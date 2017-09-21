@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(value = PROFILE.UNITTEST)
+@ActiveProfiles(value = PROFILE.MOCK)
 public class RoleRestControllerTest {
 	
 	@Autowired
