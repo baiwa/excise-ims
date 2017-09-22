@@ -1,31 +1,20 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'page-login',
     templateUrl: 'login.html',
-    styles:[
-        `
-        body > .grid {
-            height: 100%;
-        }
-        .image {
-            margin-top: -100px;
-        }
-        .column {
-            max-width: 450px;
-        }
-        `
-    ]
+    styleUrls:['login.css']
 })
 export class LoginPage {
 
-    constructor(private router: Router) {
+    constructor(
+        public authService: AuthService) {
 
     }
 
-    goToHome(): void {
-        this.router.navigate(['home']);
+    login() {
+        this.authService.login();
     }
 
 }

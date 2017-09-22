@@ -1,30 +1,25 @@
 <div class="ui fixed inverted menu">
     <div class="ui container">
         <a href="#" class="header item">
-            <img class="logo" src="assets/images/logo.png"> Project Name
+            <img class="logo" src="assets/images/logo.png"> IMS
         </a>
-        <a href="#" class="item">Home</a>
+        <a class="item" [routerLink]="['/home']" routerLinkActive="active">Home</a>
         <div class="ui simple dropdown item">
-            Dropdown <i class="dropdown icon"></i>
+            Administrator <i class="dropdown icon"></i>
             <div class="menu">
-                <a class="item" href="#">Link Item</a>
-                <a class="item" href="#">Link Item</a>
-                <div class="divider"></div>
-                <div class="header">Header Item</div>
-                <div class="item">
-                    <i class="dropdown icon"></i> Sub Menu
-                    <div class="menu">
-                        <a class="item" href="#">Link Item</a>
-                        <a class="item" href="#">Link Item</a>
-                    </div>
-                </div>
-                <a class="item" href="#">Link Item</a>
+                <a class="item" [routerLink]="['/message']" routerLinkActive="active">Message</a>
+                <a class="item" [routerLink]="['/parameter']" routerLinkActive="active">Parameter</a>
             </div>
+        </div>
+        <div class="right menu">
+            <a class="item" *ngIf="!user" [routerLink]="['/login']">Login</a>
+            <div class="item" *ngIf="user">{{user.username}}</div>
+            <a class="item" *ngIf="user" (click)="logout()">Logout</a>
         </div>
     </div>
 </div>
 
-<div class="ui main text container">
+<div class="ui main container">
     <router-outlet></router-outlet>
 </div>
 

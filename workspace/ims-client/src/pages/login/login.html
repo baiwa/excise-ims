@@ -7,11 +7,13 @@
             </div>
         </h2>
         <form class="ui large form">
+            <strong>User :</strong> admin, <strong>Pass :</strong> admin<br/>
+            <strong>User :</strong> user, <strong>Pass :</strong> user
             <div class="ui stacked segment">
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="user icon"></i>
-                        <input type="text" name="email" placeholder="E-mail address">
+                        <input type="text" name="username" placeholder="Username">
                     </div>
                 </div>
                 <div class="field">
@@ -20,7 +22,7 @@
                         <input type="password" name="password" placeholder="Password">
                     </div>
                 </div>
-                <div class="ui fluid large teal submit button" (click)="goToHome()">Login</div>
+                <div class="ui fluid large teal submit button" (click)="login()">Login</div>
             </div>
             <div class="ui error message"></div>
         </form>
