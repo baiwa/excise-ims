@@ -53,7 +53,7 @@ import th.co.baiwa.starter.thymeleaf.stsm.web.conversion.VarietyFormatter;
 })
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(WebMvcConfig.class);
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

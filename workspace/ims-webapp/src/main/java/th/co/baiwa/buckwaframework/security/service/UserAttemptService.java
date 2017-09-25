@@ -18,7 +18,7 @@
 //@Service("userAttemptService")
 //public class UserAttemptService {
 //	
-//	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+//	private static final Logger logger = LoggerFactory.getLogger(UserAttemptService.class);
 //	
 //	@Autowired
 //	private UserAttemptDao userAttemptDao;

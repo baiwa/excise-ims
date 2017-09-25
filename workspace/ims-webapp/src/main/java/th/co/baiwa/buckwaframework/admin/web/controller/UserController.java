@@ -22,9 +22,9 @@ package th.co.baiwa.buckwaframework.admin.web.controller;
 //
 //@Controller
 //@RequestMapping(value = "/admin/user")
-//public class UserManagementController {
+//public class UserController {
 //
-//	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+//	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 //
 //	@Autowired
 //	private UserService userService;

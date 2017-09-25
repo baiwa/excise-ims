@@ -22,7 +22,7 @@ public class SqlGeneratorUtils {
 		builder.append(" FROM ").append(tableName);
 		if (!CollectionUtils.isEmpty(conditionFieldNameList)) {
 			builder.append(" WHERE 1 = 1 ");
-			builder.append(org.springframework.util.StringUtils.collectionToDelimitedString(conditionFieldNameList, ",", "AND ", " = ?"));
+			builder.append(org.springframework.util.StringUtils.collectionToDelimitedString(conditionFieldNameList, " ", "AND ", " = ?"));
 		}
 		return builder.toString();
 	}
@@ -32,7 +32,7 @@ public class SqlGeneratorUtils {
 		builder.append(" SELECT COUNT(1) FROM ").append(tableName);
 		if (!CollectionUtils.isEmpty(conditionFieldNameList)) {
 			builder.append(" WHERE 1 = 1 ");
-			builder.append(org.springframework.util.StringUtils.collectionToDelimitedString(conditionFieldNameList, ",", "AND ", " = ?"));
+			builder.append(org.springframework.util.StringUtils.collectionToDelimitedString(conditionFieldNameList, " ", "AND ", " = ?"));
 		}
 		return builder.toString();
 	}

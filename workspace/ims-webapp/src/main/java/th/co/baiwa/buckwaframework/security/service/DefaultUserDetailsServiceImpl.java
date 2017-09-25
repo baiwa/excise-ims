@@ -18,9 +18,9 @@
 //import th.co.baiwa.framework.security.model.UserDetails;
 //
 //@Service("userDetailsService")
-//public class DefaultUserDetailsServiceImpl implements UserDetailsService {
+//public class DefaultUserDetailsService implements UserDetailsService {
 //
-//	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+//	private static final Logger logger = LoggerFactory.getLogger(DefaultUserDetailsService.class);
 //
 //	@Autowired
 //	private UserDetailsDao userDetailsDao;

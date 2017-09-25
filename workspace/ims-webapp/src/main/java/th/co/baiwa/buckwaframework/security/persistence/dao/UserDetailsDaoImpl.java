@@ -16,9 +16,9 @@
 //import th.co.baiwa.framework.common.persistence.dao.AbstractCommonJdbcDao;
 //
 //@Repository("userDetailsDao")
-//public class UserDetailsDaoImpl extends AbstractCommonJdbcDao implements UserDetailsDao {
+//public class UserDetailsDao extends AbstractCommonJdbcDao implements UserDetailsDao {
 //	
-//	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+//	private static final Logger logger = LoggerFactory.getLogger(UserDetailsDao.class);
 //	
 //	// --------------------------------------------------
 //	// User
