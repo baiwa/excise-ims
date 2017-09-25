@@ -27,10 +27,11 @@ public class ParameterGroupDao {
 	public List<SysParameterGroup> findAll() {
 		logger.debug("findAll");
 		
-		String sql = SqlGeneratorUtils.genSqlSelect("sys_parameter_group",
-			Arrays.asList("param_group_id", "param_group_code", "param_group_desc"),
-			Arrays.asList("is_deleted")
-		);
+		String sql =
+			" SELECT param_group_id, param_group_code, param_group_desc " +
+			" FROM sys_parameter_group " +
+			" WHERE is_deleted = ? " +
+			" ORDER BY param_group_code ";
 		
 		return commonJdbcDao.executeQuery(sql,
 			new Object[] {
@@ -43,10 +44,11 @@ public class ParameterGroupDao {
 	public SysParameterGroup findById(Long paramGroupId) {
 		logger.debug("findById");
 		
-		String sql = SqlGeneratorUtils.genSqlSelect("sys_parameter_group",
-			Arrays.asList("param_group_id", "param_group_code", "param_group_desc"),
-			Arrays.asList("is_deleted", "param_group_id")
-		);
+		String sql =
+			" SELECT param_group_id, param_group_code, param_group_desc " +
+			" FROM sys_parameter_group " +
+			" WHERE is_deleted = ? " +
+			"   AND param_group_id = ? ";
 		
 		return commonJdbcDao.executeQueryForObject(sql,
 			new Object[] {

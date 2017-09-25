@@ -27,12 +27,11 @@ public class ParameterInfoDao {
 	public List<SysParameterInfo> findAll() {
 		logger.debug("findAll");
 		
-		String sql = SqlGeneratorUtils.genSqlSelect("sys_parameter_info",
-			Arrays.asList(
-				"param_info_id", "param_group_id", "param_code", "value_1", "value_2",
-				"value_3", "value_4", "value_5", "value_6", "sorting_order", "is_default"),
-			Arrays.asList("is_deleted")
-		);
+		String sql =
+			" SELECT param_info_id, param_group_id, param_code, value_1, value_2 " +
+			"        value_3, value_4, value_5, value_6, sorting_order, is_default " +
+			" FROM sys_parameter_info " +
+			" WHERE is_deleted = ? ";
 		
 		return commonJdbcDao.executeQuery(sql,
 			new Object[] {
@@ -45,12 +44,12 @@ public class ParameterInfoDao {
 	public SysParameterInfo findById(Long paramInfoId) {
 		logger.debug("findById");
 		
-		String sql = SqlGeneratorUtils.genSqlSelect("sys_parameter_info",
-			Arrays.asList(
-				"param_info_id", "param_group_id", "param_code", "value_1", "value_2",
-				"value_3", "value_4", "value_5", "value_6", "sorting_order", "is_default"),
-			Arrays.asList("is_deleted", "param_info_id")
-		);
+		String sql =
+			" SELECT param_info_id, param_group_id, param_code, value_1, value_2 " +
+			"        value_3, value_4, value_5, value_6, sorting_order, is_default " +
+			" FROM sys_parameter_info " +
+			" WHERE is_deleted = ? " +
+			"   AND param_info_id = ? ";
 		
 		return commonJdbcDao.executeQueryForObject(sql,
 			new Object[] {
@@ -68,11 +67,12 @@ public class ParameterInfoDao {
 			" SELECT param_info_id, param_group_id, param_code, value_1, value_2, value_3, value_4, value_5, value_6, " +
 			"   is_default, sorting_order " +
 			" FROM sys_parameter_info " +
-			" WHERE is_deleted = 'N' " +
+			" WHERE is_deleted = ? " +
 			"   AND param_group_id = ? ";
 		
 		List<SysParameterInfo> paramInfoList = (List<SysParameterInfo>) commonJdbcDao.executeQuery(sql,
 			new Object[] {
+				FLAG.N_FLAG,
 				paramGroupId
 			},
 			ParameterInfoRowMapper.getInstance()
