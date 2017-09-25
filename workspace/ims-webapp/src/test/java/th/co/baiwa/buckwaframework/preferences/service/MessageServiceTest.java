@@ -1,5 +1,7 @@
 package th.co.baiwa.buckwaframework.preferences.service;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +25,41 @@ public class MessageServiceTest {
 	private MessageService messageService;
 	
 	@Test
-	public void test_insert() {
+	public void test_getMessageList() {
+		System.out.println("- - - - - getMessageList - - - - -");
+		List<Message> messageList = messageService.getMessageList();
+		Assert.assertNotEquals(0, messageList.size());
+		for (Message message : messageList) {
+			System.out.println(message);
+		}
+	}
+	
+	@Test
+	public void test_getMessageById_Found() {
+		System.out.println("- - - - - getMessageById_Found - - - - -");
+		Message message = messageService.getMessageById(3L);
+		Assert.assertNotNull(message);
+		System.out.println(message);
+	}
+	
+	@Test
+	public void test_getMessageById_NotFound() {
+		System.out.println("- - - - - getMessageById_NotFound - - - - -");
+		Message message = messageService.getMessageById(99L);
+		Assert.assertNull(message);
+		System.out.println(message);
+	}
+	
+	@Test
+	public void test_getMessageCount() {
+		System.out.println("- - - - - getMessageCount - - - - -");
+		int count = messageService.countMessage();
+		Assert.assertNotEquals(0, count);
+	}
+	
+	//@Test
+	public void test_insertMessage() {
+		System.out.println("- - - - - insertMessage - - - - -");
 		Message message = new Message();
 		message.setMessageCode("003");
 		message.setMessageEn("desc eng");
@@ -34,16 +70,22 @@ public class MessageServiceTest {
 		Assert.assertNotNull(message.getMessageId());
 	}
 	
-	@Test
-	public void test_update() {
+	//@Test
+	public void test_updateMessage() {
+		System.out.println("- - - - - updateMessage - - - - -");
 		Message message = new Message();
+		message.setMessageId(3L);
 		message.setMessageCode("003");
-		message.setMessageEn("desc eng");
-		message.setMessageTh("desc thai");
-		message.setMessageType(MESSAGE_TYPE.INFO);
-		messageService.insertMessage(message);
-		
-		Assert.assertNotNull(message.getMessageId());
+		message.setMessageEn("desc eng 44");
+		message.setMessageTh("desc thai 55");
+		message.setMessageType(MESSAGE_TYPE.WARN);
+		messageService.updateMessage(message);
+	}
+	
+	//@Test
+	public void test_deleteMessage() {
+		System.out.println("- - - - - deleteMessage - - - - -");
+		messageService.deleteMessage(3L);
 	}
 	
 }

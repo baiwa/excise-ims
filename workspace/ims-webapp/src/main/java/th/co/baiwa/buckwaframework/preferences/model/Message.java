@@ -51,11 +51,13 @@ public class Message {
 	}
 	
 	public void fromEntity(SysMessage message) {
-		this.messageId = message.getMessageId();
-		this.messageCode = message.getMessageCode();
-		this.messageEn = message.getMessageEn();
-		this.messageTh = message.getMessageTh();
-		this.messageType = message.getMessageType();
+		if (message != null) {
+			this.messageId = message.getMessageId();
+			this.messageCode = message.getMessageCode();
+			this.messageEn = message.getMessageEn();
+			this.messageTh = message.getMessageTh();
+			this.messageType = message.getMessageType();
+		}
 	}
 	
 	public SysMessage toEntity() {

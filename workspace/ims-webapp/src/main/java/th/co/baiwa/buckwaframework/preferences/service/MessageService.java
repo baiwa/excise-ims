@@ -20,7 +20,7 @@ public class MessageService {
 	@Autowired
 	private MessageDao messageDao;
 	
-	public List<Message> getMessageAll() {
+	public List<Message> getMessageList() {
 		logger.info("getMessageAll");
 		
 		List<Message> messageList = new ArrayList<Message>();
@@ -39,8 +39,11 @@ public class MessageService {
 		logger.info("getMessage messageId=?", messageId);
 		
 		SysMessage sysMessage = messageDao.findById(messageId);
-		Message message = new Message();
-		message.fromEntity(sysMessage);
+		Message message = null;
+		if (sysMessage != null) {
+			message = new Message();
+			message.fromEntity(sysMessage);
+		}
 		
 		return message;
 	}
