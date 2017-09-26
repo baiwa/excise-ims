@@ -1,9 +1,9 @@
-package th.co.baiwa.buckwaframework.preferences.model;
+package th.co.baiwa.buckwaframework.preferences.persistence.entity;
 
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.SysMessage;
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
-public class Message {
-	
+public class Message extends BaseEntity {
+
 	private Long messageId;
 	private String messageCode;
 	private String messageEn;
@@ -49,24 +49,5 @@ public class Message {
 	public void setMessageType(String messageType) {
 		this.messageType = messageType;
 	}
-	
-	public void fromEntity(SysMessage message) {
-		if (message != null) {
-			this.messageId = message.getMessageId();
-			this.messageCode = message.getMessageCode();
-			this.messageEn = message.getMessageEn();
-			this.messageTh = message.getMessageTh();
-			this.messageType = message.getMessageType();
-		}
-	}
-	
-	public SysMessage toEntity() {
-		SysMessage message = new SysMessage();
-		message.setMessageId(this.messageId);
-		message.setMessageCode(this.messageCode);
-		message.setMessageEn(this.messageEn);
-		message.setMessageTh(this.messageTh);
-		message.setMessageType(this.messageType);
-		return message;
-	}
+
 }

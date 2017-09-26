@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants.MESSAGE_TYPE;
-import th.co.baiwa.buckwaframework.preferences.model.Message;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

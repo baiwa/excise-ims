@@ -5,9 +5,9 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.SysMessage;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 
-public class MessageRowMapper implements RowMapper<SysMessage> {
+public class MessageRowMapper implements RowMapper<Message> {
 	
 	private static class SingletonHolder {
 		private static final MessageRowMapper instance = new MessageRowMapper();
@@ -18,8 +18,8 @@ public class MessageRowMapper implements RowMapper<SysMessage> {
 	}
 	
 	@Override
-	public SysMessage mapRow(ResultSet rs, int rowNum) throws SQLException {
-		SysMessage message = new SysMessage();
+	public Message mapRow(ResultSet rs, int rowNum) throws SQLException {
+		Message message = new Message();
 		message.setMessageId(rs.getLong("message_id"));
 		message.setMessageCode(rs.getString("message_code"));
 		message.setMessageEn(rs.getString("message_en"));

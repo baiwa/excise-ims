@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.SysMessage;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.mapper.MessageRowMapper;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 
@@ -24,7 +24,7 @@ public class MessageDao {
 	@Autowired
 	private CommonJdbcDao commonJdbcDao;
 	
-	public List<SysMessage> findAll() {
+	public List<Message> findAll() {
 		logger.debug("findAll");
 		
 		String sql =
@@ -40,7 +40,7 @@ public class MessageDao {
 		);
 	}
 	
-	public SysMessage findById(Long messageId) {
+	public Message findById(Long messageId) {
 		logger.debug("findById");
 		
 		String sql =
@@ -71,7 +71,7 @@ public class MessageDao {
 		);
 	}
 	
-	public Long insert(SysMessage message) {
+	public Long insert(Message message) {
 		logger.debug("insert");
 		
 		String sql = SqlGeneratorUtils.genSqlInsert("sys_message", Arrays.asList(
@@ -95,7 +95,7 @@ public class MessageDao {
 		return key;
 	}
 	
-	public int update(SysMessage message) {
+	public int update(Message message) {
 		logger.debug("update");
 		
 		String sql = SqlGeneratorUtils.genSqlUpdate("sys_message",

@@ -1,6 +1,5 @@
 package th.co.baiwa.buckwaframework.preferences.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,9 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.preferences.model.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.dao.MessageDao;
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.SysMessage;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 
 @Service("messageService")
 public class MessageService {
@@ -23,29 +21,13 @@ public class MessageService {
 	public List<Message> getMessageList() {
 		logger.info("getMessageAll");
 		
-		List<Message> messageList = new ArrayList<Message>();
-		Message message = null;
-		List<SysMessage> sysMessageList = messageDao.findAll();
-		for (SysMessage sysMessage : sysMessageList) {
-			message = new Message();
-			message.fromEntity(sysMessage);
-			messageList.add(message);
-		}
-		
-		return messageList;
+		return messageDao.findAll();
 	}
 	
 	public Message getMessageById(Long messageId) {
 		logger.info("getMessage messageId=?", messageId);
 		
-		SysMessage sysMessage = messageDao.findById(messageId);
-		Message message = null;
-		if (sysMessage != null) {
-			message = new Message();
-			message.fromEntity(sysMessage);
-		}
-		
-		return message;
+		return messageDao.findById(messageId);
 	}
 	
 	public int countMessage() {
@@ -57,7 +39,7 @@ public class MessageService {
 	public Message insertMessage(Message message) {
 		logger.info("insertMessage");
 		
-		Long messageId = messageDao.insert(message.toEntity());
+		Long messageId = messageDao.insert(message);
 		message.setMessageId(messageId);
 		
 		return message;
@@ -66,7 +48,7 @@ public class MessageService {
 	public void updateMessage(Message message) {
 		logger.info("updateMessage");
 		
-		messageDao.update(message.toEntity());
+		messageDao.update(message);
 	}
 	
 	public void deleteMessage(Long messageId) {
