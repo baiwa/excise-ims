@@ -89,7 +89,8 @@ public class SecurityConfig {
 		protected void configure(HttpSecurity http) throws Exception {
 			http.authorizeRequests()
 				.antMatchers("/api/**")
-				.hasAnyRole(ROLE.ROLE_USER)
+//				.hasAnyRole(ROLE.ROLE_USER)
+				.permitAll()
 			.and()
 			.formLogin()
 				.loginProcessingUrl(SecurityConstants.LOGIN_URL)
