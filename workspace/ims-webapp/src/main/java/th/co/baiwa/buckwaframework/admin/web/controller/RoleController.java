@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/admin/role")
 public class RoleController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value = "/init.htm", method = RequestMethod.GET)
 	public ModelAndView init() {

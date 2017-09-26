@@ -1,4 +1,4 @@
-package th.co.baiwa.buckwaframework.security.web.controller;
+package th.co.baiwa.buckwaframework.security.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class CommonController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CommonController.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value = "/anonymous.htm")
 	public ModelAndView anonymous() {
@@ -30,7 +30,7 @@ public class CommonController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/welcome.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/welcome.htm", method = RequestMethod.GET)
 	public ModelAndView welcome(HttpServletRequest httpRequest) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("welcome");
@@ -39,7 +39,7 @@ public class CommonController {
 	}
 	
 	// for 403 access denied page
-	@RequestMapping(value = "/403.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/403.htm", method = RequestMethod.GET)
 	public ModelAndView accesssDenied() {
 		
 		ModelAndView mav = new ModelAndView();

@@ -13,16 +13,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import th.co.baiwa.starter.thymeleaf.stsm.web.conversion.DateFormatter;
 import th.co.baiwa.starter.thymeleaf.stsm.web.conversion.VarietyFormatter;
@@ -56,7 +53,7 @@ import th.co.baiwa.starter.thymeleaf.stsm.web.conversion.VarietyFormatter;
 })
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	
-	private static final Logger logger = LoggerFactory.getLogger(WebMvcConfig.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -85,15 +82,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-		Gson gson = new GsonBuilder()
-			.setDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss")
-			.serializeNulls()
-			.create();
-
-		GsonHttpMessageConverter gsonConverter = new GsonHttpMessageConverter();
-		gsonConverter.setGson(gson);
-		
-		converters.add(gsonConverter);
+		super.configureMessageConverters(converters);
+		converters.add(new MappingJackson2HttpMessageConverter());
 	}
 	
 	// Thymeleaf Example

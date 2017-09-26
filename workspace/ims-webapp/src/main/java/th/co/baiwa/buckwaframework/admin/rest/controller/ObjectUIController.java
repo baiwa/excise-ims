@@ -27,7 +27,7 @@
 //@RestController
 //public class ObjectUIController {
 //
-//	private static final Logger logger = LoggerFactory.getLogger(ObjectUIController.class);
+//	private final static Logger logger = LoggerFactory.getLogger(ObjectUIController.class);
 //
 //	@Autowired
 //	private CommonJdbcDao commonJdbcDao;

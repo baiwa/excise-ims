@@ -110,13 +110,6 @@
 			<scope>test</scope>
 		</dependency>
 		
-		<!-- Spring Security Test -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
 		<!-- Spring Boot Developer Tools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -140,12 +133,6 @@
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>
-        
-		<!-- Gson: A Java serialization/deserialization library to convert Java Objects into JSON and back -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-		</dependency>
         
 		<!-- Database Logging -->
 		<dependency>

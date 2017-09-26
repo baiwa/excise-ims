@@ -14,12 +14,11 @@ import th.co.baiwa.buckwaframework.admin.persistence.mapper.RoleRowMapper;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 
 @Repository("roleDao")
 public class RoleDao {
 	
-	private static final Logger logger = LoggerFactory.getLogger(RoleDao.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private CommonJdbcDao commonJdbcDao;
@@ -28,8 +27,14 @@ public class RoleDao {
 		logger.debug("findAll");
 		
 		String sql = SqlGeneratorUtils.genSqlSelect("adm_role",
-			Arrays.asList("role_id", "role_code", "role_desc"),
-			Arrays.asList("is_deleted")
+			Arrays.asList(
+				"role_id",
+				"role_code",
+				"role_desc"
+			),
+			Arrays.asList(
+				"is_deleted"
+			)
 		);
 		
 		return commonJdbcDao.executeQuery(sql,
@@ -44,8 +49,15 @@ public class RoleDao {
 		logger.info("findById roleId={}", roleId);
 		
 		String sql = SqlGeneratorUtils.genSqlSelect("adm_role",
-			Arrays.asList("role_id", "role_code", "role_desc"),
-			Arrays.asList("is_deleted", "role_id")
+			Arrays.asList(
+				"role_id",
+				"role_code",
+				"role_desc"
+			),
+			Arrays.asList(
+				"is_deleted",
+				"role_id"
+			)
 		);
 		
 		return commonJdbcDao.executeQueryForObject(sql,
@@ -60,7 +72,11 @@ public class RoleDao {
 	public int count() {
 		logger.info("count");
 		
-		String sql = SqlGeneratorUtils.genSqlCount("adm_role", Arrays.asList("is_deleted"));
+		String sql = SqlGeneratorUtils.genSqlCount("adm_role",
+			Arrays.asList(
+				"is_deleted"
+			)
+		);
 		
 		return commonJdbcDao.executeQueryForObject(sql, Integer.class);
 	}
@@ -78,7 +94,7 @@ public class RoleDao {
 		Long key = commonJdbcDao.executeInsertWithKeyHolder(sql.toString(), new Object[] {
 			role.getRoleCode(),
 			role.getRoleDesc(),
-			UserLoginUtils.getCurrentUsername(),
+			"SYSTEM", // FIXME Will get username from SecurityContext
 			new Date()
 		});
 		
@@ -103,7 +119,7 @@ public class RoleDao {
 		int updateRow = commonJdbcDao.executeUpdate(sql.toString(), new Object[] {
 			role.getRoleCode(),
 			role.getRoleDesc(),
-			UserLoginUtils.getCurrentUsername(),
+			"SYSTEM", // FIXME Will get username from SecurityContext
 			new Date(),
 			role.getRoleId()
 		});
@@ -127,7 +143,7 @@ public class RoleDao {
 		
 		int updateRow = commonJdbcDao.executeUpdate(sql.toString(), new Object[] {
 			FLAG.Y_FLAG,
-			UserLoginUtils.getCurrentUsername(),
+			"SYSTEM", // FIXME Will get username from SecurityContext
 			new Date(),
 			roleId
 		});

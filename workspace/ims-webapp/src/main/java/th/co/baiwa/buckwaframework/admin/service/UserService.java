@@ -15,9 +15,9 @@ package th.co.baiwa.buckwaframework.admin.service;
 //import th.co.baiwa.framework.common.constant.CommonConstants.EditDataTableAction;
 //
 //@Service("userService")
-//public class UserService implements UserService {
+//public class UserServiceImpl implements UserService {
 //
-//	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+//	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 //
 //	
 //	@Autowired

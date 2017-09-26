@@ -13,7 +13,7 @@ import th.co.baiwa.buckwaframework.admin.persistence.entity.Role;
 @Service("roleService")
 public class RoleService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(RoleService.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private RoleDao roleDao;

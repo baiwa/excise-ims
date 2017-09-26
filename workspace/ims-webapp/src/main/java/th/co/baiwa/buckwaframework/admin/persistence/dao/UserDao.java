@@ -16,7 +16,7 @@
 //@Repository("userDao")
 //public class UserDao {
 //
-//	private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
+//	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 //
 //	public User findByUsername(String username) {
 //		logger.info("findByUsername username=" + username);

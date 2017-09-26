@@ -21,7 +21,7 @@
 //@Component("authenticationProvider")
 //public class DefaultAuthenticationProvider extends DaoAuthenticationProvider {
 //	
-//	private static final Logger logger = LoggerFactory.getLogger(DefaultAuthenticationProvider.class);
+//	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 //	
 //	@Autowired
 //	@Qualifier("userDetailsService")

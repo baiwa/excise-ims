@@ -9,11 +9,11 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 
 public abstract class BaseEntity {
 
-	protected transient String isDeleted = FLAG.N_FLAG;
-	protected transient String createdBy;
-	protected transient Date createdDate;
-	protected transient String updatedBy;
-	protected transient Date updatedDate;
+	protected String isDeleted = FLAG.N_FLAG;
+	protected String createdBy;
+	protected Date createdDate;
+	protected String updatedBy;
+	protected Date updatedDate;
 
 	public String getIsDeleted() {
 		return isDeleted;
