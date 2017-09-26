@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfigurati
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
-import th.co.baiwa.buckwaframework.common.config.AppConfig;
-
 @SpringBootApplication(exclude = {
 	HibernateJpaAutoConfiguration.class,
 	ThymeleafAutoConfiguration.class
@@ -21,7 +19,7 @@ public class Application extends SpringBootServletInitializer {
 	
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(AppConfig.class);
+		return application.sources(Application.class);
 	}
 	
 //	private void configListener(ServletContext servletContext) {
