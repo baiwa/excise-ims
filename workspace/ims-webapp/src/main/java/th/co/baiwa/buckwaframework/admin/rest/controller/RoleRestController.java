@@ -28,7 +28,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 @RequestMapping("/api/admin/role")
 public class RoleRestController {
 	
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(RoleRestController.class);
 	
 	@Autowired
 	private RoleService roleService;

@@ -5,8 +5,6 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import th.co.baiwa.buckwaframework.common.bean.UserBean;
-
 public class UserDetails extends User implements UserBean {
 	
 	private static final long serialVersionUID = 2637807472705815470L;

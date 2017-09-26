@@ -7,9 +7,6 @@ public class CommonConstants {
 		public static final String N_FLAG = "N";
 	}
 	
-	// Using in Security Module, for checking this User is authenticate already
-	public static final String ROLE_USER = "ROLE_USER";
-	
 	// System User
 	public static final class BACKEND_USER {
 		public static final String SYSTEM = "SYSTEM";

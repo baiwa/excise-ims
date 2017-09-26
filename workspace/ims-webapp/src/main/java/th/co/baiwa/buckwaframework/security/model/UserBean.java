@@ -1,4 +1,4 @@
-package th.co.baiwa.buckwaframework.common.bean;
+package th.co.baiwa.buckwaframework.security.model;
 
 import java.util.Collection;
 

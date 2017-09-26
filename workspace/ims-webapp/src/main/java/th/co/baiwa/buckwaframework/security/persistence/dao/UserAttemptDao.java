@@ -20,7 +20,7 @@ import th.co.baiwa.buckwaframework.security.persistence.mapper.UserAttemptRowMap
 @Repository("UserAttemptDao")
 public class UserAttemptDao {
 	
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(UserAttemptDao.class);
 	
 	@Autowired
 	private CommonJdbcDao commonJdbcDao;
