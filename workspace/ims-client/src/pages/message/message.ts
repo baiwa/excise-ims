@@ -28,7 +28,6 @@ export class MessagePage {
     }
 
     initDatatable(): void {
-        // console.log(messageService.url)
         this.messageDt = $('#messageDt').DataTable({
             "lengthChange": false,
             "searching": false,
@@ -44,6 +43,12 @@ export class MessagePage {
                 "url": this.messageService.url
             },
             "columns": [
+                {
+                    "data": "messageId",
+                    "render": function() {
+                        return '<div class="ui checkbox"><input type="checkbox"><label></label></div>';
+                    }
+                },
                 { "data": "messageCode" },
                 { "data": "messageEn" }, 
                 { "data": "messageTh" },
@@ -51,9 +56,12 @@ export class MessagePage {
                 {
                     "data": "messageId",
                     "render": function() {
-                        return '<button type="button" class="ui button edit">Edit</button>';
+                        return '<button type="button" class="ui mini button edit"><i class="pencil icon"></i> Edit</button>';
                     }
                 }
+            ],
+            "columnDefs": [
+                { targets: [0, 5], className: "center aligned"}
             ],
             "rowCallback": function(row, data, index) {
                 $('td > .edit', row).bind('click', () => {

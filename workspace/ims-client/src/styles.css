@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    background-color: #eceff4;
+}
+
+.dataTables_paginate>.ui.pagination {
+    font-size: .78571429rem !important;
+}
+
+.dataTables_info {
+    font-size: .9em !important;
+    padding-top: 0 !important;
+}
+
+.ui.dimmer {
+    display: block !important;
+}
+
+.ui.modal {
+    margin-top: -92.7px;
+    display: block !important;
+}

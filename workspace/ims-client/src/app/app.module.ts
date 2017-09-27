@@ -15,6 +15,7 @@ import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { MessagePage } from '../pages/message/message';
 import { ParameterPage } from '../pages/parameter/parameter';
+import { MessageDetailPage } from '../pages/message/message-detail';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { ParameterPage } from '../pages/parameter/parameter';
         LoginPage,
         HomePage,
         MessagePage,
+        MessageDetailPage,
         ParameterPage
     ],
     imports: [
