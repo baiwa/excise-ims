@@ -183,6 +183,7 @@ CREATE TABLE `sys_message` (
 -- ----------------------------
 -- Records of sys_message
 -- ----------------------------
+INSERT INTO `sys_message` VALUES ('1', 'MSG_00001', 'Are you sure you want to delete selected item(s)?', 'คุณต้องการลบข้อมูลที่เลือกใช่ไหม?', 'I', 'N', 1, 'INITIAL', '2017-09-27 09:30:00', 'INITIAL', '2017-09-27 09:30:00');
 
 -- ----------------------------
 -- Table structure for sys_parameter_group
