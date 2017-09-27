@@ -9,4 +9,4 @@ Excise Integrated Management System (Web)
 	cd ims-webapp
 	mvn clean package -Dmaven.test.skip=true
   
-Once the build is complete, take the generated war file from into [cd ims-client/target] deploy on any servlet container and have fun!
+Once the build is complete, take the generated war file from into `cd ims-client/target` deploy on any servlet container and have fun!
