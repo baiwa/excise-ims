@@ -15,6 +15,8 @@ Date: 2016-06-30 16:24:11
 
 SET FOREIGN_KEY_CHECKS=0;
 
+CREATE DATABASE `buckwa_framework`;
+
 -- ----------------------------
 -- Table structure for adm_operation
 -- ----------------------------

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Message } from '../../model/message';
+import { MessageService } from '../../services/message.service';
 
 declare var jQuery: any;
 declare var $: any;
@@ -13,7 +14,8 @@ export class MessagePage {
     messageDt: any;
     editMessageMd: any;
 
-    constructor() {
+    constructor(private messageService: MessageService) {
+        console.log(messageService.url);
 
     }
 
@@ -26,6 +28,7 @@ export class MessagePage {
     }
 
     initDatatable(): void {
+        // console.log(messageService.url)
         this.messageDt = $('#messageDt').DataTable({
             "lengthChange": false,
             "searching": false,
@@ -37,7 +40,8 @@ export class MessagePage {
             "pagingType": "full_numbers",
             "ajax": {
                 "type": "GET",
-                "url": "http://localhost:8084/webpoc/api/preferences/message",
+                // "url": "http://localhost:8084/webpoc/api/preferences/message",
+                "url": this.messageService.url
             },
             "columns": [
                 { "data": "messageCode" },

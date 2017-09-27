@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 // services
 import { AuthGuard } from '../services/auth-guard.service';
 import { AuthService } from '../services/auth.service';
+import { MessageService } from '../services/message.service';
 
 // components
 import { AppComponent } from './app.component';
@@ -29,7 +30,8 @@ import { ParameterPage } from '../pages/parameter/parameter';
     ],
     providers: [
         AuthGuard,
-        AuthService
+        AuthService,
+        MessageService
     ],
     bootstrap: [AppComponent]
 })
