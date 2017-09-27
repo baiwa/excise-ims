@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.SysParameterInfo;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
 import th.co.baiwa.buckwaframework.preferences.persistence.mapper.ParameterInfoRowMapper;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 
@@ -24,11 +24,11 @@ public class ParameterInfoDao {
 	@Autowired
 	private CommonJdbcDao commonJdbcDao;
 	
-	public List<SysParameterInfo> findAll() {
+	public List<ParameterInfo> findAll() {
 		logger.debug("findAll");
 		
 		String sql =
-			" SELECT param_info_id, param_group_id, param_code, value_1, value_2 " +
+			" SELECT param_info_id, param_group_id, param_code, value_1, value_2, " +
 			"        value_3, value_4, value_5, value_6, sorting_order, is_default " +
 			" FROM sys_parameter_info " +
 			" WHERE is_deleted = ? ";
@@ -41,11 +41,11 @@ public class ParameterInfoDao {
 		);
 	}
 	
-	public SysParameterInfo findById(Long paramInfoId) {
+	public ParameterInfo findById(Long paramInfoId) {
 		logger.debug("findById");
 		
 		String sql =
-			" SELECT param_info_id, param_group_id, param_code, value_1, value_2 " +
+			" SELECT param_info_id, param_group_id, param_code, value_1, value_2, " +
 			"        value_3, value_4, value_5, value_6, sorting_order, is_default " +
 			" FROM sys_parameter_info " +
 			" WHERE is_deleted = ? " +
@@ -60,17 +60,17 @@ public class ParameterInfoDao {
 		);
 	}
 	
-	public List<SysParameterInfo> findByParamGroupId(Long paramGroupId) {
+	public List<ParameterInfo> findByParamGroupId(Long paramGroupId) {
 		logger.debug("findByParamGroupId paramGroupId=?", paramGroupId);
 		
 		String sql =
-			" SELECT param_info_id, param_group_id, param_code, value_1, value_2, value_3, value_4, value_5, value_6, " +
-			"   is_default, sorting_order " +
+			" SELECT param_info_id, param_group_id, param_code, value_1, value_2, " +
+			"        value_3, value_4, value_5, value_6, sorting_order, is_default " +
 			" FROM sys_parameter_info " +
 			" WHERE is_deleted = ? " +
 			"   AND param_group_id = ? ";
 		
-		List<SysParameterInfo> paramInfoList = (List<SysParameterInfo>) commonJdbcDao.executeQuery(sql,
+		List<ParameterInfo> paramInfoList = (List<ParameterInfo>) commonJdbcDao.executeQuery(sql,
 			new Object[] {
 				FLAG.N_FLAG,
 				paramGroupId
@@ -86,11 +86,16 @@ public class ParameterInfoDao {
 		
 		String sql = SqlGeneratorUtils.genSqlCount("sys_parameter_info", Arrays.asList("is_deleted"));
 		
-		return commonJdbcDao.executeQueryForObject(sql, Integer.class);
+		return commonJdbcDao.executeQueryForObject(sql,
+			new Object[] {
+				FLAG.N_FLAG
+			},
+			Integer.class
+		);
 	}
 	
-	public int countByParamGroup(Long paramGroupId) {
-		logger.info("countByParamGroup paramGroupId=?", paramGroupId);
+	public int countByParamGroupId(Long paramGroupId) {
+		logger.info("countByParamGroupId paramGroupId=?", paramGroupId);
 		
 		String sql = SqlGeneratorUtils.genSqlCount("sys_parameter_info", Arrays.asList("is_deleted", "param_group_id"));
 		
@@ -103,7 +108,7 @@ public class ParameterInfoDao {
 		);
 	}
 	
-	public Long insert(SysParameterInfo paramInfo) {
+	public Long insert(ParameterInfo paramInfo) {
 		logger.debug("insert");
 		
 		String sql = SqlGeneratorUtils.genSqlInsert("sys_parameter_info", Arrays.asList(
@@ -139,7 +144,7 @@ public class ParameterInfoDao {
 		return key;
 	}
 	
-	public int update(SysParameterInfo paramInfo) {
+	public int update(ParameterInfo paramInfo) {
 		logger.debug("update");
 		
 		String sql = SqlGeneratorUtils.genSqlUpdate("sys_parameter_info",

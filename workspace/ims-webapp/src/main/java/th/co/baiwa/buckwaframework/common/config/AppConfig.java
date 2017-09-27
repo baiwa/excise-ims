@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+
 @Configuration
 @ComponentScan(
 	useDefaultFilters = false,
@@ -46,6 +48,11 @@ public class AppConfig {
 	public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
 		logger.info("placeHolderConfigurer");
 		return new PropertySourcesPlaceholderConfigurer();
+	}
+	
+	@Bean(initMethod = "reloadCache")
+	public ApplicationCache applicationCache() {
+		return new ApplicationCache();
 	}
 	
 }

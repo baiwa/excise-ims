@@ -5,9 +5,9 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.SysParameterInfo;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
 
-public class ParameterInfoRowMapper implements RowMapper<SysParameterInfo> {
+public class ParameterInfoRowMapper implements RowMapper<ParameterInfo> {
 	
 	private static class SingletonHolder {
 		private static final ParameterInfoRowMapper instance = new ParameterInfoRowMapper();
@@ -18,8 +18,8 @@ public class ParameterInfoRowMapper implements RowMapper<SysParameterInfo> {
 	}
 	
 	@Override
-	public SysParameterInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-		SysParameterInfo paramInfo = new SysParameterInfo();
+	public ParameterInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+		ParameterInfo paramInfo = new ParameterInfo();
 		paramInfo.setParamInfoId(rs.getLong("param_info_id"));
 		paramInfo.setParamGroupId(rs.getLong("param_group_id"));
 		paramInfo.setParamCode(rs.getString("param_code"));

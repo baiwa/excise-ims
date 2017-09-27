@@ -2,7 +2,7 @@ package th.co.baiwa.buckwaframework.preferences.persistence.entity;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
-public class SysParameterInfo extends BaseEntity {
+public class ParameterInfo extends BaseEntity {
 
 	private Long paramInfoId;
 	private Long paramGroupId;

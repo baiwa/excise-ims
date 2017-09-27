@@ -1,0 +1,63 @@
+package th.co.baiwa.buckwaframework.support;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
+import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants.MESSAGE_LANG;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterGroup;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
+@ActiveProfiles(value = PROFILE.UNITTEST)
+public class ApplicationCacheTest {
+	
+	@Test
+	public void test_getParameterGroupByCode() {
+		System.out.println("- - - - - getParameterGroupByCode - - - - -");
+		ParameterGroup paramGroup = ApplicationCache.getParameterGroupByCode("SYSTEM_CONFIG");
+		System.out.println(paramGroup);
+		Assert.assertNotNull(paramGroup);
+	}
+	
+	@Test
+	public void test_getParameterInfoByCode() {
+		System.out.println("- - - - - getParameterInfoByCode - - - - -");
+		ParameterInfo paramInfo = ApplicationCache.getParameterInfoByCode("SYSTEM_CONFIG", "LOGIN_ATTEMPTS");
+		System.out.println(paramInfo);
+		Assert.assertNotNull(paramInfo);
+	}
+	
+	@Test
+	public void test_getParameterInfoById() {
+		System.out.println("- - - - - paramInfo - - - - -");
+		ParameterInfo paramInfo = ApplicationCache.getParameterInfoById(1L);
+		System.out.println(paramInfo);
+		Assert.assertNotNull(paramInfo);
+	}
+	
+	@Test
+	public void test_getMessage() {
+		System.out.println("- - - - - getMessage - - - - -");
+		Message message = ApplicationCache.getMessage("S001");
+		System.out.println(message);
+		Assert.assertNotNull(message);
+	}
+	
+	@Test
+	public void test_getMessageByLang() {
+		System.out.println("- - - - - getMessageByLang - - - - -");
+		String message = ApplicationCache.getMessage("S001", MESSAGE_LANG.EN);
+		System.out.println(message);
+		Assert.assertNotNull(message);
+	}
+	
+}

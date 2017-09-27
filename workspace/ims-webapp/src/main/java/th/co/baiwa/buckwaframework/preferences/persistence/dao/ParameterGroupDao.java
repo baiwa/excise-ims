@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.SysParameterGroup;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterGroup;
 import th.co.baiwa.buckwaframework.preferences.persistence.mapper.ParameterGroupRowMapper;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 
@@ -24,7 +24,7 @@ public class ParameterGroupDao {
 	@Autowired
 	private CommonJdbcDao commonJdbcDao;
 	
-	public List<SysParameterGroup> findAll() {
+	public List<ParameterGroup> findAll() {
 		logger.debug("findAll");
 		
 		String sql =
@@ -41,7 +41,7 @@ public class ParameterGroupDao {
 		);
 	}
 	
-	public SysParameterGroup findById(Long paramGroupId) {
+	public ParameterGroup findById(Long paramGroupId) {
 		logger.debug("findById");
 		
 		String sql =
@@ -64,10 +64,15 @@ public class ParameterGroupDao {
 		
 		String sql = SqlGeneratorUtils.genSqlCount("sys_parameter_group", Arrays.asList("is_deleted"));
 		
-		return commonJdbcDao.executeQueryForObject(sql, Integer.class);
+		return commonJdbcDao.executeQueryForObject(sql,
+			new Object[] {
+				FLAG.N_FLAG
+			},
+			Integer.class
+		);
 	}
 	
-	public Long insert(SysParameterGroup paramGroup) {
+	public Long insert(ParameterGroup paramGroup) {
 		logger.debug("insert");
 		
 		String sql = SqlGeneratorUtils.genSqlInsert("sys_parameter_group", Arrays.asList(
@@ -87,7 +92,7 @@ public class ParameterGroupDao {
 		return key;
 	}
 	
-	public int update(SysParameterGroup paramGroup) {
+	public int update(ParameterGroup paramGroup) {
 		logger.debug("update");
 		
 		String sql = SqlGeneratorUtils.genSqlUpdate("sys_parameter_group",
