@@ -18,17 +18,6 @@ public class AuthenController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AuthenController.class);
 	
-//	@RequestMapping(value = "/")
-//	public String root() {
-//		return "redirect:/index.htm";
-//	}
-	
-	/** Home page. */
-	@RequestMapping(value = {"/", "/index.htm", "/index.html"})
-	public String index() {
-		return "index";
-	}
-	
 //	@RequestMapping(value = "/login.html", method = RequestMethod.GET)
 //	public ModelAndView login(
 //		@RequestParam(value = "error", required = false) String error,

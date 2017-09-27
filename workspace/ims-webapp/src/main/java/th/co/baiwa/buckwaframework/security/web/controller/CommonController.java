@@ -18,6 +18,14 @@ public class CommonController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommonController.class);
 	
+	/**
+	 * Home page
+	 */
+	@RequestMapping(value = "/")
+	public String root() {
+		return "redirect:/index.html";
+	}
+	
 	@RequestMapping(value = "/anonymous.htm")
 	public ModelAndView anonymous() {
 		logger.info(" # anonymous 0 ");
