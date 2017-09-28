@@ -6,6 +6,9 @@ import { MessageService } from '../../services/message.service';
 
 import { Message } from '../../model/message';
 
+declare var jQuery: any;
+declare var $: any;
+
 @Component({
     selector: 'page-message-detail',
     templateUrl: 'message-detail.html'
@@ -14,6 +17,7 @@ export class MessageDetailPage implements OnInit {
 
     title: string;
     message: Message;
+    messageForm: any;
 
     constructor(
         private messageService: MessageService,
@@ -37,7 +41,10 @@ export class MessageDetailPage implements OnInit {
     }
 
     save(): void {
-        this.messageService.create(this.message)
+        if (!this.messageForm.form('validate form')) return;
+
+        this.messageService
+            .create(this.message)
             .then((m)=> {
                 console.log('m')
                 console.log(m)
@@ -47,5 +54,51 @@ export class MessageDetailPage implements OnInit {
 
     back(): void {
         this.location.back();
+    }
+
+    ngAfterViewInit() {
+        console.log('ngAfterViewInit')
+        this.messageForm = $('#messageForm').form({
+            on: 'blur',
+            inline : true,
+            fields: {
+                    messageCode: {
+                        identifier  : 'messageCode',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Please enter a value'
+                                }
+                            ]
+                        },
+                    messageType: {
+                        identifier  : 'messageType',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Please enter a value'
+                                }
+                            ]
+                        },
+                    messageEn: {
+                        identifier  : 'messageEn',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Please enter a value'
+                                }
+                            ]
+                        },
+                    messageTh: {
+                        identifier  : 'messageTh',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Please enter a value'
+                                }
+                            ]
+                        }
+                    }
+            });
     }
 }
