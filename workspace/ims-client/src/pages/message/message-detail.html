@@ -15,24 +15,24 @@
         <div class="ui attached segment">
             <div class="ui form">
                 <div class="fields">
-                    <div class="six wide field">
+                    <div class="six wide required field">
                         <label>Message Code</label>
-                        <input type="text" placeholder="Message Code">
+                        <input type="text" placeholder="Message Code" [(ngModel)]="message.messageCode">
                     </div>
                     <div class="two wide field"></div>
-                    <div class="four wide field">
+                    <div class="four wide required field">
                         <label>Message Type</label>
-                        <input type="text" placeholder="Message Type">
+                        <input type="text" placeholder="Message Type" [(ngModel)]="message.messageType">
                     </div>
                 </div>
                 <div class="fields">
-                    <div class="eight wide field">
+                    <div class="eight wide required field">
                         <label>Message Eng</label>
-                        <textarea></textarea>
+                        <textarea [(ngModel)]="message.messageEn"></textarea>
                     </div>
-                    <div class="eight wide field">
+                    <div class="eight wide required field">
                         <label>Message Tha</label>
-                        <textarea></textarea>
+                        <textarea [(ngModel)]="message.messageTh"></textarea>
                     </div>
                 </div>
                 <div class="fields">
@@ -40,11 +40,11 @@
                         <div class="ui grid">
                             <div class="right aligned row">
                                 <div class="column">
-                                    <div class="ui mini button" [routerLink]="['/message']">
-                                        <i class="cancel icon"></i> Cancel
+                                    <div class="ui mini button" (click)="back()">
+                                        <i class="chevron left icon"></i> Back
                                     </div>
-                                    <div class="ui mini primary button">
-                                        <i class="save icon" (click)="save()"></i> Save
+                                    <div class="ui mini primary button" (click)="save()">
+                                        <i class="save icon"></i> Save
                                     </div>
                                 </div>
                             </div>
