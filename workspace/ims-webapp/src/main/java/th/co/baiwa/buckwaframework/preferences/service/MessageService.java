@@ -18,10 +18,10 @@ public class MessageService {
 	@Autowired
 	private MessageDao messageDao;
 	
-	public List<Message> getMessageList() {
+	public List<Message> getMessageList(Integer start, Integer length) {
 		logger.info("getMessageAll");
 		
-		return messageDao.findAll();
+		return messageDao.findAll(start, length);
 	}
 	
 	public Message getMessageById(Long messageId) {

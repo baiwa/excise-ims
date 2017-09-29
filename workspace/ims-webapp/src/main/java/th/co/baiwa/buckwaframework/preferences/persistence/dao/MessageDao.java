@@ -24,6 +24,7 @@ public class MessageDao {
 	@Autowired
 	private CommonJdbcDao commonJdbcDao;
 	
+
 	public List<Message> findAll() {
 		logger.debug("findAll");
 		
@@ -35,6 +36,25 @@ public class MessageDao {
 		return commonJdbcDao.executeQuery(sql,
 			new Object[] {
 				FLAG.N_FLAG
+			},
+			MessageRowMapper.getInstance()
+		);
+	}
+	
+	public List<Message> findAll(Integer start, Integer length) {
+		logger.debug("findAll");
+		
+		String sql =
+			" SELECT message_id, message_code, message_en, message_th, message_type" +
+			" FROM sys_message " +
+			" WHERE is_deleted = ? " + 
+			" LIMIT ?, ?";
+		
+		return commonJdbcDao.executeQuery(sql,
+			new Object[] {
+				FLAG.N_FLAG,
+				start,
+				length
 			},
 			MessageRowMapper.getInstance()
 		);

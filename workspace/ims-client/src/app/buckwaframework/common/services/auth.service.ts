@@ -7,7 +7,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 
 // model
-import { User } from '../model/user';
+import { User } from '../models/user';
 
 @Injectable()
 export class AuthService {

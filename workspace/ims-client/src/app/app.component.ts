@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // services
-import { AuthService } from '../services/auth.service';
+import { AuthService } from './buckwaframework/common/services/auth.service';
 
 // models
-import { User } from '../model/user';
+import { User } from './buckwaframework/common/models/user';
 
 @Component({
     selector: 'app-root',

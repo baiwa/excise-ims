@@ -34,8 +34,8 @@ public class MessageRestController {
 	public ResponseEntity<?> getAll(@RequestParam("draw") Integer draw, @RequestParam("start") Integer start, @RequestParam("length") Integer length) {
 		logger.info("getAll");
 		
-		List<Message> resultList = messageService.getMessageList();
-		Integer recordsTotal = resultList.size();
+		List<Message> resultList = messageService.getMessageList(start, length);
+		Integer recordsTotal = messageService.countMessage();
 		
 		ResponseDataTable<Message> response = new ResponseDataTable<Message>();
 		response.setDraw(draw);
