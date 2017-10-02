@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 // services
 import { MessageBarService } from '../../../common/services/message-bar.service';
-import { MessageService } from '../../services/message.service';
+import { MessageService } from '../../../common/services/message.service';
 
 declare var jQuery: any;
 declare var $: any;

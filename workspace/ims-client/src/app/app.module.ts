@@ -10,7 +10,7 @@ import { AppRoutingModule } from './buckwaframework/common/configs/app-routing.m
 import { AuthGuard } from './buckwaframework/common/services/auth-guard.service';
 import { AuthService } from './buckwaframework/common/services/auth.service';
 import { MessageBarService } from './buckwaframework/common/services/message-bar.service';
-import { MessageService } from './buckwaframework/project/services/message.service';
+import { MessageService } from './buckwaframework/common/services/message.service';
 
 // components
 import { AppComponent } from './app.component';

@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 // services
 import { MessageBarService } from '../../../common/services/message-bar.service';
-import { MessageService } from '../../services/message.service';
+import { MessageService } from '../../../common/services/message.service';
 
 // models
 import { Message } from '../../../common/models/message';
