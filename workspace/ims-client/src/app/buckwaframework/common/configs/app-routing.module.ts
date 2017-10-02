@@ -17,7 +17,7 @@ const routes: Routes = [
     { path: 'home', component: HomePage },
     { path: 'message', component: MessagePage, canActivate: [AuthGuard] },
     { path: 'add-message', component: MessageDetailPage, canActivate: [AuthGuard] },
-    { path: 'message-detail/:id', component: MessageDetailPage, canActivate: [AuthGuard] },
+    { path: 'edit-message/:id', component: MessageDetailPage, canActivate: [AuthGuard] },
     { path: 'parameter', component: ParameterPage, canActivate: [AuthGuard] }
 ];
 

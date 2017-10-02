@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 // services
 import { MessageBarService } from '../../../common/services/message-bar.service';
@@ -18,13 +19,15 @@ export class MessagePage implements OnInit  {
 
     constructor(
         private messageService: MessageService,
-        private messageBarService: MessageBarService
+        private messageBarService: MessageBarService,
+        private router: Router
     ) {
         console.log('do constructor message page');
     }
 
     ngOnInit(): void {
         console.log('do init message page');
+        //console.log(localStorage.getItem('firebase:host:big-wealth.firebaseio.com'));
     }
 
     ngAfterViewInit() {
@@ -43,7 +46,7 @@ export class MessagePage implements OnInit  {
             "pagingType": "full_numbers",
             "ajax": {
                 "type": "GET",
-                "url": this.messageService.url
+                "url": this.messageService.url+"/search"
             },
             "columns": [
                 {
@@ -66,9 +69,9 @@ export class MessagePage implements OnInit  {
             "columnDefs": [
                 { targets: [0, 5], className: "center aligned"}
             ],
-            "rowCallback": function(row, data, index) {
+            "rowCallback": (row, data, index) => {
                 $('td > .edit', row).bind('click', () => {
-                    this.showEditMessageMd(data);
+                    this.router.navigate(['/edit-message', data]);
                 });
             }
         });

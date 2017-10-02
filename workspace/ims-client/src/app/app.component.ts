@@ -3,9 +3,13 @@ import { Router } from '@angular/router';
 
 // services
 import { AuthService } from './buckwaframework/common/services/auth.service';
+import { TranslateService } from './buckwaframework/common/services/translate.service';
 
 // models
 import { User } from './buckwaframework/common/models/user';
+
+declare var jQuery: any;
+declare var $: any;
 
 @Component({
     selector: 'app-root',
@@ -17,10 +21,13 @@ export class AppComponent implements OnInit {
     user: User;
 
     constructor(
-        public authService: AuthService,
-        public router: Router) { }
+        private authService: AuthService,
+        private router: Router,
+        private translateService: TranslateService) { }
 
     ngOnInit(): void {
+        this.translateService.use('th');
+
         this.authService.authState().subscribe((user) => {
             this.user = user;
             if (user) {
@@ -38,4 +45,15 @@ export class AppComponent implements OnInit {
         this.authService.logout();
     }
 
+    ngAfterViewInit() {
+        $('.dropdown').dropdown();
+    }
+
+    changeToEnglish() {
+        this.translateService.use('en');
+    }
+
+    changeToThai() {
+        this.translateService.use('th');
+    }
 }

@@ -11,7 +11,9 @@ export class MessageService {
     readonly url = 'api/preferences/message';
     private headers = new Headers({'Content-Type': 'application/json'});
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+
+    }
 
     create(message: Message): Promise<Message> {
         return this.http
