@@ -83,6 +83,10 @@ public class ApplicationCache {
 	}
 	
 	/** Message */
+	public static Map<String, Message> getMessages() {
+		return MESSAGE_MAP;
+	}
+	
 	public static Message getMessage(String messageCode) {
 		return MESSAGE_MAP.get(messageCode);
 	}

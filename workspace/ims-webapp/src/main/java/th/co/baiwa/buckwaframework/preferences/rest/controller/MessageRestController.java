@@ -1,6 +1,7 @@
 package th.co.baiwa.buckwaframework.preferences.rest.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.service.MessageService;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 
 @Controller
 @RequestMapping("/api/preferences/message")
@@ -31,8 +33,22 @@ public class MessageRestController {
 	private MessageService messageService;
 	
 	@GetMapping
-	public ResponseEntity<?> getAll(@RequestParam("draw") Integer draw, @RequestParam("start") Integer start, @RequestParam("length") Integer length) {
+	public ResponseEntity<?> getAll() {
 		logger.info("getAll");
+		
+		ResponseData<Map<String, Message>> response = new ResponseData<>();
+		response.setData(ApplicationCache.getMessages());
+
+		return new ResponseEntity<ResponseData<Map<String, Message>>>(response, HttpStatus.OK);
+	}
+	
+	@GetMapping("search")
+	public ResponseEntity<?> search(
+			@RequestParam(name="draw") Integer draw, 
+			@RequestParam(name="start") Integer start, 
+			@RequestParam(name="length") Integer length) {
+
+		logger.info("getAll for datatable");
 		
 		List<Message> resultList = messageService.getMessageList(start, length);
 		Integer recordsTotal = messageService.countMessage();
