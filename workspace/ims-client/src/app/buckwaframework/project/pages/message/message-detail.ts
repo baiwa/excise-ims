@@ -7,7 +7,7 @@ import { MessageBarService } from '../../../common/services/message-bar.service'
 import { MessageService } from '../../services/message.service';
 
 // models
-import { Message } from '../../models/message';
+import { Message } from '../../../common/models/message';
 
 declare var jQuery: any;
 declare var $: any;
@@ -50,7 +50,12 @@ export class MessageDetailPage implements OnInit {
         this.messageService
             .create(this.message)
             .then((m)=> {
-                this.messageBarService.show();
+                let msg = new Message();
+                msg.messageCode = 'MSG_0001';
+                msg.messageEn = 'The message was saved.';
+                msg.messageTh = 'message ถูกบันทึกแล้ว';
+                msg.messageType = 'S';
+                this.messageBarService.show(msg);
                 this.router.navigate(['/message']);
             });
     }

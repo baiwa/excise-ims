@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { Message } from '../../models/message';
+import { Component, OnInit } from '@angular/core';
+
+// services
+import { MessageBarService } from '../../../common/services/message-bar.service';
 import { MessageService } from '../../services/message.service';
 
 declare var jQuery: any;
@@ -9,18 +11,20 @@ declare var $: any;
     selector: 'page-message',
     templateUrl: 'message.html'
 })
-export class MessagePage {
+export class MessagePage implements OnInit  {
 
     messageDt: any;
     editMessageMd: any;
 
-    constructor(private messageService: MessageService) {
-        console.log(messageService.url);
-
+    constructor(
+        private messageService: MessageService,
+        private messageBarService: MessageBarService
+    ) {
+        console.log('do constructor message page');
     }
 
-    showEditMessageMd(message: Message): void {
-
+    ngOnInit(): void {
+        console.log('do init message page');
     }
 
     ngAfterViewInit() {
@@ -39,7 +43,6 @@ export class MessagePage {
             "pagingType": "full_numbers",
             "ajax": {
                 "type": "GET",
-                // "url": "http://localhost:8084/webpoc/api/preferences/message",
                 "url": this.messageService.url
             },
             "columns": [
