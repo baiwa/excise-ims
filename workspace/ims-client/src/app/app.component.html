@@ -12,10 +12,14 @@
             </div>
         </div>
         <div class="right menu">
-            <div class="ui dropdown item"><i class="world icon"></i> Language <i class="dropdown icon"></i>
+            <div class="ui dropdown item">
+                <input type="hidden" name="gender">
+                <i class="world icon"></i>
+                <div class="default text">Language</div>
+                <i class="dropdown icon"></i>
                 <div class="menu">
-                    <a class="item" (click)="changeToEnglish()">English</a>
-                    <a class="item" (click)="changeToThai()">Thai</a>
+                    <div class="item" (click)="changeToEnglish()">English</div>
+                    <div class="item" (click)="changeToThai()">Thai</div>
                 </div>
             </div>
             <a class="item" *ngIf="!user" [routerLink]="['/login']">Login</a>

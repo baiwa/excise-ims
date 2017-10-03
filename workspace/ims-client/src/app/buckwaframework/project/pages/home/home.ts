@@ -6,6 +6,9 @@ import { MessageBarService } from '../../../common/services/message-bar.service'
 // models
 import { Message } from '../../../common/models/message';
 
+declare var jQuery: any;
+declare var $: any;
+
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html'
@@ -47,4 +50,7 @@ export class HomePage {
         this.messageBarService.show(message);
     }
 
+    ngAfterViewInit() {
+        $('.dropdown').dropdown();
+    }
 }

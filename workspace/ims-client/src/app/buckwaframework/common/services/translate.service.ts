@@ -31,8 +31,6 @@ export class TranslateService {
     private translate(key: string): string {
         let translation = key;
 
-        console.log(this.messages[key]);
-
         if (this.messages[key]) {
             switch(this.currentLang.toUpperCase()) { 
                 case 'TH': { 
