@@ -22,9 +22,4 @@ public class Application extends SpringBootServletInitializer {
 		return application.sources(Application.class);
 	}
 	
-//	private void configListener(ServletContext servletContext) {
-//		// HttpSessionEventPublisher for checking duplicate login
-//		//servletContext.addListener(HttpSessionEventPublisher.class);
-//	}
-	
 }

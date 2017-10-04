@@ -15,22 +15,23 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
-import th.co.baiwa.buckwaframework.security.constant.SecurityConstants;
+import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.URL;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(value = PROFILE.UNITTEST)
-public class AuthenRestController {
+public class AuthenRestControllerTest {
 	
 	@Autowired
 	private WebApplicationContext wac;
 	
 	private MockMvc mockMvc;
-
+	
 	@Autowired
 	private Filter springSecurityFilterChain;
 	
@@ -43,11 +44,14 @@ public class AuthenRestController {
 	}
 	
 	@Test
-	public void test_login_success() throws Exception {
+	public void restLoginWithValidUserThenAuthenticated() throws Exception {
+		System.out.println("- - - - - restLoginWithValidUserThenAuthenticated - - - - -");
+		
 		MvcResult result = this.mockMvc.perform(formLogin()
-			.loginProcessingUrl(SecurityConstants.LOGIN_URL)
+			.loginProcessingUrl(URL.LOGIN_REST)
 			.user("user")
 			.password("password"))
+		.andDo(MockMvcResultHandlers.print())
 		.andExpect(status().isOk())
 		.andReturn();
 		
@@ -56,11 +60,14 @@ public class AuthenRestController {
 	}
 	
 	@Test
-	public void test_login_fail() throws Exception {
+	public void restLoginWithInvalidUserThenUnauthenticated() throws Exception {
+		System.out.println("- - - - - restLoginWithInvalidUserThenUnauthenticated - - - - -");
+		
 		MvcResult result = this.mockMvc.perform(formLogin()
-			.loginProcessingUrl(SecurityConstants.LOGIN_URL)
+			.loginProcessingUrl(URL.LOGIN_REST)
 			.user("user")
 			.password("worngpass"))
+		.andDo(MockMvcResultHandlers.print())
 		.andExpect(status().isUnauthorized())
 		.andReturn();
 		

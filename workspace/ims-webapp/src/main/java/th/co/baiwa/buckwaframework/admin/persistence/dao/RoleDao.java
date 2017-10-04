@@ -41,7 +41,7 @@ public class RoleDao {
 	}
 	
 	public Role findById(Long roleId) {
-		logger.info("findById roleId={}", roleId);
+		logger.debug("findById roleId={}", roleId);
 		
 		String sql = SqlGeneratorUtils.genSqlSelect("adm_role",
 			Arrays.asList("role_id", "role_code", "role_desc"),
@@ -58,15 +58,15 @@ public class RoleDao {
 	}
 	
 	public int count() {
-		logger.info("count");
+		logger.debug("count");
 		
 		String sql = SqlGeneratorUtils.genSqlCount("adm_role", Arrays.asList("is_deleted"));
 		
 		return commonJdbcDao.executeQueryForObject(sql, Integer.class);
 	}
-
+	
 	public Long insert(Role role) {
-		logger.info("insert");
+		logger.debug("insert");
 		
 		String sql = SqlGeneratorUtils.genSqlInsert("adm_role", Arrays.asList(
 			"role_code",
@@ -84,9 +84,9 @@ public class RoleDao {
 		
 		return key;
 	}
-
+	
 	public int update(Role role) {
-		logger.info("update");
+		logger.debug("update");
 		
 		String sql = SqlGeneratorUtils.genSqlUpdate("adm_role",
 			Arrays.asList(
@@ -110,9 +110,9 @@ public class RoleDao {
 		
 		return updateRow;
 	}
-
+	
 	public int delete(Long roleId) {
-		logger.info("delete");
+		logger.debug("delete");
 		
 		String sql = SqlGeneratorUtils.genSqlUpdate("adm_role",
 			Arrays.asList(

@@ -24,7 +24,6 @@ public class MessageDao {
 	@Autowired
 	private CommonJdbcDao commonJdbcDao;
 	
-
 	public List<Message> findAll() {
 		logger.debug("findAll");
 		
@@ -61,7 +60,7 @@ public class MessageDao {
 	}
 	
 	public Message findById(Long messageId) {
-		logger.debug("findById");
+		logger.debug("findById messageId={}", messageId);
 		
 		String sql =
 			" SELECT message_id, message_code, message_en, message_th, message_type" +
@@ -79,7 +78,7 @@ public class MessageDao {
 	}
 	
 	public int count() {
-		logger.info("count");
+		logger.debug("count");
 		
 		String sql = SqlGeneratorUtils.genSqlCount("sys_message", Arrays.asList("is_deleted"));
 		
@@ -146,7 +145,7 @@ public class MessageDao {
 	}
 	
 	public int delete(Long messageId) {
-		logger.info("delete");
+		logger.debug("delete");
 		
 		String sql = SqlGeneratorUtils.genSqlUpdate("sys_message",
 			Arrays.asList(
@@ -168,5 +167,5 @@ public class MessageDao {
 		
 		return deleteRow;
 	}
-
+	
 }

@@ -2,7 +2,7 @@
 <configuration>
 	
 	<!-- Initial Properties -->
-	<springProperty scope="context" name="logPath" source="app.logging.path" defaultValue="/tmp/webpoc-back/logs"/>
+	<springProperty scope="context" name="logPath" source="app.logging.path" defaultValue="/tmp/ims-webapp/logs"/>
 	<springProperty scope="context" name="minIndex" source="app.logging.rolling-file-appender.min-index" defaultValue="1"/>
 	<springProperty scope="context" name="maxIndex" source="app.logging.rolling-file-appender.max-index" defaultValue="5"/>
 	<springProperty scope="context" name="maxFileSize" source="app.logging.rolling-file-appender.max-file-size" defaultValue="1MB"/>
@@ -18,12 +18,12 @@
 	
 	<!-- Rolling File Appender -->
 	<appender name="ROLLINGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${logPath}/webpoc-back.log</file>
+		<file>${logPath}/ims-webapp.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>${logPattern}</Pattern>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-			<fileNamePattern>${logPath}/webpoc-back.%i.log</fileNamePattern>
+			<fileNamePattern>${logPath}/ims-webapp.%i.log</fileNamePattern>
 			<minIndex>${minIndex}</minIndex>
 			<maxIndex>${maxIndex}</maxIndex>
 		</rollingPolicy>
