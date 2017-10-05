@@ -18,8 +18,8 @@
                 <div class="default text">Language</div>
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <div class="item" (click)="changeToEnglish()">English</div>
-                    <div class="item" (click)="changeToThai()">Thai</div>
+                    <div class="item" (click)="changeToEnglish()"><i class="us flag"></i> English</div>
+                    <div class="item" (click)="changeToThai()"><i class="th flag"></i> Thai</div>
                 </div>
             </div>
             <a class="item" *ngIf="!user" [routerLink]="['/login']">Login</a>

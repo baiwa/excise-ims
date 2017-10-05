@@ -15,7 +15,7 @@ Date: 2016-06-30 16:24:11
 
 SET FOREIGN_KEY_CHECKS=0;
 
-CREATE DATABASE `buckwa_framework`;
+/*CREATE DATABASE `buckwa_framework`;*/
 
 -- ----------------------------
 -- Table structure for adm_operation
@@ -183,9 +183,8 @@ CREATE TABLE `sys_message` (
 -- ----------------------------
 -- Records of sys_message
 -- ----------------------------
-TRUNCATE TABLE `sys_message`;
-INSERT INTO `sys_message` VALUES ('1', 'APP_NAME', 'IMS', 'ระบบปฏิบัติการ', 'L', 'N', 1, 'INITIAL', '2017-09-27 09:30:00', 'INITIAL', '2017-09-27 09:30:00');
-INSERT INTO `sys_message` VALUES ('2', 'MSG_00001', 'Are you sure you want to delete selected item(s)?', 'คุณต้องการลบข้อมูลที่เลือกใช่ไหม?', 'I', 'N', 1, 'INITIAL', '2017-09-27 09:30:00', 'INITIAL', '2017-09-27 09:30:00');
+INSERT INTO `sys_message` VALUES ('1', 'APP_NAME', 'IMS', 'ระบบปฏิบัติการ', 'L', 'N', 1, 'SYSTEM', '2017-09-27 09:30:00', 'SYSTEM', '2017-09-27 09:30:00');
+INSERT INTO `sys_message` VALUES ('2', 'MSG_00001', 'Are you sure you want to delete selected item(s)?', 'คุณต้องการลบข้อมูลที่เลือกใช่ไหม?', 'I', 'N', 1, 'SYSTEM', '2017-09-27 09:30:00', 'SYSTEM', '2017-09-27 09:30:00');
 
 -- ----------------------------
 -- Table structure for sys_parameter_group
@@ -202,12 +201,16 @@ CREATE TABLE `sys_parameter_group` (
   `updated_by` varchar(30) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`param_group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_parameter_group
 -- ----------------------------
 INSERT INTO `sys_parameter_group` VALUES ('1', 'SYSTEM_CONFIG', 'SYSTEM_CONFIG', 'N', '1', 'SYSTEM', '2016-06-01 00:00:00', null, null);
+INSERT INTO `sys_parameter_group` VALUES ('2', 'REGION', 'REGION', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+INSERT INTO `sys_parameter_group` VALUES ('3', 'COUNTRY', 'COUNTRY', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+INSERT INTO `sys_parameter_group` VALUES ('4', 'PROVINCE', 'PROVINCE', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+INSERT INTO `sys_parameter_group` VALUES ('5', 'DISTRICT', 'DISTRICT', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
 
 -- ----------------------------
 -- Table structure for sys_parameter_info
@@ -234,13 +237,28 @@ CREATE TABLE `sys_parameter_info` (
   PRIMARY KEY (`param_info_id`),
   KEY `sys_parameter_info_fk01` (`param_group_id`),
   CONSTRAINT `sys_parameter_info_fk01` FOREIGN KEY (`param_group_id`) REFERENCES `sys_parameter_group` (`param_group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_parameter_info
 -- ----------------------------
 INSERT INTO `sys_parameter_info` VALUES ('1', '1', 'LOGIN_ATTEMPTS', 'N', '3', '', '', '', '', '0', 'N', 'N', '1', 'SYSTEM', '2016-06-01 00:00:00', null, null);
 
+INSERT INTO `sys_parameter_info` VALUES ('2', '2', 'ASIA', 'Asia', '', '', '', '', '', '0', 'N', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+INSERT INTO `sys_parameter_info` VALUES ('3', '2', 'AMERICA', 'America', '', '', '', '', '', '0', 'N', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+
+INSERT INTO `sys_parameter_info` VALUES ('4', '3', 'THAILAND', 'Thailand', 'ASIA', '', '', '', '', '0', 'N', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+INSERT INTO `sys_parameter_info` VALUES ('5', '3', 'CANADA', 'Canada', 'AMERICA', '', '', '', '', '0', 'N', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+
+INSERT INTO `sys_parameter_info` VALUES ('6', '4', 'BANGKOK', 'Bangkok', 'THAILAND', '', '', '', '', '0', 'N', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+INSERT INTO `sys_parameter_info` VALUES ('7', '4', 'NONG_BUA_LAMPHU', 'Nong Bua Lamphu', 'THAILAND', '', '', '', '', '0', 'N', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+INSERT INTO `sys_parameter_info` VALUES ('8', '4', 'ALBERTA', 'Alberta', 'AMERICA', '', '', '', '', '0', 'N', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+
+INSERT INTO `sys_parameter_info` VALUES ('9', '5', 'RAT', 'Ratchada', 'BANGKOK', '', '', '', '', '0', 'N', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+INSERT INTO `sys_parameter_info` VALUES ('10', '5', 'DON', 'Don muang', 'BANGKOK', '', '', '', '', '0', 'N', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+INSERT INTO `sys_parameter_info` VALUES ('11', '5', 'MUEANG', 'Mueang Nong Bua Lam Phu', 'NONG_BUA_LAMPHU', '', '', '', '', '0', 'N', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+INSERT INTO `sys_parameter_info` VALUES ('12', '5', 'NA_KLANG', 'Na Klang', 'NONG_BUA_LAMPHU', '', '', '', '', '0', 'N', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
+INSERT INTO `sys_parameter_info` VALUES ('13', '5', 'D1_ALBERTA', 'D1 Alberta', 'ALBERTA', '', '', '', '', '0', 'N', 'N', '1', 'SYSTEM', '2017-10-03 00:00:00', null, null);
 -- ----------------------------
 -- Table structure for sys_webservice_logging
 -- ----------------------------
