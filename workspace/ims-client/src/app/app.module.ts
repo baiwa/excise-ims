@@ -15,6 +15,8 @@ import { AuthService } from './buckwaframework/common/services/auth.service';
 import { MessageBarService } from './buckwaframework/common/services/message-bar.service';
 import { MessageService } from './buckwaframework/common/services/message.service';
 import { TranslateService } from './buckwaframework/common/services/translate.service';
+import { ParameterGroupService } from './buckwaframework/common/services/parameterGroup.service';
+import { ParameterInfoService } from './buckwaframework/common/services/parameterInfo.service';
 
 // components
 import { AppComponent } from './app.component';
