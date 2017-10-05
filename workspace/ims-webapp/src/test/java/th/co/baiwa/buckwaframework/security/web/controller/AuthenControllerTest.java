@@ -44,7 +44,7 @@ public class AuthenControllerTest {
 			.build();
 	}
 	
-	//@Test
+	@Test
 	public void ldapLoginWithValidUserThenAuthenticated() throws Exception {
 		System.out.println("- - - - - ldapLoginWithValidUserThenAuthenticated - - - - -");
 		
@@ -60,7 +60,7 @@ public class AuthenControllerTest {
 		);
 	}
 	
-	//@Test
+	@Test
 	public void ldapLoginWithInvalidUserThenUnauthenticated() throws Exception {
 		System.out.println("- - - - - ldapLoginWithInvalidUserThenUnauthenticated - - - - -");
 		
