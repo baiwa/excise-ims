@@ -103,6 +103,18 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		
+		<!-- Spring Security LDAP -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-ldap</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.unboundid</groupId>
+			<artifactId>unboundid-ldapsdk</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
 		<!-- Starter for testing Spring Boot applications with libraries including JUnit, Hamcrest and Mockito -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

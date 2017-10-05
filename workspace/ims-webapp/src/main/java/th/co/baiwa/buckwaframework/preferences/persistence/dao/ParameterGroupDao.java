@@ -18,7 +18,7 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 
 @Repository("parameterGroupDao")
 public class ParameterGroupDao {
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(ParameterGroupDao.class);
 	
 	@Autowired
@@ -42,7 +42,7 @@ public class ParameterGroupDao {
 	}
 	
 	public ParameterGroup findById(Long paramGroupId) {
-		logger.debug("findById");
+		logger.debug("findById paramGroupId={}", paramGroupId);
 		
 		String sql =
 			" SELECT param_group_id, param_group_code, param_group_desc " +
@@ -60,7 +60,7 @@ public class ParameterGroupDao {
 	}
 	
 	public int count() {
-		logger.info("count");
+		logger.debug("count");
 		
 		String sql = SqlGeneratorUtils.genSqlCount("sys_parameter_group", Arrays.asList("is_deleted"));
 		
@@ -119,7 +119,7 @@ public class ParameterGroupDao {
 	}
 	
 	public int delete(Long paramGroupId) {
-		logger.info("delete");
+		logger.debug("delete");
 		
 		String sql = SqlGeneratorUtils.genSqlUpdate("sys_parameter_group",
 			Arrays.asList(
@@ -141,5 +141,5 @@ public class ParameterGroupDao {
 		
 		return updateRow;
 	}
-
+	
 }

@@ -11,7 +11,7 @@
         <p>Example user: bob / demo</p>
         <p>Example user and administrator: ted / demo</p>
         <p th:if="${error != null}" th:text="${error}" class="error">Invalid</p>
-        <form th:action="@{/login.html}" method="post">
+        <form th:action="@{/backend/login.htm}" method="post">
             <label for="username">Username</label>:
             <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
             <label for="password">Password</label>:
@@ -21,3 +21,4 @@
         <p><a href="../index.html" th:href="@{/index.html}">Back to home page</a></p>
     </body>
 </html>
+

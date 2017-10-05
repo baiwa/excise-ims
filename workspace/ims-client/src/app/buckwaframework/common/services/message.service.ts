@@ -23,8 +23,35 @@ export class MessageService {
             .catch(this.handleError);
     }
 
+    delete(message: string):  Promise<Message> {
+
+        return this.http.delete(this.url+"/"+message, {headers: this.headers})
+          .toPromise()
+          .then(() => null)
+          .catch(this.handleError);
+    }
+
+    update(message: Message):  Promise<Message> {
+        
+                return this.http.put(this.url, message,{headers: this.headers})
+                  .toPromise()
+                  .then(() => null)
+                  .catch(this.handleError);
+    }
+
+    read(message: Message):  Promise<Message> {
+        
+                return this.http.get(this.url+"/"+message.messageId, {headers: this.headers})
+                  .toPromise()
+                  .then((res) => JSON.parse(res['_body']).data as Message)
+                  
+                  .catch(this.handleError);
+    }
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
     }
+
+
+
 }

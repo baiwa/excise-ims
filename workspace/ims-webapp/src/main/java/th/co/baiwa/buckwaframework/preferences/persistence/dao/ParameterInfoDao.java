@@ -18,7 +18,7 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 
 @Repository("parameterInfoDao")
 public class ParameterInfoDao {
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(ParameterInfoDao.class);
 	
 	@Autowired
@@ -42,7 +42,7 @@ public class ParameterInfoDao {
 	}
 	
 	public ParameterInfo findById(Long paramInfoId) {
-		logger.debug("findById");
+		logger.debug("findById paramInfoId={}", paramInfoId);
 		
 		String sql =
 			" SELECT param_info_id, param_group_id, param_code, value_1, value_2, " +
@@ -61,7 +61,7 @@ public class ParameterInfoDao {
 	}
 	
 	public List<ParameterInfo> findByParamGroupId(Long paramGroupId) {
-		logger.debug("findByParamGroupId paramGroupId=?", paramGroupId);
+		logger.debug("findByParamGroupId paramGroupId={}", paramGroupId);
 		
 		String sql =
 			" SELECT param_info_id, param_group_id, param_code, value_1, value_2, " +
@@ -82,7 +82,7 @@ public class ParameterInfoDao {
 	}
 	
 	public int count() {
-		logger.info("count");
+		logger.debug("count");
 		
 		String sql = SqlGeneratorUtils.genSqlCount("sys_parameter_info", Arrays.asList("is_deleted"));
 		
@@ -95,7 +95,7 @@ public class ParameterInfoDao {
 	}
 	
 	public int countByParamGroupId(Long paramGroupId) {
-		logger.info("countByParamGroupId paramGroupId=?", paramGroupId);
+		logger.debug("countByParamGroupId paramGroupId={}", paramGroupId);
 		
 		String sql = SqlGeneratorUtils.genSqlCount("sys_parameter_info", Arrays.asList("is_deleted", "param_group_id"));
 		
@@ -185,7 +185,7 @@ public class ParameterInfoDao {
 	}
 	
 	public int delete(Long paramInfoId) {
-		logger.info("delete");
+		logger.debug("delete");
 		
 		String sql = SqlGeneratorUtils.genSqlUpdate("sys_parameter_info",
 			Arrays.asList(

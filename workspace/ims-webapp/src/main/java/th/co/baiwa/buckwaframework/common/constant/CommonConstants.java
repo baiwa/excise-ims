@@ -7,11 +7,6 @@ public class CommonConstants {
 		public static final String N_FLAG = "N";
 	}
 	
-	// System User
-	public static final class BACKEND_USER {
-		public static final String SYSTEM = "SYSTEM";
-	}
-	
 	// Spring Profiles
 	public static final class PROFILE {
 		// Application
@@ -23,6 +18,9 @@ public class CommonConstants {
 		// Unit Test
 		public static final String UNITTEST = "unittest";
 		public static final String UNITTEST_MOCK = "unittest-mock";
+		// Not Mock and Unit Test
+		public static final String NOT_MOCK = "!" + MOCK;
+		public static final String NOT_UNITTEST = "!" + UNITTEST;
 	}
 	
 }

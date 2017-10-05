@@ -16,6 +16,7 @@ export class MessagePage implements OnInit  {
 
     messageDt: any;
     editMessageMd: any;
+    checkboxes; Array;
 
     constructor(
         private messageService: MessageService,
@@ -34,6 +35,23 @@ export class MessagePage implements OnInit  {
         this.initDatatable();
     }
 
+    delete(): void {
+        // checkboxes = document.getElementsByName('foo');
+        // for(var i=0, n=checkboxes.length;i<n;i++) {
+        //   checkboxes[i].checked = source.checked;
+        // }
+        console.log('Delete !' );
+        this.checkboxes  = document.getElementsByName('checkMessageID');
+        for(var i=0, n=this.checkboxes.length;i<n;i++) {
+            if(this.checkboxes[i].checked){
+                console.log(this.checkboxes[i].defaultValue);
+                this.messageService.delete(this.checkboxes[i].defaultValue)
+            }
+          }
+          this.messageDt.ajax.reload();
+
+     }
+
     initDatatable(): void {
         this.messageDt = $('#messageDt').DataTable({
             "lengthChange": false,
@@ -51,8 +69,8 @@ export class MessagePage implements OnInit  {
             "columns": [
                 {
                     "data": "messageId",
-                    "render": function() {
-                        return '<div class="ui checkbox"><input type="checkbox"><label></label></div>';
+                    "render": function(data, type, full, meta) {
+                        return '<div class="ui checkbox"><input name="checkMessageID" value="'+data+'" type="checkbox"><label></label></div>';
                     }
                 },
                 { "data": "messageCode" },
@@ -71,7 +89,8 @@ export class MessagePage implements OnInit  {
             ],
             "rowCallback": (row, data, index) => {
                 $('td > .edit', row).bind('click', () => {
-                    this.router.navigate(['/edit-message', data]);
+                    // console.log("data ",data);
+                    this.router.navigate(['/edit-message', data.messageId]);
                 });
             }
         });

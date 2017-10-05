@@ -13,52 +13,54 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.URL;
+
 @Controller
 public class AuthenController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AuthenController.class);
 	
-//	@RequestMapping(value = "/login.html", method = RequestMethod.GET)
-//	public ModelAndView login(
-//		@RequestParam(value = "error", required = false) String error,
-//		@RequestParam(value = "logout", required = false) String logout,
-//		HttpServletRequest request) {
-//		
-//		logger.info("login");
-//		
-//		if (StringUtils.isNotBlank(error)) {
-//			logger.warn("login error: " + error);
-//		}
-//		
-//		ModelAndView mav = new ModelAndView();
-//		if (error != null) {
-//			mav.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
-//		}
-//		
-//		if (logout != null) {
-//			mav.addObject("msg", "You've been logged out successfully.");
-//		}
-//		
-//		mav.setViewName("security/login");
-//		
-//		return mav;
-//	}
-//	
-//	// customize the error message
-//	private String getErrorMessage(HttpServletRequest request, String key) {
-//		
-//		Exception exception = (Exception) request.getSession().getAttribute(key);
-//		
-//		String error = "";
-//		if (exception instanceof BadCredentialsException) {
-//			error = "Invalid username or password!";
-//		} else if (exception instanceof LockedException) {
-//			error = exception.getMessage();
-//		} else {
-//			error = "Invalid username and password!";
-//		}
-//		
-//		return error;
-//	}
+	@RequestMapping(value = URL.LOGIN_WEB, method = RequestMethod.GET)
+	public ModelAndView login(
+		@RequestParam(value = "error", required = false) String error,
+		@RequestParam(value = "logout", required = false) String logout,
+		HttpServletRequest request) {
+		
+		logger.info("login");
+		
+		if (StringUtils.isNotBlank(error)) {
+			logger.warn("login error: " + error);
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		if (error != null) {
+			mav.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
+		}
+		
+		if (logout != null) {
+			mav.addObject("msg", "You've been logged out successfully.");
+		}
+		
+		mav.setViewName("security/login");
+		
+		return mav;
+	}
+	
+	// customize the error message
+	private String getErrorMessage(HttpServletRequest request, String key) {
+		
+		Exception exception = (Exception) request.getSession().getAttribute(key);
+		
+		String error = "";
+		if (exception instanceof BadCredentialsException) {
+			error = "Invalid username or password!";
+		} else if (exception instanceof LockedException) {
+			error = exception.getMessage();
+		} else {
+			error = "Invalid username and password!";
+		}
+		
+		return error;
+	}
 	
 }

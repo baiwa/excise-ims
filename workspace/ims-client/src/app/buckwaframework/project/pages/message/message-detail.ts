@@ -21,6 +21,7 @@ export class MessageDetailPage implements OnInit {
     title: string;
     message: Message;
     messageForm: any;
+    statusPage: Boolean;
 
     constructor(
         private messageService: MessageService,
@@ -38,15 +39,30 @@ export class MessageDetailPage implements OnInit {
         if (id) {
             this.title = 'Edit Message';
             this.message = new Message();
+            this.statusPage = false;
+            this.message.messageId = id;
+            this.getMessageById();
         } else {
             this.title = 'Add Message';
             this.message = new Message();
+            this.statusPage = true;
         }
     }
 
+    getMessageById(): void {
+        this.messageService.read(this.message).then(respone => {
+            console.log(respone);
+            this.message = respone;
+        })
+        
+
+    }
+
+
+
     save(): void {
         if (!this.messageForm.form('validate form')) return;
-
+        if(this.statusPage){
         this.messageService
             .create(this.message)
             .then((m)=> {
@@ -58,6 +74,19 @@ export class MessageDetailPage implements OnInit {
                 this.messageBarService.show(msg);
                 this.router.navigate(['/message']);
             });
+        }else{
+            this.messageService
+            .update(this.message)
+            .then((m)=> {
+                let msg = new Message();
+                msg.messageCode = 'MSG_0001';
+                msg.messageEn = 'The message was saved.';
+                msg.messageTh = 'message ถูกบันทึกแล้ว';
+                msg.messageType = 'S';
+                this.messageBarService.show(msg);
+                this.router.navigate(['/message']);
+            });
+        }
     }
 
     back(): void {
