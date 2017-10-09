@@ -10,6 +10,8 @@ import { HomePage } from '../../project/pages/home/home';
 import { MessagePage } from '../../project/pages/message/message';
 import { MessageDetailPage } from '../../project/pages/message/message-detail';
 import { ParameterPage } from '../../project/pages/parameter/parameter';
+import { ParameterInfoPage } from '../../project/pages/parameterInfo/parameterInfo';
+import { ParameterGroupPage } from '../../project/pages/parameterGroup/parameterGroup';
 
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -18,7 +20,10 @@ const routes: Routes = [
     { path: 'message', component: MessagePage, canActivate: [AuthGuard] },
     { path: 'add-message', component: MessageDetailPage, canActivate: [AuthGuard] },
     { path: 'edit-message/:id', component: MessageDetailPage, canActivate: [AuthGuard] },
-    { path: 'parameter', component: ParameterPage, canActivate: [AuthGuard] }
+    { path: 'parameter', component: ParameterPage, canActivate: [AuthGuard] },
+
+    { path: 'parameterInfo', component: ParameterInfoPage, canActivate: [AuthGuard] },
+    { path: 'parameterGroup', component: ParameterGroupPage, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

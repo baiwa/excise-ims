@@ -28,7 +28,8 @@ import { HomePage } from './buckwaframework/project/pages/home/home';
 import { MessagePage } from './buckwaframework/project/pages/message/message';
 import { ParameterPage } from './buckwaframework/project/pages/parameter/parameter';
 import { MessageDetailPage } from './buckwaframework/project/pages/message/message-detail';
-
+import { ParameterInfoPage } from './buckwaframework/project/pages/parameterInfo/parameterInfo';
+import { ParameterGroupPage } from './buckwaframework/project/pages/parameterGroup/parameterGroup';
 @NgModule({
     declarations: [
         AppComponent,
@@ -38,7 +39,9 @@ import { MessageDetailPage } from './buckwaframework/project/pages/message/messa
         HomePage,
         MessagePage,
         MessageDetailPage,
-        ParameterPage
+        ParameterPage,
+        ParameterInfoPage,
+        ParameterGroupPage
     ],
     imports: [
         BrowserModule,
@@ -51,7 +54,9 @@ import { MessageDetailPage } from './buckwaframework/project/pages/message/messa
         AuthService,
         MessageBarService,
         MessageService,
-        TranslateService
+        TranslateService,
+        ParameterGroupService,
+        ParameterInfoService
     ],
     bootstrap: [AppComponent]
 })
