@@ -21,15 +21,10 @@ public class CommonController {
 	/**
 	 * Home page
 	 */
-	@RequestMapping(value = "/")
+	@RequestMapping(value = {"/", "index.htm"})
 	public String root() {
 		return "redirect:/index.html";
 	}
-	
-//	@RequestMapping(value = {"/index.htm", "/index.html"})
-//	public String index() {
-//		return "index";
-//	}
 	
 	@RequestMapping(value = "/anonymous.htm")
 	public ModelAndView anonymous() {
