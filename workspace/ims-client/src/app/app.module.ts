@@ -30,6 +30,9 @@ import { ParameterPage } from './buckwaframework/project/pages/parameter/paramet
 import { MessageDetailPage } from './buckwaframework/project/pages/message/message-detail';
 import { ParameterInfoPage } from './buckwaframework/project/pages/parameterInfo/parameterInfo';
 import { ParameterGroupPage } from './buckwaframework/project/pages/parameterGroup/parameterGroup';
+import { ParameterInfoDetailPage } from './buckwaframework/project/pages/parameterInfo/parameterInfoDetail';
+
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -41,7 +44,8 @@ import { ParameterGroupPage } from './buckwaframework/project/pages/parameterGro
         MessageDetailPage,
         ParameterPage,
         ParameterInfoPage,
-        ParameterGroupPage
+        ParameterGroupPage,
+        ParameterInfoDetailPage
     ],
     imports: [
         BrowserModule,

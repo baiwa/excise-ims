@@ -12,8 +12,10 @@ import { MessageDetailPage } from '../../project/pages/message/message-detail';
 import { ParameterPage } from '../../project/pages/parameter/parameter';
 import { ParameterInfoPage } from '../../project/pages/parameterInfo/parameterInfo';
 import { ParameterGroupPage } from '../../project/pages/parameterGroup/parameterGroup';
+import { ParameterInfoDetailPage } from '../../project/pages/parameterInfo/parameterInfoDetail';
 
 const routes: Routes = [
+
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'login',  component: LoginPage },
     { path: 'home', component: HomePage },
@@ -22,8 +24,11 @@ const routes: Routes = [
     { path: 'edit-message/:id', component: MessageDetailPage, canActivate: [AuthGuard] },
     { path: 'parameter', component: ParameterPage, canActivate: [AuthGuard] },
 
-    { path: 'parameterInfo', component: ParameterInfoPage, canActivate: [AuthGuard] },
-    { path: 'parameterGroup', component: ParameterGroupPage, canActivate: [AuthGuard] }
+    { path: 'parameterInfo', component: ParameterInfoPage },
+    { path: 'parameterGroup', component: ParameterGroupPage },
+    { path: 'ParameterInfoDetail', component: ParameterInfoDetailPage },
+
+    
 ];
 
 @NgModule({

@@ -53,4 +53,5 @@ export class HomePage {
     ngAfterViewInit() {
         $('.dropdown').dropdown();
     }
+    
 }
