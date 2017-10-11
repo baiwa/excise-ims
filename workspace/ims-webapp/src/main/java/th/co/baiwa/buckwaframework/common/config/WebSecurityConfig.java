@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
@@ -72,11 +73,13 @@ public class WebSecurityConfig {
 		
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.antMatcher("/api/**")
-				.authorizeRequests().anyRequest().hasAnyRole(ROLE.USER)
+			http
+				.antMatcher("/api/**")
+					.authorizeRequests().anyRequest()
+					.hasAnyRole(ROLE.USER)
 				.and()
 				.formLogin()
-					.loginProcessingUrl(URL.LOGIN_REST)
+					.loginProcessingUrl(URL.LOGIN_REST).permitAll()
 					.successHandler(restAuthenticationSuccessHandler())
 					.failureHandler(restAuthenticationFailureHandler())
 					.usernameParameter(SecurityConstants.USERNAME_PARAM)
@@ -124,25 +127,35 @@ public class WebSecurityConfig {
 	public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 		
 		@Override
+		public void configure(WebSecurity web) throws Exception {
+			web.ignoring().antMatchers(
+				// For Angular -- Start
+				"/inline.bundle.js",
+				"/polyfills.bundle.js",
+				"/scripts.bundle.js",
+				"/styles.bundle.js",
+				"/vendor.bundle.js",
+				"/main.bundle.js"
+				// For Angular -- End
+			);
+		}
+		
+		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.authorizeRequests()
-				.antMatchers(
-					"/", "/index.htm", "/index.html",
-					"/resources/**",
-					"/app/**",
-					"/assets/**"
-				).permitAll()
-				.antMatchers("/backend/**").hasAnyRole(ROLE.USER, ROLE.ADMIN)
-				.anyRequest().hasRole(ROLE.USER)
+			http
+				.antMatcher("/backend/**")
+					.authorizeRequests().anyRequest()
+					.hasAnyRole(ROLE.USER, ROLE.ADMIN)
 				.and()
 				.formLogin()
-					.loginPage(URL.LOGIN_WEB)
+					.loginPage(URL.LOGIN_WEB).permitAll()
 					.defaultSuccessUrl(URL.LOGIN_WEB_SUCCESS)
 					.failureUrl(URL.LOGIN_WEB_FAILURE)
 					.usernameParameter(SecurityConstants.USERNAME_PARAM)
 					.passwordParameter(SecurityConstants.PASSWORD_PARAM)
 				.and()
 				.logout()
+					.permitAll()
 					.logoutRequestMatcher(new AntPathRequestMatcher("/logout.htm"))
 					//.logoutSuccessHandler(CustomLogoutSuccessHandler.getInstance("/login.htm"))
 					.invalidateHttpSession(true)
