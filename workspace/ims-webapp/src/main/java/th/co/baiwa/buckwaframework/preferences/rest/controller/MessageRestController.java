@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import th.co.baiwa.buckwaframework.admin.persistence.entity.Role;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
@@ -30,9 +29,9 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 @Controller
 @RequestMapping("/api/preferences/message")
 public class MessageRestController {
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(MessageRestController.class);
-
+	
 	@Autowired
 	private MessageService messageService;
 	
@@ -42,7 +41,7 @@ public class MessageRestController {
 		
 		ResponseData<Map<String, Message>> response = new ResponseData<>();
 		response.setData(ApplicationCache.getMessages());
-
+		
 		return new ResponseEntity<ResponseData<Map<String, Message>>>(response, HttpStatus.OK);
 	}
 	
@@ -51,7 +50,7 @@ public class MessageRestController {
 			@RequestParam(name="draw") Integer draw, 
 			@RequestParam(name="start") Integer start, 
 			@RequestParam(name="length") Integer length) {
-
+		
 		logger.info("getAll for datatable");
 		
 		List<Message> resultList = messageService.getMessageList(start, length);
@@ -92,7 +91,7 @@ public class MessageRestController {
 	
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody  Message message, UriComponentsBuilder ucBuilder) {
-
+		
 		messageService.updateMessage(message);
 		
 		HttpHeaders headers = new HttpHeaders();
@@ -105,7 +104,7 @@ public class MessageRestController {
 		logger.info("delete [id=" + id + "]");
 		
 		messageService.deleteMessage(id);
-		return new ResponseEntity<Role>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Message>(HttpStatus.NO_CONTENT);
 	}
 	
 }
