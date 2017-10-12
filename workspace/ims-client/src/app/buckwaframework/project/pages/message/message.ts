@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { MessageBarService } from '../../../common/services/message-bar.service';
 import { MessageService } from '../../../common/services/message.service';
 
+// models
+import { Dropdown } from '../../../common/models/dropdown';
+
 declare var jQuery: any;
 declare var $: any;
 
@@ -14,6 +17,7 @@ declare var $: any;
 })
 export class MessagePage implements OnInit  {
 
+    messageTypes: Dropdown[];
     messageDt: any;
     editMessageMd: any;
     checkboxes; Array;
@@ -28,7 +32,32 @@ export class MessagePage implements OnInit  {
 
     ngOnInit(): void {
         console.log('do init message page');
-        //console.log(localStorage.getItem('firebase:host:big-wealth.firebaseio.com'));
+
+        this.messageTypes = new Array();
+
+        let dd = new Dropdown();
+        dd.value = 'I';
+        dd.name = 'Info';
+        dd.text = 'Info';
+        this.messageTypes.push(dd);
+
+        dd = new Dropdown();
+        dd.value = 'E';
+        dd.name = 'Error';
+        dd.text = 'Error';
+        this.messageTypes.push(dd);
+
+        dd = new Dropdown();
+        dd.value = 'W';
+        dd.name = 'Waring';
+        dd.text = 'Waring';
+        this.messageTypes.push(dd);
+
+        dd = new Dropdown();
+        dd.value = 'C';
+        dd.name = 'Confirm';
+        dd.text = 'Confirm';
+        this.messageTypes.push(dd);
     }
 
     ngAfterViewInit() {

@@ -27,7 +27,7 @@
                     </div>
                     <div class="three wide field">
                         <label>Message Type</label>
-                        <input type="text" placeholder="First Name">
+                        <dropdown [datas]="messageTypes" [placeholder]="'Message Type'"></dropdown>
                     </div>
                 </div>
                 <div class="fields">
@@ -59,7 +59,7 @@
                         <div class="ui mini primary button" [routerLink]="['/add-message']">
                             <i class="add icon"></i> Add Message
                         </div>
-                        <div class="ui mini  button"   (click)="delete()">
+                        <div class="ui mini  button" (click)="delete()">
                             <i class="trash icon"></i> Delete
                         </div>
                     </div>

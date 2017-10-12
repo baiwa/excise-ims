@@ -35,6 +35,13 @@ public class MessageRestController {
 	@Autowired
 	private MessageService messageService;
 	
+//	@GetMapping("getMessageType")
+//	public ResponseEntity<?> getMessageType() {
+//		logger.info("getMessageType");
+//		ResponseData<Map<String, Message>> response = new ResponseData<>();
+//		//response.setData(ApplicationCache.getP);
+//	}
+//	
 	@GetMapping
 	public ResponseEntity<?> getAll() {
 		logger.info("getAll");

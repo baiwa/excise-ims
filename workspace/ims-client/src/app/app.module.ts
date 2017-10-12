@@ -21,6 +21,7 @@ import { ParameterInfoService } from './buckwaframework/common/services/paramete
 // components
 import { AppComponent } from './app.component';
 import { MessageBarComponent } from './buckwaframework/common/components/message-bar.component';
+import { DropdownComponent } from './buckwaframework/common/components/dropdown.component';
 
 // pages
 import { LoginPage } from './buckwaframework/project/pages/login/login';
@@ -37,6 +38,7 @@ import { ParameterInfoDetailPage } from './buckwaframework/project/pages/paramet
     declarations: [
         AppComponent,
         MessageBarComponent,
+        DropdownComponent,
         TranslatePipe,
         LoginPage,
         HomePage,
