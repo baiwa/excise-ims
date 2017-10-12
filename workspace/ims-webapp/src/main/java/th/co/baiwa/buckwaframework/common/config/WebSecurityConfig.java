@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -92,7 +94,11 @@ public class WebSecurityConfig {
 				.and()
 				.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint())
 				.and()
-				.requestCache().requestCache(new NullRequestCache());
+				.requestCache().requestCache(new NullRequestCache())
+				.and()
+				.sessionManagement()
+					.maximumSessions(2)
+					.sessionRegistry(sessionRegistry());
 			
 			http.csrf().disable();
 		}
@@ -115,6 +121,11 @@ public class WebSecurityConfig {
 		@Bean
 		public RestAuthenticationEntryPoint restAuthenticationEntryPoint() {
 			return new RestAuthenticationEntryPoint();
+		}
+		
+		@Bean
+		public SessionRegistry sessionRegistry() {
+			return new SessionRegistryImpl();
 		}
 		
 	}
@@ -157,12 +168,20 @@ public class WebSecurityConfig {
 				.logout()
 					.permitAll()
 					.logoutRequestMatcher(new AntPathRequestMatcher("/logout.htm"))
-					//.logoutSuccessHandler(CustomLogoutSuccessHandler.getInstance("/login.htm"))
-					.invalidateHttpSession(true)
 				.and()
-				.exceptionHandling().accessDeniedPage("/403.htm");
+				.exceptionHandling().accessDeniedPage("/403.htm")
+				.and()
+				.sessionManagement()
+					.invalidSessionUrl(SecurityConstants.URL.LOGIN_WEB)
+					.maximumSessions(2)
+					.sessionRegistry(sessionRegistry());
 			
 			http.csrf().disable();
+		}
+		
+		@Bean
+		public SessionRegistry sessionRegistry() {
+			return new SessionRegistryImpl();
 		}
 		
 	}

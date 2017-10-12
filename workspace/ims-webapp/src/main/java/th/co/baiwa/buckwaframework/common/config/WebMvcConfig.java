@@ -62,15 +62,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// For Thymeleaf
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-		registry.addResourceHandler("/").addResourceLocations("classpath:/static/index.html");
-		// For Frontend
+		// Configure from WebMvcAutoConfiguration.addResourceHandlers()
 		registry.addResourceHandler("/**").addResourceLocations(new String[] {
-			//"classpath:/META-INF/resources/",
-			//"classpath:/resources/",
+			"classpath:/META-INF/resources/",
+			"classpath:/resources/",
 			"classpath:/static/",
-			"classpath:/public/"
+			"classpath:/public/",
+			"/"
 		});
-		registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
 	}
 	
 	@Bean(name = "multipartResolver")
