@@ -9,8 +9,8 @@ import org.springframework.security.authentication.LockedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import th.co.baiwa.buckwaframework.admin.persistence.dao.UserDao;
-import th.co.baiwa.buckwaframework.admin.persistence.entity.User;
+import th.co.baiwa.buckwaframework.accesscontrol.persistence.dao.UserDao;
+import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAMETER_GROUP;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.SYSTEM_CONFIG;

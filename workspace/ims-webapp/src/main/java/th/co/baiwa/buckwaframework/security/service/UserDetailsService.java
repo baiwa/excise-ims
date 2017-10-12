@@ -12,8 +12,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.admin.persistence.dao.UserDao;
-import th.co.baiwa.buckwaframework.admin.persistence.entity.User;
+import th.co.baiwa.buckwaframework.accesscontrol.persistence.dao.UserDao;
+import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.co.baiwa.buckwaframework.common.util.BooleanToStringConverter;
 import th.co.baiwa.buckwaframework.security.model.UserDetails;
