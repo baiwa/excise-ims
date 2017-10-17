@@ -75,11 +75,12 @@ public class WebSecurityConfig {
 		
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http
-				.antMatcher("/api/**")
-					.authorizeRequests().anyRequest()
-					.hasAnyRole(ROLE.USER)
-				.and()
+//			.antMatcher("/api/preferences/message").authorizeRequests().
+			 http
+	            .authorizeRequests()
+	                .antMatchers("/", "/api/preferences/message").permitAll()
+	                .anyRequest().authenticated()
+	                .and()
 				.formLogin()
 					.loginProcessingUrl(URL.LOGIN_REST).permitAll()
 					.successHandler(restAuthenticationSuccessHandler())
