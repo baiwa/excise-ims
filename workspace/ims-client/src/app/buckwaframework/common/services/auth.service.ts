@@ -53,6 +53,7 @@ export class AuthService {
         this.user = new User();
         this.ajaxService.DELETE(this.LOGIN_URL, (res: Response) => {
             console.log("Logout Success...");
+            this.router.navigate(['/login']);
         });
     }
 

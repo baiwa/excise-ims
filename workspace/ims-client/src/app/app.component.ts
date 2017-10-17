@@ -27,18 +27,7 @@ export class AppComponent implements OnInit {
 
     ngOnInit(): void {
         this.translateService.use('th');
-
-        this.authService.authState().subscribe((user) => {
-            this.user = user;
-            if (user) {
-                let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/home';
-                console.log('redirect to ' + redirect)
-                this.router.navigate([redirect]);
-            } else {
-                console.log('redirect to login')
-                this.router.navigate(['/login']);
-            }
-        });
+        this.user = this.authService.getUser();
     }
 
     logout() {
