@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
 // pipes
@@ -17,6 +17,7 @@ import { MessageService } from './buckwaframework/common/services/message.servic
 import { TranslateService } from './buckwaframework/common/services/translate.service';
 import { ParameterGroupService } from './buckwaframework/common/services/parameterGroup.service';
 import { ParameterInfoService } from './buckwaframework/common/services/parameterInfo.service';
+import { AjaxService } from './buckwaframework/common/services/ajax.service';
 
 // components
 import { AppComponent } from './app.component';
@@ -51,8 +52,9 @@ import { ParameterInfoDetailPage } from './buckwaframework/project/pages/paramet
     ],
     imports: [
         BrowserModule,
-        AppRoutingModule,
         FormsModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
         HttpModule
     ],
     providers: [
@@ -62,7 +64,8 @@ import { ParameterInfoDetailPage } from './buckwaframework/project/pages/paramet
         MessageService,
         TranslateService,
         ParameterGroupService,
-        ParameterInfoService
+        ParameterInfoService,
+        AjaxService
     ],
     bootstrap: [AppComponent]
 })

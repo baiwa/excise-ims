@@ -6,23 +6,31 @@
                 Log-in to your account
             </div>
         </h2>
-        <form class="ui large form">
+
+        <div class="ui warning message" *ngIf="loginInvalid" >
+            <i class="close icon" (click)="loginInvalid=false;"></i>
+            <div class="header">
+              Invalid Username or Password
+            </div>
+        </div>
+
+        <form  [formGroup]="loginForm" class="ui large form" [ngClass]="ngLoading" >
             <div class="ui stacked segment">
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="user icon"></i>
-                        <input type="text" name="username" placeholder="Username">
+                        <input type="text" formControlName="username" placeholder="Username">
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="lock icon"></i>
-                        <input type="password" name="password" placeholder="Password">
+                        <input type="password" formControlName="password" placeholder="Password">
                     </div>
                 </div>
                 <div class="ui fluid large teal submit button" (click)="login()">Login</div>
             </div>
-            <div class="ui error message"></div>
         </form>
+        
     </div>
 </div>

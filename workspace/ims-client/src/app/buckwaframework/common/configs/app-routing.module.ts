@@ -18,7 +18,7 @@ const routes: Routes = [
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'login',  component: LoginPage },
-    { path: 'home', component: HomePage },
+    { path: 'home', component: HomePage , canActivate: [AuthGuard]},
     { path: 'message', component: MessagePage, canActivate: [AuthGuard] },
     { path: 'add-message', component: MessageDetailPage, canActivate: [AuthGuard] },
     { path: 'edit-message/:id', component: MessageDetailPage, canActivate: [AuthGuard] },

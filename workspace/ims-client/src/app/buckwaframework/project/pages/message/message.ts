@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 // services
 import { MessageBarService } from '../../../common/services/message-bar.service';
 import { MessageService } from '../../../common/services/message.service';
+import { AjaxService } from '../../../common/services/ajax.service';
 
 // models
 import { Dropdown } from '../../../common/models/dropdown';
@@ -25,7 +26,8 @@ export class MessagePage implements OnInit  {
     constructor(
         private messageService: MessageService,
         private messageBarService: MessageBarService,
-        private router: Router
+        private router: Router,
+        private ajaxService: AjaxService
     ) {
         console.log('do constructor message page');
     }
@@ -93,7 +95,7 @@ export class MessagePage implements OnInit  {
             "pagingType": "full_numbers",
             "ajax": {
                 "type": "GET",
-                "url": this.messageService.url+"/search"
+                "url": AjaxService.CONTEXT_PATH + this.messageService.url+"/search"
             },
             "columns": [
                 {

@@ -6,7 +6,7 @@ import { Message } from '../models/message';
 export class TranslateService {
 
     private currentLang: string;
-    readonly url = 'api/preferences/message';
+    readonly url = 'ims-webapp/api/preferences/message';
     private headers = new Headers({'Content-Type': 'application/json'});
     private messages: Message[] = new Array();
 
