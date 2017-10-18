@@ -56,15 +56,25 @@ public class MessageRestController {
 	public ResponseEntity<?> search(
 			@RequestParam(name="draw") Integer draw, 
 			@RequestParam(name="start") Integer start, 
-			@RequestParam(name="length") Integer length) {
+			@RequestParam(name="length") Integer length,
+			String messageCode,
+			String messageEn,
+			String messageTh,
+			String messageType
+			) {
 		
-		logger.info("getAll for datatable");
+		Message message = new Message();
+		message.setMessageCode(messageCode);
+		message.setMessageEn(messageEn);
+		message.setMessageTh(messageTh);
+		message.setMessageType(messageType);
+		logger.info("getAll for datatable" + message);
 		
-		List<Message> resultList = messageService.getMessageList(start, length);
+		List<Message> resultList = messageService.getMessageList(start, length,message);
 		Integer recordsTotal = messageService.countMessage();
 		
 		ResponseDataTable<Message> response = new ResponseDataTable<Message>();
-		response.setDraw(draw);
+		response.setDraw(++draw);
 		response.setStart(start);
 		response.setLength(length);
 		response.setData(resultList);

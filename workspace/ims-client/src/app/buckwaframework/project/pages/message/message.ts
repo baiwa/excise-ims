@@ -16,7 +16,7 @@ declare var $: any;
     selector: 'page-message',
     templateUrl: 'message.html'
 })
-export class MessagePage implements OnInit  {
+export class MessagePage implements OnInit {
 
     messageTypes: Dropdown[];
     messageDt: any;
@@ -29,41 +29,38 @@ export class MessagePage implements OnInit  {
         private router: Router,
         private ajaxService: AjaxService
     ) {
-        console.log('do constructor message page');
+        // console.log('do constructor message page');
     }
 
     ngOnInit(): void {
-        console.log('do init message page');
+        // console.log('do init message page');
 
         this.messageTypes = new Array();
 
         let dd = new Dropdown();
         dd.value = 'I';
-        dd.name = 'Info';
         dd.text = 'Info';
         this.messageTypes.push(dd);
 
         dd = new Dropdown();
         dd.value = 'E';
-        dd.name = 'Error';
         dd.text = 'Error';
         this.messageTypes.push(dd);
 
         dd = new Dropdown();
         dd.value = 'W';
-        dd.name = 'Waring';
         dd.text = 'Waring';
         this.messageTypes.push(dd);
 
         dd = new Dropdown();
         dd.value = 'C';
-        dd.name = 'Confirm';
         dd.text = 'Confirm';
         this.messageTypes.push(dd);
     }
 
     ngAfterViewInit() {
         this.initDatatable();
+        $("#messageTypeSelect").dropdown();
     }
 
     delete(): void {
@@ -71,19 +68,20 @@ export class MessagePage implements OnInit  {
         // for(var i=0, n=checkboxes.length;i<n;i++) {
         //   checkboxes[i].checked = source.checked;
         // }
-        console.log('Delete !' );
-        this.checkboxes  = document.getElementsByName('checkMessageID');
-        for(var i=0, n=this.checkboxes.length;i<n;i++) {
-            if(this.checkboxes[i].checked){
+        console.log('Delete !');
+        this.checkboxes = document.getElementsByName('checkMessageID');
+        for (var i = 0, n = this.checkboxes.length; i < n; i++) {
+            if (this.checkboxes[i].checked) {
                 console.log(this.checkboxes[i].defaultValue);
                 this.messageService.delete(this.checkboxes[i].defaultValue)
             }
-          }
-          this.messageDt.ajax.reload();
+        }
+        this.messageDt.ajax.reload();
 
-     }
+    }
 
     initDatatable(): void {
+        const URL = AjaxService.CONTEXT_PATH + "api/preferences/message/search";
         this.messageDt = $('#messageDt').DataTable({
             "lengthChange": false,
             "searching": false,
@@ -95,28 +93,35 @@ export class MessagePage implements OnInit  {
             "pagingType": "full_numbers",
             "ajax": {
                 "type": "GET",
-                "url": AjaxService.CONTEXT_PATH + this.messageService.url+"/search"
+                "url": URL,
+                "data": function (params) {
+                    params["messageCode"] = $("#messageCode").val() ;
+                    params["messageEn"] = $("#messageEn").val() ;
+                    params["messageTh"] = $("#messageTh").val() ;
+                    params["messageType"] = $("#messageTypeSelect").dropdown('get value'); ;
+                    return params;
+                }
             },
             "columns": [
                 {
                     "data": "messageId",
-                    "render": function(data, type, full, meta) {
-                        return '<div class="ui checkbox"><input name="checkMessageID" value="'+data+'" type="checkbox"><label></label></div>';
+                    "render": function (data, type, full, meta) {
+                        return '<div class="ui checkbox"><input name="checkMessageID" value="' + data + '" type="checkbox"><label></label></div>';
                     }
                 },
                 { "data": "messageCode" },
-                { "data": "messageEn" }, 
+                { "data": "messageEn" },
                 { "data": "messageTh" },
                 { "data": "messageType" },
                 {
                     "data": "messageId",
-                    "render": function() {
+                    "render": function () {
                         return '<button type="button" class="ui mini button edit"><i class="pencil icon"></i> Edit</button>';
                     }
                 }
             ],
             "columnDefs": [
-                { targets: [0, 5], className: "center aligned"}
+                { targets: [0, 5], className: "center aligned" }
             ],
             "rowCallback": (row, data, index) => {
                 $('td > .edit', row).bind('click', () => {
@@ -125,5 +130,15 @@ export class MessagePage implements OnInit  {
                 });
             }
         });
+    }
+
+    resetSearch() {
+        $("input[type='text']").val('');
+        $("#messageTypeSelect").dropdown('restore defaults');
+        this.search();
+    }
+
+    search() {
+        this.messageDt.ajax.reload();
     }
 }

@@ -15,19 +15,22 @@
                 <div class="fields">
                     <div class="three wide field">
                         <label>Message Code</label>
-                        <input type="text" placeholder="Message Code">
+                        <input type="text" id="messageCode" placeholder="Message Code">
                     </div>
                     <div class="five wide field">
                         <label>Message Eng</label>
-                        <input type="text" placeholder="Message Eng">
+                        <input type="text" id="messageEn"  placeholder="Message Eng">
                     </div>
                     <div class="five wide field">
                         <label>Message Tha</label>
-                        <input type="text" placeholder="Message Tha">
+                        <input type="text" id="messageTh"  placeholder="Message Tha">
                     </div>
                     <div class="three wide field">
                         <label>Message Type</label>
-                        <dropdown [datas]="messageTypes" [placeholder]="'Message Type'"></dropdown>
+                        <select name="messageTypeSelect" id="messageTypeSelect" class="ui fluid search dropdown">
+                            <option value="">ALL</option>
+                            <option [value]="item.value" *ngFor="let item of messageTypes" >{{item.text}}</option>                         
+                        </select>
                     </div>
                 </div>
                 <div class="fields">
@@ -35,10 +38,10 @@
                         <div class="ui grid">
                             <div class="center aligned row">
                                 <div class="column">
-                                    <div class="ui mini primary button" [routerLink]="['/message']">
+                                    <div class="ui mini primary button" (click)="search()">
                                         <i class="search icon"></i> Search
                                     </div>
-                                    <div class="ui mini button" [routerLink]="['/message']">
+                                    <div class="ui mini button" (click)="resetSearch()" >
                                         <i class="refresh icon"></i> Reset
                                     </div>
                                 </div>
@@ -82,43 +85,3 @@
         </div>
     </div>
 </div>
-
-<!-- <div class="ui dimmer modals page transition visible active" style="display: block !important;">
-    <div class="ui modal transition visible active" style="margin-top: -92.7px; display: block !important;">
-        <div class="header">
-            Add Message
-        </div>
-        <div class="content">
-            <p>Are you sure you want to delete your account</p>
-        </div>
-        <div class="actions">
-            <div class="ui button">
-                Cancel
-            </div>
-            <div class="ui positive right labeled icon button">
-                Save
-                <i class="save icon"></i>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<!-- <div class="ui dimmer modals page transition visible active" style="display: block !important;">
-    <div class="ui mini modal transition visible active" style="margin-top: -92.7px; display: block !important;">
-        <div class="header">
-            Delete Message
-        </div>
-        <div class="content">
-            <p>Are you sure you want to delete your account</p>
-        </div>
-        <div class="actions">
-            <div class="ui negative button">
-                No
-            </div>
-            <div class="ui positive right labeled icon button">
-                Yes
-                <i class="checkmark icon"></i>
-            </div>
-        </div>
-    </div>
-</div> -->

@@ -1,9 +1,11 @@
 package th.co.baiwa.buckwaframework.preferences.persistence.dao;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,21 +42,39 @@ public class MessageDao {
 		);
 	}
 	
-	public List<Message> findAll(Integer start, Integer length) {
+	public List<Message> findAll(Integer start, Integer length, Message message) {
 		logger.debug("findAll");
 		
-		String sql =
-			" SELECT message_id, message_code, message_en, message_th, message_type" +
-			" FROM sys_message " +
-			" WHERE is_deleted = ? " + 
-			" LIMIT ?, ?";
+		StringBuilder sqBuilder = new StringBuilder();
+		sqBuilder.append(" SELECT message_id, message_code, message_en, message_th, message_type ");
+		sqBuilder.append(" FROM sys_message ");
+		sqBuilder.append(" WHERE is_deleted = ? ");
+		List<Object> params = new ArrayList<>();
+		params.add(FLAG.N_FLAG);
 		
-		return commonJdbcDao.executeQuery(sql,
-			new Object[] {
-				FLAG.N_FLAG,
-				start,
-				length
-			},
+		if(StringUtils.isNotBlank(message.getMessageCode())){
+			sqBuilder.append(" AND message_code = ? ");
+			params.add(message.getMessageCode());
+		}
+		if(StringUtils.isNotBlank(message.getMessageEn())){
+			sqBuilder.append(" AND message_en = ? ");
+			params.add(message.getMessageEn());
+		}
+		if(StringUtils.isNotBlank(message.getMessageTh())){
+			sqBuilder.append(" AND message_th = ? ");
+			params.add(message.getMessageTh());
+		}
+		if(StringUtils.isNotBlank(message.getMessageType())){
+			sqBuilder.append(" AND message_type = ? ");
+			params.add(message.getMessageType());
+		}
+		
+		sqBuilder.append(" LIMIT ?, ? ");
+		params.add(start);
+		params.add(length);
+		
+		return commonJdbcDao.executeQuery(sqBuilder.toString(),
+			params.toArray(),
 			MessageRowMapper.getInstance()
 		);
 	}
