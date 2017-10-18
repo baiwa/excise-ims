@@ -39,4 +39,11 @@ export class LoginPage implements OnInit {
             });
     }
 
+    onKey(event: KeyboardEvent) {
+        let keyCode = event.code || event.keyCode;
+        if(keyCode === "Enter" || keyCode === 13){
+            this.login();
+        }
+    }
+
 }

@@ -25,7 +25,7 @@
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="lock icon"></i>
-                        <input type="password" formControlName="password" placeholder="Password">
+                        <input type="password" formControlName="password" placeholder="Password" (keyup)="onKey($event)" >
                     </div>
                 </div>
                 <div class="ui fluid large teal submit button" (click)="login()">Login</div>
