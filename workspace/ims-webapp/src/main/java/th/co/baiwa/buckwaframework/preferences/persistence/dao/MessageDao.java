@@ -49,22 +49,23 @@ public class MessageDao {
 		sqBuilder.append(" SELECT message_id, message_code, message_en, message_th, message_type ");
 		sqBuilder.append(" FROM sys_message ");
 		sqBuilder.append(" WHERE is_deleted = ? ");
-		List<Object> params = new ArrayList<>();
+		
+		List<Object> params = new ArrayList<Object>();
 		params.add(FLAG.N_FLAG);
 		
-		if(StringUtils.isNotBlank(message.getMessageCode())){
+		if (StringUtils.isNotBlank(message.getMessageCode())) {
 			sqBuilder.append(" AND message_code = ? ");
 			params.add(message.getMessageCode());
 		}
-		if(StringUtils.isNotBlank(message.getMessageEn())){
+		if (StringUtils.isNotBlank(message.getMessageEn())) {
 			sqBuilder.append(" AND message_en = ? ");
 			params.add(message.getMessageEn());
 		}
-		if(StringUtils.isNotBlank(message.getMessageTh())){
+		if (StringUtils.isNotBlank(message.getMessageTh())) {
 			sqBuilder.append(" AND message_th = ? ");
 			params.add(message.getMessageTh());
 		}
-		if(StringUtils.isNotBlank(message.getMessageType())){
+		if (StringUtils.isNotBlank(message.getMessageType())) {
 			sqBuilder.append(" AND message_type = ? ");
 			params.add(message.getMessageType());
 		}

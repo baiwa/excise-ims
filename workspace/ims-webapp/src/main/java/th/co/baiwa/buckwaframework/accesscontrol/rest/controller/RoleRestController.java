@@ -25,7 +25,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 
 @RestController
-@RequestMapping("/api/accesscontrol/role")
+@RequestMapping("/api/access-control/role")
 public class RoleRestController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(RoleRestController.class);
@@ -53,7 +53,7 @@ public class RoleRestController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getRole(@PathVariable("id") long id) {
-		logger.info("getRole [id=" + id + "]");
+		logger.info("getRole [id={}]", id);
 		
 		Role role = roleService.getRoleById(id);
 		ResponseData<Role> response = new ResponseData<Role>();
@@ -63,29 +63,29 @@ public class RoleRestController {
 	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Role role, UriComponentsBuilder ucBuilder) {
-		logger.info("create [role=" + role + "]");
+		logger.info("create [role={}]", role);
 		
 		Role newRole = roleService.createRole(role);
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/api/admin/role/{id}").buildAndExpand(newRole.getRoleId()).toUri());
+		headers.setLocation(ucBuilder.path("/api/access-control/role/{id}").buildAndExpand(newRole.getRoleId()).toUri());
 		
 		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 	}
 	
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody Role role, UriComponentsBuilder ucBuilder) {
-		logger.info("update [role=" + role + "]");
+		logger.info("update [role={}]", role);
 		
 		roleService.updateRole(role);
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/api/admin/role/{id}").buildAndExpand(role.getRoleId()).toUri());
+		headers.setLocation(ucBuilder.path("/api/access-control/role/{id}").buildAndExpand(role.getRoleId()).toUri());
 		
 		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") long id) {
-		logger.info("delete [id=" + id + "]");
+		logger.info("delete [id={}]", id);
 		
 		roleService.deleteRole(id);
 		return new ResponseEntity<Role>(HttpStatus.NO_CONTENT);
