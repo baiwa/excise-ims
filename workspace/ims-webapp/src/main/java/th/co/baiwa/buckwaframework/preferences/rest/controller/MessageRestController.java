@@ -6,7 +6,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -86,7 +85,7 @@ public class MessageRestController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getMessage(@PathVariable("id") long id) {
-		logger.info("getMessage [id=" + id + "]");
+		logger.info("getMessage [id={}]", id);
 		
 		Message message = messageService.getMessageById(id);
 		ResponseData<Message> response = new ResponseData<Message>();
@@ -96,7 +95,7 @@ public class MessageRestController {
 	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Message message, UriComponentsBuilder ucBuilder) {
-		logger.info("create [message=" + message + "]");
+		logger.info("create [message={}]", message);
 		
 		Message newMessage = messageService.insertMessage(message);
 		
@@ -111,17 +110,17 @@ public class MessageRestController {
 		
 		messageService.updateMessage(message);
 		
-		HttpHeaders headers = new HttpHeaders();
+		ResponseData<Message> response = new ResponseData<Message>();
+		response.setData(message);
 		
-		return new ResponseEntity<String>(headers , HttpStatus.CREATED);
+		return new ResponseEntity<ResponseData<Message>>(response , HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") long id) {
-		logger.info("delete [id=" + id + "]");
+	public ResponseEntity<?> delete(@PathVariable("id") List<Long> ids) {
+		logger.info("delete [id={}]", ids);
 		
-		messageService.deleteMessage(id);
+		messageService.deleteMessage(ids);
 		return new ResponseEntity<Message>(HttpStatus.NO_CONTENT);
 	}
-	
 }

@@ -70,21 +70,20 @@ export class MessagePage implements OnInit {
                 deletes.push(this.checkboxes[i].defaultValue);
             }
         }
-        if(deletes.length == 0 ) return;
+        if (deletes.length == 0) return;
 
         this.messageBarService.comfirm((res) => {
-            
-            if(!res) return false; 
+
+            if (!res) return false;
 
             const deleteURL = `api/preferences/message/${deletes.join(",")}`;
             this.ajaxService.delete(deleteURL, (ok: Response) => {
                 let body: any = ok.json();
-                if (body.errorMessage) {
-                    this.messageBarService.error(body.errorMessage);
-                } else {
-                    this.messageBarService.success("ลบข้อมูลสำเร็จ.");
-                    this.search();
-                }
+                this.messageBarService.success("ลบข้อมูลสำเร็จ.");
+                this.search();
+            },(error:Response)=>{
+                let body:any = error.json();
+                this.messageBarService.error(body.error);
             });
 
         }, "ยืนยันการลบ.");

@@ -75,13 +75,13 @@ export class AuthService {
     }
 
     getUserProfile(): Promise<boolean> {
-        const usrProfile = "api/user/getUserProfile";
+        const usrProfile = "api/access-control/user-profile";
         let p = new Promise<boolean>((resolve, reject) => {
             //check session Ajax
             // console.log("check session Ajax");
             this.ajaxService.get(usrProfile, (res: Response) => {
                 let body: any = res.json();
-                this.user.username = body.username;
+                this.user.username = body.data.username;
                 this.isLoggedIn = true;
                 resolve(true);
             }, (resError: Response) => {

@@ -64,13 +64,12 @@ export class MessageDetailPage implements OnInit {
             const getURL = `api/preferences/message/${id}`;
             this.ajaxService.get(getURL, (success: Response) => {
                 let body: any = success.json();
-                if (body.errorMessage) {
-                    this.messageBarService.error(body.errorMessage);
-                } else {
-                    this.messageUpdate = body.data as Message;
-                    //Set Value
-                    $('#messageForm').form('set values', this.messageUpdate);
-                }
+                this.messageUpdate = body.data as Message;
+                //Set Value
+                $('#messageForm').form('set values', this.messageUpdate);
+            }, (err: Response) => {
+                let body: any = err.json();
+                this.messageBarService.error(body.error);
             });
         } else {
             this.statusPage = MessageDetailPage.ADD;
@@ -95,17 +94,16 @@ export class MessageDetailPage implements OnInit {
 
             this.ajaxService.post(createUrl, allFields, (succes: Response) => {
                 let body: any = succes.json();
-                if (body.errorMessage) {
-                    this.messageBarService.error(body.errorMessage);
-                } else {
-                    this.messageBarService.success("บันทึกข้อมูลสำเร็จ.");
-                }
+
+                this.messageBarService.success("บันทึกข้อมูลสำเร็จ.");
+
                 $form.removeClass("loading");
 
                 this.back();
 
-            }, (erro: Response) => {
-                this.messageBarService.error("เกิดข้อผิดผลาดกรุณาติดต่อผู้ดูแลระบบ.");
+            }, (err: Response) => {
+                let body: any = err.json();
+                this.messageBarService.error(body.error);
                 $form.removeClass("loading");
             });
 
@@ -114,17 +112,16 @@ export class MessageDetailPage implements OnInit {
             let update = $.extend(this.messageUpdate, allFields);
             this.ajaxService.put(createUrl, update, (succes: Response) => {
                 let body: any = succes.json();
-                if (body.errorMessage) {
-                    this.messageBarService.error(body.errorMessage);
-                } else {
-                    this.messageBarService.success("บันทึกข้อมูลสำเร็จ.");
-                }
+
+                this.messageBarService.success("บันทึกข้อมูลสำเร็จ.");
+
                 $form.removeClass("loading");
 
                 this.back();
 
-            }, (erro: Response) => {
-                this.messageBarService.error("เกิดข้อผิดผลาดกรุณาติดต่อผู้ดูแลระบบ.");
+            }, (err: Response) => {
+                let body: any = err.json();
+                this.messageBarService.error(body.error);
                 $form.removeClass("loading");
             });
         }
