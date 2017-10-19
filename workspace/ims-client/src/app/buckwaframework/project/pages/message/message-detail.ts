@@ -4,12 +4,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 // services
 import { MessageBarService } from '../../../common/services/message-bar.service';
-import { MessageService } from '../../../common/services/message.service';
 
 // models
 import { Message } from '../../../common/models/message';
+import { AjaxService } from '../../../common/services/ajax.service';
+import { Dropdown } from '../../../common/models/dropdown';
 
-declare var jQuery: any;
 declare var $: any;
 
 @Component({
@@ -18,124 +18,171 @@ declare var $: any;
 })
 export class MessageDetailPage implements OnInit {
 
-    title: string;
-    message: Message;
-    messageForm: any;
-    statusPage: Boolean;
+    private statusPage: string;
+    static ADD: string = "ADD";
+    static UPDATE: string = "UPDATE";
+    messageTypes: Dropdown[];
+    private messageUpdate: Message;
 
     constructor(
-        private messageService: MessageService,
         private location: Location,
         private router: Router,
         private route: ActivatedRoute,
-        private messageBarService: MessageBarService
+        private messageBarService: MessageBarService,
+        private ajaxService: AjaxService
     ) {
-        
+
     }
 
     ngOnInit(): void {
+        this.messageTypes = new Array();
+
+        let dd = new Dropdown();
+        dd.value = 'I';
+        dd.text = 'Info';
+        this.messageTypes.push(dd);
+
+        dd = new Dropdown();
+        dd.value = 'E';
+        dd.text = 'Error';
+        this.messageTypes.push(dd);
+
+        dd = new Dropdown();
+        dd.value = 'W';
+        dd.text = 'Waring';
+        this.messageTypes.push(dd);
+
+        dd = new Dropdown();
+        dd.value = 'C';
+        dd.text = 'Confirm';
+        this.messageTypes.push(dd);
+
         let id = this.route.snapshot.params['id'];
-        console.log('id' + id)
+        // console.log('id' + id)
         if (id) {
-            this.title = 'Edit Message';
-            this.message = new Message();
-            this.statusPage = false;
-            this.message.messageId = id;
-            this.getMessageById();
-        } else {
-            this.title = 'Add Message';
-            this.message = new Message();
-            this.statusPage = true;
-        }
-    }
-
-    getMessageById(): void {
-        this.messageService.read(this.message).then(respone => {
-            console.log(respone);
-            this.message = respone;
-        })
-        
-
-    }
-
-
-
-    save(): void {
-        if (!this.messageForm.form('validate form')) return;
-        if(this.statusPage){
-        this.messageService
-            .create(this.message)
-            .then((m)=> {
-                let msg = new Message();
-                msg.messageCode = 'MSG_0001';
-                msg.messageEn = 'The message was saved.';
-                msg.messageTh = 'message ถูกบันทึกแล้ว';
-                msg.messageType = 'S';
-                this.messageBarService.show(msg);
-                this.router.navigate(['/message']);
+            this.statusPage = MessageDetailPage.UPDATE;
+            const getURL = `api/preferences/message/${id}`;
+            this.ajaxService.get(getURL, (success: Response) => {
+                let body: any = success.json();
+                if (body.errorMessage) {
+                    this.messageBarService.error(body.errorMessage);
+                } else {
+                    this.messageUpdate = body.data as Message;
+                    //Set Value
+                    $('#messageForm').form('set values', this.messageUpdate);
+                }
             });
-        }else{
-            this.messageService
-            .update(this.message)
-            .then((m)=> {
-                let msg = new Message();
-                msg.messageCode = 'MSG_0001';
-                msg.messageEn = 'The message was saved.';
-                msg.messageTh = 'message ถูกบันทึกแล้ว';
-                msg.messageType = 'S';
-                this.messageBarService.show(msg);
-                this.router.navigate(['/message']);
+        } else {
+            this.statusPage = MessageDetailPage.ADD;
+        }
+
+    }
+
+    save() {
+
+        let $form = $('#messageForm');
+        let valid: boolean = $form.form('validate form');
+
+        if (!valid) return false;
+
+        //loading
+        $form.addClass("loading");
+        let allFields = $form.form('get values');
+        console.log("allFields", allFields);
+        const createUrl = 'api/preferences/message';
+
+        if (this.statusPage == MessageDetailPage.ADD) {
+
+            this.ajaxService.post(createUrl, allFields, (succes: Response) => {
+                let body: any = succes.json();
+                if (body.errorMessage) {
+                    this.messageBarService.error(body.errorMessage);
+                } else {
+                    this.messageBarService.success("บันทึกข้อมูลสำเร็จ.");
+                }
+                $form.removeClass("loading");
+
+                this.back();
+
+            }, (erro: Response) => {
+                this.messageBarService.error("เกิดข้อผิดผลาดกรุณาติดต่อผู้ดูแลระบบ.");
+                $form.removeClass("loading");
+            });
+
+        } else {
+            //merg Object
+            let update = $.extend(this.messageUpdate, allFields);
+            this.ajaxService.put(createUrl, update, (succes: Response) => {
+                let body: any = succes.json();
+                if (body.errorMessage) {
+                    this.messageBarService.error(body.errorMessage);
+                } else {
+                    this.messageBarService.success("บันทึกข้อมูลสำเร็จ.");
+                }
+                $form.removeClass("loading");
+
+                this.back();
+
+            }, (erro: Response) => {
+                this.messageBarService.error("เกิดข้อผิดผลาดกรุณาติดต่อผู้ดูแลระบบ.");
+                $form.removeClass("loading");
             });
         }
     }
 
     back(): void {
-        this.location.back();
+        this.router.navigate(['/message']);
     }
 
     ngAfterViewInit() {
-        console.log('ngAfterViewInit')
-        this.messageForm = $('#messageForm').form({
+        $("#messageType").dropdown();
+        this.formInit();
+
+    }
+
+    private formInit() {
+        let EMPTY_MESSAGE = "กรุณากรอกข้อมูลในช่องว่าง.";
+        $('#messageForm').form({
             on: 'blur',
-            inline : true,
+            inline: true,
             fields: {
-                    messageCode: {
-                        identifier  : 'messageCode',
-                            rules: [
-                                {
-                                    type   : 'empty',
-                                    prompt : 'Please enter a value'
-                                }
-                            ]
-                        },
-                    messageType: {
-                        identifier  : 'messageType',
-                            rules: [
-                                {
-                                    type   : 'empty',
-                                    prompt : 'Please enter a value'
-                                }
-                            ]
-                        },
-                    messageEn: {
-                        identifier  : 'messageEn',
-                            rules: [
-                                {
-                                    type   : 'empty',
-                                    prompt : 'Please enter a value'
-                                }
-                            ]
-                        },
-                    messageTh: {
-                        identifier  : 'messageTh',
-                            rules: [
-                                {
-                                    type   : 'empty',
-                                    prompt : 'Please enter a value'
-                                }
-                            ]
+                messageCode: {
+                    identifier: 'messageCode',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: EMPTY_MESSAGE
                         }
-                    }
-            });
+                    ]
+                },
+                messageType: {
+                    identifier: 'messageType',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: EMPTY_MESSAGE
+                        }
+                    ]
+                },
+                messageEn: {
+                    identifier: 'messageEn',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: EMPTY_MESSAGE
+                        }
+                    ]
+                },
+                messageTh: {
+                    identifier: 'messageTh',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: EMPTY_MESSAGE
+                        }
+                    ]
+                }
+            }
+        });
     }
 }

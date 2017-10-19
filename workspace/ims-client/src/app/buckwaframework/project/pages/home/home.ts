@@ -47,7 +47,7 @@ export class HomePage {
                 break; 
             } 
         }
-        this.messageBarService.show(message);
+        //this.messageBarService.show(message);
     }
 
     ngAfterViewInit() {

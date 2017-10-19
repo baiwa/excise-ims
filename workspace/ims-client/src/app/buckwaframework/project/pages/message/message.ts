@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // services
-import { MessageBarService } from '../../../common/services/message-bar.service';
-import { MessageService } from '../../../common/services/message.service';
 import { AjaxService } from '../../../common/services/ajax.service';
+import { MessageBarService } from '../../../common/services/message-bar.service';
 
 // models
 import { Dropdown } from '../../../common/models/dropdown';
@@ -24,10 +23,9 @@ export class MessagePage implements OnInit {
     checkboxes; Array;
 
     constructor(
-        private messageService: MessageService,
-        private messageBarService: MessageBarService,
         private router: Router,
-        private ajaxService: AjaxService
+        private ajaxService: AjaxService,
+        private messageBarService: MessageBarService
     ) {
         // console.log('do constructor message page');
     }
@@ -64,19 +62,32 @@ export class MessagePage implements OnInit {
     }
 
     delete(): void {
-        // checkboxes = document.getElementsByName('foo');
-        // for(var i=0, n=checkboxes.length;i<n;i++) {
-        //   checkboxes[i].checked = source.checked;
-        // }
-        console.log('Delete !');
+
+        let deletes = [];
         this.checkboxes = document.getElementsByName('checkMessageID');
         for (var i = 0, n = this.checkboxes.length; i < n; i++) {
             if (this.checkboxes[i].checked) {
-                console.log(this.checkboxes[i].defaultValue);
-                this.messageService.delete(this.checkboxes[i].defaultValue)
+                deletes.push(this.checkboxes[i].defaultValue);
             }
         }
-        this.messageDt.ajax.reload();
+        if(deletes.length == 0 ) return;
+
+        this.messageBarService.comfirm((res) => {
+            
+            if(!res) return false; 
+
+            const deleteURL = `api/preferences/message/${deletes.join(",")}`;
+            this.ajaxService.delete(deleteURL, (ok: Response) => {
+                let body: any = ok.json();
+                if (body.errorMessage) {
+                    this.messageBarService.error(body.errorMessage);
+                } else {
+                    this.messageBarService.success("ลบข้อมูลสำเร็จ.");
+                    this.search();
+                }
+            });
+
+        }, "ยืนยันการลบ.");
 
     }
 
@@ -95,10 +106,10 @@ export class MessagePage implements OnInit {
                 "type": "GET",
                 "url": URL,
                 "data": function (params) {
-                    params["messageCode"] = $("#messageCode").val() ;
-                    params["messageEn"] = $("#messageEn").val() ;
-                    params["messageTh"] = $("#messageTh").val() ;
-                    params["messageType"] = $("#messageTypeSelect").dropdown('get value'); ;
+                    params["messageCode"] = $("#messageCode").val();
+                    params["messageEn"] = $("#messageEn").val();
+                    params["messageTh"] = $("#messageTh").val();
+                    params["messageType"] = $("#messageTypeSelect").dropdown('get value');;
                     return params;
                 }
             },

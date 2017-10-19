@@ -33,30 +33,43 @@
 <div class="ui main container">
     <message-bar></message-bar>
     <router-outlet></router-outlet>
+
 </div>
-<!-- 
-<div class="ui dimmer modals page transition">
-    <div class="ui mini modal transition" style="margin-top: -92.7px; display: none !important;">
-        <div class="header">
-            Delete Message
-        </div>
-        <div class="content">
-            <p>Are you sure you want to delete your account</p>
-        </div>
-        <div class="actions">
-            <div class="ui negative button">
-                No
-            </div>
-            <div class="ui positive right labeled icon button">
-                Yes
-                <i class="checkmark icon"></i>
-            </div>
-        </div>
-    </div>
-</div> -->
+
 
 <div class="ui vertical footer">
     <div class="ui center aligned container">
         <p>Baiwa 2017. All Rights Reserved</p>
     </div>
 </div>
+
+<div class="ui mini test modal transition hidden baiwa-confirm-modal">
+    <div class="header">
+      Delete Your Account
+    </div>
+    <div class="content">
+      <p>Are you sure you want to delete your account</p>
+    </div>
+    <div class="actions">
+      <div class="ui negative button">
+        No
+      </div>
+      <div class="ui positive right labeled icon button">
+        Yes
+        <i class="checkmark icon"></i>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="ui tiny test modal transition hidden baiwa-alert">
+    <div class="header">
+      Delete Your Account
+    </div>
+    <div class="content">
+      <p>Are you sure you want to delete your account</p>
+    </div>
+    <div class="actions">
+        <div class="ui approve button">OK</div>
+    </div>
+  </div>

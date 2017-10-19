@@ -51,10 +51,11 @@ public class MessageService {
 		messageDao.update(message);
 	}
 	
-	public void deleteMessage(Long messageId) {
+	public void deleteMessage(List<Long> ids) {
 		logger.info("deleteMessage");
-		
-		messageDao.delete(messageId);
+		for(Long id : ids){
+			messageDao.delete(id);
+		}
 	}
 	
 }

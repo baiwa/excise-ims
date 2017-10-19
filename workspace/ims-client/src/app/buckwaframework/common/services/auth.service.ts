@@ -32,7 +32,7 @@ export class AuthService {
         let body = `username=${userBean.username}&password=${userBean.password}`;
 
         let p = new Promise((resolve, reject) => {
-            this.ajaxService.Post(this.LOGIN_URL, body, (res) => {
+            this.ajaxService.post(this.LOGIN_URL, body, (res) => {
                 this.isLoggedIn = true;
                 // this.user.username = 'admin';
                 // this.userSubject.next(this.user);
@@ -51,7 +51,7 @@ export class AuthService {
     logout(): void {
         this.isLoggedIn = false;
         this.user = new User();
-        this.ajaxService.DELETE(this.LOGIN_URL, (res: Response) => {
+        this.ajaxService.delete(this.LOGIN_URL, (res: Response) => {
             console.log("Logout Success...");
             this.router.navigate(['/login']);
         });
@@ -79,7 +79,7 @@ export class AuthService {
         let p = new Promise<boolean>((resolve, reject) => {
             //check session Ajax
             // console.log("check session Ajax");
-            this.ajaxService.GET(usrProfile, (res: Response) => {
+            this.ajaxService.get(usrProfile, (res: Response) => {
                 let body: any = res.json();
                 this.user.username = body.username;
                 this.isLoggedIn = true;

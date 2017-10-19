@@ -6,10 +6,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,15 +16,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.JsonStatus;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.service.MessageService;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 
-@Controller
+@RestController
 @RequestMapping("/api/preferences/message")
 public class MessageRestController {
 	
@@ -85,43 +85,65 @@ public class MessageRestController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getMessage(@PathVariable("id") long id) {
+	public ResponseData<Message> getMessage(@PathVariable("id") long id) {
 		logger.info("getMessage [id=" + id + "]");
 		
-		Message message = messageService.getMessageById(id);
 		ResponseData<Message> response = new ResponseData<Message>();
-		response.setData(message);
-		return new ResponseEntity<ResponseData<Message>>(response, HttpStatus.OK);
+		try{
+			Message message = messageService.getMessageById(id);
+			response.setData(message);
+			response.setStatusCode(JsonStatus.SUCCESS);
+		}catch (Exception e) {
+			response.setStatusCode(JsonStatus.ERROR);
+			response.setErrorMessage(e.getMessage());
+		}
+			
+		return response;
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody Message message, UriComponentsBuilder ucBuilder) {
+	public ResponseData<Message> create(@RequestBody Message message, UriComponentsBuilder ucBuilder) {
 		logger.info("create [message=" + message + "]");
-		
-		Message newMessage = messageService.insertMessage(message);
-		
 		ResponseData<Message> response = new ResponseData<Message>();
-		response.setData(newMessage);
-		
-		return new ResponseEntity<ResponseData<Message>>(response, HttpStatus.CREATED);
+		try{
+			Message newMessage = messageService.insertMessage(message);
+			response.setData(newMessage);
+			response.setStatusCode(JsonStatus.SUCCESS);
+		}catch (Exception e) {
+			response.setStatusCode(JsonStatus.ERROR);
+			response.setErrorMessage(e.getMessage());
+		}
+			
+		return response;
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody  Message message, UriComponentsBuilder ucBuilder) {
-		
-		messageService.updateMessage(message);
-		
-		HttpHeaders headers = new HttpHeaders();
-		
-		return new ResponseEntity<String>(headers , HttpStatus.CREATED);
+	public ResponseData<Message>update(@RequestBody  Message message, UriComponentsBuilder ucBuilder) {
+		ResponseData<Message> response = new ResponseData<Message>();
+
+		try{
+			messageService.updateMessage(message);
+			response.setStatusCode(JsonStatus.SUCCESS);
+		}catch (Exception e) {
+			response.setStatusCode(JsonStatus.ERROR);
+			response.setErrorMessage(e.getMessage());
+		}
+				
+		return response;
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") long id) {
-		logger.info("delete [id=" + id + "]");
-		
-		messageService.deleteMessage(id);
-		return new ResponseEntity<Message>(HttpStatus.NO_CONTENT);
+	public ResponseData<Message> delete(@PathVariable("id") List<Long> ids) {
+		logger.info("delete [id=" + ids + "]");
+		ResponseData<Message> response = new ResponseData<Message>();
+		try{
+			messageService.deleteMessage(ids);
+			response.setStatusCode(JsonStatus.SUCCESS);
+		}catch (Exception e) {
+			response.setStatusCode(JsonStatus.ERROR);
+			response.setErrorMessage(e.getMessage());
+		}
+		return response;
 	}
 	
 }

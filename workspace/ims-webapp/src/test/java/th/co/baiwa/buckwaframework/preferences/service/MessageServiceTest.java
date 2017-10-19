@@ -85,7 +85,7 @@ public class MessageServiceTest {
 	//@Test
 	public void test_deleteMessage() {
 		System.out.println("- - - - - deleteMessage - - - - -");
-		messageService.deleteMessage(3L);
+//		messageService.deleteMessage(3L);
 	}
 	
 }

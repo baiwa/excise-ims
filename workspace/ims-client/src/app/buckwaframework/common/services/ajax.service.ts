@@ -15,7 +15,7 @@ export class AjaxService {
     }
 
 
-    Post(url: string, body: any, success: any, error?: any, header?: Headers) {
+    post(url: string, body: any, success: any, error?: any, header?: Headers) {
         if (AjaxService.isDebug) {
             console.log("URL : ", AjaxService.CONTEXT_PATH + url);
             console.log("Params : ", body);
@@ -35,7 +35,7 @@ export class AjaxService {
             .catch(errorFn);
     }
 
-    GET(url: string, success: any, error?: any) {
+    get(url: string, success: any, error?: any) {
         let errorFn = this.handleError;
         if (error) {
             errorFn = error;
@@ -51,12 +51,32 @@ export class AjaxService {
         return Promise.reject(error.message || error);
     }
 
-    DELETE(url: string, success: any, error?: any){
+    delete(url: string, success: any, error?: any){
         let errorFn = this.handleError;
         if (error) {
             errorFn = error;
         }
         return this.http.delete(AjaxService.CONTEXT_PATH + url)
+            .toPromise()
+            .then(success)
+            .catch(errorFn);
+    }
+
+    put(url: string, body: any, success: any, error?: any, header?: Headers) {
+        if (AjaxService.isDebug) {
+            console.log("URL : ", AjaxService.CONTEXT_PATH + url);
+            console.log("Params : ", body);
+        }
+        let httpHeader = AjaxService.JSON_HEADER;
+        if (header) {
+            httpHeader = AjaxService.FORM_HEADER
+        }
+        let errorFn = this.handleError;
+        if (error) {
+            errorFn = error;
+        }
+        return this.http
+            .put(AjaxService.CONTEXT_PATH + url, body, { headers: httpHeader })
             .toPromise()
             .then(success)
             .catch(errorFn);

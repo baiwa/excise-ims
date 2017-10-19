@@ -23,4 +23,9 @@ public class CommonConstants {
 		public static final String NOT_UNITTEST = "!" + UNITTEST;
 	}
 	
+	public static final class JsonStatus {
+		public static final String ERROR = "1";
+		public static final String SUCCESS = "0";
+	}
+	
 }
