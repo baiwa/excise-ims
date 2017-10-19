@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,20 +15,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterGroup;
-import th.co.baiwa.buckwaframework.preferences.service.ParameterService;
+import th.co.baiwa.buckwaframework.preferences.service.ParameterGroupService;
 
-@Controller
-@RequestMapping(value = "/api/preferences/prameterGroup")
-public class ParamGroupController {
+@RestController
+@RequestMapping("/api/preferences/prameter-group")
+public class ParameterGroupRestController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ParamGroupController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ParameterGroupRestController.class);
 	
 	@Autowired
-	private ParameterService parameterService;
+	private ParameterGroupService parameterGroupService;
 	
 	@GetMapping
 	public ResponseEntity<?> getAll() {
@@ -46,7 +46,7 @@ public class ParamGroupController {
 	public ResponseEntity<?> getParameterGroup(@PathVariable("id") long id) {
 		logger.info("getParameterGroup [id=" + id + "]");
 		
-		ParameterGroup parameter = parameterService.getParameterGroupById(id);
+		ParameterGroup parameter = parameterGroupService.getParameterGroupById(id);
 		ResponseData<ParameterGroup> response = new ResponseData<ParameterGroup>();
 		response.setData(parameter);
 		return new ResponseEntity<ResponseData<ParameterGroup>>(response, HttpStatus.OK);
@@ -56,7 +56,7 @@ public class ParamGroupController {
 	public ResponseEntity<?> create(@RequestBody ParameterGroup parameter, UriComponentsBuilder ucBuilder) {
 		logger.info("create [parameter=" + parameter + "]");
 		
-		ParameterGroup newParameterGroup = parameterService.insertParameterGroup(parameter);
+		ParameterGroup newParameterGroup = parameterGroupService.insertParameterGroup(parameter);
 		
 		ResponseData<ParameterGroup> response = new ResponseData<ParameterGroup>();
 		response.setData(newParameterGroup);
@@ -67,7 +67,7 @@ public class ParamGroupController {
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody ParameterGroup parameter, UriComponentsBuilder ucBuilder) {
 		
-		parameterService.updateParameterGroup(parameter);
+		parameterGroupService.updateParameterGroup(parameter);
 		
 		HttpHeaders headers = new HttpHeaders();
 		
@@ -78,7 +78,7 @@ public class ParamGroupController {
 	public ResponseEntity<?> delete(@PathVariable("id") long id) {
 		logger.info("delete [id=" + id + "]");
 		
-		parameterService.deleteParameterGroup(id);
+		parameterGroupService.deleteParameterGroup(id);
 		return new ResponseEntity<ParameterGroup>(HttpStatus.NO_CONTENT);
 	}
 	

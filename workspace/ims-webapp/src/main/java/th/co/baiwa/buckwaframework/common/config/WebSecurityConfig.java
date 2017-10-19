@@ -74,13 +74,19 @@ public class WebSecurityConfig {
 	public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 		
 		@Override
+		public void configure(WebSecurity web) throws Exception {
+			web.ignoring().antMatchers(HttpMethod.GET,
+				"/api/preferences/**"
+			);
+		}
+		
+		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-//			.antMatcher("/api/preferences/message").authorizeRequests().
-			 http
-	            .authorizeRequests()
-	                .antMatchers("/", "/api/preferences/message").permitAll()
-	                .anyRequest().authenticated()
-	                .and()
+			http
+				.antMatcher("/api/**")
+					.authorizeRequests().anyRequest()
+					.hasAnyRole(ROLE.USER)
+				.and()
 				.formLogin()
 					.loginProcessingUrl(URL.LOGIN_REST).permitAll()
 					.successHandler(restAuthenticationSuccessHandler())

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,20 +15,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
-import th.co.baiwa.buckwaframework.preferences.service.ParameterService;
+import th.co.baiwa.buckwaframework.preferences.service.ParameterInfoService;
 
-@Controller
-@RequestMapping(value = "/api/preferences/prameterInfo")
-public class ParamInfoController {
+@RestController
+@RequestMapping("/api/preferences/prameter-info")
+public class ParameterInfoRestController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ParamInfoController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ParameterInfoRestController.class);
 	
 	@Autowired
-	private ParameterService parameterService;
+	private ParameterInfoService parameterInfoService;
 	
 	@GetMapping
 	public ResponseEntity<?> getAll() {
@@ -46,7 +46,7 @@ public class ParamInfoController {
 	public ResponseEntity<?> getParameterInfo(@PathVariable("id") long id) {
 		logger.info("getParameterInfo [id=" + id + "]");
 		
-		ParameterInfo parameter = parameterService.getParameterInfoById(id);
+		ParameterInfo parameter = parameterInfoService.getParameterInfoById(id);
 		ResponseData<ParameterInfo> response = new ResponseData<ParameterInfo>();
 		response.setData(parameter);
 		return new ResponseEntity<ResponseData<ParameterInfo>>(response, HttpStatus.OK);
@@ -56,7 +56,7 @@ public class ParamInfoController {
 	public ResponseEntity<?> create(@RequestBody ParameterInfo parameter, UriComponentsBuilder ucBuilder) {
 		logger.info("create [parameter=" + parameter + "]");
 		
-		ParameterInfo newParameterInfo = parameterService.insertParameterInfo(parameter);
+		ParameterInfo newParameterInfo = parameterInfoService.insertParameterInfo(parameter);
 		
 		ResponseData<ParameterInfo> response = new ResponseData<ParameterInfo>();
 		response.setData(newParameterInfo);
@@ -67,7 +67,7 @@ public class ParamInfoController {
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody ParameterInfo parameter, UriComponentsBuilder ucBuilder) {
 		
-		parameterService.updateParameterInfo(parameter);
+		parameterInfoService.updateParameterInfo(parameter);
 		
 		HttpHeaders headers = new HttpHeaders();
 		
@@ -78,7 +78,7 @@ public class ParamInfoController {
 	public ResponseEntity<?> delete(@PathVariable("id") long id) {
 		logger.info("delete [id=" + id + "]");
 		
-		parameterService.deleteParameterInfo(id);
+		parameterInfoService.deleteParameterInfo(id);
 		return new ResponseEntity<ParameterInfo>(HttpStatus.NO_CONTENT);
 	}
 	

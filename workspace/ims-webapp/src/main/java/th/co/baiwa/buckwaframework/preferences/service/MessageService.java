@@ -21,11 +21,11 @@ public class MessageService {
 	public List<Message> getMessageList(Integer start, Integer length, Message message) {
 		logger.info("getMessageAll");
 		
-		return messageDao.findAll(start, length,message);
+		return messageDao.findAll(start, length, message);
 	}
 	
 	public Message getMessageById(Long messageId) {
-		logger.info("getMessage messageId=?", messageId);
+		logger.info("getMessage messageId={}", messageId);
 		
 		return messageDao.findById(messageId);
 	}
