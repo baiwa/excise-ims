@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,7 +35,7 @@ public class AuthenController {
 		
 		ModelAndView mav = new ModelAndView();
 		if (error != null) {
-			mav.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
+			mav.addObject("error", getErrorMessage(request, WebAttributes.AUTHENTICATION_EXCEPTION));
 		}
 		
 		if (logout != null) {
