@@ -1,0 +1,103 @@
+<div class="ui grid">
+    <div class="sixteen wide column">
+        <h2 class="ui header">UserManagement</h2>
+        <div class="ui breadcrumb">
+            <a class="section">Administrator</a>
+            <i class="right angle icon divider"></i>
+            <div class="active section">UserManagement</div>
+        </div>
+
+        <div class="ui top attached header">
+            <span>Search Criteria</span>
+        </div>
+
+        <div class="ui attached segment">
+            <div id="userManagementForm" class="ui form">
+                <div class="fields">
+                    <div class="five wide field">
+                        <label>Username</label>
+                        <input type="text" id="username" name="username" placeholder="Username">
+                    </div>
+                    <div class="three wide field">
+                        <label>Enabled</label>
+                        <div id="enabled" class="ui checkbox">
+                            <input type="checkbox" name="enabled">
+                            <label>Enabled</label>
+                        </div>
+                    </div>
+                    <div class="three wide field">
+                        <label>Account Non Expired</label>
+                        <div id="accountNonExpired" class="ui checkbox">
+                            <input type="checkbox" name="accountNonExpired">
+                            <label>Enabled</label>
+                        </div>
+                    </div>
+                    <div class="three wide field">
+                        <label>Credentials Non Expired</label>
+                        <div id="credentialsNonExpired" class="ui checkbox">
+                            <input type="checkbox" name="credentialsNonExpired">
+                            <label>Enabled</label>
+                        </div>
+                    </div>
+                    <div class="three wide field">
+                        <label>Account Non Locked</label>
+                        <div id="accountNonLocked" class="ui checkbox">
+                            <input type="checkbox" name="accountNonLocked">
+                            <label>Enabled</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fields">
+                    <div class="sixteen wide field">
+                        <div class="ui grid">
+                            <div class="center aligned row">
+                                <div class="column">
+                                    <div class="ui mini primary button" (click)="search()">
+                                        <i class="search icon"></i> Search
+                                    </div>
+                                    <div class="ui mini button" (click)="resetSearch()" >
+                                        <i class="refresh icon"></i> Reset
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui clearing top attached header segment">
+            <div class="ui grid">
+                <div class="two column row">
+                    <div class="column">
+                        Search Result
+                    </div>
+                    <div class="right aligned column">
+                        <div class="ui mini primary button" [routerLink]="['/add-userManagement']">
+                            <i class="add icon"></i> Add User
+                        </div>
+                        <div class="ui mini  button" (click)="delete()">
+                            <i class="trash icon"></i> Delete
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui attached segment">
+            <table id="userManagementDt" class="ui small celled table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Username</th>
+                        <th>Enabled</th>
+                        <th>Account Non Expired</th>
+                        <th>Credentials Non Expired</th>
+                        <th>Account Non Locked</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

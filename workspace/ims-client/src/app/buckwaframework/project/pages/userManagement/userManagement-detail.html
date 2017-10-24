@@ -1,0 +1,80 @@
+<div class="ui grid">
+    <div class="sixteen wide column">
+        <h2 class="ui header">{{title}}</h2>
+        <div class="ui breadcrumb">
+            <a class="section">Administrator</a>
+            <i class="right angle icon divider"></i>
+            <a class="section">UserManagement</a>
+            <i class="right angle icon divider"></i>
+            <div class="active section">{{title}}</div>
+        </div>
+
+        <div class="ui top attached header">
+            <span>Search Criteria</span>
+        </div>
+        <div class="ui attached segment">
+            <div id="userManagementForm" class="ui form">
+                <div class="fields">
+                    <div class="six wide required field">
+                        <label>Username</label>
+                        <input id="username" type="text" placeholder="Username" name="username">
+                    </div>
+                    <div class="one wide field"></div>
+                    <div class="six wide field" [ngClass]="isRequired">
+                        <label>Password</label>
+                        <div class="ui icon input" (mousedown)="showHidePassword()" (mouseup)="showHidePassword()">
+                            <input id='password' [type]="typePassword" placeholder="Password" name="password" (change)="inputPassword()">
+                            <i class="large unhide icon" ></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="three wide field">
+                        <label>Enabled</label>
+                        <div id="enabled" class="ui checkbox">
+                            <input type="checkbox" name="enabled" >
+                            <label>Enabled</label>
+                        </div>
+                    </div>
+                    <div class="three wide field">
+                        <label>Account Non Expired</label>
+                        <div id="accountNonExpired" class="ui checkbox">
+                            <input type="checkbox" name="accountNonExpired" >
+                            <label>Enabled</label>
+                        </div>
+                    </div>
+                    <div class="three wide field">
+                        <label>Credentials Non Expired</label>
+                        <div id="credentialsNonExpired" class="ui checkbox">
+                            <input type="checkbox" name="credentialsNonExpired" >
+                            <label>Enabled</label>
+                        </div>
+                    </div>
+                    <div class="three wide field">
+                        <label>Account Non Locked</label>
+                        <div id="accountNonLocked" class="ui checkbox">
+                            <input type="checkbox" name="accountNonLocked" >
+                            <label>Enabled</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="sixteen wide field">
+                        <div class="ui grid">
+                            <div class="right aligned row">
+                                <div class="column">
+                                    <div class="ui mini button" (click)="back()">
+                                        <i class="chevron left icon"></i> Back
+                                    </div>
+                                    <div class="ui mini primary button" (click)="save()">
+                                        <i class="save icon"></i> Save
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

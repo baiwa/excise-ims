@@ -33,7 +33,8 @@ import { MessageDetailPage } from './buckwaframework/project/pages/message/messa
 import { ParameterInfoPage } from './buckwaframework/project/pages/parameterInfo/parameterInfo';
 import { ParameterGroupPage } from './buckwaframework/project/pages/parameterGroup/parameterGroup';
 import { ParameterInfoDetailPage } from './buckwaframework/project/pages/parameterInfo/parameterInfoDetail';
-
+import { UserManagementPage } from './buckwaframework/project/pages/userManagement/userManagement';
+import { UserManagementDetailPage } from './buckwaframework/project/pages/userManagement/userManagement-detail';
 
 @NgModule({
     declarations: [
@@ -48,7 +49,9 @@ import { ParameterInfoDetailPage } from './buckwaframework/project/pages/paramet
         ParameterPage,
         ParameterInfoPage,
         ParameterGroupPage,
-        ParameterInfoDetailPage
+        ParameterInfoDetailPage,
+        UserManagementPage,
+        UserManagementDetailPage
     ],
     imports: [
         BrowserModule,
