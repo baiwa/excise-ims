@@ -14,6 +14,7 @@ import { ParameterGroupPage } from '../../project/pages/parameterGroup/parameter
 import { ParameterInfoDetailPage } from '../../project/pages/parameterInfo/parameterInfoDetail';
 import { UserManagementPage } from '../../project/pages/userManagement/userManagement';
 import { UserManagementDetailPage } from '../../project/pages/userManagement/userManagement-detail';
+import { AnalysisPage } from '../../project/pages/analysis/analysis.component';
 
 const routes: Routes = [
 
@@ -32,7 +33,7 @@ const routes: Routes = [
     { path: 'add-userManagement', component: UserManagementDetailPage, canActivate: [AuthGuard] },
     { path: 'edit-userManagement/:id', component: UserManagementDetailPage, canActivate: [AuthGuard] },
 
-    
+    { path: 'analysis', component: AnalysisPage, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
