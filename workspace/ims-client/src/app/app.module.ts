@@ -28,7 +28,6 @@ import { DropdownComponent } from './buckwaframework/common/components/dropdown.
 import { LoginPage } from './buckwaframework/project/pages/login/login';
 import { HomePage } from './buckwaframework/project/pages/home/home';
 import { MessagePage } from './buckwaframework/project/pages/message/message';
-import { ParameterPage } from './buckwaframework/project/pages/parameter/parameter';
 import { MessageDetailPage } from './buckwaframework/project/pages/message/message-detail';
 import { ParameterInfoPage } from './buckwaframework/project/pages/parameterInfo/parameterInfo';
 import { ParameterGroupPage } from './buckwaframework/project/pages/parameterGroup/parameterGroup';
@@ -46,7 +45,6 @@ import { UserManagementDetailPage } from './buckwaframework/project/pages/userMa
         HomePage,
         MessagePage,
         MessageDetailPage,
-        ParameterPage,
         ParameterInfoPage,
         ParameterGroupPage,
         ParameterInfoDetailPage,

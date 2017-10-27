@@ -3,13 +3,12 @@
         <a href="#" class="header item">
             <img class="logo" src="assets/images/logo.png"> {{ 'APP_NAME' | translate }}
         </a>
-        <a class="item" [routerLink]="['/home']" routerLinkActive="active" *ngIf="authService.getLogin()" >Home</a>
-        <div class="ui simple dropdown item" *ngIf="authService.getLogin()" >
+        <a class="item" [routerLink]="['/home']" routerLinkActive="active" *ngIf="authService.getLogin()">Home</a>
+        <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
             Administrator <i class="dropdown icon"></i>
             <div class="menu">
                 <a class="item" [routerLink]="['/message']" routerLinkActive="active">Message</a>
-                <a class="item" [routerLink]="['/parameter']" routerLinkActive="active">Parameter</a>
-                <a class="item" [routerLink]="['/parameterGroup']" routerLinkActive="active">parameterGroup</a>
+                <a class="item" [routerLink]="['/parameterGroup']" routerLinkActive="active">Parameter</a>
                 <a class="item" [routerLink]="['/userManagement']" routerLinkActive="active">UserManamgement</a>
             </div>
         </div>
@@ -46,31 +45,31 @@
 
 <div class="ui mini test modal transition hidden baiwa-confirm-modal">
     <div class="header">
-      Delete Your Account
+        Delete Your Account
     </div>
     <div class="content">
-      <p>Are you sure you want to delete your account</p>
+        <p>Are you sure you want to delete your account</p>
     </div>
     <div class="actions">
-      <div class="ui negative button">
-        No
-      </div>
-      <div class="ui positive right labeled icon button">
-        Yes
-        <i class="checkmark icon"></i>
-      </div>
+        <div class="ui negative button">
+            No
+        </div>
+        <div class="ui positive right labeled icon button">
+            Yes
+            <i class="checkmark icon"></i>
+        </div>
     </div>
-  </div>
+</div>
 
 
-  <div class="ui tiny test modal transition hidden baiwa-alert">
+<div class="ui tiny test modal transition hidden baiwa-alert">
     <div class="header">
-      Delete Your Account
+        Delete Your Account
     </div>
     <div class="content">
-      <p>Are you sure you want to delete your account</p>
+        <p>Are you sure you want to delete your account</p>
     </div>
     <div class="actions">
         <div class="ui approve button">OK</div>
     </div>
-  </div>
+</div>
