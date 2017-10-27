@@ -35,6 +35,7 @@ import { ParameterInfoDetailPage } from './buckwaframework/project/pages/paramet
 import { UserManagementPage } from './buckwaframework/project/pages/userManagement/userManagement';
 import { UserManagementDetailPage } from './buckwaframework/project/pages/userManagement/userManagement-detail';
 import { AnalysisPage } from './buckwaframework/project/pages/analysis/analysis.component';
+import { ResultAnalysisPage } from './buckwaframework/project/pages/result-analysis/result-analysis.component';
 
 @NgModule({
     declarations: [
@@ -51,7 +52,8 @@ import { AnalysisPage } from './buckwaframework/project/pages/analysis/analysis.
         ParameterInfoDetailPage,
         UserManagementPage,
         UserManagementDetailPage,
-        AnalysisPage
+        AnalysisPage,
+        ResultAnalysisPage
     ],
     imports: [
         BrowserModule,

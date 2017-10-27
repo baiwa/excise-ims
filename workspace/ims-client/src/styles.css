@@ -22,6 +22,6 @@ body {
     display: block !important;
 }
 
-input[type="text"][readonly=""] {
+input.custom-readonly {
     background-color: #ccc !important;
 }
