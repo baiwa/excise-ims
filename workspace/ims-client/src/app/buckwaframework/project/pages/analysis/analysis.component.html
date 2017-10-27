@@ -1,1 +1,54 @@
-<h1>Test</h1>
+<div class="ui grid">
+    <div class="sixteen wide column">
+        <h2 class="ui header">วิเคราะห์ข้อมูลเบื้องต้น</h2>
+
+        <div class="ui top attached header">
+            <span>Criteria</span>
+        </div>
+
+        <div class="ui attached segment">
+            <div id="userManagementForm" class="ui form">
+                <div class="fields">
+                    <div class="five wide field required">
+                        <label>เลขทะเบียนสรรพสามิต</label>
+                        <input type="text">
+                    </div>
+                    <div class="three wide field"></div>
+                    <div class="five wide field">
+                        <label>เลขประจำตัวผู้เสียภาษีอากร</label>
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="fields">
+                    <div class="four wide field required">
+                        <label>รอบระยะเวลาการตรวจสอบ</label>
+                        <div class="ui calendar" id="example1">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" placeholder="MM/YYYY">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fields">
+                    <div class="sixteen wide field">
+                        <div class="ui grid">
+                            <div class="center aligned row">
+                                <div class="column">
+                                    <div class="ui mini primary button" (click)="search()">
+                                        <i class="table icon"></i> วิเคราะห์ข้อมูลเบื้องต้น
+                                    </div>
+                                    <div class="ui mini button" (click)="resetSearch()">
+                                        <i class="refresh icon"></i> ล้างข้อมูล
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
