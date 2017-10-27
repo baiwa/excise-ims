@@ -25,3 +25,11 @@ body {
 input.custom-readonly {
     background-color: #ccc !important;
 }
+
+label.custom-label-w-25 {
+    width: 25em !important;
+}
+
+label.custom-label-w-30 {
+    width: 25em !important;
+}

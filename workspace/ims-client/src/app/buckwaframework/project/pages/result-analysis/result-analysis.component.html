@@ -3,55 +3,231 @@
         <h2 class="ui header">ผลการวิเคราะห์ข้อมูลเบื้องต้น</h2>
 
         <div class="ui top attached header">
-            <span>Criteria</span>
+            <span>ผลการวิเคราะห์ข้อมูลเบื้องต้น</span>
         </div>
-
         <div class="ui attached segment">
             <div id="userManagementForm" class="ui form">
-                <div class="fields">
-                    <div class="five wide field required">
-                        <label>เลขทะเบียนสรรพสามิต</label>
-                        <input type="text">
-                    </div>
-                    <div class="three wide field"></div>
-                    <div class="five wide field">
-                        <label>เลขประจำตัวผู้เสียภาษีอากร</label>
-                        <input type="text">
-                    </div>
-                </div>
-
-                <div class="fields">
-                    <div class="eight wide field"></div>
-                    <div class="four wide field required">
-                        <label>เลขที่วิเคราะห์</label>
-                        <input type="text">
-                    </div>
-                </div>
-
-                <div class="fields">
+                <div class="inline fields">
                     <div class="ten wide field">
-                        <label>ผู้ประกอบการ</label>
+                        <label class="custom-label-w-25">เลขทะเบียนสรรพสามิต</label>
+                        <input type="text" readonly="" class="custom-readonly" value="####################">
+                    </div>
+                    <div class="six wide field">
+                        <label class="custom-label-w-25">เลขประจำตัวผู้เสียภาษีอากร</label>
+                        <input type="text" readonly="" class="custom-readonly" value="1234567890123">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="ten wide field">
+                        <label class="custom-label-w-25">ผู้ประกอบการ</label>
+                        <input type="text" readonly="" class="custom-readonly" value="####################">
+                    </div>
+                    <div class="six wide field">
+                        <label class="custom-label-w-25">เลขที่วิเคราะห์</label>
                         <input type="text" readonly="" class="custom-readonly" value="####################">
                     </div>
                 </div>
 
-                <div class="fields">
-                    <div class="five wide field required">
-                        <label>ผู้ประกอบการ</label>
-                        <input type="text" class="custom-readonly">
+                <div class="inline fields">
+                    <div class="ten wide field">
+                        <label class="custom-label-w-25">โรงอุตสาหกรรม</label>
+                        <input type="text" readonly="" class="custom-readonly" value="############">
                     </div>
                 </div>
 
+
+
+                <div class="inline fields">
+                    <div class="ten wide field">
+                        <label class="custom-label-w-25">ที่ตั้ง</label>
+                        <input type="text" readonly="" class="custom-readonly" value="#########################">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="ten wide field">
+                        <label class="custom-label-w-25">วิเคราะห์โดย</label>
+                        <input type="text" readonly="" class="custom-readonly" value="############">
+                    </div>
+                </div>
+                <div class="inline fields">
+                    <div class="ten wide field">
+                        <label class="custom-label-w-25">พื้นที่ตั้ง</label>
+                        <input type="text" readonly="" class="custom-readonly" value="ภาค 10">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui clearing top attached header segment">
+            <div class="ui grid">
+                <div class="two column row">
+                    <div class="column">
+                        ผลการวิเคราะห์ปริมาณสินค้าที่เสียภาษี
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui attached segment">
+            <table id="table1" class="ui small celled table">
+                <thead>
+                    <tr>
+                        <th>รายการ</th>
+                        <th class="sum">ข้อมูลแบบภาษี ภส. 03-07</th>
+                        <th class="sum">แบบงบเดือน ภส. 07-04</th>
+                        <th class="sum">ผลต่าง</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>รวม</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="ui clearing top attached header segment">
+            <div class="ui grid">
+                <div class="two column row">
+                    <div class="column">
+                        ผลการวิเคราะห์ราคาขายปลีกแนะนำตามแบบแจ้งฯ
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui attached segment">
+            <table id="table2" class="ui small celled table">
+                <thead>
+                    <tr>
+                        <th>รายการ</th>
+                        <th class="sum">แบบชำระภาษี ภส. 03-07</th>
+                        <th class="sum">แบบแจ้งฯ ภส. 02-01</th>
+                        <th class="sum">ผลต่าง</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>รวม</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="ui clearing top attached header segment">
+            <div class="ui grid">
+                <div class="two column row">
+                    <div class="column">
+                        ผลการวิเคราะห์มูลค่าสินค้าที่เสียภาษี
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui attached segment">
+            <table id="table3" class="ui small celled table">
+                <thead>
+                    <tr>
+                        <th>รายการ</th>
+                        <th class="sum">ปริมาณ ภส. 03-07</th>
+                        <th class="sum">ราคาขายปลีกแนะนำ</th>
+                        <th class="sum">ผลต่าง</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>รวม</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="ui clearing top attached header segment">
+            <div class="ui grid">
+                <div class="two column row">
+                    <div class="column">
+                        ผลการวิเคราะห์อัตราภาษี
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui attached segment">
+            <table id="table4" class="ui small celled table">
+                <thead>
+                    <tr>
+                        <th>รายการ</th>
+                        <th class="sum">ภส. 03-07</th>
+                        <th class="sum">อัตราภาษีที่อยู่ในระบบ</th>
+                        <th class="sum">ผลต่าง</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>รวม</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="ui clearing top attached header segment">
+            <div class="ui grid">
+                <div class="two column row">
+                    <div class="column">
+                        ผลการวิเคราะห์การยื่นชำระภาษีสรรพสามิต
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui attached segment">
+            <table id="table5" class="ui small celled table">
+                <thead>
+                    <tr>
+                        <th>รายการ</th>
+                        <th class="sum">ภาษีที่ได้จากการคำนวณ</th>
+                        <th class="sum">ภาษีที่ได้จาก ภส.03-07</th>
+                        <th class="sum">ผลต่าง</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>รวม</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="ui attached segment">
+            <div class="ui form">
                 <div class="fields">
                     <div class="sixteen wide field">
                         <div class="ui grid">
                             <div class="center aligned row">
                                 <div class="column">
-                                    <div class="ui mini primary button" [routerLink]="['/result-analysis']">
-                                        <i class="table icon"></i> วิเคราะห์ข้อมูลเบื้องต้น
+                                    <div class="ui mini primary button" (click)="search()">
+                                        <i class="save icon"></i> บันทึกผลการวิเคราะห์ข้อมูล
                                     </div>
                                     <div class="ui mini button" (click)="resetSearch()">
-                                        <i class="refresh icon"></i> ล้างข้อมูล
+                                        <i class="refresh icon"></i> ล้างผลการวิเคราะห์ข้อมูล
+                                    </div>
+                                    <div class="ui mini button" [routerLink]="['/select-form']">
+                                        <i class="file text outline icon"></i> สร้างกระดาษทำการ
+                                    </div>
+                                    <div class="ui mini button" (click)="resetSearch()">
+                                        <i class="print icon"></i> พิมพ์
                                     </div>
                                 </div>
                             </div>
