@@ -21,3 +21,7 @@ body {
     margin-top: -92.7px;
     display: block !important;
 }
+
+input[type="text"][readonly=""] {
+    background-color: #ccc !important;
+}
