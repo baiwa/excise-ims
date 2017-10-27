@@ -16,6 +16,7 @@ import { UserManagementPage } from '../../project/pages/userManagement/userManag
 import { UserManagementDetailPage } from '../../project/pages/userManagement/userManagement-detail';
 import { AnalysisPage } from '../../project/pages/analysis/analysis.component';
 import { ResultAnalysisPage } from '../../project/pages/result-analysis/result-analysis.component';
+import { SelectFormComponent } from './../../project/pages/select-form/select-form.component';
 
 const routes: Routes = [
 
@@ -36,6 +37,7 @@ const routes: Routes = [
 
     { path: 'analysis', component: AnalysisPage, canActivate: [AuthGuard] },
     { path: 'result-analysis', component: ResultAnalysisPage, canActivate: [AuthGuard] },
+    { path: 'select-form', component: SelectFormComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

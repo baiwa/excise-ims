@@ -36,6 +36,8 @@ import { UserManagementPage } from './buckwaframework/project/pages/userManageme
 import { UserManagementDetailPage } from './buckwaframework/project/pages/userManagement/userManagement-detail';
 import { AnalysisPage } from './buckwaframework/project/pages/analysis/analysis.component';
 import { ResultAnalysisPage } from './buckwaframework/project/pages/result-analysis/result-analysis.component';
+import { SelectFormComponent } from './buckwaframework/project/pages/select-form/select-form.component';
+
 
 @NgModule({
     declarations: [
@@ -53,7 +55,8 @@ import { ResultAnalysisPage } from './buckwaframework/project/pages/result-analy
         UserManagementPage,
         UserManagementDetailPage,
         AnalysisPage,
-        ResultAnalysisPage
+        ResultAnalysisPage,
+        SelectFormComponent
     ],
     imports: [
         BrowserModule,
