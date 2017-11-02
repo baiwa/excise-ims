@@ -38,6 +38,8 @@ import { AnalysisPage } from './buckwaframework/project/pages/analysis/analysis.
 import { ResultAnalysisPage } from './buckwaframework/project/pages/result-analysis/result-analysis.component';
 import { SelectFormComponent } from './buckwaframework/project/pages/select-form/select-form.component';
 import { CreateFormComponent } from './buckwaframework/project/pages/create-form/create-form.component';
+import { CreateNewFormComponent } from './buckwaframework/project/pages/create-new-form/create-new-form.component';
+import { SelectNewFormComponent } from './buckwaframework/project/pages/select-new-form/select-new-form.component';
 
 
 
@@ -59,7 +61,9 @@ import { CreateFormComponent } from './buckwaframework/project/pages/create-form
         AnalysisPage,
         ResultAnalysisPage,
         SelectFormComponent,
-        CreateFormComponent
+        CreateFormComponent,
+        CreateNewFormComponent,
+        SelectNewFormComponent
     ],
     imports: [
         BrowserModule,
