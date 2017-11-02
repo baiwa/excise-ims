@@ -8,25 +8,31 @@
 
         <div class="ui attached segment">
             <div id="userManagementForm" class="ui form">
-                <div class="fields">
-                    <div class="five wide field required">
-                        <label>เลขทะเบียนสรรพสามิต</label>
+                <div class="inline fields">
+                    <div class="eight wide field required">
+                        <label class="custom-label-w-25">เลขทะเบียนสรรพสามิต</label>
                         <input type="text">
                     </div>
-                    <div class="three wide field"></div>
-                    <div class="five wide field">
-                        <label>เลขประจำตัวผู้เสียภาษีอากร</label>
+                    <div class="eight wide field">
+                        <label class="custom-label-w-20">เลขประจำตัวผู้เสียภาษีอากร</label>
                         <input type="text">
                     </div>
                 </div>
 
-                <div class="fields">
-                    <div class="four wide field required">
-                        <label>รอบระยะเวลาการตรวจสอบ</label>
-                        <div class="ui calendar" id="example1">
-                            <div class="ui input left icon">
-                                <i class="calendar icon"></i>
+                <div class="inline fields">
+                    <div class="eight wide field required">
+                        <label class="custom-label-w-25">รอบระยะเวลาการตรวจสอบ</label>
+                        <div class="eight wide field">
+                            <div class="ui icon input">
                                 <input type="text" placeholder="MM/YYYY">
+                                <i class="add to calendar icon"></i>
+                            </div>
+                        </div>
+                        <div class="eight wide field">
+                            <label>-</label>
+                            <div class="ui icon input">
+                                <input type="text" placeholder="MM/YYYY">
+                                <i class="add to calendar icon"></i>
                             </div>
                         </div>
                     </div>
