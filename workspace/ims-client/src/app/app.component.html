@@ -4,7 +4,21 @@
             <img class="logo" src="assets/images/logo.png"> {{ 'APP_NAME' | translate }}
         </a>
         <a class="item" [routerLink]="['/home']" routerLinkActive="active" *ngIf="authService.getLogin()">Home</a>
-        <a class="item" [routerLink]="['/analysis']" routerLinkActive="active" *ngIf="authService.getLogin()">วิเคราะห์ข้อมูลเบื้องต้น</a>
+        <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
+            ตรวจสอบภายใน <i class="dropdown icon"></i>
+            <div class="menu">
+                <a class="item" [routerLink]="['/1']" routerLinkActive="active">ตรวจสอบใบเสร็จ</a>
+                <a class="item" [routerLink]="['/2']" routerLinkActive="active">ตรวจสอบการนำส่งรายได้</a>
+                <a class="item" [routerLink]="['/3']" routerLinkActive="active">ตรวจสอบงบสรุปยอดเงินค่าภาษี กับงบทดลองประจำเดือน</a>
+                <a class="item" [routerLink]="['/4']" routerLinkActive="active">ตรวจสอบสถิติการชำระภาษี</a>
+            </div>
+        </div>
+        <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
+            ตรวจสอบภาษี <i class="dropdown icon"></i>
+            <div class="menu">
+                <a class="item" [routerLink]="['/analysis']" routerLinkActive="active">วิเคราะห์ข้อมูลเบื้องต้น</a>
+            </div>
+        </div>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
             Administrator <i class="dropdown icon"></i>
             <div class="menu">
