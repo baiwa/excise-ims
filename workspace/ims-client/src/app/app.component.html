@@ -5,7 +5,7 @@
         </a>
         <a class="item" [routerLink]="['/home']" routerLinkActive="active" *ngIf="authService.getLogin()">Home</a>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
-            ตรวจสอบภายใน <i class="dropdown icon"></i>
+            ตรวจสอบภายใน (รายได้) <i class="dropdown icon"></i>
             <div class="menu">
                 <a class="item" [routerLink]="['/1']" routerLinkActive="active">ตรวจสอบใบเสร็จ</a>
                 <a class="item" [routerLink]="['/2']" routerLinkActive="active">ตรวจสอบการนำส่งรายได้</a>

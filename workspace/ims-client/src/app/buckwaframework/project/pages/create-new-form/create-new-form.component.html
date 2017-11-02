@@ -1,185 +1,185 @@
 <div class="ui grid">
-  <div class="sixteen wide column">
-    <h2 class="ui header">สร้างกระดาษทำการใหม่</h2>
+    <div class="sixteen wide column">
+        <h2 class="ui header">สร้างกระดาษทำการใหม่</h2>
 
-    <div class="ui top attached header">
-      <span>Criteria</span>
-    </div>
-
-    <div class="ui attached segment">
-      <div class="ui form">
-        <div class="inline fields">
-          <div class="eight wide field ">
-            <label class="custom-label-w-25">ทะเบียนสรรพสามิต</label>
-            <input type="text" class="custom-readonly" placeholder="ทะเบียนสรรพสามิต" readonly="" value="2560-00178-5">
-          </div>
-          <div class="eight wide field ">
-            <label class="custom-label-w-20">เลขประจำตัวผู้เสียภาษี</label>
-            <input type="text" class="custom-readonly" placeholder="เลขประจำตัวผู้เสียภาษี" readonly="" value="1-5599-00168-99-6">
-          </div>
+        <div class="ui top attached header">
+            <span>Criteria</span>
         </div>
 
-        <div class="inline fields">
-          <div class="eight wide field">
-            <label class="custom-label-w-25">ผู้ประกอบการ </label>
-            <input type="text" class="custom-readonly" placeholder="ผู้ประกอบการ" readonly="" value="น้ำหอมเทสเตอร์ BB ราคาส่ง 30">
-          </div>
-          <div class="eight wide field ">
-            <label class="custom-label-w-20">เลขที่วิเคราะห์</label>
-            <input type="text" class="custom-readonly" placeholder="เลขที่วิเคราะห์" readonly="" value="000000000000">
-          </div>
-        </div>
+        <div class="ui attached segment">
+            <div class="ui form">
+                <div class="inline fields">
+                    <div class="eight wide field ">
+                        <label class="custom-label-w-25">ทะเบียนสรรพสามิต</label>
+                        <input type="text" class="custom-readonly" placeholder="ทะเบียนสรรพสามิต" readonly="" value="2560-00178-5">
+                    </div>
+                    <div class="eight wide field ">
+                        <label class="custom-label-w-20">เลขประจำตัวผู้เสียภาษี</label>
+                        <input type="text" class="custom-readonly" placeholder="เลขประจำตัวผู้เสียภาษี" readonly="" value="1-5599-00168-99-6">
+                    </div>
+                </div>
 
-        <div class="inline fields">
-          <div class="eight wide field required">
-            <label class="custom-label-w-25">รอบระยะเวลาการตรวจสอบ</label>
-            <div class="eight wide field">
-              <div class="ui icon input">
-                <input type="text" class="custom-readonly" placeholder="MM/YYYY" value="12/2017" readonly="">
-                <i class="add to calendar icon"></i>
-              </div>
+                <div class="inline fields">
+                    <div class="eight wide field">
+                        <label class="custom-label-w-25">ผู้ประกอบการ </label>
+                        <input type="text" class="custom-readonly" placeholder="ผู้ประกอบการ" readonly="" value="บ. ฮอนด้า มอเตอร์ ประเทศไทย">
+                    </div>
+                    <div class="eight wide field ">
+                        <label class="custom-label-w-20">เลขที่วิเคราะห์</label>
+                        <input type="text" class="custom-readonly" placeholder="เลขที่วิเคราะห์" readonly="" value="256000000001">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="eight wide field required">
+                        <label class="custom-label-w-25">รอบระยะเวลาการตรวจสอบ</label>
+                        <div class="eight wide field">
+                            <div class="ui icon input">
+                                <input type="text" class="custom-readonly" placeholder="MM/YYYY" value="11/2560" readonly="">
+                                <i class="add to calendar icon"></i>
+                            </div>
+                        </div>
+                        <div class="eight wide field">
+                            <label>-</label>
+                            <div class="ui icon input">
+                                <input type="text" class="custom-readonly" placeholder="MM/YYYY" value="11/2560" readonly="">
+                                <i class="add to calendar icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="eight wide field">
-              <label>-</label>
-              <div class="ui icon input">
-                <input type="text" class="custom-readonly" placeholder="MM/YYYY" value="12/2017" readonly="">
-                <i class="add to calendar icon"></i>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
 
-    <div class="ui segment">
-      <h3 class="ui header">อัพโหลด Template ข้อมูลสำหรับการสร้างกระดาษทำการใหม่</h3>
-      <div class="ui grid">
-        <div class="six wide column">
-          <input type="file" />
-        </div>
-        <div class="four wide column">
-          <button class="ui primary button" (click)="onClickUpload()">
+        <div class="ui segment">
+            <h3 class="ui header">อัพโหลด Template ข้อมูลสำหรับการสร้างกระดาษทำการใหม่</h3>
+            <div class="ui grid">
+                <div class="six wide column">
+                    <input type="file" />
+                </div>
+                <div class="four wide column">
+                    <button class="ui primary button" (click)="onClickUpload()">
             <i class="upload icon"></i>
             อัพโหลด
           </button>
-          <button class="ui button" (click)="onclickDelete()">
+                    <button class="ui button" (click)="onclickDelete()">
             <i class="trash outline icon"></i>
             ลบไฟล์
           </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="ui segment" *ngIf="showUploadDetail">
-      <div class="ui grid center aligned">
-        <div class="sixteen wide column">
-          บริษัท รถยนต์สำเร็จรูป BB ราคาส่ง 30
-          <br> กระดาษทำการเปรียบเทียบปริมาณจำหน่ายรถยนต์สำเร็จรูปในประเทศ
-          <br> เดือน มีนาคม 2559
-        </div>
-      </div>
+        <div class="ui segment" *ngIf="showUploadDetail">
+            <div class="ui grid center aligned">
+                <div class="sixteen wide column">
+                    บ. ฮอนด้า มอเตอร์ ประเทศไทย
+                    <br> กระดาษทำการเปรียบเทียบปริมาณจำหน่ายรถยนต์สำเร็จรูปในประเทศ
+                    <br> เดือน มีนาคม 2559
+                </div>
+            </div>
 
-      <table class="ui small celled table">
-        <thead>
-          <tr style="text-align: center;">
-            <th rowspan="3">ลำดับ</th>
-            <th rowspan="3">รายการ</th>
-            <th colspan="2">เปรียบเทียบข้อมูลหลัก กับ ข้อมูลจากTemplate</th>
-            <th rowspan="3">ผลต่าง</th>
-          </tr>
-          <tr style="text-align: center;">
-            <th style="border-left: 1px solid rgba(34,36,38,.1);">ข้อมูลจาก</th>
-            <th>ข้อมูลจาก</th>
-          </tr>
-          <tr style="text-align: center;">
-            <th style="border-left: 1px solid rgba(34,36,38,.1);">ภส. 03-07</th>
-            <th>Template</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="text-align: right;">1
-            </td>
-            <td style="text-align: left;">12/2017
-            </td>
-            <td style="text-align: right;">904,010.65
-            </td>
-            <td style="text-align: right;">904,010.65
-            </td>
-            <td style="text-align: right;">0.00
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">2
-            </td>
-            <td style="text-align: left;">12/2017
-            </td>
-            <td style="text-align: right;">794,114.41
-            </td>
-            <td style="text-align: right;">754,331.41
-            </td>
-            <td style="text-align: right;">39,783.00
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">3
-            </td>
-            <td style="text-align: left;">12/2017
-            </td>
-            <td style="text-align: right;">411,693.38
-            </td>
-            <td style="text-align: right;">411,693.38
-            </td>
-            <td style="text-align: right;">0.00
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">4
-            </td>
-            <td style="text-align: left;">12/2017
-            </td>
-            <td style="text-align: right;">197,917.70
-            </td>
-            <td style="text-align: right;">143,747.70
-            </td>
-            <td style="text-align: right;">54,170.00
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" style="text-align: center;">รวม
-            </td>
-            <td style="text-align: right;">2,307,736.14
-            </td>
-            <td style="text-align: right;">2,213,783.70
-            </td>
-            <td style="text-align: right;">93953.00
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            <table class="ui small celled table">
+                <thead>
+                    <tr style="text-align: center;">
+                        <th rowspan="3">ลำดับ</th>
+                        <th rowspan="3">รายการ</th>
+                        <th colspan="2">เปรียบเทียบข้อมูลหลัก กับ ข้อมูลจากTemplate</th>
+                        <th rowspan="3">ผลต่าง</th>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <th style="border-left: 1px solid rgba(34,36,38,.1);">ข้อมูลจาก</th>
+                        <th>ข้อมูลจาก</th>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <th style="border-left: 1px solid rgba(34,36,38,.1);">ภส. 03-07</th>
+                        <th>Template</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: right;">1
+                        </td>
+                        <td style="text-align: left;">11/2560
+                        </td>
+                        <td style="text-align: right;">904,010.65
+                        </td>
+                        <td style="text-align: right;">904,010.65
+                        </td>
+                        <td style="text-align: right;">0.00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;">2
+                        </td>
+                        <td style="text-align: left;">11/2560
+                        </td>
+                        <td style="text-align: right;">794,114.41
+                        </td>
+                        <td style="text-align: right;">754,331.41
+                        </td>
+                        <td style="text-align: right;">39,783.00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;">3
+                        </td>
+                        <td style="text-align: left;">11/2560
+                        </td>
+                        <td style="text-align: right;">411,693.38
+                        </td>
+                        <td style="text-align: right;">411,693.38
+                        </td>
+                        <td style="text-align: right;">0.00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;">4
+                        </td>
+                        <td style="text-align: left;">11/2560
+                        </td>
+                        <td style="text-align: right;">197,917.70
+                        </td>
+                        <td style="text-align: right;">143,747.70
+                        </td>
+                        <td style="text-align: right;">54,170.00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center;">รวม
+                        </td>
+                        <td style="text-align: right;">2,307,736.14
+                        </td>
+                        <td style="text-align: right;">2,213,783.70
+                        </td>
+                        <td style="text-align: right;">93953.00
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-      <div class="ui center aligned grid">
-        <div class="six wide column">
-          <button class="ui primary button" routerLink="/create-new-form">
+            <div class="ui center aligned grid">
+                <div class="six wide column">
+                    <button class="ui primary button" routerLink="/create-new-form">
             <i class="print icon"></i>
             พิมพ์กระดาษทำการ
           </button>
-          <button class="ui button" routerLink="/select-form">
+                    <button class="ui button" routerLink="/select-form">
             <i class="remove icon"></i>
             ล้างข้อมูล
           </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <!-- <div class="ui segment"> -->
-    <div class="ui grid center aligned">
-      <div class="sixteen wide column">
-        <button class="ui button" routerLink="/select-new-form">
+        <!-- <div class="ui segment"> -->
+        <div class="ui grid center aligned">
+            <div class="sixteen wide column">
+                <button class="ui button" routerLink="/select-new-form">
           <i class="long arrow left icon"></i>
           ย้อนกลับ
         </button>
-      </div>
+            </div>
+        </div>
+        <!-- </div> -->
     </div>
-    <!-- </div> -->
-  </div>
