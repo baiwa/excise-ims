@@ -18,6 +18,8 @@ import { AnalysisPage } from '../../project/pages/analysis/analysis.component';
 import { ResultAnalysisPage } from '../../project/pages/result-analysis/result-analysis.component';
 import { SelectFormComponent } from './../../project/pages/select-form/select-form.component';
 import { CreateFormComponent } from './../../project/pages/create-form/create-form.component';
+import { SelectNewFormComponent } from './../../project/pages/select-new-form/select-new-form.component';
+import { CreateNewFormComponent } from './../../project/pages/create-new-form/create-new-form.component';
 
 const routes: Routes = [
 
@@ -40,6 +42,8 @@ const routes: Routes = [
     { path: 'result-analysis', component: ResultAnalysisPage, canActivate: [AuthGuard] },
     { path: 'select-form', component: SelectFormComponent, canActivate: [AuthGuard] },
     { path: 'create-form', component: CreateFormComponent, canActivate: [AuthGuard] },
+    { path: 'select-new-form', component: SelectNewFormComponent, canActivate: [AuthGuard] },
+    { path: 'create-new-form', component: CreateNewFormComponent, canActivate: [AuthGuard] },
     
 ];
 
