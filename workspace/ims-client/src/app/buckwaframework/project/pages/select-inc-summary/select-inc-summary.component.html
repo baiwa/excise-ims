@@ -1,0 +1,109 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <div class="ui large steps">
+      <div class="step">
+        <i class="upload icon"></i>
+        <div class="content">
+          <div class="title">นำเข้างบทดลอง&nbsp;&nbsp;&nbsp;</div>
+        </div>
+      </div>
+      <div class="active step">
+        <i class="list layout icon"></i>
+        <div class="content">
+          <div class="title">เลือกงบสรุปยอดเงินค่าภาษี</div>
+        </div>
+      </div>
+      <div class="step">
+        <i class="table icon"></i>
+        <div class="content">
+          <div class="title">แสดงผลการตรวจสอบ</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="ui header">เลือกงบสรุปยอดเงินค่าภาษี</h2>
+
+    <div class="ui top attached header">
+      <span>ระบุเงื่อนไข</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">สำนักงานสรรพสามิตภาค</label>
+            <select name="selectZone" id="selectZone" class="ui dropdown">
+              <option *ngFor="let item of selectZone; index as i;" value="{{i+1}}">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">สำนักงานสรรพสามิตพื้นที่</label>
+            <select name="selectArea" id="selectArea" class="ui dropdown">
+              <option *ngFor="let item of selectArea; index as i;" value="{{i+1}}">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="three wide field">
+            <label class="custom-label-w-25">สำนักงานสรรพสามิตพื้นที่สาขา</label>
+          </div>
+          <div class="five wide field">
+            <input type="text" class="custom-readonly" placeholder="สาขาเมือง 1" readonly="" value="ตำบลในเมือง">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="three wide field"></div>
+          <div class="five wide field">
+            <input type="hidden" class="custom-label-w-25" value="สำนักงานสรรพสามิตพื้นที่สาขา">
+            <input type="text" class="custom-readonly" placeholder="สาขาเมือง 2" readonly="" value="อำเภอเมือง">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="three wide field"></div>
+          <div class="five wide field">
+            <input type="hidden" class="custom-label-w-25" value="สำนักงานสรรพสามิตพื้นที่สาขา">
+            <input type="text" class="custom-readonly" placeholder="สาขาเมือง 3" readonly="" value="จังหวัดสมุทรสงคราม">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field required">
+            <label class="custom-label-w-25">รอบระยะเวลาการตรวจสอบ</label>
+            <div class="eight wide field">
+              <div class="ui icon input">
+                <input type="text" class="custom-readonly" placeholder="DD/MM/YYYY" value="03/11/2560" readonly="">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+            <div class="eight wide field">
+              <label>-</label>
+              <div class="ui icon input">
+                <input type="text" class="custom-readonly" placeholder="DD/MM/YYYY" value="03/11/2560" readonly="">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="ui center aligned grid">
+        <div class="six wide column">
+          <button class="ui primary button" routerLink="/result-analysis-gf-inc">
+            <i class="checkmark box icon"></i>
+            ตรวจสอบ
+          </button>
+          <button class="ui button" routerLink="/import-gf-accounting">
+            <i class="arrow left icon"></i>
+            ย้อนกลับ
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

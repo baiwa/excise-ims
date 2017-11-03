@@ -40,6 +40,10 @@ import { SelectFormComponent } from './buckwaframework/project/pages/select-form
 import { CreateFormComponent } from './buckwaframework/project/pages/create-form/create-form.component';
 import { CreateNewFormComponent } from './buckwaframework/project/pages/create-new-form/create-new-form.component';
 import { SelectNewFormComponent } from './buckwaframework/project/pages/select-new-form/select-new-form.component';
+import { ImportGfAccountingComponent } from './buckwaframework/project/pages/import-gf-accounting/import-gf-accounting.component';
+import { SelectIncSummaryComponent } from './buckwaframework/project/pages/select-inc-summary/select-inc-summary.component';
+import { ResultAnalysisGfIncComponent } from './buckwaframework/project/pages/result-analysis-gf-inc/result-analysis-gf-inc.component';
+import { MappingGfIncCodeComponent } from './buckwaframework/project/pages/mapping-gf-inc-code/mapping-gf-inc-code.component';
 
 
 
@@ -63,7 +67,11 @@ import { SelectNewFormComponent } from './buckwaframework/project/pages/select-n
         SelectFormComponent,
         CreateFormComponent,
         CreateNewFormComponent,
-        SelectNewFormComponent
+        SelectNewFormComponent,
+        ImportGfAccountingComponent,
+        SelectIncSummaryComponent,
+        ResultAnalysisGfIncComponent,
+        MappingGfIncCodeComponent
     ],
     imports: [
         BrowserModule,

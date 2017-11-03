@@ -1,0 +1,117 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">จับคู่รหัสภาษี</h2>
+
+    <div class="ui top attached header">
+      <div class="ui grid">
+        <div class="three column row">
+          <div class="column">
+          </div>
+
+          <div class="center aligned column">
+          </div>
+
+          <div class="right aligned column">
+            <div class="ui mini primary button" (click)="onAddClick()">
+              <i class="add icon"></i> Add
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui attached segment">
+      <table id="table1" class="ui small celled table">
+        <thead>
+          <tr>
+            <th colspan="2">งบทดลอง</th>
+            <th colspan="3">งบสรุปยอดเงินภาษี</th>
+          </tr>
+          <tr style="text-align: center;">
+            <th rowspan="2" colspan="2">บัญชีแยกประเภท</th>
+            <th colspan="2">หมวดภาษี</th>
+            <th rowspan="2">Action</th>
+          </tr>
+          <tr style="text-align: center;">
+            <th style="border-left: 1px solid rgba(34,36,38,.1);">รหัสภาษี</th>
+            <th>รายการ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listData;">
+            <td>{{item[0]}}</td>
+            <td>{{item[1]}}</td>
+            <td>{{item[2]}}</td>
+            <td>{{item[3]}}</td>
+            <td style="text-align: center;">
+              <a class="update" href="javascript:;" (click)="onEditClick()">
+                แก้ไข
+              </a>
+              <strong> / </strong>
+              <a class="delete" href="javascript:;">
+                ลบ
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<div id="modalMappingIncCode" class="ui small modal hidden transition">
+  <i class="close icon"></i>
+  <div class="header">
+    {{actionsModal}} จับคู่รหัสภาษี
+  </div>
+
+  <div class="content">
+    <div class="ui form">
+      <div class="inline fields">
+        <div class="sixteen wide field">
+          <div class="four wide field">
+            <label>บัญชีแยกประเภท</label>
+          </div>
+          <div class="ten wide field">
+            <select name="selectCatagory" id="selectCatagory" class="ui dropdown">
+              <option value="0">4102020103 : รายได้ภาษีสุรา</option>
+              <option value="1">4102020109 : รายได้ภาษีรถยนต์</option>
+              <option value="2">4201010199 : ร/ดอนุญาตอื่น</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="sixteen wide field">
+          <div class="four wide field">
+            <label>หมวดภาษี</label>
+          </div>
+          <div class="ten wide field">
+            <select name="selectTax" id="selectTax" class="ui dropdown">
+              <option value="1">203010 : ภาษีสุรา</option>
+              <option value="2">250010 : ภาษีแบตเตอรี่</option>
+              <option value="3">804203 : ค่าปรับเปรียบเทียบคดีสุรา</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="ui center aligned grid">
+      <div class="six wide column">
+        <button class="ui primary button">
+          <i class="save icon"></i>
+          บันทึก
+        </button>
+        <button class="ui button" (click)="closeModal()">
+          <i class="close icon"></i>
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

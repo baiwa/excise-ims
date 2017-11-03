@@ -5,22 +5,32 @@
         </a>
         <a class="item" [routerLink]="['/home']" routerLinkActive="active" *ngIf="authService.getLogin()">Home</a>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
-            ตรวจสอบภายใน (รายได้) <i class="dropdown icon"></i>
+            ตรวจสอบภายใน (รายได้)
+            <i class="dropdown icon"></i>
             <div class="menu">
                 <a class="item" [routerLink]="['/1']" routerLinkActive="active">ตรวจสอบใบเสร็จ</a>
                 <a class="item" [routerLink]="['/2']" routerLinkActive="active">ตรวจสอบการนำส่งรายได้</a>
-                <a class="item" [routerLink]="['/3']" routerLinkActive="active">ตรวจสอบงบสรุปยอดเงินค่าภาษี กับงบทดลองประจำเดือน</a>
+                <div class="ui dropdown item">
+                    <i class="dropdown icon"></i>
+                    ตรวจสอบงบสรุปยอดเงินค่าภาษี กับงบทดลองประจำเดือน &nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="menu">
+                        <a class="item" [routerLink]="['/import-gf-accounting']">ตรวจสอบ</a>
+                        <a class="item" [routerLink]="['/mapping-gf-inc-code']">ตั้งค่าจับคู่รหัสภาษี</a>
+                    </div>
+                </div>
                 <a class="item" [routerLink]="['/4']" routerLinkActive="active">ตรวจสอบสถิติการชำระภาษี</a>
             </div>
         </div>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
-            ตรวจสอบภาษี <i class="dropdown icon"></i>
+            ตรวจสอบภาษี
+            <i class="dropdown icon"></i>
             <div class="menu">
                 <a class="item" [routerLink]="['/analysis']" routerLinkActive="active">วิเคราะห์ข้อมูลเบื้องต้น</a>
             </div>
         </div>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
-            Administrator <i class="dropdown icon"></i>
+            Administrator
+            <i class="dropdown icon"></i>
             <div class="menu">
                 <a class="item" [routerLink]="['/message']" routerLinkActive="active">Message</a>
                 <a class="item" [routerLink]="['/parameterGroup']" routerLinkActive="active">Parameter</a>
@@ -34,8 +44,10 @@
                 <div class="default text">Language</div>
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <div class="item" (click)="changeToEnglish()"><i class="us flag"></i> English</div>
-                    <div class="item" (click)="changeToThai()"><i class="th flag"></i> Thai</div>
+                    <div class="item" (click)="changeToEnglish()">
+                        <i class="us flag"></i> English</div>
+                    <div class="item" (click)="changeToThai()">
+                        <i class="th flag"></i> Thai</div>
                 </div>
             </div>
             <a class="item" *ngIf="!authService.getLogin()" [routerLink]="['/login']">Login</a>

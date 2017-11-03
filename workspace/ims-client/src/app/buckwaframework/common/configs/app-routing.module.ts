@@ -20,6 +20,10 @@ import { SelectFormComponent } from './../../project/pages/select-form/select-fo
 import { CreateFormComponent } from './../../project/pages/create-form/create-form.component';
 import { SelectNewFormComponent } from './../../project/pages/select-new-form/select-new-form.component';
 import { CreateNewFormComponent } from './../../project/pages/create-new-form/create-new-form.component';
+import { ImportGfAccountingComponent } from './../../project/pages/import-gf-accounting/import-gf-accounting.component';
+import { SelectIncSummaryComponent } from './../../project/pages/select-inc-summary/select-inc-summary.component';
+import { ResultAnalysisGfIncComponent } from './../../project/pages/result-analysis-gf-inc/result-analysis-gf-inc.component';
+import { MappingGfIncCodeComponent } from './../../project/pages/mapping-gf-inc-code/mapping-gf-inc-code.component';
 
 const routes: Routes = [
 
@@ -44,6 +48,11 @@ const routes: Routes = [
     { path: 'create-form', component: CreateFormComponent, canActivate: [AuthGuard] },
     { path: 'select-new-form', component: SelectNewFormComponent, canActivate: [AuthGuard] },
     { path: 'create-new-form', component: CreateNewFormComponent, canActivate: [AuthGuard] },
+
+    { path: 'import-gf-accounting', component: ImportGfAccountingComponent, canActivate: [AuthGuard] },
+    { path: 'select-inc-summary', component: SelectIncSummaryComponent, canActivate: [AuthGuard] },
+    { path: 'result-analysis-gf-inc', component: ResultAnalysisGfIncComponent, canActivate: [AuthGuard] },
+    { path: 'mapping-gf-inc-code', component: MappingGfIncCodeComponent, canActivate: [AuthGuard] },
     
 ];
 
