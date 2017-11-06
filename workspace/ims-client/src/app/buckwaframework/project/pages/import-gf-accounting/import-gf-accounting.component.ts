@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-import-gf-accounting',
+  selector: 'import-gf-accounting',
   templateUrl: './import-gf-accounting.component.html',
   styleUrls: ['./import-gf-accounting.component.css']
 })

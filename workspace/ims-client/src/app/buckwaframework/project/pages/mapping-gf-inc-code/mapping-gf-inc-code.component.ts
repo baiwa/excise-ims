@@ -4,7 +4,7 @@ import { MessageBarService } from './../../../common/services/message-bar.servic
 
 declare var $: any;
 @Component({
-  selector: 'app-mapping-gf-inc-code',
+  selector: 'mapping-gf-inc-code',
   templateUrl: './mapping-gf-inc-code.component.html',
   styleUrls: ['./mapping-gf-inc-code.component.css']
 })

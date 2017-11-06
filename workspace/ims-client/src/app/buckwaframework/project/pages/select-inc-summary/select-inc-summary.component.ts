@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 declare var $: any;
 @Component({
-  selector: 'app-select-inc-summary',
+  selector: 'select-inc-summary',
   templateUrl: './select-inc-summary.component.html',
   styleUrls: ['./select-inc-summary.component.css']
 })

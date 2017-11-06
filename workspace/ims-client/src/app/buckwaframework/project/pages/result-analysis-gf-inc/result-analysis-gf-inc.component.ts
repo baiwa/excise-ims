@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 declare var $: any;
 
 @Component({
-  selector: 'app-result-analysis-gf-inc',
+  selector: 'result-analysis-gf-inc',
   templateUrl: './result-analysis-gf-inc.component.html',
   styleUrls: ['./result-analysis-gf-inc.component.css']
 })
