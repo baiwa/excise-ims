@@ -44,6 +44,9 @@ import { ImportGfAccountingComponent } from './buckwaframework/project/pages/imp
 import { SelectIncSummaryComponent } from './buckwaframework/project/pages/select-inc-summary/select-inc-summary.component';
 import { ResultAnalysisGfIncComponent } from './buckwaframework/project/pages/result-analysis-gf-inc/result-analysis-gf-inc.component';
 import { MappingGfIncCodeComponent } from './buckwaframework/project/pages/mapping-gf-inc-code/mapping-gf-inc-code.component';
+import { CheckCompanyPaymentComponent } from './buckwaframework/project/pages/check-company-payment/check-company-payment.component';
+import { CheckCompanyRenewComponent } from './buckwaframework/project/pages/check-company-renew/check-company-renew.component';
+import { CheckReprintLicenseComponent } from './buckwaframework/project/pages/check-reprint-license/check-reprint-license.component';
 
 
 
@@ -71,7 +74,10 @@ import { MappingGfIncCodeComponent } from './buckwaframework/project/pages/mappi
         ImportGfAccountingComponent,
         SelectIncSummaryComponent,
         ResultAnalysisGfIncComponent,
-        MappingGfIncCodeComponent
+        MappingGfIncCodeComponent,
+        CheckCompanyPaymentComponent,
+        CheckCompanyRenewComponent,
+        CheckReprintLicenseComponent
     ],
     imports: [
         BrowserModule,

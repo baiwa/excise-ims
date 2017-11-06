@@ -24,6 +24,9 @@ import { ImportGfAccountingComponent } from './../../project/pages/import-gf-acc
 import { SelectIncSummaryComponent } from './../../project/pages/select-inc-summary/select-inc-summary.component';
 import { ResultAnalysisGfIncComponent } from './../../project/pages/result-analysis-gf-inc/result-analysis-gf-inc.component';
 import { MappingGfIncCodeComponent } from './../../project/pages/mapping-gf-inc-code/mapping-gf-inc-code.component';
+import { CheckCompanyPaymentComponent } from './../../project/pages/check-company-payment/check-company-payment.component';
+import { CheckCompanyRenewComponent } from './../../project/pages/check-company-renew/check-company-renew.component';
+import { CheckReprintLicenseComponent } from './../../project/pages/check-reprint-license/check-reprint-license.component';
 
 const routes: Routes = [
 
@@ -53,6 +56,10 @@ const routes: Routes = [
     { path: 'select-inc-summary', component: SelectIncSummaryComponent, canActivate: [AuthGuard] },
     { path: 'result-analysis-gf-inc', component: ResultAnalysisGfIncComponent, canActivate: [AuthGuard] },
     { path: 'mapping-gf-inc-code', component: MappingGfIncCodeComponent, canActivate: [AuthGuard] },
+
+    { path: 'check-company-payment', component: CheckCompanyPaymentComponent, canActivate: [AuthGuard] },
+    { path: 'check-company-renew', component: CheckCompanyRenewComponent, canActivate: [AuthGuard] },
+    { path: 'check_reprint_license', component: CheckReprintLicenseComponent, canActivate: [AuthGuard] },
     
 ];
 

@@ -14,11 +14,19 @@
                     <i class="dropdown icon"></i>
                     ตรวจสอบงบสรุปยอดเงินค่าภาษี กับงบทดลองประจำเดือน &nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="menu">
-                        <a class="item" [routerLink]="['/import-gf-accounting']">ตรวจสอบ</a>
-                        <a class="item" [routerLink]="['/mapping-gf-inc-code']">ตั้งค่าจับคู่รหัสภาษี</a>
+                        <a class="item" [routerLink]="['/import-gf-accounting']" routerLinkActive="active">ตรวจสอบ</a>
+                        <a class="item" [routerLink]="['/mapping-gf-inc-code']" routerLinkActive="active">ตั้งค่าจับคู่รหัสภาษี</a>
                     </div>
                 </div>
-                <a class="item" [routerLink]="['/4']" routerLinkActive="active">ตรวจสอบสถิติการชำระภาษี</a>
+                <div class="ui dropdown item">
+                    <i class="dropdown icon"></i>
+                    ตรวจสอบสถิติการชำระภาษี
+                    <div class="menu">
+                        <a class="item" [routerLink]="['/check-company-payment']" routerLinkActive="active">ตรวจสอบสถิติการชำระภาษี</a>
+                        <a class="item" [routerLink]="['/check-company-renew']" routerLinkActive="active">ตรวจสอบสถิติการต่ออายุใบอนุญาต</a>
+                    </div>
+                </div>
+                <a class="item" [routerLink]="['/check_reprint_license']" routerLinkActive="active">ตรวจสอบการพิมพ์ใบอนุญาตซ้ำ</a>
             </div>
         </div>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
