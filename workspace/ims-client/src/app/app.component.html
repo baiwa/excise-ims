@@ -40,7 +40,10 @@
             ตรวจสอบภาษี
             <i class="dropdown icon"></i>
             <div class="menu">
-                <a class="item" [routerLink]="['/analysis']" routerLinkActive="active">วิเคราะห์ข้อมูลเบื้องต้น</a>
+                <a class="item" [routerLink]="['/analysis']" routerLinkActive="active">วิเคราะห์ข้อมูลเบื้องต้น(OLD)</a>
+                <a class="item" [routerLink]="['/trader-selection']" routerLinkActive="active">ระบบคัดเลือกราย</a>
+                <a class="item" [routerLink]="['/tax-audit-operation']" routerLinkActive="active">ปฏิบัติการตรวจสอบภาษี</a>
+                <a class="item" [routerLink]="['/tax-audit-reporting']" routerLinkActive="active">รายงานปลการตรวจสอบ</a>                
             </div>
         </div>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()">

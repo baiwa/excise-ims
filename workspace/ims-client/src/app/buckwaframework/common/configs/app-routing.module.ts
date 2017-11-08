@@ -29,6 +29,7 @@ import { CheckCompanyRenewComponent } from './../../project/pages/check-company-
 import { CheckReprintLicenseComponent } from './../../project/pages/check-reprint-license/check-reprint-license.component';
 import { CheckReceiptTaxComponent } from './../../project/pages/check-receipt-tax/check-receipt-tax.component';
 import { CheckReceiptLicenseComponent } from './../../project/pages/check-receipt-license/check-receipt-license.component';
+import { CreateTraderComponent } from './../../project/tax-audit/trader-selection/create-trader/create-trader.component';
 
 const routes: Routes = [
 
@@ -65,6 +66,7 @@ const routes: Routes = [
 
     { path: 'check-receipt-tax', component: CheckReceiptTaxComponent, canActivate: [AuthGuard] },
     { path: 'check-receipt-license', component: CheckReceiptLicenseComponent, canActivate: [AuthGuard] },
+    { path: 'trader-selection', component: CreateTraderComponent, canActivate: [AuthGuard] },
     
 ];
 

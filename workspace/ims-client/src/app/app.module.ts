@@ -49,6 +49,7 @@ import { CheckCompanyRenewComponent } from './buckwaframework/project/pages/chec
 import { CheckReprintLicenseComponent } from './buckwaframework/project/pages/check-reprint-license/check-reprint-license.component';
 import { CheckReceiptTaxComponent } from './buckwaframework/project/pages/check-receipt-tax/check-receipt-tax.component';
 import { CheckReceiptLicenseComponent } from './buckwaframework/project/pages/check-receipt-license/check-receipt-license.component';
+import { CreateTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/create-trader/create-trader.component';
 
 @NgModule({
     declarations: [
@@ -79,7 +80,8 @@ import { CheckReceiptLicenseComponent } from './buckwaframework/project/pages/ch
         CheckCompanyRenewComponent,
         CheckReprintLicenseComponent,
         CheckReceiptTaxComponent,
-        CheckReceiptLicenseComponent
+        CheckReceiptLicenseComponent,
+        CreateTraderComponent
     ],
     imports: [
         BrowserModule,
