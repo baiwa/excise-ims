@@ -1,3 +1,100 @@
-<p>
-  check-reprint-license works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">ตรวจสอบการพิมพ์ใบอนุญาตซ้ำ</h2>
+
+    <div class="ui top attached center aligned header">
+      <span>การพิมพ์บอนุญาตซ้ำ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="four wide field"></div>
+          <div class="eight wide field">
+            <label class="custom-label-w-25">สำนักงานสรรพสามิตภาค</label>
+            <select name="selectZone" id="selectZone" class="ui dropdown">
+              <option *ngFor="let item of zoneList; index as i;" value="{{i+1}}">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="four wide field"></div>
+          <div class="eight wide field">
+            <label class="custom-label-w-25">สำนักงานสรรพสามิตพื้นที่</label>
+            <select name="selectArea" id="selectArea" class="ui dropdown">
+              <option *ngFor="let item of areaList; index as i;" value="{{i+1}}">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="four wide field"></div>
+          <div class="eight wide field">
+            <label class="custom-label-w-25">สำนัักงานสรรพสามิตพื้นที่สาขา</label>
+            <select name="selectSubArea" id="selectSubArea" class="ui dropdown">
+              <option *ngFor="let item of subAreaList; index as i;" value="{{i+1}}">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="four wide field"></div>
+          <div class="eight wide field">
+            <label class="custom-label-w-25">ผู้ประกอบการ</label>
+            <select name="selectCompany" id="selectCompany" class="ui dropdown">
+              <option *ngFor="let item of companyList; index as i;" value="{{i+1}}">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="four wide field"></div>
+          <div class="nine wide field">
+            <label class="custom-label-w-20" style="margin-right: 5%;">วันที่</label>
+            <div class="seven wide field">
+              <div class="ui icon input">
+                <input type="text" placeholder="MM/YYYY" value="09/2560">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+            <div class="eight wide field">
+              <label>ถึง</label>
+              <div class="ui icon input">
+                <input type="text" placeholder="MM/YYYY" value="10/2560">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui center aligned grid">
+        <div class="eight wide column">
+          <button class="ui primary button" style="width: 130px;" (click)="onClickShowChart()">
+            <i class="search icon"></i>
+            ค้นหา
+          </button>
+          <button class="ui button" style="width: 130px;" (click)="clearData()">
+            <i class="refresh icon"></i>
+            ล้างข้อมูล
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui segment">
+      <table id="table1" class="ui small celled table">
+        <thead>
+          <tr style="text-align: center;">
+            <th>ประเภทใบอนุญาต</th>
+            <th>แบบพิมพ์สรรพสามิต</th>
+            <th>เลขแบบพิมพ์</th>
+            <th>เลขใบอนุญาต</th>
+            <th>จำนวนครั้งที่พิมพ์ซ้ำ</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</div>

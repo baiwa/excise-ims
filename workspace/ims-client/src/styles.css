@@ -37,3 +37,15 @@ label.custom-label-w-30 {
 label.custom-label-w-20 {
     width: 20em !important;
 }
+
+.bg-row-highlight {
+    background-color: rgb(240, 116, 116) !important;
+}
+
+td.right {
+    text-align: right !important;
+}
+
+td.center {
+    text-align: center !important;
+}
