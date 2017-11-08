@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-check-receipt-license',
+  selector: 'check-receipt-license',
   templateUrl: './check-receipt-license.component.html',
   styleUrls: ['./check-receipt-license.component.css']
 })
