@@ -13,7 +13,7 @@ export class CheckCompanyRenewComponent implements OnInit {
   private subAreaList: any[];
   private companyList: any[];
 
-  private showChart: boolean = false;
+  private showData: boolean = false;
 
   constructor() { }
 
@@ -129,11 +129,11 @@ export class CheckCompanyRenewComponent implements OnInit {
     });
   }
 
-  onClickShowChart(): void {
-    this.showChart = true;
+  searchData(): void {
+    this.showData = true;
   }
 
   clearData(): void {
-    this.showChart = false;
+    this.showData = false;
   }
 }

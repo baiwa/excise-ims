@@ -71,11 +71,11 @@
 
       <div class="ui center aligned grid">
         <div class="eight wide column">
-          <button class="ui primary button" style="width: 130px;" (click)="onClickShowChart()">
+          <button class="ui mini primary button" style="width: 100px;" (click)="searchData()">
             <i class="search icon"></i>
             ค้นหา
           </button>
-          <button class="ui button" style="width: 130px;" (click)="clearData()">
+          <button class="ui mini button" style="width: 100px;" (click)="clearData()">
             <i class="refresh icon"></i>
             ล้างข้อมูล
           </button>
@@ -98,10 +98,8 @@
       </table>
     </div>
 
-    <div class="ui segment" *ngIf="showChart">
-      <div class="ui segment" *ngIf="showChart">
+    <div class="ui segment" *ngIf="showData">
         <img src="assets/images/chart-check-company-renew.JPG" style="width: 100%;">
-      </div>
     </div>
   </div>
 </div>
