@@ -50,6 +50,12 @@ import { CheckReprintLicenseComponent } from './buckwaframework/project/pages/ch
 import { CheckReceiptTaxComponent } from './buckwaframework/project/pages/check-receipt-tax/check-receipt-tax.component';
 import { CheckReceiptLicenseComponent } from './buckwaframework/project/pages/check-receipt-license/check-receipt-license.component';
 import { CreateTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/create-trader/create-trader.component';
+import { AnalystBasicDataTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/analyst-basic-data-trader/analyst-basic-data-trader.component';
+import { CreateWorkingPaperTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/create-working-paper-trader/create-working-paper-trader.component';
+import { WorkingPaper1TraderComponent } from './buckwaframework/project/tax-audit/trader-selection/working-paper-1-trader/working-paper-1-trader.component';
+import { WorkingPaper1FullTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/working-paper-1-full-trader/working-paper-1-full-trader.component';
+import { SummaryAmountProductTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/summary-amount-product-trader/summary-amount-product-trader.component';
+import { CreateSaveMessageTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/create-save-message-trader/create-save-message-trader.component';
 
 @NgModule({
     declarations: [
@@ -81,7 +87,13 @@ import { CreateTraderComponent } from './buckwaframework/project/tax-audit/trade
         CheckReprintLicenseComponent,
         CheckReceiptTaxComponent,
         CheckReceiptLicenseComponent,
-        CreateTraderComponent
+        CreateTraderComponent,
+        AnalystBasicDataTraderComponent,
+        CreateWorkingPaperTraderComponent,
+        WorkingPaper1TraderComponent,
+        WorkingPaper1FullTraderComponent,
+        SummaryAmountProductTraderComponent,
+        CreateSaveMessageTraderComponent
     ],
     imports: [
         BrowserModule,
