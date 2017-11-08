@@ -1,3 +1,192 @@
-<p>
-  create-save-message-trader works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">สร้างกระดาษทำการคัดเลือกราย</h2>
+
+    <div class="ui top attached header">
+      <span>สร้างกระดาษทำการคัดเลือกราย</span>
+    </div>
+
+    <div class="ui attached segment">
+
+
+      <div class="ui form">
+
+        <div class="inline fields">
+          <div class="ten wide field">
+          </div>
+          <div class="six wide field">
+            <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
+            <input value="591113-01-00001" disabled="" />
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="ten wide field">
+          </div>
+          <div class="six wide field">
+
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="thirteen wide field required">
+            <label class="custom-label-w-35">ระยะเวลาที่ตรวจสอบ</label>
+            <div class="four ui action input">
+              <input type="text" placeholder="MM/YYYY" value="01/2559" disabled="">
+              <button class="ui icon button">
+                <i class="add to calendar icon"></i>
+              </button>
+            </div>
+            <div class="one">
+              <label>&nbsp;-&nbsp;</label>
+            </div>
+            <div class="four ui action input">
+              <input type="text" placeholder="MM/YYYY" value="12/2560" disabled="">
+              <button class="ui icon button">
+                <i class="add to calendar icon"></i>
+              </button>
+            </div>
+          </div>
+          <div class="eight wide field required">&nbsp;&nbsp;&nbsp;
+            <label class="custom-label-w-20">เลขที่กระดาษทำการ</label>
+            <input value="591113-02-00001" disabled="" />
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="five wide field">
+            <label style="width: 170em;">กำหนดช่วงร้อยละที่ต้องการแยกกลุ่มข้อมูล</label>
+            <input value="5" disabled="" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ui segment">
+      <div class="ui grid">
+        <div class="seven wide column">
+
+          <div class="ui list">
+            <div class="item">
+              <i class="folder icon"></i>
+              <div class="content">
+                <div class="header">แยกข้อมูลตามกลุ่มของการชำระภาษี</div>
+
+                <div class="list">
+                  <div class="item">
+                    <i class="folder icon"></i>
+                    <div class="content">
+                      <div class="header">ผู้ประกอบการที่ชำระภาษีครบ 24 เดือน</div>
+                      <div class="list">
+                        <div class="item hand-click">
+                          <i class="file text outline icon"></i>
+                          <div class="content">
+                            <div class="header">อัตราการชำระภาษีเพิ่มขึ้นมากกว่าร้อยละ 5</div>
+                          </div>
+                        </div>
+                        <div class="item hand-click">
+                          <i class="file text outline icon"></i>
+                          <div class="content">
+                            <div class="header">อัตราการชำระภาษีคงที่ (+-ไม่เกินร้อยละ 5)</div>
+                          </div>
+                        </div>
+                        <div class="item hand-click">
+                          <i class="file text outline icon"></i>
+                          <div class="content">
+                            <div class="header">อัตราการชำระภาษีลดลงมากกว่าร้อยละ 5</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="list">
+                  <div class="item">
+                    <i class="folder icon"></i>
+                    <div class="content">
+                      <div class="header">ผู้ประกอบการที่ชำระภาษีไม่ครบ 24 เดือน</div>
+                      <div class="list">
+                        <div class="item hand-click">
+                          <i class="file text outline icon"></i>
+                          <div class="content">
+                            <div class="header">อัตราการชำระภาษีเพิ่มขึ้นมากกว่าร้อยละ 5</div>
+                          </div>
+                        </div>
+                        <div class="item hand-click">
+                          <i class="file text outline icon"></i>
+                          <div class="content">
+                            <div class="header">อัตราการชำระภาษีเพิ่มขึ้นไม่เกินร้อยละ 5</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="list">
+                  <div class="item">
+                    <i class="folder icon"></i>
+                    <div class="content">
+                      <div class="header">ผู้ประกอบการใหม่</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="list">
+                  <div class="item">
+                    <i class="folder icon"></i>
+                    <div class="content">
+                      <div class="header">สรุปจำนวนตามพิกัดสินค้า</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="list">
+                  <div class="item">
+                    <i class="folder icon"></i>
+                    <div class="content">
+                      <div class="header">รวมทุกกลุ่มข้อมูลและรวมพิกัดสินค้า</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="list">
+                  <div class="item">
+                    <i class="folder icon"></i>
+                    <div class="content">
+                      <div class="header">สร้างบันทึกข้อความขอส่งข้อมูล</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="nine wide column">
+          <img src="assets/images/create-save-message.JPG" style="width: 100%;">
+
+          <div class="ui center aligned grid">
+            <div class="sixteen wide column">
+              <button class="ui mini primary button">
+                <i class="print icon"></i>
+                พิมพ์บันทึกข้อความพร้อมกระดาษทำการ
+              </button>
+              <button class="ui mini primary button">
+                <i class="print icon"></i>
+                พิมพ์บันทึกข้อความ
+              </button>
+              <button class="ui mini button">
+                <i class="refresh icon"></i>
+                ล้างข้อมูล
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
