@@ -8,7 +8,14 @@
             ตรวจสอบภายใน (รายได้)
             <i class="dropdown icon"></i>
             <div class="menu">
-                <a class="item" [routerLink]="['/1']" routerLinkActive="active">ตรวจสอบใบเสร็จ</a>
+                <div class="ui dropdown item">
+                    <i class="dropdown icon"></i>
+                    ตรวจสอบใบเสร็จ
+                    <div class="menu">
+                        <a class="item" [routerLink]="['/check-receipt-tax']" routerLinkActive="active">ภาษีสรรพสามิต และรายได้อื่นๆ</a>
+                        <a class="item" [routerLink]="['/check-receipt-license']" routerLinkActive="active">ใบอนุญาต</a>
+                    </div>
+                </div>
                 <a class="item" [routerLink]="['/2']" routerLinkActive="active">ตรวจสอบการนำส่งรายได้</a>
                 <div class="ui dropdown item">
                     <i class="dropdown icon"></i>
@@ -26,7 +33,7 @@
                         <a class="item" [routerLink]="['/check-company-renew']" routerLinkActive="active">ตรวจสอบสถิติการต่ออายุใบอนุญาต</a>
                     </div>
                 </div>
-                <a class="item" [routerLink]="['/check_reprint_license']" routerLinkActive="active">ตรวจสอบการพิมพ์ใบอนุญาตซ้ำ</a>
+                <a class="item" [routerLink]="['/check-reprint-license']" routerLinkActive="active">ตรวจสอบการพิมพ์ใบอนุญาตซ้ำ</a>
             </div>
         </div>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()">

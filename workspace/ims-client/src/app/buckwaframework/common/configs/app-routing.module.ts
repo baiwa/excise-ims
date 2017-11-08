@@ -27,6 +27,8 @@ import { MappingGfIncCodeComponent } from './../../project/pages/mapping-gf-inc-
 import { CheckCompanyPaymentComponent } from './../../project/pages/check-company-payment/check-company-payment.component';
 import { CheckCompanyRenewComponent } from './../../project/pages/check-company-renew/check-company-renew.component';
 import { CheckReprintLicenseComponent } from './../../project/pages/check-reprint-license/check-reprint-license.component';
+import { CheckReceiptTaxComponent } from './../../project/pages/check-receipt-tax/check-receipt-tax.component';
+import { CheckReceiptLicenseComponent } from './../../project/pages/check-receipt-license/check-receipt-license.component';
 
 const routes: Routes = [
 
@@ -59,7 +61,10 @@ const routes: Routes = [
 
     { path: 'check-company-payment', component: CheckCompanyPaymentComponent, canActivate: [AuthGuard] },
     { path: 'check-company-renew', component: CheckCompanyRenewComponent, canActivate: [AuthGuard] },
-    { path: 'check_reprint_license', component: CheckReprintLicenseComponent, canActivate: [AuthGuard] },
+    { path: 'check-reprint-license', component: CheckReprintLicenseComponent, canActivate: [AuthGuard] },
+
+    { path: 'check-receipt-tax', component: CheckReceiptTaxComponent, canActivate: [AuthGuard] },
+    { path: 'check-receipt-license', component: CheckReceiptLicenseComponent, canActivate: [AuthGuard] },
     
 ];
 

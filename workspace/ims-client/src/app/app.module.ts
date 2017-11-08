@@ -47,8 +47,8 @@ import { MappingGfIncCodeComponent } from './buckwaframework/project/pages/mappi
 import { CheckCompanyPaymentComponent } from './buckwaframework/project/pages/check-company-payment/check-company-payment.component';
 import { CheckCompanyRenewComponent } from './buckwaframework/project/pages/check-company-renew/check-company-renew.component';
 import { CheckReprintLicenseComponent } from './buckwaframework/project/pages/check-reprint-license/check-reprint-license.component';
-
-
+import { CheckReceiptTaxComponent } from './buckwaframework/project/pages/check-receipt-tax/check-receipt-tax.component';
+import { CheckReceiptLicenseComponent } from './buckwaframework/project/pages/check-receipt-license/check-receipt-license.component';
 
 @NgModule({
     declarations: [
@@ -77,7 +77,9 @@ import { CheckReprintLicenseComponent } from './buckwaframework/project/pages/ch
         MappingGfIncCodeComponent,
         CheckCompanyPaymentComponent,
         CheckCompanyRenewComponent,
-        CheckReprintLicenseComponent
+        CheckReprintLicenseComponent,
+        CheckReceiptTaxComponent,
+        CheckReceiptLicenseComponent
     ],
     imports: [
         BrowserModule,
