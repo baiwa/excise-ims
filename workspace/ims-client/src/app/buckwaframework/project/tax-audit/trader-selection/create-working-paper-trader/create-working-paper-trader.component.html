@@ -1,3 +1,68 @@
-<p>
-  create-working-paper-trader works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">สร้างกระดาษทำการคัดเลือกราย</h2>
+
+    <div class="ui top attached header">
+      <span>สร้างกระดาษทำการคัดเลือกราย</span>
+    </div>
+
+    <div class="ui attached segment">
+
+      <div class="ui form">
+
+        <div class="inline fields">
+          <div class="ten wide field">
+          </div>
+          <div class="six wide field">
+            <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
+            <input value="591113-01-00001" readonly="" class="custom-readonly">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="thirteen wide field">
+            <label class="custom-label-w-35">ระยะเวลาที่ตรวจสอบ</label>
+            <div class="four ui action input">
+              <input type="text" placeholder="MM/YYYY" value="01/2559" readonly="" class="custom-readonly">
+              <button class="ui icon button">
+                <i class="add to calendar icon"></i>
+              </button>
+            </div>
+            <div class="one">
+              <label>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;</label>
+            </div>
+            <div class="four ui action input">
+              <input type="text" placeholder="MM/YYYY" value="12/2560" readonly="" class="custom-readonly">
+              <button class="ui icon button">
+                <i class="add to calendar icon"></i>
+              </button>
+            </div>
+          </div>
+          <div class="eight wide field">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="five wide field required">
+            <label style="width: 180em;">กำหนดช่วงร้อยละที่ต้องการแยกกลุ่มข้อมูล</label>
+            <input value="5">
+          </div>
+        </div>
+
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button" routerLink="/working-paper-1-trader">
+              <i class="add icon"></i>
+              สร้างกระดาษทำการ
+            </button>
+            <button class="ui mini button">
+              <i class="refresh icon"></i>
+              ล้างข้อมูล
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

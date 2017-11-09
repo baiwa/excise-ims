@@ -46,7 +46,7 @@
     <div class="ui attached segment">
 
       <div class="ui grid">
-        <div class="three wide column" *ngIf="showmenu">
+        <div class="three wide column">
           <div class="ui vertical menu">
             <div class="item">
               <div class="header">พิกัดสินค้า</div>
@@ -74,7 +74,7 @@
                   <th rowspan="2">จำนวนเดือนที่ชำระภาษี</th>
                 </tr>
                 <tr class="center aligned">
-                  <th>2559</th>
+                  <th style="border-left: 1px solid rgba(34,36,38,.1);">2559</th>
                   <th>2560</th>
                   <th>2559</th>
                   <th>2560</th>
@@ -400,7 +400,7 @@
 
       <div class="ui center aligned grid">
         <div class="sixteen wide column">
-          <button class="ui mini primary button">
+          <button class="ui mini primary button" routerLink="/create-working-paper-trader">
             <i class="add icon"></i>
             สร้างกระดาษทำการคัดเลือกราย
           </button>
