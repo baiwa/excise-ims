@@ -1,16 +1,14 @@
 package th.co.baiwa.exampleproject.examplemodule.persistence.dao;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.buckwaframework.common.persistence.dao.BatchSetter;
 import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.exampleproject.examplemodule.persistence.entity.BuckwaTest;
 import th.co.baiwa.exampleproject.examplemodule.persistence.mapper.BuckwaTestRowMapper;
@@ -73,40 +71,29 @@ public class BuckwaTestDao {
 		});
 	}
 	
-	public int[] batchInsert(final List<BuckwaTest> buckwaTestList) {
+	public int[][] batchInsert(final List<BuckwaTest> buckwaTestList, int executeSize) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(" INSERT INTO buckwa_test (col_varchar) ");
 		sql.append(" VALUES(?) ");
 		
-		return commonJdbcDao.executeBatchUpdate(sql.toString(), new BatchPreparedStatementSetter() {
+		return commonJdbcDao.executeBatch(sql.toString(), new BatchSetter<BuckwaTest>() {
 			@Override
-			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				ps.setString(1, buckwaTestList.get(i).getColVarchar());
+			public List<BuckwaTest> getBatchObjectList() {
+				return buckwaTestList;
 			}
 			
 			@Override
-			public int getBatchSize() {
-				return buckwaTestList.size();
+			public Object[] toObjects(BuckwaTest obj) {
+				return new Object[] {
+					obj.getColVarchar()
+				};
+			}
+			
+			@Override
+			public int getExecuteSize() {
+				return executeSize;
 			}
 		});
-	}
-	
-	public int[][] batchInsertWithBatchSize(final List<BuckwaTest> buckwaTestList, final int batchSize) {
-		StringBuilder sql = new StringBuilder();
-		sql.append(" INSERT INTO buckwa_test (col_varchar) ");
-		sql.append(" VALUES(?) ");
-		
-		return commonJdbcDao.executeBatchUpdate(
-			sql.toString(),
-			buckwaTestList,
-			batchSize,
-			new ParameterizedPreparedStatementSetter<BuckwaTest>() {
-				@Override
-				public void setValues(PreparedStatement ps, BuckwaTest argument) throws SQLException {
-					ps.setString(1, argument.getColVarchar());
-				}
-			}
-		);
 	}
 	
 }

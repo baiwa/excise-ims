@@ -1,6 +1,8 @@
 package th.co.baiwa.exampleproject.mock.persistence.dao;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -144,43 +146,30 @@ public class MockEmployeeDaoTest {
 	}
 	
 	//@Test
-	public void test_batchInsert() {
+	public void test_batchInsert() throws SQLException {
 		System.out.println("- - - - - batchInsert - - - - -");
 		System.out.println("before insert count: " + mockEmployeeDao.count());
 		
-		MockEmployee mockEmployee1 = new MockEmployee();
-		mockEmployee1.setFirstName("Name1");
-		mockEmployee1.setLastName("LastName1");
-		mockEmployee1.setSalary(new BigDecimal("11111"));
-		mockEmployee1.setWorkingDate(new Date());
+		List<MockEmployee> mockEmployeeList = new ArrayList<MockEmployee>();
+		MockEmployee mockEmployee = null;
+		for (int i = 0; i < 10000; i++) {
+			mockEmployee = new MockEmployee();
+			mockEmployee.setFirstName("Name" + (i + 1));
+			mockEmployee.setLastName("LastName" + (i + 1));
+			mockEmployee.setSalary(new BigDecimal((i + 1)));
+			mockEmployee.setWorkingDate(new Date());
+			mockEmployeeList.add(mockEmployee);
+		}
 		
-		MockEmployee mockEmployee2 = new MockEmployee();
-		mockEmployee2.setFirstName("Name2");
-		mockEmployee2.setLastName("LastName2");
-		mockEmployee2.setSalary(new BigDecimal("22222"));
-		mockEmployee2.setWorkingDate(new Date());
-		
-		MockEmployee mockEmployee3 = new MockEmployee();
-		mockEmployee3.setFirstName("Name3");
-		mockEmployee3.setLastName("LastName3");
-		mockEmployee3.setSalary(new BigDecimal("33333"));
-		mockEmployee3.setWorkingDate(new Date());
-		
-		List<MockEmployee> mockEmployeeList = Arrays.asList(
-			mockEmployee1,
-			mockEmployee2,
-			mockEmployee3
-		);
-		
-		int[] result = mockEmployeeDao.batchInsert(mockEmployeeList);
+		int[][] result = mockEmployeeDao.batchInsert(mockEmployeeList, 1000);
 		System.out.println(result.length);
 		
 		System.out.println("after insert count: " + mockEmployeeDao.count());
-		System.out.println(StringUtils.collectionToCommaDelimitedString(mockEmployeeDao.findAll()));
+		//System.out.println(StringUtils.collectionToCommaDelimitedString(mockEmployeeDao.findAll()));
 	}
 	
 	//@Test
-	public void test_batchUpdate() {
+	public void test_batchUpdate() throws SQLException {
 		System.out.println("- - - - - batchUpdate - - - - -");
 		
 		MockEmployee mockEmployee1 = new MockEmployee();
@@ -204,7 +193,7 @@ public class MockEmployeeDaoTest {
 			mockEmployee3
 		);
 		
-		int[] result = mockEmployeeDao.batchUpdate(mockEmployeeList);
+		int[][] result = mockEmployeeDao.batchUpdate(mockEmployeeList, 2);
 		System.out.println(result.length);
 		
 		System.out.println(StringUtils.collectionToCommaDelimitedString(mockEmployeeDao.findAll()));

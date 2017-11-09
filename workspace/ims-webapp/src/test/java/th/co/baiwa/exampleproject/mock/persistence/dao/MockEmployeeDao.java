@@ -1,6 +1,5 @@
 package th.co.baiwa.exampleproject.mock.persistence.dao;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Date;
@@ -8,14 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.co.baiwa.buckwaframework.common.persistence.dao.BatchSetter;
 import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.exampleproject.mock.persistence.entity.MockEmployee;
@@ -202,7 +202,8 @@ public class MockEmployeeDao {
 		return updateRow;
 	}
 	
-	public int[] batchInsert(List<MockEmployee> mockEmployeeList) {
+	@Transactional(rollbackFor = {SQLException.class})
+	public int[][] batchInsert(List<MockEmployee> mockEmployeeList, int batchSize) throws SQLException {
 		String sql = SqlGeneratorUtils.genSqlInsert("Z_MOCK_EMPLOYEE", Arrays.asList(
 			"FIRST_NAME",
 			"LAST_NAME",
@@ -210,25 +211,31 @@ public class MockEmployeeDao {
 			"WORKING_DATE"
 		));
 		
-		return commonJdbcDao.executeBatchUpdate(sql.toString(), new BatchPreparedStatementSetter() {
+		return commonJdbcDao.executeBatch(sql.toString(), new BatchSetter<MockEmployee>() {
 			@Override
-			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				commonJdbcDao.preparePs(ps, new Object[] {
-					mockEmployeeList.get(i).getFirstName(),
-					mockEmployeeList.get(i).getLastName(),
-					mockEmployeeList.get(i).getSalary(),
-					mockEmployeeList.get(i).getWorkingDate()
-				});
+			public List<MockEmployee> getBatchObjectList() {
+				return mockEmployeeList;
 			}
 			
 			@Override
-			public int getBatchSize() {
-				return mockEmployeeList.size();
+			public Object[] toObjects(MockEmployee obj) {
+				return new Object[] {
+					obj.getFirstName(),
+					obj.getLastName(),
+					obj.getSalary(),
+					obj.getWorkingDate()
+				};
+			}
+			
+			@Override
+			public int getExecuteSize() {
+				return batchSize;
 			}
 		});
 	}
 	
-	public int[] batchUpdate(List<MockEmployee> mockEmployeeList) {
+	@Transactional(rollbackFor = {SQLException.class})
+	public int[][] batchUpdate(List<MockEmployee> mockEmployeeList, int batchSize) throws SQLException {
 		String sql = SqlGeneratorUtils.genSqlUpdate("Z_MOCK_EMPLOYEE",
 			Arrays.asList(
 				"FIRST_NAME",
@@ -241,21 +248,26 @@ public class MockEmployeeDao {
 			)
 		);
 		
-		return commonJdbcDao.executeBatchUpdate(sql.toString(), new BatchPreparedStatementSetter() {
+		return commonJdbcDao.executeBatch(sql.toString(), new BatchSetter<MockEmployee>() {
 			@Override
-			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				commonJdbcDao.preparePs(ps, new Object[] {
-					mockEmployeeList.get(i).getFirstName(),
-					mockEmployeeList.get(i).getLastName(),
+			public List<MockEmployee> getBatchObjectList() {
+				return mockEmployeeList;
+			}
+
+			@Override
+			public Object[] toObjects(MockEmployee obj) {
+				return new Object[] {
+					obj.getFirstName(),
+					obj.getLastName(),
 					"UNITTEST_USER",
 					new Date(),
-					mockEmployeeList.get(i).getEmpId()
-				});
+					obj.getEmpId()
+				};
 			}
-			
+
 			@Override
-			public int getBatchSize() {
-				return mockEmployeeList.size();
+			public int getExecuteSize() {
+				return batchSize;
 			}
 		});
 	}

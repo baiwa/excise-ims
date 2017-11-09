@@ -6,29 +6,38 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SqlParameterValue;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.transaction.annotation.Transactional;
 
-/*
- * @Author: Taechapon Himarat (Su)
- * @Create: Sep 7, 2012
+/**
+ * Common set of JDBC operations.
+ * Implemented cover {@link JdbcTemplate} for easy to use.
+ * 
+ * @author: Taechapon Himarat (Su)
+ * @since: Sep 7, 2012
+ * @see JdbcTemplate
  */
 public class CommonJdbcDao {
+	
+	private static final Logger logger = LoggerFactory.getLogger(CommonJdbcDao.class);
 	
 	private JdbcTemplate jdbcTemplate;
 	
@@ -276,6 +285,11 @@ public class CommonJdbcDao {
 		return key;
 	}
 	
+	/**
+	 * Prepare PreparedStatement from Array of Object following Object Type.
+	 * @param ps the PreparedStatement Object
+	 * @param params Array of Object will be set in PreparedStatement
+	 */
 	public void preparePs(PreparedStatement ps, Object[] params) throws SQLException {
 		int i = 1;
 		for (Object o : params) {
@@ -336,35 +350,55 @@ public class CommonJdbcDao {
 	//--------------------------------------------------------------------------------
 	
 	/**
-	 * Issue multiple update statements on a single PreparedStatement,
-	 * using batch updates and a BatchPreparedStatementSetter to set values.
-	 * <p>Will fall back to separate updates on a single PreparedStatement
-	 * if the JDBC driver does not support batch updates.
-	 * @param sql defining PreparedStatement that will be reused.
-	 * All statements in the batch will use the same SQL.
-	 * @param pss object to set parameters on the PreparedStatement
-	 * created by this method
-	 * @return an array of the number of rows affected by each statement
-	 * @throws DataAccessException if there is any problem issuing the update
+	 * Execute a batch using the supplied SQL statement with the batch of supplied arguments.
+	 * <p>Note Recommend using with {@link Transactional @Transactional} in Service Layer for fully batch process.
+	 * @param sql the SQL statement to execute
+	 * @param bs object to set parameters on the PreparedStatement
+	 * @return an array containing the numbers of rows affected by each round update in the batch
 	 */
-	public int[] executeBatchUpdate(String sql, BatchPreparedStatementSetter pss) throws DataAccessException {
-		return jdbcTemplate.batchUpdate(sql, pss);
-	}
-	
-	/**
-	 * Execute multiple batches using the supplied SQL statement with the collect of supplied arguments.
-	 * The arguments' values will be set using the ParameterizedPreparedStatementSetter.
-	 * Each batch should be of size indicated in 'batchSize'.
-	 * @param sql the SQL statement to execute.
-	 * @param batchArgs the List of Object arrays containing the batch of arguments for the query
-	 * @param batchSize batch size
-	 * @param pss ParameterizedPreparedStatementSetter to use
-	 * @return an array containing for each batch another array containing the numbers of rows affected
-	 * by each update in the batch
-	 */
-	public <T> int[][] executeBatchUpdate(String sql, final Collection<T> batchArgs, final int batchSize,
-			final ParameterizedPreparedStatementSetter<T> pss) throws DataAccessException {
-		return jdbcTemplate.batchUpdate(sql, batchArgs, batchSize, pss);
+	public <T> int[][] executeBatch(String sql, BatchSetter<T> bs) throws SQLException {
+		logger.debug("Batch Process Start");
+		long start = System.currentTimeMillis();
+		
+		Connection connection = null;
+		PreparedStatement ps = null;
+		List<int[]> rowsAffected = new ArrayList<int[]>();
+		int[][] result = null;
+		try {
+			connection = DataSourceUtils.getConnection(jdbcTemplate.getDataSource());
+			ps = connection.prepareStatement(sql.toString());
+			
+			int count = 0;
+			for (T obj : bs.getBatchObjectList()) {
+				count++;
+				preparePs(ps, bs.toObjects(obj));
+				ps.addBatch();
+				if (count % bs.getExecuteSize() == 0) {
+					logger.debug("## ps.executeBatch() at count={}", count);
+					count = 0;
+					rowsAffected.add(ps.executeBatch());
+					ps.clearBatch();
+				}
+			}
+			if (count > 0) {
+				logger.debug("## ps.executeBatch() at count={}", count);
+				rowsAffected.add(ps.executeBatch());
+				ps.clearBatch();
+			}
+			result = new int[rowsAffected.size()][];
+			for (int i = 0; i < result.length; i++) {
+				result[i] = rowsAffected.get(i);
+			}
+		} catch (SQLException e) {
+			throw e;
+		} finally {
+			JdbcUtils.closeStatement(ps);
+			DataSourceUtils.releaseConnection(connection, jdbcTemplate.getDataSource());
+		}
+		
+		long end = System.currentTimeMillis();
+		logger.debug("Batch Process Success, using {} seconds", (float) (end - start) / 1000F);
+		return result;
 	}
 	
 }

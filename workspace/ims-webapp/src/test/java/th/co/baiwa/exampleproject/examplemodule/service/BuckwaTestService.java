@@ -1,5 +1,6 @@
 package th.co.baiwa.exampleproject.examplemodule.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,13 +50,8 @@ public class BuckwaTestService {
 	}
 	
 	@Transactional
-	public int[] insertList(List<BuckwaTest> buckwaTestList) {
-		return buckwaTestDao.batchInsert(buckwaTestList);
-	}
-	
-	@Transactional
-	public int[][] insertListWithBatchSize(List<BuckwaTest> buckwaTestList, int batchSize) {
-		return buckwaTestDao.batchInsertWithBatchSize(buckwaTestList, batchSize);
+	public int[][] insertList(List<BuckwaTest> buckwaTestList, int batchSize) throws SQLException {
+		return buckwaTestDao.batchInsert(buckwaTestList, batchSize);
 	}
 	
 }

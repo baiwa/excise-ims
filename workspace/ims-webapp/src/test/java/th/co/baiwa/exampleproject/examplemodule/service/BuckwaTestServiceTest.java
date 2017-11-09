@@ -3,6 +3,7 @@ package th.co.baiwa.exampleproject.examplemodule.service;
 import static org.junit.Assert.assertNotEquals;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -100,20 +101,7 @@ public class BuckwaTestServiceTest {
 	}
 	
 	//@Test
-	public void testExecuteBatchUpdate() {
-		List<BuckwaTest> buckwaTestList = new ArrayList<BuckwaTest>();
-		BuckwaTest buckwaTest = null;
-		for (int i = 0; i < 10; i++) {
-			buckwaTest = new BuckwaTest();
-			buckwaTest.setColVarchar("Batch" + (i + 1));
-			buckwaTestList.add(buckwaTest);
-		}
-		
-		buckwaTestService.insertList(buckwaTestList);
-	}
-	
-	//@Test
-	public void testExecuteBatchUpdate_BatchSize() {
+	public void testExecuteBatch() throws SQLException {
 		List<BuckwaTest> buckwaTestList = new ArrayList<BuckwaTest>();
 		BuckwaTest buckwaTest = null;
 		for (int i = 0; i < 20; i++) {
@@ -122,7 +110,7 @@ public class BuckwaTestServiceTest {
 			buckwaTestList.add(buckwaTest);
 		}
 		
-		int[][] result = buckwaTestService.insertListWithBatchSize(buckwaTestList, 4);
+		int[][] result = buckwaTestService.insertList(buckwaTestList, 4);
 		for (int i = 0; i < result.length; i++) {
 			for (int j = 0; j < result[i].length; j++) {
 				System.out.println("[" + i + "][" + j + "]: " + result[i][j]);
