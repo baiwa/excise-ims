@@ -51,11 +51,15 @@ label.custom-label-w-10 {
 }
 
 .bg-row-highlight {
-    background-color: rgb(240, 116, 116) !important;
+    background-color: rgb(241, 126, 126) !important;
 }
 
 .bg-row-orange-highlight {
     background-color: rgb(241, 177, 125) !important;
+}
+
+.bg-row-blue-highlight {
+    background-color: rgb(195, 214, 238) !important;
 }
 
 td.right {

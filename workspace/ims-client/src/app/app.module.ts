@@ -56,6 +56,9 @@ import { WorkingPaper1TraderComponent } from './buckwaframework/project/tax-audi
 import { WorkingPaper1FullTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/working-paper-1-full-trader/working-paper-1-full-trader.component';
 import { SummaryAmountProductTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/summary-amount-product-trader/summary-amount-product-trader.component';
 import { CreateSaveMessageTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/create-save-message-trader/create-save-message-trader.component';
+import { CompareReportAssetComponent } from './buckwaframework/project/pages/compare-report-asset/compare-report-asset.component';
+import { CheckStampYearlyComponent } from './buckwaframework/project/pages/check-stamp-yearly/check-stamp-yearly.component';
+import { CheckStampBranchComponent } from './buckwaframework/project/pages/check-stamp-branch/check-stamp-branch.component';
 
 @NgModule({
     declarations: [
@@ -93,7 +96,10 @@ import { CreateSaveMessageTraderComponent } from './buckwaframework/project/tax-
         WorkingPaper1TraderComponent,
         WorkingPaper1FullTraderComponent,
         SummaryAmountProductTraderComponent,
-        CreateSaveMessageTraderComponent
+        CreateSaveMessageTraderComponent,
+        CompareReportAssetComponent,
+        CheckStampYearlyComponent,
+        CheckStampBranchComponent
     ],
     imports: [
         BrowserModule,

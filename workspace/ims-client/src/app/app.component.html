@@ -34,6 +34,22 @@
                     </div>
                 </div>
                 <a class="item" [routerLink]="['/check-reprint-license']" routerLinkActive="active">ตรวจสอบการพิมพ์ใบอนุญาตซ้ำ</a>
+                <div class="ui simple dropdown item">
+                    <i class="dropdown icon"></i>
+                    ตรวจสอบพัสดุ
+                    <div class="menu">
+                        <div class="ui dropdown item">
+                            <i class="dropdown icon"></i>
+                            ตรวจสอบแสตมป์
+                            <div class="menu">
+                                <a class="item" [routerLink]="['/check-stamp-yearly']" routerLinkActive="active">เปรียบเทียบรวมทั้งปีงบประมาณ</a>
+                                <a class="item" [routerLink]="['/check-stamp-branch']" routerLinkActive="active">เปรียบเทียบรายสาขา</a>
+                            </div>
+                        </div>
+                        <a class="item" [routerLink]="['/compare-report-asset']" routerLinkActive="active">ตรวจสอบสินทรัพย์</a>
+                        <a class="item" [routerLink]="['/3']" routerLinkActive="active">บันทึกผลการจัดซื้อจัดจ้าง</a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
@@ -43,7 +59,7 @@
                 <a class="item" [routerLink]="['/analysis']" routerLinkActive="active">วิเคราะห์ข้อมูลเบื้องต้น(OLD)</a>
                 <a class="item" [routerLink]="['/trader-selection']" routerLinkActive="active">ระบบคัดเลือกราย</a>
                 <a class="item" [routerLink]="['/tax-audit-operation']" routerLinkActive="active">ปฏิบัติการตรวจสอบภาษี</a>
-                <a class="item" [routerLink]="['/tax-audit-reporting']" routerLinkActive="active">รายงานปลการตรวจสอบ</a>                
+                <a class="item" [routerLink]="['/tax-audit-reporting']" routerLinkActive="active">รายงานปลการตรวจสอบ</a>
             </div>
         </div>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
