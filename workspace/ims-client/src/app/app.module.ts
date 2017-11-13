@@ -59,6 +59,7 @@ import { CreateSaveMessageTraderComponent } from './buckwaframework/project/tax-
 import { CompareReportAssetComponent } from './buckwaframework/project/pages/compare-report-asset/compare-report-asset.component';
 import { CheckStampYearlyComponent } from './buckwaframework/project/pages/check-stamp-yearly/check-stamp-yearly.component';
 import { CheckStampBranchComponent } from './buckwaframework/project/pages/check-stamp-branch/check-stamp-branch.component';
+import { SaveResultTradingComponent } from './buckwaframework/project/pages/save-result-trading/save-result-trading.component';
 
 @NgModule({
     declarations: [
@@ -99,7 +100,8 @@ import { CheckStampBranchComponent } from './buckwaframework/project/pages/check
         CreateSaveMessageTraderComponent,
         CompareReportAssetComponent,
         CheckStampYearlyComponent,
-        CheckStampBranchComponent
+        CheckStampBranchComponent,
+        SaveResultTradingComponent
     ],
     imports: [
         BrowserModule,

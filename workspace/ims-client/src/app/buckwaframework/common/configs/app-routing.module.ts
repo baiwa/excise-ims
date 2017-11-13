@@ -39,6 +39,7 @@ import { CreateSaveMessageTraderComponent } from './../../project/tax-audit/trad
 import { CompareReportAssetComponent } from './../../project/pages/compare-report-asset/compare-report-asset.component';
 import { CheckStampYearlyComponent } from './../../project/pages/check-stamp-yearly/check-stamp-yearly.component';
 import { CheckStampBranchComponent } from './../../project/pages/check-stamp-branch/check-stamp-branch.component';
+import { SaveResultTradingComponent } from './../../project/pages/save-result-trading/save-result-trading.component';
 
 const routes: Routes = [
 
@@ -86,6 +87,7 @@ const routes: Routes = [
     { path: 'compare-report-asset', component: CompareReportAssetComponent, canActivate: [AuthGuard] },
     { path: 'check-stamp-yearly', component: CheckStampYearlyComponent, canActivate: [AuthGuard] },
     { path: 'check-stamp-branch', component: CheckStampBranchComponent, canActivate: [AuthGuard] },
+    { path: 'save-result-trading', component: SaveResultTradingComponent, canActivate: [AuthGuard] },
     
 ];
 
