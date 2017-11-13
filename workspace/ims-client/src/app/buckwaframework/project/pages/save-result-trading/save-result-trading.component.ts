@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var $: any;
 @Component({
   selector: 'app-save-result-trading',
   templateUrl: './save-result-trading.component.html',
@@ -12,4 +13,17 @@ export class SaveResultTradingComponent implements OnInit {
   ngOnInit() {
   }
 
+  
+
+  addData() {
+    $('#modalSaveResultTrading').modal('show');
+  }
+
+  editData() {
+    $('#modalSaveResultTrading').modal('show');
+  }
+
+  closeModal() {
+    $('#modalSaveResultTrading').modal('hide');
+  }
 }
