@@ -40,6 +40,12 @@ import { CompareReportAssetComponent } from './../../project/pages/compare-repor
 import { CheckStampYearlyComponent } from './../../project/pages/check-stamp-yearly/check-stamp-yearly.component';
 import { CheckStampBranchComponent } from './../../project/pages/check-stamp-branch/check-stamp-branch.component';
 import { SaveResultTradingComponent } from './../../project/pages/save-result-trading/save-result-trading.component';
+import { CheckExpenseWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-expense-withdrawal/check-expense-withdrawal.component';
+import { CheckSummaryWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-summary-withdrawal/check-summary-withdrawal.component';
+import { CheckAllowanceWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal.component';
+import { CheckOvertimeCompensationWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-overtime-compensation-withdrawal/check-overtime-compensation-withdrawal.component';
+import { CheckControllerCompensationWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-controller-compensation-withdrawal/check-controller-compensation-withdrawal.component';
+import { CheckPersonalCompensationWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-personal-compensation-withdrawal/check-personal-compensation-withdrawal.component';
 
 const routes: Routes = [
 
@@ -88,6 +94,13 @@ const routes: Routes = [
     { path: 'check-stamp-yearly', component: CheckStampYearlyComponent, canActivate: [AuthGuard] },
     { path: 'check-stamp-branch', component: CheckStampBranchComponent, canActivate: [AuthGuard] },
     { path: 'save-result-trading', component: SaveResultTradingComponent, canActivate: [AuthGuard] },
+
+    { path: 'check-expense-withdrawal', component: CheckExpenseWithdrawalComponent, canActivate: [AuthGuard] },
+    { path: 'check-summary-withdrawal', component: CheckSummaryWithdrawalComponent, canActivate: [AuthGuard] },
+    { path: 'check-allowance-withdrawal', component: CheckAllowanceWithdrawalComponent, canActivate: [AuthGuard] },
+    { path: 'check-overtime-compensation-withdrawal', component: CheckOvertimeCompensationWithdrawalComponent, canActivate: [AuthGuard] },
+    { path: 'check-controller-compensation-withdrawal', component: CheckControllerCompensationWithdrawalComponent, canActivate: [AuthGuard] },
+    { path: 'check-personal-compensation-withdrawal', component: CheckPersonalCompensationWithdrawalComponent, canActivate: [AuthGuard] },
     
 ];
 

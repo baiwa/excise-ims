@@ -60,6 +60,12 @@ import { CompareReportAssetComponent } from './buckwaframework/project/pages/com
 import { CheckStampYearlyComponent } from './buckwaframework/project/pages/check-stamp-yearly/check-stamp-yearly.component';
 import { CheckStampBranchComponent } from './buckwaframework/project/pages/check-stamp-branch/check-stamp-branch.component';
 import { SaveResultTradingComponent } from './buckwaframework/project/pages/save-result-trading/save-result-trading.component';
+import { CheckAllowanceWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal.component';
+import { CheckSummaryWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-summary-withdrawal/check-summary-withdrawal.component';
+import { CheckExpenseWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-expense-withdrawal/check-expense-withdrawal.component';
+import { CheckOvertimeCompensationWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-overtime-compensation-withdrawal/check-overtime-compensation-withdrawal.component';
+import { CheckControllerCompensationWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-controller-compensation-withdrawal/check-controller-compensation-withdrawal.component';
+import { CheckPersonalCompensationWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-personal-compensation-withdrawal/check-personal-compensation-withdrawal.component';
 
 @NgModule({
     declarations: [
@@ -101,7 +107,13 @@ import { SaveResultTradingComponent } from './buckwaframework/project/pages/save
         CompareReportAssetComponent,
         CheckStampYearlyComponent,
         CheckStampBranchComponent,
-        SaveResultTradingComponent
+        SaveResultTradingComponent,
+        CheckAllowanceWithdrawalComponent,
+        CheckSummaryWithdrawalComponent,
+        CheckExpenseWithdrawalComponent,
+        CheckOvertimeCompensationWithdrawalComponent,
+        CheckControllerCompensationWithdrawalComponent,
+        CheckPersonalCompensationWithdrawalComponent
     ],
     imports: [
         BrowserModule,
