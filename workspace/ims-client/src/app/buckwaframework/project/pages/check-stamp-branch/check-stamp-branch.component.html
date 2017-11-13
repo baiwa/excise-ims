@@ -1,3 +1,486 @@
-<p>
-  check-stamp-branch works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">ตรวจแสตมป์เปรียบเทียบรายสาขา</h2>
+
+    <div class="ui top attached header">
+      <span>ตรวจแสตมป์เปรียบเทียบรายสาขา</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">สำนักงานสรรพสามิตภาค</label>
+            <select class="ui dropdown">
+              <option *ngFor="let item of zoneList; index as i;" value="{{i+1}}">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">สำนักงานสรรพสามิตพื้นที่</label>
+            <select class="ui dropdown">
+              <option *ngFor="let item of areaList; index as i;" value="{{i+1}}">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">สำนัักงานสรรพสามิตพื้นที่สาขา</label>
+            <select class="ui dropdown">
+              <option *ngFor="let item of branchList; index as i;" value="{{i+1}}">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">เลือกไฟล์</label>
+            <input type="file" />
+          </div>
+        </div>
+
+        <div class="ui center aligned grid">
+          <div class="eight wide column">
+            <button class="ui mini primary button width-100" (click)="uploadData()">
+              <i class="upload icon"></i>
+              อัพโหลด
+            </button>
+            <button class="ui mini button width-100" (click)="clearData()">
+              <i class="refresh icon"></i>
+              ล้างข้อมูล
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <br>
+    <div *ngIf="showData">
+      <div class="ui top attached header segment">
+        พื้นที่ลำปาง
+      </div>
+
+      <div class="ui attached segment">
+        <table class="ui small celled table">
+          <thead>
+            <tr style="text-align: center;">
+              <th rowspan="2">ชนิดแสตมป์</th>
+              <th rowspan="2">คงเหลือยกมาจากปีก่อน (ดวง)</th>
+              <th colspan="2">ตุลาคม</th>
+              <th colspan="2">สิงหาคม</th>
+              <th colspan="2">กันยายน</th>
+              <th colspan="2">รวมทั้งปีงบประมาณ</th>
+              <th rowspan="2">คงเหลือ ณ ปัจจุบัน (ดวง)</th>
+              <th rowspan="2">คงเหลือจริง</th>
+              <th rowspan="2">Action</th>
+            </tr>
+            <tr style="text-align: center;">
+              <th style="border-left: 1px solid rgba(34,36,38,.1);">รับ</th>
+              <th>จ่าย</th>
+              <th>รับ</th>
+              <th>จ่าย</th>
+              <th>รับ</th>
+              <th>จ่าย</th>
+              <th>รับ</th>
+              <th>จ่าย</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>สุรากลั่นชุมชน ขนาดกลาง 28</td>
+              <td>&nbsp;</td>
+              <td>2,000</td>
+              <td>100</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>2,000</td>
+              <td>100</td>
+              <td>1,900</td>
+              <td>&nbsp;</td>
+              <td>
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>สุรากลั่นชุมชน ขนาดกลาง 30</td>
+              <td>&nbsp;</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>&nbsp;</td>
+              <td>
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>สุรากลั่นชุมชน ขนาดกลาง 35</td>
+              <td>&nbsp;</td>
+              <td>1,100</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>1,100</td>
+              <td>-</td>
+              <td>1,100</td>
+              <td>&nbsp;</td>
+              <td>
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>สุรากลั่นชุมชน ขนาดกลาง 40</td>
+              <td>&nbsp;</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>&nbsp;</td>
+              <td>
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>สุรากลั่นชุมชน ขนาดใหญ่ 28</td>
+              <td>&nbsp;</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>&nbsp;</td>
+              <td>
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>สุรากลั่นชุมชน ขนาดใหญ่ 30</td>
+              <td>&nbsp;</td>
+              <td>2,000</td>
+              <td>1,000</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>2,000</td>
+              <td>1,000</td>
+              <td>1,000</td>
+              <td>&nbsp;</td>
+              <td>
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>สุรากลั่นชุมชน ขนาดใหญ่ 35</td>
+              <td>&nbsp;</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>&nbsp;</td>
+              <td>
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>สุรากลั่นชุมชน ขนาดใหญ่ 40</td>
+              <td>&nbsp;</td>
+              <td>3,100</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>3,100</td>
+              <td>-</td>
+              <td>3,100</td>
+              <td>&nbsp;</td>
+              <td>
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>สุราแช่ชุมชน</td>
+              <td>&nbsp;</td>
+              <td>1,000</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>1,000</td>
+              <td>-</td>
+              <td>1,000</td>
+              <td>&nbsp;</td>
+              <td>
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>ยาสูบ 2 สตางค์</td>
+              <td>&nbsp;</td>
+              <td>100</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>100</td>
+              <td>-</td>
+              <td>100</td>
+              <td>&nbsp;</td>
+              <td>
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>ยาสูบ 10 สตางค์</td>
+              <td>&nbsp;</td>
+              <td>-</td>
+              <td>2,000</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>2,000</td>
+              <td>-2,000</td>
+              <td>&nbsp;</td>
+              <td>
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>ยาสูบ 50 สตางค์</td>
+              <td>&nbsp;</td>
+              <td>2,000</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>2,000</td>
+              <td>-</td>
+              <td>2,000</td>
+              <td>&nbsp;</td>
+              <td>
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<div id="modalCheckStampBranch" class="ui modal hidden transition">
+  <i class="close icon"></i>
+  <div class="header">
+    สุรากลั่นชุมชน ขนาดกลาง 28
+  </div>
+
+  <div class="content">
+    <div class="ui form">
+
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-25">คงเหลือยกมาจากปีก่อน (ดวง)</label>
+          <input type="text" value="" />
+        </div>
+        <div class="eight wide field">
+          <label class="custom-label-w-25">คงเหลือ ณ ปัจจุบัน (ดวง)</label>
+          <input type="text" value="1900" />
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-25">คงเหลือจริง (ดวง)</label>
+          <input type="text" value="" />
+        </div>
+      </div>
+      <br>
+      <div class="sixteen wide column">
+        <h4 class="ui header">ตุลาคม</h4>
+      </div>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-25">รับ</label>
+          <input type="text" value="2000">
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-25">จ่าย</label>
+          <input type="text" value="100">
+        </div>
+      </div>
+      <br>
+      <div class="sixteen wide column">
+        <h4 class="ui header">สิงหาคม</h4>
+      </div>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-25">รับ</label>
+          <input type="text" value="">
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-25">จ่าย</label>
+          <input type="text" value="">
+        </div>
+      </div>
+      <br>
+      <div class="sixteen wide column">
+        <h4 class="ui header">กันยายน</h4>
+      </div>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-25">รับ</label>
+          <input type="text" value="">
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-25">จ่าย</label>
+          <input type="text" value="">
+        </div>
+      </div>
+      <br>
+      <div class="sixteen wide column">
+        <h4 class="ui header">รวมทั้งปีงบประมาณ</h4>
+      </div>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-25">รับ</label>
+          <input type="text" value="2000">
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-25">จ่าย</label>
+          <input type="text" value="100">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="ui center aligned grid">
+      <div class="six wide column">
+        <button class="ui primary button">
+          <i class="save icon"></i>
+          บันทึก
+        </button>
+        <button class="ui button" (click)="closeModal()">
+          <i class="close icon"></i>
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
