@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-working-paper-1-full-trader',
   templateUrl: './working-paper-1-full-trader.component.html',
-  styleUrls: []
+  styleUrls: ['./working-paper-1-full-trader.component.css']
 })
 export class WorkingPaper1FullTraderComponent implements OnInit {
 
