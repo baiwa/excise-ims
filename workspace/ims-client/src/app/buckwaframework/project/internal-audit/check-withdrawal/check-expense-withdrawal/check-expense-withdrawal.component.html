@@ -4,27 +4,29 @@
     <h2 class="ui header">อัพโหลดกระดาษทำการหมวดค่าใช้จ่าย</h2>
 
     <div class="ui segment">
-      <h3 class="ui header">กระดาษทำการหมวดค่าใช้จ่าย</h3>
-      <div class="ui grid">
-        <div class="six wide column">
-          <input type="file" />
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">กระดาษทำการหมวดค่าใช้จ่าย</label>
+            <input type="file" />
+          </div>
         </div>
-      </div>
 
-      <h3 class="ui header">งบทดลอง</h3>
-      <div class="ui grid">
-        <div class="six wide column">
-          <input type="file" />
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">งบทดลอง</label>
+            <input type="file" />
+          </div>
         </div>
       </div>
 
       <div class="ui center aligned grid">
         <div class="four wide column">
-          <button class="ui primary button" (click)="uploadData()">
+          <button class="ui mini primary button" (click)="uploadData()">
             <i class="upload icon"></i>
             อัพโหลด
           </button>
-          <button class="ui button" (click)="clearData()">
+          <button class="ui mini button" (click)="clearData()">
             <i class="trash outline icon"></i>
             ลบไฟล์
           </button>

@@ -13,120 +13,122 @@
     </div>
 
     <div class="ui attached segment">
-      <table id="table1" class="ui small celled table">
-        <thead>
-          <tr style="text-align: center;">
-            <th rowspan="2">ที่</th>
-            <th rowspan="2">รายการ</th>
-            <th rowspan="2">หมวดภาษี</th>
-            <th rowspan="2">วิธีการจัดซื้อจัดจ้าง</th>
-            <th colspan="3">เลขที่ / ปีงบประมาณ</th>
-            <th rowspan="2">ลงวันที่ เดือน ปี</th>
-            <th rowspan="2">ระยะเวลาดำเนินการ</th>
-            <th rowspan="2">ผู้ขาย/ผู้รับจ้าง</th>
-            <th colspan="2">จำนวนเงินตามสัญญา</th>
-            <th rowspan="2">หัก ณ ที่จ่าย</th>
-            <th rowspan="2">วันที่ตรวจรับ</th>
-            <th rowspan="2">จำนวนเงินที่เบิก (งวด)</th>
-            <th rowspan="2">คงเหลือ</th>
-            <th rowspan="2">หมายเหตุ</th>
-            <th rowspan="2">Action</th>
-          </tr>
-          <tr style="text-align: center;">
-            <th style="border-left: 1px solid rgba(34,36,38,.1);">ใบสั่งซื้อ/จ้าง</th>
-            <th>สัญญาซื้อ/จ้าง</th>
-            <th>ข้อตกลงซื้อ/จ้าง</th>
-            <th>เงินงบประมาณ</th>
-            <th>เงินนอกงบประมาณ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td style="text-align: center;">
-              <a class="update" href="javascript:;" (click)="editData()">
-                แก้ไข
-              </a>
-              <strong> / </strong>
-              <a class="delete" href="javascript:;">
-                ลบ
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td style="text-align: center;">
-              <a class="update" href="javascript:;" (click)="editData()">
-                แก้ไข
-              </a>
-              <strong> / </strong>
-              <a class="delete" href="javascript:;">
-                ลบ
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td style="text-align: center;">
-              <a class="update" href="javascript:;" (click)="editData()">
-                แก้ไข
-              </a>
-              <strong> / </strong>
-              <a class="delete" href="javascript:;">
-                ลบ
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div style="overflow-x: scroll">
+        <table id="table1" class="ui small celled table" style="width: 180%;">
+          <thead>
+            <tr style="text-align: center;">
+              <th rowspan="2">ที่</th>
+              <th rowspan="2">รายการ</th>
+              <th rowspan="2">หมวดภาษี</th>
+              <th rowspan="2">วิธีการจัดซื้อจัดจ้าง</th>
+              <th colspan="3">เลขที่ / ปีงบประมาณ</th>
+              <th rowspan="2">ลงวันที่ เดือน ปี</th>
+              <th rowspan="2">ระยะเวลาดำเนินการ</th>
+              <th rowspan="2">ผู้ขาย/ผู้รับจ้าง</th>
+              <th colspan="2">จำนวนเงินตามสัญญา</th>
+              <th rowspan="2">หัก ณ ที่จ่าย</th>
+              <th rowspan="2">วันที่ตรวจรับ</th>
+              <th rowspan="2">จำนวนเงินที่เบิก (งวด)</th>
+              <th rowspan="2">คงเหลือ</th>
+              <th rowspan="2">หมายเหตุ</th>
+              <th rowspan="2">Action</th>
+            </tr>
+            <tr style="text-align: center;">
+              <th style="border-left: 1px solid rgba(34,36,38,.1);">ใบสั่งซื้อ/จ้าง</th>
+              <th>สัญญาซื้อ/จ้าง</th>
+              <th>ข้อตกลงซื้อ/จ้าง</th>
+              <th>เงินงบประมาณ</th>
+              <th>เงินนอกงบประมาณ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="editData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

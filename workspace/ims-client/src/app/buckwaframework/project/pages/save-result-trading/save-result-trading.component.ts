@@ -11,16 +11,17 @@ export class SaveResultTradingComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    $('#selectTrading').hide();
   }
-
-  
 
   addData() {
     $('#modalSaveResultTrading').modal('show');
+    $('#selectTrading').show();
   }
 
   editData() {
     $('#modalSaveResultTrading').modal('show');
+    $('#selectTrading').show();
   }
 
   closeModal() {
