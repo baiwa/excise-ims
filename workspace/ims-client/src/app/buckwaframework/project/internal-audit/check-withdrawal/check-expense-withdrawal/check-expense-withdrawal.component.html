@@ -1,3 +1,328 @@
-<p>
-  check-expense-withdrawal works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column">
+
+    <h2 class="ui header">อัพโหลดกระดาษทำการหมวดค่าใช้จ่าย</h2>
+
+    <div class="ui segment">
+      <h3 class="ui header">กระดาษทำการหมวดค่าใช้จ่าย</h3>
+      <div class="ui grid">
+        <div class="six wide column">
+          <input type="file" />
+        </div>
+      </div>
+
+      <h3 class="ui header">งบทดลอง</h3>
+      <div class="ui grid">
+        <div class="six wide column">
+          <input type="file" />
+        </div>
+      </div>
+
+      <div class="ui center aligned grid">
+        <div class="four wide column">
+          <button class="ui primary button" (click)="uploadData()">
+            <i class="upload icon"></i>
+            อัพโหลด
+          </button>
+          <button class="ui button" (click)="clearData()">
+            <i class="trash outline icon"></i>
+            ลบไฟล์
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui segment" *ngIf="showData">
+      <div style="overflow-x: scroll;">
+        <table class="ui small celled table" style="width: 200%">
+          <thead>
+            <tr style="text-align: center;">
+              <th rowspan="2">รหัสบัญชี</th>
+              <th rowspan="2">ชื่อบัญชี</th>
+              <th colspan="3">กิจกรรม (รับโอนจากกรมฯ)</th>
+              <th rowspan="2">รวมรับ</th>
+              <th colspan="3">การเบิกจ่ายจริงแยกตามกิจกรรมตามทะเบียนคุม</th>
+              <th rowspan="2">รวมเบิก</th>
+              <th rowspan="2">รวมตาม GL, TB</th>
+              <th rowspan="2">ผลต่าง</th>
+              <th colspan="3">คงเหลือ</th>
+              <th rowspan="2">คงเหลือรวม</th>
+              <th colspan="4">ถัวจ่าย</th>
+              <th rowspan="2">เหลือสุทธิ</th>
+            </tr>
+            <tr style="text-align: center;">
+              <th style="border-left: 1px solid rgba(34,36,38,.1);">การบริหาร</th>
+              <th>ปราบปราม</th>
+              <th>เงินนอกงปม.</th>
+              <th>การบริหาร</th>
+              <th>ปราบปราม</th>
+              <th>เงินนอกงปม.</th>
+              <th>การบริหาร</th>
+              <th>ปราบปราม</th>
+              <th>เงินนอกงปม.</th>
+              <th>ถัวเป็นเงิน</th>
+              <th>ถัวเป็นจาก</th>
+              <th>ถัวมาเงิน</th>
+              <th>ถัวมาจาก</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>5101010108</td>
+              <td>ค่าล่วงเวลา</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>5101010113</td>
+              <td>ค่าจ้าง</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>5101010115</td>
+              <td>ค่าตอบแทนพนง.ราชการ</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>5101010116</td>
+              <td>เงินค่าครองชีพ</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>5101020106</td>
+              <td>เงินสมทบปปส.-Rel</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>5101020108</td>
+              <td>ค่าเช่าบ้าน</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>5101030101</td>
+              <td>เงินช่วยการศึกษาบุตร</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>5101030205</td>
+              <td>ค่ารักษา-นอก-รพ.รัฐ</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>5101040204</td>
+              <td>ค่ารักษาบำนาญนอก-รัฐ</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>5103010102</td>
+              <td>ค่าเบี้ยเลี้ยง</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <th colspan="2">รวมทั้งสื้น</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
