@@ -10,7 +10,7 @@
       <div class="step" style="width: 240px;">
         <i class="calendar icon"></i>
         <div class="content">
-          <div class="title">ปฏิทินโอที</div>
+          <div class="title">ปฏิทินเบี้ยเลี้ยง</div>
         </div>
       </div>
       <div class="step" style="width: 240px;">
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <h2 class="ui header">ตรวจสอบการเบิกค่าตอบแทนปฏิบัติงานนอกเวลาราชการ</h2>
+    <h2 class="ui header">ตรวจสอบการเบิกค่าเบี้ยเลี้ยง</h2>
 
     <div class="ui top attached header">
       <span>ข้อมูลเจ้าหน้าที่</span>
@@ -52,7 +52,7 @@
       <br>
       <div class="ui center aligned grid">
         <div class="eight wide column">
-          <button class="ui mini primary button width-100" routerLink="/int06-4-1">
+          <button class="ui mini primary button width-100" routerLink="/int06-3-1">
             <i class="external icon"></i>
             ตกลง
           </button>
@@ -75,13 +75,57 @@
           <table class="ui small  celled table">
             <thead>
               <tr style="text-align: center;">
+                <th style="width: 50%">อัตราเบี้ยเลี้ยง</th>
+                <th style="width: 50%">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: right;">120</td>
+                <td style="text-align: center;">
+                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">ลบ</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: right">240</td>
+                <td style="text-align: center;">
+                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">ลบ</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: right">270</td>
+                <td style="text-align: center;">
+                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">ลบ</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="ui grid">
+            <div class="sixteen wide right aligned column">
+              <button class="ui mini primary button">
+                <i class="add icon"></i>
+                เพิ่ม
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="eight wide column">
+          <table class="ui small celled table">
+            <thead>
+              <tr style="text-align: center;">
                 <th style="width: 50%">รายการปฏิทิน</th>
                 <th style="width: 50%">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td style="text-align: right;">ปฏิบัติงานนอกเวลา</td>
+                <td>เบิกเบี้ยงเลี้ยง</td>
                 <td style="text-align: center;">
                   <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
                   <strong> / </strong>
@@ -89,7 +133,7 @@
                 </td>
               </tr>
               <tr>
-                <td style="text-align: right">เดินทางไปราชการอื่น</td>
+                <td>ปฏิบัติงานนอกเวลา</td>
                 <td style="text-align: center;">
                   <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
                   <strong> / </strong>
@@ -97,7 +141,7 @@
                 </td>
               </tr>
               <tr>
-                <td style="text-align: right">อยู่เวร</td>
+                <td>เดินทางไปราชการอื่น</td>
                 <td style="text-align: center;">
                   <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
                   <strong> / </strong>
@@ -105,7 +149,15 @@
                 </td>
               </tr>
               <tr>
-                <td style="text-align: right">ลาป่วย/ลาพักผ่อน</td>
+                <td>อยู่เวร</td>
+                <td style="text-align: center;">
+                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">ลบ</a>
+                </td>
+              </tr>
+              <tr>
+                <td>ลาป่วย/ลาพักผ่อน</td>
                 <td style="text-align: center;">
                   <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
                   <strong> / </strong>
@@ -142,7 +194,7 @@
   </div>
 </div>
 
-<div id="modalOtWithdrawal" class="ui modal small hidden transition">
+<div id="modalAllowanceWithdrawal" class="ui modal small hidden transition">
   <i class="close icon"></i>
   <div class="header">
     แก้ไขอัตราเบี้ยเลี้ยง
@@ -163,11 +215,11 @@
   <div class="actions">
     <div class="ui center aligned grid">
       <div class="six wide column">
-        <button class="ui mini primary button">
+        <button class="ui mini primary button width-100">
           <i class="save icon"></i>
           บันทึก
         </button>
-        <button class="ui mini button" (click)="closePopupEdit()">
+        <button class="ui mini button width-100" (click)="closePopupEdit()">
           <i class="close icon"></i>
           ปิด
         </button>

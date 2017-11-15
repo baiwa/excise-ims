@@ -10,7 +10,7 @@
       <div class="step" style="width: 240px;">
         <i class="calendar icon"></i>
         <div class="content">
-          <div class="title">ปฏิทินเบี้ยเลี้ยง</div>
+          <div class="title">ปฏิทินโอที</div>
         </div>
       </div>
       <div class="step" style="width: 240px;">
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <h2 class="ui header">ตรวจสอบการเบิกค่าตอบแทนผู้ควบคุมงาน</h2>
+    <h2 class="ui header">ตรวจสอบการเบิกค่าตอบแทนปฏิบัติงานนอกเวลาราชการ</h2>
 
     <div class="ui top attached header">
       <span>ข้อมูลเจ้าหน้าที่</span>
@@ -48,11 +48,11 @@
           </div>
         </div>
       </div>
-
+      
       <br>
       <div class="ui center aligned grid">
         <div class="eight wide column">
-          <button class="ui mini primary button width-100" routerLink="/int06-5-1">
+          <button class="ui mini primary button width-100" routerLink="/int06-4-1">
             <i class="external icon"></i>
             ตกลง
           </button>
@@ -70,46 +70,9 @@
     </div>
 
     <div class="ui segment" *ngIf="showData">
-      <div class="ui center aligned three column grid">
-        <div class="column">
-          <table class="ui small celled table">
-            <thead>
-              <tr style="text-align: center;">
-                <th style="width: 50%">ประเภทบุคคล</th>
-                <th style="width: 50%">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="text-align: right;">บุคคลภายนอก</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">ลบ</a>
-                </td>
-              </tr>
-              <tr>
-                <td style="text-align: right">บุคคลภายใน</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">ลบ</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="ui grid">
-            <div class="sixteen wide right aligned column">
-              <button class="ui mini primary button">
-                <i class="add icon"></i>
-                เพิ่ม
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="column">
-          <table class="ui small celled table">
+      <div class="ui center aligned grid">
+        <div class="eight wide column">
+          <table class="ui small  celled table">
             <thead>
               <tr style="text-align: center;">
                 <th style="width: 50%">รายการปฏิทิน</th>
@@ -118,15 +81,7 @@
             </thead>
             <tbody>
               <tr>
-                <td style="text-align: right;">เบิกค่าตอบแทนผู้ควบคุมงาน</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">ลบ</a>
-                </td>
-              </tr>
-              <tr>
-                <td style="text-align: right">ปฏิบัติงานนอกเวลา</td>
+                <td style="text-align: right;">ปฏิบัติงานนอกเวลา</td>
                 <td style="text-align: center;">
                   <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
                   <strong> / </strong>
@@ -168,44 +123,6 @@
             </div>
           </div>
         </div>
-
-        <div class="column">
-          <table class="ui small celled table">
-            <thead>
-              <tr style="text-align: center;">
-                <th style="width: 50%">ประเภทบุคคล</th>
-                <th style="width: 50%">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="text-align: right;">บุคคลภายนอก</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">ลบ</a>
-                </td>
-              </tr>
-              <tr>
-                <td style="text-align: right">บุคคลภายใน</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">ลบ</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="ui grid">
-            <div class="sixteen wide right aligned column">
-              <button class="ui mini primary button">
-                <i class="add icon"></i>
-                เพิ่ม
-              </button>
-            </div>
-          </div>
-        </div>
-
       </div>
 
       <div class="ui center aligned grid">
@@ -225,10 +142,10 @@
   </div>
 </div>
 
-<div id="modalControllerWithdrawal" class="ui modal small hidden transition">
+<div id="modalOtWithdrawal" class="ui modal small hidden transition">
   <i class="close icon"></i>
   <div class="header">
-    แก้ไขประเภทบุคคล
+    แก้ไขอัตราเบี้ยเลี้ยง
   </div>
 
   <div class="content">
@@ -236,7 +153,7 @@
 
       <div class="inline fields">
         <div class="eight wide field">
-          <label class="custom-label-w-15">ประเภทบุคคล</label>
+          <label class="custom-label-w-15">อัตราเบี้ยเลี้ยง</label>
           <input type="text" value="" />
         </div>
       </div>
@@ -246,11 +163,11 @@
   <div class="actions">
     <div class="ui center aligned grid">
       <div class="six wide column">
-        <button class="ui mini primary button">
+        <button class="ui mini primary button width-100">
           <i class="save icon"></i>
           บันทึก
         </button>
-        <button class="ui mini button" (click)="closePopupEdit()">
+        <button class="ui mini button width-100" (click)="closePopupEdit()">
           <i class="close icon"></i>
           ปิด
         </button>

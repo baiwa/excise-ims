@@ -60,20 +60,20 @@ import { CompareReportAssetComponent } from './buckwaframework/project/pages/com
 import { CheckStampYearlyComponent } from './buckwaframework/project/pages/check-stamp-yearly/check-stamp-yearly.component';
 import { CheckStampBranchComponent } from './buckwaframework/project/pages/check-stamp-branch/check-stamp-branch.component';
 import { SaveResultTradingComponent } from './buckwaframework/project/pages/save-result-trading/save-result-trading.component';
-import { Int061Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-1/int06-1.component';
-import { Int062Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-2/int06-2.component';
-import { Int063Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-3/int06-3.component';
-import { Int0631Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-3/int06-3-1/int06-3-1.component';
-import { Int0632Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-3/int06-3-2/int06-3-2.component';
-import { Int064Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-4/int06-4.component';
-import { Int0641Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-4/int06-4-1/int06-4-1.component';
-import { Int0642Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-4/int06-4-2/int06-4-2.component';
-import { Int065Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-5/int06-5.component';
-import { CheckPersonalComWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal.component';
-import { Int0651Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-5/int06-5-1/int06-5-1.component';
-import { Int0652Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-5/int06-5-2/int06-5-2.component';
-import { CheckPersonalComWithdrawalCalendarComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal-calendar/check-personal-com-withdrawal-calendar.component';
-import { CheckPersonalComWithdrawalDisplayComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal-display/check-personal-com-withdrawal-display.component';
+import { Int061Component } from './buckwaframework/project/internal-audit/int06/int06-1/int06-1.component';
+import { Int062Component } from './buckwaframework/project/internal-audit/int06/int06-2/int06-2.component';
+import { Int063Component } from './buckwaframework/project/internal-audit/int06/int06-3/int06-3.component';
+import { Int0631Component } from './buckwaframework/project/internal-audit/int06/int06-3/int06-3-1/int06-3-1.component';
+import { Int0632Component } from './buckwaframework/project/internal-audit/int06/int06-3/int06-3-2/int06-3-2.component';
+import { Int064Component } from './buckwaframework/project/internal-audit/int06/int06-4/int06-4.component';
+import { Int0641Component } from './buckwaframework/project/internal-audit/int06/int06-4/int06-4-1/int06-4-1.component';
+import { Int0642Component } from './buckwaframework/project/internal-audit/int06/int06-4/int06-4-2/int06-4-2.component';
+import { Int065Component } from './buckwaframework/project/internal-audit/int06/int06-5/int06-5.component';
+import { Int0651Component } from './buckwaframework/project/internal-audit/int06/int06-5/int06-5-1/int06-5-1.component';
+import { Int0652Component } from './buckwaframework/project/internal-audit/int06/int06-5/int06-5-2/int06-5-2.component';
+import { Int066Component } from './buckwaframework/project/internal-audit/int06/int06-6/int06-6.component';
+import { Int0661Component } from './buckwaframework/project/internal-audit/int06/int06-6/int06-6-1/int06-6-1.component';
+import { Int0662Component } from './buckwaframework/project/internal-audit/int06/int06-6/int06-6-2/int06-6-2.component';
 
 @NgModule({
     declarations: [
@@ -127,9 +127,9 @@ import { CheckPersonalComWithdrawalDisplayComponent } from './buckwaframework/pr
         Int065Component,
         Int0651Component,
         Int0652Component,
-        CheckPersonalComWithdrawalComponent,
-        CheckPersonalComWithdrawalCalendarComponent,
-        CheckPersonalComWithdrawalDisplayComponent
+        Int066Component,
+        Int0661Component,
+        Int0662Component
     ],
     imports: [
         BrowserModule,
