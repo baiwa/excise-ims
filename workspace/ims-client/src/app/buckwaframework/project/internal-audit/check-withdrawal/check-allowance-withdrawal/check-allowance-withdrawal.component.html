@@ -30,28 +30,26 @@
     <div class="ui attached segment">
       <div class="ui form">
         <div class="inline fields">
-          <div class="eight wide field ">
-            <label class="custom-label-w-25">ชื่อ</label>
+          <div class="six wide field ">
+            <label class="custom-label-w-10">ชื่อ</label>
+            <input type="text" value="">
+          </div>
+          <div class="one wide field"></div>
+          <div class="six wide field ">
+            <label class="custom-label-w-10">นามสกุล</label>
             <input type="text" value="">
           </div>
         </div>
 
         <div class="inline fields">
-          <div class="eight wide field ">
-            <label class="custom-label-w-25">นามสกุล</label>
+          <div class="six wide field ">
+            <label class="custom-label-w-10">ตำแหน่ง</label>
             <input type="text" value="">
           </div>
         </div>
-
-        <div class="inline fields">
-          <div class="eight wide field ">
-            <label class="custom-label-w-25">ตำแหน่ง</label>
-            <input type="text" value="">
-          </div>
-        </div>
-
       </div>
-
+      
+      <br>
       <div class="ui center aligned grid">
         <div class="eight wide column">
           <button class="ui mini primary button width-100" routerLink="/check-allowance-withdrawal-calendar">
@@ -221,7 +219,7 @@
           <i class="save icon"></i>
           บันทึก
         </button>
-        <button class="ui mini button" (click)="closeModal()">
+        <button class="ui mini button" (click)="closePopupEdit()()">
           <i class="close icon"></i>
           ปิด
         </button>

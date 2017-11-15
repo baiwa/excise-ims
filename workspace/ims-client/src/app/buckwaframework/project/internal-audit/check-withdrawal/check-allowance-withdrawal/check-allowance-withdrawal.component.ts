@@ -23,6 +23,10 @@ export class CheckAllowanceWithdrawalComponent implements OnInit {
     $('#modalAllowanceWithdrawal').modal('show');
   }
 
+  closePopupEdit() {
+    $('#modalAllowanceWithdrawal').modal('hide');
+  }
+
   editData() {
     this.showData = true;
   }
