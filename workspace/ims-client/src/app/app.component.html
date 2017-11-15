@@ -62,6 +62,18 @@
                         <a class="item" [routerLink]="['/int06-6']" routerLinkActive="active">ตรวจสอบการเบิกค่าตอบแทนบุคคลหรือคณะกรรมการ</a>
                     </div>
                 </div>
+                <div class="ui simple dropdown item">
+                    <i class="dropdown icon"></i>
+                    บัญชี
+                    <div class="menu">
+                        <a class="item" [routerLink]="['/int07-1']" routerLinkActive="active">นำเข้าเอกสาร</a>
+                        <a class="item" [routerLink]="['/int07-2']" routerLinkActive="active">ตรวจสอบดุลบัญชีที่แสดงในช่อง "ยอดยกไป" ของงบทดลอง</a>
+                        <a class="item" [routerLink]="['/int07-3']" routerLinkActive="active">ตรวจสอบความสัมพันธ์ของช่อง "เดบิต" "เครดิต" ในงบทดลอง</a>
+                        <a class="item" [routerLink]="['/int07-4']" routerLinkActive="active">ตรวจสอบเปรียบเทียบ "เดบิต" "เครดิต" ในงบทดลองกับบัญชีแยกประเภท</a>
+                        <a class="item" [routerLink]="['/int07-5']" routerLinkActive="active">ตรวจสอบเปรียบเทียบบัญชีเคลื่อนไหวเงินฝากคลังกระทบยอด 3 บัญชี</a>
+                        <a class="item" [routerLink]="['/int07-6']" routerLinkActive="active">ตรวจสอบการนำส่งเงินบัญชีเจ้าหนี้ อปท.</a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
