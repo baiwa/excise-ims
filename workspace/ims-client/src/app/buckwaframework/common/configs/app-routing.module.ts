@@ -40,7 +40,7 @@ import { CompareReportAssetComponent } from './../../project/pages/compare-repor
 import { CheckStampYearlyComponent } from './../../project/pages/check-stamp-yearly/check-stamp-yearly.component';
 import { CheckStampBranchComponent } from './../../project/pages/check-stamp-branch/check-stamp-branch.component';
 import { SaveResultTradingComponent } from './../../project/pages/save-result-trading/save-result-trading.component';
-import { CheckExpenseWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-expense-withdrawal/check-expense-withdrawal.component';
+import { Int061Component } from './../../project/internal-audit/check-withdrawal/int06-1/int06-1.component';
 import { CheckSummaryWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-summary-withdrawal/check-summary-withdrawal.component';
 import { CheckAllowanceWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal.component';
 import { CheckOvertimeComWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal.component';
@@ -103,7 +103,7 @@ const routes: Routes = [
     { path: 'check-stamp-branch', component: CheckStampBranchComponent, canActivate: [AuthGuard] },
     { path: 'save-result-trading', component: SaveResultTradingComponent, canActivate: [AuthGuard] },
 
-    { path: 'check-expense-withdrawal', component: CheckExpenseWithdrawalComponent, canActivate: [AuthGuard] },
+    { path: 'int06-1', component: Int061Component, canActivate: [AuthGuard] },
     { path: 'check-summary-withdrawal', component: CheckSummaryWithdrawalComponent, canActivate: [AuthGuard] },
     { path: 'check-allowance-withdrawal', component: CheckAllowanceWithdrawalComponent, canActivate: [AuthGuard] },
     { path: 'check-allowance-withdrawal-calendar', component: CheckAllowanceWithdrawalCalendarComponent, canActivate: [AuthGuard] },

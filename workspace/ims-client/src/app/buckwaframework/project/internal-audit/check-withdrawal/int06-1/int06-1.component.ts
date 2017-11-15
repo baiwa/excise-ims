@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'check-expense-withdrawal',
-  templateUrl: './check-expense-withdrawal.component.html',
-  styleUrls: ['./check-expense-withdrawal.component.css']
+  selector: 'int06-1',
+  templateUrl: './int06-1.component.html',
+  styleUrls: ['./int06-1.component.css']
 })
-export class CheckExpenseWithdrawalComponent implements OnInit {
+export class Int061Component implements OnInit {
 
   private showData: boolean = false;
 

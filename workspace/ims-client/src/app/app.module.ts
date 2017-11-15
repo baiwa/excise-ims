@@ -62,7 +62,7 @@ import { CheckStampBranchComponent } from './buckwaframework/project/pages/check
 import { SaveResultTradingComponent } from './buckwaframework/project/pages/save-result-trading/save-result-trading.component';
 import { CheckAllowanceWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal.component';
 import { CheckSummaryWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-summary-withdrawal/check-summary-withdrawal.component';
-import { CheckExpenseWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-expense-withdrawal/check-expense-withdrawal.component';
+import { Int061Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-1/int06-1.component';
 import { CheckOvertimeComWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal.component';
 import { Int065Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-5/int06-5.component';
 import { CheckPersonalComWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal.component';
@@ -118,7 +118,7 @@ import { CheckPersonalComWithdrawalDisplayComponent } from './buckwaframework/pr
         SaveResultTradingComponent,
         CheckAllowanceWithdrawalComponent,
         CheckSummaryWithdrawalComponent,
-        CheckExpenseWithdrawalComponent,
+        Int061Component,
         CheckOvertimeComWithdrawalComponent,
         Int065Component,
         CheckPersonalComWithdrawalComponent,
