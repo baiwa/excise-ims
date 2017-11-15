@@ -63,11 +63,17 @@ import { SaveResultTradingComponent } from './buckwaframework/project/pages/save
 import { CheckAllowanceWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal.component';
 import { CheckSummaryWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-summary-withdrawal/check-summary-withdrawal.component';
 import { CheckExpenseWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-expense-withdrawal/check-expense-withdrawal.component';
-import { CheckOvertimeCompensationWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-overtime-compensation-withdrawal/check-overtime-compensation-withdrawal.component';
-import { CheckControllerCompensationWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-controller-compensation-withdrawal/check-controller-compensation-withdrawal.component';
-import { CheckPersonalCompensationWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-personal-compensation-withdrawal/check-personal-compensation-withdrawal.component';
+import { CheckOvertimeComWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal.component';
+import { CheckControllerComWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-controller-com-withdrawal/check-controller-com-withdrawal.component';
+import { CheckPersonalComWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal.component';
 import { CheckAllowanceWithdrawalCalendarComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal-calendar/check-allowance-withdrawal-calendar.component';
 import { CheckAllowanceWithdrawalDisplayComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal-display/check-allowance-withdrawal-display.component';
+import { CheckOvertimeComWithdrawalCalendarComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal-calendar/check-overtime-com-withdrawal-calendar.component';
+import { CheckOvertimeComWithdrawalDisplayComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal-display/check-overtime-com-withdrawal-display.component';
+import { CheckControllerComWithdrawalCalendarComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-controller-com-withdrawal/check-controller-com-withdrawal-calendar/check-controller-com-withdrawal-calendar.component';
+import { CheckControllerComWithdrawalDisplayComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-controller-com-withdrawal/check-controller-com-withdrawal-display/check-controller-com-withdrawal-display.component';
+import { CheckPersonalComWithdrawalCalendarComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal-calendar/check-personal-com-withdrawal-calendar.component';
+import { CheckPersonalComWithdrawalDisplayComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal-display/check-personal-com-withdrawal-display.component';
 
 @NgModule({
     declarations: [
@@ -113,11 +119,17 @@ import { CheckAllowanceWithdrawalDisplayComponent } from './buckwaframework/proj
         CheckAllowanceWithdrawalComponent,
         CheckSummaryWithdrawalComponent,
         CheckExpenseWithdrawalComponent,
-        CheckOvertimeCompensationWithdrawalComponent,
-        CheckControllerCompensationWithdrawalComponent,
-        CheckPersonalCompensationWithdrawalComponent,
+        CheckOvertimeComWithdrawalComponent,
+        CheckControllerComWithdrawalComponent,
+        CheckPersonalComWithdrawalComponent,
         CheckAllowanceWithdrawalCalendarComponent,
-        CheckAllowanceWithdrawalDisplayComponent
+        CheckAllowanceWithdrawalDisplayComponent,
+        CheckOvertimeComWithdrawalCalendarComponent,
+        CheckOvertimeComWithdrawalDisplayComponent,
+        CheckControllerComWithdrawalCalendarComponent,
+        CheckControllerComWithdrawalDisplayComponent,
+        CheckPersonalComWithdrawalCalendarComponent,
+        CheckPersonalComWithdrawalDisplayComponent
     ],
     imports: [
         BrowserModule,

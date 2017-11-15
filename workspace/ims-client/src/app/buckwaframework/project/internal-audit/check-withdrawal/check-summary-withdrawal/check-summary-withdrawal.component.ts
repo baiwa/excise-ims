@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-check-summary-withdrawal',
+  selector: 'check-summary-withdrawal',
   templateUrl: './check-summary-withdrawal.component.html',
   styleUrls: ['./check-summary-withdrawal.component.css']
 })
