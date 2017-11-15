@@ -52,11 +52,16 @@
 
 
     <div *ngIf="showData">
+      <br>
       <div class="ui top attached header">
         <div class="ui grid">
           <div class="right aligned column">
             <div class="ui mini primary button" (click)="compareData()">
               <i class="exchange icon"></i>เปรียบเทียบ TR
+            </div>
+
+            <div class="ui mini primary button" (click)="addData()">
+              <i class="print icon"></i>พิมพ์
             </div>
           </div>
         </div>

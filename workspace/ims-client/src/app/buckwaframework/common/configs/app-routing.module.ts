@@ -115,8 +115,8 @@ const routes: Routes = [
     { path: 'int06-5-1', component: Int0651Component, canActivate: [AuthGuard] },
     { path: 'int06-5-2', component: Int0652Component, canActivate: [AuthGuard] },
     { path: 'int06-6', component: Int066Component, canActivate: [AuthGuard] },
-    { path: 'int06-6-1', component: Int061Component, canActivate: [AuthGuard] },
-    { path: 'int06-6-2', component: Int062Component, canActivate: [AuthGuard] },
+    { path: 'int06-6-1', component: Int0661Component, canActivate: [AuthGuard] },
+    { path: 'int06-6-2', component: Int0662Component, canActivate: [AuthGuard] },
 
 ];
 

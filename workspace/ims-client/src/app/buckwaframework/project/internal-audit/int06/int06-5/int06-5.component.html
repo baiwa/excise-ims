@@ -112,6 +112,43 @@
           <table class="ui small celled table">
             <thead>
               <tr style="text-align: center;">
+                <th style="width: 50%">ประเภทงาน</th>
+                <th style="width: 50%">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: right;">ประธาน</td>
+                <td style="text-align: center;">
+                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">ลบ</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: right">กรรมการ</td>
+                <td style="text-align: center;">
+                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">ลบ</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="ui grid">
+            <div class="sixteen wide right aligned column">
+              <button class="ui mini primary button">
+                <i class="add icon"></i>
+                เพิ่ม
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="column">
+          <table class="ui small celled table">
+            <thead>
+              <tr style="text-align: center;">
                 <th style="width: 50%">รายการปฏิทิน</th>
                 <th style="width: 50%">Action</th>
               </tr>
@@ -151,43 +188,6 @@
               </tr>
               <tr>
                 <td style="text-align: right">ลาป่วย/ลาพักผ่อน</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">ลบ</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="ui grid">
-            <div class="sixteen wide right aligned column">
-              <button class="ui mini primary button">
-                <i class="add icon"></i>
-                เพิ่ม
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="column">
-          <table class="ui small celled table">
-            <thead>
-              <tr style="text-align: center;">
-                <th style="width: 50%">ประเภทบุคคล</th>
-                <th style="width: 50%">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="text-align: right;">บุคคลภายนอก</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">ลบ</a>
-                </td>
-              </tr>
-              <tr>
-                <td style="text-align: right">บุคคลภายใน</td>
                 <td style="text-align: center;">
                   <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
                   <strong> / </strong>
