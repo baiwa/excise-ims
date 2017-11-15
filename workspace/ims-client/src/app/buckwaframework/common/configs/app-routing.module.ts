@@ -46,12 +46,14 @@ import { CheckAllowanceWithdrawalComponent } from './../../project/internal-audi
 import { CheckOvertimeCompensationWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-overtime-compensation-withdrawal/check-overtime-compensation-withdrawal.component';
 import { CheckControllerCompensationWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-controller-compensation-withdrawal/check-controller-compensation-withdrawal.component';
 import { CheckPersonalCompensationWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-personal-compensation-withdrawal/check-personal-compensation-withdrawal.component';
+import { CheckAllowanceWithdrawalCalendarComponent } from './../../project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal-calendar/check-allowance-withdrawal-calendar.component';
+import { CheckAllowanceWithdrawalDisplayComponent } from './../../project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal-display/check-allowance-withdrawal-display.component';
 
 const routes: Routes = [
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
-    { path: 'login',  component: LoginPage },
-    { path: 'home', component: HomePage , canActivate: [AuthGuard]},
+    { path: 'login', component: LoginPage },
+    { path: 'home', component: HomePage, canActivate: [AuthGuard] },
     { path: 'message', component: MessagePage, canActivate: [AuthGuard] },
     { path: 'add-message', component: MessageDetailPage, canActivate: [AuthGuard] },
     { path: 'edit-message/:id', component: MessageDetailPage, canActivate: [AuthGuard] },
@@ -89,7 +91,7 @@ const routes: Routes = [
     { path: 'working-paper-1-full-trader', component: WorkingPaper1FullTraderComponent, canActivate: [AuthGuard] },
     { path: 'summary-amount-product-trader', component: SummaryAmountProductTraderComponent, canActivate: [AuthGuard] },
     { path: 'create-save-message-trader', component: CreateSaveMessageTraderComponent, canActivate: [AuthGuard] },
-    
+
     { path: 'compare-report-asset', component: CompareReportAssetComponent, canActivate: [AuthGuard] },
     { path: 'check-stamp-yearly', component: CheckStampYearlyComponent, canActivate: [AuthGuard] },
     { path: 'check-stamp-branch', component: CheckStampBranchComponent, canActivate: [AuthGuard] },
@@ -98,14 +100,16 @@ const routes: Routes = [
     { path: 'check-expense-withdrawal', component: CheckExpenseWithdrawalComponent, canActivate: [AuthGuard] },
     { path: 'check-summary-withdrawal', component: CheckSummaryWithdrawalComponent, canActivate: [AuthGuard] },
     { path: 'check-allowance-withdrawal', component: CheckAllowanceWithdrawalComponent, canActivate: [AuthGuard] },
+    { path: 'check-allowance-withdrawal-calendar', component: CheckAllowanceWithdrawalCalendarComponent, canActivate: [AuthGuard] },
+    { path: 'check-allowance-withdrawal-display', component: CheckAllowanceWithdrawalDisplayComponent, canActivate: [AuthGuard] },
     { path: 'check-overtime-compensation-withdrawal', component: CheckOvertimeCompensationWithdrawalComponent, canActivate: [AuthGuard] },
     { path: 'check-controller-compensation-withdrawal', component: CheckControllerCompensationWithdrawalComponent, canActivate: [AuthGuard] },
     { path: 'check-personal-compensation-withdrawal', component: CheckPersonalCompensationWithdrawalComponent, canActivate: [AuthGuard] },
-    
+
 ];
 
 @NgModule({
-    imports: [ RouterModule.forRoot(routes, { useHash: true }) ],
-    exports: [ RouterModule ]
+    imports: [RouterModule.forRoot(routes, { useHash: true })],
+    exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -66,6 +66,8 @@ import { CheckExpenseWithdrawalComponent } from './buckwaframework/project/inter
 import { CheckOvertimeCompensationWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-overtime-compensation-withdrawal/check-overtime-compensation-withdrawal.component';
 import { CheckControllerCompensationWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-controller-compensation-withdrawal/check-controller-compensation-withdrawal.component';
 import { CheckPersonalCompensationWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-personal-compensation-withdrawal/check-personal-compensation-withdrawal.component';
+import { CheckAllowanceWithdrawalCalendarComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal-calendar/check-allowance-withdrawal-calendar.component';
+import { CheckAllowanceWithdrawalDisplayComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal-display/check-allowance-withdrawal-display.component';
 
 @NgModule({
     declarations: [
@@ -113,7 +115,9 @@ import { CheckPersonalCompensationWithdrawalComponent } from './buckwaframework/
         CheckExpenseWithdrawalComponent,
         CheckOvertimeCompensationWithdrawalComponent,
         CheckControllerCompensationWithdrawalComponent,
-        CheckPersonalCompensationWithdrawalComponent
+        CheckPersonalCompensationWithdrawalComponent,
+        CheckAllowanceWithdrawalCalendarComponent,
+        CheckAllowanceWithdrawalDisplayComponent
     ],
     imports: [
         BrowserModule,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var $: any;
 @Component({
   selector: 'app-check-allowance-withdrawal',
   templateUrl: './check-allowance-withdrawal.component.html',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckAllowanceWithdrawalComponent implements OnInit {
 
+  private showData: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  clearData() {
+    this.showData = false;
+  }
+
+  popupEditData() {
+    $('#modalAllowanceWithdrawal').modal('show');
+  }
+
+  editData() {
+    this.showData = true;
+  }
 }

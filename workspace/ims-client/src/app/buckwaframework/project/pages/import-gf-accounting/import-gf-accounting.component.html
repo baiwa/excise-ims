@@ -21,25 +21,33 @@
       </div>
     </div>
 
-    <h2 class="ui header">นำเข้างบทดลอง</h2>
+    <div class="ui top attached header">
+      <span>อัพโหลดงบทดลอง</span>
+    </div>
 
-    <div class="ui segment">
-      <h3 class="ui header">อัพโหลด งบทดลอง</h3>
-      <div class="ui grid">
-        <div class="six wide column">
-          <input type="file" />
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">ไฟล์งบทดลอง</label>
+            <input type="file" />
+          </div>
         </div>
+      </div>
+
+      <div class="ui center aligned grid">
         <div class="four wide column">
-          <button class="ui primary button" routerLink='/select-inc-summary'>
+          <button class="ui mini primary button" routerLink='/select-inc-summary'>
             <i class="upload icon"></i>
             อัพโหลด
           </button>
-          <button class="ui button">
+          <button class="ui mini button">
             <i class="trash outline icon"></i>
             ลบไฟล์
           </button>
         </div>
       </div>
     </div>
+
   </div>
 </div>
