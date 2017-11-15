@@ -79,13 +79,9 @@ button.width-100 {
 }
 
 img.image-width {
-    width: 47% !important;
+    width: 16px !important;
 }
 
 img.image-width-18 {
     width: 18px !important;
-}
-
-img.image-width-16 {
-    width: 16px !important;
 }
