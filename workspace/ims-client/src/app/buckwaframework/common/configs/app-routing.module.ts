@@ -45,11 +45,11 @@ import { Int062Component } from './../../project/internal-audit/check-withdrawal
 import { Int063Component } from './../../project/internal-audit/check-withdrawal/int06-3/int06-3.component';
 import { Int0631Component } from './../../project/internal-audit/check-withdrawal/int06-3/int06-3-1/int06-3-1.component';
 import { Int0632Component } from './../../project/internal-audit/check-withdrawal/int06-3/int06-3-2/int06-3-2.component';
-import { CheckOvertimeComWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal.component';
+import { Int064Component } from './../../project/internal-audit/check-withdrawal/int06-4/int06-4.component';
+import { Int0641Component } from './../../project/internal-audit/check-withdrawal/int06-4/int06-4-1/int06-4-1.component';
+import { Int0642Component } from './../../project/internal-audit/check-withdrawal/int06-4/int06-4-2/int06-4-2.component';
 import { Int065Component } from './../../project/internal-audit/check-withdrawal/int06-5/int06-5.component';
 import { CheckPersonalComWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal.component';
-import { CheckOvertimeComWithdrawalCalendarComponent } from './../../project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal-calendar/check-overtime-com-withdrawal-calendar.component';
-import { CheckOvertimeComWithdrawalDisplayComponent } from './../../project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal-display/check-overtime-com-withdrawal-display.component';
 import { Int0651Component } from './../../project/internal-audit/check-withdrawal/int06-5/int06-5-1/int06-5-1.component';
 import { Int0652Component } from './../../project/internal-audit/check-withdrawal/int06-5/int06-5-2/int06-5-2.component';
 import { CheckPersonalComWithdrawalCalendarComponent } from './../../project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal-calendar/check-personal-com-withdrawal-calendar.component';
@@ -108,9 +108,9 @@ const routes: Routes = [
     { path: 'int06-3', component: Int063Component, canActivate: [AuthGuard] },
     { path: 'int06-3-1', component: Int0631Component, canActivate: [AuthGuard] },
     { path: 'int06-3-2', component: Int0632Component, canActivate: [AuthGuard] },
-    { path: 'check-overtime-com-withdrawal', component: CheckOvertimeComWithdrawalComponent, canActivate: [AuthGuard] },
-    { path: 'check-overtime-com-withdrawal-calendar', component: CheckOvertimeComWithdrawalCalendarComponent, canActivate: [AuthGuard] },
-    { path: 'check-overtime-com-withdrawal-display', component: CheckOvertimeComWithdrawalDisplayComponent, canActivate: [AuthGuard] },
+    { path: 'int06-4', component: Int064Component, canActivate: [AuthGuard] },
+    { path: 'int06-4-1', component: Int0641Component, canActivate: [AuthGuard] },
+    { path: 'int06-4-2', component: Int0642Component, canActivate: [AuthGuard] },
     { path: 'int06-5', component: Int065Component, canActivate: [AuthGuard] },
     { path: 'int06-5-1', component: Int0651Component, canActivate: [AuthGuard] },
     { path: 'int06-5-2', component: Int0652Component, canActivate: [AuthGuard] },

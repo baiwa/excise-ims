@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule }    from '@angular/http';
+import { HttpModule } from '@angular/http';
 
 // pipes
 import { TranslatePipe } from './buckwaframework/common/pipes/translate.pipe';
@@ -65,11 +65,11 @@ import { Int062Component } from './buckwaframework/project/internal-audit/check-
 import { Int063Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-3/int06-3.component';
 import { Int0631Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-3/int06-3-1/int06-3-1.component';
 import { Int0632Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-3/int06-3-2/int06-3-2.component';
-import { CheckOvertimeComWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal.component';
+import { Int064Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-4/int06-4.component';
+import { Int0641Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-4/int06-4-1/int06-4-1.component';
+import { Int0642Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-4/int06-4-2/int06-4-2.component';
 import { Int065Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-5/int06-5.component';
 import { CheckPersonalComWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal.component';
-import { CheckOvertimeComWithdrawalCalendarComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal-calendar/check-overtime-com-withdrawal-calendar.component';
-import { CheckOvertimeComWithdrawalDisplayComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal-display/check-overtime-com-withdrawal-display.component';
 import { Int0651Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-5/int06-5-1/int06-5-1.component';
 import { Int0652Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-5/int06-5-2/int06-5-2.component';
 import { CheckPersonalComWithdrawalCalendarComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal-calendar/check-personal-com-withdrawal-calendar.component';
@@ -121,13 +121,13 @@ import { CheckPersonalComWithdrawalDisplayComponent } from './buckwaframework/pr
         Int063Component,
         Int0631Component,
         Int0632Component,
-        CheckOvertimeComWithdrawalComponent,
+        Int064Component,
+        Int0641Component,
+        Int0642Component,
         Int065Component,
-        CheckPersonalComWithdrawalComponent,
-        CheckOvertimeComWithdrawalCalendarComponent,
-        CheckOvertimeComWithdrawalDisplayComponent,
         Int0651Component,
         Int0652Component,
+        CheckPersonalComWithdrawalComponent,
         CheckPersonalComWithdrawalCalendarComponent,
         CheckPersonalComWithdrawalDisplayComponent
     ],
