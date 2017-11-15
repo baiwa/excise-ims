@@ -153,8 +153,14 @@ public class WebSecurityConfig {
 				"/scripts.bundle.js",
 				"/styles.bundle.js",
 				"/vendor.bundle.js",
-				"/main.bundle.js"
+				"/main.bundle.js",
 				// For Angular -- End
+				// For Swagger2 -- Start
+				"/v2/api-docs/**",
+				"/swagger.json",
+				"/swagger-ui.html",
+				"/webjars/**"
+				// For Swagger2 -- End
 			);
 		}
 		

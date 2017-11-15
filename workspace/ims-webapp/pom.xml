@@ -31,6 +31,7 @@
 		<hikaricp.version>2.6.3</hikaricp.version>
 		<p6spy.version>3.0.0</p6spy.version>
 		<guava.version>22.0</guava.version>
+		<swagger.version>2.7.0</swagger.version>
 		<!-- Plugin Version -->
 		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
 	</properties>
@@ -171,6 +172,18 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
+		</dependency>
+		
+		<!-- Springfox Swagger2: JSON API documentation for spring based applications -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${swagger.version}</version>
 		</dependency>
 		
 	</dependencies>

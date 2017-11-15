@@ -1,5 +1,6 @@
 package th.co.baiwa.buckwaframework.common.config;
 
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -23,7 +24,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
+import springfox.documentation.spring.web.json.Json;
 import th.co.baiwa.starter.thymeleaf.stsm.web.conversion.DateFormatter;
 import th.co.baiwa.starter.thymeleaf.stsm.web.conversion.VarietyFormatter;
 
@@ -60,8 +66,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		// For Thymeleaf
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 		// Configure from WebMvcAutoConfiguration.addResourceHandlers()
 		registry.addResourceHandler("/**").addResourceLocations(new String[] {
 			"classpath:/META-INF/resources/",
@@ -70,6 +74,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 			"classpath:/public/",
 			"/"
 		});
+		// For Thymeleaf
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		// For Swagger2
+		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
 	
 	@Bean(name = "multipartResolver")
@@ -87,6 +96,13 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		Gson gson = new GsonBuilder()
 			.setDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss")
 			.serializeNulls()
+			.registerTypeAdapter(Json.class, new JsonSerializer<Json>() {
+				@Override
+				public JsonElement serialize(Json src, Type typeOfSrc, JsonSerializationContext context) {
+					final JsonParser parser = new JsonParser();
+					return parser.parse(src.value());
+				}
+			})
 			.create();
 
 		GsonHttpMessageConverter gsonConverter = new GsonHttpMessageConverter();
