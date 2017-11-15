@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 declare var $: any;
 @Component({
-  selector: 'app-check-allowance-withdrawal',
-  templateUrl: './check-allowance-withdrawal.component.html',
-  styleUrls: ['./check-allowance-withdrawal.component.css']
+  selector: 'int06-3',
+  templateUrl: './int06-3.component.html',
+  styleUrls: ['./int06-3.component.css']
 })
-export class CheckAllowanceWithdrawalComponent implements OnInit {
+export class Int063Component implements OnInit {
 
   private showData: boolean = false;
 

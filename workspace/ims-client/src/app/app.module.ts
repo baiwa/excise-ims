@@ -60,14 +60,14 @@ import { CompareReportAssetComponent } from './buckwaframework/project/pages/com
 import { CheckStampYearlyComponent } from './buckwaframework/project/pages/check-stamp-yearly/check-stamp-yearly.component';
 import { CheckStampBranchComponent } from './buckwaframework/project/pages/check-stamp-branch/check-stamp-branch.component';
 import { SaveResultTradingComponent } from './buckwaframework/project/pages/save-result-trading/save-result-trading.component';
-import { CheckAllowanceWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal.component';
 import { Int061Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-1/int06-1.component';
 import { Int062Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-2/int06-2.component';
+import { Int063Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-3/int06-3.component';
+import { Int0631Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-3/int06-3-1/int06-3-1.component';
+import { Int0632Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-3/int06-3-2/int06-3-2.component';
 import { CheckOvertimeComWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal.component';
 import { Int065Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-5/int06-5.component';
 import { CheckPersonalComWithdrawalComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal.component';
-import { CheckAllowanceWithdrawalCalendarComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal-calendar/check-allowance-withdrawal-calendar.component';
-import { CheckAllowanceWithdrawalDisplayComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal-display/check-allowance-withdrawal-display.component';
 import { CheckOvertimeComWithdrawalCalendarComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal-calendar/check-overtime-com-withdrawal-calendar.component';
 import { CheckOvertimeComWithdrawalDisplayComponent } from './buckwaframework/project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal-display/check-overtime-com-withdrawal-display.component';
 import { Int0651Component } from './buckwaframework/project/internal-audit/check-withdrawal/int06-5/int06-5-1/int06-5-1.component';
@@ -116,14 +116,14 @@ import { CheckPersonalComWithdrawalDisplayComponent } from './buckwaframework/pr
         CheckStampYearlyComponent,
         CheckStampBranchComponent,
         SaveResultTradingComponent,
-        CheckAllowanceWithdrawalComponent,
         Int061Component,
         Int062Component,
+        Int063Component,
+        Int0631Component,
+        Int0632Component,
         CheckOvertimeComWithdrawalComponent,
         Int065Component,
         CheckPersonalComWithdrawalComponent,
-        CheckAllowanceWithdrawalCalendarComponent,
-        CheckAllowanceWithdrawalDisplayComponent,
         CheckOvertimeComWithdrawalCalendarComponent,
         CheckOvertimeComWithdrawalDisplayComponent,
         Int0651Component,
