@@ -22,7 +22,8 @@ body {
     display: block !important;
 }
 
-input.custom-readonly {
+input.custom-readonly,
+select.custom-readonly {
     background-color: #ccc !important;
 }
 
@@ -79,9 +80,5 @@ button.width-100 {
 }
 
 img.image-width {
-    width: 16px !important;
-}
-
-img.image-width-18 {
-    width: 18px !important;
+    width: 47% !important;
 }
