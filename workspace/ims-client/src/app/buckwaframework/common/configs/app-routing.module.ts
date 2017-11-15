@@ -44,14 +44,14 @@ import { CheckExpenseWithdrawalComponent } from './../../project/internal-audit/
 import { CheckSummaryWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-summary-withdrawal/check-summary-withdrawal.component';
 import { CheckAllowanceWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal.component';
 import { CheckOvertimeComWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal.component';
-import { CheckControllerComWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-controller-com-withdrawal/check-controller-com-withdrawal.component';
+import { Int065Component } from './../../project/internal-audit/check-withdrawal/int06-5/int06-5.component';
 import { CheckPersonalComWithdrawalComponent } from './../../project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal.component';
 import { CheckAllowanceWithdrawalCalendarComponent } from './../../project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal-calendar/check-allowance-withdrawal-calendar.component';
 import { CheckAllowanceWithdrawalDisplayComponent } from './../../project/internal-audit/check-withdrawal/check-allowance-withdrawal/check-allowance-withdrawal-display/check-allowance-withdrawal-display.component';
 import { CheckOvertimeComWithdrawalCalendarComponent } from './../../project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal-calendar/check-overtime-com-withdrawal-calendar.component';
 import { CheckOvertimeComWithdrawalDisplayComponent } from './../../project/internal-audit/check-withdrawal/check-overtime-com-withdrawal/check-overtime-com-withdrawal-display/check-overtime-com-withdrawal-display.component';
-import { CheckControllerComWithdrawalCalendarComponent } from './../../project/internal-audit/check-withdrawal/check-controller-com-withdrawal/check-controller-com-withdrawal-calendar/check-controller-com-withdrawal-calendar.component';
-import { CheckControllerComWithdrawalDisplayComponent } from './../../project/internal-audit/check-withdrawal/check-controller-com-withdrawal/check-controller-com-withdrawal-display/check-controller-com-withdrawal-display.component';
+import { Int0651Component } from './../../project/internal-audit/check-withdrawal/int06-5/int06-5-1/int06-5-1.component';
+import { Int0652Component } from './../../project/internal-audit/check-withdrawal/int06-5/int06-5-2/int06-5-2.component';
 import { CheckPersonalComWithdrawalCalendarComponent } from './../../project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal-calendar/check-personal-com-withdrawal-calendar.component';
 import { CheckPersonalComWithdrawalDisplayComponent } from './../../project/internal-audit/check-withdrawal/check-personal-com-withdrawal/check-personal-com-withdrawal-display/check-personal-com-withdrawal-display.component';
 
@@ -111,9 +111,9 @@ const routes: Routes = [
     { path: 'check-overtime-com-withdrawal', component: CheckOvertimeComWithdrawalComponent, canActivate: [AuthGuard] },
     { path: 'check-overtime-com-withdrawal-calendar', component: CheckOvertimeComWithdrawalCalendarComponent, canActivate: [AuthGuard] },
     { path: 'check-overtime-com-withdrawal-display', component: CheckOvertimeComWithdrawalDisplayComponent, canActivate: [AuthGuard] },
-    { path: 'check-controller-com-withdrawal', component: CheckControllerComWithdrawalComponent, canActivate: [AuthGuard] },
-    { path: 'check-controller-com-withdrawal-calendar', component: CheckControllerComWithdrawalCalendarComponent, canActivate: [AuthGuard] },
-    { path: 'check-controller-com-withdrawal-display', component: CheckControllerComWithdrawalDisplayComponent, canActivate: [AuthGuard] },
+    { path: 'int06-5', component: Int065Component, canActivate: [AuthGuard] },
+    { path: 'int06-5-1', component: Int0651Component, canActivate: [AuthGuard] },
+    { path: 'int06-5-2', component: Int0652Component, canActivate: [AuthGuard] },
     { path: 'check-personal-com-withdrawal', component: CheckPersonalComWithdrawalComponent, canActivate: [AuthGuard] },
     { path: 'check-personal-com-withdrawal-calendar', component: CheckPersonalComWithdrawalCalendarComponent, canActivate: [AuthGuard] },
     { path: 'check-personal-com-withdrawal-display', component: CheckPersonalComWithdrawalDisplayComponent, canActivate: [AuthGuard] },
