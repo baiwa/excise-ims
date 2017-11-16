@@ -1,3 +1,114 @@
-<p>
-  int07-1 works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">นำเข้าเอกสาร</h2>
+
+    <div class="ui top attached header">
+      <span>อัพโหลดกระดาษทำการหมวดค่าใช้จ่าย</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label style="width: 43em; margin-left: 3px;">งบทดลอง</label>
+            <input type="file" />
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label style="width: 43em; margin-left: 3px;">รายงานเคลื่อนไหวเงินฝากกระทรงการคลัง</label>
+            <input type="file" />
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="two wide field">
+            <label>บัญชีแยกประเภท</label>
+          </div>
+          <div class="six wide field">
+            <label class="custom-label-w-15">บัญชีเจ้าหนี้ อปท.</label>
+            <input type="file" />
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="two wide field"></div>
+          <div class="six wide field">
+            <label class="custom-label-w-15">บัญชีเงินประกันอื่น</label>
+            <input type="file" />
+          </div>
+        </div>
+
+      </div>
+
+      <div class="ui grid">
+        <div class="four wide column"></div>
+        <div class="eight wide column">
+          <button class="ui mini primary button" (click)="popupAddData()" style="margin-left: -10px;">
+            <i class="add icon"></i>
+            เพิ่ม
+          </button>
+        </div>
+      </div>
+
+      <div class="ui center aligned grid">
+        <div class="eight wide column">
+          <button class="ui mini primary button width-100">
+            <i class="upload icon"></i>
+            อัพโหลด
+          </button>
+          <button class="ui mini button width-100">
+            <i class="refresh icon"></i>
+            ล้างข้อมูล
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div id="modalInt071" class="ui modal small hidden transition">
+  <i class="close icon"></i>
+  <div class="header">
+    บัญชีแยกประเภท
+  </div>
+
+  <div class="content">
+    <div class="ui form">
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-15">ชื่อบัญชี</label>
+          <input type="text" value="" />
+        </div>
+      </div>
+    </div>
+
+    <div class="ui grid">
+      <div class="three wide column"></div>
+      <div class="eight wide column">
+        <button class="ui mini primary button" style="margin-left: -12px;">
+          <i class="add icon"></i>
+          เพิ่ม
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="ui center aligned grid">
+      <div class="six wide column">
+        <button class="ui mini primary button width-100">
+          <i class="save icon"></i>
+          บันทึก
+        </button>
+        <button class="ui mini button width-100" (click)="closePopupAdd()">
+          <i class="close icon"></i>
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
