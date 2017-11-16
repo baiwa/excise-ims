@@ -9,14 +9,22 @@
         <div class="ui attached segment">
             <div class="ui form">
                 <div class="inline fields">
-                    <div class="six wide field">
+                    <div class="one wide field">
+                    </div>
+                    <div class="four wide field">
                         <label class="custom-label-w-10">เดือน/ปี</label>
                         <div class="ui icon input">
                             <input type="text" class="custom-readonly" readonly="" placeholder="MM/YYYY" value="ตุลาคม 2560">
                             <i class="add to calendar icon"></i>
                         </div>
                     </div>
-                    <div class="ten wide field required">
+                    <div class="six wide field required">
+                        <label class="custom-label-w-5">รหัส</label>
+                        <select class="ui dropdown" class="custom-readonly" readonly="">
+          <option *ngFor="let item of codeList; index as i;" value="{{i+1}}">{{item.value}}</option>
+        </select>
+                    </div>
+                    <div class="five wide field required">
                         <label class="custom-label-w-10">สินค้า/บริการ</label>
                         <select class="ui dropdown" class="custom-readonly" readonly="">
             <option *ngFor="let item of productList; index as i;" value="{{i+1}}">{{item.value}}</option>
@@ -28,12 +36,17 @@
             </div>
         </div>
 
+        <!-- <div class="ui top attached header">
+            <span>ภาษี</span>
+        </div> -->
         <div class="ui attached segment">
             <div class="ui form">
-                <div class="sixteen wide column">
+                <div class="sixteen wide column" style="margin-bottom: 10px;">
                     <h4 class="ui header">ภาษี</h4>
                 </div>
                 <div class="inline fields">
+                    <div class="one wide field">
+                    </div>
                     <div class="two wide field required">
                         <label class="custom-label-w-10">วันที่</label>
                         <input type="text" value="7">
@@ -42,7 +55,7 @@
                         <label class="custom-label-w-10">แบบพิมพ์</label>
                         <input type="text" value="239813">
                     </div>
-                    <div class="six wide field required">
+                    <div class="five wide field required">
                         <label class="custom-label-w-10">ใบเสร็จ</label>
                         <input type="text" class="custom-readonly" readonly="" value="C0140059/000" style="width: 55%;">&nbsp;&nbsp;<input type="text" style="width: 40%;" value="1480">
                     </div>
@@ -51,13 +64,18 @@
                         <input type="text" style="text-align: right;" value="10000.00">
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <br>
+        <div class="ui attached segment bg-row-light-gray-highlight">
+            <div class="ui form">
 
-                <div class="sixteen wide column">
-                    <h4 class="ui header">สสส.</h4>
+                <div class="sixteen wide column" style="margin-bottom: 10px;">
+                    <h4 class="ui header">สสส. (สุรา ยาสูบ)</h4>
                 </div>
-                <div class="inline fields">
+                <div class="inline fields bg-row-light-gray-highlight">
+                    <div class="one wide field">
+                    </div>
                     <div class="two wide field required">
                         <label class="custom-label-w-10">วันที่</label>
                         <input type="text" value="7">
@@ -66,7 +84,7 @@
                         <label class="custom-label-w-10">แบบพิมพ์</label>
                         <input type="text" value="239813">
                     </div>
-                    <div class="six wide field required">
+                    <div class="five wide field required">
                         <label class="custom-label-w-10">ใบเสร็จ</label>
                         <input type="text" class="custom-readonly" readonly="" value="C0140059/000" style="width: 55%;">&nbsp;&nbsp;<input type="text" style="width: 40%;" value="1481">
                     </div>
@@ -75,11 +93,21 @@
                         <input type="text" style="text-align: right;" value="200.00">
                     </div>
                 </div>
-                <br>
-                <div class="sixteen wide column">
-                    <h4 class="ui header">กกท.</h4>
+            </div>
+        </div>
+
+
+
+
+        <div class="ui attached segment">
+            <div class="ui form">
+
+                <div class="sixteen wide column" style="margin-bottom: 10px;">
+                    <h4 class="ui header">กกท. (สุรา ยาสูบ)</h4>
                 </div>
                 <div class="inline fields">
+                    <div class="one wide field">
+                    </div>
                     <div class="two wide field required">
                         <label class="custom-label-w-10">วันที่</label>
                         <input type="text" value="7">
@@ -88,7 +116,7 @@
                         <label class="custom-label-w-10">แบบพิมพ์</label>
                         <input type="text" value="239813">
                     </div>
-                    <div class="six wide field required">
+                    <div class="five wide field required">
                         <label class="custom-label-w-10">ใบเสร็จ</label>
                         <input type="text" class="custom-readonly" readonly="" value="C0140059/000" style="width: 55%;">&nbsp;&nbsp;<input type="text" style="width: 40%;" value="1482">
                     </div>
@@ -97,11 +125,19 @@
                         <input type="text" style="text-align: right;" value="200.00">
                     </div>
                 </div>
-                <br>
-                <div class="sixteen wide column">
-                    <h4 class="ui header">สสท.</h4>
+
+            </div>
+        </div>
+
+        <div class="ui attached segment bg-row-light-gray-highlight">
+            <div class="ui form">
+
+                <div class="sixteen wide column" style="margin-bottom: 10px;">
+                    <h4 class="ui header">สสท. (สุรา ยาสูบ)</h4>
                 </div>
                 <div class="inline fields">
+                    <div class="one wide field">
+                    </div>
                     <div class="two wide field required">
                         <label class="custom-label-w-10">วันที่</label>
                         <input type="text" value="7">
@@ -110,7 +146,7 @@
                         <label class="custom-label-w-10">แบบพิมพ์</label>
                         <input type="text" value="239813">
                     </div>
-                    <div class="six wide field required">
+                    <div class="five wide field required">
                         <label class="custom-label-w-10">ใบเสร็จ</label>
                         <input type="text" class="custom-readonly" readonly="" value="C0140059/000" style="width: 55%;">&nbsp;&nbsp;<input type="text" style="width: 40%;" value="1483">
                     </div>
@@ -119,28 +155,36 @@
                         <input type="text" style="text-align: right;" value="150.00">
                     </div>
                 </div>
-                <br>
-                <div class="sixteen wide column">
-                    <h4 class="ui header">คนชรา</h4>
+            </div>
+        </div>
+
+        <div class="ui attached segment">
+            <div class="ui form">
+
+                <div class="sixteen wide column" style="margin-bottom: 10px;">
+                    <h4 class="ui header">สสท. (สุรา ยาสูบ)</h4>
                 </div>
                 <div class="inline fields">
+                    <div class="one wide field">
+                    </div>
                     <div class="two wide field required">
                         <label class="custom-label-w-10">วันที่</label>
-                        <input type="text" value="">
+                        <input type="text" value="7">
                     </div>
                     <div class="four wide field required">
                         <label class="custom-label-w-10">แบบพิมพ์</label>
-                        <input type="text" value="">
+                        <input type="text" value="239813">
                     </div>
-                    <div class="six wide field required">
+                    <div class="five wide field required">
                         <label class="custom-label-w-10">ใบเสร็จ</label>
-                        <input type="text" class="custom-readonly" readonly="" value="" style="width: 55%;">&nbsp;&nbsp;<input type="text" style="width: 40%;" value="">
+                        <input type="text" class="custom-readonly" readonly="" value="C0140059/000" style="width: 55%;">&nbsp;&nbsp;<input type="text" style="width: 40%;" value="1483">
                     </div>
                     <div class="four wide field required">
                         <label class="custom-label-w-10">จำนวนเงิน</label>
-                        <input type="text" style="text-align: right;" value="">
+                        <input type="text" style="text-align: right;" value="150.00">
                     </div>
                 </div>
+
                 <br>
                 <div class="ui center aligned grid">
                     <div class="eight wide column">
@@ -158,11 +202,10 @@
         </div>
 
         <div class="ui segment">
-            <table id="table1" class="ui small celled table">
+            <table id="table1" class="ui small celled striped table">
                 <thead>
                     <tr style="text-align: center;">
                         <th>สินค้า/บริการ</th>
-                        <th>รหัส</th>
                         <th>วัน/เดือน/ปี</th>
                         <th>แบบพิมพ์</th>
                         <th>ใบเสร็จ</th>
@@ -174,11 +217,12 @@
                         <th>ชดเชย 0.75%</th>
                         <th>ค่าแสตมป์ 1% </th>
                         <th>นำส่ง</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr style="text-align: right;">
-                        <th style="text-align: left;" colspan="5">รวม</th>
+                        <th style="text-align: left;" colspan="4">รวม</th>
                         <th>19184.18</th>
                         <th>2458.8</th>
                         <th>16285.95</th>
@@ -187,9 +231,61 @@
                         <th>127.61</th>
                         <th>170.15</th>
                         <th>16717.24</th>
+                        <th></th>
                     </tr>
                 </tfoot>
             </table>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditData" class="ui modal large hidden transition">
+    <i class="close icon"></i>
+    <div class="header">
+        แก้ไขข้อมูลใบเสร็จรับเงิน
+    </div>
+
+    <div class="content">
+        <div class="ui form">
+            <div class="inline fields">
+                <div class="two wide field required">
+                    <label class="custom-label-w-10">วันที่</label>
+                    <input type="text" value="7">
+                </div>
+                <div class="four wide field required">
+                    <label class="custom-label-w-10">แบบพิมพ์</label>
+                    <input type="text" value="239813">
+                </div>
+                <div class="six wide field required">
+                    <label class="custom-label-w-10">ใบเสร็จ</label>
+                    <input type="text" class="custom-readonly" readonly="" value="C0140059/000" style="width: 55%;">&nbsp;&nbsp;<input type="text" style="width: 40%;" value="1480">
+                </div>
+                <div class="four wide field required">
+                    <label class="custom-label-w-10">จำนวนเงิน</label>
+                    <input type="text" style="text-align: right;" value="10000.00">
+                </div>
+            </div>
+            <!-- <div class="inline fields">
+                <div class="eight wide field">
+                    <label class="custom-label-w-15">อัตราเบี้ยเลี้ยง</label>
+                    <input type="text" value="" />
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="actions">
+        <div class="ui center aligned grid">
+            <div class="six wide column">
+                <button class="ui mini primary button">
+          <i class="save icon"></i>
+          บันทึก
+        </button>
+                <button class="ui mini button" (click)="closePopupEdit()">
+          <i class="close icon"></i>
+          ปิด
+        </button>
+            </div>
         </div>
     </div>
 </div>

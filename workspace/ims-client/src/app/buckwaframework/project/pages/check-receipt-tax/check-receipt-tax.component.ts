@@ -8,22 +8,27 @@ declare var $: any;
 })
 export class CheckReceiptTaxComponent implements OnInit {
 
+  private codeList: any[];
   private productList: any[];
   private printMonthList: any[];
 
   constructor() { }
 
   ngOnInit() {
+
+    this.codeList = [
+      { 'value': '1 : ภาษีสุรา ยาสูบ เครื่องดื่ม' },
+      { 'value': '2 : ภาษีอื่น(นอกจากสุรา ยาสูบ เครื่องดื่ม)' },
+      { 'value': '3 : รายได้อื่นนอกจากภาษี' }
+    ];
+
     this.productList = [
-      { 'value': 'สุราแช่ชุมชน' },
-      { 'value': 'สสสสุรา' },
-      { 'value': 'กกทสุรา' },
-      { 'value': 'สสทสุรา' },
-      { 'value': 'เครื่องหอม' },
-      { 'value': 'เครื่องดื่ม' },
-      { 'value': 'สุราแช่' },
-      { 'value': 'น้ำมัน' },
-      { 'value': 'เครื่องยนต์' }
+      { 'value': 'เครื่องดื่ม'},
+      { 'value': 'สุราแช่'},
+      { 'value': 'สุราแช่ชุมชน'},
+      { 'value': 'สุรากลั่น'},
+      { 'value': 'สุรากลั่นชุมชน'},
+      { 'value': 'ยาสูบ'},
     ];
 
     this.printMonthList = [
@@ -121,10 +126,10 @@ export class CheckReceiptTaxComponent implements OnInit {
       let rowTable = table.row(meta.row).node();
       console.log(meta.row + " : " + row);
       if (meta.row == 1 || meta.row == 2 || meta.row == 9 || meta.row == 10) {
-        $(rowTable).addClass("bg-row-highlight");
+        $(rowTable).find('td:nth-child(3)').addClass("bg-row-highlight");
       } else if (meta.row == 5 || meta.row == 6) {
-        $(rowTable).addClass("bg-row-orange-highlight");
-      }
+        $(rowTable).find('td:nth-child(4)').addClass("bg-row-orange-highlight");
+      } 
       return data;
     };
 
@@ -142,11 +147,6 @@ export class CheckReceiptTaxComponent implements OnInit {
       "columns": [
         {
           "data": "1"
-        },
-        {
-          "data": "2",
-          "render": backgroundRowColor,
-          "className": "right"
         },
         {
           "data": "3",
@@ -202,8 +202,29 @@ export class CheckReceiptTaxComponent implements OnInit {
           "data": "13",
           "render": backgroundRowColor,
           "className": "right"
+        },
+        {
+          "data": "13",
+          "render": function() {
+            return `<a class="edit">แก้ไข</a>`;
+          }
         }
-      ]
+      ],
+      "rowCallback": (row, data, index) => {
+          $('td > .edit', row).bind('click', () => {
+            this.popupEditData();
+            
+          });
+      }
     });
+
+  }
+
+  popupEditData() {
+    $('#modalEditData').modal('show');
+  }
+
+  closePopupEdit() {
+    $('#modalEditData').modal('hide');
   }
 }
