@@ -60,6 +60,12 @@ import { Int073Component } from './../../project/internal-audit/int07/int07-3/in
 import { Int074Component } from './../../project/internal-audit/int07/int07-4/int07-4.component';
 import { Int075Component } from './../../project/internal-audit/int07/int07-5/int07-5.component';
 import { Int076Component } from './../../project/internal-audit/int07/int07-6/int07-6.component';
+import { Int077Component } from './../../project/internal-audit/int07/int07-7/int07-7.component';
+import { Int0771Component } from './../../project/internal-audit/int07/int07-7/int07-7-1/int07-7-1.component';
+import { Int0772Component } from './../../project/internal-audit/int07/int07-7/int07-7-2/int07-7-2.component';
+import { Int0773Component } from './../../project/internal-audit/int07/int07-7/int07-7-3/int07-7-3.component';
+import { Int0774Component } from './../../project/internal-audit/int07/int07-7/int07-7-4/int07-7-4.component';
+import { Int0775Component } from './../../project/internal-audit/int07/int07-7/int07-7-5/int07-7-5.component';
 
 const routes: Routes = [
 
@@ -123,12 +129,19 @@ const routes: Routes = [
     { path: 'int06-6', component: Int066Component, canActivate: [AuthGuard] },
     { path: 'int06-6-1', component: Int0661Component, canActivate: [AuthGuard] },
     { path: 'int06-6-2', component: Int0662Component, canActivate: [AuthGuard] },
+    
     { path: 'int07-1', component: Int071Component, canActivate: [AuthGuard] },
     { path: 'int07-2', component: Int072Component, canActivate: [AuthGuard] },
     { path: 'int07-3', component: Int073Component, canActivate: [AuthGuard] },
     { path: 'int07-4', component: Int074Component, canActivate: [AuthGuard] },
     { path: 'int07-5', component: Int075Component, canActivate: [AuthGuard] },
     { path: 'int07-6', component: Int076Component, canActivate: [AuthGuard] },
+    { path: 'int07-7', component: Int077Component, canActivate: [AuthGuard] },
+    { path: 'int07-7-1', component: Int0771Component, canActivate: [AuthGuard] },
+    { path: 'int07-7-2', component: Int0772Component, canActivate: [AuthGuard] },
+    { path: 'int07-7-3', component: Int0773Component, canActivate: [AuthGuard] },
+    { path: 'int07-7-4', component: Int0774Component, canActivate: [AuthGuard] },
+    { path: 'int07-7-5', component: Int0775Component, canActivate: [AuthGuard] },
 
 ];
 
