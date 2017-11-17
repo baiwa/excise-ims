@@ -39,7 +39,7 @@ import { CreateSaveMessageTraderComponent } from './../../project/tax-audit/trad
 import { Int051Component } from './../../project/internal-audit/int05/int05-1/int05-1.component';
 import { Int052Component } from './../../project/internal-audit/int05/int05-2/int05-2.component';
 import { Int053Component } from './../../project/internal-audit/int05/int05-3/int05-3.component';
-import { SaveResultTradingComponent } from './../../project/pages/save-result-trading/save-result-trading.component';
+import { Int054Component } from './../../project/internal-audit/int05/int05-4/int05-4.component';
 import { Int061Component } from './../../project/internal-audit/int06/int06-1/int06-1.component';
 import { Int062Component } from './../../project/internal-audit/int06/int06-2/int06-2.component';
 import { Int063Component } from './../../project/internal-audit/int06/int06-3/int06-3.component';
@@ -107,7 +107,7 @@ const routes: Routes = [
     { path: 'int05-1', component: Int051Component, canActivate: [AuthGuard] },
     { path: 'int05-2', component: Int052Component, canActivate: [AuthGuard] },
     { path: 'int05-3', component: Int053Component, canActivate: [AuthGuard] },
-    { path: 'save-result-trading', component: SaveResultTradingComponent, canActivate: [AuthGuard] },
+    { path: 'int05-4', component: Int054Component, canActivate: [AuthGuard] },
 
     { path: 'int06-1', component: Int061Component, canActivate: [AuthGuard] },
     { path: 'int06-2', component: Int062Component, canActivate: [AuthGuard] },

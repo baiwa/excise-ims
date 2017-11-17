@@ -59,7 +59,7 @@ import { CreateSaveMessageTraderComponent } from './buckwaframework/project/tax-
 import { Int051Component } from './buckwaframework/project/internal-audit/int05/int05-1/int05-1.component';
 import { Int052Component } from './buckwaframework/project/internal-audit/int05/int05-2/int05-2.component';
 import { Int053Component } from './buckwaframework/project/internal-audit/int05/int05-3/int05-3.component';
-import { SaveResultTradingComponent } from './buckwaframework/project/pages/save-result-trading/save-result-trading.component';
+import { Int054Component } from './buckwaframework/project/internal-audit/int05/int05-4/int05-4.component';
 import { Int061Component } from './buckwaframework/project/internal-audit/int06/int06-1/int06-1.component';
 import { Int062Component } from './buckwaframework/project/internal-audit/int06/int06-2/int06-2.component';
 import { Int063Component } from './buckwaframework/project/internal-audit/int06/int06-3/int06-3.component';
@@ -121,7 +121,7 @@ import { Int076Component } from './buckwaframework/project/internal-audit/int07/
         Int051Component,
         Int052Component,
         Int053Component,
-        SaveResultTradingComponent,
+        Int054Component,
         Int061Component,
         Int062Component,
         Int063Component,
