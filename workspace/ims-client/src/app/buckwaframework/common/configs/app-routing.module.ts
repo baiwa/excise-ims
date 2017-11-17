@@ -37,7 +37,7 @@ import { WorkingPaper1FullTraderComponent } from './../../project/tax-audit/trad
 import { SummaryAmountProductTraderComponent } from './../../project/tax-audit/trader-selection/summary-amount-product-trader/summary-amount-product-trader.component';
 import { CreateSaveMessageTraderComponent } from './../../project/tax-audit/trader-selection/create-save-message-trader/create-save-message-trader.component';
 import { CompareReportAssetComponent } from './../../project/pages/compare-report-asset/compare-report-asset.component';
-import { CheckStampYearlyComponent } from './../../project/pages/check-stamp-yearly/check-stamp-yearly.component';
+import { Int051Component } from './../../project/internal-audit/int05/int05-1/int05-1.component';
 import { CheckStampBranchComponent } from './../../project/pages/check-stamp-branch/check-stamp-branch.component';
 import { SaveResultTradingComponent } from './../../project/pages/save-result-trading/save-result-trading.component';
 import { Int061Component } from './../../project/internal-audit/int06/int06-1/int06-1.component';
@@ -103,9 +103,9 @@ const routes: Routes = [
     { path: 'working-paper-1-full-trader', component: WorkingPaper1FullTraderComponent, canActivate: [AuthGuard] },
     { path: 'summary-amount-product-trader', component: SummaryAmountProductTraderComponent, canActivate: [AuthGuard] },
     { path: 'create-save-message-trader', component: CreateSaveMessageTraderComponent, canActivate: [AuthGuard] },
-
+    
+    { path: 'int05-1', component: Int051Component, canActivate: [AuthGuard] },
     { path: 'compare-report-asset', component: CompareReportAssetComponent, canActivate: [AuthGuard] },
-    { path: 'check-stamp-yearly', component: CheckStampYearlyComponent, canActivate: [AuthGuard] },
     { path: 'check-stamp-branch', component: CheckStampBranchComponent, canActivate: [AuthGuard] },
     { path: 'save-result-trading', component: SaveResultTradingComponent, canActivate: [AuthGuard] },
 

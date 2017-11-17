@@ -57,7 +57,7 @@ import { WorkingPaper1FullTraderComponent } from './buckwaframework/project/tax-
 import { SummaryAmountProductTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/summary-amount-product-trader/summary-amount-product-trader.component';
 import { CreateSaveMessageTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/create-save-message-trader/create-save-message-trader.component';
 import { CompareReportAssetComponent } from './buckwaframework/project/pages/compare-report-asset/compare-report-asset.component';
-import { CheckStampYearlyComponent } from './buckwaframework/project/pages/check-stamp-yearly/check-stamp-yearly.component';
+import { Int051Component } from './buckwaframework/project/internal-audit/int05/int05-1/int05-1.component';
 import { CheckStampBranchComponent } from './buckwaframework/project/pages/check-stamp-branch/check-stamp-branch.component';
 import { SaveResultTradingComponent } from './buckwaframework/project/pages/save-result-trading/save-result-trading.component';
 import { Int061Component } from './buckwaframework/project/internal-audit/int06/int06-1/int06-1.component';
@@ -119,7 +119,7 @@ import { Int076Component } from './buckwaframework/project/internal-audit/int07/
         SummaryAmountProductTraderComponent,
         CreateSaveMessageTraderComponent,
         CompareReportAssetComponent,
-        CheckStampYearlyComponent,
+        Int051Component,
         CheckStampBranchComponent,
         SaveResultTradingComponent,
         Int061Component,

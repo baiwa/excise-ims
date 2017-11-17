@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'check-stamp-yearly',
-  templateUrl: './check-stamp-yearly.component.html',
-  styleUrls: ['./check-stamp-yearly.component.css']
+  selector: 'int05-1',
+  templateUrl: './int05-1.component.html',
+  styleUrls: ['./int05-1.component.css']
 })
-export class CheckStampYearlyComponent implements OnInit {
+export class Int051Component implements OnInit {
 
   private zoneList: any[];
   private areaList: any[];
