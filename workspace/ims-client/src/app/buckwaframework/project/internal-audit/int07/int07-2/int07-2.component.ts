@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var $: any;
 @Component({
   selector: 'int07-2',
   templateUrl: './int07-2.component.html',
@@ -12,4 +13,11 @@ export class Int072Component implements OnInit {
   ngOnInit() {
   }
 
+  popupEditData() {
+    $('#modalInt072').modal('show');
+  }
+
+  closePopupEdit() {
+    $('#modalInt072').modal('hide');
+  }
 }

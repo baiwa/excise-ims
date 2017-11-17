@@ -1,3 +1,1324 @@
-<p>
-  int07-5 works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <div class="ui large ordered steps">
+      <div class="completed step">
+        <div class="content">
+          <div class="title">ตรวจสอบดุลบัญชี</div>
+          <div class="description">"ยอดยกไป"</div>
+        </div>
+      </div>
+      <div class="completed step">
+        <div class="content">
+          <div class="title">ตรวจสอบความสัมพันธ์</div>
+          <div class="description">"เดบิต" "เครดิต"</div>
+        </div>
+      </div>
+      <div class="completed step">
+        <div class="content">
+          <div class="title">ตรวจสอบเปรียบเทียบ</div>
+          <div class="description">"เดบิต" "เครดิต" ในงบทดลองกับบัญชีแยกประเภท</div>
+        </div>
+      </div>
+      <div class="active step">
+        <div class="content">
+          <div class="title">ตรวจสอบเปรียบเทียบบัญชี</div>
+          <div class="description">เคลื่อนไหวเงินฝากคลังกระทบยอด 3 บัญชี</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="ui header">ตรวจสอบเปรียบเทียบบัญชีเคลื่อนไหวเงินฝากคลังกระทบยอด 3 บัญชี</h2>
+
+    <div class="ui top attached header">
+      <span>ตรวจสอบเปรียบเทียบบัญชีเคลื่อนไหวเงินฝากคลังกระทบยอด 3 บัญชี</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui right aligned grid">
+        <div class="sixteen wide column">
+          <button class="ui mini primary button">
+            <i class="print icon"></i>
+            พิมพ์
+          </button>
+        </div>
+      </div>
+
+      <br>
+      <div style="overflow-x: scroll">
+        <table class="ui small celled table" style="width: 140%;">
+          <thead>
+            <tr style="text-align: center;">
+              <th rowspan="2" colspan="2">บัญชีแยกประเภท</th>
+              <th rowspan="2">ยอดยกมา</th>
+              <th rowspan="2">เดบิต</th>
+              <th rowspan="2">เครดิต</th>
+              <th rowspan="2">ยอดยกไป</th>
+              <th colspan="2">แยกประเภท</th>
+              <th rowspan="2">DiF</th>
+              <th rowspan="2">รายงานเคลื่อนไหวเงินฝากคลัง</th>
+              <th rowspan="2">Action</th>
+            </tr>
+            <tr style="text-align: center;">
+              <th style="border-left: 1px solid rgba(34,36,38,.1);">DR</th>
+              <th>CR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1101010101</td>
+              <td>เงินสดในมือ</td>
+              <td>2,603,061.29</td>
+              <td>1,219,664,529.45</td>
+              <td>-1,218,298,224.40</td>
+              <td>3,969,366.34</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>3969467.84</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>1101010103</td>
+              <td>บัตรภาษี</td>
+              <td>0</td>
+              <td>884,252.06</td>
+              <td>-832,817.49</td>
+              <td>51,434.57</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>1101010104</td>
+              <td>เงินทดรองราชการ</td>
+              <td>20,000.00</td>
+              <td>0</td>
+              <td>0</td>
+              <td>20,000.00</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>1101010106</td>
+              <td>เช็คในมือ</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>1101010110</td>
+              <td>พักเงินสดรับ</td>
+              <td>80,266,999.56</td>
+              <td>34,355,578,028.69</td>
+              <td>-34,220,607,143.57</td>
+              <td>215,237,884.68</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>1101010112</td>
+              <td>พักเงินนำส่ง</td>
+              <td>0</td>
+              <td>16,036.23</td>
+              <td>16,036.23</td>
+              <td>0</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>1101010113</td>
+              <td>พักรอ Clearing</td>
+              <td>0</td>
+              <td>15,998.92</td>
+              <td>-15,998.92</td>
+              <td>0</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>1101020501</td>
+              <td>เงินฝากคลัง</td>
+              <td>1,965,704.18</td>
+              <td>3,074,624.90</td>
+              <td>-2,633,845.11</td>
+              <td>2,406,483.97</td>
+              <td>3,074,624.90</td>
+              <td>-2,633,845.11</td>
+              <td>&nbsp;</td>
+              <td>2,406,483.97</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>1101020603</td>
+              <td>ง/ฝ ธนาคาร-ในงปม.</td>
+              <td>0</td>
+              <td>7,039,914.39</td>
+              <td>-7,039,914.39</td>
+              <td>0</td>
+              <td>7,039,914.39</td>
+              <td>-7,039,914.39</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>1101020604</td>
+              <td>ง/ฝ ธนาคาร-นอกงปม.</td>
+              <td>0</td>
+              <td>1,889,511.50</td>
+              <td>-1,889,511.50</td>
+              <td>0</td>
+              <td>1,889,500.00</td>
+              <td>-1,889,500.00</td>
+              <td>0.00</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>1101030199</td>
+              <td>เงินฝากไม่มีรายตัว</td>
+              <td>0</td>
+              <td>394,171.95</td>
+              <td>-394,171.95</td>
+              <td>345</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>2101010102</td>
+              <td>จ/น การค้า-ภายนอก</td>
+              <td>-10,776.00</td>
+              <td>837,912.04</td>
+              <td>-837,912.04</td>
+              <td>-10,776.00</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>2101010103</td>
+              <td>รับสินค้า / ใบสำคัญ</td>
+              <td>0</td>
+              <td>634,077.63</td>
+              <td>-634,077.63</td>
+              <td>0</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr class="bg-row-orange-highlight">
+              <td>2101020101</td>
+              <td>จ/น อปท.</td>
+              <td>-1,720,683.97</td>
+              <td>0</td>
+              <td>-225,573.50</td>
+              <td>-1,946,257.47</td>
+              <td>-</td>
+              <td>-225,573.50</td>
+              <td>61,973.30</td>
+              <td>2,008,230.77</td>
+              <td style="text-align: center; background-color: white;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>2101020105</td>
+              <td>จ/นเช็คขัดข้อง-บก</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>2101020106</td>
+              <td>จ/น สรก-รับแทนกัน</td>
+              <td>-7,477,340.85</td>
+              <td>3,187,374,465.37</td>
+              <td>-3,199,952,299.04</td>
+              <td>-20,055,174.52</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>2101020198</td>
+              <td>จน.อื่น-หน่วยงานรัฐ</td>
+              <td>0</td>
+              <td>181,408.72</td>
+              <td>-181,408.72</td>
+              <td>0</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>2111020199</td>
+              <td>เงินรับฝากอื่น</td>
+              <td>-2,603,840.65</td>
+              <td>1,220,144,048.75</td>
+              <td>-1,221,510,329.49</td>
+              <td>-3,970,121.39</td>
+              <td>1,220,144,048.75</td>
+              <td>-1,221,510,329.49</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr class="bg-row-orange-highlight">
+              <td>2112010199</td>
+              <td>เงินประกันอื่น</td>
+              <td>-1,750.00</td>
+              <td>1,750.00</td>
+              <td>-9,915.00</td>
+              <td>-9,915.00</td>
+              <td>1,750.00</td>
+              <td>-9,915.00</td>
+              <td>-3,165.00</td>
+              <td>6,750.00</td>
+              <td style="text-align: center; background-color: white;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>3101010101</td>
+              <td>ร/ดสูงต่ำคชจ.สุทธิ</td>
+              <td>33,790,138.34</td>
+              <td>0</td>
+              <td>-33,790,138.34</td>
+              <td>0</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>3102010101</td>
+              <td>ร/ดสูงต่ำคชจ.สะสม</td>
+              <td>-230,399,485.74</td>
+              <td>33,727,680.04</td>
+              <td>0</td>
+              <td>-196,671,805.70</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>3102010102</td>
+              <td>ผลสะสมแก้ไขผิดพลาด</td>
+              <td>0</td>
+              <td>64,737.80</td>
+              <td>64,737.80</td>
+              <td>394</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>3105010101</td>
+              <td>ทุนของหน่วยงาน</td>
+              <td>-3,987,323.78</td>
+              <td>0</td>
+              <td>0</td>
+              <td>-3,987,323.78</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>4307010103</td>
+              <td>TR-รับงบบุคลากร</td>
+              <td>0</td>
+              <td>3,785.00</td>
+              <td>-5,075,894.33</td>
+              <td>-5,072,109.33</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>4307010105</td>
+              <td>TR-รับงบดำเนินงาน</td>
+              <td>0</td>
+              <td>17,906.00</td>
+              <td>-1,924,420.01</td>
+              <td>-1,906,514.01</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>4307010108</td>
+              <td>TR-รับงบกลาง</td>
+              <td>0</td>
+              <td>0</td>
+              <td>-416,454.70</td>
+              <td>-416,454.70</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>4308010101</td>
+              <td>TR-สรก.รับเงินนอก</td>
+              <td>0</td>
+              <td>21,665.99</td>
+              <td>-2,377,023.54</td>
+              <td>-2,355,357.55</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>4308010105</td>
+              <td>T/R-ปรับเงินฝากคลัง</td>
+              <td>0</td>
+              <td>0</td>
+              <td>-244,274.10</td>
+              <td>-244,274.10</td>
+              <td>-</td>
+              <td>-244,274.10</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>4308010118</td>
+              <td>TR--ภายในกรมเดียวกัน</td>
+              <td>0</td>
+              <td>41,900.00</td>
+              <td>-5,083,198.94</td>
+              <td>-5,041,298.94</td>
+              <td>&nbsp;</td>
+              <td>-5,083,198.94</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5101010108</td>
+              <td>ค่าล่วงเวลา</td>
+              <td>0</td>
+              <td>288,900.00</td>
+              <td>0</td>
+              <td>288,900.00</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5101010113</td>
+              <td>ค่าจ้าง</td>
+              <td>0</td>
+              <td>1,077,800.00</td>
+              <td>-9,400.00</td>
+              <td>1,068,400.00</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5101010115</td>
+              <td>ค่าตอบแทนพนง.ราชการ</td>
+              <td>0</td>
+              <td>5,026,109.33</td>
+              <td>-3,281.61</td>
+              <td>5,022,827.72</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5101010116</td>
+              <td>เงินค่าครองชีพ</td>
+              <td>0</td>
+              <td>186,625.00</td>
+              <td>-5,785.00</td>
+              <td>180,840.00</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5101020106</td>
+              <td>เงินสมทบปปส.-Rel</td>
+              <td>0</td>
+              <td>293,854.00</td>
+              <td>-19,140.00</td>
+              <td>274,714.00</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5101020108</td>
+              <td>ค่าเช่าบ้าน</td>
+              <td>0</td>
+              <td>904,000.00</td>
+              <td>0</td>
+              <td>904,000.00</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5101030101</td>
+              <td>เงินช่วยการศึกษาบุตร</td>
+              <td>0</td>
+              <td>275,707.00</td>
+              <td>0</td>
+              <td>275,707.00</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5101030205</td>
+              <td>ค่ารักษา-นอก-รพ.รัฐ</td>
+              <td>0</td>
+              <td>84,327.50</td>
+              <td>0</td>
+              <td>84,327.50</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5101040111</td>
+              <td>เงินช่วยพิเศษ-บ/นตาย</td>
+              <td>0</td>
+              <td>52,720.20</td>
+              <td>0</td>
+              <td>52,720.20</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5101040204</td>
+              <td>ค่ารักษาบำนาญนอก-รัฐ</td>
+              <td>0</td>
+              <td>3,700.00</td>
+              <td>-522</td>
+              <td>3,700.00</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5103010102</td>
+              <td>ค่าเบี้ยเลี้ยง</td>
+              <td>0</td>
+              <td>529,760.00</td>
+              <td>0</td>
+              <td>529,760.00</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5103010103</td>
+              <td>ค่าที่พัก</td>
+              <td>0</td>
+              <td>12,200.00</td>
+              <td>0</td>
+              <td>12,200.00</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5103010199</td>
+              <td>คชจ.เดินทางภายในปท.</td>
+              <td>0</td>
+              <td>35,987.60</td>
+              <td>4,600.00</td>
+              <td>31,387.60</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5209010112</td>
+              <td>T/Eเบิกเกินส่งคืน</td>
+              <td>0</td>
+              <td>3,945.61</td>
+              <td>0</td>
+              <td>3,945.61</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5210010102</td>
+              <td>T/E-โอนเงินให้สรก.</td>
+              <td>0</td>
+              <td>194,171,689.90</td>
+              <td>0</td>
+              <td>194,171,689.90</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5210010103</td>
+              <td>T/E-โอนร/ดผ/ดให้บก.</td>
+              <td>0</td>
+              <td>46,130,536,063.96</td>
+              <td>0</td>
+              <td>46,130,536,063.96</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5210010105</td>
+              <td>T/E-ปรับเงินฝากคลัง</td>
+              <td>0</td>
+              <td>2,345,929.80</td>
+              <td>-400</td>
+              <td>2,345,529.80</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5210010107</td>
+              <td>TEโอนบัตรภาษีแผ่นดิน</td>
+              <td>0</td>
+              <td>765,061.55</td>
+              <td>0</td>
+              <td>765,061.55</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5210010112</td>
+              <td>T/Eรายได้รอนำส่งคลัง</td>
+              <td>0</td>
+              <td>388,504,207.12</td>
+              <td>-266,676,482.13</td>
+              <td>121,827,724.99</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5210010118</td>
+              <td>T/E-ภายในกรม</td>
+              <td>0</td>
+              <td>546,174.98</td>
+              <td>0</td>
+              <td>546,174.98</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>5210010119</td>
+              <td>TEโอนบัตรภาษีเงินนอก</td>
+              <td>0</td>
+              <td>-2,053.36</td>
+              <td>0</td>
+              <td>2,053.36</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>6201010101</td>
+              <td>พัก เงินฝากคลัง</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>6303010101</td>
+              <td>Conv อาคารพัก</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>6303010102</td>
+              <td>ConvAcc-Depre อาคารพ</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>6307010101</td>
+              <td>Convสำนักงาน</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>6307010102</td>
+              <td>ConvAcc-Depre สำนักง</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot style="text-align: right;">
+            <th colspan="2" style="text-align: left;">รวม</th>
+            <th>0</th>
+            <th>86,757,255,222.34</th>
+            <th>-40,190,774,931.48</th>
+            <th>0</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="modalInt075" class="ui modal small hidden transition">
+  <i class="close icon"></i>
+  <div class="header">
+    บัญชีแยกประเภท
+  </div>
+
+  <div class="content">
+    <div class="ui form">
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label style="width: 9em;">1101010101</label>
+          <label>เงินสดในมือ</label>
+        </div>
+      </div>
+      <br>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-15">ยอดยกมา</label>
+          <input type="text" value="2603061.29" />
+        </div>
+        <div class="eight wide field">
+          <label class="custom-label-w-15">เดบิต</label>
+          <input type="text" value="1219664529" />
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-15">เครดิต</label>
+          <input type="text" value="-1218298224" />
+        </div>
+        <div class="eight wide field">
+          <label class="custom-label-w-15">ยอดยกไป</label>
+          <input type="text" value="3969366" />
+        </div>
+      </div>
+
+      <br>
+      <div class="inline fields">
+        <div class="three wide field"></div>
+        <div class="five wide field">
+          <label style="margin-left: -6px;">แยกประเภท</label>
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-15">DR</label>
+          <input type="text" value="" />
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-15">CR</label>
+          <input type="text" value="" />
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-15">Dif</label>
+          <input type="text" value="" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="ui center aligned grid">
+      <div class="six wide column">
+        <button class="ui mini primary button width-100">
+          <i class="save icon"></i>
+          บันทึก
+        </button>
+        <button class="ui mini button width-100" (click)="closePopupEdit()">
+          <i class="close icon"></i>
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
