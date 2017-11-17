@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'compare-report-asset',
-  templateUrl: './compare-report-asset.component.html',
-  styleUrls: ['./compare-report-asset.component.css']
+  selector: 'int05-3',
+  templateUrl: './int05-3.component.html',
+  styleUrls: ['./int05-3.component.css']
 })
-export class CompareReportAssetComponent implements OnInit {
+export class Int053Component implements OnInit {
 
   private showData: boolean = false;
   constructor() { }
