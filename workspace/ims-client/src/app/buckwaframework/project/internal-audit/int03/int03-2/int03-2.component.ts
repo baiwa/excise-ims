@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MessageBarService } from './../../../common/services/message-bar.service';
+import { MessageBarService } from './../../../../common/services/message-bar.service';
 
 declare var $: any;
 @Component({
-  selector: 'mapping-gf-inc-code',
-  templateUrl: './mapping-gf-inc-code.component.html',
-  styleUrls: ['./mapping-gf-inc-code.component.css']
+  selector: 'int03-2',
+  templateUrl: './int03-2.component.html',
+  styleUrls: ['./int03-2.component.css']
 })
-export class MappingGfIncCodeComponent implements OnInit {
+export class Int032Component implements OnInit {
 
   private listData: any[] = [];
   private actionsModal: string;

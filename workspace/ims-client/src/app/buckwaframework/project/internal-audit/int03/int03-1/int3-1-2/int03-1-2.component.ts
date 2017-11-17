@@ -3,12 +3,12 @@ import { Component, OnInit } from '@angular/core';
 declare var $: any;
 
 @Component({
-  selector: 'result-analysis-gf-inc',
-  templateUrl: './result-analysis-gf-inc.component.html',
-  styleUrls: ['./result-analysis-gf-inc.component.css']
+  selector: 'int03-1-2',
+  templateUrl: './int03-1-2.component.html',
+  styleUrls: ['./int03-1-2.component.css']
 })
 
-export class ResultAnalysisGfIncComponent implements OnInit {
+export class Int0312Component implements OnInit {
 
   public listDatas: any[] = [];
   constructor() { }

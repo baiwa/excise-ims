@@ -20,10 +20,10 @@ import { SelectFormComponent } from './../../project/pages/select-form/select-fo
 import { CreateFormComponent } from './../../project/pages/create-form/create-form.component';
 import { SelectNewFormComponent } from './../../project/pages/select-new-form/select-new-form.component';
 import { CreateNewFormComponent } from './../../project/pages/create-new-form/create-new-form.component';
-import { ImportGfAccountingComponent } from './../../project/pages/import-gf-accounting/import-gf-accounting.component';
-import { SelectIncSummaryComponent } from './../../project/pages/select-inc-summary/select-inc-summary.component';
-import { ResultAnalysisGfIncComponent } from './../../project/pages/result-analysis-gf-inc/result-analysis-gf-inc.component';
-import { MappingGfIncCodeComponent } from './../../project/pages/mapping-gf-inc-code/mapping-gf-inc-code.component';
+import { Int031Component } from './../../project/internal-audit/int03/int03-1/int03-1.component';
+import { Int0311Component } from './../../project/internal-audit/int03/int03-1/int3-1-1/int03-1-1.component';
+import { Int0312Component } from './../../project/internal-audit/int03/int03-1/int3-1-2/int03-1-2.component';
+import { Int032Component } from './../../project/internal-audit/int03/int03-2/int03-2.component';
 import { CheckCompanyPaymentComponent } from './../../project/pages/check-company-payment/check-company-payment.component';
 import { CheckCompanyRenewComponent } from './../../project/pages/check-company-renew/check-company-renew.component';
 import { CheckReprintLicenseComponent } from './../../project/pages/check-reprint-license/check-reprint-license.component';
@@ -85,10 +85,10 @@ const routes: Routes = [
     { path: 'select-new-form', component: SelectNewFormComponent, canActivate: [AuthGuard] },
     { path: 'create-new-form', component: CreateNewFormComponent, canActivate: [AuthGuard] },
 
-    { path: 'import-gf-accounting', component: ImportGfAccountingComponent, canActivate: [AuthGuard] },
-    { path: 'select-inc-summary', component: SelectIncSummaryComponent, canActivate: [AuthGuard] },
-    { path: 'result-analysis-gf-inc', component: ResultAnalysisGfIncComponent, canActivate: [AuthGuard] },
-    { path: 'mapping-gf-inc-code', component: MappingGfIncCodeComponent, canActivate: [AuthGuard] },
+    { path: 'int03-1', component: Int031Component, canActivate: [AuthGuard] },
+    { path: 'int03-1-1', component: Int0311Component, canActivate: [AuthGuard] },
+    { path: 'int03-1-2', component: Int0312Component, canActivate: [AuthGuard] },
+    { path: 'int03-2', component: Int032Component, canActivate: [AuthGuard] },
 
     { path: 'check-company-payment', component: CheckCompanyPaymentComponent, canActivate: [AuthGuard] },
     { path: 'check-company-renew', component: CheckCompanyRenewComponent, canActivate: [AuthGuard] },

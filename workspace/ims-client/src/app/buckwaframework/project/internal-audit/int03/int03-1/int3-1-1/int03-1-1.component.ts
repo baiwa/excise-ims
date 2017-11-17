@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 declare var $: any;
 @Component({
-  selector: 'select-inc-summary',
-  templateUrl: './select-inc-summary.component.html',
-  styleUrls: ['./select-inc-summary.component.css']
+  selector: 'int03-1-1',
+  templateUrl: './int03-1-1.component.html',
+  styleUrls: ['./int03-1-1.component.css']
 })
-export class SelectIncSummaryComponent implements OnInit {
+export class Int0311Component implements OnInit {
 
   private selectZone: any[];
   private selectArea: any[];

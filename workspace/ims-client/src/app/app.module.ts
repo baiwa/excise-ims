@@ -40,10 +40,10 @@ import { SelectFormComponent } from './buckwaframework/project/pages/select-form
 import { CreateFormComponent } from './buckwaframework/project/pages/create-form/create-form.component';
 import { CreateNewFormComponent } from './buckwaframework/project/pages/create-new-form/create-new-form.component';
 import { SelectNewFormComponent } from './buckwaframework/project/pages/select-new-form/select-new-form.component';
-import { ImportGfAccountingComponent } from './buckwaframework/project/pages/import-gf-accounting/import-gf-accounting.component';
-import { SelectIncSummaryComponent } from './buckwaframework/project/pages/select-inc-summary/select-inc-summary.component';
-import { ResultAnalysisGfIncComponent } from './buckwaframework/project/pages/result-analysis-gf-inc/result-analysis-gf-inc.component';
-import { MappingGfIncCodeComponent } from './buckwaframework/project/pages/mapping-gf-inc-code/mapping-gf-inc-code.component';
+import { Int031Component } from './buckwaframework/project/internal-audit/int03/int03-1/int03-1.component';
+import { Int0311Component } from './buckwaframework/project/internal-audit/int03/int03-1/int3-1-1/int03-1-1.component';
+import { Int0312Component } from './buckwaframework/project/internal-audit/int03/int03-1/int3-1-2/int03-1-2.component';
+import { Int032Component } from './buckwaframework/project/internal-audit/int03/int03-2/int03-2.component';
 import { CheckCompanyPaymentComponent } from './buckwaframework/project/pages/check-company-payment/check-company-payment.component';
 import { CheckCompanyRenewComponent } from './buckwaframework/project/pages/check-company-renew/check-company-renew.component';
 import { CheckReprintLicenseComponent } from './buckwaframework/project/pages/check-reprint-license/check-reprint-license.component';
@@ -102,10 +102,10 @@ import { Int076Component } from './buckwaframework/project/internal-audit/int07/
         CreateFormComponent,
         CreateNewFormComponent,
         SelectNewFormComponent,
-        ImportGfAccountingComponent,
-        SelectIncSummaryComponent,
-        ResultAnalysisGfIncComponent,
-        MappingGfIncCodeComponent,
+        Int031Component,
+        Int0311Component,
+        Int0312Component,
+        Int032Component,
         CheckCompanyPaymentComponent,
         CheckCompanyRenewComponent,
         CheckReprintLicenseComponent,
