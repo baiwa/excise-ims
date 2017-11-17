@@ -23,13 +23,14 @@ import springfox.documentation.service.ApiDescription;
 import springfox.documentation.service.ApiListing;
 import springfox.documentation.service.Operation;
 import springfox.documentation.service.ResponseMessage;
-import springfox.documentation.service.Tag;
 import springfox.documentation.spring.web.plugins.DocumentationPluginsManager;
 import springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator;
 import springfox.documentation.spring.web.scanners.ApiDescriptionReader;
 import springfox.documentation.spring.web.scanners.ApiListingScanner;
 import springfox.documentation.spring.web.scanners.ApiListingScanningContext;
 import springfox.documentation.spring.web.scanners.ApiModelReader;
+import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
+import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.URL;
 
 public class FormLoginOperations extends ApiListingScanner {
 	
@@ -45,23 +46,19 @@ public class FormLoginOperations extends ApiListingScanner {
 	public Multimap<String, ApiListing> scan(ApiListingScanningContext context) {
 		
 		Set<String> operationTagNameSet = new HashSet<String>();
-		operationTagNameSet.add("authen-rest-controller");
+		operationTagNameSet.add(MODULE_NAME.AUTHENTICATION);
 		
 		List<Operation> operationList = new ArrayList<Operation>();
 		operationList.add(loginDocument(operationTagNameSet));
 		operationList.add(logoutDocument(operationTagNameSet));
 		
 		List<ApiDescription> apiDescList = new LinkedList<ApiDescription>();
-		apiDescList.add(new ApiDescription("/api/security/login", "Authentication documentation", operationList, false));
-		
-		Set<Tag> apiTagSet = new HashSet<Tag>();
-		apiTagSet.add(new Tag("authen-rest-controller", "Login Rest Controller"));
+		apiDescList.add(new ApiDescription(URL.LOGIN_REST, "Authentication documentation", operationList, false));
 		
 		Multimap<String, ApiListing> apiListingMap = super.scan(context);
 		apiListingMap.put("authentication", new ApiListingBuilder(context.getDocumentationContext().getApiDescriptionOrdering())
 			.apis(apiDescList)
 			.description("Authentication API")
-			.tags(apiTagSet)
 			.build()
 		);
 		
@@ -91,22 +88,23 @@ public class FormLoginOperations extends ApiListingScanner {
 			.parameters(Arrays.asList(
 				new ParameterBuilder()
 					.name("username")
-					.description("The username")
+					.description("Username")
 					.parameterType("query")
 					.type(typeResolver.resolve(String.class))
 					.modelRef(new ModelRef("string"))
+					.required(true)
 					.build(),
 				new ParameterBuilder()
 					.name("password")
-					.description("The password")
+					.description("Password")
 					.parameterType("query")
 					.type(typeResolver.resolve(String.class))
 					.modelRef(new ModelRef("string"))
+					.required(true)
 					.build()
 			))
 			.tags(operationTagNameSet)
 			.summary("Log in")
-			.notes("Here you can log in")
 			.responseMessages(responseMessageSet)
 			.build();
 	}
@@ -126,7 +124,6 @@ public class FormLoginOperations extends ApiListingScanner {
 			.uniqueId("logout")
 			.tags(operationTagNameSet)
 			.summary("Log out")
-			.notes("Here you can log out")
 			.responseMessages(responseMessageSet)
 			.build();
 	}

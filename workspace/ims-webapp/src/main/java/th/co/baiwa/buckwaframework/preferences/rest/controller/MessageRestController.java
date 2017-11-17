@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import io.swagger.annotations.ApiOperation;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.service.MessageService;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
@@ -34,14 +37,11 @@ public class MessageRestController {
 	@Autowired
 	private MessageService messageService;
 	
-//	@GetMapping("getMessageType")
-//	public ResponseEntity<?> getMessageType() {
-//		logger.info("getMessageType");
-//		ResponseData<Map<String, Message>> response = new ResponseData<>();
-//		//response.setData(ApplicationCache.getP);
-//	}
-//	
 	@GetMapping
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Get All Message"
+	)
 	public ResponseEntity<?> getAll() {
 		logger.info("getAll");
 		
@@ -52,22 +52,25 @@ public class MessageRestController {
 	}
 	
 	@GetMapping("search")
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Search Message by Criteria"
+	)
 	public ResponseEntity<?> search(
-			@RequestParam(name="draw") Integer draw, 
-			@RequestParam(name="start") Integer start, 
-			@RequestParam(name="length") Integer length,
+			@RequestParam(name = "draw") Integer draw,
+			@RequestParam(name = "start") Integer start,
+			@RequestParam(name = "length") Integer length,
 			String messageCode,
 			String messageEn,
 			String messageTh,
-			String messageType
-			) {
+			String messageType) {
 		
 		Message message = new Message();
 		message.setMessageCode(messageCode);
 		message.setMessageEn(messageEn);
 		message.setMessageTh(messageTh);
 		message.setMessageType(messageType);
-		logger.info("getAll for datatable" + message);
+		logger.info("search by {}", message);
 		
 		List<Message> resultList = messageService.getMessageList(start, length,message);
 		Integer recordsTotal = messageService.countMessage();
@@ -84,6 +87,10 @@ public class MessageRestController {
 	}
 	
 	@GetMapping("/{id}")
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Get Message by Id"
+	)
 	public ResponseEntity<?> getMessage(@PathVariable("id") long id) {
 		logger.info("getMessage [id={}]", id);
 		
@@ -94,6 +101,10 @@ public class MessageRestController {
 	}
 	
 	@PostMapping
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Create Message"
+	)
 	public ResponseEntity<?> create(@RequestBody Message message, UriComponentsBuilder ucBuilder) {
 		logger.info("create [message={}]", message);
 		
@@ -106,7 +117,12 @@ public class MessageRestController {
 	}
 	
 	@PutMapping
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Update Message"
+	)
 	public ResponseEntity<?> update(@RequestBody  Message message, UriComponentsBuilder ucBuilder) {
+		logger.info("update [message={}]", message);
 		
 		messageService.updateMessage(message);
 		
@@ -117,8 +133,12 @@ public class MessageRestController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Delete Message"
+	)
 	public ResponseEntity<?> delete(@PathVariable("id") List<Long> ids) {
-		logger.info("delete [id={}]", ids);
+		logger.info("delete [id={}]", StringUtils.collectionToCommaDelimitedString(ids));
 		
 		messageService.deleteMessage(ids);
 		return new ResponseEntity<Message>(HttpStatus.NO_CONTENT);

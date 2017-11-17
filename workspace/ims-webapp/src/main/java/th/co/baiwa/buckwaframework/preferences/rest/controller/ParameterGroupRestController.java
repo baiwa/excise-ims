@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import io.swagger.annotations.ApiOperation;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterGroup;
 import th.co.baiwa.buckwaframework.preferences.service.ParameterGroupService;
 
@@ -32,6 +34,10 @@ public class ParameterGroupRestController {
 	private ParameterGroupService parameterGroupService;
 	
 	@GetMapping
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Get All Parameter Group"
+	)
 	public ResponseEntity<?> getAll() {
 		logger.info("getAll");
 		
@@ -43,8 +49,12 @@ public class ParameterGroupRestController {
 	}
 	
 	@GetMapping("/{id}")
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Get Parameter Group by Id"
+	)
 	public ResponseEntity<?> getParameterGroup(@PathVariable("id") long id) {
-		logger.info("getParameterGroup [id=" + id + "]");
+		logger.info("getParameterGroup [id={}]", id);
 		
 		ParameterGroup parameter = parameterGroupService.getParameterGroupById(id);
 		ResponseData<ParameterGroup> response = new ResponseData<ParameterGroup>();
@@ -53,8 +63,12 @@ public class ParameterGroupRestController {
 	}
 	
 	@PostMapping
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Create Parameter Group"
+	)
 	public ResponseEntity<?> create(@RequestBody ParameterGroup parameter, UriComponentsBuilder ucBuilder) {
-		logger.info("create [parameter=" + parameter + "]");
+		logger.info("create [parameter={}]", parameter);
 		
 		ParameterGroup newParameterGroup = parameterGroupService.insertParameterGroup(parameter);
 		
@@ -65,7 +79,12 @@ public class ParameterGroupRestController {
 	}
 	
 	@PutMapping
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Update Parameter Group"
+	)
 	public ResponseEntity<?> update(@RequestBody ParameterGroup parameter, UriComponentsBuilder ucBuilder) {
+		logger.info("update [parameter={}]", parameter);
 		
 		parameterGroupService.updateParameterGroup(parameter);
 		
@@ -75,8 +94,12 @@ public class ParameterGroupRestController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Delete Parameter Group"
+	)
 	public ResponseEntity<?> delete(@PathVariable("id") long id) {
-		logger.info("delete [id=" + id + "]");
+		logger.info("delete [id={}]", id);
 		
 		parameterGroupService.deleteParameterGroup(id);
 		return new ResponseEntity<ParameterGroup>(HttpStatus.NO_CONTENT);

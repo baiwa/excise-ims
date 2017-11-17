@@ -13,23 +13,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
 import th.co.baiwa.buckwaframework.common.util.WebContextUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 
 @RestController
 @RequestMapping("/api/preferences/reload-cache")
-@Api(value = "Operations reload cache in application")
 public class PreferencesRestController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PreferencesRestController.class);
 	
 	@GetMapping
 	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
 		value = "Reload Cache",
 		notes = "Reload Parameter and Message into Cache"
 	)

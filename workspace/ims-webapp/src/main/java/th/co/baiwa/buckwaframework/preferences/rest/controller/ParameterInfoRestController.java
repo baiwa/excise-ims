@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import io.swagger.annotations.ApiOperation;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
 import th.co.baiwa.buckwaframework.preferences.service.ParameterInfoService;
 
@@ -32,6 +34,10 @@ public class ParameterInfoRestController {
 	private ParameterInfoService parameterInfoService;
 	
 	@GetMapping
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Get All Parameter Info"
+	)
 	public ResponseEntity<?> getAll() {
 		logger.info("getAll");
 		
@@ -43,8 +49,12 @@ public class ParameterInfoRestController {
 	}
 	
 	@GetMapping("/{id}")
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Get Parameter Info by Id"
+	)
 	public ResponseEntity<?> getParameterInfo(@PathVariable("id") long id) {
-		logger.info("getParameterInfo [id=" + id + "]");
+		logger.info("getParameterInfo [id={}]", id);
 		
 		ParameterInfo parameter = parameterInfoService.getParameterInfoById(id);
 		ResponseData<ParameterInfo> response = new ResponseData<ParameterInfo>();
@@ -53,8 +63,12 @@ public class ParameterInfoRestController {
 	}
 	
 	@PostMapping
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Create Parameter Info"
+	)
 	public ResponseEntity<?> create(@RequestBody ParameterInfo parameter, UriComponentsBuilder ucBuilder) {
-		logger.info("create [parameter=" + parameter + "]");
+		logger.info("create [parameter={}]", parameter);
 		
 		ParameterInfo newParameterInfo = parameterInfoService.insertParameterInfo(parameter);
 		
@@ -65,7 +79,12 @@ public class ParameterInfoRestController {
 	}
 	
 	@PutMapping
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Update Parameter Info"
+	)
 	public ResponseEntity<?> update(@RequestBody ParameterInfo parameter, UriComponentsBuilder ucBuilder) {
+		logger.info("update [parameter={}]", parameter);
 		
 		parameterInfoService.updateParameterInfo(parameter);
 		
@@ -75,8 +94,12 @@ public class ParameterInfoRestController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Delete Parameter Info"
+	)
 	public ResponseEntity<?> delete(@PathVariable("id") long id) {
-		logger.info("delete [id=" + id + "]");
+		logger.info("delete [id={}]", id);
 		
 		parameterInfoService.deleteParameterInfo(id);
 		return new ResponseEntity<ParameterInfo>(HttpStatus.NO_CONTENT);
