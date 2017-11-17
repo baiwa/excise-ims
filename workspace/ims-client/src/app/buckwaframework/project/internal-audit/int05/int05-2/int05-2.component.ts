@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 declare var $: any;
 @Component({
-  selector: 'check-stamp-branch',
-  templateUrl: './check-stamp-branch.component.html',
-  styleUrls: ['./check-stamp-branch.component.css']
+  selector: 'int05-2',
+  templateUrl: './int05-2.component.html',
+  styleUrls: ['./int05-2.component.css']
 })
-export class CheckStampBranchComponent implements OnInit {
+export class Int052Component implements OnInit {
 
   private zoneList: any[];
   private areaList: any[];
