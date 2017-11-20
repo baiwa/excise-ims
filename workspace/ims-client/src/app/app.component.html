@@ -75,6 +75,15 @@
                         <a class="item" [routerLink]="['/int07-7']" routerLinkActive="active">สร้างกระดาษทำการเงินฝากคลัง</a>
                     </div>
                 </div>
+                <div class="ui simple dropdown item">
+                    <i class="dropdown icon"></i>
+                    ประเมินความเสี่ยง
+                    <div class="menu">
+                        <a class="item" [routerLink]="['/int08-1']" routerLinkActive="active">ประเมินความเสี่ยงโครงการ</a>
+                        <a class="item" [routerLink]="['/int08-2']" routerLinkActive="active">ประเมินความเสี่ยงระบบสารสนเทศ</a>
+                        <a class="item" [routerLink]="['/int08-3']" routerLinkActive="active">ประเมินความเสี่ยงภาคพื้นที่</a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
