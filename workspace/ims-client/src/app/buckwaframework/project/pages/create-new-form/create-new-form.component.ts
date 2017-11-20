@@ -7,18 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateNewFormComponent implements OnInit {
 
-  public showUploadDetail:boolean = false;
+  public showData:boolean = false;
   
   constructor() { }
 
   ngOnInit() {
   }
 
-  onClickUpload() {
-    this.showUploadDetail = true;
+  uploadData() {
+    this.showData = true;
   }
 
-  onclickDelete() {
-    this.showUploadDetail = false;
+  clearData() {
+    this.showData = false;
   }
 }
