@@ -91,6 +91,9 @@ import { Int0811Component } from './buckwaframework/project/internal-audit/int08
 import { Int0812Component } from './buckwaframework/project/internal-audit/int08/int08-1/int08-1-2/int08-1-2.component';
 import { Int0813Component } from './buckwaframework/project/internal-audit/int08/int08-1/int08-1-3/int08-1-3.component';
 import { Int082Component } from './buckwaframework/project/internal-audit/int08/int08-2/int08-2.component';
+import { CreatePaperReceiveMaterialComponent } from './buckwaframework/project/pages/create-paper-receive-material/create-paper-receive-material.component';
+import { CreatePaperPayMaterialComponent } from './buckwaframework/project/pages/create-paper-pay-material/create-paper-pay-material.component';
+import { CreatePaperRelationMaterialComponent } from './buckwaframework/project/pages/create-paper-relation-material/create-paper-relation-material.component';
 
 @NgModule({
     declarations: [
@@ -164,6 +167,9 @@ import { Int082Component } from './buckwaframework/project/internal-audit/int08/
         Int0812Component,
         Int0813Component,
         Int082Component,
+        CreatePaperReceiveMaterialComponent,
+        CreatePaperPayMaterialComponent,
+        CreatePaperRelationMaterialComponent,
     ],
     imports: [
         BrowserModule,
