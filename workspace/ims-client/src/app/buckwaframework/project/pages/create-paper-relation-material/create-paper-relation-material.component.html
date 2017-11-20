@@ -1,6 +1,6 @@
 <div class="ui grid">
   <div class="sixteen wide column">
-    <h2 class="ui header">สร้างกระดาษทำการจ่ายวัตถุดิบ</h2>
+    <h2 class="ui header">สร้างกระดาษทำการสัมพันธ์การเบิกใช้วัตถุดิบกับการรับสินค้าสำเร็จรูป</h2>
 
     <div class="ui top attached header">
       <span>Criteria</span>
@@ -83,7 +83,7 @@
       <div class="ui grid center aligned">
         <div class="sixteen wide column">
           บ. ฮอนด้า มอเตอร์ ประเทศไทย
-          <br> กระดาษทำการรับวัตถุดิบ
+          <br> กระดาษทำการสัมพันธ์การเบิกใช้วัตถุดิบกับการรับสินค้าสำเร็จรูป
           <br> เดือน พ.ย. 2559 - ส.ค. 2559
         </div>
       </div>
@@ -91,37 +91,90 @@
       <table class="ui small celled table">
         <thead>
           <tr style="text-align: center;">
-            <th>ลำดับ</th>
-            <th>รายการ</th>
-            <th>งบเดือน (ภส.07 - 04)</th>
-            <th>Monthly Report CKD Import CBU car</th>
-            <th>ผลต่าง</th>
+            <th rowspan="2">ลำดับ</th>
+            <th rowspan="2">รายการ</th>
+            <th rowspan="2">การเบิกใช้วัตถุดิบรายเดือน
+              <br>(1)</th>
+            <th colspan="3">ปริมาณรับจากการผลิต</th>
+            <th colspan="3">ผลต่าง</th>
+          </tr>
+          <tr style="text-align: center;">
+            <th style="border-left: 1px solid rgba(34,36,38,.1);">งบเดือน (ภส.07 - 04)
+              <br>(2)</th>
+            <th>CBU STOCK REPORT (ภส.07 - 02)
+              <br>(3)</th>
+            <th>รายงาน AF-OFF
+              <br>(4)</th>
+            <th>(1) - (2)</th>
+            <th>(1) - (3)</th>
+            <th>(1) - (4)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>1</td>
-            <td>C RS CVT ZB7</td>
+            <td></td>
             <td>60</td>
-            <td>90</td>
+            <td>60</td>
+            <td>60</td>
+            <td>60</td>
             <td>
-              <span class="ui red horizontal label right aligned" style="float: right;">30</span>
+              <span class="ui green horizontal label right aligned" style="float: right;">0</span>
             </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>C 1.8S CVT ZA5</td>
-            <td>210</td>
-            <td>210</td>
+            <td>
+              <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+            </td>
             <td>
               <span class="ui green horizontal label right aligned" style="float: right;">0</span>
             </td>
           </tr>
           <tr>
+            <td>2</td>
+            <td></td>
+            <td>240</td>
+            <td>130</td>
+            <td>130</td>
+            <td>130</td>
+            <td>
+              <span class="ui red horizontal label right aligned" style="float: right;">110</span>
+            </td>
+            <td>
+              <span class="ui red horizontal label right aligned" style="float: right;">110</span>
+            </td>
+            <td>
+              <span class="ui red horizontal label right aligned" style="float: right;">110</span>
+            </td>
+          </tr>
+          <tr>
             <td>3</td>
-            <td>C 1.8E CVT ZB7</td>
-            <td>1170</td>
-            <td>1170</td>
+            <td></td>
+            <td>90</td>
+            <td>200</td>
+            <td>200</td>
+            <td>200</td>
+            <td>
+              <span class="ui red horizontal label right aligned" style="float: right;">110</span>
+            </td>
+            <td>
+              <span class="ui red horizontal label right aligned" style="float: right;">110</span>
+            </td>
+            <td>
+              <span class="ui red horizontal label right aligned" style="float: right;">110</span>
+            </td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td></td>
+            <td>390</td>
+            <td>390</td>
+            <td>390</td>
+            <td>390</td>
+            <td>
+              <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+            </td>
+            <td>
+              <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+            </td>
             <td>
               <span class="ui green horizontal label right aligned" style="float: right;">0</span>
             </td>
@@ -131,12 +184,12 @@
 
       <div class="ui center aligned grid">
         <div class="six wide column">
-          <button class="ui mini primary button" routerLink="/create-new-form">
+          <button class="ui mini primary button">
             <i class="print icon"></i>
             พิมพ์กระดาษทำการ
           </button>
-          <button class="ui mini button" routerLink="/select-form">
-            <i class="remove icon"></i>
+          <button class="ui mini button" (click)="clearData()">
+            <i class="refresh icon"></i>
             ล้างข้อมูล
           </button>
         </div>
