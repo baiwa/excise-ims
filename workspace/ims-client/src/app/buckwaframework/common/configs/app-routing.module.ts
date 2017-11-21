@@ -79,6 +79,7 @@ import { CreatePaperReceiveMaterialComponent } from './../../project/pages/creat
 import { CreatePaperRelationMaterialComponent } from './../../project/pages/create-paper-relation-material/create-paper-relation-material.component';
 import { CreatePaperReceiveInstantComponent } from './../../project/pages/create-paper-receive-instant/create-paper-receive-instant.component';
 import { CreatePaperPayInstantComponent } from './../../project/pages/create-paper-pay-instant/create-paper-pay-instant.component';
+import { CreatePaperCheckValueComponent } from './../../project/pages/create-paper-check-value/create-paper-check-value.component';
 
 const routes: Routes = [
 
@@ -171,6 +172,7 @@ const routes: Routes = [
     { path: 'create-paper-relation-material', component: CreatePaperRelationMaterialComponent, canActivate: [AuthGuard] },
     { path: 'create-paper-receive-instant', component: CreatePaperReceiveInstantComponent, canActivate: [AuthGuard] },
     { path: 'create-paper-pay-instant', component: CreatePaperPayInstantComponent, canActivate: [AuthGuard] },
+    { path: 'create-paper-check-value', component: CreatePaperCheckValueComponent, canActivate: [AuthGuard] },
     
 ];
 
