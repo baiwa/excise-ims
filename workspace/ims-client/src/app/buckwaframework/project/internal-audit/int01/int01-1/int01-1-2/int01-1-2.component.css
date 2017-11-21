@@ -1,0 +1,14 @@
+#table1>tbody>tr>td:nth-child(6),
+#table1>tbody>tr>td:nth-child(7),
+#table1>tbody>tr>td:nth-child(8),
+#table1>tbody>tr>td:nth-child(9),
+#table1>tbody>tr>td:nth-child(10),
+#table1>tbody>tr>td:nth-child(11),
+#table1>tbody>tr>td:nth-child(12) {
+    background-color: rgb(250, 250, 251) !important;
+    font-weight: bold
+}
+
+#table1>tfoot {
+    background-color: rgb(245, 245, 245) !important;
+}

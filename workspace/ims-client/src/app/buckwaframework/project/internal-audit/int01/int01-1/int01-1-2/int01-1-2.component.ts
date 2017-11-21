@@ -4,7 +4,8 @@ declare var $: any;
 
 @Component({
   selector: 'app-int01-1-2',
-  templateUrl: './int01-1-2.component.html'
+  templateUrl: './int01-1-2.component.html',
+  styleUrls: ['./int01-1-2.component.css']
 })
 export class Int0112Component implements OnInit {
 
@@ -140,90 +141,90 @@ export class Int0112Component implements OnInit {
       return data;
     };
 
-    $('#table1').DataTable({
-      "lengthChange": false,
-      "searching": false,
-      "ordering": false,
-      "pageLength": 10,
-      "processing": true,
-      "serverSide": false,
-      "paging": false,
-      "info": false,
-      "pagingType": "full_numbers",
-      "data": tableMock,
-      "columns": [
-        {
-          "data": "1"
-        },
-        {
-          "data": "3",
-          "render": backgroundRowColor,
-          "className": "right"
-        },
-        {
-          "data": "4",
-          "render": backgroundRowColor,
-          "className": "right"
-        },
-        {
-          "data": "5",
-          "render": backgroundRowColor,
-          "className": "right"
-        },
-        {
-          "data": "6",
-          "render": backgroundRowColor,
-          "className": "right"
-        },
-        {
-          "data": "7",
-          "render": backgroundRowColor,
-          "className": "right"
-        },
-        {
-          "data": "8",
-          "render": backgroundRowColor,
-          "className": "right"
-        },
-        {
-          "data": "9",
-          "render": backgroundRowColor,
-          "className": "right"
-        },
-        {
-          "data": "10",
-          "render": backgroundRowColor,
-          "className": "right"
-        },
-        {
-          "data": "11",
-          "render": backgroundRowColor,
-          "className": "right"
-        },
-        {
-          "data": "12",
-          "render": backgroundRowColor,
-          "className": "right"
-        },
-        {
-          "data": "13",
-          "render": backgroundRowColor,
-          "className": "right"
-        },
-        {
-          "data": "13",
-          "render": function() {
-            return `<a class="edit">แก้ไข</a>`;
-          }
-        }
-      ],
-      "rowCallback": (row, data, index) => {
-          $('td > .edit', row).bind('click', () => {
-            this.popupEditData();
+    // $('#table1').DataTable({
+    //   "lengthChange": false,
+    //   "searching": false,
+    //   "ordering": false,
+    //   "pageLength": 10,
+    //   "processing": true,
+    //   "serverSide": false,
+    //   "paging": false,
+    //   "info": false,
+    //   "pagingType": "full_numbers",
+    //   "data": tableMock,
+    //   "columns": [
+    //     {
+    //       "data": "1"
+    //     },
+    //     {
+    //       "data": "3",
+    //       "render": backgroundRowColor,
+    //       "className": "right"
+    //     },
+    //     {
+    //       "data": "4",
+    //       "render": backgroundRowColor,
+    //       "className": "right"
+    //     },
+    //     {
+    //       "data": "5",
+    //       "render": backgroundRowColor,
+    //       "className": "right"
+    //     },
+    //     {
+    //       "data": "6",
+    //       "render": backgroundRowColor,
+    //       "className": "right"
+    //     },
+    //     {
+    //       "data": "7",
+    //       "render": backgroundRowColor,
+    //       "className": "right"
+    //     },
+    //     {
+    //       "data": "8",
+    //       "render": backgroundRowColor,
+    //       "className": "right"
+    //     },
+    //     {
+    //       "data": "9",
+    //       "render": backgroundRowColor,
+    //       "className": "right"
+    //     },
+    //     {
+    //       "data": "10",
+    //       "render": backgroundRowColor,
+    //       "className": "right"
+    //     },
+    //     {
+    //       "data": "11",
+    //       "render": backgroundRowColor,
+    //       "className": "right"
+    //     },
+    //     {
+    //       "data": "12",
+    //       "render": backgroundRowColor,
+    //       "className": "right"
+    //     },
+    //     {
+    //       "data": "13",
+    //       "render": backgroundRowColor,
+    //       "className": "right"
+    //     },
+    //     {
+    //       "data": "13",
+    //       "render": function() {
+    //         return `<a class="edit">แก้ไข</a>`;
+    //       }
+    //     }
+    //   ],
+    //   "rowCallback": (row, data, index) => {
+    //       $('td > .edit', row).bind('click', () => {
+    //         this.popupEditData();
             
-          });
-      }
-    });
+    //       });
+    //   }
+    // });
 
   }
 

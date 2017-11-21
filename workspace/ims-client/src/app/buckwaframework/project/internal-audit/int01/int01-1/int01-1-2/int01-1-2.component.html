@@ -1,6 +1,6 @@
 <div class="ui grid">
     <div class="sixteen wide column">
-        <h2 class="ui header">ภาษีสรรพสามิต และรายได้อื่นๆ</h2>
+        <h2 class="ui header">กรอกข้อมูลใบเสร็จ</h2>
 
         <div class="ui top attached header">
             <span>ข้อมูลกระดาษทำการ ภาษีสรรพสามิต</span>
@@ -212,14 +212,214 @@
             <div class="ui form">
                 <div class="ui center aligned grid">
                     <div class="eight wide column">
-                        <button class="ui mini primary button width-100">
+                        <button class="ui mini primary button widtd-100">
           <i class="add icon"></i>
           เพิ่ม
         </button>
-                        <button class="ui mini button width-100">
+                        <button class="ui mini button widtd-100">
           <i class="refresh icon"></i>
           ล้างข้อมูล
         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sixteen wide column">
+        <div class="ui segment">
+            <div style="overflow-x: scroll;">
+                <table id="table1" class="ui small celled striped table" style="width: 110%;">
+                    <thead>
+                        <tr class="center aligned">
+                            <th>สินค้า/บริการ</th>
+                            <th>วัน/เดือน/ปี</th>
+                            <th>เลขแบบพิมพ์</th>
+                            <th>เลขใบเสร็จ<br/>C06010160/00</th>
+                            <th>จำนวนเงิน</th>
+                            <th>นำส่งมหาดไทย<br/>95% / 98.5%</th>
+                            <th>เงินฝาก/ค่าใช้จ่าย<br/>5% / 1.5%</th>
+                            <th>มหาดไทย<br/>10%</th>
+                            <th>รวม</th>
+                            <th>ชดเชยกรมศุลฯ<br/>0.75%</th>
+                            <th>ค่าพิมพ์แสตมป์ <br/>1%</th>
+                            <th>นำส่ง</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>สุราแช่</td>
+                            <td>03/10/59</td>
+                            <td>37311</td>
+                            <td>00026</td>
+                            <td class="right aligned">1,275.00</td>
+                            <td class="right aligned">121.12</td>
+                            <td class="right aligned">6.38</td>
+                            <td class="right aligned">127.50</td>
+                            <td class="right aligned">1,402.50</td>
+                            <td class="right aligned">9.56</td>
+                            <td class="right aligned">12.75</td>
+                            <td class="right aligned">1,252.69</td>
+                        </tr>
+                        <tr>
+                            <td>สสสสุรา</td>
+                            <td>03/10/59</td>
+                            <td>37312</td>
+                            <td>00027</td>
+                            <td class="right aligned">25.50</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">25.50</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">-</td>
+                        </tr>
+                        <tr>
+                            <td>สสทสุรา</td>
+                            <td>03/10/59</td>
+                            <td>37313</td>
+                            <td>00028</td>
+                            <td class="right aligned">18.83</td>
+                            <td class="right aligned">18.55</td>
+                            <td class="right aligned">0.28</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">18.83</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">-</td>
+                        </tr>
+                        <tr>
+                            <td>กกทสุรา</td>
+                            <td>03/10/59</td>
+                            <td>37314</td>
+                            <td>00029</td>
+                            <td class="right aligned">25.50</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">25.50</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">-</td>
+                        </tr>
+                        <tr>
+                            <td>อาบน้ำ</td>
+                            <td>03/10/59</td>
+                            <td>37315</td>
+                            <td>00001</td>
+                            <td class="right aligned">50.00</td>
+                            <td class="right aligned">4.75</td>
+                            <td class="right aligned">0.25</td>
+                            <td class="right aligned">5</td>
+                            <td class="right aligned">55</td>
+                            <td class="right aligned">0.38</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">49.62</td>
+                        </tr>
+                        <tr>
+                            <td>เครื่องหอม</td>
+                            <td>04/10/59</td>
+                            <td>37316</td>
+                            <td>00002</td>
+                            <td class="right aligned">180</td>
+                            <td class="right aligned">17.1</td>
+                            <td class="right aligned">0.9</td>
+                            <td class="right aligned">18</td>
+                            <td class="right aligned">198</td>
+                            <td class="right aligned">1.35</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">178.65</td>
+                        </tr>
+                        <tr>
+                            <td>เครื่องหอม</td>
+                            <td>05/10/59</td>
+                            <td>37317</td>
+                            <td>00003</td>
+                            <td class="right aligned">270</td>
+                            <td class="right aligned">25.65</td>
+                            <td class="right aligned">1.35</td>
+                            <td class="right aligned">27</td>
+                            <td class="right aligned">297</td>
+                            <td class="right aligned">2.03</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">267.97</td>
+                        </tr>
+                        <tr>
+                            <td>ไนต์คลับฯ</td>
+                            <td>05/10/59</td>
+                            <td>37318</td>
+                            <td>00004</td>
+                            <td class="right aligned">1,826.80</td>
+                            <td class="right aligned">173.54</td>
+                            <td class="right aligned">9.14</td>
+                            <td class="right aligned">182.68</td>
+                            <td class="right aligned">2,009.48</td>
+                            <td class="right aligned">13.7</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">1,813.10</td>
+                        </tr>
+                        <tr>
+                            <td>เครื่องหอม</td>
+                            <td>05/10/59</td>
+                            <td>37319</td>
+                            <td>00005</td>
+                            <td class="right aligned">171</td>
+                            <td class="right aligned">16.24</td>
+                            <td class="right aligned">0.86</td>
+                            <td class="right aligned">17.1</td>
+                            <td class="right aligned">188.1</td>
+                            <td class="right aligned">1.28</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">169.72</td>
+                        </tr>
+                        <tr>
+                            <td>เครื่องดื่ม</td>
+                            <td>07/10/59</td>
+                            <td>37320</td>
+                            <td>00006</td>
+                            <td class="right aligned">111.93</td>
+                            <td class="right aligned">10.63</td>
+                            <td class="right aligned">0.56</td>
+                            <td class="right aligned">11.19</td>
+                            <td class="right aligned">123.12</td>
+                            <td class="right aligned">0.84</td>
+                            <td class="right aligned">-</td>
+                            <td class="right aligned">111.09</td>
+                        </tr>
+                    </tbody>
+                    <tfoot style="font-weight: bold">
+                        <tr>
+                            <td colspan="4">รวม</td>
+                            <td class="right aligned">3,954.56</td>
+                            <td class="right aligned">387.58</td>
+                            <td class="right aligned">19.72</td>
+                            <td class="right aligned">388.47</td>
+                            <td class="right aligned">4,343.03</td>
+                            <td class="right aligned">29.14</td>
+                            <td class="right aligned">12.75</td>
+                            <td class="right aligned">3,842.84</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="ui attached segment">
+            <div class="ui form">
+                <div class="ui center aligned grid">
+                    <div class="eight wide column">
+                        <a class="ui mini button widtd-100" routerLink='/int01-1-1'>
+                            <i class="arrow left icon"></i>กลับ
+                        </a>
+                        <a class="ui mini button widtd-100">
+                            <i class="save icon"></i>บันทึก
+                        </a>
+                        <a class="ui mini primary button widtd-100" routerLink='/int01-1-3'>
+                            <i class="checkmark icon"></i>ตรวจสอบงบสรุปยอดภาษี
+                        </a>
+                        <button class="ui mini button widtd-100">
+                        <i class="print icon"></i>พิมพ์กระดาษทำการ
+                    </button>
                     </div>
                 </div>
             </div>
