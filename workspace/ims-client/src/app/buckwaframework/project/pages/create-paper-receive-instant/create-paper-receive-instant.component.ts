@@ -6,10 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-paper-receive-instant.component.css']
 })
 export class CreatePaperReceiveInstantComponent implements OnInit {
+  
+  public showData: boolean = false;
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  uploadData() {
+    this.showData = true;
+  }
+
+  clearData() {
+    this.showData = false;
+  }
 }
