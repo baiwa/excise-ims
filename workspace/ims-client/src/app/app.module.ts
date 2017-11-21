@@ -40,6 +40,7 @@ import { SelectFormComponent } from './buckwaframework/project/pages/select-form
 import { CreateFormComponent } from './buckwaframework/project/pages/create-form/create-form.component';
 import { CreateNewFormComponent } from './buckwaframework/project/pages/create-new-form/create-new-form.component';
 import { SelectNewFormComponent } from './buckwaframework/project/pages/select-new-form/select-new-form.component';
+import { Int0111Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-1/int01-1-1.component';
 import { Int031Component } from './buckwaframework/project/internal-audit/int03/int03-1/int03-1.component';
 import { Int0311Component } from './buckwaframework/project/internal-audit/int03/int03-1/int3-1-1/int03-1-1.component';
 import { Int0312Component } from './buckwaframework/project/internal-audit/int03/int03-1/int3-1-2/int03-1-2.component';
@@ -118,6 +119,7 @@ import { CreatePaperPayInstantComponent } from './buckwaframework/project/pages/
         CreateFormComponent,
         CreateNewFormComponent,
         SelectNewFormComponent,
+        Int0111Component,
         Int031Component,
         Int0311Component,
         Int0312Component,
