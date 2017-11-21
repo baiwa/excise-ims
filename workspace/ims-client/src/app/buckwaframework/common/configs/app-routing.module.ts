@@ -74,6 +74,8 @@ import { Int082Component } from './../../project/internal-audit/int08/int08-2/in
 import { CreatePaperPayMaterialComponent } from './../../project/pages/create-paper-pay-material/create-paper-pay-material.component';
 import { CreatePaperReceiveMaterialComponent } from './../../project/pages/create-paper-receive-material/create-paper-receive-material.component';
 import { CreatePaperRelationMaterialComponent } from './../../project/pages/create-paper-relation-material/create-paper-relation-material.component';
+import { CreatePaperReceiveInstantComponent } from './../../project/pages/create-paper-receive-instant/create-paper-receive-instant.component';
+import { CreatePaperPayInstantComponent } from './../../project/pages/create-paper-pay-instant/create-paper-pay-instant.component';
 
 const routes: Routes = [
 
@@ -160,7 +162,9 @@ const routes: Routes = [
     { path: 'create-paper-receive-material', component: CreatePaperReceiveMaterialComponent, canActivate: [AuthGuard] },
     { path: 'create-paper-pay-material', component: CreatePaperPayMaterialComponent, canActivate: [AuthGuard] },
     { path: 'create-paper-relation-material', component: CreatePaperRelationMaterialComponent, canActivate: [AuthGuard] },
-
+    { path: 'create-paper-receive-instant', component: CreatePaperReceiveInstantComponent, canActivate: [AuthGuard] },
+    { path: 'create-paper-pay-instant', component: CreatePaperPayInstantComponent, canActivate: [AuthGuard] },
+    
 ];
 
 @NgModule({
