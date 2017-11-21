@@ -21,6 +21,8 @@ import { CreateFormComponent } from './../../project/pages/create-form/create-fo
 import { SelectNewFormComponent } from './../../project/pages/select-new-form/select-new-form.component';
 import { CreateNewFormComponent } from './../../project/pages/create-new-form/create-new-form.component';
 import { Int0111Component } from './../../project/internal-audit/int01/int01-1/int01-1-1/int01-1-1.component';
+import { Int0112Component } from './../../project/internal-audit/int01/int01-1/int01-1-2/int01-1-2.component';
+import { Int0113Component } from './../../project/internal-audit/int01/int01-1/int01-1-3/int01-1-3.component';
 import { Int031Component } from './../../project/internal-audit/int03/int03-1/int03-1.component';
 import { Int0311Component } from './../../project/internal-audit/int03/int03-1/int3-1-1/int03-1-1.component';
 import { Int0312Component } from './../../project/internal-audit/int03/int03-1/int3-1-2/int03-1-2.component';
@@ -103,7 +105,9 @@ const routes: Routes = [
     { path: 'create-new-form', component: CreateNewFormComponent, canActivate: [AuthGuard] },
 
     { path: 'int01-1-1', component: Int0111Component, canActivate: [AuthGuard] },
-    
+    { path: 'int01-1-2', component: Int0112Component, canActivate: [AuthGuard] },
+    { path: 'int01-1-3', component: Int0113Component, canActivate: [AuthGuard] },
+
     { path: 'int03-1', component: Int031Component, canActivate: [AuthGuard] },
     { path: 'int03-1-1', component: Int0311Component, canActivate: [AuthGuard] },
     { path: 'int03-1-2', component: Int0312Component, canActivate: [AuthGuard] },
