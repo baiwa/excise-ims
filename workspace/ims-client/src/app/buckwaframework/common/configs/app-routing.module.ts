@@ -74,6 +74,13 @@ import { Int0811Component } from './../../project/internal-audit/int08/int08-1/i
 import { Int0812Component } from './../../project/internal-audit/int08/int08-1/int08-1-2/int08-1-2.component';
 import { Int0813Component } from './../../project/internal-audit/int08/int08-1/int08-1-3/int08-1-3.component';
 import { Int082Component } from './../../project/internal-audit/int08/int08-2/int08-2.component';
+import { Int083Component } from './../../project/internal-audit/int08/int08-3/int08-3.component';
+import { Int0831Component } from './../../project/internal-audit/int08/int08-3/int08-3-1/int08-3-1.component';
+import { Int0832Component } from './../../project/internal-audit/int08/int08-3/int08-3-2/int08-3-2.component';
+import { Int0833Component } from './../../project/internal-audit/int08/int08-3/int08-3-3/int08-3-3.component';
+import { Int0834Component } from './../../project/internal-audit/int08/int08-3/int08-3-4/int08-3-4.component';
+import { Int0835Component } from './../../project/internal-audit/int08/int08-3/int08-3-5/int08-3-5.component';
+import { Int0836Component } from './../../project/internal-audit/int08/int08-3/int08-3-6/int08-3-6.component';
 import { CreatePaperPayMaterialComponent } from './../../project/pages/create-paper-pay-material/create-paper-pay-material.component';
 import { CreatePaperReceiveMaterialComponent } from './../../project/pages/create-paper-receive-material/create-paper-receive-material.component';
 import { CreatePaperRelationMaterialComponent } from './../../project/pages/create-paper-relation-material/create-paper-relation-material.component';
@@ -166,6 +173,13 @@ const routes: Routes = [
     { path: 'int08-1-2', component: Int0812Component, canActivate: [AuthGuard] },
     { path: 'int08-1-3', component: Int0813Component, canActivate: [AuthGuard] },
     { path: 'int08-2', component: Int082Component, canActivate: [AuthGuard] },
+    { path: 'int08-3', component: Int083Component, canActivate: [AuthGuard] },
+    { path: 'int08-3-1', component: Int0831Component, canActivate: [AuthGuard] },
+    { path: 'int08-3-2', component: Int0832Component, canActivate: [AuthGuard] },
+    { path: 'int08-3-3', component: Int0833Component, canActivate: [AuthGuard] },
+    { path: 'int08-3-4', component: Int0834Component, canActivate: [AuthGuard] },
+    { path: 'int08-3-5', component: Int0835Component, canActivate: [AuthGuard] },
+    { path: 'int08-3-6', component: Int0836Component, canActivate: [AuthGuard] },    
 
     { path: 'create-paper-receive-material', component: CreatePaperReceiveMaterialComponent, canActivate: [AuthGuard] },
     { path: 'create-paper-pay-material', component: CreatePaperPayMaterialComponent, canActivate: [AuthGuard] },
