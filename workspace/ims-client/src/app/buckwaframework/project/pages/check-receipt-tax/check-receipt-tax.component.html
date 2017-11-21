@@ -26,8 +26,8 @@
                     </div>
                     <div class="five wide field required">
                         <label class="custom-label-w-10">สินค้า/บริการ</label>
-                        <select class="ui dropdown" class="custom-readonly" readonly="">
-            <option *ngFor="let item of productList; index as i;" value="{{i+1}}">{{item.value}}</option>
+                        <select class="ui dropdown" class="custom-readonly" readonly="" [ngModel]="selectedProduct" (ngModelChange)="onChange($event)">
+            <option *ngFor="let item of productList; index as i;" value="{{item.value}}">{{item.value}}</option>
           </select>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
             </div>
         </div>
 
-        <div class="ui attached segment bg-row-light-gray-highlight">
+        <div class="ui attached segment bg-row-light-gray-highlight" *ngIf="selectedProduct!='เครื่องดื่ม'">
             <div class="ui form">
 
                 <div class="sixteen wide column" style="margin-bottom: 10px;">
@@ -99,7 +99,7 @@
 
 
 
-        <div class="ui attached segment">
+        <div class="ui attached segment" *ngIf="selectedProduct!='เครื่องดื่ม'">
             <div class="ui form">
 
                 <div class="sixteen wide column" style="margin-bottom: 10px;">
@@ -129,7 +129,7 @@
             </div>
         </div>
 
-        <div class="ui attached segment bg-row-light-gray-highlight">
+        <div class="ui attached segment bg-row-light-gray-highlight" *ngIf="selectedProduct!='เครื่องดื่ม'">
             <div class="ui form">
 
                 <div class="sixteen wide column" style="margin-bottom: 10px;">
@@ -158,34 +158,37 @@
             </div>
         </div>
 
-        <div class="ui attached segment">
+        <div class="ui attached segment" *ngIf="selectedProduct!='เครื่องดื่ม'">
             <div class="ui form">
 
                 <div class="sixteen wide column" style="margin-bottom: 10px;">
-                    <h4 class="ui header">สสท. (สุรา ยาสูบ)</h4>
+                    <h4 class="ui header">คนชรา (สุรา ยาสูบ)</h4>
                 </div>
                 <div class="inline fields">
                     <div class="one wide field">
                     </div>
                     <div class="two wide field required">
                         <label class="custom-label-w-10">วันที่</label>
-                        <input type="text" value="7">
+                        <input type="text" value="">
                     </div>
                     <div class="four wide field required">
                         <label class="custom-label-w-10">แบบพิมพ์</label>
-                        <input type="text" value="239813">
+                        <input type="text" value="">
                     </div>
                     <div class="five wide field required">
                         <label class="custom-label-w-10">ใบเสร็จ</label>
-                        <input type="text" class="custom-readonly" readonly="" value="C0140059/000" style="width: 55%;">&nbsp;&nbsp;<input type="text" style="width: 40%;" value="1483">
+                        <input type="text" class="custom-readonly" readonly="" value="" style="width: 55%;">&nbsp;&nbsp;<input type="text" style="width: 40%;" value="">
                     </div>
                     <div class="four wide field required">
                         <label class="custom-label-w-10">จำนวนเงิน</label>
-                        <input type="text" style="text-align: right;" value="150.00">
+                        <input type="text" style="text-align: right;" value="">
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <br>
+        <div class="ui attached segment">
+            <div class="ui form">
                 <div class="ui center aligned grid">
                     <div class="eight wide column">
                         <button class="ui mini primary button width-100">
@@ -235,6 +238,21 @@
                     </tr>
                 </tfoot>
             </table>
+
+            <div class="ui form">
+                <div class="ui center aligned grid">
+                    <div class="eight wide column">
+                        <button class="ui mini primary button">
+            <i class="checkmark icon"></i>
+            ตรวจสอบกับงบสรุปยอดภาษี
+          </button>
+                        <button class="ui mini button">
+            <i class="print icon"></i>
+            พิมพ์กระดาษทำการ
+          </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
