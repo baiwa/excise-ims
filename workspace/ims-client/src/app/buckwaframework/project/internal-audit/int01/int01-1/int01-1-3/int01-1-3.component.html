@@ -7,15 +7,18 @@
         </div>
 
         <div class="ui attached segment">
-            <table>
+            <table id="table1" class="ui small celled table">
                 <thead>
-                    <tr>
+                    <tr style="text-align: center;">
                         <th>สินค้า/บริการ</th>
                         <th>จำนวนใบเสร็จ</th>
                         <th>จำนวนเงิน</th>
-                        <th>มหาดไทย<br/>10%</th>
-                        <th>นำส่งมหาดไทย<br/>95%</th>
-                        <th>เงินฝาก/ค่าใช้จ่าย<br/>5%</th>
+                        <th>มหาดไทย
+                            <br/>10%</th>
+                        <th>นำส่งมหาดไทย
+                            <br/>95%</th>
+                        <th>เงินฝาก/ค่าใช้จ่าย
+                            <br/>5%</th>
                         <th>ชดเชย 0.75%</th>
                         <th>ค่าพิมพ์แสตมป์ 1%</th>
                         <th>นำส่ง</th>
@@ -25,7 +28,7 @@
                     <tr>
                         <td>ภาษีสถานอาบน้ำหรืออบตัวและนวด</td>
                         <td>6</td>
-                        <td>38,747.83</td>
+                        <td class="bg-row-highlight">38,747.83</td>
                         <td>3,874.78</td>
                         <td>3,681.03</td>
                         <td>193.75</td>
@@ -69,7 +72,7 @@
                     <tr>
                         <td>ภาษีเครื่องดื่ม</td>
                         <td>1</td>
-                        <td>111.93</td>
+                        <td class="bg-row-highlight">111.93</td>
                         <td>11.19</td>
                         <td>10.63</td>
                         <td>0.56</td>
@@ -102,5 +105,113 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="ui top attached header">
+            <span>เงินกองทุน อบจ. เงินบำรุงองค์การ</span>
+        </div>
+
+        <div class="ui attached segment">
+            <table id="table2" class="ui small celled table">
+                <thead>
+                    <tr style="text-align: center;">
+                        <th>สินค้า/บริการ</th>
+                        <th>จำนวนใบเสร็จ</th>
+                        <th>จำนวนเงิน</th>
+                        <th>มหาดไทย
+                            <br/>10%</th>
+                        <th>นำส่งมหาดไทย
+                            <br/>98.5%</th>
+                        <th>เงินฝาก/ค่าใช้จ่าย
+                            <br/>1.5%</th>
+                        <th>ชดเชยกรมศุลฯ</th>
+                        <th>นำส่ง</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>เงินบำรุงกองทุน สสส. 2% (สุรา)</td>
+                        <td>1</td>
+                        <td>25.5</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>เงินบำรุงกองทุน สสส. 2% (ยาสูบ)</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>เงินบำรุงกองทุน กกท. 2% (สุรา)</td>
+                        <td>1</td>
+                        <td>25.5</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>เงินบำรุงกองทุน กกท. 2% (ยาสูบ)</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>เงินบำรุงองค์การฯ สสท.98.5 % (สุรา)</td>
+                        <td>1</td>
+                        <td>18.83</td>
+                        <td>&nbsp;</td>
+                        <td>18.55</td>
+                        <td>0.28</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>เงินบำรุงองค์การฯ สสท.98.5 % (ยาสูบ)</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>รวม</td>
+                        <td>3</td>
+                        <td>69.83</td>
+                        <td>0</td>
+                        <td>18.55</td>
+                        <td>0.28</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="ui attached segment">
+            <div class="ui center aligned grid">
+                <div class="eight wide column">
+                    <button class="ui mini button" routerLink="/int01-1-2">
+                        <i class="arrow left icon"></i>
+                        ย้อนหลับ
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
