@@ -1,3 +1,413 @@
-<p>
-  int08-3-1 works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">ประเมินความถี่การตรวจ</h2>
+
+    <div class="ui top attached header">
+      <span>ประเมินความถี่การตรวจ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="nine wide field ">
+            <label style="width: 40em">ประเมินความถี่การตรวจ</label>
+            <input type="file" />
+          </div>
+        </div>
+      </div>
+
+      <div class="ui center aligned grid">
+        <div class="sixteen wide column">
+          <button class="ui mini primary button" (click)="uploadData()">
+            <i class="upload icon"></i>
+            อัพโหลด
+          </button>
+          <button class="ui mini button" (click)="clearData()">
+            <i class="refresh icon"></i>
+            ล้างข้อมูล
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ui segment" *ngIf="showData">
+      <div class="ui right aligned grid">
+        <div class="sixteen wide column">
+          <button class="ui mini primary button">
+            <i class="print icon"></i>
+            พิมพ์
+          </button>
+        </div>
+      </div>
+      <br>
+      <div style="overflow-x: scroll;">
+        <table class="ui small celled table" style="width: 145%">
+          <thead>
+            <tr style="text-align: center;">
+              <th rowspan="2">ลำดับ</th>
+              <th rowspan="2">หน่วยงาน</th>
+              <th colspan="8">ระยะเวลาตรวจ (ปีงบประมาณ)</th>
+              <th rowspan="2">ระยะเวลาการตรวจสอบ (ปี)</th>
+              <th colspan="2">ความเสี่ยง</th>
+            </tr>
+            <tr style="text-align: center;">
+              <th style="border-left: 1px solid rgba(34,36,38,.1); width:6%;">2553</th>
+              <th style="width:6%;">2554</th>
+              <th style="width:6%;">2555</th>
+              <th style="width:6%;">2556</th>
+              <th style="width:6%;">2557</th>
+              <th style="width:6%;">2558</th>
+              <th style="width:6%;">2559</th>
+              <th style="width:6%;">2560</th>
+              <th style="width:8%;">
+                <a href="javascript:;" (click)="popupEditData()">
+                  RL
+                </a>
+              </th>
+              <th style="width:8%;">
+                <a href="javascript:;" (click)="popupEditData()">
+                  แปลค่า
+                </a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>ภาคที่ 10</td>
+              <td>&nbsp;</td>
+              <td>พ.ย.53-ก.พ.54</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>6</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>สสพ.กทม.1</td>
+              <td>&nbsp;</td>
+              <td>พ.ย.53-ก.พ.54</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>6</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>สสพ.กทม.2</td>
+              <td>&nbsp;</td>
+              <td>พ.ย.53-ก.พ.54</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>6</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>สสพ.กทม.3</td>
+              <td>&nbsp;</td>
+              <td>พ.ย.53-ก.พ.54</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>6</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>สสพ.กทม.4</td>
+              <td>&nbsp;</td>
+              <td>15พย-31ธค53</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>6</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>สสพ.กทม.5</td>
+              <td>&nbsp;</td>
+              <td>พ.ย.53-ก.พ.54</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>6</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>สสพ.ยะลา</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>23-24/4/55</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>5</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>สาขาเบตง</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>04 23 55</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>5</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>สสพ.นราธิวาส</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>18-20/4/55</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>5</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>สสพ.ปัตตานี</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>25-26/4/55</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>5</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>สสพ.บึงกาฬ</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>19-24 พย 57</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>2</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>สาขาปากพนัง</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>9-13/2/58</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>2</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>สาขาทุ่งสง</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>9-13/2/58</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>2</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td>สส.พท.นครราชสีมา สาขาบัวใหญ่</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>24/6/60</td>
+              <td>0</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <br>
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui mini button" routerLink="/int08-3">
+          <i class="arrow left icon"></i>
+          ย้อนกลับ
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="modalInt0831" class="ui modal hidden transition">
+  <i class="close icon"></i>
+  <div class="header">
+    กำหนดเงื่อนไข RL และแปลงค่า
+  </div>
+
+  <div class="content">
+    <div class="ui grid">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button">
+          <i class="add icon"></i>
+          เพิ่ม
+        </button>
+      </div>
+    </div>
+    <br>
+    <div class="ui form">
+      <div class="inline fields">
+        <div class="four wide field">
+          <label style="width: 9em;">เงื่อนไขที่ 1</label>
+          <select id="select1" class="ui dropdown">
+            <option value="0">Less Than</option>
+            <option value="1">Between</option>
+            <option value="2">More Than</option>
+          </select>
+        </div>
+        <div class="two wide field">
+          <input type="text" value="5,000,000">
+        </div>
+        <div class="one wide field"></div>
+        <div class="two wide field"></div>
+        <div class="three wide field">
+          <label class="custom-label-w-35">กำหนดค่าเป็น</label>
+          <input type="text" value="1">
+        </div>
+        <div class="four wide field">
+          <label class="custom-label-w-15">กำหนดค่าเป็น</label>
+          <input type="text" value="ต่ำ">
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="four wide field">
+          <label style="width: 9em;">เงื่อนไขที่ 2</label>
+          <select id="select2" class="ui dropdown">
+            <option value="0">Between</option>
+            <option value="1">Less Than</option>
+            <option value="2">More Than</option>
+          </select>
+        </div>
+        <div class="two wide field">
+          <input type="text" value="5,000,001">
+        </div>
+        <div class="one wide field">
+          <strong>&nbsp;&nbsp;&nbsp;ถึง</strong>
+        </div>
+        <div class="two wide field">
+          <input type="text" value="15,000,000">
+        </div>
+        <div class="three wide field">
+          <label class="custom-label-w-35">กำหนดค่าเป็น</label>
+          <input type="text" value="2">
+        </div>
+        <div class="four wide field">
+          <label class="custom-label-w-15">กำหนดค่าเป็น</label>
+          <input type="text" value="กลาง">
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="four wide field">
+          <label style="width: 9em;">เงื่อนไขที่ 3</label>
+          <select id="select3" class="ui dropdown">
+            <option value="0">More Than</option>
+            <option value="1">Between</option>
+            <option value="2">Less Than</option>
+          </select>
+        </div>
+        <div class="two wide field">
+          <input type="text" value="50,000,000">
+        </div>
+        <div class="one wide field"></div>
+        <div class="two wide field"></div>
+        <div class="three wide field">
+          <label class="custom-label-w-35">กำหนดค่าเป็น</label>
+          <input type="text" value="3">
+        </div>
+        <div class="four wide field">
+          <label class="custom-label-w-15">กำหนดค่าเป็น</label>
+          <input type="text" value="สูง">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button width-100">
+          <i class="save icon"></i>
+          บันทึก
+        </button>
+        <button class="ui mini button width-100" (click)="closePopupEdit()">
+          <i class="close icon"></i>
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
