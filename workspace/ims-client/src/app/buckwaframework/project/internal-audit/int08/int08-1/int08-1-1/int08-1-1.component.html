@@ -46,7 +46,7 @@
           <thead>
             <tr style="text-align: center;">
               <th rowspan="2">ลำดับ</th>
-              <th rowspan="2">โครงการตามยุทธศาสตร์</th>
+              <th rowspan="2" style="width: 40%;">โครงการตามยุทธศาสตร์</th>
               <th rowspan="2">หน่วยงาน</th>
               <th colspan="5">งบประมาณที่ใช้ตามแผนยุทธศาสตร์ที่กรมอนุมัติ</th>
             </tr>
@@ -54,12 +54,12 @@
               <th style="border-left: 1px solid rgba(34,36,38,.1);">งปม.</th>
               <th>นอก งปม.</th>
               <th>รวม</th>
-              <th>
+              <th style="width: 8%;">
                 <a href="javascript:;" (click)="popupEditData()">
                   RL
                 </a>
               </th>
-              <th>
+              <th style="width: 8%;">
                 <a href="javascript:;" (click)="popupEditData()">
                   แปลค่า
                 </a>
@@ -284,6 +284,15 @@
   </div>
 
   <div class="content">
+    <div class="ui grid">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button">
+          <i class="add icon"></i>
+          เพิ่ม
+        </button>
+      </div>
+    </div>
+    <br>
     <div class="ui form">
       <div class="inline fields">
         <div class="four wide field">
@@ -367,10 +376,6 @@
   <div class="actions">
     <div class="ui center aligned grid">
       <div class="sixteen wide column">
-        <button class="ui mini primary button width-100">
-          <i class="add icon"></i>
-          เพิ่ม
-        </button>
         <button class="ui mini primary button width-100">
           <i class="save icon"></i>
           บันทึก
