@@ -1,3 +1,52 @@
-<p>
-  int01-2-1 works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">สร้างกระดาษทำการ ใบอนุญาต สุรา ยาสูบ ไพ่</h2>
+
+    <div class="ui top attached header">
+      <span>ข้อมูลกระดาษทำการ ใบอนุญาต สุรา ยาสูบ ไพ่</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="four wide required field">
+            <label class="custom-label-w-10">ประจำเดือน</label>
+            <div class="ui icon input">
+              <input type="text" placeholder="MM/YYYY" value="ตุลาคม 2560">
+              <i class="add to calendar icon"></i>
+            </div>
+          </div>
+          <div class="seven wide field required">
+            <label class="custom-label-w-10">หน่วยรับตรวจ</label>
+            <input type="text" value="สำนักงานสรรพสามิต พื้นที่เมืองพิษณุโลก">
+          </div>
+          <div class="five wide field required">
+            <label class="custom-label-w-20">เลขที่กระดาษทำการ</label>
+            <input type="text" class="custom-readonly" readonly="" value="">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="four wide required field">
+            <label class="custom-label-w-10">วันที่ตรวจ</label>
+            <div class="ui icon input">
+              <input type="text" placeholder="DD/MM/YYYY" value="17 พฤษจิกายน 2560">
+              <i class="add to calendar icon"></i>
+            </div>
+          </div>
+          <div class="seven wide field required">
+            <label class="custom-label-w-10">ผู้ตรวจ</label>
+            <input type="text" value="นาย อัครเดช รักงาน">
+          </div>
+        </div>
+
+        <div class="ui center aligned grid">
+          <div class="eight wide column">
+            <a class="ui mini primary button" routerLink='/int01-2-2'>
+              <i class="add icon"></i>สร้างกระดาษทำการ</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
