@@ -1,0 +1,9 @@
+tr td:nth-child(1), td:nth-child(3), td:nth-child(5),
+td:nth-child(7), td:nth-child(9), td:nth-child(11),
+td:nth-child(12) {
+    text-align: right;
+}
+
+tr td:nth-child(13), td:nth-child(14) {
+    text-align: center;
+}
