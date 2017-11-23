@@ -81,6 +81,9 @@ import { Int083Component } from './../../project/internal-audit/int08/int08-3/in
 import { Int0831Component } from './../../project/internal-audit/int08/int08-3/int08-3-1/int08-3-1.component';
 import { Int0832Component } from './../../project/internal-audit/int08/int08-3/int08-3-2/int08-3-2.component';
 import { Int0833Component } from './../../project/internal-audit/int08/int08-3/int08-3-3/int08-3-3.component';
+import { Int08331Component } from './../../project/internal-audit/int08/int08-3/int08-3-3/int08-3-3-1/int08-3-3-1.component';
+import { Int08332Component } from './../../project/internal-audit/int08/int08-3/int08-3-3/int08-3-3-2/int08-3-3-2.component';
+import { Int08333Component } from './../../project/internal-audit/int08/int08-3/int08-3-3/int08-3-3-3/int08-3-3-3.component';
 import { Int0834Component } from './../../project/internal-audit/int08/int08-3/int08-3-4/int08-3-4.component';
 import { Int0835Component } from './../../project/internal-audit/int08/int08-3/int08-3-5/int08-3-5.component';
 import { Int0836Component } from './../../project/internal-audit/int08/int08-3/int08-3-6/int08-3-6.component';
@@ -183,6 +186,9 @@ const routes: Routes = [
     { path: 'int08-3-1', component: Int0831Component, canActivate: [AuthGuard] },
     { path: 'int08-3-2', component: Int0832Component, canActivate: [AuthGuard] },
     { path: 'int08-3-3', component: Int0833Component, canActivate: [AuthGuard] },
+    { path: 'int08-3-3-1', component: Int08331Component, canActivate: [AuthGuard] },
+    { path: 'int08-3-3-2', component: Int08332Component, canActivate: [AuthGuard] },
+    { path: 'int08-3-3-3', component: Int08333Component, canActivate: [AuthGuard] },
     { path: 'int08-3-4', component: Int0834Component, canActivate: [AuthGuard] },
     { path: 'int08-3-5', component: Int0835Component, canActivate: [AuthGuard] },
     { path: 'int08-3-6', component: Int0836Component, canActivate: [AuthGuard] },    

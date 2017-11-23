@@ -1,3 +1,635 @@
-<p>
-  int08-3-6 works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">ประเมินความเสี่ยงโครงการรวม</h2>
+
+    <div class="ui top attached header">
+      <span>ประเมินความเสี่ยงโครงการรวม</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui right aligned grid">
+        <div class="sixteen wide column">
+          <button class="ui mini primary button">
+            <i class="print icon"></i>
+            พิมพ์
+          </button>
+        </div>
+      </div>
+      <br>
+      <div style="overflow-x: scroll;">
+        <table class="ui small celled table" style="width: 140%;">
+          <thead>
+            <tr style="text-align: center;">
+              <th rowspan="2">ลำดับ</th>
+              <th rowspan="2" style="width: 20%;">โครงการตามยุทธศาสตร์</th>
+              <th rowspan="2" style="width: 5%;">
+                <a href="javascript:;" (click)="popupWeightData()">
+                  1.ระยะเวลาการตรวจสอบ (ปี)
+                </a>
+              </th>
+              <th colspan="2">ความเสี่ยง</th>
+              <th colspan="1">
+                <a href="javascript:;" (click)="popupWeightData()">
+                  2.ประสิทธิภาพการจัดเก็บรายได้
+                </a>
+              </th>
+              <th colspan="2">ความเสี่ยง</th>
+              <th colspan="2">
+                <a href="javascript:;" (click)="popupWeightData()">
+                  3.ประสิทธิภาพการปราบปราม (อัตราสูง/ต่ำเทียบกับประมาณการ)
+                </a>
+              </th>
+              <th colspan="2">ความเสี่ยง</th>
+              <th rowspan="2" style="width: 10%;">
+                <a href="javascript:;" (click)="popupWeightData()">
+                  4.ความเสี่ยงด้านการเงินและบัญชี
+                </a>
+              </th>
+              <th colspan="2">ความเสี่ยง</th>
+              <th rowspan="2">
+                <a href="javascript:;" (click)="popupWeightData()">
+                  5. ควบคุมภายใน
+                </a>
+              </th>
+              <th colspan="2">ความเสี่ยง</th>
+              <th colspan="1">ค่าความเสี่ยงเฉลี่ย</th>
+              <th rowspan="2">
+                <a href="javascript:;" (click)="popupEditData()">
+                  แปลค่า
+                </a>
+              </th>
+            </tr>
+            <tr style="text-align: center;">
+              <th style="border-left: 1px solid rgba(34,36,38,.1); width: 8%;">ระดับ</th>
+              <th style="width: 8%;">แปลค่า</th>
+              <th style="width: 8%;">ผลการจัดเก็บ (อัตราสูง/ต่ำเทียบกับประมาณการ)</th>
+              <th style="width: 8%;">ระดับ</th>
+              <th style="width: 8%;">แปลค่า</th>
+              <th style="width: 8%;">จำนวนคดี</th>
+              <th style="width: 8%;">จำนวนค่าปรับ</th>
+              <th style="width: 8%;">ระดับ</th>
+              <th style="width: 8%;">แปลค่า</th>
+              <th style="width: 8%;">ระดับ</th>
+              <th style="width: 8%;">แปลค่า</th>
+              <th style="width: 8%;">ระดับ</th>
+              <th style="width: 8%;">แปลค่า</th>
+              <th style="width: 8%;">(1+2+3)/3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>สสพ.แม่ฮ่องสอน</td>
+              <td>9</td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>
+                <font style="color: red">-1.63</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>10.43</td>
+              <td>
+                <font style="color: red">-10.84</font>
+              </td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>6</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>3</td>
+              <td>3</td>
+              <td>สูง</td>
+              <td class="bg-red">2.4</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>สสพ. นนทบุรี</td>
+              <td>9</td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>
+                <font style="color: red">-4.67</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>96.18</td>
+              <td>212.96</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>7</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>2</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td class="bg-red">2.2</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>สสพ.ลำปาง</td>
+              <td>4</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>
+                <font style="color: red">-17.57</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>1.19</td>
+              <td>
+                <font style="color: red">-58.02</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>5</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>2</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td class="bg-red">2.2</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>สสพ.อุทัยธานี</td>
+              <td>9</td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>
+                <font style="color: red">-21.88</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>56.48</td>
+              <td>
+                <font style="color: red">-5.33</font>
+              </td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>8</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>1</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td class="bg-red">2.2</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>สสพ.กาญจนบุรี</td>
+              <td>3</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>
+                <font style="color: red">-16.11</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>
+                <font style="color: red">-34.46</font>
+              </td>
+              <td>
+                <font style="color: red">-21.46</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>7</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>1</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td class="bg-red">2.2</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>สสพ.ราชบุรี</td>
+              <td>9</td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>
+                <font style="color: red">-7.02</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>29.08</td>
+              <td>131.84</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>7</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>1</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>สสพ.ชุมพร</td>
+              <td>4</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>
+                <font style="color: red">-1.91</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>
+                <font style="color: red">-9.88</font>
+              </td>
+              <td>
+                <font style="color: red">-22.08</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>3</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>1</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>สุราษฎร์ธานี</td>
+              <td>7</td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>
+                <font style="color: red">-12.14</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>
+                <font style="color: red">-11.15</font>
+              </td>
+              <td>
+                <font style="color: red">-79.07</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>-</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>0</td>
+              <td>0</td>
+              <td>ต่ำ</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>สสพ.ปัตตานี</td>
+              <td>5</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>
+                <font style="color: red">-46.74</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>
+                <font style="color: red">-0.4</font>
+              </td>
+              <td>
+                <font style="color: red">-64.54</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>5</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>1</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>สสพ.ตราด</td>
+              <td>3</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>41.34</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>
+                <font style="color: red">-14.07</font>
+              </td>
+              <td>
+                <font style="color: red">-17.15</font>
+              </td>
+              <td>3</td>
+              <td>สูง</td>
+              <td>8</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>2</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>สสพ. ลพบุรี</td>
+              <td>5</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>27.81</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>9.52</td>
+              <td>11.21</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>-</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>0</td>
+              <td>0</td>
+              <td>ต่ำ</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>สสพ. อ่างทอง</td>
+              <td>3</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>28.1</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>36</td>
+              <td>
+                <font style="color: red">-2.67</font>
+              </td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>-</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>0</td>
+              <td>0</td>
+              <td>ต่ำ</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>สส.พท.อุบลราชธานี</td>
+              <td>3</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>1.24</td>
+              <td>1</td>
+              <td>กลาง</td>
+              <td>8,883.33</td>
+              <td>33.85</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>-</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>0</td>
+              <td>0</td>
+              <td>ต่ำ</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td>สสพ.กำแพงเพชร</td>
+              <td>4</td>
+              <td>2</td>
+              <td>กลาง</td>
+              <td>1.25</td>
+              <td>1</td>
+              <td>กลาง</td>
+              <td>100</td>
+              <td>361.07</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>4</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>1</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td class="bg-green">1.2</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>15</td>
+              <td>สสพ.ขอนแก่น</td>
+              <td>1</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>4.08</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>221</td>
+              <td>216.11</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>-</td>
+              <td>1</td>
+              <td>ต่ำ</td>
+              <td>0</td>
+              <td>0</td>
+              <td>ต่ำ</td>
+              <td class="bg-green">0.8</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <br>
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui mini button" routerLink="/int08-3">
+          <i class="arrow left icon"></i>
+          ย้อนกลับ
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modalInt0836" class="ui modal hidden transition">
+  <i class="close icon"></i>
+  <div class="header">
+    กำหนดเงื่อนไขแปลงค่า
+  </div>
+
+  <div class="content">
+    <div class="ui grid">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button">
+          <i class="add icon"></i>
+          เพิ่ม
+        </button>
+      </div>
+    </div>
+    <br>
+    <div class="ui form">
+      <div class="inline fields">
+        <div class="five wide field">
+          <label class="custom-label-w-10">เงื่อนไขที่ 1</label>
+          <select id="select1" class="ui dropdown">
+            <option value="0">Between</option>
+            <option value="1">Less Than</option>
+            <option value="1">More Than</option>
+          </select>
+        </div>
+        <div class="three wide field">
+          <input type="text" value="0">
+        </div>
+        <div class="one wide field">
+          <label>ถึง</label>
+        </div>
+        <div class="two wide field">
+          <input type="text" value="1">
+        </div>
+        <div class="five wide field">
+          <label class="custom-label-w-25">กำหนดค่าเป็น</label>
+          <input type="text" value="ต่ำ">
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="five wide field">
+          <label class="custom-label-w-10">เงื่อนไขที่ 2</label>
+          <select id="select2" class="ui dropdown">
+            <option value="0">Between</option>
+            <option value="1">Less Than</option>
+            <option value="1">More Than</option>
+          </select>
+        </div>
+        <div class="three wide field">
+          <input type="text" value="1.1">
+        </div>
+        <div class="one wide field">
+          <label>ถึง</label>
+        </div>
+        <div class="two wide field">
+          <input type="text" value="2">
+        </div>
+        <div class="five wide field">
+          <label class="custom-label-w-25">กำหนดค่าเป็น</label>
+          <input type="text" value="กลาง">
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="five wide field">
+          <label class="custom-label-w-10">เงื่อนไขที่ 3</label>
+          <select id="select3" class="ui dropdown">
+            <option value="0">Between</option>
+            <option value="1">Less Than</option>
+            <option value="1">More Than</option>
+          </select>
+        </div>
+        <div class="three wide field">
+          <input type="text" value="2.1">
+        </div>
+        <div class="one wide field">
+          <label>ถึง</label>
+        </div>
+        <div class="two wide field">
+          <input type="text" value="3">
+        </div>
+        <div class="five wide field">
+          <label class="custom-label-w-25">กำหนดค่าเป็น</label>
+          <input type="text" value="สูง">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button width-100">
+          <i class="save icon"></i>
+          บันทึก
+        </button>
+        <button class="ui mini button width-100" (click)="closePopupEdit()">
+          <i class="close icon"></i>
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modalInt0836-weight-data" class="ui small modal hidden transition">
+  <i class="close icon"></i>
+  <div class="header">
+    กำหนดค่าน้ำหนัก
+  </div>
+
+  <div class="content">
+    <div class="ui form">
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-35">ระยะเวลาการตรวจสอบ</label>
+          <input type="text" value="20%">
+        </div>
+        <div class="eight wide field">
+          <label class="custom-label-w-35">ประสิทธิภาพการจัดเก็บรายได้</label>
+          <input type="text" value="20%">
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-35">ประสิทธิภาพการปราบปราม</label>
+          <input type="text" value="20%">
+        </div>
+        <div class="eight wide field">
+          <label class="custom-label-w-35">ด้านการเงินและบัญชี</label>
+          <input type="text" value="20%">
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-35">ควบคุมภายใน</label>
+          <input type="text" value="20%">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button width-100">
+          <i class="save icon"></i>
+          บันทึก
+        </button>
+        <button class="ui mini button width-100" (click)="clearPopupWeightData()">
+          <i class="close icon"></i>
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
