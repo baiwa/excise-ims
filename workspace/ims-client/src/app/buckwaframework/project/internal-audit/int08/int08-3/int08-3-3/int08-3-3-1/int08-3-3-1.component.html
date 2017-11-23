@@ -1,3 +1,364 @@
-<p>
-  int08-3-3-1 works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">ประเมินคดีด้านจำนวนค่าปรับ</h2>
+
+    <div class="ui top attached header">
+      <span>ประเมินคดีด้านจำนวนค่าปรับ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="nine wide field ">
+            <label style="width: 40em">ประเมินคดีด้านจำนวนค่าปรับ</label>
+            <input type="file" />
+          </div>
+        </div>
+      </div>
+
+      <div class="ui center aligned grid">
+        <div class="sixteen wide column">
+          <button class="ui mini primary button" (click)="uploadData()">
+            <i class="upload icon"></i>
+            อัพโหลด
+          </button>
+          <button class="ui mini button" (click)="clearData()">
+            <i class="refresh icon"></i>
+            ล้างข้อมูล
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ui segment" *ngIf="showData">
+      <div class="ui right aligned grid">
+        <div class="sixteen wide column">
+          <button class="ui mini primary button">
+            <i class="print icon"></i>
+            พิมพ์
+          </button>
+        </div>
+      </div>
+
+      <table class="ui small celled table">
+        <thead>
+          <tr style="text-align: center;">
+            <th rowspan="2">ลำดับ</th>
+            <th rowspan="2" style="width: 40%">หน่วยงาน</th>
+            <th colspan="4">ผลการปราบปรามเปรียบเทียบประมาณการ</th>
+            <th colspan="2">ความเสี่ยง</th>
+          </tr>
+          <tr style="text-align: center;">
+            <th style="border-left: 1px solid rgba(34,36,38,.1); width:8%;">จำนวนค่าปรับ</th>
+            <th style="width:8%;">ประมาณการ</th>
+            <th style="width:8%;">ผลต่าง</th>
+            <th style="width:8%;">อัตราสูงต่ำ</th>
+            <th style="width:8%;">
+              <a href="javascript:;" (click)="popupEditData()">
+                RL
+              </a>
+            </th>
+            <th style="width:8%;">
+              <a href="javascript:;" (click)="popupEditData()">
+                แปลค่า
+              </a>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tableizer-firstrow">
+            <td>1</td>
+            <td>สส.พท.อำนาจเจริญ</td>
+            <td>106,095.00</td>
+            <td>1,516,393.00</td>
+            <td>
+              <font style="color: red">-1,410,298.00</font>
+            </td>
+            <td>
+              <font style="color: red">-93</font>
+            </td>
+            <td class="bg-red">3</td>
+            <td class="bg-red">สูง</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>สส.พท.ร้อยเอ็ด</td>
+            <td>718,867.50</td>
+            <td>6,016,497.00</td>
+            <td>
+              <font style="color: red">-5,297,629.50</font>
+            </td>
+            <td>
+              <font style="color: red">-88.05</font>
+            </td>
+            <td class="bg-red">3</td>
+            <td class="bg-red">สูง</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>สุราษฎร์ธานี</td>
+            <td>5,831,447.70</td>
+            <td>27,864,350.00</td>
+            <td>
+              <font style="color: red">-22032902</font>
+            </td>
+            <td>
+              <font style="color: red">-79.07</font>
+            </td>
+            <td class="bg-red">3</td>
+            <td class="bg-red">สูง</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>สส.พท.ศรีสะเกษ</td>
+            <td>1,428,854.64</td>
+            <td>6,328,000.00</td>
+            <td>
+              <font style="color: red">-4,899,145.36</font>
+            </td>
+            <td>
+              <font style="color: red">-77.42</font>
+            </td>
+            <td class="bg-red">3</td>
+            <td class="bg-red">สูง</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>สสพ.พะเยา</td>
+            <td>1,395,847.16</td>
+            <td>5,305,700.00</td>
+            <td>
+              <font style="color: red">-3,909,852.84</font>
+            </td>
+            <td>
+              <font style="color: red">-73.69</font>
+            </td>
+            <td class="bg-red">3</td>
+            <td class="bg-red">สูง</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>สสพ.ภูเก็ต</td>
+            <td>1,812,345.27</td>
+            <td>6,400,000.00</td>
+            <td>
+              <font style="color: red">-4587655</font>
+            </td>
+            <td>
+              <font style="color: red">-71.68</font>
+            </td>
+            <td class="bg-red">3</td>
+            <td class="bg-red">สูง</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>สสพ.พัทลุง</td>
+            <td>4,286,609.17</td>
+            <td>4,200,000.00</td>
+            <td>86609</td>
+            <td>2.06</td>
+            <td class="bg-yellow">2</td>
+            <td class="bg-yellow">กลาง</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>สสพ. นนทบุรี</td>
+            <td>3,379,999.70</td>
+            <td>1,080,000.00</td>
+            <td>2,299,999.70</td>
+            <td>212.96</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>สสพ. ปทุมธานี 1</td>
+            <td>2,523,877.40</td>
+            <td>887,000.00</td>
+            <td>1,636,877.40</td>
+            <td>184.54</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>สสพ. ปทุมธานี 2</td>
+            <td>4,112,468.00</td>
+            <td>1,898,746.00</td>
+            <td>2,213,722.00</td>
+            <td>116.59</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>สสพ. ลพบุรี</td>
+            <td>871,737.50</td>
+            <td>783,900.00</td>
+            <td>87,837.50</td>
+            <td>11.21</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>สสพ. พระนครศรีอยุธยา 1</td>
+            <td>282,470.00</td>
+            <td>201,500.00</td>
+            <td>80,970.00</td>
+            <td>40.18</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td>สสพ. พระนครศรีอยุธยา 2</td>
+            <td>428,362.50</td>
+            <td>213,000.00</td>
+            <td>215,362.50</td>
+            <td>101.11</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td>สสพ.จันทบุรี</td>
+            <td>10,387,435.00</td>
+            <td>8,855,000.00</td>
+            <td>1,532,435.00</td>
+            <td>17.31</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui mini button" routerLink="/int08-3-3">
+          <i class="arrow left icon"></i>
+          ย้อนกลับ
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="modalInt08331" class="ui modal hidden transition">
+  <i class="close icon"></i>
+  <div class="header">
+    กำหนดเงื่อนไข RL และแปลงค่า
+  </div>
+
+  <div class="content">
+    <div class="ui grid">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button">
+          <i class="add icon"></i>
+          เพิ่ม
+        </button>
+      </div>
+    </div>
+    <br><br>
+    <div class="ui form">
+      <div class="inline fields">
+        <div class="four wide field">
+          <label style="width: 9em;">เงื่อนไขที่ 1</label>
+          <select id="select1" class="ui dropdown">
+            <option value="0">Between</option>
+            <option value="1">Less Than</option>
+            <option value="2">More Than</option>
+          </select>
+        </div>
+        <div class="two wide field">
+          <input type="text" value="2">
+        </div>
+        <div class="one wide field">
+          <strong>&nbsp;&nbsp;&nbsp;ถึง</strong>
+        </div>
+        <div class="two wide field">
+          <input type="text" value="5">
+        </div>
+        <div class="three wide field">
+          <label class="custom-label-w-35">กำหนดค่าเป็น</label>
+          <input type="text" value="1">
+        </div>
+        <div class="four wide field">
+          <label class="custom-label-w-15">กำหนดค่าเป็น</label>
+          <input type="text" value="ต่ำ">
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="four wide field">
+          <label style="width: 9em;">เงื่อนไขที่ 2</label>
+          <select id="select2" class="ui dropdown">
+            <option value="0">Between</option>
+            <option value="1">Less Than</option>
+            <option value="2">More Than</option>
+          </select>
+        </div>
+        <div class="two wide field">
+          <input type="text" value="3">
+        </div>
+        <div class="one wide field">
+          <strong>&nbsp;&nbsp;&nbsp;ถึง</strong>
+        </div>
+        <div class="two wide field">
+          <input type="text" value="5">
+        </div>
+        <div class="three wide field">
+          <label class="custom-label-w-35">กำหนดค่าเป็น</label>
+          <input type="text" value="2">
+        </div>
+        <div class="four wide field">
+          <label class="custom-label-w-15">กำหนดค่าเป็น</label>
+          <input type="text" value="กลาง">
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="four wide field">
+          <label style="width: 9em;">เงื่อนไขที่ 3</label>
+          <select id="select3" class="ui dropdown">
+            <option value="0">More Than</option>
+            <option value="1">Between</option>
+            <option value="2">Less Than</option>
+          </select>
+        </div>
+        <div class="two wide field">
+          <input type="text" value="5">
+        </div>
+        <div class="one wide field"></div>
+        <div class="two wide field"></div>
+        <div class="three wide field">
+          <label class="custom-label-w-35">กำหนดค่าเป็น</label>
+          <input type="text" value="3">
+        </div>
+        <div class="four wide field">
+          <label class="custom-label-w-15">กำหนดค่าเป็น</label>
+          <input type="text" value="สูง">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button width-100">
+          <i class="save icon"></i>
+          บันทึก
+        </button>
+        <button class="ui mini button width-100" (click)="closePopupEdit()">
+          <i class="close icon"></i>
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
