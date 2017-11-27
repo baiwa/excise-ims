@@ -20,6 +20,15 @@ import { SelectFormComponent } from './../../project/pages/select-form/select-fo
 import { CreateFormComponent } from './../../project/pages/create-form/create-form.component';
 import { SelectNewFormComponent } from './../../project/pages/select-new-form/select-new-form.component';
 import { CreateNewFormComponent } from './../../project/pages/create-new-form/create-new-form.component';
+import { CheckReceiptTaxComponent } from './../../project/pages/check-receipt-tax/check-receipt-tax.component';
+import { CheckReceiptLicenseComponent } from './../../project/pages/check-receipt-license/check-receipt-license.component';
+import { CreateTraderComponent } from './../../project/tax-audit/trader-selection/create-trader/create-trader.component';
+import { AnalystBasicDataTraderComponent } from './../../project/tax-audit/trader-selection/analyst-basic-data-trader/analyst-basic-data-trader.component';
+import { CreateWorkingPaperTraderComponent } from './../../project/tax-audit/trader-selection/create-working-paper-trader/create-working-paper-trader.component';
+import { WorkingPaper1TraderComponent } from './../../project/tax-audit/trader-selection/working-paper-1-trader/working-paper-1-trader.component';
+import { WorkingPaper1FullTraderComponent } from './../../project/tax-audit/trader-selection/working-paper-1-full-trader/working-paper-1-full-trader.component';
+import { SummaryAmountProductTraderComponent } from './../../project/tax-audit/trader-selection/summary-amount-product-trader/summary-amount-product-trader.component';
+import { CreateSaveMessageTraderComponent } from './../../project/tax-audit/trader-selection/create-save-message-trader/create-save-message-trader.component';
 import { Int0111Component } from './../../project/internal-audit/int01/int01-1/int01-1-1/int01-1-1.component';
 import { Int0112Component } from './../../project/internal-audit/int01/int01-1/int01-1-2/int01-1-2.component';
 import { Int0113Component } from './../../project/internal-audit/int01/int01-1/int01-1-3/int01-1-3.component';
@@ -32,16 +41,7 @@ import { Int0312Component } from './../../project/internal-audit/int03/int03-1/i
 import { Int032Component } from './../../project/internal-audit/int03/int03-2/int03-2.component';
 import { Int041Component } from './../../project/internal-audit/int04/int04-1/int04-1.component';
 import { Int042Component } from './../../project/internal-audit/int04/int04-2/int04-2.component';
-import { CheckReprintLicenseComponent } from './../../project/pages/check-reprint-license/check-reprint-license.component';
-import { CheckReceiptTaxComponent } from './../../project/pages/check-receipt-tax/check-receipt-tax.component';
-import { CheckReceiptLicenseComponent } from './../../project/pages/check-receipt-license/check-receipt-license.component';
-import { CreateTraderComponent } from './../../project/tax-audit/trader-selection/create-trader/create-trader.component';
-import { AnalystBasicDataTraderComponent } from './../../project/tax-audit/trader-selection/analyst-basic-data-trader/analyst-basic-data-trader.component';
-import { CreateWorkingPaperTraderComponent } from './../../project/tax-audit/trader-selection/create-working-paper-trader/create-working-paper-trader.component';
-import { WorkingPaper1TraderComponent } from './../../project/tax-audit/trader-selection/working-paper-1-trader/working-paper-1-trader.component';
-import { WorkingPaper1FullTraderComponent } from './../../project/tax-audit/trader-selection/working-paper-1-full-trader/working-paper-1-full-trader.component';
-import { SummaryAmountProductTraderComponent } from './../../project/tax-audit/trader-selection/summary-amount-product-trader/summary-amount-product-trader.component';
-import { CreateSaveMessageTraderComponent } from './../../project/tax-audit/trader-selection/create-save-message-trader/create-save-message-trader.component';
+import { Int043Component } from './../../project/internal-audit/int04/int04-3/int04-3.component';
 import { Int051Component } from './../../project/internal-audit/int05/int05-1/int05-1.component';
 import { Int052Component } from './../../project/internal-audit/int05/int05-2/int05-2.component';
 import { Int053Component } from './../../project/internal-audit/int05/int05-3/int05-3.component';
@@ -118,6 +118,16 @@ const routes: Routes = [
     { path: 'select-new-form', component: SelectNewFormComponent, canActivate: [AuthGuard] },
     { path: 'create-new-form', component: CreateNewFormComponent, canActivate: [AuthGuard] },
 
+    { path: 'check-receipt-tax', component: CheckReceiptTaxComponent, canActivate: [AuthGuard] },
+    { path: 'check-receipt-license', component: CheckReceiptLicenseComponent, canActivate: [AuthGuard] },
+    { path: 'trader-selection', component: CreateTraderComponent, canActivate: [AuthGuard] },
+    { path: 'analyst-basic-data-trader', component: AnalystBasicDataTraderComponent, canActivate: [AuthGuard] },
+    { path: 'create-working-paper-trader', component: CreateWorkingPaperTraderComponent, canActivate: [AuthGuard] },
+    { path: 'working-paper-1-trader', component: WorkingPaper1TraderComponent, canActivate: [AuthGuard] },
+    { path: 'working-paper-1-full-trader', component: WorkingPaper1FullTraderComponent, canActivate: [AuthGuard] },
+    { path: 'summary-amount-product-trader', component: SummaryAmountProductTraderComponent, canActivate: [AuthGuard] },
+    { path: 'create-save-message-trader', component: CreateSaveMessageTraderComponent, canActivate: [AuthGuard] },
+
     { path: 'int01-1-1', component: Int0111Component, canActivate: [AuthGuard] },
     { path: 'int01-1-2', component: Int0112Component, canActivate: [AuthGuard] },
     { path: 'int01-1-3', component: Int0113Component, canActivate: [AuthGuard] },
@@ -132,17 +142,7 @@ const routes: Routes = [
 
     { path: 'int04-1', component: Int041Component, canActivate: [AuthGuard] },
     { path: 'int04-2', component: Int042Component, canActivate: [AuthGuard] },
-    { path: 'check-reprint-license', component: CheckReprintLicenseComponent, canActivate: [AuthGuard] },
-
-    { path: 'check-receipt-tax', component: CheckReceiptTaxComponent, canActivate: [AuthGuard] },
-    { path: 'check-receipt-license', component: CheckReceiptLicenseComponent, canActivate: [AuthGuard] },
-    { path: 'trader-selection', component: CreateTraderComponent, canActivate: [AuthGuard] },
-    { path: 'analyst-basic-data-trader', component: AnalystBasicDataTraderComponent, canActivate: [AuthGuard] },
-    { path: 'create-working-paper-trader', component: CreateWorkingPaperTraderComponent, canActivate: [AuthGuard] },
-    { path: 'working-paper-1-trader', component: WorkingPaper1TraderComponent, canActivate: [AuthGuard] },
-    { path: 'working-paper-1-full-trader', component: WorkingPaper1FullTraderComponent, canActivate: [AuthGuard] },
-    { path: 'summary-amount-product-trader', component: SummaryAmountProductTraderComponent, canActivate: [AuthGuard] },
-    { path: 'create-save-message-trader', component: CreateSaveMessageTraderComponent, canActivate: [AuthGuard] },
+    { path: 'int04-3', component: Int043Component, canActivate: [AuthGuard] },
     
     { path: 'int05-1', component: Int051Component, canActivate: [AuthGuard] },
     { path: 'int05-2', component: Int052Component, canActivate: [AuthGuard] },

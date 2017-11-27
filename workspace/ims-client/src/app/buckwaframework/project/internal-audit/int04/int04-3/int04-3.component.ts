@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 declare var $: any;
 @Component({
-  selector: 'check-reprint-license',
-  templateUrl: './check-reprint-license.component.html',
-  styleUrls: ['./check-reprint-license.component.css']
+  selector: 'int04-3',
+  templateUrl: './int04-3.component.html',
+  styleUrls: ['./int04-3.component.css']
 })
-export class CheckReprintLicenseComponent implements OnInit {
+export class Int043Component implements OnInit {
 
   private zoneList: any[];
   private areaList: any[];

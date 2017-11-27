@@ -40,16 +40,6 @@ import { SelectFormComponent } from './buckwaframework/project/pages/select-form
 import { CreateFormComponent } from './buckwaframework/project/pages/create-form/create-form.component';
 import { CreateNewFormComponent } from './buckwaframework/project/pages/create-new-form/create-new-form.component';
 import { SelectNewFormComponent } from './buckwaframework/project/pages/select-new-form/select-new-form.component';
-import { Int0111Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-1/int01-1-1.component';
-import { Int0112Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-2/int01-1-2.component';
-import { Int0113Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-3/int01-1-3.component';
-import { Int031Component } from './buckwaframework/project/internal-audit/int03/int03-1/int03-1.component';
-import { Int0311Component } from './buckwaframework/project/internal-audit/int03/int03-1/int3-1-1/int03-1-1.component';
-import { Int0312Component } from './buckwaframework/project/internal-audit/int03/int03-1/int3-1-2/int03-1-2.component';
-import { Int032Component } from './buckwaframework/project/internal-audit/int03/int03-2/int03-2.component';
-import { Int041Component } from './buckwaframework/project/internal-audit/int04/int04-1/int04-1.component';
-import { Int042Component } from './buckwaframework/project/internal-audit/int04/int04-2/int04-2.component';
-import { CheckReprintLicenseComponent } from './buckwaframework/project/pages/check-reprint-license/check-reprint-license.component';
 import { CheckReceiptTaxComponent } from './buckwaframework/project/pages/check-receipt-tax/check-receipt-tax.component';
 import { CheckReceiptLicenseComponent } from './buckwaframework/project/pages/check-receipt-license/check-receipt-license.component';
 import { CreateTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/create-trader/create-trader.component';
@@ -65,6 +55,16 @@ import { CreatePaperRelationMaterialComponent } from './buckwaframework/project/
 import { CreatePaperReceiveInstantComponent } from './buckwaframework/project/pages/create-paper-receive-instant/create-paper-receive-instant.component';
 import { CreatePaperPayInstantComponent } from './buckwaframework/project/pages/create-paper-pay-instant/create-paper-pay-instant.component';
 import { CreatePaperCheckValueComponent } from './buckwaframework/project/pages/create-paper-check-value/create-paper-check-value.component';
+import { Int0111Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-1/int01-1-1.component';
+import { Int0112Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-2/int01-1-2.component';
+import { Int0113Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-3/int01-1-3.component';
+import { Int031Component } from './buckwaframework/project/internal-audit/int03/int03-1/int03-1.component';
+import { Int0311Component } from './buckwaframework/project/internal-audit/int03/int03-1/int3-1-1/int03-1-1.component';
+import { Int0312Component } from './buckwaframework/project/internal-audit/int03/int03-1/int3-1-2/int03-1-2.component';
+import { Int032Component } from './buckwaframework/project/internal-audit/int03/int03-2/int03-2.component';
+import { Int041Component } from './buckwaframework/project/internal-audit/int04/int04-1/int04-1.component';
+import { Int042Component } from './buckwaframework/project/internal-audit/int04/int04-2/int04-2.component';
+import { Int043Component } from './buckwaframework/project/internal-audit/int04/int04-3/int04-3.component';
 import { Int051Component } from './buckwaframework/project/internal-audit/int05/int05-1/int05-1.component';
 import { Int052Component } from './buckwaframework/project/internal-audit/int05/int05-2/int05-2.component';
 import { Int053Component } from './buckwaframework/project/internal-audit/int05/int05-3/int05-3.component';
@@ -135,7 +135,6 @@ import { Int08333Component } from './buckwaframework/project/internal-audit/int0
         CreateFormComponent,
         CreateNewFormComponent,
         SelectNewFormComponent,
-        CheckReprintLicenseComponent,
         CheckReceiptTaxComponent,
         CheckReceiptLicenseComponent,
         CreateTraderComponent,
@@ -154,6 +153,7 @@ import { Int08333Component } from './buckwaframework/project/internal-audit/int0
         Int032Component,
         Int041Component,
         Int042Component,
+        Int043Component,
         Int051Component,
         Int052Component,
         Int053Component,
