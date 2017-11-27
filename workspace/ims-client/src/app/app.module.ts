@@ -48,7 +48,7 @@ import { Int0311Component } from './buckwaframework/project/internal-audit/int03
 import { Int0312Component } from './buckwaframework/project/internal-audit/int03/int03-1/int3-1-2/int03-1-2.component';
 import { Int032Component } from './buckwaframework/project/internal-audit/int03/int03-2/int03-2.component';
 import { Int041Component } from './buckwaframework/project/internal-audit/int04/int04-1/int04-1.component';
-import { CheckCompanyRenewComponent } from './buckwaframework/project/pages/check-company-renew/check-company-renew.component';
+import { Int042Component } from './buckwaframework/project/internal-audit/int04/int04-2/int04-2.component';
 import { CheckReprintLicenseComponent } from './buckwaframework/project/pages/check-reprint-license/check-reprint-license.component';
 import { CheckReceiptTaxComponent } from './buckwaframework/project/pages/check-receipt-tax/check-receipt-tax.component';
 import { CheckReceiptLicenseComponent } from './buckwaframework/project/pages/check-receipt-license/check-receipt-license.component';
@@ -135,7 +135,6 @@ import { Int08333Component } from './buckwaframework/project/internal-audit/int0
         CreateFormComponent,
         CreateNewFormComponent,
         SelectNewFormComponent,
-        CheckCompanyRenewComponent,
         CheckReprintLicenseComponent,
         CheckReceiptTaxComponent,
         CheckReceiptLicenseComponent,
@@ -154,6 +153,7 @@ import { Int08333Component } from './buckwaframework/project/internal-audit/int0
         Int0312Component,
         Int032Component,
         Int041Component,
+        Int042Component,
         Int051Component,
         Int052Component,
         Int053Component,
