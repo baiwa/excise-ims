@@ -30,7 +30,7 @@ import { Int031Component } from './../../project/internal-audit/int03/int03-1/in
 import { Int0311Component } from './../../project/internal-audit/int03/int03-1/int3-1-1/int03-1-1.component';
 import { Int0312Component } from './../../project/internal-audit/int03/int03-1/int3-1-2/int03-1-2.component';
 import { Int032Component } from './../../project/internal-audit/int03/int03-2/int03-2.component';
-import { CheckCompanyPaymentComponent } from './../../project/pages/check-company-payment/check-company-payment.component';
+import { Int041Component } from './../../project/internal-audit/int04/int04-1/int04-1.component';
 import { CheckCompanyRenewComponent } from './../../project/pages/check-company-renew/check-company-renew.component';
 import { CheckReprintLicenseComponent } from './../../project/pages/check-reprint-license/check-reprint-license.component';
 import { CheckReceiptTaxComponent } from './../../project/pages/check-receipt-tax/check-receipt-tax.component';
@@ -130,7 +130,7 @@ const routes: Routes = [
     { path: 'int03-1-2', component: Int0312Component, canActivate: [AuthGuard] },
     { path: 'int03-2', component: Int032Component, canActivate: [AuthGuard] },
 
-    { path: 'check-company-payment', component: CheckCompanyPaymentComponent, canActivate: [AuthGuard] },
+    { path: 'int04-1', component: Int041Component, canActivate: [AuthGuard] },
     { path: 'check-company-renew', component: CheckCompanyRenewComponent, canActivate: [AuthGuard] },
     { path: 'check-reprint-license', component: CheckReprintLicenseComponent, canActivate: [AuthGuard] },
 

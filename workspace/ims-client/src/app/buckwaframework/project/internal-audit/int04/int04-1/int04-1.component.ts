@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 declare var $: any;
 @Component({
-  selector: 'check-company-payment',
-  templateUrl: './check-company-payment.component.html',
-  styleUrls: ['./check-company-payment.component.css']
+  selector: 'int04-1',
+  templateUrl: './int04-1.component.html',
+  styleUrls: ['./int04-1.component.css']
 })
-export class CheckCompanyPaymentComponent implements OnInit {
+export class Int041Component implements OnInit {
 
   private zoneList: any[];
   private areaList: any[];
