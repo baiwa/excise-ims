@@ -31,10 +31,10 @@ export class Int08331Component implements OnInit {
   }
 
   popupEditData() {
-    $('#modalInt08331').modal('show');
     $('#select1').show();
     $('#select2').show();
     $('#select3').show();
+    $('#modalInt08331').modal('show');
   }
 
   closePopupEdit() {
