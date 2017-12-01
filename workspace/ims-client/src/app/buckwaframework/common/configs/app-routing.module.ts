@@ -94,6 +94,10 @@ import { CreatePaperRelationMaterialComponent } from './../../project/pages/crea
 import { CreatePaperReceiveInstantComponent } from './../../project/pages/create-paper-receive-instant/create-paper-receive-instant.component';
 import { CreatePaperPayInstantComponent } from './../../project/pages/create-paper-pay-instant/create-paper-pay-instant.component';
 import { CreatePaperCheckValueComponent } from './../../project/pages/create-paper-check-value/create-paper-check-value.component';
+import { CreatePaperQuantityProductComponent } from './../../project/pages/create-paper-quantity-product/create-paper-quantity-product.component';
+import { CreatePaperQuantityTaxComponent } from './../../project/pages/create-paper-quantity-tax/create-paper-quantity-tax.component';
+import { CreatePaperValueTaxComponent } from './../../project/pages/create-paper-value-tax/create-paper-value-tax.component';
+import { CreatePaperExceptTaxComponent } from './../../project/pages/create-paper-except-tax/create-paper-except-tax.component';
 
 const routes: Routes = [
 
@@ -201,6 +205,10 @@ const routes: Routes = [
     { path: 'create-paper-receive-instant', component: CreatePaperReceiveInstantComponent, canActivate: [AuthGuard] },
     { path: 'create-paper-pay-instant', component: CreatePaperPayInstantComponent, canActivate: [AuthGuard] },
     { path: 'create-paper-check-value', component: CreatePaperCheckValueComponent, canActivate: [AuthGuard] },
+    { path: 'create-paper-quantity-product', component: CreatePaperQuantityProductComponent, canActivate: [AuthGuard] },
+    { path: 'create-paper-quantity-tax', component: CreatePaperQuantityTaxComponent, canActivate: [AuthGuard] },
+    { path: 'create-paper-value-tax', component: CreatePaperValueTaxComponent, canActivate: [AuthGuard] },
+    { path: 'create-paper-except-tax', component: CreatePaperExceptTaxComponent, canActivate: [AuthGuard] },
     
 ];
 

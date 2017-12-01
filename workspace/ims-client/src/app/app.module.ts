@@ -114,6 +114,10 @@ import { Int08331Component } from './buckwaframework/project/internal-audit/int0
 import { Int08332Component } from './buckwaframework/project/internal-audit/int08/int08-3/int08-3-3/int08-3-3-2/int08-3-3-2.component';
 import { Int08333Component } from './buckwaframework/project/internal-audit/int08/int08-3/int08-3-3/int08-3-3-3/int08-3-3-3.component';
 import { Int0621Component } from './buckwaframework/project/internal-audit/int06/int06-2/int06-2-1/int06-2-1.component';
+import { CreatePaperQuantityProductComponent } from './buckwaframework/project/pages/create-paper-quantity-product/create-paper-quantity-product.component';
+import { CreatePaperQuantityTaxComponent } from './buckwaframework/project/pages/create-paper-quantity-tax/create-paper-quantity-tax.component';
+import { CreatePaperValueTaxComponent } from './buckwaframework/project/pages/create-paper-value-tax/create-paper-value-tax.component';
+import { CreatePaperExceptTaxComponent } from './buckwaframework/project/pages/create-paper-except-tax/create-paper-except-tax.component';
 
 @NgModule({
     declarations: [
@@ -210,6 +214,10 @@ import { Int0621Component } from './buckwaframework/project/internal-audit/int06
         Int08332Component,
         Int08333Component,
         Int0621Component,
+        CreatePaperQuantityProductComponent,
+        CreatePaperQuantityTaxComponent,
+        CreatePaperValueTaxComponent,
+        CreatePaperExceptTaxComponent,
     ],
     imports: [
         BrowserModule,
