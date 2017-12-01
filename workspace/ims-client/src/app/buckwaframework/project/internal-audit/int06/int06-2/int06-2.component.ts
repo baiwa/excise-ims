@@ -8,8 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class Int062Component implements OnInit {
 
   private showData: boolean = false;
-  private showCompareData: boolean = false;
-  private showSummaryCompareData: boolean = false;
 
   constructor() { }
 
@@ -22,20 +20,6 @@ export class Int062Component implements OnInit {
 
   clearData() {
     this.showData = false;
-    this.showCompareData = false;
-    this.showSummaryCompareData = false;
-  }
-
-  compareData() {
-    this.showCompareData = true;
-  }
-
-  tabCompareClearData() {
-    this.showSummaryCompareData = false;
-  }
-
-  tabCompareData() {
-    this.showSummaryCompareData = true;
   }
 
 }

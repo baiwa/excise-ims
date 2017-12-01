@@ -113,6 +113,7 @@ import { Int0123Component } from './buckwaframework/project/internal-audit/int01
 import { Int08331Component } from './buckwaframework/project/internal-audit/int08/int08-3/int08-3-3/int08-3-3-1/int08-3-3-1.component';
 import { Int08332Component } from './buckwaframework/project/internal-audit/int08/int08-3/int08-3-3/int08-3-3-2/int08-3-3-2.component';
 import { Int08333Component } from './buckwaframework/project/internal-audit/int08/int08-3/int08-3-3/int08-3-3-3/int08-3-3-3.component';
+import { Int0621Component } from './buckwaframework/project/internal-audit/int06/int06-2/int06-2-1/int06-2-1.component';
 
 @NgModule({
     declarations: [
@@ -208,6 +209,7 @@ import { Int08333Component } from './buckwaframework/project/internal-audit/int0
         Int08331Component,
         Int08332Component,
         Int08333Component,
+        Int0621Component,
     ],
     imports: [
         BrowserModule,

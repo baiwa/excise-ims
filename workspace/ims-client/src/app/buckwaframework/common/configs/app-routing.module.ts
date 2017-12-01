@@ -48,6 +48,7 @@ import { Int053Component } from './../../project/internal-audit/int05/int05-3/in
 import { Int054Component } from './../../project/internal-audit/int05/int05-4/int05-4.component';
 import { Int061Component } from './../../project/internal-audit/int06/int06-1/int06-1.component';
 import { Int062Component } from './../../project/internal-audit/int06/int06-2/int06-2.component';
+import { Int0621Component } from './../../project/internal-audit/int06/int06-2/int06-2-1/int06-2-1.component';
 import { Int063Component } from './../../project/internal-audit/int06/int06-3/int06-3.component';
 import { Int0631Component } from './../../project/internal-audit/int06/int06-3/int06-3-1/int06-3-1.component';
 import { Int0632Component } from './../../project/internal-audit/int06/int06-3/int06-3-2/int06-3-2.component';
@@ -151,6 +152,7 @@ const routes: Routes = [
 
     { path: 'int06-1', component: Int061Component, canActivate: [AuthGuard] },
     { path: 'int06-2', component: Int062Component, canActivate: [AuthGuard] },
+    { path: 'int06-2-1', component: Int0621Component, canActivate: [AuthGuard] },
     { path: 'int06-3', component: Int063Component, canActivate: [AuthGuard] },
     { path: 'int06-3-1', component: Int0631Component, canActivate: [AuthGuard] },
     { path: 'int06-3-2', component: Int0632Component, canActivate: [AuthGuard] },

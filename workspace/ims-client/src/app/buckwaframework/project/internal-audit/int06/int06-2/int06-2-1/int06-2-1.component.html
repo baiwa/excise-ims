@@ -1,0 +1,131 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+
+    <h2 class="ui header">เปรียบเทียบรายงานสรุปรายการขอเบิก</h2>
+
+    <div class="ui top attached header">
+      <span>เปรียบเทียบรายงานสรุปรายการขอเบิก</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">รหัสงบประมาณ</label>
+            <input type="text" value="3006">
+          </div>
+          <div class="eight wide field">
+            <select name="states" class="ui selection dropdown" multiple="" id="multi-select1">
+              <option value="">เลือก TR</option>
+              <option value="AL">TR-รับงบบุคลากร</option>
+              <option value="AK">TR-รับงบดำเนินงาน</option>
+              <option value="AZ">TR-รับงบกลาง</option>
+              <option value="AR">TR-สรก.รับเงินนอก</option>
+              <option value="CA">TR-ปรับเงินฝากคลัง</option>
+              <option value="CO">TR-ภายในกรมเดียวกัน</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">รหัสงบประมาณ</label>
+            <input type="text" value="90909080170973">
+          </div>
+          <div class="eight wide field">
+            <select name="states" class="ui selection dropdown" multiple="" id="multi-select2">
+              <option value="">เลือก TR</option>
+              <option value="AL">TR-รับงบบุคลากร</option>
+              <option value="AK">TR-รับงบดำเนินงาน</option>
+              <option value="AZ">TR-รับงบกลาง</option>
+              <option value="AR">TR-สรก.รับเงินนอก</option>
+              <option value="CA">TR-ปรับเงินฝากคลัง</option>
+              <option value="CO">TR-ภายในกรมเดียวกัน</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">รหัสงบประมาณ</label>
+            <input type="text" value="300613001000000">
+          </div>
+          <div class="eight wide field">
+            <select name="states" class="ui selection dropdown" multiple="" id="multi-select3">
+              <option value="">เลือก TR</option>
+              <option value="AL">TR-รับงบบุคลากร</option>
+              <option value="AK">TR-รับงบดำเนินงาน</option>
+              <option value="AZ">TR-รับงบกลาง</option>
+              <option value="AR">TR-สรก.รับเงินนอก</option>
+              <option value="CA">TR-ปรับเงินฝากคลัง</option>
+              <option value="CO">TR-ภายในกรมเดียวกัน</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui center aligned grid">
+        <div class="four wide column">
+          <button class="ui mini primary button" (click)="compareData()">
+            <i class="exchange icon"></i>
+            เปรียบเทียบ
+          </button>
+          <button class="ui mini button" (click)="clearData()">
+            <i class="refresh outline icon"></i>
+            ล้างข้อมูล
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui segment" *ngIf="showData">
+      <table id="compareData" class="ui small celled table">
+        <thead>
+          <tr style="text-align: center;">
+            <th>รหัสงบประมาน</th>
+            <th>ชื่องบประมาณ</th>
+            <th>ผลรวมตามรหัสงบประมาณ</th>
+            <th>TR-งบทดลอง</th>
+            <th>จำนวน TR-งบทดลอง</th>
+            <th>ผลต่าง</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>3006</td>
+            <td>เงินนอกงบ</td>
+            <td>229,384.89</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>90909080170973</td>
+            <td>เงิินงบกลาง</td>
+            <td>26,028.25</td>
+            <td>TR รับงบกลาง</td>
+            <td>26,028.25</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>300613001000000</td>
+            <td>เงินงบประมาณ</td>
+            <td>86,673.34</td>
+            <td>TR รับงบบุคลากร</td>
+            <td>65,442</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>TR รับงบดำเนินงาน</td>
+            <td>34,278</td>
+            <td class="bg-row-orange-highlight">-13046.66</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
