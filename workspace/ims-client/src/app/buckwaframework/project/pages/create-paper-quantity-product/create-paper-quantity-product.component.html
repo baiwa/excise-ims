@@ -1,3 +1,163 @@
-<p>
-  create-paper-quantity-product works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">สร้างกระดาษทำการตรวจสอบปริมาณการจ่ายสินค้าสำเร็จรูป</h2>
+
+    <div class="ui top attached header">
+      <span>Criteria</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">ทะเบียนสรรพสามิต</label>
+            <input type="text" class="custom-readonly" placeholder="ทะเบียนสรรพสามิต" readonly="" value="2560-00178-5">
+          </div>
+          <div class="eight wide field ">
+            <label class="custom-label-w-20">เลขประจำตัวผู้เสียภาษี</label>
+            <input type="text" class="custom-readonly" placeholder="เลขประจำตัวผู้เสียภาษี" readonly="" value="1-5599-00168-99-6">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">ผู้ประกอบการ </label>
+            <input type="text" class="custom-readonly" placeholder="ผู้ประกอบการ" readonly="" value="บ. ฮอนด้า มอเตอร์ ประเทศไทย">
+          </div>
+          <div class="eight wide field ">
+            <label class="custom-label-w-20">เลขที่วิเคราะห์</label>
+            <input type="text" class="custom-readonly" placeholder="เลขที่วิเคราะห์" readonly="" value="256000000001">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field required">
+            <label class="custom-label-w-25">รอบระยะเวลาการตรวจสอบ</label>
+            <div class="eight wide field">
+              <div class="ui icon input">
+                <input type="text" class="custom-readonly" placeholder="MM/YYYY" value="11/2560" readonly="">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+            <div class="eight wide field">
+              <label>-</label>
+              <div class="ui icon input">
+                <input type="text" class="custom-readonly" placeholder="MM/YYYY" value="11/2560" readonly="">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui top attached header">
+      <span>อัพโหลด Template ข้อมูลปริมาณการจำหน่ายสินค้าสำเร็จรูปในประเทศ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">เลือกไฟล์ Template ข้อมูล</label>
+            <input type="file" />
+          </div>
+        </div>
+      </div>
+
+      <div class="ui center aligned grid">
+        <div class="four wide column">
+          <button class="ui mini primary button" (click)="uploadData()">
+            <i class="upload icon"></i>
+            อัพโหลด
+          </button>
+          <button class="ui mini button" (click)="clearData()">
+            <i class="trash outline icon"></i>
+            ลบไฟล์
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui segment" *ngIf="showData">
+      <div class="ui grid center aligned">
+        <div class="sixteen wide column">
+          บ. ฮอนด้า มอเตอร์ ประเทศไทย
+          <br> กระดาษทำการตรวจสอบปริมาณการจ่ายสินค้าสำเร็จรูป
+          <br> เดือน พ.ย. 2559 - ส.ค. 2559
+        </div>
+      </div>
+
+      <table class="ui small celled table">
+        <thead>
+          <tr style="text-align: center;">
+            <th rowspan="2">เดือน</th>
+            <th rowspan="2">รายการ</th>
+            <th rowspan="2">ใบกำกับภาษีในประเทศ</th>
+            <th rowspan="2">ใบกำกับภาษีต่างประเทศ</th>
+            <th colspan="2">Stock สินค้า</th>
+            <th colspan="2">ภส .03 - 06</th>
+            <th colspan="2">ข้อมูลจากภายนอก</th>
+          </tr>
+          <tr style="text-align: center;">
+            <th style="border-left: 1px solid rgba(34,36,38,.1);">ในประเทศ</th>
+            <th>ต่างประเทศ</th>
+            <th>ในประเทศ</th>
+            <th>ต่างประเทศ</th>
+            <th>ในประเทศ</th>
+            <th>ต่างประเทศ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="text-align: center;">
+            <td style="text-align: left;">ม.ค. 59</td>
+            <td>A</td>
+            <td>10</td>
+            <td>20</td>
+            <td>10</td>
+            <td>20</td>
+            <td>10</td>
+            <td>20</td>
+            <td>10</td>
+            <td>20</td>
+          </tr>
+          <tr style="text-align: center;">
+            <td style="text-align: left;">ม.ค. 59</td>
+            <td>B</td>
+            <td>15</td>
+            <td>-</td>
+            <td>16</td>
+            <td>-</td>
+            <td>15</td>
+            <td>-</td>
+            <td>16</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="ui center aligned grid">
+        <div class="six wide column">
+          <button class="ui mini primary button">
+            <i class="print icon"></i>
+            พิมพ์กระดาษทำการ
+          </button>
+          <button class="ui mini button" (click)="clearData()">
+            <i class="refresh icon"></i>
+            ล้างข้อมูล
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <div class="ui grid center aligned">
+      <div class="sixteen wide column">
+        <button class="ui mini button" routerLink="/select-form">
+          <i class="arrow left icon"></i>
+          ย้อนกลับ
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
