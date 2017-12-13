@@ -105,7 +105,7 @@
                                                     <i class="file text outline icon"></i>
                                                     <div class="content">
                                                         <div class="header">
-                                                            กระดาษทำการตรวจสอบการลดหย่อนภาษี
+                                                            <a href="javascript:;" (click)="clickMenuTax()">กระดาษทำการตรวจสอบการลดหย่อนภาษี</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -115,7 +115,7 @@
                                                     <i class="file text outline icon"></i>
                                                     <div class="content">
                                                         <div class="header">
-                                                            <a href="javascript:;" routerLink="/create-paper-except-tax">กระดาษทำการตรวจสอบปริมาณขอยกเว้นภาษี</a>
+                                                            <a href="javascript:;">กระดาษทำการตรวจสอบด้านราคา</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -125,7 +125,7 @@
                                                     <i class="file text outline icon"></i>
                                                     <div class="content">
                                                         <div class="header">
-                                                            กระดาษทำการตรวจสอบการส่งออก
+                                                            <a href="javascript:;">กระดาษทำการจ่ายสินค้าสำเร็จรูปต่างประเทศ</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -135,47 +135,7 @@
                                                     <i class="file text outline icon"></i>
                                                     <div class="content">
                                                         <div class="header">
-                                                            กระดาษทำการตรวจสอบด้านราคา
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="list">
-                                                <div class="item hand-click">
-                                                    <i class="file text outline icon"></i>
-                                                    <div class="content">
-                                                        <div class="header">
-                                                            ตารางการคำนวณภาษีที่ต้องชำระเพิ่ม
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="list">
-                                                <div class="item hand-click">
-                                                    <i class="file text outline icon"></i>
-                                                    <div class="content">
-                                                        <div class="header">
-                                                            <a href="javascript:;" routerLink="/create-paper-quantity-tax">กระดาษทำการตรวจสอบปริมาณการชำระภาษี</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="list">
-                                                <div class="item hand-click">
-                                                    <i class="file text outline icon"></i>
-                                                    <div class="content">
-                                                        <div class="header">
-                                                            <a href="javascript:;" routerLink="/create-paper-quantity-product">กระดาษทำการตรวจสอบปริมาณการจ่ายสินค้าสำเร็จรูป</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="list">
-                                                <div class="item hand-click">
-                                                    <i class="file text outline icon"></i>
-                                                    <div class="content">
-                                                        <div class="header">
-                                                            <a href="javascript:;" routerLink="/create-paper-value-tax">กระดาษทำการเรื่องราคาที่ยื่นชำระภาษี</a>
+                                                            <a href="javascript:;">ตารางการคำนวณภาษีที่ต้องชำระเพิ่ม</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -234,6 +194,16 @@
                                                     <div class="content">
                                                         <div class="header">
                                                             กระดาษทำการตรวจนับสินค้าคงเหลือ
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list">
+                                                <div class="item hand-click">
+                                                    <i class="file text outline icon"></i>
+                                                    <div class="content">
+                                                        <div class="header">
+                                                            กระดาษทำการตรวจสอบมูลค่าขอยกเว้นภาษี
                                                         </div>
                                                     </div>
                                                 </div>
@@ -313,6 +283,33 @@
                         </tbody>
                     </table>
 
+                    <table class="ui small celled table" *ngIf="showSubMenuTax">
+                        <thead>
+                            <tr>
+                                <th>NO.</th>
+                                <th>กระดาษทำการตรวจสอบการลดหย่อนภาษี</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    1
+                                </td>
+                                <td>
+                                    <a href="javascript:;"> กระดาษทำการตรวจสอบรายการวัตถุดิบที่ขอลดหย่อนภาษีที่ยื่นต่อกรมสรรพสามิต (ภส.05 - 02) </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    2
+                                </td>
+                                <td>
+                                    <a href="javascript:;"> กระดาษทำการตรวจสอบราคาต่อหน่วยของสินค้าที่ขอลดหย่อนภาษี </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                     <table class="ui small celled table" *ngIf="showSubMenuIns">
                         <thead>
                             <tr>
@@ -326,7 +323,7 @@
                                     1
                                 </td>
                                 <td>
-                                    <a href="javascript:;" routerLink="/create-paper-receive-instant"> กระดาษทำการรับสินค้าสำเร็จรูป </a>
+                                    <a href="javascript:;"> กระดาษทำการรับสินค้าสำเร็จรูป </a>
                                 </td>
                             </tr>
                             <tr>
@@ -334,15 +331,7 @@
                                     2
                                 </td>
                                 <td>
-                                    <a href="javascript:;" routerLink="/create-paper-pay-instant"> กระดาษทำการจ่ายสินค้าสำเร็จรูป </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    3
-                                </td>
-                                <td>
-                                    <a href="javascript:;"> กระดาษทำการตรวจนับสินค้าสำเร็จรูปคงเหลือ </a>
+                                    <a href="javascript:;"> กระดาษทำการจ่ายสินค้าสำเร็จรูป </a>
                                 </td>
                             </tr>
                         </tbody>

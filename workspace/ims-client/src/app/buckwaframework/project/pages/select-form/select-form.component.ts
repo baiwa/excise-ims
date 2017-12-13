@@ -18,6 +18,7 @@ export class SelectFormComponent {
 
     private showSubMenuMat: boolean = false;
     private showSubMenuIns: boolean = false;
+    private showSubMenuTax: boolean = false;
 
     constructor(private messageBarService: MessageBarService) {
 
@@ -30,10 +31,18 @@ export class SelectFormComponent {
     clickMenuMat() {
         this.showSubMenuMat = true;
         this.showSubMenuIns = false;
+        this.showSubMenuTax = false;
     }
 
     clickMenuIns() {
         this.showSubMenuMat = false;
         this.showSubMenuIns = true;
+        this.showSubMenuTax = false;
+    }
+
+    clickMenuTax() {
+        this.showSubMenuMat = false;
+        this.showSubMenuIns = false;
+        this.showSubMenuTax = true;
     }
 }
