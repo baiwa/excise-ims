@@ -52,8 +52,8 @@
                 <div class="inline fields" *ngIf="showSelectCoordinate">
                     <div class="eight wide field required">
                         <label class="custom-label-w-25">พิกัด</label>
-                        <select class="ui dropdown">
-                            <option *ngFor="let item of coordinateList; index as i;" value="{{i}}">{{item.value}}</option>
+                        <select id="selectCoordinate" class="ui dropdown">
+                            <option *ngFor="let item of coordinateList; index as i;" value="{{item.value}}">{{item.value}}</option>
                         </select>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                         <div class="ui grid">
                             <div class="center aligned row">
                                 <div class="column">
-                                    <div class="ui mini primary button" [routerLink]="['/result-analysis']">
+                                    <div class="ui mini primary button" (click)="goToAnalysisResult();">
                                         <i class="table icon"></i> วิเคราะห์ข้อมูลเบื้องต้น
                                     </div>
                                     <div class="ui mini button" (click)="resetSearch()">

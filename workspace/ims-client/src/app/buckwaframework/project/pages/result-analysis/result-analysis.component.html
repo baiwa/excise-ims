@@ -46,15 +46,21 @@
                         <label class="custom-label-w-25">ผู้ประกอบการ</label>
                         <input type="text" readonly="" class="custom-readonly" value="บ. ฮอนด้า มอเตอร์ ประเทศไทย">
                     </div>
+                    <div class="six wide field">
+                        <label class="custom-label-w-25">ประเภท</label>
+                        <input type="text" readonly="" class="custom-readonly" [value]="category">
+                    </div>
                 </div>
                 <div class="inline fields">
                     <div class="ten wide field">
                         <label class="custom-label-w-25">โรงอุตสาหกรรม</label>
                         <input type="text" readonly="" class="custom-readonly" value="ฮอนด้า บางบ่อ">
                     </div>
+                    <div class="six wide field">
+                        <label class="custom-label-w-25">พิกัด</label>
+                        <input type="text" readonly="" class="custom-readonly" [value]="coordinate">
+                    </div>
                 </div>
-
-
 
                 <div class="inline fields">
                     <div class="ten wide field">
@@ -439,7 +445,7 @@
                                     <div class="ui mini button" (click)="resetSearch()">
                                         <i class="refresh icon"></i> ล้างผลการวิเคราะห์ข้อมูล
                                     </div>
-                                    <div class="ui mini button" [routerLink]="['/select-form']">
+                                    <div class="ui mini button" (click)="goToOpe03()">
                                         <i class="file text outline icon"></i> สร้างกระดาษทำการ
                                     </div>
                                     <div class="ui mini button" (click)="resetSearch()">

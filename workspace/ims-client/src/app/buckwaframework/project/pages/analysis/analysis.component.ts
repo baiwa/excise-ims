@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 declare var $: any;
 @Component({
@@ -14,6 +15,7 @@ export class AnalysisPage implements OnInit {
     private serviceList: any[];
 
     constructor(
+        private router: Router,
     ) {
 
     }
@@ -23,7 +25,7 @@ export class AnalysisPage implements OnInit {
             { "value": "สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน" },
             { "value": "สินค้าเครื่องดื่ม" },
             { "value": "สินค้าเครื่องไฟฟ้า" },
-            { "value": "สินค้าแบตเตอี่" },
+            { "value": "สินค้าแบตเตอร์รี่" },
             { "value": "สินค้าแก้วและเครื่องแก้ว" },
             { "value": "สินค้ารถยนต์" },
             { "value": "สินค้ารถจักรยานยนต์" },
@@ -40,6 +42,7 @@ export class AnalysisPage implements OnInit {
             { "value": "กิจการเสี่ยงโชค" },
             { "value": "กิจการที่มีผลกระทต่อสิ่งแวดล้อม" },
             { "value": "กิจการที่ได้รับอนุญาตหรือสัมปทานจากรัฐ" },
+            { "value": "สนามกอล์ฟ" },
         ];
     }
 
@@ -54,6 +57,26 @@ export class AnalysisPage implements OnInit {
         } else {
             this.showSelectCoordinate = false;
         }
+    }
+
+    goToAnalysisResult() {
+        var coordinate = $('#selectCoordinate').val();
+        var category = $('#selectCatagory').val();
+        if (!coordinate) {
+            coordinate = "สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน";
+        }
+
+        if (category) {
+            if (category == 1) {
+                category = "สินค้า";
+            } else {
+                category = "บริการ";
+            }
+        } else {
+            category = "สินค้า";
+        }
+
+        this.router.navigate(['/result-analysis', category, coordinate]);
     }
 
 }

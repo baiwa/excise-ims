@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 // services
 import { MessageBarService } from '../../../common/services/message-bar.service';
@@ -14,14 +15,29 @@ declare var $: any;
     templateUrl: 'select-form.component.html',
     styleUrls: ['select-form.component.css']
 })
-export class SelectFormComponent {
+export class SelectFormComponent implements OnInit {
 
     private showSubMenuMat: boolean = false;
     private showSubMenuIns: boolean = false;
     private showSubMenuTax: boolean = false;
+    private coordinate: String;
+    private routerOpe051: String;
 
-    constructor(private messageBarService: MessageBarService) {
+    constructor(
+        private messageBarService: MessageBarService,
+        private router: Router,
+        private route: ActivatedRoute
+    ) {
 
+    }
+
+    ngOnInit(): void {
+        this.coordinate = this.route.snapshot.params['coordinate'];
+        if (this.coordinate == "สนามกอล์ฟ") {
+            this.routerOpe051 = "/ope05-1-1";
+        } else {
+            this.routerOpe051 = "/ope05-1";
+        }
     }
 
     ngAfterViewInit() {
