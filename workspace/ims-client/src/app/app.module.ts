@@ -54,7 +54,6 @@ import { CreatePaperPayMaterialComponent } from './buckwaframework/project/pages
 import { CreatePaperRelationMaterialComponent } from './buckwaframework/project/pages/create-paper-relation-material/create-paper-relation-material.component';
 import { CreatePaperReceiveInstantComponent } from './buckwaframework/project/pages/create-paper-receive-instant/create-paper-receive-instant.component';
 import { CreatePaperPayInstantComponent } from './buckwaframework/project/pages/create-paper-pay-instant/create-paper-pay-instant.component';
-import { CreatePaperCheckValueComponent } from './buckwaframework/project/pages/create-paper-check-value/create-paper-check-value.component';
 import { Int0111Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-1/int01-1-1.component';
 import { Int0112Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-2/int01-1-2.component';
 import { Int0113Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-3/int01-1-3.component';
@@ -209,7 +208,6 @@ import { Ope057Component } from './buckwaframework/project/tax-audit/operate-tax
         CreatePaperRelationMaterialComponent,
         CreatePaperReceiveInstantComponent,
         CreatePaperPayInstantComponent,
-        CreatePaperCheckValueComponent,
         Int083Component,
         Int0831Component,
         Int0832Component,
