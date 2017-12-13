@@ -114,6 +114,12 @@ import { Int08331Component } from './buckwaframework/project/internal-audit/int0
 import { Int08332Component } from './buckwaframework/project/internal-audit/int08/int08-3/int08-3-3/int08-3-3-2/int08-3-3-2.component';
 import { Int08333Component } from './buckwaframework/project/internal-audit/int08/int08-3/int08-3-3/int08-3-3-3/int08-3-3-3.component';
 import { Int0621Component } from './buckwaframework/project/internal-audit/int06/int06-2/int06-2-1/int06-2-1.component';
+import { Ope043Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-3/ope04-3.component';
+import { Ope046Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-6/ope04-6.component';
+import { Ope047Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-7/ope04-7.component';
+import { Ope048Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-8/ope04-8.component';
+import { Ope049Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-9/ope04-9.component';
+import { Ope0410Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-10/ope04-10.component';
 
 @NgModule({
     declarations: [
@@ -210,6 +216,12 @@ import { Int0621Component } from './buckwaframework/project/internal-audit/int06
         Int08332Component,
         Int08333Component,
         Int0621Component,
+        Ope043Component,
+        Ope046Component,
+        Ope047Component,
+        Ope048Component,
+        Ope049Component,
+        Ope0410Component,
     ],
     imports: [
         BrowserModule,

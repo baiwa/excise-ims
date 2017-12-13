@@ -94,6 +94,12 @@ import { CreatePaperRelationMaterialComponent } from './../../project/pages/crea
 import { CreatePaperReceiveInstantComponent } from './../../project/pages/create-paper-receive-instant/create-paper-receive-instant.component';
 import { CreatePaperPayInstantComponent } from './../../project/pages/create-paper-pay-instant/create-paper-pay-instant.component';
 import { CreatePaperCheckValueComponent } from './../../project/pages/create-paper-check-value/create-paper-check-value.component';
+import { Ope043Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-3/ope04-3.component';
+import { Ope046Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-6/ope04-6.component';
+import { Ope047Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-7/ope04-7.component';
+import { Ope048Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-8/ope04-8.component';
+import { Ope049Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-9/ope04-9.component';
+import { Ope0410Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-10/ope04-10.component';
 
 const routes: Routes = [
 
@@ -201,6 +207,13 @@ const routes: Routes = [
     { path: 'create-paper-receive-instant', component: CreatePaperReceiveInstantComponent, canActivate: [AuthGuard] },
     { path: 'create-paper-pay-instant', component: CreatePaperPayInstantComponent, canActivate: [AuthGuard] },
     { path: 'create-paper-check-value', component: CreatePaperCheckValueComponent, canActivate: [AuthGuard] },
+
+    { path: 'ope04-3', component: Ope043Component, canActivate: [AuthGuard] },
+    { path: 'ope04-6', component: Ope046Component, canActivate: [AuthGuard] },
+    { path: 'ope04-7', component: Ope047Component, canActivate: [AuthGuard] },
+    { path: 'ope04-8', component: Ope048Component, canActivate: [AuthGuard] },
+    { path: 'ope04-9', component: Ope049Component, canActivate: [AuthGuard] },
+    { path: 'ope04-10', component: Ope0410Component, canActivate: [AuthGuard] },
     
 ];
 
