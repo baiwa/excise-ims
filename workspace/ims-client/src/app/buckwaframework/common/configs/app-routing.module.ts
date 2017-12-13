@@ -100,6 +100,14 @@ import { Ope047Component } from './../../project/tax-audit/operate-tax-audit/ope
 import { Ope048Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-8/ope04-8.component';
 import { Ope049Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-9/ope04-9.component';
 import { Ope0410Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-10/ope04-10.component';
+import { Ope051Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-1/ope05-1.component';
+import { Ope0511Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-1/ope05-1-1/ope05-1-1.component';
+import { Ope052Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-2/ope05-2.component';
+import { Ope053Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-3/ope05-3.component';
+import { Ope054Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-4/ope05-4.component';
+import { Ope055Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-5/ope05-5.component';
+import { Ope056Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-6/ope05-6.component';
+import { Ope057Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-7/ope05-7.component';
 
 const routes: Routes = [
 
@@ -214,6 +222,15 @@ const routes: Routes = [
     { path: 'ope04-8', component: Ope048Component, canActivate: [AuthGuard] },
     { path: 'ope04-9', component: Ope049Component, canActivate: [AuthGuard] },
     { path: 'ope04-10', component: Ope0410Component, canActivate: [AuthGuard] },
+
+    { path: 'ope05-1', component: Ope051Component, canActivate: [AuthGuard] },
+    { path: 'ope05-1-1', component: Ope0511Component, canActivate: [AuthGuard] },
+    { path: 'ope05-2', component: Ope052Component, canActivate: [AuthGuard] },
+    { path: 'ope05-3', component: Ope053Component, canActivate: [AuthGuard] },
+    { path: 'ope05-4', component: Ope054Component, canActivate: [AuthGuard] },
+    { path: 'ope05-5', component: Ope055Component, canActivate: [AuthGuard] },
+    { path: 'ope05-6', component: Ope056Component, canActivate: [AuthGuard] },
+    { path: 'ope05-7', component: Ope057Component, canActivate: [AuthGuard] },
     
 ];
 

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'create-paper-check-value',
-  templateUrl: './create-paper-check-value.component.html',
-  styleUrls: ['./create-paper-check-value.component.css']
+  selector: 'ope05-3',
+  templateUrl: './ope05-3.component.html',
+  styleUrls: ['./ope05-3.component.css']
 })
-export class CreatePaperCheckValueComponent implements OnInit {
+export class Ope053Component implements OnInit {
 
   public showData: boolean = false;
 

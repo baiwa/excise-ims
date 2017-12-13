@@ -120,6 +120,14 @@ import { Ope047Component } from './buckwaframework/project/tax-audit/operate-tax
 import { Ope048Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-8/ope04-8.component';
 import { Ope049Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-9/ope04-9.component';
 import { Ope0410Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-10/ope04-10.component';
+import { Ope051Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope05/ope05-1/ope05-1.component';
+import { Ope0511Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope05/ope05-1/ope05-1-1/ope05-1-1.component';
+import { Ope052Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope05/ope05-2/ope05-2.component';
+import { Ope053Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope05/ope05-3/ope05-3.component';
+import { Ope054Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope05/ope05-4/ope05-4.component';
+import { Ope055Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope05/ope05-5/ope05-5.component';
+import { Ope056Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope05/ope05-6/ope05-6.component';
+import { Ope057Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope05/ope05-7/ope05-7.component';
 
 @NgModule({
     declarations: [
@@ -222,6 +230,14 @@ import { Ope0410Component } from './buckwaframework/project/tax-audit/operate-ta
         Ope048Component,
         Ope049Component,
         Ope0410Component,
+        Ope051Component,
+        Ope0511Component,
+        Ope052Component,
+        Ope053Component,
+        Ope054Component,
+        Ope055Component,
+        Ope056Component,
+        Ope057Component,
     ],
     imports: [
         BrowserModule,
