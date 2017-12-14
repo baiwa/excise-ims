@@ -50,8 +50,6 @@ import { WorkingPaper1FullTraderComponent } from './buckwaframework/project/tax-
 import { SummaryAmountProductTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/summary-amount-product-trader/summary-amount-product-trader.component';
 import { CreateSaveMessageTraderComponent } from './buckwaframework/project/tax-audit/trader-selection/create-save-message-trader/create-save-message-trader.component';
 import { CreatePaperRelationMaterialComponent } from './buckwaframework/project/pages/create-paper-relation-material/create-paper-relation-material.component';
-import { CreatePaperReceiveInstantComponent } from './buckwaframework/project/pages/create-paper-receive-instant/create-paper-receive-instant.component';
-import { CreatePaperPayInstantComponent } from './buckwaframework/project/pages/create-paper-pay-instant/create-paper-pay-instant.component';
 import { Int0111Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-1/int01-1-1.component';
 import { Int0112Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-2/int01-1-2.component';
 import { Int0113Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-3/int01-1-3.component';
@@ -114,6 +112,8 @@ import { Int0621Component } from './buckwaframework/project/internal-audit/int06
 import { Ope041Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-1/ope04-1.component';
 import { Ope042Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-2/ope04-2.component';
 import { Ope043Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-3/ope04-3.component';
+import { Ope044Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-4/ope04-4.component';
+import { Ope045Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-5/ope04-5.component';
 import { Ope046Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-6/ope04-6.component';
 import { Ope047Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-7/ope04-7.component';
 import { Ope048Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope04/ope04-8/ope04-8.component';
@@ -204,8 +204,6 @@ import { Ope057Component } from './buckwaframework/project/tax-audit/operate-tax
         Int0813Component,
         Int082Component,
         CreatePaperRelationMaterialComponent,
-        CreatePaperReceiveInstantComponent,
-        CreatePaperPayInstantComponent,
         Int083Component,
         Int0831Component,
         Int0832Component,
@@ -223,6 +221,8 @@ import { Ope057Component } from './buckwaframework/project/tax-audit/operate-tax
         Ope041Component,
         Ope042Component,
         Ope043Component,
+        Ope044Component,
+        Ope045Component,
         Ope046Component,
         Ope047Component,
         Ope048Component,

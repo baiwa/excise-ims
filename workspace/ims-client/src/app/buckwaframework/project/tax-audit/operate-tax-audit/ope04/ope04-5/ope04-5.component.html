@@ -1,6 +1,6 @@
 <div class="ui grid">
   <div class="sixteen wide column">
-    <h2 class="ui header">สร้างกระดาษทำการรับสินค้าสำเร็จรูป</h2>
+    <h2 class="ui header">สร้างกระดาษทำการจ่ายสินค้าสำเร็จรูป</h2>
 
     <div class="ui top attached header">
       <span>Criteria</span>
@@ -48,11 +48,22 @@
             </div>
           </div>
         </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">ประเภท </label>
+            <input type="text" class="custom-readonly" placeholder="ประเภท" readonly="" value="สินค้า">
+          </div>
+          <div class="eight wide field ">
+            <label class="custom-label-w-20">พิกัด</label>
+            <input type="text" class="custom-readonly" placeholder="พิกัด" readonly="" value="รถยนต์">
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="ui top attached header">
-      <span>อัพโหลด Template ข้อมูลปริมาณการการรับสินค้าสำเร็จรูป</span>
+      <span>อัพโหลด Template ข้อมูลปริมาณการการจ่ายสินค้าสำเร็จรูป</span>
     </div>
 
     <div class="ui attached segment">
@@ -83,7 +94,7 @@
       <div class="ui grid center aligned">
         <div class="sixteen wide column">
           บ. ฮอนด้า มอเตอร์ ประเทศไทย
-          <br> กระดาษทำการรับสินค้าสำเร็จรูป
+          <br> กระดาษทำการจ่ายสินค้าสำเร็จรูป
           <br> เดือน พ.ย. 2559 - ส.ค. 2559
         </div>
       </div>
@@ -91,73 +102,88 @@
       <table class="ui small celled table">
         <thead>
           <tr style="text-align: center;">
-            <th rowspan="2">ลำดับ</th>
-            <th rowspan="2">รายการ</th>
-            <th colspan="3">ปริมาณรับจากการผลิต</th>
-            <th colspan="2">ผลต่าง</th>
-          </tr>
-          <tr style="text-align: center;">
-            <th rowspan="2" style="border-left: 1px solid rgba(34,36,38,.1);">งบเดือน (ภส.07 - 04)
-              <br>(1)</th>
-            <th>CBU STOCK REPORT (ภส.07 - 02)
-              <br>(2)</th>
-            <th>รายงาน AF-OFF
-              <br>(3)</th>
-            <th>(1) - (2)</th>
-            <th>(1) - (3)</th>
+            <th>ลำดับ</th>
+            <th>รายการ</th>
+            <th>ใบกำกับภาษีขาย</th>
+            <th>(ภส.07 - 02)</th>
+            <th>งบเดือน (ภส.07 - 04)</th>
+            <th>ปริมาณที่ได้จากการตรวจสอบ</th>
+            <th>ภส 03-07</th>
+            <th>ผลต่าง
+              <br> (4) - (5)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>1</td>
-            <td>C 16M DOM-RS CVT ZB7</td>
-            <td>60</td>
-            <td>60</td>
-            <td>60</td>
-            <td>
-              <span class="ui green horizontal label right aligned" style="float: right;">0</span>
-            </td>
+            <td>C 16M DOM-RS CVT ZA7</td>
+            <td>1</td>
+            <td>2</td>
+            <td>2</td>
+            <td>2</td>
+            <td>2</td>
             <td>
               <span class="ui green horizontal label right aligned" style="float: right;">0</span>
             </td>
           </tr>
           <tr>
             <td>2</td>
-            <td>C 16M DOM-18.S CVT ZA5</td>
-            <td>130</td>
-            <td>150</td>
-            <td>150</td>
+            <td>C 16M DOM-18.S CVT ZB7</td>
+            <td>104</td>
+            <td>104</td>
+            <td>104</td>
+            <td>104</td>
+            <td>104</td>
             <td>
-              <span class="ui red horizontal label right aligned" style="float: right;">20</span>
-            </td>
-            <td>
-              <span class="ui red horizontal label right aligned" style="float: right;">20</span>
+              <span class="ui green horizontal label right aligned" style="float: right;">0</span>
             </td>
           </tr>
           <tr>
             <td>3</td>
-            <td>C 16M DOM-1.8EL CVT ZB7</td>
-            <td>200</td>
-            <td>200</td>
-            <td>200</td>
+            <td>C 16M DOM-1.8EL CVT ZA5</td>
+            <td>277</td>
+            <td>272</td>
+            <td>281</td>
+            <td>281</td>
+            <td>280</td>
             <td>
-              <span class="ui green horizontal label right aligned" style="float: right;">0</span>
-            </td>
-            <td>
-              <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+              <span class="ui red horizontal label right aligned" style="float: right;">1</span>
             </td>
           </tr>
           <tr>
             <td>4</td>
-            <td>C 16M AU-VTL-L-CVT QA5</td>
-            <td>390</td>
-            <td>390</td>
-            <td>390</td>
+            <td>C 16M AU-VTL-L-CVT ZA7</td>
+            <td>101</td>
+            <td>1001</td>
+            <td>1002</td>
+            <td>1002</td>
+            <td>1001</td>
             <td>
-              <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+              <span class="ui red horizontal label right aligned" style="float: right;">1</span>
             </td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>C 16M DOM-1.8EL CVT ZA5</td>
+            <td>54</td>
+            <td>55</td>
+            <td>55</td>
+            <td>55</td>
+            <td>59</td>
             <td>
-              <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+              <span class="ui green horizontal label right aligned" style="float: right;">4</span>
+            </td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>C 16M DOM-1.8EL CVT ZA5</td>
+            <td>512</td>
+            <td>521</td>
+            <td>521</td>
+            <td>521</td>
+            <td>525</td>
+            <td>
+              <span class="ui green horizontal label right aligned" style="float: right;">4</span>
             </td>
           </tr>
         </tbody>

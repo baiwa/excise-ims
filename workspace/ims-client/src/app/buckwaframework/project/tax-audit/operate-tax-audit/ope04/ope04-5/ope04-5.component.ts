@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'create-paper-receive-instant',
-  templateUrl: './create-paper-receive-instant.component.html',
-  styleUrls: ['./create-paper-receive-instant.component.css']
+  selector: 'ope04-5',
+  templateUrl: './ope04-5.component.html',
+  styleUrls: ['./ope04-5.component.css']
 })
-export class CreatePaperReceiveInstantComponent implements OnInit {
-  
+export class Ope045Component implements OnInit {
+
   public showData: boolean = false;
 
   constructor() { }
@@ -21,4 +21,5 @@ export class CreatePaperReceiveInstantComponent implements OnInit {
   clearData() {
     this.showData = false;
   }
+
 }
