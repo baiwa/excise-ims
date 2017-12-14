@@ -345,6 +345,6 @@ export class ResultAnalysisPage implements OnInit {
     }
 
     goToOpe03() {
-        this.router.navigate(['/select-form', this.coordinate]);
+        this.router.navigate(['/select-form', this.category, this.coordinate]);
     }
 }

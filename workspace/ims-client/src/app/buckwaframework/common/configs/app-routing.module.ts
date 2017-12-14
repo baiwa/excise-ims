@@ -127,7 +127,7 @@ const routes: Routes = [
 
     { path: 'analysis', component: AnalysisPage, canActivate: [AuthGuard] },
     { path: 'result-analysis/:category/:coordinate', component: ResultAnalysisPage, canActivate: [AuthGuard] },
-    { path: 'select-form/:coordinate', component: SelectFormComponent, canActivate: [AuthGuard] },
+    { path: 'select-form/:category/:coordinate', component: SelectFormComponent, canActivate: [AuthGuard] },
     { path: 'create-form', component: CreateFormComponent, canActivate: [AuthGuard] },
     { path: 'select-new-form', component: SelectNewFormComponent, canActivate: [AuthGuard] },
     { path: 'create-new-form', component: CreateNewFormComponent, canActivate: [AuthGuard] },
