@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Ope051Component implements OnInit {
 
+  public showData: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  uploadData() {
+    this.showData = true;
+  }
+
+  clearData() {
+    this.showData = false;
   }
 
 }
