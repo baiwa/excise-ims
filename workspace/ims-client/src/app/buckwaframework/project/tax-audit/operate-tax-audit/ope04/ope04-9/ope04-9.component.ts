@@ -6,10 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ope04-9.component.css']
 })
 export class Ope049Component implements OnInit {
+  
+  public showData: boolean = false;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  uploadData() {
+    this.showData = true;
+  }
+
+  clearData() {
+    this.showData = false;
   }
 
 }

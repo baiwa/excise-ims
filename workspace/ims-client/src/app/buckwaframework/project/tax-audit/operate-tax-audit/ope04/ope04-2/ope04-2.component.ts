@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'create-paper-pay-material',
-  templateUrl: './create-paper-pay-material.component.html',
-  styleUrls: ['./create-paper-pay-material.component.css']
+  selector: 'ope04-2',
+  templateUrl: './ope04-2.component.html',
+  styleUrls: ['./ope04-2.component.css']
 })
-export class CreatePaperPayMaterialComponent implements OnInit {
+export class Ope042Component implements OnInit {
 
   public showData: boolean = false;
 
@@ -21,4 +21,5 @@ export class CreatePaperPayMaterialComponent implements OnInit {
   clearData() {
     this.showData = false;
   }
+  
 }

@@ -48,11 +48,22 @@
             </div>
           </div>
         </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">ประเภท </label>
+            <input type="text" class="custom-readonly" placeholder="ประเภท" readonly="" value="สินค้า">
+          </div>
+          <div class="eight wide field ">
+            <label class="custom-label-w-20">พิกัด</label>
+            <input type="text" class="custom-readonly" placeholder="พิกัด" readonly="" value="รถยนต์">
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="ui top attached header">
-      <span>อัพโหลด Template ข้อมูลปริมาณการจำหน่ายสินค้าสำเร็จรูปในประเทศ</span>
+      <span>อัพโหลด Template ข้อมูลปริมาณการจ่ายวัตถุดิบ</span>
     </div>
 
     <div class="ui attached segment">
@@ -83,7 +94,7 @@
       <div class="ui grid center aligned">
         <div class="sixteen wide column">
           บ. ฮอนด้า มอเตอร์ ประเทศไทย
-          <br> กระดาษทำการรับวัตถุดิบ
+          <br> กระดาษทำการจ่ายวัตถุดิบ
           <br> เดือน พ.ย. 2559 - ส.ค. 2559
         </div>
       </div>
@@ -93,9 +104,13 @@
           <tr style="text-align: center;">
             <th>ลำดับ</th>
             <th>รายการ</th>
+            <th>ใบเบิกวัตถุดิบ</th>
+            <th>บัญชีประจำวัน ภส 07 - 01</th>
             <th>งบเดือน (ภส.07 - 04)</th>
             <th>Monthly Report CKD Import CBU car</th>
-            <th>ผลต่าง</th>
+            <th>ผลต่างคู่ข้อมูล</th>
+            <th>ผลต่างคู่ข้อมูล</th>
+            <th>ผลต่างคู่ข้อมูล</th>
           </tr>
         </thead>
         <tbody>
@@ -103,27 +118,51 @@
             <td>1</td>
             <td>C RS CVT ZB7</td>
             <td>60</td>
-            <td>90</td>
+            <td>65</td>
+            <td>60</td>
+            <td>70</td>
             <td>
-              <span class="ui red horizontal label right aligned" style="float: right;">30</span>
+              <span class="ui red horizontal label right aligned" style="float: right;">-5</span>
+            </td>
+            <td>
+              <span class="ui red horizontal label right aligned" style="float: right;">0</span>
+            </td>
+            <td>
+              <span class="ui green horizontal label right aligned" style="float: right;">-10</span>
             </td>
           </tr>
           <tr>
             <td>2</td>
             <td>C 1.8S CVT ZA5</td>
             <td>210</td>
+            <td>215</td>
+            <td>210</td>
             <td>210</td>
             <td>
-              <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+              <span class="ui red horizontal label right aligned" style="float: right;">-5</span>
+            </td>
+            <td>
+              <span class="ui red horizontal label right aligned" style="float: right;">0</span>
+            </td>
+            <td>
+              <span class="ui red horizontal label right aligned" style="float: right;">0</span>
             </td>
           </tr>
           <tr>
             <td>3</td>
             <td>C 1.8E CVT ZB7</td>
+            <td>1176</td>
+            <td>1180</td>
             <td>1170</td>
             <td>1170</td>
             <td>
-              <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+              <span class="ui red horizontal label right aligned" style="float: right;">-4</span>
+            </td>
+            <td>
+              <span class="ui green horizontal label right aligned" style="float: right;">6</span>
+            </td>
+            <td>
+              <span class="ui green horizontal label right aligned" style="float: right;">6</span>
             </td>
           </tr>
         </tbody>
