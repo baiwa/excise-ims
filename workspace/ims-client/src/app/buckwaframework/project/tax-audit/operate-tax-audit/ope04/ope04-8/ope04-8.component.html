@@ -1,3 +1,173 @@
-<p>
-  ope04-8 works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">สร้างกระดาษทำการตรวจสอบด้านราคา</h2>
+
+    <div class="ui top attached header">
+      <span>Criteria</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">ทะเบียนสรรพสามิต</label>
+            <input type="text" class="custom-readonly" placeholder="ทะเบียนสรรพสามิต" readonly="" value="2560-00178-5">
+          </div>
+          <div class="eight wide field ">
+            <label class="custom-label-w-20">เลขประจำตัวผู้เสียภาษี</label>
+            <input type="text" class="custom-readonly" placeholder="เลขประจำตัวผู้เสียภาษี" readonly="" value="1-5599-00168-99-6">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">ผู้ประกอบการ </label>
+            <input type="text" class="custom-readonly" placeholder="ผู้ประกอบการ" readonly="" value="บ. ฮอนด้า มอเตอร์ ประเทศไทย">
+          </div>
+          <div class="eight wide field ">
+            <label class="custom-label-w-20">เลขที่วิเคราะห์</label>
+            <input type="text" class="custom-readonly" placeholder="เลขที่วิเคราะห์" readonly="" value="256000000001">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field required">
+            <label class="custom-label-w-25">รอบระยะเวลาการตรวจสอบ</label>
+            <div class="eight wide field">
+              <div class="ui icon input">
+                <input type="text" class="custom-readonly" placeholder="MM/YYYY" value="11/2560" readonly="">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+            <div class="eight wide field">
+              <label>-</label>
+              <div class="ui icon input">
+                <input type="text" class="custom-readonly" placeholder="MM/YYYY" value="11/2560" readonly="">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">ประเภท </label>
+            <input type="text" class="custom-readonly" placeholder="" readonly="" value="สินค้า">
+          </div>
+          <div class="eight wide field ">
+            <label class="custom-label-w-20">พิกัด</label>
+            <input type="text" class="custom-readonly" placeholder="" readonly="" value="รถยนต์">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="ui top attached header">
+      <span>อัพโหลด Template ข้อมูลปริมาณการตรวจสอบด้านราคา</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">เลือกไฟล์ Template ข้อมูล</label>
+            <input type="file" />
+          </div>
+        </div>
+      </div>
+
+      <div class="ui center aligned grid">
+        <div class="four wide column">
+          <button class="ui mini primary button" (click)="uploadData()">
+            <i class="upload icon"></i>
+            อัพโหลด
+          </button>
+          <button class="ui mini button" (click)="clearData()">
+            <i class="trash outline icon"></i>
+            ลบไฟล์
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui segment">
+      <div class="ui grid center aligned">
+        <div class="sixteen wide column">
+          บ. ฮอนด้า มอเตอร์ ประเทศไทย
+          <br> กระดาษทำการตรวจสอบด้านราคา
+          <br> เดือน พ.ย. 2559 - ส.ค. 2559
+        </div>
+      </div>
+      <br>
+
+      <table class="ui celled table">
+        <thead>
+          <tr style="text-align: center">
+            <th>ลำดับ</th>
+            <th>รายการ</th>
+            <th>ราคาตามแบบแจ้ง<br> ภส 02-01 </th>
+            <th>ราคาจากข้อมูลภายนอก</th>
+            <th>ราคาต่อหน่วยจากการตรวจสอบ</th>
+            <th>แบบรายการภาษี ภส 03-07 </th>
+            <th>ผลต่างราคา</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="right aligned">1</td>
+            <td>C 16M DOM-RS CVT ZA7</td>
+            <td class="right aligned">350 </td>
+            <td class="right aligned">450 </td>
+            <td class="right aligned">450 </td>
+            <td class="right aligned">400 </td>
+            <td class="right aligned">50</td>
+          </tr>
+          <tr>
+            <td class="right aligned">2</td>
+            <td>C 16M DOM-18.S CVT ZB7</td>
+            <td class="right aligned">370 </td>
+            <td class="right aligned">450 </td>
+            <td class="right aligned">450 </td>
+            <td class="right aligned">460 </td>
+            <td class="right aligned">10</td>
+          </tr>
+          <tr>
+            <td class="right aligned">3</td>
+            <td>C 16M DOM-1.8EL CVT ZA5</td>
+            <td class="right aligned">100 </td>
+            <td class="right aligned">100 </td>
+            <td class="right aligned">100 </td>
+            <td class="right aligned">100 </td>
+            <td class="right aligned">0</td>
+          </tr>
+        </tbody>
+
+      </table>
+
+      <br>
+      <div class="ui center aligned grid">
+        <div class="six wide column">
+          <button class="ui mini primary button">
+            <i class="print icon"></i>
+            พิมพ์กระดาษทำการ
+          </button>
+          <button class="ui mini button" (click)="clearData()">
+            <i class="refresh icon"></i>
+            ล้างข้อมูล
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <div class="ui grid center aligned">
+      <div class="sixteen wide column">
+        <button class="ui mini button" routerLink="/select-form/สินค้า/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน">
+          <i class="arrow left icon"></i>
+          ย้อนกลับ
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
