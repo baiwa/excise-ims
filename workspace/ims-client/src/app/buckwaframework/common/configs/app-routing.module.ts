@@ -88,11 +88,11 @@ import { Int08333Component } from './../../project/internal-audit/int08/int08-3/
 import { Int0834Component } from './../../project/internal-audit/int08/int08-3/int08-3-4/int08-3-4.component';
 import { Int0835Component } from './../../project/internal-audit/int08/int08-3/int08-3-5/int08-3-5.component';
 import { Int0836Component } from './../../project/internal-audit/int08/int08-3/int08-3-6/int08-3-6.component';
-import { CreatePaperRelationMaterialComponent } from './../../project/pages/create-paper-relation-material/create-paper-relation-material.component';
 import { Ope041Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-1/ope04-1.component';
 import { Ope042Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-2/ope04-2.component';
 import { Ope043Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-3/ope04-3.component';
 import { Ope044Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-4/ope04-4.component';
+import { Ope0441Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-4/ope04-4-1/ope04-4-1.component';
 import { Ope045Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-5/ope04-5.component';
 import { Ope046Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-6/ope04-6.component';
 import { Ope047Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-7/ope04-7.component';
@@ -208,12 +208,11 @@ const routes: Routes = [
     { path: 'int08-3-5', component: Int0835Component, canActivate: [AuthGuard] },
     { path: 'int08-3-6', component: Int0836Component, canActivate: [AuthGuard] },    
 
-    { path: 'create-paper-relation-material', component: CreatePaperRelationMaterialComponent, canActivate: [AuthGuard] },
-
     { path: 'ope04-1', component: Ope041Component, canActivate: [AuthGuard] },
     { path: 'ope04-2', component: Ope042Component, canActivate: [AuthGuard] },
     { path: 'ope04-3', component: Ope043Component, canActivate: [AuthGuard] },
     { path: 'ope04-4', component: Ope044Component, canActivate: [AuthGuard] },
+    { path: 'ope04-4-1', component: Ope0441Component, canActivate: [AuthGuard] },
     { path: 'ope04-5', component: Ope045Component, canActivate: [AuthGuard] },
     { path: 'ope04-6', component: Ope046Component, canActivate: [AuthGuard] },
     { path: 'ope04-7', component: Ope047Component, canActivate: [AuthGuard] },
