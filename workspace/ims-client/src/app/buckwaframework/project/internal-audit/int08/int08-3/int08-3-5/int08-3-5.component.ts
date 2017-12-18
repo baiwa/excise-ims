@@ -18,9 +18,12 @@ export class Int0835Component implements OnInit {
   }
 
   ngAfterViewInit() {
-    $('#select1').hide();
-    $('#select2').hide();
-    $('#select3').hide();
+    $('#selectCondition1').dropdown();
+    $('#selectCondition2').dropdown();
+    $('#selectCondition3').dropdown();
+    $('#selectColor1').dropdown();
+    $('#selectColor2').dropdown();
+    $('#selectColor3').dropdown();
   }
 
   uploadData() {
@@ -32,16 +35,10 @@ export class Int0835Component implements OnInit {
   }
 
   popupEditData() {
-    $('#select1').show();
-    $('#select2').show();
-    $('#select3').show();
     $('#modalInt0835').modal('show');
   }
 
   closePopupEdit() {
-    $('#select1').hide();
-    $('#select2').hide();
-    $('#select3').hide();
     $('#modalInt0835').modal('hide');
   }
 
