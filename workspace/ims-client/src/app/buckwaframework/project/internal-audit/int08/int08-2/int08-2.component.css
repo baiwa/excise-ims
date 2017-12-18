@@ -1,9 +1,30 @@
-tr td:nth-child(1), td:nth-child(3), td:nth-child(5),
-td:nth-child(7), td:nth-child(9), td:nth-child(11),
-td:nth-child(12) {
+#tableData tr td:nth-child(3), #tableData tr td:nth-child(5),
+#tableData tr td:nth-child(7),#tableData tr td:nth-child(9),
+#tableData tr td:nth-child(11),#tableData tr td:nth-child(12),
+#tableData tr td:nth-child(13) {
     text-align: right;
 }
+#tableData tr td:nth-child(2), #tableData tr td:nth-child(4),
+#tableData tr td:nth-child(6), #tableData tr td:nth-child(8),
+#tableData tr td:nth-child(10), #tableData tr td:nth-child(14) {
+    text-align: left;
+}
 
-tr td:nth-child(13), td:nth-child(14) {
+#tableData tr td:nth-child(1) {
     text-align: center;
+}
+
+#tableSetting {
+    z-index: 1001;
+}
+
+#tableSetting tr td:nth-child(1), #tableSetting tr td:nth-child(2), 
+#tableSetting tr td:nth-child(4), #tableSetting tr td:nth-child(8),
+#tableSetting tr td:nth-child(9) {
+    text-align: center;
+}
+
+#tableSetting tr td:nth-child(3), #tableSetting tr td:nth-child(5), 
+#tableSetting tr td:nth-child(6) {
+    text-align: right;
 }

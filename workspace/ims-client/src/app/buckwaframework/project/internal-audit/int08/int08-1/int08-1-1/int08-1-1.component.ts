@@ -10,6 +10,7 @@ export class Int0811Component implements OnInit {
 
   private showData: boolean = false;
 
+
   constructor() { }
 
   ngOnInit() {
@@ -20,6 +21,12 @@ export class Int0811Component implements OnInit {
     $('#select1').hide();
     $('#select2').hide();
     $('#select3').hide();
+    $('#selectCondition1').dropdown();
+    $('#selectCondition2').dropdown();
+    $('#selectCondition3').dropdown();
+    $('#selectColor1').dropdown();
+    $('#selectColor2').dropdown();
+    $('#selectColor3').dropdown();
   }
 
   uploadData() {
@@ -29,6 +36,7 @@ export class Int0811Component implements OnInit {
   clearData() {
     this.showData = false;
   }
+
 
   popupEditData() {
     $('#select1').show();

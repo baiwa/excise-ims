@@ -40,8 +40,75 @@
           </button>
         </div>
       </div>
+      <br>
+      <div class="ui grid center aligned">
+        <div class="sixteen wide column">
+          กระดาษทำการประเมินความเสี่ยงประสิทธิภาพการดำเนินงานเพื่อพิจารณาคัดเลือกแผนงาน / โครงการ
+          <br> ปีงบประมาณ พ.ศ. 2561
+          <br> กลุ่มตรวจสอบภายใน กรมสรรพสามิต
+        </div>
+      </div>
 
-      <table class="ui small celled table">
+      <div class="ui eight column grid">
+        <div class="column">
+          ปัจจัยเสี่ยง:
+        </div>
+
+        <div class="column" style="width: 25%;">
+          2. ประสิทธิภาพในการดำเนินงาน
+          <br> ผลการดำเนินงานสูงกว่าเป้าหมาย
+          <br> ผลการดำเนินงานเป็นไปตามเป้าหมาย
+          <br> ผลการดำเนินงานต่ำกว่าเป้าหมาย
+        </div>
+
+        <div class="column" style="width: 10%;">
+          &nbsp;
+          <br> เท่ากับ
+          <br> เท่ากับ
+          <br> เท่ากับ
+        </div>
+
+        <div class="column" style="width: 5%;">
+          &nbsp;
+          <br> 1
+          <br> 2
+          <br> 3
+        </div>
+
+        <div class="column right aligned" style="width: 10%;">
+          &nbsp;
+          <br> กำหนดค่าเป็น
+          <br> กำหนดค่าเป็น
+          <br> กำหนดค่าเป็น
+        </div>
+
+        <div class="column" style="width: 5%;">
+          &nbsp;
+          <br> 1
+          <br> 2
+          <br> 3
+        </div>
+
+        <div class="column" style="width: 10%;">
+          &nbsp;
+          <br> กำหนดค่าเป็น
+          <br> กำหนดค่าเป็น
+          <br> กำหนดค่าเป็น
+        </div>
+
+        <div class="column" style="width: 5%;">
+          &nbsp;
+          <br> ต่ำ
+          <br> กลาง
+          <br> สูง
+        </div>
+
+
+      </div>
+
+
+
+      <table id="tableData" class="ui small celled table">
         <thead>
           <tr style="text-align: center;">
             <th rowspan="2">ลำดับ</th>
@@ -219,69 +286,106 @@
           </button>
         </div>
       </div>
+      <table id="tableSetting" class="ui small celled table" style="width: 100%;">
+        <thead>
+          <tr class="center aligned">
+            <th>เงื่อนไขที่</th>
+            <th>เงื่อนไข</th>
+            <th>ค่าที่ 1</th>
+            <th>ถึง</th>
+            <th>ค่าที่ 2</th>
+            <th>ค่า RL</th>
+            <th>แปลงค่า</th>
+            <th>สี</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>
+              <select id="selectCondition1" class="ui dropdown">
+                <option value="1">Equal</option>
+                <option value="0">Not Equal</option>
+              </select>
+            </td>
+            <td>1</td>
+            <td></td>
+            <td></td>
+            <td>1</td>
+            <td>ต่ำ</td>
+            <td>
+              <select id="selectColor1" class="ui dropdown">
+                <option value="0">เขียว</option>
+                <option value="1">เหลือง</option>
+                <option value="1">แดง</option>
+              </select>
+            </td>
+            <td>
+              <a href="javascript:;">
+                ลบ
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>
+              <select id="selectCondition2" class="ui dropdown">
+                <option value="0">Equal</option>
+                <option value="1">Not Equal</option>
+              </select>
+            </td>
+            <td>2</td>
+            <td></td>
+            <td></td>
+            <td>2</td>
+            <td>กลาง</td>
+            <td>
+              <select id="selectColor2" class="ui dropdown">
+                <option value="0">เหลือง</option>
+                <option value="1">เขียว</option>
+                <option value="1">แดง</option>
+              </select>
+            </td>
+            <td>
+              <a href="javascript:;">
+                ลบ
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>
+              <select id="selectCondition3" class="ui dropdown">
+                <option value="0">Equal</option>
+                <option value="1">Not Equal</option>
+              </select>
+            </td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td>3</td>
+            <td>สูง</td>
+            <td>
+              <select id="selectColor3" class="ui dropdown">
+                <option value="0">แดง</option>
+                <option value="1">เหลือง</option>
+                <option value="1">เขียว</option>
+              </select>
+            </td>
+            <td>
+              <a href="javascript:;">
+                ลบ
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-      <div class="inline fields">
-        <div class="five wide field">
-          <label class="custom-label-w-10">เงื่อนไขที่ 1</label>
-          <select id="select1" class="ui dropdown">
-            <option value="0">Equal</option>
-            <option value="1">Not Equal</option>
-          </select>
-        </div>
-        <div class="three wide field">
-          <input type="text" value="5,000,000">
-        </div>
-        <div class="four wide field">
-          <label class="custom-label-w-25">กำหนดค่าเป็น</label>
-          <input type="text" value="1">
-        </div>
-        <div class="four wide field">
-          <label class="custom-label-w-25">กำหนดค่าเป็น</label>
-          <input type="text" value="ต่ำ">
-        </div>
-      </div>
 
-      <div class="inline fields">
-        <div class="five wide field">
-          <label class="custom-label-w-10">เงื่อนไขที่ 2</label>
-          <select id="select2" class="ui dropdown">
-            <option value="0">Equal</option>
-            <option value="1">Not Equal</option>
-          </select>
-        </div>
-        <div class="three wide field">
-          <input type="text" value="5,000,001">
-        </div>
-        <div class="four wide field">
-          <label class="custom-label-w-25">กำหนดค่าเป็น</label>
-          <input type="text" value="2">
-        </div>
-        <div class="four wide field">
-          <label class="custom-label-w-25">กำหนดค่าเป็น</label>
-          <input type="text" value="กลาง">
-        </div>
-      </div>
 
-      <div class="inline fields">
-        <div class="five wide field">
-          <label class="custom-label-w-10">เงื่อนไขที่ 3</label>
-          <select id="select3" class="ui dropdown">
-            <option value="0">Equal</option>
-            <option value="1">Not Equal</option>
-          </select>
-        </div>
-        <div class="three wide field">
-          <input type="text" value="50,000,000">
-        </div>
-        <div class="four wide field">
-          <label class="custom-label-w-25">กำหนดค่าเป็น</label>
-          <input type="text" value="3">
-        </div>
-        <div class="four wide field">
-          <label class="custom-label-w-25">กำหนดค่าเป็น</label>
-          <input type="text" value="สูง">
-        </div>
-      </div>
+
+
 
     </div>
   </div>
