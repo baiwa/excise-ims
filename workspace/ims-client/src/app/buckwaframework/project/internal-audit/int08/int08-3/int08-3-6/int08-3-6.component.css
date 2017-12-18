@@ -6,7 +6,7 @@
     text-align: right;
 }
 
-#tableData tr td:nth-child(1), #tableData tr  td:nth-child(20) {
+#tableData tr td:nth-child(1) {
     text-align: center;
 }
 
