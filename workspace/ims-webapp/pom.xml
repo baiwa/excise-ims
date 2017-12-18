@@ -204,6 +204,13 @@
 					<mainClass>${start-class}</mainClass>
 					<classifier>exec</classifier>
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			
 			<!-- The Resources Plugin handles the copying of project resources to the output directory -->
