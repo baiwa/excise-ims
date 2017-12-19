@@ -20,6 +20,12 @@ export class Int08332Component implements OnInit {
     $('#select1').hide();
     $('#select2').hide();
     $('#select3').hide();
+    $('#selectCondition1').dropdown();
+    $('#selectCondition2').dropdown();
+    $('#selectCondition3').dropdown();
+    $('#selectColor1').dropdown();
+    $('#selectColor2').dropdown();
+    $('#selectColor3').dropdown();
   }
 
   uploadData() {
