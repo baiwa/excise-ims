@@ -13,6 +13,14 @@
             <i class="print icon"></i>
             พิมพ์
           </button>
+          <button class="ui mini default button" (click)="popupWeightData()">
+            <i class="setting icon"></i>
+            กำหนด %
+          </button>
+          <button class="ui mini default button" (click)="popupEditData()">
+            <i class="setting icon"></i>
+            กำหนด RL
+          </button>
         </div>
       </div>
       <br>
@@ -88,27 +96,15 @@
 
       <br>
 
-      <table id="tableData"class="ui small celled table">
+      <table id="tableData" class="ui small celled table">
         <thead>
           <tr style="text-align: center;">
             <th rowspan="2">ลำดับ</th>
             <th rowspan="2">หน่วยงาน</th>
-            <th colspan="2">
-              <a href="javascript:;" (click)="popupWeightData()">
-                1. ค่าเปรียบเทียบปรับ
-              </a>
-            </th>
-            <th colspan="2">
-              <a href="javascript:;" (click)="popupWeightData()">
-                2. จำนวนผลคดี
-              </a>
-            </th>
+            <th colspan="2">1. ค่าเปรียบเทียบปรับ</th>
+            <th colspan="2">2. จำนวนผลคดี</th>
             <th colspan="1">ค่าความเสี่ยงเฉลี่ย</th>
-            <th rowspan="2">
-              <a href="javascript:;" (click)="popupEditData()">
-                แปลค่า
-              </a>
-            </th>
+            <th rowspan="2">แปลค่า</th>
           </tr>
           <tr style="text-align: center;">
             <th style="border-left: 1px solid rgba(34,36,38,.1); width: 8%;">RL</th>

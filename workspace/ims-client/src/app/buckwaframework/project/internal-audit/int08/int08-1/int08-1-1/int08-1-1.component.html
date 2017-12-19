@@ -38,6 +38,10 @@
             <i class="print icon"></i>
             พิมพ์
           </button>
+          <button class="ui mini default button" (click)="popupEditData()">
+            <i class="setting icon"></i>
+            กำหนด RL
+          </button>
         </div>
       </div>
       <br>
@@ -129,16 +133,8 @@
               <th style="border-left: 1px solid rgba(34,36,38,.1);">งปม.</th>
               <th>นอก งปม.</th>
               <th>รวม</th>
-              <th style="width: 8%;">
-                <a href="javascript:;" (click)="popupEditData()">
-                  RL
-                </a>
-              </th>
-              <th style="width: 8%;">
-                <a href="javascript:;" (click)="popupEditData()">
-                  แปลค่า
-                </a>
-              </th>
+              <th style="width: 8%;">RL</th>
+              <th style="width: 8%;">แปลค่า</th>
             </tr>
           </thead>
           <tbody>

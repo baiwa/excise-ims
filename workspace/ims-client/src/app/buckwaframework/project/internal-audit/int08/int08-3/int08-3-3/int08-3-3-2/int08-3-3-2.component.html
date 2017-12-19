@@ -38,6 +38,10 @@
             <i class="print icon"></i>
             พิมพ์
           </button>
+          <button class="ui mini default button" (click)="popupEditData()">
+            <i class="setting icon"></i>
+            กำหนด RL
+          </button>
         </div>
       </div>
 
@@ -127,16 +131,8 @@
             <th style="width:8%;">ประมาณการ</th>
             <th style="width:8%;">ผลต่าง</th>
             <th style="width:8%;">อัตราสูงต่ำ</th>
-            <th style="width:8%;">
-              <a href="javascript:;" (click)="popupEditData()">
-                RL
-              </a>
-            </th>
-            <th style="width:8%;">
-              <a href="javascript:;" (click)="popupEditData()">
-                แปลค่า
-              </a>
-            </th>
+            <th style="width:8%;">RL</th>
+            <th style="width:8%;">แปลค่า</th>
           </tr>
         </thead>
         <tbody>
