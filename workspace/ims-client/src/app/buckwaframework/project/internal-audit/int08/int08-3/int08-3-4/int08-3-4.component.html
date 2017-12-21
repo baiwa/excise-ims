@@ -34,17 +34,31 @@
     <div class="ui segment" *ngIf="showData">
       <div class="ui right aligned grid">
         <div class="sixteen wide column">
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="setting icon"></i>
+            กำหนด RL
+          </button>
+          <button class="ui mini primary button">
+            <i class=" save icon"></i>
+            บันทึก
+          </button>
           <button class="ui mini primary button">
             <i class="print icon"></i>
             พิมพ์
           </button>
-          <button class="ui mini default button" (click)="popupEditData()">
-            <i class="setting icon"></i>
-            กำหนด RL
-          </button>
+          <div class="ui mini primary button">
+            <div class="ui simple dropdown item">
+              ส่งออก
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <div class="item">PDF</div>
+                <div class="item">Excel</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
+      <br>
       <div class="ui grid center aligned">
         <div class="sixteen wide column">
           กระดาษทำการประเมินความเสี่ยงการเงินและบัญชีเพื่อพิจารณาคัดเลือกหน่วยงานรับตรวจสำนักงานสรรพสามิตภาค พื้นที่ และสาขา
@@ -80,7 +94,8 @@
           &nbsp;
           <br> 4 - 6
           <br> 7 - 9
-          <br> <span style="margin-right: 1%;">10 - 12</span>
+          <br>
+          <span style="margin-right: 1%;">10 - 12</span>
         </div>
 
         <div class="column" style="width: 12%;">
@@ -420,9 +435,13 @@
     <br>
     <div class="ui center aligned grid">
       <div class="sixteen wide column">
-        <button class="ui mini button" routerLink="/int08-3">
+        <button class="ui mini button" routerLink="/int08-3-3-3">
           <i class="arrow left icon"></i>
           ย้อนกลับ
+        </button>
+        <button class="ui mini button" routerLink="/int08-3-5">
+          ถัดไป
+          <i class="arrow right icon"></i>
         </button>
       </div>
     </div>

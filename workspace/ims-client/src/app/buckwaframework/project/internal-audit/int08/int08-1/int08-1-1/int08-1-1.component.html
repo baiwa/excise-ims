@@ -34,14 +34,28 @@
     <div class="ui segment" *ngIf="showData">
       <div class="ui right aligned grid">
         <div class="sixteen wide column">
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="setting icon"></i>
+            กำหนด RL
+          </button>
+          <button class="ui mini primary button">
+            <i class=" save icon"></i>
+            บันทึก
+          </button>
           <button class="ui mini primary button">
             <i class="print icon"></i>
             พิมพ์
           </button>
-          <button class="ui mini default button" (click)="popupEditData()">
-            <i class="setting icon"></i>
-            กำหนด RL
-          </button>
+          <div class="ui mini primary button">
+            <div class="ui simple dropdown item">
+              ส่งออก
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <div class="item">PDF</div>
+                <div class="item">Excel</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <br>
@@ -72,39 +86,39 @@
           <br> มากกว่า
         </div>
 
-        <div class="column" style="width: 20%;" align="center" >
+        <div class="column" style="width: 20%;" align="center">
           &nbsp;
           <br> 5,000,000
           <br> 5,000,000 - 15,000,000
-          <br> 15,000,000          
+          <br> 15,000,000
         </div>
 
         <div class="column right aligned" style="width: 10%;">
           &nbsp;
           <br> กำหนดค่าเป็น
           <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น          
+          <br> กำหนดค่าเป็น
         </div>
 
         <div class="column" style="width: 2%;">
           &nbsp;
           <br> 1
           <br> 2
-          <br> 3          
+          <br> 3
         </div>
 
         <div class="column" style="width: 10%;">
           &nbsp;
           <br> กำหนดค่าเป็น
           <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น          
+          <br> กำหนดค่าเป็น
         </div>
 
         <div class="column" style="width: 2%;">
           &nbsp;
           <br> ต่ำ
           <br> กลาง
-          <br> สูง          
+          <br> สูง
         </div>
 
 
@@ -344,6 +358,10 @@
           <i class="arrow left icon"></i>
           ย้อนกลับ
         </button>
+        <button class="ui mini button" routerLink="/int08-1-2">
+          ถัดไป
+          <i class="arrow right icon"></i>
+        </button>
       </div>
     </div>
 
@@ -353,7 +371,7 @@
 <div id="modalInt0811" class="ui modal hidden transition">
   <i class="close icon"></i>
   <div class="header">
-    กำหนดเงื่อนไข RL และแปลงค่าประเมินความเสี่ยงโครงการด้านงบประมาณ								
+    กำหนดเงื่อนไข RL และแปลงค่าประเมินความเสี่ยงโครงการด้านงบประมาณ
   </div>
 
   <div class="content">

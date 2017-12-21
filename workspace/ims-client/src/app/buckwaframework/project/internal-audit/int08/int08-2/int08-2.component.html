@@ -34,546 +34,559 @@
     <div class="ui segment" *ngIf="showData">
       <div class="ui right aligned grid">
         <div class="sixteen wide column">
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="setting icon"></i>
+            กำหนด RL
+          </button>
+          <button class="ui mini primary button">
+            <i class=" save icon"></i>
+            บันทึก
+          </button>
           <button class="ui mini primary button">
             <i class="print icon"></i>
             พิมพ์
           </button>
-          <button class="ui mini default button" (click)="popupEditData()">
-            <i class="setting icon"></i>
-            กำหนด RL
-          </button>
-        </div>
-
-      </div>
-      <br>
-      <div class="ui grid center aligned">
-        <div class="sixteen wide column">
-          กระดาษทำการประเมินความเสี่ยงความมั่นคงปลอดภัยของระบบสารสนเทศ
-          <br> ปีงบประมาณ พ.ศ. 2561
-          <br> กลุ่มตรวจสอบภายใน กรมสรรพสามิต
+          <div class="ui mini primary button">
+            <div class="ui simple dropdown item">
+              ส่งออก
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <div class="item">PDF</div>
+                <div class="item">Excel</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="ui eight column grid">
-        <div class="column right aligned">
-          ปัจจัยเสี่ยง:
-        </div>
-
-        <div class="column" style="width: 30%;">
-          3. ความมั่นคงปลอดภัยของระบบงานสารสนเทศ
-          <br> ระบบสารสนเทศไม่สามารถใช้งานได้
-          <br> ระบบสารสนเทศไม่สามารถใช้งานได้
-          <br> ระบบสารสนเทศไม่สามารถใช้งานได้
-        </div>
-
-        <div class="column" style="width: 10%;">
-          &nbsp;
-          <br> น้อยกว่า
-          <br> เท่ากับ
-          <br> มากกว่า
-        </div>
-
-        <div class="column" style="width: 5%;">
-          &nbsp;
-          <br>3
-          <br>3
-          <br>3
-        </div>
-
-        <div class="column right aligned" style="width: 10%;">
-          &nbsp;
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-        </div>
-
-        <div class="column" style="width: 5%;">
-          &nbsp;
-          <br> 1
-          <br> 2
-          <br> 3
-        </div>
-
-        <div class="column" style="width: 10%;">
-          &nbsp;
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-        </div>
-
-        <div class="column" style="width: 5%;">
-          &nbsp;
-          <br> ต่ำ
-          <br> กลาง
-          <br> สูง
-        </div>
-      </div>
-      <br>
-
-
-
-      <div style="overflow-x: scroll;">
-        <table id="tableData" class="ui small celled table" style="width: 140%;">
-          <thead>
-            <tr style="text-align: center;">
-              <th rowspan="2">ลำดับ</th>
-              <th rowspan="2">ระบบงานสารสนเทศ</th>
-              <th colspan="8">ผลการตรวจสอบระบบสารสนเทศ (จำนวนครั้งที่ระบบใช้งานไม่ได้)</th>
-              <th rowspan="2">จำนวนครั้งรวมที่ระบบใช้งานไม่ได้</th>
-              <th rowspan="2">วิเคราะห์</th>
-              <th rowspan="2" style="width: 8%;">RL</th>
-              <th rowspan="2" style="width: 8%;">แปลค่า</th>
-            </tr>
-            <tr style="text-align: center;">
-              <th style="border-left: 1px solid rgba(34,36,38,.1); width: 8%;">มี.ค. 59</th>
-              <th style="width: 8%;">สาเหตุ</th>
-              <th style="width: 8%;">เม.ย. 59</th>
-              <th style="width: 8%;">สาเหตุ</th>
-              <th style="width: 8%;">พ.ค. 59</th>
-              <th style="width: 8%;">สาเหตุ</th>
-              <th style="width: 8%;">มิ.ย. 59</th>
-              <th style="width: 8%;">สาเหตุ</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>25</td>
-              <td>ระบบงาน E-Services ยื่นแบบผ่านอินเตอร์เน็ต UAT https://edserver2-uat.excise.go.th/staesw</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>13</td>
-              <td>login เข้าหน้า web ไม่ได้ (ตั้งแต่ 6/4 - 18/4)</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>1</td>
-              <td>login เข้าหน้า web ไม่ได้</td>
-              <td>14</td>
-              <td>4</td>
-              <td class="bg-red">3</td>
-              <td class="bg-red">สูง</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>เว็บไซต์กรมสรรพสามิต www.excise.go.th</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>ระบบงานอีเมล์กรมสรรพสามิต http://mail.excise.go.th</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>ระบบงานสารสนเทศหลัก http://Web.excise.go.th/EDINTRAWeb</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>1</td>
-              <td>login เข้าหน้า web ไม่ได้</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>1</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>ระบบความปลอดภัยกลาง (SSO) http://authen.excise.go.th/oiddas</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>ระบบงานกรมสรรพสามิต (Main Access)</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>ระบบงานโครงการรถยนต์ใหม่คันแรก (อินเตอร์เน็ต) https://firstcar.excise.go.th</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>1</td>
-              <td>Switch ขัดข้อง</td>
-              <td>1</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>ระบบงานโครงการรถยนต์ใหม่คันแรก (อินทราเน็ต) http://ed-firstcar.excise.go.th</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>3</td>
-              <td>ปิดปรับปรุง , Switch ขัดข้อง ,ไม่สามารถใช้งานได้</td>
-              <td>3</td>
-              <td>1</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>ระบบงานสารบรรณบูรณาการ http://192.168.3.123.8080/EDCSClient Web/pages/publile</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>ระบบงานสารสนเทศกฏหมายภาษีสรรพสามิต http://law.excise.go.th/exciselaw</td>
-              <td>1</td>
-              <td>Internal Error</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>1</td>
-              <td>login เข้าหน้า web ไม่ได้</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>2</td>
-              <td>1</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>ระบบบริการตอบข้อกฏหมายภาษีสรรพสามิต http://legal.excise.go.th/elcs</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>11</td>
-              <td>ระบบบริการตอบข้อกฏหมายภาษีสรรพสามิต UAT http://legal.excise.go.th/elcs_u</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>12</td>
-              <td>ระบบการแลกเปลี่ยนข้อมูลกับหน่วยงานภายนอกและการเชื่อมต่อกับระบบงานหลัก http://depica.excise.go.th/factory</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>13</td>
-              <td>ระบบการแลกเปลี่ยนข้อมูลกับภายนอกและการเชื่อมต่อกับระบบงานหลัก http://depicaint.excise.go.th/controller</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>14</td>
-              <td>ระบบงานสารบัญอิเล็กทรอนิกส์ E-Office http://192.168.3.44/awf</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>2</td>
-              <td>ไม่สามารถใช้งานได้</td>
-              <td>2</td>
-              <td>1</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>15</td>
-              <td>ระบบงานผู้กระทำผิดกฏหมายสรรพสามิต http://iportal.excise.go.th</td>
-              <td>3</td>
-              <td>login เข้าหน้า web ไม่ได้</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>1</td>
-              <td>login เข้าหน้า web ไม่ได้</td>
-              <td>4</td>
-              <td>1</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>16</td>
-              <td>ระบบงาน Iportal http://iportal.excise.go.th</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>1</td>
-              <td>ไม่สามารถใช้งานได้</td>
-              <td>1</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>17</td>
-              <td>ระบบงาน Bi (Business Intelligence) http://bi.excise.go.th</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>2</td>
-              <td>login เข้าหน้า web ไม่ได้ (ตั้งแต่ 2/4 - 3/4)</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>2</td>
-              <td>1</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>18</td>
-              <td>ระบบงานเงินเดือน http://salary.excise.go.th</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>19</td>
-              <td>เช็ค Traffic อินเตอร์เน็ตของกรมสรรพสามิต (CAT) http://bkk-mon.cat.net.th/cacti/index.php</td>
-              <td>1</td>
-              <td>เปลี่ยนอุปกรณ์</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>1</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>20</td>
-              <td>ระบบงาน E-Services ยื่นแบบผ่านอินเตอร์เน็ต https://edweb.excise.go.th/staesw</td>
-              <td>3</td>
-              <td>login เข้าหน้า web ไม่ได้</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>3</td>
-              <td>1</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>21</td>
-              <td>ระบบงานเทคโนโลยี 3 ระบบ (อินทราเน็ต) UAT http://wbs1-in-sta-sys.excise.go.th</td>
-              <td>3</td>
-              <td>login เข้าหน้า web ไม่ได้</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>3</td>
-              <td>1</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>22</td>
-              <td>ตรวจสอบ Proxy (http://proxy1.excise.go.th/proxy.pac</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>23</td>
-              <td>ตรวจสอบ Proxy (http://proxy3.excise.go.th/proxy.pac</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>24</td>
-              <td>ระบบควบคุมการจัดเก็บภาษีและการขนส่งสำหรับสินค้าเอทานอล http://ethanol.excise.go.th</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>26</td>
-              <td>ระบบงานเทคโนโลยี 3 ระบบ (อินทราเน็ต) UAT http://wbs4-in-sta-sys.excise.go.th</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>27</td>
-              <td>ระบบงานกรมสรรพสามิต</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>&nbsp;</td>
-              <td>0</td>
-              <td>0</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-          </tbody>
-        </table>
+    <br>
+    <div class="ui grid center aligned">
+      <div class="sixteen wide column">
+        กระดาษทำการประเมินความเสี่ยงความมั่นคงปลอดภัยของระบบสารสนเทศ
+        <br> ปีงบประมาณ พ.ศ. 2561
+        <br> กลุ่มตรวจสอบภายใน กรมสรรพสามิต
       </div>
     </div>
 
+    <div class="ui eight column grid">
+      <div class="column right aligned">
+        ปัจจัยเสี่ยง:
+      </div>
+
+      <div class="column" style="width: 30%;">
+        3. ความมั่นคงปลอดภัยของระบบงานสารสนเทศ
+        <br> ระบบสารสนเทศไม่สามารถใช้งานได้
+        <br> ระบบสารสนเทศไม่สามารถใช้งานได้
+        <br> ระบบสารสนเทศไม่สามารถใช้งานได้
+      </div>
+
+      <div class="column" style="width: 10%;">
+        &nbsp;
+        <br> น้อยกว่า
+        <br> เท่ากับ
+        <br> มากกว่า
+      </div>
+
+      <div class="column" style="width: 5%;">
+        &nbsp;
+        <br>3
+        <br>3
+        <br>3
+      </div>
+
+      <div class="column right aligned" style="width: 10%;">
+        &nbsp;
+        <br> กำหนดค่าเป็น
+        <br> กำหนดค่าเป็น
+        <br> กำหนดค่าเป็น
+      </div>
+
+      <div class="column" style="width: 5%;">
+        &nbsp;
+        <br> 1
+        <br> 2
+        <br> 3
+      </div>
+
+      <div class="column" style="width: 10%;">
+        &nbsp;
+        <br> กำหนดค่าเป็น
+        <br> กำหนดค่าเป็น
+        <br> กำหนดค่าเป็น
+      </div>
+
+      <div class="column" style="width: 5%;">
+        &nbsp;
+        <br> ต่ำ
+        <br> กลาง
+        <br> สูง
+      </div>
+    </div>
+    <br>
+
+
+
+    <div style="overflow-x: scroll;">
+      <table id="tableData" class="ui small celled table" style="width: 140%;">
+        <thead>
+          <tr style="text-align: center;">
+            <th rowspan="2">ลำดับ</th>
+            <th rowspan="2">ระบบงานสารสนเทศ</th>
+            <th colspan="8">ผลการตรวจสอบระบบสารสนเทศ (จำนวนครั้งที่ระบบใช้งานไม่ได้)</th>
+            <th rowspan="2">จำนวนครั้งรวมที่ระบบใช้งานไม่ได้</th>
+            <th rowspan="2">วิเคราะห์</th>
+            <th rowspan="2" style="width: 8%;">RL</th>
+            <th rowspan="2" style="width: 8%;">แปลค่า</th>
+          </tr>
+          <tr style="text-align: center;">
+            <th style="border-left: 1px solid rgba(34,36,38,.1); width: 8%;">มี.ค. 59</th>
+            <th style="width: 8%;">สาเหตุ</th>
+            <th style="width: 8%;">เม.ย. 59</th>
+            <th style="width: 8%;">สาเหตุ</th>
+            <th style="width: 8%;">พ.ค. 59</th>
+            <th style="width: 8%;">สาเหตุ</th>
+            <th style="width: 8%;">มิ.ย. 59</th>
+            <th style="width: 8%;">สาเหตุ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>25</td>
+            <td>ระบบงาน E-Services ยื่นแบบผ่านอินเตอร์เน็ต UAT https://edserver2-uat.excise.go.th/staesw</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>13</td>
+            <td>login เข้าหน้า web ไม่ได้ (ตั้งแต่ 6/4 - 18/4)</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>1</td>
+            <td>login เข้าหน้า web ไม่ได้</td>
+            <td>14</td>
+            <td>4</td>
+            <td class="bg-red">3</td>
+            <td class="bg-red">สูง</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>เว็บไซต์กรมสรรพสามิต www.excise.go.th</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>ระบบงานอีเมล์กรมสรรพสามิต http://mail.excise.go.th</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>ระบบงานสารสนเทศหลัก http://Web.excise.go.th/EDINTRAWeb</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>1</td>
+            <td>login เข้าหน้า web ไม่ได้</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>1</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>ระบบความปลอดภัยกลาง (SSO) http://authen.excise.go.th/oiddas</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>ระบบงานกรมสรรพสามิต (Main Access)</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>ระบบงานโครงการรถยนต์ใหม่คันแรก (อินเตอร์เน็ต) https://firstcar.excise.go.th</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>1</td>
+            <td>Switch ขัดข้อง</td>
+            <td>1</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>ระบบงานโครงการรถยนต์ใหม่คันแรก (อินทราเน็ต) http://ed-firstcar.excise.go.th</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>3</td>
+            <td>ปิดปรับปรุง , Switch ขัดข้อง ,ไม่สามารถใช้งานได้</td>
+            <td>3</td>
+            <td>1</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>ระบบงานสารบรรณบูรณาการ http://192.168.3.123.8080/EDCSClient Web/pages/publile</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>ระบบงานสารสนเทศกฏหมายภาษีสรรพสามิต http://law.excise.go.th/exciselaw</td>
+            <td>1</td>
+            <td>Internal Error</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>1</td>
+            <td>login เข้าหน้า web ไม่ได้</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>2</td>
+            <td>1</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>ระบบบริการตอบข้อกฏหมายภาษีสรรพสามิต http://legal.excise.go.th/elcs</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>ระบบบริการตอบข้อกฏหมายภาษีสรรพสามิต UAT http://legal.excise.go.th/elcs_u</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>ระบบการแลกเปลี่ยนข้อมูลกับหน่วยงานภายนอกและการเชื่อมต่อกับระบบงานหลัก http://depica.excise.go.th/factory</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td>ระบบการแลกเปลี่ยนข้อมูลกับภายนอกและการเชื่อมต่อกับระบบงานหลัก http://depicaint.excise.go.th/controller</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td>ระบบงานสารบัญอิเล็กทรอนิกส์ E-Office http://192.168.3.44/awf</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>2</td>
+            <td>ไม่สามารถใช้งานได้</td>
+            <td>2</td>
+            <td>1</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td>ระบบงานผู้กระทำผิดกฏหมายสรรพสามิต http://iportal.excise.go.th</td>
+            <td>3</td>
+            <td>login เข้าหน้า web ไม่ได้</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>1</td>
+            <td>login เข้าหน้า web ไม่ได้</td>
+            <td>4</td>
+            <td>1</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td>ระบบงาน Iportal http://iportal.excise.go.th</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>1</td>
+            <td>ไม่สามารถใช้งานได้</td>
+            <td>1</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>17</td>
+            <td>ระบบงาน Bi (Business Intelligence) http://bi.excise.go.th</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>2</td>
+            <td>login เข้าหน้า web ไม่ได้ (ตั้งแต่ 2/4 - 3/4)</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>2</td>
+            <td>1</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>18</td>
+            <td>ระบบงานเงินเดือน http://salary.excise.go.th</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>19</td>
+            <td>เช็ค Traffic อินเตอร์เน็ตของกรมสรรพสามิต (CAT) http://bkk-mon.cat.net.th/cacti/index.php</td>
+            <td>1</td>
+            <td>เปลี่ยนอุปกรณ์</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>1</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>20</td>
+            <td>ระบบงาน E-Services ยื่นแบบผ่านอินเตอร์เน็ต https://edweb.excise.go.th/staesw</td>
+            <td>3</td>
+            <td>login เข้าหน้า web ไม่ได้</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>3</td>
+            <td>1</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>21</td>
+            <td>ระบบงานเทคโนโลยี 3 ระบบ (อินทราเน็ต) UAT http://wbs1-in-sta-sys.excise.go.th</td>
+            <td>3</td>
+            <td>login เข้าหน้า web ไม่ได้</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>3</td>
+            <td>1</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>22</td>
+            <td>ตรวจสอบ Proxy (http://proxy1.excise.go.th/proxy.pac</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>23</td>
+            <td>ตรวจสอบ Proxy (http://proxy3.excise.go.th/proxy.pac</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>24</td>
+            <td>ระบบควบคุมการจัดเก็บภาษีและการขนส่งสำหรับสินค้าเอทานอล http://ethanol.excise.go.th</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>26</td>
+            <td>ระบบงานเทคโนโลยี 3 ระบบ (อินทราเน็ต) UAT http://wbs4-in-sta-sys.excise.go.th</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+          <tr>
+            <td>27</td>
+            <td>ระบบงานกรมสรรพสามิต</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="bg-green">1</td>
+            <td class="bg-green">ต่ำ</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+
+</div>
 </div>
 
 <div id="modalInt082" class="ui modal hidden transition">

@@ -34,16 +34,31 @@
     <div class="ui segment" *ngIf="showData">
       <div class="ui right aligned grid">
         <div class="sixteen wide column">
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="setting icon"></i>
+            กำหนด RL
+          </button>
+          <button class="ui mini primary button">
+            <i class=" save icon"></i>
+            บันทึก
+          </button>
           <button class="ui mini primary button">
             <i class="print icon"></i>
             พิมพ์
           </button>
-          <button class="ui mini default button" (click)="popupEditData()">
-            <i class="setting icon"></i>
-            กำหนด RL
-          </button>
+          <div class="ui mini primary button">
+            <div class="ui simple dropdown item">
+              ส่งออก
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <div class="item">PDF</div>
+                <div class="item">Excel</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
       <br>
       <div class="ui grid center aligned">
         <div class="sixteen wide column">
@@ -79,7 +94,8 @@
           <br>
           <br>0
           <br>0-100
-          <br><span style="margin-right:3%">100</span>
+          <br>
+          <span style="margin-right:3%">100</span>
         </div>
 
         <div class="column right aligned" style="width: 10%;">
@@ -308,6 +324,10 @@
           <i class="arrow left icon"></i>
           ย้อนกลับ
         </button>
+        <button class="ui mini button" routerLink="/int08-3-3-2">
+          ถัดไป
+          <i class="arrow right icon"></i>
+        </button>
       </div>
     </div>
 
@@ -317,7 +337,7 @@
 <div id="modalInt08331" class="ui modal hidden transition">
   <i class="close icon"></i>
   <div class="header">
-    กำหนดเงื่อนไข RL และแปลงค่าประเมินคดีด้านจำนวนคดี								
+    กำหนดเงื่อนไข RL และแปลงค่าประเมินคดีด้านจำนวนคดี
   </div>
 
   <div class="content">
