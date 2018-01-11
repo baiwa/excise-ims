@@ -71,7 +71,7 @@ public class WebSecurityConfig {
 	 */
 	@Configuration
 	@Order(1)
-	public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+	public class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 		
 		@Override
 		public void configure(WebSecurity web) throws Exception {
@@ -142,7 +142,7 @@ public class WebSecurityConfig {
 	 */
 	@Configuration
 	@Order(2)
-	public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+	public class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 		
 		@Override
 		public void configure(WebSecurity web) throws Exception {
@@ -158,8 +158,7 @@ public class WebSecurityConfig {
 				// For Swagger2 -- Start
 				"/v2/api-docs/**",
 				"/swagger.json",
-				"/swagger-ui.html",
-				"/webjars/**"
+				"/swagger-ui.html"
 				// For Swagger2 -- End
 			);
 		}

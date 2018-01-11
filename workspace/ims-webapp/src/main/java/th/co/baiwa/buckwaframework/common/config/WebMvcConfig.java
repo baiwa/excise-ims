@@ -67,6 +67,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// Configure from WebMvcAutoConfiguration.addResourceHandlers()
+		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 		registry.addResourceHandler("/**").addResourceLocations(new String[] {
 			"classpath:/META-INF/resources/",
 			"classpath:/resources/",
@@ -74,11 +75,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 			"classpath:/public/",
 			"/"
 		});
-		// For Thymeleaf
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 		// For Swagger2
 		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
-		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
 	
 	@Bean(name = "multipartResolver")
