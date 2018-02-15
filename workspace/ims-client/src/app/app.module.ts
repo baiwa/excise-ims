@@ -84,11 +84,7 @@ import { Int074Component } from './buckwaframework/project/internal-audit/int07/
 import { Int075Component } from './buckwaframework/project/internal-audit/int07/int07-5/int07-5.component';
 import { Int076Component } from './buckwaframework/project/internal-audit/int07/int07-6/int07-6.component';
 import { Int077Component } from './buckwaframework/project/internal-audit/int07/int07-7/int07-7.component';
-import { Int0771Component } from './buckwaframework/project/internal-audit/int07/int07-7/int07-7-1/int07-7-1.component';
-import { Int0772Component } from './buckwaframework/project/internal-audit/int07/int07-7/int07-7-2/int07-7-2.component';
-import { Int0773Component } from './buckwaframework/project/internal-audit/int07/int07-7/int07-7-3/int07-7-3.component';
-import { Int0774Component } from './buckwaframework/project/internal-audit/int07/int07-7/int07-7-4/int07-7-4.component';
-import { Int0775Component } from './buckwaframework/project/internal-audit/int07/int07-7/int07-7-5/int07-7-5.component';
+
 import { Int081Component } from './buckwaframework/project/internal-audit/int08/int08-1/int08-1.component';
 import { Int0811Component } from './buckwaframework/project/internal-audit/int08/int08-1/int08-1-1/int08-1-1.component';
 import { Int0812Component } from './buckwaframework/project/internal-audit/int08/int08-1/int08-1-2/int08-1-2.component';
@@ -127,6 +123,10 @@ import { Ope054Component } from './buckwaframework/project/tax-audit/operate-tax
 import { Ope055Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope05/ope05-5/ope05-5.component';
 import { Ope056Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope05/ope05-6/ope05-6.component';
 import { Ope057Component } from './buckwaframework/project/tax-audit/operate-tax-audit/ope05/ope05-7/ope05-7.component';
+import { Int0751Component } from './buckwaframework/project/internal-audit/int07/int07-5/int07-5-1/int07-5-1/int07-5-1.component';
+import { Int0752Component } from './buckwaframework/project/internal-audit/int07/int07-5/int07-5-2/int07-5-2.component';
+import { Int0753Component } from './buckwaframework/project/internal-audit/int07/int07-5/int07-5-3/int07-5-3.component';
+import { Int0754Component } from './buckwaframework/project/internal-audit/int07/int07-5/int07-5-4/int07-5-4.component';
 
 @NgModule({
     declarations: [
@@ -192,12 +192,7 @@ import { Ope057Component } from './buckwaframework/project/tax-audit/operate-tax
         Int074Component,
         Int075Component,
         Int076Component,
-        Int077Component,
-        Int0771Component,
-        Int0772Component,
-        Int0773Component,
-        Int0774Component,
-        Int0775Component,
+        Int077Component,       
         Int081Component,
         Int0811Component,
         Int0812Component,
@@ -236,6 +231,10 @@ import { Ope057Component } from './buckwaframework/project/tax-audit/operate-tax
         Ope055Component,
         Ope056Component,
         Ope057Component,
+        Int0751Component,
+        Int0752Component,
+        Int0753Component,
+        Int0754Component,
     ],
     imports: [
         BrowserModule,

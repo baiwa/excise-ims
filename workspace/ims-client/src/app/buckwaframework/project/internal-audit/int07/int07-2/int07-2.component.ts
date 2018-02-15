@@ -13,6 +13,14 @@ export class Int072Component implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    $('#export .dropdown')
+      .dropdown({
+        transition: 'drop'
+      });
+      
+  }
+
   popupEditData() {
     $('#modalInt072').modal('show');
   }

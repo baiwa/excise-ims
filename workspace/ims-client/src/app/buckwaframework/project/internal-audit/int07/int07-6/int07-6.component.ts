@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'int07-6',
   templateUrl: './int07-6.component.html',
@@ -13,7 +14,7 @@ export class Int076Component implements OnInit {
 
   ngOnInit() {
   }
-
+ 
   uploadData() {
     this.showData = true;
   }

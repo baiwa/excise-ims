@@ -36,16 +36,29 @@
     <div class="ui attached segment">
       <div class="ui right aligned grid">
         <div class="sixteen wide column">
-          <button class="ui mini primary button" routerLink="/int07-4">
-            <i class="arrow right icon"></i>
-            ถัดไป
-          </button>
           <button class="ui mini primary button">
             <i class="print icon"></i>
             พิมพ์
           </button>
+          <button class="ui mini primary button">
+            <i class="save icon"></i>
+            บันทึก
+          </button>
+          <div id="export" class="ui primary buttons">
+            <div class="ui mini button">ส่งออก</div>
+            <div class="ui floating dropdown icon button">
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <div class="item">
+                  <i class="edit icon"></i>PDF</div>
+                <div class="item">
+                  <i class="delete icon"></i>Excel</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
 
       <table class="ui small celled table">
         <thead>
@@ -1004,62 +1017,73 @@
           <th></th>
         </tfoot>
       </table>
-    </div>
-
-  </div>
-</div>
-
-<div id="modalInt073" class="ui modal small hidden transition">
-  <i class="close icon"></i>
-  <div class="header">
-    บัญชีแยกประเภท
-  </div>
-
-  <div class="content">
-    <div class="ui form">
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label style="width: 9em;">1101010101</label>
-          <label>เงินสดในมือ</label>
-        </div>
-      </div>
-      <br>
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-15">ยอดยกมา</label>
-          <input type="text" value="2603061.29" />
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-15">เดบิต</label>
-          <input type="text" value="1219664529" />
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-15">เครดิต</label>
-          <input type="text" value="-1218298224" />
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-15">ยอดยกไป</label>
-          <input type="text" value="3969366.34" />
+      <div class="ui center aligned grid">
+        <div class="sixteen wide column">
+          <button class="ui mini primary button " routerLink="/int07-2">
+            <i class="arrow left icon"></i>
+            ย้อนกลับ
+          </button>
+          <button class="ui mini primary button width-115" routerLink="/int07-4">
+            ถัดไป
+            <i class="arrow right icon"></i>
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="actions">
-    <div class="ui center aligned grid">
-      <div class="six wide column">
-        <button class="ui mini primary button width-100">
-          <i class="save icon"></i>
-          บันทึก
-        </button>
-        <button class="ui mini button width-100" (click)="closePopupEdit()">
-          <i class="close icon"></i>
-          ปิด
-        </button>
+
+  <div id="modalInt073" class="ui modal small hidden transition">
+    <i class="close icon"></i>
+    <div class="header">
+      ตรวจสอบข้อมูลบัญชี
+    </div>
+
+    <div class="content">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label style="width: 9em;">1101010101</label>
+            <label>เงินสดในมือ</label>
+          </div>
+        </div>
+        <br>
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-15">ยอดยกมา</label>
+            <input type="text" value="2603061.29" />
+          </div>
+          <div class="eight wide field">
+            <label class="custom-label-w-15">เดบิต</label>
+            <input type="text" value="1219664529" />
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-15">เครดิต</label>
+            <input type="text" value="-1218298224" />
+          </div>
+          <div class="eight wide field">
+            <label class="custom-label-w-15">ยอดยกไป</label>
+            <input type="text" value="3969366.34" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <div class="ui center aligned grid">
+        <div class="six wide column">
+          <button class="ui mini primary button">
+            <i class="save icon"></i>
+            บันทึก
+          </button>
+          <button class="ui mini button " (click)="closePopupEdit()">
+            <i class="close icon"></i>
+            ยกเลิก
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>

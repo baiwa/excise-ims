@@ -99,6 +99,10 @@ button.width-100 {
     width: 100px !important;
 }
 
+button.width-115 {
+    width: 115px !important;
+}
+
 img.image-width {
     width: 16px !important;
 }

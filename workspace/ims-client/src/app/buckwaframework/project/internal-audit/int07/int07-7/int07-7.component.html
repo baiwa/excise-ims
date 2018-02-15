@@ -1,65 +1,356 @@
 <div class="ui grid">
   <div class="sixteen wide column">
-    <h2 class="ui header">สร้างกระดาษทำการเงินฝากคลัง</h2>
-
-    <div class="ui top attached header">
-      <span>สร้างกระดาษทำการ</span>
+    <div class="ui large ordered steps">
+      <div class="completed step">
+        <div class="content">
+          <div class="title">ตรวจสอบดุลบัญชี</div>
+          <div class="description">"ยอดยกไป"</div>
+        </div>
+      </div>
+      <div class="completed step">
+        <div class="content">
+          <div class="title">ตรวจสอบความสัมพันธ์</div>
+          <div class="description">"เดบิต" "เครดิต"</div>
+        </div>
+      </div>
+      <div class="active step">
+        <div class="content">
+          <div class="title">ตรวจสอบเปรียบเทียบ</div>
+          <div class="description">"เดบิต" "เครดิต" ในงบทดลองกับบัญชีแยกประเภท</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="content">
+          <div class="title">ตรวจสอบเปรียบเทียบบัญชี</div>
+          <div class="description">เคลื่อนไหวเงินฝากคลังกระทบยอด 3 บัญชี</div>
+        </div>
+      </div>
     </div>
 
+    <h2 class="ui header">ตรวจสอบเปรียบเทียบ "เดบิต" "เครดิต" ในงบทดลองกับบัญชีแยกประเภท</h2>
+
+    <div class="ui top attached header">
+      <span>ตรวจสอบเปรียบเทียบ "เดบิต" "เครดิต" ในงบทดลองกับบัญชีแยกประเภท</span>
+    </div>
+
+
     <div class="ui attached segment">
-      <div class="ui form">
-        <div class="inline fields">
-          <div class="eight wide field ">
-            <label class="custom-label-w-25">กระดาษทำการเงินฝากคลัง</label>
-            <button class="ui mini primary button" routerLink="/int07-7-1">
-              <i class="add icon"></i>
-              สร้าง
-            </button>
+      <div class="ui right aligned grid">
+        <div class="sixteen wide column">
+          <button class="ui mini primary button">
+            <i class="print icon"></i>
+            พิมพ์
+          </button>
+          <button class="ui mini primary button">
+            <i class="save icon"></i>
+            บันทึก
+          </button>
+          <div id="export" class="ui primary buttons">
+            <div class="ui mini button">ส่งออก</div>
+            <div class="ui floating dropdown icon button">
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <div class="item">
+                  <i class="edit icon"></i>PDF</div>
+                <div class="item">
+                  <i class="delete icon"></i>Excel</div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+      <br>
+      <div style="overflow-x: scroll">
+        <table class="ui small celled table" style="width: 130%">
+          <thead>
+            <tr style="text-align: center;">
+              <th rowspan="2">วันที่ลงรายการ</th>
+              <th rowspan="2">เลขที่เอกสาร</th>
+              <th rowspan="2">ประเภทเอกสาร</th>
+              <th rowspan="2">เอกสารอ้างอิง</th>
+              <th rowspan="2">ผู้ทำแทน</th>
+              <th rowspan="2">การกำหนด</th>
+              <th rowspan="2">หน่วยเบิกจ่าย</th>
+              <th colspan="2">ผ่านรายการ</th>
+              <th rowspan="2">ยอดยกไป</th>
 
-        <div class="inline fields">
-          <div class="eight wide field ">
-            <label class="custom-label-w-25">กระดาษทำการเงินฝากคลัง 1</label>
-            <button class="ui mini primary button" routerLink="/int07-7-2">
-              <i class="add icon"></i>
-              สร้าง
-            </button>
-          </div>
-        </div>
+            </tr>
+            <tr style="text-align: center;">
+              <th style="border-left: 1px solid rgba(34,36,38,.1);">เดบิต</th>
+              <th>เครดิต</th>
+            </tr>
+          </thead>
+          <tbody>
 
-        <div class="inline fields">
-          <div class="eight wide field ">
-            <label class="custom-label-w-25">กระดาษทำการเจ้าหนี้ อปท.</label>
-            <button class="ui mini primary button" routerLink="/int07-7-3">
-              <i class="add icon"></i>
-              สร้าง
-            </button>
-          </div>
-        </div>
+            <!-- ใส่เทเบิลที่เหลือ -->
 
-        <div class="inline fields">
-          <div class="eight wide field ">
-            <label class="custom-label-w-25">กระดาษทำการเงินประกันอื่น</label>
-            <button class="ui mini primary button" routerLink="/int07-7-4">
-              <i class="add icon"></i>
-              สร้าง
-            </button>
-          </div>
-        </div>
 
-        <div class="inline fields">
-          <div class="eight wide field ">
-            <label class="custom-label-w-25">กระดาษทำการเงินรับฝาก</label>
-            <button class="ui mini primary button" routerLink="/int07-7-5">
-              <i class="add icon"></i>
-              สร้าง
+            <tr>
+              <td style="text-align: center;">08.10.2015</td>
+              <td>1500000507</td>
+              <td> RI</td>
+              <td>300600014</td>
+              <td>306</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>643680.00</td>
+              <td>0.00</td>
+              <td>887415.81</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">26.10.2015</td>
+              <td>200000542</td>
+              <td> J0</td>
+              <td>3600000741</td>
+              <td>306</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>0.00</td>
+              <td>90600.00</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">26.10.2015</td>
+              <td>200003801</td>
+              <td> J0</td>
+              <td>3600002002</td>
+              <td>306</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>0.00</td>
+              <td>11570.00</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;"> 26.10.2015</td>
+              <td>200003802</td>
+              <td> J0</td>
+              <td>3600002003</td>
+              <td>306</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>0.00</td>
+              <td>5108.00</td>
+              <td>780137.81</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">27.10.2015</td>
+              <td>1500002405</td>
+              <td> RI</td>
+              <td>300600014</td>
+              <td>306</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>547812.00</td>
+              <td>0.00</td>
+              <td>1327949.81</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">09.11.2015</td>
+              <td>1500005902</td>
+              <td> RI</td>
+              <td>300600014</td>
+              <td>306</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>86400.00</td>
+              <td>0.00</td>
+              <td>1414349.81</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">12.11.2015</td>
+              <td>200000588</td>
+              <td> J0</td>
+              <td>3600000795</td>
+              <td>306</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>0.00</td>
+              <td>420.00</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">12.11.2015</td>
+              <td>200001236</td>
+              <td> J0</td>
+              <td>3400001402</td>
+              <td>306</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>0.00</td>
+              <td>7276.00</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">12.11.2015</td>
+              <td>200005328</td>
+              <td> J0</td>
+              <td>3300000016</td>
+              <td>306</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>0.00</td>
+              <td>3500.00</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">12.11.2015</td>
+              <td>200005329</td>
+              <td> J0</td>
+              <td>3600007170</td>
+              <td>306</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>0.00</td>
+              <td>33600.00</td>
+              <td>1369553.81</td>
+            </tr>
+
+            <tr>
+              <td style="text-align: center;">01.10.2015
+              </td>
+              <td>8800000335
+              </td>
+              <td> IX</td>
+              <td>2187250100010370
+              </td>
+              <td>XXXX</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>407.40</td>
+              <td>0.00</td>
+              <td>1720683.97</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">02.10.2015</td>
+              <td>8800000337</td>
+              <td> IX</td>
+              <td>2188010300015840</td>
+              <td>XXXX</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>407.40</td>
+              <td>0.00</td>
+              <td>1720683.97</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">05.10.2015</td>
+              <td>8800000342</td>
+              <td> IX</td>
+              <td>2188010300013960</td>
+              <td>XXXX</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>252.20</td>
+              <td>0.00</td>
+              <td>1720936.17</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">06.10.2015</td>
+              <td>8800001363</td>
+              <td> IX</td>
+              <td>2180090700002770</td>
+              <td>XXXX</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>19.40</td>
+              <td>0.00</td>
+              <td>1720955.57</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">07.10.2015</td>
+              <td>8800001365</td>
+              <td> IX</td>
+              <td>2188086600009140</td>
+              <td>XXXX</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>135.80</td>
+              <td>0.00</td>
+              <td>1721091.37</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">08.10.2015</td>
+              <td>8800001749</td>
+              <td> IX</td>
+              <td>2187250100008290</td>
+              <td>XXXX</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>620.80</td>
+              <td>0.00</td>
+              <td>1721712.17</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;" >09.10.2015</td>
+              <td>8800002126</td>
+              <td> IX</td>
+              <td>2188086600007660</td>
+              <td>XXXX</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>252.20</td>
+              <td>0.00</td>
+              <td>1721964.37</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">12.10.2015</td>
+              <td>8800002916</td>
+              <td> IX</td>
+              <td>2188045100006770</td>
+              <td>XXXX</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>174.60</td>
+              <td>0.00</td>
+              <td>1722138.97</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">13.10.2015</td>
+              <td>8800002374</td>
+              <td> IX</td>
+              <td>2188045100008450</td>
+              <td>XXXX</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>174.60</td>
+              <td>0.00</td>
+              <td>1722313.57</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">14.10.2015</td>
+              <td>8800003719</td>
+              <td> IX</td>
+              <td>2188045100010430</td>
+              <td>XXXX</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>19.40</td>
+              <td>0.00</td>
+              <td>1722332.97</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">15.10.2015</td>
+              <td>8800004147</td>
+              <td> IX</td>
+              <td>2187250100007790</td>
+              <td>XXXX</td>
+              <td>300600053</td>
+              <td>300600053</td>
+              <td>310.40</td>
+              <td>0.00</td>
+              <td>1722643.37</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button " routerLink="/int07-5">
+              <i class="arrow left icon"></i>
+              กลับ
             </button>
           </div>
         </div>
       </div>
-
-    </div>
-
-  </div>
-</div>

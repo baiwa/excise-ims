@@ -68,11 +68,11 @@ import { Int074Component } from './../../project/internal-audit/int07/int07-4/in
 import { Int075Component } from './../../project/internal-audit/int07/int07-5/int07-5.component';
 import { Int076Component } from './../../project/internal-audit/int07/int07-6/int07-6.component';
 import { Int077Component } from './../../project/internal-audit/int07/int07-7/int07-7.component';
-import { Int0771Component } from './../../project/internal-audit/int07/int07-7/int07-7-1/int07-7-1.component';
-import { Int0772Component } from './../../project/internal-audit/int07/int07-7/int07-7-2/int07-7-2.component';
-import { Int0773Component } from './../../project/internal-audit/int07/int07-7/int07-7-3/int07-7-3.component';
-import { Int0774Component } from './../../project/internal-audit/int07/int07-7/int07-7-4/int07-7-4.component';
-import { Int0775Component } from './../../project/internal-audit/int07/int07-7/int07-7-5/int07-7-5.component';
+
+import { Int0751Component } from './../../project/internal-audit/int07/int07-5/int07-5-1/int07-5-1/int07-5-1.component';
+import { Int0752Component } from './../../project/internal-audit/int07/int07-5/int07-5-2/int07-5-2.component';
+import { Int0753Component } from './../../project/internal-audit/int07/int07-5/int07-5-3/int07-5-3.component';
+import { Int0754Component } from './../../project/internal-audit/int07/int07-5/int07-5-4/int07-5-4.component';
 import { Int081Component } from './../../project/internal-audit/int08/int08-1/int08-1.component';
 import { Int0811Component } from './../../project/internal-audit/int08/int08-1/int08-1-1/int08-1-1.component';
 import { Int0812Component } from './../../project/internal-audit/int08/int08-1/int08-1-2/int08-1-2.component';
@@ -107,6 +107,9 @@ import { Ope054Component } from './../../project/tax-audit/operate-tax-audit/ope
 import { Ope055Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-5/ope05-5.component';
 import { Ope056Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-6/ope05-6.component';
 import { Ope057Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-7/ope05-7.component';
+
+
+
 
 const routes: Routes = [
 
@@ -184,13 +187,12 @@ const routes: Routes = [
     { path: 'int07-3', component: Int073Component, canActivate: [AuthGuard] },
     { path: 'int07-4', component: Int074Component, canActivate: [AuthGuard] },
     { path: 'int07-5', component: Int075Component, canActivate: [AuthGuard] },
+    { path: 'int07-5-1', component: Int0751Component, canActivate: [AuthGuard] },
+    { path: 'int07-5-2', component: Int0752Component, canActivate: [AuthGuard] },
+    { path: 'int07-5-3', component: Int0753Component, canActivate: [AuthGuard] },
+    { path: 'int07-5-4', component: Int0754Component, canActivate: [AuthGuard] },
     { path: 'int07-6', component: Int076Component, canActivate: [AuthGuard] },
     { path: 'int07-7', component: Int077Component, canActivate: [AuthGuard] },
-    { path: 'int07-7-1', component: Int0771Component, canActivate: [AuthGuard] },
-    { path: 'int07-7-2', component: Int0772Component, canActivate: [AuthGuard] },
-    { path: 'int07-7-3', component: Int0773Component, canActivate: [AuthGuard] },
-    { path: 'int07-7-4', component: Int0774Component, canActivate: [AuthGuard] },
-    { path: 'int07-7-5', component: Int0775Component, canActivate: [AuthGuard] },
 
     { path: 'int08-1', component: Int081Component, canActivate: [AuthGuard] },
     { path: 'int08-1-1', component: Int0811Component, canActivate: [AuthGuard] },
