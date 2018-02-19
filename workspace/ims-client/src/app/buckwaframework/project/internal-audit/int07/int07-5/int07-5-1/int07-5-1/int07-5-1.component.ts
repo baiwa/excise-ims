@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+declare var $: any;
 @Component({
   selector: 'app-int07-5-1',
   templateUrl: './int07-5-1.component.html',
@@ -11,5 +11,11 @@ export class Int0751Component implements OnInit {
 
   ngOnInit() {
   }
-
+  ngAfterViewInit() {
+    $('#export .dropdown')
+      .dropdown({
+        transition: 'drop'
+      });
+      
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-
+declare var $: any;
 @Component({
   selector: 'int07-6',
   templateUrl: './int07-6.component.html',
@@ -13,6 +13,13 @@ export class Int076Component implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+  ngAfterViewInit() {
+    $('#export .dropdown')
+      .dropdown({
+        transition: 'drop'
+      });
+      
   }
  
   uploadData() {
