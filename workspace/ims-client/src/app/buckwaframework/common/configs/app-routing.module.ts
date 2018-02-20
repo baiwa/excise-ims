@@ -43,6 +43,7 @@ import { Int041Component } from './../../project/internal-audit/int04/int04-1/in
 import { Int042Component } from './../../project/internal-audit/int04/int04-2/int04-2.component';
 import { Int043Component } from './../../project/internal-audit/int04/int04-3/int04-3.component';
 import { Int051Component } from './../../project/internal-audit/int05/int05-1/int05-1.component';
+import { Int0511Component } from './../../project/internal-audit/int05/int05-1/int05-1-1/int05-1-1.component';
 import { Int052Component } from './../../project/internal-audit/int05/int05-2/int05-2.component';
 import { Int053Component } from './../../project/internal-audit/int05/int05-3/int05-3.component';
 import { Int054Component } from './../../project/internal-audit/int05/int05-4/int05-4.component';
@@ -111,6 +112,7 @@ import { Ope057Component } from './../../project/tax-audit/operate-tax-audit/ope
 
 
 
+
 const routes: Routes = [
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -161,7 +163,8 @@ const routes: Routes = [
     { path: 'int04-2', component: Int042Component, canActivate: [AuthGuard] },
     { path: 'int04-3', component: Int043Component, canActivate: [AuthGuard] },
     
-    { path: 'int05-1', component: Int051Component, canActivate: [AuthGuard] },
+    { path: 'int05-1', component: Int051Component, canActivate: [AuthGuard] },    
+    { path: 'int05-1-1', component: Int0511Component, canActivate: [AuthGuard] },
     { path: 'int05-2', component: Int052Component, canActivate: [AuthGuard] },
     { path: 'int05-3', component: Int053Component, canActivate: [AuthGuard] },
     { path: 'int05-4', component: Int054Component, canActivate: [AuthGuard] },

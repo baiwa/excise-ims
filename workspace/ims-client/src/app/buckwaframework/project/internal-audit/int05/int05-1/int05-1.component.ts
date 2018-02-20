@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+declare var $: any;
 @Component({
   selector: 'int05-1',
   templateUrl: './int05-1.component.html',
@@ -31,6 +31,13 @@ export class Int051Component implements OnInit {
       { 'value': 'สำนักงานสรรพสามิตพื้นที่สมุทรปราการ' }
     ];
   }
+  ngAfterViewInit() {
+    $('#export .dropdown')
+      .dropdown({
+        transition: 'drop'
+      });
+      
+  }
 
   uploadData() {
     this.showData = true;
@@ -39,4 +46,5 @@ export class Int051Component implements OnInit {
   clearData() {
     this.showData = false;
   }
+  
 }

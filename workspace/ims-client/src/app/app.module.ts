@@ -127,6 +127,7 @@ import { Int0751Component } from './buckwaframework/project/internal-audit/int07
 import { Int0752Component } from './buckwaframework/project/internal-audit/int07/int07-5/int07-5-2/int07-5-2.component';
 import { Int0753Component } from './buckwaframework/project/internal-audit/int07/int07-5/int07-5-3/int07-5-3.component';
 import { Int0754Component } from './buckwaframework/project/internal-audit/int07/int07-5/int07-5-4/int07-5-4.component';
+import { Int0511Component } from './buckwaframework/project/internal-audit/int05/int05-1/int05-1-1/int05-1-1.component';
 
 @NgModule({
     declarations: [
@@ -235,6 +236,7 @@ import { Int0754Component } from './buckwaframework/project/internal-audit/int07
         Int0752Component,
         Int0753Component,
         Int0754Component,
+        Int0511Component,
     ],
     imports: [
         BrowserModule,

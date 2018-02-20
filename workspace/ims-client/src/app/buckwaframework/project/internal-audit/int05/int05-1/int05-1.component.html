@@ -49,487 +49,780 @@
 
         <div class="ui center aligned grid">
           <div class="eight wide column">
-            <button class="ui mini primary button width-100" (click)="uploadData()">
+            <button class="ui mini primary button " (click)="uploadData()">
               <i class="upload icon"></i>
               อัพโหลด
             </button>
-            <button class="ui mini button width-100" (click)="clearData()">
+            <button class="ui mini button " (click)="clearData()">
               <i class="refresh icon"></i>
               ล้างข้อมูล
             </button>
+            <button class="ui mini primary button">
+              <i class="add icon"></i>
+              เพิ่มข้อมูล
+            </button>
           </div>
         </div>
-
       </div>
     </div>
     <br>
-    <div *ngIf="showData">
-      <div class="ui top attached header segment">
-        พื้นที่ลำปาง
-      </div>
-
+    <div *ngIf="showData">        
       <div class="ui attached segment">
-        <table class="ui small celled table">
-          <thead>
-            <tr style="text-align: center;">
-              <th rowspan="2">ชนิดแสตมป์</th>
-              <th rowspan="2">คงเหลือยกมาจากปีก่อน (ดวง)</th>
-              <th colspan="2">รวมทั้งปีงบประมาณ</th>
-              <th rowspan="2">คงเหลือ ณ ปัจจุบัน (ดวง)</th>
-              <th rowspan="2">คงเหลือ</th>
-            </tr>
-            <tr style="text-align: center;">
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">รับ</th>
-              <th>จ่าย</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 28</td>
-              <td class="bg-row-orange-highlight">&nbsp;</td>
-              <td class="bg-row-orange-highlight">20,000</td>
-              <td class="bg-row-orange-highlight">20,000</td>
-              <td class="bg-row-orange-highlight">0</td>
-              <td>
-                <span class="ui red horizontal label" style="text-align: right;">90</span>
-              </td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 30</td>
-              <td>&nbsp;</td>
-              <td>40,000</td>
-              <td>36,000</td>
-              <td>4,000</td>
-              <td>
-                <span class="ui green horizontal label" style="text-align: right;">0</span>
-              </td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 35</td>
-              <td>&nbsp;</td>
-              <td>60,000</td>
-              <td>58,410</td>
-              <td>1,590</td>
-              <td>
-                <span class="ui green horizontal label" style="text-align: right;">0</span>
-              </td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 40</td>
-              <td>&nbsp;</td>
-              <td>40,000</td>
-              <td>40,000</td>
-              <td>0</td>
-              <td>
-                <span class="ui green horizontal label" style="text-align: right;">0</span>
-              </td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 28</td>
-              <td>&nbsp;</td>
-              <td>20,000</td>
-              <td>20,000</td>
-              <td>0</td>
-              <td>
-                <span class="ui green horizontal label" style="text-align: right;">0</span>
-              </td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 30</td>
-              <td>&nbsp;</td>
-              <td>40,000</td>
-              <td>32,000</td>
-              <td>8,000</td>
-              <td>
-                <span class="ui green horizontal label" style="text-align: right;">0</span>
-              </td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 35</td>
-              <td>&nbsp;</td>
-              <td>60,000</td>
-              <td>59,781</td>
-              <td>219</td>
-              <td>
-                <span class="ui green horizontal label" style="text-align: right;">0</span>
-              </td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 40</td>
-              <td class="bg-row-orange-highlight">&nbsp;</td>
-              <td class="bg-row-orange-highlight">80,000</td>
-              <td class="bg-row-orange-highlight">79,500</td>
-              <td class="bg-row-orange-highlight">500</td>
-              <td>
-                <span class="ui red horizontal label" style="text-align: right;">1000</span>
-              </td>
-            </tr>
-            <tr>
-              <td>สุราแช่ชุมชน</td>
-              <td>&nbsp;</td>
-              <td>20,000</td>
-              <td>19,850</td>
-              <td>150</td>
-              <td>
-                <span class="ui green horizontal label" style="text-align: right;">0</span>
-              </td>
-            </tr>
-            <tr>
-              <td>ยาสูบ 2 สตางค์</td>
-              <td>&nbsp;</td>
-              <td>20,000</td>
-              <td>18,500</td>
-              <td>1,500</td>
-              <td>
-                <span class="ui green horizontal label" style="text-align: right;">0</span>
-              </td>
-            </tr>
-            <tr>
-              <td>ยาสูบ 10 สตางค์</td>
-              <td>&nbsp;</td>
-              <td>40,000</td>
-              <td>34,670</td>
-              <td>5,330</td>
-              <td>
-                <span class="ui green horizontal label" style="text-align: right;">0</span>
-              </td>
-            </tr>
-            <tr>
-              <td>ยาสูบ 50 สตางค์</td>
-              <td>&nbsp;</td>
-              <td>60,000</td>
-              <td>60,000</td>
-              <td>0</td>
-              <td>
-                <span class="ui green horizontal label" style="text-align: right;">0</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div class="ui right aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button">
+              <i class="print icon"></i>
+              พิมพ์
+            </button>
+            <button class="ui mini primary button">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <div id="export" class="ui primary buttons">
+              <div class="ui mini button">ส่งออก</div>
+              <div class="ui floating dropdown icon button">
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                  <div class="item">
+                    <i class="file pdf outline icon"></i> PDF</div>
+                  <div class="item">
+                    <i class="file excel outline icon"></i>Excel</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="ui grid center aligned">
+          <div class="sixteen wide column">
+            บันทึกการรับ-จ่ายแสตมป์
+            <br> สำนักงานสรรพสามิตภาคที่ 5 พื้นที่ลำปาง
+            <br> งบประมาณปี 2560
+          </div>
+        </div>
+        <div style="overflow-x: scroll">
+          <table class="ui small celled table" style="width: 200%">
+            <thead>
+              <tr style="text-align: center;">
+                <th rowspan="2">ลำดับ</th>
+                <th rowspan="2">เดือน</th>
+                <th rowspan="2">ว.ด.ป
+                  <br>รับจ่าย
+                </th>
+                <th rowspan="2">สถานะ
+                  <br>รับ-จ่าย
+                </th>
+                <th rowspan="2">หน่วยงาน</th>
+                <th colspan="2">หนังสือขอเบิกแสตมป์</th>
+                <th colspan="2">หนังสือส่งแสตมป์</th>
+                <th rowspan="2">ว.ด.ป
+                  <br>ตรวจนับ
+                </th>
+                <th rowspan="2">รหัส
+                  <br>ชนิดแสตมป์
+                </th>
+                <th rowspan="2">ชนิดแสตมป์/
+                  <br>ขนาดบรรจุ
+                </th>
+                <th rowspan="2">จำนวน
+                  <br>(เล่ม)
+                </th>
+                <th rowspan="2">จำนวน
+                  <br>(ดวง)
+                </th>
+                <th rowspan="2">มูลที่พิมพ์
+                  <br>(บาทต่อดวง)
+                </th>
+                <th rowspan="2">รวมค่าพิมพ์
+                  <br>(บาท)
+                </th>
+                <th rowspan="2">เลขที่ประจำ เล่มแสตมป์
+                </th>
+                <th rowspan="2">หมายเหตุ</th>
+                <th rowspan="2">Action</th>
 
-      <div class="ui top attached header segment">
-        พื้นที่ลำปางสาขาเมืองลำปาง
-      </div>
+              </tr>
+              <tr style="text-align: center;">
+                <th style="border-left: 1px solid rgba(34,36,38,.1);">เลขที่หนังสือ</th>
+                <th>ว.ด.ป</th>
 
-      <div class="ui attached segment">
-        <table class="ui small celled table">
-          <thead>
-            <tr style="text-align: center;">
-              <th rowspan="2">ชนิดแสตมป์</th>
-              <th rowspan="2">คงเหลือยกมาจากปีก่อน (ดวง)</th>
-              <th colspan="2">รวมทั้งปีงบประมาณ</th>
-              <th rowspan="2">คงเหลือ ณ ปัจจุบัน (ดวง)</th>
-            </tr>
-            <tr style="text-align: center;">
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">รับ</th>
-              <th>จ่าย</th>
-            </tr>
-          </thead>
-          <tbody>
+                <th style="border-left: 1px solid rgba(34,36,38,.1);">เลขที่หนังสือ</th>
+                <th>ว.ด.ป</th>
+              </tr>
+            </thead>
             <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 28</td>
-              <td class="bg-row-orange-highlight">&nbsp;</td>
-              <td class="bg-row-orange-highlight">9,910</td>
-              <td class="bg-row-orange-highlight">8790</td>
-              <td class="bg-row-orange-highlight">1,120</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 30</td>
+              <td>1</td>
+              <td>ตุลาคม</td>
+              <td>10/2/2560</td>
+              <td>รับ</td>
+              <td>กรมสรรพสามิต</td>
               <td>&nbsp;</td>
-              <td>16,000</td>
-              <td>15800</td>
-              <td>200</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>1.11</td>
+              <td>เบียร์</td>
+              <td>9</td>
+              <td>90000</td>
+              <td>1.25</td>
+              <td>112500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
             </tr>
             <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 35</td>
+              <td>2</td>
+              <td>ตุลาคม</td>
+              <td>10/2/2560</td>
+              <td>รับ</td>
+              <td>กรมสรรพสามิต</td>
               <td>&nbsp;</td>
-              <td>20,000</td>
-              <td>19655</td>
-              <td>345</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>2.11</td>
+              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>9</td>
+              <td>90000</td>
+              <td>0.5</td>
+              <td>45000</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
             </tr>
             <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 40</td>
+              <td>3</td>
+              <td>ตุลาคม</td>
+              <td>10/2/2560</td>
+              <td>รับ</td>
+              <td>กรมสรรพสามิต</td>
               <td>&nbsp;</td>
-              <td>20000</td>
-              <td>19750</td>
-              <td>250</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>3.11</td>
+              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>9</td>
+              <td>90000</td>
+              <td>3.75</td>
+              <td>337500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
             </tr>
             <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 28</td>
+              <td>4</td>
+              <td>ตุลาคม</td>
+              <td>10/10/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาเมืองลำปาง</td>
               <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>1.11</td>
+              <td>เบียร์</td>
+              <td>1</td>
               <td>10000</td>
-              <td>9823</td>
-              <td>177</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 30</td>
+              <td>1.25</td>
+              <td>12500</td>
               <td>&nbsp;</td>
-              <td>15,000</td>
-              <td>14,320</td>
-              <td>680</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 35</td>
               <td>&nbsp;</td>
-              <td>36540</td>
-              <td>34250</td>
-              <td>2,290</td>
+              <td style="text-align: center;">
+                <a class="update" href="javascript:;" (click)="popupEditData()">
+                  แก้ไข
+                </a>
+                <strong> / </strong>
+                <a class="delete" href="javascript:;">
+                  ลบ
+                </a>
+              </td>
             </tr>
             <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 40</td>
-              <td class="bg-row-orange-highlight">&nbsp;</td>
-              <td class="bg-row-orange-highlight">68,100</td>
-              <td class="bg-row-orange-highlight">68550</td>
-              <td class="bg-row-orange-highlight">-450</td>
-            </tr>
-            <tr>
-              <td>สุราแช่ชุมชน</td>
+              <td>5</td>
+              <td>ตุลาคม</td>
+              <td>10/10/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาเมืองลำปาง</td>
               <td>&nbsp;</td>
-              <td>7,560</td>
-              <td>6850</td>
-              <td>710</td>
-            </tr>
-            <tr>
-              <td>ยาสูบ 2 สตางค์</td>
               <td>&nbsp;</td>
-              <td>9320</td>
-              <td>9130</td>
-              <td>190</td>
-            </tr>
-            <tr>
-              <td>ยาสูบ 10 สตางค์</td>
               <td>&nbsp;</td>
-              <td>27800</td>
-              <td>25,400</td>
-              <td>2,400</td>
-            </tr>
-            <tr>
-              <td>ยาสูบ 50 สตางค์</td>
               <td>&nbsp;</td>
-              <td>45,600</td>
-              <td>45500</td>
-              <td>100</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="ui top attached header segment">
-        พื้นที่ลำปางสาขาสบปราบ
-      </div>
-
-      <div class="ui attached segment">
-        <table class="ui small celled table">
-          <thead>
-            <tr style="text-align: center;">
-              <th rowspan="2">ชนิดแสตมป์</th>
-              <th rowspan="2">คงเหลือยกมาจากปีก่อน (ดวง)</th>
-              <th colspan="2">รวมทั้งปีงบประมาณ</th>
-              <th rowspan="2">คงเหลือ ณ ปัจจุบัน (ดวง)</th>
-            </tr>
-            <tr style="text-align: center;">
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">รับ</th>
-              <th>จ่าย</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 28</td>
-              <td class="bg-row-orange-highlight">&nbsp;</td>
-              <td class="bg-row-orange-highlight">5,000</td>
-              <td class="bg-row-orange-highlight">4780</td>
-              <td class="bg-row-orange-highlight">220</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 30</td>
               <td>&nbsp;</td>
-              <td>10,000</td>
-              <td>9840</td>
-              <td>160</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 35</td>
-              <td>&nbsp;</td>
-              <td>19,210</td>
-              <td>18640</td>
-              <td>570</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 40</td>
-              <td>&nbsp;</td>
+              <td>2.11</td>
+              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
               <td>10000</td>
-              <td>9780</td>
-              <td>220</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 28</td>
-              <td>&nbsp;</td>
+              <td>0.5</td>
               <td>5000</td>
-              <td>4123</td>
-              <td>877</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 30</td>
               <td>&nbsp;</td>
-              <td>10,000</td>
-              <td>9,650</td>
-              <td>350</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 35</td>
               <td>&nbsp;</td>
-              <td>13140</td>
-              <td>12345</td>
-              <td>795</td>
+              <td>แก้ไข / ลบ</td>
             </tr>
             <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 40</td>
-              <td class="bg-row-orange-highlight">&nbsp;</td>
-              <td class="bg-row-orange-highlight">5,400</td>
-              <td class="bg-row-orange-highlight">5321</td>
-              <td class="bg-row-orange-highlight">79</td>
-            </tr>
-            <tr>
-              <td>สุราแช่ชุมชน</td>
+              <td>6</td>
+              <td>ตุลาคม</td>
+              <td>10/10/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาเมืองลำปาง</td>
               <td>&nbsp;</td>
-              <td>6,600</td>
-              <td>6542</td>
-              <td>58</td>
-            </tr>
-            <tr>
-              <td>ยาสูบ 2 สตางค์</td>
               <td>&nbsp;</td>
-              <td>5460</td>
-              <td>5211</td>
-              <td>249</td>
-            </tr>
-            <tr>
-              <td>ยาสูบ 10 สตางค์</td>
               <td>&nbsp;</td>
-              <td>4100</td>
-              <td>3,465</td>
-              <td>635</td>
-            </tr>
-            <tr>
-              <td>ยาสูบ 50 สตางค์</td>
               <td>&nbsp;</td>
-              <td>8,930</td>
-              <td>7888</td>
-              <td>1,042</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="ui top attached header segment">
-        พื้นที่ลำปางสาขาแจ้งห่ม
-      </div>
-
-      <div class="ui attached segment">
-        <table class="ui small celled table">
-          <thead>
-            <tr style="text-align: center;">
-              <th rowspan="2">ชนิดแสตมป์</th>
-              <th rowspan="2">คงเหลือยกมาจากปีก่อน (ดวง)</th>
-              <th colspan="2">รวมทั้งปีงบประมาณ</th>
-              <th rowspan="2">คงเหลือ ณ ปัจจุบัน (ดวง)</th>
-            </tr>
-            <tr style="text-align: center;">
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">รับ</th>
-              <th>จ่าย</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 28</td>
-              <td class="bg-row-orange-highlight">&nbsp;</td>
-              <td class="bg-row-orange-highlight">5,000</td>
-              <td class="bg-row-orange-highlight">4732</td>
-              <td class="bg-row-orange-highlight">268</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 30</td>
               <td>&nbsp;</td>
-              <td>10,000</td>
-              <td>9857</td>
-              <td>143</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 35</td>
-              <td>&nbsp;</td>
-              <td>19,200</td>
-              <td>18720</td>
-              <td>480</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดกลาง 40</td>
-              <td>&nbsp;</td>
+              <td>3.11</td>
+              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
               <td>10000</td>
-              <td>8670</td>
-              <td>1,330</td>
+              <td>3.75</td>
+              <td>37500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
             </tr>
             <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 28</td>
+              <td>7</td>
+              <td>ตุลาคม</td>
+              <td>10/10/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาสบปราบ</td>
               <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>1.11</td>
+              <td>เบียร์</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>1.25</td>
+              <td>12500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>ตุลาคม</td>
+              <td>10/10/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาสบปราบ</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>2.11</td>
+              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>0.5</td>
               <td>5000</td>
-              <td>4351</td>
-              <td>649</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 30</td>
               <td>&nbsp;</td>
-              <td>7,000</td>
-              <td>6,152</td>
-              <td>848</td>
-            </tr>
-            <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 35</td>
               <td>&nbsp;</td>
-              <td>10101</td>
-              <td>9880</td>
-              <td>221</td>
+              <td>แก้ไข / ลบ</td>
             </tr>
             <tr>
-              <td>สุรากลั่นชุมชน ขนาดใหญ่ 40</td>
-              <td class="bg-row-orange-highlight">&nbsp;</td>
-              <td class="bg-row-orange-highlight">5,000</td>
-              <td class="bg-row-orange-highlight">4561</td>
-              <td class="bg-row-orange-highlight">439</td>
-            </tr>
-            <tr>
-              <td>สุราแช่ชุมชน</td>
+              <td>9</td>
+              <td>ตุลาคม</td>
+              <td>10/10/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาสบปราบ</td>
               <td>&nbsp;</td>
-              <td>5,690</td>
-              <td>5312</td>
-              <td>378</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>3.11</td>
+              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>3.75</td>
+              <td>37500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
             </tr>
             <tr>
-              <td>ยาสูบ 2 สตางค์</td>
+              <td>10</td>
+              <td>ตุลาคม</td>
+              <td>10/10/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาแจ้งห่ม</td>
               <td>&nbsp;</td>
-              <td>3720</td>
-              <td>3691</td>
-              <td>29</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>1.11</td>
+              <td>เบียร์</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>1.25</td>
+              <td>12500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
             </tr>
             <tr>
-              <td>ยาสูบ 10 สตางค์</td>
+              <td>11</td>
+              <td>ตุลาคม</td>
+              <td>10/10/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาแจ้งห่ม</td>
               <td>&nbsp;</td>
-              <td>2770</td>
-              <td>2,655</td>
-              <td>115</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>2.11</td>
+              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>0.5</td>
+              <td>5000</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
             </tr>
             <tr>
-              <td>ยาสูบ 50 สตางค์</td>
+              <td>12</td>
+              <td>ตุลาคม</td>
+              <td>10/10/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาแจ้งห่ม</td>
               <td>&nbsp;</td>
-              <td>5,470</td>
-              <td>4623</td>
-              <td>847</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>3.11</td>
+              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>3.75</td>
+              <td>37500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
             </tr>
-          </tbody>
-        </table>
+            <tr>
+              <td>13</td>
+              <td>พฤศจิกายน</td>
+              <td>11/5/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาเมืองลำปาง</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>1.11</td>
+              <td>เบียร์</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>1.25</td>
+              <td>12500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td>พฤศจิกายน</td>
+              <td>11/5/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาเมืองลำปาง</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>2.11</td>
+              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>0.5</td>
+              <td>5000</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>15</td>
+              <td>พฤศจิกายน</td>
+              <td>11/5/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาเมืองลำปาง</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>3.11</td>
+              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>3.75</td>
+              <td>37500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>16</td>
+              <td>พฤศจิกายน</td>
+              <td>11/5/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาสบปราบ</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>1.11</td>
+              <td>เบียร์</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>1.25</td>
+              <td>12500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>17</td>
+              <td>พฤศจิกายน</td>
+              <td>11/5/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาสบปราบ</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>2.11</td>
+              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>0.5</td>
+              <td>5000</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>18</td>
+              <td>พฤศจิกายน</td>
+              <td>11/5/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาสบปราบ</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>3.11</td>
+              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>3.75</td>
+              <td>37500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>19</td>
+              <td>พฤศจิกายน</td>
+              <td>11/5/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาแจ้งห่ม</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>1.11</td>
+              <td>เบียร์</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>1.25</td>
+              <td>12500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>20</td>
+              <td>พฤศจิกายน</td>
+              <td>11/5/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาแจ้งห่ม</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>2.11</td>
+              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>0.5</td>
+              <td>5000</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>21</td>
+              <td>พฤศจิกายน</td>
+              <td>11/5/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาแจ้งห่ม</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>3.11</td>
+              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>3.75</td>
+              <td>37500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>22</td>
+              <td>ธันวาคม</td>
+              <td>12/6/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาเมืองลำปาง</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>1.11</td>
+              <td>เบียร์</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>1.25</td>
+              <td>12500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>23</td>
+              <td>ธันวาคม</td>
+              <td>12/6/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาเมืองลำปาง</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>2.11</td>
+              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>0.5</td>
+              <td>5000</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>24</td>
+              <td>ธันวาคม</td>
+              <td>12/6/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาเมืองลำปาง</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>3.11</td>
+              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>3.75</td>
+              <td>37500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>25</td>
+              <td>ธันวาคม</td>
+              <td>12/6/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาสบปราบ</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>1.11</td>
+              <td>เบียร์</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>1.25</td>
+              <td>12500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>26</td>
+              <td>ธันวาคม</td>
+              <td>12/6/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาสบปราบ</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>2.11</td>
+              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
+              <td>1</td>
+              <td>10000</td>
+              <td>0.5</td>
+              <td>5000</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+            </tr>
+            <tr>
+              <td>27</td>
+              <td>ธันวาคม</td>
+              <td>12/6/2560</td>
+              <td>จ่าย</td>
+              <td>สาขาสบปราบ</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>3.11</td>
+              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>              
+              <td>1</td>
+              <td>10000</td>
+              <td>3.75</td>
+              <td>37500</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>แก้ไข / ลบ</td>
+          </tr>
+          <tr>
+            <td>28</td>
+            <td>ธันวาคม</td>
+            <td>12/6/2560</td>
+            <td>จ่าย</td>
+            <td>สาขาแจ้งห่ม</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>1.11</td>
+            <td>เบียร์</td>           
+            <td>1</td>
+            <td>10000</td>
+            <td>1.25</td>
+            <td>12500</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>แก้ไข / ลบ</td>
+        </tr>
+        <tr>
+          <td>29</td>
+          <td>ธันวาคม</td>
+          <td>12/6/2560</td>
+          <td>จ่าย</td>
+          <td>สาขาแจ้งห่ม</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>2.11</td>
+          <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>         
+          <td>1</td>
+          <td>10000</td>
+          <td>0.5</td>
+          <td>5000</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>แก้ไข / ลบ</td>
+      </tr>
+      <tr>
+        <td>30</td>
+        <td>ธันวาคม</td>
+        <td>12/6/2560</td>
+        <td>จ่าย</td>
+        <td>สาขาแจ้งห่ม</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>3.11</td>
+        <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
+        <td>1</td>
+        <td>10000</td>
+        <td>3.75</td>
+        <td>37500</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>แก้ไข / ลบ</td>
+    </tr>
+          </table>
+          <div class="ui center aligned grid">
+            <div class="sixteen wide column">
+              <button class="ui mini primary button " routerLink="/int07-5-4">
+                <i class="arrow left icon"></i>
+                กลับ
+              </button>        
+            </div>
+          </div>
+        </div>
+        </div>
       </div>
-
     </div>
-
-  </div>
-</div>
+   
