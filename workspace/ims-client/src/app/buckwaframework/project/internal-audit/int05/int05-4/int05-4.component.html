@@ -2,290 +2,349 @@
   <div class="sixteen wide column">
     <h2 class="ui header">รายงานผลการจัดซื้อจัดจ้าง</h2>
 
+
     <div class="ui top attached header">
-      <div class="ui grid">
-        <div class="right aligned column">
-          <div class="ui mini primary button" (click)="addData()">
-            <i class="add icon"></i> Add
-          </div>
-        </div>
-      </div>
+      <span>อัพโหลดรายงานสินทรัพย์</span>
     </div>
 
     <div class="ui attached segment">
-      <div style="overflow-x: scroll">
-        <table id="table1" class="ui small celled table" style="width: 180%;">
-          <thead>
-            <tr style="text-align: center;">
-              <th rowspan="2">ที่</th>
-              <th rowspan="2">รายการ</th>
-              <th rowspan="2">หมวดภาษี</th>
-              <th rowspan="2">วิธีการจัดซื้อจัดจ้าง</th>
-              <th colspan="3">เลขที่ / ปีงบประมาณ</th>
-              <th rowspan="2">ลงวันที่ เดือน ปี</th>
-              <th rowspan="2">ระยะเวลาดำเนินการ</th>
-              <th rowspan="2">ผู้ขาย/ผู้รับจ้าง</th>
-              <th colspan="2">จำนวนเงินตามสัญญา</th>
-              <th rowspan="2">หัก ณ ที่จ่าย</th>
-              <th rowspan="2">วันที่ตรวจรับ</th>
-              <th rowspan="2">จำนวนเงินที่เบิก (งวด)</th>
-              <th rowspan="2">คงเหลือ</th>
-              <th rowspan="2">หมายเหตุ</th>
-              <th rowspan="2">Action</th>
-            </tr>
-            <tr style="text-align: center;">
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">ใบสั่งซื้อ/จ้าง</th>
-              <th>สัญญาซื้อ/จ้าง</th>
-              <th>ข้อตกลงซื้อ/จ้าง</th>
-              <th>เงินงบประมาณ</th>
-              <th>เงินนอกงบประมาณ</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" href="javascript:;" (click)="editData()">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" href="javascript:;" (click)="editData()">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" href="javascript:;" (click)="editData()">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div id="modalInt054" class="ui modal hidden transition">
-  <i class="close icon"></i>
-  <div class="header">
-    บันทึกผลการจัดซื้อจัดจ้าง
-  </div>
-
-  <div class="content">
-    <div class="ui form">
-      <div class="inline fields">
-        <div class="eight wide field required">
-          <label class="custom-label-w-25">รายการ</label>
-          <input type="text" value="" />
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">รายงานสินทรัพย์ (GFMIS)</label>
+            <input type="file" />
+          </div>
         </div>
-        <div class="eight wide field required">
-          <label class="custom-label-w-25">วิธีการจัดซื้อจัดจ้าง</label>
-          <select name="selectTrading" id="selectTrading" class="ui dropdown">
-            <option value="0">วิธีประกาศเชิญชวนทั่วไป</option>
-            <option value="1">วิธีคัดเลือก</option>
-            <option value="2">วิธีเฉพาะเจาะจง</option>
-          </select>
-        </div>
-      </div>
 
-      <div class="inline fields">
-        <div class="eight wide field required">
-          <label class="custom-label-w-25">เลขที่/ปีงบประมาณ</label>
-          <input type="text" value="" />
-        </div>
-      </div>
 
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-25">ใบสั่งซื้อ/จ้าง</label>
-          <input type="text" value="">
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-25">วัน/เดือน/ปี</label>
-          <div class="ui icon input">
-            <input type="text" placeholder="DD/MM/YYYY" value="07/10/60">
-            <i class="add to calendar icon"></i>
+        <div class="ui center aligned grid">
+          <div class="eight wide column">
+            <button class="ui mini primary button" (click)="uploadFile()">
+              <i class="upload icon"></i>
+              อัพโหลด
+            </button>
+            <button class="ui mini button" (click)="clearFile()">
+              <i class="trash outline icon"></i>
+              ลบไฟล์
+            </button>
+            <button class="ui mini primary button" (click)="addData()">
+              <i class="add icon"></i>
+              เพิ่มข้อมูล
+            </button>
           </div>
         </div>
       </div>
 
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-25">สัญญาซื้อ/จ้าง</label>
-          <input type="text" value="">
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-25">ข้อตกลงซื้อ/จ้าง</label>
-          <div class="ui icon input">
-            <input type="text" value="">
-          </div>
-        </div>
-      </div>
 
-      <div class="inline fields">
-        <div class="ten wide field">
-          <label class="custom-label-w-20">ระยะเวลาดำเนินการ</label>
-          <div class="seven wide field">
-            <div class="ui icon input" style="margin-left: -1px">
-              <input type="text" placeholder="DD/MM/YYYY" value="03/09/2560">
-              <i class="add to calendar icon"></i>
+
+
+      <br>
+      <div class="ui segment" *ngIf="showData">       
+          <div class="ui right aligned grid">
+            <div class="sixteen wide column">
+              <button class="ui mini primary button">
+                <i class="print icon"></i>
+                พิมพ์
+              </button>
+              <button class="ui mini primary button">
+                <i class="save icon"></i>
+                บันทึก
+              </button>
+              <div id="export" class="ui primary buttons">
+                  <div class="ui mini button">ส่งออก</div>
+                  <div class="ui floating dropdown icon button">
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                      <div class="item">
+                        <i class="file pdf outline icon"></i> PDF</div>
+                      <div class="item">
+                        <i class="file excel outline icon"></i>Excel</div>
+                    </div>
+                  </div>
+              </div>
             </div>
           </div>
-          <div class="eight wide field">
-            <label>ถึง</label>
-            <div class="ui icon input">
-              <input type="text" placeholder="DD/MM/YYYY" value="03/10/2560">
-              <i class="add to calendar icon"></i>
+     
+          <div class="ui grid center aligned">
+            <div class="sixteen wide column">
+                รายงานผลการจัดซื้อ/จัดจ้าง	
+              <br>สำนักงานสรรพสามิตพื้นที่/ภาค/ ส่วนบริหารการพัสดุ	
+              <br> งบประมาณปี 2560
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-25">ผู้ขาย/ผู้รับจ้าง</label>
-          <input type="text" value="">
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-25">จำนวนเงินตามสัญญา</label>
-          <input type="text" value="">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-25">เงินงบประมาณ</label>
-          <input type="text" value="">
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-25">ภาษีมูลค่าเพิ่ม</label>
-          <input type="text" value="">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-25">เงินนอกงบประมาณ</label>
-          <input type="text" value="">
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-25">หัก ณ ที่จ่าย</label>
-          <input type="text" value="">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-25">วันที่ตรวจรับ</label>
-          <div class="ui icon input">
-            <input type="text" placeholder="DD/MM/YYYY" value="07/10/60">
-            <i class="add to calendar icon"></i>
+          <div style="overflow-x: scroll">
+            <table id="table1" class="ui small celled table" style="width: 180%;">
+              <thead>
+                <tr style="text-align: center;">
+                  <th rowspan="2">ที่</th>
+                  <th rowspan="2">รายการ</th>
+                  <th rowspan="2">หมวดภาษี</th>
+                  <th rowspan="2">วิธีการจัดซื้อจัดจ้าง</th>
+                  <th colspan="3">เลขที่ / ปีงบประมาณ</th>
+                  <th rowspan="2">ลงวันที่ เดือน ปี</th>
+                  <th rowspan="2">ระยะเวลาดำเนินการ</th>
+                  <th rowspan="2">ผู้ขาย/ผู้รับจ้าง</th>
+                  <th colspan="2">จำนวนเงินตามสัญญา</th>
+                  <th rowspan="2">หัก ณ ที่จ่าย</th>
+                  <th rowspan="2">วันที่ตรวจรับ</th>
+                  <th rowspan="2">จำนวนเงินที่เบิก (งวด)</th>
+                  <th rowspan="2">คงเหลือ</th>
+                  <th rowspan="2">หมายเหตุ</th>
+                  <th rowspan="2">Action</th>
+                </tr>
+                <tr style="text-align: center;">
+                  <th style="border-left: 1px solid rgba(34,36,38,.1);">ใบสั่งซื้อ/จ้าง</th>
+                  <th>สัญญาซื้อ/จ้าง</th>
+                  <th>ข้อตกลงซื้อ/จ้าง</th>
+                  <th>เงินงบประมาณ</th>
+                  <th>เงินนอกงบประมาณ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td style="text-align: center;">
+                    <a class="update" href="javascript:;" (click)="editData()">
+                      แก้ไข
+                    </a>
+                    <strong> / </strong>
+                    <a class="delete" href="javascript:;">
+                      ลบ
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td style="text-align: center;">
+                    <a class="update" href="javascript:;" (click)="editData()">
+                      แก้ไข
+                    </a>
+                    <strong> / </strong>
+                    <a class="delete" href="javascript:;">
+                      ลบ
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td style="text-align: center;">
+                    <a class="update" href="javascript:;" (click)="editData()">
+                      แก้ไข
+                    </a>
+                    <strong> / </strong>
+                    <a class="delete" href="javascript:;">
+                      ลบ
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-25">จำนวนเงินที่เบิก</label>
-          <input type="text" value="">
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-25">คงเหลือ</label>
-          <input type="text" value="">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <div class="eleven wide field">
-          <label class="custom-label-w-20">หมายเหตุ</label>
-          <textarea></textarea>
-        </div>
-      </div>
-
     </div>
-  </div>
 
-  <div class="actions">
-    <div class="ui center aligned grid">
-      <div class="six wide column">
-        <button class="ui mini primary button">
-          <i class="save icon"></i>
-          บันทึก
-        </button>
-        <button class="ui mini button" (click)="closeModal()">
-          <i class="close icon"></i>
-          ปิด
-        </button>
+
+    <div id="modalInt054" class="ui modal hidden transition">
+      <i class="close icon"></i>
+      <div class="header">
+        บันทึกผลการจัดซื้อจัดจ้าง
+      </div>
+
+      <div class="content">
+        <div class="ui form">
+          <div class="inline fields">
+            <div class="eight wide field required">
+              <label class="custom-label-w-25">รายการ</label>
+              <input type="text" value="" />
+            </div>
+            <div class="eight wide field required">
+              <label class="custom-label-w-25">วิธีการจัดซื้อจัดจ้าง</label>
+              <select name="selectTrading" id="selectTrading" class="ui dropdown">
+                <option value="0">วิธีประกาศเชิญชวนทั่วไป</option>
+                <option value="1">วิธีคัดเลือก</option>
+                <option value="2">วิธีเฉพาะเจาะจง</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="inline fields">
+            <div class="eight wide field required">
+              <label class="custom-label-w-25">เลขที่/ปีงบประมาณ</label>
+              <input type="text" value="" />
+            </div>
+          </div>
+
+          <div class="inline fields">
+            <div class="eight wide field">
+              <label class="custom-label-w-25">ใบสั่งซื้อ/จ้าง</label>
+              <input type="text" value="">
+            </div>
+            <div class="eight wide field">
+              <label class="custom-label-w-25">วัน/เดือน/ปี</label>
+              <div class="ui icon input">
+                <input type="text" placeholder="DD/MM/YYYY" value="07/10/60">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="inline fields">
+            <div class="eight wide field">
+              <label class="custom-label-w-25">สัญญาซื้อ/จ้าง</label>
+              <input type="text" value="">
+            </div>
+            <div class="eight wide field">
+              <label class="custom-label-w-25">ข้อตกลงซื้อ/จ้าง</label>
+              <div class="ui icon input">
+                <input type="text" value="">
+              </div>
+            </div>
+          </div>
+
+          <div class="inline fields">
+            <div class="ten wide field">
+              <label class="custom-label-w-20">ระยะเวลาดำเนินการ</label>
+              <div class="seven wide field">
+                <div class="ui icon input" style="margin-left: -1px">
+                  <input type="text" placeholder="DD/MM/YYYY" value="03/09/2560">
+                  <i class="add to calendar icon"></i>
+                </div>
+              </div>
+              <div class="eight wide field">
+                <label>ถึง</label>
+                <div class="ui icon input">
+                  <input type="text" placeholder="DD/MM/YYYY" value="03/10/2560">
+                  <i class="add to calendar icon"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="inline fields">
+            <div class="eight wide field">
+              <label class="custom-label-w-25">ผู้ขาย/ผู้รับจ้าง</label>
+              <input type="text" value="">
+            </div>
+            <div class="eight wide field">
+              <label class="custom-label-w-25">จำนวนเงินตามสัญญา</label>
+              <input type="text" value="">
+            </div>
+          </div>
+
+          <div class="inline fields">
+            <div class="eight wide field">
+              <label class="custom-label-w-25">เงินงบประมาณ</label>
+              <input type="text" value="">
+            </div>
+            <div class="eight wide field">
+              <label class="custom-label-w-25">ภาษีมูลค่าเพิ่ม</label>
+              <input type="text" value="">
+            </div>
+          </div>
+
+          <div class="inline fields">
+            <div class="eight wide field">
+              <label class="custom-label-w-25">เงินนอกงบประมาณ</label>
+              <input type="text" value="">
+            </div>
+            <div class="eight wide field">
+              <label class="custom-label-w-25">หัก ณ ที่จ่าย</label>
+              <input type="text" value="">
+            </div>
+          </div>
+
+          <div class="inline fields">
+            <div class="eight wide field">
+              <label class="custom-label-w-25">วันที่ตรวจรับ</label>
+              <div class="ui icon input">
+                <input type="text" placeholder="DD/MM/YYYY" value="07/10/60">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="inline fields">
+            <div class="eight wide field">
+              <label class="custom-label-w-25">จำนวนเงินที่เบิก</label>
+              <input type="text" value="">
+            </div>
+            <div class="eight wide field">
+              <label class="custom-label-w-25">คงเหลือ</label>
+              <input type="text" value="">
+            </div>
+          </div>
+
+          <div class="inline fields">
+            <div class="eleven wide field">
+              <label class="custom-label-w-20">หมายเหตุ</label>
+              <textarea></textarea>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="actions">
+        <div class="ui center aligned grid">
+          <div class="six wide column">
+            <button class="ui mini primary button">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <button class="ui mini button" (click)="closeModal()">
+              <i class="close icon"></i>
+              ปิด
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>

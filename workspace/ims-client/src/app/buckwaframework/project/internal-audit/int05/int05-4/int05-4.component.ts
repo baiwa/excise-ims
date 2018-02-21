@@ -7,12 +7,28 @@ declare var $: any;
   styleUrls: ['./int05-4.component.css']
 })
 export class Int054Component implements OnInit {
-
+  private showData: boolean = false;
   constructor() { }
 
+
+  uploadFile() {
+    this.showData = true;
+  }
+  clearFile() {
+    this.showData = false;
+  }
+ 
   ngOnInit() {
     $('#selectTrading').hide();
   }
+  ngAfterViewInit() {
+    $('#export .dropdown')
+      .dropdown({
+        transition: 'drop'
+      });
+      
+  }
+ 
 
   addData() {
     $('#modalInt054').modal('show');

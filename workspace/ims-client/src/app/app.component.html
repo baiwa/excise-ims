@@ -1,21 +1,22 @@
-<div class="ui borderless menu fixed">
+<div class="ui borderless menu fixed" style="background:#1e83db; ">
     <div class="ui container">
-        <a href="#" class="header item">
-            <img class="logo" src="assets/images/logo.png"> {{ 'APP_NAME' | translate }}
+        <img class="logo" src="assets/images/Logo3.jpg" style="width: 250px; height: 69px; ">
+        <a href="#" class="header item" style=" color:White ">
+            {{ 'APP_NAME' | translate }}
         </a>
-        <a class="item" [routerLink]="['/home']" routerLinkActive="active" *ngIf="authService.getLogin()">Home</a>
-        <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
+        <a class="item " [routerLink]="['/home']" routerLinkActive="active" *ngIf="authService.getLogin()" style=" color:White ">Home</a>
+        <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
             ตรวจสอบภายใน
             <i class="dropdown icon"></i>
             <div class="menu">
                 <div class="ui dropdown item">
-                    <i class="dropdown icon"></i> ตรวจสอบใบเสร็จ
+                    <i class="dropdown icon" style=" color:White "></i> ตรวจสอบใบเสร็จ
                     <div class="menu">
-                        <a class="item" [routerLink]="['/int01-1-1']" routerLinkActive="active">ภาษีสรรพสามิต และรายได้อื่นๆ</a>
-                        <a class="item" [routerLink]="['/int01-2-1']" routerLinkActive="active">ใบอนุญาต</a>
+                        <a class="item" [routerLink]="['/int01-1-1']" routerLinkActive="active" style=" color:White ">ภาษีสรรพสามิต และรายได้อื่นๆ</a>
+                        <a class="item" [routerLink]="['/int01-2-1']" routerLinkActive="active" style=" color:White ">ใบอนุญาต</a>
                     </div>
                 </div>
-                <a class="item" [routerLink]="['/2']" routerLinkActive="active">ตรวจสอบการนำส่งรายได้</a>
+                <a class="item" [routerLink]="['/2']" routerLinkActive="active" style=" color:White ">ตรวจสอบการนำส่งรายได้</a>
                 <div class="ui dropdown item">
                     <i class="dropdown icon"></i> ตรวจสอบงบสรุปยอดเงินค่าภาษี กับงบทดลองประจำเดือน &nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="menu">
@@ -24,7 +25,7 @@
                     </div>
                 </div>
                 <div class="ui dropdown item">
-                    <i class="dropdown icon"></i> ตรวจสอบสถิติการชำระภาษี
+                    <i class="dropdown icon" style=" color:White "></i> ตรวจสอบสถิติการชำระภาษี
                     <div class="menu">
                         <a class="item" [routerLink]="['/int04-1']" routerLinkActive="active">ตรวจสอบสถิติการชำระภาษี</a>
                         <a class="item" [routerLink]="['/int04-2']" routerLinkActive="active">ตรวจสอบสถิติการต่ออายุใบอนุญาต</a>
@@ -79,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
+        <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
             ตรวจสอบภาษี
             <i class="dropdown icon"></i>
             <div class="menu">
@@ -90,7 +91,7 @@
                 <a class="item" [routerLink]="['/tax-audit-reporting']" routerLinkActive="active">รายงานผลการตรวจสอบภาษี</a>
             </div>
         </div>
-        <div class="ui simple dropdown item" *ngIf="authService.getLogin()">
+        <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
             Administrator
             <i class="dropdown icon"></i>
             <div class="menu">
@@ -104,7 +105,7 @@
             <div class="ui dropdown item">
                 <input type="hidden" name="gender">
                 <i class="world icon"></i>
-                <div class="default text">Language</div>
+                <div class="default text" style=" color:White ">Language</div>
                 <i class="dropdown icon"></i>
                 <div class="menu">
                     <div class="item" (click)="changeToEnglish()">
@@ -114,8 +115,8 @@
                 </div>
             </div>
             <a class="item" *ngIf="!authService.getLogin()" [routerLink]="['/login']">Login</a>
-            <div class="item" *ngIf="authService.getLogin()">{{user.username}}</div>
-            <a class="item" *ngIf="authService.getLogin()" (click)="logout()">Logout</a>
+            <div class="item" *ngIf="authService.getLogin()" style=" color:White ">{{user.username}}</div>
+            <a class="item" *ngIf="authService.getLogin()" (click)="logout()" style=" color:White ">Logout</a>
         </div>
     </div>
 </div>
@@ -127,9 +128,9 @@
 </div>
 
 
-<div class="ui vertical footer">
+<div class="ui vertical footer" style="background:#1e83db; color: white;">
     <div class="ui center aligned container">
-        <p>Baiwa 2017. All Rights Reserved</p>
+        <p>@สงวนลิขสิทธิ์ 2560 กรมสรรพสามิต / เลขที่ 1488 ถนน นครชัยศรี เขตดุสิต กรุงเทพมหานคร 10300</p>
     </div>
 </div>
 

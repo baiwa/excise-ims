@@ -110,3 +110,11 @@ img.image-width {
 img.image-width-18 {
     width: 18px !important;
 }
+
+.bg-template {
+    background-color: #1e83db;
+    color:White 
+}
+.font-template{
+    color:White 
+}
