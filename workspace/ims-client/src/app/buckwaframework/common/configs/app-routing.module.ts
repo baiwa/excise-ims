@@ -45,6 +45,9 @@ import { Int043Component } from './../../project/internal-audit/int04/int04-3/in
 import { Int051Component } from './../../project/internal-audit/int05/int05-1/int05-1.component';
 import { Int0511Component } from './../../project/internal-audit/int05/int05-1/int05-1-1/int05-1-1.component';
 import { Int05111Component } from './../../project/internal-audit/int05/int05-1/int05-1-1/int05-1-1-1/int05-1-1-1.component';
+import { Int05112Component } from './../../project/internal-audit/int05/int05-1/int05-1-1/int05-1-1-2/int05-1-1-2.component';
+import { Int05113Component } from './../../project/internal-audit/int05/int05-1/int05-1-1/int05-1-1-3/int05-1-1-3.component';
+
 import { Int052Component } from './../../project/internal-audit/int05/int05-2/int05-2.component';
 import { Int0521Component } from './../../project/internal-audit/int05/int05-2/int05-2-1/int05-2-1.component';
 import { Int053Component } from './../../project/internal-audit/int05/int05-3/int05-3.component';
@@ -170,6 +173,8 @@ const routes: Routes = [
     { path: 'int05-1', component: Int051Component, canActivate: [AuthGuard] },    
     { path: 'int05-1-1', component: Int0511Component, canActivate: [AuthGuard] },
     { path: 'int05-1-1-1', component: Int05111Component, canActivate: [AuthGuard] },
+    { path: 'int05-1-1-2', component: Int05112Component, canActivate: [AuthGuard] },
+    { path: 'int05-1-1-3', component: Int05113Component, canActivate: [AuthGuard] },
     { path: 'int05-2', component: Int052Component, canActivate: [AuthGuard] },
     { path: 'int05-2-1', component: Int0521Component, canActivate: [AuthGuard] },
     { path: 'int05-3', component: Int053Component, canActivate: [AuthGuard] },
