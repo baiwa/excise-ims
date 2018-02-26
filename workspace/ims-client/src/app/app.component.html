@@ -35,12 +35,8 @@
                 <div class="ui simple dropdown item">
                     <i class="dropdown icon"></i> ตรวจสอบพัสดุ
                     <div class="menu">
-                        <div class="ui dropdown item">
-                            <i class="dropdown icon"></i> ตรวจสอบแสตมป์
-                            <div class="menu">
-                                <a class="item" [routerLink]="['/int05-1']" routerLinkActive="active">ตรวจแสตมป์พื้นที่</a>
-                                <a class="item" [routerLink]="['/int05-2']" routerLinkActive="active">ตรวจสอบพื้นที่ สาขา</a>
-                            </div>
+                        <div class="ui dropdown item"  [routerLink]="['/int05-0']" routerLinkActive="active">
+                             ตรวจสอบแสตมป์                          
                         </div>
                         <a class="item" [routerLink]="['/int05-3']" routerLinkActive="active">ตรวจสอบสินทรัพย์</a>
                         <a class="item" [routerLink]="['/int05-4']" routerLinkActive="active">บันทึกผลการจัดซื้อจัดจ้าง</a>

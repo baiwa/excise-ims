@@ -1,6 +1,6 @@
 <div class="ui grid">
   <div class="sixteen wide column">
-      <h2 class="ui header">ตรวจแสตมป์เปรียบเทียบรายสาขา</h2>
+    <h2 class="ui header">ตรวจแสตมป์เปรียบเทียบรายสาขา</h2>
 
 
     <div class="ui attached segment">
@@ -57,7 +57,7 @@
               <i class="refresh icon"></i>
               ล้างข้อมูล
             </button>
-            <button class="ui mini primary button">
+            <button class="ui mini primary button"  routerLink="/int05-2-4">
               <i class="add icon"></i>
               เพิ่มข้อมูล
             </button>
@@ -67,7 +67,7 @@
     </div>
     <br>
 
-    <div *ngIf="showData">   
+    <div *ngIf="showData">
       <div class="ui tabular menu ">
         <a class="item active" routerLink="/int05-2">
           ตรวจแสตมป์รายเดือน
@@ -88,10 +88,9 @@
             <button class="ui mini primary button">
               <i class="save icon"></i>
               บันทึก
-            </button>
-            <div id="export" class="ui primary buttons">
-              <div class="ui mini button">ส่งออก</div>
-              <div class="ui floating dropdown icon button">
+            </button>    
+              <div  id="export" class="ui floating dropdown icon button primary">
+                ส่งออก
                 <i class="dropdown icon"></i>
                 <div class="menu">
                   <div class="item">
@@ -99,20 +98,18 @@
                   <div class="item">
                     <i class="file excel outline icon"></i>Excel</div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <br>
+              </div>          
+             <br>
         <div class="ui grid center aligned">
           <div class="sixteen wide column">
             บันทึกการับ-จ่ายแสตมป์
-            <br>สำนักงานสรรพสามิตภาคที่ 5 พื้นที่ลำปาง
+            <br>สำนักงานสรรพสามิตภาคที่ 5 พื้นที่ลำปาง สาขาเมืองลำปาง	
             <br> งบประมาณปี 2560
           </div>
         </div>
+      </div>
+    </div>
+  </div>
         <div style="overflow-x: scroll">
           <table class="ui small celled table" style="width: 180%;">
             <thead>
@@ -174,7 +171,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>2</td>
@@ -196,7 +201,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>3</td>
@@ -218,7 +231,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>4</td>
@@ -240,7 +261,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>5</td>
@@ -262,7 +291,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>6</td>
@@ -284,7 +321,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>7</td>
@@ -306,7 +351,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>8</td>
@@ -328,7 +381,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>9</td>
@@ -350,7 +411,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>10</td>
@@ -372,7 +441,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>11</td>
@@ -394,7 +471,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>12</td>
@@ -416,7 +501,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>13</td>
@@ -438,7 +531,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>14</td>
@@ -460,7 +561,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>15</td>
@@ -482,7 +591,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>16</td>
@@ -504,7 +621,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>17</td>
@@ -526,7 +651,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>18</td>
@@ -548,7 +681,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>19</td>
@@ -570,7 +711,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>20</td>
@@ -592,7 +741,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>21</td>
@@ -614,7 +771,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>22</td>
@@ -636,7 +801,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>23</td>
@@ -658,7 +831,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>24</td>
@@ -680,7 +861,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>25</td>
@@ -702,7 +891,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>26</td>
@@ -724,7 +921,15 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>27</td>
@@ -746,10 +951,26 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>แก้ไข / ลบ</td>
+                <td style="text-align: center;">
+                  <a class="update" routerLink="/int05-2-2">
+                    แก้ไข
+                  </a>
+                  <strong> / </strong>
+                  <a class="delete" href="javascript:;">
+                    ลบ
+                  </a>
+                </td>
               </tr>
             </tbody>
           </table>
+          <div class="ui center aligned grid">
+            <div class="sixteen wide column">
+              <button class="ui mini primary button " routerLink="/int05-0">
+                <i class="arrow left icon"></i>
+                กลับ
+              </button>        
+            </div>
+          </div>
         </div>
       </div>
 

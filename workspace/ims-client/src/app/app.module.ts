@@ -133,6 +133,10 @@ import { Int0521Component } from './buckwaframework/project/internal-audit/int05
 import { Int05111Component } from './buckwaframework/project/internal-audit/int05/int05-1/int05-1-1/int05-1-1-1/int05-1-1-1.component';
 import { Int05112Component } from './buckwaframework/project/internal-audit/int05/int05-1/int05-1-1/int05-1-1-2/int05-1-1-2.component';
 import { Int05113Component } from './buckwaframework/project/internal-audit/int05/int05-1/int05-1-1/int05-1-1-3/int05-1-1-3.component';
+import { Int0522Component } from './buckwaframework/project/internal-audit/int05/int05-2/int05-2-2/int05-2-2.component';
+import { Int0523Component } from './buckwaframework/project/internal-audit/int05/int05-2/int05-2-3/int05-2-3.component';
+import { Int0524Component } from './buckwaframework/project/internal-audit/int05/int05-2/int05-2-4/int05-2-4.component';
+import { Int050Component } from './buckwaframework/project/internal-audit/int05/int05-0/int05-0.component';
 
 @NgModule({
     declarations: [
@@ -242,7 +246,7 @@ import { Int05113Component } from './buckwaframework/project/internal-audit/int0
         Int0753Component,
         Int0754Component,
         Int0511Component,       
-        Int0521Component, Int05111Component, Int05112Component, Int05113Component, 
+        Int0521Component, Int05111Component, Int05112Component, Int05113Component, Int0522Component, Int0523Component, Int0524Component, Int050Component, 
     ],
     imports: [
         BrowserModule,
