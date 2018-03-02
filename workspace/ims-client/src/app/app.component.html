@@ -75,7 +75,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>     
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
             ตรวจสอบภาษี
             <i class="dropdown icon"></i>
@@ -87,6 +87,21 @@
                 <a class="item" [routerLink]="['/tax-audit-reporting']" routerLinkActive="active">รายงานผลการตรวจสอบภาษี</a>
             </div>
         </div>
+        <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
+                ตรวจปฏิบัติการ
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" [routerLink]="['/cop01-1']" routerLinkActive="active">จัดทำแผนการตรวจปฏิบัติการ </a>               
+                    <a class="item" [routerLink]="['/cop01-2']" routerLinkActive="active">ค้นหาแผนการตรวจสอบภาษี  </a>              
+                    <a class="item" [routerLink]="['/cop02-1']" routerLinkActive="active">รวบรวมข้อมูลเพื่อเตรียมออกตรวจปฏิบัติการ </a>               
+                    <a class="item" [routerLink]="['/cop03-1']" routerLinkActive="active">จัดทำหนังสือขออนุมัติเดินทางไปราชการตรวจปฏิบัติการ</a>            
+                    <a class="item" [routerLink]="['/cop03-1-1']" routerLinkActive="active">ค้นหาหนังสือขออนนุมัติเดินทางไปราชการ </a>               
+                    <a class="item" [routerLink]="['/cop04-1']" routerLinkActive="active">บันทึกผลการตรวจปฏิบัติการ  </a>              
+                    <a class="item" [routerLink]="['/cop04-2']" routerLinkActive="active">ค้นหาบันทึกผลการตรวจปฏิบัติการ </a>               
+                    <a class="item" [routerLink]="['/cop05-1']" routerLinkActive="active">รายงานผลการตรวจปฏิบัติการ  </a>
+                  
+                </div>
+            </div>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
             Administrator
             <i class="dropdown icon"></i>

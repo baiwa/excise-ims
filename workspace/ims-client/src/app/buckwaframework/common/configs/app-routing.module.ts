@@ -29,6 +29,28 @@ import { WorkingPaper1TraderComponent } from './../../project/tax-audit/trader-s
 import { WorkingPaper1FullTraderComponent } from './../../project/tax-audit/trader-selection/working-paper-1-full-trader/working-paper-1-full-trader.component';
 import { SummaryAmountProductTraderComponent } from './../../project/tax-audit/trader-selection/summary-amount-product-trader/summary-amount-product-trader.component';
 import { CreateSaveMessageTraderComponent } from './../../project/tax-audit/trader-selection/create-save-message-trader/create-save-message-trader.component';
+import { Cop011Component } from './../../project/check-operation/cop01/cop01-1/cop01-1.component';
+import { Cop012Component } from './../../project/check-operation/cop01/cop01-2/cop01-2.component';
+import { Cop013Component } from './../../project/check-operation/cop01/cop01-3/cop01-3.component';
+import { Cop021Component } from './../../project/check-operation/cop02/cop02-1/cop02-1.component';
+import { Cop0212Component } from './../../project/check-operation/cop02/cop02-1/cop02-1-2/cop02-1-2.component';
+import { Cop0211Component } from './../../project/check-operation/cop02/cop02-1/cop02-1-1/cop02-1-1.component';
+import { Cop031Component } from './../../project/check-operation/cop03/cop03-1/cop03-1.component';
+import { Cop0311Component } from './../../project/check-operation/cop03/cop03-1-1/cop03-1-1.component';
+import { Cop03111Component } from './../../project/check-operation/cop03/cop03-1-1/cop03-1-1-1/cop03-1-1-1.component';
+import { Cop041Component } from './../../project/check-operation/cop04/cop04-1/cop04-1.component';
+import { Cop0411Component } from './../../project/check-operation/cop04/cop04-1/cop04-1-1/cop04-1-1.component';
+import { Cop042Component } from './../../project/check-operation/cop04/cop04-2/cop04-2.component';
+import { Cop0421Component } from './../../project/check-operation/cop04/cop04-2/cop04-2-1/cop04-2-1.component';
+import { Cop051Component } from './../../project/check-operation/cop05/cop05-1/cop05-1.component';
+import { Cop0511Component } from './../../project/check-operation/cop05/cop05-1/cop05-1-1/cop05-1-1.component';
+
+
+
+
+
+
+
 import { Int0111Component } from './../../project/internal-audit/int01/int01-1/int01-1-1/int01-1-1.component';
 import { Int0112Component } from './../../project/internal-audit/int01/int01-1/int01-1-2/int01-1-2.component';
 import { Int0113Component } from './../../project/internal-audit/int01/int01-1/int01-1-3/int01-1-3.component';
@@ -124,9 +146,6 @@ import { Ope057Component } from './../../project/tax-audit/operate-tax-audit/ope
 
 
 
-
-
-
 const routes: Routes = [
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -161,6 +180,21 @@ const routes: Routes = [
     { path: 'summary-amount-product-trader', component: SummaryAmountProductTraderComponent, canActivate: [AuthGuard] },
     { path: 'create-save-message-trader', component: CreateSaveMessageTraderComponent, canActivate: [AuthGuard] },
 
+    { path: 'cop01-1', component: Cop011Component, canActivate: [AuthGuard] },
+    { path: 'cop01-2', component: Cop012Component, canActivate: [AuthGuard] },
+    { path: 'cop01-3', component: Cop013Component, canActivate: [AuthGuard] },
+    { path: 'cop02-1', component: Cop021Component, canActivate: [AuthGuard] },
+    { path: 'cop02-1-1', component: Cop0211Component, canActivate: [AuthGuard] },
+    { path: 'cop02-1-2', component: Cop0212Component, canActivate: [AuthGuard] },    
+    { path: 'cop03-1', component: Cop031Component, canActivate: [AuthGuard] },
+    { path: 'cop03-1-1', component: Cop0311Component, canActivate: [AuthGuard] },
+    { path: 'cop03-1-1-1', component: Cop03111Component, canActivate: [AuthGuard] },
+    { path: 'cop04-1', component: Cop041Component, canActivate: [AuthGuard] },
+    { path: 'cop04-1-1', component: Cop0411Component, canActivate: [AuthGuard] },
+    { path: 'cop04-2', component: Cop042Component, canActivate: [AuthGuard] },
+    { path: 'cop04-2-1', component: Cop0421Component, canActivate: [AuthGuard] },
+    { path: 'cop05-1', component: Cop051Component, canActivate: [AuthGuard] },
+    { path: 'cop05-1-1', component: Cop0511Component, canActivate: [AuthGuard] },
     { path: 'int01-1-1', component: Int0111Component, canActivate: [AuthGuard] },
     { path: 'int01-1-2', component: Int0112Component, canActivate: [AuthGuard] },
     { path: 'int01-1-3', component: Int0113Component, canActivate: [AuthGuard] },

@@ -137,6 +137,21 @@ import { Int0522Component } from './buckwaframework/project/internal-audit/int05
 import { Int0523Component } from './buckwaframework/project/internal-audit/int05/int05-2/int05-2-3/int05-2-3.component';
 import { Int0524Component } from './buckwaframework/project/internal-audit/int05/int05-2/int05-2-4/int05-2-4.component';
 import { Int050Component } from './buckwaframework/project/internal-audit/int05/int05-0/int05-0.component';
+import { Cop011Component } from './buckwaframework/project/check-operation/cop01/cop01-1/cop01-1.component';
+import { Cop012Component } from './buckwaframework/project/check-operation/cop01/cop01-2/cop01-2.component';
+import { Cop021Component } from './buckwaframework/project/check-operation/cop02/cop02-1/cop02-1.component';
+import { Cop013Component } from './buckwaframework/project/check-operation/cop01/cop01-3/cop01-3.component';
+import { Cop0211Component } from './buckwaframework/project/check-operation/cop02/cop02-1/cop02-1-1/cop02-1-1.component';
+import { Cop0212Component } from './buckwaframework/project/check-operation/cop02/cop02-1/cop02-1-2/cop02-1-2.component';
+import { Cop031Component } from './buckwaframework/project/check-operation/cop03/cop03-1/cop03-1.component';
+import { Cop0311Component } from './buckwaframework/project/check-operation/cop03/cop03-1-1/cop03-1-1.component';
+import { Cop03111Component } from './buckwaframework/project/check-operation/cop03/cop03-1-1/cop03-1-1-1/cop03-1-1-1.component';
+import { Cop041Component } from './buckwaframework/project/check-operation/cop04/cop04-1/cop04-1.component';
+import { Cop042Component } from './buckwaframework/project/check-operation/cop04/cop04-2/cop04-2.component';
+import { Cop0411Component } from './buckwaframework/project/check-operation/cop04/cop04-1/cop04-1-1/cop04-1-1.component';
+import { Cop0421Component } from './buckwaframework/project/check-operation/cop04/cop04-2/cop04-2-1/cop04-2-1.component';
+import { Cop051Component } from './buckwaframework/project/check-operation/cop05/cop05-1/cop05-1.component';
+import { Cop0511Component } from './buckwaframework/project/check-operation/cop05/cop05-1/cop05-1-1/cop05-1-1.component';
 
 @NgModule({
     declarations: [
@@ -246,7 +261,7 @@ import { Int050Component } from './buckwaframework/project/internal-audit/int05/
         Int0753Component,
         Int0754Component,
         Int0511Component,       
-        Int0521Component, Int05111Component, Int05112Component, Int05113Component, Int0522Component, Int0523Component, Int0524Component, Int050Component, 
+        Int0521Component, Int05111Component, Int05112Component, Int05113Component, Int0522Component, Int0523Component, Int0524Component, Int050Component, Cop011Component, Cop012Component, Cop021Component, Cop013Component, Cop0211Component, Cop0212Component, Cop031Component, Cop0311Component, Cop03111Component, Cop041Component, Cop042Component, Cop0411Component, Cop0421Component, Cop051Component, Cop0511Component, 
     ],
     imports: [
         BrowserModule,
