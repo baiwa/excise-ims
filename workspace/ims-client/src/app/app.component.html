@@ -1,5 +1,5 @@
-<div class="ui borderless menu fixed" style="background:#1e83db; ">
-    <div class="ui container">
+<div class="ui borderless menu fixed" style="background:#1e83db; ">        
+    <div class="ui container">                   
         <img class="logo" src="assets/images/Logo3.jpg" style="width: 250px; height: 69px; ">
         <a href="#" class="header item" style=" color:White ">
             {{ 'APP_NAME' | translate }}
@@ -10,7 +10,7 @@
             <i class="dropdown icon"></i>
             <div class="menu">
                 <div class="ui dropdown item">
-                    <i class="dropdown icon" style=" color:White "></i> ตรวจสอบใบเสร็จ
+                    <i class="dropdown icon"></i> ตรวจสอบใบเสร็จ
                     <div class="menu">
                         <a class="item" [routerLink]="['/int01-1-1']" routerLinkActive="active" style=" color:White ">ภาษีสรรพสามิต และรายได้อื่นๆ</a>
                         <a class="item" [routerLink]="['/int01-2-1']" routerLinkActive="active" style=" color:White ">ใบอนุญาต</a>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="ui dropdown item">
-                    <i class="dropdown icon" style=" color:White "></i> ตรวจสอบสถิติการชำระภาษี
+                    <i class="dropdown icon"></i> ตรวจสอบสถิติการชำระภาษี
                     <div class="menu">
                         <a class="item" [routerLink]="['/int04-1']" routerLinkActive="active">ตรวจสอบสถิติการชำระภาษี</a>
                         <a class="item" [routerLink]="['/int04-2']" routerLinkActive="active">ตรวจสอบสถิติการต่ออายุใบอนุญาต</a>
@@ -36,7 +36,12 @@
                     <i class="dropdown icon"></i> ตรวจสอบพัสดุ
                     <div class="menu">
                         <div class="ui dropdown item"  [routerLink]="['/int05-0']" routerLinkActive="active">
-                             ตรวจสอบแสตมป์                          
+                            <i class="dropdown icon"></i>  ตรวจสอบแสตมป์ 
+                            <div class="menu">
+                                    <a class="item" [routerLink]="['/int05-1']" routerLinkActive="active">ตรวจแสตมป์พื้นที่</a>	                                    
+                                    <a class="item" [routerLink]="['/int05-2']" routerLinkActive="active">ตรวจแสตมป์พื้นที่ สาขา </a>		
+                                   
+                                </div>                             
                         </div>
                         <a class="item" [routerLink]="['/int05-3']" routerLinkActive="active">ตรวจสอบสินทรัพย์</a>
                         <a class="item" [routerLink]="['/int05-4']" routerLinkActive="active">บันทึกผลการจัดซื้อจัดจ้าง</a>
@@ -115,9 +120,9 @@
         <div class="right menu">
             <div class="ui dropdown item">
                 <input type="hidden" name="gender">
-                <i class="world icon"></i>
+                <i class="world icon" style=" color:White "></i>
                 <div class="default text" style=" color:White ">Language</div>
-                <i class="dropdown icon"></i>
+                <i class="dropdown icon" style=" color:White "></i>
                 <div class="menu">
                     <div class="item" (click)="changeToEnglish()">
                         <i class="us flag"></i> English</div>
@@ -162,6 +167,7 @@
         </div>
     </div>
 </div>
+
 
 
 <div class="ui tiny test modal transition hidden baiwa-alert">

@@ -64,7 +64,7 @@ import { Int032Component } from './../../project/internal-audit/int03/int03-2/in
 import { Int041Component } from './../../project/internal-audit/int04/int04-1/int04-1.component';
 import { Int042Component } from './../../project/internal-audit/int04/int04-2/int04-2.component';
 import { Int043Component } from './../../project/internal-audit/int04/int04-3/int04-3.component';
-import { Int050Component } from './../../project/internal-audit/int05/int05-0/int05-0.component';
+
 
 import { Int051Component } from './../../project/internal-audit/int05/int05-1/int05-1.component';
 import { Int0511Component } from './../../project/internal-audit/int05/int05-1/int05-1-1/int05-1-1.component';
@@ -211,7 +211,7 @@ const routes: Routes = [
     { path: 'int04-2', component: Int042Component, canActivate: [AuthGuard] },
     { path: 'int04-3', component: Int043Component, canActivate: [AuthGuard] },
 
-    { path: 'int05-0', component: Int050Component, canActivate: [AuthGuard] },    
+  
     { path: 'int05-1', component: Int051Component, canActivate: [AuthGuard] },    
     { path: 'int05-1-1', component: Int0511Component, canActivate: [AuthGuard] },
     { path: 'int05-1-1-1', component: Int05111Component, canActivate: [AuthGuard] },

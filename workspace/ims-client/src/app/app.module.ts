@@ -136,7 +136,7 @@ import { Int05113Component } from './buckwaframework/project/internal-audit/int0
 import { Int0522Component } from './buckwaframework/project/internal-audit/int05/int05-2/int05-2-2/int05-2-2.component';
 import { Int0523Component } from './buckwaframework/project/internal-audit/int05/int05-2/int05-2-3/int05-2-3.component';
 import { Int0524Component } from './buckwaframework/project/internal-audit/int05/int05-2/int05-2-4/int05-2-4.component';
-import { Int050Component } from './buckwaframework/project/internal-audit/int05/int05-0/int05-0.component';
+
 import { Cop011Component } from './buckwaframework/project/check-operation/cop01/cop01-1/cop01-1.component';
 import { Cop012Component } from './buckwaframework/project/check-operation/cop01/cop01-2/cop01-2.component';
 import { Cop021Component } from './buckwaframework/project/check-operation/cop02/cop02-1/cop02-1.component';
@@ -261,7 +261,7 @@ import { Cop0511Component } from './buckwaframework/project/check-operation/cop0
         Int0753Component,
         Int0754Component,
         Int0511Component,       
-        Int0521Component, Int05111Component, Int05112Component, Int05113Component, Int0522Component, Int0523Component, Int0524Component, Int050Component, Cop011Component, Cop012Component, Cop021Component, Cop013Component, Cop0211Component, Cop0212Component, Cop031Component, Cop0311Component, Cop03111Component, Cop041Component, Cop042Component, Cop0411Component, Cop0421Component, Cop051Component, Cop0511Component, 
+        Int0521Component, Int05111Component, Int05112Component, Int05113Component, Int0522Component, Int0523Component, Int0524Component, Cop011Component, Cop012Component, Cop021Component, Cop013Component, Cop0211Component, Cop0212Component, Cop031Component, Cop0311Component, Cop03111Component, Cop041Component, Cop042Component, Cop0411Component, Cop0421Component, Cop051Component, Cop0511Component, 
     ],
     imports: [
         BrowserModule,
