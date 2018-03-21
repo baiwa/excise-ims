@@ -1,5 +1,4 @@
-<div class="ui borderless menu fixed" style="background:#1e83db; ">        
-    <div class="ui container">                   
+<div class="ui borderless menu fixed" style="background:#1e83db; ">                         
         <img class="logo" src="assets/images/Logo3.jpg" style="width: 250px; height: 69px; ">
         <a href="#" class="header item" style=" color:White ">
             {{ 'APP_NAME' | translate }}
@@ -107,6 +106,16 @@
                   
                 </div>
             </div>
+            <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
+               ระบบตรวจส่งออก
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" [routerLink]="['/epa01-1']" routerLinkActive="active">จัดการข้อมูลต้นทาง </a>               
+                    <a class="item" [routerLink]="['/epa02-1']" routerLinkActive="active">จัดการข้อมูลปายทาง</a>              
+                   
+                  
+                </div>
+            </div>
         <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
             Administrator
             <i class="dropdown icon"></i>
@@ -117,24 +126,11 @@
             </div>
         </div>
 
-        <div class="right menu">
-            <div class="ui dropdown item">
-                <input type="hidden" name="gender">
-                <i class="world icon" style=" color:White "></i>
-                <div class="default text" style=" color:White ">Language</div>
-                <i class="dropdown icon" style=" color:White "></i>
-                <div class="menu">
-                    <div class="item" (click)="changeToEnglish()">
-                        <i class="us flag"></i> English</div>
-                    <div class="item" (click)="changeToThai()">
-                        <i class="th flag"></i> Thai</div>
-                </div>
-            </div>
+        <div class="right menu">           
             <a class="item" *ngIf="!authService.getLogin()" [routerLink]="['/login']">Login</a>
             <div class="item" *ngIf="authService.getLogin()" style=" color:White ">{{user.username}}</div>
             <a class="item" *ngIf="authService.getLogin()" (click)="logout()" style=" color:White ">Logout</a>
         </div>
-    </div>
 </div>
 
 <div class="ui main container">

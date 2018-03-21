@@ -29,6 +29,14 @@ import { WorkingPaper1TraderComponent } from './../../project/tax-audit/trader-s
 import { WorkingPaper1FullTraderComponent } from './../../project/tax-audit/trader-selection/working-paper-1-full-trader/working-paper-1-full-trader.component';
 import { SummaryAmountProductTraderComponent } from './../../project/tax-audit/trader-selection/summary-amount-product-trader/summary-amount-product-trader.component';
 import { CreateSaveMessageTraderComponent } from './../../project/tax-audit/trader-selection/create-save-message-trader/create-save-message-trader.component';
+
+import { Epa0112Component } from './../../project/export-audit/epa01/epa01-1/epa01-1-2/epa01-1-2.component';
+import { Epa011Component } from './../../project/export-audit/epa01/epa01-1/epa01-1.component';
+import { Epa0111Component } from './../../project/export-audit/epa01/epa01-1/epa01-1-1/epa01-1-1.component';
+import { Epa021Component } from '../../project/export-audit/epa02/epa02-1/epa02-1.component';
+import { Epa0211Component } from '../../project/export-audit/epa02/epa02-1/epa02-1-1/epa02-1-1.component';
+import { Epa0212Component } from '../../project/export-audit/epa02/epa02-1/epa02-1-2/epa02-1-2.component';
+import { Epa0213Component } from '../../project/export-audit/epa02/epa02-1/epa02-1-3/epa02-1-3.component';
 import { Cop011Component } from './../../project/check-operation/cop01/cop01-1/cop01-1.component';
 import { Cop012Component } from './../../project/check-operation/cop01/cop01-2/cop01-2.component';
 import { Cop013Component } from './../../project/check-operation/cop01/cop01-3/cop01-3.component';
@@ -146,6 +154,14 @@ import { Ope057Component } from './../../project/tax-audit/operate-tax-audit/ope
 
 
 
+
+
+
+
+
+
+
+
 const routes: Routes = [
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -179,6 +195,14 @@ const routes: Routes = [
     { path: 'working-paper-1-full-trader', component: WorkingPaper1FullTraderComponent, canActivate: [AuthGuard] },
     { path: 'summary-amount-product-trader', component: SummaryAmountProductTraderComponent, canActivate: [AuthGuard] },
     { path: 'create-save-message-trader', component: CreateSaveMessageTraderComponent, canActivate: [AuthGuard] },
+
+    { path: 'epa01-1', component: Epa011Component, canActivate: [AuthGuard] },    
+    { path: 'epa01-1-1', component: Epa0111Component, canActivate: [AuthGuard] },
+    { path: 'epa01-1-2', component: Epa0112Component, canActivate: [AuthGuard] },
+    { path: 'epa02-1', component: Epa021Component, canActivate: [AuthGuard] },   
+    { path: 'epa02-1-1', component: Epa0211Component, canActivate: [AuthGuard] },
+    { path: 'epa02-1-2', component: Epa0212Component, canActivate: [AuthGuard] },
+    { path: 'epa02-1-3', component: Epa0213Component, canActivate: [AuthGuard] }, 
 
     { path: 'cop01-1', component: Cop011Component, canActivate: [AuthGuard] },
     { path: 'cop01-2', component: Cop012Component, canActivate: [AuthGuard] },

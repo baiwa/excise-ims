@@ -152,6 +152,14 @@ import { Cop0411Component } from './buckwaframework/project/check-operation/cop0
 import { Cop0421Component } from './buckwaframework/project/check-operation/cop04/cop04-2/cop04-2-1/cop04-2-1.component';
 import { Cop051Component } from './buckwaframework/project/check-operation/cop05/cop05-1/cop05-1.component';
 import { Cop0511Component } from './buckwaframework/project/check-operation/cop05/cop05-1/cop05-1-1/cop05-1-1.component';
+import { Epa011Component } from './buckwaframework/project/export-audit/epa01/epa01-1/epa01-1.component';
+import { Epa0111Component } from './buckwaframework/project/export-audit/epa01/epa01-1/epa01-1-1/epa01-1-1.component';
+import { Epa0112Component } from './buckwaframework/project/export-audit/epa01/epa01-1/epa01-1-2/epa01-1-2.component';
+import { Epa021Component } from './buckwaframework/project/export-audit/epa02/epa02-1/epa02-1.component';
+import { Epa0211Component } from './buckwaframework/project/export-audit/epa02/epa02-1/epa02-1-1/epa02-1-1.component';
+import { Epa0212Component } from './buckwaframework/project/export-audit/epa02/epa02-1/epa02-1-2/epa02-1-2.component';
+import { Epa0213Component } from './buckwaframework/project/export-audit/epa02/epa02-1/epa02-1-3/epa02-1-3.component';
+
 
 @NgModule({
     declarations: [
@@ -261,7 +269,19 @@ import { Cop0511Component } from './buckwaframework/project/check-operation/cop0
         Int0753Component,
         Int0754Component,
         Int0511Component,       
-        Int0521Component, Int05111Component, Int05112Component, Int05113Component, Int0522Component, Int0523Component, Int0524Component, Cop011Component, Cop012Component, Cop021Component, Cop013Component, Cop0211Component, Cop0212Component, Cop031Component, Cop0311Component, Cop03111Component, Cop041Component, Cop042Component, Cop0411Component, Cop0421Component, Cop051Component, Cop0511Component, 
+        Int0521Component,
+        Int05111Component, 
+        Int05112Component,
+        Int05113Component, 
+        Int0522Component,
+        Int0523Component,
+        Int0524Component,
+        Cop011Component,
+        Cop012Component,
+       Cop021Component, 
+       Cop013Component,
+       Cop0211Component, 
+       Cop0212Component, Cop031Component, Cop0311Component, Cop03111Component, Cop041Component, Cop042Component, Cop0411Component, Cop0421Component, Cop051Component, Cop0511Component, Epa011Component, Epa0111Component, Epa0112Component, Epa021Component, Epa0211Component, Epa0212Component, Epa0213Component, 
     ],
     imports: [
         BrowserModule,
