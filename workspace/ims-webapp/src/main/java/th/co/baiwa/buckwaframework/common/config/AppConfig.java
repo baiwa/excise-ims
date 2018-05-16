@@ -18,7 +18,8 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 @ComponentScan(
 	useDefaultFilters = false,
 	basePackages = {
-		"th.co.baiwa.buckwaframework"
+		"th.co.baiwa.buckwaframework",
+		"th.go.excise.ims"
 	},
 	includeFilters = {
 		@ComponentScan.Filter(

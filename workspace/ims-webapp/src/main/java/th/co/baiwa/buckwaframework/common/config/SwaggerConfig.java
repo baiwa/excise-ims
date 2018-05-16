@@ -34,7 +34,7 @@ public class SwaggerConfig {
 	private ApiInfo getApiInfo() {
 		return new ApiInfo("REST Api Documentation",
 			"REST Api Documentation Description",
-			"1.0",  
+			"1.0",
 			"",
 			new Contact("", "", ""),
 			"", "",
