@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import th.co.baiwa.Application;
+import th.Application;
 import th.go.excise.ims.mockup.persistence.entity.ExciseTaxReceive;
 
 @RunWith(SpringRunner.class)

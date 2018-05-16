@@ -1,4 +1,4 @@
-package th.co.baiwa;
+package th;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfigurati
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
-@SpringBootApplication(exclude = {
+@SpringBootApplication(  exclude = {
 	HibernateJpaAutoConfiguration.class,
 	ThymeleafAutoConfiguration.class
 })
@@ -18,7 +18,7 @@ public class Application extends SpringBootServletInitializer {
 	}
 	
 	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+	protected SpringApplicationBuilder configure (SpringApplicationBuilder application) {
 		return application.sources(Application.class);
 	}
 	
