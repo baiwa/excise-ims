@@ -79,6 +79,38 @@
     </div>
 
     <div class="ui segment" *ngIf="showData">
+      <div class="ui right aligned grid">
+        <div class="sixteen wide column">
+          <button class="ui mini primary button">
+            <i class="print icon"></i>
+            พิมพ์
+          </button>
+          <button class="ui mini primary button">
+            <i class="save icon"></i>
+            บันทึก
+          </button>
+          <div id="export" class="ui primary buttons">
+            <div class="ui mini button">ส่งออก</div>
+            <div class="ui floating dropdown icon button">
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <div class="item">
+                  <i class="file pdf outline icon"></i> PDF</div>
+                <div class="item">
+                  <i class="file excel outline icon"></i>Excel</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="ui grid center aligned">
+        <div class="sixteen wide column">
+          ตารางแสดงผลการเปรียบเทียบสรุปรายการขอเบิกกับงบทดลอง
+        </div>
+      </div>
+      <br>
+
       <table id="compareData" class="ui small celled table">
         <thead>
           <tr style="text-align: center;">
@@ -125,7 +157,14 @@
           </tr>
         </tbody>
       </table>
+      <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button " routerLink="/int06-2">
+              <i class="arrow left icon"></i>
+            กลับ
+            </button>           
+          </div>
+        </div>
     </div>
-
-  </div>
+    </div>  
 </div>

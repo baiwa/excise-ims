@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+declare var $: any;
 @Component({
   selector: 'int06-3-2',
   templateUrl: './int06-3-2.component.html',
@@ -10,6 +10,14 @@ export class Int0632Component implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    $('#calendar').fullCalendar({
+  
+    });
+    
   }
+ 
+  
 
 }
+
+

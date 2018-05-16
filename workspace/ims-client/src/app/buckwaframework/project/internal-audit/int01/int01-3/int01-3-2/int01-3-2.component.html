@@ -1,0 +1,944 @@
+<div class="ui grid">
+    <div class="sixteen wide column">
+        <h2 class="ui header">กรอกข้อมูลใบเสร็จ</h2>
+
+        <div class="ui top attached header">
+            <span>ข้อมูลกระดาษทำการ ใบอนุญาต สุรา ยาสูบ ไพ่</span>
+        </div>
+
+        <div class="ui attached segment">
+            <div class="ui form">
+                <div class="inline fields">
+                    <div class="four wide required field">
+                        <label class="custom-label-w-10">ประจำเดือน</label>
+                        <div class="ui icon input">
+                            <input type="text" placeholder="MM/YYYY" class="custom-readonly" readonly="" value="ตุลาคม 2560">
+                            <i class="add to calendar icon"></i>
+                        </div>
+                    </div>
+                    <div class="seven wide field required">
+                        <label class="custom-label-w-10">หน่วยรับตรวจ</label>
+                        <input type="text" class="custom-readonly" readonly="" value="สำนักงานสรรพสามิต พื้นที่เมืองพิษณุโลก">
+                    </div>
+                    <div class="five wide field required">
+                        <label class="custom-label-w-20">เลขที่กระดาษทำการ</label>
+                        <input type="text" class="custom-readonly" readonly="" value="">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="four wide required field">
+                        <label class="custom-label-w-10">วันที่ตรวจ</label>
+                        <div class="ui icon input">
+                            <input type="text" placeholder="DD/MM/YYYY" class="custom-readonly" readonly="" value="17 พฤษจิกายน 2560">
+                            <i class="add to calendar icon"></i>
+                        </div>
+                    </div>
+                    <div class="seven wide field required">
+                        <label class="custom-label-w-10">ผู้ตรวจ</label>
+                        <input type="text" class="custom-readonly" readonly="" value="นาย อัครเดช รักงาน">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="ui attached segment">
+            <div class="ui form">
+                <div class="inline fields">
+                    <div class="two wide field required">
+                        <label>วันที่รับเงิน</label>
+                    </div>
+                    <div class="three wide field ">
+                        <input type="text" placeholder="" value=" ">
+
+                    </div>
+                    <div class="two wide field required">
+                        <label>เลขที่ บค. </label>
+                    </div>
+                    <div class="three wide field ">
+                        <input type="text" placeholder="" value="">
+                    </div>
+                    <div class="two wide field required">
+                        <label>สินบน</label>
+                    </div>
+                    <div class="three wide field ">
+                        <input type="text" placeholder="" value="">
+                    </div>
+                </div>
+                <div class="inline fields">
+                    <div class="two wide field required">
+                        <label>วันที่นำฝากบัญชี</label>
+                    </div>
+                    <div class="three wide field ">
+                        <input type="text" placeholder="" value=" ">
+
+                    </div>
+                    <div class="two wide field required">
+                        <label>จำนวนเงิน </label>
+                    </div>
+                    <div class="three wide field ">
+                        <input type="text" placeholder="" value="">
+                    </div>
+                    <div class="two wide field required">
+                        <label>รางวัล</label>
+                    </div>
+                    <div class="three wide field ">
+                        <input type="text" placeholder="" value="">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="two wide field required">
+                        <label>ส่งคลัง</label>
+                    </div>
+                    <div class="three wide field ">
+                        <input type="text" placeholder="" value=" ">
+
+                    </div>
+                    <div class="two wide field required">
+                        <label>วันที่ส่งคลัง </label>
+                    </div>
+                    <div class="three wide field ">
+                        <input type="text" placeholder="" value="">
+                    </div>
+                    <div class="two wide field ">
+                        <label>วันที่จ่ายสินบน รางวัล </label>
+                    </div>
+                    <div class="three wide field required">
+                        <input type="text" placeholder="" value="">
+                    </div>
+                </div>
+
+                <div class="inline fields required">
+                    <div class="five wide field required">
+                        <label class="custom-label-w-10">ประเภทคดี</label>
+                        <select class="ui dropdown" [ngModel]="selectedProduct" (ngModelChange)="onChange($event)">
+                            <option *ngFor="let item of productList; index as i;" value="{{item.value}}">{{item.value}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="ui attached segment">
+            <div class="ui form">
+                <div class="ui center aligned grid">
+                    <div class="eight wide column">
+                        <button class="ui mini primary button width-100">
+                            <i class="add icon"></i>
+                            เพิ่ม
+                        </button>
+                        <button class="ui mini button width-100">
+                            <i class="refresh icon"></i>
+                            ล้างข้อมูล
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sixteen wide column">
+        <div class="ui segment">
+
+            <div class="ui right aligned grid">
+                <div class="sixteen wide column">
+                    <a class="ui mini primary button widtd-100" routerLink='/int01-3-3'>
+                        <i class="checkmark icon"></i>ตรวจสอบงบสรุปยอดภาษี
+                    </a>
+                    <a class="ui mini primary button widtd-100">
+                        <i class="save icon"></i>บันทึก
+                    </a>
+                    <button class="ui mini primary button widtd-100">
+                        <i class="print icon"></i>พิมพ์
+                    </button>
+                    <div id="export" class="ui primary buttons">
+                        <div class="ui mini button">ส่งออก</div>
+                        <div class="ui floating dropdown icon button">
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <div class="item">
+                                    <i class="file pdf outline icon"></i> PDF</div>
+                                <div class="item">
+                                    <i class="file excel outline icon"></i>Excel</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            <div style="overflow-x: scroll;">
+                <table id="table1" class="ui small celled table" style="width: 170%;">
+                    <thead>
+                        <tr class="center aligned">
+                            <th></th>
+                            <th>ลำดับที่</th>
+                            <th>วันที่รับเงิน </th>
+                            <th>วันที่นำฝากบัญชี</th>
+                            <th>เลขที่ บค.</th>
+                            <th>ประเภทคดี</th>
+                            <th>จำนวนเงิน</th>
+                            <th>สินบน</th>
+                            <th>รางวัล</th>
+                            <th>นำส่งคลัง</th>
+                            <th>วันที่จ่ายเงินสินบนรางวัล</th>
+                            <th>วันที่ส่งคลัง</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>1</td>
+                            <td>05/10/59</td>
+                            <td>05/10/59</td>
+                            <td>บค.1/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> - </td>
+                            <td> 2,100.00 </td>
+                            <td>05/10/59</td>
+                            <td>05/10/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>2</td>
+                            <td>10/10/59</td>
+                            <td>12/10/59</td>
+                            <td>บค.2/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> - </td>
+                            <td> 2,100.00 </td>
+                            <td>10/10/59</td>
+                            <td>12/10/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>3</td>
+                            <td>12/10/59</td>
+                            <td>12/10/59</td>
+                            <td>บค.3/60</td>
+                            <td> สุรา </td>
+                            <td>1,000.00</td>
+                            <td> 300.00 </td>
+                            <td> - </td>
+                            <td> 700.00 </td>
+                            <td>12/10/59</td>
+                            <td>12/10/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>4</td>
+                            <td>24/10/59</td>
+                            <td>25/10/59</td>
+                            <td>บค.4/60</td>
+                            <td> ยาสูบ </td>
+                            <td>6,682.50</td>
+                            <td> - </td>
+                            <td> 4,009.50 </td>
+                            <td> 2,673.00 </td>
+                            <td>24/10/59</td>
+                            <td>25/10/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>5</td>
+                            <td>25/10/59</td>
+                            <td>25/10/59</td>
+                            <td>บค.5/60</td>
+                            <td> ยาสูบ </td>
+                            <td>2,970.00</td>
+                            <td> - </td>
+                            <td> 1,782.00 </td>
+                            <td> 1,188.00 </td>
+                            <td>25/10/59</td>
+                            <td>25/10/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>6</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td> ชำรุด </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td>-</td>
+                            <td> - </td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>7</td>
+                            <td>07/11/59</td>
+                            <td>07/11/59</td>
+                            <td>บค.6/60</td>
+                            <td> ภาษี27 </td>
+                            <td>258,840.00</td>
+                            <td> - </td>
+                            <td> 142,362.00 </td>
+                            <td> 116,478.00 </td>
+                            <td>07/11/59</td>
+                            <td>08/11/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>8</td>
+                            <td>07/11/59</td>
+                            <td>07/11/59</td>
+                            <td>บค.7/60</td>
+                            <td> สุรา </td>
+                            <td>5,000.00</td>
+                            <td> 1,500.00 </td>
+                            <td> - </td>
+                            <td> 3,500.00 </td>
+                            <td>07/11/59</td>
+                            <td>08/11/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>9</td>
+                            <td>10/11/59</td>
+                            <td>10/11/59</td>
+                            <td>บค.8/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> 750.00 </td>
+                            <td> 1,350.00 </td>
+                            <td>10/11/59</td>
+                            <td>11/11/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>10</td>
+                            <td>21/11/59</td>
+                            <td>21/11/59</td>
+                            <td>บค.9/60</td>
+                            <td> สุรา </td>
+                            <td>1,000.00</td>
+                            <td> 300.00 </td>
+                            <td> 250.00 </td>
+                            <td> 450.00 </td>
+                            <td>21/11/59</td>
+                            <td>23/11/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>11</td>
+                            <td>21/11/59</td>
+                            <td>21/11/59</td>
+                            <td>บค.10/60</td>
+                            <td> สุรา </td>
+                            <td>5,000.00</td>
+                            <td> 1,500.00 </td>
+                            <td> 1,250.00 </td>
+                            <td> 2,250.00 </td>
+                            <td>21/11/59</td>
+                            <td>23/11/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>12</td>
+                            <td>24/11/59</td>
+                            <td>24/11/59</td>
+                            <td>บค.11/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> 750.00 </td>
+                            <td> 1,350.00 </td>
+                            <td>24/11/59</td>
+                            <td>24/11/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>13</td>
+                            <td>25/11/59</td>
+                            <td>25/11/59</td>
+                            <td>บค.12/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> - </td>
+                            <td> 2,100.00 </td>
+                            <td>25/11/59</td>
+                            <td>25/11/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>14</td>
+                            <td>25/11/59</td>
+                            <td>25/11/59</td>
+                            <td>บค.13/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> - </td>
+                            <td> 2,100.00 </td>
+                            <td>25/11/59</td>
+                            <td>25/11/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>15</td>
+                            <td>09/12/59</td>
+                            <td>09/12/59</td>
+                            <td>บค.14/60</td>
+                            <td> สุรา </td>
+                            <td>5,000.00</td>
+                            <td> 1,500.00 </td>
+                            <td> - </td>
+                            <td> 3,500.00 </td>
+                            <td>09/12/59</td>
+                            <td>09/12/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>16</td>
+                            <td>19/12/59</td>
+                            <td>19/12/59</td>
+                            <td>บค.15/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> - </td>
+                            <td> 2,100.00 </td>
+                            <td>19/12/59</td>
+                            <td>21/12/59</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>17</td>
+                            <td>01/01/60</td>
+                            <td>01/01/60</td>
+                            <td>บค.16/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> - </td>
+                            <td> 2,100.00 </td>
+                            <td>01/01/60</td>
+                            <td>04/01/60</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>18</td>
+                            <td>01/01/60</td>
+                            <td>01/01/60</td>
+                            <td>บค.17/60</td>
+                            <td> ยาสูบ </td>
+                            <td>4,455.00</td>
+                            <td> - </td>
+                            <td> 2,673.00 </td>
+                            <td> 1,782.00 </td>
+                            <td>01/01/60</td>
+                            <td>04/01/60</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>19</td>
+                            <td>01/01/60</td>
+                            <td>01/01/60</td>
+                            <td>บค.18/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> 750.00 </td>
+                            <td> 1,350.00 </td>
+                            <td>01/01/60</td>
+                            <td>04/01/60</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>20</td>
+                            <td>05/01/60</td>
+                            <td>05/01/60</td>
+                            <td>บค.19/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> - </td>
+                            <td> 2,100.00 </td>
+                            <td>05/01/60</td>
+                            <td>06/01/60</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>21</td>
+                            <td>16/01/60</td>
+                            <td>16/01/60</td>
+                            <td>บค.20/60</td>
+                            <td> สุรา </td>
+                            <td>5,000.00</td>
+                            <td> 1,500.00 </td>
+                            <td> - </td>
+                            <td> 3,500.00 </td>
+                            <td>16/01/60</td>
+                            <td>18/01/60</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>22</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td> ชำรุด </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td>-</td>
+                            <td> - </td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>23</td>
+                            <td>17/01/60</td>
+                            <td>17/01/60</td>
+                            <td>บค.21/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> - </td>
+                            <td> 2,100.00 </td>
+                            <td>17/01/60</td>
+                            <td>18/01/60</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>24</td>
+                            <td>18/01/60</td>
+                            <td>18/01/60</td>
+                            <td>บค.22/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> - </td>
+                            <td> 2,100.00 </td>
+                            <td>18/01/60</td>
+                            <td>18/01/60</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>25</td>
+                            <td>19/01/60</td>
+                            <td>19/01/60</td>
+                            <td>บค.23/60</td>
+                            <td> สุรา </td>
+                            <td>5,000.00</td>
+                            <td> 1,500.00 </td>
+                            <td> 1,250.00 </td>
+                            <td> 2,250.00 </td>
+                            <td>19/01/60</td>
+                            <td>20/01/60</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>26</td>
+                            <td>20/01/60</td>
+                            <td>20/01/60</td>
+                            <td>บค.24/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> - </td>
+                            <td> 2,100.00 </td>
+                            <td>20/01/60</td>
+                            <td>20/01/60</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>27</td>
+                            <td>24/01/60</td>
+                            <td>24/01/60</td>
+                            <td>บค.25/60</td>
+                            <td> สุรา </td>
+                            <td>5,000.00</td>
+                            <td> 1,500.00 </td>
+                            <td> - </td>
+                            <td> 3,500.00 </td>
+                            <td>24/01/60</td>
+                            <td>26/01/60</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>28</td>
+                            <td>30/01/60</td>
+                            <td>30/01/60</td>
+                            <td>บค.26/60</td>
+                            <td> สุรา </td>
+                            <td>500.00</td>
+                            <td> 150.00 </td>
+                            <td> 125.00 </td>
+                            <td> 225.00 </td>
+                            <td>30/01/60</td>
+                            <td>31/01/60</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>29</td>
+                            <td>07/02/60</td>
+                            <td>07/02/60</td>
+                            <td>บค.27/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> - </td>
+                            <td> 2,100.00 </td>
+                            <td>07/02/60</td>
+                            <td>08/02/60</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="example">
+                            </td>
+                            <td>30</td>
+                            <td>08/02/60</td>
+                            <td>08/02/60</td>
+                            <td>บค.28/60</td>
+                            <td> สุรา </td>
+                            <td>3,000.00</td>
+                            <td> 900.00 </td>
+                            <td> - </td>
+                            <td> 2,100.00 </td>
+                            <td>08/02/60</td>
+                            <td>08/02/60</td>
+                            <td style="text-align: center;">
+                                <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    แก้ไข
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>รวม</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>350,447.50</td>
+                            <td> 23,250.00 </td>
+                            <td> 155,951.50 </td>
+                            <td> 171,246.00 </td>
+                            <td>-</td>
+
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="ui attached segment">
+            <div class="ui form">
+                <div class="ui center aligned grid">
+                    <div class="eight wide column">
+                        <a class="ui mini primary button widtd-100" routerLink='/int01-3-1'>
+                            <i class="arrow left icon"></i>กลับ
+                        </a>
+                        <a class="ui mini button widtd-100">
+                            ลบรายการ
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalInt062" class="ui modal hidden transition">
+    <i class="close icon"></i>
+    <div class="header">
+        แก้ไขข้อมูลใบเสร็จรับเงิน
+    </div>
+    <br>
+
+    <div class="content">
+        <div class="ui form">
+            <div class="inline fields">
+                <div class="eight wide field">
+                    <label class="custom-label-w-15">วันที่รับเงิน</label>
+                    <input type="text" value="02/10/60" />
+                </div>
+                <div class="eight wide field">
+                    <label class="custom-label-w-15">สินบน</label>
+                    <input type="text" value="" readonly="488.70" />
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="eight wide field">
+                    <label class="custom-label-w-15">วันที่นำฝากบัญชี</label>
+                    <input type="text" value="02/10/60" />
+                </div>
+                <div class="eight wide field">
+                    <label class="custom-label-w-15">รางวัล</label>
+                    <input type="text" value="" />
+                </div>
+            </div>
+            <div class="inline fields">
+                <div class="eight wide field " >
+                    <label class="custom-label-w-15">ประเภทคดี</label>
+                    <select id="id" class="ui dropdown">
+                        <option value="0">สุรา</option>
+                        <option value="1">รถยนต์</option>                                            
+                    </select>
+                </div>
+                <div class="eight wide field">
+                    <label class="custom-label-w-15">ส่งคลัง</label>
+                    <input type="text" value="" readonly="" />
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="eight wide field">
+                    <label class="custom-label-w-15">เลขที่ บค.
+                    </label>
+                    <input type="text" value="" />
+                </div>
+                <div class="eight wide field">
+                    <label class="custom-label-w-15">วันที่จ่ายสินบนรางวัล
+                    </label>
+                    <input type="text" value="" />
+                </div>
+            </div>
+            <div class="inline fields">
+                <div class="eight wide field">
+                    <label class="custom-label-w-15">จำนวนเงิน
+                    </label>
+                    <input type="text" value="" />
+                </div>
+                <div class="eight wide field">
+                    <label class="custom-label-w-15">วันที่นำส่งคลัง
+                    </label>
+                    <input type="text" value="" readonly="" />
+                </div>
+            </div>
+            <br>
+        </div>
+        <div class="actions">
+            <div class="ui center aligned grid">
+                <div class="six wide column">
+                    <button class="ui mini primary button ">
+                        <i class="save icon"></i>
+                        บันทึก
+                    </button>
+                    <button class="ui mini button " (click)="closePopupEdit()">
+                        <i class="close icon"></i>
+                        ยกเลิก
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

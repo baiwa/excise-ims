@@ -1,305 +1,176 @@
 <div class="ui grid">
-  <div class="sixteen wide column">
-    <div class="ui large steps">
-      <div class="step" style="width: 240px;">
-        <i class="user icon"></i>
-        <div class="content">
-          <div class="title">ข้อมูลเจ้าหน้าที่</div>
-        </div>
+    <div class="sixteen wide column">
+        <div class="ui large ordered steps"  style="width: 280px;"> 
+            <div class=" step">	
+              <div class="content">
+                <div class="title">ข้อมูล</div>
+                <div class="description"> เลขอ้างอิง (ฎีกา)</div>
+              </div>
+            </div>
+            <div class=" step" style="width: 200px;">
+              <div class="content">
+                <div class="title">ข้อมูล</div>
+                <div class="description">เจ้าหน้าที่</div>
+              </div>
+            </div>
+            <div class="active step">
+              <div class="content">
+                <div class="title">ปฏิทินการเบิก</div>
+                <div class="description">ค่าปฏิบัติงานนอกเวลาราชการ		
+                  </div>
+              </div>
+            </div>
+            <div class=" step">
+              <div class="content">
+                <div class="title">กระดาษทำการตรวจสอบ</div>
+                <div class="description">การเบิกค่าปฏิบัติงานนอกเวลาราชการ			
+                  </div>
+              </div>
+            </div>
+            <div class=" step">
+              <div class="content">
+                <div class="title"> เปรียบเทียบ</div>
+                <div class="description">สรุปรายการขอเบิก	
+                  </div>
+              </div>
+            </div>
+          </div>
+     		
+  
+      <div class="ui top attached header">
+        <span>ปฏิทินการเบิกค่าปฏิบัติงานนอกเวลาราชการ													
+          </span>
       </div>
-      <div class="step" style="width: 240px;">
-        <i class="calendar icon"></i>
-        <div class="content">
-          <div class="title">ปฏิทินโอที</div>
-        </div>
-      </div>
-      <div class="active step" style="width: 240px;">
-        <i class="desktop icon"></i>
-        <div class="content">
-          <div class="title">แสดงผล</div>
-        </div>
-      </div>
-    </div>
-
-    <h2 class="ui header">แสดงผล</h2>
-
-    <div class="ui top attached header">
-      <div class="ui grid">
-        <div class="right aligned column">
-          <div class="ui mini primary button" (click)="addData()">
-            <i class="print icon"></i>พิมพ์
+  
+      <div class="ui attached segment">
+        <div class="ui form">
+          <div class="inline fields">
+            <div class="one wide field ">
+              <label>ชื่อ</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="" value="กนกพรรณ">
+            </div>
+            <div class="two wide field ">
+              <label>นามสกุล</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="" value="เกตุสัตบรรณ">
+            </div>
+            <div class="one wide field ">
+              <label>ตำแหน่ง</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="" value="นักวิชาการคอมพิวเตอร์ชำนาญการ">
+            </div>
+          </div>
+  
+          <div class="inline fields">
+            <div class="one wide field ">
+              <label>ประเภท</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="" value="ข้าราชการ  ">
+            </div>
+            <div class="two wide field ">
+              <label>อัตราเบี้ยเลี้ยง</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="" value="270">
+            </div>
+          </div>
+          <div class="ui center aligned grid">
+            <div class="eight wide column">
+              <button class="ui mini primary button" routerLink="/int06-4-1">
+                  <i class="arrow left icon"></i>
+                ย้อนกลับ
+              </button>
+              <button class="ui mini primary button" routerLink="/int06-4-3">
+                <i class="arrow right icon"></i> 
+                ถัดไป
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="ui attached header">
-      <div class="ui grid">
-        <div class="one wide column">
-          <i class="angle left icon"></i>
-        </div>
-        <div class="fourteen wide center aligned column">
-          <span>พฤศจิกายน</span>
-        </div>
-        <div class="one wide right aligned column">
-          <i class="angle right icon"></i>
-        </div>
-      </div>
-    </div>
-
-    <div class="ui attached segment">
-      <div style="overflow-x: scroll">
-        <table class="ui small center aligned celled table" style="width: 150%;">
-          <thead>
-            <tr>
-              <th>ชื่อ/วันที่</th>
-              <th>1</th>
-              <th>2</th>
-              <th>3</th>
-              <th style="color: red">4</th>
-              <th style="color: red">5</th>
-              <th>6</th>
-              <th>7</th>
-              <th>8</th>
-              <th>9</th>
-              <th>10</th>
-              <th style="color: red">11</th>
-              <th style="color: red">12</th>
-              <th>13</th>
-              <th>14</th>
-              <th>15</th>
-              <th>16</th>
-              <th>17</th>
-              <th style="color: red">18</th>
-              <th style="color: red">19</th>
-              <th>20</th>
-              <th>รวมชั่วโมง</th>
-              <th>รวมเงิน</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="text-align: left;">นายวรชิต วันจันทร์</td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">16.30-20.30</span>
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">16.30-20.30</span>
-                <br>
-                <img class="image-width" src="assets/images/moon.JPG">
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">8.30-16.30</span>
-              </td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">8.30-16.30</span>
-              </td>
-              <td></td>
-              <td></td>
-              <td>
-                <img class="image-width-18" src="assets/images/flower.JPG">
-              </td>
-              <td></td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">16.30-20.30</span>
-                <br>
-                <img class="image-width" src="assets/images/full-moon.JPG">
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="text-align: right">26</td>
-              <td style="text-align: right">1,440</td>
-            </tr>
-            <tr>
-              <td style="text-align: left;">นายบี วันอังคาร</td>
-              <td></td>
-              <td></td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">16.30-20.30</span>
-              </td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">8.30-16.30</span>
-              </td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">8.30-17.00</span>
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <img class="image-width-18" src="assets/images/flower.JPG">
-              </td>
-              <td>
-                <img class="image-width-18" src="assets/images/flower.JPG">
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="text-align: right">18</td>
-              <td style="text-align: right;">1,040</td>
-            </tr>
-            <tr>
-              <td style="text-align: left;">นายซี วันพุธ</td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">16.30-20.30</span>
-              </td>
-              <td></td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">16.30-20.30</span>
-              </td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">8.30-16.30</span>
-              </td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">8.30-17.00</span>
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <img class="image-width-18" src="assets/images/full-moon.JPG">
-              </td>
-              <td>
-                <img class="image-width-18" src="assets/images/full-moon.JPG">
-              </td>
-              <td></td>
-              <td></td>
-              <td>
-                <img class="image-width" src="assets/images/moon.JPG">
-                <br>
-                <img class="image-width" src="assets/images/flower.JPG">
-              </td>
-              <td>
-                <img class="image-width-18" src="assets/images/full-moon.JPG">
-              </td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">16.30-20.30</span>
-                <br>
-                <img class="image-width" src="assets/images/flower.JPG">
-              </td>
-              <td></td>
-              <td>
-                <img class="image-width-18" src="assets/images/flower.JPG">
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="text-align: right">22</td>
-              <td style="text-align: right;">1,240</td>
-            </tr>
-            <tr>
-              <td style="text-align: left;">นายดี วันพฤหัสบดี</td>
-              <td></td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">16.30-20.30</span>
-              </td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">16.30-20.30</span>
-              </td>
-              <td></td>
-              <td></td>
-              <td>
-                <img class="image-width-18" src="assets/images/full-moon.JPG">
-              </td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">16.30-20.30</span>
-                <br>
-                <img class="image-width" src="assets/images/flower.JPG">
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">16.30-20.30</span>
-              </td>
-              <td>
-                <img class="image-width" src="assets/images/square.JPG">
-                <br>
-                <span style="font-size: 11px;">16.30-20.30</span>
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <img class="image-width-18" src="assets/images/flower.JPG">
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="text-align: right">26</td>
-              <td style="text-align: right;">1,440</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
       <br>
-      <div class="ui grid">
-        <div class="one wide column">
-          หมายเหตุ*
+      <div class="ui attached segment">
+        <div class="ui form">
+            <div class="inline fields">
+                <div class="one wide field "></div>
+                <div class="two wide field ">
+              <label>ประเภท</label>  </div>
+              <div class="two wide field ">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="frequency3" checked="checked">
+                  <label>เบิกเบี้ยเลี้ยง
+                    </label>
+                </div>
+              </div>
+              
+              <div class="two wide field ">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="frequency3">
+                  <label>ลาป่วย/ลากิจ</label>
+                </div>
+              </div>
+              <div class="three wide field  ">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="frequency3">
+                  <label>เดินทางไปราชการ</label>
+                </div>
+              </div>   
+              <div class="two wide field  ">
+                  <div class="ui radio checkbox">
+                    <input type="radio" name="frequency3">
+                    <label>อยู่เวร</label>
+                  </div>
+                </div>  
+                <div class="three wide field  ">
+                    <div class="ui radio checkbox">
+                      <input type="radio" name="frequency3">
+                      <label>ปฏิบัติงานนอกเวลาราชการ</label>
+                    </div>
+                  </div>         
+             
+                  
+            </div>
+          <br>
+          <div class="inline fields">
+            <div class="one wide field ">
+              <label>วันที่</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="" value="ข้าราชการ  ">
+            </div>
+            <div class="two wide field ">
+              <label>ถึง</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="" value="270">
+            </div>
+            <button class="ui mini primary button">
+              ตกลง
+            </button>
+          </div>  
+          <br>
+          
+            <div id='calendar'></div>
+            <br>
+            <div class="ui center aligned grid">
+              <div class="eight wide column">
+                <button class="ui mini primary button" routerLink="/int06-4-1">
+                    <i class="arrow left icon"></i>
+                  ย้อนกลับ
+                </button>
+                <button class="ui mini primary button" routerLink="/int06-4-3">
+                  <i class="arrow right icon"></i> 
+                  ถัดไป
+                </button>
+              </div>
+            </div>
+          </div>       
+  
+            
+            </div>
         </div>
-        <div class="six wide column">
-          ปฏิบัติงานนอกเวลา
-          <img src="assets/images/square.JPG">
-          <br> เดินทางไปราชการอื่น
-          <img src="assets/images/moon.JPG">
-          <br> อยู่เวร
-          <img src="assets/images/full-moon.JPG">
-          <br> ลาป่วย/ลาพักผ่อน
-          <img src="assets/images/flower.JPG">
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>

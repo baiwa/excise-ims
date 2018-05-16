@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageBarService } from '../../../../../common/services/message-bar.service';
 
-import { MessageBarService } from './../../../../common/services/message-bar.service';
 
 declare var $: any;
 @Component({
-  selector: 'int03-2',
-  templateUrl: './int03-2.component.html',
-  styleUrls: ['./int03-2.component.css']
+  selector: 'app-int01-4-4',
+  templateUrl: './int01-4-4.component.html',
+  styleUrls: ['./int01-4-4.component.css']
 })
-export class Int032Component implements OnInit {
-
+export class Int0144Component implements OnInit {
   private listData: any[] = [];
   private actionsModal: string;
 
@@ -53,4 +52,5 @@ export class Int032Component implements OnInit {
     $("#selectCatagory").hide();
     $('#modalMappingIncCode').modal('hide');
   }
+
 }

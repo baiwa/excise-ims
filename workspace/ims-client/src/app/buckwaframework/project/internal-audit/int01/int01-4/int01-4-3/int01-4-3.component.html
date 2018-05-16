@@ -1,0 +1,69 @@
+<div class="ui grid">
+    <div class="sixteen wide column">
+      <div class="ui large steps">
+        <div class="step">
+          <i class="upload icon"></i>
+          <div class="content">
+            <div class="title">นำเข้างบทดลอง&nbsp;&nbsp;&nbsp;</div>
+          </div>
+        </div>
+        <div class="step">
+          <i class="list layout icon"></i>
+          <div class="content">
+            <div class="title">เลือกงบสรุปยอดเงินค่าภาษี</div>
+          </div>
+        </div>
+        <div class="active step">
+          <i class="table icon"></i>
+          <div class="content">
+            <div class="title">แสดงผลการตรวจสอบ</div>
+          </div>
+        </div>
+      </div>
+  
+      <h2 class="ui header">แสดงผลการตรวจสอบ</h2>
+  
+      <div class="ui attached segment">
+        <table id="table1" class="ui small celled table">
+          <thead>
+            <tr>
+              <th colspan="5">งบทดลอง</th>
+              <th colspan="7">งบสรุปยอดเงินภาษี</th>
+            </tr>
+            <tr style="text-align: center;">
+              <th rowspan="2">บัญชีแยกประเภท</th>
+              <th rowspan="2">ยอดยกมา</th>
+              <th rowspan="2">เดบิต</th>
+              <th rowspan="2">เครดิต</th>
+              <th rowspan="2">ยอดยกไป</th>
+              <th colspan="2">หมวดภาษี</th>
+              <th colspan="4">ยอดเงินภาษี</th>
+              <th rowspan="2">ผลต่าง</th>
+            </tr>
+            <tr style="text-align: center;">
+              <th style="border-left: 1px solid rgba(34,36,38,.1);">รหัสภาษี</th>
+              <th>รายการ</th>
+              <th>สาขาเมือง 1</th>
+              <th>สาขาเมือง 2</th>
+              <th>สาขาเมือง 3</th>
+              <th>รวม</th>
+            </tr>
+          </thead>
+        </table>
+  
+        <div class="ui center aligned grid">
+          <div class="six wide column">
+              <button class="ui mini button" routerLink="/int01-4-2">
+                <i class="arrow left icon"></i>
+                ย้อนกลับ
+              </button>
+              <button class="ui mini primary button" routerLink="/int01-4-4">
+              ตั้งค่าจับคู่รหัสภาษี
+              </button>
+           
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </div>

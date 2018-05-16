@@ -52,13 +52,8 @@ import { CreateSaveMessageTraderComponent } from './buckwaframework/project/tax-
 import { Int0111Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-1/int01-1-1.component';
 import { Int0112Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-2/int01-1-2.component';
 import { Int0113Component } from './buckwaframework/project/internal-audit/int01/int01-1/int01-1-3/int01-1-3.component';
-import { Int031Component } from './buckwaframework/project/internal-audit/int03/int03-1/int03-1.component';
-import { Int0311Component } from './buckwaframework/project/internal-audit/int03/int03-1/int3-1-1/int03-1-1.component';
-import { Int0312Component } from './buckwaframework/project/internal-audit/int03/int03-1/int3-1-2/int03-1-2.component';
-import { Int032Component } from './buckwaframework/project/internal-audit/int03/int03-2/int03-2.component';
-import { Int041Component } from './buckwaframework/project/internal-audit/int04/int04-1/int04-1.component';
-import { Int042Component } from './buckwaframework/project/internal-audit/int04/int04-2/int04-2.component';
-import { Int043Component } from './buckwaframework/project/internal-audit/int04/int04-3/int04-3.component';
+
+
 import { Int051Component } from './buckwaframework/project/internal-audit/int05/int05-1/int05-1.component';
 import { Int052Component } from './buckwaframework/project/internal-audit/int05/int05-2/int05-2.component';
 import { Int053Component } from './buckwaframework/project/internal-audit/int05/int05-3/int05-3.component';
@@ -159,6 +154,29 @@ import { Epa021Component } from './buckwaframework/project/export-audit/epa02/ep
 import { Epa0211Component } from './buckwaframework/project/export-audit/epa02/epa02-1/epa02-1-1/epa02-1-1.component';
 import { Epa0212Component } from './buckwaframework/project/export-audit/epa02/epa02-1/epa02-1-2/epa02-1-2.component';
 import { Epa0213Component } from './buckwaframework/project/export-audit/epa02/epa02-1/epa02-1-3/epa02-1-3.component';
+import { Int0611Component } from './buckwaframework/project/internal-audit/int06/int06-1/int06-1-1/int06-1-1.component';
+import { Int0633Component } from './buckwaframework/project/internal-audit/int06/int06-3/int06-3-3/int06-3-3.component';
+import { Int0634Component } from './buckwaframework/project/internal-audit/int06/int06-3/int06-3-4/int06-3-4.component';
+import { Int0643Component } from './buckwaframework/project/internal-audit/int06/int06-4/int06-4-3/int06-4-3.component';
+import { Int0644Component } from './buckwaframework/project/internal-audit/int06/int06-4/int06-4-4/int06-4-4.component';
+import { Int0653Component } from './buckwaframework/project/internal-audit/int06/int06-5/int06-5-3/int06-5-3.component';
+import { Int0654Component } from './buckwaframework/project/internal-audit/int06/int06-5/int06-5-4/int06-5-4.component';
+import { Int0663Component } from './buckwaframework/project/internal-audit/int06/int06-6/int06-6-3/int06-6-3.component';
+import { Int0664Component } from './buckwaframework/project/internal-audit/int06/int06-6/int06-6-4/int06-6-4.component';
+import { Int0131Component } from './buckwaframework/project/internal-audit/int01/int01-3/int01-3-1/int01-3-1.component';
+import { Int0132Component } from './buckwaframework/project/internal-audit/int01/int01-3/int01-3-2/int01-3-2.component';
+import { Int0133Component } from './buckwaframework/project/internal-audit/int01/int01-3/int01-3-3/int01-3-3.component';
+import { Int0141Component } from './buckwaframework/project/internal-audit/int01/int01-4/int01-4-1/int01-4-1.component';
+
+import { Int0142Component } from './buckwaframework/project/internal-audit/int01/int01-4/int01-4-2/int01-4-2.component';
+import { Int0143Component } from './buckwaframework/project/internal-audit/int01/int01-4/int01-4-3/int01-4-3.component';
+import { Int0144Component } from './buckwaframework/project/internal-audit/int01/int01-4/int01-4-4/int01-4-4.component';
+import { Int0151Component } from './buckwaframework/project/internal-audit/int01/int01-5/int01-5-1/int01-5-1.component';
+import { Int0161Component } from './buckwaframework/project/internal-audit/int01/int01-6/int01-6-1/int01-6-1.component';
+import { Int0171Component } from './buckwaframework/project/internal-audit/int01/int01-7/int01-7-1/int01-7-1.component';
+import { Int0181Component } from './buckwaframework/project/internal-audit/int01/int01-8/int01-8-1/int01-8-1.component';
+
+
 
 
 @NgModule({
@@ -193,14 +211,7 @@ import { Epa0213Component } from './buckwaframework/project/export-audit/epa02/e
         CreateSaveMessageTraderComponent,
         Int0111Component,
         Int0112Component,
-        Int0113Component,
-        Int031Component,
-        Int0311Component,
-        Int0312Component,
-        Int032Component,
-        Int041Component,
-        Int042Component,
-        Int043Component,
+        Int0113Component, 
         Int051Component,
         Int052Component,
         Int053Component,
@@ -225,7 +236,7 @@ import { Epa0213Component } from './buckwaframework/project/export-audit/epa02/e
         Int074Component,
         Int075Component,
         Int076Component,
-        Int077Component,       
+        Int077Component,
         Int081Component,
         Int0811Component,
         Int0812Component,
@@ -268,20 +279,57 @@ import { Epa0213Component } from './buckwaframework/project/export-audit/epa02/e
         Int0752Component,
         Int0753Component,
         Int0754Component,
-        Int0511Component,       
+        Int0511Component,
         Int0521Component,
-        Int05111Component, 
+        Int05111Component,
         Int05112Component,
-        Int05113Component, 
+        Int05113Component,
         Int0522Component,
         Int0523Component,
         Int0524Component,
         Cop011Component,
         Cop012Component,
-       Cop021Component, 
-       Cop013Component,
-       Cop0211Component, 
-       Cop0212Component, Cop031Component, Cop0311Component, Cop03111Component, Cop041Component, Cop042Component, Cop0411Component, Cop0421Component, Cop051Component, Cop0511Component, Epa011Component, Epa0111Component, Epa0112Component, Epa021Component, Epa0211Component, Epa0212Component, Epa0213Component, 
+        Cop021Component,
+        Cop013Component,
+        Cop0211Component,
+        Cop0212Component,
+        Cop031Component,
+        Cop0311Component,
+        Cop03111Component,
+        Cop041Component,
+        Cop042Component,
+        Cop0411Component,
+        Cop0421Component,
+        Cop051Component,
+        Cop0511Component,
+        Epa011Component,
+        Epa0111Component,
+        Epa0112Component,
+        Epa021Component,
+        Epa0211Component,
+        Epa0212Component,
+        Epa0213Component,
+        Int0611Component,
+        Int0633Component,
+        Int0634Component,
+        Int0643Component,
+        Int0644Component,
+        Int0653Component,
+        Int0654Component,
+        Int0663Component,
+        Int0664Component,
+        Int0131Component,
+        Int0132Component,
+        Int0133Component,
+        Int0141Component,
+        Int0142Component,
+        Int0143Component,
+        Int0144Component,
+        Int0151Component,
+        Int0161Component,
+        Int0171Component,
+        Int0181Component,
+       
     ],
     imports: [
         BrowserModule,

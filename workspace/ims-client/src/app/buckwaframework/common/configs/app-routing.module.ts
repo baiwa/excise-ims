@@ -65,13 +65,18 @@ import { Int0113Component } from './../../project/internal-audit/int01/int01-1/i
 import { Int0121Component } from './../../project/internal-audit/int01/int01-2/int01-2-1/int01-2-1.component';
 import { Int0122Component } from './../../project/internal-audit/int01/int01-2/int01-2-2/int01-2-2.component';
 import { Int0123Component } from './../../project/internal-audit/int01/int01-2/int01-2-3/int01-2-3.component';
-import { Int031Component } from './../../project/internal-audit/int03/int03-1/int03-1.component';
-import { Int0311Component } from './../../project/internal-audit/int03/int03-1/int3-1-1/int03-1-1.component';
-import { Int0312Component } from './../../project/internal-audit/int03/int03-1/int3-1-2/int03-1-2.component';
-import { Int032Component } from './../../project/internal-audit/int03/int03-2/int03-2.component';
-import { Int041Component } from './../../project/internal-audit/int04/int04-1/int04-1.component';
-import { Int042Component } from './../../project/internal-audit/int04/int04-2/int04-2.component';
-import { Int043Component } from './../../project/internal-audit/int04/int04-3/int04-3.component';
+import { Int0131Component } from '../../project/internal-audit/int01/int01-3/int01-3-1/int01-3-1.component';
+import { Int0132Component } from '../../project/internal-audit/int01/int01-3/int01-3-2/int01-3-2.component';
+import { Int0133Component } from '../../project/internal-audit/int01/int01-3/int01-3-3/int01-3-3.component';
+import { Int0141Component } from '../../project/internal-audit/int01/int01-4/int01-4-1/int01-4-1.component';
+import { Int0142Component } from '../../project/internal-audit/int01/int01-4/int01-4-2/int01-4-2.component';
+import { Int0143Component } from '../../project/internal-audit/int01/int01-4/int01-4-3/int01-4-3.component';
+import { Int0144Component } from '../../project/internal-audit/int01/int01-4/int01-4-4/int01-4-4.component';
+import { Int0151Component } from '../../project/internal-audit/int01/int01-5/int01-5-1/int01-5-1.component';
+import { Int0161Component } from '../../project/internal-audit/int01/int01-6/int01-6-1/int01-6-1.component';
+import { Int0171Component } from '../../project/internal-audit/int01/int01-7/int01-7-1/int01-7-1.component';
+import { Int0181Component } from '../../project/internal-audit/int01/int01-8/int01-8-1/int01-8-1.component';
+
 
 
 import { Int051Component } from './../../project/internal-audit/int05/int05-1/int05-1.component';
@@ -88,20 +93,29 @@ import { Int0524Component } from './../../project/internal-audit/int05/int05-2/i
 import { Int053Component } from './../../project/internal-audit/int05/int05-3/int05-3.component';
 import { Int054Component } from './../../project/internal-audit/int05/int05-4/int05-4.component';
 import { Int061Component } from './../../project/internal-audit/int06/int06-1/int06-1.component';
+import { Int0611Component } from '../../project/internal-audit/int06/int06-1/int06-1-1/int06-1-1.component';
 import { Int062Component } from './../../project/internal-audit/int06/int06-2/int06-2.component';
 import { Int0621Component } from './../../project/internal-audit/int06/int06-2/int06-2-1/int06-2-1.component';
 import { Int063Component } from './../../project/internal-audit/int06/int06-3/int06-3.component';
 import { Int0631Component } from './../../project/internal-audit/int06/int06-3/int06-3-1/int06-3-1.component';
 import { Int0632Component } from './../../project/internal-audit/int06/int06-3/int06-3-2/int06-3-2.component';
+import { Int0633Component } from '../../project/internal-audit/int06/int06-3/int06-3-3/int06-3-3.component';
+import { Int0634Component } from '../../project/internal-audit/int06/int06-3/int06-3-4/int06-3-4.component';
 import { Int064Component } from './../../project/internal-audit/int06/int06-4/int06-4.component';
 import { Int0641Component } from './../../project/internal-audit/int06/int06-4/int06-4-1/int06-4-1.component';
 import { Int0642Component } from './../../project/internal-audit/int06/int06-4/int06-4-2/int06-4-2.component';
+import { Int0644Component } from '../../project/internal-audit/int06/int06-4/int06-4-4/int06-4-4.component';
+import { Int0643Component } from '../../project/internal-audit/int06/int06-4/int06-4-3/int06-4-3.component';
 import { Int065Component } from './../../project/internal-audit/int06/int06-5/int06-5.component';
 import { Int0651Component } from './../../project/internal-audit/int06/int06-5/int06-5-1/int06-5-1.component';
 import { Int0652Component } from './../../project/internal-audit/int06/int06-5/int06-5-2/int06-5-2.component';
+import { Int0654Component } from '../../project/internal-audit/int06/int06-5/int06-5-4/int06-5-4.component';
+import { Int0653Component } from '../../project/internal-audit/int06/int06-5/int06-5-3/int06-5-3.component';
 import { Int066Component } from './../../project/internal-audit/int06/int06-6/int06-6.component';
 import { Int0661Component } from './../../project/internal-audit/int06/int06-6/int06-6-1/int06-6-1.component';
 import { Int0662Component } from './../../project/internal-audit/int06/int06-6/int06-6-2/int06-6-2.component';
+import { Int0664Component } from '../../project/internal-audit/int06/int06-6/int06-6-4/int06-6-4.component';
+import { Int0663Component } from '../../project/internal-audit/int06/int06-6/int06-6-3/int06-6-3.component';
 import { Int071Component } from './../../project/internal-audit/int07/int07-1/int07-1.component';
 import { Int072Component } from './../../project/internal-audit/int07/int07-2/int07-2.component';
 import { Int073Component } from './../../project/internal-audit/int07/int07-3/int07-3.component';
@@ -162,6 +176,16 @@ import { Ope057Component } from './../../project/tax-audit/operate-tax-audit/ope
 
 
 
+
+
+
+
+
+
+
+
+
+
 const routes: Routes = [
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -203,6 +227,7 @@ const routes: Routes = [
     { path: 'epa02-1-1', component: Epa0211Component, canActivate: [AuthGuard] },
     { path: 'epa02-1-2', component: Epa0212Component, canActivate: [AuthGuard] },
     { path: 'epa02-1-3', component: Epa0213Component, canActivate: [AuthGuard] }, 
+   
 
     { path: 'cop01-1', component: Cop011Component, canActivate: [AuthGuard] },
     { path: 'cop01-2', component: Cop012Component, canActivate: [AuthGuard] },
@@ -217,25 +242,27 @@ const routes: Routes = [
     { path: 'cop04-1-1', component: Cop0411Component, canActivate: [AuthGuard] },
     { path: 'cop04-2', component: Cop042Component, canActivate: [AuthGuard] },
     { path: 'cop04-2-1', component: Cop0421Component, canActivate: [AuthGuard] },
-    { path: 'cop05-1', component: Cop051Component, canActivate: [AuthGuard] },
+    { path: 'cop05-1', component: Cop051Component, canActivate: [AuthGuard] },    
     { path: 'cop05-1-1', component: Cop0511Component, canActivate: [AuthGuard] },
+
+
     { path: 'int01-1-1', component: Int0111Component, canActivate: [AuthGuard] },
     { path: 'int01-1-2', component: Int0112Component, canActivate: [AuthGuard] },
     { path: 'int01-1-3', component: Int0113Component, canActivate: [AuthGuard] },
     { path: 'int01-2-1', component: Int0121Component, canActivate: [AuthGuard] },
     { path: 'int01-2-2', component: Int0122Component, canActivate: [AuthGuard] },
     { path: 'int01-2-3', component: Int0123Component, canActivate: [AuthGuard] },
-
-    { path: 'int03-1', component: Int031Component, canActivate: [AuthGuard] },
-    { path: 'int03-1-1', component: Int0311Component, canActivate: [AuthGuard] },
-    { path: 'int03-1-2', component: Int0312Component, canActivate: [AuthGuard] },
-    { path: 'int03-2', component: Int032Component, canActivate: [AuthGuard] },
-
-    { path: 'int04-1', component: Int041Component, canActivate: [AuthGuard] },
-    { path: 'int04-2', component: Int042Component, canActivate: [AuthGuard] },
-    { path: 'int04-3', component: Int043Component, canActivate: [AuthGuard] },
-
-  
+    { path: 'int01-3-1', component: Int0131Component, canActivate: [AuthGuard] },
+    { path: 'int01-3-2', component: Int0132Component, canActivate: [AuthGuard] },
+    { path: 'int01-3-3', component: Int0133Component, canActivate: [AuthGuard] },
+    { path: 'int01-4-1', component: Int0141Component, canActivate: [AuthGuard] },
+    { path: 'int01-4-2', component: Int0142Component, canActivate: [AuthGuard] },
+    { path: 'int01-4-3', component: Int0143Component, canActivate: [AuthGuard] },
+    { path: 'int01-4-4', component: Int0144Component, canActivate: [AuthGuard] },
+    { path: 'int01-5-1', component: Int0151Component, canActivate: [AuthGuard] },
+    { path: 'int01-6-1', component: Int0161Component, canActivate: [AuthGuard] },
+    { path: 'int01-7-1', component: Int0171Component, canActivate: [AuthGuard] },
+    { path: 'int01-8-1', component: Int0181Component, canActivate: [AuthGuard] },  
     { path: 'int05-1', component: Int051Component, canActivate: [AuthGuard] },    
     { path: 'int05-1-1', component: Int0511Component, canActivate: [AuthGuard] },
     { path: 'int05-1-1-1', component: Int05111Component, canActivate: [AuthGuard] },
@@ -250,21 +277,29 @@ const routes: Routes = [
     { path: 'int05-4', component: Int054Component, canActivate: [AuthGuard] },
 
     { path: 'int06-1', component: Int061Component, canActivate: [AuthGuard] },
+    { path: 'int06-1-1', component: Int0611Component, canActivate: [AuthGuard] },
     { path: 'int06-2', component: Int062Component, canActivate: [AuthGuard] },
     { path: 'int06-2-1', component: Int0621Component, canActivate: [AuthGuard] },
     { path: 'int06-3', component: Int063Component, canActivate: [AuthGuard] },
     { path: 'int06-3-1', component: Int0631Component, canActivate: [AuthGuard] },
     { path: 'int06-3-2', component: Int0632Component, canActivate: [AuthGuard] },
+    { path: 'int06-3-3', component: Int0633Component, canActivate: [AuthGuard] },
+    { path: 'int06-3-4', component: Int0634Component, canActivate: [AuthGuard] },
     { path: 'int06-4', component: Int064Component, canActivate: [AuthGuard] },
     { path: 'int06-4-1', component: Int0641Component, canActivate: [AuthGuard] },
     { path: 'int06-4-2', component: Int0642Component, canActivate: [AuthGuard] },
+    { path: 'int06-4-3', component: Int0643Component, canActivate: [AuthGuard] },
+    { path: 'int06-4-4', component: Int0644Component, canActivate: [AuthGuard] },
     { path: 'int06-5', component: Int065Component, canActivate: [AuthGuard] },
     { path: 'int06-5-1', component: Int0651Component, canActivate: [AuthGuard] },
     { path: 'int06-5-2', component: Int0652Component, canActivate: [AuthGuard] },
+    { path: 'int06-5-3', component: Int0653Component, canActivate: [AuthGuard] },
+    { path: 'int06-5-4', component: Int0654Component, canActivate: [AuthGuard] },
     { path: 'int06-6', component: Int066Component, canActivate: [AuthGuard] },
     { path: 'int06-6-1', component: Int0661Component, canActivate: [AuthGuard] },
     { path: 'int06-6-2', component: Int0662Component, canActivate: [AuthGuard] },
-    
+    { path: 'int06-6-3', component: Int0663Component, canActivate: [AuthGuard] },
+    { path: 'int06-6-4', component: Int0664Component, canActivate: [AuthGuard] },
     { path: 'int07-1', component: Int071Component, canActivate: [AuthGuard] },
     { path: 'int07-2', component: Int072Component, canActivate: [AuthGuard] },
     { path: 'int07-3', component: Int073Component, canActivate: [AuthGuard] },

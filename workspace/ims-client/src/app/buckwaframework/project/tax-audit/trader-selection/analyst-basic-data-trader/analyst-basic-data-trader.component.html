@@ -59,340 +59,63 @@
         </div>
         <div class="thirteen wide column">
           <div style="overflow-x: scroll;">
-            <table class="ui small celled table" style="width: 250%;">
+            <table id="userManagementDt"  class="ui small celled table  aligned" style="width: 5000px;">
               <thead>
-                <tr class="center aligned">
-                  <th rowspan="2">ทะเบียนสรรพสามิต</th>
-                  <th rowspan="2">ชื่อผู้ประกอบการ</th>
-                  <th rowspan="2">ชื่อโรงอุตสาหกรรม/สถานบริการ</th>
-                  <th rowspan="2">พื้นที่</th>
-                  <th rowspan="2">ภาค</th>
-                  <th colspan="2">การชำระภาษีรวม (บาท)</th>
-                  <th rowspan="2">อัตราการเปลี่ยนแปลง</th>
-                  <th colspan="2">การชำระภาษีที่ปรับค่าแล้ว (บาท)</th>
-                  <th rowspan="2">อัตราการเปลี่ยนแปลง</th>
-                  <th rowspan="2">จำนวนเดือนที่ชำระภาษี</th>
+                <tr>
+                  <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+                  <th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th>
+                  <th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th>
+                  <th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th>
+                  <th rowspan="2" style="text-align: center !important">พื้นที่</th>
+                  <th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th>
+                  <th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th>
+                  <th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th>
+                  <th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th>
+                  <th rowspan="2" style="text-align: center !important">ภาค</th>
+                  <th rowspan="2" style="text-align: center !important">พิกัด</th>
+                  <th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th>
+                  <th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th>
+                  <th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th>
+                  <th colspan="12" style="text-align: center !important">การชำระภาษี 12 เดือนแรก</th>
+                  <th colspan="12" style="text-align: center !important">การชำระภาษี 12 เดือนหลัง </th>
                 </tr>
-                <tr class="center aligned">
-                  <th style="border-left: 1px solid rgba(34,36,38,.1);">2559</th>
-                  <th>2560</th>
-                  <th>2559</th>
-                  <th>2560</th>
+                <tr>
+                  <th style="border-left: 1px solid rgba(34,36,38,.1);">12 เดือนแรก</th>
+                  <th style="text-align: center !important">12 เดือนหลัง </th>
+                  <th style="text-align: center !important">2558</th>
+                  <th style="text-align: center !important">2559</th>
+                  <th style="text-align: center !important">2560</th>
+                  <th style="text-align: center !important">พ.ค. 58</th>
+                  <th style="text-align: center !important">มิ.ย. 58</th>
+                  <th style="text-align: center !important">ก.ค. 58</th>
+                  <th style="text-align: center !important">ส.ค. 58</th>
+                  <th style="text-align: center !important">ก.ย. 58</th>
+                  <th style="text-align: center !important">ต.ค. 58</th>
+                  <th style="text-align: center !important">พ.ย. 58</th>
+                  <th style="text-align: center !important">ธ.ค. 58</th>
+                  <th style="text-align: center !important">ม.ค. 59</th>
+                  <th style="text-align: center !important">ก.พ. 59</th>
+                  <th style="text-align: center !important">มี.ค. 59</th>
+                  <th style="text-align: center !important">เม.ย. 59 </th>
+                  <th style="text-align: center !important">พ.ค. 58</th>
+                  <th style="text-align: center !important">มิ.ย. 58</th>
+                  <th style="text-align: center !important">ก.ค. 58</th>
+                  <th style="text-align: center !important">ส.ค. 58</th>
+                  <th style="text-align: center !important">ก.ย. 58</th>
+                  <th style="text-align: center !important">ต.ค. 58</th>
+                  <th style="text-align: center !important">พ.ย. 58</th>
+                  <th style="text-align: center !important">ธ.ค. 58</th>
+                  <th style="text-align: center !important">ม.ค. 59</th>
+                  <th style="text-align: center !important">ก.พ. 59</th>
+                  <th style="text-align: center !important">มี.ค. 59</th>
+                  <th style="text-align: center !important">เม.ย. 59 </th>
+
                 </tr>
               </thead>
               <tbody>
-
-                <tr>
-                  <td>2533-00254-8</td>
-                  <td>บริษัท ศักดิ์ไชยสิทธิ จำกัด</td>
-                  <td>บริษัท ศักดิ์ไชยสิทธิ จำกัด</td>
-                  <td>ระยอง 1</td>
-                  <td>&nbsp;</td>
-                  <td>1,271,815.20</td>
-                  <td>452,624.40</td>
-                  <td>-64.41 </td>
-                  <td>1,271,815.20</td>
-                  <td>452,624.40</td>
-                  <td>-64.41 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2535-00316-6</td>
-                  <td>กรมการพลังงานทหาร</td>
-                  <td>ศูนย์พัฒนาปิโตรเลียมภาคเหนือ</td>
-                  <td>เชียงใหม่</td>
-                  <td>&nbsp;</td>
-                  <td>27,131,949.75</td>
-                  <td>27,519,280.89</td>
-                  <td> 1.43 </td>
-                  <td>27,131,949.75</td>
-                  <td>27,519,280.89</td>
-                  <td> 1.43 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2535-00546-3</td>
-                  <td>บริษัท เชลล์แห่งประเทศไทย จำกัด</td>
-                  <td>บริษัท เชลล์แห่งประเทศไทย จำกัด (คลังสมุทรสงคราม)</td>
-                  <td>สมุทรสงคราม</td>
-                  <td>&nbsp;</td>
-                  <td>66,290,672.04</td>
-                  <td>64,611,948.61</td>
-                  <td>-2.53 </td>
-                  <td>66,290,672.04</td>
-                  <td>64,611,948.61</td>
-                  <td>-2.53 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2535-00793-3</td>
-                  <td>บริษัท เชลล์แห่งประเทศไทย จำกัด</td>
-                  <td>บริษัท เชลล์แห่งประเทศไทย จำกัด</td>
-                  <td>ลำปาง</td>
-                  <td>&nbsp;</td>
-                  <td>41,545,201.20</td>
-                  <td>38,509,696.45</td>
-                  <td>-7.31 </td>
-                  <td>41,545,201.20</td>
-                  <td>38,509,696.45</td>
-                  <td>-7.31 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2535-00841-2</td>
-                  <td>บริษัท เชลล์แห่งประเทศไทย จำกัด</td>
-                  <td>บริษัท เชลล์แห่งประเทศไทย จำกัด</td>
-                  <td>สุราษฎร์ธานี</td>
-                  <td>&nbsp;</td>
-                  <td>117,929,522.24</td>
-                  <td>115,058,468.77</td>
-                  <td>-2.43 </td>
-                  <td>117,929,522.24</td>
-                  <td>115,058,468.77</td>
-                  <td>-2.43 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2535-00876-8</td>
-                  <td>บริษัท วีระสุวรรณ จำกัด</td>
-                  <td>บริษัท วีระสุวรรณ จำกัด</td>
-                  <td>สมุทรสาคร</td>
-                  <td>&nbsp;</td>
-                  <td>7,096,337.92</td>
-                  <td>12,835,341.85</td>
-                  <td> 80.87 </td>
-                  <td>7,096,337.92</td>
-                  <td>12,835,341.85</td>
-                  <td> 80.87 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2535-00921-6</td>
-                  <td>บริษัท เชลล์แห่งประเทศไทย จำกัด</td>
-                  <td>บริษัท เชลล์แห่งประเทศไทย จำกัด</td>
-                  <td>สงขลา</td>
-                  <td>&nbsp;</td>
-                  <td>68,142,686.09</td>
-                  <td>66,930,292.45</td>
-                  <td>-1.78 </td>
-                  <td>68,142,686.09</td>
-                  <td>66,930,292.45</td>
-                  <td>-1.78 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2535-01003-1</td>
-                  <td>บริษัท เชลล์แห่งประเทศไทย จำกัด</td>
-                  <td>บริษัท เชลล์แห่งประเทศไทย จำกัด</td>
-                  <td>พท.2</td>
-                  <td>&nbsp;</td>
-                  <td>191,208,220.23</td>
-                  <td>241,350,255.38</td>
-                  <td> 26.22 </td>
-                  <td>191,208,220.23</td>
-                  <td>241,350,255.38</td>
-                  <td> 26.22 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2535-01453-8</td>
-                  <td>บริษัท เชฟรอน (ไทย) จำกัด</td>
-                  <td>คลังน้ำมันเชฟรอนสุราษฎร์ธานี</td>
-                  <td>สุราษฎร์ธานี</td>
-                  <td>&nbsp;</td>
-                  <td>55,676,979.17</td>
-                  <td>43,465,525.22</td>
-                  <td>-21.93 </td>
-                  <td>55,676,979.17</td>
-                  <td>43,465,525.22</td>
-                  <td>-21.93 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2535-01512-1</td>
-                  <td>บริษัท ปตท. จำกัด (มหาชน)</td>
-                  <td>โรงแยกก๊าซธรรมชาติ ระยอง</td>
-                  <td>ระยอง 1</td>
-                  <td>&nbsp;</td>
-                  <td>638,412,005.67</td>
-                  <td>855,839,400.27</td>
-                  <td> 34.06 </td>
-                  <td>638,412,005.67</td>
-                  <td>855,839,400.27</td>
-                  <td> 34.06 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2535-01581-3</td>
-                  <td>บริษัท ปตท. จำกัด (มหาชน)</td>
-                  <td>บริษัท ปตท. จำกัด</td>
-                  <td>ชลบุรี 2</td>
-                  <td>&nbsp;</td>
-                  <td>72,234,084.00</td>
-                  <td>35,272,904.85</td>
-                  <td>-51.17 </td>
-                  <td>72,234,084.00</td>
-                  <td>35,272,904.85</td>
-                  <td>-51.17 </td>
-                  <td style="background-color: red;">19</td>
-                </tr>
-                <tr>
-                  <td>2535-01784-0</td>
-                  <td>บริษัท เชฟรอน (ไทย) จำกัด</td>
-                  <td>บริษัท เชฟรอน (ไทย) จำกัด</td>
-                  <td>พท.2</td>
-                  <td>&nbsp;</td>
-                  <td>34,805,642.50</td>
-                  <td>44,624,960.59</td>
-                  <td> 28.21 </td>
-                  <td>34,805,642.50</td>
-                  <td>44,624,960.59</td>
-                  <td> 28.21 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2536-00266-0</td>
-                  <td>บริษัท ปตท. จำกัด (มหาชน)</td>
-                  <td>คลังน้ำมันภูเก็ต</td>
-                  <td>ภูเก็ต</td>
-                  <td>&nbsp;</td>
-                  <td>9,583,757.70</td>
-                  <td style="background-color: red"> - </td>
-                  <td>-100.00 </td>
-                  <td>9,583,757.70</td>
-                  <td style="background-color: red"> - </td>
-                  <td>-100.00 </td>
-                  <td style="background-color: red;">10</td>
-                </tr>
-                <tr>
-                  <td>2536-00872-7</td>
-                  <td>บริษัท ซัสโก้ จำกัด (มหาชน)</td>
-                  <td>บริษัท ซัสโก้ จำกัด (มหาชน)</td>
-                  <td>สุราษฎร์ธานี</td>
-                  <td>&nbsp;</td>
-                  <td>3,301,689.85</td>
-                  <td>6,538,281.20</td>
-                  <td> 98.03 </td>
-                  <td>3,301,689.85</td>
-                  <td>6,538,281.20</td>
-                  <td> 98.03 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2536-01014-2</td>
-                  <td>บริษัท บางจาก คอร์ปอเรชั่น จำกัด (มหาชน)</td>
-                  <td>บริษัท บางจาก คอร์ปอเรชั่น จำกัด (มหาชน)</td>
-                  <td>พท.3</td>
-                  <td>&nbsp;</td>
-                  <td>19,761,291,504.48</td>
-                  <td>26,779,197,842.21</td>
-                  <td> 35.51 </td>
-                  <td>19,761,291,504.48</td>
-                  <td>26,779,197,842.21</td>
-                  <td> 35.51 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2536-01017-3</td>
-                  <td>บริษัท ซัสโก้ จำกัด (มหาชน)</td>
-                  <td>บริษัท ซัสโก้ จำกัด (มหาชน)</td>
-                  <td>พท.1</td>
-                  <td>&nbsp;</td>
-                  <td>6,129,064.25</td>
-                  <td>4,357,835.15</td>
-                  <td>-28.90 </td>
-                  <td>6,129,064.25</td>
-                  <td>4,357,835.15</td>
-                  <td>-28.90 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2536-01889-0</td>
-                  <td>บริษัท เชฟรอน (ไทย) จำกัด</td>
-                  <td>บมจ. คลังน้ำมันบริษัท เชฟรอน (ไทย) จำกัด และบริษัท เอสโซ่ (ประเทศไทย) จำกัด</td>
-                  <td>สงขลา</td>
-                  <td>&nbsp;</td>
-                  <td>64,401,225.18</td>
-                  <td>57,606,107.95</td>
-                  <td>-10.55 </td>
-                  <td>64,401,225.18</td>
-                  <td>57,606,107.95</td>
-                  <td>-10.55 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2536-01890-4</td>
-                  <td>บริษัท เอสโซ่ (ประเทศไทย) จำกัด (มหาชน)</td>
-                  <td>บมจ.คลังน้ำมันบริษัท เชฟรอน (ไทย) จำกัด และบริษัท เอสโซ่ (ประเทศไทย) จำกัด</td>
-                  <td>สงขลา</td>
-                  <td>&nbsp;</td>
-                  <td>48,103,654.05</td>
-                  <td>40,879,407.26</td>
-                  <td>-15.02 </td>
-                  <td>48,103,654.05</td>
-                  <td>40,879,407.26</td>
-                  <td>-15.02 </td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>2537-00008-3</td>
-                  <td>บริษัท ปตท. จำกัด (มหาชน)</td>
-                  <td>บริษัท ปตท. จำกัด (มหาชน) คลังน้ำมันลำลูกกา</td>
-                  <td>ปทุมธานี 2</td>
-                  <td>&nbsp;</td>
-                  <td>25,432,900.05</td>
-                  <td>33,763,569.30</td>
-                  <td> 32.76 </td>
-                  <td>25,432,900.05</td>
-                  <td>33,763,569.30</td>
-                  <td> 32.76 </td>
-                  <td>24</td>
-                </tr>
+             
               </tbody>
-              <tfoot>
-                <tr>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>ชำระภาษีครบ 24 เดือน</th>
-                  <th>&nbsp;</th>
-                  <th>17</th>
-                  <th>ราย</th>
-                </tr>
-                <tr>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>ชำระภาษีไม่ครบ 24 เดือน</th>
-                  <th>&nbsp;</th>
-                  <th>2</th>
-                  <th>ราย</th>
-                </tr>
-                <tr>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>รวมผู้ประกอบการทั้งสิ้นทั้งสิ้น</th>
-                  <th>&nbsp;</th>
-                  <th>19</th>
-                  <th>ราย</th>
-                </tr>
-              </tfoot>
+             
             </table>
           </div>
 

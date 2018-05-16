@@ -1,177 +1,78 @@
 <div class="ui grid">
-  <div class="sixteen wide column">
-    <div class="ui large steps">
-      <div class="active step" style="width: 240px;">
-        <i class="user icon"></i>
-        <div class="content">
-          <div class="title">ข้อมูลเจ้าหน้าที่</div>
-        </div>
-      </div>
-      <div class="step" style="width: 240px;">
-        <i class="calendar icon"></i>
-        <div class="content">
-          <div class="title">ปฏิทินโอที</div>
-        </div>
-      </div>
-      <div class="step" style="width: 240px;">
-        <i class="desktop icon"></i>
-        <div class="content">
-          <div class="title">แสดงผล</div>
-        </div>
-      </div>
-    </div>
-
-    <h2 class="ui header">ตรวจสอบการเบิกค่าตอบแทนปฏิบัติงานนอกเวลาราชการ</h2>
-
-    <div class="ui top attached header">
-      <span>ข้อมูลเจ้าหน้าที่</span>
-    </div>
-
-    <div class="ui attached segment">
-      <div class="ui form">
-        <div class="inline fields">
-          <div class="six wide field ">
-            <label class="custom-label-w-10">ชื่อ</label>
-            <input type="text" value="">
-          </div>
-          <div class="one wide field"></div>
-          <div class="six wide field ">
-            <label class="custom-label-w-10">นามสกุล</label>
-            <input type="text" value="">
-          </div>
-        </div>
-
-        <div class="inline fields">
-          <div class="six wide field ">
-            <label class="custom-label-w-10">ตำแหน่ง</label>
-            <input type="text" value="">
-          </div>
-        </div>
-      </div>
-      
-      <br>
-      <div class="ui center aligned grid">
-        <div class="eight wide column">
-          <button class="ui mini primary button width-100" routerLink="/int06-4-1">
-            <i class="external icon"></i>
-            ตกลง
-          </button>
-          <button class="ui mini button width-100" (click)="clearData()">
-            <i class="refresh icon"></i>
-            ล้างข้อมูล
-          </button>
-          <button class="ui mini primary button width-100" (click)="editData()">
-            <i class="edit icon"></i>
-            แก้ไข
-          </button>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="ui segment" *ngIf="showData">
-      <div class="ui center aligned grid">
-        <div class="eight wide column">
-          <table class="ui small  celled table">
-            <thead>
-              <tr style="text-align: center;">
-                <th style="width: 50%">รายการปฏิทิน</th>
-                <th style="width: 50%">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="text-align: right;">ปฏิบัติงานนอกเวลา</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">ลบ</a>
-                </td>
-              </tr>
-              <tr>
-                <td style="text-align: right">เดินทางไปราชการอื่น</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">ลบ</a>
-                </td>
-              </tr>
-              <tr>
-                <td style="text-align: right">อยู่เวร</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">ลบ</a>
-                </td>
-              </tr>
-              <tr>
-                <td style="text-align: right">ลาป่วย/ลาพักผ่อน</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">แก้ไข</a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">ลบ</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="ui grid">
-            <div class="sixteen wide right aligned column">
-              <button class="ui mini primary button">
-                <i class="add icon"></i>
-                เพิ่ม
-              </button>
+    <div class="sixteen wide column">
+        <div class="ui large ordered steps"  style="width: 280px;"> 
+            <div class="active step">	
+              <div class="content">
+                <div class="title">ข้อมูล</div>
+                <div class="description"> เลขอ้างอิง (ฎีกา)</div>
+              </div>
+            </div>
+            <div class=" step" style="width: 200px;">
+              <div class="content">
+                <div class="title">ข้อมูล</div>
+                <div class="description">เจ้าหน้าที่</div>
+              </div>
+            </div>
+            <div class=" step">
+              <div class="content">
+                <div class="title">ปฏิทินการเบิก</div>
+                <div class="description">ค่าปฏิบัติงานนอกเวลาราชการ		
+                  </div>
+              </div>
+            </div>
+            <div class=" step">
+              <div class="content">
+                <div class="title">กระดาษทำการตรวจสอบ</div>
+                <div class="description">การเบิกค่าปฏิบัติงานนอกเวลาราชการ			
+                  </div>
+              </div>
+            </div>
+            <div class=" step">
+              <div class="content">
+                <div class="title"> เปรียบเทียบ</div>
+                <div class="description">สรุปรายการขอเบิก	
+                  </div>
+              </div>
             </div>
           </div>
-        </div>
+     		
+    
+  
+      <div class="ui top attached header">
+        <span>ข้อมูลอ้างอิง(ฎีกา)</span>
       </div>
-
-      <div class="ui center aligned grid">
-        <div class="eight wide column">
-          <button class="ui mini primary button width-100">
-            <i class="save icon"></i>
-            บันทึก
-          </button>
-          <button class="ui mini button width-100" (click)="clearData()">
-            <i class="arrow left icon"></i>
-            ย้อนกลับ
-          </button>
+  
+      <div class="ui attached segment">
+        <div class="ui form">
+          
+          <div class="inline fields">
+              <div class="one wide field"></div>
+            <div class="six wide field ">
+              <label class="custom-label-w-15">เลขอ้างอิง (ฎีกา)</label>
+              <input type="text" value="P590000022">           
+            </div>
+            <div class="one wide field"></div>
+            <div class="six wide field ">
+              <label class="custom-label-w-15">จำนวนเจ้าหน้าที่</label>
+              <input type="text" value="5">
+            </div>
+          </div>        
         </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<div id="modalOtWithdrawal" class="ui modal small hidden transition">
-  <i class="close icon"></i>
-  <div class="header">
-    แก้ไขอัตราเบี้ยเลี้ยง
-  </div>
-
-  <div class="content">
-    <div class="ui form">
-
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-15">อัตราเบี้ยเลี้ยง</label>
-          <input type="text" value="" />
+        
+        <br>
+        <div class="ui center aligned grid">
+          <div class="eight wide column">
+            <button class="ui mini primary button width-100" routerLink="/int06-4-1">
+              <i class="arrow right icon"></i> 
+            ถัดไป
+            </button>   
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="actions">
-    <div class="ui center aligned grid">
-      <div class="six wide column">
-        <button class="ui mini primary button width-100">
-          <i class="save icon"></i>
-          บันทึก
-        </button>
-        <button class="ui mini button width-100" (click)="closePopupEdit()">
-          <i class="close icon"></i>
-          ปิด
-        </button>
+  
       </div>
     </div>
   </div>
-</div>
+  
+  
+     
+       

@@ -39,7 +39,9 @@ import th.co.baiwa.starter.thymeleaf.stsm.web.conversion.VarietyFormatter;
 	useDefaultFilters = false,
 	basePackages = {
 		"th.co.baiwa.buckwaframework",
-		"th.co.baiwa.starter"
+		"th.co.baiwa.starter",
+		"th.go.excise.ims"
+		
 	},
 	includeFilters = {
 		@ComponentScan.Filter(

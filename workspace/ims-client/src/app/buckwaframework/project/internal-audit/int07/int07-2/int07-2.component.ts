@@ -11,6 +11,7 @@ export class Int072Component implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
   ngAfterViewInit() {
@@ -18,6 +19,7 @@ export class Int072Component implements OnInit {
       .dropdown({
         transition: 'drop'
       });
+      
       
   }
 
