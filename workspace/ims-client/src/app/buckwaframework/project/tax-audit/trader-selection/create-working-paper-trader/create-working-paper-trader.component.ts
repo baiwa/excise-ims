@@ -13,8 +13,8 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
   constructor(
     private messageBarService: MessageBarService
   ) {
-    
-   }
+
+  }
 
 
 
@@ -22,29 +22,46 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
 
   }
 
-  addCondition() { 
+  addCondition() {
     if (this.count == 10) {
       this.messageBarService.error("ไม่สามารถทำรายการได้");
 
-      return ;
+      return;
     }
 
-    $("#addCondition").append('<div class="inline fields"> ' +
-    ' <div class="five wide field "> ' +
-    '  <label>กำหนดช่วงร้อยละที่ต้องการแยกกลุ่มข้อมูล</label>' +
-    '  </div>' +
-    '  <div class="two wide field ">' +
-    '  <input name ="" value="">' +
-    ' </div>' +
-    
-    '  <div class="one wide field ">' +
-    '   <label>&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>' +
-    '  </div>' +
-    '  <div class="two wide field ">' +
-    '    <input name ="" value="">' +
-    '  </div>' +
-    '  <div class="nine wide field "></div>' +
-    ' </div> ');
+    $("#addCondition").append(
+
+      '<div class="inline fields">                   ' +
+      '	<div class="three wide field ">            ' +
+      '		<label>กำหนดเงื่อนไข</label></div>          ' +
+      '  <div class="three wide field ">             ' +
+      '	<label>จำนวนเดือนที่ชำระภาษี</label>                ' +
+      '  </div>                                      ' +
+      '  <div class="two wide field ">               ' +
+      '	<input name="" value="">                   ' +
+      '  </div>                                      ' +
+      '  <div class="one wide field ">               ' +
+      '	<label>&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>  ' +
+      '  </div>                                      ' +
+      '  <div class="two wide field ">               ' +
+      '	<input name="" value="">                   ' +
+      '  </div>                                      ' +
+      '  <div class="five wide field ">              ' +
+      '	<label>ช่วงร้อยละที่ต้องการแยกกลุ่มข้อมูล</label>          ' +
+      '  </div>                                      ' +
+      '  <div class="two wide field ">               ' +
+      '	<input name="" value="">                   ' +
+      '  </div>                                      ' +
+      '  <div class="one wide field ">               ' +
+      '	<label>&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>  ' +
+      '  </div>                                      ' +
+      '  <div class="two wide field ">               ' +
+      '	<input name="" value="">                   ' +
+      '  </div>                                      ' +
+      '</div>                                        '
+
+
+    );
     this.count++;
-}
+  }
 }
