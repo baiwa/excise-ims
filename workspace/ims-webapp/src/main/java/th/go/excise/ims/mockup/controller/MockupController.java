@@ -1,5 +1,7 @@
 package th.go.excise.ims.mockup.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,7 +23,7 @@ public class MockupController {
 	@PostMapping("/list")
 	@ResponseBody
 	public ResponseDataTable<MockupVo> listdata(@ModelAttribute MockupVo vo){
-		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo);		
+		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo, new Date() , 20);		
 		return listdata;
 	}
 	
