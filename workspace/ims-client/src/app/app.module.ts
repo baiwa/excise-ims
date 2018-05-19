@@ -57,6 +57,7 @@ import { Int0113Component } from './buckwaframework/project/internal-audit/int01
 import { Int051Component } from './buckwaframework/project/internal-audit/int05/int05-1/int05-1.component';
 import { Int052Component } from './buckwaframework/project/internal-audit/int05/int05-2/int05-2.component';
 import { Int053Component } from './buckwaframework/project/internal-audit/int05/int05-3/int05-3.component';
+import { Int0531Component } from './buckwaframework/project/internal-audit/int05/int05-3/int05-3-1/int05-3-1.component';
 import { Int054Component } from './buckwaframework/project/internal-audit/int05/int05-4/int05-4.component';
 import { Int061Component } from './buckwaframework/project/internal-audit/int06/int06-1/int06-1.component';
 import { Int062Component } from './buckwaframework/project/internal-audit/int06/int06-2/int06-2.component';
@@ -175,8 +176,8 @@ import { Int0151Component } from './buckwaframework/project/internal-audit/int01
 import { Int0161Component } from './buckwaframework/project/internal-audit/int01/int01-6/int01-6-1/int01-6-1.component';
 import { Int0171Component } from './buckwaframework/project/internal-audit/int01/int01-7/int01-7-1/int01-7-1.component';
 import { Int0181Component } from './buckwaframework/project/internal-audit/int01/int01-8/int01-8-1/int01-8-1.component';
-
-
+import { TaxAuditReportingComponent } from './buckwaframework/project/pages/reports/tax-audit-reporting/tax-audit-reporting.component';
+import { Ts0101Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-01/ts01-01.component';
 
 
 @NgModule({
@@ -215,6 +216,7 @@ import { Int0181Component } from './buckwaframework/project/internal-audit/int01
         Int051Component,
         Int052Component,
         Int053Component,
+        Int0531Component,
         Int054Component,
         Int061Component,
         Int062Component,
@@ -329,6 +331,8 @@ import { Int0181Component } from './buckwaframework/project/internal-audit/int01
         Int0161Component,
         Int0171Component,
         Int0181Component,
+        TaxAuditReportingComponent,
+        Ts0101Component,
        
     ],
     imports: [

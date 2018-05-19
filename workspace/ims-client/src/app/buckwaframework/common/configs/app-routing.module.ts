@@ -15,6 +15,7 @@ import { ParameterInfoDetailPage } from '../../project/pages/parameterInfo/param
 import { UserManagementPage } from '../../project/pages/userManagement/userManagement';
 import { UserManagementDetailPage } from '../../project/pages/userManagement/userManagement-detail';
 import { AnalysisPage } from '../../project/pages/analysis/analysis.component';
+import { TaxAuditReportingComponent } from '../../project/pages/reports/tax-audit-reporting/tax-audit-reporting.component';
 import { ResultAnalysisPage } from '../../project/pages/result-analysis/result-analysis.component';
 import { SelectFormComponent } from './../../project/pages/select-form/select-form.component';
 import { CreateFormComponent } from './../../project/pages/create-form/create-form.component';
@@ -91,6 +92,7 @@ import { Int0522Component } from './../../project/internal-audit/int05/int05-2/i
 import { Int0523Component } from './../../project/internal-audit/int05/int05-2/int05-2-3/int05-2-3.component';
 import { Int0524Component } from './../../project/internal-audit/int05/int05-2/int05-2-4/int05-2-4.component';
 import { Int053Component } from './../../project/internal-audit/int05/int05-3/int05-3.component';
+import { Int0531Component } from './../../project/internal-audit/int05/int05-3/int05-3-1/int05-3-1.component';
 import { Int054Component } from './../../project/internal-audit/int05/int05-4/int05-4.component';
 import { Int061Component } from './../../project/internal-audit/int06/int06-1/int06-1.component';
 import { Int0611Component } from '../../project/internal-audit/int06/int06-1/int06-1-1/int06-1-1.component';
@@ -204,6 +206,7 @@ const routes: Routes = [
     { path: 'edit-userManagement/:id', component: UserManagementDetailPage, canActivate: [AuthGuard] },
 
     { path: 'analysis', component: AnalysisPage, canActivate: [AuthGuard] },
+    { path: 'tax-audit-manage', component: TaxAuditReportingComponent, canActivate: [AuthGuard] },
     { path: 'result-analysis/:category/:coordinate', component: ResultAnalysisPage, canActivate: [AuthGuard] },
     { path: 'select-form/:category/:coordinate', component: SelectFormComponent, canActivate: [AuthGuard] },
     { path: 'create-form', component: CreateFormComponent, canActivate: [AuthGuard] },
@@ -274,6 +277,7 @@ const routes: Routes = [
     { path: 'int05-2-3', component: Int0523Component, canActivate: [AuthGuard] },
     { path: 'int05-2-4', component: Int0524Component, canActivate: [AuthGuard] },
     { path: 'int05-3', component: Int053Component, canActivate: [AuthGuard] },
+    { path: 'int05-3-1', component: Int0531Component, canActivate: [AuthGuard] },
     { path: 'int05-4', component: Int054Component, canActivate: [AuthGuard] },
 
     { path: 'int06-1', component: Int061Component, canActivate: [AuthGuard] },

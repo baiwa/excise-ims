@@ -1,0 +1,154 @@
+<div class="ui top centered attached header segment"
+      style="background: lightblue">
+  <span>บันทึกผลการวิเคราะการชำระภาษีสรรพสามิต</span>
+</div>
+
+<div class="ui attached segment">
+    <div class="ui grid">
+      <div class="ui two wide column">&nbsp;</div>
+      <div class="ui twelve wide column">
+          <div class="ui form">
+
+            <div class="inline fields">
+                <div class="eight wide field">
+                  <label class="custom-label-w-20">ราย</label>
+                  <input type="text" style="width: 100%">
+                </div>
+                <div class="eight wide field">
+                  <label class="custom-label-w-20">ประเภทกิจการ</label>
+                  <input type="text" style="width: 100%">
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="sixteen wide field">
+                  <label class="custom-label-w-20">ทะเบียนสรรพสามิตเลขที่</label>
+                  <input type="text" style="width: 100%">
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="sixteen wide field">
+                  <label class="custom-label-w-20">ที่อยู่</label>
+                  <textarea rows="2" style="width: 100%; resize: none"></textarea>
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="six wide field">
+                  <label class="custom-label-w-22">ขอบระยะเวลาที่ทำการวิเคราะห์ตั้งแต่</label>
+                </div>
+                <div class="four wide field">
+                  <input type="text">
+                </div>
+                <div class="two wide field">
+                  <p style="text-align: center; width: 100%"> ถึง </p>
+                </div>
+                <div class="four wide field">
+                  <input type="text">
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="sixteen wide field">
+                  <label class="custom-label-w-22">ข้อมูลที่ใช้ในการวิเคราะห์</label>
+                </div>
+            </div>
+
+            <div class="inline fields" *ngFor="let num of numbers; let i = index" [attr.data-index]="i">
+                <div class="sixteen wide field">
+                  <label class="custom-label-w-18">
+                      {{i+1}}.
+                  </label>
+                  <input type="text">
+                  &nbsp;&nbsp;
+                  <a disabled *ngIf="i<=2" class="mini ui button basic"
+                  style="box-shadow: none; cursor: default; color: transparent !important; box-shadow: 0 0 0 1px transparent inset!important;">ลบ</a>
+                  <a
+                  *ngIf="i>2" class="mini ui button basic red"
+                  (click)="onDelField(i)"
+                  style="box-shadow: none; color: red !important; box-shadow: 0 0 0 1px transparent inset!important;">ลบ</a>
+                </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <a
+                  class="{{ numbers[numbers.length-1] == 5 && 'disabled'}} mini ui button basic red"
+                  (click)="onAddField()">เพิ่ม</a>
+                <span style="color: red">&nbsp;*สูงสุด 5 ข้อ</span>
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="ten wide field">
+                <label class="custom-label-w-18">
+                  เรียน
+                </label>
+                <input type="text" >
+              </div>
+            </div>
+            
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <label class="custom-label-w-20">
+                  ตามที่ได้ทำการวิเคราะห์ข้อมูลรายดังกล่าวข้างต้นแล้วปรากฏว่า
+                </label>
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <textarea rows="4" style="width: 100%; resize: none"></textarea>
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="eight wide field">
+                <label class="custom-label-w-18">จึงเห็นสมควร</label>
+                <div class="ui checkbox">
+                  <input type="checkbox" class="hidden">
+                  <label>ขออนุมัติหนังสือเรียก</label>
+                </div>
+              </div>
+              <div class="eight wide field">
+                <label class="custom-label-w-18">อื่นๆ</label>
+                <input type="text">
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="eight wide field">
+                <label for="" class="custom-label-w-18">
+                  ผู้วิเคราะห์
+                </label>
+                <input type="text" class="disabled">
+              </div>
+              <div class="eight wide field">
+                <label for="" class="custom-label-w-18">
+                  ผู้ควบคุมการวิเคราะห์
+                </label>
+                <input type="text">
+              </div>
+            </div>
+
+          </div>
+      </div>
+      <div class="ui two wide column">&nbsp;</div>
+    </div>
+</div>
+
+<div class="ui bottom centered attached segment">
+  <div class="ui center aligned grid">
+      <div class="eight wide column">
+        <button class="ui mini green button" type="button">
+          <i class="save icon"></i>
+          พิมพ์เอกสาร
+        </button>
+        <button class="ui mini red button" type="button" (click)="onDiscard()">
+          <i class="times icon"></i>
+          ยกเลิก
+        </button>
+    </div>
+  </div>
+</div>

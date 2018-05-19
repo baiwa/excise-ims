@@ -18,7 +18,6 @@
                     <a class="item" [routerLink]="['/int01-5-1']" routerLinkActive="active" style=" color:White ">ตรวจสอบสถิติการชำระภาษี</a>
                     <a class="item" [routerLink]="['/int01-6-1']" routerLinkActive="active" style=" color:White ">ตรวจสอบสถิติการต่ออายุใบอนุญาต</a>
                     <a class="item" [routerLink]="['/int01-7-1']" routerLinkActive="active" style=" color:White ">ตรวจสอบการพิมพ์ใบอนุญาตซ้ำ</a>
-
                 </div>
             </div>
 
@@ -30,7 +29,6 @@
                         <div class="menu">
                             <a class="item" [routerLink]="['/int05-1']" routerLinkActive="active">ตรวจแสตมป์พื้นที่</a>
                             <a class="item" [routerLink]="['/int05-2']" routerLinkActive="active">ตรวจแสตมป์พื้นที่ สาขา </a>
-
                         </div>
                     </div>
                     <a class="item" [routerLink]="['/int05-3']" routerLinkActive="active">ตรวจสอบสินทรัพย์</a>
@@ -58,7 +56,6 @@
                     <a class="item" [routerLink]="['/int07-5']" routerLinkActive="active">ตรวจสอบรายงานเคลื่อนไหวเงินฝากคลัง </a>
                     <a class="item" [routerLink]="['/int07-6']" routerLinkActive="active">ตรวจการนำส่งเงินบัญชีเจ้าหนี้ อปท.</a>
                     <a class="item" [routerLink]="['/int07-7']" routerLinkActive="active">รายงานเคลื่อนไหวเงินฝากคลัง </a>
-
                 </div>
             </div>
             <div class="ui simple dropdown item">
@@ -70,9 +67,8 @@
                 </div>
             </div>
             <div class="ui simple dropdown item">           
-                    <a [routerLink]="['/int01-8-1']" style="color: #000;">ค้นหากระดาษทำการ</a>              
+                <a [routerLink]="['/int01-8-1']" style="color: #000;">ค้นหากระดาษทำการ</a>              
             </div>
-
         </div>
     </div>
     <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
@@ -84,6 +80,7 @@
             <!-- /tax-audit-operation -->
             <a class="item" [routerLink]="['/analysis']" routerLinkActive="active">ปฏิบัติการตรวจสอบภาษี</a>
             <a class="item" [routerLink]="['/tax-audit-reporting']" routerLinkActive="active">รายงานผลการตรวจสอบภาษี</a>
+            <a class="item" [routerLink]="['/tax-audit-manage']" routerLinkActive="active">จัดทำบันทึกข้อความ หนังสือราชการ</a>
         </div>
     </div>
     <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
@@ -107,8 +104,6 @@
         <div class="menu">
             <a class="item" [routerLink]="['/epa01-1']" routerLinkActive="active">จัดการข้อมูลต้นทาง </a>
             <a class="item" [routerLink]="['/epa02-1']" routerLinkActive="active">จัดการข้อมูลปายทาง</a>
-
-
         </div>
     </div>
     <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
@@ -131,7 +126,6 @@
 <div class="ui main container">
     <message-bar></message-bar>
     <router-outlet></router-outlet>
-
 </div>
 
 
@@ -158,7 +152,6 @@
         </div>
     </div>
 </div>
-
 
 
 <div class="ui tiny test modal transition hidden baiwa-alert">

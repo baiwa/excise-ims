@@ -1,0 +1,80 @@
+<div class="ui grid" style="margin: 2%">
+  <div class="sixteen wide column segments">
+    <div class="ui top centered attached header segment"
+         style="background: #729ac4">
+      <span>เพิ่มข้อมูลสินทรัพย์</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui grid">
+        <div class="ui one wide column">&nbsp;</div>
+        <div class="ui fourteen wide column">
+            <div class="ui form">
+  
+              <div class="inline fields">
+                <div class="seven wide field">
+                  <label class="custom-label-w-20">เลขที่สินทรัพย์</label>
+                  <input type="text" />
+                </div>
+                <div class="two wide field">&nbsp;</div>
+                <div class="seven wide field">
+                  <label class="custom-label-w-20">มูลค่าการได้มา</label>
+                  <input type="text" />
+                </div>
+              </div>
+    
+              <div class="inline fields">
+                <div class="seven wide field">
+                  <label class="custom-label-w-20">เลขที่ย่อย</label>
+                  <input type="text" />
+                </div>
+                <div class="two wide field">&nbsp;</div>
+                <div class="seven wide field">
+                  <label class="custom-label-w-20">ค่าเสื่อมราคาสะสม</label>
+                  <input type="text" />
+                </div>
+              </div>
+              
+              <div class="inline fields">
+                <div class="seven wide field">
+                  <label class="custom-label-w-20">วันที่โอนเป็นทุน</label>
+                  <input type="text" />
+                </div>
+                <div class="two wide field">&nbsp;</div>
+                <div class="seven wide field">
+                  <label class="custom-label-w-20">มูลค่าตามบัญชี</label>
+                  <input type="text" />
+                </div>
+              </div>
+    
+              <div class="inline fields">
+                <div class="seven wide field">
+                  <label class="custom-label-w-20">คำอธิบายสินทรัพย์</label>
+                  <input type="text" />
+                </div>
+              </div>
+    
+            </div>
+        </div>
+        <div class="ui one wide column">&nbsp;</div>
+      </div>
+    </div>
+    
+    <div class="ui bottom centered attached segment">
+      <div class="ui center aligned grid">
+          <div class="eight wide column">
+            <button class="ui mini green button" (click)="callFn()">
+              <i class="save icon"></i>
+              เพิ่มข้อมูล
+            </button>
+            <button class="ui mini red button" routerLink="/int05-3">
+              <i class="times icon"></i>
+              ยกเลิก
+            </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
