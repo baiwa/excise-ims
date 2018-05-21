@@ -27,6 +27,7 @@
         "jquery": "^3.2.1",
         "rxjs": "^5.1.0",
         "semantic-ui": "^2.2.13",
+        "semantic-ui-calendar": "0.0.8",
         "zone.js": "^0.8.4"
     },
     "devDependencies": {

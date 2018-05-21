@@ -3,6 +3,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-ts01-04',
   templateUrl: './ts01-04.component.html',
+  styleUrls: ['./ts01-04.component.css']
 })
 export class Ts0104Component implements OnInit {
 

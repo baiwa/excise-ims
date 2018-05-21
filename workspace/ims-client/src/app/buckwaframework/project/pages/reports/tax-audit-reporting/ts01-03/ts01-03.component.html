@@ -1,0 +1,163 @@
+<div class="ui top centered attached header segment"
+      style="background: #1e83db;color: white">
+  <span>หนังสือเรียกตามพระราชบัญญัติสรรพสามิต พ.ศ. ๒๕๖๐</span>
+</div>
+
+<div class="ui attached segment">
+    <div class="ui grid">
+      <div class="ui two wide column">&nbsp;</div>
+      <div class="ui twelve wide column">
+          <div class="ui form">
+
+            <div class="inline fields">
+              <div class="eight wide field">
+                  <div class="sixteen wide fields">
+                    <div class="four wide field">
+                      <label class="custom-label-w-18">ที่</label>
+                    </div>
+                    <div class="twelve wide field">
+                      ......................../............................
+                    </div>
+                  </div>
+              </div>
+              <div class="eight wide field">
+                <label class="custom-label-w-18" style="width: 10% !important;">วันที่</label>
+                <div class="ui calendar" style="width:100%" id="begin_date">
+                  <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" style="width:100%" placeholder="วัน/เดือน/ปี">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <label class="custom-label-w-20">สำนัก</label>
+                <input type="text" style="width: 100%">
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <label class="custom-label-w-20">หนังสือเรียกมายัง</label>
+                <input type="text" style="width: 100%">
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="ui checkbox">
+                <input type="checkbox">
+                <label>โรงอุตสาหกรรม&nbsp;&nbsp;&nbsp;&nbsp;</label>
+              </div>
+              <div class="ui checkbox">
+                <input type="checkbox">
+                <label>สถานบริการ&nbsp;&nbsp;&nbsp;&nbsp;</label>
+              </div>
+              <div class="ui checkbox">
+                <input type="checkbox">
+                <label>สถานประกอบการ&nbsp;&nbsp;&nbsp;&nbsp;</label>
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <label class="custom-label-w-20">ชื่อ</label>
+                <input type="text">
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <label class="custom-label-w-20">สถานที่ตั้งเลขที่</label>
+                <textarea rows="2" style="width: 100%; resize: none"></textarea>
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <label class="custom-label-w-20">หนังสือเรียกมายัง</label>
+                <input type="text" style="width: 100%">
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="eight wide field">
+                <label class="custom-label-w-22">อาศัยอำนาจตามความในมาตรา</label>
+                <input type="text" style="width: 100%">
+              </div>
+              <div class="eight wide field">
+                <label class="custom-label-w-18">หมวด</label>
+                <input type="text" style="width: 100%">
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <label class="custom-label-w-20">ให้ท่านไป ณ</label>
+                <input type="text" style="width: 100%">
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <label class="custom-label-w-20" style="color: red">*เพื่อให้ถ้อยคำพิจารณาการชำระภาษี</label>
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <label class="custom-label-w-20">วันที่</label>
+                <div class="ui calendar" style="width: 100%" id="end_date">
+                  <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" style="width:100%" placeholder="วัน/เดือน/ปี">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <label class="custom-label-w-20">ให้ท่านนำ</label>
+                <input type="text" style="width: 100%">
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <label class="custom-label-w-20" style="color: red">*เพื่อประกระกอบการพิจารณาการชำระภาษี</label>
+              </div>
+            </div>
+
+            <div class="inline fields">
+              <div class="eight wide field">
+                <label class="custom-label-w-18">ลงชื่อ</label>
+                <input type="text" style="width: 100%">
+              </div>
+              <div class="eight wide field">
+                <label class="custom-label-w-18">โทร</label>
+                <input type="text" style="width: 100%">
+              </div>
+            </div>
+
+          </div>
+      </div>
+      <div class="ui two wide column">&nbsp;</div>
+    </div>
+</div>
+
+<div class="ui bottom centered attached segment">
+  <div class="ui center aligned grid">
+      <div class="eight wide column">
+        <button class="ui mini green button" type="button">
+          <i class="save icon"></i>
+          พิมพ์เอกสาร
+        </button>
+        <button class="ui mini red button" type="button" (click)="onDiscard()">
+          <i class="times icon"></i>
+          ยกเลิก
+        </button>
+    </div>
+  </div>
+</div>
