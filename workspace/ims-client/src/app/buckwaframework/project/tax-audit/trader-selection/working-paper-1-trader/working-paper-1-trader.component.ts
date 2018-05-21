@@ -106,8 +106,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
      
 
     });
-    let tableId = '#userManagementDt';
-          
+   let tableId = '#userManagementDt';          
     let backgroundRowColor = (data, type, row, meta) => {
       if (!data) {
         let table = $(tableId).DataTable();
