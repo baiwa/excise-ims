@@ -1,28 +1,19 @@
-<form class="ui grid"
-  style="margin: 2%"
-  (submit)="onSubmit()"
-  ngNativeValidate>
-  <div class="sixteen wide column segments">
-    <div class="ui top centered attached header segment"
-         style="background: lightblue">
-      <span>จัดทำบันทึกข้อความ หนังสือราชการ และแบบ ตส.</span>
-    </div>
+<form class="ui grid" style="margin: 2%" (submit)="onSubmit()" ngNativeValidate>
+    <div class="sixteen wide column segments">
+        <div class="ui top centered attached header segment" style="background: lightblue">
+            <span>จัดทำบันทึกข้อความ หนังสือราชการ และแบบ ตส.</span>
+        </div>
 
-    <div class="ui attached segment">
-      <div class="ui grid">
-        <div class="ui two wide column">&nbsp;</div>
-        <div class="ui twelve wide column">
-            <div class="ui form">
+        <div class="ui attached segment">
+            <div class="ui grid">
+                <div class="ui two wide column">&nbsp;</div>
+                <div class="ui twelve wide column">
+                    <div class="ui form">
 
-              <div class="inline fields">
-                <div class="eight wide field">
-                  <label class="custom-label-w-20" style="text-align: right">ประเภทเอกสาร</label>
-                  <select
-                    style="width: 100%"
-                    id="doc" name="doc"
-                    class="ui search dropdown"
-                    (change)="onSelectDoc($event)"
-                    required>
+                        <div class="inline fields">
+                            <div class="eight wide field">
+                                <label class="custom-label-w-20" style="text-align: right">ประเภทเอกสาร</label>
+                                <select style="width: 100%" id="doc" name="doc" class="ui search dropdown" (change)="onSelectDoc($event)" required>
                     <option value="" style="color: grey">เลือกเอกสาร</option>
                     <option
                       *ngFor="let typeDoc of typeDocs; let i = index"
@@ -30,15 +21,10 @@
                       {{typeDoc}}
                     </option>
                   </select>
-                </div>
-                <div class="eight wide field">
-                  <label class="custom-label-w-20" style="text-align: right">เรื่อง</label>
-                  <select
-                    style="width: 100%"
-                    id="topic" name="topic"
-                    class="ui search dropdown"
-                    (change)="onSelectTop($event)"
-                    required>
+                            </div>
+                            <div class="eight wide field">
+                                <label class="custom-label-w-20" style="text-align: right">เรื่อง</label>
+                                <select style="width: 100%" id="topic" name="topic" class="ui search dropdown" (change)="onSelectTop($event)" required>
                     <option value="" style="color: grey">เลือกเรื่อง</option>
                     <option
                       *ngFor="let top of topic; let i = index"
@@ -46,33 +32,33 @@
                       {{top}}
                     </option>
                   </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <div class="ui two wide column">&nbsp;</div>
             </div>
         </div>
-        <div class="ui two wide column">&nbsp;</div>
-      </div>
-    </div>
 
-    <div class="ui bottom centered attached segment">
-      <div class="ui center aligned grid">
-          <div class="eight wide column">
-            <button class="ui mini green button" type="submit">
+        <div class="ui bottom centered attached segment">
+            <div class="ui center aligned grid">
+                <div class="eight wide column">
+                    <button class="ui mini green button" type="submit">
               <i class="save icon"></i>
               สร้างเอกสาร
             </button>
-            <button class="ui mini red button" type="button">
+                    <button class="ui mini red button" type="button">
               <i class="times icon"></i>
               ยกเลิก
             </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-  </div>
-  <app-ts01-01
-    *ngIf="sent && selectedTop == 'ตส. 01-01'"
-    (discard)="onDiscard($event)"
-    class="sixteen wide column segments">
-  </app-ts01-01>
+    </div>
+    <app-ts01-01 *ngIf="sent && selectedTop == 'ตส. 01-01'" (discard)="onDiscard($event)" class="sixteen wide column segments">
+    </app-ts01-01>
+
+    <app-ts01-02 *ngIf="sent && selectedTop == 'ตส. 01-02'" (discard)="onDiscard($event)" class="sixteen wide column segments">
+    </app-ts01-02>
 </form>

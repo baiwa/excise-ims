@@ -1,153 +1,173 @@
 <div class="ui grid">
-  <div class="sixteen wide column">
-    <h2 class="ui header">สร้างกระดาษทำการ ภาษีสรรพสามิต</h2>
+    <div class="sixteen wide column">
+        <h2 class="ui header">แก้ไขข้อมูลแสตมป์รายเดือน</h2>
 
-    <div class="ui top attached header">
-      <span>ข้อมูลกระดาษทำการ ภาษีสรรพสามิต</span>
-    </div>
-
-    <div class="ui attached segment">
-      <div class="ui form">
-        <div class="inline fields">
-          <div class="three wide field">
-            <label class="">ว.ด.ป. รับ - จ่าย </label>
-          </div>
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="12/6/2560">
-          </div>
-
-          <div class="two wide field">
-            <label class="">หนังสือส่งแสตมป์<br>เลขที่หนังสือ </label>
-          </div>
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="">
-          </div>
-          <div class="two wide field">
-            <label class="custom-label-w-15">จำนวน(เล่ม) </label>
-          </div>          
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="1">
-          </div>
+        <div class="ui top attached header">
+            <span>ตรวจสอบแสตมป์รายเดือน</span>
         </div>
 
+        <div class="ui attached segment">
+            <div class="ui form">
+                <div class="inline fields">
+                    <div class="three wide field">
+                        <label class="">ว.ด.ป. รับ - จ่าย </label>
+                    </div>
+                    <div class="three wide  field">
+                        <div class="ui calendar" id="date-receive-pay">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" style="width:100%" placeholder="วัน/เดือน/ปี">
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="inline fields">
-          <div class="three wide field">
-            <label class="">สถานะการรับ - จ่าย </label>
-          </div>
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="จ่าย">
-          </div>
-
-          <div class="two wide field">
-            <label class="">หนังสือส่งแสตมป์<br> ว.ด.ป. </label>
-          </div>
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="">
-          </div>
-          <div class="two wide field">
-            <label class="custom-label-w-15">จำนวน(ดวง) </label>
-          </div>      
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="10000" class="custom-readonly" disabled> 
-          </div>
-        </div>
+                    <div class="two wide field">
+                        <label class="">หนังสือส่งแสตมป์<br>เลขที่หนังสือ </label>
+                    </div>
+                    <div class="three wide  field">
+                        <input type="text" placeholder="" value="">
+                    </div>
+                    <div class="two wide field">
+                        <label class="custom-label-w-15">จำนวน(เล่ม) </label>
+                    </div>
+                    <div class="three wide  field">
+                        <input type="text" placeholder="" value="1">
+                    </div>
+                </div>
 
 
-        <div class="inline fields">
-          <div class="three wide field">
-            <label class="">หน่วยงาน </label>
-          </div>
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="สาขาแจ้งห่ม">
-          </div>
+                <div class="inline fields">
+                    <div class="three wide field">
+                        <label class="">สถานะการรับ - จ่าย </label>
+                    </div>
+                    <div class="three wide  field">
+                        <input type="text" placeholder="" value="จ่าย">
+                    </div>
 
-          <div class="two wide field">
-            <label class="">ว.ด.ป. ตรวจนับ </label>
-          </div>
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="">
-          </div>
-          <div class="two wide field">
-            <label class="custom-label-w-15">มูลค่าพิมพ์<br>(บาทต่อดวง)
+                    <div class="two wide field">
+                        <label class="">หนังสือส่งแสตมป์<br> ว.ด.ป. </label>
+                    </div>
+                    <div class="three wide field">
+                        <div class="ui calendar" id="date-send">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" style="width:100%" placeholder="วัน/เดือน/ปี">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="two wide field">
+                        <label class="custom-label-w-15">จำนวน(ดวง) </label>
+                    </div>
+                    <div class="three wide  field">
+                        <input type="text" placeholder="" value="10000" class="custom-readonly" disabled>
+                    </div>
+                </div>
+
+
+                <div class="inline fields">
+                    <div class="three wide field">
+                        <label class="">หน่วยงาน </label>
+                    </div>
+                    <div class="three wide  field">
+                        <input type="text" placeholder="" value="สาขาแจ้งห่ม">
+                    </div>
+
+                    <div class="two wide field">
+                        <label class="">ว.ด.ป. ตรวจนับ </label>
+                    </div>
+                    <div class="three wide  field">
+                        <div class="ui calendar" id="date-check">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" style="width:100%" placeholder="วัน/เดือน/ปี">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="two wide field">
+                        <label class="custom-label-w-15">มูลค่าพิมพ์<br>(บาทต่อดวง)
             </label>
-          </div>
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="3.75">
-          </div>
-        </div>
+                    </div>
+                    <div class="three wide  field">
+                        <input type="text" placeholder="" value="3.75">
+                    </div>
+                </div>
 
 
 
-        <div class="inline fields">
-          <div class="three wide field">
-            <label class="">หนังสือขอเบิกแสตมป์ เลขที่หนังสือ
+                <div class="inline fields">
+                    <div class="three wide field">
+                        <label class="">หนังสือขอเบิกแสตมป์ เลขที่หนังสือ
             </label>
-          </div>
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="">
-          </div>
+                    </div>
+                    <div class="three wide  field">
+                        <input type="text" placeholder="" value="">
+                    </div>
 
-          <div class="two wide field">
-            <label class="">รหัสชนิดแสตมป์
+                    <div class="two wide field">
+                        <label class="">รหัสชนิดแสตมป์
             </label>
-          </div>
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="3.11">
-          </div>
-          <div class="two wide field">
-            <label class="custom-label-w-15">รวมค่าพิมพ์แสตมป์ (บาท)
+                    </div>
+                    <div class="three wide  field">
+                        <input type="text" placeholder="" value="3.11">
+                    </div>
+                    <div class="two wide field">
+                        <label class="custom-label-w-15">รวมค่าพิมพ์แสตมป์ (บาท)
             </label>
-          </div>         
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="37500" class="custom-readonly" disabled>
-          </div>
-        </div>
+                    </div>
+                    <div class="three wide  field">
+                        <input type="text" placeholder="" value="37500" class="custom-readonly" disabled>
+                    </div>
+                </div>
 
 
 
-        <div class="inline fields">
-          <div class="three wide field">
-            <label class="">หนังสือขอเบิกแสตมป์ ว.ด.ป.
+                <div class="inline fields">
+                    <div class="three wide field">
+                        <label class="">หนังสือขอเบิกแสตมป์ ว.ด.ป.
             </label>
-          </div>
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="">
-          </div>
+                    </div>
+                    <div class="three wide  field">
+                        <div class="ui calendar" id="date-withdraw">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" style="width:100%" placeholder="วัน/เดือน/ปี">
+                            </div>
+                        </div>
+                    </div>
 
-          <div class="two wide field">
-            <label class="">ชนิดแสตมป์/<br>ขนาดบรรจุ
+                    <div class="two wide field">
+                        <label class="">ชนิดแสตมป์/<br>ขนาดบรรจุ
             </label>
-          </div>
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร">
-          </div>
-          <div class="two wide field">
-            <label class="custom-label-w-15">เลขที่ประจำเล่มแสตมป์
+                    </div>
+                    <div class="three wide  field">
+                        <input type="text" placeholder="" value="สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร">
+                    </div>
+                    <div class="two wide field">
+                        <label class="custom-label-w-15">เลขที่ประจำเล่มแสตมป์
             </label>
-          </div>        
-          <div class="three wide  field">
-            <input type="text" placeholder="" value="1">
-          </div>
-        </div>
+                    </div>
+                    <div class="three wide  field">
+                        <input type="text" placeholder="" value="1">
+                    </div>
+                </div>
 
-        <div class="inline fields">           
-            <div class="three wide field">
-                <label>หมายเหตุ</label></div>
-                <div class="three wide field">
-                <textarea style="width: 220px;height: 100px;"></textarea></div>
-              </div>
-              
+                <div class="inline fields">
+                    <div class="three wide field">
+                        <label>หมายเหตุ</label></div>
+                    <div class="eight wide field">
+                        <textarea style="resize: none"></textarea></div>
+                </div>
+
             </div>
             <br>
-    <div class="ui center aligned grid">
-      <div class="sixteen wide column">
-        <button class="ui mini primary button ">  
+            <div class="ui center aligned grid">
+                <div class="sixteen wide column">
+                    <button class="ui mini primary button ">  
          บันทึก
         </button>
-        <button class="ui mini primary button"> 
+                    <button class="ui mini primary button"> 
        ยกเลิก       
         </button>
-      </div>
-    </div>
-  </div>
+                </div>
+            </div>
+        </div>

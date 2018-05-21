@@ -178,7 +178,7 @@ import { Int0171Component } from './buckwaframework/project/internal-audit/int01
 import { Int0181Component } from './buckwaframework/project/internal-audit/int01/int01-8/int01-8-1/int01-8-1.component';
 import { TaxAuditReportingComponent } from './buckwaframework/project/pages/reports/tax-audit-reporting/tax-audit-reporting.component';
 import { Ts0101Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-01/ts01-01.component';
-
+import { Ts0102Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-02/ts01-02.component';
 
 @NgModule({
     declarations: [
@@ -333,7 +333,7 @@ import { Ts0101Component } from './buckwaframework/project/pages/reports/tax-aud
         Int0181Component,
         TaxAuditReportingComponent,
         Ts0101Component,
-       
+        Ts0102Component,
     ],
     imports: [
         BrowserModule,
