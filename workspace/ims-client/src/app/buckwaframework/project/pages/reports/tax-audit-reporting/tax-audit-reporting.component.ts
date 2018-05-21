@@ -64,8 +64,8 @@ export class TaxAuditReportingComponent implements OnInit {
       ]
     ];
     this.topic = [];
-    this.sent = true; // false
-    this.selectedTop = 'ตส. 01-10'; // ''
+    this.sent = false; // false
+    this.selectedTop = ''; // ''
   }
 
   ngOnInit() {
