@@ -15,7 +15,8 @@ export class Int0531Component implements OnInit {
 
   callFn() {
     this.ajax.get(
-      'api/preferences/message',
+      'api/preferences/message?no1=55',
+
       alert('success\n** Just alert..!'),
       ret => console.log(ret)
     ).then(

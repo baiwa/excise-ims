@@ -22,18 +22,19 @@
                 <div class="inline fields">
                     <div class="three wide required field">
                         <label>ระยะเวลาที่ตรวจสอบ</label>
-                    </div>
-                    <div class="four wide field ">
-                        <div class="ui icon input">
-                            <input type="text" placeholder="DD/MM/YYYY" value="">
-                            <i class="add to calendar icon"></i>
-                        </div>
-                    </div>
+                    </div>                 
+                    <div class="ui calendar" id="calendar">
+                            <div class="ui input left icon">
+                              <i class="time icon"></i>
+                              <input type="text" placeholder="MM/DD">
+                            </div>
+                          </div>
+                          <div class="one wide field"></div>
                     <div class="two wide field required">
                         <label>ย้อนหลังไป</label>
                     </div>
                     <div class="one wide field ">
-                        <input type="text" value="">
+                        <input type="text" step="2" min="0" placeholder="" (keyup)="onKeyUp($event)" value="">
                     </div>
                     <div class="one wide field">
                         <label>เดือน</label>
@@ -54,7 +55,6 @@
                         </button>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

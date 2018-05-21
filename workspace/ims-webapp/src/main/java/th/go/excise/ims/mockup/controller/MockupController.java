@@ -23,8 +23,12 @@ public class MockupController {
 	@PostMapping("/list")
 	@ResponseBody
 	public ResponseDataTable<MockupVo> listdata(@ModelAttribute MockupVo vo){
-		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo, new Date() , 20);		
+		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo, new Date() , 20);	
+		System.out.println("zxxxxxxxxxxxxxxxxxxx"+vo.getNo1());
 		return listdata;
 	}
+	
+	
+	
 	
 }
