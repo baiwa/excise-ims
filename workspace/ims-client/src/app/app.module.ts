@@ -193,6 +193,8 @@ import { Ts0114Component } from './buckwaframework/project/pages/reports/tax-aud
 import { Ts0115Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-15/ts01-15.component';
 import { Ts0116Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-16/ts01-16.component';
 import { Ts0119Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-19/ts01-19.component';
+import { Ts01142Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-14-2/ts01-14-2.component';
+import { Ts0117Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-17/ts01-17.component';
 
 
 @NgModule({
@@ -363,6 +365,8 @@ import { Ts0119Component } from './buckwaframework/project/pages/reports/tax-aud
         Ts0115Component,
         Ts0116Component,
         Ts0119Component,
+        Ts01142Component,
+        Ts0117Component,
        
     ],
     imports: [

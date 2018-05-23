@@ -5,11 +5,11 @@ declare var jQuery: any;
 declare var $: any;
 
 @Component({
-  selector: 'app-ts01-14',
-  templateUrl: './ts01-14.component.html',
-  styleUrls: ['./ts01-14.component.css']
+  selector: 'app-ts01-14-2',
+  templateUrl: './ts01-14-2.component.html',
+  styleUrls: ['./ts01-14-2.component.css']
 })
-export class Ts0114Component implements OnInit {
+export class Ts01142Component implements OnInit {
 
   @Output() discard = new EventEmitter<any>();
 
