@@ -7,6 +7,7 @@ declare var $: any;
 @Component({
   selector: 'app-ts01-13',
   templateUrl: './ts01-13.component.html',
+  styleUrls: ['./ts01-13.component.css']
 })
 export class Ts0113Component implements OnInit {
 

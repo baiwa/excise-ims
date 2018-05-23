@@ -26,10 +26,17 @@ export class Ts0101Component implements OnInit {
 
   onAddField = () => {
     let num = this.numbers[this.numbers.length-1];
-    num < 5 && this.numbers.push(num+1);
+    if (num < 5 && this.numbers.length === num) {
+      this.numbers.push(num+1)
+    }
+    else if (num == 5 && this.numbers.length !== num) {
+      this.numbers.push(num - 1)
+    }
+    this.numbers.sort();
   };
   
   onDelField = index => {
     this.numbers.splice(index, 1);
+    this.numbers.sort();
   };
 }
