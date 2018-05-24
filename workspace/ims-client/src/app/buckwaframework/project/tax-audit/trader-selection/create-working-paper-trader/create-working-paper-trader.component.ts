@@ -10,58 +10,26 @@ declare var $: any;
 export class CreateWorkingPaperTraderComponent implements OnInit {
 
   private count: number = 1;
-  constructor(
-    private messageBarService: MessageBarService
-  ) {
-
+  numbers: number[];
+  constructor(private messageBarService: MessageBarService) {
+    this.numbers = [1];
   }
-
-
 
   ngOnInit() {
-
   }
 
-  addCondition() {
-    if (this.count == 10) {
-      this.messageBarService.error("ไม่สามารถทำรายการได้");
-
-      return;
+  onAddField = () => {
+    let num = this.numbers.length;
+    if (num < 10 ) {
+      this.numbers.push(num+1);
+    } else {
+      this.messageBarService.errorModal('ไม่สามารถทำรายการได้', 'เกิดข้อผิดพลาด');
     }
-
-    $("#addCondition").append(
-
-      '<div class="inline fields">                   ' +
-      '	<div class="three wide field ">            ' +
-      '		<label>กำหนดเงื่อนไข</label></div>          ' +
-      '  <div class="three wide field ">             ' +
-      '	<label>จำนวนเดือนที่ชำระภาษี</label>                ' +
-      '  </div>                                      ' +
-      '  <div class="two wide field ">               ' +
-      '	<input name="" value="">                   ' +
-      '  </div>                                      ' +
-      '  <div class="one wide field ">               ' +
-      '	<label>&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>  ' +
-      '  </div>                                      ' +
-      '  <div class="two wide field ">               ' +
-      '	<input name="" value="">                   ' +
-      '  </div>                                      ' +
-      '  <div class="five wide field ">              ' +
-      '	<label>ช่วงร้อยละที่ต้องการแยกกลุ่มข้อมูล</label>          ' +
-      '  </div>                                      ' +
-      '  <div class="two wide field ">               ' +
-      '	<input name="" value="">                   ' +
-      '  </div>                                      ' +
-      '  <div class="one wide field ">               ' +
-      '	<label>&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>  ' +
-      '  </div>                                      ' +
-      '  <div class="two wide field ">               ' +
-      '	<input name="" value="">                   ' +
-      '  </div>                                      ' +
-      '</div>                                        '
-
-
-    );
-    this.count++;
-  }
+    this.numbers.sort();
+  };
+  
+  onDelField = index => {
+    this.numbers.splice(index, 1);
+    this.numbers.sort();
+  };
 }

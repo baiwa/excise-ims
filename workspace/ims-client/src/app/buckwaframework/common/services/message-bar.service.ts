@@ -71,4 +71,10 @@ export class MessageBarService {
         $(".baiwa-alert").modal('show');
     }
 
+    errorModal = (msg: string, title: string = "เกิดข้อผิดพลาด") => {
+        $("#alert div.title").html(title);
+        $("#alert div.content").html(msg);
+        $("#alert").modal('show');
+    }
+
 }
