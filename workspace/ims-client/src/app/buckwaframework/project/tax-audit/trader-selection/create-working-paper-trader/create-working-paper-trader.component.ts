@@ -25,11 +25,9 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     } else {
       this.messageBarService.errorModal('ไม่สามารถทำรายการได้', 'เกิดข้อผิดพลาด');
     }
-    this.numbers.sort();
   };
   
   onDelField = index => {
     this.numbers.splice(index, 1);
-    this.numbers.sort();
   };
 }

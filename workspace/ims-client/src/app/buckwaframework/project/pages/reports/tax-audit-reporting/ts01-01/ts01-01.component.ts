@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { MessageBarService } from '../../../../../common/services/message-bar.service';
 
 @Component({
   selector: 'app-ts01-01',
@@ -11,7 +12,7 @@ export class Ts0101Component implements OnInit {
 
   numbers:number[];
 
-  constructor() {
+  constructor(private messageBarService: MessageBarService) {
     this.numbers = [1,2,3];
   }
 
@@ -25,18 +26,15 @@ export class Ts0101Component implements OnInit {
   };
 
   onAddField = () => {
-    let num = this.numbers[this.numbers.length-1];
-    if (num < 5 && this.numbers.length === num) {
-      this.numbers.push(num+1)
+    let num = this.numbers.length;
+    if (num < 5) {
+      this.numbers.push(num+1);
+    } else {
+      this.messageBarService.errorModal('ไม่สามารถทำรายการได้', 'เกิดข้อผิดพลาด');
     }
-    else if (num == 5 && this.numbers.length !== num) {
-      this.numbers.push(num - 1)
-    }
-    this.numbers.sort();
   };
   
   onDelField = index => {
     this.numbers.splice(index, 1);
-    this.numbers.sort();
   };
 }
