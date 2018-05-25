@@ -1,12 +1,10 @@
-<div 
-    class="ui top centered attached header segment"
-    style="background: #1e83db;color: white">
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
     <span>ขออนุมัติออกหนังสือเรียก</span>
 </div>
 
 <div class="ui attached segment">
     <div class="ui grid">
-        <div class="ui two wide column">&nbsp;</div>
+        <div class="ui one wide column">&nbsp;</div>
         <div class="ui twelve wide column">
             <div class="ui form">
                 <div class="inline fields">
@@ -20,81 +18,71 @@
                 </div>
 
                 <div class="inline fields">
-                    <div class="two wide field">
-                        <p>เรียน : </p>
+                    <div class="one wide field">
+                        <p>เรียน: </p>
                     </div>
-
                     <div class="four wide field">
                         <input type="text">
                     </div>
-
                     <div class="one wide field">
-                    </div>
-
-                    <div class="two wide field">
                         <p>ด้วย : </p>
                     </div>
-
                     <div class="four wide field">
                         <input type="text">
-                    </div>
-
-                    <div class="three wide field">
+                    </div>          
+                    <div class="one wide field"></div>  
+                    <div class="five wide field">
                         <p>มีความประสงค์จะออกหนังสือเรียก</p>
                     </div>
                 </div>
 
                 <div class="inline fields">
-                    <div class="two wide field">
+                    <div class="one wide field">
                         <p>ราย : </p>
                     </div>
 
-                    <div class="fourteen wide field">
+                    <div class="ten wide field">
                         <input type="text">
                     </div>
                 </div>
 
                 <div class="inline fields">
-                    <div class="two wide field">
-                        <p>ซึ่งประกอบธุรกิจ : </p>
+                    <div class="four wide field">
+                        <p>ซึ่งประกอบธุรกิจ: </p>
                     </div>
 
-                    <div class="three wide field">
+                    <div class="four wide field">
                         <div class="ui checkbox">
                             <input type="checkbox" name="example">
                             <label>โรงอุตสาหกรรม</label>
                         </div>
                     </div>
 
-                    <div class="three wide field">
+                    <div class="four wide field">
                         <div class="ui checkbox">
                             <input type="checkbox" name="example2">
                             <label>สถานบริการ &nbsp;</label>
                         </div>
                     </div>
 
-                    <div class="three wide field">
+                    <div class="four wide field">
                         <div class="ui checkbox">
                             <input type="checkbox" name="example3">
                             <label>สถานประกอบการ</label>
                         </div>
                     </div>
-
-
+                    </div>
+                    <div class="inline fields">
                     <div class="one wide field">
                         <p>ชื่อ : </p>
                     </div>
-                    <div class="four wide field">
+                    <div class="five wide field">
                         <input type="text">
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="two wide field">
+                    </div>               
+                    <div class="five wide field">
                         <p>ทะเบียนสรรพสามิตเลขที่ : </p>
                     </div>
-
-                    <div class="fourteen wide field">
+                    <div class="nine wide field">
                         <input type="text">
                     </div>
                 </div>
@@ -103,29 +91,21 @@
                     <div class="two wide field">
                         <p>ที่อยู่ : </p>
                     </div>
-
                     <div class="fourteen wide field">
-                        <textarea rows="3" style="resize : none;"></textarea>
+                        <textarea name="" id="" rows="2" style="resize: none" maxLength="200"></textarea>
                     </div>
                 </div>
 
                 <div class="inline fields">
-                    <div class="two wide field">
+                    <div class="three wide field">
                         <p>ประเภทกิจการ : </p>
                     </div>
-
                     <div class="five wide field">
                         <input type="text">
                     </div>
-
-                    <div class="two wide field">
-
-                    </div>
-
-                    <div class="two wide field">
+                    <div class="three wide field">
                         <p>ระยะเวลาตรวจสอบ : </p>
                     </div>
-
                     <div class="five wide field">
                         <input type="text">
                     </div>
@@ -145,14 +125,11 @@
                     <div class="two wide field">
                         <p>ผู้บันทึก : </p>
                     </div>
-
                     <div class="five wide field">
                         <input type="text">
                     </div>
-
                     <div class="two wide field">
                     </div>
-
                     <div class="two wide field">
                         <p>ตำแหน่ง : </p>
                     </div>
@@ -161,10 +138,9 @@
                         <input type="text">
                     </div>
                 </div>
-
             </div>
         </div>
-        <div class="ui two wide column">&nbsp;</div>
+        <div class="ui one wide column">&nbsp;</div>
     </div>
 </div>
 
@@ -172,13 +148,13 @@
     <div class="ui center aligned grid">
         <div class="eight wide column">
             <button class="ui mini green button" type="button">
-          <i class="save icon"></i>
-          พิมพ์เอกสาร
-        </button>
+                <i class="save icon"></i>
+                พิมพ์เอกสาร
+            </button>
             <button class="ui mini red button" type="button" (click)="onDiscard()">
-          <i class="times icon"></i>
-          ยกเลิก
-        </button>
+                <i class="times icon"></i>
+                ยกเลิก
+            </button>
         </div>
     </div>
 </div>
