@@ -8,7 +8,7 @@ export var TextDateTH = {
     pm: 'หลังบ่าย'
 };
  
-var digit = number => {
+export var digit = number => {
     return (number < 10 ? '0' : '') + number;
 }
 
@@ -69,4 +69,4 @@ export var formatter = (what: string = '') => {
     }
 }
 
-export default { TextDateTH, formatter }
+export default { TextDateTH, formatter, digit }

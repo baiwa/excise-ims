@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { Router } from '@angular/router';
 
-import { TextDateTH, formatter } from '../../../../common/helper/datepicker';
+import { TextDateTH, digit } from '../../../../common/helper/datepicker';
 declare var jQuery: any;
 declare var $: any;
 @Component({
@@ -21,18 +21,20 @@ export class CreateTraderComponent implements OnInit {
     ngOnInit(): void {
         $('#calendar').calendar({
             type: 'month',
-            text: TextDateTH,
-            formatter: formatter('month-year')
+            text: TextDateTH
         });
     }
 
     onSubmit = (event: any) => {
         event.preventDefault();
         let date = event.target['date-raw'].value;
+        let date_split = date.split(' ');
+        date_split[0] = digit(TextDateTH.months.indexOf(date_split[0]) + 1);
+        let date_str = date_split[0] + '/' + date_split[1];
         let num = event.target['num-raw'].value;
         this.router.navigate(
             ['/analyst-basic-data-trader'],
-            { queryParams: { from: date, month: num } }
+            { queryParams: { from: date_str, month: num } }
         );
     }
 
