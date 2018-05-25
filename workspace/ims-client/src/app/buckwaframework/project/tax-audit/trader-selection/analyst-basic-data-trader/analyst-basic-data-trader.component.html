@@ -1,145 +1,141 @@
 <div class="ui grid">
-  <div class="sixteen wide column">
-    <h2 class="ui header">กระดาษทำการเรียบเทียบการชำระภาษี 24 เดือนของผู้ประกอบการ</h2>
+    <div class="sixteen wide column">
+        <h2 class="ui header">กระดาษทำการเปรียบเทียบการชำระภาษี {{month}} เดือนย้อนหลังของผู้ประกอบการ</h2>
 
-    <div class="ui top attached header">
-      <span>ข้อมูลการวิเคราห์รายได้ของผู้ประกอบการที่มีการชำระภาษีสรรพสามิต ประเภท น้ำมัน</span>
-    </div>
-
-    <div class="ui attached segment">
-
-      <div class="ui form">
-
-        <div class="inline fields">
-          <div class="ten wide field">
-          </div>
-          <div class="six wide field">
-            <label class="custom-label-w-25">เลขที่วิเคราะห์ข้อมูล</label>
-            <input value="591113-01-00001" readonly="" class="custom-readonly" />
-          </div>
+        <div class="ui top attached header">
+            <span>ข้อมูลการวิเคราห์รายได้ของผู้ประกอบการที่มีการชำระภาษีสรรพสามิต ประเภท น้ำมัน</span>
         </div>
 
-        <div class="inline fields">
-          <div class="sixteen wide field required">
-            <label class="custom-label-w-25">ระหว่างวันที่ </label>
-            <div class="four ui action input">
-              <input type="text" placeholder="MM/YYYY">
-              <button class="ui icon button">
+        <div class="ui attached segment">
+
+            <div class="ui form">
+
+                <div class="inline fields">
+                    <div class="ten wide field">
+                    </div>
+                    <div class="six wide field">
+                        <label class="custom-label-w-25">เลขที่วิเคราะห์ข้อมูล</label>
+                        <input value="591113-01-00001" readonly="" class="custom-readonly" />
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="sixteen wide field required">
+                        <label class="custom-label-w-25">ระหว่างวันที่ </label>
+                        <div class="four ui action input">
+                            <input type="text" placeholder="MM/YYYY" value="{{form1}}" readonly="" class="custom-readonly">
+                            <button class="ui icon button">
                 <i class="add to calendar icon"></i>
               </button>
-            </div>
-            <div class="field">
-              <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>
-            </div>
-            <div class="four ui action input">
-              <input type="text" placeholder="MM/YYYY">
-              <button class="ui icon button">
+                        </div>
+                        <div class="field">
+                            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>
+                        </div>
+                        <div class="four ui action input">
+                            <input type="text" placeholder="MM/YYYY" value="{{form2}}" class="custom-readonly" [readonly]="true">
+                            <button class="ui icon button">
                 <i class="add to calendar icon"></i>
               </button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </div>
+
         </div>
+        <div class="ui attached segment">
 
-      </div>
+            <div class="ui grid">
+                <div class="three wide column">
+                    <div class="ui vertical menu">
+                        <div class="item">
+                            <div class="header">พิกัดสินค้า</div>
+                            <div class="menu">
+                                <a class="item" *ngFor="let item of listMenu">-{{item}}</a>
+                            </div>
+                        </div>
+                    </div>
 
-    </div>
-    <div class="ui attached segment">
+                </div>
+                <div class="thirteen wide column">
+                    <div style="overflow-x: scroll;">
+                        <table id="userManagementDt" class="ui small celled table  aligned" style="width: 5000px;">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+                                    <th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th>
+                                    <th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th>
+                                    <th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th>
+                                    <th rowspan="2" style="text-align: center !important">พื้นที่</th>
+                                    <th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th>
+                                    <th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th>
+                                    <th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th>
+                                    <th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th>
+                                    <th rowspan="2" style="text-align: center !important">ภาค</th>
+                                    <th rowspan="2" style="text-align: center !important">พิกัด</th>
+                                    <th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th>
+                                    <th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th>
+                                    <th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th>
+                                    <th colspan="12" style="text-align: center !important">การชำระภาษี 12 เดือนแรก</th>
+                                    <th colspan="12" style="text-align: center !important">การชำระภาษี 12 เดือนหลัง </th>
+                                </tr>
+                                <tr>
+                                    <th style="border-left: 1px solid rgba(34,36,38,.1);">12 เดือนแรก</th>
+                                    <th style="text-align: center !important">12 เดือนหลัง </th>
+                                    <th style="text-align: center !important">2558</th>
+                                    <th style="text-align: center !important">2559</th>
+                                    <th style="text-align: center !important">2560</th>
+                                    <th style="text-align: center !important">พ.ค. 58</th>
+                                    <th style="text-align: center !important">มิ.ย. 58</th>
+                                    <th style="text-align: center !important">ก.ค. 58</th>
+                                    <th style="text-align: center !important">ส.ค. 58</th>
+                                    <th style="text-align: center !important">ก.ย. 58</th>
+                                    <th style="text-align: center !important">ต.ค. 58</th>
+                                    <th style="text-align: center !important">พ.ย. 58</th>
+                                    <th style="text-align: center !important">ธ.ค. 58</th>
+                                    <th style="text-align: center !important">ม.ค. 59</th>
+                                    <th style="text-align: center !important">ก.พ. 59</th>
+                                    <th style="text-align: center !important">มี.ค. 59</th>
+                                    <th style="text-align: center !important">เม.ย. 59 </th>
+                                    <th style="text-align: center !important">พ.ค. 58</th>
+                                    <th style="text-align: center !important">มิ.ย. 58</th>
+                                    <th style="text-align: center !important">ก.ค. 58</th>
+                                    <th style="text-align: center !important">ส.ค. 58</th>
+                                    <th style="text-align: center !important">ก.ย. 58</th>
+                                    <th style="text-align: center !important">ต.ค. 58</th>
+                                    <th style="text-align: center !important">พ.ย. 58</th>
+                                    <th style="text-align: center !important">ธ.ค. 58</th>
+                                    <th style="text-align: center !important">ม.ค. 59</th>
+                                    <th style="text-align: center !important">ก.พ. 59</th>
+                                    <th style="text-align: center !important">มี.ค. 59</th>
+                                    <th style="text-align: center !important">เม.ย. 59 </th>
 
-      <div class="ui grid">
-        <div class="three wide column">
-          <div class="ui vertical menu">
-            <div class="item">
-              <div class="header">พิกัดสินค้า</div>
-              <div class="menu">
-                <a class="item" *ngFor="let item of listMenu">-{{item}}</a>
-              </div>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
             </div>
-          </div>
-
-        </div>
-        <div class="thirteen wide column">
-          <div style="overflow-x: scroll;">
-            <table id="userManagementDt"  class="ui small celled table  aligned" style="width: 5000px;">
-              <thead>
-                <tr>
-                  <th rowspan="2" style="text-align: center !important">ลำดับ</th>
-                  <th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th>
-                  <th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th>
-                  <th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th>
-                  <th rowspan="2" style="text-align: center !important">พื้นที่</th>
-                  <th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th>
-                  <th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th>
-                  <th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th>
-                  <th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th>
-                  <th rowspan="2" style="text-align: center !important">ภาค</th>
-                  <th rowspan="2" style="text-align: center !important">พิกัด</th>
-                  <th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th>
-                  <th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th>
-                  <th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th>
-                  <th colspan="12" style="text-align: center !important">การชำระภาษี 12 เดือนแรก</th>
-                  <th colspan="12" style="text-align: center !important">การชำระภาษี 12 เดือนหลัง </th>
-                </tr>
-                <tr>
-                  <th style="border-left: 1px solid rgba(34,36,38,.1);">12 เดือนแรก</th>
-                  <th style="text-align: center !important">12 เดือนหลัง </th>
-                  <th style="text-align: center !important">2558</th>
-                  <th style="text-align: center !important">2559</th>
-                  <th style="text-align: center !important">2560</th>
-                  <th style="text-align: center !important">พ.ค. 58</th>
-                  <th style="text-align: center !important">มิ.ย. 58</th>
-                  <th style="text-align: center !important">ก.ค. 58</th>
-                  <th style="text-align: center !important">ส.ค. 58</th>
-                  <th style="text-align: center !important">ก.ย. 58</th>
-                  <th style="text-align: center !important">ต.ค. 58</th>
-                  <th style="text-align: center !important">พ.ย. 58</th>
-                  <th style="text-align: center !important">ธ.ค. 58</th>
-                  <th style="text-align: center !important">ม.ค. 59</th>
-                  <th style="text-align: center !important">ก.พ. 59</th>
-                  <th style="text-align: center !important">มี.ค. 59</th>
-                  <th style="text-align: center !important">เม.ย. 59 </th>
-                  <th style="text-align: center !important">พ.ค. 58</th>
-                  <th style="text-align: center !important">มิ.ย. 58</th>
-                  <th style="text-align: center !important">ก.ค. 58</th>
-                  <th style="text-align: center !important">ส.ค. 58</th>
-                  <th style="text-align: center !important">ก.ย. 58</th>
-                  <th style="text-align: center !important">ต.ค. 58</th>
-                  <th style="text-align: center !important">พ.ย. 58</th>
-                  <th style="text-align: center !important">ธ.ค. 58</th>
-                  <th style="text-align: center !important">ม.ค. 59</th>
-                  <th style="text-align: center !important">ก.พ. 59</th>
-                  <th style="text-align: center !important">มี.ค. 59</th>
-                  <th style="text-align: center !important">เม.ย. 59 </th>
-
-                </tr>
-              </thead>
-              <tbody>
-             
-              </tbody>
-             
-            </table>
-          </div>
-
-        </div>
-      </div>
 
 
-      <div class="ui center aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini primary button" routerLink="/create-working-paper-trader">
+            <div class="ui center aligned grid">
+                <div class="sixteen wide column">
+                    <button class="ui mini primary button" routerLink="/create-working-paper-trader">
             <i class="add icon"></i>
             สร้างกระดาษทำการคัดเลือกราย
           </button>
-          <button class="ui mini button">
-            <i class="save icon"></i>
-            บันทึกข้อมูล
-          </button>
-          <button class="ui mini button">
+                    <button class="ui mini button">
             <i class="refresh icon"></i>
             ล้างข้อมูล
           </button>
+                </div>
+            </div>
+
         </div>
-      </div>
 
     </div>
-
-  </div>

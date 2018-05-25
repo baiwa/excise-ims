@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
+
+import { TextDateTH, digit } from '../../../../common/helper/datepicker';
 declare var jQuery: any;
 declare var $: any;
 @Component({
@@ -15,6 +17,8 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   router: any;
   month: any;
   from: any;
+  form1: any;
+  form2: any;
   private listItem: any[];
   constructor(private route: ActivatedRoute) { }
 
@@ -37,7 +41,28 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     // subscribe to router event
     this.from = this.route.snapshot.queryParams["from"];
     this.month = this.route.snapshot.queryParams["month"];
-    console.log(this.from, this.month);
+    //split function
+    var from_split = this.from.split("/");
+
+    //total month
+    var month = from_split[0];
+    var year_before = from_split[1];
+    var total_month = parseInt(month) + parseInt(this.month) - 1;
+
+    if(total_month>12){
+      var year = parseInt(year_before) + 1;
+      total_month -= 12;
+    }
+    else{
+      year = year_before;
+    }
+    
+    //show values
+    var sum_month = TextDateTH.months[month-1];
+    this.form1 = sum_month + " " + year_before;
+    var sum_month2 = TextDateTH.months[total_month-1];
+    this.form2 = sum_month2 + " " + year;
+
   }
   ngAfterViewInit() {
 
