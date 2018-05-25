@@ -19,12 +19,12 @@ export class Ts0103Component implements OnInit {
     $('#begin_date').calendar({
       type: 'date',
       text: TextDateTH,
-      formatter: formatter
+      formatter: formatter()
     });
     $('#end_date').calendar({
       type: 'date',
       text: TextDateTH,
-      formatter: formatter
+      formatter: formatter()
     });
   }
 

@@ -23,22 +23,22 @@ export class Ts0111Component implements OnInit {
     $('#begin_date').calendar({
       type: 'date',
       text: TextDateTH,
-      formatter: formatter
+      formatter: formatter()
     });
     $('#end_date').calendar({
       type: 'date',
       text: TextDateTH,
-      formatter: formatter
+      formatter: formatter()
     });
     $('#nut_date').calendar({
       type: 'date',
       text: TextDateTH,
-      formatter: formatter
+      formatter: formatter()
     });
     $('#nut1_date').calendar({
       type: 'date',
       text: TextDateTH,
-      formatter: formatter
+      formatter: formatter()
     });
   }
 

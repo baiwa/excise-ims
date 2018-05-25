@@ -1,4 +1,4 @@
-<div class="ui grid">
+<form class="ui grid" (submit)="onSubmit($event)" ngNativeValidate>
     <div class="sixteen wide column">
         <h2 class="ui header">สร้างกระดาษทำการคัดเลือกราย</h2>
 
@@ -24,17 +24,17 @@
                         <label>ระยะเวลาที่ตรวจสอบ</label>
                     </div>                 
                     <div class="ui calendar" id="calendar">
-                            <div class="ui input left icon">
-                              <i class="time icon"></i>
-                              <input type="text" placeholder="MM/DD">
-                            </div>
-                          </div>
-                          <div class="one wide field"></div>
+                        <div class="ui input left icon">
+                            <i class="time icon"></i>
+                            <input type="text" name="date-raw" [attr.readonly]="null" placeholder="MM/YYYY" [attr.required]="true">
+                        </div>
+                    </div>
+                    <div class="one wide field"></div>
                     <div class="two wide field required">
                         <label>ย้อนหลังไป</label>
                     </div>
-                    <div class="one wide field ">
-                        <input type="text" step="2" min="0" placeholder="" (keyup)="onKeyUp($event)" value="">
+                    <div class="two wide field ">
+                        <input type="number" step="2" name="num-raw" [attr.min]="2" [attr.max]="24" [attr.required]="true">
                     </div>
                     <div class="one wide field">
                         <label>เดือน</label>
@@ -45,10 +45,11 @@
 
                 <div class="ui center aligned grid">
                     <div class="eight wide column">
-                        <button class="ui mini primary button" routerLink="/analyst-basic-data-trader">
+                        <button type="submit" class="ui mini primary button">
                             <i class="search icon"></i>
                             วิเคราะห์ข้อมูลเบื้องต้น
                         </button>
+                        <!-- routerLink="/analyst-basic-data-trader" -->
                         <button class="ui mini button">
                             <i class="refresh icon"></i>
                             ล้างข้อมูล
@@ -58,3 +59,4 @@
             </div>
         </div>
     </div>
+</form>

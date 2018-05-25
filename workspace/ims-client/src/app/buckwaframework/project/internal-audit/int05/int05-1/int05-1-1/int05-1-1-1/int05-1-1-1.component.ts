@@ -16,25 +16,25 @@ export class Int05111Component implements OnInit {
   ngOnInit() {
     $('#date-receive-pay').calendar({
       type: 'date',
-      formatter: formatter,
+      formatter: formatter(),
       text: TextDateTH
     });
 
     $('#date-withdraw').calendar({
       type: 'date',
-      formatter: formatter,
+      formatter: formatter(),
       text: TextDateTH
     });
 
     $('#date-check').calendar({
       type: 'date',
-      formatter: formatter,
+      formatter: formatter(),
       text: TextDateTH
     });
 
     $('#date-send').calendar({
       type: 'date',
-      formatter: formatter,
+      formatter: formatter(),
       text: TextDateTH
     });
   }

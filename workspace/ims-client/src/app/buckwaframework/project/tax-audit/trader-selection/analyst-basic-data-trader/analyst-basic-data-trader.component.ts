@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../../../../common/services/ajax.service';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 declare var jQuery: any;
 declare var $: any;
 @Component({
@@ -12,8 +13,10 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   showmenu:boolean = true;
   userManagementDt: any;
   router: any;
+  month: any;
+  from: any;
   private listItem: any[];
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.listMenu = ["น้ำมัน"	
@@ -30,6 +33,11 @@ export class AnalystBasicDataTraderComponent implements OnInit {
      , 'สนามกอล์ฟ'	
      , "รวม"]	;
         this.initDatatable();
+
+    // subscribe to router event
+    this.from = this.route.snapshot.queryParams["from"];
+    this.month = this.route.snapshot.queryParams["month"];
+    console.log(this.from, this.month);
   }
   ngAfterViewInit() {
 
@@ -39,7 +47,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     this.userManagementDt = $('#userManagementDt').DataTable({
       "lengthChange": false,
       "searching": false,
-      "ordering": false,
+      "ordering": true,
       "pageLength": 10,
       "processing": true,
       "serverSide": true,
@@ -49,7 +57,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
       "ajax": {
         "type": "POST",
         "url": URL
-
       },
       "columns": [
      

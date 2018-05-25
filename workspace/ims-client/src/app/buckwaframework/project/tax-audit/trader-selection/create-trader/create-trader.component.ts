@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../../../../common/services/ajax.service';
+import { Router } from '@angular/router';
+
+import { TextDateTH, formatter } from '../../../../common/helper/datepicker';
 declare var jQuery: any;
 declare var $: any;
 @Component({
@@ -9,24 +12,28 @@ declare var $: any;
 })
 export class CreateTraderComponent implements OnInit {
   
-    constructor(private ajax : AjaxService){
+    constructor(
+        private ajax : AjaxService,
+        private router: Router
+    ){
 
     }
     ngOnInit(): void {
         $('#calendar').calendar({
-            type: 'month'
-          });   
-
+            type: 'month',
+            text: TextDateTH,
+            formatter: formatter('month-year')
+        });
     }
-    onKeyUp = (event: any) => {        
-        //console.log(event.keyCode.value % 2);
-        var patt1 = /[1-9]/g;
-    var result = event.target.value.match(patt1);
-    console.log(isNaN(event.target.value));
-        if (event.target.value % 2==1||  event.target.value>24||isNaN(event.target.value)){
-            event.target.value ='';
-        }
 
+    onSubmit = (event: any) => {
+        event.preventDefault();
+        let date = event.target['date-raw'].value;
+        let num = event.target['num-raw'].value;
+        this.router.navigate(
+            ['/analyst-basic-data-trader'],
+            { queryParams: { from: date, month: num } }
+        );
     }
 
     // analyzeData  ( ){

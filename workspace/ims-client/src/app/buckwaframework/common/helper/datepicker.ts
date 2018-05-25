@@ -12,14 +12,61 @@ var digit = number => {
     return (number < 10 ? '0' : '') + number;
 }
 
-export var formatter = {
-    date: function (date , settings) {
-        if (!date) return '';
-        let day = date.getDate();
-        let month = date.getMonth() + 1;
-        let year = date.getFullYear() + 543;
-        return digit(day) + '/' + digit(month) + '/' + year;
+export var formatter = (what: string = '') => {
+    switch(what) {
+        case 'day':
+            return {
+                date: function (date , settings) {
+                    if (!date) return '';
+                    let day = date.getDate();
+                    return digit(day);
+                }
+            }
+        case 'month':
+            return {
+                date: function (date , settings) {
+                    if (!date) return '';
+                    let month = date.getMonth() + 1;
+                    return digit(month);
+                }
+            }
+        case 'year':
+            return {
+                date: function (date , settings) {
+                    if (!date) return '';
+                    let year = date.getFullYear() + 543;
+                    return year;
+                }
+            }
+        case 'day-month':
+            return {
+                date: function (date , settings) {
+                    if (!date) return '';
+                    let day = date.getDate();
+                    let month = date.getMonth() + 1;
+                    return digit(day) + '/' + digit(month);
+                }
+            }
+        case 'month-year':
+            return {
+                date: function (date , settings) {
+                    if (!date) return '';
+                    let month = date.getMonth() + 1;
+                    let year = date.getFullYear() + 543;
+                    return digit(month) + '/' + year;
+                }
+            }
+        default:
+            return {
+                date: function (date , settings) {
+                    if (!date) return '';
+                    let day = date.getDate();
+                    let month = date.getMonth() + 1;
+                    let year = date.getFullYear() + 543;
+                    return digit(day) + '/' + digit(month) + '/' + year;
+                }
+            }
     }
-};
+}
 
 export default { TextDateTH, formatter }
