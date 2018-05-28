@@ -4,7 +4,21 @@ public class DataTableRequest {
 
 	private Integer start;
 	private Integer length;
+	private Integer month;
 	private Long draw;
+	private long startBackDate;
+	public Integer getMonth() {
+		return month;
+	}
+	public void setMonth(Integer month) {
+		this.month = month;
+	}
+	public long getStartBackDate() {
+		return startBackDate;
+	}
+	public void setStartBackDate(long startBackDate) {
+		this.startBackDate = startBackDate;
+	}
 	public Integer getStart() {
 		return start;
 	}

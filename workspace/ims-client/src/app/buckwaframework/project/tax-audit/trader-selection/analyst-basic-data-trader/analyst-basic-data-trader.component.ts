@@ -36,7 +36,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
      , "สนามแข่งม้า"	
      , 'สนามกอล์ฟ'	
      , "รวม"]	;
-        this.initDatatable();
 
     // subscribe to router event
     this.from = this.route.snapshot.queryParams["from"];
@@ -47,6 +46,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     //total month
     var month = from_split[0];
     var year_before = from_split[1];
+    this.from = from_split;
     var total_month = parseInt(month) + parseInt(this.month) - 1;
 
     if(total_month>12){
@@ -62,12 +62,16 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     this.form1 = sum_month + " " + year_before;
     var sum_month2 = TextDateTH.months[total_month-1];
     this.form2 = sum_month2 + " " + year;
-
+    
+    this.initDatatable();
   }
   ngAfterViewInit() {
 
   }
   initDatatable(): void {
+    var d = new Date();
+    d.setFullYear(parseInt(this.from[1]));
+    d.setMonth(parseInt(this.from[0]));
     const URL = AjaxService.CONTEXT_PATH + "/working/test/list";
     this.userManagementDt = $('#userManagementDt').DataTable({
       "lengthChange": false,
@@ -81,7 +85,11 @@ export class AnalystBasicDataTraderComponent implements OnInit {
 
       "ajax": {
         "type": "POST",
-        "url": URL
+        "url": URL,
+        "data": {
+          "startBackDate": d.getTime(),
+          "month": this.month
+        }
       },
       "columns": [
      

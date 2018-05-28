@@ -21,7 +21,15 @@ export class CreateTraderComponent implements OnInit {
     ngOnInit(): void {
         $('#calendar').calendar({
             type: 'month',
-            text: TextDateTH
+            text: TextDateTH,
+            formatter: {
+                date: function (date , settings) {
+                    if (!date) return '';
+                    let month = date.getMonth();
+                    let year = date.getFullYear() + 543;
+                    return TextDateTH.months[month] + ' ' + year;
+                }
+            }
         });
     }
 
