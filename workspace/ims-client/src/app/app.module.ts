@@ -195,6 +195,7 @@ import { Ts0116Component } from './buckwaframework/project/pages/reports/tax-aud
 import { Ts0119Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-19/ts01-19.component';
 import { Ts01142Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-14-2/ts01-14-2.component';
 import { Ts0117Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-17/ts01-17.component';
+import { AddDataComponent } from './buckwaframework/project/tax-audit/trader-selection/analyst-basic-data-trader/add-data/add-data.component';
 
 
 @NgModule({
@@ -367,6 +368,8 @@ import { Ts0117Component } from './buckwaframework/project/pages/reports/tax-aud
         Ts0119Component,
         Ts01142Component,
         Ts0117Component,
+        AddDataComponent,
+       
        
     ],
     imports: [

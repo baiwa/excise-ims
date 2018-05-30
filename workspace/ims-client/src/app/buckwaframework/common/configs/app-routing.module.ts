@@ -25,6 +25,7 @@ import { CheckReceiptTaxComponent } from './../../project/pages/check-receipt-ta
 import { CheckReceiptLicenseComponent } from './../../project/pages/check-receipt-license/check-receipt-license.component';
 import { CreateTraderComponent } from './../../project/tax-audit/trader-selection/create-trader/create-trader.component';
 import { AnalystBasicDataTraderComponent } from './../../project/tax-audit/trader-selection/analyst-basic-data-trader/analyst-basic-data-trader.component';
+import { AddDataComponent } from '../../project/tax-audit/trader-selection/analyst-basic-data-trader/add-data/add-data.component';
 import { CreateWorkingPaperTraderComponent } from './../../project/tax-audit/trader-selection/create-working-paper-trader/create-working-paper-trader.component';
 import { WorkingPaper1TraderComponent } from './../../project/tax-audit/trader-selection/working-paper-1-trader/working-paper-1-trader.component';
 import { WorkingPaper1FullTraderComponent } from './../../project/tax-audit/trader-selection/working-paper-1-full-trader/working-paper-1-full-trader.component';
@@ -188,6 +189,7 @@ import { Ope057Component } from './../../project/tax-audit/operate-tax-audit/ope
 
 
 
+
 const routes: Routes = [
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -217,6 +219,7 @@ const routes: Routes = [
     { path: 'check-receipt-license', component: CheckReceiptLicenseComponent, canActivate: [AuthGuard] },
     { path: 'trader-selection', component: CreateTraderComponent, canActivate: [AuthGuard] },
     { path: 'analyst-basic-data-trader', component: AnalystBasicDataTraderComponent, canActivate: [AuthGuard] },
+    { path: 'add-data', component: AddDataComponent, canActivate: [AuthGuard] },
     { path: 'create-working-paper-trader', component: CreateWorkingPaperTraderComponent, canActivate: [AuthGuard] },
     { path: 'working-paper-1-trader', component: WorkingPaper1TraderComponent, canActivate: [AuthGuard] },
     { path: 'working-paper-1-full-trader', component: WorkingPaper1FullTraderComponent, canActivate: [AuthGuard] },
