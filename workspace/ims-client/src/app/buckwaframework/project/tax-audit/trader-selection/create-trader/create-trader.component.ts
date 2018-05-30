@@ -20,6 +20,7 @@ export class CreateTraderComponent implements OnInit {
     }
     ngOnInit(): void {
         $('#calendar').calendar({
+            maxDate: new Date(),
             type: 'month',
             text: TextDateTH,
             formatter: {
