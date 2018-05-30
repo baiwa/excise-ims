@@ -43,15 +43,19 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     //split function
     var from_split = this.from.split("/");
 
-    //total month
+    //default month & year
     var month = from_split[0];
     var year_before = from_split[1];
-    this.from = from_split;
-    var total_month = parseInt(month) + parseInt(this.month) - 1;
 
-    if(total_month>12){
-      var year = parseInt(year_before) + 1;
-      total_month -= 12;
+    //output form default
+    this.from = from_split;
+
+    //total month
+    var total_month = parseInt(month) - parseInt(this.month) + 1;
+
+    if(total_month<1){
+      var year = parseInt(year_before) - 1;
+      total_month += 12;
     }
     else{
       year = year_before;
