@@ -51,11 +51,14 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     this.from = from_split;
 
     //total month
-    var total_month = parseInt(month) - parseInt(this.month) + 1;
-
-    if(total_month<1){
+    var total_month = (parseInt(month) - parseInt(this.month)) + 1;
+    if((total_month<1)&&(total_month>-11)){
       var year = parseInt(year_before) - 1;
       total_month += 12;
+    }
+    else if(total_month<-11){
+      var year = parseInt(year_before) - 2;
+      total_month += 24;
     }
     else{
       year = year_before;
