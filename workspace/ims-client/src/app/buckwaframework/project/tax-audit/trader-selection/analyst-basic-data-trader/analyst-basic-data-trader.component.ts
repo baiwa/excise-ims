@@ -47,9 +47,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     var month = from_split[0];
     var year_before = from_split[1];
 
-    //output form default
-    this.from = from_split;
-
     var m = parseInt(month)+1;
     var mm = parseInt(this.month);
     var yy = parseInt(year_before);
