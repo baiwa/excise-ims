@@ -50,25 +50,24 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     //output form default
     this.from = from_split;
 
-    //total month
-    var total_month = (parseInt(month) - parseInt(this.month)) + 1;
-    if((total_month<1)&&(total_month>-11)){
-      var year = parseInt(year_before) - 1;
-      total_month += 12;
-    }
-    else if(total_month<-11){
-      var year = parseInt(year_before) - 2;
-      total_month += 24;
-    }
-    else{
-      year = year_before;
+    var m = parseInt(month)+1;
+    var mm = parseInt(this.month);
+    var yy = parseInt(year_before);
+    // console.log('mm ',m);
+    for(var i=1;i<=mm;i++){
+      m = m-1;
+      if(m==0){m = 12;yy = yy-1;}
     }
     
+    // console.log('เดือนปีตั้ง ',parseInt(month)+'/',parseInt(year_before));
+    // console.log('ย้อนไป ',parseInt(this.month));
+    // console.log('เดือนปีย้อน ',m+'/',yy);
+
     //show values
-    var sum_month = TextDateTH.months[month-1];
-    this.form1 = sum_month + " " + year_before;
-    var sum_month2 = TextDateTH.months[total_month-1];
-    this.form2 = sum_month2 + " " + year;
+    var sum_month = TextDateTH.months[m-1];
+    this.form1 = sum_month + " " + yy;
+    var sum_month2 = TextDateTH.months[parseInt(month)-1];
+    this.form2 = sum_month2 + " " + parseInt(year_before);
     
     this.initDatatable();
   }
