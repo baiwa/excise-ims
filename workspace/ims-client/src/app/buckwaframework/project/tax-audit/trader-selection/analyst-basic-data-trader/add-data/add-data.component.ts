@@ -32,7 +32,7 @@ export class AddDataComponent implements OnInit {
       .then(
         res => {
           this.excise = res.json()[0];
-          console.log(this.excise);
+          // console.log(this.excise);
         }
       );
   }
