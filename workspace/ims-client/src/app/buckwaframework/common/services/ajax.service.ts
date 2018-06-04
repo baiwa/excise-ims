@@ -7,8 +7,8 @@ export class AjaxService {
     public static JSON_HEADER = new Headers({ 'Content-Type': 'application/json' });
     public static FORM_HEADER = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-    public static CONTEXT_PATH: string = "/ims-webapp/";
-    public static isDebug: boolean = true;
+    public static CONTEXT_PATH = '/ims-webapp/';
+    public static isDebug = true;
 
     constructor(private http: Http) {
 
@@ -17,8 +17,8 @@ export class AjaxService {
 
     post(url: string, body: any, success: any, error?: any, header?: Headers) {
         if (AjaxService.isDebug) {
-            console.log("URL : ", AjaxService.CONTEXT_PATH + url);
-            console.log("Params : ", body);
+            console.log('URL : ', AjaxService.CONTEXT_PATH + url);
+            console.log('Params : ', body);
         }
         let httpHeader = AjaxService.JSON_HEADER;
         if (header) {
@@ -64,8 +64,8 @@ export class AjaxService {
 
     put(url: string, body: any, success: any, error?: any, header?: Headers) {
         if (AjaxService.isDebug) {
-            console.log("URL : ", AjaxService.CONTEXT_PATH + url);
-            console.log("Params : ", body);
+            console.log('URL : ', AjaxService.CONTEXT_PATH + url);
+            console.log('Params : ', body);
         }
         let httpHeader = AjaxService.JSON_HEADER;
         if (header) {

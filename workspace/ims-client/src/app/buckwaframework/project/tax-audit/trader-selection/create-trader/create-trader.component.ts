@@ -11,11 +11,10 @@ declare var $: any;
     styleUrls: []
 })
 export class CreateTraderComponent implements OnInit {
-  
     constructor(
-        private ajax : AjaxService,
+        private ajax: AjaxService,
         private router: Router
-    ){
+    ) {
 
     }
     ngOnInit(): void {
@@ -25,9 +24,11 @@ export class CreateTraderComponent implements OnInit {
             text: TextDateTH,
             formatter: {
                 date: function (date , settings) {
-                    if (!date) return '';
-                    let month = date.getMonth();
-                    let year = date.getFullYear() + 543;
+                    if (!date) {
+                        return '';
+                    }
+                    const month = date.getMonth();
+                    const year = date.getFullYear() + 543;
                     return TextDateTH.months[month] + ' ' + year;
                 }
             }
@@ -36,11 +37,11 @@ export class CreateTraderComponent implements OnInit {
 
     onSubmit = (event: any) => {
         event.preventDefault();
-        let date = event.target['date-raw'].value;
-        let date_split = date.split(' ');
+        const date = event.target['date-raw'].value;
+        const date_split = date.split(' ');
         date_split[0] = digit(TextDateTH.months.indexOf(date_split[0]) + 1);
-        let date_str = date_split[0] + '/' + date_split[1];
-        let num = event.target['num-raw'].value;
+        const date_str = date_split[0] + '/' + date_split[1];
+        const num = event.target['num-raw'].value;
         this.router.navigate(
             ['/analyst-basic-data-trader'],
             { queryParams: { from: date_str, month: num } }
@@ -68,14 +69,14 @@ export class CreateTraderComponent implements OnInit {
     // }
     callFn() {
         this.ajax.get(
-          'working/test/list?no1=55',    
+          'working/test/list?no1=55',
           alert('success\n** Just alert..!'),
           ret => console.log(ret)
         ).then(
           res => console.log(res.json().data),
           error => console.log(error)
         );
-    
-    
+
+
 }
 }

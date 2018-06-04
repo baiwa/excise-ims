@@ -16,8 +16,6 @@ public class ExciseTaxReceive {
 	private String updateBy;
 	private  LocalDateTime  updateDatetime;
 	
-	
-	
 	public Integer getExciseTaxReceiveId() {
 		return exciseTaxReceiveId;
 	}

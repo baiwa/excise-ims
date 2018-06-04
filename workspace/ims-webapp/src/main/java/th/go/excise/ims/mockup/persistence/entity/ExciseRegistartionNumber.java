@@ -22,8 +22,7 @@ public class ExciseRegistartionNumber {
 	private LocalDateTime updateDatetime;
 	private String taexciseProductType;
 	private String taexciseSectorArea;
-	
-	
+
 	private String 	taxpayment1;
 	private String  taxpayment2;
 	private String  change ;
@@ -37,6 +36,16 @@ public class ExciseRegistartionNumber {
 	private String  industrialAddress;
 	private String  registeredCapital;
 	private String  status;
+
+	private ExciseTaxReceive exciseTaxReceive;
+
+	public ExciseTaxReceive getExciseTaxReceive() {
+		return exciseTaxReceive;
+	}
+
+	public void setExciseTaxReceive(ExciseTaxReceive exciseTaxReceive) {
+		this.exciseTaxReceive = exciseTaxReceive;
+	}
 
 	public Integer getExciseRegisttionNumberId() {
 		return exciseRegisttionNumberId;

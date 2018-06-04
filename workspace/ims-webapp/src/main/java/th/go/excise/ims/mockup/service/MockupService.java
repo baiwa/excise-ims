@@ -1,8 +1,10 @@
 package th.go.excise.ims.mockup.service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,20 +12,48 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.excise.ia.constant.DateConstant;
+import th.go.excise.ims.mockup.domain.Excise;
 import th.go.excise.ims.mockup.domain.MockupVo;
+import th.go.excise.ims.mockup.persistence.dao.ExciseDao;
 import th.go.excise.ims.mockup.persistence.dao.ExciseRegisttionNumberDao;
 import th.go.excise.ims.mockup.persistence.dao.ExciseTaxReceiveDao;
+import th.go.excise.ims.mockup.persistence.entity.ExciseEntity;
 import th.go.excise.ims.mockup.persistence.entity.ExciseRegistartionNumber;
+import th.go.excise.ims.mockup.persistence.entity.ExciseTax;
 import th.go.excise.ims.mockup.persistence.entity.ExciseTaxReceive;
 
 @Service
 public class MockupService {
 
 	@Autowired
+	private ExciseDao exciseDao;
+
+	@Autowired
 	private ExciseRegisttionNumberDao exciseRegisttionNumberDao;
 
 	@Autowired
 	private ExciseTaxReceiveDao exciseTaxReceiveDao;
+
+	public List<ExciseEntity> findById(String id) {
+		List<ExciseEntity> li = exciseDao.queryByExciseId(id);
+		Collection<ExciseEntity> list = li;
+		List<ExciseEntity> listed = list.stream()
+				.filter(distinctByKey(p -> p.getExciseId()))
+				.collect(Collectors.toList());
+		for (ExciseEntity l : li) {
+			for (ExciseEntity  led : listed) {
+				if (led.getExciseId().equals(l.getExciseId())) {
+					ArrayList<ExciseTax> result = led.getExciseTax();
+					if(l.getExciseTax().get(0).getExciseTaxReceiveId().equals(result.get(0).getExciseTaxReceiveId())) {
+						continue;
+					}
+					result.add(l.getExciseTax().get(0));
+					led.setExciseTax(result);
+				}
+			}
+		}
+		return listed;
+	}
 
 	public ResponseDataTable<MockupVo> findAll(String register, MockupVo mockupVo, Date startBackDate, int month) {
 
@@ -166,8 +196,6 @@ public class MockupService {
 					vo.setChange(String.format("%,.2f", totalResult));
 				}
 
-
-				
 			}
 
 			mockupVoList.add(vo);
@@ -182,6 +210,11 @@ public class MockupService {
 		responseDataTable.setRecordsFiltered((int) count);
 
 		return responseDataTable;
+	}
+
+	public static <T> Predicate<T> distinctByKey(Function<? super T, Object> key) {
+		Map<Object, Boolean> map = new ConcurrentHashMap<>();
+		return t -> map.putIfAbsent(key.apply(t), Boolean.TRUE) == null;
 	}
 
 }

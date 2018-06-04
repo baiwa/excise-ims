@@ -20,4 +20,5 @@ public class MysqlUtils {
 
 	  return sqlBuilger.toString();
 	 }
-	}
+
+}

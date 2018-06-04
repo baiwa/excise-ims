@@ -139,8 +139,9 @@ export class AnalystBasicDataTraderComponent implements OnInit {
         { "data": "exciseLatestTaxReceiveAmount11","className":"center" },
         { "data": "exciseLatestTaxReceiveAmount12","className":"center" },
         {
+          "data":"exciseId",
           "render" : function ( data, type, row, meta ) {
-            return '<a class="ui blue button" href="/#/add-data">เพิ่มข้อมูล</a>';
+            return `<a class="ui blue button" href="/#/add-data?id=${data}">เพิ่มข้อมูล</a>`;
           }
         }
       ],
