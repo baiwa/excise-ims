@@ -18,34 +18,34 @@
             <p>ชื่อผู้ประกอบการ : </p>
           </div>
           <div class="five wide field">
-            <input type="text" value="{{excise.exciseOperatorName}}">
+            <input type="text" readonly="" class="custom-readonly" value="{{excise.exciseOperatorName}}">
           </div>
           <div class="three wide field">
             <p>เลขทะเบียนสรรพสามิต: </p>
           </div>
           <div class="five wide field">
-            <input type="text" value="{{excise.exciseId}}">
+            <input type="text" readonly="" class="custom-readonly" value="{{excise.exciseId}}">
           </div>
         </div>
 
         <div class="inline fields">
           <div class="three wide field">
-            <p>ที่ตั้งโรงอุตสาหกรรม :</p>
+            <p>ชื่อโรงอุตสาหกรรม :</p>
           </div>
           <div class="five wide field">
-            <input type="text">
+            <input type="text" value="{{excise.exciseFacName}}">
           </div>
           <div class="two wide field">
             <p>พื้นที่ / ภาค : </p>
           </div>
           <div class="two wide field">
-            <input type="text">
+            <input type="text" value="{{excise.taexciseSectorArea}}">
           </div>
           <div class="two wide field">
             <p>พิกัดสินค้า :</p>
           </div>
           <div class="two wide field">
-            <input type="text">
+            <input type="text" value="{{excise.taexciseProductType}}">
           </div>
         </div>
 
@@ -116,13 +116,13 @@
             <p>เดือนที่ 1: </p>
           </div>
           <div class="three wide field">
-            <input type="text">
+            <input type="text" value="{{excise.exciseTax[0].exciseTaxReceiveMonth}}">
           </div>
           <div class="two wide field">
             <p>มูลค่าภาษี : </p>
           </div>
           <div class="three wide field">
-            <input type="text">
+            <input type="text" value="{{excise.exciseTax[0].exciseTaxReceiveAmount}}">
           </div>
           <div class="one wide field">
             <p>บาท</p>
@@ -135,13 +135,13 @@
             <p>เดือนที่ 2: </p>
           </div>
           <div class="three wide field">
-            <input type="text">
+            <input type="text" value="{{excise.exciseTax[1].exciseTaxReceiveMonth}}">
           </div>
           <div class="two wide field">
             <p>มูลค่าภาษี : </p>
           </div>
           <div class="three wide field">
-            <input type="text">
+            <input type="text" value="{{excise.exciseTax[1].exciseTaxReceiveAmount}}">
           </div>
           <div class="one wide field">
             <p>บาท</p>
@@ -154,13 +154,13 @@
             <p>เดือนที่ 3: </p>
           </div>
           <div class="three wide field">
-            <input type="text">
+            <input type="text" value="{{excise.exciseTax[2].exciseTaxReceiveMonth}}">
           </div>
           <div class="two wide field">
             <p>มูลค่าภาษี : </p>
           </div>
           <div class="three wide field">
-            <input type="text">
+            <input type="text" value="{{excise.exciseTax[2].exciseTaxReceiveAmount}}">
           </div>
           <div class="one wide field">
             <p>บาท</p>

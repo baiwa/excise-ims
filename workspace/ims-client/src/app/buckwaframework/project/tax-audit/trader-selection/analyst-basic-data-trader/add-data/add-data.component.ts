@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {AjaxService} from '../../../../../common/services/ajax.service';
 import { Excise } from '../../../../../common/models/excise';
+import { ExciseTax } from '../../../../../common/models/exciseTax';
 
 @Component({
   selector: 'app-add-data',
@@ -18,6 +19,10 @@ export class AddDataComponent implements OnInit {
     private service: AjaxService) {
     this.id = this.route.snapshot.queryParams['id'];
     this.excise = new Excise;
+    this.excise.exciseTax = new Array<ExciseTax>();
+    for(let i=0; i<3; i++) {
+      this.excise.exciseTax.push(new ExciseTax);
+    }
   }
 
   ngOnInit() {
@@ -27,6 +32,7 @@ export class AddDataComponent implements OnInit {
       .then(
         res => {
           this.excise = res.json()[0];
+          console.log(this.excise);
         }
       );
   }

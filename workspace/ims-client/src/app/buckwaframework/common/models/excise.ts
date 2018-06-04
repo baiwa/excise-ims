@@ -1,4 +1,4 @@
-// Desired for semantic-ui Dropdown.
+import { ExciseTax } from './exciseTax';
 export class Excise {
     change: any
     coordinates: any
@@ -27,17 +27,6 @@ export class Excise {
     taexciseSectorArea: String
     taxpayment1: any
     taxpayment2: any
-    updateBy: String
-    updateDatetime: any
-}
-
-class ExciseTax {
-    createdBy: any
-    createdDatetime: any
-    exciseId: String
-    exciseTaxReceiveAmount: String
-    exciseTaxReceiveId: number
-    exciseTaxReceiveMonth: String
     updateBy: String
     updateDatetime: any
 }
