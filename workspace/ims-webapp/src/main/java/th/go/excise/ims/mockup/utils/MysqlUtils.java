@@ -21,4 +21,11 @@ public class MysqlUtils {
 	  return sqlBuilger.toString();
 	 }
 
+	 public static String limitSql(String sql, int limit) {
+		StringBuilder sqlBuilger = new StringBuilder(sql);
+		sqlBuilger.append(" limit ").append(limit);
+
+		return sqlBuilger.toString();
+	 }
+
 }

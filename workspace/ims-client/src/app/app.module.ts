@@ -196,6 +196,7 @@ import { Ts0119Component } from './buckwaframework/project/pages/reports/tax-aud
 import { Ts01142Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-14-2/ts01-14-2.component';
 import { Ts0117Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-17/ts01-17.component';
 import { AddDataComponent } from './buckwaframework/project/tax-audit/trader-selection/analyst-basic-data-trader/add-data/add-data.component';
+import { ExciseService } from './buckwaframework/common/services/excise.service';
 
 
 @NgModule({
@@ -387,7 +388,8 @@ import { AddDataComponent } from './buckwaframework/project/tax-audit/trader-sel
         TranslateService,
         ParameterGroupService,
         ParameterInfoService,
-        AjaxService
+        AjaxService,
+        ExciseService
     ],
     bootstrap: [AppComponent]
 })

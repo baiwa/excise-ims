@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-
-// models
-import { AlertMessage } from './../models/alertMessage';
+import { AlertMessage } from './../models/index';
 
 declare var $: any;
 
@@ -13,9 +11,7 @@ export class MessageBarService {
     public static ERROR_ICON: string = "warning sign icon";
     private messageList: AlertMessage[] = [];
 
-    constructor() {
-
-    }
+    constructor() {}
 
     info(message: string) {
         let msg: AlertMessage = new AlertMessage();
@@ -72,7 +68,13 @@ export class MessageBarService {
     }
 
     errorModal = (msg: string, title: string = "เกิดข้อผิดพลาด") => {
-        $("#alert div.title").html(title);
+        $("#alert div.header").html(title);
+        $("#alert div.content").html(msg);
+        $("#alert").modal('show');
+    }
+
+    successModal = (msg: string, title: string = "สำเร็จ") => {
+        $("#alert div.header").html(title);
         $("#alert div.content").html(msg);
         $("#alert").modal('show');
     }

@@ -2,6 +2,7 @@ package th.go.excise.ims.mockup.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,15 @@ public class MockupController {
 	@GetMapping("/list/{id}")
 	@ResponseBody
 	public List<ExciseEntity> list(@PathVariable("id") String id) {
-		List<ExciseEntity> li = mockupService.findById(id);
+		List<ExciseEntity> li = mockupService.findById(id, 1);
+		return li;
+	}
+
+	@GetMapping("/list/{id}/{limit}")
+	@ResponseBody
+	public List<ExciseEntity> listLimit(@PathVariable("id") String id,
+								   @PathVariable(value = "limit", required = false) int limit) {
+		List<ExciseEntity> li = mockupService.findById(id, limit);
 		return li;
 	}
 	

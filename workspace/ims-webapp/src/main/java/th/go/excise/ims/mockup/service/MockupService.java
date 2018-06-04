@@ -34,8 +34,8 @@ public class MockupService {
 	@Autowired
 	private ExciseTaxReceiveDao exciseTaxReceiveDao;
 
-	public List<ExciseEntity> findById(String id) {
-		List<ExciseEntity> li = exciseDao.queryByExciseId(id);
+	public List<ExciseEntity> findById(String id, int limit) {
+		List<ExciseEntity> li = exciseDao.queryByExciseId(id, limit);
 		Collection<ExciseEntity> list = li;
 		List<ExciseEntity> listed = list.stream()
 				.filter(distinctByKey(p -> p.getExciseId()))
