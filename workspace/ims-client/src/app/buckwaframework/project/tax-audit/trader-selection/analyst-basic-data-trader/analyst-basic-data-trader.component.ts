@@ -14,14 +14,15 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   listMenu: any[] = [];
   showmenu: boolean = true;
   userManagementDt: any;
-  router: any;
   month: any;
   from: any;
   form1: any;
   form2: any;
   private listItem: any[];
   pickedup : any;
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private router: Router) { 
+    
+  }
 
   ngOnInit() {
     this.listMenu = ["น้ำมัน"
@@ -106,6 +107,14 @@ export class AnalystBasicDataTraderComponent implements OnInit {
 
 
   }
+
+  onSend = () => {
+    this.router.navigate(
+        ['/create-working-paper-trader'],
+        { queryParams: { before: this.form1, last: this.form2 ,  num_month: this.month } }
+    );
+}
+
   ngAfterViewInit() {
 
   }
@@ -194,7 +203,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
         this.pickedup = $(this);
       });
     });
-    alert(444);
 
 
 
