@@ -56,7 +56,6 @@ public class ExciseDao {
             vo.setUpdateDatetime(rs.getTimestamp("UPDATE_DATETIME") != null ? rs.getTimestamp("UPDATE_DATETIME").toLocalDateTime() : null);
             vo.setTaexciseProductType(rs.getString("TA_EXCISE_PRODUCT_TYPE"));
             vo.setTaexciseSectorArea(rs.getString("TA_EXCISE_SECTOR_AREA"));
-
             vi.setExciseTaxReceiveId(rs.getInt("TA_EXCISE_TAX_RECEIVE_ID"));
             vi.setExciseId(rs.getString("TA_EXCISE_ID"));
             vi.setExciseTaxReceiveMonth(rs.getString("TA_EXCISE_TAX_RECEIVE_MONTH"));
