@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../../../../common/services/ajax.service';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { TextDateTH, digit } from '../../../../common/helper/datepicker';
 declare var jQuery: any;
@@ -11,8 +11,8 @@ declare var $: any;
   styleUrls: []
 })
 export class AnalystBasicDataTraderComponent implements OnInit {
-  listMenu:any[] = [];
-  showmenu:boolean = true;
+  listMenu: any[] = [];
+  showmenu: boolean = true;
   userManagementDt: any;
   router: any;
   month: any;
@@ -20,133 +20,184 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   form1: any;
   form2: any;
   private listItem: any[];
+  pickedup : any;
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.listMenu = ["น้ำมัน"	
-      , "เครื่องดื่ม"	
-      , "ยาสูบ"	
-      , "ไพ่"	
-      , "แก้วและเครื่องแก้ว"	
-     , "รถยนต์"	
-     , 'พรมและสิ่งทอปูพื้น'	
-     , "แบตเตอรี่"	
-     , "ไนท์คลับและดิสโกเธค"	
-     , "สถานอาบน้ำหรืออบตัวและนวด"	
-     , "สนามแข่งม้า"	
-     , 'สนามกอล์ฟ'	
-     , "รวม"]	;
+    this.listMenu = ["น้ำมัน"
+      , "เครื่องดื่ม"
+      , "ยาสูบ"
+      , "ไพ่"
+      , "แก้วและเครื่องแก้ว"
+      , "รถยนต์"
+      , 'พรมและสิ่งทอปูพื้น'
+      , "แบตเตอรี่"
+      , "ไนท์คลับและดิสโกเธค"
+      , "สถานอาบน้ำหรืออบตัวและนวด"
+      , "สนามแข่งม้า"
+      , 'สนามกอล์ฟ'
+      , "รวม"];
 
     // subscribe to router event
     this.from = this.route.snapshot.queryParams["from"];
     this.month = this.route.snapshot.queryParams["month"];
     //split function
     var from_split = this.from.split("/");
-
+    var currDate = new Date();
+    var currYear = currDate.getFullYear() + 543;
     //default month & year
     var month = from_split[0];
     var year_before = from_split[1];
 
-    var m = parseInt(month)+1;
+    var m = parseInt(month) + 1;
     var mm = parseInt(this.month);
     var yy = parseInt(year_before);
+    var trHeaderColumn = "";
     // console.log('mm ',m);
-    for(var i=1;i<=mm;i++){
-      m = m-1;
-      if(m==0){m = 12;yy = yy-1;}
+
+    var items: string[] = [];
+    for (var i = 1; i <= mm; i++) {
+      m = m - 1;
+      if (m == 0) {
+        m = 12;
+        yy = yy - 1;
+      }
+      items.push('<th style="text-align: center !important">' + TextDateTH.monthsShort[m - 1] + ' ' + (yy + "").substr(2) + '</th>');
+
     }
-    
-    // console.log('เดือนปีตั้ง ',parseInt(month)+'/',parseInt(year_before));
-    // console.log('ย้อนไป ',parseInt(this.month));
-    // console.log('เดือนปีย้อน ',m+'/',yy);
+    for (var i = items.length - 1; i >= 0; i--) {
+      trHeaderColumn += items[i];
+    }
+    console.log(trHeaderColumn);
+    document.getElementById('trDrinamic').innerHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> '
+      + '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> '
+      + '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> '
+      + '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> '
+      + '<th rowspan="2" style="text-align: center !important">พื้นที่</th> '
+      + '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> '
+      + '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> '
+      + '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> '
+      + '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> '
+      + '<th rowspan="2" style="text-align: center !important">ภาค</th> '
+      + '<th rowspan="2" style="text-align: center !important">พิกัด</th> '
+      + '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> '
+      + '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> '
+      + '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> '
+      + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนแรก</th> '
+      + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนหลัง </th> '
+      + '</tr>'
+      + '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' + this.month / 2 + ' เดือนแรก</th>'
+      + '<th style="text-align: center !important">' + this.month / 2 + ' เดือนหลัง </th>'
+      + '<th style="text-align: center !important">' + (currYear - 3) + '</th>'
+      + '<th style="text-align: center !important">' + (currYear - 2) + '</th>'
+      + '<th style="text-align: center !important">' + (currYear - 1) + '</th>'
+      + trHeaderColumn + '</tr>';
+    console.log(trHeaderColumn);
 
     //show values
-    var sum_month = TextDateTH.months[m-1];
+    var sum_month = TextDateTH.months[m - 1];
     this.form1 = sum_month + " " + yy;
-    var sum_month2 = TextDateTH.months[parseInt(month)-1];
+    var sum_month2 = TextDateTH.months[parseInt(month) - 1];
     this.form2 = sum_month2 + " " + parseInt(year_before);
-    
+    var dataInDataTalbe = '';
     this.initDatatable();
+
+
+
+
   }
   ngAfterViewInit() {
 
   }
+
+
 
   initDatatable(): void {
     var d = new Date();
     d.setFullYear(parseInt(this.from[1]));
     d.setMonth(parseInt(this.from[0]));
     const URL = AjaxService.CONTEXT_PATH + "/working/test/list";
-    this.userManagementDt = $('#userManagementDt').DataTable({
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "pageLength": 10,
-      "processing": true,
-      "serverSide": true,
-      "paging": true,
-      "pagingType": "full_numbers",
+    var json = "";
+    json += ' { "lengthChange": false, ';
+    json += ' "searching": false, ';
+    json += ' "ordering": true, ';
+    json += ' "pageLength": 10, ';
+    json += ' "processing": true, ';
+    json += ' "serverSide": true, ';
+    json += ' "paging": true, ';
+    json += ' "pagingType": "full_numbers", ';
+    json += ' ';
+    json += ' "ajax": { ';
+    json += ' "type": "POST", ';
+    json += ' "url": "' + URL + '", ';
+    json += ' "data": { ';
+    json += ' "startBackDate": ' + d.getTime() + ', ';
+    json += ' "month": ' + this.month + ' ';
+    json += ' } ';
+    json += ' }, ';
+    json += ' "columns": [ ';
+    json += ' { "data": "exciseRegisttionNumberId","className":"center" }, ';
+    json += ' { "data": "exciseId","className":"center" }, ';
+    json += ' { "data": "exciseOperatorName" }, ';
+    json += ' { "data": "exciseFacName" }, ';
+    json += ' { "data": "exciseArea" }, ';
+    json += ' { "data": "exciseFacAddress" ,"className":"center" }, ';
+    json += ' { "data": "exciseRegisCapital","className":"center" }, ';
+    json += ' { "data": "change","className":"center" }, ';
+    json += ' { "data": "payingtax" ,"className":"center"}, ';
+    json += ' { "data": "no1" }, ';
+    json += ' { "data": "no2" }, ';
+    json += ' { "data": "no3" }, ';
+    json += ' { "data": "coordinates" }, ';
+    json += ' { "data": "sector" }, ';
+    json += ' { "data": "industrialAddress" }, ';
+    json += ' { "data": "registeredCapital" }, ';
+    json += ' { "data": "status" }, ';
 
-      "ajax": {
-        "type": "POST",
-        "url": URL,
-        "data": {
-          "startBackDate": d.getTime(),
-          "month": this.month
-        }
-      },
-      "columns": [
-     
-        { "data": "exciseRegisttionNumberId","className":"center" },
-        { "data": "exciseId","className":"center" },
-        { "data": "exciseOperatorName" },
-        { "data": "exciseFacName" },
-        { "data": "exciseArea" },
-        { "data": "exciseFacAddress" ,"className":"center" },
-        { "data": "exciseRegisCapital","className":"center" },
-        { "data": "change","className":"center" },   
-        { "data": "payingtax" ,"className":"center"},        
-        { "data": "no1" },
-        { "data": "no2" },
-        { "data": "no3" },       
-        { "data": "coordinates" },
-        { "data": "sector" },
-        { "data": "industrialAddress" },
-        { "data": "registeredCapital" },
-        { "data": "status" },
-        { "data": "exciseFirstTaxReceiveAmount1" ,"className":"center"},
-        { "data": "exciseFirstTaxReceiveAmount2","className":"center" },
-        { "data": "exciseFirstTaxReceiveAmount3","className":"center" },
-        { "data": "exciseFirstTaxReceiveAmount4","className":"center" },
-        { "data": "exciseFirstTaxReceiveAmount5","className":"center" },
-        { "data": "exciseFirstTaxReceiveAmount6","className":"center" },
-        { "data": "exciseFirstTaxReceiveAmount7" ,"className":"center"},
-        { "data": "exciseFirstTaxReceiveAmount8","className":"center" },
-        { "data": "exciseFirstTaxReceiveAmount9","className":"center" },
-        { "data": "exciseFirstTaxReceiveAmount10","className":"center" },
-        { "data": "exciseFirstTaxReceiveAmount11","className":"center" },
-        { "data": "exciseFirstTaxReceiveAmount12","className":"center" },
-        { "data": "exciseLatestTaxReceiveAmount1","className":"center" },
-        { "data": "exciseLatestTaxReceiveAmount2","className":"center" },
-        { "data": "exciseLatestTaxReceiveAmount3","className":"center"},
-        { "data": "exciseLatestTaxReceiveAmount4","className":"center" },
-        { "data": "exciseLatestTaxReceiveAmount5","className":"center" },
-        { "data": "exciseLatestTaxReceiveAmount6","className":"center" },
-        { "data": "exciseLatestTaxReceiveAmount7","className":"center" },
-        { "data": "exciseLatestTaxReceiveAmount8","className":"center" },
-        { "data": "exciseLatestTaxReceiveAmount9","className":"center" },
-        { "data": "exciseLatestTaxReceiveAmount10" ,"className":"center"},
-        { "data": "exciseLatestTaxReceiveAmount11","className":"center" },
-        { "data": "exciseLatestTaxReceiveAmount12","className":"center" },
-        {
-          "data":"exciseId",
-          "render" : function ( data, type, row, meta ) {
-            return `<a class="ui blue button" href="/#/add-data?id=${data}">เพิ่มข้อมูล</a>`;
-          }
-        }
-      ],
+    for (var i = 0; i < this.month / 2; i++) {
+      json += ' { "data": "exciseFirstTaxReceiveAmount' + (i + 1) + '" ,"className":"center"}, ';
 
+    }
+    for (var i = 0; i < this.month / 2; i++) {
+      if (i != (this.month / 2) - 1) {
+        json += ' { "data": "exciseLatestTaxReceiveAmount' + (i + 1) + '" ,"className":"center"}, ';
+      } else {
+        json += ' { "data": "exciseLatestTaxReceiveAmount' + (i + 1) + '" ,"className":"center"} ';
+      }
+
+
+    }
+
+    json += '] } ';
+    console.log(json);
+    let jsonMaping = JSON.parse(json);
+    this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
+
+    // $('#userManagementDt tbody').on('click', 'tr', function () {
+    //   alert( $(this));
+    //   $(this).toggleClass('selected');
+    // });
+
+
+    
+    $(document).ready(function () {
+      $("#userManagementDt tbody tr").on("click", function (event) {
+
+        // get back to where it was before if it was selected :
+       
+          this.pickedup.css("background-color", "white");
+        
+
+        $("#fillname").val($(this).find("td").eq(1).html());
+        $(this).css("background-color", "rgb(197,217,241)");
+
+        this.pickedup = $(this);
+      });
     });
+    alert(444);
+
+
+
   }
 
 
