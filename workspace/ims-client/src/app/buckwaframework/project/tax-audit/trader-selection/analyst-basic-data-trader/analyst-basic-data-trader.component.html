@@ -33,6 +33,7 @@
                         </div>
                         <div class="four ui action input">
                             <input type="text" placeholder="MM/YYYY" value="{{form2}}" class="custom-readonly" [readonly]="true">
+                            
                             <button class="ui icon button">
                                 <i class="add to calendar icon"></i>
                             </button>
@@ -53,7 +54,8 @@
                         <button class="ui mini primary button" routerLink="/#/add-data?id=${data}">
                             ค้นหา
                         </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button class="ui mini primary button" routerLink="/#/add-data?id=${data}">
+                        <input type="hidden" id="exciseId" value="EX"/>
+                        <button class="ui mini primary button" onclick="window.location='/#/add-data?id='+document.getElementById('exciseId').value;">
                             <i class="add icon"></i>
                             เพิ่มข้อมูล
                         </button>

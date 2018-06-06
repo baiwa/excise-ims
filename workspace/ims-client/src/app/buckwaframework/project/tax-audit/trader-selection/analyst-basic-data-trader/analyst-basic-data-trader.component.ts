@@ -3,6 +3,7 @@ import { AjaxService } from '../../../../common/services/ajax.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { TextDateTH, digit } from '../../../../common/helper/datepicker';
+import { window } from 'rxjs/operators';
 declare var jQuery: any;
 declare var $: any;
 @Component({
@@ -129,6 +130,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     var json = "";
     json += ' { "lengthChange": false, ';
     json += ' "searching": false, ';
+    json += ' "select": true, ';
     json += ' "ordering": true, ';
     json += ' "pageLength": 10, ';
     json += ' "processing": true, ';
@@ -182,39 +184,21 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
 
-    // $('#userManagementDt tbody').on('click', 'tr', function () {
-    //   alert( $(this));
-    //   $(this).toggleClass('selected');
-    // });
-
 
     var table = $('#userManagementDt').DataTable();
 
     $('#userManagementDt tbody').on('click', 'tr', function () {
       console.log(table.row(this).data().exciseId);
+      (<HTMLInputElement>document.getElementById("exciseId")).value = table.row(this).data().exciseId;
 
-      // this.pickedup.css("background-color", "white");
-      // $("#fillname").val($(this).find("td").eq(1).html());
-      // $(this).css("background-color", "rgb(197,217,241)");
+       if (this.pickedup != null) {
+        this.pickedup.css("background-color", "white");
+       }
+      $(this).css("background-color", "rgb(197,217,241)");
+      this.pickedup = $(this);
     });
-
-
-    // $("#userManagementDt tbody tr").on("click", function (event) {
-
-    //   // get back to where it was before if it was selected :
-    //   .
-    //   this.pickedup.css("background-color", "white");
-
-
-    //   $("#fillname").val($(this).find("td").eq(1).html());
-    //   $(this).css("background-color", "rgb(197,217,241)");
-
-    //   this.pickedup = $(this);
-    // });
-
-
-
   }
+
 
 
 }
