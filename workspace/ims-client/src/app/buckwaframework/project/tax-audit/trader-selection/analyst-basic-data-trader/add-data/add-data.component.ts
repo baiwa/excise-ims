@@ -35,12 +35,11 @@ export class AddDataComponent implements OnInit {
     const url = `working/test/list/${this.id}/3`;
     if (this.ex.get(this.id) === null) {
       this.service
-        .get(url, console.log(`GET '/working/test/list/${this.id}/3'`), null)
+        .get(url, console.log(`GET '${url}'`), null)
         .then(
           res => {
             this.excise = res.json()[0];
             this.ex.add(this.excise);
-            console.log(this.excise);
           }
         );
     } else {

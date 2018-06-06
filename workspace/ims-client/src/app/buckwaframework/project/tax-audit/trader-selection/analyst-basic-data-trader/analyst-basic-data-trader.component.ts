@@ -9,7 +9,7 @@ declare var $: any;
 @Component({
   selector: 'app-analyst-basic-data-trader',
   templateUrl: './analyst-basic-data-trader.component.html',
-  styleUrls: []
+  styleUrls: ['./analyst-basic-data-trader.component.css']
 })
 export class AnalystBasicDataTraderComponent implements OnInit {
   listMenu: any[] = [];
@@ -115,12 +115,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
       { queryParams: { before: this.form1, last: this.form2, num_month: this.month } }
     );
   }
-
-  ngAfterViewInit() {
-
-  }
-
-
 
   initDatatable(): void {
     var d = new Date();

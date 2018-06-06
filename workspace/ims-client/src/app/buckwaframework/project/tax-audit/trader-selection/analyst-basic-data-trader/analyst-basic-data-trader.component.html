@@ -1,13 +1,10 @@
 <div class="ui grid">
     <div class="sixteen wide column">
         <h2 class="ui header">กระดาษทำการเปรียบเทียบการชำระภาษี {{month}} เดือนย้อนหลังของผู้ประกอบการ</h2>
-
         <div class="ui top attached header">
             <span>ข้อมูลการวิเคราห์รายได้ของผู้ประกอบการที่มีการชำระภาษีสรรพสามิต</span>
         </div>
-
         <div class="ui attached segment">
-
             <div class="ui form">
 
                 <div class="inline fields">
@@ -65,10 +62,9 @@
 
             </div>
             <div class="ui attached segment">
-
                 <div class="ui grid">
-                    <div class="three wide column">
-                        <div class="ui vertical menu">
+                    <div class="three wide column" style="padding-right: 0;">
+                        <div class="ui vertical menu" style="width: auto">
                             <div class="item">
                                 <div class="header">พิกัดสินค้า</div>
                                 <div class="menu">
@@ -76,11 +72,10 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <div class="thirteen wide column">
-                        <div style="overflow-x: scroll;">
-                            <table id="userManagementDt" class="ui small celled table  aligned" style="width: 5000px;">
+                    <div class="thirteen wide column" style="padding-top: 0">
+                        <div style="overflow-x: scroll;overflow-y: hidden;padding-bottom: 14px;">
+                            <table id="userManagementDt" class="ui small celled table aligned hover" style="width: 5000px;">
                                 <thead id="trDrinamic">
                                     <tr>
                                         <th rowspan="2" style="text-align: center !important">ลำดับ</th>
@@ -131,20 +126,14 @@
                                         <th style="text-align: center !important">ก.พ. 59</th>
                                         <th style="text-align: center !important">มี.ค. 59</th>
                                         <th style="text-align: center !important">เม.ย. 59 </th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                 </tbody>
-
                             </table>
                         </div>
-
                     </div>
                 </div>
-
-
                 <div class="ui center aligned grid">
                     <div class="sixteen wide column">
                         <button (click)="onSend();" class="ui mini primary button" routerLink="/create-working-paper-trader">
@@ -156,6 +145,8 @@
                             ล้างข้อมูล
                         </button>
                     </div>
-
                 </div>
             </div>
+        </div>
+    </div>
+</div>
