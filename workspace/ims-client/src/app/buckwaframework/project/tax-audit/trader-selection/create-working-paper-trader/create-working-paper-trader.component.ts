@@ -31,8 +31,6 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
   before: any;
   last: any;
   num_month: any;
-  // num1: any;
-  // num2: any;
   num1: number[];
   num2: number[];
   percent1: number[];
@@ -44,13 +42,14 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     this.before = this.route.snapshot.queryParams["before"];
     this.last = this.route.snapshot.queryParams["last"];
     this.num_month = this.route.snapshot.queryParams["num_month"];
-    console.log(this.num_month)
+    // console.log(this.num_month)
   }
 
   onSend = () => {
     this.messageBarService.successModal('สร้างกระดาษทำการเรียบร้อยแล้ว', 'สำเร็จ');
     this.router.navigate(
-      ['/working-paper-1-trader']
+      ['/working-paper-1-trader'],
+      { queryParams: { before: this.before, last: this.last} }
     );
   }
 

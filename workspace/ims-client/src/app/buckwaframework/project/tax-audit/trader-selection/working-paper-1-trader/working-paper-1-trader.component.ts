@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../../../../common/services/ajax.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 declare var jQuery: any;
 declare var $: any;
@@ -13,12 +14,18 @@ export class WorkingPaper1TraderComponent implements OnInit {
   userManagementDt: any;
   router: any;
   private listItem: any[];
+  before: any;
+  last: any;
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
+    // subscribe to router event
+    this.before = this.route.snapshot.queryParams["before"];
+    this.last = this.route.snapshot.queryParams["last"];
+
     this.listItem = ["น้ำมัน"
       , "เครื่องดื่ม"
       , "ยาสูบ"
@@ -34,7 +41,6 @@ export class WorkingPaper1TraderComponent implements OnInit {
       , "รวม"];
 
     this.initDatatable();
-
   }
 
   ngAfterViewInit() {
