@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.go.excise.ims.mockup.persistence.entity.ExciseRegistartionNumber;
-import th.go.excise.ims.mockup.utils.MysqlUtils;
+import th.go.excise.ims.mockup.utils.OracleUtils;
 
 @Repository
 public class ExciseRegisttionNumberDao {
@@ -18,15 +18,15 @@ public class ExciseRegisttionNumberDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private final String sqlTaExciseId = " select *  from baiwa_dev.ta_excise_registtion_number ";
+	private final String sqlTaExciseId = " select *  from EXCISEADM.ta_excise_registtion_number ";
 	
 	public List<ExciseRegistartionNumber> queryByExciseId(String register,int start,int length) {		
-		List<ExciseRegistartionNumber> list = jdbcTemplate.query(MysqlUtils.limitForDataTable(sqlTaExciseId, start, length), exciseRegisttionRowmapper);
+		List<ExciseRegistartionNumber> list = jdbcTemplate.query(OracleUtils.limitForDataTable(sqlTaExciseId, start, length), exciseRegisttionRowmapper);
 		
 		return list;
 	}
 	public long queryCountByExciseId() {		
-		long count = jdbcTemplate.queryForObject(MysqlUtils.countForDatatable(sqlTaExciseId), Long.class);
+		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sqlTaExciseId), Long.class);
 		
 		return count;
 	}

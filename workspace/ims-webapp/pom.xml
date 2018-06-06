@@ -3,21 +3,21 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 		http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>th.go.excise</groupId>
 	<artifactId>ims-webapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	
+
 	<name>ims-webapp</name>
 	<description>Backend side for ims</description>
-	
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.8.RELEASE</version>
 	</parent>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -34,9 +34,9 @@
 		<!-- Plugin Version -->
 		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
 	</properties>
-	
+
 	<dependencies>
-		
+
 		<!-- Apache Commons -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -53,8 +53,9 @@
 			<artifactId>commons-io</artifactId>
 			<version>${commons.io.version}</version>
 		</dependency>
-		
-		<!-- Starter for building web, including RESTful, applications using Spring MVC. Uses Tomcat as the default embedded container -->
+
+		<!-- Starter for building web, including RESTful, applications using Spring 
+			MVC. Uses Tomcat as the default embedded container -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -65,14 +66,15 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
-		<!-- Starter for using Tomcat as the embedded servlet container. Default servlet container starter used by spring-boot-starter-web -->
+
+		<!-- Starter for using Tomcat as the embedded servlet container. Default 
+			servlet container starter used by spring-boot-starter-web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- Starter for using JDBC with the Tomcat JDBC connection pool -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -84,7 +86,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- Starter for building MVC web applications using Thymeleaf views -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -96,13 +98,13 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- Starter for using Spring Security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		
+
 		<!-- Spring Security LDAP -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -114,58 +116,66 @@
 			<artifactId>unboundid-ldapsdk</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-		<!-- Starter for testing Spring Boot applications with libraries including JUnit, Hamcrest and Mockito -->
+
+		<!-- Starter for testing Spring Boot applications with libraries including 
+			JUnit, Hamcrest and Mockito -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- Spring Security Test -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- Spring Boot Developer Tools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
+
 		<!-- Database -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>mysql</groupId> -->
+		<!-- <artifactId>mysql-connector-java</artifactId> -->
+		<!-- </dependency> -->
+
+
+		<!-- https://mvnrepository.com/artifact/com.oracle/ojdbc6 -->
+	
+
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
+
 		<!-- DataSource -->
 		<dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-        </dependency>
-		
-		<!-- Gson: A Java serialization/deserialization library to convert Java Objects into JSON and back -->
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+		</dependency>
+
+		<!-- Gson: A Java serialization/deserialization library to convert Java 
+			Objects into JSON and back -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
-        
+
 		<!-- Database Logging -->
 		<dependency>
 			<groupId>p6spy</groupId>
 			<artifactId>p6spy</artifactId>
 			<version>${p6spy.version}</version>
 		</dependency>
-		
+
 		<!-- Springfox Swagger2: JSON API documentation for spring based applications -->
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -177,25 +187,27 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger.version}</version>
 		</dependency>
-		
+
 	</dependencies>
-	
+
 	<build>
-		
+
 		<!-- This is the name of the bundled project when it is finally built. -->
 		<finalName>${project.name}</finalName>
-		
-		<!-- List of resource elements that each describe what and where to include files associated with this project. -->
+
+		<!-- List of resource elements that each describe what and where to include 
+			files associated with this project. -->
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
 		</resources>
-		
+
 		<plugins>
-			
-			<!-- Allowing to package executable jar or war archives and run an application "in-place" -->
+
+			<!-- Allowing to package executable jar or war archives and run an application 
+				"in-place" -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -212,8 +224,9 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			<!-- The Resources Plugin handles the copying of project resources to the output directory -->
+
+			<!-- The Resources Plugin handles the copying of project resources to 
+				the output directory -->
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
@@ -234,10 +247,10 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 		</plugins>
 	</build>
-	
+
 	<profiles>
 		<!-- DEV Environment -->
 		<profile>
@@ -268,5 +281,5 @@
 			</properties>
 		</profile>
 	</profiles>
-	
+
 </project>
