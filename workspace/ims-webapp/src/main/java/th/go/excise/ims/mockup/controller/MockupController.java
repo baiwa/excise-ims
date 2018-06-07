@@ -27,10 +27,9 @@ public class MockupController {
 	
 	@PostMapping("/list")
 	@ResponseBody
-	public ResponseDataTable<MockupVo> listdata(@ModelAttribute MockupVo vo, DataTableRequest input){
+	public ResponseDataTable<MockupVo> listdata(@ModelAttribute MockupVo vo, DataTableRequest input) {
 		Date date = new Date();
 		date.setTime(input.getStartBackDate());
-		System.out.println(input.getMonth());
 		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo, date, input.getMonth());
 		return listdata;
 	}

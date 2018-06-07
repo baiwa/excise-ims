@@ -99,7 +99,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     this.form2 = sum_month2 + " " + parseInt(year_before);
     var dataInDataTalbe = '';
     this.initDatatable();
-
+    $("#exciseBtn").prop('disabled', true);
   }
 
   onSend = () => {
@@ -169,14 +169,16 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
 
     var table = $('#userManagementDt').DataTable();
-    var pickedup;
+    
+    // on init table
+    $('#userManagementDt tbody tr').css({"background-color": "white", "cursor": "pointer"});
+
+    // on click row
     $('#userManagementDt tbody').on('click', 'tr', function () {
+      $("#exciseBtn").prop('disabled', false);
+      $('#userManagementDt tbody tr').css({"background-color": "white", "cursor": "pointer"});
       (<HTMLInputElement>document.getElementById("exciseId")).value = table.row(this).data().exciseId;
-      if (this.pickedup != null) {
-        this.pickedup.css("background-color", "white");
-      }
       $(this).css("background-color", "rgb(197,217,241)");
-      pickedup = $(this);
     });
   }
 
