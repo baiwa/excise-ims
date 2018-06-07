@@ -9,8 +9,8 @@
 
 .main.container {
     min-height: 100%;
-    padding-top: 8em;
-    padding-bottom: calc(60px + 2.5em);
+    padding-top: 6em;
+    padding-bottom: 60px;
     box-sizing: border-box;
 }
 
