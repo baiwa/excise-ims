@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ExciseService } from '../../../../common/services/excise.service';
 
 declare var jQuery: any;
 declare var $: any;
@@ -21,18 +22,22 @@ export class WorkingPaper1TraderComponent implements OnInit {
   percent1: any;
   percent2: any;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private ex: ExciseService
+  ) {
 
   }
 
   ngOnInit() {
-    // subscribe to router event
-    this.before = this.route.snapshot.queryParams["before"];
-    this.last = this.route.snapshot.queryParams["last"];
-    this.num1 = this.route.snapshot.queryParams["num1"];
-    this.num2 = this.route.snapshot.queryParams["num2"];
-    this.percent1 = this.route.snapshot.queryParams["percent1"];
-    this.percent2 = this.route.snapshot.queryParams["percent2"];
+    //call service
+    var getNum = this.ex.getNumber();
+    this.before = getNum.before;
+    this.last = getNum.last;
+    this.num1 = getNum.num1;
+    this.num2 = getNum.num2;
+    this.percent1 = getNum.percent1;
+    this.percent2 = getNum.percent2;
 
     //check values in array == 0
     var index = null;

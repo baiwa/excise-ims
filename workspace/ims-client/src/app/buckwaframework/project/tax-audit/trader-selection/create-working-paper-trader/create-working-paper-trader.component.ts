@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageBarService } from '../../../../common/services/message-bar.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ExciseService } from '../../../../common/services/excise.service';
+
 declare var jQuery: any;
 declare var $: any;
 @Component({
@@ -12,9 +14,15 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
 
   private count: number = 1;
   numbers: number[];
-  constructor(private messageBarService: MessageBarService, private route: ActivatedRoute, private router: Router) {
-    this.numbers = [1];
 
+  constructor(
+    private messageBarService: MessageBarService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private ex: ExciseService
+  ) {
+
+    this.numbers = [1];
     this.num1 = [];
     this.num2 = [];
     this.percent1 = [];
@@ -43,23 +51,10 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
   }
 
   onSend = () => {
-    console.log(this.num1);
-    console.log(this.num2);
-    console.log(this.percent1);
-    console.log(this.percent2);
+    //call service
+    this.ex.setNumber(this.before, this.last,this.num1, this.num2, this.percent1, this.percent2);
     this.messageBarService.successModal('สร้างกระดาษทำการเรียบร้อยแล้ว', 'สำเร็จ');
-    this.router.navigate(
-      ['/working-paper-1-trader'],
-      { queryParams: 
-        { 
-          before: this.before, 
-          last: this.last,
-          num1 : this.num1,
-          num2 : this.num2,
-          percent1 : this.percent1,
-          percent2 : this.percent2,
-        } 
-      });
+    this.router.navigate(['/working-paper-1-trader']);
   }
 
   onAddField = () => {
