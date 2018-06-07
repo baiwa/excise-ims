@@ -20,7 +20,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   form1: any;
   form2: any;
   private listItem: any[];
-  pickedup: any;
   constructor(private route: ActivatedRoute, private router: Router) {
 
   }
@@ -170,14 +169,14 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
 
     var table = $('#userManagementDt').DataTable();
-
+    var pickedup;
     $('#userManagementDt tbody').on('click', 'tr', function () {
       (<HTMLInputElement>document.getElementById("exciseId")).value = table.row(this).data().exciseId;
       if (this.pickedup != null) {
         this.pickedup.css("background-color", "white");
       }
       $(this).css("background-color", "rgb(197,217,241)");
-      this.pickedup = $(this);
+      pickedup = $(this);
     });
   }
 
