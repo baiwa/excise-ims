@@ -7,51 +7,77 @@
     </div>
 
     <div class="ui attached segment">
-
       <div class="ui form">
-
         <div class="inline fields">
-          <div class="ten wide field">
-          </div>
-          <div class="six wide field">
-            <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
-            <input value="591113-01-00001" readonly="" class="custom-readonly">
-          </div>
+            <div class="ten wide field">
+            </div>
+            <div class="six wide field">
+                <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
+                <input value="591113-01-00001" readonly="" class="custom-readonly">
+            </div>
         </div>
 
         <div class="inline fields">
-          <div class="thirteen wide field">
-            <label class="custom-label-w-35">ระยะเวลาที่ตรวจสอบ</label>
-            <div class="four ui action input">
-              <input type="text" placeholder="MM/YYYY" value="01/2559" readonly="" class="custom-readonly">
-              <button class="ui icon button">
-                <i class="add to calendar icon"></i>
-              </button>
+            <div class="thirteen wide field">
+                <label class="custom-label-w-35">ระยะเวลาที่ตรวจสอบ</label>
+                <div class="four ui action input">
+                    <input type="text" placeholder="MM/YYYY" value="{{before}}" readonly="" class="custom-readonly">
+                    <button class="ui icon button">
+        <i class="add to calendar icon"></i>
+      </button>
+                </div>
+                <div class="one">
+                    <label>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;</label>
+                </div>
+                <div class="four ui action input">
+                    <input type="text" placeholder="MM/YYYY" value="{{last}}" readonly="" class="custom-readonly">
+                    <button class="ui icon button">
+        <i class="add to calendar icon"></i>
+      </button>
+                </div>
             </div>
-            <div class="one">
-              <label>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;</label>
+            <div class="eight wide field">&nbsp;&nbsp;&nbsp;
+                <label class="custom-label-w-20">เลขที่กระดาษทำการ</label>
+                <input value="591113-02-00001" readonly="" class="custom-readonly">
             </div>
-            <div class="four ui action input">
-              <input type="text" placeholder="MM/YYYY" value="12/2560" readonly="" class="custom-readonly">
-              <button class="ui icon button">
-                <i class="add to calendar icon"></i>
-              </button>
-            </div>
-          </div>
-          <div class="eight wide field ">&nbsp;&nbsp;&nbsp;
-            <label class="custom-label-w-20">เลขที่กระดาษทำการ</label>
-            <input value="591113-02-00001" readonly="" class="custom-readonly">
-          </div>
         </div>
 
-        <div class="inline fields">
-          <div class="five wide field">
-            <label style="width: 180em;">กำหนดช่วงร้อยละที่ต้องการแยกกลุ่มข้อมูล</label>
-            <input value="5" readonly="" class="custom-readonly">
-          </div>
+        <div class="inline fields" *ngFor="let num of _num1; let i = index" [attr.data-index]="i">
+            <div class="one wide field">
+                &nbsp;
+            </div>
+            <div class="three wide field">
+                <label>จำนวนเดือนที่ชำระภาษี</label>
+            </div>
+            <div class="one wide field">
+                <input type="number" name="_num1{{i}}" [(ngModel)]="_num1[i]" readonly="" class="custom-readonly">
+            </div>
+            <div class="one wide field">
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ถึง</label>
+            </div>
+            <div class="one wide field">
+                <input type="number" name="_num2{{i}}" [(ngModel)]="_num2[i]" readonly="" class="custom-readonly">
+            </div>
+            <div class="one wide field">
+                &nbsp;
+            </div>
+            <div class="four wide field">
+                <label>ช่วงร้อยละที่ต้องการแยกกลุ่มข้อมูล</label>
+            </div>
+            <div class="one wide field">
+                <input type="number" name="_percent1{{i}}" [(ngModel)]="_percent1[i]" readonly="" class="custom-readonly">
+            </div>
+            <div class="one wide field">
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ถึง</label>
+            </div>
+            <div class="one wide field">
+                <input type="number" name="_percent2{{i}}" [(ngModel)]="_percent2[i]" readonly="" class="custom-readonly">
+            </div>
+            <div class="one wide field">
+                &nbsp;
+            </div>
         </div>
       </div>
-
     </div>
 
     <div class="ui segment">

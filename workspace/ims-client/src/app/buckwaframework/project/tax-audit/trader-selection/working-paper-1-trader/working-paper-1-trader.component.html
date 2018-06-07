@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <div class="inline fields" *ngFor="let num of num1; let i = index" [attr.data-index]="i">
+                <div class="inline fields" *ngFor="let num of _num1; let i = index" [attr.data-index]="i">
                     <div class="one wide field">
                         &nbsp;
                     </div>
@@ -50,13 +50,13 @@
                         <label>จำนวนเดือนที่ชำระภาษี</label>
                     </div>
                     <div class="one wide field">
-                        <input type="number" name="num1{{i}}" [(ngModel)]="num1[i]" readonly="" class="custom-readonly">
+                        <input type="number" name="_num1{{i}}" [(ngModel)]="_num1[i]" readonly="" class="custom-readonly">
                     </div>
                     <div class="one wide field">
                         <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ถึง</label>
                     </div>
                     <div class="one wide field">
-                        <input type="number" name="num2{{i}}" [(ngModel)]="num2[i]" readonly="" class="custom-readonly">
+                        <input type="number" name="_num2{{i}}" [(ngModel)]="_num2[i]" readonly="" class="custom-readonly">
                     </div>
                     <div class="one wide field">
                         &nbsp;
@@ -65,13 +65,13 @@
                         <label>ช่วงร้อยละที่ต้องการแยกกลุ่มข้อมูล</label>
                     </div>
                     <div class="one wide field">
-                        <input type="number" name="percent1{{i}}" [(ngModel)]="percent1[i]" readonly="" class="custom-readonly">
+                        <input type="number" name="_percent1{{i}}" [(ngModel)]="_percent1[i]" readonly="" class="custom-readonly">
                     </div>
                     <div class="one wide field">
                         <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ถึง</label>
                     </div>
                     <div class="one wide field">
-                        <input type="number" name="percent2{{i}}" [(ngModel)]="percent2[i]" readonly="" class="custom-readonly">
+                        <input type="number" name="_percent2{{i}}" [(ngModel)]="_percent2[i]" readonly="" class="custom-readonly">
                     </div>
                     <div class="one wide field">
                         &nbsp;

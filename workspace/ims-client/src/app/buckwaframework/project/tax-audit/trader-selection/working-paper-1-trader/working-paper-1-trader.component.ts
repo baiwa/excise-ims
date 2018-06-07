@@ -19,41 +19,44 @@ export class WorkingPaper1TraderComponent implements OnInit {
   last: any;
   num1: any;
   num2: any;
+  _num1: any;
+  _num2: any;
   percent1: any;
   percent2: any;
+  _percent1: any;
+  _percent2: any;
 
   constructor(
     private route: ActivatedRoute,
     private ex: ExciseService
   ) {
-
+    this._num1 = new Array();
+    this._num2 = new Array();
+    this._percent1 = new Array();
+    this._percent2 = new Array();
   }
 
   ngOnInit() {
     //call service
-    var getNum = this.ex.getNumber();
-    this.before = getNum.before;
-    this.last = getNum.last;
-    this.num1 = getNum.num1;
-    this.num2 = getNum.num2;
-    this.percent1 = getNum.percent1;
-    this.percent2 = getNum.percent2;
+    var { before, last, num1, num2, percent1, percent2 } = this.ex.getNumber();
+    this.before = before;
+    this.last = last;
+    this.num1 = num1;
+    this.num2 = num2;
+    this.percent1 = percent1;
+    this.percent2 = percent2;
 
     //check values in array == 0
-    var index = null;
     for (var i = 0; i < this.num1.length; i++) {
-      if (this.num1[i] == 0 && this.num2[i] == 0) {
-        index = i;
+      if (this.num1[i] !== 0 && this.num2[i] !== 0) {
+        this._num1.push(this.num1[i]);
+        this._num2.push(this.num2[i]);
+        this._percent1.push(this.percent1[i]);
+        this._percent2.push(this.percent2[i]);
         // console.log(index);
-        break;
+        // break;
       }
     }
-
-    //splice and show values
-    this.num1.splice(index, this.num1.length - index);
-    this.num2.splice(index, this.num1.length - index);
-    this.percent1.splice(index, this.num1.length - index);
-    this.percent2.splice(index, this.num1.length - index);
 
     this.listItem = ["น้ำมัน"
       , "เครื่องดื่ม"
