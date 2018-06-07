@@ -18,7 +18,7 @@ public class ExciseRegisttionNumberDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private final String sqlTaExciseId = " select *  from EXCISEADM.ta_excise_registtion_number ";
+	private final String sqlTaExciseId = " select *  from EXCISEADM.ta_excise_registtion_number order by TA_EXCISE_REGISTTION_NUMBER_ID ";
 	
 	public List<ExciseRegistartionNumber> queryByExciseId(String register,int start,int length) {		
 		List<ExciseRegistartionNumber> list = jdbcTemplate.query(OracleUtils.limitForDataTable(sqlTaExciseId, start, length), exciseRegisttionRowmapper);
