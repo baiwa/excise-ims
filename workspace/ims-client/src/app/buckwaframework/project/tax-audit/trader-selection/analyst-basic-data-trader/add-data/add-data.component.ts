@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Location} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {AjaxService} from '../../../../../common/services/ajax.service';
-import { Excise, ExciseTax } from '../../../../../common/models/index';
+import { Excise, ExciseTax, File } from '../../../../../common/models/index';
 import { ExciseService, MessageBarService } from '../../../../../common/services/index';
 
 @Component({
@@ -24,10 +24,13 @@ export class AddDataComponent implements OnInit {
     private messageBarService: MessageBarService
   ) {
     this.id = this.route.snapshot.queryParams['id'];
-    this.excise = new Excise();
+    this.excise = new 
+    Excise();
     this.excise.exciseTax = new Array<ExciseTax>();
+    this.excise.file = new Array<File>();
     for(let i=0; i<3; i++) {
       this.excise.exciseTax.push(new ExciseTax());
+      this.excise.file.push(new File());
     }
   }
 
@@ -38,7 +41,39 @@ export class AddDataComponent implements OnInit {
         .get(url, console.log(`GET '${url}'`), null)
         .then(
           res => {
-            this.excise = res.json()[0];
+            let ex = res.json()[0];
+            this.excise = {
+              change: ex.change,
+              coordinates: ex.coordinates,
+              createdBy: ex.createdBy,
+              createdDatetime: ex.createdDatetime,
+              exciseArea: ex.exciseArea,
+              exciseFacAddress: ex.exciseFacAddress,
+              exciseFacName: ex.exciseFacName,
+              exciseId: ex.exciseId,
+              exciseIdenNumber: ex.exciseIdenNumber,
+              exciseOperatorName: ex.exciseOperatorName,
+              exciseRegisCapital: ex.exciseRegisCapital,
+              exciseRegisttionNumberId: ex.exciseRegisttionNumberId,
+              exciseRemark: ex.exciseRemark,
+              exciseTax: ex.exciseTax,
+              file: this.excise.file,
+              industrialAddress: ex.industrialAddress,
+              no1: ex.no1,
+              no2: ex.no2,
+              no3: ex.no3,
+              payingtax: ex.payingtax,
+              paymentMonth: ex.paymentMonth,
+              registeredCapital: ex.registeredCapital,
+              sector: ex.sector,
+              status: ex.status,
+              taexciseProductType: ex.taexciseProductType,
+              taexciseSectorArea: ex.taexciseSectorArea,
+              taxpayment1: ex.taxpayment1,
+              taxpayment2: ex.taxpayment2,
+              updateBy: ex.updateBy,
+              updateDatetime: ex.updateDatetime
+            };
             this.ex.add(this.excise);
           }
         );
@@ -60,11 +95,12 @@ export class AddDataComponent implements OnInit {
     this._location.back();
   }
 
-  readUrl(event:any) {
+  readUrl(event:any, index: number) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
       reader.onload = (event:any) => {
-        this.url = event.target.result;
+        this.excise.file[index].name = new Date().getTime().toString();
+        this.excise.file[index].value = event.target.result;
       }
       reader.readAsDataURL(event.target.files[0]);
     }

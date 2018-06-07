@@ -55,7 +55,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     var mm = parseInt(this.month);
     var yy = parseInt(year_before);
     var trHeaderColumn = "";
-    // console.log('mm ',m);
 
     var items: string[] = [];
     for (var i = 1; i <= mm; i++) {
@@ -70,7 +69,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     for (var i = items.length - 1; i >= 0; i--) {
       trHeaderColumn += items[i];
     }
-    console.log(trHeaderColumn);
     document.getElementById('trDrinamic').innerHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> '
       + '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> '
       + '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> '
@@ -94,7 +92,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
       + '<th style="text-align: center !important">' + (currYear - 2) + '</th>'
       + '<th style="text-align: center !important">' + (currYear - 1) + '</th>'
       + trHeaderColumn + '</tr>';
-    console.log(trHeaderColumn);
 
     //show values
     var sum_month = TextDateTH.months[m - 1];
@@ -103,9 +100,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     this.form2 = sum_month2 + " " + parseInt(year_before);
     var dataInDataTalbe = '';
     this.initDatatable();
-
-
-
 
   }
 
@@ -169,30 +163,22 @@ export class AnalystBasicDataTraderComponent implements OnInit {
       } else {
         json += ' { "data": "exciseLatestTaxReceiveAmount' + (i + 1) + '" ,"className":"center"} ';
       }
-
-
     }
 
     json += '] } ';
-    console.log(json);
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
-
 
     var table = $('#userManagementDt').DataTable();
 
     $('#userManagementDt tbody').on('click', 'tr', function () {
-      console.log(table.row(this).data().exciseId);
       (<HTMLInputElement>document.getElementById("exciseId")).value = table.row(this).data().exciseId;
-
-       if (this.pickedup != null) {
+      if (this.pickedup != null) {
         this.pickedup.css("background-color", "white");
-       }
+      }
       $(this).css("background-color", "rgb(197,217,241)");
       this.pickedup = $(this);
     });
   }
-
-
 
 }

@@ -1,4 +1,5 @@
 import { ExciseTax } from './exciseTax';
+import { File } from './file';
 export class Excise {
     change: any
     coordinates: any
@@ -14,6 +15,7 @@ export class Excise {
     exciseRegisttionNumberId: number
     exciseRemark: String
     exciseTax: ExciseTax[]
+    file: File[]
     industrialAddress: String
     no1: any
     no2: any

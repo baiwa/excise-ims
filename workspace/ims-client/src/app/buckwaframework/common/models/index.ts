@@ -7,6 +7,7 @@ import { ParameterGroup } from './parameterGroup';
 import { ParameterInfo } from './parameterInfo';
 import { User } from './user';
 import { UserManagement } from './userManagement';
+import { File } from './file';
 
 export {
     AlertMessage,
@@ -17,5 +18,6 @@ export {
     ParameterGroup,
     ParameterInfo,
     User,
-    UserManagement
+    UserManagement,
+    File
 };

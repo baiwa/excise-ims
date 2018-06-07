@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import th.go.excise.ims.mockup.domain.Excise;
 import th.go.excise.ims.mockup.persistence.entity.ExciseEntity;
 import th.go.excise.ims.mockup.persistence.entity.ExciseTax;
 import th.go.excise.ims.mockup.utils.MysqlUtils;
+import th.go.excise.ims.mockup.utils.OracleUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,10 +28,10 @@ public class ExciseDao {
     private JdbcTemplate jdbcTemplate;
     private final String sql = " select *  from ta_excise_registtion_number as ta_n left join ta_excise_tax_receive as ta_r on ta_n.ta_excise_id = ta_r.ta_excise_id ";
 
-    private final String sqlById = " select *  from ta_excise_registtion_number as ta_n left join ta_excise_tax_receive as ta_r on ta_n.ta_excise_id = ta_r.ta_excise_id where ta_n.ta_excise_id = ? order by ta_r.ta_excise_tax_receive_id desc ";
+    private final String sqlById = " select *  from ta_excise_registtion_number ta_n left join ta_excise_tax_receive ta_r on ta_n.ta_excise_id = ta_r.ta_excise_id where ta_n.ta_excise_id = ? order by ta_r.ta_excise_tax_receive_id desc ";
 
     public List<ExciseEntity> queryByExciseId(String id, int limit) {
-        List<ExciseEntity> li = jdbcTemplate.query(MysqlUtils.limitSql(sqlById, limit), new Object[] {id}, exciseRowmapper);
+        List<ExciseEntity> li = jdbcTemplate.query(OracleUtils.limitForDataTable(sqlById, 0, limit), new Object[] {id}, exciseRowmapper);
         return li;
     }
 

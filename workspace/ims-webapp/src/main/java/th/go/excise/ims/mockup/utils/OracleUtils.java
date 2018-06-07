@@ -15,7 +15,6 @@ public class OracleUtils {
 		return sqlBuilger.toString();
 	}
 	
-	
 	public static String limitForDataTable(String sql , long start , long length ) {
 			int min = (int)start + 1;
 			int max = (int) (start +  (int)length);

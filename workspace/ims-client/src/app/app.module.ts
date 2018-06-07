@@ -10,14 +10,17 @@ import { TranslatePipe } from './buckwaframework/common/pipes/translate.pipe';
 import { AppRoutingModule } from './buckwaframework/common/configs/app-routing.module';
 
 // services
-import { AuthGuard } from './buckwaframework/common/services/auth-guard.service';
-import { AuthService } from './buckwaframework/common/services/auth.service';
-import { MessageBarService } from './buckwaframework/common/services/message-bar.service';
-import { MessageService } from './buckwaframework/common/services/message.service';
-import { TranslateService } from './buckwaframework/common/services/translate.service';
-import { ParameterGroupService } from './buckwaframework/common/services/parameterGroup.service';
-import { ParameterInfoService } from './buckwaframework/common/services/parameterInfo.service';
-import { AjaxService } from './buckwaframework/common/services/ajax.service';
+import {
+    AuthGuard,
+    AuthService,
+    MessageBarService,
+    MessageService,
+    TranslateService,
+    ParameterGroupService,
+    ParameterInfoService,
+    AjaxService,
+    ExciseService
+} from './buckwaframework/common/services/index';
 
 // components
 import { AppComponent } from './app.component';
@@ -196,7 +199,6 @@ import { Ts0119Component } from './buckwaframework/project/pages/reports/tax-aud
 import { Ts01142Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-14-2/ts01-14-2.component';
 import { Ts0117Component } from './buckwaframework/project/pages/reports/tax-audit-reporting/ts01-17/ts01-17.component';
 import { AddDataComponent } from './buckwaframework/project/tax-audit/trader-selection/analyst-basic-data-trader/add-data/add-data.component';
-import { ExciseService } from './buckwaframework/common/services/excise.service';
 
 
 @NgModule({
