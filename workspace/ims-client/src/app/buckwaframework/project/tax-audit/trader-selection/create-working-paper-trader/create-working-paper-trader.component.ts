@@ -15,13 +15,11 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
   constructor(private messageBarService: MessageBarService, private route: ActivatedRoute, private router: Router) {
     this.numbers = [1];
 
-    this.data = [];
     this.num1 = [];
     this.num2 = [];
     this.percent1 = [];
     this.percent2 = [];
     for (let i = 0; i < 10; i++) {
-      this.data.push(`A${i}`);
       this.num1.push(0);
       this.num2.push(0);
       this.percent1.push(0);
@@ -35,7 +33,6 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
   num2: number[];
   percent1: number[];
   percent2: number[];
-  data: string[];
 
   ngOnInit() {
     // subscribe to router event
@@ -46,11 +43,23 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
   }
 
   onSend = () => {
+    console.log(this.num1);
+    console.log(this.num2);
+    console.log(this.percent1);
+    console.log(this.percent2);
     this.messageBarService.successModal('สร้างกระดาษทำการเรียบร้อยแล้ว', 'สำเร็จ');
     this.router.navigate(
       ['/working-paper-1-trader'],
-      { queryParams: { before: this.before, last: this.last} }
-    );
+      { queryParams: 
+        { 
+          before: this.before, 
+          last: this.last,
+          num1 : this.num1,
+          num2 : this.num2,
+          percent1 : this.percent1,
+          percent2 : this.percent2,
+        } 
+      });
   }
 
   onAddField = () => {
