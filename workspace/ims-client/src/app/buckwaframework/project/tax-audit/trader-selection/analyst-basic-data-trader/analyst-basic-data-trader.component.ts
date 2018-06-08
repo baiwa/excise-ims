@@ -122,9 +122,9 @@ export class AnalystBasicDataTraderComponent implements OnInit {
 
 
   initDatatable(): void {
-    var d = new Date(); 
-    d.setFullYear(parseInt(this.from[1]));
-    d.setMonth(parseInt(this.from[0]));
+    var d = new Date();
+    //d.setFullYear(parseInt(this.from[1]));
+    //d.setMonth(parseInt(this.from[0]));
     const URL = AjaxService.CONTEXT_PATH + "/working/test/list";
     var json = "";
     json += ' { "lengthChange": false, ';
@@ -141,7 +141,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
-    json += ' "startBackDate": ' + d.getTime() + ', ';
+    json += ' "startBackDate": "' +this.from + '", ';
     json += ' "month": ' + this.month + ' ';
     json += ' } ';
     json += ' }, ';
