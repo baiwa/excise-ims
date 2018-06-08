@@ -17,19 +17,25 @@ import th.go.excise.ims.mockup.domain.DataTableRequest;
 import th.go.excise.ims.mockup.domain.MockupVo;
 import th.go.excise.ims.mockup.persistence.entity.ExciseEntity;
 import th.go.excise.ims.mockup.service.MockupService;
+import th.go.excise.ims.mockup.service.ta.PlanWorksheetHeaderService;
 
 @Controller
 @RequestMapping("working/test")
 public class MockupController {
 
 	@Autowired
-	private MockupService mockupService;	
+	private MockupService mockupService;
+	
+	@Autowired
+	private PlanWorksheetHeaderService planWorksheetHeaderService;	
 	
 	@PostMapping("/list")
 	@ResponseBody
 	public ResponseDataTable<MockupVo> listdata(@ModelAttribute MockupVo vo, DataTableRequest input) {
+		String[] startDate = input.getStartBackDate().split("/");
 		Date date = new Date();
-		date.setTime(input.getStartBackDate());
+		date.setMonth(Integer.parseInt(startDate[0]));
+		date.setYear(Integer.parseInt(startDate[1]));
 		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo, date, input.getMonth());
 		return listdata;
 	}
@@ -47,6 +53,19 @@ public class MockupController {
 								   @PathVariable(value = "limit", required = false) int limit) {
 		List<ExciseEntity> li = mockupService.findById(id, limit);
 		return li;
+	}
+	
+	@PostMapping("/createWorkSheet")
+	@ResponseBody
+	public void createWorkSheet(@ModelAttribute MockupVo vo, DataTableRequest input){
+		Date date = new Date();
+		String[] startDate = input.getStartBackDate().split("/");
+		date.setMonth(Integer.parseInt(startDate[0]));
+		date.setYear(Integer.parseInt(startDate[1]));
+		System.out.println(input.getMonth());
+		int month = input.getMonth() != null ? input.getMonth() : 0;
+		planWorksheetHeaderService.insertPlanWorksheetHeaderService(vo,date, month);
+		
 	}
 	
 }

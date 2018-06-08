@@ -55,5 +55,11 @@ public class ExciseRegisttionNumberDao {
 		}
 
 	};
+	
+	public List<ExciseRegistartionNumber> queryByExciseRegistionNumber() {		
+		List<ExciseRegistartionNumber> list = jdbcTemplate.query(sqlTaExciseId, exciseRegisttionRowmapper);
+		
+		return list;
+	}
 
 }

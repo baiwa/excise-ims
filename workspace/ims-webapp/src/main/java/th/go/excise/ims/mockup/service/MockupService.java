@@ -37,14 +37,13 @@ public class MockupService {
 	public List<ExciseEntity> findById(String id, int limit) {
 		List<ExciseEntity> li = exciseDao.queryByExciseId(id, limit);
 		Collection<ExciseEntity> list = li;
-		List<ExciseEntity> listed = list.stream()
-				.filter(distinctByKey(p -> p.getExciseId()))
+		List<ExciseEntity> listed = list.stream().filter(distinctByKey(p -> p.getExciseId()))
 				.collect(Collectors.toList());
 		for (ExciseEntity l : li) {
-			for (ExciseEntity  led : listed) {
+			for (ExciseEntity led : listed) {
 				if (led.getExciseId().equals(l.getExciseId())) {
 					ArrayList<ExciseTax> result = led.getExciseTax();
-					if(l.getExciseTax().get(0).getExciseTaxReceiveId().equals(result.get(0).getExciseTaxReceiveId())) {
+					if (l.getExciseTax().get(0).getExciseTaxReceiveId().equals(result.get(0).getExciseTaxReceiveId())) {
 						continue;
 					}
 					result.add(l.getExciseTax().get(0));
@@ -85,8 +84,8 @@ public class MockupService {
 
 			for (int i = 0; i < monthNameList.size(); i++) {
 				for (ExciseTaxReceive taxReceive : taxReciveList) {
-				vo.setExciseFacAddress(String.valueOf(count));
-				vo.setExciseRegisCapital(count2);
+					vo.setExciseFacAddress(String.valueOf(count));
+					vo.setExciseRegisCapital(count2);
 					String monthName = monthNameList.get(i);
 					if (monthName.equals(taxReceive.getExciseTaxReceiveMonth())) {
 						switch (i) {
@@ -182,15 +181,15 @@ public class MockupService {
 
 					}
 					vo.setExciseFacAddress(String.valueOf(count));
-					sumFirstMonth += Double.parseDouble(StringUtils.isNotBlank(taxReceive.getExciseTaxReceiveAmount())? StringUtils.replace(taxReceive.getExciseTaxReceiveAmount(), ",", ""): "0");
-					
-					
-					
+					sumFirstMonth += Double.parseDouble(StringUtils.isNotBlank(taxReceive.getExciseTaxReceiveAmount())
+							? StringUtils.replace(taxReceive.getExciseTaxReceiveAmount(), ",", "")
+							: "0");
+
 					double total24Month = (sumFirstMonth + sumLastMonth);
 					double changOfPercent1 = ((sumFirstMonth / total24Month) * 100.00);
 					double changOfPercent2 = ((sumLastMonth / total24Month) * 100.00);
 					double totalResult = (changOfPercent1 - changOfPercent2);
-					
+
 					vo.setExciseRegisCapital(count2);
 					vo.setPayingtax(String.valueOf(count2 + count));
 					vo.setChange(String.format("%,.2f", totalResult));
@@ -215,6 +214,11 @@ public class MockupService {
 	public static <T> Predicate<T> distinctByKey(Function<? super T, Object> key) {
 		Map<Object, Boolean> map = new ConcurrentHashMap<>();
 		return t -> map.putIfAbsent(key.apply(t), Boolean.TRUE) == null;
+	}
+
+	public void createWorkSheetService( MockupVo mockupVo,Date startBackDate, int month) {
+		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseId("",mockupVo.getStart(), mockupVo.getLength());
+		
 	}
 
 }
