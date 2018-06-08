@@ -6,9 +6,19 @@ public class DataTableRequest {
 	private Integer length;
 	private Integer month;
 	private Long draw;
-	private String startBackDate;
-	
-	
+	private long startBackDate;
+	public Integer getMonth() {
+		return month;
+	}
+	public void setMonth(Integer month) {
+		this.month = month;
+	}
+	public long getStartBackDate() {
+		return startBackDate;
+	}
+	public void setStartBackDate(long startBackDate) {
+		this.startBackDate = startBackDate;
+	}
 	public Integer getStart() {
 		return start;
 	}
@@ -21,25 +31,11 @@ public class DataTableRequest {
 	public void setLength(Integer length) {
 		this.length = length;
 	}
-	public Integer getMonth() {
-		return month;
-	}
-	public void setMonth(Integer month) {
-		this.month = month;
-	}
 	public Long getDraw() {
 		return draw;
 	}
 	public void setDraw(Long draw) {
 		this.draw = draw;
 	}
-	public String getStartBackDate() {
-		return startBackDate;
-	}
-	public void setStartBackDate(String startBackDate) {
-		this.startBackDate = startBackDate;
-	}
-	
-	
 	
 }

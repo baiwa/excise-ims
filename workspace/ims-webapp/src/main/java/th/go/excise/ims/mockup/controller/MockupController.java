@@ -32,11 +32,8 @@ public class MockupController {
 	@PostMapping("/list")
 	@ResponseBody
 	public ResponseDataTable<MockupVo> listdata(@ModelAttribute MockupVo vo, DataTableRequest input) {
-		String[] startDate = input.getStartBackDate().split("/");
 		Date date = new Date();
-		date.setMonth(Integer.parseInt(startDate[0]));
-		date.setYear(Integer.parseInt(startDate[1]));
-		System.out.println(date);
+		date.setTime(input.getStartBackDate());
 		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo, date, input.getMonth());
 		return listdata;
 	}
@@ -60,9 +57,7 @@ public class MockupController {
 	@ResponseBody
 	public void createWorkSheet(@ModelAttribute MockupVo vo, DataTableRequest input){
 		Date date = new Date();
-		String[] startDate = input.getStartBackDate().split("/");
-		date.setMonth(Integer.parseInt(startDate[0]));
-		date.setYear(Integer.parseInt(startDate[1]));
+		date.setTime(input.getStartBackDate());
 		System.out.println(input.getMonth());
 		int month = input.getMonth() != null ? input.getMonth() : 0;
 		planWorksheetHeaderService.insertPlanWorksheetHeaderService(vo,date, month);
