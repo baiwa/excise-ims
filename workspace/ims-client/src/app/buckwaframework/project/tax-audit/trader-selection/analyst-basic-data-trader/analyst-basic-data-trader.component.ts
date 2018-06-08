@@ -108,7 +108,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     d.setFullYear(parseInt(this.from[1]));
     d.setMonth(parseInt(this.from[0]));
     const URL = AjaxService.CONTEXT_PATH + "/working/test/createWorkSheet";
-    $.post(URL, { startBackDate: d.getTime(), month: this.month },
+    $.post(URL, { startBackDate: this.from , month: this.month },
       function (returnedData) {
         console.log("ok");
       }).fail(function () {

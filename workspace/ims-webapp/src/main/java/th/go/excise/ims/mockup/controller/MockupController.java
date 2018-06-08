@@ -1,5 +1,6 @@
 package th.go.excise.ims.mockup.controller;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.excise.ia.constant.DateConstant;
 import th.go.excise.ims.mockup.domain.DataTableRequest;
 import th.go.excise.ims.mockup.domain.MockupVo;
 import th.go.excise.ims.mockup.persistence.entity.ExciseEntity;
@@ -33,10 +35,10 @@ public class MockupController {
 	@ResponseBody
 	public ResponseDataTable<MockupVo> listdata(@ModelAttribute MockupVo vo, DataTableRequest input) {
 		String[] fulldate = input.getStartBackDate().split("/");
-		Date date = new Date();
-		date.setYear(Integer.parseInt(fulldate[1]));
-		date.setMonth(Integer.parseInt(fulldate[0]));
-		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo, date, input.getMonth());
+		Calendar date = Calendar.getInstance(DateConstant.LOCAL_TH);
+		date.set(Integer.parseInt(fulldate[1]), Integer.parseInt(fulldate[0]), 1);
+//		
+		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo, date.getTime(), input.getMonth());
 		return listdata;
 	}
 	

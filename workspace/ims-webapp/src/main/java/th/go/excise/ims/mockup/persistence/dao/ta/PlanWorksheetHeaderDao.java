@@ -25,7 +25,7 @@ public class PlanWorksheetHeaderDao {
 		String sql = "SELECT TO_CHAR(ANALYS_NUMBER_SEQ.nextval, '00000') as SEQ FROM DUAL";
 		Map<String, Object> map = jdbcTemplate.queryForMap(sql);
 		String analysNumber = map != null ? (String)map.get("SEQ") : null;
-		return analysNumber;
+		return analysNumber.trim();
 	}
 	
 	
@@ -47,19 +47,17 @@ public class PlanWorksheetHeaderDao {
 
 	}
 
-	public void insertPlanWorksheetHeader(List<PlanWorksheetHeader> valueList) {
+	public void insertPlanWorksheetHeader(PlanWorksheetHeader value) {
 		//inti SQL for insert to database
 		StringBuilder sql = new StringBuilder(" INSERT INTO TA_PLAN_WORK_SHEET_HEADER (WORK_SHEET_HEADER_ID,ANALYS_NUMBER,EXCISE_ID,COMPANY_NAME,FACTORY_NAME,FACTORY_ADDRESS,EXCISE_OWNER_AREA,PRODUCT_TYPE,EXCISE_OWNER_AREA_1,TOTAL_AMOUNT,PERCENTAGE,TOTAL_MONTH,DECIDE_TYPE,FLAG,CREATED_BY,CREATED_DATETIME,UPDATE_BY,UPDATE_DATETIME,FIRST_MONTH,LAST_MONTH)"); 
-		sql.append(" values(TA_PLAN_WS_HEADER_SEQ,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
-		
+		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
+//		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nectval,'"+value.getAnalysNumber()+"','"+value.getExciseId()+"','"+value.getCompanyName()+"','"+value.getFactoryName()+"','"+value.getFactoryAddress()+"',"
+//				+ "'"+value.getExciseOwnerArea()+"','"+value.getProductType()+"','"+value.getExciseOwnerArea1()+"',"+value.getTotalAmount()+","+value.getPercentage()+","
+//						+ "'"+value.getTotalMonth()+"','"+value.getDecideType()+"','"+value.getFlag()+"','"+value.getCreateBy()+"',SYSDATE,null,null,'"+value.getFirstMonth()+"','"+value.getLastMonth()+"') ");
+		System.out.println(sql);
 		//for to set Object
-		List<Object[]> objArrayList = new ArrayList<Object[]>();
-		for (PlanWorksheetHeader planWorksheetHeader : valueList) {
-			objArrayList.add(planWorksheetHeaderToArrayObject(planWorksheetHeader));
-		}
-		
-		
-		jdbcTemplate.batchUpdate(sql.toString(), objArrayList);
+		jdbcTemplate.update(sql.toString() ,planWorksheetHeaderToArrayObject(value) );
+//		jdbcTemplate.update(sql.toString()  );
 	}
 
 	
@@ -95,7 +93,7 @@ public class PlanWorksheetHeaderDao {
 		@Override
 		public PlanWorksheetHeader mapRow(ResultSet rs, int arg1) throws SQLException {
 			PlanWorksheetHeader header = new PlanWorksheetHeader();
-			header.setWorksheetHeaderId(rs.getBigDecimal("WORK_SHEET_DETAIL_ID"));
+			header.setWorksheetHeaderId(rs.getBigDecimal("WORK_SHEET_HEADER_ID"));
 			header.setAnalysNumber(rs.getString("ANALYS_NUMBER"));
 			header.setExciseId(rs.getString("EXCISE_ID"));
 			header.setCompanyName(rs.getString("COMPANY_NAME"));
@@ -111,7 +109,7 @@ public class PlanWorksheetHeaderDao {
 			header.setFlag(rs.getString("FLAG"));
 			header.setFirstMonth(rs.getBigDecimal("FIRST_MONTH"));
 			header.setLastMonth(rs.getBigDecimal("LAST_MONTH"));
-			header.setCreateBy(rs.getString("UPDATE_BY"));
+			header.setCreateBy(rs.getString("CREATED_BY"));
 			header.setCreateDatetime(rs.getDate("CREATED_DATETIME"));
 			header.setUpdateBy(rs.getString("UPDATE_BY"));
 			header.setUpdateDatetime(rs.getTime("UPDATE_DATETIME"));
