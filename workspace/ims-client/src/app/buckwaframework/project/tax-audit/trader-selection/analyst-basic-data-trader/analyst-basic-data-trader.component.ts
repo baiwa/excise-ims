@@ -20,6 +20,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   form1: any;
   form2: any;
   private listItem: any[];
+  fullDate : any;
   constructor(private route: ActivatedRoute, private router: Router) {
 
   }
@@ -41,6 +42,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
 
     // subscribe to router event
     this.from = this.route.snapshot.queryParams["from"];
+    this.fullDate = this.route.snapshot.queryParams["from"];
     this.month = this.route.snapshot.queryParams["month"];
     //split function
     var from_split = this.from.split("/");
@@ -103,16 +105,27 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   }
 
   onSend = () => {
+
+    var d = new Date(); 
+    d.setFullYear(parseInt(this.from[1]));
+    d.setMonth(parseInt(this.from[0]));
+    const URL = AjaxService.CONTEXT_PATH + "/working/test/createWorkSheet";
+    $.post(URL, { startBackDate: d.getTime(), month: this.month },
+      function (returnedData) {
+        console.log("ok");
+      }).fail(function () {
+        console.log("error");
+      });
     this.router.navigate(
       ['/create-working-paper-trader'],
       { queryParams: { before: this.form1, last: this.form2, num_month: this.month } }
     );
   }
 
+
   initDatatable(): void {
-    var d = new Date();
-    d.setFullYear(parseInt(this.from[1]));
-    d.setMonth(parseInt(this.from[0]));
+    
+    
     const URL = AjaxService.CONTEXT_PATH + "/working/test/list";
     var json = "";
     json += ' { "lengthChange": false, ';
@@ -129,7 +142,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
-    json += ' "startBackDate": ' + d.getTime() + ', ';
+    json += ' "startBackDate": ' + this.fullDate + ', ';
     json += ' "month": ' + this.month + ' ';
     json += ' } ';
     json += ' }, ';

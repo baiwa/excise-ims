@@ -36,6 +36,7 @@ public class MockupController {
 		Date date = new Date();
 		date.setMonth(Integer.parseInt(startDate[0]));
 		date.setYear(Integer.parseInt(startDate[1]));
+		System.out.println(date);
 		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo, date, input.getMonth());
 		return listdata;
 	}
