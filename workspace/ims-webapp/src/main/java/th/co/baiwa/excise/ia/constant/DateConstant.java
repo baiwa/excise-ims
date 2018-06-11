@@ -23,7 +23,7 @@ public class DateConstant {
 		List<String> monthList = new ArrayList<>();
 		Calendar calendar = Calendar.getInstance(LOCAL_TH);
 		calendar.setTime(date);
-		calendar.add(Calendar.MONTH, -(backDate - 1));
+		calendar.add(Calendar.MONTH, -(backDate));
 		for (int i = 0; i < backDate; i++) {
 			Date initTime = calendar.getTime();
 			monthList.add(MONTH_SHOT_NAMES[initTime.getMonth()] + " " + checkYearThai(initTime));

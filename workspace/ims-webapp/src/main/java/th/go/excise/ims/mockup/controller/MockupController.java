@@ -38,7 +38,7 @@ public class MockupController {
 		Calendar date = Calendar.getInstance(DateConstant.LOCAL_TH);
 		date.set(Integer.parseInt(fulldate[1]), Integer.parseInt(fulldate[0]), 1);
 //		
-		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo, date.getTime(), input.getMonth());
+		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo, date.getTime(), input.getMonth(),input.getExciseProductType());
 		return listdata;
 	}
 	
@@ -65,7 +65,7 @@ public class MockupController {
 		date.setYear(Integer.parseInt(fulldate[1]));
 		date.setMonth(Integer.parseInt(fulldate[0]));
 		int month = input.getMonth() != null ? input.getMonth() : 0;
-		planWorksheetHeaderService.insertPlanWorksheetHeaderService(vo,date, month);
+		planWorksheetHeaderService.insertPlanWorksheetHeaderService(vo,date, month,input.getExciseProductType());
 		
 	}
 	

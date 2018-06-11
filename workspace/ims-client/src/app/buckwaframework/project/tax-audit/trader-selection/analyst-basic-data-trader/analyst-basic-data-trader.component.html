@@ -68,7 +68,7 @@
                             <div class="item">
                                 <div class="header">พิกัดสินค้า</div>
                                 <div class="menu">
-                                    <a class="item" *ngFor="let item of listMenu">-{{item}}</a>
+                                    <div class="item" *ngFor="let item of listMenu" (click)="selectExciseProductType(item)" >-{{item}}</div>
                                 </div>
                             </div>
                         </div>

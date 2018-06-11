@@ -20,12 +20,14 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   form1: any;
   form2: any;
   private listItem: any[];
+  exciseProductType: any;
   constructor(private route: ActivatedRoute, private router: Router) {
 
   }
 
   ngOnInit() {
-    this.listMenu = ["น้ำมัน"
+    this.listMenu = ["รวม"
+      , "น้ำมัน"
       , "เครื่องดื่ม"
       , "ยาสูบ"
       , "ไพ่"
@@ -36,9 +38,9 @@ export class AnalystBasicDataTraderComponent implements OnInit {
       , "ไนท์คลับและดิสโกเธค"
       , "สถานอาบน้ำหรืออบตัวและนวด"
       , "สนามแข่งม้า"
-      , 'สนามกอล์ฟ'
-      , "รวม"];
+      , 'สนามกอล์ฟ'];
 
+    this.exciseProductType = "";
     // subscribe to router event
     this.from = this.route.snapshot.queryParams["from"];
     this.month = this.route.snapshot.queryParams["month"];
@@ -100,6 +102,18 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     var dataInDataTalbe = '';
     this.initDatatable();
     $("#exciseBtn").prop('disabled', true);
+    var table = $('#userManagementDt').DataTable();
+
+    // on init table
+    $('#userManagementDt tbody tr').css({ "background-color": "white", "cursor": "pointer" });
+
+    // on click row
+    $('#userManagementDt tbody').on('click', 'tr', function () {
+      $("#exciseBtn").prop('disabled', false);
+      $('#userManagementDt tbody tr').css({ "background-color": "white", "cursor": "pointer" });
+      (<HTMLInputElement>document.getElementById("exciseId")).value = table.row(this).data().exciseId;
+      $(this).css("background-color", "rgb(197,217,241)");
+    });
   }
 
   onSend = () => {
@@ -108,18 +122,25 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     d.setFullYear(parseInt(this.from[1]));
     d.setMonth(parseInt(this.from[0]));
     const URL = AjaxService.CONTEXT_PATH + "/working/test/createWorkSheet";
-    $.post(URL, { startBackDate: this.from , month: this.month },
+    $.post(URL, { startBackDate: this.from, month: this.month  , exciseProductType : this.exciseProductType},
       function (returnedData) {
         console.log("ok");
+       
       }).fail(function () {
         console.log("error");
       });
-    this.router.navigate(
-      ['/create-working-paper-trader'],
-      { queryParams: { before: this.form1, last: this.form2, num_month: this.month } }
-    );
+      this.router.navigate(
+        ['/create-working-paper-trader'],
+        { queryParams: { before: this.form1, last: this.form2, num_month: this.month } }
+      );
   }
 
+  selectExciseProductType(productionType): void {
+    console.log(productionType);
+    this.exciseProductType = productionType == 'รวม' ? '' : productionType;
+    console.log(this.exciseProductType);
+    this.initDatatable();
+  }
 
   initDatatable(): void {
     var d = new Date();
@@ -141,7 +162,8 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
-    json += ' "startBackDate": "' +this.from + '", ';
+    json += ' "exciseProductType": "' + this.exciseProductType + '", ';
+    json += ' "startBackDate": "' + this.from + '", ';
     json += ' "month": ' + this.month + ' ';
     json += ' } ';
     json += ' }, ';
@@ -178,20 +200,10 @@ export class AnalystBasicDataTraderComponent implements OnInit {
 
     json += '] } ';
     let jsonMaping = JSON.parse(json);
+    console.log(json);
     this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
 
-    var table = $('#userManagementDt').DataTable();
-    
-    // on init table
-    $('#userManagementDt tbody tr').css({"background-color": "white", "cursor": "pointer"});
 
-    // on click row
-    $('#userManagementDt tbody').on('click', 'tr', function () {
-      $("#exciseBtn").prop('disabled', false);
-      $('#userManagementDt tbody tr').css({"background-color": "white", "cursor": "pointer"});
-      (<HTMLInputElement>document.getElementById("exciseId")).value = table.row(this).data().exciseId;
-      $(this).css("background-color", "rgb(197,217,241)");
-    });
   }
 
 }

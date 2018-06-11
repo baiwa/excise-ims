@@ -42,7 +42,7 @@ public class PlanWorksheetHeaderService {
 	
 	
 	
-	public void insertPlanWorksheetHeaderService(MockupVo mockupVo,Date startBackDate, int month) {
+	public void insertPlanWorksheetHeaderService(MockupVo mockupVo,Date startBackDate, int month , String productType) {
 		logger.info("PlanWorksheetHeaderService.insertPlanWorksheetHeaderService");
 		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD)+"-01-"+planWorksheetHeaderDao.getAnalysNumber();
 		Date saveDate = new Date();
@@ -50,7 +50,7 @@ public class PlanWorksheetHeaderService {
 		System.out.println(analysNumber);
 		PlanWorksheetHeader planWorksheetHeader = null;
 		List<ExciseTaxReceive> taxReciveList = null;
-		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseRegistionNumber();
+		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseRegistionNumber(productType);
 		for (ExciseRegistartionNumber exciseRegistartionNumber : regisNumberList) {
 			planWorksheetHeader = new PlanWorksheetHeader();
 			planWorksheetHeader.setAnalysNumber(analysNumber);
@@ -70,9 +70,9 @@ public class PlanWorksheetHeaderService {
 				for (int i = 0 ; i < taxReciveList.size() ; i++) {
 					ExciseTaxReceive taxRecive = taxReciveList.get(i);
 					
-					String amount = taxRecive.getExciseTaxReceiveAmount() != null ? taxRecive.getExciseTaxReceiveAmount() : "0";
+					String amount = taxRecive.getExciseTaxReceiveAmount() != null ? taxRecive.getExciseTaxReceiveAmount().trim().replaceAll(",","") : "0";
 					try {
-						totalAmount.add(new BigDecimal(amount.trim()));
+						totalAmount.add(new BigDecimal(amount));
 					} catch (Exception e) {
 						System.out.println(amount);
 						totalAmount.add(new BigDecimal(0));
@@ -107,7 +107,7 @@ public class PlanWorksheetHeaderService {
 				planWorksheetDetail.setExciseId(taxRecive.getExciseId());
 				planWorksheetDetail.setCreateBy(UserLoginUtils.getCurrentUsername());
 				planWorksheetDetail.setCreateDatetime(saveDate);
-				String amountDetail = taxRecive.getExciseTaxReceiveAmount()  != null? taxRecive.getExciseTaxReceiveAmount() :"0" ;
+				String amountDetail = taxRecive.getExciseTaxReceiveAmount()  != null? taxRecive.getExciseTaxReceiveAmount().trim().replaceAll(",","") :"0" ;
 				planWorksheetDetail.setAmount(new BigDecimal(amountDetail));
 				planWorksheetDetailList.add(planWorksheetDetail);
 			}

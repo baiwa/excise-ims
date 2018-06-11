@@ -18,15 +18,27 @@ public class ExciseRegisttionNumberDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private final String sqlTaExciseId = " select *  from EXCISEADM.ta_excise_registtion_number order by TA_EXCISE_REGISTTION_NUMBER_ID ";
+	private final String sqlTaExciseId = " select *  from EXCISEADM.ta_excise_registtion_number ";
 	
-	public List<ExciseRegistartionNumber> queryByExciseId(String register,int start,int length) {		
-		List<ExciseRegistartionNumber> list = jdbcTemplate.query(OracleUtils.limitForDataTable(sqlTaExciseId, start, length), exciseRegisttionRowmapper);
+	public List<ExciseRegistartionNumber> queryByExciseId(String register, String exciseProductType,int start,int length) {	
+		StringBuilder sql = new StringBuilder(sqlTaExciseId);
+		sql.append(" where 1=1 ");
+		if(exciseProductType != null && exciseProductType.length() > 0) {
+			sql.append(" and  TA_EXCISE_PRODUCT_TYPE = '"+exciseProductType.trim()+"' ");
+		}
+		
+		sql.append(" order By TA_EXCISE_REGISTTION_NUMBER_ID ");
+		List<ExciseRegistartionNumber> list = jdbcTemplate.query(OracleUtils.limitForDataTable(sql.toString(), start, length), exciseRegisttionRowmapper);
 		
 		return list;
 	}
-	public long queryCountByExciseId() {		
-		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sqlTaExciseId), Long.class);
+	public long queryCountByExciseId(String exciseProductType) {	
+		StringBuilder sql = new StringBuilder(sqlTaExciseId);
+		sql.append(" where 1=1 ");
+		if(exciseProductType != null && exciseProductType.length() > 0) {
+			sql.append(" and  TA_EXCISE_PRODUCT_TYPE = '"+exciseProductType.trim()+"' ");
+		}
+		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()), Long.class);
 		
 		return count;
 	}
@@ -56,8 +68,13 @@ public class ExciseRegisttionNumberDao {
 
 	};
 	
-	public List<ExciseRegistartionNumber> queryByExciseRegistionNumber() {		
-		List<ExciseRegistartionNumber> list = jdbcTemplate.query(sqlTaExciseId, exciseRegisttionRowmapper);
+	public List<ExciseRegistartionNumber> queryByExciseRegistionNumber(String exciseProductType) {	
+		StringBuilder sql = new StringBuilder(sqlTaExciseId);
+		sql.append(" where 1=1 ");
+		if(exciseProductType != null && exciseProductType.length() > 0) {
+			sql.append(" and  TA_EXCISE_PRODUCT_TYPE = '"+exciseProductType.trim()+"' ");
+		}
+		List<ExciseRegistartionNumber> list = jdbcTemplate.query(sql.toString(), exciseRegisttionRowmapper);
 		
 		return list;
 	}

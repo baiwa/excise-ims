@@ -7,8 +7,15 @@ public class DataTableRequest {
 	private Integer month;
 	private Long draw;
 	private String startBackDate;
+	private String exciseProductType;
 	
 	
+	public String getExciseProductType() {
+		return exciseProductType;
+	}
+	public void setExciseProductType(String exciseProductType) {
+		this.exciseProductType = exciseProductType;
+	}
 	public Integer getStart() {
 		return start;
 	}
