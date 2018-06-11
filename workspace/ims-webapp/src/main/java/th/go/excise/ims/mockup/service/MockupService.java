@@ -90,8 +90,6 @@ public class MockupService {
 				if (i != -1) {
 
 					String monthName = monthNameList.get(i);
-					System.out.println(taxReceive.getExciseId() + " : " + taxReceive.getExciseTaxReceiveMonth() + " : "
-							+ taxReceive.getExciseTaxReceiveAmount());
 
 					try {
 						if (i < (month / 2)) {
@@ -99,12 +97,6 @@ public class MockupService {
 							sumFirstMonth += Double.parseDouble(amount);
 							switch (i + 1) {
 							case 1:
-								System.out.println(
-										taxReceive.getExciseId() + " : " + taxReceive.getExciseTaxReceiveMonth() + " : "
-												+ taxReceive.getExciseTaxReceiveAmount());
-								System.out.println(
-										taxReceive.getExciseId() + " : " + taxReceive.getExciseTaxReceiveMonth() + " : "
-												+ taxReceive.getExciseTaxReceiveAmount());
 								vo.setExciseFirstTaxReceiveMonth1(taxReceive.getExciseTaxReceiveMonth());
 								vo.setExciseFirstTaxReceiveAmount1(taxReceive.getExciseTaxReceiveAmount());
 								if (!vo.getExciseFirstTaxReceiveAmount1().isEmpty()) {
@@ -200,12 +192,6 @@ public class MockupService {
 							sumLastMonth += Double.parseDouble(amount);
 							switch ((i + 1)-(month / 2)) {
 							case 1:
-								System.out.println(
-										taxReceive.getExciseId() + " : " + taxReceive.getExciseTaxReceiveMonth() + " : "
-												+ taxReceive.getExciseTaxReceiveAmount());
-								System.out.println(
-										taxReceive.getExciseId() + " : " + taxReceive.getExciseTaxReceiveMonth() + " : "
-												+ taxReceive.getExciseTaxReceiveAmount());
 								vo.setExciseLatestTaxReceiveMonth1(taxReceive.getExciseTaxReceiveMonth());
 								vo.setExciseLatestTaxReceiveAmount1(taxReceive.getExciseTaxReceiveAmount());
 								if (!vo.getExciseLatestTaxReceiveAmount1().isEmpty()) {

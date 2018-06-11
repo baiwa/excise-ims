@@ -51,13 +51,8 @@ public class PlanWorksheetHeaderDao {
 		//inti SQL for insert to database
 		StringBuilder sql = new StringBuilder(" INSERT INTO TA_PLAN_WORK_SHEET_HEADER (WORK_SHEET_HEADER_ID,ANALYS_NUMBER,EXCISE_ID,COMPANY_NAME,FACTORY_NAME,FACTORY_ADDRESS,EXCISE_OWNER_AREA,PRODUCT_TYPE,EXCISE_OWNER_AREA_1,TOTAL_AMOUNT,PERCENTAGE,TOTAL_MONTH,DECIDE_TYPE,FLAG,CREATED_BY,CREATED_DATETIME,UPDATE_BY,UPDATE_DATETIME,FIRST_MONTH,LAST_MONTH)"); 
 		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
-//		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nectval,'"+value.getAnalysNumber()+"','"+value.getExciseId()+"','"+value.getCompanyName()+"','"+value.getFactoryName()+"','"+value.getFactoryAddress()+"',"
-//				+ "'"+value.getExciseOwnerArea()+"','"+value.getProductType()+"','"+value.getExciseOwnerArea1()+"',"+value.getTotalAmount()+","+value.getPercentage()+","
-//						+ "'"+value.getTotalMonth()+"','"+value.getDecideType()+"','"+value.getFlag()+"','"+value.getCreateBy()+"',SYSDATE,null,null,'"+value.getFirstMonth()+"','"+value.getLastMonth()+"') ");
-		System.out.println(sql);
 		//for to set Object
 		jdbcTemplate.update(sql.toString() ,planWorksheetHeaderToArrayObject(value) );
-//		jdbcTemplate.update(sql.toString()  );
 	}
 
 	

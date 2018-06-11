@@ -59,13 +59,13 @@ public class MockupController {
 	
 	@PostMapping("/createWorkSheet")
 	@ResponseBody
-	public void createWorkSheet(@ModelAttribute MockupVo vo, DataTableRequest input){
+	public String createWorkSheet(@ModelAttribute MockupVo vo, DataTableRequest input){
 		String[] fulldate = input.getStartBackDate().split("/");
 		Date date = new Date();
 		date.setYear(Integer.parseInt(fulldate[1]));
 		date.setMonth(Integer.parseInt(fulldate[0]));
 		int month = input.getMonth() != null ? input.getMonth() : 0;
-		planWorksheetHeaderService.insertPlanWorksheetHeaderService(vo,date, month,input.getExciseProductType());
+		return planWorksheetHeaderService.insertPlanWorksheetHeaderService(vo,date, month,input.getExciseProductType());
 		
 	}
 	

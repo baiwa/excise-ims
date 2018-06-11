@@ -21,6 +21,7 @@ import th.co.baiwa.buckwaframework.preferences.constant.UserManagementConstants;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.UserManagement;
 import th.co.baiwa.buckwaframework.preferences.persistence.mapper.UserManagementRowMapper;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.mockup.utils.OracleUtils;
 
 @Transactional
 @Repository("userManagementDao")
@@ -100,13 +101,11 @@ public class UserManagementDao {
 			params.add(userManagement.getAccountNonLocked());
 		}
 		
-		sqBuilder.append(" LIMIT ?, ? ");
-		params.add(start);
-		params.add(length);
-		logger.debug(sqBuilder.toString());
-		return commonJdbcDao.executeQuery(sqBuilder.toString(),
-			params.toArray(),
-			UserManagementRowMapper.getInstance()
+		sqBuilder.append(" order by username ");
+		
+		String sql = OracleUtils.limit(sqBuilder.toString(), start, length);
+		logger.debug(sql);
+		return commonJdbcDao.executeQuery(sql,params.toArray(),UserManagementRowMapper.getInstance()
 		);
 	}
 

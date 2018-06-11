@@ -82,7 +82,6 @@ public class SeedStarterMngController {
     
     @RequestMapping({"/seedstartermng"})
     public String showSeedstarters(final SeedStarter seedStarter) {
-    	System.out.println("SSSS 1111");
         seedStarter.setDatePlanted(Calendar.getInstance().getTime());
         return "thymeleaf/seedstartermng";
     }

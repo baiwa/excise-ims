@@ -17,6 +17,7 @@ import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.mapper.MessageRowMapper;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.mockup.utils.OracleUtils;
 
 @Repository("messageDao")
 public class MessageDao {
@@ -69,14 +70,10 @@ public class MessageDao {
 			sqBuilder.append(" AND message_type = ? ");
 			params.add(message.getMessageType());
 		}
+		sqBuilder.append(" order by message_code ");
+		String sql = OracleUtils.limitForDataTable(sqBuilder, start, length);
 		
-		sqBuilder.append(" LIMIT ?, ? ");
-		params.add(start);
-		params.add(length);
-		
-		return commonJdbcDao.executeQuery(sqBuilder.toString(),
-			params.toArray(),
-			MessageRowMapper.getInstance()
+		return commonJdbcDao.executeQuery(sql,params.toArray(),MessageRowMapper.getInstance()
 		);
 	}
 	

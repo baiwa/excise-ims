@@ -16,7 +16,6 @@ public class DateConstant {
 	
 	public static void main(String[] args) {
 		List<String> monthList = startBackDate(new Date(), 6);
-		System.out.println(monthList);
 	}
 
 	public static List<String> startBackDate(Date date, int backDate) {

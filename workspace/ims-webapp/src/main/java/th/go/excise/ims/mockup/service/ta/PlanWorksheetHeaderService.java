@@ -42,12 +42,11 @@ public class PlanWorksheetHeaderService {
 	
 	
 	
-	public void insertPlanWorksheetHeaderService(MockupVo mockupVo,Date startBackDate, int month , String productType) {
+	public String insertPlanWorksheetHeaderService(MockupVo mockupVo,Date startBackDate, int month , String productType) {
 		logger.info("PlanWorksheetHeaderService.insertPlanWorksheetHeaderService");
 		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD)+"-01-"+planWorksheetHeaderDao.getAnalysNumber();
 		Date saveDate = new Date();
 		logger.info("get analysNumber : "+analysNumber);
-		System.out.println(analysNumber);
 		PlanWorksheetHeader planWorksheetHeader = null;
 		List<ExciseTaxReceive> taxReciveList = null;
 		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseRegistionNumber(productType);
@@ -74,7 +73,6 @@ public class PlanWorksheetHeaderService {
 					try {
 						totalAmount.add(new BigDecimal(amount));
 					} catch (Exception e) {
-						System.out.println(amount);
 						totalAmount.add(new BigDecimal(0));
 					}
 					
@@ -114,6 +112,7 @@ public class PlanWorksheetHeaderService {
 			planWorksheetDetailDao.insertPlanWorksheetDetail(planWorksheetDetailList);
 			
 		}
+		return analysNumber;
 	}
 	
 	
