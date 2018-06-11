@@ -117,22 +117,33 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   }
 
   onSend = () => {
-
+    var router = this.router;
+    var param1 = this.form1;
+    var param2 = this.form2;
+    var param3 = this.month;
     var d = new Date();
     d.setFullYear(parseInt(this.from[1]));
     d.setMonth(parseInt(this.from[0]));
     const URL = AjaxService.CONTEXT_PATH + "/working/test/createWorkSheet";
-    $.post(URL, { startBackDate: this.from, month: this.month  , exciseProductType : this.exciseProductType},
+    $.post(URL, { startBackDate: this.from, month: this.month, exciseProductType: this.exciseProductType },
       function (returnedData) {
-        console.log("ok");
-       
+        console.log("analysNumber : "+returnedData);
+        console.log("this.form1 : "+param1);
+        console.log("this.form2 : "+param3);
+        console.log("this.month : "+param3);
+        router.navigate(['/create-working-paper-trader'],
+        { queryParams: { before: param1, last: param2, num_month: param3, analysNumber: returnedData } }
+      );
       }).fail(function () {
         console.log("error");
       });
-      this.router.navigate(
-        ['/create-working-paper-trader'],
-        { queryParams: { before: this.form1, last: this.form2, num_month: this.month } }
-      );
+
+  }
+
+  routerToNextStep(data): void {
+    this.router.navigate(['/create-working-paper-trader'],
+      { queryParams: { before: this.form1, last: this.form2, num_month: this.month, analysNumber: data } }
+    );
   }
 
   selectExciseProductType(productionType): void {
