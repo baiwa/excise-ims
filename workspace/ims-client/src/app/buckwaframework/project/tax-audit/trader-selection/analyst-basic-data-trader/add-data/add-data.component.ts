@@ -19,13 +19,12 @@ export class AddDataComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private _location: Location,
-    private service: AjaxService,
+    private ajax: AjaxService,
     private ex: ExciseService,
     private messageBarService: MessageBarService
   ) {
     this.id = this.route.snapshot.queryParams['id'];
-    this.excise = new 
-    Excise();
+    this.excise = new Excise();
     this.excise.exciseTax = new Array<ExciseTax>();
     this.excise.file = new Array<File>();
     for(let i=0; i<3; i++) {
@@ -37,7 +36,7 @@ export class AddDataComponent implements OnInit {
   ngOnInit() {
     const url = `working/test/list/${this.id}/3`;
     if (this.ex.get(this.id) === null) {
-      this.service
+      this.ajax
         .get(url, console.log(`GET '${url}'`), null)
         .then(
           res => {
@@ -84,6 +83,17 @@ export class AddDataComponent implements OnInit {
 
   onUpdate(e): void {
     e.preventDefault();
+    const url = `working/excise/list/${this.id}`;
+    const data: File = {
+      name: this.excise.file[0].name,
+      type: this.excise.file[0].type,
+      value: this.excise.file[0].value
+    };
+    this.ajax.put(url, data, null).then(
+      res => {
+        console.log(res);
+      }
+    );
     if (this.ex.update(this.excise)) {
       this.messageBarService.successModal('บันทึกข้อมูลเรียบร้อยแล้ว', 'สำเร็จ');
     } else {
@@ -98,9 +108,12 @@ export class AddDataComponent implements OnInit {
   readUrl(event:any, index: number) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-      reader.onload = (event:any) => {
-        this.excise.file[index].name = new Date().getTime().toString();
-        this.excise.file[index].value = event.target.result;
+      reader.onload = (e:any) => {
+        console.log(event.target.files[0]);
+        const { name, type } = event.target.files[0];
+        this.excise.file[index].name = name;
+        this.excise.file[index].type = type;
+        this.excise.file[index].value = e.target.result;
       }
       reader.readAsDataURL(event.target.files[0]);
     }
