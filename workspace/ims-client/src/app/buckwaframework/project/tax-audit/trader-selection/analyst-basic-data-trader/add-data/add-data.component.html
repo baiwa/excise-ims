@@ -180,18 +180,26 @@
           </div>
           <div class="inline fields">
             <div class="five wide field">
-              <h4>เพิ่มข้อมูลภายนอก </h4>
+              <h4>เพิ่มข้อมูลภายนอก <a class="custom-btn" (click)="addFileInput()">เพิ่ม</a></h4>
             </div>
           </div>
           <div class="inline fields" *ngFor="let f of excise.file; let i = index">
             <div class="one wide field"></div>
-            <div class="nine wide field">
-              <label class="custom-label-w-15">เพิ่มข้อมูล</label>
-              <input type="file" (change)="readUrl($event, i)" accept=".pdf, image/*, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,.doc,.docx"
-              />
-            </div>
+            <div class="nine wide field" *ngIf="hasFile(f.name); then thenBlock; else elseBlock"></div>
+            <ng-template #thenBlock>
+              <div class="nine wide field">
+                <label class="custom-label-w-15">ไฟล์</label>
+                <input type="file" (change)="readUrl($event, i)" accept=".pdf, image/*, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,.doc,.docx"
+              required>
+              </div>
+            </ng-template>
+            <ng-template #elseBlock>
+              <div class="nine wide field">
+                <label class="custom-label-w-15">ไฟล์ : {{f.type}}</label>
+              </div>
+            </ng-template>
             <div class="one wide field">
-              <p>เพิ่ม</p>
+              <a class="custom-btn danger" (click)="removeFileInput()" *ngIf="i == excise.file.length-1">ลบ</a>
             </div>
           </div>
         </div>

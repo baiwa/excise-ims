@@ -26,10 +26,9 @@ export class AddDataComponent implements OnInit {
     this.id = this.route.snapshot.queryParams['id'];
     this.excise = new Excise();
     this.excise.exciseTax = new Array<ExciseTax>();
-    this.excise.file = new Array<File>();
+    this.excise.file = new Array<File>(); // initial file array
     for(let i=0; i<3; i++) {
       this.excise.exciseTax.push(new ExciseTax());
-      this.excise.file.push(new File());
     }
   }
 
@@ -83,17 +82,6 @@ export class AddDataComponent implements OnInit {
 
   onUpdate(e): void {
     e.preventDefault();
-    const url = `working/excise/list/${this.id}`;
-    const data: File = {
-      name: this.excise.file[0].name,
-      type: this.excise.file[0].type,
-      value: this.excise.file[0].value
-    };
-    this.ajax.put(url, data, null).then(
-      res => {
-        console.log(res);
-      }
-    );
     if (this.ex.update(this.excise)) {
       this.messageBarService.successModal('บันทึกข้อมูลเรียบร้อยแล้ว', 'สำเร็จ');
     } else {
@@ -105,14 +93,29 @@ export class AddDataComponent implements OnInit {
     this._location.back();
   }
 
+  hasFile(name): boolean {
+    let index = this.ex.get(this.id).file.findIndex(f => f.name === name);
+    if (index !== -1) {
+      return true;
+    }
+    return false;
+  }
+
+  addFileInput(): void {
+    this.excise.file.push(new File());
+  }
+
+  removeFileInput(): void {
+    this.excise.file.pop();
+  }
+
   readUrl(event:any, index: number) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
       reader.onload = (e:any) => {
-        console.log(event.target.files[0]);
         const { name, type } = event.target.files[0];
-        this.excise.file[index].name = name;
-        this.excise.file[index].type = type;
+        this.excise.file[index].name = name.split(".")[0];
+        this.excise.file[index].type = name;
         this.excise.file[index].value = e.target.result;
       }
       reader.readAsDataURL(event.target.files[0]);

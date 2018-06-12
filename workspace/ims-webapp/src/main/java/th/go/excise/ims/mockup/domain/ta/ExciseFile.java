@@ -2,7 +2,7 @@ package th.go.excise.ims.mockup.domain.ta;
 
 import java.io.Serializable;
 
-public class File implements Serializable {
+public class ExciseFile implements Serializable {
 	private String name;
 	private String value;
 	private String type;

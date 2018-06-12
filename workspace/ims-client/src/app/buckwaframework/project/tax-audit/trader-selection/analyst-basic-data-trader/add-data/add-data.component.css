@@ -27,3 +27,11 @@
     text-align: right;
     top: 0;
 }
+
+.custom-btn {
+    cursor: pointer;
+}
+
+.danger {
+    color: red;
+}

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Excise } from '../models/excise';
+import { Excise, File } from '../models';
+import { AjaxService } from './ajax.service';
 
 @Injectable()
 export class ExciseService {
@@ -12,7 +13,9 @@ export class ExciseService {
     private percent1: number[];
     private percent2: number[];
 
-    constructor() {
+    constructor(
+        private ajax: AjaxService
+    ) {
         console.log('Call ExciseService');
         this.excise = new Array<Excise>();
     }
@@ -34,6 +37,13 @@ export class ExciseService {
         const index = this.excise.findIndex(obj => obj.exciseId == data.exciseId);
         if (index > -1) {
             this.excise[index] = data;
+            const url = `working/excise/list/${data.exciseId}`;
+            const new_data: File[] = data.file;
+            this.ajax.put(url, new_data, null).then(
+                res => {
+                    console.log(res);
+                }
+            );
             return true;
         } else {
             return false;
