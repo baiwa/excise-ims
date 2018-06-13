@@ -24,13 +24,13 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   private prevYear: any;
   private listItem: any[];
   exciseProductType: any;
+  onLoading: boolean;
   
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
     private ex: ExciseService
   ) {
-
   }
 
   ngOnInit() {
@@ -52,7 +52,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     // subscribe to router event
     this.from = this.route.snapshot.queryParams["from"];
     this.month = this.route.snapshot.queryParams["month"];
-    console.log(this.from);
     //split function
     var from_split = this.from.split("/");
     var currDate = new Date();
@@ -160,6 +159,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   }
 
   initDatatable(): void {
+    this.onLoading = true;
     var d = new Date();
     const URL = AjaxService.CONTEXT_PATH + "/working/test/list";
     var json = "";
@@ -214,6 +214,11 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     json += '] } ';
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
+
+    // i can't check loaded datatable...?
+    setTimeout(() => {
+      this.onLoading = false;
+    }, 500);
   }
 
 }
