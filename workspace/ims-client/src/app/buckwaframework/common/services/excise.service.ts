@@ -15,6 +15,8 @@ export class ExciseService {
     private from: any;
     private analysNumber: any;
     private month: any;
+    private currYear: number;
+    private prevYear: number;
 
     constructor(
         private ajax: AjaxService
@@ -53,11 +55,13 @@ export class ExciseService {
         }
     }
 
-    setformValues(before, last, from, month){
+    setformValues(before, last, from, month, currYear, prevYear){
         this.before = before;
         this.last = last;
         this.from = from;
         this.month = month;
+        this.currYear = currYear;
+        this.prevYear = prevYear;
     }
 
     getformValues(){
@@ -65,7 +69,9 @@ export class ExciseService {
             before: this.before,
             last: this.last,
             from: this.from,
-            month: this.month
+            month: this.month,
+            currYear: this.currYear,
+            prevYear: this.prevYear
         };
     }
 

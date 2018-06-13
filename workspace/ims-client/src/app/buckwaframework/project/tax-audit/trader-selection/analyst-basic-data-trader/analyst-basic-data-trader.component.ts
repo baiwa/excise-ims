@@ -20,6 +20,8 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   from: any;
   before: any;
   last: any;
+  private currYear: any;
+  private prevYear: any;
   private listItem: any[];
   exciseProductType: any;
   
@@ -55,6 +57,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     var from_split = this.from.split("/");
     var currDate = new Date();
     var currYear = currDate.getFullYear() + 543;
+    this.currYear = currYear;
     //default month & year
     var month = from_split[0];
     var year_before = from_split[1];
@@ -62,6 +65,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     var m = parseInt(month) + 1;
     var mm = parseInt(this.month);
     var yy = parseInt(year_before);
+    this.prevYear = yy;
     var trHeaderColumn = "";
 
     var items: string[] = [];
@@ -125,7 +129,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
 
   onSend = () => {
     //call ExciseService
-    this.ex.setformValues(this.before, this.last, this.from, this.month);
+    this.ex.setformValues(this.before, this.last, this.from, this.month, this.currYear, this.prevYear);
 
     var router = this.router;
     var param1 = this.before;
@@ -142,48 +146,21 @@ export class AnalystBasicDataTraderComponent implements OnInit {
         console.log("this.before : "+param1);
         console.log("this.last : "+param3);
         console.log("this.month : "+param3);
-        router.navigate(['/create-working-paper-trader']
-        // {
-        //   queryParams: {
-        //     before: param1,
-        //     last: param2, 
-        //     num_month: param3,
-        //     analysNumber: returnedData,
-        //     from: from
-        //   }
-        // }
-      );
+        router.navigate(['/create-working-paper-trader']);
       }).fail(function () {
         console.log("error");
       });
 
   }
 
-  // routerToNextStep(data): void {
-  //   this.router.navigate(['/create-working-paper-trader'],
-  //     {
-  //       queryParams: {
-  //         before: this.before,
-  //         last: this.last,
-  //         num_month: this.month,
-  //         analysNumber: data,
-  //         from: this.from
-  //       }
-  //     }
-  //   );
-  // }
-
   selectExciseProductType(productionType): void {
-    console.log(productionType);
     this.exciseProductType = productionType == 'รวม' ? '' : productionType;
-    console.log(this.exciseProductType);
+    this.userManagementDt.destroy();
     this.initDatatable();
   }
 
   initDatatable(): void {
     var d = new Date();
-    //d.setFullYear(parseInt(this.from[1]));
-    //d.setMonth(parseInt(this.from[0]));
     const URL = AjaxService.CONTEXT_PATH + "/working/test/list";
     var json = "";
     json += ' { "lengthChange": false, ';
@@ -226,7 +203,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
 
     for (var i = 0; i < this.month / 2; i++) {
       json += ' { "data": "exciseFirstTaxReceiveAmount' + (i + 1) + '" ,"className":"center"}, ';
-
     }
     for (var i = 0; i < this.month / 2; i++) {
       if (i != (this.month / 2) - 1) {
@@ -235,13 +211,9 @@ export class AnalystBasicDataTraderComponent implements OnInit {
         json += ' { "data": "exciseLatestTaxReceiveAmount' + (i + 1) + '" ,"className":"center"} ';
       }
     }
-
     json += '] } ';
     let jsonMaping = JSON.parse(json);
-    console.log(json);
     this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
-
-
   }
 
 }

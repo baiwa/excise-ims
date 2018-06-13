@@ -1,19 +1,19 @@
 package th.go.excise.ims.mockup.persistence.dao;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
-import th.go.excise.ims.mockup.persistence.entity.ExciseEntity;
-import th.go.excise.ims.mockup.persistence.entity.ExciseTax;
-import th.go.excise.ims.mockup.utils.MysqlUtils;
-import th.go.excise.ims.mockup.utils.OracleUtils;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+
+import th.go.excise.ims.mockup.persistence.entity.ExciseEntity;
+import th.go.excise.ims.mockup.persistence.entity.ExciseTax;
+import th.go.excise.ims.mockup.utils.OracleUtils;
 
 @Repository
 public class ExciseDao {
