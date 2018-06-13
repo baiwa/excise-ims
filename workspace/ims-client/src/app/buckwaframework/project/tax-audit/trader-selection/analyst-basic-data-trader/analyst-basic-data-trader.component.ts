@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ExciseService } from '../../../../common/services/excise.service';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
@@ -17,11 +18,16 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   userManagementDt: any;
   month: any;
   from: any;
-  form1: any;
-  form2: any;
+  before: any;
+  last: any;
   private listItem: any[];
   exciseProductType: any;
-  constructor(private route: ActivatedRoute, private router: Router) {
+  
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router,
+    private ex: ExciseService
+  ) {
 
   }
 
@@ -44,6 +50,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     // subscribe to router event
     this.from = this.route.snapshot.queryParams["from"];
     this.month = this.route.snapshot.queryParams["month"];
+    console.log(this.from);
     //split function
     var from_split = this.from.split("/");
     var currDate = new Date();
@@ -96,9 +103,9 @@ export class AnalystBasicDataTraderComponent implements OnInit {
 
     //show values
     var sum_month = TextDateTH.months[m - 1];
-    this.form1 = sum_month + " " + yy;
+    this.before = sum_month + " " + yy;
     var sum_month2 = TextDateTH.months[parseInt(month) - 1];
-    this.form2 = sum_month2 + " " + parseInt(year_before);
+    this.last = sum_month2 + " " + parseInt(year_before);
     var dataInDataTalbe = '';
     this.initDatatable();
     $("#exciseBtn").prop('disabled', true);
@@ -117,10 +124,14 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   }
 
   onSend = () => {
+    //call ExciseService
+    this.ex.setformValues(this.before, this.last, this.from, this.month);
+
     var router = this.router;
-    var param1 = this.form1;
-    var param2 = this.form2;
+    var param1 = this.before;
+    var param2 = this.last;
     var param3 = this.month;
+    var from = this.from;
     var d = new Date();
     d.setFullYear(parseInt(this.from[1]));
     d.setMonth(parseInt(this.from[0]));
@@ -128,11 +139,19 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     $.post(URL, { startBackDate: this.from, month: this.month, exciseProductType: this.exciseProductType },
       function (returnedData) {
         console.log("analysNumber : "+returnedData);
-        console.log("this.form1 : "+param1);
-        console.log("this.form2 : "+param3);
+        console.log("this.before : "+param1);
+        console.log("this.last : "+param3);
         console.log("this.month : "+param3);
-        router.navigate(['/create-working-paper-trader'],
-        { queryParams: { before: param1, last: param2, num_month: param3, analysNumber: returnedData } }
+        router.navigate(['/create-working-paper-trader']
+        // {
+        //   queryParams: {
+        //     before: param1,
+        //     last: param2, 
+        //     num_month: param3,
+        //     analysNumber: returnedData,
+        //     from: from
+        //   }
+        // }
       );
       }).fail(function () {
         console.log("error");
@@ -140,11 +159,19 @@ export class AnalystBasicDataTraderComponent implements OnInit {
 
   }
 
-  routerToNextStep(data): void {
-    this.router.navigate(['/create-working-paper-trader'],
-      { queryParams: { before: this.form1, last: this.form2, num_month: this.month, analysNumber: data } }
-    );
-  }
+  // routerToNextStep(data): void {
+  //   this.router.navigate(['/create-working-paper-trader'],
+  //     {
+  //       queryParams: {
+  //         before: this.before,
+  //         last: this.last,
+  //         num_month: this.month,
+  //         analysNumber: data,
+  //         from: this.from
+  //       }
+  //     }
+  //   );
+  // }
 
   selectExciseProductType(productionType): void {
     console.log(productionType);

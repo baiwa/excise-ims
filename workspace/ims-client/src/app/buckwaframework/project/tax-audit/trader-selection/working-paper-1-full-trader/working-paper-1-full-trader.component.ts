@@ -20,6 +20,9 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
   percent2: any;
   _percent1: any;
   _percent2: any;
+  from: any;
+  month: any;
+  analysNumber: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,13 +36,19 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
 
   ngOnInit() {
     //call service
-    var { before, last, num1, num2, percent1, percent2 } = this.ex.getNumber();
+    var { before, last, from, month } = this.ex.getformValues();
+    var { num1, num2, percent1, percent2, analysNumber } = this.ex.getformNumber();
+
+    //set values
     this.before = before;
     this.last = last;
+    this.from = from;
+    this.month = month;
     this.num1 = num1;
     this.num2 = num2;
     this.percent1 = percent1;
     this.percent2 = percent2;
+    this.analysNumber = analysNumber;
 
     //check values in array == 0
     for (var i = 0; i < this.num1.length; i++) {

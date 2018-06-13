@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageBarService } from '../../../../common/services/message-bar.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ExciseService } from '../../../../common/services/excise.service';
+import { AjaxService } from '../../../../common/services/ajax.service';
 
 declare var jQuery: any;
 declare var $: any;
@@ -34,6 +35,7 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
       this.percent2.push(0);
     }
   }
+  from: any;
   before: any;
   last: any;
   num_month: any;
@@ -41,20 +43,67 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
   num2: number[];
   percent1: number[];
   percent2: number[];
+  analysNumbers: any;
+  month: any;
+  analysNumber: any;
+
 
   ngOnInit() {
-    // subscribe to router event
-    this.before = this.route.snapshot.queryParams["before"];
-    this.last = this.route.snapshot.queryParams["last"];
-    this.num_month = this.route.snapshot.queryParams["num_month"];
-    // console.log(this.num_month)
+    //call service
+    var { before, last, from, month } = this.ex.getformValues();
+
+    //set values
+    this.before = before;
+    this.last = last;
+    this.from = from;
+    this.month = month;
+    // console.log(this.before);
+    // console.log(this.last);
+    // console.log(this.from);
+    // console.log(this.month);
+  
+    const URL = AjaxService.CONTEXT_PATH + "/working/test/getAnalysNumber";
+    $.post(URL,
+      function (data) {
+        this.analysNumbers = data;
+        var optionList = "";
+        for (var i = 0; i < this.analysNumbers.length; i++) {
+          optionList += "<option>" + this.analysNumbers[i] + "</option>";
+        }
+        document.getElementById('analysNumber').innerHTML = optionList;
+      }).fail(function () {
+        console.log("error");
+      });
   }
 
   onSend = () => {
-    //call service
-    this.ex.setNumber(this.before, this.last,this.num1, this.num2, this.percent1, this.percent2);
+    //call ExciseService
+    this.ex.setformNumber(this.num1, this.num2, this.percent1, this.percent2, this.analysNumber);
     this.messageBarService.successModal('สร้างกระดาษทำการเรียบร้อยแล้ว', 'สำเร็จ');
-    this.router.navigate(['/working-paper-1-trader']);
+    this.router.navigate(['/working-paper-1-trader'],
+    { queryParams: { num_month: this.num_month } }
+    );
+
+    // var myJsonString = JSON.stringify(this.num1);
+    // console.log(myJsonString);
+    // console.log(this.num1);
+    // console.log(this.num2);
+    // console.log(this.percent1);
+    // console.log(this.percent2);
+    
+    // var param1 = this.form1;
+    // var param2 = this.form2;
+    // var param3 = this.month;
+
+    // const URL = AjaxService.CONTEXT_PATH + "/working/test/createWorkSheet";
+    // $.post(URL, {  },
+    //   function (data) {
+    //     this.router.navigate(['/working-paper-1-trader']);
+    //     { queryParams: { analysNumber: data } }
+    //   );
+    //   }).fail(function () {
+    //     console.log("error");
+    //   });
   }
 
   onAddField = () => {

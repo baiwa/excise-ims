@@ -1,6 +1,8 @@
 package th.go.excise.ims.mockup.service.ta;
 
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -115,7 +118,9 @@ public class PlanWorksheetHeaderService {
 		return analysNumber;
 	}
 	
-	
+	public List<String> queryAnalysNumberFromHeader() {
+		return planWorksheetHeaderDao.queryAnalysNumberFromHeader();
+	}
 
 	public PlanWorksheetHeaderDao getPlanWorksheetHeaderDao() {
 		return planWorksheetHeaderDao;

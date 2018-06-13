@@ -111,6 +111,25 @@ public class PlanWorksheetHeaderDao {
 			return header;
 		}
 	};
+	
+	public List<String> queryAnalysNumberFromHeader() {
+		String sql = "select DISTINCT ANALYS_NUMBER from TA_PLAN_WORK_SHEET_HEADER";
+		List<String> analysList = getJdbcTemplate().query(sql, new RowMapper<String>(){
+            public String mapRow(ResultSet rs, int rowNum) 
+                                         throws SQLException {
+                    return rs.getString(1);
+            }
+       });
+		return analysList;
+	}
+	
+	private RowMapper<String> fieldMappingAnalysNumber = new RowMapper<String>() {
+		@Override
+		public String mapRow(ResultSet rs, int arg1) throws SQLException {
+			
+			return rs.getString("ANALYS_NUMBER");
+		}
+	};
 
 	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;

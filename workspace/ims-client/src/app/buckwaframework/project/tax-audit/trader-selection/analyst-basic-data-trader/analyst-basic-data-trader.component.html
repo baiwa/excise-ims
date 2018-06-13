@@ -20,7 +20,7 @@
                     <div class="sixteen wide field required">
                         <label class="custom-label-w-25">ระหว่างวันที่ </label>
                         <div class="four ui action input">
-                            <input type="text" placeholder="MM/YYYY" value="{{form1}}" readonly="" class="custom-readonly">
+                            <input type="text" placeholder="MM/YYYY" value="{{before}}" readonly="" class="custom-readonly">
                             <button class="ui icon button">
                                 <i class="add to calendar icon"></i>
                             </button>
@@ -29,8 +29,8 @@
                             <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>
                         </div>
                         <div class="four ui action input">
-                            <input type="text" placeholder="MM/YYYY" value="{{form2}}" class="custom-readonly" [readonly]="true">
-                            
+                            <input type="text" placeholder="MM/YYYY" value="{{last}}" class="custom-readonly" [readonly]="true">
+
                             <button class="ui icon button">
                                 <i class="add to calendar icon"></i>
                             </button>
@@ -51,7 +51,7 @@
                         <button class="ui mini primary button" routerLink="/#/add-data?id=${data}">
                             ค้นหา
                         </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="hidden" id="exciseId" value="EX"/>
+                        <input type="hidden" id="exciseId" value="EX" />
                         <button id="exciseBtn" class="ui mini primary button" onclick="window.location='/#/add-data?id='+document.getElementById('exciseId').value;">
                             <i class="add icon"></i>
                             เพิ่มข้อมูล
@@ -68,7 +68,7 @@
                             <div class="item">
                                 <div class="header">พิกัดสินค้า</div>
                                 <div class="menu">
-                                    <div class="item" *ngFor="let item of listMenu" (click)="selectExciseProductType(item)" >-{{item}}</div>
+                                    <div class="item" *ngFor="let item of listMenu" (click)="selectExciseProductType(item)">-{{item}}</div>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                 </div>
                 <div class="ui center aligned grid">
                     <div class="sixteen wide column">
-                        <button (click)="onSend();" class="ui mini primary button" >
+                        <button (click)="onSend();" class="ui mini primary button">
                             <i class="add icon"></i>
                             สร้างกระดาษทำการคัดเลือกราย
                         </button>

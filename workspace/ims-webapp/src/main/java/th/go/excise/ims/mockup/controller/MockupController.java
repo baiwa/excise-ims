@@ -69,4 +69,11 @@ public class MockupController {
 		
 	}
 	
+	@PostMapping("/getAnalysNumber")
+	@ResponseBody
+	public List<String> getAnalizeNumber() {
+		List<String> li = planWorksheetHeaderService.queryAnalysNumberFromHeader();
+		return li;
+	}
+	
 }

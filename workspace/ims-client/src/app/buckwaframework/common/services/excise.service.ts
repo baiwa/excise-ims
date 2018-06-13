@@ -12,6 +12,9 @@ export class ExciseService {
     private num2: number[];
     private percent1: number[];
     private percent2: number[];
+    private from: any;
+    private analysNumber: any;
+    private month: any;
 
     constructor(
         private ajax: AjaxService
@@ -50,23 +53,37 @@ export class ExciseService {
         }
     }
 
-    setNumber(before, last, num1, num2, percent1, percent2){
+    setformValues(before, last, from, month){
         this.before = before;
         this.last = last;
+        this.from = from;
+        this.month = month;
+    }
+
+    getformValues(){
+        return {
+            before: this.before,
+            last: this.last,
+            from: this.from,
+            month: this.month
+        };
+    }
+
+    setformNumber(num1, num2, percent1, percent2, analysNumber){
         this.num1 = num1;
         this.num2 = num2;
         this.percent1 = percent1;
         this.percent2 = percent2;
+        this.analysNumber = analysNumber;
     }
 
-    getNumber(){
+    getformNumber(){
         return {
-            before: this.before ,
-            last: this.last ,
             num1: this.num1 ,
             num2: this.num2 ,
             percent1: this.percent1 ,
-            percent2: this.percent2
+            percent2: this.percent2 ,
+            analysNumber: this.analysNumber
         };
     }
 
