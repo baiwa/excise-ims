@@ -1,16 +1,14 @@
 package th.go.excise.ims.mockup.service.ta;
 
 import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+			
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -43,9 +41,8 @@ public class PlanWorksheetHeaderService {
 	@Autowired
 	private ExciseTaxReceiveDao exciseTaxReceiveDao;
 	
-	
-	
 	public String insertPlanWorksheetHeaderService(MockupVo mockupVo,Date startBackDate, int month , String productType) {
+
 		logger.info("PlanWorksheetHeaderService.insertPlanWorksheetHeaderService");
 		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD)+"-01-"+planWorksheetHeaderDao.getAnalysNumber();
 		Date saveDate = new Date();
@@ -68,31 +65,49 @@ public class PlanWorksheetHeaderService {
 			int countReciveMonth = 0;
 			int firstMonth = 0;
 			int lastMonth = 0;
-			if(taxReciveList != null) {
+			double firstAmount = 0;
+			double lastAmount = 0;
+			BigDecimal percenttage = new BigDecimal(0);
+			if(taxReciveList != null && taxReciveList.size()  > 0) {
 				for (int i = 0 ; i < taxReciveList.size() ; i++) {
 					ExciseTaxReceive taxRecive = taxReciveList.get(i);
 					
 					String amount = taxRecive.getExciseTaxReceiveAmount() != null ? taxRecive.getExciseTaxReceiveAmount().trim().replaceAll(",","") : "0";
 					try {
-						totalAmount.add(new BigDecimal(amount));
+						totalAmount = totalAmount.add(new BigDecimal(amount));
 					} catch (Exception e) {
-						totalAmount.add(new BigDecimal(0));
+						totalAmount = totalAmount.add(new BigDecimal(0));
 					}
-					
 					if(taxRecive.getExciseTaxReceiveMonth() != null && taxRecive.getExciseTaxReceiveMonth().length() > 0) {
 						countReciveMonth++;
 						if( (i+1) < taxReciveList.size()/2 ) {
 							firstMonth++;
+							firstAmount += Double.parseDouble(amount);
 						}else {
 							lastMonth++;
+							lastAmount += Double.parseDouble(amount);
 						}
 					}
 				}
+				double percetFirstAmount = firstAmount / totalAmount.doubleValue() * 100 ;
+				double percetLastAmount = lastAmount / totalAmount.doubleValue() * 100 ;
+				
+				try {
+					double calAmount = percetLastAmount - percetFirstAmount;
+//					String strPercen =  (calAmount)+"".split(".")[0]+"."+(calAmount)+"".split(".")[1].substring(0, 2);
+					percenttage = new BigDecimal(calAmount);
+					percenttage.setScale(2, RoundingMode.UP);
+				} catch (Exception e) {
+					e.printStackTrace();
+					percenttage = new BigDecimal(0);
+				}
 			}
 			
+			
+			System.out.println(percenttage);
 			planWorksheetHeader.setTotalAmount(totalAmount);
 			planWorksheetHeader.setTotalMonth(new BigDecimal(countReciveMonth));
-//			planWorksheetHeader.setPercentage(percentage);
+			planWorksheetHeader.setPercentage(percenttage);
 			planWorksheetHeader.setFirstMonth(new BigDecimal(firstMonth));
 			planWorksheetHeader.setLastMonth(new BigDecimal(lastMonth));
 			planWorksheetHeader.setFlag("N");
