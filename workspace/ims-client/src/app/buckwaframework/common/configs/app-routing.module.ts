@@ -136,6 +136,7 @@ import { Int0811Component } from './../../project/internal-audit/int08/int08-1/i
 import { Int0812Component } from './../../project/internal-audit/int08/int08-1/int08-1-2/int08-1-2.component';
 import { Int0813Component } from './../../project/internal-audit/int08/int08-1/int08-1-3/int08-1-3.component';
 import { Int082Component } from './../../project/internal-audit/int08/int08-2/int08-2.component';
+import { Int0821Component } from '../../project/internal-audit/int08/int08-2/int08-2-1/int08-2-1.component';
 import { Int083Component } from './../../project/internal-audit/int08/int08-3/int08-3.component';
 import { Int0831Component } from './../../project/internal-audit/int08/int08-3/int08-3-1/int08-3-1.component';
 import { Int0832Component } from './../../project/internal-audit/int08/int08-3/int08-3-2/int08-3-2.component';
@@ -146,6 +147,7 @@ import { Int08333Component } from './../../project/internal-audit/int08/int08-3/
 import { Int0834Component } from './../../project/internal-audit/int08/int08-3/int08-3-4/int08-3-4.component';
 import { Int0835Component } from './../../project/internal-audit/int08/int08-3/int08-3-5/int08-3-5.component';
 import { Int0836Component } from './../../project/internal-audit/int08/int08-3/int08-3-6/int08-3-6.component';
+import { Int091Component } from '../../project/internal-audit/int09/int09-1/int09-1.component';
 import { Ope041Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-1/ope04-1.component';
 import { Ope042Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-2/ope04-2.component';
 import { Ope043Component } from './../../project/tax-audit/operate-tax-audit/ope04/ope04-3/ope04-3.component';
@@ -165,28 +167,6 @@ import { Ope054Component } from './../../project/tax-audit/operate-tax-audit/ope
 import { Ope055Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-5/ope05-5.component';
 import { Ope056Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-6/ope05-6.component';
 import { Ope057Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-7/ope05-7.component';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -232,8 +212,7 @@ const routes: Routes = [
     { path: 'epa02-1', component: Epa021Component, canActivate: [AuthGuard] },   
     { path: 'epa02-1-1', component: Epa0211Component, canActivate: [AuthGuard] },
     { path: 'epa02-1-2', component: Epa0212Component, canActivate: [AuthGuard] },
-    { path: 'epa02-1-3', component: Epa0213Component, canActivate: [AuthGuard] }, 
-   
+    { path: 'epa02-1-3', component: Epa0213Component, canActivate: [AuthGuard] },    
 
     { path: 'cop01-1', component: Cop011Component, canActivate: [AuthGuard] },
     { path: 'cop01-2', component: Cop012Component, canActivate: [AuthGuard] },
@@ -324,6 +303,7 @@ const routes: Routes = [
     { path: 'int08-1-2', component: Int0812Component, canActivate: [AuthGuard] },
     { path: 'int08-1-3', component: Int0813Component, canActivate: [AuthGuard] },
     { path: 'int08-2', component: Int082Component, canActivate: [AuthGuard] },
+    { path: 'int08-2-1', component: Int0821Component, canActivate: [AuthGuard] },
     { path: 'int08-3', component: Int083Component, canActivate: [AuthGuard] },
     { path: 'int08-3-1', component: Int0831Component, canActivate: [AuthGuard] },
     { path: 'int08-3-2', component: Int0832Component, canActivate: [AuthGuard] },
@@ -333,7 +313,9 @@ const routes: Routes = [
     { path: 'int08-3-3-3', component: Int08333Component, canActivate: [AuthGuard] },
     { path: 'int08-3-4', component: Int0834Component, canActivate: [AuthGuard] },
     { path: 'int08-3-5', component: Int0835Component, canActivate: [AuthGuard] },
-    { path: 'int08-3-6', component: Int0836Component, canActivate: [AuthGuard] },    
+    { path: 'int08-3-6', component: Int0836Component, canActivate: [AuthGuard] },  
+    { path: 'int09-1', component: Int091Component, canActivate: [AuthGuard] },    
+  
 
     { path: 'ope04-1', component: Ope041Component, canActivate: [AuthGuard] },
     { path: 'ope04-2', component: Ope042Component, canActivate: [AuthGuard] },

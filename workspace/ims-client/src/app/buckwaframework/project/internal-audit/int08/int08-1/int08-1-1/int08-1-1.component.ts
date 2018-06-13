@@ -22,6 +22,7 @@ export class Int0811Component implements OnInit {
     $('#select2').hide();
     $('#select3').hide();
     $('#selectCondition1').dropdown();
+    $('#selectC1').dropdown();
     $('#selectCondition2').dropdown();
     $('#selectCondition3').dropdown();
     $('#selectColor1').dropdown();

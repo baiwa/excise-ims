@@ -20,12 +20,15 @@ export class Int0831Component implements OnInit {
     $('#select1').hide();
     $('#select2').hide();
     $('#select3').hide();
+    $('#selectColorto3').hide();
     $('#selectCondition1').dropdown();
     $('#selectCondition2').dropdown();
     $('#selectCondition3').dropdown();
     $('#selectColor1').dropdown();
     $('#selectColor2').dropdown();
     $('#selectColor3').dropdown();
+    $('#selectColorto2').dropdown();
+    $('#selectColorto3').dropdown();
   }
 
   uploadData() {
@@ -36,18 +39,26 @@ export class Int0831Component implements OnInit {
     this.showData = false;
   }
 
-  popupEditData() {
+  popupEditData(idname) {
     $('#select1').show();
     $('#select2').show();
     $('#select3').show();
-    $('#modalInt0831').modal('show');
+    $('#selectColorto2').show();
+    $('#selectColorto3').show();
+    $(idname).modal('show');
+    
   }
 
   closePopupEdit() {
     $('#select1').hide();
     $('#select2').hide();
     $('#select3').hide();
+    $('#selectColorto2').hide();
+    $('#selectColorto3').hide();
     $('#modalInt0831').modal('hide');
+    $('#modalInt0831to2').modal('hide');
   }
+
+ 
 
 }

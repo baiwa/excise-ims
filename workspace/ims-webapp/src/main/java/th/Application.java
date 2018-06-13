@@ -10,7 +10,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 @SpringBootApplication(  exclude = {
 	HibernateJpaAutoConfiguration.class,
 	ThymeleafAutoConfiguration.class
-})
+})	
 public class Application extends SpringBootServletInitializer {
 	
 	public static void main(String[] args) throws Exception {

@@ -1,26 +1,82 @@
 <div class="ui grid">
   <div class="sixteen wide column">
-    <h2 class="ui header">ประเมินคดีด้านจำนวนค่าปรับ</h2>
 
-    <div class="ui top attached header">
-      <span>ประเมินคดีด้านจำนวนค่าปรับ</span>
+
+    <div class="ui large ordered steps" style="width: 280px;">
+      <div class="active step">
+        <div class="content">
+          <div class="title"> ประเมินความเสี่ยง
+          </div>
+          <div class="description">ผลการปราบปรามด้านค่าปรับคดี </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="content">
+          <div class="title">ประเมินความเสี่ยง
+          </div>
+          <div class="description"> ผลการปราบปรามด้านจำนวณคดี</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="content">
+          <div class="title"> ประเมินความเสี่ยง
+          </div>
+          <div class="description">ผลการปราบปราม</div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>สร้างกระดาษทำการประเมินความเสี่ยงผลการปราบปรามด้านจำนวนค่าปรับคดี													
+        </span>
     </div>
 
     <div class="ui attached segment">
       <div class="ui form">
         <div class="inline fields">
-          <div class="nine wide field ">
-            <label style="width: 40em">ประเมินคดีด้านจำนวนค่าปรับ</label>
-            <input type="file" />
+          <div class="two wide field "></div>
+          <div class="two wide field ">
+            <label>เดือน</label>
+          </div>
+          <div class="four wide field ">
+            <select class="ui search dropdown">
+              <option value="0">มกราคม</option>
+              <option value="1">กุมพาพันธ์</option>
+              <option value="2">มีนาคม</option>
+              <option value="0">เมษายน</option>
+              <option value="1">พฤษภาคม</option>
+              <option value="2">มิถุนายน</option>
+              <option value="0">กรกฎาคม</option>
+              <option value="1">กันยายน</option>
+              <option value="2">สิงหาคม</option>
+              <option value="0">ตุลาตม</option>
+              <option value="1">พฤศจิกายน</option>
+              <option value="2">ธันวาคม</option>
+            </select>
+          </div>
+          <div class="two wide field ">
+            <label>ปีงบประมาณ</label>
+          </div>
+          <div class="four wide field ">
+            <select class="ui search dropdown">
+              <option value="0">2651</option>
+              <option value="1">2560</option>
+              <option value="2">2559</option>
+            </select>
           </div>
         </div>
       </div>
 
+      <br>
+
       <div class="ui center aligned grid">
         <div class="sixteen wide column">
           <button class="ui mini primary button" (click)="uploadData()">
-            <i class="upload icon"></i>
-            อัพโหลด
+            <i class="add icon"></i>
+            สร้างกระดาษทำการ
           </button>
           <button class="ui mini button" (click)="clearData()">
             <i class="refresh icon"></i>
@@ -64,6 +120,7 @@
         <div class="sixteen wide column">
           กระดาษทำการประเมินความเสี่ยงผลการปราบปรามเปรียบเทียบประมาณการฯเพื่อพิจารณาคัดเลือกหน่วยงานรับตรวจสำนักงานสรรพสามิตภาค พื้นที่
           และสาขา
+
           <br> ปีงบประมาณ พ.ศ. 2561
           <br> กลุ่มตรวจสอบภายใน กรมสรรพสามิต
         </div>
@@ -75,7 +132,7 @@
 
         <div class="column" style="width: 30%;">
           6. ผลการจับกุมผู้กระทำผิด
-          <br> 6.1 จำนวนคดี
+          <br> 6.1 จำนวนค่าปรับ
           <br> ผลการจับกุมผู้กระทำผิด (จำนวนค่าปรับ)
           <br> ผลการจับกุมผู้กระทำผิด (จำนวนค่าปรับ)
           <br> ผลการจับกุมผู้กระทำผิด (จำนวนค่าปรับ)
@@ -85,7 +142,7 @@
           &nbsp;
           <br>
           <br> น้อยกว่า
-          <br> เท่ากับ
+          <br> อยู่ระหว่าง
           <br> มากกว่า
         </div>
 
@@ -94,7 +151,7 @@
           <br>
           <br>0
           <br>0-100
-          <br>
+          <br>100
           <span style="margin-right:3%">100</span>
         </div>
 
@@ -342,14 +399,7 @@
 
   <div class="content">
     <div class="ui form">
-      <div class="inline fields">
-        <div class="sixteen wide field">
-          <button class="ui mini primary button">
-            <i class="add icon"></i>
-            เพิ่ม
-          </button>
-        </div>
-      </div>
+
 
       <table id="tableSetting" class="ui small celled table" style="width: 100%;">
         <thead>
@@ -456,6 +506,10 @@
   <div class="actions">
     <div class="ui center aligned grid">
       <div class="sixteen wide column">
+        <button class="ui mini primary button">
+          <i class="add icon"></i>
+          เพิ่ม
+        </button>
         <button class="ui mini primary button width-100">
           <i class="save icon"></i>
           บันทึก

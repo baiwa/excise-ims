@@ -1,34 +1,68 @@
 <div class="ui grid">
   <div class="sixteen wide column">
-    <h2 class="ui header">ประเมินความเสี่ยงโครงการด้านประสิทธิภาพ</h2>
 
-    <div class="ui top attached header">
-      <span>ประเมินความเสี่ยงโครงการด้านประสิทธิภาพ</span>
+    <div class="ui large ordered steps" style="width: 280px;">
+      <div class=" step">
+        <div class="content">
+          <div class="title">ประเมิน
+          </div>
+          <div class="description">ความเสี่ยงโครงการด้านงบประมาณ </div>
+        </div>
+      </div>
+      <div class="active step">
+        <div class="content">
+          <div class="title">ประเมิน
+          </div>
+          <div class="description">ความเสี่ยงโครงการด้านประสิทธิภาพ</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="content">
+          <div class="title">ประเมิน
+          </div>
+          <div class="description">ความเสี่ยงโครงการรวม</div>
+        </div>
+      </div>
+    </div>  
+
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>สร้างกระดาษทำการประเมินความเสี่ยงโครงการด้านประสิทธิภาพ
+      </span>
     </div>
+
 
     <div class="ui attached segment">
       <div class="ui form">
         <div class="inline fields">
-          <div class="nine wide field ">
-            <label style="width: 40em">ประเมินความเสี่ยงโครงการด้านประสิทธิภาพ</label>
-            <input type="file" />
+          <div class="four wide field "></div>
+          <div class="two wide field ">
+            <label>ปีงบประมาณ</label>
+          </div>
+          <div class="four wide field ">
+            <select class="ui search dropdown">
+              <option value="0">2561</option>
+              <option value="1">2560</option>
+              <option value="2">2559</option>
+            </select>
           </div>
         </div>
       </div>
-
-      <div class="ui center aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini primary button" (click)="uploadData()">
-            <i class="upload icon"></i>
-            อัพโหลด
-          </button>
-          <button class="ui mini button" (click)="clearData()">
-            <i class="refresh icon"></i>
-            ล้างข้อมูล
-          </button>
+      <br>
+      <div class="inline fields">
+        <div class="two wide field "></div>
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button" (click)="uploadData()">
+              <i class="add icon"></i>
+              สร้างกระดาษทำการ
+            </button>
+            <button class="ui mini button" (click)="clearData()">
+              <i class="refresh icon"></i>
+              ล้างข้อมูล
+            </button>
+          </div>
         </div>
       </div>
-
     </div>
 
     <div class="ui segment" *ngIf="showData">
@@ -292,14 +326,7 @@
   <div class="content">
 
     <div class="ui form">
-      <div class="inline fields">
-        <div class="sixteen wide field">
-          <button class="ui mini primary button">
-            <i class="add icon"></i>
-            เพิ่ม
-          </button>
-        </div>
-      </div>
+     
       <table id="tableSetting" class="ui small celled table" style="width: 100%;">
         <thead>
           <tr class="center aligned">
@@ -407,6 +434,10 @@
   <div class="actions">
     <div class="ui center aligned grid">
       <div class="sixteen wide column">
+        <button class="ui mini primary button width-100">
+          <i class="add icon"></i>
+          เพิ่ม
+        </button>
         <button class="ui mini primary button width-100">
           <i class="save icon"></i>
           บันทึก
