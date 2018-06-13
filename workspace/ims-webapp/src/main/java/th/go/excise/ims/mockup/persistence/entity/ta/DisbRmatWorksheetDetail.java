@@ -1,11 +1,12 @@
 package th.go.excise.ims.mockup.persistence.entity.ta;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class DisbRmatWorksheetDetail {
-    private Integer taDisbRmatWsDtlId;
-    private Integer taDisburseRawMatHeadId;
-    private Integer disburseRawMatDtlNo;
+    private BigDecimal taDisbRmatWsDtlId;
+    private BigDecimal taDisburseRawMatHeadId;
+    private BigDecimal disburseRawMatDtlNo;
     private String disburseRawMatDtlOrder;
     private String rawMatRequisition;
     private String dayBook0701;
@@ -16,27 +17,27 @@ public class DisbRmatWorksheetDetail {
     private String updateBy;
     private Date updateDatetime;
 
-    public Integer getTaDisbRmatWsDtlId() {
+    public BigDecimal getTaDisbRmatWsDtlId() {
         return taDisbRmatWsDtlId;
     }
 
-    public void setTaDisbRmatWsDtlId(Integer taDisbRmatWsDtlId) {
+    public void setTaDisbRmatWsDtlId(BigDecimal taDisbRmatWsDtlId) {
         this.taDisbRmatWsDtlId = taDisbRmatWsDtlId;
     }
 
-    public Integer getTaDisburseRawMatHeadId() {
+    public BigDecimal getTaDisburseRawMatHeadId() {
         return taDisburseRawMatHeadId;
     }
 
-    public void setTaDisburseRawMatHeadId(Integer taDisburseRawMatHeadId) {
+    public void setTaDisburseRawMatHeadId(BigDecimal taDisburseRawMatHeadId) {
         this.taDisburseRawMatHeadId = taDisburseRawMatHeadId;
     }
 
-    public Integer getDisburseRawMatDtlNo() {
+    public BigDecimal getDisburseRawMatDtlNo() {
         return disburseRawMatDtlNo;
     }
 
-    public void setDisburseRawMatDtlNo(Integer disburseRawMatDtlNo) {
+    public void setDisburseRawMatDtlNo(BigDecimal disburseRawMatDtlNo) {
         this.disburseRawMatDtlNo = disburseRawMatDtlNo;
     }
 

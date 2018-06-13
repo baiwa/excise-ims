@@ -1,10 +1,11 @@
 package th.go.excise.ims.mockup.persistence.entity.ta;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class MaterialsWorkSheetHeader {
-    private Integer taMaterialsWsHeaderId;
-    private Integer taxPlanId;
+    private BigDecimal taMaterialsWsHeaderId;
+    private BigDecimal taxPlanId;
     private String exciseId;
     private String taxationId;
     private String taAnalysisId;
@@ -17,19 +18,19 @@ public class MaterialsWorkSheetHeader {
     private String updateBy;
     private Date updateDatetime;
 
-    public Integer getTaMaterialsWsHeaderId() {
+    public BigDecimal getTaMaterialsWsHeaderId() {
         return taMaterialsWsHeaderId;
     }
 
-    public void setTaMaterialsWsHeaderId(Integer taMaterialsWsHeaderId) {
+    public void setTaMaterialsWsHeaderId(BigDecimal taMaterialsWsHeaderId) {
         this.taMaterialsWsHeaderId = taMaterialsWsHeaderId;
     }
 
-    public Integer getTaxPlanId() {
+    public BigDecimal getTaxPlanId() {
         return taxPlanId;
     }
 
-    public void setTaxPlanId(Integer taxPlanId) {
+    public void setTaxPlanId(BigDecimal taxPlanId) {
         this.taxPlanId = taxPlanId;
     }
 

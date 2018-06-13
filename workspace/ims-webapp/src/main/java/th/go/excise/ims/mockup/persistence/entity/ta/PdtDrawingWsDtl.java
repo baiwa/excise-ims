@@ -1,10 +1,11 @@
 package th.go.excise.ims.mockup.persistence.entity.ta;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class PdtDrawingWsDtl {
-    private Integer taPdtDrawingWsDtlId;
-    private Integer taPdtDrawingWsHeaderId;
+    private BigDecimal taPdtDrawingWsDtlId;
+    private BigDecimal taPdtDrawingWsHeaderId;
     private String drawingDate;
     private String billNo;
     private String taPdtDrawingWsDtlOwder;
@@ -17,19 +18,19 @@ public class PdtDrawingWsDtl {
     private String updateBy;
     private Date updateDatetime;
 
-    public Integer getTaPdtDrawingWsDtlId() {
+    public BigDecimal getTaPdtDrawingWsDtlId() {
         return taPdtDrawingWsDtlId;
     }
 
-    public void setTaPdtDrawingWsDtlId(Integer taPdtDrawingWsDtlId) {
+    public void setTaPdtDrawingWsDtlId(BigDecimal taPdtDrawingWsDtlId) {
         this.taPdtDrawingWsDtlId = taPdtDrawingWsDtlId;
     }
 
-    public Integer getTaPdtDrawingWsHeaderId() {
+    public BigDecimal getTaPdtDrawingWsHeaderId() {
         return taPdtDrawingWsHeaderId;
     }
 
-    public void setTaPdtDrawingWsHeaderId(Integer taPdtDrawingWsHeaderId) {
+    public void setTaPdtDrawingWsHeaderId(BigDecimal taPdtDrawingWsHeaderId) {
         this.taPdtDrawingWsHeaderId = taPdtDrawingWsHeaderId;
     }
 

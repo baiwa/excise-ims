@@ -1,10 +1,11 @@
 package th.go.excise.ims.mockup.persistence.entity.ta;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class AnalysisDataDetail {
-	private Integer analysisDataDetailId;
-	private Integer analysisDataId;
+	private BigDecimal analysisDataDetailId;
+	private BigDecimal analysisDataId;
 	private String analysisName;
 	private String analysisOrder;
 	private String analysisList1;
@@ -14,16 +15,16 @@ public class AnalysisDataDetail {
 	private Date createdDatetime;
 	private Date updatedDatetime;
 	
-	public Integer getAnalysisDataDetailId() {
+	public BigDecimal getAnalysisDataDetailId() {
 		return analysisDataDetailId;
 	}
-	public void setAnalysisDataDetailId(Integer analysisDataDetailId) {
+	public void setAnalysisDataDetailId(BigDecimal analysisDataDetailId) {
 		this.analysisDataDetailId = analysisDataDetailId;
 	}
-	public Integer getAnalysisDataId() {
+	public BigDecimal getAnalysisDataId() {
 		return analysisDataId;
 	}
-	public void setAnalysisDataId(Integer analysisDataId) {
+	public void setAnalysisDataId(BigDecimal analysisDataId) {
 		this.analysisDataId = analysisDataId;
 	}
 	public String getAnalysisName() {

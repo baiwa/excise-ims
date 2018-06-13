@@ -15,24 +15,21 @@ import org.springframework.stereotype.Repository;
 import th.go.excise.ims.mockup.persistence.entity.ta.ExciseFileUpload;
 
 @Repository
-public class ExciseFileUploadDao {
+public class DisbRmatWorksheetHeaderDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private Logger logger = LoggerFactory.getLogger(ExciseFileUploadDao.class);
+	private Logger logger = LoggerFactory.getLogger(DisbRmatWorksheetHeaderDao.class);
 
+	private final String sql = " SELECT * FROM TA_DISB_RMAT_WORKSHEET_HEADER ";
 
-	private final String sqlTaExciseId = " select * from ta_excise_tax_receive where TA_EXCISE_ID =  ?  ";
-
-	public List<ExciseFileUpload> queryByExciseId(String register) {
+	public List<ExciseFileUpload> queryById(String register) {
 		logger.info("register: {}", register);
-		List<ExciseFileUpload> list = jdbcTemplate.query(sqlTaExciseId, new Object[] { register },
-				exciseRegisttionRowmapper);
-		
+		List<ExciseFileUpload> list = jdbcTemplate.query(sql, new Object[] { register }, rowMapper);
 		return list;
 	}
 	
-	public void insertExciseFileUpload(ExciseFileUpload value) {
+	public void insert(ExciseFileUpload value) {
 		// Initial SQL for insert to database
 		StringBuilder sql = new StringBuilder(" INSERT INTO TA_EXCISE_FILE_UPLOAD (TA_EXCISE_FILE_UPLOAD_ID," + 
 				"EXCISE_ID," + 
@@ -41,13 +38,13 @@ public class ExciseFileUploadDao {
 				"CREATED_BY," + 
 				"CREATED_DATETIME," + 
 				"UPDATE_BY," + 
-				"UPDATE_DATETIME)"); 
+				"UPDATE_DATETIME)");
 		sql.append(" values (TA_EXCISE_FILE_UPLOAD_SEQ.nextval,?,?,?,?,?,?,?) ");
 		// For set Object
-		jdbcTemplate.update(sql.toString(), exciseFileUploadToArrayObject(value) );
+		jdbcTemplate.update(sql.toString(), toArrayObject(value) );
 	}
 	
-	private Object[] exciseFileUploadToArrayObject(ExciseFileUpload value) {
+	private Object[] toArrayObject(ExciseFileUpload value) {
 
 		List<Object> valueList = new ArrayList<Object>();
 		if (value != null) {
@@ -62,7 +59,7 @@ public class ExciseFileUploadDao {
 		return valueList.toArray();
 	}
 	
-	private RowMapper<ExciseFileUpload> exciseRegisttionRowmapper = new RowMapper<ExciseFileUpload>() {
+	private RowMapper<ExciseFileUpload> rowMapper = new RowMapper<ExciseFileUpload>() {
 
 		@Override
 		public ExciseFileUpload mapRow(ResultSet rs, int arg1) throws SQLException {

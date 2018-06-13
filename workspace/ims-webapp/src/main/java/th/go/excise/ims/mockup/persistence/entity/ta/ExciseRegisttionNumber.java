@@ -1,16 +1,17 @@
 package th.go.excise.ims.mockup.persistence.entity.ta;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ExciseRegisttionNumber {
-    private Integer taExciseRegisttionNumberId;
+    private BigDecimal taExciseRegisttionNumberId;
     private String taExciseId;
     private String taExciseOperatorName;
     private String taExciseIdenNumber;
     private String taExciseFacName;
     private String taExciseFacAddress;
     private String taExciseArea;
-    private Integer taExciseRegisCapital;
+    private BigDecimal taExciseRegisCapital;
     private String taExciseRemark;
     private String taExciseProductType;
     private String taExciseSectorArea;
@@ -19,11 +20,11 @@ public class ExciseRegisttionNumber {
     private String updateBy;
     private Date updateDatetime;
 
-    public Integer getTaExciseRegisttionNumberId() {
+    public BigDecimal getTaExciseRegisttionNumberId() {
         return taExciseRegisttionNumberId;
     }
 
-    public void setTaExciseRegisttionNumberId(Integer taExciseRegisttionNumberId) {
+    public void setTaExciseRegisttionNumberId(BigDecimal taExciseRegisttionNumberId) {
         this.taExciseRegisttionNumberId = taExciseRegisttionNumberId;
     }
 
@@ -75,11 +76,11 @@ public class ExciseRegisttionNumber {
         this.taExciseArea = taExciseArea;
     }
 
-    public Integer getTaExciseRegisCapital() {
+    public BigDecimal getTaExciseRegisCapital() {
         return taExciseRegisCapital;
     }
 
-    public void setTaExciseRegisCapital(Integer taExciseRegisCapital) {
+    public void setTaExciseRegisCapital(BigDecimal taExciseRegisCapital) {
         this.taExciseRegisCapital = taExciseRegisCapital;
     }
 

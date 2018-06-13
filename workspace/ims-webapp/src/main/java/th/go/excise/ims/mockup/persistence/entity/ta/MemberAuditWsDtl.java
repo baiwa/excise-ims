@@ -1,10 +1,11 @@
 package th.go.excise.ims.mockup.persistence.entity.ta;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class MemberAuditWsDtl {
-    private Integer taMemberAuditWsDtlId;
-    private Integer taMemberAuditWsHeaderId;
+    private BigDecimal taMemberAuditWsDtlId;
+    private BigDecimal taMemberAuditWsHeaderId;
     private String memberId;
     private String memberName;
     private String startDate;
@@ -16,19 +17,19 @@ public class MemberAuditWsDtl {
     private String updateBy;
     private Date updateDatetime;
 
-    public Integer getTaMemberAuditWsDtlId() {
+    public BigDecimal getTaMemberAuditWsDtlId() {
         return taMemberAuditWsDtlId;
     }
 
-    public void setTaMemberAuditWsDtlId(Integer taMemberAuditWsDtlId) {
+    public void setTaMemberAuditWsDtlId(BigDecimal taMemberAuditWsDtlId) {
         this.taMemberAuditWsDtlId = taMemberAuditWsDtlId;
     }
 
-    public Integer getTaMemberAuditWsHeaderId() {
+    public BigDecimal getTaMemberAuditWsHeaderId() {
         return taMemberAuditWsHeaderId;
     }
 
-    public void setTaMemberAuditWsHeaderId(Integer taMemberAuditWsHeaderId) {
+    public void setTaMemberAuditWsHeaderId(BigDecimal taMemberAuditWsHeaderId) {
         this.taMemberAuditWsHeaderId = taMemberAuditWsHeaderId;
     }
 

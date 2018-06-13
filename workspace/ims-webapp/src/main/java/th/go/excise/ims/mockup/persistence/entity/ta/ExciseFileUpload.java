@@ -1,9 +1,10 @@
 package th.go.excise.ims.mockup.persistence.entity.ta;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ExciseFileUpload {
-	private Integer taExciseFileUploadId;
+	private BigDecimal taExciseFileUploadId;
 	private String exciseId;
 	private Date createDate;
 	private String uploadPath;
@@ -11,10 +12,10 @@ public class ExciseFileUpload {
 	private Date  createdDatetime;
 	private String updateBy;
 	private Date updateDatetime;
-	public Integer getTaExciseFileUploadId() {
+	public BigDecimal getTaExciseFileUploadId() {
 		return taExciseFileUploadId;
 	}
-	public void setTaExciseFileUploadId(Integer taExciseFileUploadId) {
+	public void setTaExciseFileUploadId(BigDecimal taExciseFileUploadId) {
 		this.taExciseFileUploadId = taExciseFileUploadId;
 	}
 	public String getExciseId() {

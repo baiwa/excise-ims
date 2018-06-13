@@ -1,9 +1,10 @@
 package th.go.excise.ims.mockup.persistence.entity.ta;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ExciseProductType {
-    private Integer taExciseRegisNumberId;
+    private BigDecimal taExciseRegisNumberId;
     private String productTypeValue;
     private String productTypeText;
     private String createdBy;
@@ -11,11 +12,11 @@ public class ExciseProductType {
     private String updateBy;
     private Date updateDatetime;
 
-    public Integer getTaExciseRegisNumberId() {
+    public BigDecimal getTaExciseRegisNumberId() {
         return taExciseRegisNumberId;
     }
 
-    public void setTaExciseRegisNumberId(Integer taExciseRegisNumberId) {
+    public void setTaExciseRegisNumberId(BigDecimal taExciseRegisNumberId) {
         this.taExciseRegisNumberId = taExciseRegisNumberId;
     }
 

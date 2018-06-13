@@ -1,11 +1,13 @@
 package th.go.excise.ims.mockup.persistence.entity.ta;
 
+import java.math.BigDecimal;
+
 public class MemberAuditWsHeader {
-    private Integer taMemberAuditWsHeaderId;
-    private Integer taxPlanId;
+    private BigDecimal taMemberAuditWsHeaderId;
+    private BigDecimal taxPlanId;
     private String exciseId;
     private String taxationId;
-    private Integer taAnalysisId;
+    private BigDecimal taAnalysisId;
     private String startDate;
     private String endDate;
     private String productType;
@@ -15,19 +17,19 @@ public class MemberAuditWsHeader {
     private String updateBy;
     private String updateDatetime;
 
-    public Integer getTaMemberAuditWsHeaderId() {
+    public BigDecimal getTaMemberAuditWsHeaderId() {
         return taMemberAuditWsHeaderId;
     }
 
-    public void setTaMemberAuditWsHeaderId(Integer taMemberAuditWsHeaderId) {
+    public void setTaMemberAuditWsHeaderId(BigDecimal taMemberAuditWsHeaderId) {
         this.taMemberAuditWsHeaderId = taMemberAuditWsHeaderId;
     }
 
-    public Integer getTaxPlanId() {
+    public BigDecimal getTaxPlanId() {
         return taxPlanId;
     }
 
-    public void setTaxPlanId(Integer taxPlanId) {
+    public void setTaxPlanId(BigDecimal taxPlanId) {
         this.taxPlanId = taxPlanId;
     }
 
@@ -47,11 +49,11 @@ public class MemberAuditWsHeader {
         this.taxationId = taxationId;
     }
 
-    public Integer getTaAnalysisId() {
+    public BigDecimal getTaAnalysisId() {
         return taAnalysisId;
     }
 
-    public void setTaAnalysisId(Integer taAnalysisId) {
+    public void setTaAnalysisId(BigDecimal taAnalysisId) {
         this.taAnalysisId = taAnalysisId;
     }
 

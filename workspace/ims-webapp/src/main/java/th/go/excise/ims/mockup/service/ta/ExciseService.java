@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.mockup.domain.ta.ExciseFile;
 import th.go.excise.ims.mockup.persistence.dao.ta.ExciseFileUploadDao;
 import th.go.excise.ims.mockup.persistence.entity.ta.ExciseFileUpload;
@@ -46,8 +47,8 @@ public class ExciseService {
     		    ExciseFileUpload excise = new ExciseFileUpload();
         		excise.setExciseId(exciseId);
         		excise.setUploadPath(path);
-        		excise.setCreatedBy("admin");
-        		excise.setUpdateBy("admin");
+        		excise.setCreatedBy(UserLoginUtils.getCurrentUsername());
+        		excise.setUpdateBy(UserLoginUtils.getCurrentUsername());
         		excise.setCreateDate(in);
         		excise.setCreatedDatetime(in);
         		excise.setUpdateDatetime(in);
