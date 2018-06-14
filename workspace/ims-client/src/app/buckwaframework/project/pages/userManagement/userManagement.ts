@@ -91,6 +91,7 @@ export class UserManagementPage implements OnInit {
                     }
                 },
                 { "data": "username" },
+                { "data": "sector" },
                 { "data": "enabled" },
                 { "data": "accountNonExpired" },
                 { "data": "credentialsNonExpired" },

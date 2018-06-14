@@ -21,6 +21,7 @@ public class UserManagementRowMapper implements RowMapper<UserManagement> {
 	public UserManagement mapRow(ResultSet rs, int rowNum) throws SQLException {
 		UserManagement userManagement = new UserManagement();
 		userManagement.setUserId(rs.getLong("user_id"));
+		userManagement.setSector(rs.getString("sector"));
 		userManagement.setUsername(rs.getString("username"));
 		userManagement.setPassword(rs.getString("password"));
 		userManagement.setEnabled(rs.getString("enabled"));

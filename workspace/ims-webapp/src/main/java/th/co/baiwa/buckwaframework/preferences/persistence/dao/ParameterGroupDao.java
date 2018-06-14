@@ -25,20 +25,15 @@ public class ParameterGroupDao {
 	private CommonJdbcDao commonJdbcDao;
 	
 	public List<ParameterGroup> findAll() {
-		logger.debug("findAll");
+		logger.debug("findAll table sys_parameter_group intal project ");
 		
 		String sql =
 			" SELECT param_group_id, param_group_code, param_group_desc " +
 			" FROM sys_parameter_group " +
 			" WHERE is_deleted = ? " +
 			" ORDER BY param_group_code ";
-		
-		return commonJdbcDao.executeQuery(sql,
-			new Object[] {
-				FLAG.N_FLAG
-			},
-			ParameterGroupRowMapper.getInstance()
-		);
+		List<ParameterGroup> parameterGroupList = commonJdbcDao.executeQuery(sql,new Object[] {FLAG.N_FLAG},ParameterGroupRowMapper.getInstance());
+		return parameterGroupList;
 	}
 	
 	public ParameterGroup findById(Long paramGroupId) {

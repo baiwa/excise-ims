@@ -14,6 +14,7 @@ import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAMETER_GROUP;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.SYSTEM_CONFIG;
+import th.co.baiwa.buckwaframework.preferences.persistence.dao.SEQDao;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
 import th.co.baiwa.buckwaframework.security.persistence.dao.UserAttemptDao;
 import th.co.baiwa.buckwaframework.security.persistence.entity.UserAttempt;
@@ -30,12 +31,16 @@ public class UserAttemptService {
 	@Autowired
 	private UserDao userDao;
 	
+	@Autowired
+	private SEQDao seqDao;
+	
 	public void resetFailAttempt(String username) {
 		logger.info("resetFailAttempt username={}", username);
 		
 		UserAttempt userAttempt = userAttemptDao.findByUsername(username);
 		if (userAttempt == null) {
 			userAttempt = new UserAttempt();
+			userAttempt.setUserAttemptId(seqDao.autoNumberRunningBySeqName("ADM_USER_ATTEMPT_SEQ").longValue());    
 			userAttempt.setUsername(username);
 			userAttempt.setAttempts(0);
 			userAttempt.setLastModified(new Date());
@@ -54,6 +59,7 @@ public class UserAttemptService {
 		UserAttempt userAttempt = userAttemptDao.findByUsername(username);
 		if (userAttempt == null) {
 			userAttempt = new UserAttempt();
+			userAttempt.setUserAttemptId(seqDao.autoNumberRunningBySeqName("ADM_USER_ATTEMPT_SEQ").longValue());
 			userAttempt.setUsername(username);
 			userAttempt.setAttempts(1);
 			userAttempt.setLastModified(new Date());

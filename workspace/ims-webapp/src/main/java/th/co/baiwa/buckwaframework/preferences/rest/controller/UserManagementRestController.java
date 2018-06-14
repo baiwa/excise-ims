@@ -1,5 +1,6 @@
 package th.co.baiwa.buckwaframework.preferences.rest.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
@@ -22,6 +24,9 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.UserManagement;
 import th.co.baiwa.buckwaframework.preferences.service.UserManagementService;
+import th.go.excise.ims.mockup.persistence.entity.ListOfValue;
+import th.go.excise.ims.mockup.persistence.entity.SelectOptionValue;
+import th.go.excise.ims.mockup.service.ListOfValueService;
 
 @RestController
 @RequestMapping("/api/preferences/userManagement")
@@ -31,6 +36,9 @@ public class UserManagementRestController {
 	
 	@Autowired
 	private UserManagementService userManagementService;
+	
+	@Autowired
+	private ListOfValueService listOfValueService;
 	
 	@GetMapping("search")
 	public ResponseEntity<?> search(
@@ -116,6 +124,20 @@ public class UserManagementRestController {
 		
 		userManagementService.deleteUserManagement(id);
 		return new ResponseEntity<Message>(HttpStatus.NO_CONTENT);
+	}
+	
+	@PostMapping("/setorList")
+	@ResponseBody
+	public List<SelectOptionValue> getSetorListByLov() {
+		List<SelectOptionValue> sectorList = new ArrayList<SelectOptionValue>();
+		List<ListOfValue> lovList = listOfValueService.queryLovByCriteria(new ListOfValue("SECTOR_LIST"));
+		SelectOptionValue selectOption= null;
+		for (ListOfValue listOfValue : lovList) {
+			selectOption = new SelectOptionValue();
+			selectOption.setValue(listOfValue.getValue());
+			sectorList.add(selectOption);
+		}
+		return sectorList;
 	}
 	
 }

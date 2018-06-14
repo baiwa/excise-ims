@@ -68,8 +68,7 @@ public class MockupService {
 		List<String> monthNameList = DateConstant.startBackDate(startBackDate, month);
 		for (ExciseRegistartionNumber registartionNumber : regisNumberList) {
 
-			taxReciveList = exciseTaxReceiveDao
-					.queryByExciseTaxReceiveAndFilterDataSelection(registartionNumber.getExciseId(), monthNameList);
+			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(registartionNumber.getExciseId(), monthNameList);
 			int count = 0;
 			int count2 = 0;
 

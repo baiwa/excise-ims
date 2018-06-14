@@ -8,11 +8,18 @@ public class ListOfValue {
 	private String type;
 	private String typeDescription;
 	private String value;
-	private String typeDrescription;
+	private String valueDescription;
 	private String createdBy;
 	private Date createdDatetime;
 	private String updateBy;
 	private Date updateDatetime;
+	
+	public ListOfValue(String type) {
+		this.type = type;
+	}
+	public ListOfValue() {
+		
+	}
 	public BigDecimal getLovId() {
 		return lovId;
 	}
@@ -37,12 +44,7 @@ public class ListOfValue {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public String getTypeDrescription() {
-		return typeDrescription;
-	}
-	public void setTypeDrescription(String typeDrescription) {
-		this.typeDrescription = typeDrescription;
-	}
+	
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -66,5 +68,11 @@ public class ListOfValue {
 	}
 	public void setUpdateDatetime(Date updateDatetime) {
 		this.updateDatetime = updateDatetime;
+	}
+	public String getValueDescription() {
+		return valueDescription;
+	}
+	public void setValueDescription(String valueDescription) {
+		this.valueDescription = valueDescription;
 	}
 }

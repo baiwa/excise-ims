@@ -27,7 +27,8 @@ export class UserManagementDetailPage implements OnInit {
 
     private isRequired: string = "";
     private typePassword: string;
-
+    private sector : any[];
+    
     constructor(
         private ajaxService: AjaxService,
         private messageBarService: MessageBarService,
@@ -39,6 +40,7 @@ export class UserManagementDetailPage implements OnInit {
     }
 
     ngOnInit() {
+       
         this.typePassword = "password";
         let id = this.route.snapshot.params['id'];
         this.$form = $('#userManagementForm');
@@ -71,10 +73,31 @@ export class UserManagementDetailPage implements OnInit {
             this.isRequired = "required";
 
         }
+        this.querySecorByLov();
+
     }
 
     ngAfterViewInit() {
         this.formInit();
+    }
+
+    querySecorByLov() { //pavit 13/06/2561 table list_of_value at lov Type 
+        const URL =AjaxService.CONTEXT_PATH+ "/api/preferences/userManagement/setorList";
+        var parameter = {};
+       
+        $.post(URL,
+            function (data) {
+                console.log(data);
+                this.sector = data;
+                var option = "";
+                for(var i = 0 ; i < data.length ; i++){
+                    option += "<option name="+data[i].value+">"+data[i].value+"</option>";
+                }
+                document.getElementById('selectSector').innerHTML = option;
+            }).fail(function () {
+                
+                console.log("error");
+            });
     }
 
     formInit(): void {
@@ -150,8 +173,8 @@ export class UserManagementDetailPage implements OnInit {
             this.ajaxService.get(getURL, (success: Response) => {
                 let body: any = success.json();
                 let existUserManagement = body.data as UserManagement;
-
-                if (existUserManagement.username) {
+                console.log("existUserManagement : " + existUserManagement);
+                if (existUserManagement != null && existUserManagement.username != null) {
                     this.messageBarService.error('Username is existing...');
                     this.$form.removeClass("loading");
                 } else {

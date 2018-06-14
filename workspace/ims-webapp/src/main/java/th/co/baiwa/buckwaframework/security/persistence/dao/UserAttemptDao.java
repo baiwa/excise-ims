@@ -18,6 +18,8 @@ public class UserAttemptDao {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserAttemptDao.class);
 	
+	
+	
 	@Autowired
 	private CommonJdbcDao commonJdbcDao;
 	
@@ -25,12 +27,14 @@ public class UserAttemptDao {
 		logger.debug("insert");
 		
 		String sql = SqlGeneratorUtils.genSqlInsert("adm_user_attempt", Arrays.asList(
+			"USER_ATTEMPT_ID",
 			"username",
 			"attempts",
 			"last_modified"
 		));
-		
+		logger.debug("sql : "+ sql);
 		commonJdbcDao.executeInsert(sql, new Object[] {
+			userAttempt.getUserAttemptId(),
 			userAttempt.getUsername(),
 			userAttempt.getAttempts(),
 			userAttempt.getLastModified(),
@@ -47,7 +51,7 @@ public class UserAttemptDao {
 			),
 			Arrays.asList("user_attempt_id")
 		);
-		
+		logger.debug("sql : "+ sql);
 		commonJdbcDao.executeInsert(sql, new Object[] {
 			userAttempt.getAttempts(),
 			new Date(),
@@ -62,7 +66,7 @@ public class UserAttemptDao {
 			" SELECT user_attempt_id, username, attempts, last_modified " +
 			" FROM adm_user_attempt " +
 			" WHERE username = ? ";
-		
+		logger.debug("sql : "+ sql);
 		UserAttempt userAttempt = commonJdbcDao.executeQueryForObject(sql,
 			new Object[] {
 				username

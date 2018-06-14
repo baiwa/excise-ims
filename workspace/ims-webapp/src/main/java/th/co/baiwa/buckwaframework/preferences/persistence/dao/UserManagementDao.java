@@ -1,6 +1,7 @@
 package th.co.baiwa.buckwaframework.preferences.persistence.dao;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -27,17 +28,22 @@ import th.go.excise.ims.mockup.utils.OracleUtils;
 @Repository("userManagementDao")
 public class UserManagementDao {
 
-	
+	private final String ADM_USER_SEQ = "ADM_USER_SEQ";
+	private final String ADM_USER_ROLE_SEQ = "ADM_USER_ROLE_SEQ";
 	private static final Logger logger = LoggerFactory.getLogger(UserManagementDao.class);
 	
 	@Autowired
 	private CommonJdbcDao commonJdbcDao;
 	
+	@Autowired
+	private SEQDao seqDao;
+	
+	
 	public UserManagement findByUserId(String userId) {
 		logger.debug("findByUserId userId={}", userId);
 		
 		String sql =
-			" SELECT user_id, username, password, enabled, account_non_expired, " + 
+			" SELECT user_id, username, password,SECTOR, enabled, account_non_expired, " + 
 			" credentials_non_expired, account_non_locked, is_deleted FROM adm_user " + 
 			" WHERE is_deleted = ?" +
 			" AND user_id = ? ";
@@ -55,7 +61,7 @@ public class UserManagementDao {
 		logger.debug("findByUserId username={}", username);
 		
 		String sql =
-			" SELECT user_id, username, password, enabled, account_non_expired, " + 
+			" SELECT user_id, username, password,SECTOR, enabled, account_non_expired, " + 
 			" credentials_non_expired, account_non_locked, is_deleted FROM adm_user " + 
 			" WHERE is_deleted = ?" +
 			" AND username = ? ";
@@ -73,7 +79,7 @@ public class UserManagementDao {
 		logger.debug("findAll");
 		
 		StringBuilder sqBuilder = new StringBuilder();
-		sqBuilder.append(" SELECT user_id, username, password, enabled, account_non_expired, ");
+		sqBuilder.append(" SELECT user_id, username, password,SECTOR, enabled, account_non_expired, ");
 		sqBuilder.append(" credentials_non_expired, account_non_locked, is_deleted ");
 		sqBuilder.append(" FROM adm_user ");
 		sqBuilder.append(" WHERE is_deleted = ? ");
@@ -86,6 +92,10 @@ public class UserManagementDao {
 		}
 		if(StringUtils.isNotBlank(userManagement.getEnabled())){
 			sqBuilder.append(" AND enabled = ? ");
+			params.add(userManagement.getEnabled());
+		}
+		if(StringUtils.isNotBlank(userManagement.getSector())){
+			sqBuilder.append(" AND SECTOR = ? ");
 			params.add(userManagement.getEnabled());
 		}
 		if(StringUtils.isNotBlank(userManagement.getAccountNonExpired())){
@@ -126,12 +136,16 @@ public class UserManagementDao {
 		logger.debug("insert");
 		
 		String sql = SqlGeneratorUtils.genSqlInsert("adm_user", Arrays.asList(
+			"USER_ID",
 			"username",
 			"password",
+			"SECTOR",
 			"enabled",
 			"account_non_expired",
 			"credentials_non_expired",
 			"account_non_locked",
+			"IS_DELETED",
+			"VERSION",
 			"created_by",
 			"created_date",
 			"updated_by",
@@ -139,31 +153,42 @@ public class UserManagementDao {
 		));
 		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		
-		Long key = commonJdbcDao.executeInsertWithKeyHolder(sql.toString(), new Object[] {
+		BigDecimal userId = seqDao.autoNumberRunningBySeqName(ADM_USER_SEQ);
+		Long key = (long) commonJdbcDao.executeUpdate(sql.toString(), new Object[] {
+			userId,
 			userManagement.getUsername(),
 			passwordEncoder.encode(userManagement.getPassword()),
+			userManagement.getSector(),
 			userManagement.getEnabled(),
 			userManagement.getAccountNonExpired(),
 			userManagement.getCredentialsNonExpired(),
 			userManagement.getAccountNonLocked(),
+			"N",
+			"1",
 			UserLoginUtils.getCurrentUsername(),
 			new Date(),
 			UserLoginUtils.getCurrentUsername(),
-			new Date(),
+			new Date()
 		});
 		
 		if (key != 0) {
 			String sqlUserAdmRole = SqlGeneratorUtils.genSqlInsert("adm_user_role", Arrays.asList(
+				"USER_ROLE_ID",
 				"user_id",
 				"role_id",
+				"IS_DELETED",
+				"VERSION",
 				"created_by",
 				"created_date"
 			));
 			
-			commonJdbcDao.executeInsertWithKeyHolder(sqlUserAdmRole.toString(), new Object[] {
+			BigDecimal userRoleId = seqDao.autoNumberRunningBySeqName(ADM_USER_ROLE_SEQ);
+			commonJdbcDao.executeUpdate(sqlUserAdmRole.toString(), new Object[] {
+				userRoleId,
 				key,
 				UserManagementConstants.ROLE.USER,
+				"N",
+				"1",
 				UserLoginUtils.getCurrentUsername(),
 				new Date()
 			});

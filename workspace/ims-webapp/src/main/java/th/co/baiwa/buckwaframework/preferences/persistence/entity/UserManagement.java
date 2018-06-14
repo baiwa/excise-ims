@@ -5,10 +5,13 @@ public class UserManagement {
 	private Long userId;
 	private String username;
 	private String password;
+	private String sector;
 	private String enabled;
 	private String accountNonExpired;
 	private String credentialsNonExpired;
 	private String accountNonLocked;
+	private String isDeleted;
+	private String version;
 	
 	public Long getUserId() {
 		return userId;
@@ -51,6 +54,24 @@ public class UserManagement {
 	}
 	public void setAccountNonLocked(String accountNonLocked) {
 		this.accountNonLocked = accountNonLocked;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	public String getSector() {
+		return sector;
+	}
+	public void setSector(String sector) {
+		this.sector = sector;
+	}
+	public String getIsDeleted() {
+		return isDeleted;
+	}
+	public void setIsDeleted(String isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 	
 }
