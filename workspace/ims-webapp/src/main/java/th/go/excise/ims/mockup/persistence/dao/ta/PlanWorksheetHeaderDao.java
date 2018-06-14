@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.go.excise.ims.mockup.domain.ta.PlanWorksheetVo;
 import th.go.excise.ims.mockup.persistence.entity.ta.PlanWorksheetHeader;
 
 @Repository
@@ -112,6 +113,51 @@ public class PlanWorksheetHeaderDao {
 		}
 	};
 	
+	
+	public List<PlanWorksheetVo> queryPlanWorksheetHeaderDetil(PlanWorksheetHeader criteria) {
+
+		List<Object> valueList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select * from TA_PLAN_WORK_SHEET_HEADER H ");
+		sql.append(" inner join TA_PLAN_WORK_SHEET_DETAIL D ");
+		sql.append(" on D.EXCISE_ID = H.EXCISE_ID and d.ANALYS_NUMBER = h.ANALYS_NUMBER ");
+		sql.append(" where H.ANALYS_NUMBER = ? ");
+		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
+		valueList.add(criteria.getAnalysNumber());
+		List<PlanWorksheetVo> planWorksheetHeaderList = jdbcTemplate.query( sql.toString(), valueList.toArray(),
+				fieldMappingPlanWorksheetVo);
+		return planWorksheetHeaderList;
+
+	}
+	
+	private RowMapper<PlanWorksheetVo> fieldMappingPlanWorksheetVo = new RowMapper<PlanWorksheetVo>() {
+		@Override
+		public PlanWorksheetVo mapRow(ResultSet rs, int arg1) throws SQLException {
+			PlanWorksheetVo header = new PlanWorksheetVo();
+			header.setWorksheetHeaderId(rs.getBigDecimal("WORK_SHEET_HEADER_ID"));
+			header.setAnalysNumber(rs.getString("ANALYS_NUMBER"));
+			header.setExciseId(rs.getString("EXCISE_ID"));
+			header.setCompanyName(rs.getString("COMPANY_NAME"));
+			header.setFactoryName(rs.getString("FACTORY_NAME"));
+			header.setFactoryAddress(rs.getString("FACTORY_ADDRESS"));
+			header.setExciseOwnerArea(rs.getString("EXCISE_OWNER_AREA"));
+			header.setProductType(rs.getString("PRODUCT_TYPE"));
+			header.setExciseOwnerArea1(rs.getString("EXCISE_OWNER_AREA_1"));
+			header.setTotalAmount(rs.getBigDecimal("TOTAL_AMOUNT"));
+			header.setPercentage(rs.getBigDecimal("PERCENTAGE"));
+			header.setTotalMonth(rs.getBigDecimal("TOTAL_MONTH"));
+			header.setDecideType(rs.getString("DECIDE_TYPE"));
+			header.setFlag(rs.getString("FLAG"));
+			header.setFirstMonth(rs.getBigDecimal("FIRST_MONTH"));
+			header.setLastMonth(rs.getBigDecimal("LAST_MONTH"));
+			header.setMonth(rs.getString("MONTH"));
+			header.setYear(rs.getString("YEAR"));
+			header.setAmount(rs.getBigDecimal("AMOUNT"));
+			
+			return header;
+		}
+	};
+	
 	public List<String> queryAnalysNumberFromHeader() {
 		String sql = "select DISTINCT ANALYS_NUMBER from TA_PLAN_WORK_SHEET_HEADER";
 		List<String> analysList = getJdbcTemplate().query(sql, new RowMapper<String>(){
@@ -138,5 +184,8 @@ public class PlanWorksheetHeaderDao {
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
+	
+	
+	
 
 }

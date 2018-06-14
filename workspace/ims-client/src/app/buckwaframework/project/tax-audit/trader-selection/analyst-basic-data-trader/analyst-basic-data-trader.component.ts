@@ -22,7 +22,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   last: any;
   private currYear: any;
   private prevYear: any;
-  private listItem: any[];
   exciseProductType: any;
   onLoading: boolean;
   

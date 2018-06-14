@@ -69,6 +69,19 @@ public class MockupVo extends DataTableRequest {
 	private String exciseLatestTaxReceiveAmount11;
 	private String exciseLatestTaxReceiveMonth12;
 	private String exciseLatestTaxReceiveAmount12;
+	private String analysNumber;
+
+
+
+	public String getAnalysNumber() {
+		return analysNumber;
+	}
+
+
+
+	public void setAnalysNumber(String analysNumber) {
+		this.analysNumber = analysNumber;
+	}
 
 
 

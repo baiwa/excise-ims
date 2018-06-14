@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ExciseService } from '../../../../common/services/excise.service';
+import { TextDateTH, digit } from '../../../../common/helper/datepicker';
+import { CurrencyPipe } from '@angular/common';
 
 declare var jQuery: any;
 declare var $: any;
@@ -28,6 +30,8 @@ export class WorkingPaper1TraderComponent implements OnInit {
   month: any;
   from: any;
   analysNumber: any;
+  exciseProductType: any;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -42,7 +46,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
   ngOnInit() {
   
     //call ExciseService
-    var { before, last, from, month } = this.ex.getformValues();
+    var { before, last, from, month, currYear, prevYear } = this.ex.getformValues();
     var { num1, num2, percent1, percent2, analysNumber } = this.ex.getformNumber();
 
     //set values
@@ -55,32 +59,88 @@ export class WorkingPaper1TraderComponent implements OnInit {
     this.percent1 = percent1;
     this.percent2 = percent2;
     this.analysNumber = analysNumber;
+    console.log("analysNumber: ", this.analysNumber);
+    // currYear = currYear;
+    // var yy = prevYear;
+
+    // console.log(currYear);
+    // console.log(yy);
 
     //check values in array == 0
     for (var i = 0; i < this.num1.length; i++) {
       if (this.num1[i] !== 0 && this.num2[i] !== 0) {
         this._num1.push(this.num1[i]);
         this._num2.push(this.num2[i]);
-        this._percent1.push(this.percent1[i]);
+        this._percent1.push((this.percent1[i]+0.00));
         this._percent2.push(this.percent2[i]);
         // console.log(index);
         // break;
       }
     }
 
-    this.listItem = ["น้ำมัน"
-      , "เครื่องดื่ม"
-      , "ยาสูบ"
-      , "ไพ่"
-      , "แก้วและเครื่องแก้ว"
-      , "รถยนต์"
-      , 'พรมและสิ่งทอปูพื้น'
-      , "แบตเตอรี่"
-      , "ไนท์คลับและดิสโกเธค"
-      , "สถานอาบน้ำหรืออบตัวและนวด"
-      , "สนามแข่งม้า"
-      , 'สนามกอล์ฟ'
-      , "รวม"];
+    //split function
+    var from_split = this.from.split("/");
+
+    //default month & year
+    var month = from_split[0];
+    var year_before = from_split[1];
+
+    var m = parseInt(month) + 1;
+    var mm = parseInt(this.month);
+    var yy = parseInt(year_before);
+    
+    var items: string[] = [];
+    for (var i = 1; i <= mm; i++) {
+      m = m - 1;
+      if (m == 0) {
+        m = 12;
+        yy = yy - 1;
+      }
+      items.push('<th style="text-align: center !important">' + TextDateTH.monthsShort[m - 1] + ' ' + (yy + "").substr(2) + '</th>');
+
+    }
+
+    var trHeaderColumn = "";
+    for (var i = items.length - 1; i >= 0; i--) {
+      trHeaderColumn += items[i];
+    }
+    document.getElementById('trDrinamic').innerHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> '
+      + '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> '
+      + '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> '
+      + '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> '
+      + '<th rowspan="2" style="text-align: center !important">พื้นที่</th> '
+      + '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> '
+      + '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> '
+      + '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> '
+      + '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> '
+      + '<th rowspan="2" style="text-align: center !important">ภาค</th> '
+      + '<th rowspan="2" style="text-align: center !important">พิกัด</th> '
+      + '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> '
+      + '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> '
+      + '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> '
+      + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนแรก</th> '
+      + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนหลัง </th> '
+      + '</tr>'
+      + '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' + this.month / 2 + ' เดือนแรก</th>'
+      + '<th style="text-align: center !important">' + this.month / 2 + ' เดือนหลัง </th>'
+      + '<th style="text-align: center !important">' + (currYear - 3) + '</th>'
+      + '<th style="text-align: center !important">' + (currYear - 2) + '</th>'
+      + '<th style="text-align: center !important">' + (currYear - 1) + '</th>'
+      + trHeaderColumn + '</tr>';
+
+    // this.listItem = ["น้ำมัน"
+    //   , "เครื่องดื่ม"
+    //   , "ยาสูบ"
+    //   , "ไพ่"
+    //   , "แก้วและเครื่องแก้ว"
+    //   , "รถยนต์"
+    //   , 'พรมและสิ่งทอปูพื้น'
+    //   , "แบตเตอรี่"
+    //   , "ไนท์คลับและดิสโกเธค"
+    //   , "สถานอาบน้ำหรืออบตัวและนวด"
+    //   , "สนามแข่งม้า"
+    //   , 'สนามกอล์ฟ'
+    //   , "รวม"];
 
     this.initDatatable();
   }
@@ -88,87 +148,146 @@ export class WorkingPaper1TraderComponent implements OnInit {
   ngAfterViewInit() {
 
   }
-
+  
   initDatatable(): void {
-    const URL = AjaxService.CONTEXT_PATH + "/working/test/list";
-    this.userManagementDt = $('#userManagementDt').DataTable({
-      "lengthChange": false,
-      "searching": false,
-      "ordering": false,
-      "pageLength": 10,
-      "processing": true,
-      "serverSide": true,
-      "paging": true,
-      "pagingType": "full_numbers",
+    
+    var d = new Date();
+    const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
+    console.log(URL);
+    console.log(this.analysNumber);
+    var json = "";
+    json += ' { "lengthChange": false, ';
+    json += ' "searching": false, ';
+    json += ' "select": true, ';
+    json += ' "ordering": true, ';
+    json += ' "pageLength": 10, ';
+    json += ' "processing": true, ';
+    json += ' "serverSide": true, ';
+    json += ' "paging": true, ';
+    json += ' "pagingType": "full_numbers", ';
+    json += ' ';
+    json += ' "ajax": { ';
+    json += ' "type": "POST", ';
+    json += ' "url": "' + URL + '", ';
+    json += ' "data": { ';
+    json += ' "analysNumber": "' + this.analysNumber + '" ';
+    json += ' } ';
+    json += ' }, ';
+    json += ' "columns": [ ';
+    json += ' { "data": "exciseRegisttionNumberId","className":"center" }, ';
+    json += ' { "data": "exciseId","className":"center" }, ';
+    json += ' { "data": "exciseOperatorName" }, ';
+    json += ' { "data": "exciseFacName" }, ';
+    json += ' { "data": "exciseArea" }, ';
+    json += ' { "data": "exciseFacAddress" ,"className":"center" }, ';
+    json += ' { "data": "exciseRegisCapital","className":"center" }, ';
+    json += ' { "data": "change","className":"center" }, ';
+    json += ' { "data": "payingtax" ,"className":"center"}, ';
+    json += ' { "data": "no1" }, ';
+    json += ' { "data": "no2" }, ';
+    json += ' { "data": "no3" }, ';
+    json += ' { "data": "coordinates" }, ';
+    json += ' { "data": "sector" }, ';
+    json += ' { "data": "industrialAddress" }, ';
+    json += ' { "data": "registeredCapital" }, ';
+    json += ' { "data": "status" }, ';
 
-      "ajax": {
-        "type": "POST",
-        "url": URL,
-        "data": {
-          "exciseProductType": '',
-          "startBackDate": this.from,
-          "month":this.month
-        }
-      },
-      "columns": [
-
-        { "data": "exciseRegisttionNumberId", "className": "center" },
-        { "data": "exciseId", "className": "center" },
-        { "data": "exciseOperatorName" },
-        { "data": "exciseFacName" },
-        { "data": "exciseArea" },
-        { "data": "exciseFacAddress", "className": "center" },
-        { "data": "exciseRegisCapital", "className": "center" },
-        { "data": "change", "className": "center" },
-        { "data": "payingtax", "className": "center" },
-        { "data": "no1" },
-        { "data": "no2" },
-        { "data": "no3" },
-        { "data": "coordinates" },
-        { "data": "sector" },
-        { "data": "industrialAddress" },
-        { "data": "registeredCapital" },
-        { "data": "status" },
-        { "data": "exciseFirstTaxReceiveAmount1", "className": "center" },
-        { "data": "exciseFirstTaxReceiveAmount2", "className": "center" },
-        { "data": "exciseFirstTaxReceiveAmount3", "className": "center" },
-        { "data": "exciseFirstTaxReceiveAmount4", "className": "center" },
-        { "data": "exciseFirstTaxReceiveAmount5", "className": "center" },
-        { "data": "exciseFirstTaxReceiveAmount6", "className": "center" },
-        { "data": "exciseFirstTaxReceiveAmount7", "className": "center" },
-        { "data": "exciseFirstTaxReceiveAmount8", "className": "center" },
-        { "data": "exciseFirstTaxReceiveAmount9", "className": "center" },
-        { "data": "exciseFirstTaxReceiveAmount10", "className": "center" },
-        { "data": "exciseFirstTaxReceiveAmount11", "className": "center" },
-        { "data": "exciseFirstTaxReceiveAmount12", "className": "center" },
-        { "data": "exciseLatestTaxReceiveAmount1", "className": "center" },
-        { "data": "exciseLatestTaxReceiveAmount2", "className": "center" },
-        { "data": "exciseLatestTaxReceiveAmount3", "className": "center" },
-        { "data": "exciseLatestTaxReceiveAmount4", "className": "center" },
-        { "data": "exciseLatestTaxReceiveAmount5", "className": "center" },
-        { "data": "exciseLatestTaxReceiveAmount6", "className": "center" },
-        { "data": "exciseLatestTaxReceiveAmount7", "className": "center" },
-        { "data": "exciseLatestTaxReceiveAmount8", "className": "center" },
-        { "data": "exciseLatestTaxReceiveAmount9", "className": "center" },
-        { "data": "exciseLatestTaxReceiveAmount10", "className": "center" },
-        { "data": "exciseLatestTaxReceiveAmount11", "className": "center" },
-        { "data": "exciseLatestTaxReceiveAmount12", "className": "center" }
-
-      ],
-
-
-    });
-    let tableId = '#userManagementDt';
-    let backgroundRowColor = (data, type, row, meta) => {
-      if (!data) {
-        let table = $(tableId).DataTable();
-        let cell = table.cell(meta.row, meta.col).node();
-        $(cell).addClass("bg-row-highlight");
-      }
-
-      return data;
+    for (var i = 0; i < this.month / 2; i++) {
+      json += ' { "data": "exciseFirstTaxReceiveAmount' + (i + 1) + '" ,"className":"center"}, ';
     }
-
+    for (var i = 0; i < this.month / 2; i++) {
+      if (i != (this.month / 2) - 1) {
+        json += ' { "data": "exciseLatestTaxReceiveAmount' + (i + 1) + '" ,"className":"center"}, ';
+      } else {
+        json += ' { "data": "exciseLatestTaxReceiveAmount' + (i + 1) + '" ,"className":"center"} ';
+      }
+    }
+    json += '] } ';
+    console.log(json);
+    let jsonMaping = JSON.parse(json);
+    this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
   }
+
+  // initDatatable(): void {
+  //   const URL = AjaxService.CONTEXT_PATH + "/working/test/list";
+  //   this.userManagementDt = $('#userManagementDt').DataTable({
+  //     "lengthChange": false,
+  //     "searching": false,
+  //     "ordering": false,
+  //     "pageLength": 10,
+  //     "processing": true,
+  //     "serverSide": true,
+  //     "paging": true,
+  //     "pagingType": "full_numbers",
+
+  //     "ajax": {
+  //       "type": "POST",
+  //       "url": URL,
+  //       "data": {
+  //         "exciseProductType": '',
+  //         "startBackDate": this.from,
+  //         "month":this.month
+  //       }
+  //     },
+  //     "columns": [
+
+  //       { "data": "exciseRegisttionNumberId", "className": "center" },
+  //       { "data": "exciseId", "className": "center" },
+  //       { "data": "exciseOperatorName" },
+  //       { "data": "exciseFacName" },
+  //       { "data": "exciseArea" },
+  //       { "data": "exciseFacAddress", "className": "center" },
+  //       { "data": "exciseRegisCapital", "className": "center" },
+  //       { "data": "change", "className": "center" },
+  //       { "data": "payingtax", "className": "center" },
+  //       { "data": "no1" },
+  //       { "data": "no2" },
+  //       { "data": "no3" },
+  //       { "data": "coordinates" },
+  //       { "data": "sector" },
+  //       { "data": "industrialAddress" },
+  //       { "data": "registeredCapital" },
+  //       { "data": "status" },
+  //       { "data": "exciseFirstTaxReceiveAmount1", "className": "center" },
+  //       { "data": "exciseFirstTaxReceiveAmount2", "className": "center" },
+  //       { "data": "exciseFirstTaxReceiveAmount3", "className": "center" },
+  //       { "data": "exciseFirstTaxReceiveAmount4", "className": "center" },
+  //       { "data": "exciseFirstTaxReceiveAmount5", "className": "center" },
+  //       { "data": "exciseFirstTaxReceiveAmount6", "className": "center" },
+  //       { "data": "exciseFirstTaxReceiveAmount7", "className": "center" },
+  //       { "data": "exciseFirstTaxReceiveAmount8", "className": "center" },
+  //       { "data": "exciseFirstTaxReceiveAmount9", "className": "center" },
+  //       { "data": "exciseFirstTaxReceiveAmount10", "className": "center" },
+  //       { "data": "exciseFirstTaxReceiveAmount11", "className": "center" },
+  //       { "data": "exciseFirstTaxReceiveAmount12", "className": "center" },
+  //       { "data": "exciseLatestTaxReceiveAmount1", "className": "center" },
+  //       { "data": "exciseLatestTaxReceiveAmount2", "className": "center" },
+  //       { "data": "exciseLatestTaxReceiveAmount3", "className": "center" },
+  //       { "data": "exciseLatestTaxReceiveAmount4", "className": "center" },
+  //       { "data": "exciseLatestTaxReceiveAmount5", "className": "center" },
+  //       { "data": "exciseLatestTaxReceiveAmount6", "className": "center" },
+  //       { "data": "exciseLatestTaxReceiveAmount7", "className": "center" },
+  //       { "data": "exciseLatestTaxReceiveAmount8", "className": "center" },
+  //       { "data": "exciseLatestTaxReceiveAmount9", "className": "center" },
+  //       { "data": "exciseLatestTaxReceiveAmount10", "className": "center" },
+  //       { "data": "exciseLatestTaxReceiveAmount11", "className": "center" },
+  //       { "data": "exciseLatestTaxReceiveAmount12", "className": "center" }
+
+  //     ],
+
+
+  //   });
+  //   let tableId = '#userManagementDt';
+  //   let backgroundRowColor = (data, type, row, meta) => {
+  //     if (!data) {
+  //       let table = $(tableId).DataTable();
+  //       let cell = table.cell(meta.row, meta.col).node();
+  //       $(cell).addClass("bg-row-highlight");
+  //     }
+
+  //     return data;
+  //   }
+
+  // }
 
 }

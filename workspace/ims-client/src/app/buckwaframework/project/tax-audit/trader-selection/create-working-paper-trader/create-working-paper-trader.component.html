@@ -51,25 +51,25 @@
                             <label>จำนวนเดือนที่ชำระภาษี</label>
                         </div>
                         <div class="two wide field">
-                            <input type="number" name="num1{{i}}" [(ngModel)]="num1[i]" [attr.min]="1" [attr.max]="num2[i]-1" [attr.required]="true">
+                            <input (keyup)="onKeyUpMin($event, i)" type="number" id="num1{{i}}" name="num1{{i}}" [(ngModel)]="num1[i]" [attr.min]="i==0 ? 1 : num2[i-1]+1" [attr.max]=" num2[i]==0 ? month-1 : num2[i]-1" [attr.required]="true">
                         </div>
                         <div class="one wide field">
                             <label>&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>
                         </div>
                         <div class="two wide field">
-                            <input type="number" name="num2{{i}}" [(ngModel)]="num2[i]" [attr.min]="2" [attr.max]="num_month" [attr.required]="true">
+                            <input (keyup)="onKeyUpMax($event, i)" type="number" id="num2{{i}}" name="num2{{i}}" [(ngModel)]="num2[i]" [attr.max]="month" [attr.required]="true">
                         </div>
                         <div class="five wide field">
                             <label>ช่วงร้อยละที่ต้องการแยกกลุ่มข้อมูล</label>
                         </div>
                         <div class="two wide field">
-                            <input type="number" name="percent1{{i}}" [(ngModel)]="percent1[i]" [attr.max]="percent2[i]-0.01" [attr.required]="true">
+                            <input type="number" name="percent1{{i}}" [(ngModel)]="percent1[i]" [attr.step]="0.01" [attr.max]="percent2[i]-0.01" [attr.required]="true">
                         </div>
                         <div class="one wide field">
                             <label>&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>
                         </div>
                         <div class="two wide field">
-                            <input type="number" name="percent2{{i}}" [(ngModel)]="percent2[i]" [attr.max]="100" [attr.required]="true">
+                            <input type="number" name="percent2{{i}}" [(ngModel)]="percent2[i]" [attr.step]="0.01" [attr.max]="100" [attr.required]="true">
                         </div>
                         <div class="two wide field">
                             <a (click)="onDelField(i)" *ngIf="i!==0" style="cursor: pointer;color: red">

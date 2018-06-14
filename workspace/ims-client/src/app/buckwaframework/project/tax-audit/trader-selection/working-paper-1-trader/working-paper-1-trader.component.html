@@ -43,9 +43,6 @@
                 </div>
 
                 <div class="inline fields" *ngFor="let num of _num1; let i = index" [attr.data-index]="i">
-                    <div class="one wide field">
-                        &nbsp;
-                    </div>
                     <div class="three wide field">
                         <label>จำนวนเดือนที่ชำระภาษี</label>
                     </div>
@@ -64,17 +61,14 @@
                     <div class="four wide field">
                         <label>ช่วงร้อยละที่ต้องการแยกกลุ่มข้อมูล</label>
                     </div>
-                    <div class="one wide field">
+                    <div class="two wide field">
                         <input type="number" name="_percent1{{i}}" [(ngModel)]="_percent1[i]" readonly="" class="custom-readonly">
                     </div>
                     <div class="one wide field">
                         <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ถึง</label>
                     </div>
-                    <div class="one wide field">
+                    <div class="two wide field">
                         <input type="number" name="_percent2{{i}}" [(ngModel)]="_percent2[i]" readonly="" class="custom-readonly">
-                    </div>
-                    <div class="one wide field">
-                        &nbsp;
                     </div>
                 </div>
             </div>
@@ -157,8 +151,8 @@
 
                 <div class="thirteen wide column" style="padding-top: 0">
                     <div style="overflow-x: scroll;overflow-y: hidden;padding-bottom: 14px;">
-                        <table id="userManagementDt" class="ui small celled table  aligned" style="width: 5000px;">
-                            <thead>
+                        <table id="userManagementDt" class="ui small celled table aligned hover" style="width: 5000px;">
+                            <thead id="trDrinamic">
                                 <tr>
                                     <th rowspan="2" style="text-align: center !important">ลำดับ</th>
                                     <th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th>
@@ -174,27 +168,16 @@
                                     <th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th>
                                     <th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th>
                                     <th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th>
-                                    <th colspan="12" style="text-align: center !important">การชำระภาษี 12 เดือนแรก</th>
-                                    <th colspan="12" style="text-align: center !important">การชำระภาษี 12 เดือนหลัง </th>
+                                    <th colspan="12" style="text-align: center !important">การชำระภาษี {{ month/2 }} เดือนแรก</th>
+                                    <th colspan="12" style="text-align: center !important">การชำระภาษี {{ month/2 }} เดือนหลัง </th>
+                                    <th rowspan="2" style="text-align: center !important">เพิ่มข้อมูลภายนอก</th>
                                 </tr>
                                 <tr>
-                                    <th style="border-left: 1px solid rgba(34,36,38,.1); text-align: center !important"> 12 เดือนแรก</th>
-                                    <th style="text-align: center !important"> 12 เดือนหลัง </th>
+                                    <th style="border-left: 1px solid rgba(34,36,38,.1);">{{ month/2 }} เดือนแรก</th>
+                                    <th style="text-align: center !important">{{ month/2 }} เดือนหลัง </th>
                                     <th style="text-align: center !important">2558</th>
                                     <th style="text-align: center !important">2559</th>
-                                    <th style="text-align: center !important"> 2560</th>
-                                    <th style="text-align: center !important">พ.ค. 58</th>
-                                    <th style="text-align: center !important">มิ.ย. 58</th>
-                                    <th style="text-align: center !important">ก.ค. 58</th>
-                                    <th style="text-align: center !important">ส.ค. 58</th>
-                                    <th style="text-align: center !important">ก.ย. 58</th>
-                                    <th style="text-align: center !important">ต.ค. 58</th>
-                                    <th style="text-align: center !important">พ.ย. 58</th>
-                                    <th style="text-align: center !important">ธ.ค. 58</th>
-                                    <th style="text-align: center !important">ม.ค. 59</th>
-                                    <th style="text-align: center !important">ก.พ. 59</th>
-                                    <th style="text-align: center !important">มี.ค. 59</th>
-                                    <th style="text-align: center !important">เม.ย. 59</th>
+                                    <th style="text-align: center !important">2560</th>
                                     <th style="text-align: center !important">พ.ค. 58</th>
                                     <th style="text-align: center !important">มิ.ย. 58</th>
                                     <th style="text-align: center !important">ก.ค. 58</th>
@@ -207,13 +190,22 @@
                                     <th style="text-align: center !important">ก.พ. 59</th>
                                     <th style="text-align: center !important">มี.ค. 59</th>
                                     <th style="text-align: center !important">เม.ย. 59 </th>
-
+                                    <th style="text-align: center !important">พ.ค. 58</th>
+                                    <th style="text-align: center !important">มิ.ย. 58</th>
+                                    <th style="text-align: center !important">ก.ค. 58</th>
+                                    <th style="text-align: center !important">ส.ค. 58</th>
+                                    <th style="text-align: center !important">ก.ย. 58</th>
+                                    <th style="text-align: center !important">ต.ค. 58</th>
+                                    <th style="text-align: center !important">พ.ย. 58</th>
+                                    <th style="text-align: center !important">ธ.ค. 58</th>
+                                    <th style="text-align: center !important">ม.ค. 59</th>
+                                    <th style="text-align: center !important">ก.พ. 59</th>
+                                    <th style="text-align: center !important">มี.ค. 59</th>
+                                    <th style="text-align: center !important">เม.ย. 59 </th>
                                 </tr>
                             </thead>
                             <tbody>
-
                             </tbody>
-
                         </table>
                     </div>
                     <br>
