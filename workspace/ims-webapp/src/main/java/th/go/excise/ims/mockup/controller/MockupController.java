@@ -17,7 +17,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.excise.ia.constant.DateConstant;
 import th.go.excise.ims.mockup.domain.DataTableRequest;
 import th.go.excise.ims.mockup.domain.MockupVo;
-import th.go.excise.ims.mockup.persistence.entity.ExciseEntity;
+import th.go.excise.ims.mockup.persistence.entity.ExciseDetail;
 import th.go.excise.ims.mockup.service.MockupService;
 import th.go.excise.ims.mockup.service.ta.PlanWorksheetHeaderService;
 
@@ -37,24 +37,8 @@ public class MockupController {
 		String[] fulldate = input.getStartBackDate().split("/");
 		Calendar date = Calendar.getInstance(DateConstant.LOCAL_TH);
 		date.set(Integer.parseInt(fulldate[1]), Integer.parseInt(fulldate[0]), 1);
-//		
 		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo, date.getTime(), input.getMonth(),input.getExciseProductType());
 		return listdata;
-	}
-	
-	@GetMapping("/list/{id}")
-	@ResponseBody
-	public List<ExciseEntity> list(@PathVariable("id") String id) {
-		List<ExciseEntity> li = mockupService.findById(id, 1);
-		return li;
-	}
-
-	@GetMapping("/list/{id}/{limit}")
-	@ResponseBody
-	public List<ExciseEntity> listLimit(@PathVariable("id") String id,
-								   @PathVariable(value = "limit", required = false) int limit) {
-		List<ExciseEntity> li = mockupService.findById(id, limit);
-		return li;
 	}
 	
 	@PostMapping("/createWorkSheet")

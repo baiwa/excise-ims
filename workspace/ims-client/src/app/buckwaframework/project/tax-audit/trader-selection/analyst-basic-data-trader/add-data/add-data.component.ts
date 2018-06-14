@@ -33,7 +33,7 @@ export class AddDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    const url = `working/test/list/${this.id}/3`;
+    const url = `excise/detail/list/${this.id}/3`;
     if (this.ex.get(this.id) === null) {
       this.ajax
         .get(url, console.log(`GET '${url}'`), null)
@@ -55,7 +55,7 @@ export class AddDataComponent implements OnInit {
               exciseRegisttionNumberId: ex.exciseRegisttionNumberId,
               exciseRemark: ex.exciseRemark,
               exciseTax: ex.exciseTax,
-              file: this.excise.file,
+              file: ex.file !== [] ? ex.file : this.excise.file,
               industrialAddress: ex.industrialAddress,
               no1: ex.no1,
               no2: ex.no2,

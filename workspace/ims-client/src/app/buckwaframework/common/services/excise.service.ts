@@ -42,7 +42,7 @@ export class ExciseService {
         const index = this.excise.findIndex(obj => obj.exciseId == data.exciseId);
         if (index > -1) {
             this.excise[index] = data;
-            const url = `working/excise/list/${data.exciseId}`;
+            const url = `excise/detail/list/${data.exciseId}`;
             const new_data: File[] = data.file;
             this.ajax.put(url, new_data, null).then(
                 res => {

@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.go.excise.ims.mockup.persistence.entity.ta.ExciseFileUpload;
+import th.go.excise.ims.mockup.utils.OracleUtils;
 
 @Repository
 public class ExciseFileUploadDao {
@@ -22,11 +23,11 @@ public class ExciseFileUploadDao {
 	private Logger logger = LoggerFactory.getLogger(ExciseFileUploadDao.class);
 
 
-	private final String sqlTaExciseId = " select * from ta_excise_tax_receive where TA_EXCISE_ID =  ?  ";
+	private final String sqlTaExciseId = " SELECT * FROM TA_EXCISE_FILE_UPLOAD WHERE EXCISE_ID = ? ";
 
-	public List<ExciseFileUpload> queryByExciseId(String register) {
-		logger.info("register: {}", register);
-		List<ExciseFileUpload> list = jdbcTemplate.query(sqlTaExciseId, new Object[] { register },
+	public List<ExciseFileUpload> queryByExciseId(String exciseId) {
+		logger.info("register: {}", exciseId);
+		List<ExciseFileUpload> list = jdbcTemplate.query(sqlTaExciseId , new Object[] { exciseId },
 				exciseRegisttionRowmapper);
 		
 		return list;
@@ -69,6 +70,7 @@ public class ExciseFileUploadDao {
 			ExciseFileUpload vo = new ExciseFileUpload();
 			vo.setTaExciseFileUploadId(rs.getBigDecimal("TA_EXCISE_FILE_UPLOAD_ID"));
 			vo.setExciseId(rs.getString("EXCISE_ID"));
+			vo.setUploadPath(rs.getString("UPLOAD_PATH"));
 			vo.setCreatedBy(rs.getString("CREATED_BY"));
 			vo.setCreatedDatetime(rs.getDate("CREATED_DATETIME"));
 			vo.setUpdateBy(rs.getString("UPDATE_BY"));
