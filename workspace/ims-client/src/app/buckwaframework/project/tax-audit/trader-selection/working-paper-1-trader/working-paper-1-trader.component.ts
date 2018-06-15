@@ -15,7 +15,6 @@ declare var $: any;
 export class WorkingPaper1TraderComponent implements OnInit {
 
   userManagementDt: any;
-  router: any;
   private listItem: any[];
   before: any;
   last: any;
@@ -35,6 +34,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private ex: ExciseService
   ) {
     this._num1 = new Array();
@@ -147,6 +147,11 @@ export class WorkingPaper1TraderComponent implements OnInit {
 
   ngAfterViewInit() {
 
+  }
+
+  onSend = () => {
+    alert('aasd');
+    this.router.navigate(['/add-external-data']);
   }
   
   initDatatable(): void {
