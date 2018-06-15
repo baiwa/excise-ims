@@ -13,6 +13,7 @@ import { ExciseService, MessageBarService } from '../../../../../common/services
 export class AddDataComponent implements OnInit {
 
   id: string;
+  num: string;
   excise: Excise;
   url: any;
 
@@ -24,6 +25,7 @@ export class AddDataComponent implements OnInit {
     private messageBarService: MessageBarService
   ) {
     this.id = this.route.snapshot.queryParams['id'];
+    this.num = this.route.snapshot.queryParams['num'];
     this.excise = new Excise();
     this.excise.exciseTax = new Array<ExciseTax>();
     this.excise.file = new Array<File>(); // initial file array
@@ -33,44 +35,47 @@ export class AddDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    const url = `excise/detail/list/${this.id}/3`;
+    const url = `excise/detail/list/${this.num}/${this.id}/3`;
     if (this.ex.get(this.id) === null) {
       this.ajax
         .get(url, console.log(`GET '${url}'`), null)
         .then(
           res => {
-            let ex = res.json()[0];
+            let ex: Excise = res.json()[0];
+            let e: ExciseTax;
+            if (ex.exciseTax.length != 3) {
+              let len = ex.exciseTax.length;
+              for(let i = 0; i < 3-len; i++){
+                e = new ExciseTax();
+                e.exciseTaxReceiveAmount = null;
+                e.exciseTaxReceiveMonth = null;
+                ex.exciseTax.push(e);
+              }
+            }
+            ex.exciseTax.reverse();
             this.excise = {
-              change: ex.change,
-              coordinates: ex.coordinates,
-              createdBy: ex.createdBy,
-              createdDatetime: ex.createdDatetime,
-              exciseArea: ex.exciseArea,
-              exciseFacAddress: ex.exciseFacAddress,
-              exciseFacName: ex.exciseFacName,
+              worksheetHeaderId: ex.worksheetHeaderId,
+              analysNumber: ex.analysNumber,
               exciseId: ex.exciseId,
-              exciseIdenNumber: ex.exciseIdenNumber,
-              exciseOperatorName: ex.exciseOperatorName,
-              exciseRegisCapital: ex.exciseRegisCapital,
-              exciseRegisttionNumberId: ex.exciseRegisttionNumberId,
-              exciseRemark: ex.exciseRemark,
+              companyName: ex.companyName,
+              factoryName: ex.factoryName,
+              factoryAddress: ex.factoryAddress,
+              exciseOwnerArea: ex.exciseOwnerArea,
+              productType: ex.productType,
+              exciseOwnerArea1: ex.exciseOwnerArea1,
+              totalAmount: ex.totalAmount,
+              percentage: ex.percentage,
+              totalMonth: ex.totalMonth,
+              decideType: ex.decideType,
+              flag: ex.flag,
+              firstMonth: ex.firstMonth,
+              lastMonth: ex.lastMonth,
+              createBy: ex.createBy,
+              createDatetime: ex.createDatetime,
+              updateBy: ex.updateBy,
+              updateDatetime: ex.updateDatetime,
               exciseTax: ex.exciseTax,
               file: ex.file !== [] ? ex.file : this.excise.file,
-              industrialAddress: ex.industrialAddress,
-              no1: ex.no1,
-              no2: ex.no2,
-              no3: ex.no3,
-              payingtax: ex.payingtax,
-              paymentMonth: ex.paymentMonth,
-              registeredCapital: ex.registeredCapital,
-              sector: ex.sector,
-              status: ex.status,
-              taexciseProductType: ex.taexciseProductType,
-              taexciseSectorArea: ex.taexciseSectorArea,
-              taxpayment1: ex.taxpayment1,
-              taxpayment2: ex.taxpayment2,
-              updateBy: ex.updateBy,
-              updateDatetime: ex.updateDatetime
             };
             this.ex.add(this.excise);
           }
@@ -83,7 +88,11 @@ export class AddDataComponent implements OnInit {
   onUpdate(e): void {
     e.preventDefault();
     if (this.ex.update(this.excise)) {
+      this.excise = this.ex.get(this.id);
       this.messageBarService.successModal('บันทึกข้อมูลเรียบร้อยแล้ว', 'สำเร็จ');
+      setTimeout(() => {
+        this.onCancel();
+      }, 500);
     } else {
       this.messageBarService.errorModal('ไม่สามารถบันทึกข้อมูลได้ กรุณาตรวจสอบการทำรายการ', 'เกิดข้อผิดพลาด');
     }

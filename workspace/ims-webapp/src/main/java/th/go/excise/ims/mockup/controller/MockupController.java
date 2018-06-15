@@ -6,9 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +15,6 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.excise.ia.constant.DateConstant;
 import th.go.excise.ims.mockup.domain.DataTableRequest;
 import th.go.excise.ims.mockup.domain.MockupVo;
-import th.go.excise.ims.mockup.persistence.entity.ExciseDetail;
 import th.go.excise.ims.mockup.service.MockupService;
 import th.go.excise.ims.mockup.service.ta.PlanWorksheetHeaderService;
 

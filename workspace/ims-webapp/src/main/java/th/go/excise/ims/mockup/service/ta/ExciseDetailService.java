@@ -6,30 +6,29 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.mockup.domain.ta.ExciseDetail;
 import th.go.excise.ims.mockup.domain.ta.ExciseFile;
 import th.go.excise.ims.mockup.persistence.dao.ExciseDetailDao;
 import th.go.excise.ims.mockup.persistence.dao.ta.ExciseFileUploadDao;
-import th.go.excise.ims.mockup.persistence.entity.ExciseDetail;
+import th.go.excise.ims.mockup.persistence.dao.ta.PlanWorksheetHeaderDao;
 import th.go.excise.ims.mockup.persistence.entity.ExciseTax;
 import th.go.excise.ims.mockup.persistence.entity.ta.ExciseFileUpload;
 
 @Service
 public class ExciseDetailService {
+
+	private Logger logger = LoggerFactory.getLogger(ExciseDetailService.class);
 	
 	@Value("${app.datasource.path}")
 	private String pathed;
@@ -40,44 +39,38 @@ public class ExciseDetailService {
 	@Autowired
 	private ExciseFileUploadDao exciseFileUploadDao;
 	
-	public List<ExciseDetail> findById(String id, int limit) {
-		List<ExciseDetail> li = exciseDao.queryByExciseId(id, limit);
-		Collection<ExciseDetail> list = li;
-		List<ExciseDetail> listed = list.stream().filter(distinctByKey(p -> p.getExciseId()))
-				.collect(Collectors.toList());
-		for (ExciseDetail l : li) {
-			for (ExciseDetail led : listed) {
-				if (led.getExciseId().equals(l.getExciseId())) {
-					ArrayList<ExciseTax> result = led.getExciseTax();
-					if (l.getExciseTax().get(0).getExciseTaxReceiveId().equals(result.get(0).getExciseTaxReceiveId())) {
-						continue;
-					}
-					result.add(l.getExciseTax().get(0));
-					led.setExciseTax(result);
-				}
-			}
-		}
-		for (ExciseDetail led : listed) {
-			List<ExciseFileUpload> file = exciseFileUploadDao.queryByExciseId(id);
+	@Autowired
+	private PlanWorksheetHeaderDao planWorksheetHeaderDao;
+	
+	public List<ExciseDetail> findById(String exciseId, String analysNum, int limit) {
+		logger.info("ExciseDetailService.findById exciseId: {}, analysNum: {}, limit: {}", exciseId, analysNum, limit);
+		List<ExciseDetail> li = exciseDao.queryByExciseId(exciseId, analysNum, limit);
+		for (ExciseDetail led: li) {
+			List<ExciseFileUpload> file = exciseFileUploadDao.queryByExciseId(exciseId);
+			List<ExciseTax> tax = exciseDao.queryByTaxId(exciseId, limit);
+			led.setExciseTax(tax);
 			led.setFile(file);
 		}
-		return listed;
+		return li;
 	}
 	
-	public boolean saveExciseFileUpload(String exciseId, ExciseFile[] files) {
+	public boolean saveExciseFileUpload(String exciseId, String analysNum, ExciseFile[] files) {
+		logger.info("ExciseDetailService.saveExciseFileUpload exciseId: {}, files: {}", exciseId, files);
 		ArrayList<ExciseFile> file = new ArrayList<ExciseFile>();
 		for(ExciseFile fs: files) {
 			if (fs.getName() != null) {
 				file.add(fs);
-				System.out.println(fs.getName());
+				// System.out.println(fs.getName());
 			}	
 		}
 		File f = new File(pathed + exciseId); // initial file (folder)
         if (!f.exists()) { // check folder exists
             if (f.mkdirs()) {
-                System.out.println("Directory is created!");
+            	logger.info("Directory is created!");
+                // System.out.println("Directory is created!");
             } else {
-                System.out.println("Failed to create directory!");
+            	logger.error("Failed to create directory!");
+                // System.out.println("Failed to create directory!");
             }
         }
         for(ExciseFile fi: file) {
@@ -100,7 +93,9 @@ public class ExciseDetailService {
         		excise.setCreatedDatetime(in);
         		excise.setUpdateDatetime(in);
         		exciseFileUploadDao.insertExciseFileUpload(excise); // insert to database
-        		System.out.println("Created file: " + path);
+        		planWorksheetHeaderDao.updatePlanWorksheetHeaderFlag("E", analysNum, exciseId);
+        		logger.info("Created file: " + path);
+        		// System.out.println("Created file: " + path);
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
@@ -108,8 +103,4 @@ public class ExciseDetailService {
 		return true;
 	}
 	
-	private static <T> Predicate<T> distinctByKey(Function<? super T, Object> key) {
-		Map<Object, Boolean> map = new ConcurrentHashMap<>();
-		return t -> map.putIfAbsent(key.apply(t), Boolean.TRUE) == null;
-	}
 }

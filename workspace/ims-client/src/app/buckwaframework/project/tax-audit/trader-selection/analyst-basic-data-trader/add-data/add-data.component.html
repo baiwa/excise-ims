@@ -17,7 +17,7 @@
               <p>ชื่อผู้ประกอบการ : </p>
             </div>
             <div class="five wide field">
-              <input type="text" readonly="" name="exciseOperatorName" class="custom-readonly" [(ngModel)]="excise.exciseOperatorName">
+              <input type="text" readonly="" name="companyName" class="custom-readonly" [(ngModel)]="excise.companyName">
             </div>
             <div class="three wide field">
               <p>เลขทะเบียนสรรพสามิต: </p>
@@ -31,19 +31,19 @@
               <p>ชื่อโรงอุตสาหกรรม :</p>
             </div>
             <div class="five wide field">
-              <input type="text" [(ngModel)]="excise.exciseFacName" name="exciseFacName" required>
+              <input type="text" [(ngModel)]="excise.factoryName" name="factoryName" required>
             </div>
             <div class="two wide field">
               <p>พื้นที่ / ภาค : </p>
             </div>
             <div class="two wide field">
-              <input type="text" [(ngModel)]="excise.taexciseSectorArea" name="taexciseSectorArea" required>
+              <input type="text" [(ngModel)]="excise.exciseOwnerArea" name="exciseOwnerArea" required>
             </div>
             <div class="two wide field">
               <p>พิกัดสินค้า :</p>
             </div>
             <div class="two wide field">
-              <input type="text" [(ngModel)]="excise.taexciseProductType" name="taexciseProductType" required>
+              <input type="text" [(ngModel)]="excise.productType" name="productType" required>
             </div>
           </div>
           <div class="inline fields">
@@ -51,7 +51,7 @@
               <p>ที่ตั้งโรงอุตสาหกรรม :</p>
             </div>
             <div class="thirteen wide field">
-              <textarea style="width: 100%" cols="30" rows="2" [(ngModel)]="excise.industrialAddress" name="industrialAddress" required></textarea>
+              <textarea style="width: 100%" cols="30" rows="2" [(ngModel)]="excise.factoryAddress" name="factoryAddress" required></textarea>
             </div>
           </div>
           <div class="inline fields">

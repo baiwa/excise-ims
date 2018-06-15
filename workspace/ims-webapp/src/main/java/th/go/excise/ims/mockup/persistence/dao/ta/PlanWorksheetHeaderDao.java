@@ -6,11 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.go.excise.ims.mockup.controller.ta.ExciseDetailController;
 import th.go.excise.ims.mockup.domain.ta.PlanWorksheetVo;
 import th.go.excise.ims.mockup.persistence.entity.ta.PlanWorksheetHeader;
 
@@ -19,7 +22,7 @@ public class PlanWorksheetHeaderDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	
+	private Logger logger = LoggerFactory.getLogger(PlanWorksheetHeaderDao.class);
 	
 	
 	public String getAnalysNumber() {
@@ -56,7 +59,10 @@ public class PlanWorksheetHeaderDao {
 		jdbcTemplate.update(sql.toString() ,planWorksheetHeaderToArrayObject(value) );
 	}
 
-	
+	public int updatePlanWorksheetHeaderFlag(String flag, String analysNum, String exciseId) {
+		String sql = " UPDATE TA_PLAN_WORK_SHEET_HEADER SET FLAG = ? WHERE ANALYS_NUMBER = ? AND EXCISE_ID = ? ";
+		return jdbcTemplate.update(sql,new Object[] {flag, analysNum, exciseId});
+	}
 	
 	private Object[] planWorksheetHeaderToArrayObject(PlanWorksheetHeader value) {
 

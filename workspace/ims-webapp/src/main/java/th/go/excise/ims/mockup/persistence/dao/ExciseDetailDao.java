@@ -6,61 +6,83 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import th.go.excise.ims.mockup.persistence.entity.ExciseDetail;
+import th.go.excise.ims.mockup.domain.ta.ExciseDetail;
 import th.go.excise.ims.mockup.persistence.entity.ExciseTax;
 import th.go.excise.ims.mockup.utils.OracleUtils;
 
 @Repository
 public class ExciseDetailDao {
-
-    @Autowired
-    private ExciseDetail exciseEntity;
-
-    @Autowired
-    private ExciseTax exciseTax;
+	
+	private Logger logger = LoggerFactory.getLogger(ExciseDetailDao.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    private final String sql = " select *  from ta_excise_registtion_number as ta_n left join ta_excise_tax_receive as ta_r on ta_n.ta_excise_id = ta_r.ta_excise_id ";
+    
+    // SELECT * FROM TA_PLAN_WORK_SHEET_HEADER WHERE EXCISE_ID = '2539-00033-3' AND ANALYS_NUMBER = '25610613-01-00220';
+    private final String sqlPlan = " SELECT * FROM TA_PLAN_WORK_SHEET_HEADER WHERE EXCISE_ID = ? AND ANALYS_NUMBER = ? ";
+    
+    private final String sqlTax = " SELECT * FROM TA_EXCISE_TAX_RECEIVE WHERE TA_EXCISE_ID = ? ORDER BY TA_EXCISE_TAX_RECEIVE_ID DESC ";
 
-    private final String sqlById = " select *  from ta_excise_registtion_number ta_n left join ta_excise_tax_receive ta_r on ta_n.ta_excise_id = ta_r.ta_excise_id where ta_n.ta_excise_id = ? order by ta_r.ta_excise_tax_receive_id desc ";
-
-    public List<ExciseDetail> queryByExciseId(String id, int limit) {
-        List<ExciseDetail> li = jdbcTemplate.query(OracleUtils.limitForDataTable(sqlById, 0, limit), new Object[] {id}, exciseRowmapper);
+    public List<ExciseDetail> queryByExciseId(String exciseId, String analysNum, int limit) {
+    	logger.info("ExciseDetailDao.queryByExciseId exciseId: {}, analysNum: {}, limit: {}", exciseId, analysNum, limit);
+        List<ExciseDetail> li = jdbcTemplate.query(OracleUtils.limitForDataTable(sqlPlan, 0, limit), new Object[] {exciseId, analysNum}, worksheetRowmapper);
         return li;
     }
+    
+    public List<ExciseTax> queryByTaxId(String exciseId, int limit) {
+    	logger.info("ExciseDetailDao.queryByTaxId exciseId: {}, limit: {}", exciseId, limit);
+    	List<ExciseTax> li = jdbcTemplate.query(OracleUtils.limitForDataTable(sqlTax, 0, limit), new Object[] {exciseId}, taxRowmapper);
+        return li;
+    }
+    
+    private RowMapper<ExciseTax> taxRowmapper = new RowMapper<ExciseTax>() {
+    	@Override
+    	public ExciseTax mapRow(ResultSet rs, int arg1) throws SQLException {
+    		ExciseTax vo = new ExciseTax();
+    		vo.setExciseTaxReceiveId(rs.getInt("TA_EXCISE_TAX_RECEIVE_ID"));
+    		vo.setExciseId(rs.getString("TA_EXCISE_ID"));
+    		vo.setExciseTaxReceiveMonth(rs.getString("TA_EXCISE_TAX_RECEIVE_MONTH"));
+    		vo.setExciseTaxReceiveAmount(rs.getString("TA_EXCISE_TAX_RECEIVE_AMOUNT"));
+    		vo.setExciseTaxReceiveAmount(rs.getString("CREATED_BY"));
+    		vo.setCreatedDatetime(rs.getTimestamp("CREATED_DATETIME") != null ? rs.getTimestamp("CREATED_DATETIME").toLocalDateTime() : null);
+    		vo.setExciseTaxReceiveAmount(rs.getString("UPDATE_BY"));
+    		vo.setUpdateDatetime(rs.getTimestamp("UPDATE_DATETIME") != null ? rs.getTimestamp("UPDATE_DATETIME").toLocalDateTime() : null);
+    		return vo;
+    	}
+    };
 
-    private RowMapper<ExciseDetail> exciseRowmapper = new RowMapper<ExciseDetail>() {
+    private RowMapper<ExciseDetail> worksheetRowmapper = new RowMapper<ExciseDetail>() {
         @Override
         public ExciseDetail mapRow(ResultSet rs, int arg1) throws SQLException {
             ExciseDetail vo = new ExciseDetail();
-            ExciseTax vi = new ExciseTax();
             ArrayList<ExciseTax> ve = new ArrayList<ExciseTax>();
-            vo.setExciseRegisttionNumberId(rs.getInt("TA_EXCISE_REGISTTION_NUMBER_ID"));
-            vo.setExciseId(rs.getString("TA_EXCISE_ID"));
-            vo.setExciseOperatorName(rs.getString("TA_EXCISE_OPERATOR_NAME"));
-            vo.setExciseIdenNumber(rs.getString("TA_EXCISE_IDEN_NUMBER"));
-            vo.setExciseFacName(rs.getString("TA_EXCISE_FAC_NAME"));
-            vo.setIndustrialAddress(rs.getString("TA_EXCISE_FAC_ADDRESS"));
-            vo.setExciseArea(rs.getString("TA_EXCISE_AREA"));
-            vo.setExciseRegisCapital(rs.getInt("TA_EXCISE_REGIS_CAPITAL"));
-            vo.setExciseRemark(rs.getString("TA_EXCISE_REMARK"));
-            vo.setCreatedBy(rs.getString("CREATED_BY"));
-            vo.setCreatedDatetime(rs.getTimestamp("CREATED_DATETIME") != null ? rs.getTimestamp("CREATED_DATETIME").toLocalDateTime() : null);
-            vo.setUpdateBy(rs.getString("UPDATE_BY"));
-            vo.setUpdateDatetime(rs.getTimestamp("UPDATE_DATETIME") != null ? rs.getTimestamp("UPDATE_DATETIME").toLocalDateTime() : null);
-            vo.setTaexciseProductType(rs.getString("TA_EXCISE_PRODUCT_TYPE"));
-            vo.setTaexciseSectorArea(rs.getString("TA_EXCISE_SECTOR_AREA"));
-            vi.setExciseTaxReceiveId(rs.getInt("TA_EXCISE_TAX_RECEIVE_ID"));
-            vi.setExciseId(rs.getString("TA_EXCISE_ID"));
-            vi.setExciseTaxReceiveMonth(rs.getString("TA_EXCISE_TAX_RECEIVE_MONTH"));
-            vi.setExciseTaxReceiveAmount(rs.getString("TA_EXCISE_TAX_RECEIVE_AMOUNT"));
-            ve.add(vi);
+            vo.setWorksheetHeaderId(rs.getBigDecimal("WORK_SHEET_HEADER_ID"));
+			vo.setAnalysNumber(rs.getString("ANALYS_NUMBER"));
+			vo.setExciseId(rs.getString("EXCISE_ID"));
+			vo.setCompanyName(rs.getString("COMPANY_NAME"));
+			vo.setFactoryName(rs.getString("FACTORY_NAME"));
+			vo.setFactoryAddress(rs.getString("FACTORY_ADDRESS"));
+			vo.setExciseOwnerArea(rs.getString("EXCISE_OWNER_AREA"));
+			vo.setProductType(rs.getString("PRODUCT_TYPE"));
+			vo.setExciseOwnerArea1(rs.getString("EXCISE_OWNER_AREA_1"));
+			vo.setTotalAmount(rs.getBigDecimal("TOTAL_AMOUNT"));
+			vo.setPercentage(rs.getBigDecimal("PERCENTAGE"));
+			vo.setTotalMonth(rs.getBigDecimal("TOTAL_MONTH"));
+			vo.setDecideType(rs.getString("DECIDE_TYPE"));
+			vo.setFlag(rs.getString("FLAG"));
+			vo.setFirstMonth(rs.getBigDecimal("FIRST_MONTH"));
+			vo.setLastMonth(rs.getBigDecimal("LAST_MONTH"));
+			vo.setCreateBy(rs.getString("CREATED_BY"));
+			vo.setCreateDatetime(rs.getDate("CREATED_DATETIME"));
+			vo.setUpdateBy(rs.getString("UPDATE_BY"));
+			vo.setUpdateDatetime(rs.getTime("UPDATE_DATETIME"));
             vo.setExciseTax(ve);
             return vo;
         }

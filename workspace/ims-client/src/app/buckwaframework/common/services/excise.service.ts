@@ -42,10 +42,27 @@ export class ExciseService {
         const index = this.excise.findIndex(obj => obj.exciseId == data.exciseId);
         if (index > -1) {
             this.excise[index] = data;
-            const url = `excise/detail/list/${data.exciseId}`;
+            const url = `excise/detail/list/${data.analysNumber}/${data.exciseId}`;
             const new_data: File[] = data.file;
             this.ajax.put(url, new_data, null).then(
                 res => {
+                    var new_file = [];
+                    var old_file = this.excise[index].file;
+                    for (let i = 0; i < old_file.length; i++) {
+                        if (old_file[i].uploadPath === undefined) {
+                            const d = {
+                                name: old_file[i].name,
+                                value: old_file[i].value,
+                                type: old_file[i].type,
+                                taExciseFileUploadId: null,
+                                uploadPath: `///${old_file[i].name}`
+                            };
+                            new_file.push(d);
+                        } else {
+                            new_file.push(old_file[i]);
+                        }
+                    }
+                    this.excise[index].file = new_file;
                     console.log(res);
                 }
             );

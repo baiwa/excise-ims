@@ -1,14 +1,8 @@
 package th.go.excise.ims.mockup.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +11,9 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.excise.ia.constant.DateConstant;
 import th.go.excise.ims.mockup.domain.MockupVo;
-import th.go.excise.ims.mockup.persistence.dao.ExciseDetailDao;
 import th.go.excise.ims.mockup.persistence.dao.ExciseRegisttionNumberDao;
 import th.go.excise.ims.mockup.persistence.dao.ExciseTaxReceiveDao;
-import th.go.excise.ims.mockup.persistence.entity.ExciseDetail;
 import th.go.excise.ims.mockup.persistence.entity.ExciseRegistartionNumber;
-import th.go.excise.ims.mockup.persistence.entity.ExciseTax;
 import th.go.excise.ims.mockup.persistence.entity.ExciseTaxReceive;
 
 @Service

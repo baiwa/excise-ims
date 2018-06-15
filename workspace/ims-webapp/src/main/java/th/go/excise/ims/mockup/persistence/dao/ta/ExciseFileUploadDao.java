@@ -26,7 +26,7 @@ public class ExciseFileUploadDao {
 	private final String sqlTaExciseId = " SELECT * FROM TA_EXCISE_FILE_UPLOAD WHERE EXCISE_ID = ? ";
 
 	public List<ExciseFileUpload> queryByExciseId(String exciseId) {
-		logger.info("register: {}", exciseId);
+		logger.info("ExciseFileUploadDao.queryByExciseId exciseId: {}", exciseId);
 		List<ExciseFileUpload> list = jdbcTemplate.query(sqlTaExciseId , new Object[] { exciseId },
 				exciseRegisttionRowmapper);
 		

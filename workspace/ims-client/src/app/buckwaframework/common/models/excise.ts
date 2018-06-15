@@ -1,34 +1,27 @@
 import { ExciseTax } from './exciseTax';
 import { File } from './file';
 export class Excise {
-    change: any
-    coordinates: any
-    createdBy: String
-    createdDatetime: any
-    exciseArea: String
-    exciseFacAddress: any
-    exciseFacName: String
-    exciseId: String
-    exciseIdenNumber: String
-    exciseOperatorName: String
-    exciseRegisCapital: number
-    exciseRegisttionNumberId: number
-    exciseRemark: String
+    [x: string]: any
+    worksheetHeaderId: number
+    analysNumber: string
+    exciseId: string
+    companyName: string
+    factoryName: string
+    factoryAddress: string
+    exciseOwnerArea: string
+    productType: string
+    exciseOwnerArea1: string
+    totalAmount: number
+    percentage: number
+    totalMonth: number
+    decideType: string
+    flag: string
+    firstMonth: number
+    lastMonth: number
+    createBy: string
+    createDatetime: any
+    updateBy: string
+    updateDatetime: any
     exciseTax: ExciseTax[]
     file: File[]
-    industrialAddress: String
-    no1: any
-    no2: any
-    no3: any
-    payingtax: any
-    paymentMonth: any
-    registeredCapital: any
-    sector: any
-    status: any
-    taexciseProductType: String
-    taexciseSectorArea: String
-    taxpayment1: any
-    taxpayment2: any
-    updateBy: String
-    updateDatetime: any
 }

@@ -120,9 +120,10 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     $('#userManagementDt tbody').on('click', 'tr', function () {
       $("#exciseBtn").prop('disabled', false);
       $('#userManagementDt tbody tr').css({ "background-color": "white", "cursor": "pointer" });
-      (<HTMLInputElement>document.getElementById("exciseId")).value = table.row(this).data().exciseId;
+      (<HTMLInputElement>document.getElementById("exciseId")).value = $(this).children().toArray()[1].innerHTML;
       $(this).css("background-color", "rgb(197,217,241)");
     });
+    
   }
 
   onSend = () => {

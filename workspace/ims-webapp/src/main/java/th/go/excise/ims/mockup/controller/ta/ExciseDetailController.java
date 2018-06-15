@@ -1,12 +1,10 @@
 package th.go.excise.ims.mockup.controller.ta;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,39 +13,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.go.excise.ims.mockup.domain.ta.ExciseDetail;
 import th.go.excise.ims.mockup.domain.ta.ExciseFile;
 import th.go.excise.ims.mockup.domain.ta.Response;
-import th.go.excise.ims.mockup.persistence.entity.ExciseDetail;
 import th.go.excise.ims.mockup.service.ta.ExciseDetailService;
 
 @Controller
 @RequestMapping("excise/detail")
 public class ExciseDetailController {
 	
+	private Logger logger = LoggerFactory.getLogger(ExciseDetailController.class);
+	
 	@Autowired
 	ExciseDetailService exciseService;
 	
-	@PutMapping("/list/{id}")
+	@PutMapping("/list/{num}/{id}")
 	@ResponseBody
-	public Response addFile(@PathVariable("id") String id, @RequestBody ExciseFile[] file) {
-		if (exciseService.saveExciseFileUpload(id, file))
+	public Response addFile(@PathVariable("num") String num, @PathVariable("id") String id, @RequestBody ExciseFile[] file) {
+		logger.info("ExciseDetailContorller.addFile id: {}, file: {}", id, file);
+		if (exciseService.saveExciseFileUpload(id, num, file))
 			return new Response("200", "OK");
 		else
 			return new Response("404", "ERROR");
 	}
 	
-	@GetMapping("/list/{id}")
+	@GetMapping("/list/{num}/{id}")
 	@ResponseBody
-	public List<ExciseDetail> list(@PathVariable("id") String id) {
-		List<ExciseDetail> li = exciseService.findById(id, 1);
+	public List<ExciseDetail> list(@PathVariable("num") String num, @PathVariable("id") String id) {
+		logger.info("ExciseDetailContorller.list num: {}, id: {}", num, id);
+		List<ExciseDetail> li = exciseService.findById(id, num, 1);
 		return li;
 	}
 
-	@GetMapping("/list/{id}/{limit}")
+	@GetMapping("/list/{num}/{id}/{limit}")
 	@ResponseBody
-	public List<ExciseDetail> listLimit(@PathVariable("id") String id,
+	public List<ExciseDetail> list(@PathVariable("num") String num, @PathVariable("id") String id,
 								   @PathVariable(value = "limit", required = false) int limit) {
-		List<ExciseDetail> li = exciseService.findById(id, limit);
+		logger.info("ExciseDetailContorller.list num: {}, id: {}, limit: {}", num, id, limit);
+		List<ExciseDetail> li = exciseService.findById(id, num, limit);
 		return li;
 	}
 	
