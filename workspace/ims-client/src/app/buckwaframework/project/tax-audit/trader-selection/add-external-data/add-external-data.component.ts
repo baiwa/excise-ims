@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ExciseService } from '../../../../common/services/excise.service';
 import { AjaxService } from '../../../../common/services/ajax.service';
 
@@ -17,6 +18,7 @@ export class AddExternalDataComponent implements OnInit {
   analysNumber: any;
 
   constructor(
+    private router: Router,
     private ex: ExciseService
   ) {
 
