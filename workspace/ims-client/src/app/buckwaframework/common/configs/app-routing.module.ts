@@ -167,7 +167,7 @@ import { Ope054Component } from './../../project/tax-audit/operate-tax-audit/ope
 import { Ope055Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-5/ope05-5.component';
 import { Ope056Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-6/ope05-6.component';
 import { Ope057Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-7/ope05-7.component';
-
+import { AddExternalDataComponent } from '../../project/tax-audit/trader-selection/add-external-data/add-external-data.component';
 
 
 const routes: Routes = [
@@ -337,6 +337,7 @@ const routes: Routes = [
     { path: 'ope05-5', component: Ope055Component, canActivate: [AuthGuard] },
     { path: 'ope05-6', component: Ope056Component, canActivate: [AuthGuard] },
     { path: 'ope05-7', component: Ope057Component, canActivate: [AuthGuard] },
+    { path: 'add-external-data', component: AddExternalDataComponent, canActivate: [AuthGuard] }
     
 ];
 

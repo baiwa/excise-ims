@@ -202,7 +202,7 @@ import { AddDataComponent } from './buckwaframework/project/tax-audit/trader-sel
 import { Int0821Component } from './buckwaframework/project/internal-audit/int08/int08-2/int08-2-1/int08-2-1.component';
 import { Int091Component } from './buckwaframework/project/internal-audit/int09/int09-1/int09-1.component';
 import { Int092Component } from './buckwaframework/project/internal-audit/int09/int09-2/int09-2.component';
-
+import { AddExternalDataComponent } from './buckwaframework/project/tax-audit/trader-selection/add-external-data/add-external-data.component';
 
 
 
@@ -380,6 +380,7 @@ import { Int092Component } from './buckwaframework/project/internal-audit/int09/
         Int0821Component,
         Int091Component,
         Int092Component,
+        AddExternalDataComponent
       
     
        
