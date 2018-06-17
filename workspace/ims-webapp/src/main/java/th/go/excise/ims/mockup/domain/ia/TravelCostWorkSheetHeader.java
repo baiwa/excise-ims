@@ -1,21 +1,23 @@
 package th.go.excise.ims.mockup.domain.ia;
 
-public class TravelCostWorkSheetHeader {
+import java.math.BigDecimal;
+import java.util.Date;
 
-	private String workSheetHeaderId;
+public class TravelCostWorkSheetHeader {
+	private BigDecimal workSheetHeaderId;
 	private String workSheetHeaderName;
 	private String departmentName;
-	private String startDate;
-	private String endDate;
+	private Date startDate;
+	private Date endDate;
 	private String description;
 	private String createdBy;
-	private String createdDatetime;
+	private Date createdDatetime;
 	private String updateBy;
-	private String updateDatetime;
-	public String getWorkSheetHeaderId() {
+	private Date updateDatetime;
+	public BigDecimal getWorkSheetHeaderId() {
 		return workSheetHeaderId;
 	}
-	public void setWorkSheetHeaderId(String workSheetHeaderId) {
+	public void setWorkSheetHeaderId(BigDecimal workSheetHeaderId) {
 		this.workSheetHeaderId = workSheetHeaderId;
 	}
 	public String getWorkSheetHeaderName() {
@@ -30,16 +32,16 @@ public class TravelCostWorkSheetHeader {
 	public void setDepartmentName(String departmentName) {
 		this.departmentName = departmentName;
 	}
-	public String getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	public String getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(String endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 	public String getDescription() {
@@ -54,10 +56,10 @@ public class TravelCostWorkSheetHeader {
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	public String getCreatedDatetime() {
+	public Date getCreatedDatetime() {
 		return createdDatetime;
 	}
-	public void setCreatedDatetime(String createdDatetime) {
+	public void setCreatedDatetime(Date createdDatetime) {
 		this.createdDatetime = createdDatetime;
 	}
 	public String getUpdateBy() {
@@ -66,11 +68,12 @@ public class TravelCostWorkSheetHeader {
 	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
 	}
-	public String getUpdateDatetime() {
+	public Date getUpdateDatetime() {
 		return updateDatetime;
 	}
-	public void setUpdateDatetime(String updateDatetime) {
+	public void setUpdateDatetime(Date updateDatetime) {
 		this.updateDatetime = updateDatetime;
 	}
-	
+
 }
+

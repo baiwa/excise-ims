@@ -1,29 +1,32 @@
 package th.go.excise.ims.mockup.domain.ia;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class TravelCostWsDetail {
-	private String workSheetDetailId;
+	private BigDecimal workSheetDetailId;
 	private String headerId;
 	private String name;
 	private String lastName;
 	private String position;
 	private String category;
 	private String degree;
-	private String allowanceDate;
-	private String allowanceCost;
-	private String rentDate;
-	private String rentCost;
-	private String travelCost;
-	private String otherCost;
-	private String sumCost;
+	private BigDecimal allowanceDate;
+	private BigDecimal allowanceCost;
+	private BigDecimal rentDate;
+	private BigDecimal rentCost;
+	private BigDecimal travelCost;
+	private BigDecimal otherCost;
+	private BigDecimal sumCost;
 	private String note;
 	private String createdBy;
-	private String createdDatetime;
+	private Date createdDatetime;
 	private String updateBy;
-	private String updateDatetime;
-	public String getWorkSheetDetailId() {
+	private Date updateDatetime;
+	public BigDecimal getWorkSheetDetailId() {
 		return workSheetDetailId;
 	}
-	public void setWorkSheetDetailId(String workSheetDetailId) {
+	public void setWorkSheetDetailId(BigDecimal workSheetDetailId) {
 		this.workSheetDetailId = workSheetDetailId;
 	}
 	public String getHeaderId() {
@@ -62,46 +65,46 @@ public class TravelCostWsDetail {
 	public void setDegree(String degree) {
 		this.degree = degree;
 	}
-	public String getAllowanceDate() {
+	public BigDecimal getAllowanceDate() {
 		return allowanceDate;
 	}
-	public void setAllowanceDate(String allowanceDate) {
+	public void setAllowanceDate(BigDecimal allowanceDate) {
 		this.allowanceDate = allowanceDate;
 	}
-	public String getAllowanceCost() {
+	public BigDecimal getAllowanceCost() {
 		return allowanceCost;
 	}
-	public void setAllowanceCost(String allowanceCost) {
+	public void setAllowanceCost(BigDecimal allowanceCost) {
 		this.allowanceCost = allowanceCost;
 	}
-	public String getRentDate() {
+	public BigDecimal getRentDate() {
 		return rentDate;
 	}
-	public void setRentDate(String rentDate) {
+	public void setRentDate(BigDecimal rentDate) {
 		this.rentDate = rentDate;
 	}
-	public String getRentCost() {
+	public BigDecimal getRentCost() {
 		return rentCost;
 	}
-	public void setRentCost(String rentCost) {
+	public void setRentCost(BigDecimal rentCost) {
 		this.rentCost = rentCost;
 	}
-	public String getTravelCost() {
+	public BigDecimal getTravelCost() {
 		return travelCost;
 	}
-	public void setTravelCost(String travelCost) {
+	public void setTravelCost(BigDecimal travelCost) {
 		this.travelCost = travelCost;
 	}
-	public String getOtherCost() {
+	public BigDecimal getOtherCost() {
 		return otherCost;
 	}
-	public void setOtherCost(String otherCost) {
+	public void setOtherCost(BigDecimal otherCost) {
 		this.otherCost = otherCost;
 	}
-	public String getSumCost() {
+	public BigDecimal getSumCost() {
 		return sumCost;
 	}
-	public void setSumCost(String sumCost) {
+	public void setSumCost(BigDecimal sumCost) {
 		this.sumCost = sumCost;
 	}
 	public String getNote() {
@@ -116,10 +119,10 @@ public class TravelCostWsDetail {
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	public String getCreatedDatetime() {
+	public Date getCreatedDatetime() {
 		return createdDatetime;
 	}
-	public void setCreatedDatetime(String createdDatetime) {
+	public void setCreatedDatetime(Date createdDatetime) {
 		this.createdDatetime = createdDatetime;
 	}
 	public String getUpdateBy() {
@@ -128,10 +131,10 @@ public class TravelCostWsDetail {
 	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
 	}
-	public String getUpdateDatetime() {
+	public Date getUpdateDatetime() {
 		return updateDatetime;
 	}
-	public void setUpdateDatetime(String updateDatetime) {
+	public void setUpdateDatetime(Date updateDatetime) {
 		this.updateDatetime = updateDatetime;
 	}
 }

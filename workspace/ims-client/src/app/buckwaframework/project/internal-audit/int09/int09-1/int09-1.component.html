@@ -2,7 +2,7 @@
   <span>รายละเอียดหัวกระดาษทำการ
   </span>
 </div>
-<div class="ui form center aligned" id="int09-1">
+<div class="ui form center aligned" id="int09-1" (submit)="onSubmitt()" ngNativeValidate>
   <div class="ui attached  segment">
     <div class="ui grid center aligned">
       <div class="ui two wide column">&nbsp;</div>
@@ -100,37 +100,25 @@
         </div>
 
         <div class="inline fields">
-          <div class="two wide field">
-            <label>ประเภท :</label>
-          </div>
-          <div class="four wide field ">
-            <select name="category" class="ui search dropdown">
-              <option value="0">ทั่วไป</option>
-              <option value="1">วิชาการ</option>
-              <option value="2">อำนวยการ</option>
-              <option value="3">บริหาร</option>
+          <div class="two wide field"><label>ประเภท</label></div>
+          <div class="five wide field">
+            <select style="width: 100%" id="category" name="category" class="ui search dropdown" (change)="onSelectDoc($event)" required>
+              <option value="" style="color: grey">เลือกประเภท</option>
+              <option *ngFor="let typeDoc of typeDocs; let i = index" value="{{i}}">
+                {{typeDoc}}
+              </option>
             </select>
           </div>
-          <div class="two wide field">
-            <label>ระดับ :</label>
-          </div>
-          <div class="four wide field ">
-            <select name="degree" class="ui search dropdown">
-              <option value="0">ระดับ</option>
-              <option value="1">ปฏิบัติงาน</option>
-              <option value="2">ชำนาญงาน</option>
-              <option value="3">อาวุโส</option>
-              <option value="5">ทักษะพิเศษ</option>
-              <option value="6">ปฏิบัติการ</option>
-              <option value="7">ปฏิบัติงาน</option>
-              <option value="8">ชำนาญการ</option>
-              <option value="9">ชำนาญการพิเศษ</option>
-              <option value="10">เชี่ยวชาญ</option>
-              <option value="11">ทรงคุณวุฒิ</option>
-              <option value="12">ระดับต้น</option>
-              <option value="13">ระดับสูง</option>             
+          <div class="two wide field"><label>ระดับ</label></div>
+          <div class="five wide field">
+            <select style="width: 100%" id="degree" name="degree" class="ui search dropdown" (change)="onSelectTop($event)" required>
+              <option value="" style="color: grey">เลือกระดับ</option>
+              <option *ngFor="let top of topic; let i = index" value="{{i}}">
+                {{top}}
+              </option>
             </select>
           </div>
+         <div class="five wide field"></div>
         </div>
         <div class="inline fields">
           <div class="two wide field">
@@ -191,8 +179,7 @@
     </div>
     <br>
 
-    <div class="ui segment" *ngIf="showData">
-
+   
       <br>
       <div style="overflow-x: scroll;">
         <table id="tableData" class="ui small celled table" style="width: 120%">
@@ -230,10 +217,7 @@
           </button>
           <button class="ui mini primary button" type="submit" (click)=" onSubmit()">
             บันทึก
-          </button>
-          <button class="ui mini primary button">
-            พิมพ์
-          </button>
+          </button>                    
           <button class="ui mini primary button">
             ส่งออก
           </button>
@@ -244,4 +228,3 @@
       </div>
     </div>
   </div>
-</div>
