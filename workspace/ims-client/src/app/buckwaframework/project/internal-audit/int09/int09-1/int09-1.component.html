@@ -2,7 +2,7 @@
   <span>รายละเอียดหัวกระดาษทำการ
   </span>
 </div>
-<div class="ui form center aligned" id="int09-1">
+<div class="ui form center aligned" id="int09-1" (submit)="onSubmitt()" ngNativeValidate>
   <div class="ui attached  segment">
     <div class="ui grid center aligned">
       <div class="ui two wide column">&nbsp;</div>
@@ -19,7 +19,7 @@
         <div class="inline fields">
           <div class="three wide field">
             <label>
-              หน่วยงาน :
+              ชื่อ (ผู้สร้าง) :
             </label>
           </div>
           <div class="eight  wide field">
@@ -27,33 +27,10 @@
           </div>
         </div>
 
-        <div class="inline fields">
-          <div class="three wide field">
-            <label>วันที่ :</label>
-          </div>
-          <div class="ui calendar" id="example2">
-            <div class="ui input left icon">
-              <i class="calendar icon"></i>
-              <input type="text" placeholder="Date" name="startDate">
-            </div>
-          </div>
 
-          <div class="one wide field">
-            &nbsp; &nbsp; &nbsp;
-            <label>
-              ถึง :
-            </label>
-          </div>
-          <div class="ui calendar" id="example3">
-            <div class="ui input left icon">
-              <i class="calendar icon"></i>
-              <input type="text" placeholder="Date" name="endDate">
-            </div>
-          </div>
-        </div>
         <div class="inline fields">
           <div class="three wide field">
-            <label>รายระเอียด :</label>
+            <label>วันที่ทำการ</label>
           </div>
           <div class="eight wide field">
             <input type="text" class="disabled" name="description">
@@ -64,184 +41,51 @@
 
     <br>
 
-    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>สร้างกระดาษทำการประมาณการค่าใช้จ่ายในการเดินทางไปราชการ </span>
-    </div>
-    <br>
+
     <div class="ui grid center aligned">
       <div class="ui two wide column">&nbsp;</div>
       <div class="ui center aligned thirteen wide  column">
-
-        <div class="inline fields">
-          <div class="two wide field">
-            <label>ชื่อ :</label>
-          </div>
-          <div class="four wide field">
-            <input type="text" name="name">
-          </div>
-          <div class="two wide field">
-            <label>
-              นามสกุล :
-            </label>
-          </div>
-          <div class="four wide field">
-            <input type="text" name="lastName">
-          </div>
-        </div>
-        <div class="inline fields">
-          <div class="two wide field">
-            <label>
-              ตำแหน่ง :
-            </label>
-          </div>
-          <div class="four  wide field">
-            <input type="text" name="position">
-          </div>
-        </div>
-
-        <div class="inline fields">
-          <div class="two wide field">
-            <label>ประเภท :</label>
-          </div>
-          <div class="four wide field ">
-            <select name="category" class="ui search dropdown">
-              <option value="0">ทั่วไป</option>
-              <option value="1">วิชาการ</option>
-              <option value="2">อำนวยการ</option>
-              <option value="3">บริหาร</option>
-            </select>
-          </div>
-          <div class="two wide field">
-            <label>ระดับ :</label>
-          </div>
-          <div class="four wide field ">
-            <select name="degree" class="ui search dropdown">
-              <option value="0">ระดับ</option>
-              <option value="1">ปฏิบัติงาน</option>
-              <option value="2">ชำนาญงาน</option>
-              <option value="3">อาวุโส</option>
-              <option value="5">ทักษะพิเศษ</option>
-              <option value="6">ปฏิบัติการ</option>
-              <option value="7">ปฏิบัติงาน</option>
-              <option value="8">ชำนาญการ</option>
-              <option value="9">ชำนาญการพิเศษ</option>
-              <option value="10">เชี่ยวชาญ</option>
-              <option value="11">ทรงคุณวุฒิ</option>
-              <option value="12">ระดับต้น</option>
-              <option value="13">ระดับสูง</option>             
-            </select>
-          </div>
-        </div>
-        <div class="inline fields">
-          <div class="two wide field">
-            <label>ค่าเบี้ยเลี้ยง (วัน):</label>
-          </div>
-          <div class="four wide field">
-            <input type="text" name="allowanceDate">
-          </div>
-          <div class="two wide field">
-            <label>
-              ค่าเช่าที่พัก (วัน):
-            </label>
-          </div>
-          <div class="four wide field">
-            <input type="text" name="rentDate">
-          </div>
-        </div>
-        <div class="inline fields">
-          <div class="two wide field">
-            <label>ค่าพาหนะ :</label>
-          </div>
-          <div class="four wide field">
-            <input type="text" name="travelCost">
-          </div>
-          <div class="two wide field">
-            <label>
-              ค่าใช้จ่ายอื่น ๆ :
-            </label>
-          </div>
-          <div class="four wide field">
-            <input type="text" name="otherCost">
-          </div>
-        </div>
-
-        <div class="inline fields">
-          <div class="two wide field">
-            <label>
-              หมายเหตุ :
-            </label>
-          </div>
-          <div class="ten wide field">
-            <textarea name="" id="" rows="2" style="resize: none" maxLength="2000" name="note"></textarea>
-          </div>
-        </div>
       </div>
     </div>
+
 
 
     <div class="ui center aligned grid">
       <div class="eight wide column">
         <button class="ui mini green button" type="button" (click)="uploadData()">
-          เพิ่ม
+        ค้นหา
         </button>
         <button class="ui mini red button" type="button" (click)="clearData()">
-          ล้างข้อมูล
+        ล้างข้อมูล
+          </button>
+        <button class="ui mini green button" type="button"  routerLink="/int09-1-1" >
+        เพิ่มข้อมูล
         </button>
+       
       </div>
     </div>
     <br>
 
-    <div class="ui segment" *ngIf="showData">
 
-      <br>
-      <div style="overflow-x: scroll;">
-        <table id="tableData" class="ui small celled table" style="width: 120%">
-          <thead>
-            <tr style="text-align: center;">
-              <th rowspan="2">ที่</th>
-              <th rowspan="2">ชื่อ</th>
-              <th rowspan="2">ตำแหน่ง</th>
-              <th colspan="2">ค่าเบี้ยเลี้ยง</th>
-              <th colspan="2">ค่าเช่าที่พัก</th>
-              <th rowspan="2">ค่าพาหนะ</th>
-              <th rowspan="4">ค่าใช้จ่ายอื่น</th>
-              <th rowspan="2">รวมเป็นเงิน</th>
-              <th rowspan="2">หมายเหตุ</th>
-              <th rowspan="2">Action</th>
-            </tr>
-            <tr style="text-align: center;">
-              <th>วัน</th>
-              <th>จำนวนเงิน</th>
-              <th>วัน</th>
-              <th>จำนวนเงิน</th>
-            </tr>
-          </thead>
-          <tbody>
+    <br>
+    <div style="overflow-x: scroll;">
+      <table id="tableData" class="ui small celled table">
+        <thead>
+          <tr style="text-align: center;">
+            <th rowspan="2">ลำดับที่</th>
+            <th rowspan="2">ชื่อกระดาษทำการ</th>
+            <th rowspan="2">หน่วยงาน</th>
+            <th rowspan="2">วันที่</th>
+            <th rowspan="2">Action</th>
+          </tr>
+
+        </thead>
+        <tbody>
 
 
-          </tbody>
-        </table>
-      </div>
-      <br>
-      <div class="ui center aligned grid">
-        <div class="eight wide column">
-          <button class="ui mini red button">
-            ลบ
-          </button>
-          <button class="ui mini primary button" type="submit" (click)=" onSubmit()">
-            บันทึก
-          </button>
-          <button class="ui mini primary button">
-            พิมพ์
-          </button>
-          <button class="ui mini primary button">
-            ส่งออก
-          </button>
-          <button class="ui mini primary button" routerLink="/int09-2">
-            สัญญาการยืมเงิน
-          </button>
-        </div>
-      </div>
+        </tbody>
+      </table>
     </div>
+    <br>  
   </div>
 </div>

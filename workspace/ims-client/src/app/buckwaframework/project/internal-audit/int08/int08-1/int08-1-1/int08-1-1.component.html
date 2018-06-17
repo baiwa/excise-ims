@@ -1,47 +1,48 @@
 <div class="ui grid">
+
   <div class="sixteen wide column">
-
-      <div class="ui large ordered steps" style="width: 280px;">
-          <div class="active step">
-            <div class="content">
-              <div class="title">ประเมิน	
-                </div>
-              <div class="description">ความเสี่ยงโครงการด้านงบประมาณ		</div>
-            </div>
+    <div class="ui large ordered steps" style="width: 100%;">
+      <div class="active step">
+        <div class="content">
+          <div class="title">ประเมิน
           </div>
-          <div class="step">
-            <div class="content">
-              <div class="title">ประเมิน			
-                </div>
-              <div class="description">ความเสี่ยงโครงการด้านประสิทธิภาพ</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="content">
-              <div class="title">ประเมิน		
-                </div>
-              <div class="description">ความเสี่ยงโครงการรวม</div>              
-            </div>
-          </div>         
+          <div class="description">ความเสี่ยงโครงการด้านงบประมาณ </div>
         </div>
-
-        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-            <span>สร้างกระดาษทำการประเมินความเสี่ยงโครงการด้านงบประมาณ</span>
+      </div>
+      <div class="step">
+        <div class="content">
+          <div class="title">ประเมิน
           </div>
+          <div class="description">ความเสี่ยงโครงการด้านประสิทธิภาพ</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="content">
+          <div class="title">ประเมิน
+          </div>
+          <div class="description">ความเสี่ยงโครงการรวม</div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>สร้างกระดาษทำการประเมินความเสี่ยงโครงการด้านงบประมาณ</span>
+    </div>
 
     <div class="ui attached segment">
       <div class="ui form">
         <div class="inline fields">
           <div class="four wide field "></div>
           <div class="two wide field ">
-            <label>ปีงบประมาณ</label>           
-          </div> 
+            <label>ปีงบประมาณ</label>
+          </div>
           <div class="four wide field ">
-          <select class="ui search dropdown">
+            <select class="ui search dropdown">
               <option value="0">2561</option>
               <option value="1">2560</option>
               <option value="2">2559</option>
-         </select>
+            </select>
           </div>
         </div>
       </div>
@@ -60,104 +61,143 @@
         </div>
       </div>
     </div>
+    <br>
 
-    <div class="ui segment" *ngIf="showData">
-      <div class="ui right aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini primary button" (click)="popupEditData()">
-            <i class="setting icon"></i>
-            กำหนด RL
-          </button>
-          <button class="ui mini primary button">
-            <i class=" save icon"></i>
-            บันทึก
-          </button>
-          <button class="ui mini primary button">
-            <i class="print icon"></i>
-            พิมพ์
-          </button>
-          <div class="ui mini primary button">
-            <div class="ui simple dropdown item">
-              ส่งออก
-              <i class="dropdown icon"></i>
-              <div class="menu">
-                <div class="item">PDF</div>
-                <div class="item">Excel</div>
+    <div class="ui right aligned grid" style="margin-left: auto;" *ngIf="showData">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button" (click)="popupEditData()">
+          <i class="setting icon"></i>
+          กำหนด RL
+        </button>
+        <button class="ui mini primary button">
+          <i class=" save icon"></i>
+          บันทึก
+        </button>
+        <button class="ui mini primary button">
+          <i class="print icon"></i>
+          พิมพ์
+        </button>
+        <div class="ui mini primary button">
+          <div class="ui simple dropdown item">
+            ส่งออก
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <div class="item">PDF</div>
+              <div class="item">Excel</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white" *ngIf="showData">
+      <span>รายละเอียดหัวกระดาษทำการ</span>
+    </div>
+
+    <div class="ui attached segment" *ngIf="showData">
+      <div class="ui center aligned grid">
+        <div class="twelve wide column">
+          <div class="ui form">
+            <div class="inline fields">
+              <div class="three wide field">
+                ชื่อกระดาษทำการ
+              </div>
+              <div class="thirteen wide field">
+                <input type="text">
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="three wide field">
+                ปีงบประมาณ
+              </div>
+              <div class="five wide field">
+                <input type="text">
+              </div>
+              <div class="two wide field">
+                ผู้ตรวจ
+              </div>
+              <div class="six wide field">
+                <input type="text">
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="three wide field">
+                ปัจจัยเสี่ยง
+              </div>
+              <div class="five wide field">
+                <input type="text">
+              </div>
+              <div class="three wide field">
+                ประเภทกระดาษทำการ
+              </div>
+              <div class="five wide field">
+                <select class="ui dropdown">
+                  <option value="">เลือกประเภทกระดาษทำการ</option>
+                  <option value="{{ d }}" *ngFor="let d of data">{{ d }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="three wide field condition" [ngStyle]="{ 'margin-top': '-120px' }">
+                เงื่อนไข
+              </div>
+              <div class="thirteen wide field">
+                <div class="ui form" style="width: 100%">
+                  <div class="inline fields">
+                    <div class="one wide field">1.</div>
+                    <div class="fifteen wide field" style="padding-right: 0">
+                      <div class="ui right labeled input">
+                        <input type="text" placeholder="">
+                        <div class="ui red label" style="cursor: pointer;">
+                          <i class="trash icon" style="margin: 0"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inline fields">
+                    <div class="one wide field">2.</div>
+                    <div class="fifteen wide field" style="padding-right: 0">
+                      <div class="ui right labeled input">
+                        <input type="text" placeholder="">
+                        <div class="ui red label" style="cursor: pointer;">
+                          <i class="trash icon" style="margin: 0"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inline fields">
+                    <div class="one wide field">3.</div>
+                    <div class="fifteen wide field" style="padding-right: 0">
+                      <div class="ui right labeled input">
+                        <input type="text" placeholder="">
+                        <div class="ui red label" style="cursor: pointer;">
+                          <i class="trash icon" style="margin: 0"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="fifteen wide field"></div>
+              <div class="one wide field" style="padding: 0 1em 0 0;">
+                <div class="ui vertical mini animated button" tabindex="0">
+                  <div class="hidden content">เพิ่ม</div>
+                  <div class="visible content">
+                    <i class="plus icon ani-icon" style="margin-left: -0.5em;"></i>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <br>
-      <div class="ui grid center aligned">
-        <div class="sixteen wide column">
-            กระดาษทำการประเมินความเสี่ยงงบประมาณเพื่อพิจารณาคัดเลือกแผนงาน / โครงการ	
-          <br> ปีงบประมาณ พ.ศ. 2561
-          <br> กลุ่มตรวจสอบภายใน กรมสรรพสามิต
-        </div>
-      </div>
+    </div>
 
-      <div class="ui nine column grid">
-        <div class="column right aligned">
-          ปัจจัยเสี่ยง:
-        </div>
-
-        <div class="column" style="width: 20%;">
-          1. งบประมาณที่ใช้ดำเนินโครงการ
-          <br> งบประมาณดำเนินโครงการ
-          <br> งบประมาณดำเนินโครงการ
-          <br> งบประมาณดำเนินโครงการ
-        </div>
-
-        <div class="column">
-          &nbsp;
-          <br> น้อยกว่า
-          <br> อยู่ระหว่าง
-          <br> มากกว่า
-        </div>
-
-        <div class="column" style="width: 20%;" align="center">
-          &nbsp;
-          <br> 5,000,000
-          <br> 5,000,000 - 15,000,000
-          <br> 15,000,000
-        </div>
-
-        <div class="column right aligned" style="width: 10%;">
-          &nbsp;
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-        </div>
-
-        <div class="column" style="width: 2%;">
-          &nbsp;
-          <br> 1
-          <br> 2
-          <br> 3
-        </div>
-
-        <div class="column" style="width: 10%;">
-          &nbsp;
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-        </div>
-
-        <div class="column" style="width: 2%;">
-          &nbsp;
-          <br> ต่ำ
-          <br> กลาง
-          <br> สูง
-        </div>
-
-
-      </div>
-
-
-
-      <br>
-      <div style="overflow-x: scroll;">
+    <div class="ui segment" style="padding: 0;" *ngIf="showData">
+      <div style="overflow: scroll;max-height: 84vh;">
         <table id="tableData" class="ui small celled table" style="width: 120%">
           <thead>
             <tr style="text-align: center;">
@@ -167,274 +207,274 @@
               <th colspan="4">งบประมาณที่ใช้ตามแผนยุทธศาสตร์ที่กรมอนุมัติ</th>
               <th rowspan="2">เงินงบประมาณที่กรมอนุมัติ</th>
               <th colspan="2">ประเมินความเสี่ยง</th>
-
             </tr>
             <tr style="text-align: center;">
               <th style="border-left: 1px solid rgba(34,36,38,.1);">เงินงบประมาณ</th>
               <th>เงินท้องถิ่น</th>
               <th>เงินอื่นๆ</th>
-              <th style="width: 8%;">รวม</th>              
+              <th style="width: 8%;">รวม</th>
               <th>RL</th>
               <th>แปลค่า</th>
             </tr>
           </thead>
           <tbody>
-            
-              <tr>
-                  <td>1</td>
-                  <td>40. โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ กรมสรรพสามิต (Network and Security System)</td>
-                
-                  <td>ศทส.</td>
-                  <td>55,000,000</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>55,000,000</td>
-                  <td>55,000,000</td>
-                  <td  class="bg-red">3</td>
-                  <td  class="bg-red">สูง</td>
-              </tr>
-              <tr>
-                  <td>2</td>
-                  <td>41. โครงการจัดหาเครื่องไมโครคอมพิวเตอร์ เครื่องคอมพิวเตอร์แบบพกพา และอุปกรณ์เพื่อทดแทนเครื่องเดิมและเพิ่มเติมเพื่อใช้ในการปฏิบัติงาน</td>
-               
-                  <td>ศทส.</td>
-                  <td>40,800,000</td>
-                  <td>0</td>
-                  <td>3,000,000</td>
-                  <td>43,800,000</td>
-                  <td>46,800,000</td>
-                  <td  class="bg-red">3</td>
-                  <td  class="bg-red">สูง</td>
-              </tr>
-              <tr>
-                  <td>3</td>
-                  <td>62.โครงการติดตั้งมาตรวัดและคอมพิวเตอร์สื่อสารทางไกลมาใช้ในการบริหารจัดเก็บภาษีเครื่องดื่ม</td>
-                
-                  <td>สมฐ.1</td>
-                  <td>32,150,000</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>98,800,000</td>
-                  <td>101,800,000</td>
-                  <td  class="bg-red">3</td>
-                  <td  class="bg-red">สูง</td>
-              </tr>
-              <tr>
-                  <td>4</td>
-                  <td>42. โครงการจัดหาระบบบริหารจัดการทรัพยากร ICT</td>
 
-                  <td>ศทส.</td>
-                  <td>25,000,000</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>25,000,000</td>
-                  <td>25,000,000</td>
-                  <td  class="bg-red">3</td>
-                  <td  class="bg-red">สูง</td>
-              </tr>
-              <tr>
-                  <td>5</td>
-                  <td>11. โครงการป้องกันและปราบปรามผู้กระทำผิดกฎหมายสรรพสามิต</td>
-                
-                  <td>สตป.</td>
-                  <td>0</td>
-                  <td>23,828,100</td>
-                  <td>23,828,100</td>
-                  <td>47,656,200</td>
-                  <td>95,312,400</td>
-                  <td  class="bg-red">3</td>
-                  <td  class="bg-red">สูง</td>
-              </tr>
-              <tr>
-                  <td>6</td>
-                  <td>38. โครงการปรับปรุงและพัฒนาเพิ่มเติมระบบ SSO และระบบข้อมูลสารสนเทศเพื่อรองรับการบูรณาการสารสนเทศ 3 กรมภาษี</td>
-                 
-                  <td>ศทส.</td>
-                  <td>20,000,000</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>72,656,200</td>
-                  <td>120,312,400</td>
-                  <td  class="bg-red">3</td>
-                  <td  class="bg-red">สูง</td>
-              </tr>
-              <tr>
-                  <td>7</td>
-                  <td>39. การพัฒนาระบบควบคุมสารสนเทศสารละลายไฮโดรคาร์บอน (Hydrocarbon Solvent)</td>
-                
-                  <td>ศทส.</td>
-                  <td>16,000,000</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>16,000,000</td>
-                  <td>16,000,000</td>
-                  <td  class="bg-red">3</td>
-                  <td  class="bg-red">สูง</td>
-              </tr>
-              <tr>
-                  <td>8</td>
-                  <td>9. โครงการซ่อมบำรุงรักษา สอบเทียบ และจัดหาอะไหล่ระบบเครื่องมือวัดปริมาณ น้ำสุราแช่ออนไลน์</td>
-                 
-                  <td>กตท.</td>
-                  <td>3,000,000</td>
-                  <td>12,100,000</td>
-                  <td>12,100,000</td>
-                  <td>27,200,000</td>
-                  <td>51,400,000</td>
-                  <td  class="bg-red">3</td>
-                  <td  class="bg-red">สูง</td>
-              </tr>
-              <tr>
-                  <td>9</td>
-                  <td>10. โครงการติดตั้งเครื่องพิมพ์โค๊ดและระบบตรวจสอบการเสียภาษีสุราแช่แบบใหม่</td>
-               
-                  <td>กตท.</td>
-                  <td>0</td>
-                  <td>15,800,000</td>
-                  <td>15,800,000</td>
-                  <td>43,200,000</td>
-                  <td>67,400,000</td>
-                  <td  class="bg-red">3</td>
-                  <td  class="bg-red">สูง</td>
-              </tr>
-              <tr>
-                  <td>10</td>
-                  <td>61. โครงการสำรวจราคาขายปลีกและจัดทำฐานข้อมูลราคาขายปลีกสำหรับสินค้าสุรา ยาสูบ และเครื่องดื่ม</td>
-                
-                  <td>สผษ.</td>
-                  <td>10,000,000</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>10,000,000</td>
-                  <td>10,000,000</td>
-                  <td class="bg-yellow">2</td>
-                  <td class="bg-yellow" >กลาง</td>
-              </tr>
-              <tr>
-                  <td>11</td>
-                  <td>45. โครงการจัดซื้อพร้อมติดตั้งจำนวนผู้ใช้งาน(Concurrent User License) เพิ่มเติมระบบการจัดการข้อมูลของห้องปฏิบัติการทางวิทยาศาสตร์ (Laboratory Information Management System: LIMS)</td>
-                
-                  <td>กวข.</td>
-                  <td>8,000,000</td>
-                  <td>0</td>
-                  <td>3,000,000</td>
-                  <td>11,000,000</td>
-                  <td>14,000,000</td>
-                  <td class="bg-yellow">2</td>
-                  <td class="bg-yellow">กลาง</td>
-              </tr>
-              <tr>
-                  <td>12</td>
-                  <td>43. ติดตั้งสื่อประชาสัมพันธ์ข้อมูลข่าวสาร กรมสรรพสามิต ระยะที่ 2</td>
-                 
-                  <td>ศทส.</td>
-                  <td>5,850,000</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>21,000,000</td>
-                  <td>24,000,000</td>
-                  <td class="bg-yellow">2</td>
-                  <td class="bg-yellow">กลาง</td>
-              </tr>
-              <tr>
-                  <td>13</td>
-                  <td>60.โครงการ Excise Innovation Award ครั้งที่ 7</td>
-                 
-                  <td>สบค.</td>
-                  <td>0</td>
-                  <td>4,500,000</td>
-                  <td>4,500,000</td>
-                  <td>9,000,000</td>
-                  <td>18,000,000</td>
-                  <td  class="bg-green">1</td>
-                  <td  class="bg-green">ต่ำ</td>
-              </tr>
-              <tr>
-                  <td>14</td>
-                  <td>27. โครงการสร้างความรู้ความเข้าใจแก่ประชาชนอย่างมีประสิทธิภาพ</td>
-              
-                  <td>สลก.</td>
-                  <td>2,962,900</td>
-                  <td>1,110,000</td>
-                  <td>1,110,000</td>
-                  <td>5,182,900</td>
-                  <td>7,402,900</td>
-                  <td  class="bg-green">1</td>
-                  <td  class="bg-green">ต่ำ</td>
-              </tr>
-              <tr>
-                  <td>15</td>
-                  <td>52.โครงการสัมมนาหลักสูตรวิธีปฏิบัติราชการทางปกครองและการติดตามเงินคืนกรณีโครงการรถยนต์คันแรก</td>
-                
-                  <td>สกม.</td>
-                  <td>0</td>
-                  <td>4,000,000</td>
-                  <td>4,000,000</td>
-                  <td>14,182,900</td>
-                  <td>25,402,900</td>
-                  <td  class="bg-green">1</td>
-                  <td  class="bg-green">ต่ำ</td>
-              </tr>
-              <tr>
-                  <td>16</td>
-                  <td>32. โครงการพัฒนาคุณภาพการบริหารจัดการภาครัฐ (PMQA) สู่ความเป็นเลิศ</td>                
-                  <td>กพร.</td>
-                  <td>0</td>
-                  <td>3,673,600</td>
-                  <td>3,673,600</td>
-                  <td>7,347,200</td>
-                  <td>14,694,400</td>
-                  <td  class="bg-green">1</td>
-                  <td  class="bg-green">ต่ำ</td>
-              </tr>
-              <tr>
-                  <td>17</td>
-                  <td>14. โครงการตรวจสอบภาษี (Post Audit)</td>               
-                  <td>สตป.</td>
-                  <td>2,396,040</td>
-                  <td>1,177,520</td>
-                  <td>1,177,520</td>
-                  <td>4,751,080</td>
-                  <td>7,106,120</td>
-                  <td  class="bg-green">1</td>
-                  <td  class="bg-green">ต่ำ</td>
-              </tr>
-              <tr>
-                  <td>18</td>
-                  <td>58.โครงการก่อสร้างสำนักงานสรรพสามิตและบ้านพักข้าราชการสรรพสามิต</td>               
-                  <td>กตท.</td>
-                  <td>2,530,400</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>12,098,280</td>
-                  <td>21,800,520</td>
-                  <td  class="bg-green">1</td>
-                  <td class="bg-green">ต่ำ</td>
-              </tr>
-              <tr>
-                  <td>19</td>
-                  <td>13. โครงการบูรณาการตรวจสอบสินค้าน้ำมันเพื่อป้องกันการหลีกเลี่ยงภาษีสรรพสามิตอย่างยั่งยืน</td>            
-                  <td>กวข.</td>
-                  <td>2,199,600</td>
-                  <td>0</td>
-                  <td>3,000,000</td>
-                  <td>5,199,600</td>
-                  <td>8,199,600</td>
-                  <td class="bg-green">1</td>
-                  <td class="bg-green">ต่ำ</td>
-              </tr>
-              <tr>
-                  <td>รวม</td>               
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>225,888,940</td>
-                  <td>66,189,220</td>
-                  <td>75189220</td>
-                  <td>292,078,160</td>
-                  <td>292,078,161</td>   
-                  <td>&nbsp;</td>              
-                  <td>&nbsp;</td>    
-              </tr>
+            <tr>
+              <td>1</td>
+              <td>40. โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ
+                กรมสรรพสามิต (Network and Security System)</td>
+              <td>ศทส.</td>
+              <td>55,000,000</td>
+              <td>0</td>
+              <td>0</td>
+              <td>55,000,000</td>
+              <td>55,000,000</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>41. โครงการจัดหาเครื่องไมโครคอมพิวเตอร์ เครื่องคอมพิวเตอร์แบบพกพา และอุปกรณ์เพื่อทดแทนเครื่องเดิมและเพิ่มเติมเพื่อใช้ในการปฏิบัติงาน</td>
+
+              <td>ศทส.</td>
+              <td>40,800,000</td>
+              <td>0</td>
+              <td>3,000,000</td>
+              <td>43,800,000</td>
+              <td>46,800,000</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>62.โครงการติดตั้งมาตรวัดและคอมพิวเตอร์สื่อสารทางไกลมาใช้ในการบริหารจัดเก็บภาษีเครื่องดื่ม</td>
+
+              <td>สมฐ.1</td>
+              <td>32,150,000</td>
+              <td>0</td>
+              <td>0</td>
+              <td>98,800,000</td>
+              <td>101,800,000</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>42. โครงการจัดหาระบบบริหารจัดการทรัพยากร ICT</td>
+
+              <td>ศทส.</td>
+              <td>25,000,000</td>
+              <td>0</td>
+              <td>0</td>
+              <td>25,000,000</td>
+              <td>25,000,000</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>11. โครงการป้องกันและปราบปรามผู้กระทำผิดกฎหมายสรรพสามิต</td>
+
+              <td>สตป.</td>
+              <td>0</td>
+              <td>23,828,100</td>
+              <td>23,828,100</td>
+              <td>47,656,200</td>
+              <td>95,312,400</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>38. โครงการปรับปรุงและพัฒนาเพิ่มเติมระบบ SSO และระบบข้อมูลสารสนเทศเพื่อรองรับการบูรณาการสารสนเทศ 3 กรมภาษี</td>
+
+              <td>ศทส.</td>
+              <td>20,000,000</td>
+              <td>0</td>
+              <td>0</td>
+              <td>72,656,200</td>
+              <td>120,312,400</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>39. การพัฒนาระบบควบคุมสารสนเทศสารละลายไฮโดรคาร์บอน (Hydrocarbon Solvent)</td>
+
+              <td>ศทส.</td>
+              <td>16,000,000</td>
+              <td>0</td>
+              <td>0</td>
+              <td>16,000,000</td>
+              <td>16,000,000</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>9. โครงการซ่อมบำรุงรักษา สอบเทียบ และจัดหาอะไหล่ระบบเครื่องมือวัดปริมาณ น้ำสุราแช่ออนไลน์</td>
+
+              <td>กตท.</td>
+              <td>3,000,000</td>
+              <td>12,100,000</td>
+              <td>12,100,000</td>
+              <td>27,200,000</td>
+              <td>51,400,000</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>10. โครงการติดตั้งเครื่องพิมพ์โค๊ดและระบบตรวจสอบการเสียภาษีสุราแช่แบบใหม่</td>
+
+              <td>กตท.</td>
+              <td>0</td>
+              <td>15,800,000</td>
+              <td>15,800,000</td>
+              <td>43,200,000</td>
+              <td>67,400,000</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>61. โครงการสำรวจราคาขายปลีกและจัดทำฐานข้อมูลราคาขายปลีกสำหรับสินค้าสุรา ยาสูบ และเครื่องดื่ม</td>
+
+              <td>สผษ.</td>
+              <td>10,000,000</td>
+              <td>0</td>
+              <td>0</td>
+              <td>10,000,000</td>
+              <td>10,000,000</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>45. โครงการจัดซื้อพร้อมติดตั้งจำนวนผู้ใช้งาน(Concurrent User License) เพิ่มเติมระบบการจัดการข้อมูลของห้องปฏิบัติการทางวิทยาศาสตร์
+                (Laboratory Information Management System: LIMS)</td>
+
+              <td>กวข.</td>
+              <td>8,000,000</td>
+              <td>0</td>
+              <td>3,000,000</td>
+              <td>11,000,000</td>
+              <td>14,000,000</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>43. ติดตั้งสื่อประชาสัมพันธ์ข้อมูลข่าวสาร กรมสรรพสามิต ระยะที่ 2</td>
+
+              <td>ศทส.</td>
+              <td>5,850,000</td>
+              <td>0</td>
+              <td>0</td>
+              <td>21,000,000</td>
+              <td>24,000,000</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>60.โครงการ Excise Innovation Award ครั้งที่ 7</td>
+
+              <td>สบค.</td>
+              <td>0</td>
+              <td>4,500,000</td>
+              <td>4,500,000</td>
+              <td>9,000,000</td>
+              <td>18,000,000</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td>27. โครงการสร้างความรู้ความเข้าใจแก่ประชาชนอย่างมีประสิทธิภาพ</td>
+
+              <td>สลก.</td>
+              <td>2,962,900</td>
+              <td>1,110,000</td>
+              <td>1,110,000</td>
+              <td>5,182,900</td>
+              <td>7,402,900</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>15</td>
+              <td>52.โครงการสัมมนาหลักสูตรวิธีปฏิบัติราชการทางปกครองและการติดตามเงินคืนกรณีโครงการรถยนต์คันแรก</td>
+
+              <td>สกม.</td>
+              <td>0</td>
+              <td>4,000,000</td>
+              <td>4,000,000</td>
+              <td>14,182,900</td>
+              <td>25,402,900</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>16</td>
+              <td>32. โครงการพัฒนาคุณภาพการบริหารจัดการภาครัฐ (PMQA) สู่ความเป็นเลิศ</td>
+              <td>กพร.</td>
+              <td>0</td>
+              <td>3,673,600</td>
+              <td>3,673,600</td>
+              <td>7,347,200</td>
+              <td>14,694,400</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>17</td>
+              <td>14. โครงการตรวจสอบภาษี (Post Audit)</td>
+              <td>สตป.</td>
+              <td>2,396,040</td>
+              <td>1,177,520</td>
+              <td>1,177,520</td>
+              <td>4,751,080</td>
+              <td>7,106,120</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>18</td>
+              <td>58.โครงการก่อสร้างสำนักงานสรรพสามิตและบ้านพักข้าราชการสรรพสามิต</td>
+              <td>กตท.</td>
+              <td>2,530,400</td>
+              <td>0</td>
+              <td>0</td>
+              <td>12,098,280</td>
+              <td>21,800,520</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>19</td>
+              <td>13. โครงการบูรณาการตรวจสอบสินค้าน้ำมันเพื่อป้องกันการหลีกเลี่ยงภาษีสรรพสามิตอย่างยั่งยืน</td>
+              <td>กวข.</td>
+              <td>2,199,600</td>
+              <td>0</td>
+              <td>3,000,000</td>
+              <td>5,199,600</td>
+              <td>8,199,600</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>รวม</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>225,888,940</td>
+              <td>66,189,220</td>
+              <td>75189220</td>
+              <td>292,078,160</td>
+              <td>292,078,161</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -465,17 +505,17 @@
   <div class="content">
     <div class="ui form">
       <div class="inline fields">
-          <div class="three wide field"></div>
+        <div class="three wide field"></div>
         <div class="four wide field">
-         <label>ข้อมูลที่ใช้ตรวจสอบ	 </label>         
+          <label>ข้อมูลที่ใช้ตรวจสอบ </label>
         </div>
         <div class="six wide field">
-        <select id="selectC1" class="ui dropdown">
+          <select id="selectC1" class="ui dropdown">
             <option value="1">เงินงบประมาณตามแผนยุทธศาสตร์</option>
-            <option value="0">เงินงบประมาณที่กรมอนุมัติ</option>           
+            <option value="0">เงินงบประมาณที่กรมอนุมัติ</option>
           </select>
-          </div>
-      </div>		
+        </div>
+      </div>
 
 
       <table id="tableSetting" class="ui small celled table" style="width: 100%;">
@@ -583,10 +623,10 @@
   <div class="actions">
     <div class="ui center aligned grid">
       <div class="sixteen wide column">
-          <button class="ui mini primary button width-100">
-              <i class="add icon"></i>
-            เพิ่ม
-            </button>
+        <button class="ui mini primary button width-100">
+          <i class="add icon"></i>
+          เพิ่ม
+        </button>
         <button class="ui mini primary button width-100">
           <i class="save icon"></i>
           บันทึก
