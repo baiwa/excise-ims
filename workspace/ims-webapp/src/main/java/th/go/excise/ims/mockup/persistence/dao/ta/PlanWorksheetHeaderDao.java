@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import th.go.excise.ims.mockup.controller.ta.ExciseDetailController;
 import th.go.excise.ims.mockup.domain.ta.PlanWorksheetVo;
 import th.go.excise.ims.mockup.persistence.entity.ta.PlanWorksheetHeader;
+import th.go.excise.ims.mockup.utils.OracleUtils;
 
 @Repository
 public class PlanWorksheetHeaderDao {
@@ -39,7 +40,7 @@ public class PlanWorksheetHeaderDao {
 		StringBuilder sql = new StringBuilder(" select * from TA_PLAN_WORK_SHEET_HEADER ");
 		sql.append(" where 1 = 1 ");
 
-		if (criteria.getAnalysNumber() != null && criteria.getAnalysNumber().length() > 0) {
+		if ( StringUtils.isNotBlank(criteria.getAnalysNumber())) {
 			sql.append(" and ANALYS_NUMBER = ? ");
 			valueList.add(criteria.getAnalysNumber());
 
@@ -120,20 +121,47 @@ public class PlanWorksheetHeaderDao {
 	};
 	
 	
-	public List<PlanWorksheetVo> queryPlanWorksheetHeaderDetil(PlanWorksheetHeader criteria) {
+	public List<PlanWorksheetVo> queryPlanWorksheetHeaderDetil(String analysNumber , int start , int length) {
 
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select * from TA_PLAN_WORK_SHEET_HEADER H ");
 		sql.append(" inner join TA_PLAN_WORK_SHEET_DETAIL D ");
-		sql.append(" on D.EXCISE_ID = H.EXCISE_ID and d.ANALYS_NUMBER = h.ANALYS_NUMBER ");
+		sql.append(" on D.EXCISE_ID = H.EXCISE_ID and D.ANALYS_NUMBER = H.ANALYS_NUMBER ");
 		sql.append(" where H.ANALYS_NUMBER = ? ");
 		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
-		valueList.add(criteria.getAnalysNumber());
-		List<PlanWorksheetVo> planWorksheetHeaderList = jdbcTemplate.query( sql.toString(), valueList.toArray(),
+		valueList.add(analysNumber);
+		List<PlanWorksheetVo> planWorksheetHeaderList = jdbcTemplate.query( OracleUtils.limitForDataTable(sql, start, length), valueList.toArray(),
 				fieldMappingPlanWorksheetVo);
 		return planWorksheetHeaderList;
 
+	}
+	
+	public List<PlanWorksheetHeader> queryPlanWorksheetHeader(String analysNumber , int start , int length) {
+
+		List<Object> valueList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select * from TA_PLAN_WORK_SHEET_HEADER H ");
+		sql.append(" where H.ANALYS_NUMBER = ? ");
+		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
+		valueList.add(analysNumber);
+		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate.query( OracleUtils.limitForDataTable(sql, start, length), valueList.toArray(),
+				fieldMapping);
+		return planWorksheetHeaderList;
+
+	}
+	
+	public long queryCountByPlanWorksheetHeaderDetil(String analysNumber) {	
+		List<Object> valueList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select * from TA_PLAN_WORK_SHEET_HEADER H ");
+		sql.append(" LEFT JOIN TA_PLAN_WORK_SHEET_DETAIL D ");
+		sql.append(" on D.EXCISE_ID = H.EXCISE_ID and d.ANALYS_NUMBER = h.ANALYS_NUMBER ");
+		sql.append(" where H.ANALYS_NUMBER = ? ");
+		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
+		valueList.add(analysNumber);
+		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()) ,valueList.toArray() , Long.class);
+		return count;
 	}
 	
 	private RowMapper<PlanWorksheetVo> fieldMappingPlanWorksheetVo = new RowMapper<PlanWorksheetVo>() {

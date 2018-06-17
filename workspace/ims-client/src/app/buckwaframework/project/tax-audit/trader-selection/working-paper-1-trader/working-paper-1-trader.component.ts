@@ -15,6 +15,7 @@ declare var $: any;
 export class WorkingPaper1TraderComponent implements OnInit {
 
   userManagementDt: any;
+  router: any;
   private listItem: any[];
   before: any;
   last: any;
@@ -34,7 +35,6 @@ export class WorkingPaper1TraderComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private ex: ExciseService
   ) {
     this._num1 = new Array();
@@ -128,30 +128,12 @@ export class WorkingPaper1TraderComponent implements OnInit {
       + '<th style="text-align: center !important">' + (currYear - 1) + '</th>'
       + trHeaderColumn + '</tr>';
 
-    // this.listItem = ["น้ำมัน"
-    //   , "เครื่องดื่ม"
-    //   , "ยาสูบ"
-    //   , "ไพ่"
-    //   , "แก้วและเครื่องแก้ว"
-    //   , "รถยนต์"
-    //   , 'พรมและสิ่งทอปูพื้น'
-    //   , "แบตเตอรี่"
-    //   , "ไนท์คลับและดิสโกเธค"
-    //   , "สถานอาบน้ำหรืออบตัวและนวด"
-    //   , "สนามแข่งม้า"
-    //   , 'สนามกอล์ฟ'
-    //   , "รวม"];
 
     this.initDatatable();
   }
 
   ngAfterViewInit() {
 
-  }
-
-  onSend = () => {
-    alert('aasd');
-    this.router.navigate(['/add-external-data']);
   }
   
   initDatatable(): void {
@@ -179,32 +161,30 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' } ';
     json += ' }, ';
     json += ' "columns": [ ';
-    json += ' { "data": "exciseRegisttionNumberId","className":"center" }, ';
+    json += ' { "data": "worksheetHeaderId","className":"center" }, ';
     json += ' { "data": "exciseId","className":"center" }, ';
-    json += ' { "data": "exciseOperatorName" }, ';
-    json += ' { "data": "exciseFacName" }, ';
-    json += ' { "data": "exciseArea" }, ';
-    json += ' { "data": "exciseFacAddress" ,"className":"center" }, ';
-    json += ' { "data": "exciseRegisCapital","className":"center" }, ';
-    json += ' { "data": "change","className":"center" }, ';
-    json += ' { "data": "payingtax" ,"className":"center"}, ';
+    json += ' { "data": "companyName" }, ';
+    json += ' { "data": "companyName" }, ';
+    json += ' { "data": "exciseOwnerArea" }, ';
+    json += ' { "data": "firstMonth" ,"className":"center" }, ';
+    json += ' { "data": "lastMonth","className":"center" }, ';
+    json += ' { "data": "percentage","className":"center" }, ';
+    json += ' { "data": "totalMonth" ,"className":"center"}, ';
     json += ' { "data": "no1" }, ';
     json += ' { "data": "no2" }, ';
     json += ' { "data": "no3" }, ';
-    json += ' { "data": "coordinates" }, ';
-    json += ' { "data": "sector" }, ';
-    json += ' { "data": "industrialAddress" }, ';
+    json += ' { "data": "exciseOwnerArea1" }, ';
+    json += ' { "data": "productType" }, ';
+    json += ' { "data": "factoryAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
     json += ' { "data": "status" }, ';
 
-    for (var i = 0; i < this.month / 2; i++) {
-      json += ' { "data": "exciseFirstTaxReceiveAmount' + (i + 1) + '" ,"className":"center"}, ';
-    }
-    for (var i = 0; i < this.month / 2; i++) {
-      if (i != (this.month / 2) - 1) {
-        json += ' { "data": "exciseLatestTaxReceiveAmount' + (i + 1) + '" ,"className":"center"}, ';
+   
+    for (var i = 0; i < this.month; i++) {
+      if (i != this.month - 1) {
+        json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"}, ';
       } else {
-        json += ' { "data": "exciseLatestTaxReceiveAmount' + (i + 1) + '" ,"className":"center"} ';
+        json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"} ';
       }
     }
     json += '] } ';
@@ -213,86 +193,6 @@ export class WorkingPaper1TraderComponent implements OnInit {
     this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
   }
 
-  // initDatatable(): void {
-  //   const URL = AjaxService.CONTEXT_PATH + "/working/test/list";
-  //   this.userManagementDt = $('#userManagementDt').DataTable({
-  //     "lengthChange": false,
-  //     "searching": false,
-  //     "ordering": false,
-  //     "pageLength": 10,
-  //     "processing": true,
-  //     "serverSide": true,
-  //     "paging": true,
-  //     "pagingType": "full_numbers",
 
-  //     "ajax": {
-  //       "type": "POST",
-  //       "url": URL,
-  //       "data": {
-  //         "exciseProductType": '',
-  //         "startBackDate": this.from,
-  //         "month":this.month
-  //       }
-  //     },
-  //     "columns": [
-
-  //       { "data": "exciseRegisttionNumberId", "className": "center" },
-  //       { "data": "exciseId", "className": "center" },
-  //       { "data": "exciseOperatorName" },
-  //       { "data": "exciseFacName" },
-  //       { "data": "exciseArea" },
-  //       { "data": "exciseFacAddress", "className": "center" },
-  //       { "data": "exciseRegisCapital", "className": "center" },
-  //       { "data": "change", "className": "center" },
-  //       { "data": "payingtax", "className": "center" },
-  //       { "data": "no1" },
-  //       { "data": "no2" },
-  //       { "data": "no3" },
-  //       { "data": "coordinates" },
-  //       { "data": "sector" },
-  //       { "data": "industrialAddress" },
-  //       { "data": "registeredCapital" },
-  //       { "data": "status" },
-  //       { "data": "exciseFirstTaxReceiveAmount1", "className": "center" },
-  //       { "data": "exciseFirstTaxReceiveAmount2", "className": "center" },
-  //       { "data": "exciseFirstTaxReceiveAmount3", "className": "center" },
-  //       { "data": "exciseFirstTaxReceiveAmount4", "className": "center" },
-  //       { "data": "exciseFirstTaxReceiveAmount5", "className": "center" },
-  //       { "data": "exciseFirstTaxReceiveAmount6", "className": "center" },
-  //       { "data": "exciseFirstTaxReceiveAmount7", "className": "center" },
-  //       { "data": "exciseFirstTaxReceiveAmount8", "className": "center" },
-  //       { "data": "exciseFirstTaxReceiveAmount9", "className": "center" },
-  //       { "data": "exciseFirstTaxReceiveAmount10", "className": "center" },
-  //       { "data": "exciseFirstTaxReceiveAmount11", "className": "center" },
-  //       { "data": "exciseFirstTaxReceiveAmount12", "className": "center" },
-  //       { "data": "exciseLatestTaxReceiveAmount1", "className": "center" },
-  //       { "data": "exciseLatestTaxReceiveAmount2", "className": "center" },
-  //       { "data": "exciseLatestTaxReceiveAmount3", "className": "center" },
-  //       { "data": "exciseLatestTaxReceiveAmount4", "className": "center" },
-  //       { "data": "exciseLatestTaxReceiveAmount5", "className": "center" },
-  //       { "data": "exciseLatestTaxReceiveAmount6", "className": "center" },
-  //       { "data": "exciseLatestTaxReceiveAmount7", "className": "center" },
-  //       { "data": "exciseLatestTaxReceiveAmount8", "className": "center" },
-  //       { "data": "exciseLatestTaxReceiveAmount9", "className": "center" },
-  //       { "data": "exciseLatestTaxReceiveAmount10", "className": "center" },
-  //       { "data": "exciseLatestTaxReceiveAmount11", "className": "center" },
-  //       { "data": "exciseLatestTaxReceiveAmount12", "className": "center" }
-
-  //     ],
-
-
-  //   });
-  //   let tableId = '#userManagementDt';
-  //   let backgroundRowColor = (data, type, row, meta) => {
-  //     if (!data) {
-  //       let table = $(tableId).DataTable();
-  //       let cell = table.cell(meta.row, meta.col).node();
-  //       $(cell).addClass("bg-row-highlight");
-  //     }
-
-  //     return data;
-  //   }
-
-  // }
 
 }

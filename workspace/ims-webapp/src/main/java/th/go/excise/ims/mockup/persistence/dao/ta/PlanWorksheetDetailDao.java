@@ -13,10 +13,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.go.excise.ims.mockup.persistence.entity.ta.PlanWorksheetDetail;
-import th.go.excise.ims.mockup.service.ta.PlanWorksheetHeaderService;
+import th.go.excise.ims.mockup.utils.BeanUtils;
 
 @Repository
-public class PlanWorksheetDetailDao {
+public class PlanWorksheetDetailDao{
 	
 	private Logger logger = LoggerFactory.getLogger(PlanWorksheetDetailDao.class);
 	
@@ -28,13 +28,18 @@ public class PlanWorksheetDetailDao {
 	public List<PlanWorksheetDetail> queryPlanWorksheetDetailCriteria(PlanWorksheetDetail criteria) {
 		logger.info("PlanWorksheetDetailDao.queryPlanWorksheetDetailCriteria");
 		List<Object> valueList = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder(" select * from TA_PLAN_WORK_SHEET_HEADER ");
+		StringBuilder sql = new StringBuilder(" select * from TA_PLAN_WORK_SHEET_DETAIL ");
 		sql.append(" where 1 = 1 ");
 
-		if (criteria.getAnalysNumber() != null && criteria.getAnalysNumber().length() > 0) {
+		if (BeanUtils.isNotEmpty(criteria.getAnalysNumber())) {
 			sql.append(" and ANALYS_NUMBER = ? ");
 			valueList.add(criteria.getAnalysNumber());
 
+		}
+		if (BeanUtils.isNotEmpty(criteria.getExciseId())) {
+			sql.append(" and EXCISE_ID = ? ");
+			valueList.add(criteria.getExciseId());
+			
 		}
 
 		List<PlanWorksheetDetail> PlanWorksheetDetailList = jdbcTemplate.query(sql.toString(), valueList.toArray(),

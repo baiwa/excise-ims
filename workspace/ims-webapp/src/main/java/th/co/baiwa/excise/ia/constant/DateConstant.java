@@ -3,10 +3,15 @@ package th.co.baiwa.excise.ia.constant;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class DateConstant {
 
@@ -30,6 +35,29 @@ public class DateConstant {
 		}
 		return monthList;
 	}
+	
+	public static List<String> sortMonthShotList(List<String> monthNameList){
+		List<Integer> data = new ArrayList<Integer>();
+		Map<Integer, String> mapping = new HashMap<Integer, String>();
+		for (String month : monthNameList) {
+			String[] split = month.split(" ");
+			String monthNumber = (Arrays.asList(MONTH_SHOT_NAMES).indexOf(split[0])+1)+"";
+			if(monthNumber.length() == 1) {
+				monthNumber = "0"+monthNumber;
+			}
+			Integer dataSet = Integer.parseInt("25"+split[1]+monthNumber);
+			data.add(dataSet);
+			mapping.put(dataSet, month);
+		}
+		List<String> monthListReturn = new ArrayList<String>();
+		Collections.sort(data);
+		for (Integer integer : data) {
+			monthListReturn.add(mapping.get(integer));
+			//System.out.println(mapping.get(integer));
+		}
+		return monthListReturn;
+	}
+	
 
 	public static String checkYearThai(Date date) {
 		String pattern = "yyyy";

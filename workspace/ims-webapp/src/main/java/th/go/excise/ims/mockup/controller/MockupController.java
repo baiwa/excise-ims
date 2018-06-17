@@ -1,7 +1,6 @@
 package th.go.excise.ims.mockup.controller;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +41,10 @@ public class MockupController {
 	@ResponseBody
 	public String createWorkSheet(@ModelAttribute MockupVo vo, DataTableRequest input){
 		String[] fulldate = input.getStartBackDate().split("/");
-		Date date = new Date();
-		date.setYear(Integer.parseInt(fulldate[1]));
-		date.setMonth(Integer.parseInt(fulldate[0]));
+		Calendar date = Calendar.getInstance(DateConstant.LOCAL_TH);
+		date.set(Integer.parseInt(fulldate[1]), Integer.parseInt(fulldate[0]), 1);
 		int month = input.getMonth() != null ? input.getMonth() : 0;
-		return planWorksheetHeaderService.insertPlanWorksheetHeaderService(vo,date, month,input.getExciseProductType());
+		return planWorksheetHeaderService.insertPlanWorksheetHeaderService(vo,date.getTime(), month,input.getExciseProductType());
 		
 	}
 	
