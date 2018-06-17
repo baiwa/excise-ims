@@ -12,18 +12,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import th.go.excise.ims.mockup.persistence.entity.ListOfValue;
+import th.go.excise.ims.mockup.persistence.entity.sys.Lov;
 
 @Repository
-public class ListOfValueDao {
+public class LovDao {
 
-	private Logger logger = LoggerFactory.getLogger(ListOfValueDao.class);
+	private Logger logger = LoggerFactory.getLogger(LovDao.class);
 
 	@Autowired
 	private JdbcTemplate JdbcTemplate;
 	private String sqlSelectTable = "SELECT * FROM LIST_OF_VALUE WHERE 1 = 1 ";
 
-	public List<ListOfValue> queryLovByCriteria(ListOfValue lov) {
+	public List<Lov> queryLovByCriteria(Lov lov) {
 		logger.info("queryLovByCriteria");
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlSelectTable);
@@ -36,26 +36,33 @@ public class ListOfValueDao {
 				sql.append(" and TYPE = ?");
 				objList.add(lov.getType());
 			}
-			if (lov.getValue() != null && lov.getValue().length() > 0) {
-				sql.append(" and VALUE = ?");
-				objList.add(lov.getValue());
+			if (lov.getValue1() != null && lov.getValue1().length() > 0) {
+				sql.append(" and VALUE1 = ?");
+				objList.add(lov.getValue1());
 			}
 		}
 		logger.info("SQL : " + sql.toString());
-		List<ListOfValue> list = JdbcTemplate.query(sql.toString(), objList.toArray(), lovMappingRow);
+		List<Lov> list = JdbcTemplate.query(sql.toString(), objList.toArray(), lovMappingRow);
 		return list;
 	}
 
-	private RowMapper<ListOfValue> lovMappingRow = new RowMapper<ListOfValue>() {
+	private RowMapper<Lov> lovMappingRow = new RowMapper<Lov>() {
 
 		@Override
-		public ListOfValue mapRow(ResultSet rs, int arg1) throws SQLException {
-			ListOfValue lov = new ListOfValue();
+		public Lov mapRow(ResultSet rs, int arg1) throws SQLException {
+			Lov lov = new Lov();
 			lov.setLovId(rs.getBigDecimal("LOV_ID"));
+			lov.setLovIdMaster(rs.getBigDecimal("LOV_ID_MASTER"));
 			lov.setType(rs.getString("TYPE"));
 			lov.setTypeDescription(rs.getString("TYPE_DESCRIPTION"));
-			lov.setValue(rs.getString("VALUE"));
-			lov.setValueDescription(rs.getString("VALUE_DESCRIPTION"));
+			lov.setSubType(rs.getString("SUB_TYPE"));
+			lov.setSubTypeDescription(rs.getString("SUB_TYPE_DESCRIPTION"));
+			lov.setValue1(rs.getString("VALUE1"));
+			lov.setValue2(rs.getString("VALUE2"));
+			lov.setValue3(rs.getString("VALUE3"));
+			lov.setValue4(rs.getString("VALUE4"));
+			lov.setValue5(rs.getString("VALUE5"));
+			lov.setIsDeleted(rs.getString("IS_DELETED"));
 			lov.setCreatedBy(rs.getString("CREATED_BY"));
 			lov.setCreatedDatetime(rs.getDate("CREATED_DATETIME"));
 			lov.setUpdateBy(rs.getString("UPDATE_BY"));

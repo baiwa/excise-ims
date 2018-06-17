@@ -24,8 +24,8 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.UserManagement;
 import th.co.baiwa.buckwaframework.preferences.service.UserManagementService;
-import th.go.excise.ims.mockup.persistence.entity.ListOfValue;
 import th.go.excise.ims.mockup.persistence.entity.SelectOptionValue;
+import th.go.excise.ims.mockup.persistence.entity.sys.Lov;
 import th.go.excise.ims.mockup.service.ListOfValueService;
 
 @RestController
@@ -130,11 +130,11 @@ public class UserManagementRestController {
 	@ResponseBody
 	public List<SelectOptionValue> getSetorListByLov() {
 		List<SelectOptionValue> sectorList = new ArrayList<SelectOptionValue>();
-		List<ListOfValue> lovList = listOfValueService.queryLovByCriteria(new ListOfValue("SECTOR_LIST"));
+		List<Lov> lovList = listOfValueService.queryLovByCriteria(new Lov("SECTOR_VALUE"));
 		SelectOptionValue selectOption= null;
-		for (ListOfValue listOfValue : lovList) {
+		for (Lov listOfValue : lovList) {
 			selectOption = new SelectOptionValue();
-			selectOption.setValue(listOfValue.getValue());
+			selectOption.setValue(listOfValue.getValue1());
 			sectorList.add(selectOption);
 		}
 		return sectorList;

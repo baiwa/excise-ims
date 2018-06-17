@@ -5,16 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.go.excise.ims.mockup.persistence.dao.ListOfValueDao;
-import th.go.excise.ims.mockup.persistence.entity.ListOfValue;
+import th.go.excise.ims.mockup.persistence.dao.LovDao;
+import th.go.excise.ims.mockup.persistence.entity.sys.Lov;
 
 @Service
 public class ListOfValueService {
 
 	
 	@Autowired
-	private ListOfValueDao listOfValueDao;
-	public List<ListOfValue> queryLovByCriteria(ListOfValue lov){
+	private LovDao listOfValueDao;
+	public List<Lov> queryLovByCriteria(Lov lov){
 		return listOfValueDao.queryLovByCriteria(lov);
 	}
 }
