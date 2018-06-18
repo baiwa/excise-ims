@@ -19,7 +19,8 @@ import {
     ParameterGroupService,
     ParameterInfoService,
     AjaxService,
-    ExciseService
+    ExciseService,
+    TravelService
 } from './buckwaframework/common/services/index';
 
 // components
@@ -403,7 +404,8 @@ import { Int0911Component } from './buckwaframework/project/internal-audit/int09
         ParameterGroupService,
         ParameterInfoService,
         AjaxService,
-        ExciseService
+        ExciseService,
+        TravelService
     ],
     bootstrap: [AppComponent]
 })

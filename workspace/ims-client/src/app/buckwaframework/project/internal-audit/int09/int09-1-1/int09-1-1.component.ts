@@ -3,6 +3,7 @@ import { TravelCostHeader, TravelCostDetail } from '../../../../common/models';
 import { AjaxService } from '../../../../common/services';
 import { Prices } from '../../../../common/helper/travel';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { TextDateTH, formatter } from '../../../../common/helper/datepicker';
 declare var $: any;
 @Component({
   selector: 'app-int09-1-1',
@@ -10,6 +11,9 @@ declare var $: any;
   styleUrls: ['./int09-1-1.component.css']
 })
 export class Int0911Component implements OnInit {
+
+  public status: string;
+  public id: number;
 
   public hdr: TravelCostHeader;
   public detail: TravelCostDetail[];
@@ -29,7 +33,7 @@ export class Int0911Component implements OnInit {
 
   constructor(private ajax: AjaxService ,  private router: Router) {
   
-   
+    this.status = 'create';
     this.hdr = new TravelCostHeader();
     this.detail = new Array<TravelCostDetail>();
     this.data = new TravelCostDetail();
@@ -72,9 +76,17 @@ export class Int0911Component implements OnInit {
   }
 
   ngOnInit() {
-    $('.ui.radio.checkbox')
-      .checkbox()
-      ;
+    $('.ui.radio.checkbox').checkbox();
+    $('#example2').calendar({
+      type: 'date',
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $('#example3').calendar({
+      type: 'date',
+      text: TextDateTH,
+      formatter: formatter()
+    });
   }
 
   onSelectDoc = event => {
@@ -116,7 +128,6 @@ export class Int0911Component implements OnInit {
     this.ajax.post(URL, data, function (res) {      
       console.log(res.json());
       router.navigate(['/int09-1']);
-      
     });
 
   };
@@ -141,9 +152,15 @@ export class Int0911Component implements OnInit {
     this.detail[index].checked = e.target.checked;
   }
 
-  addData() {
-    this.detail.push(this.data);
-    this.clearData();
+  manageDate() {
+    if (this.status === 'create') {
+      this.detail.push(this.data);
+      this.clearData();
+    } else {
+      const data = this.data;
+      this.detail[this.id] = data;
+      this.status = 'edit';
+    }
   }
 
   deleteData() {
@@ -153,12 +170,24 @@ export class Int0911Component implements OnInit {
   }
 
   editData(index: number) {
-    this.data = this.detail[index];
+
+    // change `status` and `id`
+    this.id = index;
+    this.status = 'edit';
+
+    const data: any = this.detail[index];
+    this.data = new TravelCostDetail();
+    this.data = data;
+
   }
 
   clearData() {
-    this.data = new TravelCostDetail();
+    if (this.status === 'create'){
+      this.data = new TravelCostDetail();
+    } else {
+      this.data = new TravelCostDetail();
+      this.status = 'create';
+    }
   }
-
 
 }

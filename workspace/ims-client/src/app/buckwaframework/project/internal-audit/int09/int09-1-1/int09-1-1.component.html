@@ -2,7 +2,7 @@
   <span>รายละเอียดหัวกระดาษทำการ
   </span>
 </div>
-<form class="ui form center aligned" (submit)="addData()" id="int09-1" ngNativeValidate >
+<form class="ui form center aligned" (submit)="manageDate()" id="int09-1" ngNativeValidate >
   <div class="ui attached  segment">
     <div class="ui grid center aligned">
       <div class="ui two wide column">&nbsp;</div>
@@ -34,7 +34,7 @@
           <div class="ui calendar" id="example2">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input type="text" placeholder="Date" name="startDate" required>
+              <input type="text" placeholder="วว/ดด/ปปปป" autocomplete="off" [attr.readonly]="null" name="startDate" [attr.required]="true">
             </div>
           </div>
 
@@ -47,7 +47,7 @@
           <div class="ui calendar" id="example3">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input type="text" placeholder="Date" name="endDate" required>
+              <input type="text" placeholder="วว/ดด/ปปปป" autocomplete="off" [attr.readonly]="null" name="endDate" [attr.required]="true">
             </div>
           </div>
         </div>
@@ -181,11 +181,20 @@
     </div>
     <div class="ui center aligned grid">
       <div class="eight wide column">
-        <button class="ui mini green button" type="submit">
+        <button
+          class="ui mini yellow button"
+          type="submit"
+          *ngIf="status === 'edit'">
+          แก้ไข
+        </button>
+        <button
+          class="ui mini green button"
+          type="submit"
+          *ngIf="status === 'create'">
           เพิ่ม
         </button>
         <button class="ui mini red button" type="button" (click)="clearData()">
-          ล้างข้อมูล
+          {{ status === 'create' ? 'ล้างข้อมูล' : 'ยกเลิก' }}
         </button>
       </div>
     </div>
