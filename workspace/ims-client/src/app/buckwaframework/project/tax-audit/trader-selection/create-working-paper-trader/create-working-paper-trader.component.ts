@@ -38,8 +38,6 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     //call ExciseService
     //var { before, last, from, month } = this.ex.getformValues();
 
-  
-    
     const URL = AjaxService.CONTEXT_PATH + "/working/test/getAnalysNumber";
     $.post(URL,
       function (data) {
@@ -62,6 +60,8 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
             (<HTMLInputElement>document.getElementById("last")).value = returnedData[1];
             (<HTMLInputElement>document.getElementById("fromData")).value = returnedData[2];
             (<HTMLInputElement>document.getElementById("monthData")).value = returnedData[3];
+
+            //set attribute
             for(var i=0; i<10; i++){
               $("#num1" + i).attr({
                 "min": 0
@@ -96,8 +96,6 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     
   }
 
-  
-
   onKeyUpMax = (e, i) => {
     e.preventDefault();
     var key = e.target.value;
@@ -117,8 +115,6 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
   }
 
   onSend = () => {
-    //call ExciseService
-
     this.before = (<HTMLInputElement>document.getElementById("before")).value;
     this.last = (<HTMLInputElement>document.getElementById("last")).value;
     this.from = (<HTMLInputElement>document.getElementById("fromData")).value;
@@ -130,6 +126,8 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     var year_before = from_split[1];
     var yy = parseInt(year_before);
     console.log(yy);
+
+    //call ExciseService
     this.ex.setformNumber(this.num1, this.num2, this.percent1, this.percent2, (<HTMLInputElement>document.getElementById("analysNumber")).value);
     this.ex.setformValues(this.before, this.last, this.from, this.month, currYear, yy);
     this.messageBarService.successModal('สร้างกระดาษทำการเรียบร้อยแล้ว', 'สำเร็จ');
@@ -149,6 +147,7 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
         (<HTMLInputElement>document.getElementById("monthData")).value = returnedData[3];
         console.log(returnedData[2]);
 
+        //set attribute
         for(var i=0; i<10; i++){
           $("#num1" + i).attr({
             "min": 0

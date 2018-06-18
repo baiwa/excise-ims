@@ -62,7 +62,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     console.log("analysNumber: ", this.analysNumber);
     
     for (var i = 0; i < this.num1.length; i++) {
-      if (this.num1[i] !== 0 && this.num2[i] !== 0) {
+      if (this.num2[i] !== 0) {
         this._num1.push(this.num1[i]);
         this._num2.push(this.num2[i]);
         this._percent1.push((this.percent1[i]+0.00));
@@ -94,9 +94,9 @@ export class WorkingPaper1TraderComponent implements OnInit {
     }
 
     var trHeaderColumn = "";
-    for (var i = items.length - 1; i >= 0; i--) {
-      trHeaderColumn += items[i];
-    }
+    //for (var i = items.length - 1; i >= 0; i--) {
+    //  trHeaderColumn += items[i];
+    //}
     document.getElementById('trDrinamic').innerHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> '
       + '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> '
       + '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> '
@@ -111,8 +111,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
       + '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> '
       + '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> '
       + '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> '
-      + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนแรก</th> '
-      + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนหลัง </th> '
+     
       + '</tr>'
       + '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' + this.month / 2 + ' เดือนแรก</th>'
       + '<th style="text-align: center !important">' + this.month / 2 + ' เดือนหลัง </th>'
@@ -120,7 +119,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
       + '<th style="text-align: center !important">' + (currYear - 2) + '</th>'
       + '<th style="text-align: center !important">' + (currYear - 1) + '</th>'
       + trHeaderColumn + '</tr>';
-
+    console.log(document.getElementById('trDrinamic').innerHTML);
 
     this.initDatatable();
   }
@@ -175,16 +174,8 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' { "data": "productType" }, ';
     json += ' { "data": "factoryAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
-    json += ' { "data": "status" }, ';
+    json += ' { "data": "status" } ';
 
-   
-    for (var i = 0; i < this.month; i++) {
-      if (i != this.month - 1) {
-        json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"}, ';
-      } else {
-        json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"} ';
-      }
-    }
     json += '] } ';
     console.log(json);
     let jsonMaping = JSON.parse(json);
