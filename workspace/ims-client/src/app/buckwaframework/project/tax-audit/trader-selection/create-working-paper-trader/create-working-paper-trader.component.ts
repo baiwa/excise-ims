@@ -36,31 +36,43 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
 
   ngOnInit() {
     //call ExciseService
-    var { before, last, from, month } = this.ex.getformValues();
+    //var { before, last, from, month } = this.ex.getformValues();
 
-    //set values
-    this.before = before;
-    this.last = last;
-    this.from = from;
-    this.month = month;
-    // console.log(this.before);
-    // console.log(this.last);
-    // console.log(this.from);
-    // console.log(this.month);
-
+  
+    
     const URL = AjaxService.CONTEXT_PATH + "/working/test/getAnalysNumber";
     $.post(URL,
       function (data) {
         this.analysNumbers = data;
         var optionList = "";
         for (var i = 0; i < this.analysNumbers.length; i++) {
+          
           optionList += "<option value='"+this.analysNumbers[i]+"'>" + this.analysNumbers[i] + "</option>";
         }
         document.getElementById('analysNumber').innerHTML = optionList;
+        console.log(this.analysNumbers[0]);
+        (<HTMLInputElement>document.getElementById("analysNumber")).value = this.analysNumbers[0];
+        const URL = AjaxService.CONTEXT_PATH + "filter/exise/getStartEndDate";
+        var analysNumber = this.analysNumbers[0];
+         console.log((<HTMLInputElement>document.getElementById("analysNumber")).value);
+         return $.post(URL, { analysNumber : analysNumber },
+          function (returnedData) {
+            console.log(returnedData);
+            (<HTMLInputElement>document.getElementById("before")).value = returnedData[0];
+            (<HTMLInputElement>document.getElementById("last")).value = returnedData[1];
+            (<HTMLInputElement>document.getElementById("fromData")).value = returnedData[2];
+            (<HTMLInputElement>document.getElementById("monthData")).value = returnedData[3];
+            return returnedData
+           
+            
+          }).fail(function () {
+            console.log("error");
+    
+          });
       }).fail(function () {
         console.log("error");
       });
-
+    
     this.numbers = [1];
     this.num1 = [];
     this.num2 = [];
@@ -72,7 +84,10 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
       this.percent1.push('0.00');
       this.percent2.push('0.00');
     }
+    
   }
+
+  
 
   onKeyUpMax = (e, i) => {
     e.preventDefault();
@@ -93,11 +108,46 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     });
   }
 
+
+  
+
   onSend = () => {
     //call ExciseService
+
+    this.before = (<HTMLInputElement>document.getElementById("before")).value;
+    this.last = (<HTMLInputElement>document.getElementById("last")).value;
+    this.from = (<HTMLInputElement>document.getElementById("fromData")).value;
+    this.month = (<HTMLInputElement>document.getElementById("monthData")).value;
+    var currDate = new Date();
+    var currYear = currDate.getFullYear() + 543;
+    var from_split = this.from.split("/");
+    var year_before = from_split[1];
+    var yy = parseInt(year_before);
+    console.log(yy);
     this.ex.setformNumber(this.num1, this.num2, this.percent1, this.percent2, (<HTMLInputElement>document.getElementById("analysNumber")).value);
+    this.ex.setformValues(this.before, this.last, this.from, this.month, currYear, yy);
     this.messageBarService.successModal('สร้างกระดาษทำการเรียบร้อยแล้ว', 'สำเร็จ');
     this.router.navigate(['/working-paper-1-trader']);
+  }
+
+  changeAnalysNumber = () =>{
+    const URL = AjaxService.CONTEXT_PATH + "filter/exise/getStartEndDate";
+    var analysNumber = (<HTMLInputElement>document.getElementById("analysNumber")).value;
+     console.log((<HTMLInputElement>document.getElementById("analysNumber")).value);
+     $.post(URL, { analysNumber : analysNumber },
+      function (returnedData) {
+        console.log(returnedData);
+        (<HTMLInputElement>document.getElementById("before")).value = returnedData[0];
+        (<HTMLInputElement>document.getElementById("last")).value = returnedData[1];
+        (<HTMLInputElement>document.getElementById("fromData")).value = returnedData[2];
+        (<HTMLInputElement>document.getElementById("monthData")).value = returnedData[3];
+        console.log(returnedData[2]);
+       
+       return returnedData;
+      }).fail(function () {
+        console.log("error");
+
+      });
   }
 
   onAddField = () => {

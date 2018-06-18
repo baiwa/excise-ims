@@ -1,5 +1,7 @@
 package th.go.excise.ims.mockup.controller.ta;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.go.excise.ims.mockup.domain.ta.PlanWorksheetHeaderDetail;
+import th.go.excise.ims.mockup.domain.ta.RequestFilterMapping;
 import th.go.excise.ims.mockup.service.ta.PlanWorksheetHeaderService;
 
 @Controller
@@ -18,16 +21,23 @@ import th.go.excise.ims.mockup.service.ta.PlanWorksheetHeaderService;
 public class FilterExisePlanHeaderController {
 
 	private Logger logger = LoggerFactory.getLogger(FilterExisePlanHeaderController.class);
+	
 	@Autowired
 	private PlanWorksheetHeaderService planWorksheetHeaderService;	
 	
 	@PostMapping("/list")
 	@ResponseBody
-	public ResponseDataTable<PlanWorksheetHeaderDetail> listdata(@ModelAttribute PlanWorksheetHeaderDetail vo) {
+	public ResponseDataTable<PlanWorksheetHeaderDetail> listdata(@ModelAttribute RequestFilterMapping vo) {
 		logger.debug("analysNumber : "+vo.getAnalysNumber());
 		System.out.println(vo.getAnalysNumber());
 		return planWorksheetHeaderService.queryPlanWorksheetHeaderDetil(vo);
 	}
 	
+	@PostMapping("/getStartEndDate")
+	@ResponseBody
+	public List<String> getStartDateAndEndDateFromAnalysNumber(@ModelAttribute PlanWorksheetHeaderDetail vo) {
+		logger.debug("analysNumber : "+vo.getAnalysNumber());
+		return planWorksheetHeaderService.getStartDateAndEndDateFromAnalysNumber(vo.getAnalysNumber());
+	}
 
 }

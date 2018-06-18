@@ -15,9 +15,11 @@
                         </div>
                         <div class="six wide field">
                             <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
-                            <select name="analysNumber" id="analysNumber" class="ui dropdown">
+                            <select name="analysNumber" id="analysNumber" (change)="changeAnalysNumber()" class="ui dropdown">
                                 <option></option>
                             </select>
+                            <input type="hidden" id="fromData" value="">
+                            <input type="hidden" id="monthData" value="">
                         </div>
                     </div>
 
@@ -25,7 +27,7 @@
                         <div class="thirteen wide field">
                             <label class="custom-label-w-35">ระยะเวลาที่ตรวจสอบ</label>
                             <div class="four ui action input">
-                                <input type="text" placeholder="MM/YYYY" value="{{before}}" readonly="" class="custom-readonly">
+                                <input type="text" id="before" placeholder="MM/YYYY" value="{{before}}" readonly="" class="custom-readonly">
                                 <button class="ui icon button">
                 <i class="add to calendar icon"></i>
               </button>
@@ -34,7 +36,7 @@
                                 <label>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;</label>
                             </div>
                             <div class="four ui action input">
-                                <input type="text" placeholder="MM/YYYY" value="{{last}}" readonly="" class="custom-readonly">
+                                <input type="text" id="last" placeholder="MM/YYYY" value="{{last}}" readonly="" class="custom-readonly">
                                 <button class="ui icon button">
                 <i class="add to calendar icon"></i>
               </button>
@@ -88,7 +90,7 @@
 
                     <div class="ui center aligned grid">
                         <div class="sixteen wide column">
-                            <button type="submit" class="ui mini primary button">
+                            <button type="button" (click)="onSend()" class="ui mini primary button">
               <i class="add icon"></i>
               สร้างกระดาษทำการ
             </button>

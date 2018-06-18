@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.ia.constant.DateConstant;
 import th.go.excise.ims.mockup.domain.MockupVo;
 import th.go.excise.ims.mockup.domain.ta.PlanWorksheetHeaderDetail;
+import th.go.excise.ims.mockup.domain.ta.RequestFilterMapping;
 import th.go.excise.ims.mockup.persistence.dao.ExciseRegisttionNumberDao;
 import th.go.excise.ims.mockup.persistence.dao.ExciseTaxReceiveDao;
 import th.go.excise.ims.mockup.persistence.dao.ta.PlanWorksheetDetailDao;
@@ -48,12 +50,14 @@ public class PlanWorksheetHeaderService {
 
 		logger.info("PlanWorksheetHeaderService.insertPlanWorksheetHeaderService");
 		List<String> monthNameList = DateConstant.startBackDate(startBackDate, month);
-		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-01-"+ planWorksheetHeaderDao.getAnalysNumber();
+		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-01-"
+				+ planWorksheetHeaderDao.getAnalysNumber();
 		Date saveDate = new Date();
 		logger.info("get analysNumber : " + analysNumber);
 		PlanWorksheetHeader planWorksheetHeader = null;
 		List<ExciseTaxReceive> taxReciveList = null;
-		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseRegistionNumber(productType);
+		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao
+				.queryByExciseRegistionNumber(productType);
 		for (ExciseRegistartionNumber exciseRegistartionNumber : regisNumberList) {
 			planWorksheetHeader = new PlanWorksheetHeader();
 			planWorksheetHeader.setAnalysNumber(analysNumber);
@@ -64,7 +68,8 @@ public class PlanWorksheetHeaderService {
 			planWorksheetHeader.setExciseOwnerArea(exciseRegistartionNumber.getExciseArea());
 			planWorksheetHeader.setProductType(exciseRegistartionNumber.getTaexciseProductType());
 			planWorksheetHeader.setExciseOwnerArea1(exciseRegistartionNumber.getTaexciseSectorArea());
-			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(exciseRegistartionNumber.getExciseId(), monthNameList);
+			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(
+					exciseRegistartionNumber.getExciseId(), monthNameList);
 			BigDecimal totalAmount = new BigDecimal(0);
 			int countReciveMonth = 0;
 			int firstMonth = 0;
@@ -75,7 +80,7 @@ public class PlanWorksheetHeaderService {
 			if (taxReciveList != null && taxReciveList.size() > 0) {
 				for (int i = 0; i < taxReciveList.size(); i++) {
 					ExciseTaxReceive taxRecive = taxReciveList.get(i);
-					
+
 					String amount = taxRecive.getExciseTaxReceiveAmount() != null
 							? taxRecive.getExciseTaxReceiveAmount().trim().replaceAll(",", "")
 							: "0";
@@ -87,15 +92,16 @@ public class PlanWorksheetHeaderService {
 					if (taxRecive.getExciseTaxReceiveMonth() != null
 							&& taxRecive.getExciseTaxReceiveMonth().length() > 0) {
 						countReciveMonth++;
-						int indexOfMonthNameList = monthNameList.indexOf(taxReciveList.get(i).getExciseTaxReceiveMonth());
-						if(indexOfMonthNameList != -1){
-							if(indexOfMonthNameList < monthNameList.size()/2) {
-								if(!"0".equals(amount)) {
+						int indexOfMonthNameList = monthNameList
+								.indexOf(taxReciveList.get(i).getExciseTaxReceiveMonth());
+						if (indexOfMonthNameList != -1) {
+							if (indexOfMonthNameList < monthNameList.size() / 2) {
+								if (!"0".equals(amount)) {
 									firstMonth++;
 								}
 								firstAmount += Double.parseDouble(amount);
-							}else {
-								if(!"0".equals(amount)) {
+							} else {
+								if (!"0".equals(amount)) {
 									lastMonth++;
 								}
 								lastAmount += Double.parseDouble(amount);
@@ -150,9 +156,10 @@ public class PlanWorksheetHeaderService {
 		return planWorksheetHeaderDao.queryAnalysNumberFromHeader();
 	}
 
-	public ResponseDataTable<PlanWorksheetHeaderDetail> queryPlanWorksheetHeaderDetil(PlanWorksheetHeaderDetail vo) {
+	public ResponseDataTable<PlanWorksheetHeaderDetail> queryPlanWorksheetHeaderDetil(RequestFilterMapping vo) {
 
-		List<PlanWorksheetHeader> planWorksheetHeaderList = planWorksheetHeaderDao.queryPlanWorksheetHeader(vo.getAnalysNumber(), vo.getStart(), vo.getLength());
+		List<PlanWorksheetHeader> planWorksheetHeaderList = planWorksheetHeaderDao
+				.queryPlanWorksheetHeader(vo.getAnalysNumber(), vo.getStart(), vo.getLength());
 		List<PlanWorksheetHeaderDetail> PlanWorksheetHeaderDetailList = new ArrayList<PlanWorksheetHeaderDetail>();
 		List<PlanWorksheetDetail> planDetailList = new ArrayList<PlanWorksheetDetail>();
 		PlanWorksheetHeaderDetail planShow = new PlanWorksheetHeaderDetail();
@@ -198,53 +205,53 @@ public class PlanWorksheetHeaderService {
 					amountValue = "";
 				}
 				int index = monthList.indexOf(planDetail.getMonth());
-				if (index+1 == 1) {
+				if (index + 1 == 1) {
 					planShow.setAmount1(amountValue);
-				} else if (index+1 == 2) {
+				} else if (index + 1 == 2) {
 					planShow.setAmount2(amountValue);
-				} else if (index+1 == 3) {
+				} else if (index + 1 == 3) {
 					planShow.setAmount3(amountValue);
-				} else if (index+1 == 4) {
+				} else if (index + 1 == 4) {
 					planShow.setAmount4(amountValue);
-				} else if (index+1 == 5) {
+				} else if (index + 1 == 5) {
 					planShow.setAmount5(amountValue);
-				} else if (index+1 == 6) {
+				} else if (index + 1 == 6) {
 					planShow.setAmount6(amountValue);
-				} else if (index+1 == 7) {
+				} else if (index + 1 == 7) {
 					planShow.setAmount7(amountValue);
-				} else if (index+1 == 8) {
+				} else if (index + 1 == 8) {
 					planShow.setAmount8(amountValue);
-				} else if (index+1 == 9) {
+				} else if (index + 1 == 9) {
 					planShow.setAmount9(amountValue);
-				} else if (index+1 == 10) {
+				} else if (index + 1 == 10) {
 					planShow.setAmount10(amountValue);
-				} else if (index+1 == 11) {
+				} else if (index + 1 == 11) {
 					planShow.setAmount11(amountValue);
-				} else if (index+1 == 12) {
+				} else if (index + 1 == 12) {
 					planShow.setAmount12(amountValue);
-				} else if (index+1 == 13) {
+				} else if (index + 1 == 13) {
 					planShow.setAmount13(amountValue);
-				} else if (index+1 == 14) {
+				} else if (index + 1 == 14) {
 					planShow.setAmount14(amountValue);
-				} else if (index+1 == 15) {
+				} else if (index + 1 == 15) {
 					planShow.setAmount15(amountValue);
-				} else if (index+1 == 16) {
+				} else if (index + 1 == 16) {
 					planShow.setAmount16(amountValue);
-				} else if (index+1 == 17) {
+				} else if (index + 1 == 17) {
 					planShow.setAmount17(amountValue);
-				} else if (index+1 == 18) {
+				} else if (index + 1 == 18) {
 					planShow.setAmount18(amountValue);
-				} else if (index+1 == 19) {
+				} else if (index + 1 == 19) {
 					planShow.setAmount19(amountValue);
-				} else if (index+1 == 20) {
+				} else if (index + 1 == 20) {
 					planShow.setAmount20(amountValue);
-				} else if (index+1 == 21) {
+				} else if (index + 1 == 21) {
 					planShow.setAmount21(amountValue);
-				} else if (index+1 == 22) {
+				} else if (index + 1 == 22) {
 					planShow.setAmount22(amountValue);
-				} else if (index+1 == 23) {
+				} else if (index + 1 == 23) {
 					planShow.setAmount23(amountValue);
-				} else if (index+1 == 24) {
+				} else if (index + 1 == 24) {
 					planShow.setAmount24(amountValue);
 				}
 			}
@@ -258,5 +265,29 @@ public class PlanWorksheetHeaderService {
 		responseDataTable.setRecordsFiltered((int) count);
 		return responseDataTable;
 
+	}
+
+	public List<String> getStartDateAndEndDateFromAnalysNumber(String analysNumber) {
+		List<String> valueList = planWorksheetHeaderDao.getStartDateAndEndDateFromAnalysNumber(analysNumber);
+		String countMonth = valueList != null ? valueList.size()+"" : "0";
+		valueList = DateConstant.sortMonthShotList(valueList);
+        String startMonthDate = valueList.get(0);
+        String endMonthDate = valueList.get(valueList.size()-1);
+        String splitStart[] = startMonthDate.split(" ");
+        String splitEnd[] = endMonthDate.split(" ");
+        startMonthDate = DateConstant.MONTH_NAMES[Arrays.asList(DateConstant.MONTH_SHOT_NAMES).indexOf(splitStart[0])]+" 25"+splitStart[1];
+        endMonthDate = DateConstant.MONTH_NAMES[Arrays.asList(DateConstant.MONTH_SHOT_NAMES).indexOf(splitEnd[0])]+" 25"+splitEnd[1];
+        valueList = new ArrayList<String>();
+        valueList.add(startMonthDate);
+        valueList.add(endMonthDate);
+        String fromMonth = (Arrays.asList(DateConstant.MONTH_SHOT_NAMES).indexOf(splitEnd[0])+1)+"";
+        if(fromMonth.length() == 1) {
+        	fromMonth = "0"+fromMonth;
+        }
+        fromMonth+="/25"+splitEnd[1];
+        valueList.add(fromMonth);
+        valueList.add(countMonth);
+        
+		return valueList;
 	}
 }

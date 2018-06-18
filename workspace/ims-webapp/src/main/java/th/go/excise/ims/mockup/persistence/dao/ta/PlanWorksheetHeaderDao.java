@@ -24,23 +24,21 @@ public class PlanWorksheetHeaderDao {
 	private JdbcTemplate jdbcTemplate;
 
 	private Logger logger = LoggerFactory.getLogger(PlanWorksheetHeaderDao.class);
-	
-	
+
 	public String getAnalysNumber() {
 		String sql = "SELECT TO_CHAR(ANALYS_NUMBER_SEQ.nextval, '00000') as SEQ FROM DUAL";
 		Map<String, Object> map = jdbcTemplate.queryForMap(sql);
-		String analysNumber = map != null ? (String)map.get("SEQ") : null;
+		String analysNumber = map != null ? (String) map.get("SEQ") : null;
 		return analysNumber.trim();
 	}
-	
-	
+
 	public List<PlanWorksheetHeader> queryPlanWorksheetHeaderCriteria(PlanWorksheetHeader criteria) {
 
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(" select * from TA_PLAN_WORK_SHEET_HEADER ");
 		sql.append(" where 1 = 1 ");
 
-		if ( StringUtils.isNotBlank(criteria.getAnalysNumber())) {
+		if (StringUtils.isNotBlank(criteria.getAnalysNumber())) {
 			sql.append(" and ANALYS_NUMBER = ? ");
 			valueList.add(criteria.getAnalysNumber());
 
@@ -53,18 +51,19 @@ public class PlanWorksheetHeaderDao {
 	}
 
 	public void insertPlanWorksheetHeader(PlanWorksheetHeader value) {
-		//inti SQL for insert to database
-		StringBuilder sql = new StringBuilder(" INSERT INTO TA_PLAN_WORK_SHEET_HEADER (WORK_SHEET_HEADER_ID,ANALYS_NUMBER,EXCISE_ID,COMPANY_NAME,FACTORY_NAME,FACTORY_ADDRESS,EXCISE_OWNER_AREA,PRODUCT_TYPE,EXCISE_OWNER_AREA_1,TOTAL_AMOUNT,PERCENTAGE,TOTAL_MONTH,DECIDE_TYPE,FLAG,CREATED_BY,CREATED_DATETIME,UPDATE_BY,UPDATE_DATETIME,FIRST_MONTH,LAST_MONTH)"); 
+		// inti SQL for insert to database
+		StringBuilder sql = new StringBuilder(
+				" INSERT INTO TA_PLAN_WORK_SHEET_HEADER (WORK_SHEET_HEADER_ID,ANALYS_NUMBER,EXCISE_ID,COMPANY_NAME,FACTORY_NAME,FACTORY_ADDRESS,EXCISE_OWNER_AREA,PRODUCT_TYPE,EXCISE_OWNER_AREA_1,TOTAL_AMOUNT,PERCENTAGE,TOTAL_MONTH,DECIDE_TYPE,FLAG,CREATED_BY,CREATED_DATETIME,UPDATE_BY,UPDATE_DATETIME,FIRST_MONTH,LAST_MONTH)");
 		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
-		//for to set Object
-		jdbcTemplate.update(sql.toString() ,planWorksheetHeaderToArrayObject(value) );
+		// for to set Object
+		jdbcTemplate.update(sql.toString(), planWorksheetHeaderToArrayObject(value));
 	}
 
 	public int updatePlanWorksheetHeaderFlag(String flag, String analysNum, String exciseId) {
 		String sql = " UPDATE TA_PLAN_WORK_SHEET_HEADER SET FLAG = ? WHERE ANALYS_NUMBER = ? AND EXCISE_ID = ? ";
-		return jdbcTemplate.update(sql,new Object[] {flag, analysNum, exciseId});
+		return jdbcTemplate.update(sql, new Object[] { flag, analysNum, exciseId });
 	}
-	
+
 	private Object[] planWorksheetHeaderToArrayObject(PlanWorksheetHeader value) {
 
 		List<Object> valueList = new ArrayList<Object>();
@@ -119,9 +118,8 @@ public class PlanWorksheetHeaderDao {
 			return header;
 		}
 	};
-	
-	
-	public List<PlanWorksheetVo> queryPlanWorksheetHeaderDetil(String analysNumber , int start , int length) {
+
+	public List<PlanWorksheetVo> queryPlanWorksheetHeaderDetil(String analysNumber, int start, int length) {
 
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
@@ -131,13 +129,13 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" where H.ANALYS_NUMBER = ? ");
 		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
 		valueList.add(analysNumber);
-		List<PlanWorksheetVo> planWorksheetHeaderList = jdbcTemplate.query( OracleUtils.limitForDataTable(sql, start, length), valueList.toArray(),
-				fieldMappingPlanWorksheetVo);
+		List<PlanWorksheetVo> planWorksheetHeaderList = jdbcTemplate.query(
+				OracleUtils.limitForDataTable(sql, start, length), valueList.toArray(), fieldMappingPlanWorksheetVo);
 		return planWorksheetHeaderList;
 
 	}
-	
-	public List<PlanWorksheetHeader> queryPlanWorksheetHeader(String analysNumber , int start , int length) {
+
+	public List<PlanWorksheetHeader> queryPlanWorksheetHeader(String analysNumber, int start, int length) {
 
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
@@ -145,13 +143,13 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" where H.ANALYS_NUMBER = ? ");
 		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
 		valueList.add(analysNumber);
-		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate.query( OracleUtils.limitForDataTable(sql, start, length), valueList.toArray(),
-				fieldMapping);
+		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate
+				.query(OracleUtils.limitForDataTable(sql, start, length), valueList.toArray(), fieldMapping);
 		return planWorksheetHeaderList;
 
 	}
-	
-	public long queryCountByPlanWorksheetHeaderDetil(String analysNumber) {	
+
+	public long queryCountByPlanWorksheetHeaderDetil(String analysNumber) {
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select * from TA_PLAN_WORK_SHEET_HEADER H ");
@@ -160,10 +158,11 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" where H.ANALYS_NUMBER = ? ");
 		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
 		valueList.add(analysNumber);
-		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()) ,valueList.toArray() , Long.class);
+		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()), valueList.toArray(),
+				Long.class);
 		return count;
 	}
-	
+
 	private RowMapper<PlanWorksheetVo> fieldMappingPlanWorksheetVo = new RowMapper<PlanWorksheetVo>() {
 		@Override
 		public PlanWorksheetVo mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -187,39 +186,43 @@ public class PlanWorksheetHeaderDao {
 			header.setMonth(rs.getString("MONTH"));
 			header.setYear(rs.getString("YEAR"));
 			header.setAmount(rs.getBigDecimal("AMOUNT"));
-			
+
 			return header;
 		}
 	};
-	
+
 	public List<String> queryAnalysNumberFromHeader() {
-		String sql = "select DISTINCT ANALYS_NUMBER from TA_PLAN_WORK_SHEET_HEADER";
-		List<String> analysList = getJdbcTemplate().query(sql, new RowMapper<String>(){
-            public String mapRow(ResultSet rs, int rowNum) 
-                                         throws SQLException {
-                    return rs.getString(1);
-            }
-       });
+		String sql = "select DISTINCT ANALYS_NUMBER from TA_PLAN_WORK_SHEET_HEADER order by ANALYS_NUMBER desc";
+		List<String> analysList = jdbcTemplate.query(sql, new RowMapper<String>() {
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
 		return analysList;
 	}
-	
+
 	private RowMapper<String> fieldMappingAnalysNumber = new RowMapper<String>() {
 		@Override
 		public String mapRow(ResultSet rs, int arg1) throws SQLException {
-			
+
 			return rs.getString("ANALYS_NUMBER");
 		}
 	};
 
-	public JdbcTemplate getJdbcTemplate() {
-		return jdbcTemplate;
+	public List<String> getStartDateAndEndDateFromAnalysNumber(String analysNumber) {
+		StringBuilder sql = new StringBuilder(" SELECT DISTINCT D.MONTH ");
+		sql.append(" FROM TA_PLAN_WORK_SHEET_HEADER H ");
+		sql.append(" INNER JOIN TA_PLAN_WORK_SHEET_DETAIL D ");
+		sql.append(" ON H.ANALYS_NUMBER = D.ANALYS_NUMBER ");
+		sql.append(" AND H.EXCISE_ID = D.EXCISE_ID ");
+		sql.append(" WHERE H.ANALYS_NUMBER = ? ");
+		List<String> listMonth = jdbcTemplate.query(sql.toString(), new Object[] { analysNumber },
+				new RowMapper<String>() {
+					public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+						return rs.getString(1);
+					}
+				});
+		return listMonth;
 	}
-
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
-	
-	
-	
 
 }

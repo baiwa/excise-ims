@@ -60,21 +60,14 @@ export class WorkingPaper1TraderComponent implements OnInit {
     this.percent2 = percent2;
     this.analysNumber = analysNumber;
     console.log("analysNumber: ", this.analysNumber);
-    // currYear = currYear;
-    // var yy = prevYear;
-
-    // console.log(currYear);
-    // console.log(yy);
-
-    //check values in array == 0
+    
     for (var i = 0; i < this.num1.length; i++) {
       if (this.num1[i] !== 0 && this.num2[i] !== 0) {
         this._num1.push(this.num1[i]);
         this._num2.push(this.num2[i]);
         this._percent1.push((this.percent1[i]+0.00));
         this._percent2.push(this.percent2[i]);
-        // console.log(index);
-        // break;
+        
       }
     }
 
@@ -157,6 +150,10 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
+    json += ' "num1": "' + this.num1 + '", ';
+    json += ' "num2": "' + this.num2 + '", ';
+    json += ' "percent1": "' + this.percent1 + '", ';
+    json += ' "percent2": "' + this.percent2 + '", ';
     json += ' "analysNumber": "' + this.analysNumber + '" ';
     json += ' } ';
     json += ' }, ';
