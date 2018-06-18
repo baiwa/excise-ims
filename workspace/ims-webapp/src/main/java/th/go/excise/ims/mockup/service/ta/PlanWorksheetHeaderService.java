@@ -257,7 +257,7 @@ public class PlanWorksheetHeaderService {
 		}
 		PlanWorksheetHeaderDetailList.add(planShow);
 		ResponseDataTable<PlanWorksheetHeaderDetail> responseDataTable = new ResponseDataTable<PlanWorksheetHeaderDetail>();
-		long count = planWorksheetHeaderDao.queryCountByPlanWorksheetHeaderDetil(vo);
+		long count = planWorksheetHeaderDao.queryCountByPlanWorksheetHeader(vo);
 		responseDataTable.setDraw(vo.getDraw().intValue() + 1);
 		responseDataTable.setData(PlanWorksheetHeaderDetailList);
 		responseDataTable.setRecordsTotal((int) count);

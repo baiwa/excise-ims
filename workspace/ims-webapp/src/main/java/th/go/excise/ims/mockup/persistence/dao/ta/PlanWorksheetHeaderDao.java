@@ -144,33 +144,91 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" select * from TA_PLAN_WORK_SHEET_HEADER H ");
 		sql.append(" where H.ANALYS_NUMBER = ? ");
 		valueList.add(vo.getAnalysNumber());
-		
-		if(BeanUtils.isNotEmpty(vo.getFlag())) {
+
+		if (BeanUtils.isNotEmpty(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
 		}
-		
-		
+		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2())
+				&& BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
+			String[] monthFrom = vo.getNum1().split(",");
+			String[] monthTo = vo.getNum2().split(",");
+			String[] percentFrom = vo.getPercent1().split(",");
+			String[] percentTo = vo.getPercent2().split(",");
+			for (int i = 0; i < monthFrom.length; i++) {
+				if (i == 0) {
+					sql.append(" AND ( ");
+				}
+				if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i])|| !"0.00".equals(percentTo[i])) {
+					if (i == 0) {
+						sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+					}else {
+						sql.append("OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+						
+					}
+					valueList.add(monthFrom[i]);
+					valueList.add(monthTo[i]);
+					valueList.add(percentFrom[i]);
+					valueList.add(percentTo[i]);
+
+					
+				}
+				if (i == monthFrom.length - 1) {
+					sql.append(" ) ");
+				}
+			}
+		}
+
 		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
 		logger.info(sql.toString());
-		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate
-				.query(OracleUtils.limitForDataTable(sql, vo.getStart(), vo.getLength()), valueList.toArray(), fieldMapping);
+		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate.query(
+				OracleUtils.limitForDataTable(sql, vo.getStart(), vo.getLength()), valueList.toArray(), fieldMapping);
 		return planWorksheetHeaderList;
 
 	}
 
-	public long queryCountByPlanWorksheetHeaderDetil(RequestFilterMapping vo) {
+	public long queryCountByPlanWorksheetHeader(RequestFilterMapping vo) {
+		logger.debug("queryCountByPlanWorksheetHeader");
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select * from TA_PLAN_WORK_SHEET_HEADER H ");
 		sql.append(" where H.ANALYS_NUMBER = ? ");
 		valueList.add(vo.getAnalysNumber());
-		
-		if(BeanUtils.isNotEmpty(vo.getFlag())) {
+
+		if (BeanUtils.isNotEmpty(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
 		}
-		
+		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2())
+				&& BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
+			String[] monthFrom = vo.getNum1().split(",");
+			String[] monthTo = vo.getNum2().split(",");
+			String[] percentFrom = vo.getPercent1().split(",");
+			String[] percentTo = vo.getPercent2().split(",");
+			for (int i = 0; i < monthFrom.length; i++) {
+				if (i == 0) {
+					sql.append(" AND ( ");
+				}
+				if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i])|| !"0.00".equals(percentTo[i])) {
+					if (i == 0) {
+						sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+					}else {
+						sql.append("OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+						
+					}
+					valueList.add(monthFrom[i]);
+					valueList.add(monthTo[i]);
+					valueList.add(percentFrom[i]);
+					valueList.add(percentTo[i]);
+
+					
+				}
+				if (i == monthFrom.length - 1) {
+					sql.append(" ) ");
+				}
+			}
+		}
+
 		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()), valueList.toArray(),
 				Long.class);
 		return count;
