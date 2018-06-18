@@ -8,6 +8,7 @@ import { ParameterInfo } from './parameterInfo';
 import { User } from './user';
 import { UserManagement } from './userManagement';
 import { File } from './file';
+import { TravelCosts } from './travelcosts';
 
 export {
     AlertMessage,
@@ -19,5 +20,6 @@ export {
     ParameterInfo,
     User,
     UserManagement,
-    File
+    File,
+    TravelCosts
 };
