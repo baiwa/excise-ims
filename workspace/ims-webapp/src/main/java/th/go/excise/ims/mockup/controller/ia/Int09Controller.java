@@ -25,10 +25,5 @@ public class Int09Controller {
 		return travelCostWorkSheetHeader;
 	}
 	
-	@GetMapping("/create")
-	@ResponseBody
-	public String create() {
-		return "EIEI";
-	}
-
+	
 }

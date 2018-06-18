@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TravelCostHeader, TravelCostDetail } from '../../../../common/models';
 import { AjaxService } from '../../../../common/services';
 import { Prices } from '../../../../common/helper/travel';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 declare var $: any;
 @Component({
   selector: 'app-int09-1-1',
@@ -25,7 +26,10 @@ export class Int0911Component implements OnInit {
   sent: boolean;
 
 
-  constructor(private ajax: AjaxService) {
+
+  constructor(private ajax: AjaxService ,  private router: Router) {
+  
+   
     this.hdr = new TravelCostHeader();
     this.detail = new Array<TravelCostDetail>();
     this.data = new TravelCostDetail();
@@ -108,9 +112,11 @@ export class Int0911Component implements OnInit {
     };
 
     const URL = "ia/int09/create";
-
-    this.ajax.post(URL, data, function (res) {
+    var router = this.router;
+    this.ajax.post(URL, data, function (res) {      
       console.log(res.json());
+      router.navigate(['/int09-1']);
+      
     });
 
   };
