@@ -22,6 +22,12 @@ public class PlanWorksheetHeaderDetail extends DataTableRequest{
 	private String flag;
 	private BigDecimal firstMonth;
 	private BigDecimal lastMonth;
+	private String no1;
+	private String no2;
+	private String no3;
+	private String registeredCapital;
+	private String status;
+	
 	
 	
 	private String amount1;
@@ -290,6 +296,27 @@ public class PlanWorksheetHeaderDetail extends DataTableRequest{
 	}
 	public String getAmount1() {
 		return amount1;
+	}
+	public String getRegisteredCapital() {
+		return registeredCapital;
+	}
+	public void setRegisteredCapital(String registeredCapital) {
+		this.registeredCapital = registeredCapital;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public void setNo1(String no1) {
+		this.no1 = no1;
+	}
+	public void setNo2(String no2) {
+		this.no2 = no2;
+	}
+	public void setNo3(String no3) {
+		this.no3 = no3;
 	}
 	
 }

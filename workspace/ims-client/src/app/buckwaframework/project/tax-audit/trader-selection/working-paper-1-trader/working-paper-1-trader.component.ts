@@ -150,6 +150,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
+    json += ' "flag": "N", ';
     json += ' "num1": "' + this.num1 + '", ';
     json += ' "num2": "' + this.num2 + '", ';
     json += ' "percent1": "' + this.percent1 + '", ';

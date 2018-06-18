@@ -158,8 +158,7 @@ public class PlanWorksheetHeaderService {
 
 	public ResponseDataTable<PlanWorksheetHeaderDetail> queryPlanWorksheetHeaderDetil(RequestFilterMapping vo) {
 
-		List<PlanWorksheetHeader> planWorksheetHeaderList = planWorksheetHeaderDao
-				.queryPlanWorksheetHeader(vo.getAnalysNumber(), vo.getStart(), vo.getLength());
+		List<PlanWorksheetHeader> planWorksheetHeaderList = planWorksheetHeaderDao.queryPlanWorksheetHeader(vo);
 		List<PlanWorksheetHeaderDetail> PlanWorksheetHeaderDetailList = new ArrayList<PlanWorksheetHeaderDetail>();
 		List<PlanWorksheetDetail> planDetailList = new ArrayList<PlanWorksheetDetail>();
 		PlanWorksheetHeaderDetail planShow = new PlanWorksheetHeaderDetail();
@@ -258,7 +257,7 @@ public class PlanWorksheetHeaderService {
 		}
 		PlanWorksheetHeaderDetailList.add(planShow);
 		ResponseDataTable<PlanWorksheetHeaderDetail> responseDataTable = new ResponseDataTable<PlanWorksheetHeaderDetail>();
-		long count = planWorksheetHeaderDao.queryCountByPlanWorksheetHeaderDetil(vo.getAnalysNumber());
+		long count = planWorksheetHeaderDao.queryCountByPlanWorksheetHeaderDetil(vo);
 		responseDataTable.setDraw(vo.getDraw().intValue() + 1);
 		responseDataTable.setData(PlanWorksheetHeaderDetailList);
 		responseDataTable.setRecordsTotal((int) count);

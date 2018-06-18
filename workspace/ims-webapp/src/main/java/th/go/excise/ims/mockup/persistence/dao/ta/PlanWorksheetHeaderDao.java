@@ -15,7 +15,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.go.excise.ims.mockup.domain.ta.PlanWorksheetVo;
+import th.go.excise.ims.mockup.domain.ta.RequestFilterMapping;
 import th.go.excise.ims.mockup.persistence.entity.ta.PlanWorksheetHeader;
+import th.go.excise.ims.mockup.utils.BeanUtils;
 import th.go.excise.ims.mockup.utils.OracleUtils;
 
 @Repository
@@ -135,29 +137,40 @@ public class PlanWorksheetHeaderDao {
 
 	}
 
-	public List<PlanWorksheetHeader> queryPlanWorksheetHeader(String analysNumber, int start, int length) {
-
+	public List<PlanWorksheetHeader> queryPlanWorksheetHeader(RequestFilterMapping vo) {
+		logger.debug("queryPlanWorksheetHeader");
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select * from TA_PLAN_WORK_SHEET_HEADER H ");
 		sql.append(" where H.ANALYS_NUMBER = ? ");
+		valueList.add(vo.getAnalysNumber());
+		
+		if(BeanUtils.isNotEmpty(vo.getFlag())) {
+			sql.append(" AND H.FLAG = ? ");
+			valueList.add(vo.getFlag());
+		}
+		
+		
 		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
-		valueList.add(analysNumber);
+		logger.info(sql.toString());
 		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate
-				.query(OracleUtils.limitForDataTable(sql, start, length), valueList.toArray(), fieldMapping);
+				.query(OracleUtils.limitForDataTable(sql, vo.getStart(), vo.getLength()), valueList.toArray(), fieldMapping);
 		return planWorksheetHeaderList;
 
 	}
 
-	public long queryCountByPlanWorksheetHeaderDetil(String analysNumber) {
+	public long queryCountByPlanWorksheetHeaderDetil(RequestFilterMapping vo) {
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select * from TA_PLAN_WORK_SHEET_HEADER H ");
-		sql.append(" LEFT JOIN TA_PLAN_WORK_SHEET_DETAIL D ");
-		sql.append(" on D.EXCISE_ID = H.EXCISE_ID and d.ANALYS_NUMBER = h.ANALYS_NUMBER ");
 		sql.append(" where H.ANALYS_NUMBER = ? ");
-		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
-		valueList.add(analysNumber);
+		valueList.add(vo.getAnalysNumber());
+		
+		if(BeanUtils.isNotEmpty(vo.getFlag())) {
+			sql.append(" AND H.FLAG = ? ");
+			valueList.add(vo.getFlag());
+		}
+		
 		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()), valueList.toArray(),
 				Long.class);
 		return count;
