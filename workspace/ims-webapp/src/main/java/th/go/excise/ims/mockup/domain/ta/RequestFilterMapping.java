@@ -9,6 +9,7 @@ public class RequestFilterMapping extends DataTableRequest{
 	private String num2;
 	private String percent1;
 	private String percent2;
+	private String flag;
 	
 	public String getAnalysNumber() {
 		return analysNumber;
@@ -40,4 +41,11 @@ public class RequestFilterMapping extends DataTableRequest{
 	public void setPercent2(String percent2) {
 		this.percent2 = percent2;
 	}
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+
 }
