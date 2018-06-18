@@ -2,7 +2,7 @@
   <span>รายละเอียดหัวกระดาษทำการ
   </span>
 </div>
-<div class="ui form center aligned" id="int09-1" ngNativeValidate>
+<div class="ui form center aligned" id="int09-1" ngNativeValidate >
   <div class="ui attached  segment">
     <div class="ui grid center aligned">
       <div class="ui two wide column">&nbsp;</div>
@@ -13,7 +13,7 @@
             <label>ชื่อกระดาษทำการ :</label>
           </div>
           <div class="eight wide field">
-            <input type="text" maxlength="1000" [(ngModel)]="hdr.workSheetHeaderName" name="workSheetHeaderName">
+            <input type="text" maxlength="1000" [(ngModel)]="hdr.workSheetHeaderName" name="workSheetHeaderName" >
           </div>
         </div>
         <div class="inline fields">
@@ -61,7 +61,6 @@
         </div>
       </div>
     </div>
-
     <br>
 
     <div class="ui top centered attached header segment" id="create" style="background: #1e83db;color: white">
@@ -180,8 +179,6 @@
         </div>
       </div>
     </div>
-
-
     <div class="ui center aligned grid">
       <div class="eight wide column">
         <button class="ui mini green button" type="button" (click)="addData()">
@@ -193,11 +190,9 @@
       </div>
     </div>
     <br>
-
-
     <br>
-    <div style="overflow-x: scroll;">
-      <table id="tableData" class="ui small celled table" style="width: 120%">
+
+      <table id="tableData" class="ui small celled table" style="width: 100%">
         <thead>
           <tr style="text-align: center;">
             <th rowspan="2"></th>
@@ -228,7 +223,7 @@
               </div>
             </td>
             <td>{{i+1}}</td>
-            <td>{{d.name}} {{d.lastname}}</td>
+            <td>{{d.name}} {{d.lastName}}</td>
             <td>{{d.position}}</td>
             <td>{{d.allowanceDate}}</td>
             <td>-</td>
@@ -244,7 +239,6 @@
           </tr>
         </tbody>
       </table>
-    </div>
     <br>
     <div class="ui center aligned grid">
       <div class="eight wide column">
