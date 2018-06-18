@@ -2,7 +2,7 @@
   <span>รายละเอียดหัวกระดาษทำการ
   </span>
 </div>
-<div class="ui form center aligned" id="int09-1" ngNativeValidate >
+<form class="ui form center aligned" (submit)="addData()" id="int09-1" ngNativeValidate >
   <div class="ui attached  segment">
     <div class="ui grid center aligned">
       <div class="ui two wide column">&nbsp;</div>
@@ -13,7 +13,7 @@
             <label>ชื่อกระดาษทำการ :</label>
           </div>
           <div class="eight wide field">
-            <input type="text" maxlength="1000" [(ngModel)]="hdr.workSheetHeaderName" name="workSheetHeaderName" >
+            <input type="text" maxlength="1000" [(ngModel)]="hdr.workSheetHeaderName" name="workSheetHeaderName" required >
           </div>
         </div>
         <div class="inline fields">
@@ -23,7 +23,7 @@
             </label>
           </div>
           <div class="eight  wide field">
-            <input type="text" [(ngModel)]="hdr.departmentName" name="departmentName">
+            <input type="text" [(ngModel)]="hdr.departmentName" name="departmentName" required> 
           </div>
         </div>
 
@@ -34,7 +34,7 @@
           <div class="ui calendar" id="example2">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input type="text" placeholder="Date" name="startDate">
+              <input type="text" placeholder="Date" name="startDate" required>
             </div>
           </div>
 
@@ -47,7 +47,7 @@
           <div class="ui calendar" id="example3">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input type="text" placeholder="Date" name="endDate">
+              <input type="text" placeholder="Date" name="endDate" required>
             </div>
           </div>
         </div>
@@ -56,7 +56,7 @@
             <label>รายละเอียด :</label>
           </div>
           <div class="eight wide field">
-            <input type="text" class="disabled" [(ngModel)]="hdr.description" name="description">
+            <input type="text" class="disabled" [(ngModel)]="hdr.description" name="description" required>
           </div>
         </div>
       </div>
@@ -94,7 +94,7 @@
             </label>
           </div>
           <div class="four  wide field">
-            <input type="text" [(ngModel)]="data.position" name="position">
+            <input type="text" [(ngModel)]="data.position" name="position" required>
           </div>
         </div>
 
@@ -123,7 +123,7 @@
             <label>ค่าเบี้ยเลี้ยง (วัน):</label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.allowanceDate" name="allowanceDate">
+            <input type="text" [(ngModel)]="data.allowanceDate" name="allowanceDate" required>
           </div>
           <div class="two wide field">
             <label>
@@ -131,7 +131,7 @@
             </label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.rentDate" name="rentDate">
+            <input type="text" [(ngModel)]="data.rentDate" name="rentDate" required>
           </div>
         </div>
         <div class="inline fields">
@@ -139,13 +139,13 @@
             <label>ห้องเดี่ยว</label>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" [(ngModel)]="data.restType" name="frequency" value="rest-single" checked="checked">
+                <input type="radio" [(ngModel)]="data.restType" name="frequency" value="rest-single" checked="checked" required>
               </div>
             </div>
             <label>ห้องคู่</label>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" [(ngModel)]="data.restType" name="frequency" value="rest-double">
+                <input type="radio" [(ngModel)]="data.restType" name="frequency" value="rest-double" required>
               </div>
             </div>
           </div>
@@ -155,7 +155,7 @@
             <label>ค่าพาหนะ :</label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.travelCost" name="travelCost">
+            <input type="text" [(ngModel)]="data.travelCost" name="travelCost" required>
           </div>
           <div class="two wide field">
             <label>
@@ -163,7 +163,7 @@
             </label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.otherCost" name="otherCost">
+            <input type="text" [(ngModel)]="data.otherCost" name="otherCost" required>
           </div>
         </div>
 
@@ -181,7 +181,7 @@
     </div>
     <div class="ui center aligned grid">
       <div class="eight wide column">
-        <button class="ui mini green button" type="button" (click)="addData()">
+        <button class="ui mini green button" type="submit">
           เพิ่ม
         </button>
         <button class="ui mini red button" type="button" (click)="clearData()">
@@ -208,7 +208,7 @@
             <th rowspan="2">Action</th>
           </tr>
           <tr style="text-align: center;">
-            <th>วัน</th>
+            <th style=" border-left: 1px solid rgba(34,36,38,.1);">วัน</th>
             <th>จำนวนเงิน</th>
             <th>วัน</th>
             <th>จำนวนเงิน</th>
@@ -257,4 +257,4 @@
       </div>
     </div>
   </div>
-</div>
+</form>
