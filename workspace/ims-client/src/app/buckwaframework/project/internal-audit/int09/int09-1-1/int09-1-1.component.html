@@ -101,7 +101,7 @@
         <div class="inline fields">
           <div class="six wide field">
             <label class="custom-label-w-19" style="text-align: right">ประเภท</label>
-            <select style="width: 100%" id="doc" name="doc" class="ui search dropdown" (change)="onSelectDoc($event)" required>
+            <select style="width: 100%" id="doc" name="doc" class="ui search dropdown" [(ngModel)]="data.category" (change)="onSelectDoc($event)" required>
               <option value="" style="color: grey">เลือกประเภทเอกสาร</option>
               <option *ngFor="let typeDoc of typeDocs; let i = index" value="{{i}}">
                 {{typeDoc}}
@@ -110,7 +110,7 @@
           </div>
           <div class="six wide field">
             <label class="custom-label-w-19" style="text-align: right">ระดับ</label>
-            <select style="width: 100%" id="topic" name="topic" class="ui search dropdown" (change)="onSelectTop($event)" required>
+            <select style="width: 100%" id="topic" name="topic" class="ui search dropdown" [(ngModel)]="data.degree" (change)="onSelectTop($event)" required>
               <option value="" style="color: grey">เลือกระดับ</option>
               <option *ngFor="let top of topic; let i = index" value="{{i}}">
                 {{top}}
@@ -139,13 +139,13 @@
             <label>ห้องเดี่ยว</label>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="frequency" checked="checked">
+                <input type="radio" [(ngModel)]="data.restType" name="frequency" value="rest-single" checked="checked">
               </div>
             </div>
             <label>ห้องคู่</label>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="frequency">
+                <input type="radio" [(ngModel)]="data.restType" name="frequency" value="rest-double">
               </div>
             </div>
           </div>
@@ -226,12 +226,12 @@
             <td>{{d.name}} {{d.lastName}}</td>
             <td>{{d.position}}</td>
             <td>{{d.allowanceDate}}</td>
-            <td>-</td>
+            <td>{{getPrice(i, 'allowance')}}</td>
             <td>{{d.rentDate}}</td>
-            <td>-</td>
+            <td>{{getPrice(i, d.restType)}}</td>
             <td>{{d.travelCost}}</td>
             <td>{{d.otherCost}}</td>
-            <td>-</td>
+            <td>{{totalCost(i)}}</td>
             <td>{{d.note}}</td>
             <td>
               <button class="ui mini red button" type="button" (click)="editData(i)">แก้ไข</button>

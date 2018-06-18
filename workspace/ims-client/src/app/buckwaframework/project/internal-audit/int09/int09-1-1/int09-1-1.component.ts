@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TravelCostHeader, TravelCostDetail } from '../../../../common/models';
 import { AjaxService } from '../../../../common/services';
+import { Prices } from '../../../../common/helper/travel';
 declare var $: any;
 @Component({
   selector: 'app-int09-1-1',
@@ -12,15 +13,15 @@ export class Int0911Component implements OnInit {
   public hdr: TravelCostHeader;
   public detail: TravelCostDetail[];
   public data: TravelCostDetail;
-  typeDocs: String[];
-  topics: String[][];
-  topic: String[];
+  typeDocs: string[];
+  topics: string[][];
+  topic: string[];
 
-  selectDoc: String;
-  selectTop: String;
+  selectDoc: string;
+  selectTop: string;
 
-  selectedDoc: String;
-  selectedTop: String;
+  selectedDoc: string;
+  selectedTop: string;
   sent: boolean;
 
 
@@ -113,6 +114,22 @@ export class Int0911Component implements OnInit {
     });
 
   };
+
+  getPrice(index, what) {
+    const { category, degree, allowanceDate, rentDate } = this.detail[index];
+    const num = what === 'allowance' ? allowanceDate : rentDate;
+    return Prices(category, degree, what) * num;
+  }
+
+  totalCost(index) {
+    const { restType, travelCost, otherCost } = this.detail[index];
+    let total:number = 0;
+    total += this.getPrice(index, 'allowance');
+    total += this.getPrice(index, restType);
+    total += parseFloat(travelCost.toString());
+    total += parseFloat(otherCost.toString());
+    return total;
+  }
 
   selectedBox(e, index) {
     this.detail[index].checked = e.target.checked;

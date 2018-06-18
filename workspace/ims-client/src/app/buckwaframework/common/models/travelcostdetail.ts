@@ -1,4 +1,5 @@
 export class TravelCostDetail {
+	[x: string]: any;
     workSheetDetailId : number = 0
 	headerId : string = ''
 	name : string = ''
