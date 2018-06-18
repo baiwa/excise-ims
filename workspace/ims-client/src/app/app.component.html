@@ -84,11 +84,9 @@
             <a class="item" [routerLink]="['/int01-8-1']" style="color: #000;">ค้นหากระดาษทำการ</a>
             <a class="item" [routerLink]="['/int09-1']" style="color: #000;">ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ
             </a>
-
-
-
         </div>
     </div>
+
     <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
         ตรวจสอบภาษี
         <i class="dropdown icon"></i>
@@ -99,7 +97,6 @@
                     <a class="item" [routerLink]="['/trader-selection']" routerLinkActive="active">สร้างกระดาษทำการคัดเลือกราย</a>
                     <a class="item" [routerLink]="['/create-working-paper-trader']" routerLinkActive="active">กำหนดเงื่อนไขเพื่อวิเคราะห์ความเสี่ยง </a>
                     <a class="item" [routerLink]="['/working-paper-1-trader']" routerLinkActive="active">ส่งกระดาษทำการคัดเลือกราย </a>
-
                 </div>
             </div>
             <div class="ui dropdown item" routerLinkActive="active">

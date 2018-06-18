@@ -2,7 +2,7 @@
   <span>รายละเอียดหัวกระดาษทำการ
   </span>
 </div>
-<div class="ui form center aligned" id="int09-1" (submit)="onSubmitt()" ngNativeValidate>
+<div class="ui form center aligned" id="int09-1" ngNativeValidate>
   <div class="ui attached  segment">
     <div class="ui grid center aligned">
       <div class="ui two wide column">&nbsp;</div>
@@ -100,25 +100,24 @@
         </div>
 
         <div class="inline fields">
-          <div class="two wide field">
-            <label>ประเภท</label>
-          </div>
-          <div class="five wide field">
-            <select style="width: 100%" id="category" name="category" class="ui search dropdown" [(ngModel)]="data.typeOf" required>
-              <option value="" style="color: grey">เลือกประเภท</option>
-              <option value="1">1</option>
+          <div class="six wide field">
+            <label class="custom-label-w-19" style="text-align: right">ประเภท</label>
+            <select style="width: 100%" id="doc" name="doc" class="ui search dropdown" (change)="onSelectDoc($event)" required>
+              <option value="" style="color: grey">เลือกประเภทเอกสาร</option>
+              <option *ngFor="let typeDoc of typeDocs; let i = index" value="{{i}}">
+                {{typeDoc}}
+              </option>
             </select>
           </div>
-          <div class="two wide field">
-            <label>ระดับ</label>
-          </div>
-          <div class="five wide field">
-            <select style="width: 100%" id="degree" name="degree" class="ui search dropdown" [(ngModel)]="data.levelOf" required>
+          <div class="six wide field">
+            <label class="custom-label-w-19" style="text-align: right">ระดับ</label>
+            <select style="width: 100%" id="topic" name="topic" class="ui search dropdown" (change)="onSelectTop($event)" required>
               <option value="" style="color: grey">เลือกระดับ</option>
-              <option value="1">1</option>
+              <option *ngFor="let top of topic; let i = index" value="{{i}}">
+                {{top}}
+              </option>
             </select>
           </div>
-          <div class="five wide field"></div>
         </div>
         <div class="inline fields">
           <div class="two wide field">
@@ -134,6 +133,22 @@
           </div>
           <div class="four wide field">
             <input type="text" [(ngModel)]="data.accommodation" name="rentDate">
+          </div>
+        </div>
+        <div class="inline fields">
+          <div class="inline fields">
+            <label>ห้องเดี่ยว</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="frequency" checked="checked">
+              </div>
+            </div>
+            <label>ห้องคู่</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="frequency">
+              </div>
+            </div>
           </div>
         </div>
         <div class="inline fields">
@@ -236,7 +251,7 @@
         <button class="ui mini red button" (click)="deleteData()">
           ลบ
         </button>
-        <button class="ui mini primary button" type="submit" (click)="onSubmit()">
+        <button class="ui mini primary button" type="button" (click)="onSubmit()">
           บันทึก
         </button>
         <button class="ui mini primary button">

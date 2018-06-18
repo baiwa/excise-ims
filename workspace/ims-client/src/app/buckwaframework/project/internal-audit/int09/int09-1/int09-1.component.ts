@@ -99,24 +99,6 @@ export class Int091Component implements OnInit {
   clearData() {
     this.showData = false;
   }
-  onSubmit = () => {
-    let allFields = this.$form.form('get values');
-    console.log("allFields", allFields);
-
-    const URL = AjaxService.CONTEXT_PATH + "/ia/int09/creaet";
-    console.log(URL);
-    var parameter = {};
-
-    $.post(URL,allFields,
-      function (data) {
-        console.log(data);
-      }).fail(function () {
-
-        console.log("error");
-      });
-  };
-
-  saveT
-
+  
 }
 

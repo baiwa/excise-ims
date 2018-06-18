@@ -1,9 +1,15 @@
 package th.go.excise.ims.mockup.domain.ia;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class TravelCostWorkSheetHeader {
+public class TravelCostWorkSheetHeader implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5520256970558605796L;
+	
 	private BigDecimal workSheetHeaderId;
 	private String workSheetHeaderName;
 	private String departmentName;
@@ -14,6 +20,7 @@ public class TravelCostWorkSheetHeader {
 	private Date createdDatetime;
 	private String updateBy;
 	private Date updateDatetime;
+	
 	public BigDecimal getWorkSheetHeaderId() {
 		return workSheetHeaderId;
 	}

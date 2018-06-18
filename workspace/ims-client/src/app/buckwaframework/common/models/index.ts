@@ -8,6 +8,7 @@ import { ParameterInfo } from './parameterInfo';
 import { User } from './user';
 import { UserManagement } from './userManagement';
 import { File } from './file';
+import { TravelCost } from './travelcost';
 import { TravelCosts } from './travelcosts';
 
 export {
@@ -21,5 +22,6 @@ export {
     User,
     UserManagement,
     File,
+    TravelCost,
     TravelCosts
 };
