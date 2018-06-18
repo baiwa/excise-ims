@@ -145,10 +145,13 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" where H.ANALYS_NUMBER = ? ");
 		valueList.add(vo.getAnalysNumber());
 
-		if (BeanUtils.isNotEmpty(vo.getFlag())) {
+		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
+		}else {
+			sql.append(" AND H.FLAG != 'N' ");
 		}
+
 		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2())
 				&& BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
 			String[] monthFrom = vo.getNum1().split(",");
@@ -195,9 +198,11 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" where H.ANALYS_NUMBER = ? ");
 		valueList.add(vo.getAnalysNumber());
 
-		if (BeanUtils.isNotEmpty(vo.getFlag())) {
+		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
+		}else {
+			sql.append(" AND H.FLAG != 'N' ");
 		}
 		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2())
 				&& BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {

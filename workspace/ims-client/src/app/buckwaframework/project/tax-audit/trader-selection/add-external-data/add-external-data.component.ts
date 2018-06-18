@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ExciseService } from '../../../../common/services/excise.service';
 import { AjaxService } from '../../../../common/services/ajax.service';
-import { TextDateTH } from '../../../../common/helper/datepicker';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ExciseService } from '../../../../common/services/excise.service';
+import { TextDateTH, digit } from '../../../../common/helper/datepicker';
+import { CurrencyPipe } from '@angular/common';
 
 declare var jQuery: any;
 declare var $: any;
@@ -11,44 +12,68 @@ declare var $: any;
   templateUrl: './add-external-data.component.html',
 })
 export class AddExternalDataComponent implements OnInit {
-  from: any;
-  before: any;
-  last: any;
-  analysNumbers: any;
-  month: any;
-  analysNumber: any;
 
   userManagementDt: any;
-  private currYear: any;
-  private prevYear: any;
+  router: any;
+  private listItem: any[];
+  before: any;
+  last: any;
+  num1: any;
+  num2: any;
+  _num1: any;
+  _num2: any;
+  percent1: any;
+  percent2: any;
+  _percent1: any;
+  _percent2: any;
+  month: any;
+  from: any;
+  analysNumber: any;
   exciseProductType: any;
-  onLoading: boolean;
+  flag: any;
+
 
   constructor(
-    private router: Router,
+    private route: ActivatedRoute,
     private ex: ExciseService
   ) {
-
+    this._num1 = new Array();
+    this._num2 = new Array();
+    this._percent1 = new Array();
+    this._percent2 = new Array();
   }
 
   ngOnInit() {
+  
     //call ExciseService
-    var { before, last, from, month } = this.ex.getformValues();
-    var { analysNumber } = this.ex.getformNumber();
+    var { before, last, from, month, currYear, prevYear } = this.ex.getformValues();
+    var { num1, num2, percent1, percent2, analysNumber } = this.ex.getformNumber();
 
     //set values
     this.before = before;
     this.last = last;
     this.from = from;
     this.month = month;
+    this.num1 = num1;
+    this.num2 = num2;
+    this.percent1 = percent1;
+    this.percent2 = percent2;
     this.analysNumber = analysNumber;
-
+    console.log("analysNumber: ", this.analysNumber);
+    
+    for (var i = 0; i < this.num1.length; i++) {
+      if (this.num2[i] !== 0) {
+        this._num1.push(this.num1[i]);
+        this._num2.push(this.num2[i]);
+        this._percent1.push((this.percent1[i]+0.00));
+        this._percent2.push(this.percent2[i]);
+        
+      }
+    }
 
     //split function
     var from_split = this.from.split("/");
-    var currDate = new Date();
-    var currYear = currDate.getFullYear() + 543;
-    this.currYear = currYear;
+
     //default month & year
     var month = from_split[0];
     var year_before = from_split[1];
@@ -56,9 +81,7 @@ export class AddExternalDataComponent implements OnInit {
     var m = parseInt(month) + 1;
     var mm = parseInt(this.month);
     var yy = parseInt(year_before);
-    this.prevYear = yy;
-    var trHeaderColumn = "";
-
+    
     var items: string[] = [];
     for (var i = 1; i <= mm; i++) {
       m = m - 1;
@@ -69,6 +92,8 @@ export class AddExternalDataComponent implements OnInit {
       items.push('<th style="text-align: center !important">' + TextDateTH.monthsShort[m - 1] + ' ' + (yy + "").substr(2) + '</th>');
 
     }
+
+    var trHeaderColumn = "";
     for (var i = items.length - 1; i >= 0; i--) {
       trHeaderColumn += items[i];
     }
@@ -96,32 +121,20 @@ export class AddExternalDataComponent implements OnInit {
       + '<th style="text-align: center !important">' + (currYear - 1) + '</th>'
       + trHeaderColumn + '</tr>';
 
-    //show values
-    var sum_month = TextDateTH.months[m - 1];
-    this.before = sum_month + " " + yy;
-    var sum_month2 = TextDateTH.months[parseInt(month) - 1];
-    this.last = sum_month2 + " " + parseInt(year_before);
-    var dataInDataTalbe = '';
+
     this.initDatatable();
-    $("#exciseBtn").prop('disabled', true);
-    var table = $('#userManagementDt').DataTable();
-
-    // on init table
-    $('#userManagementDt tbody tr').css({ "background-color": "white", "cursor": "pointer" });
-
-    // on click row
-    $('#userManagementDt tbody').on('click', 'tr', function () {
-      $("#exciseBtn").prop('disabled', false);
-      $('#userManagementDt tbody tr').css({ "background-color": "white", "cursor": "pointer" });
-      (<HTMLInputElement>document.getElementById("exciseId")).value = $(this).children().toArray()[1].innerHTML;
-      $(this).css("background-color", "rgb(197,217,241)");
-    });
   }
 
+  ngAfterViewInit() {
+
+  }
+  
   initDatatable(): void {
-    this.onLoading = true;
+    
     var d = new Date();
-    const URL = AjaxService.CONTEXT_PATH + "/working/test/list";
+    const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
+    console.log(URL);
+    console.log(this.analysNumber);
     var json = "";
     json += ' { "lengthChange": false, ';
     json += ' "searching": false, ';
@@ -137,47 +150,53 @@ export class AddExternalDataComponent implements OnInit {
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
-    json += ' "exciseProductType": "' + this.exciseProductType + '", ';
-    json += ' "startBackDate": "' + this.from + '", ';
-    json += ' "month": ' + this.month + ' ';
+    json += ' "flag": "' + this.flag + '", ';
+    json += ' "analysNumber": "' + this.analysNumber + '" ';
     json += ' } ';
     json += ' }, ';
     json += ' "columns": [ ';
-    json += ' { "data": "exciseRegisttionNumberId","className":"center" }, ';
+    json += ' { "data": "worksheetHeaderId","className":"center" }, ';
     json += ' { "data": "exciseId","className":"center" }, ';
-    json += ' { "data": "exciseOperatorName" }, ';
-    json += ' { "data": "exciseFacName" }, ';
-    json += ' { "data": "exciseArea" }, ';
-    json += ' { "data": "exciseFacAddress" ,"className":"center" }, ';
-    json += ' { "data": "exciseRegisCapital","className":"center" }, ';
-    json += ' { "data": "change","className":"center" }, ';
-    json += ' { "data": "payingtax" ,"className":"center"}, ';
+    json += ' { "data": "companyName" }, ';
+    json += ' { "data": "companyName" }, ';
+    json += ' { "data": "exciseOwnerArea" }, ';
+    json += ' { "data": "firstMonth" ,"className":"center" }, ';
+    json += ' { "data": "lastMonth","className":"center" }, ';
+    json += ' { "data": "percentage","className":"center" }, ';
+    json += ' { "data": "totalMonth" ,"className":"center"}, ';
     json += ' { "data": "no1" }, ';
     json += ' { "data": "no2" }, ';
     json += ' { "data": "no3" }, ';
-    json += ' { "data": "coordinates" }, ';
-    json += ' { "data": "sector" }, ';
-    json += ' { "data": "industrialAddress" }, ';
+    json += ' { "data": "exciseOwnerArea1" }, ';
+    json += ' { "data": "productType" }, ';
+    json += ' { "data": "factoryAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
     json += ' { "data": "status" }, ';
 
-    for (var i = 0; i < this.month / 2; i++) {
-      json += ' { "data": "exciseFirstTaxReceiveAmount' + (i + 1) + '" ,"className":"center"}, ';
-    }
-    for (var i = 0; i < this.month / 2; i++) {
-      if (i != (this.month / 2) - 1) {
-        json += ' { "data": "exciseLatestTaxReceiveAmount' + (i + 1) + '" ,"className":"center"}, ';
+   
+    for (var i = 0; i < this.month; i++) {
+      if (i != this.month - 1) {
+        json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"}, ';
       } else {
-        json += ' { "data": "exciseLatestTaxReceiveAmount' + (i + 1) + '" ,"className":"center"} ';
+        json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"} ';
       }
     }
     json += '] } ';
+    console.log(json);
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
-
-    // i can't check loaded datatable...?
-    setTimeout(() => {
-      this.onLoading = false;
-    }, 500);
   }
+
+  FlagN = () => {
+    this.flag = 'N';
+    this.userManagementDt.destroy();
+    this.initDatatable();
+  }
+  
+  FlagNotN = () => {
+    this.flag = 'NOT N';
+    this.userManagementDt.destroy();
+    this.initDatatable();
+  }
+
 }
