@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TravelCost, TravelCosts } from '../../../../common/models';
+import { TravelCostHeader, TravelCostDetail } from '../../../../common/models';
 import { AjaxService } from '../../../../common/services';
 declare var $: any;
 @Component({
@@ -9,9 +9,9 @@ declare var $: any;
 })
 export class Int0911Component implements OnInit {
 
-  public allData: TravelCosts[];
-  public data: TravelCosts;
-  private $form: any;
+  public hdr: TravelCostHeader;
+  public detail: TravelCostDetail[];
+  public data: TravelCostDetail;
   typeDocs: String[];
   topics: String[][];
   topic: String[];
@@ -25,8 +25,9 @@ export class Int0911Component implements OnInit {
 
 
   constructor(private ajax: AjaxService) {
-    this.data = new TravelCosts();
-    this.allData = new Array<TravelCosts>();
+    this.hdr = new TravelCostHeader();
+    this.detail = new Array<TravelCostDetail>();
+    this.data = new TravelCostDetail();
     this.typeDocs = [
       'ทั่วไป',
       'วิชาการ',
@@ -84,42 +85,56 @@ export class Int0911Component implements OnInit {
     // show form generate pdf
     this.sent = true;
     this.selectedTop = this.selectTop;
-    var data: TravelCost = new TravelCost();
+    const {
+      workSheetHeaderName,
+      departmentName,
+      startDate,
+      endDate,
+      description
+    } = this.hdr;
+    var data: TravelCostHeader = {
+      workSheetHeaderId: 0,
+      workSheetHeaderName: workSheetHeaderName,
+      departmentName: departmentName,
+      startDate: startDate,
+      endDate: endDate,
+      description: description,
+      createdBy: '',
+      createdDatetime: null,
+      updateBy: '',
+      updateDatetime: null,
+      Detail: this.detail
+    };
+
     const URL = "ia/int09/create";
 
-    this.ajax.post(URL, JSON.stringify(data), function (res) {
-      console.log(res);
+    this.ajax.post(URL, data, function (res) {
+      console.log(res.json());
     });
 
   };
 
-
-  total(index) {
-    const { allowance, accommodation, passage, outgoings } = this.allData[index];
-    return allowance + accommodation + passage + outgoings;
-  }
-
   selectedBox(e, index) {
-    this.allData[index].checked = e.target.checked;
+    this.detail[index].checked = e.target.checked;
   }
 
   addData() {
-    this.allData.push(this.data);
+    this.detail.push(this.data);
     this.clearData();
   }
 
   deleteData() {
-    this.allData = this.allData.filter(obj => {
+    this.detail = this.detail.filter(obj => {
       return !obj.checked;
     });
   }
 
   editData(index: number) {
-    this.data = this.allData[index];
+    this.data = this.detail[index];
   }
 
   clearData() {
-    this.data = new TravelCosts();
+    this.data = new TravelCostDetail();
   }
 
 

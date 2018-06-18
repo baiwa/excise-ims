@@ -25,7 +25,7 @@ import { CheckReceiptTaxComponent } from './../../project/pages/check-receipt-ta
 import { CheckReceiptLicenseComponent } from './../../project/pages/check-receipt-license/check-receipt-license.component';
 import { CreateTraderComponent } from './../../project/tax-audit/trader-selection/create-trader/create-trader.component';
 import { AnalystBasicDataTraderComponent } from './../../project/tax-audit/trader-selection/analyst-basic-data-trader/analyst-basic-data-trader.component';
-import { AddDataComponent } from '../../project/tax-audit/trader-selection/analyst-basic-data-trader/add-data/add-data.component';
+import { AddDataComponent } from '../../project/tax-audit/trader-selection/add-external-data/add-data/add-data.component';
 import { CreateWorkingPaperTraderComponent } from './../../project/tax-audit/trader-selection/create-working-paper-trader/create-working-paper-trader.component';
 import { WorkingPaper1TraderComponent } from './../../project/tax-audit/trader-selection/working-paper-1-trader/working-paper-1-trader.component';
 import { WorkingPaper1FullTraderComponent } from './../../project/tax-audit/trader-selection/working-paper-1-full-trader/working-paper-1-full-trader.component';

@@ -13,7 +13,7 @@
             <label>ชื่อกระดาษทำการ :</label>
           </div>
           <div class="eight wide field">
-            <input type="text" maxlength="1000" name="workSheetHeaderName">
+            <input type="text" maxlength="1000" [(ngModel)]="hdr.workSheetHeaderName" name="workSheetHeaderName">
           </div>
         </div>
         <div class="inline fields">
@@ -23,7 +23,7 @@
             </label>
           </div>
           <div class="eight  wide field">
-            <input type="text" name="departmentName">
+            <input type="text" [(ngModel)]="hdr.departmentName" name="departmentName">
           </div>
         </div>
 
@@ -56,7 +56,7 @@
             <label>รายละเอียด :</label>
           </div>
           <div class="eight wide field">
-            <input type="text" class="disabled" (ngModel)="data.detail" name="description">
+            <input type="text" class="disabled" [(ngModel)]="hdr.description" name="description">
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@
             <label>ชื่อ :</label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.fname" name="name" required>
+            <input type="text" [(ngModel)]="data.name" name="name" required>
           </div>
           <div class="two wide field">
             <label>
@@ -85,7 +85,7 @@
             </label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.lname" name="lastName" required>
+            <input type="text" [(ngModel)]="data.lastName" name="lastName" required>
           </div>
         </div>
         <div class="inline fields">
@@ -124,7 +124,7 @@
             <label>ค่าเบี้ยเลี้ยง (วัน):</label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.allowance" name="allowanceDate">
+            <input type="text" [(ngModel)]="data.allowanceDate" name="allowanceDate">
           </div>
           <div class="two wide field">
             <label>
@@ -132,7 +132,7 @@
             </label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.accommodation" name="rentDate">
+            <input type="text" [(ngModel)]="data.rentDate" name="rentDate">
           </div>
         </div>
         <div class="inline fields">
@@ -156,7 +156,7 @@
             <label>ค่าพาหนะ :</label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.passage" name="travelCost">
+            <input type="text" [(ngModel)]="data.travelCost" name="travelCost">
           </div>
           <div class="two wide field">
             <label>
@@ -164,7 +164,7 @@
             </label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.outgoings" name="otherCost">
+            <input type="text" [(ngModel)]="data.otherCost" name="otherCost">
           </div>
         </div>
 
@@ -220,7 +220,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let d of allData; let i = index">
+          <tr *ngFor="let d of detail; let i = index">
             <td>
               <div class="ui fitted checkbox">
                 <input (change)="selectedBox($event, i)" name="checked{{i}}" type="checkbox">
@@ -228,16 +228,16 @@
               </div>
             </td>
             <td>{{i+1}}</td>
-            <td>{{d.fname}} {{d.lname}}</td>
+            <td>{{d.name}} {{d.lastname}}</td>
             <td>{{d.position}}</td>
-            <td>2</td>
-            <td>{{d.allowance}}</td>
-            <td>2</td>
-            <td>{{d.accommodation}}</td>
+            <td>{{d.allowanceDate}}</td>
+            <td>-</td>
+            <td>{{d.rentDate}}</td>
+            <td>-</td>
             <td>{{d.passage}}</td>
             <td>{{d.outgoings}}</td>
-            <td>{{total(i)}}</td>
-            <td>???</td>
+            <td>-</td>
+            <td>{{d.note}}</td>
             <td>
               <button class="ui mini button" type="button" (click)="editData(i)">แก้ไข</button>
             </td>

@@ -23,8 +23,8 @@
                         <div class="four ui action input">
                             <input type="text" placeholder="MM/YYYY" value="{{before}}" readonly="" class="custom-readonly">
                             <button class="ui icon button">
-                    <i class="add to calendar icon"></i>
-                  </button>
+                                <i class="add to calendar icon"></i>
+                            </button>
                         </div>
                         <div class="one">
                             <label>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;</label>
@@ -32,8 +32,8 @@
                         <div class="four ui action input">
                             <input type="text" placeholder="MM/YYYY" value="{{last}}" readonly="" class="custom-readonly">
                             <button class="ui icon button">
-                    <i class="add to calendar icon"></i>
-                  </button>
+                                <i class="add to calendar icon"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="eight wide field">&nbsp;&nbsp;&nbsp;
@@ -41,6 +41,23 @@
                         <input value="" readonly="" class="custom-readonly">
                     </div>
                 </div>
+
+                <div class="inline fields">
+                    <div class="fourteen wide field"></div>
+                    <div class="two wide field">
+                        <input type="hidden" id="exciseId" value="EX" />
+                        <button
+                            type="button"
+                            id="exciseBtn"
+                            style="margin-left: auto"
+                            class="ui mini primary button right floated"
+                            onclick="window.location='/#/add-data?id='+document.getElementById('exciseId').value+'&num=25610615-01-00330';">
+                            <i class="add icon"></i>
+                            เพิ่มข้อมูล
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -53,8 +70,8 @@
                             <div class="sixteen wide field">
                                 <label style="width: 5em;">ภาค</label>
                                 <select class="ui dropdown">
-                              <option value=""></option>
-                            </select>
+                                    <option value=""></option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -65,8 +82,8 @@
                             <div class="sixteen wide field">
                                 <label style="width: 5em;">พิกัด</label>
                                 <select class="ui dropdown">
-                          <option value=""></option>
-                        </select>
+                                    <option value=""></option>
+                                </select>
                             </div>
                         </div>
                     </div>
