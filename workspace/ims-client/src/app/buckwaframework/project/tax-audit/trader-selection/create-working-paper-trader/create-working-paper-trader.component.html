@@ -53,7 +53,7 @@
                             <label>จำนวนเดือนที่ชำระภาษี</label>
                         </div>
                         <div class="two wide field">
-                            <input (keyup)="onKeyUpMin($event, i)" type="number" id="num1{{i}}" name="num1{{i}}" [(ngModel)]="num1[i]" [attr.min]="i==0 ? 1 : num2[i-1]+1" [attr.max]=" num2[i]==0 ? month-1 : num2[i]-1" [attr.required]="true">
+                            <input (keyup)="onKeyUpMin($event, i)" type="number" id="num1{{i}}" name="num1{{i}}" [(ngModel)]="num1[i]" [attr.min]="num2[i-1]+1" [attr.max]=" num2[i]==0 ? month-1 : num2[i]-1" [attr.required]="true">
                         </div>
                         <div class="one wide field">
                             <label>&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>
@@ -90,7 +90,7 @@
 
                     <div class="ui center aligned grid">
                         <div class="sixteen wide column">
-                            <button type="button" (click)="onSend()" class="ui mini primary button">
+                            <button type="submit" class="ui mini primary button">
               <i class="add icon"></i>
               สร้างกระดาษทำการ
             </button>

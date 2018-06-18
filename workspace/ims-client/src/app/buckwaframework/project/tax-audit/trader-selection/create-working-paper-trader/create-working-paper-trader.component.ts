@@ -62,9 +62,18 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
             (<HTMLInputElement>document.getElementById("last")).value = returnedData[1];
             (<HTMLInputElement>document.getElementById("fromData")).value = returnedData[2];
             (<HTMLInputElement>document.getElementById("monthData")).value = returnedData[3];
-            return returnedData
+            for(var i=0; i<10; i++){
+              $("#num1" + i).attr({
+                "min": 0
+              });
+    
+              $("#num2" + i).attr({
+                "max": returnedData[3]
+              });
+            }
+
+            return returnedData;
            
-            
           }).fail(function () {
             console.log("error");
     
@@ -96,7 +105,6 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     $("#num1" + i).attr({
       "max": parseInt(key) - 1
     });
-
   }
 
   onKeyUpMin = (e, i) => {
@@ -108,9 +116,6 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     });
   }
 
-
-  
-
   onSend = () => {
     //call ExciseService
 
@@ -118,6 +123,7 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     this.last = (<HTMLInputElement>document.getElementById("last")).value;
     this.from = (<HTMLInputElement>document.getElementById("fromData")).value;
     this.month = (<HTMLInputElement>document.getElementById("monthData")).value;
+    console.log(this.month);
     var currDate = new Date();
     var currYear = currDate.getFullYear() + 543;
     var from_split = this.from.split("/");
@@ -142,6 +148,16 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
         (<HTMLInputElement>document.getElementById("fromData")).value = returnedData[2];
         (<HTMLInputElement>document.getElementById("monthData")).value = returnedData[3];
         console.log(returnedData[2]);
+
+        for(var i=0; i<10; i++){
+          $("#num1" + i).attr({
+            "min": 0
+          });
+
+          $("#num2" + i).attr({
+            "max": returnedData[3]
+          });
+        }
        
        return returnedData;
       }).fail(function () {
