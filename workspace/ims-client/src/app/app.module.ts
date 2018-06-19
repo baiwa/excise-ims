@@ -208,6 +208,7 @@ import { Int0911Component } from './buckwaframework/project/internal-audit/int09
 import { Mgc012Component } from './buckwaframework/project/management-control/mgc01/mgc01-2/mgc01-2.component';
 import { Mgc013Component } from './buckwaframework/project/management-control/mgc01/mgc01-3/mgc01-3.component';
 import { Mgc011Component } from './buckwaframework/project/management-control/mgc01/mgc01-1/mgc01-1.component';
+import { MgcontrolComponent } from './buckwaframework/project/management-control/mgcontrol/mgcontrol.component';
 
 
 
@@ -389,7 +390,8 @@ import { Mgc011Component } from './buckwaframework/project/management-control/mg
         Int0911Component,      
         Mgc012Component,
         Mgc013Component,
-        Mgc011Component
+        Mgc011Component,
+        MgcontrolComponent
       
     
        

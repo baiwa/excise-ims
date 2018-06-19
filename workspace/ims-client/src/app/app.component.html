@@ -117,7 +117,7 @@
                 </div>
             </div>
             <a class="item" routerLinkActive="active">ทะเบียนคุมหนังสือเรียก</a>
-            <a class="item" routerLinkActive="active">บันทึกข้อความ หนังสือราชการ </a>
+            <a class="item" [routerLink]="['/tax-audit-manage']" routerLinkActive="active">บันทึกข้อความ หนังสือราชการ </a>
         </div>
     </div>
     <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
@@ -148,7 +148,7 @@
        ระบบบริหารและควบคุม
         <i class="dropdown icon"></i>
         <div class="menu">
-            <a class="item" [routerLink]="['/mgc01-1']" routerLinkActive="active">Dash Board </a>
+            <a class="item" [routerLink]="['/mgcontrol']" routerLinkActive="active">หน้าควบคุม</a>
             <a class="item" [routerLink]="[]" routerLinkActive="active">รายงานผลการออกตรวจ</a>
             <div class="ui dropdown item" routerLinkActive="active">
                 <i class="dropdown icon"></i> รายงานผลการตรวจ
