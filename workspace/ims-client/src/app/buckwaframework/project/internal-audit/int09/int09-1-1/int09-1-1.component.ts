@@ -16,8 +16,9 @@ export class Int0911Component implements OnInit {
   public id: number;
 
   public hdr: TravelCostHeader;
-  public detail: TravelCostDetail[];
-  public data: TravelCostDetail;
+  detail: TravelCostDetail[];
+  data: TravelCostDetail;
+
   typeDocs: string[];
   topics: string[][];
   topic: string[];
@@ -73,19 +74,57 @@ export class Int0911Component implements OnInit {
     this.topic = [];
     this.sent = false; // false
     this.selectedTop = ''; // ''
+    this.hdr.startDate = null;
+    this.hdr.endDate = null;
   }
 
   ngOnInit() {
     $('.ui.radio.checkbox').checkbox();
     $('#example2').calendar({
+      endCalendar: $('#example3'),
+      maxDate: new Date(),
       type: 'date',
       text: TextDateTH,
-      formatter: formatter()
+      formatter: formatter(),
+      onChange: function(date) {
+        if ($('#startDate').val() !== null) {
+          var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds 
+          var nd2 = $('#endDate').val().split('/');
+          var st1 = [
+            date.getDate(),
+            date.getMonth() + 1,
+            date.getFullYear() + 543
+          ];
+          var firstDate = new Date(st1[2], st1[1], st1[0]);
+          var secondDate = new Date(nd2[2], nd2[1], nd2[0]);
+          var rs = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+          $('#allowanceDate').attr('max', rs);
+          $('#rentDate').attr('max', rs);
+        }
+      }
     });
     $('#example3').calendar({
+      startCalendar: $('#example2'),
+      maxDate: new Date(),
       type: 'date',
       text: TextDateTH,
-      formatter: formatter()
+      formatter: formatter(),
+      onChange: function(date) {
+        if ($('#startDate').val() !== null) {
+          var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds 
+          var st1 = $('#startDate').val().split('/');
+          var nd2 = [
+            date.getDate(),
+            date.getMonth() + 1,
+            date.getFullYear() + 543
+          ];
+          var firstDate = new Date(st1[2], st1[1], st1[0]);
+          var secondDate = new Date(nd2[2], nd2[1], nd2[0]);
+          var rs = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+          $('#allowanceDate').attr('max', rs);
+          $('#rentDate').attr('max', rs);
+        }
+      }
     });
   }
 
@@ -132,6 +171,16 @@ export class Int0911Component implements OnInit {
 
   };
 
+  maxDate(startDate, endDate) {
+    var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds 
+    var st1 = startDate.split('/');
+    var nd2 = endDate.split('/');
+    var firstDate = new Date(st1[2], st1[1], st1[0]);
+    var secondDate = new Date(nd2[2], nd2[1], nd2[0]);
+
+    return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+  }
+
   getPrice(index, what) {
     const { category, degree, allowanceDate, rentDate } = this.detail[index];
     const num = what === 'allowance' ? allowanceDate : rentDate;
@@ -152,12 +201,42 @@ export class Int0911Component implements OnInit {
     this.detail[index].checked = e.target.checked;
   }
 
-  manageDate() {
+  manageDate(e) {
+    e.preventDefault();
+
+    // extract constructs
+    const {
+      name,
+      lastName,
+      position,
+      category,
+      degree,
+      allowanceDate,
+      rentDate,
+      restType,
+      travelCost,
+      otherCost,
+      note
+    } = e.target;
+
+    // binding data
+    const data: TravelCostDetail = new TravelCostDetail();
+    data.name = name.value;
+    data.lastName = lastName.value;
+    data.position = position.value;
+    data.category = category.value;
+    data.degree = degree.value;
+    data.allowanceDate = allowanceDate.value;
+    data.rentDate = rentDate.value;
+    data.restType = restType.value;
+    data.travelCost = travelCost.value;
+    data.otherCost = otherCost.value;
+    data.note = note.value;
+
     if (this.status === 'create') {
-      this.detail.push(this.data);
+      this.detail.push(data);
       this.clearData();
     } else {
-      const data = this.data;
       this.detail[this.id] = data;
       this.status = 'edit';
     }

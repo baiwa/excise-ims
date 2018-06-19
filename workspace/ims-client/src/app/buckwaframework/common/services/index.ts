@@ -7,7 +7,6 @@ import { AjaxService } from './ajax.service';
 import { ParameterGroupService } from './parameterGroup.service';
 import { ParameterInfoService } from './parameterInfo.service';
 import { TranslateService } from './translate.service';
-import { TravelService } from './travel.service';
 
 export {
     MessageBarService,
@@ -18,6 +17,5 @@ export {
     AjaxService,
     ParameterGroupService,
     ParameterInfoService,
-    TranslateService,
-    TravelService
+    TranslateService
 };

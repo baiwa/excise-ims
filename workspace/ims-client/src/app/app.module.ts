@@ -19,8 +19,7 @@ import {
     ParameterGroupService,
     ParameterInfoService,
     AjaxService,
-    ExciseService,
-    TravelService
+    ExciseService
 } from './buckwaframework/common/services/index';
 
 // components
@@ -411,8 +410,7 @@ import { Mgc011Component } from './buckwaframework/project/management-control/mg
         ParameterGroupService,
         ParameterInfoService,
         AjaxService,
-        ExciseService,
-        TravelService
+        ExciseService
     ],
     bootstrap: [AppComponent]
 })

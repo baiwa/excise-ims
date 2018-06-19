@@ -2,7 +2,7 @@
   <span>รายละเอียดหัวกระดาษทำการ
   </span>
 </div>
-<form class="ui form center aligned" (submit)="manageDate()" id="int09-1" ngNativeValidate >
+<form class="ui form center aligned" (submit)="manageDate($event)" id="int09-1" ngNativeValidate >
   <div class="ui attached  segment">
     <div class="ui grid center aligned">
       <div class="ui two wide column">&nbsp;</div>
@@ -34,7 +34,14 @@
           <div class="ui calendar" id="example2">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input type="text" placeholder="วว/ดด/ปปปป" autocomplete="off" [attr.readonly]="null" name="startDate" [attr.required]="true">
+              <input type="text"
+                placeholder="วว/ดด/ปปปป"
+                [(ngModel)]="hdr.startDate"
+                autocomplete="off"
+                [attr.readonly]="null"
+                id="startDate"
+                name="startDate"
+                [attr.required]="true">
             </div>
           </div>
 
@@ -47,7 +54,14 @@
           <div class="ui calendar" id="example3">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input type="text" placeholder="วว/ดด/ปปปป" autocomplete="off" [attr.readonly]="null" name="endDate" [attr.required]="true">
+              <input type="text"
+                placeholder="วว/ดด/ปปปป"
+                [(ngModel)]="hdr.endDate"
+                autocomplete="off"
+                [attr.readonly]="null"
+                id="endDate"
+                name="endDate"
+                [attr.required]="true">
             </div>
           </div>
         </div>
@@ -76,32 +90,28 @@
             <label>ชื่อ :</label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.name" name="name" required>
+            <input type="text" [ngModel]="data.name" id="name" name="name" required>
           </div>
           <div class="two wide field">
-            <label>
-              นามสกุล :
-            </label>
+            <label>นามสกุล :</label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.lastName" name="lastName" required>
+            <input type="text" [ngModel]="data.lastName" id="lastName" name="lastName" required>
           </div>
         </div>
         <div class="inline fields">
           <div class="two wide field">
-            <label>
-              ตำแหน่ง :
-            </label>
+            <label>ตำแหน่ง :</label>
           </div>
           <div class="four  wide field">
-            <input type="text" [(ngModel)]="data.position" name="position" required>
+            <input type="text" [ngModel]="data.position" id="position" name="position" required>
           </div>
         </div>
 
         <div class="inline fields">
           <div class="six wide field">
             <label class="custom-label-w-19" style="text-align: right">ประเภท</label>
-            <select style="width: 100%" id="doc" name="doc" class="ui search dropdown" [(ngModel)]="data.category" (change)="onSelectDoc($event)" required>
+            <select style="width: 100%" id="category" name="category" class="ui search dropdown" [ngModel]="data.category" (change)="onSelectDoc($event)" required>
               <option value="" style="color: grey">เลือกประเภทเอกสาร</option>
               <option *ngFor="let typeDoc of typeDocs; let i = index" value="{{i}}">
                 {{typeDoc}}
@@ -110,7 +120,7 @@
           </div>
           <div class="six wide field">
             <label class="custom-label-w-19" style="text-align: right">ระดับ</label>
-            <select style="width: 100%" id="topic" name="topic" class="ui search dropdown" [(ngModel)]="data.degree" (change)="onSelectTop($event)" required>
+            <select style="width: 100%" id="degree" name="degree" class="ui search dropdown" [ngModel]="data.degree" (change)="onSelectTop($event)" required>
               <option value="" style="color: grey">เลือกระดับ</option>
               <option *ngFor="let top of topic; let i = index" value="{{i}}">
                 {{top}}
@@ -123,15 +133,17 @@
             <label>ค่าเบี้ยเลี้ยง (วัน):</label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.allowanceDate" name="allowanceDate" required>
+            <input type="number" [ngModel]="data.allowanceDate" id="allowanceDate" name="allowanceDate" required>
           </div>
           <div class="two wide field">
-            <label>
-              ค่าเช่าที่พัก (วัน):
-            </label>
+            <label>ค่าเช่าที่พัก (วัน):</label>
           </div>
           <div class="four wide field">
+<<<<<<< Updated upstream
             <input type="text" [(ngModel)]="data.rentDate" name="rentDate" >
+=======
+            <input type="number" [ngModel]="data.rentDate" id="rentDate" name="rentDate" required>
+>>>>>>> Stashed changes
           </div>
         </div>
         <div class="inline fields">
@@ -139,13 +151,21 @@
             <label>ห้องเดี่ยว</label>
             <div class="field">
               <div class="ui radio checkbox">
+<<<<<<< Updated upstream
                 <input type="radio" [(ngModel)]="data.restType" name="frequency" value="rest-single" checked="checked" >
+=======
+                <input type="radio" [ngModel]="data.restType" id="restType" name="restType" value="rest-single" checked="checked" required>
+>>>>>>> Stashed changes
               </div>
             </div>
             <label>ห้องคู่</label>
             <div class="field">
               <div class="ui radio checkbox">
+<<<<<<< Updated upstream
                 <input type="radio" [(ngModel)]="data.restType" name="frequency" value="rest-double" >
+=======
+                <input type="radio" [ngModel]="data.restType" id="restType" name="restType" value="rest-double" required>
+>>>>>>> Stashed changes
               </div>
             </div>
           </div>
@@ -155,26 +175,26 @@
             <label>ค่าพาหนะ :</label>
           </div>
           <div class="four wide field">
-            <input type="text" [(ngModel)]="data.travelCost" name="travelCost" required>
+            <input type="number" [ngModel]="data.travelCost" id="travelCost" name="travelCost" required>
           </div>
           <div class="two wide field">
-            <label>
-              ค่าใช้จ่ายอื่น ๆ :
-            </label>
+            <label>ค่าใช้จ่ายอื่น ๆ :</label>
           </div>
           <div class="four wide field">
+<<<<<<< Updated upstream
             <input type="text" [(ngModel)]="data.otherCost" name="otherCost">
+=======
+            <input type="number" [ngModel]="data.otherCost" id="otherCost" name="otherCost" required>
+>>>>>>> Stashed changes
           </div>
         </div>
 
         <div class="inline fields">
           <div class="two wide field">
-            <label>
-              หมายเหตุ :
-            </label>
+            <label>หมายเหตุ :</label>
           </div>
           <div class="ten wide field">
-            <textarea name="" id="" rows="2" [(ngModel)]="data.note" style="resize: none" maxLength="2000" name="note"></textarea>
+            <textarea name="note" id="note" rows="2" [ngModel]="data.note" style="resize: none" maxLength="2000" name="note"></textarea>
           </div>
         </div>
       </div>
@@ -251,16 +271,16 @@
     <br>
     <div class="ui center aligned grid">
       <div class="eight wide column">
-        <button class="ui mini red button" (click)="deleteData()">
+        <button class="ui mini red button" type="button" (click)="deleteData()">
           ลบ
         </button>
         <button class="ui mini primary button" type="button" (click)="onSubmit()">
           บันทึก
         </button>
-        <button class="ui mini primary button">
+        <button class="ui mini primary button" type="button">
           ส่งออก
         </button>
-        <button class="ui mini primary button" routerLink="/int09-2">
+        <button class="ui mini primary button" type="button" routerLink="/int09-2">
           สัญญาการยืมเงิน
         </button>
       </div>
