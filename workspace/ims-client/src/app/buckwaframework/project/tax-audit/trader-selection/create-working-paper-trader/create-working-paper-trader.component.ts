@@ -177,4 +177,18 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
   onDelField = index => {
     this.numbers.splice(index, 1);
   };
+
+  reset = () => {
+
+    for (var i = 0; i < 10; i++) {
+      //check value of null
+      if ((<HTMLInputElement>document.getElementById("num1" + i)) != null) {
+        (<HTMLInputElement>document.getElementById("num1" + i)).value = "0";
+        (<HTMLInputElement>document.getElementById("num2" + i)).value = "0";
+        (<HTMLInputElement>document.getElementById("percent1" + i)).value = "0.00";
+        (<HTMLInputElement>document.getElementById("percent2" + i)).value = "0.00";
+      }
+    }
+
+  }
 }

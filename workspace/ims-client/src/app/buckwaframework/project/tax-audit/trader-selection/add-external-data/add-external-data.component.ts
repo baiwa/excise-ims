@@ -61,15 +61,15 @@ export class AddExternalDataComponent implements OnInit {
     this.analysNumber = analysNumber;
     console.log("analysNumber: ", this.analysNumber);
     
-    for (var i = 0; i < this.num1.length; i++) {
-      if (this.num2[i] !== 0) {
-        this._num1.push(this.num1[i]);
-        this._num2.push(this.num2[i]);
-        this._percent1.push((this.percent1[i]+0.00));
-        this._percent2.push(this.percent2[i]);
+    // for (var i = 0; i < this.num1.length; i++) {
+    //   if (this.num2[i] !== 0) {
+    //     this._num1.push(this.num1[i]);
+    //     this._num2.push(this.num2[i]);
+    //     this._percent1.push((this.percent1[i]+0.00));
+    //     this._percent2.push(this.percent2[i]);
         
-      }
-    }
+    //   }
+    // }
 
     //split function
     var from_split = this.from.split("/");
@@ -150,7 +150,13 @@ export class AddExternalDataComponent implements OnInit {
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
-    json += ' "flag": "' + this.flag + '", ';
+    console.log(this.flag);
+    if(this.flag == 'undefined'){
+      json += ' "flag": "' + this.flag + '", ';
+    }
+    else{
+      json += ' "flag": "N", ';
+    }
     json += ' "analysNumber": "' + this.analysNumber + '" ';
     json += ' } ';
     json += ' }, ';
