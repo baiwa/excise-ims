@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TextDateTH, formatter } from '../../../common/helper/datepicker';
 
 declare var $: any;
 @Component({
@@ -8,14 +9,30 @@ declare var $: any;
 })
 export class MgcontrolComponent implements OnInit {
 
-  constructor() { }
+  public topic: string;
+
+  constructor() {
+    this.topic = '';
+  }
 
   ngOnInit() {
-    $('#context .menu .item')
-      .tab({
-        // special keyword works same as above
-        context: 'parent'
-      });
+    // context
+    $('#context .menu .item').tab({
+      context: $('#context')
+    });
+    // checkbox
+    $('.ui.checkbox').checkbox();
+    // dropdown
+    $('.tag.example .ui.dropdown').dropdown({
+      allowAdditions: true
+    });
+    // calendar
+    $('#year').calendar({
+      maxDate: new Date(),
+      type: 'year',
+      text: TextDateTH,
+      formatter: formatter('year')
+    });
   }
 
 }
