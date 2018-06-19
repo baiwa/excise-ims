@@ -289,4 +289,13 @@ public class PlanWorksheetHeaderService {
         
 		return valueList;
 	}
+	
+	
+	public void updateStatusFlg(RequestFilterMapping vo) {
+		String workSheetNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-02-"
+				+ planWorksheetHeaderDao.getWorksheetNumber();
+		vo.setWorkShheetNumber(workSheetNumber);
+		planWorksheetHeaderDao.updateStatusFlg(vo);
+	}
+	
 }

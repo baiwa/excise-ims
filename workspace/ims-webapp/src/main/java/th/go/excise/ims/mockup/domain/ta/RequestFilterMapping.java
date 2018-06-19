@@ -10,6 +10,8 @@ public class RequestFilterMapping extends DataTableRequest{
 	private String percent1;
 	private String percent2;
 	private String flag;
+	private String indexFilter;
+	private String workShheetNumber;
 	
 	public String getAnalysNumber() {
 		return analysNumber;
@@ -47,5 +49,17 @@ public class RequestFilterMapping extends DataTableRequest{
 	public void setFlag(String flag) {
 		this.flag = flag;
 	}
-
+	public String getIndexFilter() {
+		return indexFilter;
+	}
+	public void setIndexFilter(String indexFilter) {
+		this.indexFilter = indexFilter;
+	}
+	public String getWorkShheetNumber() {
+		return workShheetNumber;
+	}
+	public void setWorkShheetNumber(String workShheetNumber) {
+		this.workShheetNumber = workShheetNumber;
+	}
+	
 }

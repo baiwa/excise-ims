@@ -39,5 +39,12 @@ public class FilterExisePlanHeaderController {
 		logger.debug("analysNumber : "+vo.getAnalysNumber());
 		return planWorksheetHeaderService.getStartDateAndEndDateFromAnalysNumber(vo.getAnalysNumber());
 	}
+	
+	@PostMapping("/updateStatusPlanWsHeader")
+	@ResponseBody
+	public void updateStatusPlanWsHeader(@ModelAttribute RequestFilterMapping vo) {
+		logger.debug("vo.getNum1() : "+vo.getNum1());
+		planWorksheetHeaderService.updateStatusFlg(vo);
+	}
 
 }
