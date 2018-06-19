@@ -3,7 +3,6 @@
     <a href="#" class="header item" style=" color:White ">
         {{ 'APP_NAME' | translate }}
     </a>
-    <a class="item " [routerLink]="['/home']" routerLinkActive="active" *ngIf="authService.getLogin()" style=" color:White ">Home</a>
     <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
         ตรวจสอบภายใน
         <i class="dropdown icon"></i>
@@ -104,10 +103,10 @@
                 <i class="dropdown icon"></i>การตรวจสอบภาษี
                 <div class="menu">
                     <a class="item" [routerLink]="['/analysis']" routerLinkActive="active">การวิเคราะห์ข้อมูลเบื้องต้น </a>
-                    <a class="item"  routerLinkActive="active">รวบรวมข้อมูลเบื้องต้น </a>
-                    <a class="item"  routerLinkActive="active">ขออนุมัติออกตรวจสอบภาษี </a>
-                    <a class="item"  routerLinkActive="active">สร้างกระดาษทำการตรวจสอบภาษี </a>
-                    <a class="item"  routerLinkActive="active">สรุปผลการตรวจสอบภาษี</a>
+                    <a class="item" routerLinkActive="active">รวบรวมข้อมูลเบื้องต้น </a>
+                    <a class="item" routerLinkActive="active">ขออนุมัติออกตรวจสอบภาษี </a>
+                    <a class="item" routerLinkActive="active">สร้างกระดาษทำการตรวจสอบภาษี </a>
+                    <a class="item" routerLinkActive="active">สรุปผลการตรวจสอบภาษี</a>
                 </div>
             </div>
             <div class="ui dropdown item" routerLinkActive="active">
@@ -115,14 +114,10 @@
                 <div class="menu">
                     <a class="item" routerLinkActive="active">รายงานผลการตรวจสอบภาษี </a>
                     <a class="item" routerLinkActive="active">ติดตามผลการตรวจสอบภาษี </a>
-
                 </div>
             </div>
-
             <a class="item" routerLinkActive="active">ทะเบียนคุมหนังสือเรียก</a>
-            <a class="item"  routerLinkActive="active">บันทึกข้อความ หนังสือราชการ </a>
-
-
+            <a class="item" routerLinkActive="active">บันทึกข้อความ หนังสือราชการ </a>
         </div>
     </div>
     <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
@@ -146,6 +141,25 @@
         <div class="menu">
             <a class="item" [routerLink]="['/epa01-1']" routerLinkActive="active">จัดการข้อมูลต้นทาง </a>
             <a class="item" [routerLink]="['/epa02-1']" routerLinkActive="active">จัดการข้อมูลปายทาง</a>
+        </div>
+    </div>
+
+    <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
+       ระบบบริหารและควบคุม
+        <i class="dropdown icon"></i>
+        <div class="menu">
+            <a class="item" [routerLink]="['/mgc01-1']" routerLinkActive="active">Dash Board </a>
+            <a class="item" [routerLink]="[]" routerLinkActive="active">รายงานผลการออกตรวจ</a>
+            <div class="ui dropdown item" routerLinkActive="active">
+                <i class="dropdown icon"></i> รายงานผลการตรวจ
+                <div class="menu">
+                    <a class="item" [routerLink]="[]" routerLinkActive="active">รายงานผลการตรวจสอบภาษี</a>
+                    <a class="item" [routerLink]="[]" routerLinkActive="active">รายงานผลการตรวจสอบภายใน </a>                    
+                    <a class="item" [routerLink]="[]" routerLinkActive="active">รายงานผลการตรวจส่งออก  </a>
+                    <a class="item" [routerLink]="[]" routerLinkActive="active">รายงานผลการตรวจปฏิบัติการ</a>
+
+                </div>
+            </div>
         </div>
     </div>
     <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">

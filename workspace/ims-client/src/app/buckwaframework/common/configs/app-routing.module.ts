@@ -57,6 +57,9 @@ import { Cop0511Component } from './../../project/check-operation/cop05/cop05-1/
 
 
 
+import { Mgc011Component } from '../../project/management-control/mgc01/mgc01-1/mgc01-1.component';
+import { Mgc013Component } from '../../project/management-control/mgc01/mgc01-3/mgc01-3.component';
+import { Mgc012Component } from '../../project/management-control/mgc01/mgc01-2/mgc01-2.component';
 
 
 
@@ -217,6 +220,10 @@ const routes: Routes = [
     { path: 'epa02-1-1', component: Epa0211Component, canActivate: [AuthGuard] },
     { path: 'epa02-1-2', component: Epa0212Component, canActivate: [AuthGuard] },
     { path: 'epa02-1-3', component: Epa0213Component, canActivate: [AuthGuard] },    
+
+    { path: 'mgc01-1', component: Mgc011Component, canActivate: [AuthGuard] },    
+    { path: 'mgc01-2', component: Mgc012Component, canActivate: [AuthGuard] },    
+    { path: 'mgc01-3', component: Mgc013Component, canActivate: [AuthGuard] },    
 
     { path: 'cop01-1', component: Cop011Component, canActivate: [AuthGuard] },
     { path: 'cop01-2', component: Cop012Component, canActivate: [AuthGuard] },
