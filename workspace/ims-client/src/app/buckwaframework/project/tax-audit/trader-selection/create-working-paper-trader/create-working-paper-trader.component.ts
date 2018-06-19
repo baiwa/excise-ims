@@ -44,16 +44,16 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
         this.analysNumbers = data;
         var optionList = "";
         for (var i = 0; i < this.analysNumbers.length; i++) {
-          
-          optionList += "<option value='"+this.analysNumbers[i]+"'>" + this.analysNumbers[i] + "</option>";
+
+          optionList += "<option value='" + this.analysNumbers[i] + "'>" + this.analysNumbers[i] + "</option>";
         }
         document.getElementById('analysNumber').innerHTML = optionList;
         console.log(this.analysNumbers[0]);
         (<HTMLInputElement>document.getElementById("analysNumber")).value = this.analysNumbers[0];
         const URL = AjaxService.CONTEXT_PATH + "filter/exise/getStartEndDate";
         var analysNumber = this.analysNumbers[0];
-         console.log((<HTMLInputElement>document.getElementById("analysNumber")).value);
-         return $.post(URL, { analysNumber : analysNumber },
+        console.log((<HTMLInputElement>document.getElementById("analysNumber")).value);
+        $.post(URL, { analysNumber: analysNumber },
           function (returnedData) {
             console.log(returnedData);
             (<HTMLInputElement>document.getElementById("before")).value = returnedData[0];
@@ -62,26 +62,26 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
             (<HTMLInputElement>document.getElementById("monthData")).value = returnedData[3];
 
             //set attribute
-            for(var i=0; i<10; i++){
+            for (var i = 0; i < 10; i++) {
               $("#num1" + i).attr({
                 "min": 0
               });
-    
+
               $("#num2" + i).attr({
                 "max": returnedData[3]
               });
             }
 
-            return returnedData;
-           
+            returnedData;
+
           }).fail(function () {
             console.log("error");
-    
+
           });
       }).fail(function () {
         console.log("error");
       });
-    
+
     this.numbers = [1];
     this.num1 = [];
     this.num2 = [];
@@ -93,7 +93,7 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
       this.percent1.push('0.00');
       this.percent2.push('0.00');
     }
-    
+
   }
 
   onKeyUpMax = (e, i) => {
@@ -134,11 +134,11 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     this.router.navigate(['/working-paper-1-trader']);
   }
 
-  changeAnalysNumber = () =>{
+  changeAnalysNumber = () => {
     const URL = AjaxService.CONTEXT_PATH + "filter/exise/getStartEndDate";
     var analysNumber = (<HTMLInputElement>document.getElementById("analysNumber")).value;
-     console.log((<HTMLInputElement>document.getElementById("analysNumber")).value);
-     $.post(URL, { analysNumber : analysNumber },
+    console.log((<HTMLInputElement>document.getElementById("analysNumber")).value);
+    $.post(URL, { analysNumber: analysNumber },
       function (returnedData) {
         console.log(returnedData);
         (<HTMLInputElement>document.getElementById("before")).value = returnedData[0];
@@ -148,7 +148,7 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
         console.log(returnedData[2]);
 
         //set attribute
-        for(var i=0; i<10; i++){
+        for (var i = 0; i < 10; i++) {
           $("#num1" + i).attr({
             "min": 0
           });
@@ -157,8 +157,8 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
             "max": returnedData[3]
           });
         }
-       
-       return returnedData;
+
+        return returnedData;
       }).fail(function () {
         console.log("error");
 

@@ -15,7 +15,7 @@ declare var $: any;
 export class WorkingPaper1TraderComponent implements OnInit {
 
   userManagementDt: any;
-  router: any;
+  
   private listItem: any[];
   before: any;
   last: any;
@@ -31,10 +31,11 @@ export class WorkingPaper1TraderComponent implements OnInit {
   from: any;
   analysNumber: any;
   exciseProductType: any;
-
+  indexFilter : any;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private ex: ExciseService
   ) {
     this._num1 = new Array();
@@ -48,7 +49,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     //call ExciseService
     var { before, last, from, month, currYear, prevYear } = this.ex.getformValues();
     var { num1, num2, percent1, percent2, analysNumber } = this.ex.getformNumber();
-
+    this.indexFilter = "";
     //set values
     this.before = before;
     this.last = last;
@@ -127,6 +128,13 @@ export class WorkingPaper1TraderComponent implements OnInit {
   ngAfterViewInit() {
 
   }
+
+  filterDataByCriteria(index){
+    console.log(index);
+    this.indexFilter = index;
+    this.userManagementDt.destroy();
+    this.initDatatable();
+  }
   
   initDatatable(): void {
     
@@ -150,6 +158,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
     json += ' "flag": "N", ';
+    json += ' "indexFilter": "'+this.indexFilter+'", ';
     json += ' "num1": "' + this.num1 + '", ';
     json += ' "num2": "' + this.num2 + '", ';
     json += ' "percent1": "' + this.percent1 + '", ';
@@ -182,6 +191,37 @@ export class WorkingPaper1TraderComponent implements OnInit {
     this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
   }
 
+
+  updateFlg(){
+    
+    var router = this.router;
+    const URL = AjaxService.CONTEXT_PATH + "/filter/exise/updateStatusPlanWsHeader";
+    var param1 = "";
+    var param2 = "";
+    var param3 = "";
+    var param4 = "";
+    for(var i = 0 ; i < 10 ; i++ ){
+      param1+=this.num1[i];
+      param2+=this.num2[i];
+      param3+=this.percent1[i];
+      param4+=this.percent2[i];
+      if(i != 9){
+        param1+=",";
+        param2+=",";
+        param3+=",";
+        param4+=",";
+      }
+    }
+    $.post(URL, { num1: param1, num2: param2 , percent1: param3 , percent2 : param4 , analysNumber :this.analysNumber },
+      function (returnedData) {
+        router.navigate(['/add-external-data']);
+      }).fail(function () {
+        console.log("error");
+      });
+
+  }
+
+  
 
 
 }
