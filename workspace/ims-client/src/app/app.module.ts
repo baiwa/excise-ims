@@ -205,14 +205,18 @@ import { Int092Component } from './buckwaframework/project/internal-audit/int09/
 import { AddExternalDataComponent } from './buckwaframework/project/tax-audit/trader-selection/add-external-data/add-external-data.component';
 import { Int0911Component } from './buckwaframework/project/internal-audit/int09/int09-1-1/int09-1-1.component';
 
+import { Mgc011Component } from './buckwaframework/project/management-control/mgc01/mgc01-1/mgc01-1.component';
 import { Mgc012Component } from './buckwaframework/project/management-control/mgc01/mgc01-2/mgc01-2.component';
 import { Mgc013Component } from './buckwaframework/project/management-control/mgc01/mgc01-3/mgc01-3.component';
-import { Mgc011Component } from './buckwaframework/project/management-control/mgc01/mgc01-1/mgc01-1.component';
 import { MgcontrolComponent } from './buckwaframework/project/management-control/mgcontrol/mgcontrol.component';
 import { ReportTaxComponent } from './buckwaframework/project/management-control/reports/report-tax/report-tax.component';
 import { ReportIntComponent } from './buckwaframework/project/management-control/reports/report-int/report-int.component';
 import { ReportOutComponent } from './buckwaframework/project/management-control/reports/report-out/report-out.component';
 import { ReportOptComponent } from './buckwaframework/project/management-control/reports/report-opt/report-opt.component';
+import { MgReportResultComponent } from './buckwaframework/project/management-control/mgc02/mgReportResult.component';
+import { Mgc021Component } from './buckwaframework/project/management-control/mgc02/mgc02-1/mgc02-1.component';
+import { Mgc022Component } from './buckwaframework/project/management-control/mgc02/mgc02-2/mgc02-2.component';
+import { Mgc023Component } from './buckwaframework/project/management-control/mgc02/mgc02-3/mgc02-3.component';
 
 
 
@@ -392,6 +396,7 @@ import { ReportOptComponent } from './buckwaframework/project/management-control
         Int092Component,
         AddExternalDataComponent,
         Int0911Component,      
+        Mgc011Component,
         Mgc012Component,
         Mgc013Component,
         Mgc011Component,
@@ -399,7 +404,11 @@ import { ReportOptComponent } from './buckwaframework/project/management-control
         ReportTaxComponent,
         ReportIntComponent,
         ReportOutComponent,
-        ReportOptComponent
+        ReportOptComponent,
+        MgReportResultComponent,
+        Mgc021Component,
+        Mgc022Component,
+        Mgc023Component
       
     
        

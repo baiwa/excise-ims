@@ -145,16 +145,16 @@
     </div>
 
     <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
-       ระบบบริหารและควบคุม
+        ระบบบริหารและควบคุม
         <i class="dropdown icon"></i>
         <div class="menu">
-            <a class="item" [routerLink]="['/mgcontrol']" routerLinkActive="active">หน้าควบคุม</a>
-            <a class="item" [routerLink]="[]" routerLinkActive="active">รายงานผลการออกตรวจ</a>
+            <a class="item" [routerLink]="['/mgcontrol']" routerLinkActive="active">dashboard</a>
+            <a class="item" [routerLink]="['/mgReportResult']" routerLinkActive="active">รายงานผลการออกตรวจ</a>
             <div class="ui dropdown item" routerLinkActive="active">
                 <i class="dropdown icon"></i> รายงานผลการตรวจ
                 <div class="menu">
                     <a class="item" [routerLink]="['/report-tax']" routerLinkActive="active">รายงานผลการตรวจสอบภาษี</a>
-                    <a class="item" [routerLink]="['/report-int']" routerLinkActive="active">รายงานผลการตรวจสอบภายใน </a>                    
+                    <a class="item" [routerLink]="['/report-int']" routerLinkActive="active">รายงานผลการตรวจสอบภายใน </a>
                     <a class="item" [routerLink]="['/report-out']" routerLinkActive="active">รายงานผลการตรวจส่งออก  </a>
                     <a class="item" [routerLink]="['/report-opt']" routerLinkActive="active">รายงานผลการตรวจปฏิบัติการ</a>
 
