@@ -10,6 +10,7 @@ declare var $: any;
 export class ReportTaxComponent implements OnInit {
 
   year: any;
+  toggled: boolean;
 
   constructor() { }
 
@@ -21,6 +22,17 @@ export class ReportTaxComponent implements OnInit {
       text: TextDateTH,
       formatter: formatter('year')
     });
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    this.year = e.target.year.value;
+    e.target.year.value = '';
+    this.toggled = true;
+  }
+
+  onCancel() {
+    this.toggled = false;
   }
 
 }

@@ -5,7 +5,7 @@
       <span>รายงานผลการตรวจภาษี</span>
     </div>
 
-    <form class="ui form center aligned" ngNativeValidate>
+    <form class="ui form center aligned" (submit)="onSubmit($event)" ngNativeValidate>
       <div class="ui attached segment">
         <div class="ui center aligned grid">
           <div class="twelve wide column">
@@ -21,7 +21,7 @@
                   <div class="ui calendar" id="year" style="width: 100%">
                     <div class="ui input left icon">
                       <i class="calendar icon"></i>
-                      <input type="text" [(ngModel)]="year" placeholder="ปี" autocomplete="off" [attr.readonly]="null" id="year" name="year" [attr.required]="true">
+                      <input type="text" placeholder="ปี" autocomplete="off" [attr.readonly]="null" id="year" name="year" [attr.required]="true">
                     </div>
                   </div>
                 </div>
@@ -29,8 +29,8 @@
                   <label>พิกัดสินค้า : </label>
                 </div>
                 <div class="five wide field">
-                  <select name="target" style="width: 100%" class="ui fluid search dropdown">
-                    <option value="">เลือกพิกัดสิน</option>
+                  <select id="target" name="target" style="width: 100%" class="ui fluid search dropdown" [attr.required]="true">
+                    <option value="">เลือกพิกัด</option>
                     <option value="ทั้งหมด">ทั้งหมด</option>
                     <option value="สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน">สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน</option>
                     <option value="สินค้าเครื่องดื่ม">สินค้าเครื่องดื่ม</option>
@@ -56,8 +56,8 @@
                 <div class="sixteen wide field">
                   <div class="ui center aligned grid" style="width: 100%">
                     <div class="sixteen wide column">
-                      <button class="ui mini green button">ค้นหารายงาน</button>
-                      <button class="ui mini red button">ยกเลิก</button>
+                      <button type="submit" class="ui mini green button">ค้นหารายงาน</button>
+                      <button type="button" (click)="onCancel()" class="ui mini red button">ยกเลิก</button>
                     </div>
                   </div>
                 </div>
@@ -70,17 +70,79 @@
 
   </div>
 
-  <div class="twelve wide column">
+  <div class="twelve wide column" *ngIf="toggled">
 
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>รายงานผลการตรวจภาษี ประจำปีงบประมาณ {{year}}</span>
+      <span>รายงานผลการตรวจภาษี ประจำปีงบประมาณ <span style="color: red">{{year}}</span></span>
     </div>
 
 
     <div class="ui attached segment">
       <div class="ui center aligned grid">
-        <div class="twelve wide column">
-          
+        <div class="fifteen wide column" style="overflow-x: scroll;padding: 0;margin: 2em;">
+          <table class="ui very compact table" style="width: 150%;margin: 0 !important;">
+            <thead>
+              <tr>
+                <th colspan="7" style="background: #1e83db;color: white;text-align: center">รายงานผลการตรวจ</th>
+              </tr>
+              <tr>
+                <th>ลำดับที่</th>
+                <th>ชื่อรายงาน</th>
+                <th>ภาค</th>
+                <th>พื้นที่</th>
+                <th>พิกัด</th>
+                <th>ปีงบประมาณ</th>
+                <th>File</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>รายงานผลการตรวจสอบภาษี สถานประกอบการ XXXXXXXXXXXXX</td>
+                <td>ภาค 4</td>
+                <td>-</td>
+                <td>น้ำมัน</td>
+                <td>2559</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>รายงานผลการตรวจสอบภาษี สถานประกอบการ XXXXXXXXXXXXX</td>
+                <td>ภาค 3</td>
+                <td>-</td>
+                <td>น้ำมัน</td>
+                <td>2559</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>รายงานผลการตรวจสอบภาษี สถานประกอบการ XXXXXXXXXXXXX</td>
+                <td>ภาค 4</td>
+                <td>-</td>
+                <td>น้ำดื่ม</td>
+                <td>2559</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>รายงานผลการตรวจสอบภาษี สถานประกอบการ XXXXXXXXXXXXX</td>
+                <td>ภาค 4</td>
+                <td>-</td>
+                <td>รถยนต์</td>
+                <td>2559</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>รายงานผลการตรวจสอบภาษี สถานประกอบการ XXXXXXXXXXXXX</td>
+                <td>ภาค 10</td>
+                <td>กทม 1</td>
+                <td>น้ำดื่ม</td>
+                <td>2559</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

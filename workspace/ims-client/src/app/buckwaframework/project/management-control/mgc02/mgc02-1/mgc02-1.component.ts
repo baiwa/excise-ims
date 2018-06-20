@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { formatter, TextDateTH } from '../../../../common/helper/datepicker';
 declare var $: any;
 @Component({
@@ -6,6 +6,7 @@ declare var $: any;
   templateUrl: './mgc02-1.component.html',
 })
 export class Mgc021Component implements OnInit {
+  @Input() year: any; 
   products: String[];
   zones: String[];
   selectProduct: String;

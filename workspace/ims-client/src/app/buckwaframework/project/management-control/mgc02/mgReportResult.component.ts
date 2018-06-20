@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { formatter, TextDateTH } from '../../../common/helper/datepicker';
 declare var $: any;
 @Component({
@@ -6,7 +6,8 @@ declare var $: any;
   templateUrl: './mgReportResult.component.html',
 })
 export class MgReportResultComponent implements OnInit {
-  @Input() showYear: number;
+
+  year: any;
 
   typeDocs: String[];
 
@@ -44,8 +45,7 @@ export class MgReportResultComponent implements OnInit {
 
   onSubmit = (event) => {
     // show form generate pdf
-    const showYear = event.target['year'].value;
-    console.log(showYear);
+    this.year = event.target['year'].value;
     this.sent = true;
     this.selectedDoc = this.selectDoc;
   };

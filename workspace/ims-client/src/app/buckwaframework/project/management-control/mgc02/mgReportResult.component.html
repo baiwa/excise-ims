@@ -61,7 +61,7 @@
               <i class="save icon"></i>
               ค้นหารายงาน
             </button>
-                    <button class="ui mini red button" type="button">
+                    <button class="ui mini red button" type="button" (click)="onDiscard(false)">
               <i class="times icon"></i>
               ยกเลิก
             </button>
@@ -71,11 +71,11 @@
 
     </div>
 
-    <app-mgc02-1 *ngIf="sent && selectedDoc == 'ระบบการตรวจภาษี'" (discard)="onDiscard($event)" class="sixteen wide column segments">
+    <app-mgc02-1 *ngIf="sent && selectedDoc == 'ระบบการตรวจภาษี'" [year]="year" (discard)="onDiscard($event)" class="sixteen wide column segments">
     </app-mgc02-1>
-    <app-mgc02-2 *ngIf="sent && selectedDoc == 'ระบบการตรวจวัตถุดิบคงเหลือ'" (discard)="onDiscard($event)" class="sixteen wide column segments">
+    <app-mgc02-2 *ngIf="sent && selectedDoc == 'ระบบการตรวจวัตถุดิบคงเหลือ'" [year]="year" (discard)="onDiscard($event)" class="sixteen wide column segments">
     </app-mgc02-2>
-    <app-mgc02-3 *ngIf="sent && selectedDoc == 'ระบบตรวจสอบภายในและการตรวจส่งออก'" (discard)="onDiscard($event)" class="sixteen wide column segments">
+    <app-mgc02-3 *ngIf="sent && selectedDoc == 'ระบบตรวจสอบภายในและการตรวจส่งออก'" [year]="year" (discard)="onDiscard($event)" class="sixteen wide column segments">
     </app-mgc02-3>
 
 </form>
