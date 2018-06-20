@@ -22,13 +22,16 @@ export class Mgc013Component implements AfterViewInit {
     let myChart = new Chart(this.ctx, {
       type: 'pie',
       data: {
-          labels: ["A", "B"],
+          labels: ["A", "B","C", "D", "E", ],
           datasets: [{
               label: 'Result',
-              data: [4,6],
+              data: [4,6,3,7,3],
               backgroundColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
+                'rgb(0, 204, 0)',
+                  'rgb(0, 0, 255)',
+                  'rgb(255, 0, 0)',
+                  'rgb(102, 0, 0)',
+                  'rgb(255, 102, 0)'
               ],
               borderWidth: 1
           }]

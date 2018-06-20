@@ -32,9 +32,31 @@ export class Mgc011Component implements AfterViewInit {
             label: "B",
             data: [60, 75, 55, 60, 84, 66, 44],
             fill: false,
-            borderColor: "yellow",
+            borderColor: "blue",
+            lineTension: 0.1
+          },
+          {
+            label: "C",
+            data: [50, 71, 52, 42, 47, 65, 64],
+            fill: false,
+            borderColor: "red",
+            lineTension: 0.1
+          },
+          {
+            label: "D",
+            data: [63, 73, 58, 68, 81, 69, 41],
+            fill: false,
+            borderColor: "brown",
+            lineTension: 0.1
+          },
+          {
+            label: "E",
+            data: [80, 79, 59, 69, 88, 63, 74],
+            fill: false,
+            borderColor: "orange",
             lineTension: 0.1
           }
+
         ]
       },
       options: {
