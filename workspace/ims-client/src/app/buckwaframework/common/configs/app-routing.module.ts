@@ -171,6 +171,10 @@ import { Ope055Component } from './../../project/tax-audit/operate-tax-audit/ope
 import { Ope056Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-6/ope05-6.component';
 import { Ope057Component } from './../../project/tax-audit/operate-tax-audit/ope05/ope05-7/ope05-7.component';
 import { AddExternalDataComponent } from '../../project/tax-audit/trader-selection/add-external-data/add-external-data.component';
+import { ReportTaxComponent } from '../../project/management-control/reports/report-tax/report-tax.component';
+import { ReportIntComponent } from '../../project/management-control/reports/report-int/report-int.component';
+import { ReportOutComponent } from '../../project/management-control/reports/report-out/report-out.component';
+import { ReportOptComponent } from '../../project/management-control/reports/report-opt/report-opt.component';
 
 
 
@@ -346,8 +350,12 @@ const routes: Routes = [
     { path: 'ope05-5', component: Ope055Component, canActivate: [AuthGuard] },
     { path: 'ope05-6', component: Ope056Component, canActivate: [AuthGuard] },
     { path: 'ope05-7', component: Ope057Component, canActivate: [AuthGuard] },
-    { path: 'add-external-data', component: AddExternalDataComponent, canActivate: [AuthGuard] }
+    { path: 'add-external-data', component: AddExternalDataComponent, canActivate: [AuthGuard] },
     
+    { path: 'report-tax', component: ReportTaxComponent, canActivate: [AuthGuard]},
+    { path: 'report-int', component: ReportIntComponent, canActivate: [AuthGuard]},
+    { path: 'report-out', component: ReportOutComponent, canActivate: [AuthGuard]},
+    { path: 'report-opt', component: ReportOptComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
