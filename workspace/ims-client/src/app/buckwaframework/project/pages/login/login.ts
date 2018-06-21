@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 import { AuthService } from '../../../common/services/auth.service';
 import { User } from '../../../common/models/user';
+import { MessageBarService } from '../../../common/services/message-bar.service';
 
 @Component({
     selector: 'page-login',
@@ -15,7 +16,10 @@ export class LoginPage implements OnInit {
     public loginInvalid: boolean = false;
     public ngLoading = { "loading": false };
 
-    constructor(public authService: AuthService) {
+    constructor(
+        public authService: AuthService,
+        private messageBarService: MessageBarService
+    ) {
 
     }
 
@@ -35,6 +39,7 @@ export class LoginPage implements OnInit {
             })
             .catch(error => {
                 this.loginInvalid = true;
+                this.messageBarService.errorModal('ไม่สามารถเข้าสู่ระบบได้', 'เกิดข้อผิดพลาด');
                 this.ngLoading = { "loading": false };
             });
     }
