@@ -26,7 +26,6 @@ export class Int054Component implements OnInit {
       .dropdown({
         transition: 'drop'
       });
-      
   }
  
 
