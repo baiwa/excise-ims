@@ -27,12 +27,12 @@
     <br>
 
 
-    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white" *ngIf="!showData">
       <span>ประเมินความเสี่ยงโครงการรวม
       </span>
     </div>
 
-    <div class="ui attached segment">
+    <div class="ui attached segment" *ngIf="!showData">
       <div class="ui form">
         <div class="inline fields">
           <div class="four wide field "></div>
