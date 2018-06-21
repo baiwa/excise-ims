@@ -1,15 +1,15 @@
 <div class="ui grid">
   <div class="sixteen wide column">
 
-    <div class="ui large ordered steps" style="width: 280px;">
-      <div class=" step">
+    <div class="ui large ordered steps" style="width: 100%;">
+      <div class="step">
         <div class="content">
           <div class="title">ประเมิน
           </div>
           <div class="description">ความเสี่ยงโครงการด้านงบประมาณ </div>
         </div>
       </div>
-      <div class=" step">
+      <div class="step">
         <div class="content">
           <div class="title">ประเมิน
           </div>
@@ -24,118 +24,188 @@
         </div>
       </div>
     </div>
+    <br>
 
-  
+
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>ประเมินความเสี่ยงโครงการรวม
-        </span>
-      </div>
-  
+      <span>ประเมินความเสี่ยงโครงการรวม
+      </span>
+    </div>
+
     <div class="ui attached segment">
-      <div class="ui right aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini primary button" (click)="popupWeightData()">
-            <i class="setting icon"></i>
-            กำหนด %
-          </button>
-          <button class="ui mini primary button" (click)="popupEditData()">
-            <i class="setting icon"></i>
-            กำหนด RL
-          </button>
-          <button class="ui mini primary button">
-            <i class=" save icon"></i>
-            บันทึก
-          </button>
-          <button class="ui mini primary button">
-            <i class="print icon"></i>
-            พิมพ์
-          </button>
-          <div class="ui mini primary button">
-            <div class="ui simple dropdown item">
-              ส่งออก
-              <i class="dropdown icon"></i>
-              <div class="menu">
-                <div class="item">PDF</div>
-                <div class="item">Excel</div>
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="four wide field "></div>
+          <div class="two wide field ">
+            <label>ปีงบประมาณ</label>
+          </div>
+          <div class="four wide field ">
+            <select class="ui search dropdown">
+              <option value="0">2561</option>
+              <option value="1">2560</option>
+              <option value="2">2559</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="inline fields">
+        <div class="two wide field "></div>
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button" (click)="uploadData()">
+              <i class="add icon"></i>
+              สร้างกระดาษทำการ
+            </button>
+            <button class="ui mini button" (click)="clearData()">
+              <i class="refresh icon"></i>
+              ล้างข้อมูล
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <div class="ui right aligned grid" style="margin-left: auto;" *ngIf="showData">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button" (click)="popupWeightData()">
+          <i class="print icon"></i>
+          กำหนด %
+        </button>
+        <button class="ui mini primary button" (click)="popupEditData()">
+          <i class="setting icon"></i>
+          กำหนด RL
+        </button>
+        <button class="ui mini primary button">
+          <i class=" save icon"></i>
+          บันทึก
+        </button>
+        <div class="ui mini primary button">
+          <div class="ui simple dropdown item">
+            ส่งออก
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <div class="item">PDF</div>
+              <div class="item">Excel</div>
+            </div>
+          </div>
+        </div>
+        <button class="ui mini primary button">
+          <i class="print icon"></i>
+          แบบฟอร์ม TM
+        </button>
+      </div>
+    </div>
+    <br>
+
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white" *ngIf="showData">
+      <span>รายละเอียดหัวกระดาษทำการ</span>
+    </div>
+
+    <div class="ui attached segment" *ngIf="showData">
+      <div class="ui center aligned grid">
+        <div class="twelve wide column">
+          <div class="ui form">
+            <div class="inline fields">
+              <div class="three wide field">
+                ชื่อกระดาษทำการ
+              </div>
+              <div class="thirteen wide field">
+                <input type="text">
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="three wide field">
+                ปีงบประมาณ
+              </div>
+              <div class="five wide field">
+                <input type="text">
+              </div>
+              <div class="two wide field">
+                ผู้ตรวจ
+              </div>
+              <div class="six wide field">
+                <input type="text">
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="three wide field">
+                ปัจจัยเสี่ยง
+              </div>
+              <div class="five wide field">
+                <input type="text">
+              </div>
+              <div class="three wide field">
+                ประเภทกระดาษทำการ
+              </div>
+              <div class="five wide field">
+                <select class="ui dropdown">
+                  <option value="">เลือกประเภทกระดาษทำการ</option>
+                  <option value="{{ d }}" *ngFor="let d of data">{{ d }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="three wide field condition" [ngStyle]="{ 'margin-top': '-120px' }">
+                เงื่อนไข
+              </div>
+              <div class="thirteen wide field">
+                <div class="ui form" style="width: 100%">
+                  <div class="inline fields">
+                    <div class="one wide field">1.</div>
+                    <div class="fifteen wide field" style="padding-right: 0">
+                      <div class="ui right labeled input">
+                        <input type="text" placeholder="">
+                        <div class="ui red label" style="cursor: pointer;">
+                          <i class="trash icon" style="margin: 0"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inline fields">
+                    <div class="one wide field">2.</div>
+                    <div class="fifteen wide field" style="padding-right: 0">
+                      <div class="ui right labeled input">
+                        <input type="text" placeholder="">
+                        <div class="ui red label" style="cursor: pointer;">
+                          <i class="trash icon" style="margin: 0"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inline fields">
+                    <div class="one wide field">3.</div>
+                    <div class="fifteen wide field" style="padding-right: 0">
+                      <div class="ui right labeled input">
+                        <input type="text" placeholder="">
+                        <div class="ui red label" style="cursor: pointer;">
+                          <i class="trash icon" style="margin: 0"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="fifteen wide field"></div>
+              <div class="one wide field" style="padding: 0 1em 0 0;">
+                <div class="ui vertical mini animated button" tabindex="0">
+                  <div class="hidden content">เพิ่ม</div>
+                  <div class="visible content">
+                    <i class="plus icon ani-icon" style="margin-left: -0.5em;"></i>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <br>
-      <div class="ui grid center aligned">
-        <div class="sixteen wide column">
-          กระดาษทำการประเมินความเสี่ยงประสิทธิภาพการดำเนินงานเพื่อพิจารณาคัดเลือกแผนงาน / โครงการ
-          <br> ปีงบประมาณ พ.ศ. 2561
-          <br> กลุ่มตรวจสอบภายใน กรมสรรพสามิต
-        </div>
-      </div>
-      <div class="ui eight column grid">
-        <div class="column right aligned">
-          ปัจจัยเสี่ยง:
-        </div>
-
-        <div class="column" style="width: 30%;">
-          1. งบประมาณที่ใช้ดำเนินโครงการ
-          <br> 2. ประสิทธิภาพในการดำเนินงาน
-          <br> งบประมาณเปรียบเทียบประสิทธิภาพโครงการ
-          <br> งบประมาณเปรียบเทียบประสิทธิภาพโครงการ
-          <br> งบประมาณเปรียบเทียบประสิทธิภาพโครงการ
-        </div>
-
-        <div class="column" style="width: 10%;">
-          &nbsp;
-          <br>
-          <br> อยู่ระหว่าง
-          <br> อยู่ระหว่าง
-          <br> อยู่ระหว่าง
-        </div>
-
-        <div class="column" style="width: 8%;" align="right">
-          &nbsp;
-          <br>
-          <br>0 - 1
-          <br>1.1 - 2
-          <br>
-          <span style="margin:3%">2.1 - 3</span>
-        </div>
-
-        <div class="column right aligned" style="width: 10%;">
-          &nbsp;
-          <br>
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-        </div>
-
-        <div class="column" style="width: 5%;">
-          &nbsp;
-          <br>
-          <br> 1
-          <br> 2
-          <br> 3
-        </div>
-
-        <div class="column" style="width: 10%;">
-          &nbsp;
-          <br>
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-        </div>
-
-        <div class="column" style="width: 5%;">
-          &nbsp;
-          <br>
-          <br> ต่ำ
-          <br> กลาง
-          <br> สูง
-        </div>
-      </div>
-
-      <br>
-      <div style="overflow-x: scroll;">
+    <div class="ui segment" style="padding: 0;" *ngIf="showData">
+      <div style="overflow: scroll;max-height: 84vh;">
         <table id="tableData" class="ui small celled table" style="width: 120%;">
           <thead>
             <tr style="text-align: center;">

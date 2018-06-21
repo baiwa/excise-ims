@@ -1,8 +1,9 @@
-#tableData tr td:nth-child(4), #tableData tr td:nth-child(5) {
+#tableData tr td:nth-child(4), #tableData tr td:nth-child(5),
+#tableData tr td:nth-child(6),#tableData tr td:nth-child(7) {
     text-align: right;
 }
 #tableData tr td:nth-child(2), #tableData tr td:nth-child(3)
-#tableData tr td:nth-child(6) {
+#tableData tr td:nth-child(8) {
     text-align: left;
 }
 
@@ -23,4 +24,19 @@
 #tableSetting tr td:nth-child(3), #tableSetting tr td:nth-child(5), 
 #tableSetting tr td:nth-child(6) {
     text-align: right;
+}
+
+@media only screen and (max-width: 1172px) {
+    .vertical.mini.animated {
+        padding-right: 16.500px !important;
+    }
+} 
+
+@media only screen and (max-width: 768px) {
+    .condition{
+        margin-top: 0 !important;
+    }
+    .ani-icon{
+        margin-left: -0.65em !important;
+    }
 }

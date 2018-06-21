@@ -1,9 +1,14 @@
 <div class="ui borderless menu fixed" style="background:#1e83db; ">
     <img class="logo" src="assets/images/Logo3.jpg" style="width: 250px; height: 69px; ">
-    <a href="#" class="header item" style=" color:White ">
+    <a href="#" class="header item" style=" color:White " *ngIf="authService.getLogin()">
         {{ 'APP_NAME' | translate }}
     </a>
-    <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style=" color:White ">
+    <a  href="#" class="ui header center aligned item grid"
+        style="color:White;width: calc(100% - 500px);font-size: 20px;"
+        *ngIf="!authService.getLogin()">
+        ระบบบริหารจัดการตรวจปฎิบัติการแบบบูรณาการ
+    </a>
+    <div class="ui simple dropdown item" *ngIf="authService.getLogin()" style="color:White;">
         ตรวจสอบภายใน
         <i class="dropdown icon"></i>
         <div class="menu">
@@ -173,7 +178,7 @@
     </div>
 
     <div class="right menu">
-        <a class="item" *ngIf="!authService.getLogin()" [routerLink]="['/login']">Login</a>
+        <a class="item" *ngIf="!authService.getLogin()" style="color:white;" [routerLink]="['/login']">เข้าสู่ระบบ</a>
         <div class="item" *ngIf="authService.getLogin()" style=" color:White ">{{user.username}}</div>
         <a class="item" *ngIf="authService.getLogin()" (click)="logout()" style=" color:White ">Logout</a>
     </div>

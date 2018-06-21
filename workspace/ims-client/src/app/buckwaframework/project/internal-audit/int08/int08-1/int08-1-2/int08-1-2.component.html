@@ -1,8 +1,8 @@
 <div class="ui grid">
   <div class="sixteen wide column">
 
-    <div class="ui large ordered steps" style="width: 280px;">
-      <div class=" step">
+    <div class="ui large ordered steps" style="width: 100%;">
+      <div class="step">
         <div class="content">
           <div class="title">ประเมิน
           </div>
@@ -23,7 +23,8 @@
           <div class="description">ความเสี่ยงโครงการรวม</div>
         </div>
       </div>
-    </div>  
+    </div>
+    <br>
 
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>สร้างกระดาษทำการประเมินความเสี่ยงโครงการด้านประสิทธิภาพ
@@ -64,241 +65,279 @@
         </div>
       </div>
     </div>
+    <br>
 
-    <div class="ui segment" *ngIf="showData">
-      <div class="ui right aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini primary button" (click)="popupEditData()">
-            <i class="setting icon"></i>
-            กำหนด RL
-          </button>
-          <button class="ui mini primary button">
-            <i class=" save icon"></i>
-            บันทึก
-          </button>
-          <button class="ui mini primary button">
-            <i class="print icon"></i>
-            พิมพ์
-          </button>
-          <div class="ui mini primary button">
-            <div class="ui simple dropdown item">
-              ส่งออก
-              <i class="dropdown icon"></i>
-              <div class="menu">
-                <div class="item">PDF</div>
-                <div class="item">Excel</div>
+    <div class="ui right aligned grid" style="margin-left: auto;" *ngIf="showData">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button" (click)="popupEditData()">
+          <i class="setting icon"></i>
+          กำหนด RL
+        </button>
+        <button class="ui mini primary button">
+          <i class=" save icon"></i>
+          บันทึก
+        </button>
+        <div class="ui mini primary button">
+          <div class="ui simple dropdown item">
+            ส่งออก
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <div class="item">PDF</div>
+              <div class="item">Excel</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white" *ngIf="showData">
+      <span>รายละเอียดหัวกระดาษทำการ</span>
+    </div>
+
+    <div class="ui attached segment" *ngIf="showData">
+      <div class="ui center aligned grid">
+        <div class="twelve wide column">
+          <div class="ui form">
+            <div class="inline fields">
+              <div class="three wide field">
+                ชื่อกระดาษทำการ
+              </div>
+              <div class="thirteen wide field">
+                <input type="text">
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="three wide field">
+                ปีงบประมาณ
+              </div>
+              <div class="five wide field">
+                <input type="text">
+              </div>
+              <div class="two wide field">
+                ผู้ตรวจ
+              </div>
+              <div class="six wide field">
+                <input type="text">
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="three wide field">
+                ปัจจัยเสี่ยง
+              </div>
+              <div class="five wide field">
+                <input type="text">
+              </div>
+              <div class="three wide field">
+                ประเภทกระดาษทำการ
+              </div>
+              <div class="five wide field">
+                <select class="ui dropdown">
+                  <option value="">เลือกประเภทกระดาษทำการ</option>
+                  <option value="{{ d }}" *ngFor="let d of data">{{ d }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="three wide field condition" [ngStyle]="{ 'margin-top': '-120px' }">
+                เงื่อนไข
+              </div>
+              <div class="thirteen wide field">
+                <div class="ui form" style="width: 100%">
+                  <div class="inline fields">
+                    <div class="one wide field">1.</div>
+                    <div class="fifteen wide field" style="padding-right: 0">
+                      <div class="ui right labeled input">
+                        <input type="text" placeholder="">
+                        <div class="ui red label" style="cursor: pointer;">
+                          <i class="trash icon" style="margin: 0"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inline fields">
+                    <div class="one wide field">2.</div>
+                    <div class="fifteen wide field" style="padding-right: 0">
+                      <div class="ui right labeled input">
+                        <input type="text" placeholder="">
+                        <div class="ui red label" style="cursor: pointer;">
+                          <i class="trash icon" style="margin: 0"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inline fields">
+                    <div class="one wide field">3.</div>
+                    <div class="fifteen wide field" style="padding-right: 0">
+                      <div class="ui right labeled input">
+                        <input type="text" placeholder="">
+                        <div class="ui red label" style="cursor: pointer;">
+                          <i class="trash icon" style="margin: 0"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="fifteen wide field"></div>
+              <div class="one wide field" style="padding: 0 1em 0 0;">
+                <div class="ui vertical mini animated button" tabindex="0">
+                  <div class="hidden content">เพิ่ม</div>
+                  <div class="visible content">
+                    <i class="plus icon ani-icon" style="margin-left: -0.5em;"></i>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <br>
-      <div class="ui grid center aligned">
-        <div class="sixteen wide column">
-          กระดาษทำการประเมินความเสี่ยงประสิทธิภาพการดำเนินงานเพื่อพิจารณาคัดเลือกแผนงาน / โครงการ
-          <br> ปีงบประมาณ พ.ศ. 2561
-          <br> กลุ่มตรวจสอบภายใน กรมสรรพสามิต
-        </div>
+    </div>
+
+    <div class="ui segment" style="padding: 0;" *ngIf="showData">
+      <div style="overflow: scroll;max-height: 84vh;">
+        <table id="tableData" class="ui small celled table" style="width: 120%">
+          <thead>
+            <tr style="text-align: center;">
+              <th rowspan="2">ลำดับ</th>
+              <th rowspan="2" style="width: 50%;">โครงการตามยุทธศาสตร์</th>
+              <th rowspan="2">หน่วยงาน</th>
+              <th rowspan="2">สถานะ</th>
+              <th colspan="2">วิเคราะห์</th>
+            </tr>
+            <tr style="text-align: center;">
+              <th style="border-left: 1px solid rgba(34,36,38,.1); width: 8%;">RL</th>
+              <th style="width: 8%;">แปลค่า</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>9. โครงการซ่อมบำรุงรักษา สอบเทียบ และจัดหาอะไหล่ระบบเครื่องมือวัดปริมาณน้ำสุราแช่ออนไลน์</td>
+              <td>กตท.</td>
+              <td>3</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>10. โครงการติดตั้งเครื่องพิมพ์โค๊ดและระบบตรวจสอบการเสียภาษีสุราแช่แบบใหม่</td>
+              <td>กตท.</td>
+              <td>3</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>15. โครงการตรวจสอบการส่งออกสินค้าในการกำกับดูแลของกรมสรรพสามิต</td>
+              <td>สตป.</td>
+              <td>3</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>50.โครงการเพิ่มศักยภาพงานด้านการตรวจพิสูจน์และจัดการของกลาง</td>
+              <td>สกม.</td>
+              <td>3</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>51.โครงการให้ความรู้เพื่อพัฒนาศักยภาพของเจ้าหน้าที่ในการดำเนินคดี</td>
+              <td>สกม.</td>
+              <td>3</td>
+              <td class="bg-red">3</td>
+              <td class="bg-red">สูง</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>2. โครงการปรับปรุงมาตรฐานการจัดเก็บภาษีเพื่อประสิทธิภาพการจัดเก็บภาษี</td>
+              <td>สผษ.</td>
+              <td>2</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>3. โครงการพัฒนาและปรับปรุงการบริหารการจัดเก็บภาษีสำหรับสุรา เบียร์ และเอทานอล ให้สอดคล้องกับร่างพระราชบัญญัติภาษีสรรพสามิตฉบับใหม่</td>
+              <td>สมฐ.1</td>
+              <td>2</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>4. โครงการ จัดกลุ่มสินค้าสารละลายประเภทไฮโดรคาร์บอน เพื่อรองรับระบบควบคุมสารสนเทศสารละลายไฮโดรคาร์บอน (Hydrocarbon
+                Solvent)
+              </td>
+              <td>สมฐ.2</td>
+              <td>2</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>7. โครงการแยกชนิดวัตถุดิบที่ใช้ทำไวน์โดยใช้เทคนิค NMR เพื่อการจัดเก็บภาษีที่ยั่งยืน</td>
+              <td>กวข.</td>
+              <td>2</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>8. โครงการพัฒนามาตรฐานการบริหารการจัดเก็บภาษีสรรพสามิตสินค้าน้ำมันและผลิตภัณฑ์น้ำมัน เพื่อรองรับกฎหมายใหม่</td>
+              <td>สมฐ.2</td>
+              <td>2</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>1. โครงการติดตามและวิเคราะห์ผลการจัดเก็บรายได้ภาษีสรรพสามิตเป็นรายสินค้าและรายเดือน</td>
+              <td>สผษ.</td>
+              <td>1</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>5. โครงการตรวจวิเคราะห์คุณภาพสุราเชิงรุกเพื่อการพัฒนาที่ยั่งยืน</td>
+              <td>กวข.</td>
+              <td>1</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>6. โครงการตรวจสอบเครื่องดื่มน้ำผลไม้และน้ำพืชผักเพื่อสังคมที่ดีและการจัดเก็บภาษีที่มีมาตรฐานโปร่งใสเป็นธรรม</td>
+              <td>กวข.</td>
+              <td>1</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td>11. โครงการป้องกันและปราบปรามผู้กระทำผิดกฎหมายสรรพสามิต</td>
+              <td>สตป.</td>
+              <td>1</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>15</td>
+              <td>13. โครงการบูรณาการตรวจสอบสินค้าน้ำมันเพื่อป้องกันการหลีกเลี่ยงภาษีสรรพสามิตอย่างยั่งยืน</td>
+              <td>กวข.</td>
+              <td>1</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
-      <div class="ui eight column grid">
-        <div class="column right aligned">
-          ปัจจัยเสี่ยง:
-        </div>
-
-        <div class="column" style="width: 25%;">
-          2. ประสิทธิภาพในการดำเนินงาน
-          <br> ผลการดำเนินงานสูงกว่าเป้าหมาย
-          <br> ผลการดำเนินงานเป็นไปตามเป้าหมาย
-          <br> ผลการดำเนินงานต่ำกว่าเป้าหมาย
-        </div>
-
-        <div class="column" style="width: 10%;">
-          &nbsp;
-          <br> เท่ากับ
-          <br> เท่ากับ
-          <br> เท่ากับ
-        </div>
-
-        <div class="column" style="width: 5%;">
-          &nbsp;
-          <br> 1
-          <br> 2
-          <br> 3
-        </div>
-
-        <div class="column right aligned" style="width: 10%;">
-          &nbsp;
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-        </div>
-
-        <div class="column" style="width: 5%;">
-          &nbsp;
-          <br> 1
-          <br> 2
-          <br> 3
-        </div>
-
-        <div class="column" style="width: 10%;">
-          &nbsp;
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-        </div>
-
-        <div class="column" style="width: 5%;">
-          &nbsp;
-          <br> ต่ำ
-          <br> กลาง
-          <br> สูง
-        </div>
-
-
-      </div>
-
-
-
-      <table id="tableData" class="ui small celled table">
-        <thead>
-          <tr style="text-align: center;">
-            <th rowspan="2">ลำดับ</th>
-            <th rowspan="2" style="width: 50%;">โครงการตามยุทธศาสตร์</th>
-            <th rowspan="2">หน่วยงาน</th>
-            <th rowspan="2">สถานะ</th>
-            <th colspan="2">วิเคราะห์</th>
-          </tr>
-          <tr style="text-align: center;">
-            <th style="border-left: 1px solid rgba(34,36,38,.1); width: 8%;">RL</th>
-            <th style="width: 8%;">แปลค่า</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>9. โครงการซ่อมบำรุงรักษา สอบเทียบ และจัดหาอะไหล่ระบบเครื่องมือวัดปริมาณน้ำสุราแช่ออนไลน์</td>
-            <td>กตท.</td>
-            <td>3</td>
-            <td class="bg-red">3</td>
-            <td class="bg-red">สูง</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>10. โครงการติดตั้งเครื่องพิมพ์โค๊ดและระบบตรวจสอบการเสียภาษีสุราแช่แบบใหม่</td>
-            <td>กตท.</td>
-            <td>3</td>
-            <td class="bg-red">3</td>
-            <td class="bg-red">สูง</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>15. โครงการตรวจสอบการส่งออกสินค้าในการกำกับดูแลของกรมสรรพสามิต</td>
-            <td>สตป.</td>
-            <td>3</td>
-            <td class="bg-red">3</td>
-            <td class="bg-red">สูง</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>50.โครงการเพิ่มศักยภาพงานด้านการตรวจพิสูจน์และจัดการของกลาง</td>
-            <td>สกม.</td>
-            <td>3</td>
-            <td class="bg-red">3</td>
-            <td class="bg-red">สูง</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>51.โครงการให้ความรู้เพื่อพัฒนาศักยภาพของเจ้าหน้าที่ในการดำเนินคดี</td>
-            <td>สกม.</td>
-            <td>3</td>
-            <td class="bg-red">3</td>
-            <td class="bg-red">สูง</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>2. โครงการปรับปรุงมาตรฐานการจัดเก็บภาษีเพื่อประสิทธิภาพการจัดเก็บภาษี</td>
-            <td>สผษ.</td>
-            <td>2</td>
-            <td class="bg-yellow">2</td>
-            <td class="bg-yellow">กลาง</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>3. โครงการพัฒนาและปรับปรุงการบริหารการจัดเก็บภาษีสำหรับสุรา เบียร์ และเอทานอล ให้สอดคล้องกับร่างพระราชบัญญัติภาษีสรรพสามิตฉบับใหม่</td>
-            <td>สมฐ.1</td>
-            <td>2</td>
-            <td class="bg-yellow">2</td>
-            <td class="bg-yellow">กลาง</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>4. โครงการ จัดกลุ่มสินค้าสารละลายประเภทไฮโดรคาร์บอน เพื่อรองรับระบบควบคุมสารสนเทศสารละลายไฮโดรคาร์บอน (Hydrocarbon
-              Solvent)
-            </td>
-            <td>สมฐ.2</td>
-            <td>2</td>
-            <td class="bg-yellow">2</td>
-            <td class="bg-yellow">กลาง</td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td>7. โครงการแยกชนิดวัตถุดิบที่ใช้ทำไวน์โดยใช้เทคนิค NMR เพื่อการจัดเก็บภาษีที่ยั่งยืน</td>
-            <td>กวข.</td>
-            <td>2</td>
-            <td class="bg-yellow">2</td>
-            <td class="bg-yellow">กลาง</td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td>8. โครงการพัฒนามาตรฐานการบริหารการจัดเก็บภาษีสรรพสามิตสินค้าน้ำมันและผลิตภัณฑ์น้ำมัน เพื่อรองรับกฎหมายใหม่</td>
-            <td>สมฐ.2</td>
-            <td>2</td>
-            <td class="bg-yellow">2</td>
-            <td class="bg-yellow">กลาง</td>
-          </tr>
-          <tr>
-            <td>11</td>
-            <td>1. โครงการติดตามและวิเคราะห์ผลการจัดเก็บรายได้ภาษีสรรพสามิตเป็นรายสินค้าและรายเดือน</td>
-            <td>สผษ.</td>
-            <td>1</td>
-            <td class="bg-green">1</td>
-            <td class="bg-green">ต่ำ</td>
-          </tr>
-          <tr>
-            <td>12</td>
-            <td>5. โครงการตรวจวิเคราะห์คุณภาพสุราเชิงรุกเพื่อการพัฒนาที่ยั่งยืน</td>
-            <td>กวข.</td>
-            <td>1</td>
-            <td class="bg-green">1</td>
-            <td class="bg-green">ต่ำ</td>
-          </tr>
-          <tr>
-            <td>13</td>
-            <td>6. โครงการตรวจสอบเครื่องดื่มน้ำผลไม้และน้ำพืชผักเพื่อสังคมที่ดีและการจัดเก็บภาษีที่มีมาตรฐานโปร่งใสเป็นธรรม</td>
-            <td>กวข.</td>
-            <td>1</td>
-            <td class="bg-green">1</td>
-            <td class="bg-green">ต่ำ</td>
-          </tr>
-          <tr>
-            <td>14</td>
-            <td>11. โครงการป้องกันและปราบปรามผู้กระทำผิดกฎหมายสรรพสามิต</td>
-            <td>สตป.</td>
-            <td>1</td>
-            <td class="bg-green">1</td>
-            <td class="bg-green">ต่ำ</td>
-          </tr>
-          <tr>
-            <td>15</td>
-            <td>13. โครงการบูรณาการตรวจสอบสินค้าน้ำมันเพื่อป้องกันการหลีกเลี่ยงภาษีสรรพสามิตอย่างยั่งยืน</td>
-            <td>กวข.</td>
-            <td>1</td>
-            <td class="bg-green">1</td>
-            <td class="bg-green">ต่ำ</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
 
     <br>
@@ -326,7 +365,7 @@
   <div class="content">
 
     <div class="ui form">
-     
+
       <table id="tableSetting" class="ui small celled table" style="width: 100%;">
         <thead>
           <tr class="center aligned">
