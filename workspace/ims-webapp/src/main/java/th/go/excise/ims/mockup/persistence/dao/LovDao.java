@@ -23,7 +23,7 @@ public class LovDao {
 	private JdbcTemplate JdbcTemplate;
 	private String sqlSelectTable = "SELECT * FROM SYS_LOV WHERE 1 = 1 ";
 
-	public List<Lov> queryLovByCriteria(Lov lov) {
+	public List<Lov> queryLovByCriteria(Lov lov , String orderBy) {
 		logger.info("queryLovByCriteria");
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlSelectTable);
@@ -42,7 +42,7 @@ public class LovDao {
 			}
 		}
 		
-		sql.append(" order by  VALUE2 ");
+		sql.append(" order by " + orderBy);
 		logger.info("SQL : " + sql.toString());
 		List<Lov> list = JdbcTemplate.query(sql.toString(), objList.toArray(), lovMappingRow);
 		return list;

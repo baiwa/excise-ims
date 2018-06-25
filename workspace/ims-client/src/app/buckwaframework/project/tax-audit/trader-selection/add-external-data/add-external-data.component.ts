@@ -53,7 +53,7 @@ export class AddExternalDataComponent implements OnInit {
         this.coordinates = data;
         var optionList = "<option value=''>เลือกพิกัด</option>";
         for (var i = 0; i < this.coordinates.length; i++) {
-          optionList += "<option value='" + this.coordinates[i] + "'>" + this.coordinates[i] + "</option>";
+          optionList += "<option value='" + this.coordinates[i].value1 + "'>" + this.coordinates[i].value1 + "</option>";
         }
         document.getElementById('coordinates').innerHTML = optionList;
 

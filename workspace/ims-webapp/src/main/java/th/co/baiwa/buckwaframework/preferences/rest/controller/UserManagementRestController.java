@@ -130,7 +130,7 @@ public class UserManagementRestController {
 	@ResponseBody
 	public List<SelectOptionValue> getSetorListByLov() {
 		List<SelectOptionValue> sectorList = new ArrayList<SelectOptionValue>();
-		List<Lov> lovList = listOfValueService.queryLovByCriteria(new Lov("SECTOR_VALUE"));
+		List<Lov> lovList = listOfValueService.queryLovByCriteria(new Lov("SECTOR_VALUE"),"VALUE2");
 		SelectOptionValue selectOption= null;
 		for (Lov listOfValue : lovList) {
 			selectOption = new SelectOptionValue();

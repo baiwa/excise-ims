@@ -13,6 +13,8 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.excise.ia.constant.DateConstant;
 import th.go.excise.ims.mockup.domain.DataTableRequest;
 import th.go.excise.ims.mockup.domain.MockupVo;
+import th.go.excise.ims.mockup.persistence.entity.sys.Lov;
+import th.go.excise.ims.mockup.service.ListOfValueService;
 import th.go.excise.ims.mockup.service.MockupService;
 import th.go.excise.ims.mockup.service.ta.PlanWorksheetHeaderService;
 
@@ -22,6 +24,9 @@ public class MockupController {
 
 	@Autowired
 	private MockupService mockupService;
+	
+	@Autowired
+	private ListOfValueService listOfValueService;
 	
 	@Autowired
 	private PlanWorksheetHeaderService planWorksheetHeaderService;	
@@ -56,8 +61,9 @@ public class MockupController {
 	
 	@PostMapping("/getCoordinates")
 	@ResponseBody
-	public List<String> getCoordinates() {
-		List<String> li = planWorksheetHeaderService.queryCoordinatesFromLOV();
+	public List<Lov> getCoordinates() {
+		Lov lov = new Lov("PRODUCT_TYPE");
+		List<Lov> li = listOfValueService.queryLovByCriteria(lov, "VALUE1");
 		return li;
 	}
 	

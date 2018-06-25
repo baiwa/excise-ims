@@ -14,7 +14,7 @@ public class ListOfValueService {
 	
 	@Autowired
 	private LovDao listOfValueDao;
-	public List<Lov> queryLovByCriteria(Lov lov){
-		return listOfValueDao.queryLovByCriteria(lov);
+	public List<Lov> queryLovByCriteria(Lov lov, String oderby){
+		return listOfValueDao.queryLovByCriteria(lov, oderby);
 	}
 }
