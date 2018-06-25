@@ -14,7 +14,6 @@ declare var $: any;
 export class AddExternalDataComponent implements OnInit {
 
   userManagementDt: any;
-  router: any;
   private listItem: any[];
   before: any;
   last: any;
@@ -35,7 +34,8 @@ export class AddExternalDataComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private ex: ExciseService
+    private ex: ExciseService,
+    private router: Router
   ) {
     this._num1 = new Array();
     this._num2 = new Array();
@@ -191,6 +191,26 @@ export class AddExternalDataComponent implements OnInit {
     console.log(json);
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
+    // on init table
+    $('#userManagementDt tbody tr').css({ "background-color": "white", "cursor": "pointer" });
+
+    // on click row
+    $('#userManagementDt tbody').on('click', 'tr', function () {
+      $("#exciseBtn").prop('disabled', false);
+      $('#userManagementDt tbody tr').css({ "background-color": "white", "cursor": "pointer" });
+      (<HTMLInputElement>document.getElementById("exciseId")).value = $(this).children().toArray()[1].innerHTML;
+      $(this).css("background-color", "rgb(197,217,241)");
+    });
+  }
+
+  linkToDetail() {
+    this.router.navigate(
+      ['/add-data'],
+      {queryParams: {
+          id: (<HTMLInputElement>document.getElementById("exciseId")).value,
+          num: this.analysNumber
+        }}
+    );
   }
 
   FlagN = () => {

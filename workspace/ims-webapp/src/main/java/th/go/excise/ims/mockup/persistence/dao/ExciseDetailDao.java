@@ -50,9 +50,9 @@ public class ExciseDetailDao {
     		vo.setExciseId(rs.getString("TA_EXCISE_ID"));
     		vo.setExciseTaxReceiveMonth(rs.getString("TA_EXCISE_TAX_RECEIVE_MONTH"));
     		vo.setExciseTaxReceiveAmount(rs.getString("TA_EXCISE_TAX_RECEIVE_AMOUNT"));
-    		vo.setExciseTaxReceiveAmount(rs.getString("CREATED_BY"));
+    		vo.setCreatedBy(rs.getString("CREATED_BY"));
     		vo.setCreatedDatetime(rs.getTimestamp("CREATED_DATETIME") != null ? rs.getTimestamp("CREATED_DATETIME").toLocalDateTime() : null);
-    		vo.setExciseTaxReceiveAmount(rs.getString("UPDATE_BY"));
+    		vo.setUpdateBy(rs.getString("UPDATE_BY"));
     		vo.setUpdateDatetime(rs.getTimestamp("UPDATE_DATETIME") != null ? rs.getTimestamp("UPDATE_DATETIME").toLocalDateTime() : null);
     		return vo;
     	}

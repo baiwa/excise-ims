@@ -46,7 +46,12 @@
                     <div class="fourteen wide field"></div>
                     <div class="two wide field">
                         <input type="hidden" id="exciseId" value="EX" />
-                        <button type="button" id="exciseBtn" style="margin-left: auto" class="ui mini primary button right floated" onclick="window.location='/#/add-data?id='+document.getElementById('exciseId').value+'&num=25610615-01-00330';">
+                        <button
+                            type="button"
+                            id="exciseBtn"
+                            style="margin-left: auto"
+                            class="ui mini primary button right floated"
+                            (click)="linkToDetail()">
                             <i class="add icon"></i>
                             เพิ่มข้อมูล
                         </button>
