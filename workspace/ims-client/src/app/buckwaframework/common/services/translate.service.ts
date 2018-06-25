@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Message } from '../models/message';
+import { AjaxService } from '.';
 
 @Injectable()
 export class TranslateService {
 
     private currentLang: string;
-    readonly url = 'ims-webapp/api/preferences/message';
+    readonly url = 'api/preferences/message';
     private headers = new Headers({'Content-Type': 'application/json'});
     private messages: Message[] = new Array();
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private ajax: AjaxService) {
         // load messages
         console.log('Load messages');
         this.getMessages().then(messages => this.messages = messages);
@@ -18,10 +19,10 @@ export class TranslateService {
 
     
     getMessages(): Promise<any> {
-        return this.http.get(this.url)
-            .toPromise()
-            .then(res => JSON.parse(res['_body']).data)
-            .catch(this.handleError);
+        return this.ajax
+        .get(this.url, null, null)
+        .then(res => JSON.parse(res['_body']).data)
+        .catch(this.handleError);
     }
 
     public use(lang: string): void {
