@@ -42,7 +42,7 @@ public class LovDao {
 			}
 		}
 		
-		sql.append(" order by  VALUE1 ");
+		sql.append(" order by  VALUE2 ");
 		logger.info("SQL : " + sql.toString());
 		List<Lov> list = JdbcTemplate.query(sql.toString(), objList.toArray(), lovMappingRow);
 		return list;
