@@ -151,7 +151,7 @@ export class AddExternalDataComponent implements OnInit {
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
     console.log(this.flag);
-    if(this.flag == 'undefined'){
+    if(this.flag != 'undefined'){
       json += ' "flag": "' + this.flag + '", ';
     }
     else{
