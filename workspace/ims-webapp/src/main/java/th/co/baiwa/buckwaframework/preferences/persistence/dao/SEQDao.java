@@ -14,7 +14,7 @@ public class SEQDao {
 	private JdbcTemplate jdbcTemplate;
 
 	public BigDecimal autoNumberRunningBySeqName(String seqName) {
-		String sql = "SELECT "+seqName+".nextval as SEQ FROM DUAL";
+		String sql = " SELECT "+seqName+".nextval as SEQ FROM DUAL ";
 		Map<String, Object> map = jdbcTemplate.queryForMap(sql);
 		BigDecimal analysNumber = map != null ? (BigDecimal) map.get("SEQ") : null;
 		return analysNumber;

@@ -22,7 +22,7 @@ import th.co.baiwa.buckwaframework.preferences.constant.UserManagementConstants;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.UserManagement;
 import th.co.baiwa.buckwaframework.preferences.persistence.mapper.UserManagementRowMapper;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.go.excise.ims.mockup.utils.OracleUtils;
+import th.co.baiwa.excise.utils.OracleUtils;
 
 @Transactional
 @Repository("userManagementDao")
@@ -185,7 +185,7 @@ public class UserManagementDao {
 			BigDecimal userRoleId = seqDao.autoNumberRunningBySeqName(ADM_USER_ROLE_SEQ);
 			commonJdbcDao.executeUpdate(sqlUserAdmRole.toString(), new Object[] {
 				userRoleId,
-				key,
+				userId,
 				UserManagementConstants.ROLE.USER,
 				"N",
 				"1",

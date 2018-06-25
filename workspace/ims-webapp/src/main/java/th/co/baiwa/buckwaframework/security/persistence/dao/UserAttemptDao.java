@@ -18,8 +18,6 @@ public class UserAttemptDao {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserAttemptDao.class);
 	
-	
-	
 	@Autowired
 	private CommonJdbcDao commonJdbcDao;
 	

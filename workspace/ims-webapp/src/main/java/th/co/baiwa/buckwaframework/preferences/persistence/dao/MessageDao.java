@@ -17,7 +17,7 @@ import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.mapper.MessageRowMapper;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.go.excise.ims.mockup.utils.OracleUtils;
+import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository("messageDao")
 public class MessageDao {

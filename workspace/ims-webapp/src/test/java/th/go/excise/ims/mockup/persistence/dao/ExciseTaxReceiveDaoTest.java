@@ -9,7 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import th.Application;
-import th.go.excise.ims.mockup.persistence.entity.ExciseTaxReceive;
+import th.co.baiwa.excise.persistence.dao.ExciseTaxReceiveDao;
+import th.co.baiwa.excise.persistence.entity.ExciseTaxReceive;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {Application.class})

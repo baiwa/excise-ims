@@ -24,9 +24,9 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.UserManagement;
 import th.co.baiwa.buckwaframework.preferences.service.UserManagementService;
-import th.go.excise.ims.mockup.persistence.entity.SelectOptionValue;
-import th.go.excise.ims.mockup.persistence.entity.sys.Lov;
-import th.go.excise.ims.mockup.service.ListOfValueService;
+import th.co.baiwa.excise.persistence.entity.SelectOptionValue;
+import th.co.baiwa.excise.persistence.entity.sys.Lov;
+import th.co.baiwa.excise.service.ListOfValueService;
 
 @RestController
 @RequestMapping("/api/preferences/userManagement")

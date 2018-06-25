@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -23,9 +25,11 @@ import th.co.baiwa.buckwaframework.security.model.UserDetails;
 @RestController
 @RequestMapping("/api/access-control/user-profile")
 public class UserProfileRestController {
+	private Logger logger = LoggerFactory.getLogger(UserProfileRestController.class);
 	
 	@GetMapping
 	public ResponseEntity<?> userProfile(Authentication authentication) {
+		logger.info("userProfile : "+ authentication.getName());
 		ResponseData<UserDetails> response = new ResponseData<>();
 		if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
 			UserDetails userDetail = (UserDetails) authentication.getPrincipal();
