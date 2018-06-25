@@ -12,6 +12,7 @@ public class RequestFilterMapping extends DataTableRequest{
 	private String flag;
 	private String indexFilter;
 	private String workShheetNumber;
+	private String productType;
 	
 	public String getAnalysNumber() {
 		return analysNumber;
@@ -60,6 +61,12 @@ public class RequestFilterMapping extends DataTableRequest{
 	}
 	public void setWorkShheetNumber(String workShheetNumber) {
 		this.workShheetNumber = workShheetNumber;
+	}
+	public String getProductType() {
+		return productType;
+	}
+	public void setProductType(String productType) {
+		this.productType = productType;
 	}
 	
 }

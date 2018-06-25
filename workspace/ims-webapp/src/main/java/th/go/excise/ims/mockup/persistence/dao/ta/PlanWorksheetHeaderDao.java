@@ -150,7 +150,11 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" select * from TA_PLAN_WORK_SHEET_HEADER H ");
 		sql.append(" where H.ANALYS_NUMBER = ? ");
 		valueList.add(vo.getAnalysNumber());
-
+		
+		if (BeanUtils.isNotEmpty(vo.getProductType())) {
+			sql.append(" AND H.PRODUCT_TYPE = ? ");
+			valueList.add(vo.getProductType());
+		}
 		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
@@ -214,6 +218,10 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" where H.ANALYS_NUMBER = ? ");
 		valueList.add(vo.getAnalysNumber());
 
+		if (BeanUtils.isNotEmpty(vo.getProductType())) {
+			sql.append(" AND H.PRODUCT_TYPE = ? ");
+			valueList.add(vo.getProductType());
+		}
 		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
