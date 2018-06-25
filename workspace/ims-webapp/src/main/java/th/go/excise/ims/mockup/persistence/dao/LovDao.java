@@ -21,7 +21,7 @@ public class LovDao {
 
 	@Autowired
 	private JdbcTemplate JdbcTemplate;
-	private String sqlSelectTable = "SELECT * FROM LIST_OF_VALUE WHERE 1 = 1 ";
+	private String sqlSelectTable = "SELECT * FROM SYS_LOV WHERE 1 = 1 ";
 
 	public List<Lov> queryLovByCriteria(Lov lov) {
 		logger.info("queryLovByCriteria");
@@ -41,6 +41,8 @@ public class LovDao {
 				objList.add(lov.getValue1());
 			}
 		}
+		
+		sql.append(" order by  VALUE1 ");
 		logger.info("SQL : " + sql.toString());
 		List<Lov> list = JdbcTemplate.query(sql.toString(), objList.toArray(), lovMappingRow);
 		return list;
