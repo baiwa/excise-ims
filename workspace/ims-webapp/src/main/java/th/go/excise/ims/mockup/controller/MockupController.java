@@ -54,4 +54,11 @@ public class MockupController {
 		return li;
 	}
 	
+	@PostMapping("/getCoordinates")
+	@ResponseBody
+	public List<String> getCoordinates() {
+		List<String> li = planWorksheetHeaderService.queryCoordinatesFromLOV();
+		return li;
+	}
+	
 }

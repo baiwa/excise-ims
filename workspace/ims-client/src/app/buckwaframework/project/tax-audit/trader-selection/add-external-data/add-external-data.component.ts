@@ -30,6 +30,7 @@ export class AddExternalDataComponent implements OnInit {
   analysNumber: any;
   exciseProductType: any;
   flag: any;
+  coordinates: any;
 
 
   constructor(
@@ -44,6 +45,21 @@ export class AddExternalDataComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    const URL = AjaxService.CONTEXT_PATH + "/working/test/getCoordinates";
+    $.post(URL,
+      function (data) {
+        console.log(data);
+        this.coordinates = data;
+        var optionList = "<option value=''>เลือกพิกัด</option>";
+        for (var i = 0; i < this.coordinates.length; i++) {
+          optionList += "<option value='" + this.coordinates[i] + "'>" + this.coordinates[i] + "</option>";
+        }
+        document.getElementById('coordinates').innerHTML = optionList;
+
+      }).fail(function () {
+        console.log("error");
+      });
   
     //call ExciseService
     var { before, last, from, month, currYear, prevYear } = this.ex.getformValues();
@@ -130,7 +146,7 @@ export class AddExternalDataComponent implements OnInit {
   }
   
   initDatatable(): void {
-    
+
     var d = new Date();
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
     console.log(URL);
@@ -150,13 +166,8 @@ export class AddExternalDataComponent implements OnInit {
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
-    console.log(this.flag);
-    if(this.flag != 'undefined'){
-      json += ' "flag": "' + this.flag + '", ';
-    }
-    else{
-      json += ' "flag": "N", ';
-    }
+    json += ' "flag": "' + (this.flag == undefined ? 'N': this.flag)  + '", ';
+    json += ' "productType": "' + (this.coordinates == undefined ? '': this.coordinates)  + '", ';
     json += ' "analysNumber": "' + this.analysNumber + '" ';
     json += ' } ';
     json += ' }, ';
@@ -221,6 +232,12 @@ export class AddExternalDataComponent implements OnInit {
   
   FlagNotN = () => {
     this.flag = 'NOT N';
+    this.userManagementDt.destroy();
+    this.initDatatable();
+  }
+
+  changeCoordinates = () => {
+    this.coordinates = (<HTMLInputElement>document.getElementById("coordinates")).value;
     this.userManagementDt.destroy();
     this.initDatatable();
   }

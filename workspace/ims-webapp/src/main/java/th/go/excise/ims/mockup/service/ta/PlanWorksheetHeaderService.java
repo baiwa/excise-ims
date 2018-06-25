@@ -298,4 +298,8 @@ public class PlanWorksheetHeaderService {
 		planWorksheetHeaderDao.updateStatusFlg(vo);
 	}
 	
+	public List<String> queryCoordinatesFromLOV() {
+		return planWorksheetHeaderDao.queryCoordinatesFromLOV();
+	}
+	
 }

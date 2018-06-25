@@ -362,5 +362,15 @@ public class PlanWorksheetHeaderDao {
 		}
 		
 	}
+	
+	public List<String> queryCoordinatesFromLOV() {
+		String sql = "select DISTINCT VALUE1 from SYS_LOV where TYPE = 'PRODUCT_TYPE' order by VALUE1";
+		List<String> coordinatesList = jdbcTemplate.query(sql, new RowMapper<String>() {
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
+		return coordinatesList;
+	}
 
 }
