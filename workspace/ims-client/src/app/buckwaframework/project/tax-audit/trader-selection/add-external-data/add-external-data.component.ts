@@ -31,12 +31,14 @@ export class AddExternalDataComponent implements OnInit {
   exciseProductType: any;
   flag: any;
   coordinates: any;
+  coordinatesArr: any;
 
 
   constructor(
     private route: ActivatedRoute,
     private ex: ExciseService,
-    private router: Router
+    private router: Router,
+    private ajax: AjaxService
   ) {
     this._num1 = new Array();
     this._num2 = new Array();
@@ -46,20 +48,10 @@ export class AddExternalDataComponent implements OnInit {
 
   ngOnInit() {
 
-    const URL = AjaxService.CONTEXT_PATH + "/working/test/getCoordinates";
-    $.post(URL,
-      function (data) {
-        console.log(data);
-        this.coordinates = data;
-        var optionList = "<option value=''>เลือกพิกัด</option>";
-        for (var i = 0; i < this.coordinates.length; i++) {
-          optionList += "<option value='" + this.coordinates[i].value1 + "'>" + this.coordinates[i].value1 + "</option>";
-        }
-        document.getElementById('coordinates').innerHTML = optionList;
-
-      }).fail(function () {
-        console.log("error");
-      });
+    const URL = "working/test/getCoordinates";
+    this.ajax.post(URL, {}, 
+      res => { this.coordinatesArr = res.json() }
+    );
   
     //call ExciseService
     var { before, last, from, month, currYear, prevYear } = this.ex.getformValues();

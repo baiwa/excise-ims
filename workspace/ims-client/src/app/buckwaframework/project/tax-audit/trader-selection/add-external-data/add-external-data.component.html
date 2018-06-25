@@ -77,7 +77,8 @@
                             <div class="sixteen wide field">
                                 <label style="width: 5em;">พิกัด</label>
                                 <select class="ui dropdown" name="coordinates" id="coordinates" (change)="changeCoordinates()">
-                                    <option></option>
+                                    <option value="">ทั้งหมด</option>
+                                    <option *ngFor="let list of coordinatesArr">{{list.value1}}</option>
                                 </select>
                             </div>
                         </div>

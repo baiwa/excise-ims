@@ -122,7 +122,7 @@ export class Int0911Component implements OnInit {
           var secondDate = new Date(nd2[2], nd2[1], nd2[0]);
           var rs = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
           $('#allowanceDate').attr('max', rs);
-          $('#rentDate').attr('max', rs);
+          $('#rentDate').attr('max', rs - 1);
         }
       }
     });
@@ -232,6 +232,18 @@ export class Int0911Component implements OnInit {
     data.travelCost = travelCost.value;
     data.otherCost = otherCost.value;
     data.note = note.value;
+
+    name.value = '';
+    lastName.value = '';
+    position.value = '';
+    category.value = '';
+    degree.value = '';
+    allowanceDate.value = '';
+    rentDate.value = '';
+    restType.value = '';
+    travelCost.value = '';
+    otherCost.value = '';
+    note.value = '';
 
     if (this.status === 'create') {
       this.detail.push(data);
