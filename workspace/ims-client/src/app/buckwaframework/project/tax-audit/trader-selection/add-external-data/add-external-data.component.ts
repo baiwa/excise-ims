@@ -1,33 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../../../../common/services/ajax.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router } from '@angular/router';
 import { ExciseService } from '../../../../common/services/excise.service';
-import { TextDateTH, digit } from '../../../../common/helper/datepicker';
-import { CurrencyPipe } from '@angular/common';
+import { TextDateTH } from '../../../../common/helper/datepicker';
 
-declare var jQuery: any;
 declare var $: any;
 @Component({
   selector: 'app-add-external-data',
   templateUrl: './add-external-data.component.html',
+  styleUrls: ['./add-external-data.component.css']
 })
 export class AddExternalDataComponent implements OnInit {
 
   userManagementDt: any;
-  private listItem: any[];
   before: any;
   last: any;
-  num1: any;
-  num2: any;
-  _num1: any;
-  _num2: any;
-  percent1: any;
-  percent2: any;
-  _percent1: any;
-  _percent2: any;
   month: any;
   from: any;
   analysNumber: any;
+  analysNumberArr: any;
   exciseProductType: any;
   flag: any;
   coordinates: any;
@@ -35,114 +26,107 @@ export class AddExternalDataComponent implements OnInit {
 
 
   constructor(
-    private route: ActivatedRoute,
     private ex: ExciseService,
     private router: Router,
     private ajax: AjaxService
   ) {
-    this._num1 = new Array();
-    this._num2 = new Array();
-    this._percent1 = new Array();
-    this._percent2 = new Array();
+    this.flag = '';
+    this.analysNumberArr = '';
   }
 
   ngOnInit() {
 
-    const URL = "working/test/getCoordinates";
-    this.ajax.post(URL, {}, 
-      res => { this.coordinatesArr = res.json() }
-    );
-  
-    //call ExciseService
-    var { before, last, from, month, currYear, prevYear } = this.ex.getformValues();
-    var { num1, num2, percent1, percent2, analysNumber } = this.ex.getformNumber();
+    if (this.ex.getformNumber().analysNumber !== undefined) {
 
-    //set values
-    this.before = before;
-    this.last = last;
-    this.from = from;
-    this.month = month;
-    this.num1 = num1;
-    this.num2 = num2;
-    this.percent1 = percent1;
-    this.percent2 = percent2;
-    this.analysNumber = analysNumber;
-    console.log("analysNumber: ", this.analysNumber);
-    
-    // for (var i = 0; i < this.num1.length; i++) {
-    //   if (this.num2[i] !== 0) {
-    //     this._num1.push(this.num1[i]);
-    //     this._num2.push(this.num2[i]);
-    //     this._percent1.push((this.percent1[i]+0.00));
-    //     this._percent2.push(this.percent2[i]);
-        
-    //   }
-    // }
+      const URL = "working/test/getCoordinates";
+      this.ajax.post(URL, {},
+        res => { this.coordinatesArr = res.json() }
+      );
 
-    //split function
-    var from_split = this.from.split("/");
+      //call ExciseService
+      var { before, last, from, month, currYear } = this.ex.getformValues();
+      var { analysNumber } = this.ex.getformNumber();
 
-    //default month & year
-    var month = from_split[0];
-    var year_before = from_split[1];
+      //set values
+      this.before = before;
+      this.last = last;
+      this.from = from;
+      this.month = month;
+      this.analysNumber = analysNumber;
 
-    var m = parseInt(month) + 1;
-    var mm = parseInt(this.month);
-    var yy = parseInt(year_before);
-    
-    var items: string[] = [];
-    for (var i = 1; i <= mm; i++) {
-      m = m - 1;
-      if (m == 0) {
-        m = 12;
-        yy = yy - 1;
+      //split function
+      var from_split = this.from.split("/");
+
+      //default month & year
+      var month = from_split[0];
+      var year_before = from_split[1];
+
+      var m = parseInt(month) + 1;
+      var mm = parseInt(this.month);
+      var yy = parseInt(year_before);
+
+      var items: string[] = [];
+      for (var i = 1; i <= mm; i++) {
+        m = m - 1;
+        if (m == 0) {
+          m = 12;
+          yy = yy - 1;
+        }
+        items.push('<th style="text-align: center !important">' + TextDateTH.monthsShort[m - 1] + ' ' + (yy + "").substr(2) + '</th>');
       }
-      items.push('<th style="text-align: center !important">' + TextDateTH.monthsShort[m - 1] + ' ' + (yy + "").substr(2) + '</th>');
 
+      var trHeaderColumn = "";
+      for (var i = items.length - 1; i >= 0; i--) {
+        trHeaderColumn += items[i];
+      }
+      $('#trDrinamic').html( '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> '
+        + '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> '
+        + '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> '
+        + '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> '
+        + '<th rowspan="2" style="text-align: center !important">พื้นที่</th> '
+        + '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> '
+        + '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> '
+        + '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> '
+        + '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> '
+        + '<th rowspan="2" style="text-align: center !important">ภาค</th> '
+        + '<th rowspan="2" style="text-align: center !important">พิกัด</th> '
+        + '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> '
+        + '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> '
+        + '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> '
+        + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนแรก</th> '
+        + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนหลัง </th> '
+        + '</tr>'
+        + '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' + this.month / 2 + ' เดือนแรก</th>'
+        + '<th style="text-align: center !important">' + this.month / 2 + ' เดือนหลัง </th>'
+        + '<th style="text-align: center !important">' + (currYear - 3) + '</th>'
+        + '<th style="text-align: center !important">' + (currYear - 2) + '</th>'
+        + '<th style="text-align: center !important">' + (currYear - 1) + '</th>'
+        + trHeaderColumn + '</tr>' );
+
+      this.initDatatable();
+    } else {
+      const coorUrl = "working/test/getCoordinates";
+      this.ajax.post(coorUrl, {},
+        res => { this.coordinatesArr = res.json() }
+      );
+      const analysUrl = 'working/test/getAnalysNumber';
+      this.ajax.post(analysUrl, {},
+        res => {
+          this.analysNumberArr = res.json();
+        }
+      ).then(() => {
+        this.directAccess(true);
+      });
     }
-
-    var trHeaderColumn = "";
-    for (var i = items.length - 1; i >= 0; i--) {
-      trHeaderColumn += items[i];
-    }
-    document.getElementById('trDrinamic').innerHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> '
-      + '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> '
-      + '<th rowspan="2" style="text-align: center !important">พื้นที่</th> '
-      + '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> '
-      + '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> '
-      + '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> '
-      + '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ภาค</th> '
-      + '<th rowspan="2" style="text-align: center !important">พิกัด</th> '
-      + '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> '
-      + '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> '
-      + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนแรก</th> '
-      + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนหลัง </th> '
-      + '</tr>'
-      + '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' + this.month / 2 + ' เดือนแรก</th>'
-      + '<th style="text-align: center !important">' + this.month / 2 + ' เดือนหลัง </th>'
-      + '<th style="text-align: center !important">' + (currYear - 3) + '</th>'
-      + '<th style="text-align: center !important">' + (currYear - 2) + '</th>'
-      + '<th style="text-align: center !important">' + (currYear - 1) + '</th>'
-      + trHeaderColumn + '</tr>';
-
-
-    this.initDatatable();
   }
 
   ngAfterViewInit() {
 
   }
-  
+
   initDatatable(): void {
 
-    var d = new Date();
-    const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
-    console.log(URL);
-    console.log(this.analysNumber);
+    const URL = AjaxService.CONTEXT_PATH + "filter/exise/list";
     var json = "";
     json += ' { "lengthChange": false, ';
     json += ' "searching": false, ';
@@ -158,8 +142,8 @@ export class AddExternalDataComponent implements OnInit {
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
-    json += ' "flag": "' + (this.flag == undefined ? 'N': this.flag)  + '", ';
-    json += ' "productType": "' + (this.coordinates == undefined ? '': this.coordinates)  + '", ';
+    json += ' "flag": "' + (this.flag == '' ? 'N' : this.flag) + '", ';
+    json += ' "productType": "' + (this.coordinates == undefined ? '' : this.coordinates) + '", ';
     json += ' "analysNumber": "' + this.analysNumber + '" ';
     json += ' } ';
     json += ' }, ';
@@ -182,7 +166,6 @@ export class AddExternalDataComponent implements OnInit {
     json += ' { "data": "registeredCapital" }, ';
     json += ' { "data": "status" }, ';
 
-   
     for (var i = 0; i < this.month; i++) {
       if (i != this.month - 1) {
         json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"}, ';
@@ -191,9 +174,9 @@ export class AddExternalDataComponent implements OnInit {
       }
     }
     json += '] } ';
-    console.log(json);
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
+
     // on init table
     $('#userManagementDt tbody tr').css({ "background-color": "white", "cursor": "pointer" });
 
@@ -201,7 +184,7 @@ export class AddExternalDataComponent implements OnInit {
     $('#userManagementDt tbody').on('click', 'tr', function () {
       $("#exciseBtn").prop('disabled', false);
       $('#userManagementDt tbody tr').css({ "background-color": "white", "cursor": "pointer" });
-      (<HTMLInputElement>document.getElementById("exciseId")).value = $(this).children().toArray()[1].innerHTML;
+      $('#exciseId').val($(this).children().toArray()[1].innerHTML);
       $(this).css("background-color", "rgb(197,217,241)");
     });
   }
@@ -209,10 +192,12 @@ export class AddExternalDataComponent implements OnInit {
   linkToDetail() {
     this.router.navigate(
       ['/add-data'],
-      {queryParams: {
-          id: (<HTMLInputElement>document.getElementById("exciseId")).value,
+      {
+        queryParams: {
+          id: $('#exciseId').val(),
           num: this.analysNumber
-        }}
+        }
+      }
     );
   }
 
@@ -221,17 +206,96 @@ export class AddExternalDataComponent implements OnInit {
     this.userManagementDt.destroy();
     this.initDatatable();
   }
-  
+
   FlagNotN = () => {
     this.flag = 'NOT N';
     this.userManagementDt.destroy();
     this.initDatatable();
   }
 
+  selectAnalysNumbers = () => {
+    this.userManagementDt.destroy();
+    this.directAccess();
+  }
+
   changeCoordinates = () => {
-    this.coordinates = (<HTMLInputElement>document.getElementById("coordinates")).value;
+    this.coordinates = $('#coordinates').val();
     this.userManagementDt.destroy();
     this.initDatatable();
+  }
+
+  directAccess = (withOut?: any) => {
+    const headerUrl = AjaxService.CONTEXT_PATH + 'filter/exise/getStartEndDate';
+    let analysNumber: any;
+    if (withOut) {
+      analysNumber = this.analysNumberArr[0];
+      this.analysNumber = analysNumber;
+    } else {
+      analysNumber = this.analysNumber;
+    }
+    $.post(headerUrl, { analysNumber: analysNumber },
+      res => {
+        this.before = res[0];
+        this.last = res[1];
+        this.from = res[2];
+        this.month = res[3];
+
+        var currDate = new Date();
+        var currYear = currDate.getFullYear() + 543;
+
+        //split function
+        var from_split: any = this.from.split("/");
+
+        //default month & year
+        var month = from_split[0];
+        var year_before = from_split[1];
+
+        var m = parseInt(month) + 1;
+        var mm = parseInt(this.month);
+        var yy = parseInt(year_before);
+
+        var items: string[] = [];
+        for (var i = 1; i <= mm; i++) {
+          m = m - 1;
+          if (m == 0) {
+            m = 12;
+            yy = yy - 1;
+          }
+          items.push('<th style="text-align: center !important">' + TextDateTH.monthsShort[m - 1] + ' ' + (yy + "").substr(2) + '</th>');
+        }
+
+        var trHeaderColumn = "";
+        for (var i = items.length - 1; i >= 0; i--) {
+          trHeaderColumn += items[i];
+        }
+        $('#trDrinamic').html( '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> '
+          + '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> '
+          + '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> '
+          + '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> '
+          + '<th rowspan="2" style="text-align: center !important">พื้นที่</th> '
+          + '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> '
+          + '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> '
+          + '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> '
+          + '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> '
+          + '<th rowspan="2" style="text-align: center !important">ภาค</th> '
+          + '<th rowspan="2" style="text-align: center !important">พิกัด</th> '
+          + '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> '
+          + '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> '
+          + '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> '
+          + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนแรก</th> '
+          + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนหลัง </th> '
+          + '</tr>'
+          + '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' + this.month / 2 + ' เดือนแรก</th>'
+          + '<th style="text-align: center !important">' + this.month / 2 + ' เดือนหลัง </th>'
+          + '<th style="text-align: center !important">' + (currYear - 3) + '</th>'
+          + '<th style="text-align: center !important">' + (currYear - 2) + '</th>'
+          + '<th style="text-align: center !important">' + (currYear - 1) + '</th>'
+          + trHeaderColumn + '</tr>' );
+
+        this.initDatatable();
+        return res;
+      }
+    );
   }
 
 }
