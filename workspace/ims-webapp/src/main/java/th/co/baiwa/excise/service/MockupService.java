@@ -15,6 +15,7 @@ import th.co.baiwa.excise.persistence.dao.ExciseRegisttionNumberDao;
 import th.co.baiwa.excise.persistence.dao.ExciseTaxReceiveDao;
 import th.co.baiwa.excise.persistence.entity.ExciseRegistartionNumber;
 import th.co.baiwa.excise.persistence.entity.ExciseTaxReceive;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class MockupService {
@@ -32,11 +33,14 @@ public class MockupService {
 
 		List<ExciseTaxReceive> taxReciveList = null;
 		MockupVo vo = null;
-		List<MockupVo> mockupVoList = new ArrayList<>();
-		List<String> monthNameList = DateConstant.startBackDate(startBackDate, month);
+		List<MockupVo> mockupVoList = new ArrayList<MockupVo>();
+		List<String> monthNameList = exciseTaxReceiveDao.queryMonthShotName(startBackDate, month);
+//		if(BeanUtils.isNotEmpty(monthNameList)) {
+//			DateConstant.sortMonthShotList(monthNameList);
+//		}
 		for (ExciseRegistartionNumber registartionNumber : regisNumberList) {
 
-			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(registartionNumber.getExciseId(), monthNameList);
+			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(registartionNumber.getExciseId(),startBackDate, month);
 			int count = 0;
 			int count2 = 0;
 

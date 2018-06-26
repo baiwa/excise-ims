@@ -17,4 +17,8 @@ public class ListOfValueService {
 	public List<Lov> queryLovByCriteria(Lov lov, String oderby){
 		return listOfValueDao.queryLovByCriteria(lov, oderby);
 	}
+	
+	public List<String> queryLovTypeList() {
+		return listOfValueDao.queryLovTypeList();
+	}
 }

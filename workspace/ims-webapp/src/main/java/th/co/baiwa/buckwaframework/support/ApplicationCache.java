@@ -1,5 +1,6 @@
 package th.co.baiwa.buckwaframework.support;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,9 @@ import th.co.baiwa.buckwaframework.preferences.persistence.dao.ParameterInfoDao;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterGroup;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
+import th.co.baiwa.excise.persistence.entity.sys.Lov;
+import th.co.baiwa.excise.service.ListOfValueService;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 public class ApplicationCache {
 	
@@ -25,6 +29,7 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<Long, ParameterInfo> PARAMETER_INFO_MAP = new ConcurrentHashMap<Long, ParameterInfo>();
 	private static final ConcurrentHashMap<String, Message> MESSAGE_MAP = new ConcurrentHashMap<String, Message>();
 	private static final ConcurrentHashMap<String, Object> COMMON_CACHE = new ConcurrentHashMap<String, Object>();
+	private static final ConcurrentHashMap<String, List<Lov>> LOV_GROUP_VALUE = new ConcurrentHashMap<String, List<Lov>>();
 	
 	@Autowired
 	private ParameterGroupDao parameterGroupDao;
@@ -34,6 +39,9 @@ public class ApplicationCache {
 	
 	@Autowired
 	private MessageDao messageDao;
+	
+	@Autowired
+	private ListOfValueService listOfValueService;
 	
 	
 	/********************* Method for Get Cache - Start *********************/
@@ -51,6 +59,12 @@ public class ApplicationCache {
 	public static ParameterInfo getParameterInfoByCode(String paramGroupCode, String paramInfoCode) {
 		return PARAMETER_GROUP_MAP.get(paramGroupCode).getParameterInfoCodeMap().get(paramInfoCode);
 	}
+	
+	public static List<Lov> getListOfValueByValueType(String lovType) {
+		return LOV_GROUP_VALUE.get(lovType);
+	}
+	
+	
 	
 	static final class ParameterGroupWrapper {
 		
@@ -119,6 +133,7 @@ public class ApplicationCache {
 		loadMessage();
 		
 		//loadCommonCache();
+		loadLov();
 		
 		logger.info("ApplicationCache Reloaded");
 	}
@@ -145,6 +160,8 @@ public class ApplicationCache {
 		logger.info("load ParamterGroup-Info loaded [" + PARAMETER_GROUP_MAP.size() + "-" + PARAMETER_INFO_MAP.size() + "]");
 	}
 	
+	
+	
 	private void loadMessage() {
 		logger.info("load Message loading...");
 		
@@ -166,5 +183,19 @@ public class ApplicationCache {
 //		
 //		logger.info("load CommonCache loaded");
 //	}
+	
+	private void loadLov() {
+		logger.info("load List Of value loading...");
+		LOV_GROUP_VALUE.clear();
+		List<Lov> lovList = null;
+		List<String> lovTypeList = listOfValueService.queryLovTypeList();
+		for (String type : lovTypeList) {
+			lovList = new ArrayList<Lov>();
+			lovList = listOfValueService.queryLovByCriteria(new Lov(type), "");
+			if(BeanUtils.isNotEmpty(lovList)) {
+				LOV_GROUP_VALUE.put(type, lovList);
+			}
+		}
+	}
 	
 }

@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.persistence.entity.sys.Lov;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Repository
 public class LovDao {
@@ -20,7 +21,7 @@ public class LovDao {
 	private Logger logger = LoggerFactory.getLogger(LovDao.class);
 
 	@Autowired
-	private JdbcTemplate JdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 	private String sqlSelectTable = "SELECT * FROM SYS_LOV WHERE 1 = 1 ";
 
 	public List<Lov> queryLovByCriteria(Lov lov , String orderBy) {
@@ -42,9 +43,11 @@ public class LovDao {
 			}
 		}
 		
-		sql.append(" order by " + orderBy);
+		if(BeanUtils.isNotEmpty(orderBy)) {
+			sql.append(" order by " + orderBy);
+		}
 		logger.info("SQL : " + sql.toString());
-		List<Lov> list = JdbcTemplate.query(sql.toString(), objList.toArray(), lovMappingRow);
+		List<Lov> list = jdbcTemplate.query(sql.toString(), objList.toArray(), lovMappingRow);
 		return list;
 	}
 
@@ -74,5 +77,17 @@ public class LovDao {
 		}
 
 	};
+	
+	
+	public List<String> queryLovTypeList() {
+		logger.info("queryLovTypeList");
+		String sql = "SELECT DISTINCT L.TYPE FROM SYS_LOV L";
+		List<String> lovList = jdbcTemplate.query(sql, new RowMapper<String>() {
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
+		return lovList;
+	}
 
 }

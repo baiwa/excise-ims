@@ -69,8 +69,7 @@ public class PlanWorksheetHeaderService {
 			planWorksheetHeader.setExciseOwnerArea(exciseRegistartionNumber.getExciseArea());
 			planWorksheetHeader.setProductType(exciseRegistartionNumber.getTaexciseProductType());
 			planWorksheetHeader.setExciseOwnerArea1(exciseRegistartionNumber.getTaexciseSectorArea());
-			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(
-					exciseRegistartionNumber.getExciseId(), monthNameList);
+			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(exciseRegistartionNumber.getExciseId(), startBackDate, month);
 			BigDecimal totalAmount = new BigDecimal(0);
 			int countReciveMonth = 0;
 			int firstMonth = 0;
@@ -279,12 +278,12 @@ public class PlanWorksheetHeaderService {
         String endMonthDate = valueList.get(valueList.size()-1);
         String splitStart[] = startMonthDate.split(" ");
         String splitEnd[] = endMonthDate.split(" ");
-        startMonthDate = DateConstant.MONTH_NAMES[Arrays.asList(DateConstant.MONTH_SHOT_NAMES).indexOf(splitStart[0])]+" 25"+splitStart[1];
-        endMonthDate = DateConstant.MONTH_NAMES[Arrays.asList(DateConstant.MONTH_SHOT_NAMES).indexOf(splitEnd[0])]+" 25"+splitEnd[1];
+        startMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitStart[0])]+" 25"+splitStart[1];
+        endMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitEnd[0])]+" 25"+splitEnd[1];
         valueList = new ArrayList<String>();
         valueList.add(startMonthDate);
         valueList.add(endMonthDate);
-        String fromMonth = (Arrays.asList(DateConstant.MONTH_SHOT_NAMES).indexOf(splitEnd[0])+1)+"";
+        String fromMonth = (Arrays.asList(DateConstant.monthShotName()).indexOf(splitEnd[0])+1)+"";
         if(fromMonth.length() == 1) {
         	fromMonth = "0"+fromMonth;
         }

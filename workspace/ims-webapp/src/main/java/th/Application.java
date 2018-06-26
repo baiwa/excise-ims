@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 @SpringBootApplication(  exclude = {
 	HibernateJpaAutoConfiguration.class,
@@ -21,5 +23,13 @@ public class Application extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure (SpringApplicationBuilder application) {
 		return application.sources(Application.class);
 	}
+	
+	@Bean
+    CharacterEncodingFilter characterEncodingFilter() {
+      CharacterEncodingFilter filter = new CharacterEncodingFilter();
+      filter.setEncoding("UTF-8");
+      filter.setForceEncoding(true);
+      return filter;
+    }
 	
 }

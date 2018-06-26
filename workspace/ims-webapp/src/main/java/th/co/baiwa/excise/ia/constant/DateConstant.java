@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,11 +12,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.persistence.entity.sys.Lov;
+
 public class DateConstant {
 
 	public static final Locale LOCAL_TH = new Locale("th", "TH");
-	public static final String[] MONTH_SHOT_NAMES = { "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.","ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค." };
-	public static final String[] MONTH_NAMES = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
+//	public static final String[] MONTH_SHOT_NAMES = { "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.","ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค." };
+//	public static final String[] MONTH_NAMES = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
 	public static final String YYYYMMDD = "yyyyMMdd";
 	
 	public static void main(String[] args) {
@@ -31,7 +33,7 @@ public class DateConstant {
 		calendar.add(Calendar.MONTH, -(backDate));
 		for (int i = 0; i < backDate; i++) {
 			Date initTime = calendar.getTime();
-			monthList.add(MONTH_SHOT_NAMES[initTime.getMonth()] + " " + checkYearThai(initTime));
+			monthList.add(monthShotName()[initTime.getMonth()] + " " + checkYearThai(initTime));
 			calendar.add(Calendar.MONTH, 1);
 		}
 		return monthList;
@@ -42,7 +44,7 @@ public class DateConstant {
 		Map<Integer, String> mapping = new HashMap<Integer, String>();
 		for (String month : monthNameList) {
 			String[] split = month.split(" ");
-			String monthNumber = (Arrays.asList(MONTH_SHOT_NAMES).indexOf(split[0])+1)+"";
+			String monthNumber = (Arrays.asList(monthShotName()).indexOf(split[0])+1)+"";
 			if(monthNumber.length() == 1) {
 				monthNumber = "0"+monthNumber;
 			}
@@ -57,6 +59,24 @@ public class DateConstant {
 			//System.out.println(mapping.get(integer));
 		}
 		return monthListReturn;
+	}
+	
+	public static String[] monthShotName() {
+		List<String> valueList = new ArrayList<String>();
+		List<Lov> lovList = ApplicationCache.getListOfValueByValueType("MONTH_SHOT_NAMES");
+		for (Lov lov : lovList) {
+			valueList.add(lov.getValue1());
+		}
+		return valueList.toArray(new String[0]);
+	}
+	public static String[] monthName() {
+		List<String> valueList = new ArrayList<String>();
+		List<Lov> lovList = ApplicationCache.getListOfValueByValueType("MONTH_NAMES");
+		for (Lov lov : lovList) {
+			valueList.add(lov.getValue1());
+		}
+		
+		return valueList.toArray(new String[0]);
 	}
 	
 
