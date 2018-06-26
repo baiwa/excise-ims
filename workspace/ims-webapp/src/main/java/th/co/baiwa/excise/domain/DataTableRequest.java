@@ -8,6 +8,7 @@ public class DataTableRequest {
 	private Long draw;
 	private String startBackDate;
 	private String exciseProductType;
+	private String paging;
 	
 	
 	public String getExciseProductType() {
@@ -46,7 +47,12 @@ public class DataTableRequest {
 	public void setStartBackDate(String startBackDate) {
 		this.startBackDate = startBackDate;
 	}
-	
+	public String getPaging() {
+		return paging;
+	}
+	public void setPaging(String paging) {
+		this.paging = paging;
+	}
 	
 	
 }

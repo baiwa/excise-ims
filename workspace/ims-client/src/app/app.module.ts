@@ -204,6 +204,7 @@ import { Int091Component } from './buckwaframework/project/internal-audit/int09/
 import { Int092Component } from './buckwaframework/project/internal-audit/int09/int09-2/int09-2.component';
 import { AddExternalDataComponent } from './buckwaframework/project/tax-audit/trader-selection/add-external-data/add-external-data.component';
 import { Int0911Component } from './buckwaframework/project/internal-audit/int09/int09-1-1/int09-1-1.component';
+import { SendLineUserComponent } from './buckwaframework/project/tax-audit/trader-selection/add-external-data/send-line-user/send-line-user.component';
 
 import { Mgc011Component } from './buckwaframework/project/management-control/mgc01/mgc01-1/mgc01-1.component';
 import { Mgc012Component } from './buckwaframework/project/management-control/mgc01/mgc01-2/mgc01-2.component';
@@ -408,7 +409,8 @@ import { Mgc023Component } from './buckwaframework/project/management-control/mg
         MgReportResultComponent,
         Mgc021Component,
         Mgc022Component,
-        Mgc023Component
+        Mgc023Component,
+        SendLineUserComponent
       
     
        

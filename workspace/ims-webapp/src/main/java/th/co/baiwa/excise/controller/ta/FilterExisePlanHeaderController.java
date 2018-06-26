@@ -46,5 +46,13 @@ public class FilterExisePlanHeaderController {
 		logger.debug("vo.getNum1() : "+vo.getNum1());
 		planWorksheetHeaderService.updateStatusFlg(vo);
 	}
+	
+	@PostMapping("/listFullDataNoPaging")
+	@ResponseBody
+	public ResponseDataTable<PlanWorksheetHeaderDetail> listFullData(@ModelAttribute RequestFilterMapping vo) {
+		logger.debug("analysNumber : "+vo.getAnalysNumber());
+		System.out.println(vo.getAnalysNumber());
+		return planWorksheetHeaderService.queryPlanWorksheetHeaderDetil(vo);
+	}
 
 }

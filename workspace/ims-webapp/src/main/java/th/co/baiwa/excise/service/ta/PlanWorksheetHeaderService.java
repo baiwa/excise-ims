@@ -27,6 +27,7 @@ import th.co.baiwa.excise.persistence.dao.ta.PlanWorksheetDetailDao;
 import th.co.baiwa.excise.persistence.dao.ta.PlanWorksheetHeaderDao;
 import th.co.baiwa.excise.persistence.entity.ExciseRegistartionNumber;
 import th.co.baiwa.excise.persistence.entity.ExciseTaxReceive;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class PlanWorksheetHeaderService {
@@ -157,8 +158,12 @@ public class PlanWorksheetHeaderService {
 	}
 
 	public ResponseDataTable<PlanWorksheetHeaderDetail> queryPlanWorksheetHeaderDetil(RequestFilterMapping vo) {
-
-		List<PlanWorksheetHeader> planWorksheetHeaderList = planWorksheetHeaderDao.queryPlanWorksheetHeader(vo);
+		List<PlanWorksheetHeader> planWorksheetHeaderList;
+		if(BeanUtils.isEmpty(vo.getPaging()) || new Boolean(vo.getPaging())) {
+			planWorksheetHeaderList = planWorksheetHeaderDao.queryPlanWorksheetHeader(vo);
+		}else {
+			planWorksheetHeaderList = planWorksheetHeaderDao.queryPlanWorksheetHeaderFullDataNoPaging(vo);
+		}
 		List<PlanWorksheetHeaderDetail> PlanWorksheetHeaderDetailList = new ArrayList<PlanWorksheetHeaderDetail>();
 		List<PlanWorksheetDetail> planDetailList = new ArrayList<PlanWorksheetDetail>();
 		PlanWorksheetHeaderDetail planShow = new PlanWorksheetHeaderDetail();

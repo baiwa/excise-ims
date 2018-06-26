@@ -182,6 +182,7 @@ import { ReportTaxComponent } from '../../project/management-control/reports/rep
 import { ReportIntComponent } from '../../project/management-control/reports/report-int/report-int.component';
 import { ReportOutComponent } from '../../project/management-control/reports/report-out/report-out.component';
 import { ReportOptComponent } from '../../project/management-control/reports/report-opt/report-opt.component';
+import { SendLineUserComponent } from '../../project/tax-audit/trader-selection/add-external-data/send-line-user/send-line-user.component';
 
 
 
@@ -365,6 +366,7 @@ const routes: Routes = [
     { path: 'ope05-6', component: Ope056Component, canActivate: [AuthGuard] },
     { path: 'ope05-7', component: Ope057Component, canActivate: [AuthGuard] },
     { path: 'add-external-data', component: AddExternalDataComponent, canActivate: [AuthGuard] },
+    { path: 'send-line-user', component: SendLineUserComponent, canActivate: [AuthGuard] },
     
     { path: 'report-tax', component: ReportTaxComponent, canActivate: [AuthGuard]},
     { path: 'report-int', component: ReportIntComponent, canActivate: [AuthGuard]},
