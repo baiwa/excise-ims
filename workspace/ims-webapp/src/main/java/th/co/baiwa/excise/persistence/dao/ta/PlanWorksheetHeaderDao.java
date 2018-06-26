@@ -104,6 +104,7 @@ public class PlanWorksheetHeaderDao {
 		public PlanWorksheetHeader mapRow(ResultSet rs, int arg1) throws SQLException {
 			PlanWorksheetHeader header = new PlanWorksheetHeader();
 			header.setWorksheetHeaderId(rs.getBigDecimal("WORK_SHEET_HEADER_ID"));
+			header.setWorkSheetNumber(rs.getString("WORK_SHEET_NUMBER"));
 			header.setAnalysNumber(rs.getString("ANALYS_NUMBER"));
 			header.setExciseId(rs.getString("EXCISE_ID"));
 			header.setCompanyName(rs.getString("COMPANY_NAME"));
@@ -141,6 +142,18 @@ public class PlanWorksheetHeaderDao {
 				OracleUtils.limitForDataTable(sql, start, length), valueList.toArray(), fieldMappingPlanWorksheetVo);
 		return planWorksheetHeaderList;
 
+	}
+	
+	public String queryWorkSheetNumber(String analysNumber) {
+		String sql = " SELECT DISTINCT H.WORK_SHEET_NUMBER FROM TA_PLAN_WORK_SHEET_HEADER H WHERE H.WORK_SHEET_NUMBER IS NOT NULL AND H.ANALYS_NUMBER = ? ";
+		List<Object> valueList = new ArrayList<Object>();
+		valueList.add(analysNumber);
+		List<String> result = jdbcTemplate.query(sql, valueList.toArray(), new RowMapper<String>() {
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
+		return ( result == null || result.size() == 0 ) ? "" : result.get(0);
 	}
 
 	public List<PlanWorksheetHeader> queryPlanWorksheetHeader(RequestFilterMapping vo) {
@@ -403,8 +416,9 @@ public class PlanWorksheetHeaderDao {
 	}
 	
 	public void updateStatusFlg(RequestFilterMapping vo) {
+		logger.info("AnalysNumber: ", vo.getAnalysNumber());
 		StringBuilder sql = new StringBuilder("UPDATE TA_PLAN_WORK_SHEET_HEADER SET FLAG = ? ,WORK_SHEET_NUMBER = ? ");
-		sql.append(" Where ");
+		sql.append(" Where ANALYS_NUMBER = ? AND ");
 		sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2())&& BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
 			String[] monthFrom = vo.getNum1().split(",");
@@ -416,6 +430,7 @@ public class PlanWorksheetHeaderDao {
 					List<Object> objList = new ArrayList<Object>();
 					objList.add("N"+(i+1));
 					objList.add(vo.getWorkShheetNumber());
+					objList.add(vo.getAnalysNumber());
 					objList.add(monthFrom[i]);
 					objList.add(monthTo[i]);
 					objList.add(percentFrom[i]);

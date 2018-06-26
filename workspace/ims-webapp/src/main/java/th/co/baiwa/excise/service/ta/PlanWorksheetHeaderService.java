@@ -295,6 +295,10 @@ public class PlanWorksheetHeaderService {
 		return valueList;
 	}
 	
+	public String getWorkSheetNumber(String analysNumber) {
+		return planWorksheetHeaderDao.queryWorkSheetNumber(analysNumber);
+	}
+	
 	
 	public void updateStatusFlg(RequestFilterMapping vo) {
 		String workSheetNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-02-"

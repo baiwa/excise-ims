@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 public class PlanWorksheetHeader {
 
 	private BigDecimal worksheetHeaderId;
+	private String workSheetNumber;
 	private String analysNumber;
 	private String exciseId;
 	private String companyName;
@@ -149,6 +150,12 @@ public class PlanWorksheetHeader {
 	}
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+	public String getWorkSheetNumber() {
+		return workSheetNumber;
+	}
+	public void setWorkSheetNumber(String workSheetNumber) {
+		this.workSheetNumber = workSheetNumber;
 	}
 	
 	
