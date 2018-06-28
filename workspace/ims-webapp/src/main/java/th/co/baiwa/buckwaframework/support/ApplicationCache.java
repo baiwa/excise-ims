@@ -14,11 +14,11 @@ import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants.MESSAGE
 import th.co.baiwa.buckwaframework.preferences.persistence.dao.MessageDao;
 import th.co.baiwa.buckwaframework.preferences.persistence.dao.ParameterGroupDao;
 import th.co.baiwa.buckwaframework.preferences.persistence.dao.ParameterInfoDao;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterGroup;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
-import th.co.baiwa.excise.persistence.entity.sys.Lov;
-import th.co.baiwa.excise.service.ListOfValueService;
+import th.co.baiwa.excise.ta.service.ListOfValueService;
 import th.co.baiwa.excise.utils.BeanUtils;
 
 public class ApplicationCache {

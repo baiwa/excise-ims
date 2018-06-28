@@ -7,6 +7,8 @@ import { AuthGuard } from '../services/auth-guard.service';
 // pages
 import { AddExternalDataComponent } from '../../project/tax-audit/trader-selection/add-external-data/add-external-data.component';
 import { SendLineUserComponent } from '../../project/tax-audit/trader-selection/add-external-data/send-line-user/send-line-user.component';
+import { Int021Component } from '../../project/internal-audit/int02/int02-1/int02-1.component';
+import { Int022Component } from '../../project/internal-audit/int02/int02-2/int02-2.component';
 
 const routes: Routes = [
 
@@ -56,6 +58,10 @@ const routes: Routes = [
     { path: 'cop05', loadChildren: '../../project/check-operation/cop05/cop05.module#Cop05Module' },
     
     { path: 'int01', loadChildren: '../../project/internal-audit/int01/int01.module#Int01Module' },
+
+    { path: 'int02-1', component: Int021Component, canActivate: [AuthGuard] },
+    { path: 'int02-2', component: Int022Component, canActivate: [AuthGuard] },
+    
     { path: 'int05', loadChildren: '../../project/internal-audit/int05/int05.module#Int05Module' },
     { path: 'int06', loadChildren: '../../project/internal-audit/int06/int06.module#Int06Module' },
     { path: 'int07', loadChildren: '../../project/internal-audit/int07/int07.module#Int07Module' },
