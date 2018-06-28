@@ -1,23 +1,18 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
-import { Int0151Component } from './int01-5-1/int01-5-1.component';
+import { Int0151Component } from "./int01-5-1/int01-5-1.component";
 
-import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from '../../../../common/services';
+import { Routes, RouterModule } from "@angular/router";
+import { AuthGuard } from "../../../../common/services";
 
 const routes: Routes = [
-    { path: '', component: Int0151Component, canActivate: [AuthGuard] }
+  { path: "1", component: Int0151Component, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-    CommonModule
-  ],
-  declarations: [
-    Int0151Component
-  ],
+  imports: [RouterModule.forChild(routes), CommonModule],
+  declarations: [Int0151Component],
   exports: [RouterModule]
 })
-export class Int015Module { }
+export class Int015Module {}

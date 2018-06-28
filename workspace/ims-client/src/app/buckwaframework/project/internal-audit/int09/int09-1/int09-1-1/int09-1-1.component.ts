@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { TravelCostHeader, TravelCostDetail } from '../../../../../common/models';
-import { AjaxService } from '../../../../../common/services';
-import { Prices } from '../../../../../common/helper/travel';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
+import { Component, OnInit } from "@angular/core";
+import {
+  TravelCostHeader,
+  TravelCostDetail
+} from "../../../../../common/models";
+import { AjaxService } from "../../../../../common/services";
+import { Prices } from "../../../../../common/helper/travel";
+import { Router, ActivatedRoute, Params } from "@angular/router";
+import { TextDateTH, formatter } from "../../../../../common/helper/datepicker";
 declare var $: any;
 @Component({
-  selector: 'app-int09-1-1',
-  templateUrl: './int09-1-1.component.html',
-  styleUrls: ['./int09-1-1.component.css']
+  selector: "app-int09-1-1",
+  templateUrl: "./int09-1-1.component.html",
+  styleUrls: ["./int09-1-1.component.css"]
 })
 export class Int0911Component implements OnInit {
-
   public status: string;
   public id: number;
 
@@ -30,66 +32,39 @@ export class Int0911Component implements OnInit {
   selectedTop: string;
   sent: boolean;
 
-
-
-  constructor(private ajax: AjaxService ,  private router: Router) {
-  
-    this.status = 'create';
+  constructor(private ajax: AjaxService, private router: Router) {
+    this.status = "create";
     this.hdr = new TravelCostHeader();
     this.detail = new Array<TravelCostDetail>();
     this.data = new TravelCostDetail();
-    this.typeDocs = [
-      'ทั่วไป',
-      'วิชาการ',
-      'อำนวยการ',
-      'บริหาร',
-    ];
+    this.typeDocs = ["ทั่วไป", "วิชาการ", "อำนวยการ", "บริหาร"];
     this.topics = [
-      [
-        'ปฏิบัติงาน',
-        'ชำนาญงาน',
-        'อาวุโส',
-        'ทักษะพิเศษ',
-
-      ],
-      [
-        'ปฏิบัติการ',
-        'ชำนาญการ',
-        'ชำนาญการพิเศษ',
-        'เชี่ยวชาญ',
-        'ทรงคุณวุฒิ',
-      ],
-      [
-
-        'ระดับต้น',
-        'ระดับสูง',
-
-      ], [
-
-        'ระดับต้น',
-        'ระดับสูง',
-
-      ]
+      ["ปฏิบัติงาน", "ชำนาญงาน", "อาวุโส", "ทักษะพิเศษ"],
+      ["ปฏิบัติการ", "ชำนาญการ", "ชำนาญการพิเศษ", "เชี่ยวชาญ", "ทรงคุณวุฒิ"],
+      ["ระดับต้น", "ระดับสูง"],
+      ["ระดับต้น", "ระดับสูง"]
     ];
     this.topic = [];
     this.sent = false; // false
-    this.selectedTop = ''; // ''
+    this.selectedTop = ""; // ''
     this.hdr.startDate = null;
     this.hdr.endDate = null;
   }
 
   ngOnInit() {
-    $('.ui.radio.checkbox').checkbox();
-    $('#example2').calendar({
-      endCalendar: $('#example3'),
+    $(".ui.radio.checkbox").checkbox();
+    $("#example2").calendar({
+      endCalendar: $("#example3"),
       maxDate: new Date(),
-      type: 'date',
+      type: "date",
       text: TextDateTH,
       formatter: formatter(),
       onChange: function(date) {
-        if ($('#startDate').val() !== null) {
-          var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds 
-          var nd2 = $('#endDate').val().split('/');
+        if ($("#startDate").val() !== null) {
+          var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+          var nd2 = $("#endDate")
+            .val()
+            .split("/");
           var st1 = [
             date.getDate(),
             date.getMonth() + 1,
@@ -97,22 +72,26 @@ export class Int0911Component implements OnInit {
           ];
           var firstDate = new Date(st1[2], st1[1], st1[0]);
           var secondDate = new Date(nd2[2], nd2[1], nd2[0]);
-          var rs = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
-          $('#allowanceDate').attr('max', rs);
-          $('#rentDate').attr('max', rs);
+          var rs = Math.round(
+            Math.abs((firstDate.getTime() - secondDate.getTime()) / oneDay)
+          );
+          $("#allowanceDate").attr("max", rs);
+          $("#rentDate").attr("max", rs);
         }
       }
     });
-    $('#example3').calendar({
-      startCalendar: $('#example2'),
+    $("#example3").calendar({
+      startCalendar: $("#example2"),
       maxDate: new Date(),
-      type: 'date',
+      type: "date",
       text: TextDateTH,
       formatter: formatter(),
       onChange: function(date) {
-        if ($('#startDate').val() !== null) {
-          var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds 
-          var st1 = $('#startDate').val().split('/');
+        if ($("#startDate").val() !== null) {
+          var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+          var st1 = $("#startDate")
+            .val()
+            .split("/");
           var nd2 = [
             date.getDate(),
             date.getMonth() + 1,
@@ -120,9 +99,11 @@ export class Int0911Component implements OnInit {
           ];
           var firstDate = new Date(st1[2], st1[1], st1[0]);
           var secondDate = new Date(nd2[2], nd2[1], nd2[0]);
-          var rs = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
-          $('#allowanceDate').attr('max', rs);
-          $('#rentDate').attr('max', rs - 1);
+          var rs = Math.round(
+            Math.abs((firstDate.getTime() - secondDate.getTime()) / oneDay)
+          );
+          $("#allowanceDate").attr("max", rs);
+          $("#rentDate").attr("max", rs - 1);
         }
       }
     });
@@ -155,42 +136,43 @@ export class Int0911Component implements OnInit {
       startDate: startDate,
       endDate: endDate,
       description: description,
-      createdBy: '',
+      createdBy: "",
       createdDatetime: null,
-      updateBy: '',
+      updateBy: "",
       updateDatetime: null,
       Detail: this.detail
     };
 
     const URL = "ia/int09/create";
     var router = this.router;
-    this.ajax.post(URL, data, function (res) {      
+    this.ajax.post(URL, data, function(res) {
       console.log(res.json());
-      router.navigate(['/int09-1']);
+      router.navigate(["/int09/1"]);
     });
-
   };
 
   maxDate(startDate, endDate) {
-    var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds 
-    var st1 = startDate.split('/');
-    var nd2 = endDate.split('/');
+    var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    var st1 = startDate.split("/");
+    var nd2 = endDate.split("/");
     var firstDate = new Date(st1[2], st1[1], st1[0]);
     var secondDate = new Date(nd2[2], nd2[1], nd2[0]);
 
-    return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+    return Math.round(
+      Math.abs((firstDate.getTime() - secondDate.getTime()) / oneDay)
+    );
   }
 
   getPrice(index, what) {
     const { category, degree, allowanceDate, rentDate } = this.detail[index];
-    const num = what === 'allowance' ? allowanceDate : rentDate;
+    const num = what === "allowance" ? allowanceDate : rentDate;
     return Prices(category, degree, what) * num;
   }
 
   totalCost(index) {
     const { restType, travelCost, otherCost } = this.detail[index];
-    let total:number = 0;
-    total += this.getPrice(index, 'allowance');
+    let total: number = 0;
+    total += this.getPrice(index, "allowance");
     total += this.getPrice(index, restType);
     total += parseFloat(travelCost.toString());
     total += parseFloat(otherCost.toString());
@@ -233,24 +215,24 @@ export class Int0911Component implements OnInit {
     data.otherCost = otherCost.value;
     data.note = note.value;
 
-    name.value = '';
-    lastName.value = '';
-    position.value = '';
-    category.value = '';
-    degree.value = '';
-    allowanceDate.value = '';
-    rentDate.value = '';
-    restType.value = '';
-    travelCost.value = '';
-    otherCost.value = '';
-    note.value = '';
+    name.value = "";
+    lastName.value = "";
+    position.value = "";
+    category.value = "";
+    degree.value = "";
+    allowanceDate.value = "";
+    rentDate.value = "";
+    restType.value = "";
+    travelCost.value = "";
+    otherCost.value = "";
+    note.value = "";
 
-    if (this.status === 'create') {
+    if (this.status === "create") {
       this.detail.push(data);
       this.clearData();
     } else {
       this.detail[this.id] = data;
-      this.status = 'edit';
+      this.status = "edit";
     }
   }
 
@@ -261,24 +243,21 @@ export class Int0911Component implements OnInit {
   }
 
   editData(index: number) {
-
     // change `status` and `id`
     this.id = index;
-    this.status = 'edit';
+    this.status = "edit";
 
     const data: any = this.detail[index];
     this.data = new TravelCostDetail();
     this.data = data;
-
   }
 
   clearData() {
-    if (this.status === 'create'){
+    if (this.status === "create") {
       this.data = new TravelCostDetail();
     } else {
       this.data = new TravelCostDetail();
-      this.status = 'create';
+      this.status = "create";
     }
   }
-
 }

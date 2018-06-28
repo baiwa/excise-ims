@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { AjaxService } from '../../../../common/services/ajax.service';
-import { Router } from '@angular/router';
-import { ExciseService } from '../../../../common/services/excise.service';
-import { TextDateTH } from '../../../../common/helper/datepicker';
+import { Component, OnInit } from "@angular/core";
+import { AjaxService } from "../../../../common/services/ajax.service";
+import { Router } from "@angular/router";
+import { ExciseService } from "../../../../common/services/excise.service";
+import { TextDateTH } from "../../../../common/helper/datepicker";
 
 declare var $: any;
 @Component({
-  selector: 'app-add-external-data',
-  templateUrl: './add-external-data.component.html',
-  styleUrls: ['./add-external-data.component.css']
+  selector: "app-add-external-data",
+  templateUrl: "./add-external-data.component.html",
+  styleUrls: ["./add-external-data.component.css"]
 })
 export class AddExternalDataComponent implements OnInit {
-
   userManagementDt: any;
   before: any;
   last: any;
@@ -25,25 +24,23 @@ export class AddExternalDataComponent implements OnInit {
   coordinatesArr: any;
   workSheetNumber: any;
 
-
   constructor(
     private ex: ExciseService,
     private router: Router,
     private ajax: AjaxService
   ) {
-    this.flag = '';
-    this.analysNumberArr = '';
-    this.workSheetNumber = '';
+    this.flag = "";
+    this.analysNumberArr = "";
+    this.workSheetNumber = "";
   }
 
   ngOnInit() {
-
-    $("#exciseBtn").prop('disabled', true);
+    $("#exciseBtn").prop("disabled", true);
 
     const URL = "working/test/getCoordinates";
-    this.ajax.post(URL, {},
-      res => { this.coordinatesArr = res.json() }
-    );
+    this.ajax.post(URL, {}, res => {
+      this.coordinatesArr = res.json();
+    });
 
     if (this.ex.getformNumber().analysNumber !== undefined) {
       //call ExciseService
@@ -61,23 +58,20 @@ export class AddExternalDataComponent implements OnInit {
 
       this.initDatatable();
     } else {
-      const analysUrl = 'working/test/getAnalysNumber';
-      this.ajax.post(analysUrl, {},
-        res => {
+      const analysUrl = "working/test/getAnalysNumber";
+      this.ajax
+        .post(analysUrl, {}, res => {
           this.analysNumberArr = res.json();
-        }
-      ).then(() => {
-        this.directAccess(true);
-      });
+        })
+        .then(() => {
+          this.directAccess(true);
+        });
     }
   }
 
-  ngAfterViewInit() {
-
-  }
+  ngAfterViewInit() {}
 
   initDatatable(): void {
-
     const URL = AjaxService.CONTEXT_PATH + "filter/exise/list";
     var json = "";
     json += ' { "lengthChange": false, ';
@@ -89,16 +83,19 @@ export class AddExternalDataComponent implements OnInit {
     json += ' "serverSide": true, ';
     json += ' "paging": true, ';
     json += ' "pagingType": "full_numbers", ';
-    json += ' ';
+    json += " ";
     json += ' "ajax": { ';
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
-    json += ' "flag": "' + (this.flag == '' ? 'N' : this.flag) + '", ';
-    json += ' "productType": "' + (this.coordinates == undefined ? '' : this.coordinates) + '", ';
+    json += ' "flag": "' + (this.flag == "" ? "N" : this.flag) + '", ';
+    json +=
+      ' "productType": "' +
+      (this.coordinates == undefined ? "" : this.coordinates) +
+      '", ';
     json += ' "analysNumber": "' + this.analysNumber + '" ';
-    json += ' } ';
-    json += ' }, ';
+    json += " } ";
+    json += " }, ";
     json += ' "columns": [ ';
     json += ' { "data": "worksheetHeaderId","className":"center" }, ';
     json += ' { "data": "exciseId","className":"center" }, ';
@@ -125,59 +122,66 @@ export class AddExternalDataComponent implements OnInit {
         json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"} ';
       }
     }
-    json += '] } ';
+    json += "] } ";
     let jsonMaping = JSON.parse(json);
-    this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
+    this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
 
     // on init table
-    $('#userManagementDt tbody tr').css({ "background-color": "white", "cursor": "pointer" });
+    $("#userManagementDt tbody tr").css({
+      "background-color": "white",
+      cursor: "pointer"
+    });
 
     // on click row
-    $('#userManagementDt tbody').on('click', 'tr', function () {
-      $("#exciseBtn").prop('disabled', false);
-      $('#userManagementDt tbody tr').css({ "background-color": "white", "cursor": "pointer" });
-      $('#exciseId').val($(this).children().toArray()[1].innerHTML);
+    $("#userManagementDt tbody").on("click", "tr", function() {
+      $("#exciseBtn").prop("disabled", false);
+      $("#userManagementDt tbody tr").css({
+        "background-color": "white",
+        cursor: "pointer"
+      });
+      $("#exciseId").val(
+        $(this)
+          .children()
+          .toArray()[1].innerHTML
+      );
       $(this).css("background-color", "rgb(197,217,241)");
     });
   }
 
   linkToDetail() {
-    this.router.navigate(
-      ['/add-data'],
-      {
-        queryParams: {
-          id: $('#exciseId').val(),
-          num: this.analysNumber
-        }
+    this.router.navigate(["/add-external-data/add-data"], {
+      queryParams: {
+        id: $("#exciseId").val(),
+        num: this.analysNumber
       }
-    );
+    });
   }
 
   FlagN = () => {
-    this.flag = 'N';
+    this.flag = "N";
     this.userManagementDt.destroy();
     this.initDatatable();
-  }
+  };
 
   FlagNotN = () => {
-    this.flag = 'NOT N';
+    this.flag = "NOT N";
     this.userManagementDt.destroy();
     this.initDatatable();
-  }
+  };
 
   selectAnalysNumbers = () => {
     this.userManagementDt.destroy();
     this.directAccess();
-  }
+  };
 
   changeCoordinates = () => {
-    this.coordinates = $('#coordinates').val();
+    this.coordinates = $("#coordinates").val();
     this.userManagementDt.destroy();
     this.initDatatable();
-  }
+  };
 
   directAccess = (withOut?: any) => {
-    const headerUrl = AjaxService.CONTEXT_PATH + 'filter/exise/getStartEndDate';
+    const headerUrl = AjaxService.CONTEXT_PATH + "filter/exise/getStartEndDate";
     let analysNumber: any;
     if (withOut) {
       analysNumber = this.analysNumberArr[0];
@@ -186,34 +190,30 @@ export class AddExternalDataComponent implements OnInit {
       analysNumber = this.analysNumber;
     }
     this.getWorkSheetNumber();
-    $.post(headerUrl, { analysNumber: analysNumber },
-      res => {
-        this.before = res[0];
-        this.last = res[1];
-        this.from = res[2];
-        this.month = res[3];
+    $.post(headerUrl, { analysNumber: analysNumber }, res => {
+      this.before = res[0];
+      this.last = res[1];
+      this.from = res[2];
+      this.month = res[3];
 
-        var currDate = new Date();
-        var currYear = currDate.getFullYear() + 543;
+      var currDate = new Date();
+      var currYear = currDate.getFullYear() + 543;
 
-        this.createTH(currYear);
+      this.createTH(currYear);
 
-        this.initDatatable();
-        return res;
-      }
-    );
-  }
+      this.initDatatable();
+      return res;
+    });
+  };
 
   getWorkSheetNumber = () => {
-    const workSheetUrl = 'filter/exise/getWorkSheetNumber/';
-    this.ajax.get(`${workSheetUrl}${this.analysNumber}`,
-      res => {
-        this.workSheetNumber = res.json();
-      }
-    );
-  }
+    const workSheetUrl = "filter/exise/getWorkSheetNumber/";
+    this.ajax.get(`${workSheetUrl}${this.analysNumber}`, res => {
+      this.workSheetNumber = res.json();
+    });
+  };
 
-  createTH = (currYear) => {
+  createTH = currYear => {
     //split function
     var from_split = this.from.split("/");
 
@@ -232,35 +232,62 @@ export class AddExternalDataComponent implements OnInit {
         m = 12;
         yy = yy - 1;
       }
-      items.push('<th style="text-align: center !important">' + TextDateTH.monthsShort[m - 1] + ' ' + (yy + "").substr(2) + '</th>');
+      items.push(
+        '<th style="text-align: center !important">' +
+          TextDateTH.monthsShort[m - 1] +
+          " " +
+          (yy + "").substr(2) +
+          "</th>"
+      );
     }
 
     var trHeaderColumn = "";
     for (var i = items.length - 1; i >= 0; i--) {
       trHeaderColumn += items[i];
     }
-    $('#trDrinamic').html('<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> '
-      + '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> '
-      + '<th rowspan="2" style="text-align: center !important">พื้นที่</th> '
-      + '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> '
-      + '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> '
-      + '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> '
-      + '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ภาค</th> '
-      + '<th rowspan="2" style="text-align: center !important">พิกัด</th> '
-      + '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> '
-      + '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> '
-      + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนแรก</th> '
-      + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนหลัง </th> '
-      + '</tr>'
-      + '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' + this.month / 2 + ' เดือนแรก</th>'
-      + '<th style="text-align: center !important">' + this.month / 2 + ' เดือนหลัง </th>'
-      + '<th style="text-align: center !important">' + (currYear - 3) + '</th>'
-      + '<th style="text-align: center !important">' + (currYear - 2) + '</th>'
-      + '<th style="text-align: center !important">' + (currYear - 1) + '</th>'
-      + trHeaderColumn + '</tr>');
-  }
+    $("#trDrinamic").html(
+      '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> ' +
+        '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
+        '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
+        '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
+        '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
+        '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
+        '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
+        '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
+        '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
+        '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
+        '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
+        '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
+        '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> ' +
+        '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
+        '<th colspan="' +
+        this.month / 2 +
+        '" style="text-align: center !important">การชำระภาษี ' +
+        this.month / 2 +
+        " เดือนแรก</th> " +
+        '<th colspan="' +
+        this.month / 2 +
+        '" style="text-align: center !important">การชำระภาษี ' +
+        this.month / 2 +
+        " เดือนหลัง </th> " +
+        "</tr>" +
+        '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
+        this.month / 2 +
+        " เดือนแรก</th>" +
+        '<th style="text-align: center !important">' +
+        this.month / 2 +
+        " เดือนหลัง </th>" +
+        '<th style="text-align: center !important">' +
+        (currYear - 3) +
+        "</th>" +
+        '<th style="text-align: center !important">' +
+        (currYear - 2) +
+        "</th>" +
+        '<th style="text-align: center !important">' +
+        (currYear - 1) +
+        "</th>" +
+        trHeaderColumn +
+        "</tr>"
+    );
+  };
 }

@@ -1,4 +1,4 @@
-<form class="ui grid" style="margin: 2%" (submit)="onSubmit()" ngNativeValidate>
+<form class="ui grid" action="void(0)" style="margin: 2%" (submit)="onSubmit()" ngNativeValidate>
     <div class="sixteen wide column segments">
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>จัดทำบันทึกข้อความ หนังสือราชการ และแบบ ตส.</span>
@@ -14,24 +14,20 @@
                             <div class="eight wide field">
                                 <label class="custom-label-w-20" style="text-align: right">ประเภทเอกสาร</label>
                                 <select style="width: 100%" id="doc" name="doc" class="ui search dropdown" (change)="onSelectDoc($event)" required>
-                    <option value="" style="color: grey">เลือกเอกสาร</option>
-                    <option
-                      *ngFor="let typeDoc of typeDocs; let i = index"
-                      value="{{i}}">
-                      {{typeDoc}}
-                    </option>
-                  </select>
+                                    <option value="" style="color: grey">เลือกเอกสาร</option>
+                                    <option *ngFor="let typeDoc of typeDocs; let i = index" value="{{i}}">
+                                        {{typeDoc}}
+                                    </option>
+                                </select>
                             </div>
                             <div class="eight wide field">
                                 <label class="custom-label-w-20" style="text-align: right">เรื่อง</label>
                                 <select style="width: 100%" id="topic" name="topic" class="ui search dropdown" (change)="onSelectTop($event)" required>
-                    <option value="" style="color: grey">เลือกเรื่อง</option>
-                    <option
-                      *ngFor="let top of topic; let i = index"
-                      value="{{i}}">
-                      {{top}}
-                    </option>
-                  </select>
+                                    <option value="" style="color: grey">เลือกเรื่อง</option>
+                                    <option *ngFor="let top of topic; let i = index" value="{{i}}">
+                                        {{top}}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -44,13 +40,13 @@
             <div class="ui center aligned grid">
                 <div class="eight wide column">
                     <button class="ui mini green button" type="submit">
-              <i class="save icon"></i>
-              สร้างเอกสาร
-            </button>
+                        <i class="save icon"></i>
+                        สร้างเอกสาร
+                    </button>
                     <button class="ui mini red button" type="button">
-              <i class="times icon"></i>
-              ยกเลิก
-            </button>
+                        <i class="times icon"></i>
+                        ยกเลิก
+                    </button>
                 </div>
             </div>
         </div>
