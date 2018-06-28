@@ -218,6 +218,8 @@ import { MgReportResultComponent } from './buckwaframework/project/management-co
 import { Mgc021Component } from './buckwaframework/project/management-control/mgc02/mgc02-1/mgc02-1.component';
 import { Mgc022Component } from './buckwaframework/project/management-control/mgc02/mgc02-2/mgc02-2.component';
 import { Mgc023Component } from './buckwaframework/project/management-control/mgc02/mgc02-3/mgc02-3.component';
+import { Int021Component } from './buckwaframework/project/internal-audit/int02/int02-1/int02-1.component';
+import { Int022Component } from './buckwaframework/project/internal-audit/int02/int02-2/int02-2.component';
 
 
 
@@ -410,7 +412,9 @@ import { Mgc023Component } from './buckwaframework/project/management-control/mg
         Mgc021Component,
         Mgc022Component,
         Mgc023Component,
-        SendLineUserComponent
+        SendLineUserComponent,
+        Int021Component,
+        Int022Component
       
     
        

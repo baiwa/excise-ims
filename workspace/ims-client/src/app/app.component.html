@@ -11,6 +11,15 @@
         <i class="dropdown icon"></i>
         <div class="menu">
             <div class="ui simple dropdown item">
+                    <i class="dropdown icon"></i> แบบสอบทานระบบการควบคุมภายใน
+                    <div class="menu" style="margin:20px;">
+                            <a class="item" [routerLink]="['/int02-1']" routerLinkActive="active">สร้างแบบสอบทานระบบการควบคุมภายใน</a>
+                            <a class="item"  routerLinkActive="active">สร้างแบแบบสอบทานระบบการควบคุมภายใน (หน่วยงาน)บสอบทานระบบการควบคุมภายใน</a>
+                            <a class="item"  routerLinkActive="active">สรุปผลแบบสอบทานระบบการควบคุมภายใน</a>
+                            <a class="item"  routerLinkActive="active">จัดการข้อมูลแบบสอบทานระบบการควบคุมภายใน</a>
+                    </div>
+            </div>
+            <div class="ui simple dropdown item">
                 <i class="dropdown icon"></i> ประเมินความเสี่ยง
                 <div class="menu" style="margin:20px;">
                     <a class="item" [routerLink]="['/int08-1-1']" routerLinkActive="active">ประเมินความเสี่ยงโครงการ</a>
@@ -158,7 +167,7 @@
                 <div class="menu">
                     <a class="item" [routerLink]="['/report-tax']" routerLinkActive="active">รายงานผลการตรวจสอบภาษี</a>
                     <a class="item" [routerLink]="['/report-int']" routerLinkActive="active">รายงานผลการตรวจสอบภายใน </a>
-                    <a class="item" [routerLink]="['/report-out']" routerLinkActive="active">รายงานผลการตรวจส่งออก  </a>
+                    <a class="item" [routerLink]="['/report-out']" routerLinkActive="active">รายงานผลการตรวจส่งออก </a>
                     <a class="item" [routerLink]="['/report-opt']" routerLinkActive="active">รายงานผลการตรวจปฏิบัติการ</a>
 
                 </div>

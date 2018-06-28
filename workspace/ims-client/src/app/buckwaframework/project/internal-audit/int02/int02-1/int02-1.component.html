@@ -1,0 +1,83 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">ตรวจสอบภายใน</h2>
+
+    <div class="ui top attached header">
+      <span>แบบสอบทานระบบการควบคุมภายใน</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+
+        <div class="inline fields">
+          <div class="eight wide field">&nbsp;&nbsp;&nbsp;
+            <label class="custom-label-w-20">ชื่อหน่วยงาน</label>
+            <input [(ngModel)]="departmentName" class="custom">
+          </div>
+          <div class="eight wide field">&nbsp;&nbsp;&nbsp;
+            <label class="custom-label-w-20">หน่วยรับตรวจ</label>
+            <input [(ngModel)]="departmentNameChecking" class="custom">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">&nbsp;&nbsp;&nbsp;
+            <label class="custom-label-w-20">วันที่</label>
+            <input [(ngModel)]="departmentName" class="custom">
+          </div>
+          <div class="eight wide field">&nbsp;&nbsp;&nbsp;
+            <label class="custom-label-w-20">ด้าน</label>
+            <input [(ngModel)]="departmentNameChecking" class="custom">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eleven wide field"></div>
+          <div class="five wide field">
+            <button type="button" style="margin-left: auto" class="ui mini primary button right floated">
+              <i class="search icon"></i>
+              ค้นหา
+            </button>
+            <button type="button" style="margin-left: auto" class="ui mini primary button right floated">
+              <i class="delete icon"></i>
+              ล้างข้อมูล
+            </button>
+            <button type="button" style="margin-left: auto" class="ui mini primary button right floated" [routerLink]="['/int02-2']">
+              <i class="add icon"></i>
+              สร้าง
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="ui segment">
+
+      <div class="ui grid">
+
+        <div class="sixteen wide column ">
+
+          <table id="datatable" class="ui small celled table aligned hover">
+            <thead>
+              <tr>
+                <th style="text-align: center !important">ลำดับ</th>
+                <th style="text-align: center !important">ชื่อหน่อยงาน</th>
+                <th style="text-align: center !important">หน่วยรับตรวจ</th>
+                <th style="text-align: center !important">วันที่</th>
+                <th style="text-align: center !important">ด้าน</th>
+                <th style="text-align: center !important">Action</th>
+
+              </tr>
+
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

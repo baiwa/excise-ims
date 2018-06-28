@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.UserManagement;
 import th.co.baiwa.buckwaframework.preferences.service.UserManagementService;
-import th.co.baiwa.excise.persistence.entity.SelectOptionValue;
-import th.co.baiwa.excise.persistence.entity.sys.Lov;
-import th.co.baiwa.excise.service.ListOfValueService;
+import th.co.baiwa.excise.ta.persistence.entity.SelectOptionValue;
+import th.co.baiwa.excise.ta.service.ListOfValueService;
 
 @RestController
 @RequestMapping("/api/preferences/userManagement")

@@ -87,7 +87,8 @@ import { Int0161Component } from '../../project/internal-audit/int01/int01-6/int
 import { Int0171Component } from '../../project/internal-audit/int01/int01-7/int01-7-1/int01-7-1.component';
 import { Int0181Component } from '../../project/internal-audit/int01/int01-8/int01-8-1/int01-8-1.component';
 
-
+import { Int021Component } from '../../project/internal-audit/int02/int02-1/int02-1.component';
+import { Int022Component } from '../../project/internal-audit/int02/int02-2/int02-2.component';
 
 import { Int051Component } from './../../project/internal-audit/int05/int05-1/int05-1.component';
 import { Int0511Component } from './../../project/internal-audit/int05/int05-1/int05-1-1/int05-1-1.component';
@@ -187,6 +188,8 @@ import { SendLineUserComponent } from '../../project/tax-audit/trader-selection/
 
 
 
+
+
 const routes: Routes = [
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -273,7 +276,11 @@ const routes: Routes = [
     { path: 'int01-5-1', component: Int0151Component, canActivate: [AuthGuard] },
     { path: 'int01-6-1', component: Int0161Component, canActivate: [AuthGuard] },
     { path: 'int01-7-1', component: Int0171Component, canActivate: [AuthGuard] },
-    { path: 'int01-8-1', component: Int0181Component, canActivate: [AuthGuard] },  
+    { path: 'int01-8-1', component: Int0181Component, canActivate: [AuthGuard] }, 
+    
+    { path: 'int02-1', component: Int021Component, canActivate: [AuthGuard] },
+    { path: 'int02-2', component: Int022Component, canActivate: [AuthGuard] },
+
     { path: 'int05-1', component: Int051Component, canActivate: [AuthGuard] },    
     { path: 'int05-1-1', component: Int0511Component, canActivate: [AuthGuard] },
     { path: 'int05-1-1-1', component: Int05111Component, canActivate: [AuthGuard] },

@@ -6,8 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import th.Application;
-import th.co.baiwa.excise.persistence.dao.ExciseRegisttionNumberDao;
-import th.co.baiwa.excise.service.MockupService;
+import th.co.baiwa.excise.ia.persistence.dao.ExciseRegisttionNumberDao;
+import th.co.baiwa.excise.ta.service.MockupService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {Application.class})
