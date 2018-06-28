@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
 
 import { AuthService } from '../../../common/services/auth.service';
 import { User } from '../../../common/models/user';
@@ -12,42 +11,37 @@ import { MessageBarService } from '../../../common/services/message-bar.service'
 })
 export class LoginPage implements OnInit {
 
-    public loginForm: FormGroup;
-    public loginInvalid: boolean = false;
-    public ngLoading = { "loading": false };
+    username: string;
+    password: string;
+    loading: boolean;
 
     constructor(
         public authService: AuthService,
         private messageBarService: MessageBarService
-    ) {
+    ) { }
 
-    }
+    ngOnInit() { }
 
-    ngOnInit() {
-        this.loginForm = new FormGroup({
-            username: new FormControl(''),
-            password: new FormControl('')
-        });
-    }
-
-    login() {
-        this.ngLoading = { "loading": true };
-        this.authService.login(this.loginForm.value as User)
+    onLogin() {
+        this.loading = true;
+        const user: User = {
+            username: this.username,
+            password: this.password
+        }
+        this.authService.login(user)
             .then(ok => {
-                this.loginInvalid = false;
-                this.ngLoading = { "loading": false };
+                this.loading = false;
             })
             .catch(error => {
-                this.loginInvalid = true;
                 this.messageBarService.errorModal('ไม่สามารถเข้าสู่ระบบได้', 'เกิดข้อผิดพลาด');
-                this.ngLoading = { "loading": false };
+                this.loading = false;
             });
     }
 
     onKey(event: KeyboardEvent) {
         let keyCode = event.code || event.keyCode;
         if(keyCode === "Enter" || keyCode === 13){
-            this.login();
+            this.onLogin();
         }
     }
 

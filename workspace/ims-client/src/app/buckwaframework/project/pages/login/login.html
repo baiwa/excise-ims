@@ -1,13 +1,7 @@
 <div class="ui middle aligned center aligned grid" style="margin-top: 5px;">
     <div class="column" style="margin-top: 80px;">
-        <!-- <div class="ui warning message" *ngIf="loginInvalid">
-            <i class="close icon" (click)="loginInvalid=false;"></i>
-            <div class="header">
-                Invalid Username or Password
-            </div>
-        </div> -->
 
-        <form [formGroup]="loginForm" class="ui large form" [ngClass]="ngLoading">
+        <form (submit)="onLogin()" class="ui large form {{loading && 'loading'}}" ngNativeValidate>
             <div class="ui stacked segment">
                 <img src="assets/images/logo.png" style="width: 140px;" class="image">
 
@@ -18,7 +12,12 @@
                     <div class="twelve wide field">
                         <div class="ui left icon input">
                             <i class="user icon"></i>
-                            <input type="text" formControlName="username" placeholder="Username">
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                [(ngModel)]="username"
+                                placeholder="Username" required>
                         </div>
                     </div>
                 </div>
@@ -30,7 +29,12 @@
                     <div class="twelve wide field">
                         <div class="ui left icon input">
                             <i class="lock icon"></i>
-                            <input type="password" formControlName="password" placeholder="Password" (keyup)="onKey($event)">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                [(ngModel)]="password"
+                                placeholder="Password" (keyup)="onKey($event)" required>
                         </div>
                     </div>
                 </div>
@@ -40,7 +44,7 @@
                         &nbsp;
                     </div>
                     <div class="twelve wide field">
-                        <div class="ui fluid large blue submit button" (click)="login()">เข้าสู่ระบบ</div>
+                        <button class="ui fluid large blue submit button" type="submit">เข้าสู่ระบบ</button>
                     </div>
                 </div>
 
@@ -49,5 +53,7 @@
     </div>
 </div>
 <div class="ui middle aligned center aligned grid">
-    <div style="margin-top: 70px;"><img src="assets/images/uatucm.png" class="image" style="width: 350px"></div>
+    <div style="margin-top: 70px;">
+        <img src="assets/images/uatucm.png" class="image" style="width: 350px">
+    </div>
 </div>
