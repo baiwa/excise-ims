@@ -1,18 +1,18 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from "@angular/common"
-import { Epa021Component } from './epa02-1.component';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { Epa021Component } from "./epa02-1.component";
 
-import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from '../../../../common/services';
-import { Epa0211Component } from './epa02-1-1/epa02-1-1.component';
-import { Epa0212Component } from './epa02-1-2/epa02-1-2.component';
-import { Epa0213Component } from './epa02-1-3/epa02-1-3.component';
+import { Routes, RouterModule } from "@angular/router";
+import { AuthGuard } from "../../../../common/services";
+import { Epa0211Component } from "./epa02-1-1/epa02-1-1.component";
+import { Epa0212Component } from "./epa02-1-2/epa02-1-2.component";
+import { Epa0213Component } from "./epa02-1-3/epa02-1-3.component";
 
 const routes: Routes = [
-    { path: '', component: Epa021Component, canActivate: [AuthGuard] },
-    { path: '1', component: Epa0211Component, canActivate: [AuthGuard] },
-    { path: '2', component: Epa0212Component, canActivate: [AuthGuard] },
-    { path: '3', component: Epa0213Component, canActivate: [AuthGuard] }
+  { path: "", component: Epa021Component, canActivate: [AuthGuard] },
+  { path: "1", component: Epa0211Component, canActivate: [AuthGuard] },
+  { path: "2", component: Epa0212Component, canActivate: [AuthGuard] },
+  { path: "3", component: Epa0213Component, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -25,4 +25,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class Epa021ComponentModule { }
+export class Epa021Module {}

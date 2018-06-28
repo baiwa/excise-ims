@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from "@angular/common"
-import { ParameterInfoDetailPage } from './parameterinfoDetail';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { ParameterInfoDetailPage } from "./parameterinfoDetail";
 
-import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from '../../../common/services';
+import { Routes, RouterModule } from "@angular/router";
+import { AuthGuard } from "../../../common/services";
 
 const routes: Routes = [
-    { path: '', component: ParameterInfoDetailPage, canActivate: [AuthGuard] }
+  { path: "", component: ParameterInfoDetailPage, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -14,4 +14,4 @@ const routes: Routes = [
   declarations: [ParameterInfoDetailPage],
   exports: [RouterModule]
 })
-export class ParameterInfoDetailPageModule { }
+export class ParameterInfoDetailPageModule {}
