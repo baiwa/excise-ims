@@ -25,7 +25,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.UserManagement;
 import th.co.baiwa.buckwaframework.preferences.service.UserManagementService;
-import th.co.baiwa.excise.ta.persistence.entity.SelectOptionValue;
+import th.co.baiwa.excise.combobox.entity.Combobox;
 import th.co.baiwa.excise.ta.service.ListOfValueService;
 
 @RestController
@@ -128,12 +128,12 @@ public class UserManagementRestController {
 	
 	@PostMapping("/setorList")
 	@ResponseBody
-	public List<SelectOptionValue> getSetorListByLov() {
-		List<SelectOptionValue> sectorList = new ArrayList<SelectOptionValue>();
+	public List<Combobox> getSetorListByLov() {
+		List<Combobox> sectorList = new ArrayList<Combobox>();
 		List<Lov> lovList = listOfValueService.queryLovByCriteria(new Lov("SECTOR_VALUE"),"VALUE2");
-		SelectOptionValue selectOption= null;
+		Combobox selectOption= null;
 		for (Lov listOfValue : lovList) {
-			selectOption = new SelectOptionValue();
+			selectOption = new Combobox();
 			selectOption.setValue(listOfValue.getValue1());
 			sectorList.add(selectOption);
 		}

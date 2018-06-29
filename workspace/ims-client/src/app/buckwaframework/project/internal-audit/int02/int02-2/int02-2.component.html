@@ -6,20 +6,24 @@
       <span>แบบสอบทานระบบการควบคุมภายใน</span>
     </div>
 
-    <div class="ui attached segment center">
+    <div class="ui attached segment">
       <div class="ui form">
 
         <div class="inline fields">
           <div class="field">
-            <label>ชื่อหน่วยงาน</label>
-            <input type="text" placeholder="ชื่อหน่วยงาน" class="custom">
+            <label>ด้านที่ตรวจ (เดิม)</label>
+            <select class="ui dropdown" name="departmentName" id="departmentName" [(ngModel)]="departmentName">
+              <option aria-placeholder="ด้านที่ตรวจ (เดิม)"></option>
+              <option *ngFor="let list of departmentNameArr" ng-value="list.value">{{list.description}}</option>
+            </select>
+
           </div>
           <div class="field">
-            <label>หน่วยรับตรวจ</label>
-            <input type="text" placeholder="หน่วยรับตรวจ" class="custom">
+            <label>ด้านที่ตรวจ (ใหม่)</label>
+            <input type="text" placeholder="หน่วยรับตรวจ" class="custom" name="departmentNameNew" id="departmentNameNew" [(ngModel)]="departmentNameNew">
           </div>
           <div class="field">
-            <button type="button" style="margin-left: auto" class="ui mini primary button right floated">
+            <button type="button" style="margin-left: auto" class="ui mini primary button right floated" (click)="addHeaderQuestionnaire()">
               <i class="add icon"></i>
               เพิ่ม
             </button>
@@ -55,10 +59,27 @@
             <tbody>
             </tbody>
           </table>
+          <div class="inline fields">
+
+
+            <button type="button" style="margin-left: auto" class="ui mini primary button center floated">
+              <i class="angle left icon"></i>
+              กลับ
+            </button>
+
+
+            <button type="button" style="margin-left: auto" class="ui mini primary button center floated">
+              <i class="save icon"></i>
+              ส่งแบบสอบทาน
+            </button>
+
+            <div class="inline fields"></div>
+
+          </div>
+
+
 
         </div>
-
       </div>
     </div>
   </div>
-</div>
