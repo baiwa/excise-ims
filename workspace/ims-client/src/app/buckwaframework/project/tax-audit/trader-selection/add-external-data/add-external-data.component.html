@@ -13,12 +13,7 @@
                     </div>
                     <div class="six wide field">
                         <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
-                        <select
-                            class="ui dropdown"
-                            name="analysNumbers"
-                            id="analysNumbers"
-                            [(ngModel)]="analysNumber"
-                            (change)="selectAnalysNumbers()"
+                        <select class="ui dropdown" name="analysNumbers" id="analysNumbers" [(ngModel)]="analysNumber" (change)="selectAnalysNumbers()"
                             *ngIf="analysNumberArr !== ''">
                             <option *ngFor="let list of analysNumberArr" ng-value="list">{{list}}</option>
                         </select>
@@ -170,7 +165,7 @@
                                     <th style="text-align: center !important">เม.ย. 59 </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tbodyDrinamic">
                             </tbody>
                         </table>
                     </div>

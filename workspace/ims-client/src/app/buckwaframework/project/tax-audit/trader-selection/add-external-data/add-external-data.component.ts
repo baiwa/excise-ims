@@ -23,6 +23,7 @@ export class AddExternalDataComponent implements OnInit {
   coordinates: any;
   coordinatesArr: any;
   workSheetNumber: any;
+  curr: any;
 
   constructor(
     private ex: ExciseService,
@@ -32,6 +33,7 @@ export class AddExternalDataComponent implements OnInit {
     this.flag = "";
     this.analysNumberArr = "";
     this.workSheetNumber = "";
+    this.curr = "";
   }
 
   ngOnInit() {
@@ -53,7 +55,7 @@ export class AddExternalDataComponent implements OnInit {
       this.from = from;
       this.month = month;
       this.analysNumber = analysNumber;
-
+      this.curr = currYear;
       this.createTH(currYear);
 
       this.initDatatable();
@@ -170,13 +172,14 @@ export class AddExternalDataComponent implements OnInit {
   };
 
   selectAnalysNumbers = () => {
-    this.userManagementDt.destroy();
+    this.userManagementDt.destroy().draw();
+    $("#tbodyDrinamic").empty();
     this.directAccess();
   };
 
   changeCoordinates = () => {
     this.coordinates = $("#coordinates").val();
-    this.userManagementDt.destroy();
+    this.userManagementDt.destroy().draw();
     this.initDatatable();
   };
 
@@ -245,49 +248,49 @@ export class AddExternalDataComponent implements OnInit {
     for (var i = items.length - 1; i >= 0; i--) {
       trHeaderColumn += items[i];
     }
-    $("#trDrinamic").html(
+    var str =
       '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> ' +
-        '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
-        '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
-        '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
-        '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
-        '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
-        '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
-        '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
-        '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
-        '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
-        '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
-        '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
-        '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> ' +
-        '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
-        '<th colspan="' +
-        this.month / 2 +
-        '" style="text-align: center !important">การชำระภาษี ' +
-        this.month / 2 +
-        " เดือนแรก</th> " +
-        '<th colspan="' +
-        this.month / 2 +
-        '" style="text-align: center !important">การชำระภาษี ' +
-        this.month / 2 +
-        " เดือนหลัง </th> " +
-        "</tr>" +
-        '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
-        this.month / 2 +
-        " เดือนแรก</th>" +
-        '<th style="text-align: center !important">' +
-        this.month / 2 +
-        " เดือนหลัง </th>" +
-        '<th style="text-align: center !important">' +
-        (currYear - 3) +
-        "</th>" +
-        '<th style="text-align: center !important">' +
-        (currYear - 2) +
-        "</th>" +
-        '<th style="text-align: center !important">' +
-        (currYear - 1) +
-        "</th>" +
-        trHeaderColumn +
-        "</tr>"
-    );
+      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
+      '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
+      '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
+      '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
+      '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> ' +
+      '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
+      '<th colspan="' +
+      this.month / 2 +
+      '" style="text-align: center !important">การชำระภาษี ' +
+      this.month / 2 +
+      " เดือนแรก</th> " +
+      '<th colspan="' +
+      this.month / 2 +
+      '" style="text-align: center !important">การชำระภาษี ' +
+      this.month / 2 +
+      " เดือนหลัง </th> " +
+      "</tr>" +
+      '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
+      this.month / 2 +
+      " เดือนแรก</th>" +
+      '<th style="text-align: center !important">' +
+      this.month / 2 +
+      " เดือนหลัง </th>" +
+      '<th style="text-align: center !important">' +
+      (currYear - 3) +
+      "</th>" +
+      '<th style="text-align: center !important">' +
+      (currYear - 2) +
+      "</th>" +
+      '<th style="text-align: center !important">' +
+      (currYear - 1) +
+      "</th>" +
+      trHeaderColumn +
+      "</tr>";
+    $("#trDrinamic").html(str);
   };
 }

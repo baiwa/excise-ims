@@ -1,15 +1,19 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { HomePage } from "../../project/pages/home/home";
+import { LoginPage } from "../../project/pages/login/login";
+import { AuthGuard } from "../services";
 
 const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
   {
     path: "login",
-    loadChildren: "../../project/pages/login/login.module#LoginModule"
+    component: LoginPage
   },
   {
     path: "home",
-    loadChildren: "../../project/pages/home/home.module#HomeModule"
+    component: HomePage,
+    canActivate: [AuthGuard]
   },
   {
     path: "message",
