@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.ta.persistence.entity;
 
+import java.util.List;
+
 import th.co.baiwa.excise.domain.DataTableRequest;
 
 public class RequestFilterMapping extends DataTableRequest{
@@ -13,6 +15,8 @@ public class RequestFilterMapping extends DataTableRequest{
 	private String indexFilter;
 	private String workShheetNumber;
 	private String productType;
+	private String exciseId;
+	private List<String> exiceList;
 	
 	public String getAnalysNumber() {
 		return analysNumber;
@@ -67,6 +71,18 @@ public class RequestFilterMapping extends DataTableRequest{
 	}
 	public void setProductType(String productType) {
 		this.productType = productType;
+	}
+	public String getExciseId() {
+		return exciseId;
+	}
+	public void setExciseId(String exciseId) {
+		this.exciseId = exciseId;
+	}
+	public List<String> getExiceList() {
+		return exiceList;
+	}
+	public void setExiceList(List<String> exiceList) {
+		this.exiceList = exiceList;
 	}
 	
 }
