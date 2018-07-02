@@ -201,7 +201,8 @@ export class AddExternalDataComponent implements OnInit {
 
       var currDate = new Date();
       var currYear = currDate.getFullYear() + 543;
-
+      
+      this.curr = currYear;
       this.createTH(currYear);
 
       this.initDatatable();
@@ -216,7 +217,11 @@ export class AddExternalDataComponent implements OnInit {
     });
   };
 
-  createTH = currYear => {
+  sendLineUserValues = () => {
+    this.ex.setToSendlineUser(this.before, this.last, this.analysNumber, this.workSheetNumber, this.from, this.month, this.curr);
+  }
+
+  createTH = (currYear) => {
     //split function
     var from_split = this.from.split("/");
 
