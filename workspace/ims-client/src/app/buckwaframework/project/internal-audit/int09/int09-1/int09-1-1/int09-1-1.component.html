@@ -2,7 +2,7 @@
   <span>รายละเอียดหัวกระดาษทำการ
   </span>
 </div>
-<form class="ui form center aligned" (submit)="manageDate($event)" id="int09-1" ngNativeValidate >
+<form class="ui form center aligned" (submit)="manageDate($event)" id="int09-1" ngNativeValidate>
   <div class="ui attached  segment">
     <div class="ui grid center aligned">
       <div class="ui two wide column">&nbsp;</div>
@@ -13,7 +13,7 @@
             <label>ชื่อกระดาษทำการ :</label>
           </div>
           <div class="eight wide field">
-            <input type="text" maxlength="1000" [(ngModel)]="hdr.workSheetHeaderName" name="workSheetHeaderName" required >
+            <input type="text" maxlength="1000" [(ngModel)]="hdr.workSheetHeaderName" name="workSheetHeaderName" required>
           </div>
         </div>
         <div class="inline fields">
@@ -23,7 +23,7 @@
             </label>
           </div>
           <div class="eight  wide field">
-            <input type="text" [(ngModel)]="hdr.departmentName" name="departmentName" required> 
+            <input type="text" [(ngModel)]="hdr.departmentName" name="departmentName" required>
           </div>
         </div>
 
@@ -34,14 +34,8 @@
           <div class="ui calendar" id="example2">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input type="text"
-                placeholder="วว/ดด/ปปปป"
-                [(ngModel)]="hdr.startDate"
-                autocomplete="off"
-                [attr.readonly]="null"
-                id="startDate"
-                name="startDate"
-                [attr.required]="true">
+              <input type="text" placeholder="วว/ดด/ปปปป" [(ngModel)]="hdr.startDate" autocomplete="off" [attr.readonly]="null" id="startDate"
+                name="startDate" [attr.required]="true">
             </div>
           </div>
 
@@ -54,14 +48,8 @@
           <div class="ui calendar" id="example3">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input type="text"
-                placeholder="วว/ดด/ปปปป"
-                [(ngModel)]="hdr.endDate"
-                autocomplete="off"
-                [attr.readonly]="null"
-                id="endDate"
-                name="endDate"
-                [attr.required]="true">
+              <input type="text" placeholder="วว/ดด/ปปปป" [(ngModel)]="hdr.endDate" autocomplete="off" [attr.readonly]="null" id="endDate"
+                name="endDate" [attr.required]="true">
             </div>
           </div>
         </div>
@@ -111,7 +99,8 @@
         <div class="inline fields">
           <div class="six wide field">
             <label class="custom-label-w-19" style="text-align: right">ประเภท</label>
-            <select style="width: 100%" id="category" name="category" class="ui search dropdown" [ngModel]="data.category" (change)="onSelectDoc($event)" required>
+            <select style="width: 100%" id="category" name="category" class="ui search dropdown" [ngModel]="data.category" (change)="onSelectDoc($event)"
+              required>
               <option value="" style="color: grey">เลือกประเภทเอกสาร</option>
               <option *ngFor="let typeDoc of typeDocs; let i = index" value="{{i}}">
                 {{typeDoc}}
@@ -120,7 +109,8 @@
           </div>
           <div class="six wide field">
             <label class="custom-label-w-19" style="text-align: right">ระดับ</label>
-            <select style="width: 100%" id="degree" name="degree" class="ui search dropdown" [ngModel]="data.degree" (change)="onSelectTop($event)" required>
+            <select style="width: 100%" id="degree" name="degree" class="ui search dropdown" [ngModel]="data.degree" (change)="onSelectTop($event)"
+              required>
               <option value="" style="color: grey">เลือกระดับ</option>
               <option *ngFor="let top of topic; let i = index" value="{{i}}">
                 {{top}}
@@ -185,16 +175,10 @@
     </div>
     <div class="ui center aligned grid">
       <div class="eight wide column">
-        <button
-          class="ui mini yellow button"
-          type="submit"
-          *ngIf="status === 'edit'">
+        <button class="ui mini yellow button" type="submit" *ngIf="status === 'edit'">
           แก้ไข
         </button>
-        <button
-          class="ui mini green button"
-          type="submit"
-          *ngIf="status === 'create'">
+        <button class="ui mini green button" type="submit" *ngIf="status === 'create'">
           เพิ่ม
         </button>
         <button class="ui mini red button" type="button" (click)="clearData()">
@@ -205,53 +189,53 @@
     <br>
     <br>
 
-      <table id="tableData" class="ui small celled table" style="width: 100%">
-        <thead>
-          <tr style="text-align: center;">
-            <th rowspan="2"></th>
-            <th rowspan="2">ที่</th>
-            <th rowspan="2">ชื่อ</th>
-            <th rowspan="2">ตำแหน่ง</th>
-            <th colspan="2">ค่าเบี้ยเลี้ยง</th>
-            <th colspan="2">ค่าเช่าที่พัก</th>
-            <th rowspan="2">ค่าพาหนะ</th>
-            <th rowspan="2">ค่าใช้จ่ายอื่น</th>
-            <th rowspan="2">รวมเป็นเงิน</th>
-            <th rowspan="2">หมายเหตุ</th>
-            <th rowspan="2">Action</th>
-          </tr>
-          <tr style="text-align: center;">
-            <th style=" border-left: 1px solid rgba(34,36,38,.1);">วัน</th>
-            <th>จำนวนเงิน</th>
-            <th>วัน</th>
-            <th>จำนวนเงิน</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let d of detail; let i = index">
-            <td>
-              <div class="ui fitted checkbox">
-                <input (change)="selectedBox($event, i)" name="checked{{i}}" type="checkbox">
-                <label></label>
-              </div>
-            </td>
-            <td>{{i+1}}</td>
-            <td>{{d.name}} {{d.lastName}}</td>
-            <td>{{d.position}}</td>
-            <td>{{d.allowanceDate}}</td>
-            <td>{{getPrice(i, 'allowance')}}</td>
-            <td>{{d.rentDate}}</td>
-            <td>{{getPrice(i, d.restType)}}</td>
-            <td>{{d.travelCost}}</td>
-            <td>{{d.otherCost}}</td>
-            <td>{{totalCost(i)}}</td>
-            <td>{{d.note}}</td>
-            <td>
-              <button class="ui mini red button" type="button" (click)="editData(i)">แก้ไข</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <table id="tableData" class="ui small celled table" style="width: 100%">
+      <thead>
+        <tr style="text-align: center;">
+          <th rowspan="2"></th>
+          <th rowspan="2">ที่</th>
+          <th rowspan="2">ชื่อ</th>
+          <th rowspan="2">ตำแหน่ง</th>
+          <th colspan="2">ค่าเบี้ยเลี้ยง</th>
+          <th colspan="2">ค่าเช่าที่พัก</th>
+          <th rowspan="2">ค่าพาหนะ</th>
+          <th rowspan="2">ค่าใช้จ่ายอื่น</th>
+          <th rowspan="2">รวมเป็นเงิน</th>
+          <th rowspan="2">หมายเหตุ</th>
+          <th rowspan="2">Action</th>
+        </tr>
+        <tr style="text-align: center;">
+          <th style=" border-left: 1px solid rgba(34,36,38,.1);">วัน</th>
+          <th>จำนวนเงิน</th>
+          <th>วัน</th>
+          <th>จำนวนเงิน</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of detail; let i = index">
+          <td>
+            <div class="ui fitted checkbox">
+              <input (change)="selectedBox($event, i)" name="checked{{i}}" type="checkbox">
+              <label></label>
+            </div>
+          </td>
+          <td>{{i+1}}</td>
+          <td>{{d.name}} {{d.lastName}}</td>
+          <td>{{d.position}}</td>
+          <td>{{d.allowanceDate}}</td>
+          <td>{{getPrice(i, 'allowance')}}</td>
+          <td>{{d.rentDate}}</td>
+          <td>{{getPrice(i, d.restType)}}</td>
+          <td>{{d.travelCost}}</td>
+          <td>{{d.otherCost}}</td>
+          <td>{{totalCost(i)}}</td>
+          <td>{{d.note}}</td>
+          <td>
+            <button class="ui mini red button" type="button" (click)="editData(i)">แก้ไข</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <br>
     <div class="ui center aligned grid">
       <div class="eight wide column">
@@ -264,7 +248,7 @@
         <button class="ui mini primary button" type="button">
           ส่งออก
         </button>
-        <button class="ui mini primary button" type="button" routerLink="/int09-2">
+        <button class="ui mini primary button" type="button" routerLink="/int09/2">
           สัญญาการยืมเงิน
         </button>
       </div>

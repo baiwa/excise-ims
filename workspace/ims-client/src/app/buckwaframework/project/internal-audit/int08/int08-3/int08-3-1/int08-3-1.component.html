@@ -1,10 +1,10 @@
 <div class="ui grid">
-  <div class="sixteen wide column"> 
+  <div class="sixteen wide column">
 
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>สร้างกระดาษทำการประเมินความเสี่ยงความถี่การตรวจ	 </span>
-      </div>    
-  
+      <span>สร้างกระดาษทำการประเมินความเสี่ยงความถี่การตรวจ </span>
+    </div>
+
 
     <div class="ui attached segment">
       <div class="ui form">
@@ -22,7 +22,7 @@
 
       <div class="ui center aligned grid">
         <div class="sixteen wide column">
-          <button class="ui mini primary button"  (click)="popupEditData('#modalInt0831to2')">
+          <button class="ui mini primary button" (click)="popupEditData('#modalInt0831to2')">
             <i class="add  icon"></i>
             เพิ่มข้อมูล
           </button>
@@ -372,11 +372,11 @@
     <br>
     <div class="ui center aligned grid">
       <div class="sixteen wide column">
-        <button class="ui mini button" routerLink="/int08-3">
+        <button class="ui mini button" routerLink="/int08/3">
           <i class="arrow left icon"></i>
           ย้อนกลับ
         </button>
-        <button class="ui mini button" routerLink="/int08-3-2">
+        <button class="ui mini button" routerLink="/int08/3/2">
           ถัดไป
           <i class="arrow right icon"></i>
         </button>
@@ -500,10 +500,10 @@
   <div class="actions">
     <div class="ui center aligned grid">
       <div class="sixteen wide column">
-          <button class="ui mini primary button">
-              <i class="add icon"></i>
-              เพิ่ม
-            </button>
+        <button class="ui mini primary button">
+          <i class="add icon"></i>
+          เพิ่ม
+        </button>
         <button class="ui mini primary button width-100">
           <i class="save icon"></i>
           บันทึก
@@ -519,108 +519,107 @@
 
 
 <div id="modalInt0831to2" class="ui modal hidden transition">
-    <i class="close icon"></i>
-    <div class="header">
-      กำหนดเงื่อนไข RL และแปลงค่าประเมินความถี่การตรวจ
-    </div>
-  
-    <div class="content">
-      <div class="ui form">  
-          <div class="inline fields">    
-              <div class="five wide field "></div>
-              <div class="seven wide field ">
-                  <select id="selectColorto2" class="ui dropdown">
-                      <option value="0">สรรพสามิตภาคที่ 5  </option>
-                      <option value="1">สรรพสามิตภาคที่ 4  </option>
-                      <option value="2">สรรพสามิตภาคที่ 3  </option>
-                    </select>
-              </div>    
-            </div>
-            <div class="inline fields">    
-                <div class="five wide field "></div>
-                <div class="five wide field ">
-                    <select id="selectColorto3" class="ui dropdown">
-                        <option value="0">สรรพสามิตพื้นที่เชียงราย</option>
-                        <option value="1">สรรพสามิตพื้นที่เชียงใหม่</option>
-                        <option value="2">สรรพสามิตพื้นที่พะเยา</option>
-                      </select>
-                </div>    
-              </div>          
+  <i class="close icon"></i>
+  <div class="header">
+    กำหนดเงื่อนไข RL และแปลงค่าประเมินความถี่การตรวจ
+  </div>
 
-        <table id="tableSetting" class="ui small celled table" style="width: 100%;">
-          <thead>
-            <tr class="center aligned">
-              <th>ที่</th>
-              <th>สรรพสามิตภาค</th>
-              <th>สรรพสามิตพื้นที่ </th>
-              <th>สรรพสามิตพื้นที่สาขา </th>
-              <th>วันที่เริ่มตรวจ</th>
-              <th>วันที่ปิดตรวจ</th>
-           
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>            
-              <td>ภาค5</td>
-              <td>เชียงราย</td>
-              <td>เมืองเชียงราย</td>
-              <td> &nbsp;</td>
-              <td>&nbsp;</td>           
-             
-            </tr>
-
-            <tr>
-                <td>2</td>            
-                <td>ภาค5</td>
-                <td>เชียงราย</td>
-                <td>เชียงของ </td>
-                <td> &nbsp;</td>
-                <td>&nbsp;</td>           
-               
-              </tr>
-              <tr>
-                  <td>3</td>            
-                  <td>ภาค5</td>
-                  <td>เชียงราย</td>
-                  <td>แม่สาย</td>
-                  <td> &nbsp;</td>
-                  <td>&nbsp;</td>           
-                 
-                </tr>
-                <tr>
-                    <td>4</td>            
-                    <td>ภาค5</td>
-                    <td>เชียงราย</td>
-                    <td>เวียงป่าเป่า </td>
-                    <td> &nbsp;</td>
-                    <td>&nbsp;</td>           
-                   
-                  </tr>
-            
-          </tbody>
-        </table>
-  
-      </div>
-    </div>
-  
-    <div class="actions">
-      <div class="ui center aligned grid">
-        <div class="sixteen wide column">
-            <button class="ui mini primary button">
-                <i class="add icon"></i>
-                เพิ่ม
-              </button>
-          <button class="ui mini primary button width-100">
-            <i class="save icon"></i>
-            บันทึก
-          </button>
-          <button class="ui mini button width-100" (click)="closePopupEdit()">
-            <i class="close icon"></i>
-            ปิด
-          </button>
+  <div class="content">
+    <div class="ui form">
+      <div class="inline fields">
+        <div class="five wide field "></div>
+        <div class="seven wide field ">
+          <select id="selectColorto2" class="ui dropdown">
+            <option value="0">สรรพสามิตภาคที่ 5 </option>
+            <option value="1">สรรพสามิตภาคที่ 4 </option>
+            <option value="2">สรรพสามิตภาคที่ 3 </option>
+          </select>
         </div>
       </div>
+      <div class="inline fields">
+        <div class="five wide field "></div>
+        <div class="five wide field ">
+          <select id="selectColorto3" class="ui dropdown">
+            <option value="0">สรรพสามิตพื้นที่เชียงราย</option>
+            <option value="1">สรรพสามิตพื้นที่เชียงใหม่</option>
+            <option value="2">สรรพสามิตพื้นที่พะเยา</option>
+          </select>
+        </div>
+      </div>
+
+      <table id="tableSetting" class="ui small celled table" style="width: 100%;">
+        <thead>
+          <tr class="center aligned">
+            <th>ที่</th>
+            <th>สรรพสามิตภาค</th>
+            <th>สรรพสามิตพื้นที่ </th>
+            <th>สรรพสามิตพื้นที่สาขา </th>
+            <th>วันที่เริ่มตรวจ</th>
+            <th>วันที่ปิดตรวจ</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>ภาค5</td>
+            <td>เชียงราย</td>
+            <td>เมืองเชียงราย</td>
+            <td> &nbsp;</td>
+            <td>&nbsp;</td>
+
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>ภาค5</td>
+            <td>เชียงราย</td>
+            <td>เชียงของ </td>
+            <td> &nbsp;</td>
+            <td>&nbsp;</td>
+
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>ภาค5</td>
+            <td>เชียงราย</td>
+            <td>แม่สาย</td>
+            <td> &nbsp;</td>
+            <td>&nbsp;</td>
+
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>ภาค5</td>
+            <td>เชียงราย</td>
+            <td>เวียงป่าเป่า </td>
+            <td> &nbsp;</td>
+            <td>&nbsp;</td>
+
+          </tr>
+
+        </tbody>
+      </table>
+
     </div>
   </div>
 
+  <div class="actions">
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button">
+          <i class="add icon"></i>
+          เพิ่ม
+        </button>
+        <button class="ui mini primary button width-100">
+          <i class="save icon"></i>
+          บันทึก
+        </button>
+        <button class="ui mini button width-100" (click)="closePopupEdit()">
+          <i class="close icon"></i>
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
