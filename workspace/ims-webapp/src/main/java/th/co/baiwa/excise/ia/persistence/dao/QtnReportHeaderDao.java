@@ -18,6 +18,7 @@ public class QtnReportHeaderDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	private String sqlTemplate = " SELECT * FROM IA_QTN_REPORT_HEADER H WHERE 1 = 1 ";
+	
 	public List<QtnReportHeader> findByCriteria(QtnReportHeader qtnReportHeader) {
 		List<Object> paramList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlTemplate); 
@@ -55,7 +56,7 @@ public class QtnReportHeaderDao {
 
 	};
 	
-	public Integer CreateQtnReportHeader(QtnReportHeader qtnReportHeader){
+	public Integer createQtnReportHeader(QtnReportHeader qtnReportHeader){
 		List<Object> paramList = new ArrayList<Object>();
 		String sql = "INSERT INTO IA_QTN_REPORT_HEADER (QTN_REPORT_HDR_ID,QTN_REPORT_HDR_NAME,CREATOR,CREATED_BY,CREATED_DATETIME,UPDATE_BY,UPDATE_DATETIME) VALUES (IA_QTN_REPORT_HEADER_SEQ.nextval,?,?,?,?,?,?)";
 		paramList.add(qtnReportHeader.getQtnReportHdrName());
