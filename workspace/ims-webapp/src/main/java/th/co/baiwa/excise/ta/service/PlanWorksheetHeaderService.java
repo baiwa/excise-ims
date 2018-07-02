@@ -69,7 +69,8 @@ public class PlanWorksheetHeaderService {
 			planWorksheetHeader.setExciseOwnerArea(exciseRegistartionNumber.getExciseArea());
 			planWorksheetHeader.setProductType(exciseRegistartionNumber.getTaexciseProductType());
 			planWorksheetHeader.setExciseOwnerArea1(exciseRegistartionNumber.getTaexciseSectorArea());
-			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(exciseRegistartionNumber.getExciseId(), startBackDate, month);
+			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(
+					exciseRegistartionNumber.getExciseId(), startBackDate, month);
 			BigDecimal totalAmount = new BigDecimal(0);
 			int countReciveMonth = 0;
 			int firstMonth = 0;
@@ -158,9 +159,9 @@ public class PlanWorksheetHeaderService {
 
 	public ResponseDataTable<PlanWorksheetHeaderDetail> queryPlanWorksheetHeaderDetil(RequestFilterMapping vo) {
 		List<PlanWorksheetHeader> planWorksheetHeaderList;
-		if(BeanUtils.isEmpty(vo.getPaging()) || new Boolean(vo.getPaging())) {
+		if (BeanUtils.isEmpty(vo.getPaging()) || new Boolean(vo.getPaging())) {
 			planWorksheetHeaderList = planWorksheetHeaderDao.queryPlanWorksheetHeader(vo);
-		}else {
+		} else {
 			planWorksheetHeaderList = planWorksheetHeaderDao.queryPlanWorksheetHeaderFullDataNoPaging(vo);
 		}
 		List<PlanWorksheetHeaderDetail> PlanWorksheetHeaderDetailList = new ArrayList<PlanWorksheetHeaderDetail>();
@@ -272,42 +273,47 @@ public class PlanWorksheetHeaderService {
 
 	public List<String> getStartDateAndEndDateFromAnalysNumber(String analysNumber) {
 		List<String> valueList = planWorksheetHeaderDao.getStartDateAndEndDateFromAnalysNumber(analysNumber);
-		String countMonth = valueList != null ? valueList.size()+"" : "0";
+		String countMonth = valueList != null ? valueList.size() + "" : "0";
 		valueList = DateConstant.sortMonthShotList(valueList);
-        String startMonthDate = valueList.get(0);
-        String endMonthDate = valueList.get(valueList.size()-1);
-        String splitStart[] = startMonthDate.split(" ");
-        String splitEnd[] = endMonthDate.split(" ");
-        startMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitStart[0])]+" 25"+splitStart[1];
-        endMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitEnd[0])]+" 25"+splitEnd[1];
-        valueList = new ArrayList<String>();
-        valueList.add(startMonthDate);
-        valueList.add(endMonthDate);
-        String fromMonth = (Arrays.asList(DateConstant.monthShotName()).indexOf(splitEnd[0])+1)+"";
-        if(fromMonth.length() == 1) {
-        	fromMonth = "0"+fromMonth;
-        }
-        fromMonth+="/25"+splitEnd[1];
-        valueList.add(fromMonth);
-        valueList.add(countMonth);
-        
+		String startMonthDate = valueList.get(0);
+		String endMonthDate = valueList.get(valueList.size() - 1);
+		String splitStart[] = startMonthDate.split(" ");
+		String splitEnd[] = endMonthDate.split(" ");
+		startMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitStart[0])]
+				+ " 25" + splitStart[1];
+		endMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitEnd[0])]
+				+ " 25" + splitEnd[1];
+		valueList = new ArrayList<String>();
+		valueList.add(startMonthDate);
+		valueList.add(endMonthDate);
+		String fromMonth = (Arrays.asList(DateConstant.monthShotName()).indexOf(splitEnd[0]) + 1) + "";
+		if (fromMonth.length() == 1) {
+			fromMonth = "0" + fromMonth;
+		}
+		fromMonth += "/25" + splitEnd[1];
+		valueList.add(fromMonth);
+		valueList.add(countMonth);
+
 		return valueList;
 	}
-	
+
 	public String getWorkSheetNumber(String analysNumber) {
 		return planWorksheetHeaderDao.queryWorkSheetNumber(analysNumber);
 	}
-	
-	
+
 	public void updateStatusFlg(RequestFilterMapping vo) {
 		String workSheetNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-02-"
 				+ planWorksheetHeaderDao.getWorksheetNumber();
 		vo.setWorkShheetNumber(workSheetNumber);
 		planWorksheetHeaderDao.updateStatusFlg(vo);
 	}
-	
-//	public List<String> planWorkSheetHeader(RequestFilterMapping vo) {
-//		planWorksheetHeaderDao.updatePlanWorksheetHeaderFlag(vo.getFlag(), vo.getAnalysNumber(), vo.getExciseId());
-//	}
-	
+
+	public Integer updatePlanWorksheetHeaderByExciseList(RequestFilterMapping vo) {
+		int count = 0;
+		for (String exice : vo.getExiceList()) {
+			count += planWorksheetHeaderDao.updatePlanWorksheetHeaderFlag(vo.getFlag(), vo.getAnalysNumber(), exice);
+		}
+		return count;
+	}
+
 }

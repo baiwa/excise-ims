@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
@@ -24,44 +26,51 @@ import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 public class FilterExisePlanHeaderController {
 
 	private Logger logger = LoggerFactory.getLogger(FilterExisePlanHeaderController.class);
-	
+
 	@Autowired
-	private PlanWorksheetHeaderService planWorksheetHeaderService;	
-	
+	private PlanWorksheetHeaderService planWorksheetHeaderService;
+
 	@PostMapping("/list")
 	@ResponseBody
 	public ResponseDataTable<PlanWorksheetHeaderDetail> listdata(@ModelAttribute RequestFilterMapping vo) {
-		logger.debug("analysNumber : "+vo.getAnalysNumber());
+		logger.debug("analysNumber : " + vo.getAnalysNumber());
 		System.out.println(vo.getAnalysNumber());
 		return planWorksheetHeaderService.queryPlanWorksheetHeaderDetil(vo);
 	}
-	
+
 	@GetMapping("/getWorkSheetNumber/{id}")
 	@ResponseBody
 	public String getWorkSheetNumber(@PathVariable("id") String id) {
 		return planWorksheetHeaderService.getWorkSheetNumber(id);
 	}
-	
+
 	@PostMapping("/getStartEndDate")
 	@ResponseBody
 	public List<String> getStartDateAndEndDateFromAnalysNumber(@ModelAttribute PlanWorksheetHeaderDetail vo) {
-		logger.debug("analysNumber : "+vo.getAnalysNumber());
+		logger.debug("analysNumber : " + vo.getAnalysNumber());
 		return planWorksheetHeaderService.getStartDateAndEndDateFromAnalysNumber(vo.getAnalysNumber());
 	}
-	
+
 	@PostMapping("/updateStatusPlanWsHeader")
 	@ResponseBody
 	public void updateStatusPlanWsHeader(@ModelAttribute RequestFilterMapping vo) {
-		logger.debug("vo.getNum1() : "+vo.getNum1());
+		logger.debug("vo.getNum1() : " + vo.getNum1());
 		planWorksheetHeaderService.updateStatusFlg(vo);
 	}
-	
+
 	@PostMapping("/listFullDataNoPaging")
 	@ResponseBody
-	public  List<String> planWorkSheetHeader(@RequestBody RequestFilterMapping vo) {
-		logger.debug("analysNumber : "+vo.getFlag());
+	public Message planWorkSheetHeader(@RequestBody RequestFilterMapping vo) {
+		logger.debug("analysNumber : " + vo.getFlag());
+		int count = planWorksheetHeaderService.updatePlanWorksheetHeaderByExciseList(vo);
 		System.out.println(vo.getAnalysNumber());
-		return null;
+		Message msg = null;
+		if (count == 0) {
+			msg = ApplicationCache.getMessage("MSG_00003");
+		} else {
+			msg = ApplicationCache.getMessage("MSG_00002");
+		}
+		return msg;
 	}
 
 }

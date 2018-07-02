@@ -138,117 +138,6 @@ export class SendLineUserComponent implements OnInit {
 
   ngAfterViewInit() {}
 
-  // initDatatable(): void {
-
-  //     var d = new Date();
-  //     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
-  //     console.log(URL);
-  //     console.log(this.analysNumber);
-
-  //     this.sendLineUser = $('#sendLineUser').DataTable({
-  //         "lengthChange":false,
-  //         "searching":false,
-  //         "select":true,
-  //         "ordering":true,
-  //         "processing":true,
-  //         "serverSide":true,
-  //         "paging":false,
-  //         "ajax":{
-  //            "type":"POST",
-  //            "url":"/ims-webapp//filter/exise/list",
-  //            "data":{
-  //               "paging":false,
-  //               "flag":"N",
-  //               "productType":"",
-  //               "analysNumber":"25610627-01-00581"
-  //            }
-  //         },
-  //         "columns":[
-  //            {
-  //               "data":"worksheetHeaderId",
-  //               "className":"center"
-  //            },
-  //            {
-  //               "data":"exciseId",
-  //               "className":"center"
-  //            },
-  //            {
-  //               "data":"companyName"
-  //            },
-  //            {
-  //               "data":"companyName"
-  //            },
-  //            {
-  //               "data":"exciseOwnerArea"
-  //            },
-  //            {
-  //               "data":"firstMonth",
-  //               "className":"center"
-  //            },
-  //            {
-  //               "data":"lastMonth",
-  //               "className":"center"
-  //            },
-  //            {
-  //               "data":"percentage",
-  //               "className":"center"
-  //            },
-  //            {
-  //               "data":"totalMonth",
-  //               "className":"center"
-  //            },
-  //            {
-  //               "data":"no1"
-  //            },
-  //            {
-  //               "data":"no2"
-  //            },
-  //            {
-  //               "data":"no3"
-  //            },
-  //            {
-  //               "data":"exciseOwnerArea1"
-  //            },
-  //            {
-  //               "data":"productType"
-  //            },
-  //            {
-  //               "data":"factoryAddress"
-  //            },
-  //            {
-  //               "data":"registeredCapital"
-  //            },
-  //            {
-  //               "data":"status"
-  //            }
-  //         ]
-  //      });
-
-  //     // $(document).ready(function() {
-  //     //     $('#sendLineUser').DataTable( {
-  //     //         columnDefs: [ {
-  //     //             orderable: false,
-  //     //             className: 'select-checkbox',
-  //     //             targets:   0
-  //     //         } ],
-  //     //         select: {
-  //     //             style:    'os',
-  //     //             selector: 'td:first-child'
-  //     //         },
-  //     //         order: [[ 1, 'asc' ]]
-  //     //     } );
-  //     // } );
-  //     // on init table
-  //     $('#sendLineUser tbody tr').css({ "background-color": "white", "cursor": "pointer" });
-
-  //     // on click row
-  //     $('#sendLineUser tbody').on('click', 'tr', function () {
-  //         $("#exciseBtn").prop('disabled', false);
-  //         $('#sendLineUser tbody tr').css({ "background-color": "white", "cursor": "pointer" });
-  //         (<HTMLInputElement>document.getElementById("exciseId")).value = $(this).children().toArray()[1].innerHTML;
-  //         $(this).css("background-color", "rgb(197,217,241)");
-  //     });
-  // }
   initDatatable(): void {
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
     var sendLineUserCheckbox = (this.sendLineUser = $(
@@ -273,16 +162,6 @@ export class SendLineUserComponent implements OnInit {
         }
       },
       columns: [
-        // {
-        //     data:   "active",
-        //     render: function ( data, type, row ) {
-        //         if ( type === 'display' ) {
-        //             return '<input type="checkbox">';
-        //         }
-        //         return data;
-        //     },
-        //     className: "center"
-        // },
         {
           render: function(data, type, full, meta) {
             console.log(
@@ -363,34 +242,10 @@ export class SendLineUserComponent implements OnInit {
         // console.log("exciseId" + (i + 1) + ": ", this.exciseId);
         // console.log("analysNumber: ", this.analysNumber);
       }
-      //   else {
-      //     var unCheck = "''";
-      //   }
     } //end for loops
     console.log(this.exciseId);
 
     if (this.exciseId.length != 0) {
-      //   const URL =
-      //     AjaxService.CONTEXT_PATH + "filter/exise/listFullDataNoPaging";
-      //   $.post(
-      //     URL,
-      //     {
-      //       analysNumber: this.analysNumber,
-      //       exiceList: this.exciseId,
-      //       flag: "S"
-      //     },
-      //     function(data) {
-      //       var succ = data;
-      //       console.log(succ);
-      //       this.messageBarService.successModal(
-      //         "สร้างกระดาษทำการเรียบร้อยแล้ว",
-      //         "สำเร็จ"
-      //       );
-      //     }
-      //   ).fail(function() {
-      //     console.log("error");
-      //   });
-
       const URL = "filter/exise/listFullDataNoPaging";
       this.ajax.post(
         URL,
@@ -400,17 +255,20 @@ export class SendLineUserComponent implements OnInit {
           flag: "S"
         },
         res => {
-          var succ = res;
-          console.log(succ);
-          this.messageBarService.successModal(
-            "สร้างกระดาษทำการเรียบร้อยแล้ว",
-            "สำเร็จ"
-          );
+          var data = res.json();
+          // console.log(data.messageTh);
+          if (data.messageId == 3) {
+            this.messageBarService.successModal(data.messageTh, "สำเร็จ");
+            this.sendLineUser.destroy().draw();
+            this.initDatatable();
+          } else {
+            this.messageBarService.errorModal(data.messageTh, "เกิดข้อผิดพลาด");
+          }
         }
       );
     } else {
       this.messageBarService.errorModal(
-        "ไม่สามารถทำรายการได้",
+        "กรุณาเลือกข้อมูลอย่างน้อย 1 ชุด",
         "เกิดข้อผิดพลาด"
       );
     }
