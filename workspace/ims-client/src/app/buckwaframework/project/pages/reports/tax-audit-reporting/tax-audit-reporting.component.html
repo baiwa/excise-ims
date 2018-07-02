@@ -1,4 +1,4 @@
-<form class="ui grid" action="void(0)" style="margin: 2%" (submit)="onSubmit()" ngNativeValidate>
+<form class="ui grid" style="margin: 2%" (submit)="onSubmit($event)" ngNativeValidate>
     <div class="sixteen wide column segments">
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>จัดทำบันทึกข้อความ หนังสือราชการ และแบบ ตส.</span>
@@ -43,7 +43,7 @@
                         <i class="save icon"></i>
                         สร้างเอกสาร
                     </button>
-                    <button class="ui mini red button" type="button">
+                    <button class="ui mini red button" (click)="onDiscard(false)" type="reset">
                         <i class="times icon"></i>
                         ยกเลิก
                     </button>
