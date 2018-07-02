@@ -109,4 +109,9 @@ public class NumberUtils {
 		}
 		return result;
 	}
+	
+	public static String toStringFormat(Long number,String format) {
+		DecimalFormat formatter = new DecimalFormat(format);
+		return formatter.format(number);
+	}
 }

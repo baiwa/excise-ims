@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.ia.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,7 @@ public class Int02Controller {
 	private Logger logger = LoggerFactory.getLogger(Int02Controller.class);
 	
 	@Autowired
-	private QtnReportHeaderService QtnReportHeaderService;
+	private QtnReportHeaderService qtnReportHeaderService;
 
 	
 	
@@ -31,12 +33,21 @@ public class Int02Controller {
 	public Message addHeaderQuestionnaire(@RequestBody QtnReportHeader qtnReportHeader) {
 		logger.info("Add QtnReportHeader");
 		Message message = null;
-		Integer insertCountRow = QtnReportHeaderService.CreateQtnReportHeader(qtnReportHeader);
+		Integer insertCountRow = qtnReportHeaderService.createQtnReportHeader(qtnReportHeader);
 		if(BeanUtils.isNotEmpty(insertCountRow) && insertCountRow.intValue() == 1) {
 			message = ApplicationCache.getMessage("MSG_00002");
 		}else {
 			message = ApplicationCache.getMessage("MSG_00003");
 		}
 		return message;
+	}
+	@PostMapping("/queryQtnReportHeaderByCriteria")
+	@ResponseBody
+	public List<QtnReportHeader> queryQtnReportHeaderByCriteria() {
+		logger.info("queryQtnReportHeaderByCriteria");
+		
+		List<QtnReportHeader> qtnReportHeaderList = qtnReportHeaderService.findByCriteria(new QtnReportHeader());
+		logger.info("qtnReportHeaderList value :"+ qtnReportHeaderList.size());
+		return qtnReportHeaderList;
 	}
 }
