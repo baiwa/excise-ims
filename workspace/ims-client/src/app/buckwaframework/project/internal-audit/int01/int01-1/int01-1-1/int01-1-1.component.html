@@ -3,9 +3,9 @@
         <h2 class="ui header">สร้างกระดาษทำการ ภาษีสรรพสามิต</h2>
 
         <div class="ui top attached header">
-            <span>  ข้อมูลกระดาษทำการภาษีสรรพสามิต</span>
+            <span> ข้อมูลกระดาษทำการภาษีสรรพสามิต</span>
         </div>
-      													
+
 
         <div class="ui attached segment">
             <div class="ui form">
@@ -16,21 +16,21 @@
                             <input type="text" placeholder="MM/YYYY" value="ตุลาคม 2560">
                             <i class="add to calendar icon"></i>
                         </div>
-                    </div>                  
+                    </div>
                     <div class="six wide field required">
-                            <label class="custom-label-w-10">หน่วยรับตรวจ   </label>
-                            <select class="ui dropdown" [ngModel]="selectedProduct" (ngModelChange)="onChange($event)">
-                                <option *ngFor="let item of productList; index as i;" value="{{item.value}}">{{item.value}}</option>
-                            </select>
-                        </div>
-                      
+                        <label class="custom-label-w-10">หน่วยรับตรวจ </label>
+                        <select class="ui dropdown" [ngModel]="selectedProduct" (ngModelChange)="onChange($event)">
+                            <option *ngFor="let item of productList; index as i;" value="{{item.value}}">{{item.value}}</option>
+                        </select>
+                    </div>
+
 
                     <div class="five wide field required">
                         <label class="custom-label-w-20">ผู้ตรวจ</label>
-                        <input type="text"  value="">
+                        <input type="text" value="">
                     </div>
                 </div>
-                
+
 
                 <div class="inline fields">
                     <div class="four wide required field">
@@ -44,21 +44,16 @@
                         <label class="custom-label-w-10">Prefix ใบเสร็จ</label>
                         <input type="text" value="C06010160/00">
                     </div>
-                   
+
                 </div>
 
                 <div class="ui center aligned grid">
                     <div class="eight wide column">
-                        <a class="ui mini primary button" routerLink='/int01-1-2'><i class="add icon"></i>สร้างกระดาษทำการ</a>
+                        <a class="ui mini primary button" routerLink='/int01/1/2'>
+                            <i class="add icon"></i>สร้างกระดาษทำการ</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-              
-
-         
-
