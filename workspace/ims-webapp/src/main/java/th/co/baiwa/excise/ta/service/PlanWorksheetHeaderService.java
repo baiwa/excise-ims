@@ -306,4 +306,8 @@ public class PlanWorksheetHeaderService {
 		planWorksheetHeaderDao.updateStatusFlg(vo);
 	}
 	
+//	public List<String> planWorkSheetHeader(RequestFilterMapping vo) {
+//		planWorksheetHeaderDao.updatePlanWorksheetHeaderFlag(vo.getFlag(), vo.getAnalysNumber(), vo.getExciseId());
+//	}
+	
 }

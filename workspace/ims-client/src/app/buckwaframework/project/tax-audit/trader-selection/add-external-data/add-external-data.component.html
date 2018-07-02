@@ -13,8 +13,7 @@
                     </div>
                     <div class="six wide field">
                         <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
-                        <select class="ui dropdown" name="analysNumbers" id="analysNumbers" [(ngModel)]="analysNumber" (change)="selectAnalysNumbers()"
-                            *ngIf="analysNumberArr !== ''">
+                        <select class="ui dropdown" name="analysNumbers" id="analysNumbers" [(ngModel)]="analysNumber" (change)="selectAnalysNumbers()" *ngIf="analysNumberArr !== ''">
                             <option *ngFor="let list of analysNumberArr" ng-value="list">{{list}}</option>
                         </select>
                         <input value="{{analysNumber}}" readonly="" *ngIf="analysNumberArr === ''" class="custom-readonly">
@@ -104,7 +103,7 @@
                         </div>
                         <div class="item">
                             <div class="menu">
-                                <a class="item" routerLink="/send-line-user">- กดส่งรายให้ภาคพื้นที่</a>
+                                <a class="item" (click)="sendLineUserValues()" routerLink="/add-external-data/send-line-user">- กดส่งรายให้ภาคพื้นที่</a>
                             </div>
                         </div>
                     </div>

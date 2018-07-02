@@ -17,6 +17,7 @@ export class ExciseService {
     private month: any;
     private currYear: number;
     private prevYear: number;
+    private workSheetNumber: number;
 
     constructor(
         private ajax: AjaxService
@@ -72,7 +73,7 @@ export class ExciseService {
         }
     }
 
-    setformValues(before, last, from, month, currYear, prevYear){
+    setformValues(before, last, from, month, currYear, prevYear) {
         this.before = before;
         this.last = last;
         this.from = from;
@@ -81,7 +82,7 @@ export class ExciseService {
         this.prevYear = prevYear;
     }
 
-    getformValues(){
+    getformValues() {
         return {
             before: this.before,
             last: this.last,
@@ -92,7 +93,7 @@ export class ExciseService {
         };
     }
 
-    setformNumber(num1, num2, percent1, percent2, analysNumber){
+    setformNumber(num1, num2, percent1, percent2, analysNumber) {
         this.num1 = num1;
         this.num2 = num2;
         this.percent1 = percent1;
@@ -100,13 +101,37 @@ export class ExciseService {
         this.analysNumber = analysNumber;
     }
 
-    getformNumber(){
+    getformNumber() {
         return {
-            num1: this.num1 ,
-            num2: this.num2 ,
-            percent1: this.percent1 ,
-            percent2: this.percent2 ,
+            num1: this.num1,
+            num2: this.num2,
+            percent1: this.percent1,
+            percent2: this.percent2,
             analysNumber: this.analysNumber
+        };
+    }
+
+    setToSendlineUser(before, last, analysNumber, workSheetNumber, from, month, currYear) {
+
+        this.before = before;
+        this.last = last;
+        this.analysNumber = analysNumber;
+        this.workSheetNumber = workSheetNumber;
+        this.from = from;
+        this.month = month;
+        this.currYear = currYear;
+    }
+
+    getToSendlineUser() {
+        return {
+            before: this.before,
+            last: this.last,
+            analysNumber: this.analysNumber,
+            workSheetNumber: this.workSheetNumber,
+            from: this.from,
+            month: this.month,
+            currYear: this.currYear
+
         };
     }
 
