@@ -233,6 +233,9 @@
 </div>
 
 <div class="ui main container">
+    <div class="ui active inverted dimmer" *ngIf="loading">
+        <div class="ui text loader">Loading</div>
+    </div>
     <message-bar></message-bar>
     <router-outlet></router-outlet>
 </div>

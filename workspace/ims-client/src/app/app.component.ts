@@ -1,5 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import {
+  Router,
+  NavigationEnd,
+  NavigationCancel,
+  NavigationStart
+} from "@angular/router";
 
 // services
 import { AuthService } from "./buckwaframework/common/services/auth.service";
@@ -18,7 +23,7 @@ declare var $: any;
 })
 export class AppComponent implements OnInit {
   user: User;
-
+  loading: boolean;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -36,6 +41,16 @@ export class AppComponent implements OnInit {
 
   ngAfterViewInit() {
     $(".dropdown").dropdown();
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.loading = true;
+      } else if (
+        event instanceof NavigationEnd ||
+        event instanceof NavigationCancel
+      ) {
+        this.loading = false;
+      }
+    });
   }
 
   changeToEnglish() {
