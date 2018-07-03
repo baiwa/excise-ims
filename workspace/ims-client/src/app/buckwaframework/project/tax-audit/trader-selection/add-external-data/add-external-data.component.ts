@@ -24,6 +24,8 @@ export class AddExternalDataComponent implements OnInit {
   coordinatesArr: any;
   workSheetNumber: any;
   curr: any;
+  sector: any;
+  sectorArr: any;
 
   constructor(
     private ex: ExciseService,
@@ -39,9 +41,15 @@ export class AddExternalDataComponent implements OnInit {
   ngOnInit() {
     $("#exciseBtn").prop("disabled", true);
 
-    const URL = "working/test/getCoordinates";
+    //get coordinates in select option
+    const URL = "combobox/controller/getCoordinates";
     this.ajax.post(URL, {}, res => {
       this.coordinatesArr = res.json();
+    });
+    //get Sector in select option
+    const URL2 = "combobox/controller/getSector";
+    this.ajax.post(URL2, {}, res => {
+      this.sectorArr = res.json();
     });
 
     if (this.ex.getformNumber().analysNumber !== undefined) {
@@ -60,7 +68,7 @@ export class AddExternalDataComponent implements OnInit {
 
       this.initDatatable();
     } else {
-      const analysUrl = "working/test/getAnalysNumber";
+      const analysUrl = "combobox/controller/getAnalysNumber";
       this.ajax
         .post(analysUrl, {}, res => {
           this.analysNumberArr = res.json();
@@ -95,6 +103,8 @@ export class AddExternalDataComponent implements OnInit {
       ' "productType": "' +
       (this.coordinates == undefined ? "" : this.coordinates) +
       '", ';
+    json +=
+      ' "sector": "' + (this.sector == undefined ? "" : this.sector) + '", ';
     json += ' "analysNumber": "' + this.analysNumber + '" ';
     json += " } ";
     json += " }, ";
@@ -183,6 +193,12 @@ export class AddExternalDataComponent implements OnInit {
     this.initDatatable();
   };
 
+  changeSector = () => {
+    this.sector = (<HTMLInputElement>document.getElementById("sector")).value;
+    this.userManagementDt.destroy();
+    this.initDatatable();
+  };
+
   directAccess = (withOut?: any) => {
     const headerUrl = AjaxService.CONTEXT_PATH + "filter/exise/getStartEndDate";
     let analysNumber: any;
@@ -201,7 +217,7 @@ export class AddExternalDataComponent implements OnInit {
 
       var currDate = new Date();
       var currYear = currDate.getFullYear() + 543;
-      
+
       this.curr = currYear;
       this.createTH(currYear);
 
@@ -218,10 +234,18 @@ export class AddExternalDataComponent implements OnInit {
   };
 
   sendLineUserValues = () => {
-    this.ex.setToSendlineUser(this.before, this.last, this.analysNumber, this.workSheetNumber, this.from, this.month, this.curr);
-  }
+    this.ex.setToSendlineUser(
+      this.before,
+      this.last,
+      this.analysNumber,
+      this.workSheetNumber,
+      this.from,
+      this.month,
+      this.curr
+    );
+  };
 
-  createTH = (currYear) => {
+  createTH = currYear => {
     //split function
     var from_split = this.from.split("/");
 

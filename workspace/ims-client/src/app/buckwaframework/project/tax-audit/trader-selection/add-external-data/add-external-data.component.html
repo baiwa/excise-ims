@@ -67,8 +67,9 @@
                         <div class="inline fields">
                             <div class="sixteen wide field">
                                 <label style="width: 5em;">ภาค</label>
-                                <select class="ui dropdown">
-                                    <option value=""></option>
+                                <select class="ui dropdown" name="sector" id="sector" (change)="changeSector()">
+                                    <option value="">ทั้งหมด</option>
+                                    <option *ngFor="let list of sectorArr">{{list.value1}}</option>
                                 </select>
                             </div>
                         </div>
@@ -97,8 +98,8 @@
                         </div>
                         <div class="item">
                             <div class="menu">
-                                <a class="item hover {{(flag == 'N' || flag == '') && 'active'}}" (click)="FlagN()">- รายที่อยู่ในเงื่อนไข</a>
-                                <a class="item hover {{flag == 'NOT N' && 'active'}}" (click)="FlagNotN()">- รายที่ไม่อยู่ในเงื่อนไข</a>
+                                <a class="item hover {{(flag == 'N' || flag == '') && 'active'}}" (click)="FlagN()">- รายที่ไม่อยู่ในเงื่อนไข</a>
+                                <a class="item hover {{flag == 'NOT N' && 'active'}}" (click)="FlagNotN()">- รายที่อยู่ในเงื่อนไข</a>
                             </div>
                         </div>
                         <div class="item">

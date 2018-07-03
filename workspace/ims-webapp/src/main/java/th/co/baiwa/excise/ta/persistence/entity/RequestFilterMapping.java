@@ -17,6 +17,7 @@ public class RequestFilterMapping extends DataTableRequest{
 	private String productType;
 	private String exciseId;
 	private List<String> exiceList;
+	private String sector;
 	
 	public String getAnalysNumber() {
 		return analysNumber;
@@ -83,6 +84,12 @@ public class RequestFilterMapping extends DataTableRequest{
 	}
 	public void setExiceList(List<String> exiceList) {
 		this.exiceList = exiceList;
+	}
+	public String getSector() {
+		return sector;
+	}
+	public void setSector(String sector) {
+		this.sector = sector;
 	}
 	
 }
