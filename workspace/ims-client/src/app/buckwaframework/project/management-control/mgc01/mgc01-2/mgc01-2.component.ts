@@ -15,7 +15,7 @@ export class Mgc012Component implements AfterViewInit {
 
   ngAfterViewInit() {
     this.canvas = document.getElementById('myChart2');
-    this.ctx = this.canvas.getContext('2d');
+     this.ctx = this.canvas.getContext('2d');
     let myChart = new Chart(this.ctx, {
         type: "bar",
         data: {
