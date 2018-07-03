@@ -64,8 +64,9 @@
                         <div class="inline fields">
                             <div class="sixteen wide field">
                                 <label style="width: 5em;">ภาค</label>
-                                <select class="ui dropdown">
-                                    <option value=""></option>
+                                <select class="ui dropdown" name="sector" id="sector" (change)="changeSector()">
+                                    <option value="">ทั้งหมด</option>
+                                    <option *ngFor="let list of sectorArr">{{list.value1}}</option>
                                 </select>
                             </div>
                         </div>

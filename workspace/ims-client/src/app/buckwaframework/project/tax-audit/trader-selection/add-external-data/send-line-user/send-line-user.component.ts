@@ -27,6 +27,8 @@ export class SendLineUserComponent implements OnInit {
   coordinatesArr: any;
   workSheetNumber: any;
   exciseId: any[];
+  sector: any;
+  sectorArr: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,9 +41,16 @@ export class SendLineUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    const URL = "working/test/getCoordinates";
+    //get coordinates in select option
+    const URL = "combobox/controller/getCoordinates";
     this.ajax.post(URL, {}, res => {
       this.coordinatesArr = res.json();
+    });
+
+    //get Sector in select option
+    const URL2 = "combobox/controller/getSector";
+    this.ajax.post(URL2, {}, res => {
+      this.sectorArr = res.json();
     });
 
     //call ExciseService
@@ -157,23 +166,24 @@ export class SendLineUserComponent implements OnInit {
         data: {
           paging: false,
           flag: "N",
-          productType: "",
-          analysNumber: this.analysNumber
+          productType: this.coordinates == undefined ? "" : this.coordinates,
+          analysNumber: this.analysNumber,
+          sector: this.sector
         }
       },
       columns: [
         {
           render: function(data, type, full, meta) {
-            console.log(
-              "data: ",
-              data,
-              "type",
-              type,
-              "full",
-              full,
-              "meta",
-              meta.row
-            );
+            // console.log(
+            //   "data: ",
+            //   data,
+            //   "type",
+            //   type,
+            //   "full",
+            //   full,
+            //   "meta",
+            //   meta.row
+            // );
             return `<input type="checkbox" name="chk${meta.row}" id="chk${
               meta.row
             }" value="${$("<div/>")
@@ -278,6 +288,12 @@ export class SendLineUserComponent implements OnInit {
     this.coordinates = (<HTMLInputElement>(
       document.getElementById("coordinates")
     )).value;
+    this.sendLineUser.destroy();
+    this.initDatatable();
+  };
+
+  changeSector = () => {
+    this.sector = (<HTMLInputElement>document.getElementById("sector")).value;
     this.sendLineUser.destroy();
     this.initDatatable();
   };

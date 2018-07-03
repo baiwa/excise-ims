@@ -168,6 +168,12 @@ public class PlanWorksheetHeaderDao {
 			sql.append(" AND H.PRODUCT_TYPE = ? ");
 			valueList.add(vo.getProductType());
 		}
+		
+		if (BeanUtils.isNotEmpty(vo.getSector())) {
+			sql.append(" AND H.EXCISE_OWNER_AREA_1 = ? ");
+			valueList.add(vo.getSector());
+		}
+		
 		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
@@ -235,6 +241,12 @@ public class PlanWorksheetHeaderDao {
 			sql.append(" AND H.PRODUCT_TYPE = ? ");
 			valueList.add(vo.getProductType());
 		}
+		
+		if (BeanUtils.isNotEmpty(vo.getSector())) {
+			sql.append(" AND H.EXCISE_OWNER_AREA_1 = ? ");
+			valueList.add(vo.getSector());
+		}
+		
 		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());

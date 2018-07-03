@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.MockupVo;
@@ -50,22 +51,6 @@ public class MockupController {
 		date.set(Integer.parseInt(fulldate[1]), Integer.parseInt(fulldate[0]), 1);
 		int month = input.getMonth() != null ? input.getMonth() : 0;
 		return planWorksheetHeaderService.insertPlanWorksheetHeaderService(vo,date.getTime(), month,input.getExciseProductType());
-		
-	}
-	
-	@PostMapping("/getAnalysNumber")
-	@ResponseBody
-	public List<String> getAnalizeNumber() {
-		List<String> li = planWorksheetHeaderService.queryAnalysNumberFromHeader();
-		return li;
-	}
-	
-	@PostMapping("/getCoordinates")
-	@ResponseBody
-	public List<Lov> getCoordinates() {
-		Lov lov = new Lov("PRODUCT_TYPE");
-		List<Lov> li = listOfValueService.queryLovByCriteria(lov, "VALUE1");
-		return li;
 	}
 	
 }
