@@ -20,7 +20,7 @@ public class Int09Controller {
 	@PostMapping("/create")
 	@ResponseBody
 	public TravelCostWsIntegrate create(@RequestBody  TravelCostWsIntegrate travelCostWorkSheetHeader) {
-	System.out.println(travelCostWorkSheetHeader.getDepartmentName());
+		int09Service.createTravelCostService(travelCostWorkSheetHeader);
 		return travelCostWorkSheetHeader;
 	}
 	
