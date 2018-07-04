@@ -1,10 +1,8 @@
 package th.co.baiwa.excise.ia.persistence.dao;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireHeader;
 import th.co.baiwa.excise.ia.persistence.entity.TravelCostWorkSheetHeader;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Repository
 public class TravelCostWorkSheetHeaderDao {
