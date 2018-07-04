@@ -242,7 +242,7 @@
         <button class="ui mini red button" type="button" (click)="deleteData()">
           ลบ
         </button>
-        <button class="ui  disabled mini primary button" type="button" (click)="onSubmit()" >
+        <button class="ui {{detail.length==0&&'disabled'}} mini primary button" type="button" (click)="onSubmit()"  >
           บันทึก
         </button>
         <button class="ui mini primary button" type="button">
