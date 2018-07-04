@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,15 @@ public class Int09Service {
 	private TravelCostWsDetailDao travelCostWsDetailDao;	
 	
 	public void createTravelCostService(TravelCostWsIntegrate travelCostWsIntegrate ){
-		// query success
 		if (travelCostWorkSheetHeaderDao.insertTravelCostWorksheetHeader(travelCostWsIntegrate) > 0) {
-			// travelCostWsDetailDao.insertTravelCostWsDetails(travelCostWsIntegrate.getDetail());
 			List<TravelCostWorkSheetHeader> header= travelCostWorkSheetHeaderDao.queryTravelCostWorksheetHeader();
 			if (header.toArray().length > 0) {
-				for(TravelCostWsDetail travel: travelCostWsIntegrate.getDetail()) {
-					travel.setHeaderId(header.get(0).getWorkSheetHeaderId().toString());
-					travelCostWsDetailDao.insertTravelCostWsDetail(travel);
+				List<TravelCostWsDetail> travel = new ArrayList<TravelCostWsDetail>();
+				for(TravelCostWsDetail t: travelCostWsIntegrate.getDetail()) {
+					t.setHeaderId(header.get(0).getWorkSheetHeaderId().toString());
+					travel.add(t);
 				}
+				travelCostWsDetailDao.insertTravelCostWsDetail(travel);
 			}
 		}
 	}
