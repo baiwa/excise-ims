@@ -46,13 +46,11 @@ public class PlanWorksheetHeaderService {
 	@Autowired
 	private ExciseTaxReceiveDao exciseTaxReceiveDao;
 
-	public String insertPlanWorksheetHeaderService(MockupVo mockupVo, Date startBackDate, int month,
-			String productType) {
+	public String insertPlanWorksheetHeaderService(MockupVo mockupVo, Date startBackDate, int month,String productType) {
 
 		logger.info("PlanWorksheetHeaderService.insertPlanWorksheetHeaderService");
 		List<String> monthNameList = DateConstant.startBackDate(startBackDate, month);
-		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-01-"
-				+ planWorksheetHeaderDao.getAnalysNumber();
+		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-01-"+ planWorksheetHeaderDao.getAnalysNumber();
 		Date saveDate = new Date();
 		logger.info("get analysNumber : " + analysNumber);
 		PlanWorksheetHeader planWorksheetHeader = null;
@@ -67,10 +65,12 @@ public class PlanWorksheetHeaderService {
 			planWorksheetHeader.setFactoryName(exciseRegistartionNumber.getExciseFacName());
 			planWorksheetHeader.setFactoryAddress(exciseRegistartionNumber.getIndustrialAddress());
 			planWorksheetHeader.setExciseOwnerArea(exciseRegistartionNumber.getExciseArea());
+			planWorksheetHeader.setExciseOwnerArea(exciseRegistartionNumber.getExciseArea());
 			planWorksheetHeader.setProductType(exciseRegistartionNumber.getTaexciseProductType());
 			planWorksheetHeader.setExciseOwnerArea1(exciseRegistartionNumber.getTaexciseSectorArea());
-			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(
-					exciseRegistartionNumber.getExciseId(), startBackDate, month);
+			planWorksheetHeader.setMonthDate(mockupVo.getStartBackDate());
+			planWorksheetHeader.setFullMonth(new BigDecimal(month));
+			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(exciseRegistartionNumber.getExciseId(), startBackDate, month);
 			BigDecimal totalAmount = new BigDecimal(0);
 			int countReciveMonth = 0;
 			int firstMonth = 0;
@@ -314,6 +314,13 @@ public class PlanWorksheetHeaderService {
 			count += planWorksheetHeaderDao.updatePlanWorksheetHeaderFlag(vo.getFlag(), vo.getAnalysNumber(), exice);
 		}
 		return count;
+	}
+	
+	public List<String> getProductionInProcessByMonthAndBackDate(MockupVo mockupVo, Date startBackDate, int month){
+		PlanWorksheetHeader planWorksheetHeader = new PlanWorksheetHeader();
+		planWorksheetHeader.setMonthDate(mockupVo.getStartBackDate());
+		planWorksheetHeader.setFullMonth(new BigDecimal(month));
+		return planWorksheetHeaderDao.queryProductTypeList(planWorksheetHeader);
 	}
 
 }

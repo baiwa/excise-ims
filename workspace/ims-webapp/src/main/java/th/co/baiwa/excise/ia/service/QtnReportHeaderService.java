@@ -6,11 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.preferences.persistence.dao.SEQDao;
+import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.dao.QtnReportHeaderDao;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
-import th.co.baiwa.excise.utils.NumberUtils;
 
  
 @Service
@@ -20,8 +20,7 @@ public class QtnReportHeaderService {
 	@Autowired
 	private QtnReportHeaderDao qtnReportHeaderDao;
 	
-	@Autowired
-	private SEQDao seqDao;
+	
 	
 	public List<QtnReportHeader> findByCriteria(QtnReportHeader qtnReportHeader) {
 		return qtnReportHeaderDao.findByCriteria(qtnReportHeader);
@@ -33,6 +32,21 @@ public class QtnReportHeaderService {
 		qtnReportHeader.setCreatedBy(UserLoginUtils.getCurrentUsername());
 		qtnReportHeader.setCreatedDatetime(new Date());
 		return qtnReportHeaderDao.createQtnReportHeader(qtnReportHeader);
+	}
+	
+	
+	public ResponseDataTable<QtnReportHeader> findByCriteriaForDatatable(QtnReportHeader qtnReportHeader , DataTableRequest dataTableRequest) {
+		
+		ResponseDataTable<QtnReportHeader> responseDataTable = new ResponseDataTable<QtnReportHeader>();
+		List<QtnReportHeader> qtnReportHeaderList = qtnReportHeaderDao.findByCriteriaDataTable(qtnReportHeader, dataTableRequest.getStart().intValue(), dataTableRequest.getLength().intValue());
+		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
+		long count = qtnReportHeaderDao.countQtnReportHeader(qtnReportHeader);
+		responseDataTable.setData(qtnReportHeaderList);
+		responseDataTable.setRecordsTotal((int) count);
+		responseDataTable.setRecordsFiltered((int) count);
+		return responseDataTable;
+				
+				
 	}
 	
 	

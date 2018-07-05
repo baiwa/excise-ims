@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ExciseService } from '../../../../common/services/excise.service';
-import { AjaxService } from '../../../../common/services/ajax.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { ExciseService } from "../../../../common/services/excise.service";
+import { AjaxService } from "../../../../common/services/ajax.service";
+import { Router, ActivatedRoute, Params } from "@angular/router";
+import { MessageBarService } from "../../../../common/services/message-bar.service";
 
-import { TextDateTH, digit } from '../../../../common/helper/datepicker';
-import { window } from 'rxjs/operators';
+import { TextDateTH, digit } from "../../../../common/helper/datepicker";
+import { window } from "rxjs/operators";
 declare var jQuery: any;
 declare var $: any;
 @Component({
-  selector: 'app-analyst-basic-data-trader',
-  templateUrl: './analyst-basic-data-trader.component.html',
-  styleUrls: ['./analyst-basic-data-trader.component.css']
+  selector: "app-analyst-basic-data-trader",
+  templateUrl: "./analyst-basic-data-trader.component.html",
+  styleUrls: ["./analyst-basic-data-trader.component.css"]
 })
 export class AnalystBasicDataTraderComponent implements OnInit {
   listMenu: any[] = [];
@@ -24,28 +25,44 @@ export class AnalystBasicDataTraderComponent implements OnInit {
   private prevYear: any;
   exciseProductType: any;
   onLoading: boolean;
-  
+  numbers: number[];
+  font: number[];
+  back: number[];
+  firstNumber: any;
+  lastNumber: any;
+
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
+    private messageBarService: MessageBarService,
     private router: Router,
     private ex: ExciseService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this.listMenu = ["รวม"
-      , "น้ำมัน"
-      , "เครื่องดื่ม"
-      , "ยาสูบ"
-      , "ไพ่"
-      , "แก้วและเครื่องแก้ว"
-      , "รถยนต์"
-      , 'พรมและสิ่งทอปูพื้น'
-      , "แบตเตอรี่"
-      , "ไนท์คลับและดิสโกเธค"
-      , "สถานอาบน้ำหรืออบตัวและนวด"
-      , "สนามแข่งม้า"
-      , 'สนามกอล์ฟ'];
+    this.listMenu = [
+      "รวม",
+      "น้ำมัน",
+      "เครื่องดื่ม",
+      "ยาสูบ",
+      "ไพ่",
+      "แก้วและเครื่องแก้ว",
+      "รถยนต์",
+      "พรมและสิ่งทอปูพื้น",
+      "แบตเตอรี่",
+      "ไนท์คลับและดิสโกเธค",
+      "สถานอาบน้ำหรืออบตัวและนวด",
+      "สนามแข่งม้า",
+      "สนามกอล์ฟ"
+    ];
+
+    this.numbers = [1];
+    console.log(this.numbers);
+    this.back = [];
+    this.font = [];
+    for (let i = 0; i < 3; i++) {
+      this.back.push(0);
+      this.font.push(0);
+    }
 
     this.exciseProductType = "";
     // subscribe to router event
@@ -73,62 +90,110 @@ export class AnalystBasicDataTraderComponent implements OnInit {
         m = 12;
         yy = yy - 1;
       }
-      items.push('<th style="text-align: center !important">' + TextDateTH.monthsShort[m - 1] + ' ' + (yy + "").substr(2) + '</th>');
-
+      items.push(
+        '<th style="text-align: center !important">' +
+          TextDateTH.monthsShort[m - 1] +
+          " " +
+          (yy + "").substr(2) +
+          "</th>"
+      );
     }
     for (var i = items.length - 1; i >= 0; i--) {
       trHeaderColumn += items[i];
     }
-    document.getElementById('trDrinamic').innerHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> '
-      + '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> '
-      + '<th rowspan="2" style="text-align: center !important">พื้นที่</th> '
-      + '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> '
-      + '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> '
-      + '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> '
-      + '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ภาค</th> '
-      + '<th rowspan="2" style="text-align: center !important">พิกัด</th> '
-      + '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> '
-      + '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> '
-      + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนแรก</th> '
-      + '<th colspan="' + (this.month / 2) + '" style="text-align: center !important">การชำระภาษี ' + (this.month / 2) + ' เดือนหลัง </th> '
-      + '</tr>'
-      + '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' + this.month / 2 + ' เดือนแรก</th>'
-      + '<th style="text-align: center !important">' + this.month / 2 + ' เดือนหลัง </th>'
-      + '<th style="text-align: center !important">' + (currYear - 3) + '</th>'
-      + '<th style="text-align: center !important">' + (currYear - 2) + '</th>'
-      + '<th style="text-align: center !important">' + (currYear - 1) + '</th>'
-      + trHeaderColumn + '</tr>';
+    document.getElementById("trDrinamic").innerHTML =
+      '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
+      '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
+      '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
+      '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
+      '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> ' +
+      '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
+      '<th colspan="' +
+      this.month / 2 +
+      '" style="text-align: center !important">การชำระภาษี ' +
+      this.month / 2 +
+      " เดือนแรก</th> " +
+      '<th colspan="' +
+      this.month / 2 +
+      '" style="text-align: center !important">การชำระภาษี ' +
+      this.month / 2 +
+      " เดือนหลัง </th> " +
+      "</tr>" +
+      '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
+      this.month / 2 +
+      " เดือนแรก</th>" +
+      '<th style="text-align: center !important">' +
+      this.month / 2 +
+      " เดือนหลัง </th>" +
+      '<th style="text-align: center !important">' +
+      (currYear - 3) +
+      "</th>" +
+      '<th style="text-align: center !important">' +
+      (currYear - 2) +
+      "</th>" +
+      '<th style="text-align: center !important">' +
+      (currYear - 1) +
+      "</th>" +
+      trHeaderColumn +
+      "</tr>";
 
     //show values
     var sum_month = TextDateTH.months[m - 1];
     this.before = sum_month + " " + yy;
     var sum_month2 = TextDateTH.months[parseInt(month) - 1];
     this.last = sum_month2 + " " + parseInt(year_before);
-    var dataInDataTalbe = '';
+    var dataInDataTalbe = "";
     this.initDatatable();
-    $("#exciseBtn").prop('disabled', true);
-    var table = $('#userManagementDt').DataTable();
+    $("#exciseBtn").prop("disabled", true);
+    var table = $("#userManagementDt").DataTable();
 
     // on init table
-    $('#userManagementDt tbody tr').css({ "background-color": "white", "cursor": "pointer" });
+    $("#userManagementDt tbody tr").css({
+      "background-color": "white",
+      cursor: "pointer"
+    });
 
     // on click row
-    $('#userManagementDt tbody').on('click', 'tr', function () {
-      $("#exciseBtn").prop('disabled', false);
-      $('#userManagementDt tbody tr').css({ "background-color": "white", "cursor": "pointer" });
-      (<HTMLInputElement>document.getElementById("exciseId")).value = $(this).children().toArray()[1].innerHTML;
+    $("#userManagementDt tbody").on("click", "tr", function() {
+      $("#exciseBtn").prop("disabled", false);
+      $("#userManagementDt tbody tr").css({
+        "background-color": "white",
+        cursor: "pointer"
+      });
+      (<HTMLInputElement>document.getElementById("exciseId")).value = $(this)
+        .children()
+        .toArray()[1].innerHTML;
       $(this).css("background-color", "rgb(197,217,241)");
     });
-    
+
+    //on click condition modal
+    $("#conditonModal").click(function() {
+      $(".ui.modal.condition")
+        .modal({
+          centered: false
+        })
+        .modal("show");
+    });
   }
 
   onSend = () => {
     //call ExciseService
-    this.ex.setformValues(this.before, this.last, this.from, this.month, this.currYear, this.prevYear);
+    this.ex.setformValues(
+      this.before,
+      this.last,
+      this.from,
+      this.month,
+      this.currYear,
+      this.prevYear
+    );
 
     var router = this.router;
     var param1 = this.before;
@@ -139,21 +204,51 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     d.setFullYear(parseInt(this.from[1]));
     d.setMonth(parseInt(this.from[0]));
     const URL = AjaxService.CONTEXT_PATH + "/working/test/createWorkSheet";
-    $.post(URL, { startBackDate: this.from, month: this.month, exciseProductType: this.exciseProductType },
-      function (returnedData) {
-        console.log("analysNumber : "+returnedData);
-        console.log("this.before : "+param1);
-        console.log("this.last : "+param3);
-        console.log("this.month : "+param3);
-        router.navigate(['/create-working-paper-trader']);
-      }).fail(function () {
-        console.log("error");
-      });
+    $.post(
+      URL,
+      {
+        startBackDate: this.from,
+        month: this.month,
+        exciseProductType: this.exciseProductType
+      },
+      function(returnedData) {
+        console.log("analysNumber : " + returnedData);
+        console.log("this.before : " + param1);
+        console.log("this.last : " + param3);
+        console.log("this.month : " + param3);
+        router.navigate(["/create-working-paper-trader"]);
+      }
+    ).fail(function() {
+      console.log("error");
+    });
+  };
 
-  }
+  onAddField = () => {
+    let num = this.numbers.length;
+    if (num < 3) {
+      this.numbers.push(num + 1);
+    }
+  };
+
+  onDelField = index => {
+    this.numbers.splice(index, 1);
+  };
+
+  onSendModal = () => {
+    this.firstNumber = (<HTMLInputElement>(
+      document.getElementById("firstNumber")
+    )).value;
+    this.lastNumber = (<HTMLInputElement>(
+      document.getElementById("lastNumber")
+    )).value;
+    console.log("firstNumber: ", this.firstNumber);
+    console.log("lastNumber: ", this.lastNumber);
+    console.log("font: ", this.font);
+    console.log("back: ", this.back);
+  };
 
   selectExciseProductType(productionType): void {
-    this.exciseProductType = productionType == 'รวม' ? '' : productionType;
+    this.exciseProductType = productionType == "รวม" ? "" : productionType;
     this.userManagementDt.destroy();
     this.initDatatable();
   }
@@ -172,16 +267,16 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     json += ' "serverSide": true, ';
     json += ' "paging": true, ';
     json += ' "pagingType": "full_numbers", ';
-    json += ' ';
+    json += " ";
     json += ' "ajax": { ';
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
     json += ' "exciseProductType": "' + this.exciseProductType + '", ';
     json += ' "startBackDate": "' + this.from + '", ';
-    json += ' "month": ' + this.month + ' ';
-    json += ' } ';
-    json += ' }, ';
+    json += ' "month": ' + this.month + " ";
+    json += " } ";
+    json += " }, ";
     json += ' "columns": [ ';
     json += ' { "data": "exciseRegisttionNumberId","className":"center" }, ';
     json += ' { "data": "exciseId","className":"center" }, ';
@@ -202,23 +297,31 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     json += ' { "data": "status" }, ';
 
     for (var i = 0; i < this.month / 2; i++) {
-      json += ' { "data": "exciseFirstTaxReceiveAmount' + (i + 1) + '" ,"className":"center"}, ';
+      json +=
+        ' { "data": "exciseFirstTaxReceiveAmount' +
+        (i + 1) +
+        '" ,"className":"center"}, ';
     }
     for (var i = 0; i < this.month / 2; i++) {
-      if (i != (this.month / 2) - 1) {
-        json += ' { "data": "exciseLatestTaxReceiveAmount' + (i + 1) + '" ,"className":"center"}, ';
+      if (i != this.month / 2 - 1) {
+        json +=
+          ' { "data": "exciseLatestTaxReceiveAmount' +
+          (i + 1) +
+          '" ,"className":"center"}, ';
       } else {
-        json += ' { "data": "exciseLatestTaxReceiveAmount' + (i + 1) + '" ,"className":"center"} ';
+        json +=
+          ' { "data": "exciseLatestTaxReceiveAmount' +
+          (i + 1) +
+          '" ,"className":"center"} ';
       }
     }
-    json += '] } ';
+    json += "] } ";
     let jsonMaping = JSON.parse(json);
-    this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
+    this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
 
     // i can't check loaded datatable...?
     setTimeout(() => {
       this.onLoading = false;
     }, 500);
   }
-
 }

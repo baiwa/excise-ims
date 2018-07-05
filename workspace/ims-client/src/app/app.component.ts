@@ -40,6 +40,10 @@ export class AppComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    $(".ui.modal.condition").modal({
+      centered: false
+    });
+
     $(".dropdown").dropdown();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {

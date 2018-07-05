@@ -11,7 +11,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
+import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetVo;
+import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
 import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
 public class QtnReportHeaderDao {
@@ -36,6 +39,39 @@ public class QtnReportHeaderDao {
 		
 		return qtnReportHeaderList;
 	}
+	
+	public List<QtnReportHeader> findByCriteriaDataTable(QtnReportHeader qtnReportHeader,int start, int length) {
+		List<Object> paramList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder(sqlTemplate); 
+		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnReportHdrId())) {
+			sql.append("AND H.QTN_REPORT_HDR_ID = ? ");
+			paramList.add(qtnReportHeader.getQtnReportHdrId());
+		}
+		
+		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnReportHdrName())) {
+			sql.append("AND H.QTN_REPORT_HDR_NAME = ? ");
+			paramList.add(qtnReportHeader.getQtnReportHdrName());
+		}
+		
+		List<QtnReportHeader> qtnReportHeaderList = jdbcTemplate.query(OracleUtils.limitForDataTable(sql, start, length), paramList.toArray(),rowMapper );
+		
+		return qtnReportHeaderList;
+	}
+	public long countQtnReportHeader(QtnReportHeader qtnReportHeader) {
+		List<Object> paramList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder(sqlTemplate); 
+		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnReportHdrId())) {
+			sql.append("AND H.QTN_REPORT_HDR_ID = ? ");
+			paramList.add(qtnReportHeader.getQtnReportHdrId());
+		}
+		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnReportHdrName())) {
+			sql.append("AND H.QTN_REPORT_HDR_NAME = ? ");
+			paramList.add(qtnReportHeader.getQtnReportHdrName());
+		}
+		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()), paramList.toArray(),Long.class);
+		return count;
+	}
+	
 	
 	private RowMapper<QtnReportHeader> rowMapper = new RowMapper<QtnReportHeader>() {
 

@@ -49,7 +49,14 @@ public class PlanWorksheetHeaderDao {
 		if (StringUtils.isNotBlank(criteria.getAnalysNumber())) {
 			sql.append(" and ANALYS_NUMBER = ? ");
 			valueList.add(criteria.getAnalysNumber());
-
+		}
+		if (StringUtils.isNotBlank(criteria.getMonthDate())) {
+			sql.append(" and MONTH_DATE = ? ");
+			valueList.add(criteria.getMonthDate());
+		}
+		if (criteria.getFullMonth() != null) {
+			sql.append(" and FULL_MONTH = ? ");
+			valueList.add(criteria.getFullMonth());
 		}
 
 		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate.query(sql.toString(), valueList.toArray(),
@@ -61,8 +68,8 @@ public class PlanWorksheetHeaderDao {
 	public void insertPlanWorksheetHeader(PlanWorksheetHeader value) {
 		// inti SQL for insert to database
 		StringBuilder sql = new StringBuilder(
-				" INSERT INTO TA_PLAN_WORK_SHEET_HEADER (WORK_SHEET_HEADER_ID,ANALYS_NUMBER,EXCISE_ID,COMPANY_NAME,FACTORY_NAME,FACTORY_ADDRESS,EXCISE_OWNER_AREA,PRODUCT_TYPE,EXCISE_OWNER_AREA_1,TOTAL_AMOUNT,PERCENTAGE,TOTAL_MONTH,DECIDE_TYPE,FLAG,CREATED_BY,CREATED_DATETIME,UPDATE_BY,UPDATE_DATETIME,FIRST_MONTH,LAST_MONTH)");
-		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
+				" INSERT INTO TA_PLAN_WORK_SHEET_HEADER (WORK_SHEET_HEADER_ID,ANALYS_NUMBER,EXCISE_ID,COMPANY_NAME,FACTORY_NAME,FACTORY_ADDRESS,EXCISE_OWNER_AREA,PRODUCT_TYPE,EXCISE_OWNER_AREA_1,TOTAL_AMOUNT,PERCENTAGE,TOTAL_MONTH,DECIDE_TYPE,FLAG,CREATED_BY,CREATED_DATETIME,UPDATE_BY,UPDATE_DATETIME,FIRST_MONTH,LAST_MONTH,MONTH_DATE,FULL_MONTH)");
+		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
 		// for to set Object
 		jdbcTemplate.update(sql.toString(), planWorksheetHeaderToArrayObject(value));
 	}
@@ -95,6 +102,8 @@ public class PlanWorksheetHeaderDao {
 			valueList.add(value.getUpdateDatetime());
 			valueList.add(value.getFirstMonth());
 			valueList.add(value.getLastMonth());
+			valueList.add(value.getMonthDate());
+			valueList.add(value.getFullMonth());
 		}
 		return valueList.toArray();
 	}
@@ -124,6 +133,8 @@ public class PlanWorksheetHeaderDao {
 			header.setCreateDatetime(rs.getDate("CREATED_DATETIME"));
 			header.setUpdateBy(rs.getString("UPDATE_BY"));
 			header.setUpdateDatetime(rs.getTime("UPDATE_DATETIME"));
+			header.setFullMonth(rs.getBigDecimal("FULL_MONTH"));
+			header.setMonthDate(rs.getString("MONTH_DATE"));
 			return header;
 		}
 	};
@@ -454,6 +465,34 @@ public class PlanWorksheetHeaderDao {
 			
 		}
 		
+	}
+	
+	public List<String> queryProductTypeList(PlanWorksheetHeader criteria) {
+
+		List<Object> valueList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder(" SELECT DISTINCT PRODUCT_TYPE FROM TA_PLAN_WORK_SHEET_HEADER ");
+		sql.append(" WHERE 1 = 1 ");
+
+		if (StringUtils.isNotBlank(criteria.getAnalysNumber())) {
+			sql.append(" and ANALYS_NUMBER = ? ");
+			valueList.add(criteria.getAnalysNumber());
+		}
+		if (StringUtils.isNotBlank(criteria.getMonthDate())) {
+			sql.append(" and MONTH_DATE = ? ");
+			valueList.add(criteria.getMonthDate());
+		}
+		if (criteria.getFullMonth() != null) {
+			sql.append(" and FULL_MONTH = ? ");
+			valueList.add(criteria.getFullMonth());
+		}
+
+		List<String> productType = jdbcTemplate.query(sql.toString(),valueList.toArray(), new RowMapper<String>() {
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
+		return productType;
+
 	}
 
 }
