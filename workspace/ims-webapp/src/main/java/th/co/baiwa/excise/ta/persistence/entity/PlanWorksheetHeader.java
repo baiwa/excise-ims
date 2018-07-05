@@ -25,6 +25,8 @@ public class PlanWorksheetHeader {
 	private String flag;
 	private BigDecimal firstMonth;
 	private BigDecimal lastMonth;
+	private String monthDate;
+	private BigDecimal fullMonth;
 	private String createBy;
 	private Date createDatetime;
 	private String updateBy;
@@ -156,6 +158,18 @@ public class PlanWorksheetHeader {
 	}
 	public void setWorkSheetNumber(String workSheetNumber) {
 		this.workSheetNumber = workSheetNumber;
+	}
+	public String getMonthDate() {
+		return monthDate;
+	}
+	public void setMonthDate(String monthDate) {
+		this.monthDate = monthDate;
+	}
+	public BigDecimal getFullMonth() {
+		return fullMonth;
+	}
+	public void setFullMonth(BigDecimal fullMonth) {
+		this.fullMonth = fullMonth;
 	}
 	
 	

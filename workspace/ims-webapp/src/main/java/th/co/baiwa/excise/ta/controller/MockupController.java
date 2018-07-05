@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
-import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.MockupVo;
@@ -51,6 +49,15 @@ public class MockupController {
 		date.set(Integer.parseInt(fulldate[1]), Integer.parseInt(fulldate[0]), 1);
 		int month = input.getMonth() != null ? input.getMonth() : 0;
 		return planWorksheetHeaderService.insertPlanWorksheetHeaderService(vo,date.getTime(), month,input.getExciseProductType());
+	}
+	@PostMapping("/checkDupProductType")
+	@ResponseBody
+	public List<String> checkDupProductType(@ModelAttribute MockupVo vo, DataTableRequest input){
+		String[] fulldate = input.getStartBackDate().split("/");
+		Calendar date = Calendar.getInstance(DateConstant.LOCAL_TH);
+		date.set(Integer.parseInt(fulldate[1]), Integer.parseInt(fulldate[0]), 1);
+		int month = input.getMonth() != null ? input.getMonth() : 0;
+		return planWorksheetHeaderService.getProductionInProcessByMonthAndBackDate(vo, date.getTime(), month);
 	}
 	
 }

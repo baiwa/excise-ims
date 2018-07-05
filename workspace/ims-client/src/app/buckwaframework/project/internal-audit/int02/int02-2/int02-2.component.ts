@@ -56,20 +56,23 @@ export class Int022Component implements OnInit {
     this.ajax.post(URL, { qtnReportHdrName: departmentValue }, res => {
       console.log(res.json());
       var message = res.json();
-      if (res.json().messageType == 'E') {
+      console.log(message.messageType);
+      if (message.messageType == 'E') {
         this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
       } else {
-        this.messageBarService.success
+        this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
       }
-
-
     });
     this.datatable.destroy();
     this.initDatatable();
 
+
+
+
   }
 
   initDatatable(): void {
+    console.log('initDatatable');
     const URL = AjaxService.CONTEXT_PATH + "ia/int02/queryQtnReportHeaderByCriteria";
 
     this.datatable = $('#datatable').DataTable({
@@ -87,7 +90,6 @@ export class Int022Component implements OnInit {
         "url": URL,
         "data": {
 
-
         }
       },
       "columns": [
@@ -102,13 +104,61 @@ export class Int022Component implements OnInit {
         {
           "data": "creator",
           "className": "center"
-        },
-        {
-          "data": "createdBy",
-          "className": "center"
+
+        }, {
+          render: function (data, type, full, meta) {
+
+            return `<i class="edit icon" id="edit-${full.qtnReportHdrId}" value="edit-${full.qtnReportHdrId}" ></i>&nbsp;&nbsp;&nbsp; <i class="trash alternate icon" id="delete-${full.qtnReportHdrId}" value="delete-${full.qtnReportHdrId}" ></i>`;
+          },
+          className: "center"
+
         }
+
       ]
+
     });
+    var table = this.datatable;
+    $('#datatable tbody').on('click', 'i', function () {
+
+      var data = table.row($(this).parents('tr')).data();
+      console.log(table.row($(this).parents('tr')).row());
+      console.log(data.qtnReportHdrId);
+      var idClick = this.id;
+      var actionClick = idClick.split("-")[0];
+      console.log(actionClick);
+      if ('edit' == actionClick) {
+        //edit case
+        //$('.ui.modal').modal();
+      } else {
+        //delete case
+
+      }
+    });
+
+    $("#datatable tbody tr").css({
+      "background-color": "white",
+      cursor: "pointer"
+    });
+
+    //on click row
+    $("#datatable tbody").on("click", "tr", function (e) {
+
+      $("#exciseBtn").prop("disabled", false);
+      $("#datatable tbody tr").css({
+        "background-color": "white",
+        cursor: "pointer"
+      });
+
+      $(this).css("background-color", "rgb(197,217,241)");
+    });
+  }
+
+  clickEditFunction(index) {
+    console.log(index);
+  }
+
+  clickDeleteFunctionFunction(index) {
+    console.log(index);
   }
 
 }

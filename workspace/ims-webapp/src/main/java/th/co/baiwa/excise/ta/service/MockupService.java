@@ -33,9 +33,6 @@ public class MockupService {
 		MockupVo vo = null;
 		List<MockupVo> mockupVoList = new ArrayList<MockupVo>();
 		List<String> monthNameList = exciseTaxReceiveDao.queryMonthShotName(startBackDate, month);
-//		if(BeanUtils.isNotEmpty(monthNameList)) {
-//			DateConstant.sortMonthShotList(monthNameList);
-//		}
 		for (ExciseRegistartionNumber registartionNumber : regisNumberList) {
 
 			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(registartionNumber.getExciseId(),startBackDate, month);
