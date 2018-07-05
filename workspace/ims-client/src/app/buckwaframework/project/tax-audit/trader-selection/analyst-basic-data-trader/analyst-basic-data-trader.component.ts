@@ -275,7 +275,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
       .modal({
         centered: false
       })
-      .modal("close");
+      .modal("hide");
   };
 
   selectExciseProductType(productionType): void {
