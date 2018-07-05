@@ -26,7 +26,7 @@ public class MockupService {
 
 	public ResponseDataTable<MockupVo> findAll(String register, MockupVo mockupVo, Date startBackDate, int month , String exciseProductType) {
 
-		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseId(register,exciseProductType,mockupVo.getStart(), mockupVo.getLength());
+		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseId(register,exciseProductType,mockupVo.getStart(), mockupVo.getLength(),mockupVo.getCondition());
 		DecimalFormat formatter = new DecimalFormat("#,###.00");
 
 		List<ExciseTaxReceive> taxReciveList = null;
@@ -203,7 +203,7 @@ public class MockupService {
 			mockupVoList.add(vo);
 		}
 
-		long count = exciseRegisttionNumberDao.queryCountByExciseId(exciseProductType);
+		long count = exciseRegisttionNumberDao.queryCountByExciseId(exciseProductType,mockupVo.getCondition());
 
 		ResponseDataTable<MockupVo> responseDataTable = new ResponseDataTable<>();
 		responseDataTable.setDraw(mockupVo.getDraw().intValue() + 1);
@@ -215,7 +215,7 @@ public class MockupService {
 	}
 
 	public void createWorkSheetService(MockupVo mockupVo, Date startBackDate, int month) {
-		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseId("",null,mockupVo.getStart(), mockupVo.getLength());
+		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseId("",null,mockupVo.getStart(), mockupVo.getLength() , null);
 
 	}
 

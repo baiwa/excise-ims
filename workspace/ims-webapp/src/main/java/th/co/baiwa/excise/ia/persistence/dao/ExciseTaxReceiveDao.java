@@ -32,14 +32,18 @@ public class ExciseTaxReceiveDao {
 		return list;
 	}
 
-	public List<ExciseTaxReceive> queryByExciseTaxReceiveAndFilterDataSelection(String register, Date date, int month) {
+	public List<ExciseTaxReceive> queryByExciseTaxReceiveAndFilterDataSelection(String register, Date date, int month ) {
 		List<Object> objList = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder(" SELECT TA_EXCISE_TAX_RECEIVE_MONTH ,TA_EXCISE_ID ,SUM( TO_NUMBER(trim(TA_EXCISE_TAX_RECEIVE_AMOUNT), '999999999999999.99')) as TA_EXCISE_TAX_RECEIVE_AMOUNT from ta_excise_tax_receive where TA_EXCISE_ID =  ? ");
+		StringBuilder sql = new StringBuilder(" SELECT H.TA_EXCISE_TAX_RECEIVE_MONTH ,H.TA_EXCISE_ID ,SUM( TO_NUMBER(trim(H.TA_EXCISE_TAX_RECEIVE_AMOUNT), '999999999999999.99')) as TA_EXCISE_TAX_RECEIVE_AMOUNT from ta_excise_tax_receive H ");
+		
+		sql.append(" where H.TA_EXCISE_ID =  ? ");
 		objList.add(register);
-		sql.append("and TA_EXCISE_TAX_RECEIVE_MONTH in ( ");
+		
+		
+		sql.append("and H.TA_EXCISE_TAX_RECEIVE_MONTH in ( ");
 		sql.append(" Select  REPLACE(TO_CHAR( add_MONTHS(  ?, LEVEL-?  )  , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) Month_AFTER FROM dual CONNECT BY LEVEL <= ? ");
 		sql.append(" ) ");
-		sql.append(" GROUP BY TA_EXCISE_TAX_RECEIVE_MONTH ,TA_EXCISE_ID  ");
+		sql.append(" GROUP BY H.TA_EXCISE_TAX_RECEIVE_MONTH ,H.TA_EXCISE_ID  ");
 		objList.add(date);
 		objList.add(month);
 		objList.add(month);

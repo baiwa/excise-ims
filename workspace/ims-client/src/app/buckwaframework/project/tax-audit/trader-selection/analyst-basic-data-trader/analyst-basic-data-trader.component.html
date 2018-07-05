@@ -163,8 +163,10 @@
                     </div>
                     <div class="five wide field">
                         <label style="width: 5em;">เงื่อนไข</label>
-                        <select class="ui dropdown" name="sector" id="sector" (change)="changeSector()">
+                        <select class="ui dropdown" name="condition" id="condition" (change)="changeCondition($event.target.value)">
                             <option value="">ทั้งหมด</option>
+
+                            <option *ngFor="let item of valueForFontList; let i = index" value="{{valueForBackEndList[i]}}">{{item}}</option>
                         </select>
                     </div>
                 </div>
@@ -178,7 +180,7 @@
                             <div class="item">
                                 <div class="header">พิกัดสินค้า</div>
                                 <div class="menu">
-                                    <div class="item hover {{exciseProductType == item && 'active'}}" *ngFor="let item of listMenu" (click)="selectExciseProductType(item)">-{{item}}</div>
+                                    <div class="item hover {{exciseProductType == item && 'active'}}" *ngFor="let item of listMenu" (click)="selectExciseProductType(item)">- {{item}}</div>
                                 </div>
                             </div>
                         </div>

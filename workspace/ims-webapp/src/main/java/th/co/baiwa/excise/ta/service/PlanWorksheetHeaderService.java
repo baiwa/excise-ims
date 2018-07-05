@@ -46,17 +46,16 @@ public class PlanWorksheetHeaderService {
 	@Autowired
 	private ExciseTaxReceiveDao exciseTaxReceiveDao;
 
-	public String insertPlanWorksheetHeaderService(MockupVo mockupVo, Date startBackDate, int month,String productType) {
+	public String insertPlanWorksheetHeaderService(MockupVo mockupVo, Date startBackDate, int month, String productType) {
 
 		logger.info("PlanWorksheetHeaderService.insertPlanWorksheetHeaderService");
 		List<String> monthNameList = DateConstant.startBackDate(startBackDate, month);
-		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-01-"+ planWorksheetHeaderDao.getAnalysNumber();
+		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-01-" + planWorksheetHeaderDao.getAnalysNumber();
 		Date saveDate = new Date();
 		logger.info("get analysNumber : " + analysNumber);
 		PlanWorksheetHeader planWorksheetHeader = null;
 		List<ExciseTaxReceive> taxReciveList = null;
-		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao
-				.queryByExciseRegistionNumber(productType);
+		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseRegistionNumber(productType, mockupVo.getCondition());
 		for (ExciseRegistartionNumber exciseRegistartionNumber : regisNumberList) {
 			planWorksheetHeader = new PlanWorksheetHeader();
 			planWorksheetHeader.setAnalysNumber(analysNumber);
@@ -82,19 +81,15 @@ public class PlanWorksheetHeaderService {
 				for (int i = 0; i < taxReciveList.size(); i++) {
 					ExciseTaxReceive taxRecive = taxReciveList.get(i);
 
-					String amount = taxRecive.getExciseTaxReceiveAmount() != null
-							? taxRecive.getExciseTaxReceiveAmount().trim().replaceAll(",", "")
-							: "0";
+					String amount = taxRecive.getExciseTaxReceiveAmount() != null ? taxRecive.getExciseTaxReceiveAmount().trim().replaceAll(",", "") : "0";
 					try {
 						totalAmount = totalAmount.add(new BigDecimal(amount));
 					} catch (Exception e) {
 						totalAmount = totalAmount.add(new BigDecimal(0));
 					}
-					if (taxRecive.getExciseTaxReceiveMonth() != null
-							&& taxRecive.getExciseTaxReceiveMonth().length() > 0) {
+					if (taxRecive.getExciseTaxReceiveMonth() != null && taxRecive.getExciseTaxReceiveMonth().length() > 0) {
 						countReciveMonth++;
-						int indexOfMonthNameList = monthNameList
-								.indexOf(taxReciveList.get(i).getExciseTaxReceiveMonth());
+						int indexOfMonthNameList = monthNameList.indexOf(taxReciveList.get(i).getExciseTaxReceiveMonth());
 						if (indexOfMonthNameList != -1) {
 							if (indexOfMonthNameList < monthNameList.size() / 2) {
 								if (!"0".equals(amount)) {
@@ -123,7 +118,6 @@ public class PlanWorksheetHeaderService {
 				}
 			}
 
-			planWorksheetHeader.setTotalAmount(totalAmount);
 			planWorksheetHeader.setTotalMonth(new BigDecimal(countReciveMonth));
 			planWorksheetHeader.setPercentage(percenttage);
 			planWorksheetHeader.setFirstMonth(new BigDecimal(firstMonth));
@@ -131,6 +125,7 @@ public class PlanWorksheetHeaderService {
 			planWorksheetHeader.setFlag("N");
 			planWorksheetHeader.setCreateBy(UserLoginUtils.getCurrentUsername());
 			planWorksheetHeader.setCreateDatetime(saveDate);
+
 			planWorksheetHeaderDao.insertPlanWorksheetHeader(planWorksheetHeader);
 			PlanWorksheetDetail planWorksheetDetail = null;
 			List<PlanWorksheetDetail> planWorksheetDetailList = new ArrayList<PlanWorksheetDetail>();
@@ -141,9 +136,7 @@ public class PlanWorksheetHeaderService {
 				planWorksheetDetail.setExciseId(taxRecive.getExciseId());
 				planWorksheetDetail.setCreateBy(UserLoginUtils.getCurrentUsername());
 				planWorksheetDetail.setCreateDatetime(saveDate);
-				String amountDetail = taxRecive.getExciseTaxReceiveAmount() != null
-						? taxRecive.getExciseTaxReceiveAmount().trim().replaceAll(",", "")
-						: "0";
+				String amountDetail = taxRecive.getExciseTaxReceiveAmount() != null ? taxRecive.getExciseTaxReceiveAmount().trim().replaceAll(",", "") : "0";
 				planWorksheetDetail.setAmount(new BigDecimal(amountDetail));
 				planWorksheetDetailList.add(planWorksheetDetail);
 			}
@@ -169,8 +162,7 @@ public class PlanWorksheetHeaderService {
 		PlanWorksheetHeaderDetail planShow = new PlanWorksheetHeaderDetail();
 		PlanWorksheetDetail planDetail;
 		for (PlanWorksheetHeader planWorksheetHeader : planWorksheetHeaderList) {
-			if (planWorksheetHeader != null
-					&& !planWorksheetHeader.getWorksheetHeaderId().equals(planShow.getWorksheetHeaderId())) {
+			if (planWorksheetHeader != null && !planWorksheetHeader.getWorksheetHeaderId().equals(planShow.getWorksheetHeaderId())) {
 				if (planShow.getWorksheetHeaderId() != null) {
 					PlanWorksheetHeaderDetailList.add(planShow);
 				}
@@ -279,10 +271,8 @@ public class PlanWorksheetHeaderService {
 		String endMonthDate = valueList.get(valueList.size() - 1);
 		String splitStart[] = startMonthDate.split(" ");
 		String splitEnd[] = endMonthDate.split(" ");
-		startMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitStart[0])]
-				+ " 25" + splitStart[1];
-		endMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitEnd[0])]
-				+ " 25" + splitEnd[1];
+		startMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitStart[0])] + " 25" + splitStart[1];
+		endMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitEnd[0])] + " 25" + splitEnd[1];
 		valueList = new ArrayList<String>();
 		valueList.add(startMonthDate);
 		valueList.add(endMonthDate);
@@ -302,8 +292,7 @@ public class PlanWorksheetHeaderService {
 	}
 
 	public void updateStatusFlg(RequestFilterMapping vo) {
-		String workSheetNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-02-"
-				+ planWorksheetHeaderDao.getWorksheetNumber();
+		String workSheetNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-02-" + planWorksheetHeaderDao.getWorksheetNumber();
 		vo.setWorkShheetNumber(workSheetNumber);
 		planWorksheetHeaderDao.updateStatusFlg(vo);
 	}
@@ -315,8 +304,8 @@ public class PlanWorksheetHeaderService {
 		}
 		return count;
 	}
-	
-	public List<String> getProductionInProcessByMonthAndBackDate(MockupVo mockupVo, Date startBackDate, int month){
+
+	public List<String> getProductionInProcessByMonthAndBackDate(MockupVo mockupVo, Date startBackDate, int month) {
 		PlanWorksheetHeader planWorksheetHeader = new PlanWorksheetHeader();
 		planWorksheetHeader.setMonthDate(mockupVo.getStartBackDate());
 		planWorksheetHeader.setFullMonth(new BigDecimal(month));

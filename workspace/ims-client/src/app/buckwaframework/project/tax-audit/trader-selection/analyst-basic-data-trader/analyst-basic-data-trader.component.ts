@@ -15,6 +15,9 @@ declare var $: any;
 })
 export class AnalystBasicDataTraderComponent implements OnInit {
   listMenu: any[] = [];
+  valueForFontList: any[] = [];
+  condition: any[] = [];
+  valueForBackEndList: any[] = [];
   showmenu: boolean = true;
   userManagementDt: any;
   month: any;
@@ -36,12 +39,10 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     private messageBarService: MessageBarService,
     private router: Router,
     private ex: ExciseService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.listMenu = [
-      "รวม",
-      "น้ำมัน",
+    this.listMenu = ["น้ำมัน",
       "เครื่องดื่ม",
       "ยาสูบ",
       "ไพ่",
@@ -92,10 +93,10 @@ export class AnalystBasicDataTraderComponent implements OnInit {
       }
       items.push(
         '<th style="text-align: center !important">' +
-          TextDateTH.monthsShort[m - 1] +
-          " " +
-          (yy + "").substr(2) +
-          "</th>"
+        TextDateTH.monthsShort[m - 1] +
+        " " +
+        (yy + "").substr(2) +
+        "</th>"
       );
     }
     for (var i = items.length - 1; i >= 0; i--) {
@@ -155,33 +156,35 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     $("#exciseBtn").prop("disabled", true);
     var table = $("#userManagementDt").DataTable();
 
-    // on init table
-    $("#userManagementDt tbody tr").css({
-      "background-color": "white",
-      cursor: "pointer"
-    });
 
-    // on click row
-    $("#userManagementDt tbody").on("click", "tr", function() {
-      $("#exciseBtn").prop("disabled", false);
-      $("#userManagementDt tbody tr").css({
-        "background-color": "white",
-        cursor: "pointer"
-      });
-      (<HTMLInputElement>document.getElementById("exciseId")).value = $(this)
-        .children()
-        .toArray()[1].innerHTML;
-      $(this).css("background-color", "rgb(197,217,241)");
-    });
 
     //on click condition modal
-    $("#conditonModal").click(function() {
+    $("#conditonModal").click(function () {
       $(".ui.modal.condition")
         .modal({
           centered: false
         })
         .modal("show");
     });
+
+    this.listMenu = this.checkProductType(this.listMenu);
+    console.log(this.listMenu);
+  }
+
+  checkProductType = (listMenu) => {
+    const URL = AjaxService.CONTEXT_PATH + "/working/test/checkDupProductType";
+    $.post(URL, { startBackDate: this.from, month: this.month, exciseProductType: this.exciseProductType },
+      function (returnedData) {
+        console.log("returnedData : ", returnedData.length);
+        for (var i = 0; i < returnedData.length; i++) {
+          var dat = returnedData[i];
+          var index = listMenu.indexOf(dat);
+          console.log("indexOf", index);
+          listMenu[index] = '*' + dat;
+        }
+
+      });
+    return listMenu;
   }
 
   onSend = () => {
@@ -201,6 +204,16 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     var param3 = this.month;
     var from = this.from;
     var d = new Date();
+    var conditionStr = "";
+    console.log(this.valueForBackEndList);
+    for (var i = 0; i < this.valueForBackEndList.length; i++) {
+      conditionStr += this.valueForBackEndList[i];
+
+      if (i != this.valueForBackEndList.length - 1) {
+        conditionStr += ",";
+      }
+    }
+
     d.setFullYear(parseInt(this.from[1]));
     d.setMonth(parseInt(this.from[0]));
     const URL = AjaxService.CONTEXT_PATH + "/working/test/createWorkSheet";
@@ -209,16 +222,17 @@ export class AnalystBasicDataTraderComponent implements OnInit {
       {
         startBackDate: this.from,
         month: this.month,
-        exciseProductType: this.exciseProductType
+        exciseProductType: this.exciseProductType,
+        conditionStr: conditionStr
       },
-      function(returnedData) {
+      function (returnedData) {
         console.log("analysNumber : " + returnedData);
         console.log("this.before : " + param1);
         console.log("this.last : " + param3);
         console.log("this.month : " + param3);
         router.navigate(["/create-working-paper-trader"]);
       }
-    ).fail(function() {
+    ).fail(function () {
       console.log("error");
     });
   };
@@ -245,10 +259,41 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     console.log("lastNumber: ", this.lastNumber);
     console.log("font: ", this.font);
     console.log("back: ", this.back);
+    this.valueForFontList = new Array();
+    this.valueForBackEndList = new Array();
+    this.valueForFontList.push("มากกว่า " + this.firstNumber);
+    this.valueForBackEndList.push(">:" + this.firstNumber);
+    for (var i = 0; i < this.font.length; i++) {
+      if (this.font[i] != 0 || this.back[i] != 0) {
+        this.valueForFontList.push("ตั้งแต่ " + this.font[i] + " ถึง " + this.back[i]);
+        this.valueForBackEndList.push(this.font[i] + ":" + this.back[i]);
+      }
+    }
+    this.valueForFontList.push("น้อยกว่า " + this.lastNumber);
+    this.valueForBackEndList.push("<:" + this.lastNumber);
+    $(".ui.modal.condition")
+      .modal({
+        centered: false
+      })
+      .modal("close");
   };
 
   selectExciseProductType(productionType): void {
-    this.exciseProductType = productionType == "รวม" ? "" : productionType;
+    this.exciseProductType = productionType;
+    this.userManagementDt.destroy();
+    this.initDatatable();
+  }
+
+  changeCondition = (data) => {
+    console.log(data);
+    if (data == 0) {
+      this.condition = this.valueForBackEndList;
+    } else {
+      var conditionValue = new Array();
+      conditionValue.push(data);
+      this.condition = conditionValue;
+    }
+
     this.userManagementDt.destroy();
     this.initDatatable();
   }
@@ -273,9 +318,12 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
     json += ' "exciseProductType": "' + this.exciseProductType + '", ';
+
     json += ' "startBackDate": "' + this.from + '", ';
+    json += ' "condition": "' + (this.condition != undefined ? this.condition : "") + '", ';
     json += ' "month": ' + this.month + " ";
     json += " } ";
+
     json += " }, ";
     json += ' "columns": [ ';
     json += ' { "data": "exciseRegisttionNumberId","className":"center" }, ';
@@ -316,6 +364,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
       }
     }
     json += "] } ";
+    console.log(json);
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
 
@@ -324,4 +373,5 @@ export class AnalystBasicDataTraderComponent implements OnInit {
       this.onLoading = false;
     }, 500);
   }
+
 }

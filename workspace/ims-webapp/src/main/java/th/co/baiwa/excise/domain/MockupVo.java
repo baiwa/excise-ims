@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.domain;
 
+import java.util.List;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -70,6 +72,8 @@ public class MockupVo extends DataTableRequest {
 	private String exciseLatestTaxReceiveMonth12;
 	private String exciseLatestTaxReceiveAmount12;
 	private String analysNumber;
+	private List<String> condition;
+	private String conditionStr;
 
 
 
@@ -879,6 +883,30 @@ public class MockupVo extends DataTableRequest {
 
 	public void setExciseRegisttionNumberId(Integer exciseRegisttionNumberId) {
 		this.exciseRegisttionNumberId = exciseRegisttionNumberId;
+	}
+
+
+
+	public List<String> getCondition() {
+		return condition;
+	}
+
+
+
+	public void setCondition(List<String> condition) {
+		this.condition = condition;
+	}
+
+
+
+	public String getConditionStr() {
+		return conditionStr;
+	}
+
+
+
+	public void setConditionStr(String conditionStr) {
+		this.conditionStr = conditionStr;
 	}
 
 	

@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ta.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -48,6 +49,12 @@ public class MockupController {
 		Calendar date = Calendar.getInstance(DateConstant.LOCAL_TH);
 		date.set(Integer.parseInt(fulldate[1]), Integer.parseInt(fulldate[0]), 1);
 		int month = input.getMonth() != null ? input.getMonth() : 0;
+		List<String> listCondition = new ArrayList<String>();
+		String condition[] = vo.getConditionStr().split(",");
+		for (String con : condition) {
+			listCondition.add(con);
+		}
+		vo.setCondition(listCondition);
 		return planWorksheetHeaderService.insertPlanWorksheetHeaderService(vo,date.getTime(), month,input.getExciseProductType());
 	}
 	@PostMapping("/checkDupProductType")
@@ -57,6 +64,8 @@ public class MockupController {
 		Calendar date = Calendar.getInstance(DateConstant.LOCAL_TH);
 		date.set(Integer.parseInt(fulldate[1]), Integer.parseInt(fulldate[0]), 1);
 		int month = input.getMonth() != null ? input.getMonth() : 0;
+		
+		
 		return planWorksheetHeaderService.getProductionInProcessByMonthAndBackDate(vo, date.getTime(), month);
 	}
 	
