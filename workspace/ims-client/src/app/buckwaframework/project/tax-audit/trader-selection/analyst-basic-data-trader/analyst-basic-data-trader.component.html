@@ -1,3 +1,101 @@
+<div class="ui modal condition transition hidden" style="height: calc(6em + 14px);">
+    <i class="close icon"></i>
+    <div class="header">
+        <i class="add icon"></i> เพิ่มเงื่อนไข
+    </div>
+
+    <div class="ui form content">
+        <form ngNativeValidate (submit)="onSendModal()">
+            <div class="inline fields">
+                <div class="four wide field">
+                    &nbsp;
+                </div>
+
+                <div class="two wide field">
+                    <label>เงื่อนไขที่ 1</label>
+                </div>
+
+                <div class="two wide field ">
+                    <label>มากกว่า</label>
+                </div>
+
+                <div class="three wide field">
+                    <input type="number" id="firstNumber" placeholder="100" [attr.required]="true" value="">
+                </div>
+            </div>
+
+            <div class="inline fields" *ngFor="let num of numbers; let i = index" [attr.data-index]="i">
+                <div class="four wide field">
+                    &nbsp;
+                </div>
+
+                <div class="two wide field ">
+                    <label>เงื่อนไขที่ {{i+2}}</label>
+                </div>
+
+                <div class="two wide field ">
+                    <input type="number" name="font{{i}}" id="font{{i}}" placeholder="?????" [attr.required]="true" [(ngModel)]="font[i]" value="">
+                </div>
+
+                <div class="one wide field ">
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;ถึง</label>
+                </div>
+
+                <div class="two wide field ">
+                    <input type="number" name="back{{i}}" id="back{{i}}" placeholder="?????" [attr.required]="true" [(ngModel)]="back[i]" value="">
+                </div>
+
+                <div class="two wide field">
+                    <a (click)="onDelField(i)" *ngIf="i!==0" style="cursor: pointer;color: red">
+                        <i class="minus icon"></i> ลบ
+                    </a>
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="four wide field">
+                    &nbsp;
+                </div>
+
+                <div class="two wide field ">
+                    <label>เงื่อนไขที่</label>
+                </div>
+
+                <div class="two wide field ">
+                    <label>น้อยกว่า</label>
+                </div>
+
+                <div class="three wide field ">
+                    <input type="number" id="lastNumber" placeholder="10" [attr.required]="true" value="">
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="four wide field">
+                    &nbsp;
+                </div>
+                <i class="plus icon"></i>
+                <div class="five wide field ">
+                    <a (click)="onAddField()" style="cursor:  pointer;">เพิ่มเงื่อนไข</a>
+                </div>
+
+            </div>
+            <hr style="margin: 10px;">
+            <div class="ui center aligned grid">
+                <div class="sixteen wide column">
+                    <button type="submit" class="ui small primary button">
+                        <i class="save icon"></i> บันทึก
+                    </button>
+                    <button class="ui small button" type="reset">
+                        <i class="refresh icon"></i> ล้างข้อมูล
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 <div class="ui grid">
     <div class="sixteen wide column">
         <h2 class="ui header">กระดาษทำการเปรียบเทียบการชำระภาษี {{month}} เดือนย้อนหลังของผู้ประกอบการ</h2>
@@ -43,11 +141,11 @@
                         <label>คำค้นหา</label>
                     </div>
                     &nbsp;&nbsp;&nbsp;
-                    <div class="seven wide field ">
+                    <div class="five wide field ">
                         <input type="text" placeholder="" value="">
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <div class="seven wide field ">
+                    <div class="two wide field ">
                         <button class="ui mini primary button" routerLink="/#/add-data?id=${data}">
                             ค้นหา
                         </button>
@@ -57,6 +155,17 @@
                             <i class="add icon"></i>
                             เพิ่มข้อมูล
                         </button> -->
+                    </div>
+                    <div class="two wide field ">
+                        <button class="ui mini primary button" id="conditonModal">
+                            เพิ่มเงื่อนไข
+                        </button>
+                    </div>
+                    <div class="five wide field">
+                        <label style="width: 5em;">เงื่อนไข</label>
+                        <select class="ui dropdown" name="sector" id="sector" (change)="changeSector()">
+                            <option value="">ทั้งหมด</option>
+                        </select>
                     </div>
                 </div>
 
