@@ -1,11 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import {
   TravelCostHeader,
   TravelCostDetail
 } from "../../../../../common/models";
 import { AjaxService } from "../../../../../common/services";
 import { Prices } from "../../../../../common/helper/travel";
-import { Router, ActivatedRoute, Params } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
+import { digit } from "../../../../../common/helper/datepicker";
 import { TextDateTH, formatter } from "../../../../../common/helper/datepicker";
 declare var $: any;
 @Component({
@@ -13,11 +14,12 @@ declare var $: any;
   templateUrl: "./int09-1-1.component.html",
   styleUrls: ["./int09-1-1.component.css"]
 })
-export class Int0911Component implements OnInit {
-  public status: string;
-  public id: number;
+export class Int0911Component implements OnInit, AfterViewInit {
+  status: string;
+  id: number;
+  headerId: number;
 
-  public hdr: TravelCostHeader;
+  hdr: TravelCostHeader;
   detail: TravelCostDetail[];
   data: TravelCostDetail;
 
@@ -32,7 +34,11 @@ export class Int0911Component implements OnInit {
   selectedTop: string;
   sent: boolean;
 
-  constructor(private ajax: AjaxService, private router: Router) {
+  constructor(
+    private ajax: AjaxService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.status = "create";
     this.hdr = new TravelCostHeader();
     this.detail = new Array<TravelCostDetail>();
@@ -52,6 +58,25 @@ export class Int0911Component implements OnInit {
   }
 
   ngOnInit() {
+    this.headerId = this.route.snapshot.queryParams["id"];
+    if (this.headerId !== undefined) {
+      const HEADER_URL = `ia/int09/lists/${this.headerId}`;
+      console.log(`HEADER_ID: ${this.headerId}`);
+      this.ajax.get(HEADER_URL, res => {
+        this.hdr = res.json()[0];
+        let date = new Date(this.hdr.startDate);
+        this.hdr.startDate = `${digit(date.getDate())}/${digit(
+          date.getMonth()
+        )}/${digit(date.getFullYear() + 543)}`;
+        date = new Date(this.hdr.endDate);
+        this.hdr.endDate = `${digit(date.getDate())}/${digit(
+          date.getMonth()
+        )}/${digit(date.getFullYear() + 543)}`;
+      });
+    }
+  }
+
+  ngAfterViewInit() {
     $(".ui.radio.checkbox").checkbox();
     $("#example2").calendar({
       endCalendar: $("#example3"),
@@ -122,6 +147,8 @@ export class Int0911Component implements OnInit {
     // show form generate pdf
     this.sent = true;
     this.selectedTop = this.selectTop;
+    this.hdr.startDate = $("#startDate").val();
+    this.hdr.endDate = $("#endDate").val();
     const {
       workSheetHeaderName,
       departmentName,
@@ -129,12 +156,22 @@ export class Int0911Component implements OnInit {
       endDate,
       description
     } = this.hdr;
+    let arr = startDate.split("/");
+    const start = new Date();
+    start.setDate(parseInt(arr[0]));
+    start.setMonth(parseInt(arr[1]));
+    start.setFullYear(parseInt(arr[2]) - 543);
+    arr = endDate.split("/");
+    const end = new Date();
+    end.setDate(parseInt(arr[0]));
+    end.setMonth(parseInt(arr[1]));
+    end.setFullYear(parseInt(arr[2]) - 543);
     var data: TravelCostHeader = {
       workSheetHeaderId: 0,
       workSheetHeaderName: workSheetHeaderName,
       departmentName: departmentName,
-      startDate: startDate,
-      endDate: endDate,
+      startDate: start,
+      endDate: end,
       description: description,
       createdBy: "",
       createdDatetime: null,

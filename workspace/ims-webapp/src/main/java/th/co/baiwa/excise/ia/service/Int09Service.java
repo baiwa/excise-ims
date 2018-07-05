@@ -24,8 +24,8 @@ public class Int09Service {
 	private TravelCostWsDetailDao travelCostWsDetailDao;
 	
 	
-	public List<TravelCostWorkSheetHeader> listTravelCostHeaderService() {
-		List<TravelCostWorkSheetHeader> list = travelCostWorkSheetHeaderDao.queryTravelCostWorksheetHeader();
+	public List<TravelCostWorkSheetHeader> listTravelCostHeaderService(TravelCostWorkSheetHeader travel) {
+		List<TravelCostWorkSheetHeader> list = travelCostWorkSheetHeaderDao.queryTravelCostWorksheetHeader(travel);
 		return list;
 	}
 

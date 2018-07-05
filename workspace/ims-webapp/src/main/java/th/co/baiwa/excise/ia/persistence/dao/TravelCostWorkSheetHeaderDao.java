@@ -23,13 +23,17 @@ public class TravelCostWorkSheetHeaderDao {
 
 	private String sqlTemplate = " SELECT * FROM IA_TRAVEL_COST_WS_HEADER H WHERE 1 = 1 ";
 
-	public List<TravelCostWorkSheetHeader> queryTravelCostWorksheetHeader() {
+	public List<TravelCostWorkSheetHeader> queryTravelCostWorksheetHeader(TravelCostWorkSheetHeader travel) {
 		List<Object> paramList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlTemplate);
+		if (BeanUtils.isNotEmpty(travel.getWorkSheetHeaderId())) {
+			sql.append(" AND WORK_SHEET_HEADER_ID = ? ");
+			paramList.add(travel.getWorkSheetHeaderId());
+		}
 		List<TravelCostWorkSheetHeader> res = jdbcTemplate.query(sql.toString(), paramList.toArray(), rowMapper);
 		return res;
 	}
-
+	
 	public List<TravelCostWorkSheetHeader> queryTravelCostWorksheetHeader(String orderBy) {
 		List<Object> paramList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlTemplate);
