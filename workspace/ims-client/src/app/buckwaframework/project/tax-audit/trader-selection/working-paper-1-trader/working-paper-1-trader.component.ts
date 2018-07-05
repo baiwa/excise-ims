@@ -21,6 +21,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
   last: any;
   num1: any;
   num2: any;
+  
   _num1: any;
   _num2: any;
   percent1: any;

@@ -1,28 +1,28 @@
 .ui.menu .item img.logo {
-    margin-right: 1.5em;
+  margin-right: 1.5em;
 }
 
 .ui.menu {
-    background-color: #ffffff;
-    border-bottom: solid 1px #c5d6de;
+  background-color: #ffffff;
+  border-bottom: solid 1px #c5d6de;
 }
 
 .main.container {
-    min-height: 100%;
-    padding-top: 6em;
-    padding-bottom: 60px;
-    box-sizing: border-box;
+  min-height: 100%;
+  padding-top: 6em;
+  padding-bottom: 60px;
+  box-sizing: border-box;
 }
 
 .wireframe {
-    margin-top: 2em;
+  margin-top: 2em;
 }
 
 .ui.footer {
-    background-color: #fff;
-    position: absolute;
-    margin-top: -50px;
-    left: 0;
-    width: 100%;
-    padding: 15px 0;
+  background-color: #fff;
+  position: absolute;
+  margin-top: -50px;
+  left: 0;
+  width: 100%;
+  padding: 15px 0;
 }
