@@ -317,7 +317,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
-    json += ' "exciseProductType": "' + this.exciseProductType + '", ';
+    json += ' "exciseProductType": "' + this.exciseProductType.replace("*", "") + '", ';
 
     json += ' "startBackDate": "' + this.from + '", ';
     json += ' "condition": "' + (this.condition != undefined ? this.condition : "") + '", ';
