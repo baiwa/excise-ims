@@ -91,4 +91,12 @@ export class Int091Component implements OnInit {
       }
     });
   }
+
+  editHeader(id: any): void {
+    this.router.navigate(["int09/1/1"], {
+      queryParams: {
+        id: id
+      }
+    });
+  }
 }
