@@ -56,6 +56,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     ];
 
     this.numbers = [1];
+    console.log(this.numbers);
     this.back = [];
     this.font = [];
     for (let i = 0; i < 3; i++) {
@@ -226,11 +227,6 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     let num = this.numbers.length;
     if (num < 3) {
       this.numbers.push(num + 1);
-    } else {
-      this.messageBarService.errorModal(
-        "ไม่สามารถทำรายการได้",
-        "เกิดข้อผิดพลาด"
-      );
     }
   };
 

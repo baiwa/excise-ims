@@ -92,8 +92,9 @@
                         <div class="inline fields">
                             <div class="sixteen wide field">
                                 <label style="width: 5em;">พิกัด</label>
-                                <select class="ui dropdown">
-                                    <option *ngFor="let item of listItem" value="{{item}}">{{item}}</option>
+                                <select class="ui dropdown" name="coordinates" id="coordinates" (change)="changeCoordinates()">
+                                    <option value="">ทั้งหมด</option>
+                                    <option *ngFor="let list of coordinatesArr">{{list.value1}}</option>
                                 </select>
                             </div>
                         </div>
@@ -108,14 +109,17 @@
                             <div class="header">แยกข้อมูลตามกลุ่มของการชำระภาษี</div>
                         </div>
                         <div class="item">
+                            <div class="menu">
+                                <a class="item hover {{(( _num1.length>1)&&(indexFilter === '')) && 'active'}}" *ngIf="_num1.length>1" (click)="filterAllDataByCriteria()">- เงื่อนไขทั้งหมด</a>
+                            </div>
                             <div class="menu" *ngFor="let num of _num1; let i = index" (click)="filterDataByCriteria(i)">
-                                <a class="item">-เงื่อนไขที่ {{i+1}}</a>
+                                <a class="item hover {{ ( indexFilter === i ) && 'active' }}">- เงื่อนไขที่ {{i+1}}</a>
                             </div>
                         </div>
                         <div class="item">
                             <div class="menu">
-                                <a class="item">-รวมทุกเงื่อนไข</a>
-                                <a class="item">-รายที่ไม่อยู่ในเงื่อนไข</a>
+                                <a class="item hover {{(flag == 'N' || flag == '') && 'active'}}" (click)="FlagN()">- รายที่ไม่อยู่ในเงื่อนไข</a>
+                                <a class="item hover {{flag == 'NOT N' && 'active'}}" (click)="FlagNotN()">- รายที่อยู่ในเงื่อนไข</a>
                             </div>
                         </div>
                     </div>

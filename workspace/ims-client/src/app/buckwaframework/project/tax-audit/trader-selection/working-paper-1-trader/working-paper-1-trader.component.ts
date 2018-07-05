@@ -1,22 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { AjaxService } from '../../../../common/services/ajax.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { ExciseService } from '../../../../common/services/excise.service';
-import { TextDateTH, digit } from '../../../../common/helper/datepicker';
-import { CurrencyPipe } from '@angular/common';
+import { Component, OnInit } from "@angular/core";
+import { AjaxService } from "../../../../common/services/ajax.service";
+import { Router, ActivatedRoute, Params } from "@angular/router";
+import { ExciseService } from "../../../../common/services/excise.service";
+import { TextDateTH, digit } from "../../../../common/helper/datepicker";
+import { CurrencyPipe } from "@angular/common";
 
 declare var jQuery: any;
 declare var $: any;
 @Component({
-  selector: 'app-working-paper-1-trader',
-  templateUrl: './working-paper-1-trader.component.html',
-  styleUrls: ['./working-paper-1-trader.component.css']
+  selector: "app-working-paper-1-trader",
+  templateUrl: "./working-paper-1-trader.component.html",
+  styleUrls: ["./working-paper-1-trader.component.css"]
 })
 export class WorkingPaper1TraderComponent implements OnInit {
-
   userManagementDt: any;
-  
-  private listItem: any[];
   before: any;
   last: any;
   num1: any;
@@ -32,12 +29,16 @@ export class WorkingPaper1TraderComponent implements OnInit {
   from: any;
   analysNumber: any;
   exciseProductType: any;
-  indexFilter : any;
+  indexFilter: any;
+  coordinates: any;
+  coordinatesArr: any;
+  flag: any;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private ex: ExciseService
+    private ex: ExciseService,
+    private ajax: AjaxService
   ) {
     this._num1 = new Array();
     this._num2 = new Array();
@@ -46,11 +47,30 @@ export class WorkingPaper1TraderComponent implements OnInit {
   }
 
   ngOnInit() {
-  
+    //get coordinates in select option
+    const URL = "combobox/controller/getCoordinates";
+    this.ajax.post(URL, {}, res => {
+      this.coordinatesArr = res.json();
+    });
+
     //call ExciseService
-    var { before, last, from, month, currYear, prevYear } = this.ex.getformValues();
-    var { num1, num2, percent1, percent2, analysNumber } = this.ex.getformNumber();
+    var {
+      before,
+      last,
+      from,
+      month,
+      currYear,
+      prevYear
+    } = this.ex.getformValues();
+    var {
+      num1,
+      num2,
+      percent1,
+      percent2,
+      analysNumber
+    } = this.ex.getformNumber();
     this.indexFilter = "";
+    this.flag = "";
     //set values
     this.before = before;
     this.last = last;
@@ -62,16 +82,16 @@ export class WorkingPaper1TraderComponent implements OnInit {
     this.percent2 = percent2;
     this.analysNumber = analysNumber;
     console.log("analysNumber: ", this.analysNumber);
-    
+
     for (var i = 0; i < this.num1.length; i++) {
       if (this.num2[i] !== 0) {
         this._num1.push(this.num1[i]);
         this._num2.push(this.num2[i]);
-        this._percent1.push((this.percent1[i]+0.00));
+        this._percent1.push(this.percent1[i] + 0.0);
         this._percent2.push(this.percent2[i]);
-        
       }
     }
+    console.log(this._num1.length);
 
     //split function
     var from_split = this.from.split("/");
@@ -83,7 +103,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     var m = parseInt(month) + 1;
     var mm = parseInt(this.month);
     var yy = parseInt(year_before);
-    
+
     var items: string[] = [];
     for (var i = 1; i <= mm; i++) {
       m = m - 1;
@@ -91,54 +111,73 @@ export class WorkingPaper1TraderComponent implements OnInit {
         m = 12;
         yy = yy - 1;
       }
-      items.push('<th style="text-align: center !important">' + TextDateTH.monthsShort[m - 1] + ' ' + (yy + "").substr(2) + '</th>');
-
+      items.push(
+        '<th style="text-align: center !important">' +
+          TextDateTH.monthsShort[m - 1] +
+          " " +
+          (yy + "").substr(2) +
+          "</th>"
+      );
     }
 
     var trHeaderColumn = "";
     //for (var i = items.length - 1; i >= 0; i--) {
     //  trHeaderColumn += items[i];
     //}
-    document.getElementById('trDrinamic').innerHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> '
-      + '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> '
-      + '<th rowspan="2" style="text-align: center !important">พื้นที่</th> '
-      + '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> '
-      + '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> '
-      + '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> '
-      + '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ภาค</th> '
-      + '<th rowspan="2" style="text-align: center !important">พิกัด</th> '
-      + '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> '
-      + '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> '
-      + '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> '
-     
-      + '</tr>'
-      + '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' + this.month / 2 + ' เดือนแรก</th>'
-      + '<th style="text-align: center !important">' + this.month / 2 + ' เดือนหลัง </th>'
-      + '<th style="text-align: center !important">' + (currYear - 3) + '</th>'
-      + '<th style="text-align: center !important">' + (currYear - 2) + '</th>'
-      + '<th style="text-align: center !important">' + (currYear - 1) + '</th>'
-      + trHeaderColumn + '</tr>';
-    console.log(document.getElementById('trDrinamic').innerHTML);
+    document.getElementById("trDrinamic").innerHTML =
+      '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
+      '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
+      '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
+      '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
+      '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> ' +
+      '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
+      "</tr>" +
+      '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
+      this.month / 2 +
+      " เดือนแรก</th>" +
+      '<th style="text-align: center !important">' +
+      this.month / 2 +
+      " เดือนหลัง </th>" +
+      '<th style="text-align: center !important">' +
+      (currYear - 3) +
+      "</th>" +
+      '<th style="text-align: center !important">' +
+      (currYear - 2) +
+      "</th>" +
+      '<th style="text-align: center !important">' +
+      (currYear - 1) +
+      "</th>" +
+      trHeaderColumn +
+      "</tr>";
+    console.log(document.getElementById("trDrinamic").innerHTML);
 
     this.initDatatable();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit() {}
 
-  }
-
-  filterDataByCriteria(index){
+  filterDataByCriteria(index) {
     console.log(index);
     this.indexFilter = index;
     this.userManagementDt.destroy();
     this.initDatatable();
   }
-  
+
+  filterAllDataByCriteria() {
+    this.indexFilter = "";
+    this.userManagementDt.destroy();
+    this.initDatatable();
+  }
+
   initDatatable(): void {
-    
     var d = new Date();
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
     console.log(URL);
@@ -153,20 +192,24 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' "serverSide": true, ';
     json += ' "paging": true, ';
     json += ' "pagingType": "full_numbers", ';
-    json += ' ';
+    json += " ";
     json += ' "ajax": { ';
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
-    json += ' "flag": "N", ';
-    json += ' "indexFilter": "'+this.indexFilter+'", ';
+    json += ' "flag": "' + (this.flag == "" ? "N" : this.flag) + '", ';
+    json += ' "indexFilter": "' + this.indexFilter + '", ';
     json += ' "num1": "' + this.num1 + '", ';
     json += ' "num2": "' + this.num2 + '", ';
     json += ' "percent1": "' + this.percent1 + '", ';
     json += ' "percent2": "' + this.percent2 + '", ';
-    json += ' "analysNumber": "' + this.analysNumber + '" ';
-    json += ' } ';
-    json += ' }, ';
+    json += ' "analysNumber": "' + this.analysNumber + '", ';
+    json +=
+      ' "productType": "' +
+      (this.coordinates == undefined ? "" : this.coordinates) +
+      '" ';
+    json += " } ";
+    json += " }, ";
     json += ' "columns": [ ';
     json += ' { "data": "worksheetHeaderId","className":"center" }, ';
     json += ' { "data": "exciseId","className":"center" }, ';
@@ -186,43 +229,64 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' { "data": "registeredCapital" }, ';
     json += ' { "data": "status" } ';
 
-    json += '] } ';
+    json += "] } ";
     console.log(json);
     let jsonMaping = JSON.parse(json);
-    this.userManagementDt = $('#userManagementDt').DataTable(jsonMaping);
+    this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
   }
 
-
-  updateFlg(){
-    
+  updateFlg() {
     var router = this.router;
-    const URL = AjaxService.CONTEXT_PATH + "/filter/exise/updateStatusPlanWsHeader";
+    const URL =
+      AjaxService.CONTEXT_PATH + "/filter/exise/updateStatusPlanWsHeader";
     var param1 = "";
     var param2 = "";
     var param3 = "";
     var param4 = "";
-    for(var i = 0 ; i < 10 ; i++ ){
-      param1+=this.num1[i];
-      param2+=this.num2[i];
-      param3+=this.percent1[i];
-      param4+=this.percent2[i];
-      if(i != 9){
-        param1+=",";
-        param2+=",";
-        param3+=",";
-        param4+=",";
+    for (var i = 0; i < 10; i++) {
+      param1 += this.num1[i];
+      param2 += this.num2[i];
+      param3 += this.percent1[i];
+      param4 += this.percent2[i];
+      if (i != 9) {
+        param1 += ",";
+        param2 += ",";
+        param3 += ",";
+        param4 += ",";
       }
     }
-    $.post(URL, { num1: param1, num2: param2 , percent1: param3 , percent2 : param4 , analysNumber :this.analysNumber },
-      function (returnedData) {
-        router.navigate(['/add-external-data']);
-      }).fail(function () {
-        console.log("error");
-      });
-
+    $.post(
+      URL,
+      {
+        num1: param1,
+        num2: param2,
+        percent1: param3,
+        percent2: param4,
+        analysNumber: this.analysNumber
+      },
+      function(returnedData) {
+        router.navigate(["/add-external-data"]);
+      }
+    ).fail(function() {
+      console.log("error");
+    });
   }
 
-  
+  changeCoordinates = () => {
+    this.coordinates = $("#coordinates").val();
+    this.userManagementDt.destroy().draw();
+    this.initDatatable();
+  };
 
+  FlagN = () => {
+    this.flag = "N";
+    this.userManagementDt.destroy();
+    this.initDatatable();
+  };
 
+  FlagNotN = () => {
+    this.flag = "NOT N";
+    this.userManagementDt.destroy();
+    this.initDatatable();
+  };
 }

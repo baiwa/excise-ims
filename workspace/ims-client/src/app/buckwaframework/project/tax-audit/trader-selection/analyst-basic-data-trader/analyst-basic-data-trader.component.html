@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="two wide field ">
-                    <label>เงื่อนไขที่</label>
+                    <label>เงื่อนไขที่ {{numbers.length + 2}}</label>
                 </div>
 
                 <div class="two wide field ">
@@ -70,7 +70,7 @@
                 </div>
             </div>
 
-            <div class="inline fields">
+            <div class="inline fields" *ngIf="numbers.length!=3">
                 <div class="four wide field">
                     &nbsp;
                 </div>
@@ -78,8 +78,8 @@
                 <div class="five wide field ">
                     <a (click)="onAddField()" style="cursor:  pointer;">เพิ่มเงื่อนไข</a>
                 </div>
-
             </div>
+
             <hr style="margin: 10px;">
             <div class="ui center aligned grid">
                 <div class="sixteen wide column">
