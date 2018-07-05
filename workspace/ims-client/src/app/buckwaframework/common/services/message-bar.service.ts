@@ -62,8 +62,8 @@ export class MessageBarService {
       .modal("show");
   }
 
-  alert(message: string, titele: string = "Alert") {
-    $(".baiwa-alert div.header").html(titele);
+  alert(message: string, title: string = "Alert") {
+    $(".baiwa-alert div.header").html(title);
     $(".baiwa-alert div.content").html(message);
     $(".baiwa-alert").modal("show");
   }

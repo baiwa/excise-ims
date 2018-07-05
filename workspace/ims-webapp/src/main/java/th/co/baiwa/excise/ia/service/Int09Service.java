@@ -22,6 +22,12 @@ public class Int09Service {
 
 	@Autowired
 	private TravelCostWsDetailDao travelCostWsDetailDao;
+	
+	
+	public List<TravelCostWorkSheetHeader> listTravelCostHeaderService() {
+		List<TravelCostWorkSheetHeader> list = travelCostWorkSheetHeaderDao.queryTravelCostWorksheetHeader();
+		return list;
+	}
 
 	public void createTravelCostService(TravelCostWsIntegrate travelCostWsIntegrate) {
 		// Creator

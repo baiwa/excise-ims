@@ -78,11 +78,17 @@
             <th rowspan="2">วันที่</th>
             <th rowspan="2">Action</th>
           </tr>
-
         </thead>
         <tbody>
-
-
+          <tr *ngFor="let d of data; let i=index">
+            <td>{{d.workSheetHeaderId}}</td>
+            <td>{{d.workSheetHeaderName}}</td>
+            <td>{{d.departmentName}}</td>
+            <td>{{d.createdDatetime.toDateString()}}</td>
+            <td>
+              <button class="ui mini primary button" type="button" (click)="createLoan(d.workSheetHeaderId)">สัญญาการยืมเงิน</button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

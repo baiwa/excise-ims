@@ -1,19 +1,21 @@
-
-import { Component, OnInit } from '@angular/core';
-import { TextDateTH } from '../../../../common/helper/datepicker';
-import { AjaxService } from '../../../../common/services';
+import { Component, OnInit } from "@angular/core";
+import { TextDateTH } from "../../../../common/helper/datepicker";
+import { AjaxService } from "../../../../common/services";
+import { TravelCostHeader } from "../../../../common/models";
+import { Router } from "@angular/router";
 declare var $: any;
 @Component({
-  selector: 'app-int09-1',
-  templateUrl: './int09-1.component.html',
-  styleUrls: ['./int09-1.component.css']
+  selector: "app-int09-1",
+  templateUrl: "./int09-1.component.html",
+  styleUrls: ["./int09-1.component.css"]
 })
 export class Int091Component implements OnInit {
-  private $form: any;
-  private showData: boolean = false;
+  public $form: any;
+  public showData: boolean = false;
   typeDocs: String[];
   topics: String[][];
   topic: String[];
+  data: TravelCostHeader[];
 
   selectDoc: String;
   selectTop: String;
@@ -23,55 +25,37 @@ export class Int091Component implements OnInit {
 
   sent: boolean;
 
-  constructor() {
-    this.typeDocs = [
-      'ทั่วไป',
-      'วิชาการ',
-      'อำนวยการ',
-      'บริหาร',
-    ];
+  constructor(private ajax: AjaxService, private router: Router) {
+    this.typeDocs = ["ทั่วไป", "วิชาการ", "อำนวยการ", "บริหาร"];
     this.topics = [
-      [
-        'ปฏิบัติงาน',
-        'ชำนาญงาน',
-        'อาวุโส',
-        'ทักษะพิเศษ',
-
-      ],
-      [
-        'ปฏิบัติการ',
-        'ชำนาญการ',
-        'ชำนาญการพิเศษ',
-        'เชี่ยวชาญ',
-        'ทรงคุณวุฒิ',
-      ],
-      [
-
-        'ระดับต้น',
-        'ระดับสูง',
-
-      ], [
-
-        'ระดับต้น',
-        'ระดับสูง',
-
-      ]
+      ["ปฏิบัติงาน", "ชำนาญงาน", "อาวุโส", "ทักษะพิเศษ"],
+      ["ปฏิบัติการ", "ชำนาญการ", "ชำนาญการพิเศษ", "เชี่ยวชาญ", "ทรงคุณวุฒิ"],
+      ["ระดับต้น", "ระดับสูง"],
+      ["ระดับต้น", "ระดับสูง"]
     ];
     this.topic = [];
     this.sent = false; // false
-    this.selectedTop = ''; // ''
+    this.selectedTop = ""; // ''
   }
 
   ngOnInit() {
-    $('#example2').calendar({
-      type: 'date',
+    const URL_LIST = "ia/int09/lists";
+    this.ajax.get(URL_LIST, res => {
+      this.data = res.json();
+      this.data.forEach((item, index) => {
+        this.data[index].createdDatetime = new Date(item.createdDatetime);
+        this.data[index].updateDatetime = new Date(item.updateDatetime);
+      });
+    });
+    $("#example2").calendar({
+      type: "date",
       text: TextDateTH
     });
-    $('#example3').calendar({
-      type: 'date',
+    $("#example3").calendar({
+      type: "date",
       text: TextDateTH
     });
-    this.$form = $('#int09-1');
+    this.$form = $("#int09-1");
   }
   onSelectDoc = event => {
     this.topic = this.topics[event.target.value];
@@ -99,6 +83,12 @@ export class Int091Component implements OnInit {
   clearData() {
     this.showData = false;
   }
-  
-}
 
+  createLoan(id: any): void {
+    this.router.navigate(["int09/2"], {
+      queryParams: {
+        id: id
+      }
+    });
+  }
+}
