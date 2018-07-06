@@ -268,6 +268,9 @@ export class AnalystBasicDataTraderComponent implements OnInit {
 
   onDelField = index => {
     this.numbers.splice(index, 1);
+    console.log(this.numbers);
+    this.back.splice(index, 1);
+    this.font.splice(index, 1);
   };
 
   onSendModal = () => {

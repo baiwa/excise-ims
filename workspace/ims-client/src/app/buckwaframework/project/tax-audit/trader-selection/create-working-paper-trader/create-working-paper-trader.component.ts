@@ -206,6 +206,14 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
 
   onDelField = index => {
     this.numbers.splice(index, 1);
+    this.num1.splice(index, 1);
+    this.num2.splice(index, 1);
+    this.percent1.splice(index, 1);
+    this.percent2.splice(index, 1);
+    // console.log(this.num1);
+    // console.log(this.num2);
+    // console.log(this.percent1);
+    // console.log(this.percent2);
   };
 
   reset = () => {
