@@ -39,10 +39,10 @@ public class Int09Controller {
 	
 	@GetMapping("/lists/{id}")
 	@ResponseBody
-	public List<TravelCostWorkSheetHeader> lists(@PathVariable("id") String id) {
+	public List<TravelCostWsIntegrate> lists(@PathVariable("id") String id) {
 		TravelCostWorkSheetHeader travel = new TravelCostWorkSheetHeader();
 		travel.setWorkSheetHeaderId(new BigDecimal(id));
-		List<TravelCostWorkSheetHeader> lists = int09Service.listTravelCostHeaderService(travel);
+		List<TravelCostWsIntegrate> lists = int09Service.listTravelCostService(travel);
 		return lists;
 	}
 	

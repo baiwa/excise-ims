@@ -23,10 +23,44 @@ public class Int09Service {
 	@Autowired
 	private TravelCostWsDetailDao travelCostWsDetailDao;
 	
-	
 	public List<TravelCostWorkSheetHeader> listTravelCostHeaderService(TravelCostWorkSheetHeader travel) {
-		List<TravelCostWorkSheetHeader> list = travelCostWorkSheetHeaderDao.queryTravelCostWorksheetHeader(travel);
-		return list;
+
+		// Query Data
+		List<TravelCostWorkSheetHeader> result = travelCostWorkSheetHeaderDao.queryTravelCostWorksheetHeader(travel);
+		
+		// Return Result
+		return result;
+	}
+	
+	public List<TravelCostWsIntegrate> listTravelCostService(TravelCostWorkSheetHeader travel) {
+		// Initial Objects
+		List<TravelCostWsIntegrate> result = new ArrayList<TravelCostWsIntegrate>();
+		TravelCostWsDetail detail = new TravelCostWsDetail();
+		detail.setHeaderId(travel.getWorkSheetHeaderId().toString());
+		TravelCostWsIntegrate ti = new TravelCostWsIntegrate();
+		
+		// Query Data
+		List<TravelCostWorkSheetHeader> header = travelCostWorkSheetHeaderDao.queryTravelCostWorksheetHeader(travel);
+		List<TravelCostWsDetail> details = travelCostWsDetailDao.queryTravelCostWsDetail(detail);
+		
+		// Mapping Data
+		ti.setWorkSheetHeaderId(header.get(0).getWorkSheetHeaderId());
+		ti.setWorkSheetHeaderName(header.get(0).getWorkSheetHeaderName());
+		ti.setDepartmentName(header.get(0).getDepartmentName());
+		ti.setStartDate(header.get(0).getStartDate());
+		ti.setEndDate(header.get(0).getEndDate());
+		ti.setDescription(header.get(0).getDescription());
+		ti.setCreatedBy(header.get(0).getCreatedBy());
+		ti.setCreatedDatetime(header.get(0).getCreatedDatetime());
+		ti.setUpdateBy(header.get(0).getUpdateBy());
+		ti.setUpdateDatetime(header.get(0).getUpdateDatetime());
+		ti.setDetail(details);
+		
+		// Add to ArrayList
+		result.add(ti);
+		
+		// Return Result
+		return result;
 	}
 
 	public void createTravelCostService(TravelCostWsIntegrate travelCostWsIntegrate) {

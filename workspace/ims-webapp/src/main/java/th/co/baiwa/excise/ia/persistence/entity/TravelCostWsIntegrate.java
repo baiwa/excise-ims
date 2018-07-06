@@ -1,13 +1,15 @@
 package th.co.baiwa.excise.ia.persistence.entity;
 
-public class TravelCostWsIntegrate extends TravelCostWorkSheetHeader {
-	private TravelCostWsDetail[] Detail;
+import java.util.List;
 
-	public TravelCostWsDetail[] getDetail() {
+public class TravelCostWsIntegrate extends TravelCostWorkSheetHeader {
+	private List<TravelCostWsDetail> Detail;
+
+	public List<TravelCostWsDetail> getDetail() {
 		return Detail;
 	}
 
-	public void setDetail(TravelCostWsDetail[] detail) {
+	public void setDetail(List<TravelCostWsDetail> detail) {
 		Detail = detail;
 	}
 }
