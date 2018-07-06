@@ -242,12 +242,22 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     });
   };
 
-  onKeyUp = (e, i) => {
-    e.preventDefault();
-    var key = e.target.value;
-    console.log(key);
-    return key.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  numberWithCommas = x => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
+
+  onKeyUp(e, target) {
+    e.preventDefault();
+    var num = e.target.value;
+    for (var i = 0; i < num.length / 3; i++) {
+      num = num.replace(",", "");
+    }
+    // console.log("num: ", num);
+    // console.log("num[,]: ", this.numberWithCommas(num));
+    (<HTMLInputElement>(
+      document.getElementById(target)
+    )).value = this.numberWithCommas(num);
+  }
 
   onAddField = () => {
     let num = this.numbers.length;
@@ -331,7 +341,10 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
-    json += ' "exciseProductType": "' + this.exciseProductType.replace("*", "") + '", ';
+    json +=
+      ' "exciseProductType": "' +
+      this.exciseProductType.replace("*", "") +
+      '", ';
 
     json += ' "startBackDate": "' + this.from + '", ';
     json +=

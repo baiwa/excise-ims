@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="four wide field">
-                    <input type="number" id="firstNumber" (keyup)="onKeyUp($event, i)" placeholder="1,000,000,000" [attr.required]="true" value="">
+                    <input type="text" id="firstNumber" (keyup)="onKeyUp($event, 'firstNumber')" placeholder="1,000,000,000" [attr.required]="true">
                 </div>
             </div>
 
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="four wide field ">
-                    <input type="number" name="font{{i}}" id="font{{i}}" placeholder="?????" [attr.required]="true" [(ngModel)]="font[i]" value="">
+                    <input type="text" name="font{{i}}" id="font{{i}}" (keyup)="onKeyUp($event, 'font'+i)" placeholder="?????" [attr.required]="true" [(ngModel)]="font[i]" value="">
                 </div>
 
                 <div class="one wide field ">
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="four wide field ">
-                    <input type="number" name="back{{i}}" id="back{{i}}" placeholder="?????" [attr.required]="true" [(ngModel)]="back[i]" value="">
+                    <input type="text" name="back{{i}}" id="back{{i}}" (keyup)="onKeyUp($event, 'back'+i)" font placeholder="?????" [attr.required]="true" [(ngModel)]="back[i]" value="">
                 </div>
 
                 <div class="two wide field">
@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="four wide field ">
-                    <input type="number" id="lastNumber" placeholder="10" [attr.required]="true" value="">
+                    <input type="text" id="lastNumber" (keyup)="onKeyUp($event, 'lastNumber')" placeholder="10" [attr.required]="true" value="">
                 </div>
             </div>
 
