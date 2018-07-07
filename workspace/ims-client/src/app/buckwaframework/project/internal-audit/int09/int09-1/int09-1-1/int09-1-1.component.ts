@@ -64,6 +64,8 @@ export class Int0911Component implements OnInit, AfterViewInit {
       console.log(`HEADER_ID: ${this.headerId}`);
       this.ajax.get(HEADER_URL, res => {
         this.hdr = res.json()[0];
+        console.log(this.hdr);
+        this.detail = this.hdr.Detail;
         let date = new Date(this.hdr.startDate);
         this.hdr.startDate = `${digit(date.getDate())}/${digit(
           date.getMonth()
