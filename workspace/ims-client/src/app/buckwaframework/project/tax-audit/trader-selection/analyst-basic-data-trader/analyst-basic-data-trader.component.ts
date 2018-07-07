@@ -39,7 +39,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     private messageBarService: MessageBarService,
     private router: Router,
     private ex: ExciseService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.listMenu = [
@@ -94,10 +94,10 @@ export class AnalystBasicDataTraderComponent implements OnInit {
       }
       items.push(
         '<th style="text-align: center !important">' +
-          TextDateTH.monthsShort[m - 1] +
-          " " +
-          (yy + "").substr(2) +
-          "</th>"
+        TextDateTH.monthsShort[m - 1] +
+        " " +
+        (yy + "").substr(2) +
+        "</th>"
       );
     }
     for (var i = items.length - 1; i >= 0; i--) {
@@ -158,7 +158,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     var table = $("#userManagementDt").DataTable();
 
     //on click condition modal
-    $("#conditonModal").click(function() {
+    $("#conditonModal").click(function () {
       $(".ui.modal.condition")
         .modal({
           centered: false
@@ -179,7 +179,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
         month: this.month,
         exciseProductType: this.exciseProductType
       },
-      function(returnedData) {
+      function (returnedData) {
         console.log("returnedData : ", returnedData.length);
         for (var i = 0; i < returnedData.length; i++) {
           var dat = returnedData[i];
@@ -230,14 +230,14 @@ export class AnalystBasicDataTraderComponent implements OnInit {
         exciseProductType: this.exciseProductType,
         conditionStr: conditionStr
       },
-      function(returnedData) {
+      function (returnedData) {
         console.log("analysNumber : " + returnedData);
         console.log("this.before : " + param1);
         console.log("this.last : " + param3);
         console.log("this.month : " + param3);
         router.navigate(["/create-working-paper-trader"]);
       }
-    ).fail(function() {
+    ).fail(function () {
       console.log("error");
     });
   };
@@ -287,17 +287,17 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     this.valueForFontList = new Array();
     this.valueForBackEndList = new Array();
     this.valueForFontList.push("มากกว่า " + this.firstNumber);
-    this.valueForBackEndList.push(">:" + this.firstNumber);
+    this.valueForBackEndList.push(">:" + this.replaceAllValue(this.firstNumber));
     for (var i = 0; i < this.font.length; i++) {
       if (this.font[i] != 0 || this.back[i] != 0) {
         this.valueForFontList.push(
           "ตั้งแต่ " + this.font[i] + " ถึง " + this.back[i]
         );
-        this.valueForBackEndList.push(this.font[i] + ":" + this.back[i]);
+        this.valueForBackEndList.push(this.replaceAllValue(this.font[i]) + ":" + this.replaceAllValue(this.back[i]));
       }
     }
     this.valueForFontList.push("น้อยกว่า " + this.lastNumber);
-    this.valueForBackEndList.push("<:" + this.lastNumber);
+    this.valueForBackEndList.push("<:" + this.replaceAllValue(this.lastNumber));
     $(".ui.modal.condition")
       .modal({
         centered: false
@@ -310,9 +310,15 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     this.userManagementDt.destroy();
     this.initDatatable();
   }
-
+  replaceAllValue(data) {
+    while (data.indexOf(',') > 0) {
+      data = data.replace(',', '');
+    }
+    return data;
+  }
   changeCondition = data => {
     console.log(data);
+    data = this.replaceAllValue(data);
     if (data == 0) {
       this.condition = this.valueForBackEndList;
     } else {
