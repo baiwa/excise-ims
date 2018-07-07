@@ -22,30 +22,42 @@ import th.co.baiwa.excise.utils.BeanUtils;
 public class Int02Controller {
 
 	private Logger logger = LoggerFactory.getLogger(Int02Controller.class);
-	
+
 	@Autowired
 	private QtnReportHeaderService qtnReportHeaderService;
 
-	
-	
 	@PostMapping("/addHeaderQuestionnaire")
 	@ResponseBody
 	public Message addHeaderQuestionnaire(@RequestBody QtnReportHeader qtnReportHeader) {
 		logger.info("Add QtnReportHeader");
 		Message message = null;
 		Integer insertCountRow = qtnReportHeaderService.createQtnReportHeader(qtnReportHeader);
+		if (BeanUtils.isNotEmpty(insertCountRow) && insertCountRow.intValue() == 1) {
+			message = ApplicationCache.getMessage("MSG_00002");
+		} else {
+			message = ApplicationCache.getMessage("MSG_00003");
+		}
+		return message;
+	}
+
+	@PostMapping("/queryQtnReportHeaderByCriteria")
+	@ResponseBody
+	public ResponseDataTable<QtnReportHeader> queryQtnReportHeaderByCriteria(DataTableRequest dataTableRequest) {
+		logger.info("queryQtnReportHeaderByCriteria");
+		return qtnReportHeaderService.findByCriteriaForDatatable(new QtnReportHeader(), dataTableRequest);
+	}
+
+	@PostMapping("/deleteQtnReportHeaderByCriteria")
+	@ResponseBody
+	public Message deleteQtnReportHeaderByCriteria(QtnReportHeader qtnReportHeader) {
+		logger.info("queryQtnReportHeaderByCriteria");
+		Message message = null;
+		Integer insertCountRow = qtnReportHeaderService.deleteQtnReportHeader(qtnReportHeader);
 		if(BeanUtils.isNotEmpty(insertCountRow) && insertCountRow.intValue() == 1) {
 			message = ApplicationCache.getMessage("MSG_00002");
 		}else {
 			message = ApplicationCache.getMessage("MSG_00003");
 		}
 		return message;
-	}
-	
-	@PostMapping("/queryQtnReportHeaderByCriteria")
-	@ResponseBody
-	public ResponseDataTable<QtnReportHeader> queryQtnReportHeaderByCriteria(DataTableRequest dataTableRequest) {
-		logger.info("queryQtnReportHeaderByCriteria");
-		return qtnReportHeaderService.findByCriteriaForDatatable(new QtnReportHeader(),dataTableRequest);
 	}
 }

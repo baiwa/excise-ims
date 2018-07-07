@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { MessageBarService } from '../../../../common/services/message-bar.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { ExciseService } from '../../../../common/services/excise.service';
-import { TextDateTH, digit } from '../../../../common/helper/datepicker';
-import { CurrencyPipe } from '@angular/common';
+
 
 
 declare var jQuery: any;
@@ -20,13 +18,17 @@ export class Int022Component implements OnInit {
   departmentName: any;
   departmentNameNew: any;
   datatable: any;
-  constructor(private ajax: AjaxService, private messageBarService: MessageBarService) {
+  constructor(
+    private router: Router,
+    private ajax: AjaxService,
+    private messageBarService: MessageBarService) {
 
 
 
   }
 
   ngOnInit() {
+
     this.departmentNameArr = "";
     const URL = "combobox/controller/comboboxHeaderQuestionnaire";
 
@@ -113,7 +115,6 @@ export class Int022Component implements OnInit {
           className: "center"
 
         }
-
       ]
 
     });
@@ -127,11 +128,23 @@ export class Int022Component implements OnInit {
       var actionClick = idClick.split("-")[0];
       console.log(actionClick);
       if ('edit' == actionClick) {
-        //edit case
-        //$('.ui.modal').modal();
+
+
       } else {
         //delete case
+        this.messageBarService.comfirm((res) => {
+          if (!res) return false;
+          const deleteURL = `api/preferences/userManagement/`;
+          this.ajaxService.delete(deleteURL, (success: Response) => {
+            let body: any = success.json();
+            this.messageBarService.success("ลบข้อมูลสำเร็จ.");
+            this.search();
+          }, (error: Response) => {
+            let body: any = error.json();
+            this.messageBarService.error(body.error);
+          });
 
+        }, "ยืนยันการลบ.");
       }
     });
 
@@ -153,12 +166,28 @@ export class Int022Component implements OnInit {
     });
   }
 
+  deleteData() {
+
+  }
+
   clickEditFunction(index) {
     console.log(index);
   }
 
   clickDeleteFunctionFunction(index) {
     console.log(index);
+  }
+
+
+  popupEditData() {
+    $('#modalEditData').modal('show');
+
+  }
+
+  closePopupEdit() {
+
+    $('#modalEditData').modal('hide');
+
   }
 
 }

@@ -8,41 +8,41 @@ declare var $: any;
 })
 export class Int0132Component implements OnInit {
   private productList: any[];
-  
-  private selectedProduct:string = 'สุรา';
+
+  private selectedProduct: string = 'สุรา';
 
   constructor() { }
 
   ngOnInit() {
 
-    
+
     this.productList = [
-      { 'value': 'เครื่องดื่ม'},
-      { 'value': 'สุราแช่'},
-      { 'value': 'สุราแช่ชุมชน'},
-      { 'value': 'สุรากลั่น'},
-      { 'value': 'สุรากลั่นชุมชน'},
-      { 'value': 'ยาสูบ'},
-      
+      { 'value': 'เครื่องดื่ม' },
+      { 'value': 'สุราแช่' },
+      { 'value': 'สุราแช่ชุมชน' },
+      { 'value': 'สุรากลั่น' },
+      { 'value': 'สุรากลั่นชุมชน' },
+      { 'value': 'ยาสูบ' },
+
     ];
     $('#id').hide();
   }
   onChange(newValue) {
     console.log(newValue);
     this.selectedProduct = newValue;  // don't forget to update the model here
-}
+  }
 
-popupEditData() {
-  $('#modalEditData').modal('show');
-  $('#modalInt062').modal('show');
-  $('#id').show();
-  $('#selectTrading').show();
-}
+  popupEditData() {
+    $('#modalEditData').modal('show');
+    $('#modalInt062').modal('show');
+    $('#id').show();
+    $('#selectTrading').show();
+  }
 
-closePopupEdit() {
-  $('#selectTrading').show();
-  $('#modalEditData').modal('hide');
-  $('#modalInt062').modal('hide');
-}
+  closePopupEdit() {
+    $('#selectTrading').show();
+    $('#modalEditData').modal('hide');
+    $('#modalInt062').modal('hide');
+  }
 
 }

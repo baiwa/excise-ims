@@ -1,9 +1,10 @@
 package th.co.baiwa.excise.ia.persistence.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
-public class IaStampWorkSheetHeader {
+import th.co.baiwa.excise.domain.DefaultEntity;
+
+public class IaStampWorkSheetHeader extends DefaultEntity {
 
 	private BigDecimal workSheetHeaderId;
 	private String workSheetType;
@@ -12,10 +13,7 @@ public class IaStampWorkSheetHeader {
 	private String departmentName;
 	private String auditorName;
 	private String checkDatetime;
-	private String createBy;
-	private Date createDate;
-	private String updateBy;
-	private Date updateDate;
+	
 	
 	
 	public BigDecimal getWorkSheetHeaderId() {
@@ -60,33 +58,6 @@ public class IaStampWorkSheetHeader {
 	public void setCheckDatetime(String checkDatetime) {
 		this.checkDatetime = checkDatetime;
 	}
-	public String getCreateBy() {
-		return createBy;
-	}
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
-	public Date getCreateDate() {
-		return createDate;
-	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-	public String getUpdateBy() {
-		return updateBy;
-	}
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
-	}
-	public Date getUpdateDate() {
-		return updateDate;
-	}
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
-	
-	
-	
 	
 	
 }

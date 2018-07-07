@@ -110,6 +110,7 @@ public class PlanWorksheetHeaderService {
 
 				try {
 					double calAmount = percetLastAmount - percetFirstAmount;
+					logger.debug("calAmount", calAmount);
 					percenttage = new BigDecimal(calAmount);
 					percenttage.setScale(2, RoundingMode.UP);
 				} catch (Exception e) {

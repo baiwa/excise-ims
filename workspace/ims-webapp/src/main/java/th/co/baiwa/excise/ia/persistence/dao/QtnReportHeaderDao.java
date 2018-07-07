@@ -11,8 +11,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
-import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetVo;
-import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.utils.OracleUtils;
 
@@ -102,6 +100,18 @@ public class QtnReportHeaderDao {
 		paramList.add(qtnReportHeader.getUpdateBy());
 		paramList.add(qtnReportHeader.getUpdateDatetime());
 		return jdbcTemplate.update(sql.toString(), paramList.toArray());
+		
+		
+		
+	}
+	public Integer deleteQtnReportHeader(QtnReportHeader qtnReportHeader){
+		List<Object> objList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder("DELETE FROM IA_QUESTIONNAIRE_HEADER  WHERE 1=1");
+		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnReportHdrId())) {
+			sql.append(" AND QTN_HEADER_ID = ? ");
+			objList.add(qtnReportHeader.getQtnReportHdrId());
+		}
+		return jdbcTemplate.update(sql.toString(), objList.toArray());
 		
 		
 		

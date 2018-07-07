@@ -114,34 +114,16 @@ public class ExciseRegisttionNumberDao {
 		}
 
 		sql.append(" order By TA_EXCISE_REGISTTION_NUMBER_ID ");
-		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()),objList.toArray(), Long.class);
+		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()), objList.toArray(), Long.class);
 
 		return count;
 	}
 
-	private RowMapper<ExciseRegistartionNumber> exciseRegisttionRowmapper = new RowMapper<ExciseRegistartionNumber>() {
-		@Override
-		public ExciseRegistartionNumber mapRow(ResultSet rs, int arg1) throws SQLException {
-			ExciseRegistartionNumber vo = new ExciseRegistartionNumber();
+	private RowMapper<ExciseRegistartionNumber> exciseRegisttionRowmapper=new RowMapper<ExciseRegistartionNumber>(){@Override public ExciseRegistartionNumber mapRow(ResultSet rs,int arg1)throws SQLException{ExciseRegistartionNumber vo=new ExciseRegistartionNumber();
 
-			vo.setExciseRegisttionNumberId(rs.getInt("TA_EXCISE_REGISTTION_NUMBER_ID"));
-			vo.setExciseId(rs.getString("TA_EXCISE_ID"));
-			vo.setExciseOperatorName(rs.getString("TA_EXCISE_OPERATOR_NAME"));
-			vo.setExciseIdenNumber(rs.getString("TA_EXCISE_IDEN_NUMBER"));
-			vo.setExciseFacName(rs.getString("TA_EXCISE_FAC_NAME"));
-			vo.setIndustrialAddress(rs.getString("TA_EXCISE_FAC_ADDRESS"));
-			vo.setExciseArea(rs.getString("TA_EXCISE_AREA"));
-			vo.setExciseRegisCapital(rs.getInt("TA_EXCISE_REGIS_CAPITAL"));
-			vo.setExciseRemark(rs.getString("TA_EXCISE_REMARK"));
-			vo.setCreatedBy(rs.getString("CREATED_BY"));
-			vo.setCreatedDatetime(rs.getTimestamp("CREATED_DATETIME") != null ? rs.getTimestamp("CREATED_DATETIME").toLocalDateTime() : null);
-			vo.setUpdateBy(rs.getString("UPDATE_BY"));
-			vo.setUpdateDatetime(rs.getTimestamp("UPDATE_DATETIME") != null ? rs.getTimestamp("UPDATE_DATETIME").toLocalDateTime() : null);
-			vo.setTaexciseProductType(rs.getString("TA_EXCISE_PRODUCT_TYPE"));
-			vo.setTaexciseSectorArea(rs.getString("TA_EXCISE_SECTOR_AREA"));
-			return vo;
+	vo.setExciseRegisttionNumberId(rs.getInt("TA_EXCISE_REGISTTION_NUMBER_ID"));vo.setExciseId(rs.getString("TA_EXCISE_ID"));vo.setExciseOperatorName(rs.getString("TA_EXCISE_OPERATOR_NAME"));vo.setExciseIdenNumber(rs.getString("TA_EXCISE_IDEN_NUMBER"));vo.setExciseFacName(rs.getString("TA_EXCISE_FAC_NAME"));vo.setIndustrialAddress(rs.getString("TA_EXCISE_FAC_ADDRESS"));vo.setExciseArea(rs.getString("TA_EXCISE_AREA"));vo.setExciseRegisCapital(rs.getInt("TA_EXCISE_REGIS_CAPITAL"));vo.setExciseRemark(rs.getString("TA_EXCISE_REMARK"));vo.setCreatedBy(rs.getString("CREATED_BY"));vo.setCreatedDatetime(rs.getTimestamp("CREATED_DATETIME")!=null?rs.getTimestamp("CREATED_DATETIME").toLocalDateTime():null);vo.setUpdateBy(rs.getString("UPDATE_BY"));vo.setUpdateDatetime(rs.getTimestamp("UPDATE_DATETIME")!=null?rs.getTimestamp("UPDATE_DATETIME").toLocalDateTime():null);vo.setTaexciseProductType(rs.getString("TA_EXCISE_PRODUCT_TYPE"));vo.setTaexciseSectorArea(rs.getString("TA_EXCISE_SECTOR_AREA"));return vo;
 
-		}
+	}
 
 	};
 
@@ -158,11 +140,21 @@ public class ExciseRegisttionNumberDao {
 			sql.append(" and  TA_EXCISE_PRODUCT_TYPE = ? ");
 			objList.add(exciseProductType);
 		}
-
-		if (BeanUtils.isNotEmpty(conditionList)) {
+		List<String> dataUseCondition = new ArrayList<String>();
+		if (BeanUtils.isNotEmpty(conditionList) && conditionList.size() > 0) {
+			for (String condition : conditionList) {
+				if(BeanUtils.isNotEmpty(condition)) {
+					dataUseCondition.add(condition);
+				}
+			}
+		}
+		if (BeanUtils.isNotEmpty(dataUseCondition) && dataUseCondition.size() > 0) {
 			boolean isFirstCondition = true;
 			sql.append(" AND ( ");
-			for (String condition : conditionList) {
+			for (String condition : dataUseCondition) {
+				if(BeanUtils.isNotEmpty(condition)) {
+					
+				
 				if (!isFirstCondition) {
 					sql.append(" OR ");
 				} else {
@@ -183,13 +175,14 @@ public class ExciseRegisttionNumberDao {
 					objList.add(startValue);
 					objList.add(endValue);
 				}
+				}
 			}
 			sql.append(" ) ");
 		}
 
-		List<ExciseRegistartionNumber> list = jdbcTemplate.query(sql.toString(),objList.toArray() ,exciseRegisttionRowmapper);
+	List<ExciseRegistartionNumber> list = jdbcTemplate.query(sql.toString(),objList.toArray() ,exciseRegisttionRowmapper);
 
-		return list;
-	}
+	return list;
+}
 
 }

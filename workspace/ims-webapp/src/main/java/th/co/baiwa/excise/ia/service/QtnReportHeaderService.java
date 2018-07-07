@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.dao.QtnReportHeaderDao;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
+import th.co.baiwa.excise.utils.BeanUtils;
 
  
 @Service
@@ -47,6 +49,9 @@ public class QtnReportHeaderService {
 		return responseDataTable;
 				
 				
+	}
+	public int deleteQtnReportHeader(QtnReportHeader qtnReportHeader ) {
+		return qtnReportHeaderDao.deleteQtnReportHeader(qtnReportHeader);
 	}
 	
 	
