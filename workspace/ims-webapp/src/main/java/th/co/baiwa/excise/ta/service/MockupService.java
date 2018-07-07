@@ -123,6 +123,7 @@ public class MockupService {
 							
 							if(!"0".equals(amount)) {
 								count2++;
+								taxReceive.setExciseTaxReceiveAmount(formatter.format(Double.parseDouble(amount)));
 							}
 							switch ((i + 1)-(month / 2)) {
 							case 1:
