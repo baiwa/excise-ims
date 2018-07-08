@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ExciseService } from "../../../../common/services/excise.service";
 import { AjaxService } from "../../../../common/services/ajax.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
@@ -13,7 +13,7 @@ declare var $: any;
   templateUrl: "./analyst-basic-data-trader.component.html",
   styleUrls: ["./analyst-basic-data-trader.component.css"]
 })
-export class AnalystBasicDataTraderComponent implements OnInit {
+export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
   listMenu: any[] = [];
   valueForFontList: any[] = [];
   condition: any[] = [];
@@ -39,7 +39,11 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     private messageBarService: MessageBarService,
     private router: Router,
     private ex: ExciseService
-  ) { }
+  ) {}
+
+  ngOnDestroy() {
+    $(".ui.modal.condition").remove();
+  }
 
   ngOnInit() {
     this.listMenu = [
@@ -94,10 +98,10 @@ export class AnalystBasicDataTraderComponent implements OnInit {
       }
       items.push(
         '<th style="text-align: center !important">' +
-        TextDateTH.monthsShort[m - 1] +
-        " " +
-        (yy + "").substr(2) +
-        "</th>"
+          TextDateTH.monthsShort[m - 1] +
+          " " +
+          (yy + "").substr(2) +
+          "</th>"
       );
     }
     for (var i = items.length - 1; i >= 0; i--) {
@@ -158,12 +162,8 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     var table = $("#userManagementDt").DataTable();
 
     //on click condition modal
-    $("#conditonModal").click(function () {
-      $(".ui.modal.condition")
-        .modal({
-          centered: false
-        })
-        .modal("show");
+    $("#conditonModal").click(function() {
+      $(".ui.modal.condition").modal("show");
     });
 
     this.listMenu = this.checkProductType(this.listMenu);
@@ -179,7 +179,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
         month: this.month,
         exciseProductType: this.exciseProductType
       },
-      function (returnedData) {
+      function(returnedData) {
         console.log("returnedData : ", returnedData.length);
         for (var i = 0; i < returnedData.length; i++) {
           var dat = returnedData[i];
@@ -230,14 +230,14 @@ export class AnalystBasicDataTraderComponent implements OnInit {
         exciseProductType: this.exciseProductType,
         conditionStr: conditionStr
       },
-      function (returnedData) {
+      function(returnedData) {
         console.log("analysNumber : " + returnedData);
         console.log("this.before : " + param1);
         console.log("this.last : " + param3);
         console.log("this.month : " + param3);
         router.navigate(["/create-working-paper-trader"]);
       }
-    ).fail(function () {
+    ).fail(function() {
       console.log("error");
     });
   };
@@ -287,22 +287,24 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     this.valueForFontList = new Array();
     this.valueForBackEndList = new Array();
     this.valueForFontList.push("มากกว่า " + this.firstNumber);
-    this.valueForBackEndList.push(">:" + this.replaceAllValue(this.firstNumber));
+    this.valueForBackEndList.push(
+      ">:" + this.replaceAllValue(this.firstNumber)
+    );
     for (var i = 0; i < this.font.length; i++) {
       if (this.font[i] != 0 || this.back[i] != 0) {
         this.valueForFontList.push(
           "ตั้งแต่ " + this.font[i] + " ถึง " + this.back[i]
         );
-        this.valueForBackEndList.push(this.replaceAllValue(this.font[i]) + ":" + this.replaceAllValue(this.back[i]));
+        this.valueForBackEndList.push(
+          this.replaceAllValue(this.font[i]) +
+            ":" +
+            this.replaceAllValue(this.back[i])
+        );
       }
     }
     this.valueForFontList.push("น้อยกว่า " + this.lastNumber);
     this.valueForBackEndList.push("<:" + this.replaceAllValue(this.lastNumber));
-    $(".ui.modal.condition")
-      .modal({
-        centered: false
-      })
-      .modal("hide");
+    $(".ui.modal.condition").modal.modal("hide");
   };
 
   selectExciseProductType(productionType): void {
@@ -311,8 +313,8 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     this.initDatatable();
   }
   replaceAllValue(data) {
-    while (data.indexOf(',') > 0) {
-      data = data.replace(',', '');
+    while (data.indexOf(",") > 0) {
+      data = data.replace(",", "");
     }
     return data;
   }
@@ -364,6 +366,7 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     json += " } ";
 
     json += " }, ";
+
     json += ' "columns": [ ';
     json += ' { "data": "exciseRegisttionNumberId","className":"center" }, ';
     json += ' { "data": "exciseId","className":"center" }, ';
@@ -387,19 +390,19 @@ export class AnalystBasicDataTraderComponent implements OnInit {
       json +=
         ' { "data": "exciseFirstTaxReceiveAmount' +
         (i + 1) +
-        '" ,"className":"center"}, ';
+        '" ,"className":"center amount"}, ';
     }
     for (var i = 0; i < this.month / 2; i++) {
       if (i != this.month / 2 - 1) {
         json +=
           ' { "data": "exciseLatestTaxReceiveAmount' +
           (i + 1) +
-          '" ,"className":"center"}, ';
+          '" ,"className":"center amount"}, ';
       } else {
         json +=
           ' { "data": "exciseLatestTaxReceiveAmount' +
           (i + 1) +
-          '" ,"className":"center"} ';
+          '" ,"className":"center amount"} ';
       }
     }
     json += "] } ";
@@ -407,9 +410,16 @@ export class AnalystBasicDataTraderComponent implements OnInit {
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
 
-    // i can't check loaded datatable...?
+    //check loaded datatable...?
     setTimeout(() => {
       this.onLoading = false;
+      if ($(".amount").length > 0) {
+        $(".amount").each(function() {
+          if (this.innerHTML == "" || this.innerHTML == null) {
+            this.className = "center amount null";
+          }
+        });
+      }
     }, 500);
   }
 }

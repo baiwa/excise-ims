@@ -1,9 +1,11 @@
 .hover {
     cursor: pointer;
 }
+
 .hover:hover {
     color: black !important;
 }
+
 .active {
     color: black !important;
 }
