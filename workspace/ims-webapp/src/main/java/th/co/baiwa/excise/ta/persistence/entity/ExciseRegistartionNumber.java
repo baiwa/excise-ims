@@ -1,13 +1,13 @@
 package th.co.baiwa.excise.ta.persistence.entity;
 
-import java.time.LocalDateTime;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class ExciseRegistartionNumber {
+import th.co.baiwa.excise.domain.BaseEntity;
 
-	private Integer exciseRegisttionNumberId;	
+public class ExciseRegistartionNumber extends BaseEntity {
+
+	private Integer exciseRegisttionNumberId;
 	private String exciseId;
 	private String exciseOperatorName;
 	private String exciseIdenNumber;
@@ -16,26 +16,23 @@ public class ExciseRegistartionNumber {
 	private String exciseArea;
 	private Integer exciseRegisCapital;
 	private String exciseRemark;
-	private String createdBy;
-	private LocalDateTime createdDatetime;
-	private String updateBy;
-	private LocalDateTime updateDatetime;
+
 	private String taexciseProductType;
 	private String taexciseSectorArea;
 
-	private String 	taxpayment1;
-	private String  taxpayment2;
-	private String  change ;
-	private String payingtax;	
-	private String 	no1;
-	private String  no2;
-	private String  no3 ;
-	private String paymentMonth;	
-	private String  sector;
-	private String 	coordinates;	
-	private String  industrialAddress;
-	private String  registeredCapital;
-	private String  status;
+	private String taxpayment1;
+	private String taxpayment2;
+	private String change;
+	private String payingtax;
+	private String no1;
+	private String no2;
+	private String no3;
+	private String paymentMonth;
+	private String sector;
+	private String coordinates;
+	private String industrialAddress;
+	private String registeredCapital;
+	private String status;
 
 	private ExciseTaxReceive exciseTaxReceive;
 
@@ -117,38 +114,6 @@ public class ExciseRegistartionNumber {
 
 	public void setExciseRemark(String exciseRemark) {
 		this.exciseRemark = exciseRemark;
-	}
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public LocalDateTime getCreatedDatetime() {
-		return createdDatetime;
-	}
-
-	public void setCreatedDatetime(LocalDateTime createdDatetime) {
-		this.createdDatetime = createdDatetime;
-	}
-
-	public String getUpdateBy() {
-		return updateBy;
-	}
-
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
-	}
-
-	public LocalDateTime getUpdateDatetime() {
-		return updateDatetime;
-	}
-
-	public void setUpdateDatetime(LocalDateTime updateDatetime) {
-		this.updateDatetime = updateDatetime;
 	}
 
 	@Override

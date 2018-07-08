@@ -2,122 +2,89 @@ package th.co.baiwa.excise.ta.persistence.entity;
 
 import java.math.BigDecimal;
 
-public class MemberAuditWsHeader {
-    private BigDecimal taMemberAuditWsHeaderId;
-    private BigDecimal taxPlanId;
-    private String exciseId;
-    private String taxationId;
-    private BigDecimal taAnalysisId;
-    private String startDate;
-    private String endDate;
-    private String productType;
-    private String subProductType;
-    private String createdBy;
-    private String createdDatetime;
-    private String updateBy;
-    private String updateDatetime;
+import th.co.baiwa.excise.domain.BaseEntity;
 
-    public BigDecimal getTaMemberAuditWsHeaderId() {
-        return taMemberAuditWsHeaderId;
-    }
+public class MemberAuditWsHeader extends BaseEntity{
+	private BigDecimal taMemberAuditWsHeaderId;
+	private BigDecimal taxPlanId;
+	private String exciseId;
+	private String taxationId;
+	private BigDecimal taAnalysisId;
+	private String startDate;
+	private String endDate;
+	private String productType;
+	private String subProductType;
 
-    public void setTaMemberAuditWsHeaderId(BigDecimal taMemberAuditWsHeaderId) {
-        this.taMemberAuditWsHeaderId = taMemberAuditWsHeaderId;
-    }
+	public BigDecimal getTaMemberAuditWsHeaderId() {
+		return taMemberAuditWsHeaderId;
+	}
 
-    public BigDecimal getTaxPlanId() {
-        return taxPlanId;
-    }
+	public void setTaMemberAuditWsHeaderId(BigDecimal taMemberAuditWsHeaderId) {
+		this.taMemberAuditWsHeaderId = taMemberAuditWsHeaderId;
+	}
 
-    public void setTaxPlanId(BigDecimal taxPlanId) {
-        this.taxPlanId = taxPlanId;
-    }
+	public BigDecimal getTaxPlanId() {
+		return taxPlanId;
+	}
 
-    public String getExciseId() {
-        return exciseId;
-    }
+	public void setTaxPlanId(BigDecimal taxPlanId) {
+		this.taxPlanId = taxPlanId;
+	}
 
-    public void setExciseId(String exciseId) {
-        this.exciseId = exciseId;
-    }
+	public String getExciseId() {
+		return exciseId;
+	}
 
-    public String getTaxationId() {
-        return taxationId;
-    }
+	public void setExciseId(String exciseId) {
+		this.exciseId = exciseId;
+	}
 
-    public void setTaxationId(String taxationId) {
-        this.taxationId = taxationId;
-    }
+	public String getTaxationId() {
+		return taxationId;
+	}
 
-    public BigDecimal getTaAnalysisId() {
-        return taAnalysisId;
-    }
+	public void setTaxationId(String taxationId) {
+		this.taxationId = taxationId;
+	}
 
-    public void setTaAnalysisId(BigDecimal taAnalysisId) {
-        this.taAnalysisId = taAnalysisId;
-    }
+	public BigDecimal getTaAnalysisId() {
+		return taAnalysisId;
+	}
 
-    public String getStartDate() {
-        return startDate;
-    }
+	public void setTaAnalysisId(BigDecimal taAnalysisId) {
+		this.taAnalysisId = taAnalysisId;
+	}
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
+	public String getStartDate() {
+		return startDate;
+	}
 
-    public String getEndDate() {
-        return endDate;
-    }
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
+	public String getEndDate() {
+		return endDate;
+	}
 
-    public String getProductType() {
-        return productType;
-    }
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 
-    public void setProductType(String productType) {
-        this.productType = productType;
-    }
+	public String getProductType() {
+		return productType;
+	}
 
-    public String getSubProductType() {
-        return subProductType;
-    }
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
 
-    public void setSubProductType(String subProductType) {
-        this.subProductType = subProductType;
-    }
+	public String getSubProductType() {
+		return subProductType;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	public void setSubProductType(String subProductType) {
+		this.subProductType = subProductType;
+	}
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getCreatedDatetime() {
-        return createdDatetime;
-    }
-
-    public void setCreatedDatetime(String createdDatetime) {
-        this.createdDatetime = createdDatetime;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public String getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(String updateDatetime) {
-        this.updateDatetime = updateDatetime;
-    }
 }

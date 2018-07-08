@@ -54,9 +54,9 @@ public class QuestionnaireHeaderDao {
 			vo.setQtnHeaderCode(rs.getString("QTN_HEADER_CODE"));
 			vo.setQtnHeaderName(rs.getString("QTN_HEADER_NAME"));
 			vo.setCreatedBy(rs.getString("CREATED_BY"));
-			vo.setCreatedDatetime(rs.getDate("CREATED_DATETIME"));
-			vo.setUpdateBy(rs.getString("UPDATE_BY"));
-			vo.setUpdateDatetime(rs.getDate("UPDATE_DATETIME"));
+			vo.setCreatedDate(rs.getDate("CREATED_DATE"));
+			vo.setUpdatedBy(rs.getString("UPDATED_BY"));
+			vo.setUpdatedDate(rs.getDate("UPDATED_DATE"));
 			
 			return vo;
 

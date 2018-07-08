@@ -58,7 +58,7 @@
         <button class="ui mini primary button" type="button" (click)="clearData()">
           ล้างข้อมูล
         </button>
-        <button class="ui mini primary button" type="button" routerLink="/int09/1/1">
+        <button  class="ui mini primary button" type="button" routerLink="/int09/1/1">
           เพิ่มข้อมูล
         </button>
 
@@ -80,11 +80,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let d of data; let i=index">
+          <tr *ngFor="let d of data; let i=index"  >
             <td>{{d.workSheetHeaderId}}</td>
             <td>{{d.workSheetHeaderName}}</td>
             <td>{{d.departmentName}}</td>
-            <td>{{d.createdDatetime.toDateString()}}</td>
+            <td>{{d.createdDatetime}}</td>
             <td>
               <button class="ui mini primary button" type="button" (click)="createLoan(d.workSheetHeaderId)">สัญญาการยืมเงิน</button>
               <button class="ui mini orange button" type="button" (click)="editHeader(d.workSheetHeaderId)">แก้ไข</button>

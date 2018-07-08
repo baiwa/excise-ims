@@ -1,142 +1,109 @@
 package th.co.baiwa.excise.ta.persistence.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
-public class ExciseRegisttionNumber {
-    private BigDecimal taExciseRegisttionNumberId;
-    private String taExciseId;
-    private String taExciseOperatorName;
-    private String taExciseIdenNumber;
-    private String taExciseFacName;
-    private String taExciseFacAddress;
-    private String taExciseArea;
-    private BigDecimal taExciseRegisCapital;
-    private String taExciseRemark;
-    private String taExciseProductType;
-    private String taExciseSectorArea;
-    private String createdBy;
-    private Date createdDatetime;
-    private String updateBy;
-    private Date updateDatetime;
+import th.co.baiwa.excise.domain.BaseEntity;
 
-    public BigDecimal getTaExciseRegisttionNumberId() {
-        return taExciseRegisttionNumberId;
-    }
 
-    public void setTaExciseRegisttionNumberId(BigDecimal taExciseRegisttionNumberId) {
-        this.taExciseRegisttionNumberId = taExciseRegisttionNumberId;
-    }
+public class ExciseRegisttionNumber extends BaseEntity{
+	private BigDecimal taExciseRegisttionNumberId;
+	private String taExciseId;
+	private String taExciseOperatorName;
+	private String taExciseIdenNumber;
+	private String taExciseFacName;
+	private String taExciseFacAddress;
+	private String taExciseArea;
+	private BigDecimal taExciseRegisCapital;
+	private String taExciseRemark;
+	private String taExciseProductType;
+	private String taExciseSectorArea;
 
-    public String getTaExciseId() {
-        return taExciseId;
-    }
+	public BigDecimal getTaExciseRegisttionNumberId() {
+		return taExciseRegisttionNumberId;
+	}
 
-    public void setTaExciseId(String taExciseId) {
-        this.taExciseId = taExciseId;
-    }
+	public void setTaExciseRegisttionNumberId(BigDecimal taExciseRegisttionNumberId) {
+		this.taExciseRegisttionNumberId = taExciseRegisttionNumberId;
+	}
 
-    public String getTaExciseOperatorName() {
-        return taExciseOperatorName;
-    }
+	public String getTaExciseId() {
+		return taExciseId;
+	}
 
-    public void setTaExciseOperatorName(String taExciseOperatorName) {
-        this.taExciseOperatorName = taExciseOperatorName;
-    }
+	public void setTaExciseId(String taExciseId) {
+		this.taExciseId = taExciseId;
+	}
 
-    public String getTaExciseIdenNumber() {
-        return taExciseIdenNumber;
-    }
+	public String getTaExciseOperatorName() {
+		return taExciseOperatorName;
+	}
 
-    public void setTaExciseIdenNumber(String taExciseIdenNumber) {
-        this.taExciseIdenNumber = taExciseIdenNumber;
-    }
+	public void setTaExciseOperatorName(String taExciseOperatorName) {
+		this.taExciseOperatorName = taExciseOperatorName;
+	}
 
-    public String getTaExciseFacName() {
-        return taExciseFacName;
-    }
+	public String getTaExciseIdenNumber() {
+		return taExciseIdenNumber;
+	}
 
-    public void setTaExciseFacName(String taExciseFacName) {
-        this.taExciseFacName = taExciseFacName;
-    }
+	public void setTaExciseIdenNumber(String taExciseIdenNumber) {
+		this.taExciseIdenNumber = taExciseIdenNumber;
+	}
 
-    public String getTaExciseFacAddress() {
-        return taExciseFacAddress;
-    }
+	public String getTaExciseFacName() {
+		return taExciseFacName;
+	}
 
-    public void setTaExciseFacAddress(String taExciseFacAddress) {
-        this.taExciseFacAddress = taExciseFacAddress;
-    }
+	public void setTaExciseFacName(String taExciseFacName) {
+		this.taExciseFacName = taExciseFacName;
+	}
 
-    public String getTaExciseArea() {
-        return taExciseArea;
-    }
+	public String getTaExciseFacAddress() {
+		return taExciseFacAddress;
+	}
 
-    public void setTaExciseArea(String taExciseArea) {
-        this.taExciseArea = taExciseArea;
-    }
+	public void setTaExciseFacAddress(String taExciseFacAddress) {
+		this.taExciseFacAddress = taExciseFacAddress;
+	}
 
-    public BigDecimal getTaExciseRegisCapital() {
-        return taExciseRegisCapital;
-    }
+	public String getTaExciseArea() {
+		return taExciseArea;
+	}
 
-    public void setTaExciseRegisCapital(BigDecimal taExciseRegisCapital) {
-        this.taExciseRegisCapital = taExciseRegisCapital;
-    }
+	public void setTaExciseArea(String taExciseArea) {
+		this.taExciseArea = taExciseArea;
+	}
 
-    public String getTaExciseRemark() {
-        return taExciseRemark;
-    }
+	public BigDecimal getTaExciseRegisCapital() {
+		return taExciseRegisCapital;
+	}
 
-    public void setTaExciseRemark(String taExciseRemark) {
-        this.taExciseRemark = taExciseRemark;
-    }
+	public void setTaExciseRegisCapital(BigDecimal taExciseRegisCapital) {
+		this.taExciseRegisCapital = taExciseRegisCapital;
+	}
 
-    public String getTaExciseProductType() {
-        return taExciseProductType;
-    }
+	public String getTaExciseRemark() {
+		return taExciseRemark;
+	}
 
-    public void setTaExciseProductType(String taExciseProductType) {
-        this.taExciseProductType = taExciseProductType;
-    }
+	public void setTaExciseRemark(String taExciseRemark) {
+		this.taExciseRemark = taExciseRemark;
+	}
 
-    public String getTaExciseSectorArea() {
-        return taExciseSectorArea;
-    }
+	public String getTaExciseProductType() {
+		return taExciseProductType;
+	}
 
-    public void setTaExciseSectorArea(String taExciseSectorArea) {
-        this.taExciseSectorArea = taExciseSectorArea;
-    }
+	public void setTaExciseProductType(String taExciseProductType) {
+		this.taExciseProductType = taExciseProductType;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	public String getTaExciseSectorArea() {
+		return taExciseSectorArea;
+	}
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
+	public void setTaExciseSectorArea(String taExciseSectorArea) {
+		this.taExciseSectorArea = taExciseSectorArea;
+	}
 
-    public Date getCreatedDatetime() {
-        return createdDatetime;
-    }
-
-    public void setCreatedDatetime(Date createdDatetime) {
-        this.createdDatetime = createdDatetime;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public Date getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(Date updateDatetime) {
-        this.updateDatetime = updateDatetime;
-    }
 }

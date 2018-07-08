@@ -88,10 +88,10 @@ public class ExciseDetailService {
         		excise.setExciseId(exciseId);
         		excise.setUploadPath(path);
         		excise.setCreatedBy(UserLoginUtils.getCurrentUsername());
-        		excise.setUpdateBy(UserLoginUtils.getCurrentUsername());
+        		excise.setUpdatedBy(UserLoginUtils.getCurrentUsername());
         		excise.setCreateDate(in);
-        		excise.setCreatedDatetime(in);
-        		excise.setUpdateDatetime(in);
+        		excise.setCreatedDate(in);
+        		excise.setUpdatedDate(in);
         		exciseFileUploadDao.insertExciseFileUpload(excise); // insert to database
         		planWorksheetHeaderDao.updatePlanWorksheetHeaderFlag("E", analysNum, exciseId);
         		logger.info("Created file: " + path);

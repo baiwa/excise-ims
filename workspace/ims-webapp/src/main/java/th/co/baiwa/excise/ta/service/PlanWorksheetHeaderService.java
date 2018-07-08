@@ -124,8 +124,8 @@ public class PlanWorksheetHeaderService {
 			planWorksheetHeader.setFirstMonth(new BigDecimal(firstMonth));
 			planWorksheetHeader.setLastMonth(new BigDecimal(lastMonth));
 			planWorksheetHeader.setFlag("N");
-			planWorksheetHeader.setCreateBy(UserLoginUtils.getCurrentUsername());
-			planWorksheetHeader.setCreateDatetime(saveDate);
+			planWorksheetHeader.setCreatedBy(UserLoginUtils.getCurrentUsername());
+			planWorksheetHeader.setCreatedDate(saveDate);
 
 			planWorksheetHeaderDao.insertPlanWorksheetHeader(planWorksheetHeader);
 			PlanWorksheetDetail planWorksheetDetail = null;
@@ -135,8 +135,8 @@ public class PlanWorksheetHeaderService {
 				planWorksheetDetail.setAnalysNumber(analysNumber);
 				planWorksheetDetail.setMonth(taxRecive.getExciseTaxReceiveMonth());
 				planWorksheetDetail.setExciseId(taxRecive.getExciseId());
-				planWorksheetDetail.setCreateBy(UserLoginUtils.getCurrentUsername());
-				planWorksheetDetail.setCreateDatetime(saveDate);
+				planWorksheetDetail.setCreatedBy(UserLoginUtils.getCurrentUsername());
+				planWorksheetDetail.setCreatedDate(saveDate);
 				String amountDetail = taxRecive.getExciseTaxReceiveAmount() != null ? taxRecive.getExciseTaxReceiveAmount().trim().replaceAll(",", "") : "0";
 				planWorksheetDetail.setAmount(new BigDecimal(amountDetail));
 				planWorksheetDetailList.add(planWorksheetDetail);

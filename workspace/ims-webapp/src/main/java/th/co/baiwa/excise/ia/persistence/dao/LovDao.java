@@ -69,9 +69,9 @@ public class LovDao {
 			lov.setValue5(rs.getString("VALUE5"));
 			lov.setIsDeleted(rs.getString("IS_DELETED"));
 			lov.setCreatedBy(rs.getString("CREATED_BY"));
-			lov.setCreatedDatetime(rs.getDate("CREATED_DATETIME"));
-			lov.setUpdateBy(rs.getString("UPDATE_BY"));
-			lov.setUpdateDatetime(rs.getDate("UPDATE_DATETIME"));
+			lov.setCreatedDate(rs.getDate("CREATED_DATE"));
+			lov.setUpdatedBy(rs.getString("UPDATED_BY"));
+			lov.setUpdatedDate(rs.getDate("UPDATED_DATE"));
 			return lov;
 
 		}

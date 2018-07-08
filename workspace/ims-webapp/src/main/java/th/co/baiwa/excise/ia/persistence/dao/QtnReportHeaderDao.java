@@ -80,9 +80,9 @@ public class QtnReportHeaderDao {
 			vo.setQtnReportHdrName(rs.getString("QTN_REPORT_HDR_NAME"));
 			vo.setCreator(rs.getString("CREATOR"));
 			vo.setCreatedBy(rs.getString("CREATED_BY"));
-			vo.setCreatedDatetime(rs.getDate("CREATED_DATETIME"));
-			vo.setUpdateBy(rs.getString("UPDATE_BY"));
-			vo.setUpdateDatetime(rs.getDate("UPDATE_DATETIME"));
+			vo.setCreatedDate(rs.getDate("CREATED_DATE"));
+			vo.setUpdatedBy(rs.getString("UPDATED_BY"));
+			vo.setUpdatedDate(rs.getDate("UPDATED_DATE"));
 			
 			return vo;
 
@@ -92,13 +92,13 @@ public class QtnReportHeaderDao {
 	
 	public Integer createQtnReportHeader(QtnReportHeader qtnReportHeader){
 		List<Object> paramList = new ArrayList<Object>();
-		String sql = "INSERT INTO IA_QTN_REPORT_HEADER (QTN_REPORT_HDR_ID,QTN_REPORT_HDR_NAME,CREATOR,CREATED_BY,CREATED_DATETIME,UPDATE_BY,UPDATE_DATETIME) VALUES (IA_QTN_REPORT_HEADER_SEQ.nextval,?,?,?,?,?,?)";
+		String sql = "INSERT INTO IA_QTN_REPORT_HEADER (QTN_REPORT_HDR_ID,QTN_REPORT_HDR_NAME,CREATOR,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE) VALUES (IA_QTN_REPORT_HEADER_SEQ.nextval,?,?,?,?,?,?)";
 		paramList.add(qtnReportHeader.getQtnReportHdrName());
 		paramList.add(qtnReportHeader.getCreator());
 		paramList.add(qtnReportHeader.getCreatedBy());
-		paramList.add(qtnReportHeader.getCreatedDatetime());
-		paramList.add(qtnReportHeader.getUpdateBy());
-		paramList.add(qtnReportHeader.getUpdateDatetime());
+		paramList.add(qtnReportHeader.getCreatedDate());
+		paramList.add(qtnReportHeader.getUpdatedBy());
+		paramList.add(qtnReportHeader.getUpdatedDate());
 		return jdbcTemplate.update(sql.toString(), paramList.toArray());
 		
 		

@@ -1,17 +1,14 @@
 package th.co.baiwa.excise.ta.persistence.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
-public class ExciseProduct {
+import th.co.baiwa.excise.domain.BaseEntity;
+
+public class ExciseProduct extends BaseEntity {
 	private BigDecimal taExciseProductId;
 	private BigDecimal taExciseProductTypeId;
 	private String productValue;
 	private String productText;
-	private String createdBy;
-	private String updateBy;
-	private Date createdDatetime;
-	private Date updateDatetime;
 
 	public BigDecimal getTaExciseProductId() {
 		return taExciseProductId;
@@ -45,35 +42,4 @@ public class ExciseProduct {
 		this.productText = productText;
 	}
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public String getUpdateBy() {
-		return updateBy;
-	}
-
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
-	}
-
-	public Date getCreatedDatetime() {
-		return createdDatetime;
-	}
-
-	public void setCreatedDatetime(Date createdDatetime) {
-		this.createdDatetime = createdDatetime;
-	}
-
-	public Date getUpdateDatetime() {
-		return updateDatetime;
-	}
-
-	public void setUpdateDatetime(Date updateDatetime) {
-		this.updateDatetime = updateDatetime;
-	}
 }

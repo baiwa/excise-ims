@@ -51,9 +51,9 @@ public class Int09Service {
 		ti.setEndDate(header.get(0).getEndDate());
 		ti.setDescription(header.get(0).getDescription());
 		ti.setCreatedBy(header.get(0).getCreatedBy());
-		ti.setCreatedDatetime(header.get(0).getCreatedDatetime());
-		ti.setUpdateBy(header.get(0).getUpdateBy());
-		ti.setUpdateDatetime(header.get(0).getUpdateDatetime());
+		ti.setCreatedDate(header.get(0).getCreatedDate());
+		ti.setUpdatedBy(header.get(0).getUpdatedBy());
+		ti.setUpdatedDate(header.get(0).getUpdatedDate());
 		ti.setDetail(details);
 		
 		// Add to ArrayList
@@ -72,9 +72,9 @@ public class Int09Service {
 
 		// Set data to HeaderCost
 		travelCostWsIntegrate.setCreatedBy(creator);
-		travelCostWsIntegrate.setUpdateBy(creator);
-		travelCostWsIntegrate.setCreatedDatetime(date);
-		travelCostWsIntegrate.setUpdateDatetime(date);
+		travelCostWsIntegrate.setUpdatedBy(creator);
+		travelCostWsIntegrate.setCreatedDate(date);
+		travelCostWsIntegrate.setUpdatedDate(date);
 
 		// Insert data to HeaderCost
 		if (travelCostWorkSheetHeaderDao.insertTravelCostWorksheetHeader(travelCostWsIntegrate) > 0) {
@@ -89,9 +89,9 @@ public class Int09Service {
 					// Set data to DetailCost
 					t.setHeaderId(header.get(0).getWorkSheetHeaderId().toString());
 					t.setCreatedBy(creator);
-					t.setUpdateBy(creator);
-					t.setCreatedDatetime(date);
-					t.setUpdateDatetime(date);
+					t.setUpdatedBy(creator);
+					t.setCreatedDate(date);
+					t.setUpdatedDate(date);
 
 					// add `TravelCostWsDetail t` to ArrayList
 					travel.add(t);

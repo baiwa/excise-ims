@@ -36,9 +36,9 @@ public class AnalysisDataDetailDao {
 				"CREATE_DATE," + 
 				"UPLOAD_PATH," + 
 				"CREATED_BY," + 
-				"CREATED_DATETIME," + 
-				"UPDATE_BY," + 
-				"UPDATE_DATETIME)"); 
+				"CREATED_DATE," + 
+				"UPDATED_BY," + 
+				"UPDATED_DATE)"); 
 		sql.append(" values (TA_EXCISE_FILE_UPLOAD_SEQ.nextval,?,?,?,?,?,?,?) ");
 		// For set Object
 		jdbcTemplate.update(sql.toString(), toArrayObject(value) );
@@ -52,9 +52,9 @@ public class AnalysisDataDetailDao {
 			valueList.add(value.getCreateDate());
 			valueList.add(value.getUploadPath());
 			valueList.add(value.getCreatedBy());
-			valueList.add(value.getCreatedDatetime());
-			valueList.add(value.getUpdateBy());
-			valueList.add(value.getUpdateDatetime());
+			valueList.add(value.getCreatedDate());
+			valueList.add(value.getUpdatedBy());
+			valueList.add(value.getUpdatedDate());
 		}
 		return valueList.toArray();
 	}
@@ -67,9 +67,9 @@ public class AnalysisDataDetailDao {
 			vo.setTaExciseFileUploadId(rs.getBigDecimal("TA_EXCISE_FILE_UPLOAD_ID"));
 			vo.setExciseId(rs.getString("EXCISE_ID"));
 			vo.setCreatedBy(rs.getString("CREATED_BY"));
-			vo.setCreatedDatetime(rs.getDate("CREATED_DATETIME"));
-			vo.setUpdateBy(rs.getString("UPDATE_BY"));
-			vo.setUpdateDatetime(rs.getDate("UPDATE_DATETIME"));
+			vo.setCreatedDate(rs.getDate("CREATED_DATE"));
+			vo.setUpdatedBy(rs.getString("UPDATED_BY"));
+			vo.setUpdatedDate(rs.getDate("UPDATED_DATE"));
 			
 			return vo;
 

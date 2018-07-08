@@ -1,6 +1,5 @@
 package th.co.baiwa.excise.ia.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.dao.QtnReportHeaderDao;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
-import th.co.baiwa.excise.utils.BeanUtils;
 
  
 @Service
@@ -32,7 +30,7 @@ public class QtnReportHeaderService {
 //		String reportHeaderCode = NumberUtils.toStringFormat(seqDao.autoNumberRunningBySeqName("IA_QTN_HEADER_CODE_SEQ").longValue(), "H0000");
 		qtnReportHeader.setCreator(UserLoginUtils.getCurrentUsername());
 		qtnReportHeader.setCreatedBy(UserLoginUtils.getCurrentUsername());
-		qtnReportHeader.setCreatedDatetime(new Date());
+		qtnReportHeader.setCreatedDate(new Date());
 		return qtnReportHeaderDao.createQtnReportHeader(qtnReportHeader);
 	}
 	

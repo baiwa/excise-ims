@@ -48,7 +48,7 @@ public class TravelCostWorkSheetHeaderDao {
 		// inti SQL for insert to database
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				" insert into IA_TRAVEL_COST_WS_HEADER (WORK_SHEET_HEADER_ID,WORK_SHEET_HEADER_NAME,DEPARTMENT_NAME,START_DATE,END_DATE,DESCRIPTION,CREATED_BY,CREATED_DATETIME,UPDATE_BY,UPDATE_DATETIME) ");
+				" insert into IA_TRAVEL_COST_WS_HEADER (WORK_SHEET_HEADER_ID,WORK_SHEET_HEADER_NAME,DEPARTMENT_NAME,START_DATE,END_DATE,DESCRIPTION,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE) ");
 		sql.append(" values(WORK_SHEET_HEADER_SEQ.nextval ,?,?,?,?,?,?,?,?,?)");
 		// for to set Object
 		return jdbcTemplate.update(sql.toString(), TravelCostWorkSheetHeaderToArrayObject(value));
@@ -64,9 +64,9 @@ public class TravelCostWorkSheetHeaderDao {
 			valueList.add(value.getEndDate());
 			valueList.add(value.getDescription());
 			valueList.add(value.getCreatedBy());
-			valueList.add(value.getCreatedDatetime());
-			valueList.add(value.getUpdateBy());
-			valueList.add(value.getUpdateDatetime());
+			valueList.add(value.getCreatedDate());
+			valueList.add(value.getUpdatedBy());
+			valueList.add(value.getUpdatedDate());
 
 		}
 		return valueList.toArray();
@@ -84,9 +84,9 @@ public class TravelCostWorkSheetHeaderDao {
 			vo.setEndDate(rs.getDate("END_DATE"));
 			vo.setDescription(rs.getString("DESCRIPTION"));
 			vo.setCreatedBy(rs.getString("CREATED_BY"));
-			vo.setCreatedDatetime(rs.getDate("CREATED_DATETIME"));
-			vo.setUpdateBy(rs.getString("UPDATE_BY"));
-			vo.setUpdateDatetime(rs.getDate("UPDATE_DATETIME"));
+			vo.setCreatedDate(rs.getDate("CREATED_DATE"));
+			vo.setUpdatedBy(rs.getString("UPDATED_BY"));
+			vo.setUpdatedDate(rs.getDate("UPDATED_DATE"));
 
 			return vo;
 

@@ -2,9 +2,9 @@ package th.co.baiwa.excise.ia.persistence.entity;
 
 import java.math.BigDecimal;
 
-import th.co.baiwa.excise.domain.DefaultEntity;
+import th.co.baiwa.excise.domain.BaseEntity;
 
-public class IaStampWorkSheetHeader extends DefaultEntity {
+public class IaStampWorkSheetHeader extends BaseEntity {
 
 	private BigDecimal workSheetHeaderId;
 	private String workSheetType;

@@ -1,97 +1,63 @@
 package th.co.baiwa.excise.ta.persistence.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
-public class MaterialsWorksheetDetail {
-    private BigDecimal materialsWsDtlId;
-    private BigDecimal materialsWsHeaderId;
-    private String materialsWsDtlNo;
-    private String materialsWsDtlOrder;
-    private String materialsWsDtlBalance;
-    private String materialsWsDtlCounting;
-    private String createdBy;
-    private Date createdDatetime;
-    private String updateBy;
-    private Date updateDatetime;
+import th.co.baiwa.excise.domain.BaseEntity;
 
-    public BigDecimal getMaterialsWsDtlId() {
-        return materialsWsDtlId;
-    }
+public class MaterialsWorksheetDetail extends BaseEntity {
+	private BigDecimal materialsWsDtlId;
+	private BigDecimal materialsWsHeaderId;
+	private String materialsWsDtlNo;
+	private String materialsWsDtlOrder;
+	private String materialsWsDtlBalance;
+	private String materialsWsDtlCounting;
 
-    public void setMaterialsWsDtlId(BigDecimal materialsWsDtlId) {
-        this.materialsWsDtlId = materialsWsDtlId;
-    }
+	public BigDecimal getMaterialsWsDtlId() {
+		return materialsWsDtlId;
+	}
 
-    public BigDecimal getMaterialsWsHeaderId() {
-        return materialsWsHeaderId;
-    }
+	public void setMaterialsWsDtlId(BigDecimal materialsWsDtlId) {
+		this.materialsWsDtlId = materialsWsDtlId;
+	}
 
-    public void setMaterialsWsHeaderId(BigDecimal materialsWsHeaderId) {
-        this.materialsWsHeaderId = materialsWsHeaderId;
-    }
+	public BigDecimal getMaterialsWsHeaderId() {
+		return materialsWsHeaderId;
+	}
 
-    public String getMaterialsWsDtlNo() {
-        return materialsWsDtlNo;
-    }
+	public void setMaterialsWsHeaderId(BigDecimal materialsWsHeaderId) {
+		this.materialsWsHeaderId = materialsWsHeaderId;
+	}
 
-    public void setMaterialsWsDtlNo(String materialsWsDtlNo) {
-        this.materialsWsDtlNo = materialsWsDtlNo;
-    }
+	public String getMaterialsWsDtlNo() {
+		return materialsWsDtlNo;
+	}
 
-    public String getMaterialsWsDtlOrder() {
-        return materialsWsDtlOrder;
-    }
+	public void setMaterialsWsDtlNo(String materialsWsDtlNo) {
+		this.materialsWsDtlNo = materialsWsDtlNo;
+	}
 
-    public void setMaterialsWsDtlOrder(String materialsWsDtlOrder) {
-        this.materialsWsDtlOrder = materialsWsDtlOrder;
-    }
+	public String getMaterialsWsDtlOrder() {
+		return materialsWsDtlOrder;
+	}
 
-    public String getMaterialsWsDtlBalance() {
-        return materialsWsDtlBalance;
-    }
+	public void setMaterialsWsDtlOrder(String materialsWsDtlOrder) {
+		this.materialsWsDtlOrder = materialsWsDtlOrder;
+	}
 
-    public void setMaterialsWsDtlBalance(String materialsWsDtlBalance) {
-        this.materialsWsDtlBalance = materialsWsDtlBalance;
-    }
+	public String getMaterialsWsDtlBalance() {
+		return materialsWsDtlBalance;
+	}
 
-    public String getMaterialsWsDtlCounting() {
-        return materialsWsDtlCounting;
-    }
+	public void setMaterialsWsDtlBalance(String materialsWsDtlBalance) {
+		this.materialsWsDtlBalance = materialsWsDtlBalance;
+	}
 
-    public void setMaterialsWsDtlCounting(String materialsWsDtlCounting) {
-        this.materialsWsDtlCounting = materialsWsDtlCounting;
-    }
+	public String getMaterialsWsDtlCounting() {
+		return materialsWsDtlCounting;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	public void setMaterialsWsDtlCounting(String materialsWsDtlCounting) {
+		this.materialsWsDtlCounting = materialsWsDtlCounting;
+	}
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Date getCreatedDatetime() {
-        return createdDatetime;
-    }
-
-    public void setCreatedDatetime(Date createdDatetime) {
-        this.createdDatetime = createdDatetime;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public Date getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(Date updateDatetime) {
-        this.updateDatetime = updateDatetime;
-    }
 }

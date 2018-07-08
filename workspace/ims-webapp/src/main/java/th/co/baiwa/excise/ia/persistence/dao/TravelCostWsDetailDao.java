@@ -37,7 +37,7 @@ public class TravelCostWsDetailDao {
 		// inti SQL for insert to database
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				" insert into IA_TRAVEL_COST_WS_DETAIL (WORK_SHEET_DETAIL_ID,HEADER_ID,NAME,LAST_NAME,POSITION,CATEGORY,DEGREE,ALLOWANCE_DATE,ALLOWANCE_COST,RENT_DATE,RENT_COST,TRAVEL_COST,OTHER_COST,SUM_COST,NOTE,CREATED_BY,CREATED_DATETIME,UPDATE_BY,UPDATE_DATETIME) ");
+				" insert into IA_TRAVEL_COST_WS_DETAIL (WORK_SHEET_DETAIL_ID,HEADER_ID,NAME,LAST_NAME,POSITION,CATEGORY,DEGREE,ALLOWANCE_DATE,ALLOWANCE_COST,RENT_DATE,RENT_COST,TRAVEL_COST,OTHER_COST,SUM_COST,NOTE,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE) ");
 		sql.append(" values(WORK_SHEET_DETAIL_SEQ.nextval ,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
 		List<Object[]> obj = new ArrayList<Object[]>();
 		for (TravelCostWsDetail val : value) {
@@ -65,9 +65,9 @@ public class TravelCostWsDetailDao {
 			valueList.add(value.getSumCost());
 			valueList.add(value.getNote());
 			valueList.add(value.getCreatedBy());
-			valueList.add(value.getCreatedDatetime());
-			valueList.add(value.getUpdateBy());
-			valueList.add(value.getUpdateDatetime());
+			valueList.add(value.getCreatedDate());
+			valueList.add(value.getUpdatedBy());
+			valueList.add(value.getUpdatedDate());
 		}
 		return valueList.toArray();
 	}
@@ -93,9 +93,9 @@ public class TravelCostWsDetailDao {
 			vo.setSumCost(rs.getBigDecimal("SUM_COST"));
 			vo.setNote(rs.getString("NOTE"));
 			vo.setCreatedBy(rs.getString("CREATED_BY"));
-			vo.setCreatedDatetime(rs.getDate("CREATED_DATETIME"));
-			vo.setUpdateBy(rs.getString("UPDATE_BY"));
-			vo.setUpdateDatetime(rs.getDate("UPDATE_DATETIME"));
+			vo.setCreatedDate(rs.getDate("CREATED_DATE"));
+			vo.setUpdatedBy(rs.getString("UPDATED_BY"));
+			vo.setUpdatedDate(rs.getDate("UPDATED_DATE"));
 			return vo;
 		}
 

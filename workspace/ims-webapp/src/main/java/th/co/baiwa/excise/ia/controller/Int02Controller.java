@@ -13,8 +13,10 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
+import th.co.baiwa.excise.domain.ia.Int023MappingVO;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
 import th.co.baiwa.excise.ia.service.QtnReportHeaderService;
+import th.co.baiwa.excise.ia.service.QuestionnaireMainDetailService;
 import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
@@ -25,6 +27,9 @@ public class Int02Controller {
 
 	@Autowired
 	private QtnReportHeaderService qtnReportHeaderService;
+
+	@Autowired
+	private QuestionnaireMainDetailService questionnaireMainDetailService;
 
 	@PostMapping("/addHeaderQuestionnaire")
 	@ResponseBody
@@ -59,5 +64,21 @@ public class Int02Controller {
 			message = ApplicationCache.getMessage("MSG_00003");
 		}
 		return message;
+	}
+	
+	@PostMapping("/createQuestionnaireMainDetail")
+	@ResponseBody
+	public Message createQuestionnaireMainDetail(@RequestBody Int023MappingVO int023MappingVO) {
+		logger.info("createQuestionnaireMainDetail");
+		System.out.println(int023MappingVO.toString());
+		Message message = null;
+		Integer insertCountRow = questionnaireMainDetailService.createQuestionnaireMainDetail(int023MappingVO);
+		if(BeanUtils.isNotEmpty(insertCountRow) && insertCountRow.intValue() >0) {
+			message = ApplicationCache.getMessage("MSG_00002");
+		}else {
+			message = ApplicationCache.getMessage("MSG_00003");
+		}
+		return message;
+
 	}
 }

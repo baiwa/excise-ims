@@ -7,7 +7,7 @@ export class TravelCostHeader {
 	endDate: any = null
 	description:string = ''
 	createdBy:string = ''
-	createdDatetime: any = null
+	createdDatetime: string = ''
 	updateBy:string = ''
-	updateDatetime: any = null
+	updateDatetime: string = ''
 }

@@ -51,9 +51,9 @@ public class ExciseDetailDao {
     		vo.setExciseTaxReceiveMonth(rs.getString("TA_EXCISE_TAX_RECEIVE_MONTH"));
     		vo.setExciseTaxReceiveAmount(rs.getString("TA_EXCISE_TAX_RECEIVE_AMOUNT"));
     		vo.setCreatedBy(rs.getString("CREATED_BY"));
-    		vo.setCreatedDatetime(rs.getTimestamp("CREATED_DATETIME") != null ? rs.getTimestamp("CREATED_DATETIME").toLocalDateTime() : null);
-    		vo.setUpdateBy(rs.getString("UPDATE_BY"));
-    		vo.setUpdateDatetime(rs.getTimestamp("UPDATE_DATETIME") != null ? rs.getTimestamp("UPDATE_DATETIME").toLocalDateTime() : null);
+    		vo.setCreatedDate(rs.getDate("CREATED_DATE"));
+    		vo.setUpdatedBy(rs.getString("UPDATED_BY"));
+    		vo.setUpdatedDate(rs.getDate("UPDATED_DATE"));
     		return vo;
     	}
     };
@@ -79,10 +79,10 @@ public class ExciseDetailDao {
 			vo.setFlag(rs.getString("FLAG"));
 			vo.setFirstMonth(rs.getBigDecimal("FIRST_MONTH"));
 			vo.setLastMonth(rs.getBigDecimal("LAST_MONTH"));
-			vo.setCreateBy(rs.getString("CREATED_BY"));
-			vo.setCreateDatetime(rs.getDate("CREATED_DATETIME"));
-			vo.setUpdateBy(rs.getString("UPDATE_BY"));
-			vo.setUpdateDatetime(rs.getTime("UPDATE_DATETIME"));
+			vo.setCreatedBy(rs.getString("CREATED_BY"));
+			vo.setCreatedDate(rs.getDate("CREATED_DATE"));
+			vo.setUpdatedBy(rs.getString("UPDATED_BY"));
+			vo.setUpdatedDate(rs.getTime("UPDATED_DATE"));
             vo.setExciseTax(ve);
             return vo;
         }

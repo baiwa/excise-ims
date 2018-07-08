@@ -68,7 +68,7 @@ public class PlanWorksheetHeaderDao {
 	public void insertPlanWorksheetHeader(PlanWorksheetHeader value) {
 		// inti SQL for insert to database
 		StringBuilder sql = new StringBuilder(
-				" INSERT INTO TA_PLAN_WORK_SHEET_HEADER (WORK_SHEET_HEADER_ID,ANALYS_NUMBER,EXCISE_ID,COMPANY_NAME,FACTORY_NAME,FACTORY_ADDRESS,EXCISE_OWNER_AREA,PRODUCT_TYPE,EXCISE_OWNER_AREA_1,TOTAL_AMOUNT,PERCENTAGE,TOTAL_MONTH,DECIDE_TYPE,FLAG,CREATED_BY,CREATED_DATETIME,UPDATE_BY,UPDATE_DATETIME,FIRST_MONTH,LAST_MONTH,MONTH_DATE,FULL_MONTH)");
+				" INSERT INTO TA_PLAN_WORK_SHEET_HEADER (WORK_SHEET_HEADER_ID,ANALYS_NUMBER,EXCISE_ID,COMPANY_NAME,FACTORY_NAME,FACTORY_ADDRESS,EXCISE_OWNER_AREA,PRODUCT_TYPE,EXCISE_OWNER_AREA_1,TOTAL_AMOUNT,PERCENTAGE,TOTAL_MONTH,DECIDE_TYPE,FLAG,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE,FIRST_MONTH,LAST_MONTH,MONTH_DATE,FULL_MONTH)");
 		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
 		// for to set Object
 		jdbcTemplate.update(sql.toString(), planWorksheetHeaderToArrayObject(value));
@@ -96,10 +96,10 @@ public class PlanWorksheetHeaderDao {
 			valueList.add(value.getTotalMonth());
 			valueList.add(value.getDecideType());
 			valueList.add(value.getFlag());
-			valueList.add(value.getCreateBy());
-			valueList.add(value.getCreateDatetime());
-			valueList.add(value.getUpdateBy());
-			valueList.add(value.getUpdateDatetime());
+			valueList.add(value.getCreatedBy());
+			valueList.add(value.getCreatedDate());
+			valueList.add(value.getUpdatedBy());
+			valueList.add(value.getUpdatedDate());
 			valueList.add(value.getFirstMonth());
 			valueList.add(value.getLastMonth());
 			valueList.add(value.getMonthDate());
@@ -129,10 +129,10 @@ public class PlanWorksheetHeaderDao {
 			header.setFlag(rs.getString("FLAG"));
 			header.setFirstMonth(rs.getBigDecimal("FIRST_MONTH"));
 			header.setLastMonth(rs.getBigDecimal("LAST_MONTH"));
-			header.setCreateBy(rs.getString("CREATED_BY"));
-			header.setCreateDatetime(rs.getDate("CREATED_DATETIME"));
-			header.setUpdateBy(rs.getString("UPDATE_BY"));
-			header.setUpdateDatetime(rs.getTime("UPDATE_DATETIME"));
+			header.setCreatedBy(rs.getString("CREATED_BY"));
+			header.setCreatedDate(rs.getDate("CREATED_DATE"));
+			header.setUpdatedBy(rs.getString("UPDATED_BY"));
+			header.setUpdatedDate(rs.getDate("UPDATED_DATE"));
 			header.setFullMonth(rs.getBigDecimal("FULL_MONTH"));
 			header.setMonthDate(rs.getString("MONTH_DATE"));
 			return header;

@@ -51,7 +51,7 @@ public class PlanWorksheetDetailDao{
 	public void insertPlanWorksheetDetail(List<PlanWorksheetDetail> valueList) {
 		logger.info("PlanWorksheetDetailDao.insertPlanWorksheetDetail");
 		//inti SQL for insert to database
-		StringBuilder sql = new StringBuilder(" Insert into EXCISEADM.TA_PLAN_WORK_SHEET_DETAIL (WORK_SHEET_DETAIL_ID,EXCISE_ID,ANALYS_NUMBER,MONTH,YEAR,AMOUNT,CREATED_BY,CREATED_DATETIME,UPDATE_BY,UPDATE_DATETIME) "); 
+		StringBuilder sql = new StringBuilder(" Insert into EXCISEADM.TA_PLAN_WORK_SHEET_DETAIL (WORK_SHEET_DETAIL_ID,EXCISE_ID,ANALYS_NUMBER,MONTH,YEAR,AMOUNT,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE) "); 
 		sql.append(" values (TA_PLAN_WORK_SHEET_DETAIL_SEQ.nextval,?,?,?,?,?,?,?,?,?) ");
 		
 		//for to set Object
@@ -71,10 +71,10 @@ public class PlanWorksheetDetailDao{
 			valueList.add(value.getMonth());
 			valueList.add(value.getYear());
 			valueList.add(value.getAmount());
-			valueList.add(value.getCreateBy());
-			valueList.add(value.getCreateDatetime());
-			valueList.add(value.getUpdateBy());
-			valueList.add(value.getUpdateDatetime());
+			valueList.add(value.getCreatedBy());
+			valueList.add(value.getCreatedDate());
+			valueList.add(value.getUpdatedBy());
+			valueList.add(value.getUpdatedDate());
 			
 		}
 		return valueList.toArray();
@@ -90,10 +90,10 @@ public class PlanWorksheetDetailDao{
 			header.setMonth(rs.getString("MONTH"));
 			header.setYear(rs.getString("YEAR"));
 			header.setAmount(rs.getBigDecimal("AMOUNT"));
-			header.setCreateBy(rs.getString("CREATED_BY"));
-			header.setCreateDatetime(rs.getDate("CREATED_DATETIME"));
-			header.setUpdateBy(rs.getString("UPDATE_BY"));
-			header.setUpdateDatetime(rs.getTime("UPDATE_DATETIME"));
+			header.setCreatedBy(rs.getString("CREATED_BY"));
+			header.setCreatedDate(rs.getDate("CREATED_DATE"));
+			header.setUpdatedBy(rs.getString("UPDATED_BY"));
+			header.setUpdatedDate(rs.getTime("UPDATED_DATE"));
 			return header;
 		}
 	};

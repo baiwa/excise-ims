@@ -1,0 +1,130 @@
+<form (submit)="onSend()">
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">ตรวจสอบภายใน</h2>
+
+    <div class="ui top attached header">
+      <span>แบบสอบทานระบบการควบคุมภายใน ด้านการเงิน</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+
+        <div class="inline fields">
+          <div class="ten wide field">
+            <label>รายละเอียดแบบสอบทาน (เดิม)</label>
+          </div>
+          <div class="six wide field">
+            <label>Search:&nbsp;&nbsp;</label>
+            <div class="ui left icon input">
+              <i class="search icon"></i>
+              <input type="text" placeholder="Search..." class="custom" name="" id="" >
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+    <div class="ui segment ">
+      <div class="ui grid ">
+        <div class="sixteen wide column ">
+
+          <table id="datatable " class="ui small celled table aligned hover ">
+            <thead>
+              <tr>
+                <th style="text-align: center !important ;width: 5%"><input type="checkbox" name=""></th>
+                <th style="text-align: center !important ;width: 95%">รายการ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let d of detail; let i = index">
+                  <td>
+                     
+                  </td>
+                  <td>
+                  
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="ui attached segment">
+      <div class="ui form">
+
+          <div class="inline fields">
+            <div class="ten wide field">
+              <label>รายละเอียดแบบสอบทาน (ใหม่)</label>
+            </div>
+          </div>
+          
+          <div class="inline fields">
+              <div class="two wide field ">
+                  <label>ข้อหลัก</label>
+              </div>
+              <div class="twelve wide field ">
+                  <input  class="custom" type="text" id="mainDetail" name="mainDetail" value="" [attr.required]="true" >
+              </div>
+          </div>
+          <div  class="inline fields" *ngFor="let num of numbers; let i = index" [attr.data-index]="i">
+              <div class="two wide field ">
+                  <label>ข้อย่อย</label>
+              </div>
+              <div class="ten wide field ">
+                  <input  class="custom" type="text" id="minorDetail{{i}}" name="minorDetail{{i}}" [(ngModel)]="minorDetail[i]" value="" [attr.required]="true" >
+              </div>
+              <div class="two wide field ">
+                  <a   (click)="onDelField(i)"  style="cursor: pointer;color: red">
+                    <i class="delete icon"></i>
+                  </a>
+              </div>
+          </div>
+          <div class="inline fields">
+              <div class="two wide field "></div>
+              <div class="ten wide field "></div>
+              <div class="two wide field ">
+                  <a   class=" primary  " (click)="onAddField()" style="cursor:  pointer;">
+                    <i class="add icon"></i>
+                  </a>
+              </div>
+          </div>
+          <div class="inline fields">
+              <div class="two wide field ">
+              </div>
+              <div class="field">
+                  <button type="button" style="margin-left: auto" class="ui mini primary button left floated" >
+                    <i class="add icon"></i>
+                    เพิ่มข้อหลัก
+                  </button>
+                  <button type="submit" style="margin-left: auto" class="ui mini primary button left floated" >
+                      <i class="save icon"></i>
+                      บันทึก
+                  </button>
+              </div>
+          </div>
+
+        
+        </div>
+      </div>
+
+      </div>
+
+
+  </div>
+
+
+  <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+          <button class="ui mini primary button" >
+              <i class="save icon"></i>
+              บันทึก
+          </button>
+      </div>
+  </div>
+</form>
+ 

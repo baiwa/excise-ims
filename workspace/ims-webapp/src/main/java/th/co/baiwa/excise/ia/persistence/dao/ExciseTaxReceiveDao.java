@@ -63,11 +63,11 @@ public class ExciseTaxReceiveDao {
 			vo.setExciseTaxReceiveMonth(rs.getString("TA_EXCISE_TAX_RECEIVE_MONTH"));
 			vo.setExciseTaxReceiveAmount(rs.getString("TA_EXCISE_TAX_RECEIVE_AMOUNT"));
 			// vo.setCreatedBy(rs.getString("CREATED_BY"));
-			// vo.setCreatedDatetime(rs.getTimestamp("CREATED_DATETIME") != null ?
-			// rs.getTimestamp("CREATED_DATETIME").toLocalDateTime() : null);
-			// vo.setUpdateBy(rs.getString("UPDATE_BY"));
-			// vo.setUpdateDatetime(rs.getTimestamp("UPDATE_DATETIME") != null ?
-			// rs.getTimestamp("UPDATE_DATETIME").toLocalDateTime() : null);
+			// vo.setCreatedDate(rs.getTimestamp("CREATED_DATE") != null ?
+			// rs.getTimestamp("CREATED_DATE").toLocalDateTime() : null);
+			// vo.setUpdateBy(rs.getString("UPDATED_BY"));
+			// vo.setUpdateDate(rs.getTimestamp("UPDATED_DATE") != null ?
+			// rs.getTimestamp("UPDATED_DATE").toLocalDateTime() : null);
 
 			return vo;
 

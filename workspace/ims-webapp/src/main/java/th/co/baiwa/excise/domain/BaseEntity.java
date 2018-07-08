@@ -3,7 +3,7 @@ package th.co.baiwa.excise.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class DefaultEntity {
+public class BaseEntity {
 	
 	private String isDeleted;
 	private BigDecimal version;
