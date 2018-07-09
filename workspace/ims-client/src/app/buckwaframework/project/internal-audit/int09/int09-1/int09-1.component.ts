@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { TextDateTH } from "../../../../common/helper/datepicker";
-import { AjaxService } from "../../../../common/services";
-import { TravelCostHeader } from "../../../../common/models";
+import {
+  TextDateTH,
+  ThaiFormatter
+} from "app/buckwaframework/common/helper/datepicker";
+import { AjaxService } from "app/buckwaframework/common/services";
+import { TravelCostHeader } from "app/buckwaframework/common/models";
 import { Router } from "@angular/router";
 declare var $: any;
 @Component({
@@ -42,18 +45,13 @@ export class Int091Component implements OnInit {
     const URL_LIST = "ia/int09/lists";
     this.ajax.get(URL_LIST, res => {
       this.data = res.json();
-      console.log(this.data);
-      var options = {  year: 'numeric', month: 'long', day: 'numeric' };
       this.data.forEach((item, index) => {
-        
-        var createdDate = new Date(item.createdDate);
-        var updatedDate = new Date(item.updatedDate);
-        console.log(createdDate.toLocaleDateString('th-TH', options));
-        console.log(updatedDate.toLocaleDateString('th-TH', options));
-        this.data[index].createdDatetime = createdDate.toLocaleDateString('th-TH', options);
-        this.data[index].updateDatetime = updatedDate.toLocaleDateString('th-TH', options);
-       
-
+        this.data[index].createdDatetime = ThaiFormatter(
+          new Date(item.createdDate)
+        );
+        this.data[index].updateDatetime = ThaiFormatter(
+          new Date(item.updatedDate)
+        );
       });
     });
     $("#example2").calendar({

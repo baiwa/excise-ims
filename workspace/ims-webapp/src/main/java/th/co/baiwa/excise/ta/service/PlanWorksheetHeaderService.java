@@ -49,7 +49,7 @@ public class PlanWorksheetHeaderService {
 	public String insertPlanWorksheetHeaderService(MockupVo mockupVo, Date startBackDate, int month, String productType) {
 
 		logger.info("PlanWorksheetHeaderService.insertPlanWorksheetHeaderService");
-		List<String> monthNameList = DateConstant.startBackDate(startBackDate, month);
+		List<String> monthNameList = exciseTaxReceiveDao.queryMonthShotName(startBackDate, month);
 		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-01-" + planWorksheetHeaderDao.getAnalysNumber();
 		Date saveDate = new Date();
 		logger.info("get analysNumber : " + analysNumber);

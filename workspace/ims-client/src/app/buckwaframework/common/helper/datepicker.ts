@@ -69,4 +69,9 @@ export var formatter = (what: string = '') => {
     }
 }
 
-export default { TextDateTH, formatter, digit }
+export var ThaiFormatter = (date) => {
+    const options = {  year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('th-TH', options);
+}
+
+export default { TextDateTH, formatter, digit, ThaiFormatter }
