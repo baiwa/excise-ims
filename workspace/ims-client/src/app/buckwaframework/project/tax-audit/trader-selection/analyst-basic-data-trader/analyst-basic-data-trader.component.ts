@@ -1,12 +1,9 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ExciseService } from "../../../../common/services/excise.service";
 import { AjaxService } from "../../../../common/services/ajax.service";
-import { Router, ActivatedRoute, Params } from "@angular/router";
-import { MessageBarService } from "../../../../common/services/message-bar.service";
+import { Router, ActivatedRoute } from "@angular/router";
 
-import { TextDateTH, digit } from "../../../../common/helper/datepicker";
-import { window } from "rxjs/operators";
-declare var jQuery: any;
+import { TextDateTH } from "../../../../common/helper/datepicker";
 declare var $: any;
 @Component({
   selector: "app-analyst-basic-data-trader",
@@ -36,7 +33,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private messageBarService: MessageBarService,
     private router: Router,
     private ex: ExciseService
   ) {}
@@ -156,10 +152,8 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     this.before = sum_month + " " + yy;
     var sum_month2 = TextDateTH.months[parseInt(month) - 1];
     this.last = sum_month2 + " " + parseInt(year_before);
-    var dataInDataTalbe = "";
     this.initDatatable();
     $("#exciseBtn").prop("disabled", true);
-    var table = $("#userManagementDt").DataTable();
 
     //on click condition modal
     $("#conditonModal").click(function() {
@@ -338,36 +332,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     var d = new Date();
     const URL = AjaxService.CONTEXT_PATH + "/working/test/list";
     var json = "";
-    json += ' { "lengthChange": false, ';
-    json += ' "searching": false, ';
-    json += ' "select": true, ';
-    json += ' "ordering": true, ';
-    json += ' "pageLength": 10, ';
-    json += ' "processing": true, ';
-    json += ' "serverSide": true, ';
-    json += ' "paging": true, ';
-    json += ' "pagingType": "full_numbers", ';
-    json += " ";
-    json += ' "ajax": { ';
-    json += ' "type": "POST", ';
-    json += ' "url": "' + URL + '", ';
-    json += ' "data": { ';
-    json +=
-      ' "exciseProductType": "' +
-      this.exciseProductType.replace("*", "") +
-      '", ';
-
-    json += ' "startBackDate": "' + this.from + '", ';
-    json +=
-      ' "condition": "' +
-      (this.condition != undefined ? this.condition : "") +
-      '", ';
-    json += ' "month": ' + this.month + " ";
-    json += " } ";
-
-    json += " }, ";
-
-    json += ' "columns": [ ';
+    json += " [ ";
     json += ' { "data": "exciseRegisttionNumberId","className":"center" }, ';
     json += ' { "data": "exciseId","className":"center" }, ';
     json += ' { "data": "exciseOperatorName" }, ';
@@ -405,27 +370,51 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
           '" ,"className":"center amount"} ';
       }
     }
-    json += "] } ";
+    json += "]";
     console.log(json);
-    let jsonMaping = JSON.parse(json);
-    this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
+    let jsonMapping = JSON.parse(json);
+    console.log(jsonMapping);
+    this.userManagementDt = $("#userManagementDt").DataTable({
+      lengthChange: false,
+      searching: false,
+      select: true,
+      ordering: true,
+      pageLength: 10,
+      processing: true,
+      serverSide: true,
+      paging: true,
+      pagingType: "full_numbers",
+      ajax: {
+        type: "POST",
+        url: URL,
+        data: {
+          exciseProductType: this.exciseProductType.replace("*", ""),
+          startBackDate: this.from,
+          condition: this.condition != undefined ? this.condition : "",
+          month: this.month
+        }
+      },
+      columns: jsonMapping,
+      fnDrawCallback: function(oSettings) {
+        if ($(".amount").length > 0) {
+          $(".amount").each(function() {
+            if (
+              this.innerHTML == "" ||
+              this.innerHTML == null ||
+              this.innerHTML == "0" ||
+              this.innerHTML == 0
+            ) {
+              this.className = "center amount null";
+              this.innerHTML = "-";
+            }
+          });
+        }
+      }
+    });
 
     //check loaded datatable...?
     setTimeout(() => {
       this.onLoading = false;
-      if ($(".amount").length > 0) {
-        $(".amount").each(function() {
-          if (
-            this.innerHTML == "" ||
-            this.innerHTML == null ||
-            this.innerHTML == "0" ||
-            this.innerHTML == 0
-          ) {
-            this.className = "center amount null";
-            this.innerHTML = "-";
-          }
-        });
-      }
     }, 500);
   }
 }
