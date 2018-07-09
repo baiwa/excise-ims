@@ -415,8 +415,14 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       this.onLoading = false;
       if ($(".amount").length > 0) {
         $(".amount").each(function() {
-          if (this.innerHTML == "" || this.innerHTML == null) {
+          if (
+            this.innerHTML == "" ||
+            this.innerHTML == null ||
+            this.innerHTML == "0" ||
+            this.innerHTML == 0
+          ) {
             this.className = "center amount null";
+            this.innerHTML = "-";
           }
         });
       }
