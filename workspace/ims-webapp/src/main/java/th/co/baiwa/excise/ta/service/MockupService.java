@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ta.service;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,9 +26,9 @@ public class MockupService {
 	@Autowired
 	private ExciseTaxReceiveDao exciseTaxReceiveDao;
 
-	public ResponseDataTable<MockupVo> findAll(String register, MockupVo mockupVo, Date startBackDate, int month , String exciseProductType) {
+	public ResponseDataTable<MockupVo> findAll(String register, MockupVo mockupVo, Date startBackDate, int month, String exciseProductType) {
 
-		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseId(register,exciseProductType,mockupVo.getStart(), mockupVo.getLength(),mockupVo.getCondition());
+		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseId(register, exciseProductType, mockupVo.getStart(), mockupVo.getLength(), mockupVo.getCondition());
 		DecimalFormat formatter = new DecimalFormat("#,###.00");
 
 		List<ExciseTaxReceive> taxReciveList = null;
@@ -36,12 +37,17 @@ public class MockupService {
 		List<String> monthNameList = exciseTaxReceiveDao.queryMonthShotName(startBackDate, month);
 		for (ExciseRegistartionNumber registartionNumber : regisNumberList) {
 
-			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(registartionNumber.getExciseId(),startBackDate, month);
+			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(registartionNumber.getExciseId(), startBackDate, month);
 			int count = 0;
 			int count2 = 0;
 
 			double sumFirstMonth = 0.0;
 			double sumLastMonth = 0.0;
+			double maxAmount = 0.0;
+			double minAmount = -1;
+			if(taxReciveList.size() < month) {
+				minAmount = 0;
+			}
 			vo = new MockupVo();
 			vo.setExciseRegisttionNumberId(registartionNumber.getExciseRegisttionNumberId());
 			vo.setExciseId(registartionNumber.getExciseId());
@@ -55,12 +61,21 @@ public class MockupService {
 				int i = monthNameList.indexOf(taxReceive.getExciseTaxReceiveMonth());
 				if (i != -1) {
 
-
 					try {
-						String amount = taxReceive.getExciseTaxReceiveAmount()!= null ? taxReceive.getExciseTaxReceiveAmount().trim().replace(",", "") : "0";
-						sumFirstMonth += Double.parseDouble(amount);
+						String amount = taxReceive.getExciseTaxReceiveAmount() != null ? taxReceive.getExciseTaxReceiveAmount().trim().replace(",", "") : "0";
+						double valueAmount = Double.parseDouble(amount);
+						if(valueAmount > maxAmount) {
+							maxAmount = valueAmount;
+						}
+						if(minAmount == -1) {
+							minAmount = valueAmount;
+						}else if(valueAmount <  minAmount) {
+							minAmount = valueAmount;
+						}
+						
 						if (i < (month / 2)) {
-							if(!"0".equals(amount)) {
+							sumFirstMonth += Double.parseDouble(amount);
+							if (!"0".equals(amount)) {
 								count++;
 								taxReceive.setExciseTaxReceiveAmount(formatter.format(Double.parseDouble(amount)));
 							}
@@ -119,15 +134,14 @@ public class MockupService {
 								break;
 							}
 
-						}else {
+						} else {
 
-							
-							if(!"0".equals(amount)) {
+							if (!"0".equals(amount)) {
 								count2++;
 								sumLastMonth += Double.parseDouble(amount);
 								taxReceive.setExciseTaxReceiveAmount(formatter.format(Double.parseDouble(amount)));
 							}
-							switch ((i + 1)-(month / 2)) {
+							switch ((i + 1) - (month / 2)) {
 							case 1:
 								vo.setExciseLatestTaxReceiveMonth1(taxReceive.getExciseTaxReceiveMonth());
 								vo.setExciseLatestTaxReceiveAmount1(taxReceive.getExciseTaxReceiveAmount());
@@ -182,35 +196,59 @@ public class MockupService {
 								break;
 							}
 
-						
 						}
 					} catch (Exception e) {
 						// TODO: handle exception
 					}
 
 					vo.setExciseFacAddress(String.valueOf(count));
-//					sumFirstMonth += Double.parseDouble(StringUtils.isNotBlank(taxReceive.getExciseTaxReceiveAmount())
-//							? StringUtils.replace(taxReceive.getExciseTaxReceiveAmount(), ",", "")
-//							: "0");
+					// sumFirstMonth +=
+					// Double.parseDouble(StringUtils.isNotBlank(taxReceive.getExciseTaxReceiveAmount())
+					// ? StringUtils.replace(taxReceive.getExciseTaxReceiveAmount(), ",", "")
+					// : "0");
 					double total24Month = (sumFirstMonth + sumLastMonth);
 					double changOfPercent1 = ((sumFirstMonth / total24Month) * 100.00);
 					double changOfPercent2 = ((sumLastMonth / total24Month) * 100.00);
 					double totalResult = (changOfPercent1 - changOfPercent2);
 					vo.setExciseRegisCapital(count2);
-					
-					vo.setChange(String.format("%,.2f", totalResult)+"%");
+
+					vo.setChange(String.format("%,.2f", totalResult) + "%");
 				}
 			}
 			vo.setExciseFacAddress(String.valueOf(count));
 			vo.setExciseRegisCapital(count2);
 			vo.setPayingtax(String.valueOf(count2 + count));
-			if(BeanUtils.isEmpty(vo.getChange())) {
+			if (BeanUtils.isEmpty(vo.getChange())) {
 				vo.setChange("0%");
 			}
+			BigDecimal totalAvg = new BigDecimal("0");
+			try {
+				totalAvg = new BigDecimal((sumFirstMonth + sumLastMonth) / month);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			double percenOfAvg = totalAvg.doubleValue() *100 / (sumFirstMonth + sumLastMonth);
+			BigDecimal maxAvg = new BigDecimal("0");
+			try {
+				maxAvg = new BigDecimal( ((maxAmount / (sumFirstMonth + sumLastMonth)*100) -  percenOfAvg));
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			BigDecimal minAvg = new BigDecimal("0");
+			try {
+				minAvg = new BigDecimal( ((minAmount / (sumFirstMonth + sumLastMonth)*100) -  percenOfAvg));
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+			DecimalFormat formatterNonScal = new DecimalFormat("#,##0");
+			vo.setAvgTotal(formatterNonScal.format(totalAvg)+"");
+			vo.setMonthMaxPercen(formatterNonScal.format(maxAvg)+" %");
+			vo.setMonthMinPercen(formatterNonScal.format(minAvg)+" %");
 			mockupVoList.add(vo);
 		}
 
-		long count = exciseRegisttionNumberDao.queryCountByExciseId(exciseProductType,mockupVo.getCondition());
+		long count = exciseRegisttionNumberDao.queryCountByExciseId(exciseProductType, mockupVo.getCondition());
 
 		ResponseDataTable<MockupVo> responseDataTable = new ResponseDataTable<>();
 		responseDataTable.setDraw(mockupVo.getDraw().intValue() + 1);
@@ -222,7 +260,7 @@ public class MockupService {
 	}
 
 	public void createWorkSheetService(MockupVo mockupVo, Date startBackDate, int month) {
-		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseId("",null,mockupVo.getStart(), mockupVo.getLength() , null);
+		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseId("", null, mockupVo.getStart(), mockupVo.getLength(), null);
 
 	}
 

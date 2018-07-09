@@ -35,7 +35,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private ex: ExciseService
-  ) {}
+  ) { }
 
   ngOnDestroy() {
     $(".ui.modal.condition").remove();
@@ -94,10 +94,10 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       }
       items.push(
         '<th style="text-align: center !important">' +
-          TextDateTH.monthsShort[m - 1] +
-          " " +
-          (yy + "").substr(2) +
-          "</th>"
+        TextDateTH.monthsShort[m - 1] +
+        " " +
+        (yy + "").substr(2) +
+        "</th>"
       );
     }
     for (var i = items.length - 1; i >= 0; i--) {
@@ -118,6 +118,9 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ค่าเฉลี่ยภาษี</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ค่าร้อยละสูงสุด</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ค่าร้อยละต่ำสุด</th> ' +
       '<th colspan="' +
       this.month / 2 +
       '" style="text-align: center !important">การชำระภาษี ' +
@@ -145,7 +148,9 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       (currYear - 1) +
       "</th>" +
       trHeaderColumn +
-      "</tr>";
+
+      "</tr>"
+      ;
 
     //show values
     var sum_month = TextDateTH.months[m - 1];
@@ -156,7 +161,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     $("#exciseBtn").prop("disabled", true);
 
     //on click condition modal
-    $("#conditonModal").click(function() {
+    $("#conditonModal").click(function () {
       $(".ui.modal.condition").modal("show");
     });
 
@@ -173,7 +178,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         month: this.month,
         exciseProductType: this.exciseProductType
       },
-      function(returnedData) {
+      function (returnedData) {
         console.log("returnedData : ", returnedData.length);
         for (var i = 0; i < returnedData.length; i++) {
           var dat = returnedData[i];
@@ -224,14 +229,14 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         exciseProductType: this.exciseProductType,
         conditionStr: conditionStr
       },
-      function(returnedData) {
+      function (returnedData) {
         console.log("analysNumber : " + returnedData);
         console.log("this.before : " + param1);
         console.log("this.last : " + param3);
         console.log("this.month : " + param3);
         router.navigate(["/create-working-paper-trader"]);
       }
-    ).fail(function() {
+    ).fail(function () {
       console.log("error");
     });
   };
@@ -291,8 +296,8 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         );
         this.valueForBackEndList.push(
           this.replaceAllValue(this.font[i]) +
-            ":" +
-            this.replaceAllValue(this.back[i])
+          ":" +
+          this.replaceAllValue(this.back[i])
         );
       }
     }
@@ -350,24 +355,26 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     json += ' { "data": "industrialAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
     json += ' { "data": "status" }, ';
-
+    json += ' { "data": "avgTotal","className":"right" }, ';
+    json += ' { "data": "monthMaxPercen","className":"right" }, ';
+    json += ' { "data": "monthMinPercen","className":"right" }, ';
     for (var i = 0; i < this.month / 2; i++) {
       json +=
         ' { "data": "exciseFirstTaxReceiveAmount' +
         (i + 1) +
-        '" ,"className":"center amount"}, ';
+        '" ,"className":"right amount"}, ';
     }
     for (var i = 0; i < this.month / 2; i++) {
       if (i != this.month / 2 - 1) {
         json +=
           ' { "data": "exciseLatestTaxReceiveAmount' +
           (i + 1) +
-          '" ,"className":"center amount"}, ';
+          '" ,"className":"right amount"}, ';
       } else {
         json +=
           ' { "data": "exciseLatestTaxReceiveAmount' +
           (i + 1) +
-          '" ,"className":"center amount"} ';
+          '" ,"className":"right amount"} ';
       }
     }
     json += "]";
@@ -395,9 +402,9 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         }
       },
       columns: jsonMapping,
-      fnDrawCallback: function(oSettings) {
+      fnDrawCallback: function (oSettings) {
         if ($(".amount").length > 0) {
-          $(".amount").each(function() {
+          $(".amount").each(function () {
             if (
               this.innerHTML == "" ||
               this.innerHTML == null ||
