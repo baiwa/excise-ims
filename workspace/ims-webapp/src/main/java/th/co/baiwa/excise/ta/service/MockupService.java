@@ -14,6 +14,7 @@ import th.co.baiwa.excise.ia.persistence.dao.ExciseRegisttionNumberDao;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseTaxReceiveDao;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseRegistartionNumber;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseTaxReceive;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class MockupService {
@@ -123,6 +124,7 @@ public class MockupService {
 							
 							if(!"0".equals(amount)) {
 								count2++;
+								sumLastMonth += Double.parseDouble(amount);
 								taxReceive.setExciseTaxReceiveAmount(formatter.format(Double.parseDouble(amount)));
 							}
 							switch ((i + 1)-(month / 2)) {
@@ -195,12 +197,16 @@ public class MockupService {
 					double changOfPercent2 = ((sumLastMonth / total24Month) * 100.00);
 					double totalResult = (changOfPercent1 - changOfPercent2);
 					vo.setExciseRegisCapital(count2);
-					vo.setPayingtax(String.valueOf(count2 + count));
+					
 					vo.setChange(String.format("%,.2f", totalResult)+"%");
 				}
 			}
 			vo.setExciseFacAddress(String.valueOf(count));
 			vo.setExciseRegisCapital(count2);
+			vo.setPayingtax(String.valueOf(count2 + count));
+			if(BeanUtils.isEmpty(vo.getChange())) {
+				vo.setChange("0%");
+			}
 			mockupVoList.add(vo);
 		}
 
