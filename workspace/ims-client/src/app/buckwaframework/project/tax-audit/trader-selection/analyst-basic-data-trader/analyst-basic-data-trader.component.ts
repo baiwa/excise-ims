@@ -397,7 +397,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         data: {
           exciseProductType: this.exciseProductType.replace("*", ""),
           startBackDate: this.from,
-          condition: this.condition != undefined ? this.condition : "",
+          condition: (this.condition != undefined ? this.condition.toString() : ""),
           month: this.month
         }
       },
