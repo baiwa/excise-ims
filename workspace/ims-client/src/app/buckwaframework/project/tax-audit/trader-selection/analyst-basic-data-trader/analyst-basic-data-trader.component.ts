@@ -304,7 +304,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     }
     this.valueForFontList.push("น้อยกว่า " + this.lastNumber);
     this.valueForBackEndList.push("<:" + this.replaceAllValue(this.lastNumber));
-    $(".ui.modal.condition").modal.modal("hide");
+    $(".ui.modal.condition").modal("hide");
   };
 
   selectExciseProductType(productionType): void {
