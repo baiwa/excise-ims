@@ -5,7 +5,7 @@
     </div>
 
     <div class="ui form content">
-        <form ngNativeValidate (submit)="onSendModal()">
+        <form ngNativeValidate (submit)="onSendModal($event)">
             <div class="inline fields">
                 <div class="three wide field">
                     &nbsp;
@@ -34,7 +34,8 @@
                 </div>
 
                 <div class="four wide field ">
-                    <input type="text" name="font{{i}}" id="font{{i}}" (keyup)="onKeyUp($event, 'font'+i)" [attr.required]="true" [(ngModel)]="font[i]" value="">
+                    <input type="text" name="font{{i}}" id="font{{i}}" (keyup)="onKeyUp($event, 'font'+i)" [attr.required]="true" [(ngModel)]="font[i]"
+                        value="">
                 </div>
 
                 <div class="one wide field ">
@@ -42,7 +43,8 @@
                 </div>
 
                 <div class="four wide field ">
-                    <input type="text" name="back{{i}}" id="back{{i}}" (keyup)="onKeyUp($event, 'back'+i)" [attr.required]="true" [(ngModel)]="back[i]" value="">
+                    <input type="text" name="back{{i}}" id="back{{i}}" (keyup)="onKeyUp($event, 'back'+i)" [attr.required]="true" [(ngModel)]="back[i]"
+                        value="">
                 </div>
 
                 <div class="two wide field">
@@ -103,6 +105,9 @@
             <span>ข้อมูลการวิเคราห์รายได้ของผู้ประกอบการที่มีการชำระภาษีสรรพสามิต</span>
         </div>
         <div class="ui attached segment">
+            <div class="ui active inverted dimmer" *ngIf="loading">
+                <div class="ui text loader">Loading</div>
+            </div>
             <div class="ui form">
 
                 <div class="inline fields">
@@ -251,7 +256,7 @@
                 </div>
                 <div class="ui center aligned grid">
                     <div class="sixteen wide column">
-                        <button type="button" (click)="onSend()" class="ui mini primary button">
+                        <button type="button" (click)="onSend()" class="ui mini primary button {{ loading && 'loading' }}">
                             <i class="add icon"></i>
                             สร้างกระดาษทำการคัดเลือกราย
                         </button>

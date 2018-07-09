@@ -30,12 +30,13 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
   back: number[];
   firstNumber: any;
   lastNumber: any;
+  loading: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private ex: ExciseService
-  ) { }
+  ) {}
 
   ngOnDestroy() {
     $(".ui.modal.condition").remove();
@@ -56,7 +57,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       "สนามแข่งม้า",
       "สนามกอล์ฟ"
     ];
-
+    this.loading = false;
     this.numbers = [1];
     console.log(this.numbers);
     this.back = [];
@@ -94,10 +95,10 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       }
       items.push(
         '<th style="text-align: center !important">' +
-        TextDateTH.monthsShort[m - 1] +
-        " " +
-        (yy + "").substr(2) +
-        "</th>"
+          TextDateTH.monthsShort[m - 1] +
+          " " +
+          (yy + "").substr(2) +
+          "</th>"
       );
     }
     for (var i = items.length - 1; i >= 0; i--) {
@@ -148,9 +149,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       (currYear - 1) +
       "</th>" +
       trHeaderColumn +
-
-      "</tr>"
-      ;
+      "</tr>";
 
     //show values
     var sum_month = TextDateTH.months[m - 1];
@@ -161,7 +160,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     $("#exciseBtn").prop("disabled", true);
 
     //on click condition modal
-    $("#conditonModal").click(function () {
+    $("#conditonModal").click(function() {
       $(".ui.modal.condition").modal("show");
     });
 
@@ -178,7 +177,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         month: this.month,
         exciseProductType: this.exciseProductType
       },
-      function (returnedData) {
+      function(returnedData) {
         console.log("returnedData : ", returnedData.length);
         for (var i = 0; i < returnedData.length; i++) {
           var dat = returnedData[i];
@@ -192,6 +191,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
   };
 
   onSend = () => {
+    this.loading = true;
     //call ExciseService
     this.ex.setformValues(
       this.before,
@@ -229,14 +229,15 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         exciseProductType: this.exciseProductType,
         conditionStr: conditionStr
       },
-      function (returnedData) {
+      function(returnedData) {
         console.log("analysNumber : " + returnedData);
         console.log("this.before : " + param1);
         console.log("this.last : " + param3);
         console.log("this.month : " + param3);
         router.navigate(["/create-working-paper-trader"]);
+        this.loading = false;
       }
-    ).fail(function () {
+    ).fail(function() {
       console.log("error");
     });
   };
@@ -272,7 +273,8 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     this.font.splice(index, 1);
   };
 
-  onSendModal = () => {
+  onSendModal = e => {
+    e.preventDefault();
     this.firstNumber = (<HTMLInputElement>(
       document.getElementById("firstNumber")
     )).value;
@@ -296,8 +298,8 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         );
         this.valueForBackEndList.push(
           this.replaceAllValue(this.font[i]) +
-          ":" +
-          this.replaceAllValue(this.back[i])
+            ":" +
+            this.replaceAllValue(this.back[i])
         );
       }
     }
@@ -311,12 +313,14 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     this.userManagementDt.destroy();
     this.initDatatable();
   }
+
   replaceAllValue(data) {
     while (data.indexOf(",") > 0) {
       data = data.replace(",", "");
     }
     return data;
   }
+
   changeCondition = data => {
     console.log(data);
     data = this.replaceAllValue(data);
@@ -397,14 +401,15 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         data: {
           exciseProductType: this.exciseProductType.replace("*", ""),
           startBackDate: this.from,
-          condition: (this.condition != undefined ? this.condition.toString() : ""),
+          condition:
+            this.condition != undefined ? this.condition.toString() : "",
           month: this.month
         }
       },
       columns: jsonMapping,
-      fnDrawCallback: function (oSettings) {
+      fnDrawCallback: function(oSettings) {
         if ($(".amount").length > 0) {
-          $(".amount").each(function () {
+          $(".amount").each(function() {
             if (
               this.innerHTML == "" ||
               this.innerHTML == null ||
