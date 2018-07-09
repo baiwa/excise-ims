@@ -1,11 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  TextDateTH,
-  ThaiFormatter
-} from "app/buckwaframework/common/helper/datepicker";
-import { AjaxService } from "app/buckwaframework/common/services";
-import { TravelCostHeader } from "app/buckwaframework/common/models";
+import { TextDateTH } from "../../../../common/helper/datepicker";
+import { AjaxService } from "../../../../common/services";
+import { TravelCostHeader } from "../../../../common/models";
 import { Router } from "@angular/router";
+import { TravelCostDetail } from "app/buckwaframework/common/models/travelcostdetail";
 declare var $: any;
 @Component({
   selector: "app-int09-1",
@@ -18,8 +16,8 @@ export class Int091Component implements OnInit {
   typeDocs: String[];
   topics: String[][];
   topic: String[];
-  data: TravelCostHeader[];
-
+  data: TravelCostHeader;
+  status: string;
   selectDoc: String;
   selectTop: String;
 
@@ -45,13 +43,18 @@ export class Int091Component implements OnInit {
     const URL_LIST = "ia/int09/lists";
     this.ajax.get(URL_LIST, res => {
       this.data = res.json();
+      console.log(this.data);
+      var options = {  year: 'numeric', month: 'long', day: 'numeric' };
       this.data.forEach((item, index) => {
-        this.data[index].createdDatetime = ThaiFormatter(
-          new Date(item.createdDate)
-        );
-        this.data[index].updateDatetime = ThaiFormatter(
-          new Date(item.updatedDate)
-        );
+        
+        var createdDate = new Date(item.createdDate);
+        var updatedDate = new Date(item.updatedDate);
+        console.log(createdDate.toLocaleDateString('th-TH', options));
+        console.log(updatedDate.toLocaleDateString('th-TH', options));
+        this.data[index].createdDatetime = createdDate.toLocaleDateString('th-TH', options);
+        this.data[index].updateDatetime = updatedDate.toLocaleDateString('th-TH', options);
+       
+
       });
     });
     $("#example2").calendar({
@@ -88,7 +91,7 @@ export class Int091Component implements OnInit {
   }
 
   clearData() {
-    this.showData = false;
+    this.showData = false;       
   }
 
   createLoan(id: any): void {
@@ -98,7 +101,6 @@ export class Int091Component implements OnInit {
       }
     });
   }
-
   editHeader(id: any): void {
     this.router.navigate(["int09/1/1"], {
       queryParams: {
@@ -106,4 +108,5 @@ export class Int091Component implements OnInit {
       }
     });
   }
+
 }
