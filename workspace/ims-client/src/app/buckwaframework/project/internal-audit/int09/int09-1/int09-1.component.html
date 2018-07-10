@@ -85,7 +85,7 @@
             <td>{{d.createdDatetime}}</td>
             <td>             
               <button class="ui mini orange button" type="button" (click)="editHeader(d.workSheetHeaderId)">แก้ไข</button>
-              <button class="ui mini orange button" type="button">ลบ</button>
+              <button class="ui mini orange button" type="button" (click)="deleteData(d.workSheetHeaderId)">ลบ</button>
             </td>
           </tr>
         </tbody>

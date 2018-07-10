@@ -1,6 +1,5 @@
 package th.co.baiwa.excise.ia.service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +23,7 @@ public class Int09Service {
 	@Autowired
 	private TravelCostWsDetailDao travelCostWsDetailDao;
 	
+	
 	public List<TravelCostWorkSheetHeader> listTravelCostHeaderService(TravelCostWorkSheetHeader travel) {
 
 		// Query Data
@@ -31,14 +31,6 @@ public class Int09Service {
 		
 		// Return Result
 		return result;
-	}
-	
-	public Integer deleteTravelCostHeader(String id) {
-		if (travelCostWorkSheetHeaderDao.deleteTravelCostWorksheetHeader(new BigDecimal(id)) > 0) {
-			return travelCostWsDetailDao.deleteTravelCostWorksheetDetail(new BigDecimal(id));
-		} else {
-			return 0;
-		}
 	}
 	
 	public List<TravelCostWsIntegrate> listTravelCostService(TravelCostWorkSheetHeader travel) {
@@ -96,7 +88,7 @@ public class Int09Service {
 
 				for (TravelCostWsDetail t : travelCostWsIntegrate.getDetail()) {
 					// Set data to DetailCost
-					t.setHeaderId(header.get(0).getWorkSheetHeaderId().toString());
+					t.setHeaderId(header.get (0).getWorkSheetHeaderId().toString());
 					t.setCreatedBy(creator);
 					t.setUpdatedBy(creator);
 					t.setCreatedDate(date);

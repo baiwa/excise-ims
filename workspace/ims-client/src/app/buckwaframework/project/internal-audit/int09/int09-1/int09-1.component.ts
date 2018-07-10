@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TextDateTH } from "../../../../common/helper/datepicker";
-import { AjaxService } from "../../../../common/services";
+import { AjaxService, MessageBarService } from "../../../../common/services";
 import { TravelCostHeader } from "../../../../common/models";
 import { Router } from "@angular/router";
 import { TravelCostDetail } from "app/buckwaframework/common/models/travelcostdetail";
@@ -13,20 +13,22 @@ declare var $: any;
 export class Int091Component implements OnInit {
   public $form: any;
   public showData: boolean = false;
-  typeDocs: String[];
+
   topics: String[][];
   topic: String[];
   data: TravelCostHeader;
   status: string;
   selectDoc: String;
   selectTop: String;
+  detail: TravelCostDetail[];
 
   selectedDoc: String;
   selectedTop: String;
+  typeDocs: string[];
 
   sent: boolean;
 
-  constructor(private ajax: AjaxService, private router: Router) {
+  constructor(private ajax: AjaxService, private router: Router,  private msg: MessageBarService ) {
     this.typeDocs = ["ทั่วไป", "วิชาการ", "อำนวยการ", "บริหาร"];
     this.topics = [
       ["ปฏิบัติงาน", "ชำนาญงาน", "อาวุโส", "ทักษะพิเศษ"],
@@ -107,6 +109,25 @@ export class Int091Component implements OnInit {
         id: id
       }
     });
+  }
+
+  deleteData(id): void {
+    this.msg.comfirm(
+      boo => {
+        if (boo) {
+          const URL = `ia/int09/lists/${id}`;
+          this.ajax.delete(URL, res => {
+            this.data = this.data.filter( (obj: TravelCostHeader)  => {
+            return obj.workSheetHeaderId !== id;
+          });
+            console.log(res);
+          });
+       
+        }
+      },
+      `ต้องการลบข้อมูลที่เลือกหรือไม่?`,
+      "การยืนยัน"
+    );
   }
 
 }

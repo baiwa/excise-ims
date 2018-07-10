@@ -246,13 +246,13 @@ export class Int0911Component implements OnInit, AfterViewInit {
     data.name = name.value;
     data.lastName = lastName.value;
     data.position = position.value;
-    data.category = category.value;
-    data.degree = degree.value;
-    data.allowanceDate = allowanceDate.value;
+    data.category = parseInt(category.value);
+    data.degree = parseInt(degree.value);
+    data.allowanceDate = parseInt(allowanceDate.value);
     data.allowanceCost =
-      Prices(category, degree, "allowance") * allowanceDate.value;
-    data.rentDate = rentDate.value;
-    data.rentCost = Prices(category, degree, restType.value) * rentDate.value;
+      Prices(data.category, data.degree, "allowance") * parseInt(allowanceDate.value);
+    data.rentDate = parseInt(rentDate.value);
+    data.rentCost = Prices(data.category, data.degree, restType.value) * parseInt(rentDate.value);
     data.restType = restType.value;
     data.travelCost = travelCost.value;
     data.otherCost = otherCost.value;

@@ -5,8 +5,8 @@ export class TravelCostDetail {
 	name : string = ''
 	lastName : string = ''
 	position : string = ''
-	category : string = ''
-	degree : string = ''
+	category : number = 0
+	degree : number = 0
 	allowanceDate : number = 0
 	allowanceCost : number = 0
 	rentDate : number = 0
