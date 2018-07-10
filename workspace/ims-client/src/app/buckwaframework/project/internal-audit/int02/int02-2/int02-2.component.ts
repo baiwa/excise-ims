@@ -22,9 +22,6 @@ export class Int022Component implements OnInit {
     private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService) {
-
-
-
   }
 
   ngOnInit() {
@@ -74,6 +71,7 @@ export class Int022Component implements OnInit {
   }
 
   initDatatable(): void {
+    var router = this.router;
     console.log('initDatatable');
     const URL = AjaxService.CONTEXT_PATH + "ia/int02/queryQtnReportHeaderByCriteria";
 
@@ -129,6 +127,10 @@ export class Int022Component implements OnInit {
       console.log(actionClick);
       if ('edit' == actionClick) {
 
+        router.navigate(
+          ['/int02/3'],
+          { queryParams: { id: idClick.split("-")[1] } }
+        );
 
       } else {
         //delete case
@@ -168,6 +170,14 @@ export class Int022Component implements OnInit {
 
   deleteData() {
 
+  }
+
+  linkToDetail(headerId) {
+    this.router.navigate(["/int02/3"], {
+      queryParams: {
+        id: headerId
+      }
+    });
   }
 
   clickEditFunction(index) {
