@@ -6,8 +6,12 @@ import {
 import { AjaxService, MessageBarService } from "../../../../../common/services";
 import { Prices } from "../../../../../common/helper/travel";
 import { Router, ActivatedRoute } from "@angular/router";
-import { digit } from "../../../../../common/helper/datepicker";
-import { TextDateTH, formatter } from "../../../../../common/helper/datepicker";
+import {
+  digit,
+  numberWithCommas,
+  TextDateTH,
+  formatter
+} from "../../../../../common/helper";
 declare var $: any;
 @Component({
   selector: "app-int09-1-1",
@@ -36,12 +40,15 @@ export class Int0911Component implements OnInit, AfterViewInit {
   selectedTop: string;
   sent: boolean;
 
+  numFunc: any;
+
   constructor(
     private ajax: AjaxService,
     private router: Router,
     private route: ActivatedRoute,
     private msg: MessageBarService
   ) {
+    this.numFunc = numberWithCommas;
     this.sum = {
       allowance: 0,
       rent: 0,
@@ -98,7 +105,7 @@ export class Int0911Component implements OnInit, AfterViewInit {
       type: "date",
       text: TextDateTH,
       formatter: formatter(),
-      onChange: function (date) {
+      onChange: function(date) {
         if ($("#startDate").val() !== null) {
           var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
           var nd2 = $("#endDate")
@@ -125,7 +132,7 @@ export class Int0911Component implements OnInit, AfterViewInit {
       type: "date",
       text: TextDateTH,
       formatter: formatter(),
-      onChange: function (date) {
+      onChange: function(date) {
         if ($("#startDate").val() !== null) {
           var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
           var st1 = $("#startDate")
@@ -196,7 +203,7 @@ export class Int0911Component implements OnInit, AfterViewInit {
     const URL =
       this.headerId !== undefined ? "ia/int09/update/" : "ia/int09/create";
     var router = this.router;
-    this.ajax.post(URL, data, function (res) {
+    this.ajax.post(URL, data, function(res) {
       console.log(res.json());
       router.navigate(["/int09/1"]);
     });
@@ -261,14 +268,21 @@ export class Int0911Component implements OnInit, AfterViewInit {
     data.degree = parseInt(degree.value);
     data.allowanceDate = parseInt(allowanceDate.value);
     data.allowanceCost =
-      Prices(data.category, data.degree, "allowance") * parseInt(allowanceDate.value);
+      Prices(data.category, data.degree, "allowance") *
+      parseInt(allowanceDate.value);
     data.rentDate = parseInt(rentDate.value);
-    data.rentCost = Prices(data.category, data.degree, restType.value) * parseInt(rentDate.value);
+    data.rentCost =
+      Prices(data.category, data.degree, restType.value) *
+      parseInt(rentDate.value);
     data.restType = restType.value;
     data.travelCost = travelCost.value;
     data.otherCost = otherCost.value;
     data.note = note.value;
-    data.sumCost = parseInt(data.allowanceCost.toString()) + parseInt(data.rentCost.toString()) + parseInt(data.travelCost.toString()) + parseInt(data.otherCost.toString());
+    data.sumCost =
+      parseInt(data.allowanceCost.toString()) +
+      parseInt(data.rentCost.toString()) +
+      parseInt(data.travelCost.toString()) +
+      parseInt(data.otherCost.toString());
 
     name.value = "";
     lastName.value = "";
@@ -321,8 +335,8 @@ export class Int0911Component implements OnInit, AfterViewInit {
     this.data = new TravelCostDetail();
     this.data = data;
 
-    this.onSelectDoc({target: { value: this.detail[index].category}});
-    this.onSelectTop({target: { value: this.detail[index].degree}});
+    this.onSelectDoc({ target: { value: this.detail[index].category } });
+    this.onSelectTop({ target: { value: this.detail[index].degree } });
   }
 
   clearData() {
