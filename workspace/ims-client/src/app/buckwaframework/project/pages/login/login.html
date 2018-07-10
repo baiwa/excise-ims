@@ -1,9 +1,12 @@
 <div class="ui middle aligned center aligned grid" style="margin-top: 5px;">
+
     <div class="column" style="margin-top: 80px;">
 
+        <img src="assets/images/logo.png" style="width: 140px;margin-left:-70px;margin-bottom: -70px; position: absolute; z-index: 999998;"
+            class="image">
+
         <form (submit)="onLogin()" class="ui large form {{loading && 'loading'}}" ngNativeValidate>
-            <div class="ui stacked segment">
-                <img src="assets/images/logo.png" style="width: 140px;" class="image">
+            <div class="ui stacked segment" style="padding-top: 80px">
 
                 <div class="inline fields">
                     <div class="four wide field">
@@ -12,12 +15,7 @@
                     <div class="twelve wide field">
                         <div class="ui left icon input">
                             <i class="user icon"></i>
-                            <input
-                                type="text"
-                                id="username"
-                                name="username"
-                                [(ngModel)]="username"
-                                placeholder="Username" required>
+                            <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Username" required>
                         </div>
                     </div>
                 </div>
@@ -29,12 +27,8 @@
                     <div class="twelve wide field">
                         <div class="ui left icon input">
                             <i class="lock icon"></i>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                [(ngModel)]="password"
-                                placeholder="Password" (keyup)="onKey($event)" required>
+                            <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Password" (keyup)="onKey($event)"
+                                required>
                         </div>
                     </div>
                 </div>

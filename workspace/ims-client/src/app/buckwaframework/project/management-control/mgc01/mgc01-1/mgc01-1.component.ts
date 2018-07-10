@@ -1,25 +1,31 @@
-import { Component, AfterViewInit } from '@angular/core';
-import * as Chart from 'chart.js';
+import { Component, AfterViewInit } from "@angular/core";
+import * as Chart from "chart.js";
 declare var $: any;
 @Component({
-  selector: 'app-mgc01-1',
-  templateUrl: './mgc01-1.component.html',
-  styleUrls: ['./mgc01-1.component.css']
+  selector: "app-mgc01-1",
+  templateUrl: "./mgc01-1.component.html",
+  styleUrls: ["./mgc01-1.component.css"]
 })
 export class Mgc011Component implements AfterViewInit {
-
-
   canvas: any;
   ctx: any;
-  constructor() { }
+  constructor() {}
 
   ngAfterViewInit() {
-    this.canvas = document.getElementById('myChart1');
-    this.ctx = this.canvas.getContext('2d');
+    this.canvas = <HTMLCanvasElement>document.getElementById("myChart1");
+    this.ctx = this.canvas.getContext("2d");
     let myChart = new Chart(this.ctx, {
-      type: 'line',
+      type: "line",
       data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July"
+        ],
         datasets: [
           {
             label: "A",
@@ -56,7 +62,6 @@ export class Mgc011Component implements AfterViewInit {
             borderColor: "orange",
             lineTension: 0.1
           }
-
         ]
       },
       options: {
@@ -65,5 +70,4 @@ export class Mgc011Component implements AfterViewInit {
       }
     });
   }
-
 }

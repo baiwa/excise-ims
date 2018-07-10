@@ -4,11 +4,11 @@
 
 <div class="ui attached  segment">
   <div class="ui grid center aligned">
-    <div class="ui three wide column">&nbsp;</div>
-    <div class="ui center aligned twelve wide  column">
-      <div class="ui form center aligned  ">
+    <div class="ui center aligned centered fourteen wide column">
+      <div class="ui form center aligned">
 
         <div class="inline fields">
+          <div class="two wide field"></div>
           <div class="four wide field">
             <label>ทะเบียนสรรพสามิตเลขที่ :</label>
           </div>
@@ -16,7 +16,9 @@
             <input type="text">
           </div>
         </div>
+
         <div class="inline fields">
+          <div class="two wide field"></div>
           <div class="one wide field">
             <label>
               ราย :
@@ -34,19 +36,23 @@
             <input type="text">
           </div>
         </div>
-        
+
         <div class="inline fields">
+          <div class="two wide field"></div>
           <div class="one wide field">
             <label>ที่อยู่ :</label>
-          </div>
-          </div>
-          <div class="inline fields">
-          <div class="thirteen wide field">
-           <textarea name="" id="" rows="2" style="resize: none" maxLength="200"></textarea>
           </div>
         </div>
 
         <div class="inline fields">
+          <div class="two wide field"></div>
+          <div class="thirteen wide field">
+            <textarea name="" id="" rows="2" style="resize: none" maxLength="200"></textarea>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="two wide field"></div>
           <div class="five wide field">
             <label>
               ขอบระยะเวลาที่ทำการวิเคราะห์ตั้งแต่ :
@@ -66,45 +72,40 @@
         </div>
 
         <div class="inline fields">
+          <div class="two wide field"></div>
           <div class="fourteen wide field">
             <label class="custom-label-w-22">ข้อมูลที่ใช้ในการวิเคราะห์</label>
           </div>
         </div>
 
         <div class="inline fields" *ngFor="let num of numbers; let i = index" [attr.data-index]="i">
-          <div class="fifteen wide field">
+          <div class="two wide field"></div>
+          <div class="fourteen wide field">
             <label class="custom-label-w-18">
               {{i+1}}.
             </label>
             <input type="text"> &nbsp;&nbsp;
-            <a
-              disabled
-              *ngIf="i<=2"
-              style="width:16%;box-shadow: none; cursor: default; color: transparent !important; box-shadow: 0 0 0 1px transparent inset!important;">
+            <a disabled *ngIf="i<=2" style="width:16%;box-shadow: none; cursor: default; color: transparent !important; box-shadow: 0 0 0 1px transparent inset!important;">
               <i class="times icon"></i> ลบ
             </a>
-            <a *ngIf="i>2"
-              class="red"
-              (click)="onDelField(i)"
-              style="width:16%;box-shadow: none; color: red !important; box-shadow: 0 0 0 1px transparent inset!important;cursor:pointer">
+            <a *ngIf="i>2" class="red" (click)="onDelField(i)" style="width:16%;box-shadow: none; color: red !important; box-shadow: 0 0 0 1px transparent inset!important;cursor:pointer">
               <i class="times icon"></i> ลบ
             </a>
           </div>
         </div>
 
         <div class="inline fields">
-          <div class="sixteen wide field">
-              <i class="plus icon"></i>
-            <a
-              style="cursor: pointer"
-              class="{{ numbers.length == 5 && 'disabled'}} red"
-              (click)="onAddField()">
-                 เพิ่ม
-              </a>
+          <div class="two wide field"></div>
+          <div class="fourteen wide field">
+            <i class="plus icon"></i>
+            <a style="cursor: pointer" class="{{ numbers.length == 5 && 'disabled'}} red" (click)="onAddField()">
+              เพิ่ม
+            </a>
           </div>
         </div>
 
         <div class="inline fields">
+          <div class="two wide field"></div>
           <div class="one wide field">
             <label>เรียน:</label>
           </div>
@@ -112,20 +113,25 @@
             <input type="text" class="disabled">
           </div>
         </div>
+
         <div class="inline fields">
+          <div class="two wide field"></div>
           <div class="nine wide field">
             <label>
               ตามที่ได้ทำการวิเคราะห์ข้อมูลรายดังกล่าวข้างต้นแล้วปรากฏว่า
             </label>
           </div>
         </div>
+
         <div class="inline fields">
+          <div class="two wide field"></div>
           <div class="thirteen wide field">
-            <textarea name="" id=""   rows="2" style="resize: none;" maxLength="200" ></textarea>
-           </div>
+            <textarea name="" id="" rows="2" style="resize: none;" maxLength="200"></textarea>
+          </div>
         </div>
 
         <div class="inline fields">
+          <div class="two wide field"></div>
           <div class="six wide field">
             <label>จึงเห็นสมควร</label>
             <div class="ui checkbox">
@@ -142,6 +148,7 @@
         </div>
 
         <div class="inline fields">
+          <div class="two wide field"></div>
           <div class="two wide field">
             <label>
               ผู้วิเคราะห์:
@@ -155,13 +162,13 @@
               ผู้ควบคุมการวิเคราะห์:
             </label>
           </div>
-          <div class="four  wide field">
+          <div class="four wide field">
             <input type="text">
           </div>
         </div>
+
       </div>
     </div>
-    <div class="ui two wide column">&nbsp;</div>
   </div>
 </div>
 
@@ -180,4 +187,3 @@
     </div>
   </div>
 </div>
-

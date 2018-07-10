@@ -6,10 +6,8 @@
 
         <div class="ui attached segment">
             <div class="ui grid">
-                <div class="ui two wide column">&nbsp;</div>
-                <div class="ui twelve wide column">
+                <div class="ui centered eleven wide column">
                     <div class="ui form">
-
                         <div class="inline fields">
                             <div class="eight wide field">
                                 <label class="custom-label-w-20" style="text-align: right">ประเภทเอกสาร</label>
@@ -21,7 +19,7 @@
                                 </select>
                             </div>
                             <div class="eight wide field">
-                                <label class="custom-label-w-20" style="text-align: right">เรื่อง</label>
+                                <label class="custom-label-w-18" style="text-align: right">เรื่อง</label>
                                 <select style="width: 100%" id="topic" name="topic" class="ui search dropdown" (change)="onSelectTop($event)" required>
                                     <option value="" style="color: grey">เลือกเรื่อง</option>
                                     <option *ngFor="let top of topic; let i = index" value="{{i}}">
@@ -32,7 +30,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="ui two wide column">&nbsp;</div>
             </div>
         </div>
 
