@@ -44,10 +44,10 @@ export class MessageBarService {
     this.messageList.length = 0;
   }
 
-  comfirm(func: Function, message: string, titele: string = "Confirm") {
-    $(".baiwa-confirm-modal div.header").html(titele);
+  comfirm(func: Function, message: string, title: string = "การยืนยัน") {
+    $(".baiwa-confirm-modal div.header").html(title);
     $(".baiwa-confirm-modal div.content").html(message);
-    $(".mini.modal")
+    $("#confirm")
       .modal({
         onApprove: function(element) {
           console.log("onApprove", element);
