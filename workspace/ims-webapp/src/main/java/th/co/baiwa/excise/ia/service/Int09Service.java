@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,14 @@ public class Int09Service {
 		
 		// Return Result
 		return result;
+	}
+	
+	public Integer deleteTravelCostHeader(String id) {
+		if (travelCostWorkSheetHeaderDao.deleteTravelCostWorksheetHeader(new BigDecimal(id)) > 0) {
+			return travelCostWsDetailDao.deleteTravelCostWorksheetDetail(new BigDecimal(id));
+		} else {
+			return 0;
+		}
 	}
 	
 	public List<TravelCostWsIntegrate> listTravelCostService(TravelCostWorkSheetHeader travel) {

@@ -50,7 +50,7 @@ public class Int09Controller {
 	@DeleteMapping("/lists/{id}")
 	@ResponseBody
 	public String deleteLists(@PathVariable("id") String id) {
-		return id;
+		return int09Service.deleteTravelCostHeader(id).toString();
 	}
 	
 	@PostMapping("/lists/{id}")

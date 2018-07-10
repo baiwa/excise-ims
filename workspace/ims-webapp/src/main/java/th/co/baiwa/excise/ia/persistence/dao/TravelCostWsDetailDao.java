@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.persistence.dao;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,6 +33,12 @@ public class TravelCostWsDetailDao {
 		 List<TravelCostWsDetail> res = jdbcTemplate.query(sql.toString(), params.toArray(), rowMapper);
 		 return res;
 	 }
+	
+	public int deleteTravelCostWorksheetDetail(BigDecimal id) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" DELETE FROM IA_TRAVEL_COST_WS_DETAIL WHERE HEADER_ID = ? ");
+		return jdbcTemplate.update(sql.toString(), new Object[] {id});
+	}
 
 	public int[] insertTravelCostWsDetail(List<TravelCostWsDetail> value) {
 		// inti SQL for insert to database
