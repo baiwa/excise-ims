@@ -223,17 +223,30 @@
           <td>{{d.name}} {{d.lastName}}</td>
           <td>{{d.position}}</td>
           <td>{{d.allowanceDate}}</td>
-          <td>{{d.allowanceCost ? d.allowanceCost : getPrice(i, 'allowance')}}</td>
+          <td>{{d.allowanceCost}}</td>
           <td>{{d.rentDate}}</td>
-          <td>{{d.rentCost ? d.rentCost : getPrice(i, d.restType)}}</td>
+          <td>{{d.rentCost}}</td>
           <td>{{d.travelCost}}</td>
           <td>{{d.otherCost}}</td>
-          <td>{{totalCost(i)}}</td>
+          <td>{{d.sumCost}}</td>
           <td>{{d.note}}</td>
+        
           <td>
             <button class="ui mini red button" type="button" (click)="editData(i)">แก้ไข</button>
-
-          </td>
+          </td>          
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="3"><b>รวม</b></td>
+          <td></td>
+          <td>{{sum.allowance}}</td>
+          <td></td>
+          <td>{{sum.rent}}</td>
+          <td>{{sum.travel}}</td>
+          <td>{{sum.etc}}</td>
+          <td>{{sum.total}}</td>
+          <td></td>
+          <td></td>         
         </tr>
       </tbody>
     </table>

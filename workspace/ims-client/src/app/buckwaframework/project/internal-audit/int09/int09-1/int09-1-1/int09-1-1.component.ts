@@ -19,6 +19,8 @@ export class Int0911Component implements OnInit, AfterViewInit {
   id: number;
   headerId: number;
 
+  sum: any;
+
   hdr: TravelCostHeader;
   detail: TravelCostDetail[];
   data: TravelCostDetail;
@@ -40,6 +42,13 @@ export class Int0911Component implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private msg: MessageBarService
   ) {
+    this.sum = {
+      allowance: 0,
+      rent: 0,
+      travel: 0,
+      etc: 0,
+      total: 0
+    };
     this.status = "create";
     this.hdr = new TravelCostHeader();
     this.detail = new Array<TravelCostDetail>();
@@ -75,6 +84,8 @@ export class Int0911Component implements OnInit, AfterViewInit {
         this.hdr.endDate = `${digit(date.getDate())}/${digit(
           date.getMonth()
         )}/${digit(date.getFullYear() + 543)}`;
+        // calculate all costs
+        this.cal();
       });
     }
   }
@@ -87,7 +98,7 @@ export class Int0911Component implements OnInit, AfterViewInit {
       type: "date",
       text: TextDateTH,
       formatter: formatter(),
-      onChange: function(date) {
+      onChange: function (date) {
         if ($("#startDate").val() !== null) {
           var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
           var nd2 = $("#endDate")
@@ -114,7 +125,7 @@ export class Int0911Component implements OnInit, AfterViewInit {
       type: "date",
       text: TextDateTH,
       formatter: formatter(),
-      onChange: function(date) {
+      onChange: function (date) {
         if ($("#startDate").val() !== null) {
           var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
           var st1 = $("#startDate")
@@ -185,7 +196,7 @@ export class Int0911Component implements OnInit, AfterViewInit {
     const URL =
       this.headerId !== undefined ? "ia/int09/update/" : "ia/int09/create";
     var router = this.router;
-    this.ajax.post(URL, data, function(res) {
+    this.ajax.post(URL, data, function (res) {
       console.log(res.json());
       router.navigate(["/int09/1"]);
     });
@@ -212,8 +223,8 @@ export class Int0911Component implements OnInit, AfterViewInit {
   totalCost(index) {
     const { restType, travelCost, otherCost } = this.detail[index];
     let total: number = 0;
-    total += this.getPrice(index, "allowance");
-    total += this.getPrice(index, restType);
+    total += parseFloat(this.getPrice(index, "allowance").toString());
+    total += parseFloat(this.getPrice(index, restType).toString());
     total += parseFloat(travelCost.toString());
     total += parseFloat(otherCost.toString());
     return total;
@@ -257,6 +268,7 @@ export class Int0911Component implements OnInit, AfterViewInit {
     data.travelCost = travelCost.value;
     data.otherCost = otherCost.value;
     data.note = note.value;
+    data.sumCost = parseInt(data.allowanceCost.toString()) + parseInt(data.rentCost.toString()) + parseInt(data.travelCost.toString()) + parseInt(data.otherCost.toString());
 
     name.value = "";
     lastName.value = "";
@@ -272,10 +284,14 @@ export class Int0911Component implements OnInit, AfterViewInit {
 
     if (this.status === "create") {
       this.detail.push(data);
+      // calculate all costs
+      this.cal();
       this.clearData();
     } else {
       this.detail[this.id] = data;
       this.status = "edit";
+      // calculate all costs
+      this.cal();
     }
   }
 
@@ -287,6 +303,8 @@ export class Int0911Component implements OnInit, AfterViewInit {
           this.detail = this.detail.filter(obj => {
             return !obj.checked;
           });
+          // calculate all costs
+          this.cal();
         }
       },
       "ต้องการลบข้อมูลที่เลือกทั้งหมดหรือไม่ ?",
@@ -302,6 +320,9 @@ export class Int0911Component implements OnInit, AfterViewInit {
     const data: any = this.detail[index];
     this.data = new TravelCostDetail();
     this.data = data;
+
+    this.onSelectDoc({target: { value: this.detail[index].category}});
+    this.onSelectTop({target: { value: this.detail[index].degree}});
   }
 
   clearData() {
@@ -310,6 +331,23 @@ export class Int0911Component implements OnInit, AfterViewInit {
     } else {
       this.data = new TravelCostDetail();
       this.status = "create";
+    }
+  }
+
+  cal() {
+    this.sum = {
+      allowance: 0,
+      rent: 0,
+      travel: 0,
+      etc: 0,
+      total: 0
+    };
+    for (var i = 0; i < this.detail.length; i++) {
+      this.sum.allowance += parseInt(this.detail[i].allowanceCost.toString());
+      this.sum.rent += parseInt(this.detail[i].rentCost.toString());
+      this.sum.travel += parseInt(this.detail[i].travelCost.toString());
+      this.sum.etc += parseInt(this.detail[i].otherCost.toString());
+      this.sum.total += parseInt(this.detail[i].sumCost.toString());
     }
   }
 }
