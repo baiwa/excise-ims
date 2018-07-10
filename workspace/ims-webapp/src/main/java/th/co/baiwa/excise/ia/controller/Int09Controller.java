@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +45,18 @@ public class Int09Controller {
 		travel.setWorkSheetHeaderId(new BigDecimal(id));
 		List<TravelCostWsIntegrate> lists = int09Service.listTravelCostService(travel);
 		return lists;
+	}
+	
+	@DeleteMapping("/lists/{id}")
+	@ResponseBody
+	public String deleteLists(@PathVariable("id") String id) {
+		return id;
+	}
+	
+	@PostMapping("/lists/{id}")
+	@ResponseBody
+	public TravelCostWsIntegrate updateLists(@RequestBody  TravelCostWsIntegrate travelCostWorkSheetHeader) {
+		return travelCostWorkSheetHeader;
 	}
 	
 }

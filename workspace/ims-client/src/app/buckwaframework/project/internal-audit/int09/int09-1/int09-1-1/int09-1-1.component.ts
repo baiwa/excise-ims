@@ -3,7 +3,7 @@ import {
   TravelCostHeader,
   TravelCostDetail
 } from "../../../../../common/models";
-import { AjaxService } from "../../../../../common/services";
+import { AjaxService, MessageBarService } from "../../../../../common/services";
 import { Prices } from "../../../../../common/helper/travel";
 import { Router, ActivatedRoute } from "@angular/router";
 import { digit } from "../../../../../common/helper/datepicker";
@@ -37,7 +37,8 @@ export class Int0911Component implements OnInit, AfterViewInit {
   constructor(
     private ajax: AjaxService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private msg: MessageBarService
   ) {
     this.status = "create";
     this.hdr = new TravelCostHeader();
@@ -181,8 +182,8 @@ export class Int0911Component implements OnInit, AfterViewInit {
       updateDatetime: null,
       Detail: this.detail
     };
-
-    const URL = "ia/int09/create";
+    const URL =
+      this.headerId !== undefined ? "ia/int09/update/" : "ia/int09/create";
     var router = this.router;
     this.ajax.post(URL, data, function(res) {
       console.log(res.json());
@@ -248,7 +249,10 @@ export class Int0911Component implements OnInit, AfterViewInit {
     data.category = category.value;
     data.degree = degree.value;
     data.allowanceDate = allowanceDate.value;
+    data.allowanceCost =
+      Prices(category, degree, "allowance") * allowanceDate.value;
     data.rentDate = rentDate.value;
+    data.rentCost = Prices(category, degree, restType.value) * rentDate.value;
     data.restType = restType.value;
     data.travelCost = travelCost.value;
     data.otherCost = otherCost.value;
@@ -259,11 +263,11 @@ export class Int0911Component implements OnInit, AfterViewInit {
     position.value = "";
     category.value = "";
     degree.value = "";
-    allowanceDate.value = "";
-    rentDate.value = "";
-    restType.value = "";
-    travelCost.value = "";
-    otherCost.value = "";
+    allowanceDate.value = 0;
+    rentDate.value = 0;
+    restType.value = 0;
+    travelCost.value = 0;
+    otherCost.value = 0;
     note.value = "";
 
     if (this.status === "create") {
@@ -276,9 +280,18 @@ export class Int0911Component implements OnInit, AfterViewInit {
   }
 
   deleteData() {
-    this.detail = this.detail.filter(obj => {
-      return !obj.checked;
-    });
+    this.msg.comfirm(
+      boo => {
+        if (boo) {
+          // TODO
+          this.detail = this.detail.filter(obj => {
+            return !obj.checked;
+          });
+        }
+      },
+      "ต้องการลบข้อมูลที่เลือกทั้งหมดหรือไม่ ?",
+      "การยืนยัน"
+    );
   }
 
   editData(index: number) {

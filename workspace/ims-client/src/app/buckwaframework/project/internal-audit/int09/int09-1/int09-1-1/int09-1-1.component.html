@@ -58,7 +58,7 @@
             <label>รายละเอียด :</label>
           </div>
           <div class="eight wide field">
-            <input type="text" class="disabled" [(ngModel)]="hdr.description" name="description" >
+            <input type="text" class="disabled" [(ngModel)]="hdr.description" name="description">
           </div>
         </div>
       </div>
@@ -223,16 +223,16 @@
           <td>{{d.name}} {{d.lastName}}</td>
           <td>{{d.position}}</td>
           <td>{{d.allowanceDate}}</td>
-          <td>{{getPrice(i, 'allowance')}}</td>
+          <td>{{d.allowanceCost ? d.allowanceCost : getPrice(i, 'allowance')}}</td>
           <td>{{d.rentDate}}</td>
-          <td>{{getPrice(i, d.restType)}}</td>
+          <td>{{d.rentCost ? d.rentCost : getPrice(i, d.restType)}}</td>
           <td>{{d.travelCost}}</td>
           <td>{{d.otherCost}}</td>
           <td>{{totalCost(i)}}</td>
           <td>{{d.note}}</td>
           <td>
             <button class="ui mini red button" type="button" (click)="editData(i)">แก้ไข</button>
-           
+
           </td>
         </tr>
       </tbody>
@@ -243,7 +243,7 @@
         <button class="ui mini red button" type="button" (click)="deleteData()">
           ลบ
         </button>
-        <button class="ui {{detail.length==0&&'disabled'}} mini primary button" type="button" (click)="onSubmit()"  >
+        <button class="ui {{detail.length==0&&'disabled'}} mini primary button" type="button" (click)="onSubmit()">
           บันทึก
         </button>
         <button class="ui mini primary button" type="button">
