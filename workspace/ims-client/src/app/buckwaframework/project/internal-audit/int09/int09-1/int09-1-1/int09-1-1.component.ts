@@ -78,10 +78,8 @@ export class Int0911Component implements OnInit, AfterViewInit {
     this.headerId = this.route.snapshot.queryParams["id"];
     if (this.headerId !== undefined) {
       const HEADER_URL = `ia/int09/lists/${this.headerId}`;
-      console.log(`HEADER_ID: ${this.headerId}`);
       this.ajax.get(HEADER_URL, res => {
         this.hdr = res.json()[0];
-        console.log(this.hdr);
         this.detail = this.hdr.Detail;
         let date = new Date(this.hdr.startDate);
         this.hdr.startDate = `${digit(date.getDate())}/${digit(
@@ -204,7 +202,6 @@ export class Int0911Component implements OnInit, AfterViewInit {
       this.headerId !== undefined ? "ia/int09/update/" : "ia/int09/create";
     var router = this.router;
     this.ajax.post(URL, data, function(res) {
-      console.log(res.json());
       router.navigate(["/int09/1"]);
     });
   };
@@ -363,5 +360,13 @@ export class Int0911Component implements OnInit, AfterViewInit {
       this.sum.etc += parseInt(this.detail[i].otherCost.toString());
       this.sum.total += parseInt(this.detail[i].sumCost.toString());
     }
+  }
+
+  checkedElements() {
+    return (
+      this.detail.findIndex(obj => {
+        return obj.checked;
+      }) == -1
+    );
   }
 }

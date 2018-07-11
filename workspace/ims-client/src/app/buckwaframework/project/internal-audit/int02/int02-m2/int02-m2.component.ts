@@ -14,7 +14,9 @@ export class Int02M2Component implements OnInit {
     this.DetailTest1 = ["mamsodjio", "asdkop", "kaopsdksaof", "akofpkakspod"];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    $(".ui.dropdown").dropdown();
+  }
 
   onSubmit = (e, i) => {
     e.preventDefault();
@@ -37,14 +39,4 @@ export class Int02M2Component implements OnInit {
       conclude
     );
   };
-  //toggle checkbox
-  // onChangeCheckBox = i => {
-  //   if ((<HTMLInputElement>document.getElementById("first" + i)).checked) {
-  //     $("#second" + i).prop("checked", false);
-  //     console.log(i);
-  //   } else {
-  //     $("#first" + i).prop("checked", false);
-  //     console.log(i);
-  //   }
-  // };
 }

@@ -17,7 +17,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
   before: any;
   last: any;
   num1: any;
-  num2: any;  
+  num2: any;
   _num1: any;
   _num2: any;
   percent1: any;
@@ -80,7 +80,6 @@ export class WorkingPaper1TraderComponent implements OnInit {
     this.percent1 = percent1;
     this.percent2 = percent2;
     this.analysNumber = analysNumber;
-    console.log("analysNumber: ", this.analysNumber);
 
     for (var i = 0; i < this.num1.length; i++) {
       if (this.num2[i] !== 0) {
@@ -90,7 +89,6 @@ export class WorkingPaper1TraderComponent implements OnInit {
         this._percent2.push(this.percent2[i]);
       }
     }
-    console.log(this._num1.length);
 
     //split function
     var from_split = this.from.split("/");
@@ -156,7 +154,6 @@ export class WorkingPaper1TraderComponent implements OnInit {
       "</th>" +
       trHeaderColumn +
       "</tr>";
-    console.log(document.getElementById("trDrinamic").innerHTML);
 
     this.initDatatable();
   }
@@ -164,7 +161,6 @@ export class WorkingPaper1TraderComponent implements OnInit {
   ngAfterViewInit() {}
 
   filterDataByCriteria(index) {
-    console.log(index);
     this.indexFilter = index;
     this.userManagementDt.destroy();
     this.initDatatable();
@@ -179,8 +175,6 @@ export class WorkingPaper1TraderComponent implements OnInit {
   initDatatable(): void {
     var d = new Date();
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
-    console.log(URL);
-    console.log(this.analysNumber);
     var json = "";
     json += ' { "lengthChange": false, ';
     json += ' "searching": false, ';
@@ -229,7 +223,6 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' { "data": "status" } ';
 
     json += "] } ";
-    console.log(json);
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
   }
@@ -267,7 +260,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
         router.navigate(["/add-external-data"]);
       }
     ).fail(function() {
-      console.log("error");
+      console.error("error");
     });
   }
 

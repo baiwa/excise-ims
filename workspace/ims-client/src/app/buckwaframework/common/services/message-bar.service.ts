@@ -50,11 +50,9 @@ export class MessageBarService {
     $("#confirm")
       .modal({
         onApprove: function(element) {
-          console.log("onApprove", element);
           func(true);
         },
         onDeny: function(element) {
-          console.log("onDeny", element);
           func(false);
         },
         closable: false

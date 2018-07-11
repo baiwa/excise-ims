@@ -1,27 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { AjaxService } from '../../../../../common/services/ajax.service';
+import { Component, OnInit } from "@angular/core";
+import { AjaxService } from "../../../../../common/services/ajax.service";
 
 @Component({
-  selector: 'int05-3-1',
-  templateUrl: './int05-3-1.component.html',
-  styleUrls: ['./int05-3-1.component.css']
+  selector: "int05-3-1",
+  templateUrl: "./int05-3-1.component.html",
+  styleUrls: ["./int05-3-1.component.css"]
 })
 export class Int0531Component implements OnInit {
+  constructor(private ajax: AjaxService) {}
 
-  constructor(private ajax: AjaxService) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   callFn() {
     this.ajax.get(
-      'api/preferences/message?no1=55',
-
-      alert('success\n** Just alert..!'),
-      ret => console.log(ret)
-    ).then(
+      "api/preferences/message?no1=55",
       res => console.log(res.json().data),
-      error => console.log(error)
+      error => console.error(error)
     );
     // this.ajax.post(
     //   'api/post/me',

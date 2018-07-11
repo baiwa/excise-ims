@@ -46,32 +46,11 @@ export class CreateTraderComponent implements OnInit {
     });
   };
 
-  // analyzeData  ( ){
-  // //     // this.ajax.post(
-  // //     //     'working/test/list',
-  // //     //     "{no1 : '15/15',no2 : '10'}",
-  // //     //     alert('hahaha'),
-  // //     //     ret => console.log(ret)
-  // //     //   ).then(
-  // //     //     res => console.log(res.json().data),
-  // //     //     error => console.log(error)
-  // //     //   );
-
-  //     let body = JSON.parse('{"no1" : "15/15","no2" : "10"}');
-  //     this.ajax.post('working/test/list', body, (success: Response) => {
-  //         console.log("success");
-  //     }, (error: Response) => {
-  //         let body: any = error.json();
-  //         console.log("fail");
-  //     });
-  // }
   callFn() {
-    this.ajax
-      .get(
-        "working/test/list?no1=55",
-        alert("success\n** Just alert..!"),
-        ret => console.log(ret)
-      )
-      .then(res => console.log(res.json().data), error => console.log(error));
+    this.ajax.get(
+      "working/test/list?no1=55",
+      res => console.log(res.json().data),
+      error => console.error(error)
+    );
   }
 }

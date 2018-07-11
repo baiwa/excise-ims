@@ -28,7 +28,11 @@ export class Int091Component implements OnInit {
 
   sent: boolean;
 
-  constructor(private ajax: AjaxService, private router: Router,  private msg: MessageBarService ) {
+  constructor(
+    private ajax: AjaxService,
+    private router: Router,
+    private msg: MessageBarService
+  ) {
     this.typeDocs = ["ทั่วไป", "วิชาการ", "อำนวยการ", "บริหาร"];
     this.topics = [
       ["ปฏิบัติงาน", "ชำนาญงาน", "อาวุโส", "ทักษะพิเศษ"],
@@ -45,18 +49,18 @@ export class Int091Component implements OnInit {
     const URL_LIST = "ia/int09/lists";
     this.ajax.get(URL_LIST, res => {
       this.data = res.json();
-      console.log(this.data);
-      var options = {  year: 'numeric', month: 'long', day: 'numeric' };
+      var options = { year: "numeric", month: "long", day: "numeric" };
       this.data.forEach((item, index) => {
-        
         var createdDate = new Date(item.createdDate);
         var updatedDate = new Date(item.updatedDate);
-        console.log(createdDate.toLocaleDateString('th-TH', options));
-        console.log(updatedDate.toLocaleDateString('th-TH', options));
-        this.data[index].createdDatetime = createdDate.toLocaleDateString('th-TH', options);
-        this.data[index].updateDatetime = updatedDate.toLocaleDateString('th-TH', options);
-       
-
+        this.data[index].createdDatetime = createdDate.toLocaleDateString(
+          "th-TH",
+          options
+        );
+        this.data[index].updateDatetime = updatedDate.toLocaleDateString(
+          "th-TH",
+          options
+        );
       });
     });
     $("#example2").calendar({
@@ -93,7 +97,7 @@ export class Int091Component implements OnInit {
   }
 
   clearData() {
-    this.showData = false;       
+    this.showData = false;
   }
 
   createLoan(id: any): void {
@@ -117,17 +121,14 @@ export class Int091Component implements OnInit {
         if (boo) {
           const URL = `ia/int09/lists/${id}`;
           this.ajax.delete(URL, res => {
-            this.data = this.data.filter( (obj: TravelCostHeader)  => {
-            return obj.workSheetHeaderId !== id;
+            this.data = this.data.filter((obj: TravelCostHeader) => {
+              return obj.workSheetHeaderId !== id;
+            });
           });
-            console.log(res);
-          });
-       
         }
       },
       `ต้องการลบข้อมูลที่เลือกหรือไม่?`,
       "การยืนยัน"
     );
   }
-
 }

@@ -20,7 +20,6 @@ export class ExciseService {
   private analysSelectedNum: any;
 
   constructor(private ajax: AjaxService) {
-    console.log("Call ExciseService");
     this.excise = new Array<Excise>();
   }
 
@@ -61,7 +60,6 @@ export class ExciseService {
           }
         }
         this.excise[index].file = new_file;
-        console.log(res);
       });
       return true;
     } else {

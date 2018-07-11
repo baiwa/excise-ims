@@ -1,11 +1,11 @@
 <div class="ui grid">
     <div class="four wide column">
-        <div class="ui stacked  segments">
+        <div class="ui stacked segments">
             <div class="ui segment">
                 <p style="cursor: pointer;">การเงิน</p>
             </div>
             <div class="ui blue segment">
-                <p style="cursor: pointer;">เจ้าหน้าที่</p>
+                <p style="cursor: pointer;">เจ้าหนี้</p>
             </div>
             <div class="ui green segment">
                 <p style="cursor: pointer;">ระบบ e-paymanet</p>
@@ -25,15 +25,14 @@
         </div>
     </div>
 
-    <form ngNativeValidate (submit)="onSubmit($event, i)">
-        <div class="twelve wide column">
-            <div class="ui segment">
-                <div class="ui form">
+    <form class="twelve wide column" ngNativeValidate (submit)="onSubmit($event, i)">
+        <div class="ui segment">
+            <div class="ui form">
 
-                    <div class="inline fields">
-                        <div class="eight wide field">&nbsp;&nbsp;&nbsp;
-                            <label class="custom-label-w-20">สรรพสามิตภาค</label>
-                            <select class="ui search dropdown" id="sector">
+                <div class="inline fields">
+                    <div class="eight wide field">&nbsp;&nbsp;&nbsp;
+                        <label class="custom-label-w-20">สรรพสามิตภาค</label>
+                        <select class="ui search dropdown" id="sector">
                             <option value="">State</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -86,19 +85,19 @@
                             <option value="WV">West Virginia</option>
                             <option value="WI">Wisconsin</option>
                             <option value="WY">Wyoming</option>
-                          </select>
-                        </div>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <div class="eight wide field">
-                            <label class="custom-label-w-10">ผู้สอบทาน</label>
-                            <input type="text" class="custom" id="test">
-                        </div>
+                        </select>
                     </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="eight wide field">
+                        <label class="custom-label-w-10">ผู้สอบทาน</label>
+                        <input type="text" class="custom" id="test">
+                    </div>
+                </div>
 
-                    <div class="inline fields">
-                        <div class="eight wide field">&nbsp;&nbsp;&nbsp;
-                            <label class="custom-label-w-20">สรรพสามิตพื้นที่</label>
-                            <select class="ui search dropdown" id="area">
+                <div class="inline fields">
+                    <div class="eight wide field">&nbsp;&nbsp;&nbsp;
+                        <label class="custom-label-w-20">สรรพสามิตพื้นที่</label>
+                        <select class="ui search dropdown" id="area">
                             <option value="">State</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -151,58 +150,58 @@
                             <option value="WV">West Virginia</option>
                             <option value="WI">Wisconsin</option>
                             <option value="WY">Wyoming</option>
-                          </select>
-                        </div>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <div class="eight wide field">
-                            <label class="custom-label-w-10">วันที่</label>
-                            <input type="text" class="custom" id="date">
-                        </div>
+                        </select>
                     </div>
-                    <br/>
-
-                    <div class="ui top center aligned attached header">
-                        <span>แบบสอบทานระบบการควบคุมภายใน</span>
-                        <p>ด้านการเงิน</p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="eight wide field">
+                        <label class="custom-label-w-10">วันที่</label>
+                        <input type="text" class="custom" id="date">
                     </div>
-                    <br/>
+                </div>
+                <br/>
 
-                    <div class="ui center aligned grid">
-                        <div class="centered fifteen wide column ">
-                            <table id="datatable" class="ui small celled table aligned hover">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" style="text-align: center !important">ที่</th>
-                                        <th rowspan="2" style="text-align: center !important">รายการ</th>
-                                        <th style="text-align: center !important">มี/ใช่</th>
-                                        <th style="text-align: center !important">ไม่มี/ไม่ใช่</th>
+                <div class="ui top center aligned attached header">
+                    <span>แบบสอบทานระบบการควบคุมภายใน</span>
+                    <p>ด้านการเงิน</p>
+                </div>
+                <br/>
 
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align: center !important; border-left: 1px solid rgba(34,36,1,.1);">สมบูรณ์</th>
-                                        <th style="text-align: center !important">สมบูรณ์</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let list of DetailTest1 let i = index" [attr.data-index]="i">
-                                        <td class="center">{{i+1}}</td>
-                                        <td class="center">{{list}}</td>
-                                        <td class="center">
-                                            <!-- <input type="radio" name="first{{i}}" id="first{{i}}"> -->
-                                            <div class="ui checkbox">
-                                                <input type="radio" name="frequency{{i}}" id="frequency{{i}}">
-                                                <label></label>
-                                            </div>
-                                        </td>
-                                        <td class="center">
-                                            <!-- <input type="radio" name="second{{i}}" id="second{{i}}"> -->
-                                            <div class="ui checkbox">
-                                                <input type="radio" name="frequency{{i}}" id="frequencyY{{i}}">
-                                                <label></label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!-- <tr>
+                <div class="ui center aligned grid">
+                    <div class="centered fifteen wide column ">
+                        <table id="datatable" class="ui small celled table aligned hover">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="text-align: center !important">ที่</th>
+                                    <th rowspan="2" style="text-align: center !important">รายการ</th>
+                                    <th style="text-align: center !important">มี/ใช่</th>
+                                    <th style="text-align: center !important">ไม่มี/ไม่ใช่</th>
+
+                                </tr>
+                                <tr>
+                                    <th style="text-align: center !important; border-left: 1px solid rgba(34,36,1,.1);">สมบูรณ์</th>
+                                    <th style="text-align: center !important">สมบูรณ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let list of DetailTest1 let i = index" [attr.data-index]="i">
+                                    <td class="center">{{i+1}}</td>
+                                    <td class="center">{{list}}</td>
+                                    <td class="center">
+                                        <!-- <input type="radio" name="first{{i}}" id="first{{i}}"> -->
+                                        <div class="ui checkbox">
+                                            <input type="radio" name="frequency{{i}}" id="frequency{{i}}">
+                                            <label></label>
+                                        </div>
+                                    </td>
+                                    <td class="center">
+                                        <!-- <input type="radio" name="second{{i}}" id="second{{i}}"> -->
+                                        <div class="ui checkbox">
+                                            <input type="radio" name="frequency{{i}}" id="frequencyY{{i}}">
+                                            <label></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
                                     <td>2</td>
                                     <td>Cell</td>
                                     <td>Cell</td>
@@ -214,22 +213,21 @@
                                     <td>Cell</td>
                                     <td>Cell</td>
                                 </tr> -->
-                                </tbody>
-                            </table>
+                            </tbody>
+                        </table>
 
-                            <div class="field">
-                                <label style="text-align: left;">สรุปผลการสอบทาน</label>
-                                <textarea rows="4" id="conclude"></textarea>
-                            </div>
+                        <div class="field">
+                            <label style="text-align: left;">สรุปผลการสอบทาน</label>
+                            <textarea rows="4" id="conclude"></textarea>
+                        </div>
 
-                            <button type="submit" class="ui small primary button">
-                              <i class="save icon"></i>บันทึก
+                        <button type="submit" class="ui small primary button">
+                            <i class="save icon"></i>บันทึก
                         </button>
 
-                        </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
     </form>

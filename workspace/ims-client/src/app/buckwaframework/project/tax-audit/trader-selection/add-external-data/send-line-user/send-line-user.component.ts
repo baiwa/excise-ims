@@ -73,9 +73,6 @@ export class SendLineUserComponent implements OnInit {
     this.month = month;
     this.analysNumber = analysNumber;
     this.workSheetNumber = workSheetNumber;
-    console.log("analysNumber: ", this.analysNumber);
-    console.log("from: ", this.from);
-    console.log("month: ", this.month);
 
     //split function
     var from_split = this.from.split("/");
@@ -174,16 +171,6 @@ export class SendLineUserComponent implements OnInit {
       columns: [
         {
           render: function(data, type, full, meta) {
-            // console.log(
-            //   "data: ",
-            //   data,
-            //   "type",
-            //   type,
-            //   "full",
-            //   full,
-            //   "meta",
-            //   meta.row
-            // );
             return `<input type="checkbox" name="chk${meta.row}" id="chk${
               meta.row
             }" value="${$("<div/>")
@@ -249,11 +236,8 @@ export class SendLineUserComponent implements OnInit {
     for (let i = 0; i < data.length; i++) {
       if ((<HTMLInputElement>document.getElementById(`chk${i}`)).checked) {
         this.exciseId.push(data[i].exciseId);
-        // console.log("exciseId" + (i + 1) + ": ", this.exciseId);
-        // console.log("analysNumber: ", this.analysNumber);
       }
     } //end for loops
-    console.log(this.exciseId);
 
     if (this.exciseId.length != 0) {
       const URL = "filter/exise/listFullDataNoPaging";
@@ -266,7 +250,6 @@ export class SendLineUserComponent implements OnInit {
         },
         res => {
           var data = res.json();
-          // console.log(data.messageTh);
           if (data.messageId == 3) {
             this.messageBarService.successModal(data.messageTh, "สำเร็จ");
             this.sendLineUser.destroy().draw();

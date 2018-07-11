@@ -59,7 +59,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     ];
     this.loading = false;
     this.numbers = [1];
-    console.log(this.numbers);
     this.back = [];
     this.font = [];
     for (let i = 0; i < 3; i++) {
@@ -165,7 +164,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     });
 
     this.listMenu = this.checkProductType(this.listMenu);
-    console.log(this.listMenu);
   }
 
   checkProductType = listMenu => {
@@ -178,11 +176,9 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         exciseProductType: this.exciseProductType
       },
       function(returnedData) {
-        console.log("returnedData : ", returnedData.length);
         for (var i = 0; i < returnedData.length; i++) {
           var dat = returnedData[i];
           var index = listMenu.indexOf(dat);
-          console.log("indexOf", index);
           listMenu[index] = "*" + dat;
         }
       }
@@ -209,7 +205,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     var from = this.from;
     var d = new Date();
     var conditionStr = "";
-    console.log(this.valueForBackEndList);
     for (var i = 0; i < this.valueForBackEndList.length; i++) {
       conditionStr += this.valueForBackEndList[i];
 
@@ -230,15 +225,11 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         conditionStr: conditionStr
       },
       function(returnedData) {
-        console.log("analysNumber : " + returnedData);
-        console.log("this.before : " + param1);
-        console.log("this.last : " + param3);
-        console.log("this.month : " + param3);
         router.navigate(["/create-working-paper-trader"]);
         this.loading = false;
       }
     ).fail(function() {
-      console.log("error");
+      console.error("error");
     });
   };
 
@@ -252,8 +243,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     for (var i = 0; i < num.length / 3; i++) {
       num = num.replace(",", "");
     }
-    // console.log("num: ", num);
-    // console.log("num[,]: ", this.numberWithCommas(num));
     (<HTMLInputElement>(
       document.getElementById(target)
     )).value = this.numberWithCommas(num);
@@ -268,7 +257,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
 
   onDelField = index => {
     this.numbers.splice(index, 1);
-    console.log(this.numbers);
     this.back.splice(index, 1);
     this.font.splice(index, 1);
   };
@@ -281,10 +269,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     this.lastNumber = (<HTMLInputElement>(
       document.getElementById("lastNumber")
     )).value;
-    console.log("firstNumber: ", this.firstNumber);
-    console.log("lastNumber: ", this.lastNumber);
-    console.log("font: ", this.font);
-    console.log("back: ", this.back);
     this.valueForFontList = new Array();
     this.valueForBackEndList = new Array();
     this.valueForFontList.push("มากกว่า " + this.firstNumber);
@@ -322,7 +306,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
   }
 
   changeCondition = data => {
-    console.log(data);
     data = this.replaceAllValue(data);
     if (data == 0) {
       this.condition = this.valueForBackEndList;
@@ -382,9 +365,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       }
     }
     json += "]";
-    console.log(json);
     let jsonMapping = JSON.parse(json);
-    console.log(jsonMapping);
     this.userManagementDt = $("#userManagementDt").DataTable({
       lengthChange: false,
       searching: false,

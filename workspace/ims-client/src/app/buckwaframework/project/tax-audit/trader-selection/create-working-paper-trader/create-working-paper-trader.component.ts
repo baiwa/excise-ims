@@ -49,17 +49,12 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
           "</option>";
       }
       document.getElementById("analysNumber").innerHTML = optionList;
-      console.log(this.analysNumbers[0]);
       (<HTMLInputElement>(
         document.getElementById("analysNumber")
       )).value = this.analysNumbers[0];
       const URL = AjaxService.CONTEXT_PATH + "filter/exise/getStartEndDate";
       var analysNumber = this.analysNumbers[0];
-      console.log(
-        (<HTMLInputElement>document.getElementById("analysNumber")).value
-      );
       $.post(URL, { analysNumber: analysNumber }, function(returnedData) {
-        console.log(returnedData);
         (<HTMLInputElement>document.getElementById("before")).value =
           returnedData[0];
         (<HTMLInputElement>document.getElementById("last")).value =
@@ -82,10 +77,10 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
 
         returnedData;
       }).fail(function() {
-        console.log("error");
+        console.error("error");
       });
     }).fail(function() {
-      console.log("error");
+      console.error("error");
     });
 
     this.numbers = [1];
@@ -124,13 +119,11 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     this.last = (<HTMLInputElement>document.getElementById("last")).value;
     this.from = (<HTMLInputElement>document.getElementById("fromData")).value;
     this.month = (<HTMLInputElement>document.getElementById("monthData")).value;
-    console.log(this.month);
     var currDate = new Date();
     var currYear = currDate.getFullYear() + 543;
     var from_split = this.from.split("/");
     var year_before = from_split[1];
     var yy = parseInt(year_before);
-    console.log(yy);
 
     //call ExciseService
     this.ex.setformNumber(
@@ -160,11 +153,7 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     var analysNumber = (<HTMLInputElement>(
       document.getElementById("analysNumber")
     )).value;
-    console.log(
-      (<HTMLInputElement>document.getElementById("analysNumber")).value
-    );
     $.post(URL, { analysNumber: analysNumber }, function(returnedData) {
-      console.log(returnedData);
       (<HTMLInputElement>document.getElementById("before")).value =
         returnedData[0];
       (<HTMLInputElement>document.getElementById("last")).value =
@@ -173,7 +162,6 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
         returnedData[2];
       (<HTMLInputElement>document.getElementById("monthData")).value =
         returnedData[3];
-      console.log(returnedData[2]);
 
       //set attribute
       for (var i = 0; i < 10; i++) {
@@ -188,7 +176,7 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
 
       return returnedData;
     }).fail(function() {
-      console.log("error");
+      console.error("error");
     });
   };
 
@@ -210,10 +198,6 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     this.num2.splice(index, 1);
     this.percent1.splice(index, 1);
     this.percent2.splice(index, 1);
-    // console.log(this.num1);
-    // console.log(this.num2);
-    // console.log(this.percent1);
-    // console.log(this.percent2);
   };
 
   reset = () => {
