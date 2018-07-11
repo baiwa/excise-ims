@@ -264,7 +264,7 @@
         <button class="ui mini primary button" type="button">
           ส่งออก
         </button>
-        <button class="ui mini primary button" type="button" routerLink="/int09/2">สัญญาการยืมเงิน</button>
+        <button *ngIf="this.headerId !== undefined" class="ui mini primary button" type="button" routerLink="/int09/2">สัญญาการยืมเงิน</button>
       </div>
     </div>
   </div>

@@ -62,6 +62,11 @@ export var formatter = (what: string = "") => {
           //return a string to show on the header for the given 'date' and 'mode'
           return date.getFullYear() + 543;
         },
+        cell: function(cell, date, cellOptions) {
+          //customize the calendar cell, cellOptions is:
+          //{ mode: string, adjacent: boolean, disabled: boolean, active: boolean, today: boolean }
+          cell[0].innerHTML = parseInt(cell[0].innerHTML) + 543;
+        },
         date: function(date, settings) {
           if (!date) return "";
           let year = date.getFullYear() + 543;
