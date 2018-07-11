@@ -4,22 +4,22 @@
             <div class="ui segment">
                 <p style="cursor: pointer;">การเงิน</p>
             </div>
-            <div class="ui blue segment">
+            <div class="ui segment">
                 <p style="cursor: pointer;">เจ้าหนี้</p>
             </div>
-            <div class="ui green segment">
+            <div class="ui segment">
                 <p style="cursor: pointer;">ระบบ e-paymanet</p>
             </div>
-            <div class="ui yellow segment">
+            <div class="ui segment">
                 <p style="cursor: pointer;">ระบบ GFMIS</p>
             </div>
-            <div class="ui black segment">
+            <div class="ui segment">
                 <p style="cursor: pointer;">ระบบบัญชีเกณฑ์คงค้าง</p>
             </div>
-            <div class="ui pink segment">
+            <div class="ui segment">
                 <p style="cursor: pointer;">จัดซื้อจัดจ้างพัสดุโดยวิธีคัดเลือก</p>
             </div>
-            <div class="ui brown segment">
+            <div class="ui segment">
                 <p style="cursor: pointer;">จัดซื้อจัดจ้างพัสดุโดยวิธีเฉพาะเจาะจง</p>
             </div>
         </div>
@@ -90,7 +90,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="eight wide field">
                         <label class="custom-label-w-10">ผู้สอบทาน</label>
-                        <input type="text" class="custom" id="test">
+                        <input type="text" class="custom" id="test" required>
                     </div>
                 </div>
 
@@ -155,7 +155,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="eight wide field">
                         <label class="custom-label-w-10">วันที่</label>
-                        <input type="text" class="custom" id="date">
+                        <input type="text" class="custom" id="date" required>
                     </div>
                 </div>
                 <br/>
@@ -189,14 +189,14 @@
                                     <td class="center">
                                         <!-- <input type="radio" name="first{{i}}" id="first{{i}}"> -->
                                         <div class="ui checkbox">
-                                            <input type="radio" name="frequency{{i}}" id="frequency{{i}}">
+                                            <input type="radio" name="frequency{{i}}" id="frequency{{i}}" required>
                                             <label></label>
                                         </div>
                                     </td>
                                     <td class="center">
                                         <!-- <input type="radio" name="second{{i}}" id="second{{i}}"> -->
                                         <div class="ui checkbox">
-                                            <input type="radio" name="frequency{{i}}" id="frequencyY{{i}}">
+                                            <input type="radio" name="frequency{{i}}" id="frequencyY{{i}}" required>
                                             <label></label>
                                         </div>
                                     </td>
@@ -218,7 +218,7 @@
 
                         <div class="field">
                             <label style="text-align: left;">สรุปผลการสอบทาน</label>
-                            <textarea rows="4" id="conclude"></textarea>
+                            <textarea rows="4" id="conclude" required></textarea>
                         </div>
 
                         <button type="submit" class="ui small primary button">
