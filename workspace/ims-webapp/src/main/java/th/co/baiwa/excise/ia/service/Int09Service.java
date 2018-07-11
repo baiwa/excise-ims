@@ -73,7 +73,6 @@ public class Int09Service {
 	}
 
 	public void createTravelCostService(TravelCostWsIntegrate travelCostWsIntegrate) {
-		// Creator
 		String creator = UserLoginUtils.getCurrentUsername();
 
 		// New Date
