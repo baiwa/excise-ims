@@ -16,7 +16,8 @@ import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.ia.Int023MappingVO;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
 import th.co.baiwa.excise.ia.service.QtnReportHeaderService;
-import th.co.baiwa.excise.ia.service.QuestionnaireMainDetailService;
+import th.co.baiwa.excise.ia.service.QuestionnaireDetailService;
+
 import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
@@ -28,8 +29,10 @@ public class Int02Controller {
 	@Autowired
 	private QtnReportHeaderService qtnReportHeaderService;
 
+	
 	@Autowired
-	private QuestionnaireMainDetailService questionnaireMainDetailService;
+	private QuestionnaireDetailService questionnaireDetailService;
+	
 
 	@PostMapping("/addHeaderQuestionnaire")
 	@ResponseBody
@@ -58,27 +61,44 @@ public class Int02Controller {
 		logger.info("queryQtnReportHeaderByCriteria");
 		Message message = null;
 		Integer insertCountRow = qtnReportHeaderService.deleteQtnReportHeader(qtnReportHeader);
-		if(BeanUtils.isNotEmpty(insertCountRow) && insertCountRow.intValue() == 1) {
+		if (BeanUtils.isNotEmpty(insertCountRow) && insertCountRow.intValue() == 1) {
 			message = ApplicationCache.getMessage("MSG_00002");
-		}else {
+		} else {
 			message = ApplicationCache.getMessage("MSG_00003");
 		}
 		return message;
 	}
-	
-	@PostMapping("/createQuestionnaireMainDetail")
+
+	/*
+	 * @PostMapping("/createQuestionnaireMainDetail")
+	 * 
+	 * @ResponseBody public Message createQuestionnaireMainDetail(@RequestBody
+	 * Int023MappingVO int023MappingVO) {
+	 * logger.info("createQuestionnaireMainDetail");
+	 * System.out.println(int023MappingVO.toString()); Message message = null;
+	 * Integer insertCountRow =
+	 * questionnaireMainDetailService.createQuestionnaireMainDetail(int023MappingVO)
+	 * ; if(BeanUtils.isNotEmpty(insertCountRow) && insertCountRow.intValue() >0) {
+	 * message = ApplicationCache.getMessage("MSG_00002"); }else { message =
+	 * ApplicationCache.getMessage("MSG_00003"); } return message;
+	 * 
+	 * }
+	 */
+
+	@PostMapping("/createQuestionnaireDetail")
 	@ResponseBody
-	public Message createQuestionnaireMainDetail(@RequestBody Int023MappingVO int023MappingVO) {
-		logger.info("createQuestionnaireMainDetail");
+	public Message createQuestionnaireDetail(@RequestBody Int023MappingVO int023MappingVO) {
+		logger.info("createQuestionnaireDetail");
 		System.out.println(int023MappingVO.toString());
 		Message message = null;
-		Integer insertCountRow = questionnaireMainDetailService.createQuestionnaireMainDetail(int023MappingVO);
-		if(BeanUtils.isNotEmpty(insertCountRow) && insertCountRow.intValue() >0) {
+		Integer insertCountRow = questionnaireDetailService.createQuestionnaireDetail(int023MappingVO);
+		if (BeanUtils.isNotEmpty(insertCountRow) && insertCountRow.intValue() > 0) {
 			message = ApplicationCache.getMessage("MSG_00002");
-		}else {
+		} else {
 			message = ApplicationCache.getMessage("MSG_00003");
 		}
 		return message;
 
 	}
+
 }
