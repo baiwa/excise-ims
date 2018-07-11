@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from "@angular/router";
 import { MessageBarService } from "../../../../common/services/message-bar.service";
-import { Router } from "@angular/router";
+
 import { ExciseService } from "../../../../common/services/excise.service";
 import { AjaxService } from "../../../../common/services/ajax.service";
 
@@ -14,23 +14,39 @@ declare var $: any;
   styleUrls: ["./int02-3.component.css"]
 })
 export class Int023Component implements OnInit {
-  private count: number = 1;
+  //private count: number = 1;
   numbers: number[];
+
   minorDetail: String[];
   mainDetail: string;
 
+  datatable: any;
+
+  headerId: number;
+
   constructor(
     private messageBarService: MessageBarService,
-    private ajax: AjaxService
-  ) {}
+    private ajax: AjaxService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.headerId = this.route.snapshot.queryParams["id"];
+
+
+
+
+
+
+    /*-------add row--------*/
     this.numbers = [1];
     this.minorDetail = [];
     //set loop <5
     for (let i = 0; i < 5; i++) {
       this.minorDetail.push(" ");
     }
+    /*-------!add row--------*/
+
   }
 
   onAddField = () => {
@@ -49,29 +65,25 @@ export class Int023Component implements OnInit {
   };
 
   onSend = () => {
-    this.mainDetail = (<HTMLInputElement>(
-      document.getElementById("mainDetail")
-    )).value;
-    console.log("mainDetail :: " + this.mainDetail);
+
+    this.mainDetail = (<HTMLInputElement>document.getElementById("mainDetail")).value;
+    console.log("mainDetail :: " + this.mainDetail)
     console.log(this.minorDetail);
 
-    const URL = "ia/int02/createQuestionnaireMainDetail";
-    this.ajax.post(
-      URL,
-      { mainDetail: this.mainDetail, minorDetail: this.minorDetail },
-      res => {
-        console.log(res.json());
-        var message = res.json();
-        console.log(message.messageType);
-        if (message.messageType == "E") {
-          this.messageBarService.errorModal(message.messageTh, "แจ้งเตือน");
-        } else {
-          this.messageBarService.successModal(
-            message.messageTh,
-            "บันทึกข้อมูลสำเร็จ"
-          );
-        }
+    /*--------------------Go Send back-end-----------------------------------*/
+    const URL = "ia/int02/createQuestionnaireDetail";
+    this.ajax.post(URL, {
+      mainDetail: this.mainDetail,
+      minorDetail: this.minorDetail
+    }, res => {
+      console.log(res.json());
+      var message = res.json();
+      console.log(message.messageType);
+      if (message.messageType == 'E') {
+        this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
+      } else {
+        this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
       }
-    );
+    });
   };
 }
