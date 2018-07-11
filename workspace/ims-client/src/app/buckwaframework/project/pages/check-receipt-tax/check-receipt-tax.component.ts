@@ -7,15 +7,17 @@ declare var $: any;
   styleUrls: ["./check-receipt-tax.component.css"]
 })
 export class CheckReceiptTaxComponent implements OnInit {
-  private codeList: any[];
-  private productList: any[];
-  private printMonthList: any[];
+  codeList: any[];
+  productList: any[];
+  printMonthList: any[];
 
-  private selectedProduct: string = "เครื่องดื่ม";
+  selectedProduct: string = "เครื่องดื่ม";
 
   constructor() {}
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     this.codeList = [
       { value: "1 : ภาษีสุรา ยาสูบ เครื่องดื่ม" },
       { value: "2 : ภาษีอื่น(นอกจากสุรา ยาสูบ เครื่องดื่ม)" },

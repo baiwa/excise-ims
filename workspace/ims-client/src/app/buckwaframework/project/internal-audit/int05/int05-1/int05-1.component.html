@@ -10,7 +10,7 @@
         <div class="inline fields">
           <div class="eight wide field">
             <label class="custom-label-w-25">สำนักงานสรรพสามิตภาค</label>
-            <select name="selectZone" id="selectZone" class="ui dropdown">
+            <select name="selectZone" id="selectZone" class="ui dropdown ai">
               <option *ngFor="let item of zoneList; index as i;" value="{{i+1}}">{{item.value}}</option>
             </select>
           </div>
@@ -19,7 +19,7 @@
         <div class="inline fields">
           <div class="eight wide field">
             <label class="custom-label-w-25">สำนักงานสรรพสามิตพื้นที่</label>
-            <select name="selectArea" id="selectArea" class="ui dropdown">
+            <select name="selectArea" id="selectArea" class="ui dropdown ai">
               <option *ngFor="let item of areaList; index as i;" value="{{i+1}}">{{item.value}}</option>
             </select>
           </div>

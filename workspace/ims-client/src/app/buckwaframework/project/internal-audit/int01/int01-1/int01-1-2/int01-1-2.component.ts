@@ -18,6 +18,8 @@ export class Int0112Component implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     this.codeList = [
       { value: "1 : ภาษีสุรา ยาสูบ เครื่องดื่ม" },
       { value: "2 : ภาษีอื่น(นอกจากสุรา ยาสูบ เครื่องดื่ม)" },

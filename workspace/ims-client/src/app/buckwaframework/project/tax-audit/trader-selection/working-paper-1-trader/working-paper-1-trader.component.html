@@ -92,7 +92,7 @@
                         <div class="inline fields">
                             <div class="sixteen wide field">
                                 <label style="width: 5em;">พิกัด</label>
-                                <select class="ui dropdown" name="coordinates" id="coordinates" (change)="changeCoordinates()">
+                                <select class="ui dropdown ai" name="coordinates" id="coordinates" (change)="changeCoordinates()">
                                     <option value="">ทั้งหมด</option>
                                     <option *ngFor="let list of coordinatesArr">{{list.value1}}</option>
                                 </select>
@@ -165,9 +165,9 @@
                                 บันทึกข้อมูล
                             </button>
                             <button class="ui mini button" routerLink="/create-working-paper-trader">
-                <i class="refresh icon"></i>
-                ล้างข้อมูล
-              </button>
+                                <i class="refresh icon"></i>
+                                ล้างข้อมูล
+                            </button>
                         </div>
                     </div>
                 </div>

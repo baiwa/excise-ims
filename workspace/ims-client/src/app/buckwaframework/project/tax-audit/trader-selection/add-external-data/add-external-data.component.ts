@@ -39,6 +39,8 @@ export class AddExternalDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     $("#exciseBtn").prop("disabled", true);
 
     //get coordinates in select option
@@ -78,8 +80,6 @@ export class AddExternalDataComponent implements OnInit {
         });
     }
   }
-
-  ngAfterViewInit() {}
 
   initDatatable(): void {
     const URL = AjaxService.CONTEXT_PATH + "filter/exise/list";

@@ -14,6 +14,8 @@ export class Int0132Component implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     this.productList = [
       { value: "เครื่องดื่ม" },
       { value: "สุราแช่" },

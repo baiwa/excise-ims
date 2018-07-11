@@ -15,18 +15,18 @@ declare var $: any;
   templateUrl: "userManagement-detail.html"
 })
 export class UserManagementDetailPage implements OnInit {
-  private title: string;
-  private statusPage: string;
+  title: string;
+  statusPage: string;
   static ADD: string = "ADD";
   static UPDATE: string = "UPDATE";
-  private userManagementUpdate: UserManagement;
-  private passwordRule: any;
-  private userRule: any;
-  private $form: any;
+  userManagementUpdate: UserManagement;
+  passwordRule: any;
+  userRule: any;
+  $form: any;
 
-  private isRequired: string = "";
-  private typePassword: string;
-  private sector: any[];
+  isRequired: string = "";
+  typePassword: string;
+  sector: any[];
 
   constructor(
     private ajaxService: AjaxService,
@@ -37,6 +37,8 @@ export class UserManagementDetailPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     this.typePassword = "password";
     let id = this.route.snapshot.params["id"];
     this.$form = $("#userManagementForm");

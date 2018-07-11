@@ -15,6 +15,8 @@ export class MgcontrolComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     // context
     $("#context .menu .item").tab({
       context: $("#context")

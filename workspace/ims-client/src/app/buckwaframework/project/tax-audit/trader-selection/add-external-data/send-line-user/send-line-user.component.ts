@@ -15,7 +15,7 @@ declare var $: any;
 })
 export class SendLineUserComponent implements OnInit {
   sendLineUser: any;
-  private listItem: any[];
+  listItem: any[];
   before: any;
   last: any;
   month: any;
@@ -41,6 +41,8 @@ export class SendLineUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     //get coordinates in select option
     const URL = "combobox/controller/getCoordinates";
     this.ajax.post(URL, {}, res => {

@@ -46,6 +46,8 @@ export class WorkingPaper1TraderComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     //get coordinates in select option
     const URL = "combobox/controller/getCoordinates";
     this.ajax.post(URL, {}, res => {

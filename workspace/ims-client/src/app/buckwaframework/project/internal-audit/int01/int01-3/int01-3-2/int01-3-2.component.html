@@ -112,7 +112,7 @@
                 <div class="inline fields required">
                     <div class="five wide field required">
                         <label class="custom-label-w-10">ประเภทคดี</label>
-                        <select class="ui dropdown" [ngModel]="selectedProduct" (ngModelChange)="onChange($event)">
+                        <select class="ui dropdown ai" [ngModel]="selectedProduct" (ngModelChange)="onChange($event)">
                             <option *ngFor="let item of productList; index as i;" value="{{item.value}}">{{item.value}}</option>
                         </select>
                     </div>
@@ -889,7 +889,7 @@
             <div class="inline fields">
                 <div class="eight wide field ">
                     <label class="custom-label-w-15">ประเภทคดี</label>
-                    <select id="id" class="ui dropdown">
+                    <select id="id" class="ui dropdown ai">
                         <option value="0">สุรา</option>
                         <option value="1">รถยนต์</option>
                     </select>

@@ -64,7 +64,7 @@
                         <div class="inline fields">
                             <div class="sixteen wide field">
                                 <label style="width: 5em;">ภาค</label>
-                                <select class="ui dropdown" name="sector" id="sector" (change)="changeSector()">
+                                <select class="ui dropdown ai" name="sector" id="sector" (change)="changeSector()">
                                     <option value="">ทั้งหมด</option>
                                     <option *ngFor="let list of sectorArr">{{list.value1}}</option>
                                 </select>
@@ -77,7 +77,7 @@
                         <div class="inline fields">
                             <div class="sixteen wide field">
                                 <label style="width: 5em;">พิกัด</label>
-                                <select class="ui dropdown" name="coordinates" id="coordinates" (change)="changeCoordinates()">
+                                <select class="ui dropdown ai" name="coordinates" id="coordinates" (change)="changeCoordinates()">
                                     <option value="">ทั้งหมด</option>
                                     <option *ngFor="let list of coordinatesArr">{{list.value1}}</option>
                                 </select>
@@ -105,13 +105,13 @@
                 <div class="ui center aligned grid">
                     <div class="sixteen wide column">
                         <button type="submit" class="ui mini primary button">
-                        <i class="add icon"></i>
-                        สร้างกระดาษทำการคัดเลือกราย
-                    </button>
+                            <i class="add icon"></i>
+                            สร้างกระดาษทำการคัดเลือกราย
+                        </button>
                         <button type="button" class="ui mini button" routerLink="/add-external-data">
-                        <i class="refresh icon"></i>
-                        ล้างข้อมูล
-                    </button>
+                            <i class="refresh icon"></i>
+                            ล้างข้อมูล
+                        </button>
                     </div>
                 </div>
             </form>

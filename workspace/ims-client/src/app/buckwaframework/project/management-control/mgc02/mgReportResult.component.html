@@ -24,14 +24,12 @@
                                 <label class="custom-label-w-20" style="text-align: right">เรื่อง: </label>
                             </div>
                             <div class="six wide field">
-                                <select style="width: 100%" id="doc" name="doc" class="ui search dropdown" (change)="onSelectDoc($event)" required>
-                    <option value="" style="color: grey">เลือกเรื่อง</option>
-                    <option
-                      *ngFor="let typeDoc of typeDocs; let i = index"
-                      value="{{i}}">
-                      {{typeDoc}}
-                    </option>
-                  </select>
+                                <select style="width: 100%" id="doc" name="doc" class="ui search dropdown ai" (change)="onSelectDoc($event)" required>
+                                    <option value="" style="color: grey">เลือกเรื่อง</option>
+                                    <option *ngFor="let typeDoc of typeDocs; let i = index" value="{{i}}">
+                                        {{typeDoc}}
+                                    </option>
+                                </select>
                             </div>
                             <div class="one wide field">
                                 &nbsp;
@@ -58,13 +56,13 @@
             <div class="ui center aligned grid">
                 <div class="eight wide column">
                     <button class="ui mini green button" type="submit">
-              <i class="save icon"></i>
-              ค้นหารายงาน
-            </button>
+                        <i class="save icon"></i>
+                        ค้นหารายงาน
+                    </button>
                     <button class="ui mini red button" type="button" (click)="onDiscard(false)">
-              <i class="times icon"></i>
-              ยกเลิก
-            </button>
+                        <i class="times icon"></i>
+                        ยกเลิก
+                    </button>
                 </div>
             </div>
         </div>
@@ -75,7 +73,8 @@
     </app-mgc02-1>
     <app-mgc02-2 *ngIf="sent && selectedDoc == 'ระบบการตรวจวัตถุดิบคงเหลือ'" [year]="year" (discard)="onDiscard($event)" class="sixteen wide column segments">
     </app-mgc02-2>
-    <app-mgc02-3 *ngIf="sent && selectedDoc == 'ระบบตรวจสอบภายในและการตรวจส่งออก'" [year]="year" (discard)="onDiscard($event)" class="sixteen wide column segments">
+    <app-mgc02-3 *ngIf="sent && selectedDoc == 'ระบบตรวจสอบภายในและการตรวจส่งออก'" [year]="year" (discard)="onDiscard($event)"
+        class="sixteen wide column segments">
     </app-mgc02-3>
 
 </form>

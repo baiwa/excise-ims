@@ -15,7 +15,7 @@
                         </div>
                         <div class="six wide field">
                             <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
-                            <select name="analysNumber" id="analysNumber" (change)="changeAnalysNumber()" class="ui dropdown">
+                            <select name="analysNumber" id="analysNumber" (change)="changeAnalysNumber()" class="ui dropdown ai">
                                 <option></option>
                             </select>
                             <input type="hidden" id="fromData" value="">
@@ -29,8 +29,8 @@
                             <div class="four ui action input">
                                 <input type="text" id="before" placeholder="MM/YYYY" value="{{before}}" readonly="" class="custom-readonly">
                                 <button class="ui icon button">
-                <i class="add to calendar icon"></i>
-              </button>
+                                    <i class="add to calendar icon"></i>
+                                </button>
                             </div>
                             <div class="one">
                                 <label>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;</label>
@@ -38,8 +38,8 @@
                             <div class="four ui action input">
                                 <input type="text" id="last" placeholder="MM/YYYY" value="{{last}}" readonly="" class="custom-readonly">
                                 <button class="ui icon button">
-                <i class="add to calendar icon"></i>
-              </button>
+                                    <i class="add to calendar icon"></i>
+                                </button>
                             </div>
                         </div>
                         <div class="eight wide field">
@@ -48,30 +48,35 @@
 
                     <div class="inline fields" *ngFor="let num of numbers; let i = index" [attr.data-index]="i">
                         <div class="three wide field">
-                            <label>กำหนดเงื่อนไข</label></div>
+                            <label>กำหนดเงื่อนไข</label>
+                        </div>
                         <div class="four wide field">
                             <label>จำนวนเดือนที่ชำระภาษี</label>
                         </div>
                         <div class="two wide field">
-                            <input (keyup)="onKeyUpMin($event, i)" value="" type="number" id="num1{{i}}" name="num1{{i}}" [(ngModel)]="num1[i]" [attr.min]="num2[i-1]+1" [attr.max]=" num2[i]==0 ? month-1 : num2[i]-1" [attr.required]="true">
+                            <input (keyup)="onKeyUpMin($event, i)" value="" type="number" id="num1{{i}}" name="num1{{i}}" [(ngModel)]="num1[i]" [attr.min]="num2[i-1]+1"
+                                [attr.max]=" num2[i]==0 ? month-1 : num2[i]-1" [attr.required]="true">
                         </div>
                         <div class="one wide field">
                             <label>&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>
                         </div>
                         <div class="two wide field">
-                            <input (keyup)="onKeyUpMax($event, i)" value="" type="number" id="num2{{i}}" name="num2{{i}}" [(ngModel)]="num2[i]" [attr.max]="month" [attr.required]="true">
+                            <input (keyup)="onKeyUpMax($event, i)" value="" type="number" id="num2{{i}}" name="num2{{i}}" [(ngModel)]="num2[i]" [attr.max]="month"
+                                [attr.required]="true">
                         </div>
                         <div class="five wide field">
                             <label>ช่วงร้อยละที่ต้องการแยกกลุ่มข้อมูล</label>
                         </div>
                         <div class="two wide field">
-                            <input type="number" name="percent1{{i}}" id="percent1{{i}}" [(ngModel)]="percent1[i]" [attr.step]="0.01" [attr.max]="percent2[i]-0.01" [attr.required]="true" value="">
+                            <input type="number" name="percent1{{i}}" id="percent1{{i}}" [(ngModel)]="percent1[i]" [attr.step]="0.01" [attr.max]="percent2[i]-0.01"
+                                [attr.required]="true" value="">
                         </div>
                         <div class="one wide field">
                             <label>&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>
                         </div>
                         <div class="two wide field">
-                            <input type="number" name="percent2{{i}}" id="percent2{{i}}" [(ngModel)]="percent2[i]" [attr.step]="0.01" [attr.max]="100" [attr.required]="true" value="">
+                            <input type="number" name="percent2{{i}}" id="percent2{{i}}" [(ngModel)]="percent2[i]" [attr.step]="0.01" [attr.max]="100"
+                                [attr.required]="true" value="">
                         </div>
                         <div class="two wide field">
                             <a (click)="onDelField(i)" *ngIf="i!==0" style="cursor: pointer;color: red">
@@ -91,13 +96,13 @@
                     <div class="ui center aligned grid">
                         <div class="sixteen wide column">
                             <button type="submit" class="ui mini primary button">
-              <i class="add icon"></i>
-              สร้างกระดาษทำการ
-            </button>
+                                <i class="add icon"></i>
+                                สร้างกระดาษทำการ
+                            </button>
                             <button class="ui mini button" (click)="reset()">
-                <i class="refresh icon"></i>
-                ล้างข้อมูล
-              </button>
+                                <i class="refresh icon"></i>
+                                ล้างข้อมูล
+                            </button>
 
                         </div>
                     </div>

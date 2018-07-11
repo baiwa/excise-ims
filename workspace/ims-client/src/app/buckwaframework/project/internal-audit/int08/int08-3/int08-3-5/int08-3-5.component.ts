@@ -1,29 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit } from "@angular/core";
 
 declare var $: any;
 @Component({
-  selector: 'int08-3-5',
-  templateUrl: './int08-3-5.component.html',
-  styleUrls: ['./int08-3-5.component.css']
+  selector: "int08-3-5",
+  templateUrl: "./int08-3-5.component.html",
+  styleUrls: ["./int08-3-5.component.css"]
 })
 export class Int0835Component implements OnInit {
+  showData: boolean = false;
 
-  private showData: boolean = false;
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
   }
 
   ngAfterViewInit() {
-    $('#selectCondition1').dropdown();
-    $('#selectCondition2').dropdown();
-    $('#selectCondition3').dropdown();
-    $('#selectColor1').dropdown();
-    $('#selectColor2').dropdown();
-    $('#selectColor3').dropdown();
+    $("#selectCondition1").dropdown();
+    $("#selectCondition2").dropdown();
+    $("#selectCondition3").dropdown();
+    $("#selectColor1").dropdown();
+    $("#selectColor2").dropdown();
+    $("#selectColor3").dropdown();
   }
 
   uploadData() {
@@ -35,11 +34,10 @@ export class Int0835Component implements OnInit {
   }
 
   popupEditData() {
-    $('#modalInt0835').modal('show');
+    $("#modalInt0835").modal("show");
   }
 
   closePopupEdit() {
-    $('#modalInt0835').modal('hide');
+    $("#modalInt0835").modal("hide");
   }
-
 }

@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 declare var $: any;
 @Component({
-  selector: 'int08-1-2',
-  templateUrl: './int08-1-2.component.html',
-  styleUrls: ['./int08-1-2.component.css']
+  selector: "int08-1-2",
+  templateUrl: "./int08-1-2.component.html",
+  styleUrls: ["./int08-1-2.component.css"]
 })
 export class Int0812Component implements OnInit {
-  private showData: boolean = false;
+  showData: boolean = false;
   public data: String[];
 
   constructor() {
-    this.data =  [
+    this.data = [
       "ประเมินความเสี่ยงโครงการ - งบประมาณ",
       "ประเมินความเสี่ยงโครงการ - ประสิทธิภาพ",
       "ประเมินความเสี่ยงโครงการ - รวม",
@@ -24,24 +24,25 @@ export class Int0812Component implements OnInit {
       "ประเมินความเสี่ยงภาคพื้นที่ - ผลการปราบปราม (รวม)",
       "ประเมินความเสี่ยงภาคพื้นที่ - การเงินและบัญชี",
       "ประเมินความเสี่ยงภาคพื้นที่ - ควบคุมภายใน",
-      "ประเมินความเสี่ยงภาคพื้นที่ - รวม",
+      "ประเมินความเสี่ยงภาคพื้นที่ - รวม"
     ];
   }
 
   ngOnInit() {
-
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
   }
 
   ngAfterViewInit() {
-    $('#select1').hide();
-    $('#select2').hide();
-    $('#select3').hide();
-    $('#selectCondition1').dropdown();
-    $('#selectCondition2').dropdown();
-    $('#selectCondition3').dropdown();
-    $('#selectColor1').dropdown();
-    $('#selectColor2').dropdown();
-    $('#selectColor3').dropdown();
+    $("#select1").hide();
+    $("#select2").hide();
+    $("#select3").hide();
+    $("#selectCondition1").dropdown();
+    $("#selectCondition2").dropdown();
+    $("#selectCondition3").dropdown();
+    $("#selectColor1").dropdown();
+    $("#selectColor2").dropdown();
+    $("#selectColor3").dropdown();
   }
 
   uploadData() {
@@ -53,17 +54,16 @@ export class Int0812Component implements OnInit {
   }
 
   popupEditData() {
-    $('#select1').show();
-    $('#select2').show();
-    $('#select3').show();
-    $('#modalInt0812').modal('show');
+    $("#select1").show();
+    $("#select2").show();
+    $("#select3").show();
+    $("#modalInt0812").modal("show");
   }
 
   closePopupEdit() {
-    $('#select1').hide();
-    $('#select2').hide();
-    $('#select3').hide();
-    $('#modalInt0812').modal('hide');
+    $("#select1").hide();
+    $("#select2").hide();
+    $("#select3").hide();
+    $("#modalInt0812").modal("hide");
   }
-
 }

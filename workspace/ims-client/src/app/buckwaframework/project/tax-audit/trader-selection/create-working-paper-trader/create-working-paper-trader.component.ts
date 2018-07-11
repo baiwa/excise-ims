@@ -32,6 +32,8 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     //call ExciseService
     //var { before, last, from, month } = this.ex.getformValues();
 

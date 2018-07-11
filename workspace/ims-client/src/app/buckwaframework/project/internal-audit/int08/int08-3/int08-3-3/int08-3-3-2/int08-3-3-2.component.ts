@@ -1,31 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
-declare var $: any
+declare var $: any;
 @Component({
-  selector: 'int08-3-3-2',
-  templateUrl: './int08-3-3-2.component.html',
-  styleUrls: ['./int08-3-3-2.component.css']
+  selector: "int08-3-3-2",
+  templateUrl: "./int08-3-3-2.component.html",
+  styleUrls: ["./int08-3-3-2.component.css"]
 })
 export class Int08332Component implements OnInit {
+  showData: boolean = false;
 
-  private showData: boolean = false;
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
   }
 
   ngAfterViewInit() {
-    $('#select1').hide();
-    $('#select2').hide();
-    $('#select3').hide();
-    $('#selectCondition1').dropdown();
-    $('#selectCondition2').dropdown();
-    $('#selectCondition3').dropdown();
-    $('#selectColor1').dropdown();
-    $('#selectColor2').dropdown();
-    $('#selectColor3').dropdown();
+    $("#select1").hide();
+    $("#select2").hide();
+    $("#select3").hide();
+    $("#selectCondition1").dropdown();
+    $("#selectCondition2").dropdown();
+    $("#selectCondition3").dropdown();
+    $("#selectColor1").dropdown();
+    $("#selectColor2").dropdown();
+    $("#selectColor3").dropdown();
   }
 
   uploadData() {
@@ -37,16 +37,16 @@ export class Int08332Component implements OnInit {
   }
 
   popupEditData() {
-    $('#select1').show();
-    $('#select2').show();
-    $('#select3').show();
-    $('#modalInt08332').modal('show');
+    $("#select1").show();
+    $("#select2").show();
+    $("#select3").show();
+    $("#modalInt08332").modal("show");
   }
 
   closePopupEdit() {
-    $('#select1').hide();
-    $('#select2').hide();
-    $('#select3').hide();
-    $('#modalInt08332').modal('hide');
+    $("#select1").hide();
+    $("#select2").hide();
+    $("#select3").hide();
+    $("#modalInt08332").modal("hide");
   }
 }

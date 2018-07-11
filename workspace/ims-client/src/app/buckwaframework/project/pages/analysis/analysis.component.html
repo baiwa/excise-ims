@@ -41,7 +41,7 @@
                 <div class="inline fields">
                     <div class="eight wide field required">
                         <label class="custom-label-w-25">ประเภท</label>
-                        <select id="selectCatagory" class="ui dropdown" (change)="selectCatagory()">
+                        <select id="selectCatagory" class="ui dropdown ai" (change)="selectCatagory()">
                             <option value="0">- เลือกประเภท -</option>
                             <option value="1">สินค้า</option>
                             <option value="2">บริการ</option>
@@ -52,7 +52,7 @@
                 <div class="inline fields" *ngIf="showSelectCoordinate">
                     <div class="eight wide field required">
                         <label class="custom-label-w-25">พิกัด</label>
-                        <select id="selectCoordinate" class="ui dropdown">
+                        <select id="selectCoordinate" class="ui dropdown ai">
                             <option *ngFor="let item of coordinateList; index as i;" value="{{item.value}}">{{item.value}}</option>
                         </select>
                     </div>

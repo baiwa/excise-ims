@@ -15,7 +15,7 @@ declare var $: any;
 export class WorkingPaper1FullTraderComponent implements OnInit {
   userManagementDt: any;
   router: any;
-  private listItem: any[];
+  listItem: any[];
   before: any;
   last: any;
   num1: any;
@@ -39,6 +39,8 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     //call ExciseService
     var {
       before,

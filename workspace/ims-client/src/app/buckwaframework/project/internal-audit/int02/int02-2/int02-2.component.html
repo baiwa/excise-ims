@@ -16,7 +16,7 @@
         <div class="inline fields">
           <div class="field">
             <label>ด้านที่ตรวจ (เดิม)</label>
-            <select class="ui dropdown" name="departmentName" id="departmentName" [(ngModel)]="departmentName">
+            <select class="ui dropdown ai" name="departmentName" id="departmentName" [(ngModel)]="departmentName">
               <option aria-placeholder="ด้านที่ตรวจ (เดิม)"></option>
               <option *ngFor="let list of departmentNameArr" ng-value="list.value">{{list.description}}</option>
             </select>

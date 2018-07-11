@@ -168,7 +168,7 @@
                     </div>
                     <div class="five wide field">
                         <label style="width: 5em;">เงื่อนไข</label>
-                        <select class="ui dropdown" name="condition" id="condition" (change)="changeCondition($event.target.value)">
+                        <select class="ui dropdown ai" name="condition" id="condition" (change)="changeCondition($event.target.value)">
                             <option value="">ทั้งหมด</option>
 
                             <option *ngFor="let item of valueForFontList; let i = index" value="{{valueForBackEndList[i]}}">{{item}}</option>

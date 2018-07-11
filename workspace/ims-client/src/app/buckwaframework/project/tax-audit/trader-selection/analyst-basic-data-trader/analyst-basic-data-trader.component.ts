@@ -43,6 +43,8 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     this.listMenu = [
       "น้ำมัน",
       "เครื่องดื่ม",

@@ -60,13 +60,13 @@
                     <br>
                     <div class="five wide field required">
                         <label class="custom-label-w-5">รหัส</label>
-                        <select class="ui dropdown">
+                        <select class="ui dropdown ai">
                             <option *ngFor="let item of codeList; index as i;" value="{{i+1}}">{{item.value}}</option>
                         </select>
                     </div>
                     <div class="six wide field required">
                         <label class="custom-label-w-10">หน่วยรับตรวจ </label>
-                        <select class="ui dropdown" [ngModel]="selectedProduct" (ngModelChange)="onChange($event)">
+                        <select class="ui dropdown ai" [ngModel]="selectedProduct" (ngModelChange)="onChange($event)">
                             <option *ngFor="let item of productList; index as i;" value="{{item.value}}">{{item.value}}</option>
                         </select>
                     </div>
@@ -1320,7 +1320,7 @@
             <div class="inline fields">
                 <div class="eight wide field ">
                     <label class="custom-label-w-15">สินค้า/บริการ</label>
-                    <select id="idint" class="ui dropdown">
+                    <select id="idint" class="ui dropdown ai">
                         <option value="0">สุราแช่</option>
                         <option value="1">สุราแช่ชุมชน</option>
                         <option value="2">สุราแช่ชุมชน</option>
@@ -1335,7 +1335,7 @@
             <div class="inline fields">
                 <div class="eight wide field ">
                     <label class="custom-label-w-15">รหัส</label>
-                    <select id="id" class="ui dropdown">
+                    <select id="id" class="ui dropdown ai">
                         <option value="0">ภาษีสุรา ยาสูบ เครื่องดื่ม</option>
                         <option value="1">ภาษีอื่น(นอกจากสุรา ยาสูบ เครื่องดื่ม)</option>
                         <option value="2">รายได้อื่นนอกจากภาษี</option>

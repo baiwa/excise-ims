@@ -19,7 +19,7 @@
                     </div>
                     <div class="six wide field required">
                         <label class="custom-label-w-10">หน่วยรับตรวจ </label>
-                        <select class="ui dropdown" [ngModel]="selectedProduct" (ngModelChange)="onChange($event)">
+                        <select class="ui dropdown ai" [ngModel]="selectedProduct" (ngModelChange)="onChange($event)">
                             <option *ngFor="let item of productList; index as i;" value="{{item.value}}">{{item.value}}</option>
                         </select>
                     </div>

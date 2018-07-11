@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
+declare var $: any;
 @Component({
   selector: "app-tax-audit-reporting",
   templateUrl: "./tax-audit-reporting.component.html",
@@ -63,7 +64,10 @@ export class TaxAuditReportingComponent implements OnInit {
     this.selectedTop = ""; // ''
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
+  }
 
   onSelectDoc = event => {
     this.topic = this.topics[event.target.value];

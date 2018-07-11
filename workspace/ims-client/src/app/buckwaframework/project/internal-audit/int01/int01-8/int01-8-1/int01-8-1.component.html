@@ -1,195 +1,275 @@
 <div class="ui grid">
-    <div class="sixteen wide column">
-      <h2 class="ui header">ค้นหากระดาษทำการ</h2>
-  
-      <div class="ui top attached header">
-        <span>ค้นหากระดาษทำการ </span>
-      </div>
-  
-      <div class="ui attached segment">
-        <div class="ui form">
-          <div class="inline fields">
-            <div class="eight wide field">
-              <label class="custom-label-w-25">เลขที่กระดาษทำการ</label>
-              <input type="text" placeholder="" value="">
-            </div>
-          </div>
-  
-          <div class="inline fields">
-            <div class="eight wide field">
-              <label class="custom-label-w-25">หน่วยรับตรวจ</label>
-              <select name="selectArea" id="selectArea" class="ui dropdown">
-                <option *ngFor="let item of areaList; index as i;" value="{{i+1}}">{{item.value}}</option>
-              </select>
-            </div>
-          </div>
-  
-          <div class="inline fields">
-            <div class="eight wide field">
-              <label class="custom-label-w-25">ประเภทกระดาษทำการ</label>
-              <select name="selectSubArea" id="selectSubArea" class="ui dropdown">
-                <option *ngFor="let item of subAreaList; index as i;" value="{{i+1}}">{{item.value}}</option>
-              </select>
-            </div>
-          </div>
-  
-          <div class="inline fields">
-            <div class="eight wide field">
-              <label class="custom-label-w-25">ผู้ตรวจ</label>
-              <input type="text" placeholder="" value="">
-            </div>
-          </div>
-  
-          <div class="inline fields">
-            <div class="nine wide field">
-              <label class="custom-label-w-20" style="margin-right: 5%;">วันที่</label>
-              <div class="seven wide field">
-                <div class="ui icon input">
-                  <input type="text" placeholder="MM/YYYY" value="09/2560">
-                  <i class="add to calendar icon"></i>
-                </div>
-              </div>
-              <div class="eight wide field">
-                <label>ถึง</label>
-                <div class="ui icon input">
-                  <input type="text" placeholder="MM/YYYY" value="10/2560">
-                  <i class="add to calendar icon"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-  
-        <div class="ui center aligned grid">
-          <div class="eight wide column">
-            <button class="ui mini primary button width-100">
-              <i class="search icon"></i>
-              ค้นหา
-            </button>
-            <button class="ui mini button width-100">
-              <i class="refresh icon"></i>
-              ล้างข้อมูล
-            </button>
-          </div>
-        </div>
-      </div>        
+  <div class="sixteen wide column">
+    <h2 class="ui header">ค้นหากระดาษทำการ</h2>
 
-      <div class="ui segment">
-          <table id="table1" class="ui small celled table">
-            <thead>
-              <tr style="text-align: center;">
-                <th>ลำดับที่</th>
-                <th>เลขที่กระดาษทำการ</th>
-                <th>ประเภทกระดาษทำการ</th>
-                <th>วันที่</th>
-                <th colspan="4">Action</th>
-              </tr>
-            </thead>
-            <tbody>              
-                        <tr>
-                            <td>1</td>
-                            <td>R2560100001</td>                      
-                            <td>กระดาษทำการภาษีสรรพสามิต</td>                         
-                            <td>17 พฤษจิกายน 2560</td>                            
-                            <td><a>พิมพ์</a></td>
-                            <td><a>ส่งออก</a></td>
-                            <td><a>แก้ไข</a></td>
-                            <td><a>ลบ</a></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>R2560100002</td>                            
-                            <td>กระดาษทำการภาษีสรรพสามิต</td>                            
-                            <td>17 พฤษจิกายน 2560</td>                            
-                            <td><a>พิมพ์</a></td>
-                            <td><a>ส่งออก</a></td>
-                            <td><a>แก้ไข</a></td>
-                            <td><a>ลบ</a></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>R2560100003</td>                            
-                            <td>กระดาษทำการภาษีสรรพสามิต</td>                            
-                            <td>17 พฤษจิกายน 2560</td>                            
-                            <td><a>พิมพ์</a></td>
-                            <td><a>ส่งออก</a></td>
-                            <td><a>แก้ไข</a></td>
-                            <td><a>ลบ</a></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>R2560100004</td>                            
-                            <td>กระดาษทำการภาษีสรรพสามิต</td>                            
-                            <td>17 พฤษจิกายน 2560</td>                            
-                            <td><a>พิมพ์</a></td>
-                            <td><a>ส่งออก</a></td>
-                            <td><a>แก้ไข</a></td>
-                            <td><a>ลบ</a></td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>R2560100005</td>                            
-                            <td>กระดาษทำการใบอนุญาตสุรา ยาสูบ ไพ่</td>                            
-                            <td>17 พฤษจิกายน 2560</td>                            
-                            <td><a>พิมพ์</a></td>
-                            <td><a>ส่งออก</a></td>
-                            <td><a>แก้ไข</a></td>
-                            <td><a>ลบ</a></td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>R2560100006</td>                            
-                            <td>กระดาษทำการใบอนุญาตสุรา ยาสูบ ไพ่</td>                            
-                            <td>17 พฤษจิกายน 2560</td>                            
-                            <td><a>พิมพ์</a></td>
-                            <td><a>ส่งออก</a></td>
-                            <td><a>แก้ไข</a></td>
-                            <td><a>ลบ</a></td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>R2560100007</td>                            
-                            <td>กระดาษทำการใบอนุญาตสุรา ยาสูบ ไพ่</td>                           
-                            <td>17 พฤษจิกายน 2560</td>                            
-                            <td><a>พิมพ์</a></td>
-                            <td><a>ส่งออก</a></td>
-                            <td><a>แก้ไข</a></td>
-                            <td><a>ลบ</a></td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>R2560100008</td>                            
-                            <td>กระดาษทำการใบอนุญาตสุรา ยาสูบ ไพ่</td>                            
-                            <td>17 พฤษจิกายน 2560</td>                            
-                            <td><a>พิมพ์</a></td>
-                            <td><a>ส่งออก</a></td>
-                            <td><a>แก้ไข</a></td>
-                            <td><a>ลบ</a></td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>R2560100009</td>                            
-                            <td>กระดาษทำการค่าปรับเปรียบเทียบคดี</td>                            
-                            <td>17 พฤษจิกายน 2560</td>                            
-                            <td><a>พิมพ์</a></td>
-                            <td><a>ส่งออก</a></td>
-                            <td><a>แก้ไข</a></td>
-                            <td><a>ลบ</a></td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>R2560100010</td>                            
-                            <td>กระดาษทำการค่าปรับเปรียบเทียบคดี</td>                            
-                            <td>17 พฤษจิกายน 2560</td>                            
-                            <td><a>พิมพ์</a></td>
-                            <td><a>ส่งออก</a></td>
-                            <td><a>แก้ไข</a></td>
-                            <td><a>ลบ</a></td>
-                        </tr>
-                
-            </tbody>
-          </table>
-        </div>
-
+    <div class="ui top attached header">
+      <span>ค้นหากระดาษทำการ </span>
     </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">เลขที่กระดาษทำการ</label>
+            <input type="text" placeholder="" value="">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">หน่วยรับตรวจ</label>
+            <select name="selectArea" id="selectArea" class="ui dropdown ai">
+              <option *ngFor="let item of areaList; index as i;" value="{{i+1}}">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">ประเภทกระดาษทำการ</label>
+            <select name="selectSubArea" id="selectSubArea" class="ui dropdown ai">
+              <option *ngFor="let item of subAreaList; index as i;" value="{{i+1}}">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">ผู้ตรวจ</label>
+            <input type="text" placeholder="" value="">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="nine wide field">
+            <label class="custom-label-w-20" style="margin-right: 5%;">วันที่</label>
+            <div class="seven wide field">
+              <div class="ui icon input">
+                <input type="text" placeholder="MM/YYYY" value="09/2560">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+            <div class="eight wide field">
+              <label>ถึง</label>
+              <div class="ui icon input">
+                <input type="text" placeholder="MM/YYYY" value="10/2560">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui center aligned grid">
+        <div class="eight wide column">
+          <button class="ui mini primary button width-100">
+            <i class="search icon"></i>
+            ค้นหา
+          </button>
+          <button class="ui mini button width-100">
+            <i class="refresh icon"></i>
+            ล้างข้อมูล
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui segment">
+      <table id="table1" class="ui small celled table">
+        <thead>
+          <tr style="text-align: center;">
+            <th>ลำดับที่</th>
+            <th>เลขที่กระดาษทำการ</th>
+            <th>ประเภทกระดาษทำการ</th>
+            <th>วันที่</th>
+            <th colspan="4">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>R2560100001</td>
+            <td>กระดาษทำการภาษีสรรพสามิต</td>
+            <td>17 พฤษจิกายน 2560</td>
+            <td>
+              <a>พิมพ์</a>
+            </td>
+            <td>
+              <a>ส่งออก</a>
+            </td>
+            <td>
+              <a>แก้ไข</a>
+            </td>
+            <td>
+              <a>ลบ</a>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>R2560100002</td>
+            <td>กระดาษทำการภาษีสรรพสามิต</td>
+            <td>17 พฤษจิกายน 2560</td>
+            <td>
+              <a>พิมพ์</a>
+            </td>
+            <td>
+              <a>ส่งออก</a>
+            </td>
+            <td>
+              <a>แก้ไข</a>
+            </td>
+            <td>
+              <a>ลบ</a>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>R2560100003</td>
+            <td>กระดาษทำการภาษีสรรพสามิต</td>
+            <td>17 พฤษจิกายน 2560</td>
+            <td>
+              <a>พิมพ์</a>
+            </td>
+            <td>
+              <a>ส่งออก</a>
+            </td>
+            <td>
+              <a>แก้ไข</a>
+            </td>
+            <td>
+              <a>ลบ</a>
+            </td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>R2560100004</td>
+            <td>กระดาษทำการภาษีสรรพสามิต</td>
+            <td>17 พฤษจิกายน 2560</td>
+            <td>
+              <a>พิมพ์</a>
+            </td>
+            <td>
+              <a>ส่งออก</a>
+            </td>
+            <td>
+              <a>แก้ไข</a>
+            </td>
+            <td>
+              <a>ลบ</a>
+            </td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>R2560100005</td>
+            <td>กระดาษทำการใบอนุญาตสุรา ยาสูบ ไพ่</td>
+            <td>17 พฤษจิกายน 2560</td>
+            <td>
+              <a>พิมพ์</a>
+            </td>
+            <td>
+              <a>ส่งออก</a>
+            </td>
+            <td>
+              <a>แก้ไข</a>
+            </td>
+            <td>
+              <a>ลบ</a>
+            </td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>R2560100006</td>
+            <td>กระดาษทำการใบอนุญาตสุรา ยาสูบ ไพ่</td>
+            <td>17 พฤษจิกายน 2560</td>
+            <td>
+              <a>พิมพ์</a>
+            </td>
+            <td>
+              <a>ส่งออก</a>
+            </td>
+            <td>
+              <a>แก้ไข</a>
+            </td>
+            <td>
+              <a>ลบ</a>
+            </td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>R2560100007</td>
+            <td>กระดาษทำการใบอนุญาตสุรา ยาสูบ ไพ่</td>
+            <td>17 พฤษจิกายน 2560</td>
+            <td>
+              <a>พิมพ์</a>
+            </td>
+            <td>
+              <a>ส่งออก</a>
+            </td>
+            <td>
+              <a>แก้ไข</a>
+            </td>
+            <td>
+              <a>ลบ</a>
+            </td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>R2560100008</td>
+            <td>กระดาษทำการใบอนุญาตสุรา ยาสูบ ไพ่</td>
+            <td>17 พฤษจิกายน 2560</td>
+            <td>
+              <a>พิมพ์</a>
+            </td>
+            <td>
+              <a>ส่งออก</a>
+            </td>
+            <td>
+              <a>แก้ไข</a>
+            </td>
+            <td>
+              <a>ลบ</a>
+            </td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>R2560100009</td>
+            <td>กระดาษทำการค่าปรับเปรียบเทียบคดี</td>
+            <td>17 พฤษจิกายน 2560</td>
+            <td>
+              <a>พิมพ์</a>
+            </td>
+            <td>
+              <a>ส่งออก</a>
+            </td>
+            <td>
+              <a>แก้ไข</a>
+            </td>
+            <td>
+              <a>ลบ</a>
+            </td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>R2560100010</td>
+            <td>กระดาษทำการค่าปรับเปรียบเทียบคดี</td>
+            <td>17 พฤษจิกายน 2560</td>
+            <td>
+              <a>พิมพ์</a>
+            </td>
+            <td>
+              <a>ส่งออก</a>
+            </td>
+            <td>
+              <a>แก้ไข</a>
+            </td>
+            <td>
+              <a>ลบ</a>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
   </div>
+</div>

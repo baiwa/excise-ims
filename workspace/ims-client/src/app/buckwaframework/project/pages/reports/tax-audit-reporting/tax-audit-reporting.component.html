@@ -11,7 +11,7 @@
                         <div class="inline fields">
                             <div class="eight wide field">
                                 <label class="custom-label-w-20" style="text-align: right">ประเภทเอกสาร</label>
-                                <select style="width: 100%" id="doc" name="doc" class="ui search dropdown" (change)="onSelectDoc($event)" required>
+                                <select style="width: 100%" id="doc" name="doc" class="ui search dropdown ai" (change)="onSelectDoc($event)" required>
                                     <option value="" style="color: grey">เลือกเอกสาร</option>
                                     <option *ngFor="let typeDoc of typeDocs; let i = index" value="{{i}}">
                                         {{typeDoc}}
@@ -20,7 +20,7 @@
                             </div>
                             <div class="eight wide field">
                                 <label class="custom-label-w-18" style="text-align: right">เรื่อง</label>
-                                <select style="width: 100%" id="topic" name="topic" class="ui search dropdown" (change)="onSelectTop($event)" required>
+                                <select style="width: 100%" id="topic" name="topic" class="ui search dropdown ai" (change)="onSelectTop($event)" required>
                                     <option value="" style="color: grey">เลือกเรื่อง</option>
                                     <option *ngFor="let top of topic; let i = index" value="{{i}}">
                                         {{top}}

@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 declare var $: any;
 @Component({
-  selector: 'app-int08-1-3',
-  templateUrl: './int08-1-3.component.html',
-  styleUrls: ['./int08-1-3.component.css']
+  selector: "app-int08-1-3",
+  templateUrl: "./int08-1-3.component.html",
+  styleUrls: ["./int08-1-3.component.css"]
 })
 export class Int0813Component implements OnInit {
-
-  private showData: boolean = false;
+  showData: boolean = false;
   public data: String[];
 
   constructor() {
-    this.data =  [
+    this.data = [
       "ประเมินความเสี่ยงโครงการ - งบประมาณ",
       "ประเมินความเสี่ยงโครงการ - ประสิทธิภาพ",
       "ประเมินความเสี่ยงโครงการ - รวม",
@@ -25,12 +24,13 @@ export class Int0813Component implements OnInit {
       "ประเมินความเสี่ยงภาคพื้นที่ - ผลการปราบปราม (รวม)",
       "ประเมินความเสี่ยงภาคพื้นที่ - การเงินและบัญชี",
       "ประเมินความเสี่ยงภาคพื้นที่ - ควบคุมภายใน",
-      "ประเมินความเสี่ยงภาคพื้นที่ - รวม",
+      "ประเมินความเสี่ยงภาคพื้นที่ - รวม"
     ];
   }
 
   ngOnInit() {
-
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
   }
 
   uploadData() {
@@ -42,37 +42,36 @@ export class Int0813Component implements OnInit {
   }
 
   ngAfterViewInit() {
-    $('#select1').hide();
-    $('#select2').hide();
-    $('#select3').hide();
-    $('#selectCondition1').dropdown();
-    $('#selectCondition2').dropdown();
-    $('#selectCondition3').dropdown();
-    $('#selectColor1').dropdown();
-    $('#selectColor2').dropdown();
-    $('#selectColor3').dropdown();
+    $("#select1").hide();
+    $("#select2").hide();
+    $("#select3").hide();
+    $("#selectCondition1").dropdown();
+    $("#selectCondition2").dropdown();
+    $("#selectCondition3").dropdown();
+    $("#selectColor1").dropdown();
+    $("#selectColor2").dropdown();
+    $("#selectColor3").dropdown();
   }
 
   popupEditData() {
-    $('#select1').show();
-    $('#select2').show();
-    $('#select3').show();
-    $('#modalInt0813').modal('show');
+    $("#select1").show();
+    $("#select2").show();
+    $("#select3").show();
+    $("#modalInt0813").modal("show");
   }
 
   closePopupEdit() {
-    $('#select1').hide();
-    $('#select2').hide();
-    $('#select3').hide();
-    $('#modalInt0813').modal('hide');
+    $("#select1").hide();
+    $("#select2").hide();
+    $("#select3").hide();
+    $("#modalInt0813").modal("hide");
   }
 
   popupWeightData() {
-    $('#modalInt0813-weight-data').modal('show');
+    $("#modalInt0813-weight-data").modal("show");
   }
 
   clearPopupWeightData() {
-    $('#modalInt0813-weight-data').modal('hide');
+    $("#modalInt0813-weight-data").modal("hide");
   }
-
 }

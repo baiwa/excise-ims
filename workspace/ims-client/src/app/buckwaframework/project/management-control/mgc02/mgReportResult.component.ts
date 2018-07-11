@@ -28,6 +28,8 @@ export class MgReportResultComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     // calendar
     $("#year").calendar({
       maxDate: new Date(),

@@ -11,7 +11,7 @@
         <div class="inline fields">
           <div class="eight wide field">
             <label class="custom-label-w-25">สำนักงานสรรพสามิตภาค</label>
-            <select name="selectZone" id="selectZone" class="ui dropdown">
+            <select name="selectZone" id="selectZone" class="ui dropdown ai">
               <option *ngFor="let item of zoneList; index as i;" value="{{i+1}}">{{item.value}}</option>
             </select>
           </div>
@@ -20,7 +20,7 @@
         <div class="inline fields">
           <div class="eight wide field">
             <label class="custom-label-w-25">สำนักงานสรรพสามิตพื้นที่</label>
-            <select name="selectArea" id="selectArea" class="ui dropdown">
+            <select name="selectArea" id="selectArea" class="ui dropdown ai">
               <option *ngFor="let item of areaList; index as i;" value="{{i+1}}">{{item.value}}</option>
             </select>
           </div>
@@ -29,7 +29,7 @@
         <div class="inline fields">
           <div class="eight wide field">
             <label class="custom-label-w-25">สำนัักงานสรรพสามิตพื้นที่สาขา</label>
-            <select name="selectSubArea" id="selectSubArea" class="ui dropdown">
+            <select name="selectSubArea" id="selectSubArea" class="ui dropdown ai">
               <option *ngFor="let item of subAreaList; index as i;" value="{{i+1}}">{{item.value}}</option>
             </select>
           </div>
@@ -38,7 +38,7 @@
         <div class="inline fields">
           <div class="eight wide field">
             <label class="custom-label-w-25">ผู้ประกอบการ</label>
-            <select name="selectCompany" id="selectCompany" class="ui dropdown">
+            <select name="selectCompany" id="selectCompany" class="ui dropdown ai">
               <option *ngFor="let item of companyList; index as i;" value="{{i+1}}">{{item.value}}</option>
             </select>
           </div>

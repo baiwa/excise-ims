@@ -2,8 +2,8 @@
   <div class="twelve wide column">
 
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>รายงานผลการตรวจปฏิบัติการ												
-											
+      <span>รายงานผลการตรวจปฏิบัติการ
+
       </span>
     </div>
 
@@ -31,7 +31,7 @@
                   <label>พิกัดสินค้า : </label>
                 </div>
                 <div class="five wide field">
-                  <select id="target" name="target" style="width: 100%" class="ui fluid search dropdown" [attr.required]="true">
+                  <select id="target" name="target" style="width: 100%" class="ui fluid search dropdown ai" [attr.required]="true">
                     <option value="">เลือกพิกัด</option>
                     <option value="ทั้งหมด">ทั้งหมด</option>
                     <option value="สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน">สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน</option>
@@ -75,7 +75,10 @@
   <div class="twelve wide column" *ngIf="toggled">
 
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>รายงานผลการตรวจภาษี ประจำปีงบประมาณ <span style="color: red">{{year}}</span> พิกัดสินค้า<span style="color: red">{{target}}</span></span>
+      <span>รายงานผลการตรวจภาษี ประจำปีงบประมาณ
+        <span style="color: red">{{year}}</span> พิกัดสินค้า
+        <span style="color: red">{{target}}</span>
+      </span>
     </div>
 
 

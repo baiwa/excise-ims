@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 declare var $: any;
 @Component({
-  selector: 'int05-4',
-  templateUrl: './int05-4.component.html',
-  styleUrls: ['./int05-4.component.css']
+  selector: "int05-4",
+  templateUrl: "./int05-4.component.html",
+  styleUrls: ["./int05-4.component.css"]
 })
 export class Int054Component implements OnInit {
-  private showData: boolean = false;
-  constructor() { }
-
+  showData: boolean = false;
+  constructor() {}
 
   uploadFile() {
     this.showData = true;
@@ -17,29 +16,29 @@ export class Int054Component implements OnInit {
   clearFile() {
     this.showData = false;
   }
- 
+
   ngOnInit() {
-    $('#selectTrading').hide();
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
+    $("#selectTrading").hide();
   }
   ngAfterViewInit() {
-    $('#export .dropdown')
-      .dropdown({
-        transition: 'drop'
-      });
+    $("#export .dropdown").dropdown({
+      transition: "drop"
+    });
   }
- 
 
   addData() {
-    $('#modalInt054').modal('show');
-    $('#selectTrading').show();
+    $("#modalInt054").modal("show");
+    $("#selectTrading").show();
   }
 
   editData() {
-    $('#modalInt054').modal('show');
-    $('#selectTrading').show();
+    $("#modalInt054").modal("show");
+    $("#selectTrading").show();
   }
 
   closeModal() {
-    $('#modalInt054').modal('hide');
+    $("#modalInt054").modal("hide");
   }
 }
