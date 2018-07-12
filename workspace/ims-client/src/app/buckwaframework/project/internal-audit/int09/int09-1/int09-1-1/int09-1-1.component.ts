@@ -75,6 +75,8 @@ export class Int0911Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     this.headerId = this.route.snapshot.queryParams["id"];
     if (this.headerId !== undefined) {
       const HEADER_URL = `ia/int09/lists/${this.headerId}`;
@@ -154,12 +156,12 @@ export class Int0911Component implements OnInit, AfterViewInit {
   }
 
   onSelectDoc = event => {
-    this.topic = this.topics[event.target.value];
-    this.selectDoc = this.typeDocs[event.target.value];
+    this.topic = this.topics[event.target.value - 1];
+    this.selectDoc = this.typeDocs[event.target.value - 1];
   };
 
   onSelectTop = event => {
-    this.selectTop = this.topic[event.target.value];
+    this.selectTop = this.topic[event.target.value - 1];
   };
 
   onSubmit = () => {
@@ -261,8 +263,8 @@ export class Int0911Component implements OnInit, AfterViewInit {
     data.name = name.value;
     data.lastName = lastName.value;
     data.position = position.value;
-    data.category = parseInt(category.value);
-    data.degree = parseInt(degree.value);
+    data.category = parseInt(category.value) - 1;
+    data.degree = parseInt(degree.value) - 1;
     data.allowanceDate = parseInt(allowanceDate.value);
     data.allowanceCost =
       Prices(data.category, data.degree, "allowance") *
@@ -332,8 +334,12 @@ export class Int0911Component implements OnInit, AfterViewInit {
     this.data = new TravelCostDetail();
     this.data = data;
 
-    this.onSelectDoc({ target: { value: this.detail[index].category } });
-    this.onSelectTop({ target: { value: this.detail[index].degree } });
+    this.onSelectDoc({
+      target: { value: parseInt(this.detail[index].category.toString()) + 1 }
+    });
+    this.onSelectTop({
+      target: { value: parseInt(this.detail[index].degree.toString()) + 1 }
+    });
   }
 
   clearData() {

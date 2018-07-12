@@ -77,6 +77,9 @@ export class AddExternalDataComponent implements OnInit {
         })
         .then(() => {
           this.directAccess(true);
+        })
+        .then(() => {
+          $(".ui.dropdown").dropdown();
         });
     }
   }

@@ -22,7 +22,7 @@
               หน่วยงาน :
             </label>
           </div>
-          <div class="eight  wide field">
+          <div class="eight wide field">
             <input type="text" [(ngModel)]="hdr.departmentName" name="departmentName" required>
           </div>
         </div>
@@ -91,7 +91,7 @@
           <div class="two wide field">
             <label>ตำแหน่ง :</label>
           </div>
-          <div class="four  wide field">
+          <div class="four wide field">
             <input type="text" [ngModel]="data.position" id="position" name="position" required>
           </div>
         </div>
@@ -99,20 +99,20 @@
         <div class="inline fields">
           <div class="six wide field">
             <label class="custom-label-w-19" style="text-align: right">ประเภท</label>
-            <select style="width: 100%" id="category" name="category" class="ui search dropdown" [ngModel]="data.category" (change)="onSelectDoc($event)"
+            <select style="width: 100%" id="category" name="category" class="ui search dropdown ai" [ngModel]="data.category" (change)="onSelectDoc($event)"
               required>
               <option value="" style="color: grey">เลือกประเภทเอกสาร</option>
-              <option *ngFor="let typeDoc of typeDocs; let i = index" value="{{i}}">
+              <option *ngFor="let typeDoc of typeDocs; let i = index" value="{{i+1}}">
                 {{typeDoc}}
               </option>
             </select>
           </div>
           <div class="six wide field">
             <label class="custom-label-w-19" style="text-align: right">ระดับ</label>
-            <select style="width: 100%" id="degree" name="degree" class="ui search dropdown" [ngModel]="data.degree" (change)="onSelectTop($event)"
+            <select style="width: 100%" id="degree" name="degree" class="ui search dropdown ai" [ngModel]="data.degree" (change)="onSelectTop($event)"
               required>
               <option value="" style="color: grey">เลือกระดับ</option>
-              <option *ngFor="let top of topic; let i = index" value="{{i}}">
+              <option *ngFor="let top of topic; let i = index" value="{{i+1}}">
                 {{top}}
               </option>
             </select>
