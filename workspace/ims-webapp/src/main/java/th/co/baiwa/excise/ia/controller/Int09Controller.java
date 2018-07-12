@@ -92,7 +92,8 @@ public class Int09Controller {
 	@ResponseBody
 	public void test(@PathVariable("txt") String txt,@PathVariable("name") String name, HttpServletResponse response) throws JRException, IOException {
 		// Get Compiled Report File
-		File reportFile = new File("src/main/resources/reports/a.jrxml");
+		ClassLoader classLoader = getClass().getClassLoader();
+		File reportFile = new File(classLoader.getResource("reports/a.jrxml").getFile());
 		FileInputStream inputStream = new FileInputStream(reportFile);
 		
 		File f = new File("c:/out"); // initial file (folder)
