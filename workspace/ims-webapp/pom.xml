@@ -35,6 +35,7 @@
 		<swagger.version>2.7.0</swagger.version>
 		<jasperreports.version>6.5.1</jasperreports.version>
 		<itext.version>2.1.7</itext.version>
+		<apache.cxf.version>3.2.1</apache.cxf.version>
 		<!-- Plugin Version -->
 		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
 	</properties>
@@ -297,6 +298,26 @@
 			</exclusions>
 		</dependency>
 		
+		<!-- Apache CXF Spring Boot Starter JAX-WS -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+			<version>${apache.cxf.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.validation</groupId>
+					<artifactId>validation-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<!-- Apache CXF Advanced Logging Feature -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-features-logging</artifactId>
+			<version>${apache.cxf.version}</version>
+		</dependency>
+		
 	</dependencies>
 	
 	<repositories>
@@ -388,6 +409,37 @@
 						<nonFilteredFileExtension>xls</nonFilteredFileExtension>
 					</nonFilteredFileExtensions>
 				</configuration>
+			</plugin>
+			
+			<!-- Apache CXF Code Generation Maven2 Plugins -->
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+				<version>${apache.cxf.version}</version>
+				<executions>
+					<execution>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/test/resources/wsdl/CurrentDate.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-verbose</extraarg>
+										<extraarg>-p</extraarg><!-- targetNamespace -->
+										<extraarg>http://ws.baiwa.th.com=th.co.baiwa.exampleproject.ws.consumer.currentdate.operation</extraarg>
+										<extraarg>-wsdlLocation</extraarg>
+										<extraarg>classpath:wsdl/CurrentDate.wsdl</extraarg>
+									</extraargs>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			
 		</plugins>
