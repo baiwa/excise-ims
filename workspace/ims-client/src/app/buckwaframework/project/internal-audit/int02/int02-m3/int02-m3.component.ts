@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 
 var jQuery: any;
 declare var $: any;
@@ -8,8 +8,12 @@ declare var $: any;
   templateUrl: "./int02-m3.component.html",
   styleUrls: ["./int02-m3.component.css"]
 })
-export class Int02M3Component implements OnInit {
+export class Int02M3Component implements OnInit, OnDestroy {
   constructor() {}
+
+  ngOnDestroy() {
+    $(".ui.modal.show").remove();
+  }
 
   ngOnInit() {
     $("#showList").click(function() {

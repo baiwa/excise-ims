@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 
 var jQuery: any;
 declare var $: any;
@@ -8,7 +8,7 @@ declare var $: any;
   templateUrl: "./int02-m4.component.html",
   styleUrls: ["./int02-m4.component.css"]
 })
-export class Int02M4Component implements OnInit {
+export class Int02M4Component implements OnInit, OnDestroy {
   topics: any[][];
   province: any[];
 
@@ -21,6 +21,10 @@ export class Int02M4Component implements OnInit {
     ];
 
     this.province = ["สสพ.แม่ฮ่องสอน", "สสพ.นนทบุรี", "สสพ.ลำปาง"];
+  }
+
+  ngOnDestroy() {
+    $(".ui.modal.show").remove();
   }
 
   ngOnInit() {
