@@ -55,7 +55,6 @@ public class Int02Controller {
 		logger.info("queryQtnReportHeaderByCriteria");
 		return qtnReportHeaderService.findByCriteriaForDatatable(new QtnReportHeader(), dataTableRequest);
 	}
-
 	@PostMapping("/deleteQtnReportHeaderByCriteria")
 	@ResponseBody
 	public Message deleteQtnReportHeaderByCriteria(QtnReportHeader qtnReportHeader) {

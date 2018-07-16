@@ -16,7 +16,6 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.ia.Int023MappingVO;
 import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireDetailDao;
-import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
 
 @Service

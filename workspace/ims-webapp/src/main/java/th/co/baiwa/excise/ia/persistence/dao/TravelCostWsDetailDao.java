@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import th.co.baiwa.excise.ia.persistence.entity.TravelCostWorkSheetHeader;
 import th.co.baiwa.excise.ia.persistence.entity.TravelCostWsDetail;
 import th.co.baiwa.excise.utils.BeanUtils;
 
