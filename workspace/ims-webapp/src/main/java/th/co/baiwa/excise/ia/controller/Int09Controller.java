@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.excise.ia.persistence.bean.ContractBean;
 import th.co.baiwa.excise.ia.persistence.entity.TravelCostWorkSheetHeader;
 import th.co.baiwa.excise.ia.persistence.entity.TravelCostWsIntegrate;
 import th.co.baiwa.excise.ia.service.Int09Service;
@@ -67,11 +68,27 @@ public class Int09Controller {
 		return travelCostWorkSheetHeader;
 	}
 
-	@GetMapping("/pdf/{id}")
+//	@GetMapping("/pdf/{id}")
+//	@ResponseBody
+//	public void pdfSomething(@PathVariable("id") String id, HttpServletResponse response) throws Exception {
+//
+//		byte[] reportFile = int09Service.contractToPDF("flame1"); // null
+//	
+//		response.setContentType("application/pdf");
+//		response.addHeader("Content-Disposition", "inline;filename=" + "Example.pdf");
+//		response.setContentLength(reportFile.length);
+//
+//		OutputStream responseOutputStream = response.getOutputStream();
+//		for (byte bytes : reportFile) {
+//			responseOutputStream.write(bytes);
+//		}
+//	}
+	
+	@PostMapping("/pdf/contract")
 	@ResponseBody
-	public void pdfSomething(@PathVariable("id") String id, HttpServletResponse response) throws Exception {
+	public void pdfContract(@RequestBody ContractBean contract, HttpServletResponse response) throws Exception {
 
-		byte[] reportFile = int09Service.contractToPDF("flame1"); // null
+		byte[] reportFile = int09Service.contractToPDF("flame1", contract); // null
 	
 		response.setContentType("application/pdf");
 		response.addHeader("Content-Disposition", "inline;filename=" + "Example.pdf");
@@ -81,6 +98,6 @@ public class Int09Controller {
 		for (byte bytes : reportFile) {
 			responseOutputStream.write(bytes);
 		}
-	}
 
+	}
 }

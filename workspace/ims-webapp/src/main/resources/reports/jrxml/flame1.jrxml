@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="flame1" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="30" bottomMargin="30" uuid="a53c8bc3-6901-4197-8e75-415c6474949e">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -11,12 +11,25 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<parameter name="positionName" class="java.lang.String"/>
-	<parameter name="name" class="java.lang.String"/>
-	<parameter name="textEx01" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+	<field name="loanName" class="java.lang.String"/>
+	<field name="sendTo" class="java.lang.String"/>
+	<field name="rentCost" class="java.math.BigDecimal"/>
+	<field name="allowanceCost" class="java.math.BigDecimal"/>
+	<field name="travelCost" class="java.math.BigDecimal"/>
+	<field name="otherCost" class="java.math.BigDecimal"/>
+	<field name="sumCostTxt" class="java.lang.String"/>
+	<field name="sumCost" class="java.math.BigDecimal"/>
+	<field name="positionName" class="java.lang.String"/>
+	<field name="loanFrom" class="java.lang.String"/>
+	<field name="day" class="java.math.BigDecimal"/>
+	<field name="presentTo" class="java.lang.String"/>
+	<field name="numberId" class="java.lang.String"/>
+	<field name="dateFixed" class="java.util.Date"/>
+	<field name="locateAt" class="java.lang.String"/>
+	<field name="reasonTxt" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -46,12 +59,12 @@
 					<textElement>
 						<font fontName="TH Sarabun New" size="13"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{sendTo}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="331" y="41" width="60" height="20" uuid="c4c5e16b-c6da-4470-828c-b18c4a2c29be"/>
 					<textElement>
-						<font fontName="TH Sarabun New" size="13"/>
+						<font fontName="TH Sarabun New" size="15"/>
 					</textElement>
 					<text><![CDATA[(๑)]]></text>
 				</staticText>
@@ -76,6 +89,18 @@
 					<text><![CDATA[             วันครบกำหนด
 .................................................]]></text>
 				</staticText>
+				<textField>
+					<reportElement x="28" y="1" width="104" height="18" uuid="07070389-aef7-4877-8e39-4fdabbb9aeb6"/>
+					<textElement>
+						<font fontName="TH Sarabun New" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{numberId}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="18" y="41" width="107" height="26" uuid="e56050c0-d15a-4e9d-aca9-42a62acfefdc"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{dateFixed}]]></textFieldExpression>
+				</textField>
 			</frame>
 		</band>
 	</title>
@@ -98,7 +123,7 @@
 					<textElement>
 						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{loanName}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="242" y="1" width="59" height="28" uuid="03a76157-a567-4938-b9b9-109ccdbe65e8"/>
@@ -110,9 +135,9 @@
 				<textField isBlankWhenNull="true">
 					<reportElement x="301" y="1" width="118" height="28" uuid="2ad16b65-4b5b-4de5-b13b-bcc4f6ef9cb2"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="TH Sarabun New"/>
+						<font fontName="TH Sarabun New" size="18"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{positionName}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{positionName}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="418" y="0" width="50" height="29" uuid="8300b6f0-6f2f-47fc-94f5-b4329b611815"/>
@@ -122,33 +147,50 @@
 					<text><![CDATA[สังกัด]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="11" y="29" width="128" height="32" uuid="3e50212d-1279-48e6-b6ad-e3ad930c687d"/>
+					<reportElement x="11" y="29" width="160" height="32" uuid="3e50212d-1279-48e6-b6ad-e3ad930c687d"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="TH Sarabun New" size="16"/>
+						<font fontName="TH Sarabun New" size="13"/>
 					</textElement>
 					<text><![CDATA[มีความประสงค์ขอยืมเงินจาก]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="139" y="29" width="111" height="32" uuid="cffdaba0-3037-4745-9ea3-fb604d4438e5"/>
+					<reportElement x="171" y="30" width="111" height="32" uuid="cffdaba0-3037-4745-9ea3-fb604d4438e5"/>
+					<box>
+						<bottomPen lineWidth="1.25" lineStyle="Dotted"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="TH Sarabun New" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{loanFrom}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="11" y="61" width="299" height="28" uuid="bc4e7707-5b70-4cc0-b326-312f44c4b3a5"/>
+					<textElement>
+						<font fontName="TH Sarabun New" size="13"/>
+					</textElement>
+					<text><![CDATA[(๒) เพื่อเป็นค่าใช้จ่ายในการเดินทางไปราชการเพื่อจะ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="11" y="89" width="299" height="21" uuid="ca00ecd8-5a24-4069-8b29-5382fe3550ac"/>
+					<textElement>
+						<font fontName="TH Sarabun New" size="13"/>
+					</textElement>
+					<text><![CDATA[(๓) ดังรายระเอียดต่อไปนี้]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="448" y="1" width="87" height="28" uuid="b99fc3f2-ce75-47ec-8791-7f39de495f71"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="TH Sarabun New" size="15"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{locateAt}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="311" y="62" width="222" height="27" uuid="d22050bb-e948-412c-83f4-23cecef691ef"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{reasonTxt}]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement x="11" y="61" width="209" height="28" uuid="bc4e7707-5b70-4cc0-b326-312f44c4b3a5"/>
-					<textElement>
-						<font fontName="TH Sarabun New" size="16"/>
-					</textElement>
-					<text><![CDATA[(๒)เพื่อเป็นค่าใช้จ่ายในการเดินทางไปราชการ]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="11" y="89" width="128" height="30" uuid="ca00ecd8-5a24-4069-8b29-5382fe3550ac"/>
-					<textElement>
-						<font fontName="TH Sarabun New" size="16"/>
-					</textElement>
-					<text><![CDATA[(๓)ดังรายระเอียดต่อไปนี้]]></text>
-				</staticText>
 			</frame>
 		</band>
 	</pageHeader>
@@ -199,7 +241,7 @@
 					<textElement>
 						<font fontName="TH Sarabun New" size="13"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{sumCostTxt}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="292" y="97" width="80" height="19" uuid="65f2e129-e366-48b5-aedd-9ad4d2fc2c57"/>
@@ -219,28 +261,28 @@
 					<textElement>
 						<font fontName="TH Sarabun New"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{rentCost}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="57" y="53" width="80" height="24" uuid="4108a650-0486-46b7-976e-3533092239bc"/>
 					<textElement>
 						<font fontName="TH Sarabun New"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{travelCost}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="56" y="78" width="80" height="23" uuid="372fa60b-bf84-4bde-a7a7-8a10180cb9b6"/>
 					<textElement>
 						<font fontName="TH Sarabun New"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{otherCost}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="56" y="25" width="80" height="27" uuid="807c93b6-72e7-4057-8314-daa26efb05a5"/>
 					<textElement>
 						<font fontName="TH Sarabun New"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{allowanceCost}]]></textFieldExpression>
 				</textField>
 				<frame>
 					<reportElement x="0" y="101" width="156" height="29" uuid="5c3424ae-e71e-4751-b388-d896eda63f20"/>
@@ -252,7 +294,7 @@
 						<textElement>
 							<font fontName="TH Sarabun New"/>
 						</textElement>
-						<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{sumCost}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</frame>
@@ -278,7 +320,7 @@
 					<textElement>
 						<font fontName="TH Sarabun New"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{day}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="9" y="111" width="209" height="30" uuid="6ce15c8a-eb7f-49b7-a910-cbd334ef0bf7"/>
@@ -299,7 +341,7 @@
 					<textElement>
 						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{loanName}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="9" y="143" width="19" height="21" uuid="ef918c16-5e45-44aa-9f94-679a46e4c603"/>
@@ -333,7 +375,7 @@
 					<textElement verticalAlignment="Middle">
 						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{presentTo}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="249" y="1" width="49" height="30" uuid="cc1327a0-a90b-4b08-b33b-c9cc499ffb51"/>
@@ -354,7 +396,7 @@
 					<textElement verticalAlignment="Middle">
 						<font fontName="TH Sarabun New"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{sumCost}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="432" y="33" width="66" height="30" uuid="b76eed32-b347-4d7e-9126-997bd9c24047"/>

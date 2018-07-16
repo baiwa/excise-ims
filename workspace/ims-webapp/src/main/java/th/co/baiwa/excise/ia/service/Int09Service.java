@@ -22,6 +22,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.excise.ia.persistence.bean.ContractBean;
 import th.co.baiwa.excise.ia.persistence.bean.ExampleBean;
 import th.co.baiwa.excise.ia.persistence.dao.TravelCostWorkSheetHeaderDao;
 import th.co.baiwa.excise.ia.persistence.dao.TravelCostWsDetailDao;
@@ -127,25 +128,19 @@ public class Int09Service {
 		}
 	}
 	
-	public byte[] contractToPDF(String name) throws IOException, JRException {
+	public byte[] contractToPDF(String name, ContractBean contract) throws IOException, JRException {
 		String reportName = name != null ? name: "Example";
 
 		Map<String, Object> params = new HashMap<>();
 		params.put("name", "ผมชื่อ เฟรม แฟน น้องมุ๊ก ข้อความทดสอบ ");
 		params.put("positionName", "เทพพระเจ้า"); //ReportUtils.getResourceFile(PATH.IMAGE_PATH, "garuda-emblem.jpg")
 
-//		List<ExampleBean> exampleList = new ArrayList<>();
-//		ExampleBean exBean = null;
-//		for (int i = 0; i < 10; i++) {
-//			exBean = new ExampleBean();
-//			exBean.setData1(String.valueOf(i + 1));
-//			exBean.setData2(new BigDecimal(i + 1));
-//			exBean.setData3(new Date());
-//			exampleList.add(exBean);
-//		}
+		List<ContractBean> conList = new ArrayList<>();
+		contract.setDateFixed(new Date());
+		conList.add(contract);
 
 		JasperPrint jasperPrint = ReportUtils.exportReport(reportName, params,
-				new JREmptyDataSource()); // JRBeanCollectionDataSource(exampleList)
+				new JRBeanCollectionDataSource(conList)); // JRBeanCollectionDataSource(exampleList)
 		// JasperPrint jasperPrint = ReportUtils.exportReport(jasperFile, params, new
 		// JREmptyDataSource());
 
