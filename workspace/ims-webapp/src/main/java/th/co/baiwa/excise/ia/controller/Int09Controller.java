@@ -13,6 +13,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,10 +41,13 @@ import net.sf.jasperreports.export.SimpleHtmlExporterOutput;
 import th.co.baiwa.excise.ia.persistence.entity.TravelCostWorkSheetHeader;
 import th.co.baiwa.excise.ia.persistence.entity.TravelCostWsIntegrate;
 import th.co.baiwa.excise.ia.service.Int09Service;
+import th.co.baiwa.excise.ta.controller.ExciseDetailController;
 
 @Controller
 @RequestMapping("ia/int09")
 public class Int09Controller {
+	
+	private Logger logger = LoggerFactory.getLogger(Int09Controller.class);
 
 	@Autowired
 	private Int09Service int09Service;
@@ -83,23 +88,36 @@ public class Int09Controller {
 		return travelCostWorkSheetHeader;
 	}
 
-	@GetMapping("/test/{txt}")
+	@GetMapping("/test/{txt}/{name}")
 	@ResponseBody
-	public void test(@PathVariable("txt") String txt, HttpServletResponse response) throws JRException, IOException {
+	public void test(@PathVariable("txt") String txt,@PathVariable("name") String name, HttpServletResponse response) throws JRException, IOException {
 		// Get Compiled Report File
-		File reportFile = new File("src/main/resources/reports/a.jrxml");
+		ClassLoader classLoader = getClass().getClassLoader();
+		File reportFile = new File(classLoader.getResource("reports/a.jrxml").getFile());
 		FileInputStream inputStream = new FileInputStream(reportFile);
 		
+		File f = new File("c:/out"); // initial file (folder)
+        if (!f.exists()) { // check folder exists
+            if (f.mkdirs()) {
+            	logger.info("Directory is created!");
+                // System.out.println("Directory is created!");
+            } else {
+            	logger.error("Failed to create directory!");
+                // System.out.println("Failed to create directory!");
+            }
+        }
+        
 		// mapping
 		Map<String, Object> mapping = new HashMap<String, Object>();
-		mapping.put("eiei", txt);
+		mapping.put("title", txt);
+		mapping.put("name", name);
 		
 		// data binary complied
 		JasperPrint jasperPrint = JasperFillManager.fillReport(JasperCompileManager.compileReport(inputStream), mapping,
 				new JREmptyDataSource());
 		
 		// export to pdf
-		OutputStream output = new FileOutputStream(new File("c:/JasperReport.pdf"));
+		OutputStream output = new FileOutputStream(new File("c:/out/JasperReport.pdf"));
 		JasperExportManager.exportReportToPdfStream(jasperPrint, output);
 
 		// export to html
