@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="flame1" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="30" bottomMargin="30" uuid="a53c8bc3-6901-4197-8e75-415c6474949e">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -30,28 +30,28 @@
 				<staticText>
 					<reportElement key="" x="170" y="0" width="170" height="30" uuid="164f3462-e6f5-44dd-a125-cf3fc5bddf97"/>
 					<textElement>
-						<font fontName="Angsana New" size="24"/>
+						<font fontName="TH Sarabun New" size="21"/>
 					</textElement>
 					<text><![CDATA[สัญญาการยืมเงิน]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="10" y="40" width="80" height="20" uuid="c70083ce-cc65-489a-8fad-e4a8cdafdb28"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="13"/>
 					</textElement>
 					<text><![CDATA[ยื่นต่อ]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="100" y="40" width="230" height="20" uuid="716aad03-8d67-4666-b930-4e257841bbc3"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="13"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="331" y="41" width="60" height="20" uuid="c4c5e16b-c6da-4470-828c-b18c4a2c29be"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="13"/>
 					</textElement>
 					<text><![CDATA[(๑)]]></text>
 				</staticText>
@@ -64,14 +64,14 @@
 				<staticText>
 					<reportElement key="" x="0" y="0" width="135" height="27" uuid="3243af65-323a-4fd3-ab05-6e4423ea0dd5"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[  เลขที่..................................]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="1" y="27" width="134" height="40" uuid="1feae737-e0cc-4588-833f-3c251199df7f"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[             วันครบกำหนด
 .................................................]]></text>
@@ -89,61 +89,63 @@
 				<staticText>
 					<reportElement x="32" y="1" width="38" height="28" uuid="64b72391-7b0b-4634-aae8-252d6286926a"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[ข้าพเจ้า]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="70" y="1" width="171" height="28" uuid="30c170e1-2e2f-459c-9bd1-e599b78a3f4a"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="242" y="1" width="59" height="28" uuid="03a76157-a567-4938-b9b9-109ccdbe65e8"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[ตำแหน่ง]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
 					<reportElement x="301" y="1" width="118" height="28" uuid="2ad16b65-4b5b-4de5-b13b-bcc4f6ef9cb2"/>
-					<textElement verticalAlignment="Middle"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="TH Sarabun New"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$P{positionName}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="418" y="0" width="50" height="29" uuid="8300b6f0-6f2f-47fc-94f5-b4329b611815"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[สังกัด]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="11" y="29" width="128" height="32" uuid="3e50212d-1279-48e6-b6ad-e3ad930c687d"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[มีความประสงค์ขอยืมเงินจาก]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="139" y="29" width="111" height="32" uuid="cffdaba0-3037-4745-9ea3-fb604d4438e5"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="11" y="61" width="209" height="28" uuid="bc4e7707-5b70-4cc0-b326-312f44c4b3a5"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[(๒)เพื่อเป็นค่าใช้จ่ายในการเดินทางไปราชการ]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="11" y="89" width="128" height="30" uuid="ca00ecd8-5a24-4069-8b29-5382fe3550ac"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[(๓)ดังรายระเอียดต่อไปนี้]]></text>
 				</staticText>
@@ -151,7 +153,7 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="576" splitType="Stretch">
+		<band height="400" splitType="Stretch">
 			<frame>
 				<reportElement x="0" y="0" width="379" height="130" uuid="ed8852ad-31e6-4d83-8bd0-c4483dcf83ac"/>
 				<box>
@@ -160,49 +162,49 @@
 				<staticText>
 					<reportElement x="22" y="28" width="80" height="19" uuid="4e26531a-1f13-4b2e-9ec5-dfffa83321db"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="13"/>
 					</textElement>
 					<text><![CDATA[-ค่าเบี้ยเลี้ยง]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="21" y="4" width="80" height="19" uuid="4c50e962-9084-42b0-b318-9a69b3c102f2"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="13"/>
 					</textElement>
 					<text><![CDATA[-ค่าที่พัก]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="23" y="48" width="80" height="19" uuid="7220378a-0d04-4cad-a002-c71f5b7edeaa"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="13"/>
 					</textElement>
 					<text><![CDATA[-ค่าพาหนะ]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="23" y="71" width="79" height="19" uuid="ea362e5f-0c0b-4633-b4f3-0c4d1aa79bf7"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="13"/>
 					</textElement>
 					<text><![CDATA[-ค่าใช้จ่ายอื่นๆ]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="27" y="95" width="59" height="19" uuid="9380f26c-1f13-4ed9-8832-108dd0882f3f"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="13"/>
 					</textElement>
 					<text><![CDATA[(ตัวอักษร]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="88" y="96" width="199" height="19" uuid="f5dc6dad-3a81-4025-a75a-aba929483010"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="13"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="292" y="97" width="80" height="19" uuid="65f2e129-e366-48b5-aedd-9ad4d2fc2c57"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="13"/>
 					</textElement>
 					<text><![CDATA[รวมเป็นเงิน(บาท)]]></text>
 				</staticText>
@@ -214,18 +216,30 @@
 				</box>
 				<textField>
 					<reportElement x="57" y="4" width="79" height="23" uuid="6e21059f-fe13-4631-9aab-9d13307bb83f"/>
+					<textElement>
+						<font fontName="TH Sarabun New"/>
+					</textElement>
 					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="57" y="53" width="80" height="24" uuid="4108a650-0486-46b7-976e-3533092239bc"/>
+					<textElement>
+						<font fontName="TH Sarabun New"/>
+					</textElement>
 					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="56" y="78" width="80" height="23" uuid="372fa60b-bf84-4bde-a7a7-8a10180cb9b6"/>
+					<textElement>
+						<font fontName="TH Sarabun New"/>
+					</textElement>
 					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="56" y="25" width="80" height="27" uuid="807c93b6-72e7-4057-8314-daa26efb05a5"/>
+					<textElement>
+						<font fontName="TH Sarabun New"/>
+					</textElement>
 					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 				</textField>
 				<frame>
@@ -235,6 +249,9 @@
 					</box>
 					<textField>
 						<reportElement x="59" y="7" width="80" height="22" uuid="df5e0a64-bdd4-4b84-af67-fc81b1144a4b"/>
+						<textElement>
+							<font fontName="TH Sarabun New"/>
+						</textElement>
 						<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 					</textField>
 				</frame>
@@ -247,7 +264,7 @@
 				<staticText>
 					<reportElement x="9" y="10" width="490" height="90" uuid="b674ef79-3aba-46fc-808d-27b62e4e867f"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[ข้าพเจ้าสัญญาว่าจะปฏิบัติตามระเบียบของทางราชการทุกประการ และจะนำใบสำคัญคู่จ่ายที่ถูกต้อง พร้อมทั้งเงินเหลือจ่าย (ถ้ามี) ส่งภายในกำหนดไว้ในระเบียบการจ่ายเงินจากคลัง คือภายใน                                                                                       
 วันนับแต่วันที่เดินทางกลับมาถึง ถ้าข้าพเจ้าไม่ส่งตามกำหนดข้าพเจ้ายินยอมให้หักเงินเดือน ค่าจ้าง เบี้ยหวัด บำเหน็จ บำนาญ หรือเงินอื่นใดที่ข้าพเจ้าพึงได้รับจากทางราชการ ชดใช้จำนวนเงินที่ยืมไปจนครบถ้วนได้ทันที
@@ -258,35 +275,44 @@
 				</staticText>
 				<textField>
 					<reportElement x="391" y="31" width="79" height="19" uuid="40de570d-1400-49af-a082-017d32bec5b9"/>
+					<textElement>
+						<font fontName="TH Sarabun New"/>
+					</textElement>
 					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="9" y="111" width="209" height="30" uuid="6ce15c8a-eb7f-49b7-a910-cbd334ef0bf7"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[ลายมือชื่อ...........................................ผู้ยืม]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="228" y="112" width="201" height="29" uuid="59b38eb9-544a-4207-98c5-de798e67e41d"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[ชื่อ.............................................................]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="29" y="140" width="130" height="24" uuid="beca42b2-9608-473d-b91c-dd54acced71d"/>
 					<textElement>
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="9" y="143" width="19" height="21" uuid="ef918c16-5e45-44aa-9f94-679a46e4c603"/>
+					<textElement>
+						<font fontName="TH Sarabun New"/>
+					</textElement>
 					<text><![CDATA[(]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="165" y="143" width="43" height="21" uuid="b39520ea-f7e0-44c2-ace6-d5207942844b"/>
+					<textElement>
+						<font fontName="TH Sarabun New"/>
+					</textElement>
 					<text><![CDATA[)]]></text>
 				</staticText>
 			</frame>
@@ -298,47 +324,46 @@
 				<staticText>
 					<reportElement x="23" y="1" width="48" height="30" uuid="9126ac03-6cde-43f3-9965-89580e1d8f53"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[เสนอ]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="71" y="1" width="178" height="30" uuid="24a513b2-a587-4f5a-81c2-3c195c813b0c"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="249" y="1" width="49" height="30" uuid="cc1327a0-a90b-4b08-b33b-c9cc499ffb51"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[เสนอ]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="45" y="32" width="284" height="30" uuid="e7c14379-ec1a-446d-b598-42b4a6c82c95"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[ได้ตรวจแล้ว เห็นสมควรอนุมัติให้ยืมตามใบยืมฉบับนี้ได้ จำนวน]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="331" y="33" width="100" height="30" uuid="97758ec2-3381-4f1e-a345-ae904ab61493"/>
-					<textElement verticalAlignment="Middle"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="TH Sarabun New"/>
+					</textElement>
 					<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="432" y="33" width="66" height="30" uuid="b76eed32-b347-4d7e-9126-997bd9c24047"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Angsana New" size="16"/>
+						<font fontName="TH Sarabun New" size="16"/>
 					</textElement>
 					<text><![CDATA[บาท]]></text>
 				</staticText>
 			</frame>
 		</band>
 	</columnHeader>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

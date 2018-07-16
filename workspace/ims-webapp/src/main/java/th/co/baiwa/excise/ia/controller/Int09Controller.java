@@ -1,15 +1,8 @@
 package th.co.baiwa.excise.ia.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,29 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 
-import net.sf.jasperreports.engine.DefaultJasperReportsContext;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.export.HtmlExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleHtmlExporterOutput;
 import th.co.baiwa.excise.ia.persistence.entity.TravelCostWorkSheetHeader;
 import th.co.baiwa.excise.ia.persistence.entity.TravelCostWsIntegrate;
 import th.co.baiwa.excise.ia.service.Int09Service;
-import th.co.baiwa.excise.ta.controller.ExciseDetailController;
 
 @Controller
 @RequestMapping("ia/int09")
 public class Int09Controller {
-	
+
 	private Logger logger = LoggerFactory.getLogger(Int09Controller.class);
 
 	@Autowired
@@ -88,43 +67,20 @@ public class Int09Controller {
 		return travelCostWorkSheetHeader;
 	}
 
-	@GetMapping("/test/{txt}/{name}")
+	@GetMapping("/pdf/{id}")
 	@ResponseBody
-	public void test(@PathVariable("txt") String txt,@PathVariable("name") String name, HttpServletResponse response) throws JRException, IOException {
-		// Get Compiled Report File
-		ClassLoader classLoader = getClass().getClassLoader();
-		File reportFile = new File(classLoader.getResource("reports/a.jrxml").getFile());
-		FileInputStream inputStream = new FileInputStream(reportFile);
-		
-		File f = new File("c:/out"); // initial file (folder)
-        if (!f.exists()) { // check folder exists
-            if (f.mkdirs()) {
-            	logger.info("Directory is created!");
-                // System.out.println("Directory is created!");
-            } else {
-            	logger.error("Failed to create directory!");
-                // System.out.println("Failed to create directory!");
-            }
-        }
-        
-		// mapping
-		Map<String, Object> mapping = new HashMap<String, Object>();
-		mapping.put("title", txt);
-		mapping.put("name", name);
-		
-		// data binary complied
-		JasperPrint jasperPrint = JasperFillManager.fillReport(JasperCompileManager.compileReport(inputStream), mapping,
-				new JREmptyDataSource());
-		
-		// export to pdf
-		OutputStream output = new FileOutputStream(new File("c:/out/JasperReport.pdf"));
-		JasperExportManager.exportReportToPdfStream(jasperPrint, output);
+	public void pdfSomething(@PathVariable("id") String id, HttpServletResponse response) throws Exception {
 
-		// export to html
-		HtmlExporter exporter = new HtmlExporter(DefaultJasperReportsContext.getInstance());
-		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleHtmlExporterOutput(response.getWriter()));
-		exporter.exportReport();
+		byte[] reportFile = int09Service.contractToPDF("flame1"); // null
+	
+		response.setContentType("application/pdf");
+		response.addHeader("Content-Disposition", "inline;filename=" + "Example.pdf");
+		response.setContentLength(reportFile.length);
+
+		OutputStream responseOutputStream = response.getOutputStream();
+		for (byte bytes : reportFile) {
+			responseOutputStream.write(bytes);
+		}
 	}
 
 }
