@@ -10,10 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.dao.SEQDao;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.ia.Int023MappingVO;
 import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireDetailDao;
+import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
 
 @Service
@@ -55,7 +58,10 @@ public class QuestionnaireDetailService {
 			questionnaireDetail = new QuestionnaireDetail();
 			questionnaireDetail.setQtnDetailId(seqDao.autoNumberRunningBySeqName("IA_QTN_DETAIL_SEQ"));
 			questionnaireDetail.setMasterId(detailId);
+			questionnaireDetail.setHeaderCode("FIXED HEADER_CODE");
 			questionnaireDetail.setQtnMainDetail(minorDetail);
+			questionnaireDetail.setVersion(BigDecimal.ZERO);
+			questionnaireDetail.setIsDeleted("N");
 			questionnaireDetail.setCreatedBy(userlogin);
 			questionnaireDetail.setCreatedDate(processDate);
 			questionnaireDetail.setUpdatedBy(userlogin);
@@ -67,4 +73,18 @@ public class QuestionnaireDetailService {
 		return countInsert;
 	}
 
+	
+	public ResponseDataTable<QuestionnaireDetail> findByCriteriaForDatatable(QuestionnaireDetail questionnaireDetail , DataTableRequest dataTableRequest) {
+		
+		ResponseDataTable<QuestionnaireDetail> responseDataTable = new ResponseDataTable<QuestionnaireDetail>();
+		List<QuestionnaireDetail> questionnaireDetailList = questionnaireDetailDao.findByCriteriaDataTable(questionnaireDetail, dataTableRequest.getStart().intValue(), dataTableRequest.getLength().intValue());
+		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
+		long count = questionnaireDetailDao.countQuestionnaireDetail(questionnaireDetail);
+		responseDataTable.setData(questionnaireDetailList);
+		responseDataTable.setRecordsTotal((int) count);
+		responseDataTable.setRecordsFiltered((int) count);
+		return responseDataTable;
+				
+				
+	}
 }
