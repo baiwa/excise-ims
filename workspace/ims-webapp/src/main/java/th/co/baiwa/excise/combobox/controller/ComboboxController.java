@@ -17,7 +17,7 @@ import th.co.baiwa.excise.combobox.service.ComboboxService;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 
 @Controller
-@RequestMapping("combobox/controller")
+@RequestMapping("api/combobox/controller")
 public class ComboboxController {
 	
 	private Logger logger = LoggerFactory.getLogger(ComboboxController.class);

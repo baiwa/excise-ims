@@ -22,7 +22,7 @@ import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 
 @Controller
-@RequestMapping("filter/exise")
+@RequestMapping("api/filter/exise")
 public class FilterExisePlanHeaderController {
 
 	private Logger logger = LoggerFactory.getLogger(FilterExisePlanHeaderController.class);

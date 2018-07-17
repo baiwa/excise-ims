@@ -20,7 +20,7 @@ import th.co.baiwa.excise.ia.persistence.entity.TravelCostWsIntegrate;
 import th.co.baiwa.excise.ia.service.Int09Service;
 
 @Controller
-@RequestMapping("ia/int09")
+@RequestMapping("api/ia/int09")
 public class Int09Controller {
 
 	private Logger logger = LoggerFactory.getLogger(Int09Controller.class);

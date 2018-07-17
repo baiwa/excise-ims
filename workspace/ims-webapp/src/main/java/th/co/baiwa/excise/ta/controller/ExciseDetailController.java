@@ -19,7 +19,7 @@ import th.co.baiwa.excise.ta.persistence.entity.Response;
 import th.co.baiwa.excise.ta.service.ExciseDetailService;
 
 @Controller
-@RequestMapping("excise/detail")
+@RequestMapping("api/excise/detail")
 public class ExciseDetailController {
 	
 	private Logger logger = LoggerFactory.getLogger(ExciseDetailController.class);
