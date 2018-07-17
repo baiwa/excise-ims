@@ -20,7 +20,7 @@ import th.co.baiwa.excise.ta.service.MockupService;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 
 @Controller
-@RequestMapping("working/test")
+@RequestMapping("api/working/test")
 public class MockupController {
 
 	@Autowired

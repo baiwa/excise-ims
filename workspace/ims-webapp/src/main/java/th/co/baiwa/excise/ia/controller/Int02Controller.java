@@ -22,7 +22,7 @@ import th.co.baiwa.excise.ia.service.QuestionnaireDetailService;
 import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
-@RequestMapping("ia/int02")
+@RequestMapping("api/ia/int02")
 public class Int02Controller {
 
 	private Logger logger = LoggerFactory.getLogger(Int02Controller.class);
