@@ -1,4 +1,4 @@
-package th.co.baiwa.excise.ia.persistence.bean;
+package th.co.baiwa.excise.report.bean;
 
 import java.math.BigDecimal;
 import java.util.Date;

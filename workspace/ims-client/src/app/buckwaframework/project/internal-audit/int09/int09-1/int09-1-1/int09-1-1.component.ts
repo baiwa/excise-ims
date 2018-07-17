@@ -22,6 +22,7 @@ export class Int0911Component implements OnInit, AfterViewInit {
   status: string;
   id: number;
   headerId: number;
+  view: boolean;
 
   sum: any;
 
@@ -56,6 +57,7 @@ export class Int0911Component implements OnInit, AfterViewInit {
       etc: 0,
       total: 0
     };
+    this.view = false;
     this.status = "create";
     this.hdr = new TravelCostHeader();
     this.detail = new Array<TravelCostDetail>();
@@ -79,6 +81,7 @@ export class Int0911Component implements OnInit, AfterViewInit {
     $(".ui.dropdown.ai").css("width", "100%");
     this.headerId = this.route.snapshot.queryParams["id"];
     if (this.headerId !== undefined) {
+      this.view = true;
       const HEADER_URL = `ia/int09/lists/${this.headerId}`;
       this.ajax.get(HEADER_URL, res => {
         this.hdr = res.json()[0];
@@ -374,5 +377,43 @@ export class Int0911Component implements OnInit, AfterViewInit {
         return obj.checked;
       }) == -1
     );
+  }
+
+  contractPdf(index: any) {
+    const data: TravelCostDetail = this.detail[index];
+    const url = "api/report/pdf/contract"; //contract
+    const body = {
+      numberId: data.workSheetDetailId,
+      loanName: data.name + " " + data.lastName,
+      loanFrom: "เก๊ก",
+      sendTo: "ห้อง 309",
+      locateAt: this.hdr.departmentName,
+      positionName: data.position,
+      presentTo: "พี่เป้",
+      sumCostTxt: "นับไม่ถ้วน",
+      reasonTxt: "ไม่บอกหรอก",
+      allowanceCost: data.allowanceCost,
+      otherCost: data.otherCost,
+      travelCost: data.travelCost,
+      rentCost: data.rentCost,
+      sumCost: data.sumCost,
+      day: data.allowanceDate,
+      dateFixed: null
+    };
+    this.ajax.post(url, body, res => {
+      if (res.status == 200 && res.statusText == "OK") {
+        var byteArray = new Uint8Array(res.json());
+        var blob = new Blob([byteArray], { type: "application/pdf" });
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(blob);
+        } else {
+          var objectUrl = URL.createObjectURL(blob);
+          window.open(objectUrl);
+        }
+        console.log(blob);
+        //window.open("ims-webapp/report/pdf/contract/" + data.workSheetDetailId);
+        console.log(res);
+      }
+    });
   }
 }

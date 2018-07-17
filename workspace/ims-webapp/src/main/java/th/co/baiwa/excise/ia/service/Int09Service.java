@@ -1,29 +1,14 @@
 package th.co.baiwa.excise.ia.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
-import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.co.baiwa.excise.ia.persistence.bean.ContractBean;
-import th.co.baiwa.excise.ia.persistence.bean.ExampleBean;
 import th.co.baiwa.excise.ia.persistence.dao.TravelCostWorkSheetHeaderDao;
 import th.co.baiwa.excise.ia.persistence.dao.TravelCostWsDetailDao;
 import th.co.baiwa.excise.ia.persistence.entity.TravelCostWorkSheetHeader;
@@ -126,30 +111,6 @@ public class Int09Service {
 			}
 
 		}
-	}
-	
-	public byte[] contractToPDF(String name, ContractBean contract) throws IOException, JRException {
-		String reportName = name != null ? name: "Example";
-
-		Map<String, Object> params = new HashMap<>();
-		params.put("name", "ผมชื่อ เฟรม แฟน น้องมุ๊ก ข้อความทดสอบ ");
-		params.put("positionName", "เทพพระเจ้า"); //ReportUtils.getResourceFile(PATH.IMAGE_PATH, "garuda-emblem.jpg")
-
-		List<ContractBean> conList = new ArrayList<>();
-		contract.setDateFixed(new Date());
-		conList.add(contract);
-
-		JasperPrint jasperPrint = ReportUtils.exportReport(reportName, params,
-				new JRBeanCollectionDataSource(conList)); // JRBeanCollectionDataSource(exampleList)
-		// JasperPrint jasperPrint = ReportUtils.exportReport(jasperFile, params, new
-		// JREmptyDataSource());
-
-		byte[] reportFile = JasperExportManager.exportReportToPdf(jasperPrint);
-		IOUtils.write(reportFile, new FileOutputStream(new File("c:/out/" + "Example.pdf"))); // /tmp/excise/ims/report/
-		
-		ReportUtils.closeResourceFileInputStream(params);
-		
-		return reportFile;
 	}
 
 }
