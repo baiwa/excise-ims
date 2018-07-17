@@ -142,7 +142,7 @@ export class Int022Component implements OnInit {
         //delete case
         this.messageBarService.comfirm(res => {
           if (!res) return false;
-          const deleteURL = `api/preferences/userManagement/`;
+          const deleteURL = `preferences/userManagement/`;
           this.ajaxService.delete(
             deleteURL,
             (success: Response) => {

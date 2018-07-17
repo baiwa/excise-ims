@@ -6,7 +6,7 @@ import { AjaxService } from ".";
 @Injectable()
 export class TranslateService {
   private currentLang: string;
-  readonly url = "api/preferences/message";
+  readonly url = "preferences/message";
   private headers = new Headers({ "Content-Type": "application/json" });
   private messages: Message[] = new Array();
 

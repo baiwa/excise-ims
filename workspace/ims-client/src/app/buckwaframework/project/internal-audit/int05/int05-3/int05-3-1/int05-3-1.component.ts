@@ -13,12 +13,12 @@ export class Int0531Component implements OnInit {
 
   callFn() {
     this.ajax.get(
-      "api/preferences/message?no1=55",
+      "preferences/message?no1=55",
       res => console.log(res.json().data),
       error => console.error(error)
     );
     // this.ajax.post(
-    //   'api/post/me',
+    //   'post/me',
     //   {
     //     startBackDate: '01/2539',
     //     month: '10'

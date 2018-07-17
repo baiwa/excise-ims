@@ -11,7 +11,7 @@ import { User } from "../models/user";
 
 @Injectable()
 export class AuthService {
-  readonly LOGIN_URL = "api/security/login";
+  readonly LOGIN_URL = "security/login";
   private headers = new Headers({
     "Content-Type": "application/x-www-form-urlencoded"
   });
@@ -80,7 +80,7 @@ export class AuthService {
   }
 
   getUserProfile(): Promise<boolean> {
-    const usrProfile = "api/access-control/user-profile";
+    const usrProfile = "access-control/user-profile";
     let p = new Promise<boolean>((resolve, reject) => {
       //check session Ajax
       this.ajaxService.get(

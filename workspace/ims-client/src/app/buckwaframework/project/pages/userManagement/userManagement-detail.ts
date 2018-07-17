@@ -46,7 +46,7 @@ export class UserManagementDetailPage implements OnInit {
       this.title = "Edit UserManagement";
       $("#username").attr("disabled", "disabled");
       this.statusPage = UserManagementDetailPage.UPDATE;
-      const getURL = `api/preferences/userManagement/${id}`;
+      const getURL = `preferences/userManagement/${id}`;
       this.ajaxService.get(
         getURL,
         (success: Response) => {
@@ -89,7 +89,7 @@ export class UserManagementDetailPage implements OnInit {
   querySecorByLov() {
     //pavit 13/06/2561 table list_of_value at lov Type
     const URL =
-      AjaxService.CONTEXT_PATH + "/api/preferences/userManagement/setorList";
+      AjaxService.CONTEXT_PATH + "preferences/userManagement/setorList";
     var parameter = {};
 
     $.post(URL, function(data) {
@@ -169,14 +169,14 @@ export class UserManagementDetailPage implements OnInit {
     this.$form.addClass("loading");
     let allFields = this.$form.form("get values");
 
-    const url = "api/preferences/userManagement";
+    const url = "preferences/userManagement";
 
     if (this.statusPage == UserManagementDetailPage.ADD) {
       let userManagementAdd = allFields as UserManagement;
       userManagementAdd = this.convertCheckboxVal(userManagementAdd);
 
       //check exist username
-      const getURL = `api/preferences/userManagement/exist/${
+      const getURL = `preferences/userManagement/exist/${
         userManagementAdd.username
       }`;
       this.ajaxService.get(

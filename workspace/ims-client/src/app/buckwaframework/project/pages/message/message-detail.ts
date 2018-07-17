@@ -57,7 +57,7 @@ export class MessageDetailPage implements OnInit {
     let id = this.route.snapshot.params["id"];
     if (id) {
       this.statusPage = MessageDetailPage.UPDATE;
-      const getURL = `api/preferences/message/${id}`;
+      const getURL = `preferences/message/${id}`;
       this.ajaxService.get(
         getURL,
         (success: Response) => {
@@ -85,7 +85,7 @@ export class MessageDetailPage implements OnInit {
     //loading
     $form.addClass("loading");
     let allFields = $form.form("get values");
-    const createUrl = "api/preferences/message";
+    const createUrl = "preferences/message";
 
     if (this.statusPage == MessageDetailPage.ADD) {
       this.ajaxService.post(

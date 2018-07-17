@@ -40,11 +40,11 @@ export class UserManagementPage implements OnInit {
       }
     }
 
-    const url = "api/preferences/userManagement/" + deletes;
+    const url = "preferences/userManagement/" + deletes;
 
     this.messageBarService.comfirm(res => {
       if (!res) return false;
-      const deleteURL = `api/preferences/userManagement/${deletes.join(",")}`;
+      const deleteURL = `preferences/userManagement/${deletes.join(",")}`;
       this.ajaxService.delete(
         deleteURL,
         (success: Response) => {
@@ -61,8 +61,7 @@ export class UserManagementPage implements OnInit {
   }
 
   initDatatable(): void {
-    const URL =
-      AjaxService.CONTEXT_PATH + "api/preferences/userManagement/search";
+    const URL = AjaxService.CONTEXT_PATH + "preferences/userManagement/search";
     this.userManagementDt = $("#userManagementDt").DataTable({
       lengthChange: false,
       searching: false,

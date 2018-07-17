@@ -70,7 +70,7 @@ export class MessagePage implements OnInit {
     this.messageBarService.comfirm(res => {
       if (!res) return false;
 
-      const deleteURL = `api/preferences/message/${deletes.join(",")}`;
+      const deleteURL = `preferences/message/${deletes.join(",")}`;
       this.ajaxService.delete(
         deleteURL,
         (ok: Response) => {
@@ -87,7 +87,7 @@ export class MessagePage implements OnInit {
   }
 
   initDatatable(): void {
-    const URL = AjaxService.CONTEXT_PATH + "api/preferences/message/search";
+    const URL = AjaxService.CONTEXT_PATH + "preferences/message/search";
     this.messageDt = $("#messageDt").DataTable({
       lengthChange: false,
       searching: false,

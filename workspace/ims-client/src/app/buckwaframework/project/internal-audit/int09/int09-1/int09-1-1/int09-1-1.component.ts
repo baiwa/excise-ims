@@ -381,7 +381,7 @@ export class Int0911Component implements OnInit, AfterViewInit {
 
   contractPdf(index: any) {
     const data: TravelCostDetail = this.detail[index];
-    const url = "api/report/pdf/contract"; //contract
+    const url = "report/pdf/contract"; //contract
     const body = {
       numberId: data.workSheetDetailId,
       loanName: data.name + " " + data.lastName,
