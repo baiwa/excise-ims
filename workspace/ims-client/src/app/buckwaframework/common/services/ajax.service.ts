@@ -1,86 +1,86 @@
-import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import { Injectable } from "@angular/core";
+import { Headers, Http } from "@angular/http";
+import "rxjs/add/operator/toPromise";
 @Injectable()
 export class AjaxService {
+  public static JSON_HEADER = new Headers({
+    "Content-Type": "application/json"
+  });
+  public static FORM_HEADER = new Headers({
+    "Content-Type": "application/x-www-form-urlencoded"
+  });
 
-    public static JSON_HEADER = new Headers({ 'Content-Type': 'application/json' });
-    public static FORM_HEADER = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+  public static CONTEXT_PATH = "/ims-webapp/api/";
+  public static isDebug = true;
 
-    public static CONTEXT_PATH = '/ims-webapp/';
-    public static isDebug = true;
+  constructor(private http: Http) {}
 
-    constructor(private http: Http) {
-
+  post(url: string, body: any, success: any, error?: any, header?: Headers) {
+    if (AjaxService.isDebug) {
+      console.log("URL : ", AjaxService.CONTEXT_PATH + url);
+      console.log("Params : ", body);
     }
-
-
-    post(url: string, body: any, success: any, error?: any, header?: Headers) {
-        if (AjaxService.isDebug) {
-            console.log('URL : ', AjaxService.CONTEXT_PATH + url);
-            console.log('Params : ', body);
-        }
-        let httpHeader = AjaxService.JSON_HEADER;
-        if (header) {
-            httpHeader = AjaxService.FORM_HEADER
-        }
-        let errorFn = this.handleError;
-        if (error) {
-            errorFn = error;
-        }
-        return this.http
-            .post(AjaxService.CONTEXT_PATH + url, body, { headers: httpHeader })
-            .toPromise()
-            .then(success)
-            .catch(errorFn);
+    let httpHeader = AjaxService.JSON_HEADER;
+    if (header) {
+      httpHeader = AjaxService.FORM_HEADER;
     }
-
-    get(url: string, success: any, error?: any) {
-        let errorFn = this.handleError;
-        if (error) {
-            errorFn = error;
-        }
-        return this.http.get(AjaxService.CONTEXT_PATH + url)
-            .toPromise()
-            .then(success)
-            .catch(errorFn);
+    let errorFn = this.handleError;
+    if (error) {
+      errorFn = error;
     }
+    return this.http
+      .post(AjaxService.CONTEXT_PATH + url, body, { headers: httpHeader })
+      .toPromise()
+      .then(success)
+      .catch(errorFn);
+  }
 
-    private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); // for demo purposes only
-        return Promise.reject(error.message || error);
+  get(url: string, success: any, error?: any) {
+    let errorFn = this.handleError;
+    if (error) {
+      errorFn = error;
     }
+    return this.http
+      .get(AjaxService.CONTEXT_PATH + url)
+      .toPromise()
+      .then(success)
+      .catch(errorFn);
+  }
 
-    delete(url: string, success: any, error?: any){
-        let errorFn = this.handleError;
-        if (error) {
-            errorFn = error;
-        }
-        return this.http.delete(AjaxService.CONTEXT_PATH + url)
-            .toPromise()
-            .then(success)
-            .catch(errorFn);
+  private handleError(error: any): Promise<any> {
+    console.error("An error occurred", error); // for demo purposes only
+    return Promise.reject(error.message || error);
+  }
+
+  delete(url: string, success: any, error?: any) {
+    let errorFn = this.handleError;
+    if (error) {
+      errorFn = error;
     }
+    return this.http
+      .delete(AjaxService.CONTEXT_PATH + url)
+      .toPromise()
+      .then(success)
+      .catch(errorFn);
+  }
 
-    put(url: string, body: any, success: any, error?: any, header?: Headers) {
-        if (AjaxService.isDebug) {
-            console.log('URL : ', AjaxService.CONTEXT_PATH + url);
-            console.log('Params : ', body);
-        }
-        let httpHeader = AjaxService.JSON_HEADER;
-        if (header) {
-            httpHeader = AjaxService.FORM_HEADER
-        }
-        let errorFn = this.handleError;
-        if (error) {
-            errorFn = error;
-        }
-        return this.http
-            .put(AjaxService.CONTEXT_PATH + url, body, { headers: httpHeader })
-            .toPromise()
-            .then(success)
-            .catch(errorFn);
+  put(url: string, body: any, success: any, error?: any, header?: Headers) {
+    if (AjaxService.isDebug) {
+      console.log("URL : ", AjaxService.CONTEXT_PATH + url);
+      console.log("Params : ", body);
     }
-
-
+    let httpHeader = AjaxService.JSON_HEADER;
+    if (header) {
+      httpHeader = AjaxService.FORM_HEADER;
+    }
+    let errorFn = this.handleError;
+    if (error) {
+      errorFn = error;
+    }
+    return this.http
+      .put(AjaxService.CONTEXT_PATH + url, body, { headers: httpHeader })
+      .toPromise()
+      .then(success)
+      .catch(errorFn);
+  }
 }
