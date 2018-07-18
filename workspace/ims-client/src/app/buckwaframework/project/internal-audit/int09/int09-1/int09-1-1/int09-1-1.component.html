@@ -236,10 +236,8 @@
           <td>{{numFunc(d.otherCost)}}</td>
           <td>{{numFunc(d.sumCost)}}</td>
           <td>{{d.note}}</td>
-
           <td>
             <button *ngIf="!view" class="ui mini orange button" type="button" (click)="editData(i)">แก้ไข</button>
-            <button *ngIf="view" class="ui mini primary button" type="button" (click)="contractPdf(i)">สัญญาการยืมเงิน</button>
           </td>
         </tr>
         <tr>
@@ -260,17 +258,18 @@
       </tbody>
     </table>
     <br>
-    <div class="ui center aligned grid" *ngIf="!view">
+    <div class="ui center aligned grid">
       <div class="eight wide column">
-        <button class="ui {{checkedElements()&&'disabled'}} mini red button" type="button" (click)="deleteData()">
+        <button *ngIf="!view" class="ui {{checkedElements()&&'disabled'}} mini red button" type="button" (click)="deleteData()">
           ลบ
         </button>
-        <button class="ui {{detail.length==0&&'disabled'}} mini primary button" type="button" (click)="onSubmit()">
+        <button *ngIf="!view" class="ui {{detail.length==0&&'disabled'}} mini primary button" type="button" (click)="onSubmit()">
           บันทึก
         </button>
         <button class="ui mini primary button" type="button">
           ส่งออก
         </button>
+        <button class="ui mini primary button" type="button" (click)="contractPage()">สัญญาการยืมเงิน</button>
       </div>
     </div>
   </div>

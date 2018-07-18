@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 
 import { Routes, RouterModule } from "@angular/router";
 import { Int092Component } from "./int09-2/int09-2.component";
+import { FormsModule } from "@angular/forms";
 
 const routes: Routes = [
   { path: "1", loadChildren: "./int09-1/int09-1.module#Int091Module" },
@@ -10,7 +11,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule],
+  imports: [RouterModule.forChild(routes), CommonModule, FormsModule],
   declarations: [Int092Component],
   exports: [RouterModule]
 })

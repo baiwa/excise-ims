@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import {
   TravelCostHeader,
-  TravelCostDetail
+  TravelCostDetail,
+  Contract
 } from "../../../../../common/models";
 import { AjaxService, MessageBarService } from "../../../../../common/services";
 import { Prices } from "../../../../../common/helper/travel";
@@ -12,6 +13,7 @@ import {
   TextDateTH,
   formatter
 } from "../../../../../common/helper";
+import { TravelService } from "../../../../../common/services/travel.service";
 declare var $: any;
 @Component({
   selector: "app-int09-1-1",
@@ -47,7 +49,8 @@ export class Int0911Component implements OnInit, AfterViewInit {
     private ajax: AjaxService,
     private router: Router,
     private route: ActivatedRoute,
-    private msg: MessageBarService
+    private msg: MessageBarService,
+    private travelService: TravelService
   ) {
     this.numFunc = numberWithCommas;
     this.sum = {
@@ -379,41 +382,47 @@ export class Int0911Component implements OnInit, AfterViewInit {
     );
   }
 
-  contractPdf(index: any) {
-    const data: TravelCostDetail = this.detail[index];
-    const url = "report/pdf/contract"; //contract
-    const body = {
-      numberId: data.workSheetDetailId,
-      loanName: data.name + " " + data.lastName,
-      loanFrom: "เก๊ก",
-      sendTo: "ห้อง 309",
-      locateAt: this.hdr.departmentName,
-      positionName: data.position,
-      presentTo: "พี่เป้",
-      sumCostTxt: "นับไม่ถ้วน",
-      reasonTxt: "ไม่บอกหรอก",
-      allowanceCost: data.allowanceCost,
-      otherCost: data.otherCost,
-      travelCost: data.travelCost,
-      rentCost: data.rentCost,
-      sumCost: data.sumCost,
-      day: data.allowanceDate,
-      dateFixed: null
-    };
-    this.ajax.post(url, body, res => {
-      if (res.status == 200 && res.statusText == "OK") {
-        var byteArray = new Uint8Array(res.json());
-        var blob = new Blob([byteArray], { type: "application/pdf" });
-        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-          window.navigator.msSaveOrOpenBlob(blob);
-        } else {
-          var objectUrl = URL.createObjectURL(blob);
-          window.open(objectUrl);
-        }
-        console.log(blob);
-        //window.open("ims-webapp/report/pdf/contract/" + data.workSheetDetailId);
-        console.log(res);
-      }
+  contractPage() {
+    const promise = new Promise((resolve, reject) => {
+      // new variable
+      let allowance = 0;
+      let rent = 0;
+      let other = 0;
+      let travel = 0;
+      let sum = 0;
+      // extract contruct
+      // for summary costs
+      this.detail.forEach(element => {
+        allowance += parseFloat(element.allowanceCost.toString());
+        rent += parseFloat(element.rentCost.toString());
+        other += parseFloat(element.otherCost.toString());
+        travel += parseFloat(element.travelCost.toString());
+        sum += parseFloat(element.sumCost.toString());
+      });
+      // set data
+      let body: Contract = {
+        numberId: "",
+        loanName: "",
+        loanFrom: "",
+        sendTo: "",
+        locateAt: "",
+        positionName: "",
+        presentTo: "",
+        sumCostTxt: "",
+        reasonTxt: "",
+        allowanceCost: allowance,
+        otherCost: other,
+        travelCost: travel,
+        rentCost: rent,
+        sumCost: sum,
+        day: 1,
+        dateFixed: null
+      };
+      // set data to service
+      this.travelService.setTravelContract(body);
+      //console.log(body);
+      this.router.navigate(["int09/2"]);
     });
+    // this.router.navigate(["int09/2"]);
   }
 }

@@ -1,6 +1,7 @@
 import { TextDateTH, formatter, digit, ThaiFormatter } from "./datepicker";
 import { numberWithCommas } from "./number";
 import { Prices } from "./travel";
+import { ThaiNumberToText, ArabicNumberToText, CheckNumber } from "./thaibath";
 
 export {
   // DatePicker
@@ -11,5 +12,9 @@ export {
   // Number
   numberWithCommas,
   // Travel
-  Prices
+  Prices,
+  // ThaiBath
+  ThaiNumberToText,
+  ArabicNumberToText,
+  CheckNumber
 };

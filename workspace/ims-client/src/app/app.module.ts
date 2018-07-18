@@ -19,7 +19,8 @@ import {
   ParameterGroupService,
   ParameterInfoService,
   AjaxService,
-  ExciseService
+  ExciseService,
+  TravelService
 } from "./buckwaframework/common/services";
 
 // components
@@ -54,7 +55,8 @@ import { LoginPage } from "./buckwaframework/project/pages/login/login";
     ParameterGroupService,
     ParameterInfoService,
     AjaxService,
-    ExciseService
+    ExciseService,
+    TravelService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

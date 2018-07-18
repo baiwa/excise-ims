@@ -1,9 +1,17 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { TravelCostHeader } from "../../../../common/models";
+import { TravelCostHeader, Contract } from "../../../../common/models";
 import { TravelCostDetail } from "app/buckwaframework/common/models/travelcostdetail";
 import { AjaxService } from "../../../../common/services";
+import { TravelService } from "../../../../common/services/travel.service";
+import {
+  numberWithCommas,
+  ArabicNumberToText,
+  TextDateTH,
+  formatter
+} from "../../../../common/helper";
 
+declare var $;
 @Component({
   selector: "app-int09-2",
   templateUrl: "./int09-2.component.html",
@@ -27,9 +35,24 @@ export class Int092Component implements OnInit {
   selectDoc: string;
   selectTop: string;
 
-  constructor(private route: ActivatedRoute, private ajax: AjaxService) {}
+  body: Contract;
+
+  constructor(
+    private route: ActivatedRoute,
+    private ajax: AjaxService,
+    private travelService: TravelService
+  ) {}
 
   ngOnInit() {
+    $("#calendar").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    // get data from service
+    this.body = this.travelService.getTravelContract();
+    this.body.sumCostTxt = this.ArabicNumberToText(this.body.sumCost);
     this.id = this.route.snapshot.queryParams["id"];
     if (this.id !== undefined) {
       const HEADER_URL = `ia/int09/lists/${this.id}`;
@@ -37,5 +60,34 @@ export class Int092Component implements OnInit {
         this.hdr = res.json()[0];
       });
     }
+  }
+
+  contractPdf(event) {
+    event.preventDefault();
+    const url = "report/pdf/contract"; //contract
+    const body = this.body;
+    this.ajax.post(url, body, res => {
+      if (res.status == 200 && res.statusText == "OK") {
+        var byteArray = new Uint8Array(res.json());
+        var blob = new Blob([byteArray], { type: "application/pdf" });
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(blob);
+        } else {
+          var objectUrl = URL.createObjectURL(blob);
+          window.open(objectUrl);
+        }
+        console.log(blob);
+        //window.open("ims-webapp/report/pdf/contract/" + data.workSheetDetailId);
+        console.log(res);
+      }
+    });
+  }
+
+  ArabicNumberToText(num) {
+    return ArabicNumberToText(num);
+  }
+
+  toCommaAndDecimal(num) {
+    return numberWithCommas(parseFloat(num.toFixed(2))) + ".00";
   }
 }
