@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.report.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.slf4j.Logger;
@@ -43,13 +44,22 @@ public class ReportController {
 	// responseOutputStream.write(bytes);
 	// }
 	// }
+	
+	public ReportController() {
+		File f = new File("c:/out"); // initial file (folder)
+		if (!f.exists()) { // check folder exists
+			if (f.mkdirs()) {
+				logger.info("Directory is created!");
+			} else {
+				logger.error("Failed to create directory!");
+			}
+		}
+	}
 
 	@PostMapping("/pdf/contract")
 	@ResponseBody
 	public byte[] pdfContract(@RequestBody ContractBean contract) throws Exception {
-
 		byte[] reportFile = reportService.contractToPDF("Contract", contract); // null
-
 		return reportFile;
 	}
 

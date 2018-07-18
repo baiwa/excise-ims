@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Contract" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d9ae9864-54ec-45f8-94a4-718b68e2cf6a">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="Test" class="java.lang.String"/>
 	<parameter name="Test1" class="java.lang.String"/>
+	<parameter name="loanName" class="java.lang.String"/>
+	<parameter name="numberId" class="java.lang.String"/>
+	<parameter name="dateFixed" class="java.util.Date"/>
+	<parameter name="loanFrom" class="java.lang.String"/>
+	<parameter name="positionName" class="java.lang.String"/>
+	<parameter name="locateAt" class="java.lang.String"/>
+	<parameter name="reasonTxt" class="java.lang.String"/>
+	<parameter name="allowanceCost" class="java.math.BigDecimal"/>
+	<parameter name="rentCost" class="java.math.BigDecimal"/>
+	<parameter name="travelCost" class="java.math.BigDecimal"/>
+	<parameter name="otherCost" class="java.math.BigDecimal"/>
+	<parameter name="sumCost" class="java.math.BigDecimal"/>
+	<parameter name="sumCostTxt" class="java.lang.String"/>
+	<parameter name="day" class="java.math.BigDecimal"/>
+	<parameter name="presentTo" class="java.lang.String"/>
+	<parameter name="sendTo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="loanName" class="java.lang.String"/>
-	<field name="numberId" class="java.lang.String"/>
-	<field name="dateFixed" class="java.util.Date"/>
-	<field name="loanFrom" class="java.lang.String"/>
-	<field name="positionName" class="java.lang.String"/>
-	<field name="locateAt" class="java.lang.String"/>
-	<field name="reasonTxt" class="java.lang.String"/>
-	<field name="allowanceCost" class="java.math.BigDecimal"/>
-	<field name="rentCost" class="java.math.BigDecimal"/>
-	<field name="travelCost" class="java.math.BigDecimal"/>
-	<field name="otherCost" class="java.math.BigDecimal"/>
-	<field name="sumCost" class="java.math.BigDecimal"/>
-	<field name="sumCostTxt" class="java.lang.String"/>
-	<field name="day" class="java.math.BigDecimal"/>
-	<field name="presentTo" class="java.lang.String"/>
-	<field name="sendTo" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -39,10 +39,10 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{numberId}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{numberId}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="78" y="31" width="88" height="20" uuid="c7e2f6e4-5eb6-46b4-8674-c85faeff00b3"/>
@@ -56,7 +56,7 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom" markup="rtf">
+					<textElement textAlignment="Center" verticalAlignment="Bottom" markup="rtf">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
@@ -86,10 +86,10 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{sendTo}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{sendTo}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="257" y="31" width="29" height="20" uuid="ad8fde7e-0fe3-40b9-baf1-e71df7bc1905"/>
@@ -112,51 +112,51 @@
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textField>
-					<reportElement x="230" y="0" width="120" height="20" uuid="2e42bc16-143b-436b-b77d-472880587df0"/>
+					<reportElement x="223" y="0" width="120" height="20" uuid="2e42bc16-143b-436b-b77d-472880587df0"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{positionName}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{positionName}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="381" y="0" width="115" height="20" uuid="df9a519d-e0d4-4f1f-a4f6-735af3cbf034"/>
+					<reportElement x="374" y="0" width="115" height="20" uuid="df9a519d-e0d4-4f1f-a4f6-735af3cbf034"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement>
+					<textElement textAlignment="Center">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{locateAt}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{locateAt}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="20" y="0" width="40" height="20" uuid="360ea0d4-54f2-4f61-ab2c-9262d17bcbc6"/>
+					<reportElement x="13" y="0" width="40" height="20" uuid="360ea0d4-54f2-4f61-ab2c-9262d17bcbc6"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["ข้าพเจ้า"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="60" y="0" width="120" height="20" uuid="fe092ce2-c952-4db4-b99e-49efcd960123"/>
+					<reportElement x="53" y="0" width="120" height="20" uuid="fe092ce2-c952-4db4-b99e-49efcd960123"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{loanName}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{loanName}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="180" y="0" width="50" height="20" uuid="229a3df6-b02e-4290-b8b5-7b52478524ae"/>
+					<reportElement x="173" y="0" width="50" height="20" uuid="229a3df6-b02e-4290-b8b5-7b52478524ae"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="350" y="0" width="31" height="20" uuid="cd22421f-d03b-44dd-aef6-52ac2d6aed68"/>
+					<reportElement x="343" y="0" width="31" height="20" uuid="cd22421f-d03b-44dd-aef6-52ac2d6aed68"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
@@ -174,17 +174,18 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{loanFrom}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{loanFrom}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="0" y="40" width="496" height="60" uuid="05aadb02-18ab-48f6-8ec0-8a9c65328e28"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="40" width="500" height="60" uuid="05aadb02-18ab-48f6-8ec0-8a9c65328e28"/>
+					<box topPadding="0" leftPadding="15" bottomPadding="0" rightPadding="11"/>
 					<textElement textAlignment="Left" verticalAlignment="Top">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{reasonTxt}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{reasonTxt}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="1" y="101" width="120" height="20" uuid="2ab10e93-5c33-42c5-b0c6-cd3640d10799"/>
@@ -204,28 +205,28 @@
 					<textElement verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["-ค่าเบี้ยเลี้ยง"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["- ค่าเบี้ยเลี้ยง"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="12" y="23" width="80" height="20" uuid="bfedad10-82d2-4680-95e4-e28ece9b37c8"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["ค่าที่พัก"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["- ค่าที่พัก"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="13" y="44" width="80" height="20" uuid="657e0bc1-cc1d-48ea-8871-a9ec4660225b"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["ค่าพาหนะ"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["- ค่าพาหนะ"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="13" y="65" width="80" height="20" uuid="c1abea1c-0402-41b2-b12e-1724bdec3b4a"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["ค่าใช้จ่ายอื่น"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["- ค่าใช้จ่ายอื่น"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="23" y="86" width="48" height="20" uuid="19b2902d-faa9-4fb4-b938-6e47c7f3c5eb"/>
@@ -235,14 +236,14 @@
 					<textFieldExpression><![CDATA["ตัวอักษร"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="71" y="86" width="186" height="20" uuid="38461f9f-f3dc-4ee1-b5aa-0bc47a684ee0"/>
+					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="71" y="87" width="186" height="18" forecolor="#000000" uuid="38461f9f-f3dc-4ee1-b5aa-0bc47a684ee0"/>
 					<box topPadding="10">
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{sumCostTxt}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{sumCostTxt}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="257" y="87" width="70" height="20" uuid="eb9581ce-7089-47d3-98d6-0665bb628bf9"/>
@@ -259,31 +260,31 @@
 				</box>
 				<textField>
 					<reportElement x="88" y="1" width="78" height="20" uuid="ad0debe1-dd29-4d6c-9407-0881e3f53388"/>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{allowanceCost}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{allowanceCost}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="88" y="21" width="78" height="20" uuid="9502d489-5280-46f4-bfb8-fd1ff33674d0"/>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{rentCost}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{rentCost}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="88" y="41" width="78" height="20" uuid="982d4455-d185-4aa9-8a3d-630926d633db"/>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{travelCost}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{travelCost}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="88" y="61" width="78" height="19" uuid="2e387c5b-e603-4645-979c-93a1a970605a"/>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{otherCost}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{otherCost}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
@@ -293,25 +294,25 @@
 				</box>
 				<textField>
 					<reportElement x="88" y="3" width="78" height="20" uuid="29b5e9d1-5d97-47b5-a6f5-e346d9fafbfe"/>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{sumCost}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{sumCost}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="459">
-			<textField>
-				<reportElement x="29" y="-1" width="500" height="131" uuid="d9ff416a-f13d-4eb6-881d-96beeb3a5cf4"/>
-				<box>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="29" y="-1" width="500" height="131" uuid="d9ff416a-f13d-4eb6-881d-96beeb3a5cf4"/>
+				<box topPadding="4" leftPadding="11" bottomPadding="0" rightPadding="11">
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="TH Sarabun New" size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ข้าพเจ้าสัญญาว่าจะปฏิบัติตามระเบียบของทางราชการทุกประการ และจะนำใบสำคัญคู่จ่ายที่ถูกต้อง พร้อมทั้งเงินเหลือจ่าย (ถ้ามี)ส่งภายในกำหนดไว้ในระเบียบการจ่ายเงินจากคลัง คือภายใน"  + $P{Test1}+"  วัน นับแต่วันที่เดินทางกลับมาถึง ถ้าข้าพเจ้าไม่ส่งตามกำหนดข้าพเจ้ายินยอมให้หักเงินเดือน ค่าจ้าง เบี้ยหวัด บำเหน็จ บำนาญ หรือเงินอื่นใดที่ข้าพเจ้าพึงได้รับจากทางราชการ ชดใช้จำนวนเงินที่ยืมไปจนครบถ้วนได้นที"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["	ข้าพเจ้าสัญญาว่าจะปฏิบัติตามระเบียบของทางราชการทุกประการ และจะนำใบสำคัญคู่จ่ายที่ถูกต้อง พร้อมทั้งเงินเหลือจ่าย (ถ้ามี)ส่งภายในกำหนดไว้ในระเบียบการจ่ายเงินจากคลัง คือภายใน "  + $P{day}+"  วัน นับแต่วันที่เดินทางกลับมาถึง ถ้าข้าพเจ้าไม่ส่งตามกำหนดข้าพเจ้ายินยอมให้หักเงินเดือน ค่าจ้าง เบี้ยหวัด บำเหน็จ บำนาญ หรือเงินอื่นใดที่ข้าพเจ้าพึงได้รับจากทางราชการ ชดใช้จำนวนเงินที่ยืมไปจนครบถ้วนได้ทันที"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="40" y="80" width="48" height="20" uuid="c6ddf804-cfc9-4ee1-9e1e-d05844194715"/>
@@ -325,7 +326,7 @@
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
-				<textElement verticalAlignment="Bottom">
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
@@ -349,7 +350,7 @@
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
-				<textElement verticalAlignment="Bottom">
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
@@ -373,10 +374,10 @@
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
-				<textElement verticalAlignment="Bottom">
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{loanName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{loanName}]]></textFieldExpression>
 			</textField>
 			<frame>
 				<reportElement x="29" y="130" width="500" height="220" uuid="924a6320-27ab-4b1f-9b47-64fdfdf0c394"/>
@@ -398,7 +399,7 @@
 					<textElement verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{presentTo}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{presentTo}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="186" y="0" width="21" height="20" uuid="48ab0955-3bf8-46c9-b808-83fc4fd86136"/>
@@ -419,10 +420,10 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{sumCost}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{sumCost}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="439" y="20" width="32" height="20" uuid="ca5169b5-f851-4c39-8771-dd90eb368244"/>
@@ -436,10 +437,10 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{sumCostTxt}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{sumCostTxt}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="18" y="74" width="48" height="20" uuid="fbf1135a-e01c-4d85-9c0f-477f73ac865d"/>
@@ -453,7 +454,7 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
@@ -470,14 +471,14 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="214" y="110" width="64" height="20" uuid="3d3da4ab-eb11-4d14-9369-d8cf64898f4c"/>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["คำอนุมัติ"]]></textFieldExpression>
@@ -494,10 +495,10 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{sumCost}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{sumCost}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="319" y="145" width="32" height="20" uuid="49c13764-52f8-449a-a26d-d8abe7b88173"/>
@@ -511,10 +512,10 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{sumCostTxt}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{sumCostTxt}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="12" y="190" width="59" height="20" uuid="c05df759-4610-4ecd-aa88-f97724a2aa90"/>
@@ -528,7 +529,7 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
@@ -545,7 +546,7 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
@@ -557,8 +558,8 @@
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textField>
-					<reportElement x="204" y="0" width="64" height="20" uuid="04e26b4b-96fe-47d1-805b-56edbabb9e31"/>
-					<textElement verticalAlignment="Bottom">
+					<reportElement x="213" y="0" width="64" height="20" uuid="04e26b4b-96fe-47d1-805b-56edbabb9e31"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["ใบรับเงิน"]]></textFieldExpression>
@@ -575,10 +576,10 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{sumCost}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{sumCost}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="207" y="30" width="32" height="20" uuid="491a216c-833f-418a-9c76-8bbbb1b8759d"/>
@@ -592,13 +593,13 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{sumCostTxt}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{sumCostTxt}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="6" y="50" width="86" height="20" uuid="03e8e7f1-171b-4658-9a71-6c995ec5ae87"/>
+					<reportElement x="6" y="50" width="115" height="20" uuid="03e8e7f1-171b-4658-9a71-6c995ec5ae87"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
@@ -616,31 +617,31 @@
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="230" y="71" width="48" height="20" uuid="1345cdd3-d5b3-4902-bc85-3107f26f1524"/>
+					<reportElement x="230" y="72" width="48" height="20" uuid="1345cdd3-d5b3-4902-bc85-3107f26f1524"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["ผู้รับเงิน"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="284" y="70" width="32" height="20" uuid="5a35f30f-0333-4eb5-a0f5-2502bc4aa66d"/>
+					<reportElement x="284" y="72" width="32" height="20" uuid="5a35f30f-0333-4eb5-a0f5-2502bc4aa66d"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["วันที่"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="316" y="70" width="155" height="20" uuid="10f43173-1258-4d0a-8b4c-4aac04fb357f"/>
+					<reportElement x="316" y="72" width="155" height="20" uuid="10f43173-1258-4d0a-8b4c-4aac04fb357f"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
-					<textElement verticalAlignment="Bottom">
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>

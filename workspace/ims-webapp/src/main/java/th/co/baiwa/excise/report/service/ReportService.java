@@ -11,8 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -20,10 +23,13 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.excise.report.bean.ExampleBean;
+import th.co.baiwa.excise.report.controller.ReportController;
 import th.co.baiwa.excise.report.bean.ContractBean;
 
 @Service
 public class ReportService {
+
+	private Logger logger = LoggerFactory.getLogger(ReportService.class);
 
 	public byte[] exampleToPDF() throws IOException, JRException {
 		String reportName = "Example";
@@ -33,7 +39,7 @@ public class ReportService {
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, "garuda-emblem.jpg"));
 		List<ExampleBean> exampleList = new ArrayList<>();
 		ExampleBean exBean = null;
-		for (int i = 0; i < 10000; i++) {
+		for (int i = 0; i < 29; i++) {
 			exBean = new ExampleBean();
 			exBean.setData1(String.valueOf(i + 1));
 			exBean.setData2(new BigDecimal(i + 1));
@@ -58,15 +64,29 @@ public class ReportService {
 		String reportName = name != null ? name : "Example";
 
 		Map<String, Object> params = new HashMap<>();
-		// params.put("name", "ผมชื่อ เฟรม แฟน น้องมุ๊ก ข้อความทดสอบ ");
-		// params.put("positionName", "เทพพระเจ้า");
-		// //ReportUtils.getResourceFile(PATH.IMAGE_PATH, "garuda-emblem.jpg")
+		params.put("allowanceCost", contract.getAllowanceCost());
+		params.put("rentCost", contract.getRentCost());
+		params.put("travelCost", contract.getTravelCost());
+		params.put("otherCost", contract.getOtherCost());
+		params.put("sumCost", contract.getSumCost());
+		params.put("sumCostTxt", contract.getSumCostTxt());
+		params.put("numberId", contract.getNumberId());
+		params.put("loanName", contract.getLoanName());
+		params.put("loanFrom", contract.getLoanFrom());
+		params.put("day", contract.getDay());
+		logger.info(contract.getDay().toString());
+		params.put("dateFixed", contract.getDateFixed());
+		params.put("locateAt", contract.getLocateAt());
+		params.put("positionName", contract.getPositionName());
+		params.put("presentTo", contract.getPresentTo());
+		params.put("reasonTxt", contract.getReasonTxt());
+		params.put("sendTo", contract.getSendTo());
 
-		List<ContractBean> conList = new ArrayList<>();
-		contract.setDateFixed(new Date());
-		conList.add(contract);
-		
-		JasperPrint jasperPrint = ReportUtils.exportReport(reportName, params, new JRBeanCollectionDataSource(conList)); // JRBeanCollectionDataSource(exampleList)
+//		List<ContractBean> conList = new ArrayList<>();
+//		contract.setDateFixed(new Date());
+//		conList.add(contract);
+
+		JasperPrint jasperPrint = ReportUtils.exportReport(reportName, params, new JREmptyDataSource()); // JRBeanCollectionDataSource(exampleList)
 		// JasperPrint jasperPrint = ReportUtils.exportReport(jasperFile, params, new
 		// JREmptyDataSource());
 

@@ -139,7 +139,7 @@
             ระเบียบการจ่ายเงินจากคลัง คือภายใน
           </div>
           <div class="four wide field">
-            <input type="text" name="day" [(ngModel)]="body.day" required>
+            <input type="number" min="0" name="day" [(ngModel)]="body.day" required>
           </div>
           <p> วัน นับแต่วันที่เดินทางกลับมาถึง ถ้าข้าพเจ้าไม่ส่งตามกำหนด</p>
         </div>
@@ -167,7 +167,7 @@
           <div class="one wide field"></div>
           <div class="six wide field">
             <label class="custom-label-w-18">(</label>
-            <input type="text" name="loanNameShw" [ngModel]="body.loanName" style="width: 100%; text-align: center">
+            <input type="text" name="loanNameShw" [ngModel]="body.loanName" style="width: 100%; text-align: center" disabled>
             <label></label>
           </div>
           <div class="two wide field">
