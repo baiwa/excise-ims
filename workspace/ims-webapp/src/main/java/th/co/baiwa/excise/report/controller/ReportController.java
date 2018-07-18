@@ -48,7 +48,7 @@ public class ReportController {
 	@ResponseBody
 	public byte[] pdfContract(@RequestBody ContractBean contract) throws Exception {
 
-		byte[] reportFile = reportService.contractToPDF("flame1", contract); // null
+		byte[] reportFile = reportService.contractToPDF("Contract", contract); // null
 
 		return reportFile;
 	}
