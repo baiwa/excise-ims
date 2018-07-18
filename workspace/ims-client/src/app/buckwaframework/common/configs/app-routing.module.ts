@@ -258,6 +258,10 @@ const routes: Routes = [
     path: "int09",
     loadChildren: "../../project/internal-audit/int09/int09.module#Int09Module",
     canActivate: [AuthGuard]
+  }, {
+    path: "int10",
+    loadChildren: "../../project/internal-audit/int10/int10.module#Int10Module",
+    canActivate: [AuthGuard]
   },
 
   {
@@ -292,4 +296,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
