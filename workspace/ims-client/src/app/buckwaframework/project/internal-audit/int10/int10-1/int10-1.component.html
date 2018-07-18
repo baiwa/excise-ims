@@ -70,7 +70,7 @@
                 <label>ภาษีจากการประเมิน</label>
               </div>
               <div class="five wide field ">
-                <input type="text" placeholder="" value="">
+                <input type="number" placeholder="" [(ngModel)]="a">
               </div>
             </div>
 
@@ -85,7 +85,7 @@
                 <label>เบี้ยปรับ</label>
               </div>
               <div class="five wide field ">
-                <input type="text" placeholder="" value="">
+                <input type="number" placeholder="" [(ngModel)]="b" ng-change="updateTotal();">
               </div>
             </div>
 
@@ -101,7 +101,7 @@
                 </label>
               </div>
               <div class="five wide field ">
-                <input type="text" placeholder="" value="">
+                <input type="number" placeholder="" [(ngModel)]="c">
               </div>
             </div>
 
@@ -116,7 +116,7 @@
                 </label>
               </div>
               <div class="five wide field ">
-                <input type="text" placeholder="" value="">
+                <input type="number" placeholder="" value="{{a+b+c}}">              
               </div>
             </div>
           <br>

@@ -9,6 +9,9 @@ declare var $: any;
 })
 export class Int101Component implements OnInit {
 
+  a : number =0;
+  b : number =0;
+  c : number =0;
   constructor() { }
 
   ngOnInit() {
@@ -22,6 +25,8 @@ export class Int101Component implements OnInit {
       type: "month",
       text: TextDateTH
     });
+
+    
   }
 
 }
