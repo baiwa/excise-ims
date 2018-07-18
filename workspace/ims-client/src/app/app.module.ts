@@ -29,6 +29,7 @@ import { DropdownComponent } from "./buckwaframework/common/components/dropdown.
 import { HomePage } from "./buckwaframework/project/pages/home/home";
 import { LoginPage } from "./buckwaframework/project/pages/login/login";
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,7 @@ import { LoginPage } from "./buckwaframework/project/pages/login/login";
     DropdownComponent,
     TranslatePipe,
     HomePage,
-    LoginPage
+    LoginPage  
   ],
   imports: [
     BrowserModule,
