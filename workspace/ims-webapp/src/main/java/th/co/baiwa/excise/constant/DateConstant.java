@@ -12,9 +12,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.ws.CurrentDateService;
 
+@Service
 public class DateConstant {
 
 	public static final Locale LOCAL_TH = new Locale("th", "TH");
@@ -22,10 +27,16 @@ public class DateConstant {
 //	public static final String[] MONTH_NAMES = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
 	public static final String YYYYMMDD = "yyyyMMdd";
 	
-	public static void main(String[] args) {
-		List<String> monthList = startBackDate(new Date(), 6);
+	@Autowired
+	private static CurrentDateService currentDateService;
+	
+	
+	public static Date getExcideDate() {
+		Date exciseDate = currentDateService.exciseSystemDate();
+		
+		return exciseDate;
 	}
-
+	
 	public static List<String> startBackDate(Date date, int backDate) {
 		List<String> monthList = new ArrayList<>();
 		Calendar calendar = Calendar.getInstance(LOCAL_TH);

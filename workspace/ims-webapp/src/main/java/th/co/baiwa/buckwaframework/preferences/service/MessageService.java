@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.dao.MessageDao;
+import th.co.baiwa.buckwaframework.preferences.persistence.dao.SEQDao;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 
 @Service("messageService")
@@ -17,6 +18,9 @@ public class MessageService {
 	
 	@Autowired
 	private MessageDao messageDao;
+	
+	@Autowired
+	private SEQDao seqDao;
 	
 	public List<Message> getMessageList(Integer start, Integer length, Message message) {
 		logger.info("getMessageAll");
@@ -38,7 +42,7 @@ public class MessageService {
 	
 	public Message insertMessage(Message message) {
 		logger.info("insertMessage");
-		
+		message.setMessageId(seqDao.autoNumberRunningBySeqName("SYS_MESSAGE_SEQ").longValue());
 		Long messageId = messageDao.insert(message);
 		message.setMessageId(messageId);
 		

@@ -112,6 +112,7 @@ public class MessageDao {
 		logger.debug("insert");
 		
 		String sql = SqlGeneratorUtils.genSqlInsert("sys_message", Arrays.asList(
+			"MESSAGE_ID",
 			"message_code",
 			"message_en",
 			"message_th",
@@ -121,6 +122,7 @@ public class MessageDao {
 		));
 		
 		Long key = commonJdbcDao.executeInsertWithKeyHolder(sql.toString(), new Object[] {
+			message.getMessageId(),
 			message.getMessageCode(),
 			message.getMessageEn(),
 			message.getMessageTh(),
