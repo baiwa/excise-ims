@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="N_mis01-2" pageWidth="595" pageHeight="842" columnWidth="482" leftMargin="85" rightMargin="28" topMargin="28" bottomMargin="85" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="Angsana New" fontSize="18" isBold="true"/>
+	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="Angsana New" fontSize="14"/>
+	<style name="data" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="Angsana New" fontSize="16">
+		<box>
+			<pen lineWidth="0.0" lineStyle="Dotted"/>
+			<bottomPen lineWidth="3.0" lineStyle="Dotted"/>
+		</box>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<pageHeader>
+		<band height="699" splitType="Stretch">
+			<image>
+				<reportElement x="195" y="0" width="62" height="70" uuid="90ca04f2-82d8-4e03-92ba-af7e35dc179c"/>
+				<imageExpression><![CDATA["C:/Users/toffee/Desktop/img/logo.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="Topic" x="377" y="50" width="76" height="27" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ตส. ๐๑-๐๑"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Topic" x="-1" y="78" width="454" height="30" uuid="861f16b3-f966-4bff-b95f-486a25fe61c6"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["บันทึกผลการวิเคราะห์การชำระภาษีสรรพสามิต"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="-1" y="108" width="21" height="18" uuid="17b21979-121c-4d0d-a216-bc079f6837b2"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ราย"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="20" y="108" width="198" height="18" uuid="a2a8c9f4-2834-4e20-804f-3aa5024dced2"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="-1" y="127" width="100" height="18" uuid="5a466d6f-40b0-4dd6-a21b-47c8822c47be"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ทะเบียนสรรพสามิตเลขที่"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="99" y="127" width="354" height="18" uuid="5f69a886-39c0-4836-9ecc-01463e8c08ef"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="-1" y="145" width="21" height="18" uuid="16d3018e-70cf-4fbc-9469-4843601d07e7"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ที่อยู่"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="20" y="145" width="433" height="18" uuid="accbba75-3070-44ac-a9c6-97fa0ae55b2b"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="-1" y="163" width="102" height="18" uuid="219b9b45-9c33-48e1-9fc6-29ee67c1ad84"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["รอบระยะเวลาที่ตรวจสอบ"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="101" y="163" width="352" height="18" uuid="96c6a242-5b28-46bb-9d92-a0946cd6b64a"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="-1" y="289" width="23" height="18" uuid="ebb92fc5-4fe0-4064-bbd9-c2f09491f9e3"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["เรียน"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="203" y="416" width="117" height="18" uuid="0490a3f8-51ad-474c-a952-f35e050dfa6c"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="203" y="434" width="117" height="18" uuid="e77db48d-94b8-4f18-9caa-d1f26c69561c"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="197" y="434" width="6" height="18" uuid="239ea194-307a-49fe-a910-42af84351c40"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["("]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="320" y="434" width="6" height="18" uuid="62937ab8-692c-4526-90a1-0ba170c166e1"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="221" y="488" width="6" height="18" uuid="646cd5c3-8f95-45ef-8052-f64588c53069"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="286" y="488" width="6" height="18" uuid="c3ff5d06-7771-4b2b-a6b4-d089079e5b1f"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="227" y="488" width="59" height="18" uuid="5316fe6b-e3d5-41ae-95b5-3912fa7b5d02"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="292" y="488" width="34" height="18" uuid="9724b427-882d-4663-8041-8d7b8b8e5ec3"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="194" y="488" width="27" height="18" uuid="c6e1a3be-f9df-495c-a7e1-b8d214edfcf9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+			</textField>
+			<textField>
+				<reportElement x="139" y="380" width="10" height="18" uuid="a8398076-939d-44ee-9b46-c0249e06c1a4"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="139" y="398" width="10" height="18" uuid="74c7e816-1599-4b15-bcfa-fa62ae36b086"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="169" y="380" width="41" height="18" uuid="a127d463-e909-406d-a573-d8bc3580efe5"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["อนุมัติ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="169" y="398" width="21" height="18" uuid="dc704157-c83c-44c7-bf35-249f9e2b541e"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["อื่นๆ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="218" y="108" width="60" height="18" uuid="83db931b-d505-4a18-bfcd-bf4a215c5a2e"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ประเภทกิจการ"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="278" y="108" width="175" height="18" uuid="83d07c38-4f52-4630-ba94-22e694e2bf39"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="-1" y="181" width="102" height="18" uuid="de7160cc-a9b3-4176-8509-7a1c685321e7"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ข้อมูลที่ใช้ในการวิเคราะห์"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="31" y="217" width="20" height="18" uuid="87233aa5-4b43-4fe7-8f10-21cb35d998cc"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["(๒)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="31" y="235" width="20" height="18" uuid="f11471a1-1669-4f0f-af86-5e977cf7f38d"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["(๓)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="31" y="253" width="20" height="18" uuid="ab96b537-4371-4fdc-9af5-de99122e43c9"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["(๔)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="31" y="271" width="20" height="18" uuid="c0943149-7509-438d-81c1-bb4fde79da8b"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["(๕)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="31" y="199" width="20" height="18" uuid="7d496e68-32a3-4517-8306-a49a2e60ce46"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["(๑)"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="51" y="199" width="318" height="18" uuid="dd2ac461-ce0c-4784-84de-962db9143587"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="51" y="217" width="318" height="18" uuid="a074c32c-f89f-4541-b51c-77ba240b840a"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="51" y="235" width="318" height="18" uuid="9f3f2f76-f94b-4eba-93d4-932231097575"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="51" y="253" width="318" height="18" uuid="0dd6ae32-4980-4068-ba8c-e11d5518b740"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="51" y="271" width="318" height="18" uuid="3d9d7d90-8c45-445d-8eda-b48dd0798766"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="22" y="289" width="214" height="18" uuid="8c8f3b39-e28d-4775-b050-c00b25941753"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="31" y="307" width="239" height="18" uuid="afee14af-c60a-458b-b708-8af1bd74e6f0"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ตามที่ได้ทำการวิเคราะห์ข้อมูลรายดังกล่าวข้างต้นแล้วปรากฏว่า"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="270" y="307" width="182" height="18" uuid="00f48b89-1f94-475d-ae88-d2487f5b8fce"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="0" y="325" width="453" height="18" uuid="2ec754b3-d9b2-49ba-a01b-c4482bfeba14"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="0" y="343" width="453" height="18" uuid="0f11753d-db64-4f53-98c1-5a5cc11fe4c3"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="0" y="362" width="453" height="18" uuid="9dcf8162-b0e2-4211-b438-d921193dfe5f"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="31" y="380" width="59" height="18" uuid="5eba1b0a-ed24-4cbd-988d-16d31ba6afe8"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["จึงเห็นสมควร"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="190" y="398" width="130" height="18" uuid="1cf7f39b-a1fc-4284-8deb-1c7f45a7bab2"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="320" y="416" width="41" height="18" uuid="2fb54762-c421-41d2-b58f-7dfb33e8b7f6"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ผู้วิเคาระห์"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="203" y="452" width="117" height="18" uuid="b12226a9-87f9-466c-a8bb-7c7dd88cda46"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="203" y="470" width="117" height="18" uuid="37ec4205-0ff8-4ecc-ab6e-7e78da44ccad"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="197" y="470" width="6" height="18" uuid="c4e256d7-d3b1-450f-aec0-2fec889822a3"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["("]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="320" y="470" width="6" height="18" uuid="ea30fbbd-300f-4859-a7ce-9437c8eeaa8d"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="320" y="452" width="41" height="18" uuid="87ee2ff2-0a47-432b-a988-b63f80cac57a"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ผู้ควบคุม"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="169" y="506" width="123" height="18" uuid="c7512b6b-9d08-4b7a-90bc-dc20f9345be9"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["คำสั่งผู้บังคับบัญชาตามสายงาน"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="31" y="524" width="10" height="18" uuid="1fba6b77-0f6f-4234-986c-ca822279668c"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="50" y="524" width="41" height="18" uuid="8ae10ffb-7964-43ee-b441-faeb8cc6a84e"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["อนุมัติ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="121" y="524" width="10" height="18" uuid="ab6b0914-56d5-47dd-a23b-ec39f558e2df"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="140" y="524" width="41" height="18" uuid="06fcc8be-bd25-4aad-b52e-5b468576bb11"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ไม่อนุมัติ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="50" y="542" width="168" height="18" uuid="8bfed156-db4d-4563-a5e1-5ceb70b59a39"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ให้ดำนวนการขออนุมัติออกหนังสือเรียกได้"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="203" y="560" width="117" height="18" uuid="54ad903c-cea7-4722-aa1a-53de77fa9658"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="203" y="578" width="117" height="18" uuid="020f974f-001d-4e94-9b39-249bb0cdd4fb"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="197" y="578" width="6" height="18" uuid="abf0babc-a7c3-4a73-a264-4a4536be82e7"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["("]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="320" y="578" width="6" height="18" uuid="bd55f0cc-d44a-45f6-9b60-5c8cfc9f1a58"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="236" y="596" width="84" height="18" uuid="33c83672-b356-43dd-80c9-469ecb06ea2b"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="198" y="596" width="38" height="18" uuid="fa03a30a-6d62-4913-a0c0-f08de0cab0d1"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TextDetail" x="198" y="614" width="38" height="18" uuid="547c59c2-6446-4898-94c8-c64a52c717db"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["วันเดือนปี"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="data" x="236" y="614" width="84" height="18" uuid="d4cf72c7-a234-42cb-8e79-1534d6224b9c"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+			</textField>
+		</band>
+	</pageHeader>
+</jasperReport>
