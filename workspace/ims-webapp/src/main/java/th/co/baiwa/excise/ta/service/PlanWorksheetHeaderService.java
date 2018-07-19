@@ -313,4 +313,8 @@ public class PlanWorksheetHeaderService {
 		return planWorksheetHeaderDao.queryProductTypeList(planWorksheetHeader);
 	}
 
+	public List<PlanWorksheetHeader> queryPlanWorksheetHeaderCriteria(PlanWorksheetHeader criteria) {
+		return planWorksheetHeaderDao.queryPlanWorksheetHeaderCriteria(criteria);
+	}
+
 }

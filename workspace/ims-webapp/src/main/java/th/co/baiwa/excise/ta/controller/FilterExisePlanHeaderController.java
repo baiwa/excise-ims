@@ -72,5 +72,13 @@ public class FilterExisePlanHeaderController {
 		}
 		return msg;
 	}
+	
+	@GetMapping("/apiList")
+	@ResponseBody
+	public ResponseDataTable<PlanWorksheetHeaderDetail> apiList(@ModelAttribute RequestFilterMapping vo) {
+		logger.debug("analysNumber : " + vo.getAnalysNumber());
+		System.out.println(vo.getAnalysNumber());
+		return planWorksheetHeaderService.queryPlanWorksheetHeaderDetil(vo);
+	}
 
 }
