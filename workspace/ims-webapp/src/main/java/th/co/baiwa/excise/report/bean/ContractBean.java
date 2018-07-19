@@ -88,6 +88,14 @@ public class ContractBean {
 		this.sumCostTxt = sumCostTxt;
 	}
 
+	public String getReasonTxt() {
+		return reasonTxt;
+	}
+
+	public void setReasonTxt(String reasonTxt) {
+		this.reasonTxt = reasonTxt;
+	}
+
 	public BigDecimal getAllowanceCost() {
 		return allowanceCost;
 	}
@@ -142,14 +150,6 @@ public class ContractBean {
 
 	public void setDateFixed(Date dateFixed) {
 		this.dateFixed = dateFixed;
-	}
-
-	public String getReasonTxt() {
-		return reasonTxt;
-	}
-
-	public void setReasonTxt(String reasonTxt) {
-		this.reasonTxt = reasonTxt;
 	}
 
 }

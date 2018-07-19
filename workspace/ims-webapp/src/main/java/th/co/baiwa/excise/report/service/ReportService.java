@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
+import th.co.baiwa.buckwaframework.common.util.ThaiNumberUtils;
 import th.co.baiwa.excise.report.bean.ExampleBean;
 import th.co.baiwa.excise.report.controller.ReportController;
 import th.co.baiwa.excise.report.bean.ContractBean;
@@ -63,18 +65,21 @@ public class ReportService {
 	public byte[] contractToPDF(String name, ContractBean contract) throws IOException, JRException {
 		String reportName = name != null ? name : "Example";
 
+		DecimalFormat formatter = new DecimalFormat("#,###.00");
+		
+		contract.setSumCostTxt(ThaiNumberUtils.toThaiBaht(contract.getSumCost().toString()));
 		Map<String, Object> params = new HashMap<>();
-		params.put("allowanceCost", contract.getAllowanceCost());
-		params.put("rentCost", contract.getRentCost());
-		params.put("travelCost", contract.getTravelCost());
-		params.put("otherCost", contract.getOtherCost());
-		params.put("sumCost", contract.getSumCost());
+		params.put("day", ThaiNumberUtils.toThaiNumber(formatter.format(contract.getDay().doubleValue())));
+		params.put("allowanceCost", ThaiNumberUtils.toThaiNumber(formatter.format(contract.getAllowanceCost().doubleValue())));
+		params.put("rentCost", ThaiNumberUtils.toThaiNumber(formatter.format(contract.getRentCost().doubleValue())));
+		params.put("travelCost", ThaiNumberUtils.toThaiNumber(formatter.format(contract.getTravelCost().doubleValue())));
+		params.put("otherCost", ThaiNumberUtils.toThaiNumber(formatter.format(contract.getOtherCost().doubleValue())));
+		params.put("sumCost", ThaiNumberUtils.toThaiNumber(formatter.format(contract.getSumCost().doubleValue())));
+		
 		params.put("sumCostTxt", contract.getSumCostTxt());
 		params.put("numberId", contract.getNumberId());
 		params.put("loanName", contract.getLoanName());
 		params.put("loanFrom", contract.getLoanFrom());
-		params.put("day", contract.getDay());
-		logger.info(contract.getDay().toString());
 		params.put("dateFixed", contract.getDateFixed());
 		params.put("locateAt", contract.getLocateAt());
 		params.put("positionName", contract.getPositionName());

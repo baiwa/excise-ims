@@ -229,12 +229,12 @@
           <td>{{d.name}} {{d.lastName}}</td>
           <td>{{d.position}}</td>
           <td>{{d.allowanceDate}}</td>
-          <td>{{numFunc(d.allowanceCost)}}</td>
+          <td>{{df.format(d.allowanceCost)}}</td>
           <td>{{d.rentDate}}</td>
-          <td>{{numFunc(d.rentCost)}}</td>
-          <td>{{numFunc(d.travelCost)}}</td>
-          <td>{{numFunc(d.otherCost)}}</td>
-          <td>{{numFunc(d.sumCost)}}</td>
+          <td>{{df.format(d.rentCost)}}</td>
+          <td>{{df.format(d.travelCost)}}</td>
+          <td>{{df.format(d.otherCost)}}</td>
+          <td>{{df.format(d.sumCost)}}</td>
           <td>{{d.note}}</td>
           <td>
             <button *ngIf="!view" class="ui mini orange button" type="button" (click)="editData(i)">แก้ไข</button>
@@ -246,12 +246,12 @@
             <b>รวม</b>
           </td>
           <td></td>
-          <td>{{numFunc(sum.allowance)}}</td>
+          <td>{{df.format(sum.allowance)}}</td>
           <td></td>
-          <td>{{numFunc(sum.rent)}}</td>
-          <td>{{numFunc(sum.travel)}}</td>
-          <td>{{numFunc(sum.etc)}}</td>
-          <td>{{numFunc(sum.total)}}</td>
+          <td>{{df.format(sum.rent)}}</td>
+          <td>{{df.format(sum.travel)}}</td>
+          <td>{{df.format(sum.etc)}}</td>
+          <td>{{df.format(sum.total)}}</td>
           <td></td>
           <td></td>
         </tr>

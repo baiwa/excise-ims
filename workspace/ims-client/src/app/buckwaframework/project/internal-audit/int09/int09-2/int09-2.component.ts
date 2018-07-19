@@ -5,7 +5,7 @@ import { TravelCostDetail } from "app/buckwaframework/common/models/travelcostde
 import { AjaxService } from "../../../../common/services";
 import { TravelService } from "../../../../common/services/travel.service";
 import {
-  numberWithCommas,
+  DecimalFormat,
   ArabicNumberToText,
   TextDateTH,
   formatter
@@ -37,11 +37,15 @@ export class Int092Component implements OnInit {
 
   body: Contract;
 
+  df: any;
+
   constructor(
     private route: ActivatedRoute,
     private ajax: AjaxService,
     private travelService: TravelService
-  ) {}
+  ) {
+    this.df = new DecimalFormat("#,###.00");
+  }
 
   ngOnInit() {
     $("#calendar").calendar({
@@ -88,6 +92,6 @@ export class Int092Component implements OnInit {
   }
 
   toCommaAndDecimal(num) {
-    return numberWithCommas(parseFloat(num.toFixed(2))) + ".00";
+    return this.df.format(num.toString());
   }
 }

@@ -109,6 +109,7 @@ public class ThaiNumberUtilsTest {
 	@Test
 	public void test_9_123_456_Baht() {
 		assertEquals("เก้าล้านหนึ่งแสนสองหมื่นสามพันสี่ร้อยห้าสิบหกบาท", ThaiNumberUtils.toThaiBaht("9123456"));
+		System.out.println(ThaiNumberUtils.toThaiBaht("9123456"));
 	}
 	
 	@Test

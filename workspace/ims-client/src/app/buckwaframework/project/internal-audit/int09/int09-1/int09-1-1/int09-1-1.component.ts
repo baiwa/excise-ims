@@ -11,7 +11,8 @@ import {
   digit,
   numberWithCommas,
   TextDateTH,
-  formatter
+  formatter,
+  DecimalFormat
 } from "../../../../../common/helper";
 import { TravelService } from "../../../../../common/services/travel.service";
 declare var $: any;
@@ -43,7 +44,7 @@ export class Int0911Component implements OnInit, AfterViewInit {
   selectedTop: string;
   sent: boolean;
 
-  numFunc: any;
+  df: any;
 
   constructor(
     private ajax: AjaxService,
@@ -52,7 +53,6 @@ export class Int0911Component implements OnInit, AfterViewInit {
     private msg: MessageBarService,
     private travelService: TravelService
   ) {
-    this.numFunc = numberWithCommas;
     this.sum = {
       allowance: 0,
       rent: 0,
@@ -77,6 +77,8 @@ export class Int0911Component implements OnInit, AfterViewInit {
     this.selectedTop = ""; // ''
     this.hdr.startDate = null;
     this.hdr.endDate = null;
+    this.df = new DecimalFormat("#,###.00");
+    console.log(this.df.format(100000));
   }
 
   ngOnInit() {

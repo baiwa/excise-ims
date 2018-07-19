@@ -11,13 +11,13 @@
 	<parameter name="positionName" class="java.lang.String"/>
 	<parameter name="locateAt" class="java.lang.String"/>
 	<parameter name="reasonTxt" class="java.lang.String"/>
-	<parameter name="allowanceCost" class="java.math.BigDecimal"/>
-	<parameter name="rentCost" class="java.math.BigDecimal"/>
-	<parameter name="travelCost" class="java.math.BigDecimal"/>
-	<parameter name="otherCost" class="java.math.BigDecimal"/>
-	<parameter name="sumCost" class="java.math.BigDecimal"/>
+	<parameter name="allowanceCost" class="java.lang.String"/>
+	<parameter name="rentCost" class="java.lang.String"/>
+	<parameter name="travelCost" class="java.lang.String"/>
+	<parameter name="otherCost" class="java.lang.String"/>
+	<parameter name="sumCost" class="java.lang.String"/>
 	<parameter name="sumCostTxt" class="java.lang.String"/>
-	<parameter name="day" class="java.math.BigDecimal"/>
+	<parameter name="day" class="java.lang.String"/>
 	<parameter name="presentTo" class="java.lang.String"/>
 	<parameter name="sendTo" class="java.lang.String"/>
 	<queryString>
@@ -27,7 +27,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="342" splitType="Stretch">
+		<band height="341" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<frame>
 				<reportElement positionType="FixRelativeToBottom" x="324" y="20" width="205" height="80" uuid="5bf3b599-8c04-4311-bcc2-5795d2ac10bb"/>
@@ -236,21 +236,21 @@
 					<textFieldExpression><![CDATA["ตัวอักษร"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="71" y="87" width="186" height="18" forecolor="#000000" uuid="38461f9f-f3dc-4ee1-b5aa-0bc47a684ee0"/>
-					<box topPadding="10">
-						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font fontName="TH Sarabun New" size="14"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{sumCostTxt}]]></textFieldExpression>
-				</textField>
-				<textField>
 					<reportElement x="257" y="87" width="70" height="20" uuid="eb9581ce-7089-47d3-98d6-0665bb628bf9"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="TH Sarabun New" size="14" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["รวมเงิน (บาท)"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="71" y="87" width="187" height="20" uuid="8198fb31-3489-41a9-803b-4e03e22973a4"/>
+					<box>
+						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="TH Sarabun New" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{sumCostTxt}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
