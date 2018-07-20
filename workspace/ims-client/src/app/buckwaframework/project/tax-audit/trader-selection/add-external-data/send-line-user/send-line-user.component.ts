@@ -222,7 +222,7 @@ export class SendLineUserComponent implements OnInit {
   }
 
   linkToDetail() {
-    this.router.navigate(["/add-data"], {
+    this.router.navigate(["/add-external-data/add-data"], {
       queryParams: {
         id: (<HTMLInputElement>document.getElementById("exciseId")).value,
         num: this.analysNumber
