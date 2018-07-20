@@ -79,6 +79,8 @@ public class FilterExisePlanHeaderController {
 		logger.debug("analysNumber : " + vo.getAnalysNumber());
 		System.out.println(vo.getAnalysNumber());
 		return planWorksheetHeaderService.queryPlanWorksheetHeaderDetil(vo);
+	}
+	
 	@PostMapping("/getDataExciseIdList")
 	@ResponseBody
 	public List<Object> queryExciseIdFlagSDataList(@ModelAttribute PlanWorksheetHeaderDetail vo) {
