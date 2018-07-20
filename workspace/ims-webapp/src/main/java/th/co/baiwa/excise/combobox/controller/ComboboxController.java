@@ -38,7 +38,7 @@ public class ComboboxController {
 	
 	@PostMapping("/getAnalysNumber")
 	@ResponseBody
-	public List<String> getAnalizeNumber() {
+	public List<String> getAnalysNumber() {
 		List<String> li = planWorksheetHeaderService.queryAnalysNumberFromHeader();
 		return li;
 	}
@@ -54,6 +54,13 @@ public class ComboboxController {
 	@ResponseBody
 	public List<Lov> getSector() {
 		List<Lov> li = ApplicationCache.getListOfValueByValueType("SECTOR_VALUE");
+		return li;
+	}
+	
+	@PostMapping("/getExciseId")
+	@ResponseBody
+	public List<String> getExciseId() {
+		List<String> li = planWorksheetHeaderService.getExciseIdFlagSFromHeader();
 		return li;
 	}
 

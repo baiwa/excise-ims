@@ -79,6 +79,18 @@ public class FilterExisePlanHeaderController {
 		logger.debug("analysNumber : " + vo.getAnalysNumber());
 		System.out.println(vo.getAnalysNumber());
 		return planWorksheetHeaderService.queryPlanWorksheetHeaderDetil(vo);
+	@PostMapping("/getDataExciseIdList")
+	@ResponseBody
+	public List<Object> queryExciseIdFlagSDataList(@ModelAttribute PlanWorksheetHeaderDetail vo) {
+		logger.info("ExciseId : " + vo.getExciseId());
+		return planWorksheetHeaderService.queryExciseIdFlagSDataList(vo.getExciseId());
+	}
+	
+	@PostMapping("/getDataExciseIdMonthList")
+	@ResponseBody
+	public List<Object> getExciseIdFromAccDTL(@ModelAttribute PlanWorksheetHeaderDetail vo) {
+		logger.info("ExciseId : " + vo.getExciseId(), "StartDate : " + vo.getStartDate(), "EndDate : " + vo.getEndDate());
+		return planWorksheetHeaderService.queryExciseIdFromAccDTL(vo.getExciseId(), vo.getStartDate(), vo.getEndDate());
 	}
 
 }

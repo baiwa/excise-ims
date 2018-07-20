@@ -27,7 +27,8 @@ public class PlanWorksheetHeaderDetail extends DataTableRequest{
 	private String no3;
 	private String registeredCapital;
 	private String status;
-	
+	private String startDate;
+	private String endDate;
 	
 	
 	private String amount1;
@@ -317,6 +318,27 @@ public class PlanWorksheetHeaderDetail extends DataTableRequest{
 	}
 	public void setNo3(String no3) {
 		this.no3 = no3;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public String getNo1() {
+		return no1;
+	}
+	public String getNo2() {
+		return no2;
+	}
+	public String getNo3() {
+		return no3;
 	}
 	
 }

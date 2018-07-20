@@ -3,6 +3,8 @@ package th.co.baiwa.excise.ta.persistence.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -494,5 +496,56 @@ public class PlanWorksheetHeaderDao {
 		return productType;
 
 	}
-
+	
+	public List<String> queryExciseIdFlagSFromHeader() {
+		String sql = "select DISTINCT H.EXCISE_ID from TA_PLAN_WORK_SHEET_HEADER H where H.ANALYS_NUMBER is not null and h.FLAG = 'S' ";
+		List<String> exciseList = jdbcTemplate.query(sql, new RowMapper<String>() {
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
+		return exciseList;
+	}
+	
+	public List<Object> queryExciseIdFlagSDataList(String exciseId) {
+		String sql = "select * from TA_PLAN_WORK_SHEET_HEADER H where H.EXCISE_ID = ? and H.ANALYS_NUMBER is not null";
+		List<Object> exciseList = jdbcTemplate.query(sql.toString(), new Object[] { exciseId },
+				new RowMapper<Object>() {
+					public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+						Map<String, Object> map = new HashMap<String, Object>();
+						map.put("analysNumber", rs.getString("ANALYS_NUMBER"));
+						map.put("companyName", rs.getString("COMPANY_NAME"));
+						map.put("productType", rs.getString("PRODUCT_TYPE"));
+						
+						return map;
+					}
+				});
+		return exciseList;
+	}
+	
+	public List<Object> queryExciseIdFromAccDTL(String exciseId, Date date, int backMonth) {
+		String sql = "select * from TA_EXCISE_ACC_MONTH_04_07_DTL D where D.EXCISE_ID = ? and D.ACC_MONTH in (SELECT REPLACE(TO_CHAR( add_MONTHS( ?, LEVEL-? ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) Month_AFTER FROM dual CONNECT BY LEVEL <= ?) ";
+		List<Object> exciseMonthList = jdbcTemplate.query(sql.toString(), new Object[] { exciseId, date, backMonth, backMonth },
+				new RowMapper<Object>() {
+					public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+						Map<String, Object> map = new HashMap<String, Object>();
+						map.put("product1", rs.getString("PRODUCT_1"));
+						map.put("product2", rs.getString("PRODUCT_2"));
+						map.put("product3", rs.getString("PRODUCT_3"));
+						map.put("product4", rs.getString("PRODUCT_4"));
+						map.put("product5", rs.getString("PRODUCT_5"));
+						map.put("product6", rs.getString("PRODUCT_6"));
+						map.put("monthRecieve1", rs.getString("MONTH_RECIEVE_1"));
+						map.put("monthRecieve2", rs.getString("MONTH_RECIEVE_2"));
+						map.put("monthRecieve3", rs.getString("MONTH_RECIEVE_3"));
+						map.put("monthRecieve4", rs.getString("MONTH_RECIEVE_4"));
+						map.put("monthRecieve5", rs.getString("MONTH_RECIEVE_5"));
+						map.put("monthRecieve6", rs.getString("MONTH_RECIEVE_6"));
+						
+						return map;
+					}
+				});
+		
+		return exciseMonthList;
+	}
 }

@@ -3,8 +3,10 @@ package th.co.baiwa.excise.ta.service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -311,6 +313,36 @@ public class PlanWorksheetHeaderService {
 		planWorksheetHeader.setMonthDate(mockupVo.getStartBackDate());
 		planWorksheetHeader.setFullMonth(new BigDecimal(month));
 		return planWorksheetHeaderDao.queryProductTypeList(planWorksheetHeader);
+	}
+	
+	public List<String> getExciseIdFlagSFromHeader() {
+		return planWorksheetHeaderDao.queryExciseIdFlagSFromHeader();
+	}
+	
+	public List<Object> queryExciseIdFlagSDataList(String exciseId) {
+		List<Object> valueList = planWorksheetHeaderDao.queryExciseIdFlagSDataList(exciseId);	
+		return valueList;
+	}
+	
+	public List<Object> queryExciseIdFromAccDTL(String exciseId, String start, String end) {
+		String[] startData = start.split("/");
+		String[] endData = end.split("/");
+		
+		Calendar startCal = Calendar.getInstance();
+		startCal.set(Integer.parseInt(startData[1]), Integer.parseInt(startData[0]), 1);
+		Calendar endCal = Calendar.getInstance();
+		endCal.set(Integer.parseInt(endData[1]), Integer.parseInt(endData[0]), 1);
+		int backMonth = 1;
+		while(!isEqualsDate(startCal.getTime(), endCal.getTime())) {
+			endCal.add(Calendar.MONTH, -1);
+			backMonth++;
+		}
+		return planWorksheetHeaderDao.queryExciseIdFromAccDTL(exciseId, endCal.getTime(), backMonth);
+	}
+	
+	public boolean isEqualsDate(Date date1, Date date2) {
+		SimpleDateFormat simple = new SimpleDateFormat("yyyyMM");
+		return simple.format(date1).equals(simple.format(date2));
 	}
 
 	public List<PlanWorksheetHeader> queryPlanWorksheetHeaderCriteria(PlanWorksheetHeader criteria) {
