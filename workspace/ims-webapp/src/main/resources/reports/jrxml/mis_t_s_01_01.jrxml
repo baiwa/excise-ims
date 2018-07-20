@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="N_mis01-2" pageWidth="595" pageHeight="842" columnWidth="482" leftMargin="85" rightMargin="28" topMargin="28" bottomMargin="85" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -15,14 +15,31 @@
 			<bottomPen lineWidth="3.0" lineStyle="Dotted"/>
 		</box>
 	</style>
+	<scriptlet name="Scriptlet_1" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
+	<parameter name="item" class="java.lang.String"/>
+	<parameter name="workType" class="java.lang.String"/>
+	<parameter name="exciseId" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="dateFrom" class="java.lang.String"/>
+	<parameter name="analys1" class="java.lang.String"/>
+	<parameter name="analys2" class="java.lang.String"/>
+	<parameter name="analys3" class="java.lang.String"/>
+	<parameter name="analys4" class="java.lang.String"/>
+	<parameter name="analys5" class="java.lang.String"/>
+	<parameter name="sendTo" class="java.lang.String"/>
+	<parameter name="reasonTxt" class="java.lang.String"/>
+	<parameter name="agreeBox" class="java.lang.String"/>
+	<parameter name="otherTxt" class="java.lang.String"/>
+	<parameter name="analysName" class="java.lang.String"/>
+	<parameter name="analysControl" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
 	<pageHeader>
-		<band height="699" splitType="Stretch">
+		<band height="632" splitType="Stretch">
 			<image>
 				<reportElement x="195" y="0" width="62" height="70" uuid="90ca04f2-82d8-4e03-92ba-af7e35dc179c"/>
-				<imageExpression><![CDATA["C:/Users/toffee/Desktop/img/logo.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["src/main/resources/reports/images/logo.jpg"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement style="Topic" x="377" y="50" width="76" height="27" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
@@ -49,6 +66,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{item} == null ? "" : $P{item}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="-1" y="127" width="100" height="18" uuid="5a466d6f-40b0-4dd6-a21b-47c8822c47be"/>
@@ -65,6 +83,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{exciseId} == null ? "" : $P{exciseId}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="-1" y="145" width="21" height="18" uuid="16d3018e-70cf-4fbc-9469-4843601d07e7"/>
@@ -81,6 +100,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{address} == null ? "" : $P{address}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="-1" y="163" width="102" height="18" uuid="219b9b45-9c33-48e1-9fc6-29ee67c1ad84"/>
@@ -97,6 +117,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{dateFrom} == null ? "" : $P{dateFrom}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="-1" y="289" width="23" height="18" uuid="ebb92fc5-4fe0-4064-bbd9-c2f09491f9e3"/>
@@ -113,6 +134,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="203" y="434" width="117" height="18" uuid="e77db48d-94b8-4f18-9caa-d1f26c69561c"/>
@@ -124,6 +146,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{analysName} == null ? "" : $P{analysName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="197" y="434" width="6" height="18" uuid="239ea194-307a-49fe-a910-42af84351c40"/>
@@ -155,6 +178,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="292" y="488" width="34" height="18" uuid="9724b427-882d-4663-8041-8d7b8b8e5ec3"/>
@@ -166,6 +190,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="194" y="488" width="27" height="18" uuid="c6e1a3be-f9df-495c-a7e1-b8d214edfcf9"/>
@@ -177,20 +202,21 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="139" y="380" width="10" height="18" uuid="a8398076-939d-44ee-9b46-c0249e06c1a4"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{agreeBox} == "accept" && $P{agreeBox} != null ? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="139" y="398" width="10" height="18" uuid="74c7e816-1599-4b15-bcfa-fa62ae36b086"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{agreeBox} == "other" && $P{agreeBox} != null ? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="169" y="380" width="41" height="18" uuid="a127d463-e909-406d-a573-d8bc3580efe5"/>
@@ -217,6 +243,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{workType} == null ? "" : $P{workType}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="-1" y="181" width="102" height="18" uuid="de7160cc-a9b3-4176-8509-7a1c685321e7"/>
@@ -258,6 +285,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{analys1} == null ? "" : $P{analys1}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="51" y="217" width="318" height="18" uuid="a074c32c-f89f-4541-b51c-77ba240b840a"/>
@@ -269,6 +297,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{analys2} == null ? "" : $P{analys2}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="51" y="235" width="318" height="18" uuid="9f3f2f76-f94b-4eba-93d4-932231097575"/>
@@ -280,6 +309,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{analys3} == null ? "" : $P{analys3}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="51" y="253" width="318" height="18" uuid="0dd6ae32-4980-4068-ba8c-e11d5518b740"/>
@@ -291,6 +321,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{analys4} == null ? "" : $P{analys4}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="51" y="271" width="318" height="18" uuid="3d9d7d90-8c45-445d-8eda-b48dd0798766"/>
@@ -302,6 +333,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{analys5} == null ? "" : $P{analys5}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="22" y="289" width="214" height="18" uuid="8c8f3b39-e28d-4775-b050-c00b25941753"/>
@@ -313,6 +345,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{sendTo} == null ? "" : $P{sendTo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="31" y="307" width="239" height="18" uuid="afee14af-c60a-458b-b708-8af1bd74e6f0"/>
@@ -320,7 +353,7 @@
 				<textFieldExpression><![CDATA["ตามที่ได้ทำการวิเคราะห์ข้อมูลรายดังกล่าวข้างต้นแล้วปรากฏว่า"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="270" y="307" width="182" height="18" uuid="00f48b89-1f94-475d-ae88-d2487f5b8fce"/>
+				<reportElement style="data" x="271" y="307" width="182" height="18" uuid="00f48b89-1f94-475d-ae88-d2487f5b8fce"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -329,6 +362,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="0" y="325" width="453" height="18" uuid="2ec754b3-d9b2-49ba-a01b-c4482bfeba14"/>
@@ -340,6 +374,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="0" y="343" width="453" height="18" uuid="0f11753d-db64-4f53-98c1-5a5cc11fe4c3"/>
@@ -351,6 +386,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="0" y="362" width="453" height="18" uuid="9dcf8162-b0e2-4211-b438-d921193dfe5f"/>
@@ -362,6 +398,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="31" y="380" width="59" height="18" uuid="5eba1b0a-ed24-4cbd-988d-16d31ba6afe8"/>
@@ -378,11 +415,12 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{otherTxt} == null ? "" : $P{otherTxt}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="320" y="416" width="41" height="18" uuid="2fb54762-c421-41d2-b58f-7dfb33e8b7f6"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA["ผู้วิเคาระห์"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ผู้วิเคราะห์"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="203" y="452" width="117" height="18" uuid="b12226a9-87f9-466c-a8bb-7c7dd88cda46"/>
@@ -394,6 +432,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="203" y="470" width="117" height="18" uuid="37ec4205-0ff8-4ecc-ab6e-7e78da44ccad"/>
@@ -405,6 +444,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{analysControl} == null ? "" : $P{analysControl}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="197" y="470" width="6" height="18" uuid="c4e256d7-d3b1-450f-aec0-2fec889822a3"/>
@@ -465,6 +505,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="data" x="203" y="578" width="117" height="18" uuid="020f974f-001d-4e94-9b39-249bb0cdd4fb"/>
@@ -476,6 +517,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="197" y="578" width="6" height="18" uuid="abf0babc-a7c3-4a73-a264-4a4536be82e7"/>
@@ -497,6 +539,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="198" y="596" width="38" height="18" uuid="fa03a30a-6d62-4913-a0c0-f08de0cab0d1"/>
@@ -518,6 +561,15 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="307" width="451" height="74" uuid="3c95d6c7-7af3-4949-86e9-c23214c94137"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Angsana New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["							" + $P{reasonTxt} == null ? "" : $P{reasonTxt}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

@@ -22,13 +22,14 @@ import { Ts0115Component } from './ts01-15/ts01-15.component';
 import { Ts0116Component } from './ts01-16/ts01-16.component';
 import { Ts0117Component } from './ts01-17/ts01-17.component';
 import { Ts0119Component } from './ts01-19/ts01-19.component';
+import { FormsModule } from '../../../../../../../node_modules/@angular/forms';
 
 const routes: Routes = [
     { path: '', component: TaxAuditReportingComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule],
+  imports: [RouterModule.forChild(routes), CommonModule, FormsModule],
   declarations: [
     TaxAuditReportingComponent,
     Ts0101Component,

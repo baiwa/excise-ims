@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -26,10 +27,13 @@ import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.common.util.ThaiNumberUtils;
 import th.co.baiwa.excise.report.bean.ExampleBean;
 import th.co.baiwa.excise.report.controller.ReportController;
+import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.report.bean.ContractBean;
 
 @Service
 public class ReportService {
+	
+	private static String PATH_EXPORT = "c:/reports/";
 
 	private Logger logger = LoggerFactory.getLogger(ReportService.class);
 
@@ -55,48 +59,34 @@ public class ReportService {
 		// JREmptyDataSource());
 
 		byte[] reportFile = JasperExportManager.exportReportToPdf(jasperPrint);
-		IOUtils.write(reportFile, new FileOutputStream(new File("c:/out/" + "Example.pdf"))); // /tmp/excise/ims/report/
+		IOUtils.write(reportFile, new FileOutputStream(new File(PATH_EXPORT + "Example.pdf"))); // /tmp/excise/ims/report/
 
 		ReportUtils.closeResourceFileInputStream(params);
 
 		return reportFile;
 	}
 
-	public byte[] contractToPDF(String name, ContractBean contract) throws IOException, JRException {
+	public byte[] objectToPDF(String name, Map<String, Object> params, List<Object> bean) throws IOException, JRException {
 		String reportName = name != null ? name : "Example";
-
-		DecimalFormat formatter = new DecimalFormat("#,###.00");
-		
-		contract.setSumCostTxt(ThaiNumberUtils.toThaiBaht(contract.getSumCost().toString()));
-		Map<String, Object> params = new HashMap<>();
-		params.put("day", ThaiNumberUtils.toThaiNumber(formatter.format(contract.getDay().doubleValue())));
-		params.put("allowanceCost", ThaiNumberUtils.toThaiNumber(formatter.format(contract.getAllowanceCost().doubleValue())));
-		params.put("rentCost", ThaiNumberUtils.toThaiNumber(formatter.format(contract.getRentCost().doubleValue())));
-		params.put("travelCost", ThaiNumberUtils.toThaiNumber(formatter.format(contract.getTravelCost().doubleValue())));
-		params.put("otherCost", ThaiNumberUtils.toThaiNumber(formatter.format(contract.getOtherCost().doubleValue())));
-		params.put("sumCost", ThaiNumberUtils.toThaiNumber(formatter.format(contract.getSumCost().doubleValue())));
-		
-		params.put("sumCostTxt", contract.getSumCostTxt());
-		params.put("numberId", contract.getNumberId());
-		params.put("loanName", contract.getLoanName());
-		params.put("loanFrom", contract.getLoanFrom());
-		params.put("dateFixed", contract.getDateFixed());
-		params.put("locateAt", contract.getLocateAt());
-		params.put("positionName", contract.getPositionName());
-		params.put("presentTo", contract.getPresentTo());
-		params.put("reasonTxt", contract.getReasonTxt());
-		params.put("sendTo", contract.getSendTo());
 
 //		List<ContractBean> conList = new ArrayList<>();
 //		contract.setDateFixed(new Date());
 //		conList.add(contract);
+		
+		JRDataSource dataSource = null;
+		
+		if (BeanUtils.isEmpty(bean)) {
+			dataSource = new JREmptyDataSource();
+		} else {
+			dataSource = new JRBeanCollectionDataSource(bean);
+		}
 
-		JasperPrint jasperPrint = ReportUtils.exportReport(reportName, params, new JREmptyDataSource()); // JRBeanCollectionDataSource(exampleList)
+		JasperPrint jasperPrint = ReportUtils.exportReport(reportName, params, dataSource); // JRBeanCollectionDataSource(exampleList)
 		// JasperPrint jasperPrint = ReportUtils.exportReport(jasperFile, params, new
 		// JREmptyDataSource());
 
 		byte[] reportFile = JasperExportManager.exportReportToPdf(jasperPrint);
-		IOUtils.write(reportFile, new FileOutputStream(new File("c:/out/" + contract.getNumberId() + ".pdf"))); // /tmp/excise/ims/report/
+		IOUtils.write(reportFile, new FileOutputStream(new File(PATH_EXPORT + reportName + ".pdf"))); // /tmp/excise/ims/report/
 
 		ReportUtils.closeResourceFileInputStream(params);
 

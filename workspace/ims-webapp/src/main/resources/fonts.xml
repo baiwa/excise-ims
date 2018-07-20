@@ -16,5 +16,14 @@
 		<pdfEncoding>Identity-H</pdfEncoding>
 		<pdfEmbedded>true</pdfEmbedded>
 	</fontFamily>
+	
+	<fontFamily name="Angsana New">
+		<normal>reports/fonts/ANGSA.ttf</normal>
+		<bold>reports/fonts/angsab.ttf</bold>
+		<italic>reports/fonts/ANGSAI.ttf</italic>
+		<boldItalic>reports/fonts/AngsanaNewBoldItalic.ttf</boldItalic>
+		<pdfEncoding>Identity-H</pdfEncoding>
+		<pdfEmbedded>true</pdfEmbedded>
+	</fontFamily>
 
 </fontFamilies>
