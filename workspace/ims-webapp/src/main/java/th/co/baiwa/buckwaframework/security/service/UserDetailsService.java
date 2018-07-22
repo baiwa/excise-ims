@@ -7,35 +7,32 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.accesscontrol.persistence.dao.UserDao;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
-import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
+import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.UserRepository;
 import th.co.baiwa.buckwaframework.common.util.BooleanToStringConverter;
 import th.co.baiwa.buckwaframework.security.model.UserDetails;
-import th.co.baiwa.buckwaframework.security.persistence.dao.UserDetailsDao;
+import th.co.baiwa.buckwaframework.security.persistence.repository.UserDetailsRepository;
 
 @Service("userDetailsService")
-@Profile({PROFILE.NOT_MOCK, PROFILE.NOT_UNITTEST})
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserDetailsService.class);
 	
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userRepository;
 	
 	@Autowired
-	private UserDetailsDao userDetailsDao;
+	private UserDetailsRepository userDetailsRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.info("loadUserByUsername username={}", username);
 		
-		User user = userDao.findByUsername(username);
+		User user = userRepository.findByUsername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException(MessageFormat.format("Username {0} not found", username));
 		}
@@ -43,9 +40,9 @@ public class UserDetailsService implements org.springframework.security.core.use
 		// Initial Granted Authority
 		List<GrantedAuthority> grantedAuthorityList = new ArrayList<GrantedAuthority>();
 		// Add Role
-		grantedAuthorityList.addAll(userDetailsDao.findGrantedRoleByUserId(user.getUserId()));
+		grantedAuthorityList.addAll(userDetailsRepository.findGrantedRoleByUserId(user.getUserId()));
 		// Add Operation
-		grantedAuthorityList.addAll(userDetailsDao.findGrantedOperationByUserId(user.getUserId()));
+		grantedAuthorityList.addAll(userDetailsRepository.findGrantedOperationByUserId(user.getUserId()));
 		
 		UserDetails userDetails = new UserDetails(
 			user.getUsername(),

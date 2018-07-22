@@ -1,12 +1,34 @@
 package th.co.baiwa.buckwaframework.accesscontrol.persistence.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
+@Entity
+@Table(name = "ADM_OPERATION")
 public class Operation extends BaseEntity {
 
+	private static final long serialVersionUID = -5628927546154517795L;
+
+	@Id
+	@GeneratedValue(generator = "OPERATION_SEQ", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "OPERATION_SEQ", sequenceName = "ADM_OPERATION_SEQ", allocationSize = 1)
+	@Column(name = "OPERATION_ID")
 	private Long operationId;
+
+	@Column(name = "OPERATION_CODE")
 	private String operationCode;
+
+	@Column(name = "OPERATION_DESC")
 	private String operationDesc;
+
+	@Column(name = "PARENT_ID")
 	private Long parentId;
 
 	public Long getOperationId() {

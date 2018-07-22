@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.accesscontrol.persistence.dao.RoleDao;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
+import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.RoleRepository;
 
 @Service("roleService")
 public class RoleService {
@@ -16,39 +16,38 @@ public class RoleService {
 	private static final Logger logger = LoggerFactory.getLogger(RoleService.class);
 	
 	@Autowired
-	private RoleDao roleDao;
+	private RoleRepository roleRepository;
 	
 	public List<Role> getRoleAll() {
 		logger.info("getAllRole");
-		return roleDao.findAll();
+		return roleRepository.findAll();
 	}
 
 	public Role getRoleById(Long roleId) {
 		logger.info("getRoleById");
-		return roleDao.findById(roleId);
+		return roleRepository.findOne(roleId);
 	}
 	
-	public int getRoleCount() {
+	public long getRoleCount() {
 		logger.info("getRoleCount");
-		return roleDao.count();
+		return roleRepository.count();
 	}
 
 	public Role createRole(Role role) {
 		logger.info("createRole");
-		Long key = roleDao.insert(role);
-		role.setRoleId(key);
+		roleRepository.save(role);
 		return role;
 	}
 
 	public Role updateRole(Role role) {
 		logger.info("updateRole");
-		roleDao.update(role);
+		roleRepository.save(role);
 		return role;
 	}
 
 	public void deleteRole(Long roleId) {
 		logger.info("deleteRole");
-		roleDao.delete(roleId);
+		roleRepository.delete(roleId);
 	}
 
 }

@@ -5,7 +5,6 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import th.co.baiwa.buckwaframework.common.persistence.util.RowMapperUtils;
 import th.co.baiwa.exampleproject.mock.persistence.entity.MockEmployee;
 
 public class MockEmployeeRowMapper implements RowMapper<MockEmployee> {
@@ -26,7 +25,6 @@ public class MockEmployeeRowMapper implements RowMapper<MockEmployee> {
 		mockUser.setLastName(rs.getString("LAST_NAME"));
 		mockUser.setSalary(rs.getBigDecimal("SALARY"));
 		mockUser.setWorkingDate(rs.getDate("WORKING_DATE"));
-		RowMapperUtils.mapCommonColumn(mockUser, rs);
 		return mockUser;
 	}
 	

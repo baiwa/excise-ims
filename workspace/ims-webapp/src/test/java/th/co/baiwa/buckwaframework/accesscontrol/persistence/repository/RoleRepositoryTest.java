@@ -1,4 +1,4 @@
-package th.co.baiwa.buckwaframework.accesscontrol.persistence.dao;
+package th.co.baiwa.buckwaframework.accesscontrol.persistence.repository;
 
 import java.util.List;
 
@@ -18,66 +18,64 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 @SpringBootTest
 @WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
 @ActiveProfiles(value = PROFILE.UNITTEST)
-public class RoleDaoTest {
-	
+public class RoleRepositoryTest {
+
 	@Autowired
-	private RoleDao roleDao;
-	
+	private RoleRepository roleRepository;
+
 	@Test
 	public void test_findAll() {
 		System.out.println("- - - - - findAll - - - - -");
-		List<Role> roleList = roleDao.findAll();
+		List<Role> roleList = roleRepository.findAll();
 		System.out.println(roleList);
 		Assert.assertNotEquals(0, roleList.size());
 	}
-	
+
 	@Test
-	public void test_findById_Found() {
-		System.out.println("- - - - - findById_Found - - - - -");
-		Role role = roleDao.findById(1L);
+	public void test_findOne_Found() {
+		System.out.println("- - - - - findOne_Found - - - - -");
+		Role role = roleRepository.findOne(1L);
 		System.out.println(role);
 		Assert.assertNotNull(role);
 	}
-	
+
 	@Test
-	public void test_findById_NotFound() {
-		System.out.println("- - - - - findById_NotFound - - - - -");
-		Role role = roleDao.findById(99L);
+	public void test_findOne_NotFound() {
+		System.out.println("- - - - - findOne_NotFound - - - - -");
+		Role role = roleRepository.findOne(99L);
 		System.out.println(role);
 		Assert.assertNull(role);
 	}
-	
+
 	@Test
 	public void test_count() {
 		System.out.println("- - - - - count - - - - -");
-		int count = roleDao.count();
+		long count = roleRepository.count();
 		System.out.println(count);
 		Assert.assertNotEquals(0, count);
 	}
-	
+
 	//@Test
-	public void test_insert() {
-		System.out.println("- - - - - insert - - - - -");
+	public void test_save_insert() {
+		System.out.println("- - - - - save_insert - - - - -");
 		Role role = new Role();
 		role.setRoleCode("unit role code");
 		role.setRoleDesc("unit role desc");
-		roleDao.insert(role);
+		roleRepository.save(role);
 	}
-	
+
 	//@Test
-	public void test_update() {
-		System.out.println("- - - - - update - - - - -");
-		Role role = roleDao.findById(3L);
+	public void test_save_update() {
+		System.out.println("- - - - - save_update - - - - -");
+		Role role = roleRepository.findOne(3L);
 		role.setRoleDesc("edit");
-		int updateRow = roleDao.update(role);
-		Assert.assertEquals(1, updateRow);
+		roleRepository.save(role);
 	}
-	
+
 	//@Test
 	public void test_delete() {
 		System.out.println("- - - - - delete - - - - -");
-		int updateRow = roleDao.delete(3L);
-		Assert.assertEquals(1, updateRow);
+		roleRepository.delete(3L);
 	}
-	
+
 }

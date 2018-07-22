@@ -1,13 +1,33 @@
 package th.co.baiwa.buckwaframework.security.persistence.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ADM_USER_ATTEMPT")
 public class UserAttempt {
 
+	@Id
+	@GeneratedValue(generator = "USER_ATTEMPT_SEQ", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "USER_ATTEMPT_SEQ", sequenceName = "ADM_USER_ATTEMPT_SEQ", allocationSize = 1)
+	@Column(name = "USER_ATTEMPT_ID")
 	private Long userAttemptId;
+
+	@Column(name = "USERNAME")
 	private String username;
-	private int attempts;
-	private Date lastModified;
+
+	@Column(name = "ATTEMPTS")
+	private Integer attempts;
+
+	@Column(name = "LAST_MODIFIED")
+	private LocalDateTime lastModified;
 
 	public Long getUserAttemptId() {
 		return userAttemptId;
@@ -25,19 +45,19 @@ public class UserAttempt {
 		this.username = username;
 	}
 
-	public int getAttempts() {
+	public Integer getAttempts() {
 		return attempts;
 	}
 
-	public void setAttempts(int attempts) {
+	public void setAttempts(Integer attempts) {
 		this.attempts = attempts;
 	}
 
-	public Date getLastModified() {
+	public LocalDateTime getLastModified() {
 		return lastModified;
 	}
 
-	public void setLastModified(Date lastModified) {
+	public void setLastModified(LocalDateTime lastModified) {
 		this.lastModified = lastModified;
 	}
 

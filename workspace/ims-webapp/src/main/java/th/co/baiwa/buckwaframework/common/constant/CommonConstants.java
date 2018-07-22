@@ -14,13 +14,9 @@ public class CommonConstants {
 		public static final String SIT = "sit";
 		public static final String UAT = "uat";
 		public static final String PROD = "prod";
-		public static final String MOCK = "mock";
 		// Unit Test
 		public static final String UNITTEST = "unittest";
 		public static final String UNITTEST_MOCK = "unittest-mock";
-		// Not Mock and Unit Test
-		public static final String NOT_MOCK = "!" + MOCK;
-		public static final String NOT_UNITTEST = "!" + UNITTEST;
 	}
 	
 	public static final class JsonStatus {

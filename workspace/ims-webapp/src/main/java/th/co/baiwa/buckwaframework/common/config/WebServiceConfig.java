@@ -1,9 +1,9 @@
 package th.co.baiwa.buckwaframework.common.config;
 
 import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.ext.logging.LoggingInInterceptor;
+import org.apache.cxf.ext.logging.LoggingOutInterceptor;
 import org.apache.cxf.frontend.ClientProxy;
-import org.apache.cxf.interceptor.LoggingInInterceptor;
-import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import th.co.baiwa.exampleproject.ws.consumer.currentdate.operation.CurrentDate;
 
 @Configuration
-public class WebServiceConfig {@Configuration
+public class WebServiceConfig {
 	public class ClientConfig {
 	
 	@Bean(name = "currentDateProxy")

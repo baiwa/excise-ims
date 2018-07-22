@@ -2,6 +2,7 @@ package th.co.baiwa.exampleproject.mock.persistence.dao;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -101,7 +102,7 @@ public class MockEmployeeDaoTest {
 		mockEmployee.setWorkingDate(new Date());
 		mockEmployee.setIsDeleted("N");
 		mockEmployee.setCreatedBy("SU");
-		mockEmployee.setCreatedDate(new Date());
+		mockEmployee.setCreatedDate(LocalDateTime.now());
 		mockEmployeeDao.insertBySimpleJdbcInsert(mockEmployee);
 		
 		System.out.println("after insert count: " + mockEmployeeDao.count());

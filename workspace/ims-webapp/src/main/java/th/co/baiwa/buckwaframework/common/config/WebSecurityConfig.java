@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -15,17 +14,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.savedrequest.NullRequestCache;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.ROLE;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.URL;
@@ -50,15 +45,6 @@ public class WebSecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder;
-	}
-	
-	@Bean
-	@Profile(value = {PROFILE.MOCK, PROFILE.UNITTEST})
-	public UserDetailsService userDetailsService() {
-		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-		manager.createUser(User.withUsername("user").password(new BCryptPasswordEncoder().encode("password")).roles("USER").build());
-		manager.createUser(User.withUsername("admin").password(new BCryptPasswordEncoder().encode("password")).roles("USER", "ADMIN").build());
-		return manager;
 	}
 	
 	@Bean

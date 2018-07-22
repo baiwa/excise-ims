@@ -1,6 +1,6 @@
 package th.co.baiwa.buckwaframework.security.provider;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +67,7 @@ public class JdbcAuthenticationProvider extends DaoAuthenticationProvider {
 			String error = "";
 			UserAttempt userAttempt = userAttemptService.getUserAttemptByUsername(authentication.getName());
 			if (userAttempt != null) {
-				Date lastAttempts = userAttempt.getLastModified();
+				LocalDateTime lastAttempts = userAttempt.getLastModified();
 				error = "User account is locked! <br><br>Username : " + authentication.getName() + "<br>Last Attempts : " + lastAttempts;
 			} else {
 				error = e.getMessage();
