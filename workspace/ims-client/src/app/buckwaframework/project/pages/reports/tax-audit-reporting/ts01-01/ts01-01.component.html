@@ -133,18 +133,24 @@
 
           <div class="inline fields">
             <div class="two wide field"></div>
-            <div class="six wide field">
+            <div class="five wide field">
               <label>จึงเห็นสมควร</label>
               <div class="ui checkbox">
-                <input type="checkbox">
+                <input type="radio" name="agreeBox" [(ngModel)]="obj.agreeBox" value="accept">
                 <label>ขออนุมัติหนังสือเรียก</label>
               </div>
             </div>
             <div class="one wide field">
-              <label>อื่นๆ:</label>
+              <div class="ui checkbox">
+                <input type="radio" name="agreeBox" [(ngModel)]="obj.agreeBox" value="other">
+                <label>อื่นๆ&nbsp;:&nbsp;&nbsp;</label>
+              </div>
             </div>
-            <div class="six wide field">
-              <input type="text">
+            <div class="seven wide field">
+              &nbsp;&nbsp;
+              <div class="ui {{ obj.agreeBox !== 'other' && 'disabled' }} input">
+                <input type="text" [(ngModel)]="obj.otherTxt" name="otherTxt" id="otherTxt">
+              </div>
             </div>
           </div>
 
@@ -156,7 +162,7 @@
               </label>
             </div>
             <div class="four wide field">
-              <input type="text" class="disabled">
+              <input type="text" name="analysName" [(ngModel)]="obj.analysName" required>
             </div>
             <div class="three wide field">
               <label>
@@ -164,7 +170,7 @@
               </label>
             </div>
             <div class="four wide field">
-              <input type="text">
+              <input type="text" name="analysControl" [(ngModel)]="obj.analysControl" required>
             </div>
           </div>
 

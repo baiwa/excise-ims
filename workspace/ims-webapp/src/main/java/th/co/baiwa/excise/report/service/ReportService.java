@@ -37,15 +37,14 @@ public class ReportService {
 
 	private Logger logger = LoggerFactory.getLogger(ReportService.class);
 
-	public byte[] exampleToPDF() throws IOException, JRException {
+	public byte[] exampleToPDF(Integer num) throws IOException, JRException {
 		String reportName = "Example";
 
 		Map<String, Object> params = new HashMap<>();
 		params.put("sendTo", "ผมชื่อ เฟรม แฟน น้องมุ๊ก ข้อความทดสอบ");
-		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, "garuda-emblem.jpg"));
 		List<ExampleBean> exampleList = new ArrayList<>();
 		ExampleBean exBean = null;
-		for (int i = 0; i < 29; i++) {
+		for (int i = 0; i < num; i++) {
 			exBean = new ExampleBean();
 			exBean.setData1(String.valueOf(i + 1));
 			exBean.setData2(new BigDecimal(i + 1));

@@ -28,10 +28,11 @@
 	<parameter name="analys5" class="java.lang.String"/>
 	<parameter name="sendTo" class="java.lang.String"/>
 	<parameter name="reasonTxt" class="java.lang.String"/>
-	<parameter name="agreeBox" class="java.lang.String"/>
+	<parameter name="accept" class="java.lang.Boolean"/>
 	<parameter name="otherTxt" class="java.lang.String"/>
 	<parameter name="analysName" class="java.lang.String"/>
 	<parameter name="analysControl" class="java.lang.String"/>
+	<parameter name="other" class="java.lang.Boolean"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -90,7 +91,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ที่อยู่"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="20" y="145" width="433" height="18" uuid="accbba75-3070-44ac-a9c6-97fa0ae55b2b"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -99,7 +100,9 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{address} == null ? "" : $P{address}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -209,14 +212,14 @@
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{agreeBox} == "accept" && $P{agreeBox} != null ? "\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{accept} && $P{accept} != null ? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="139" y="398" width="10" height="18" uuid="74c7e816-1599-4b15-bcfa-fa62ae36b086"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{agreeBox} == "other" && $P{agreeBox} != null ? "\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{other} && $P{other} != null ? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="169" y="380" width="41" height="18" uuid="a127d463-e909-406d-a573-d8bc3580efe5"/>
@@ -233,7 +236,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ประเภทกิจการ"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="278" y="108" width="175" height="18" uuid="83d07c38-4f52-4630-ba94-22e694e2bf39"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -243,7 +246,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{workType} == null ? "" : $P{workType}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{workType}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="-1" y="181" width="102" height="18" uuid="de7160cc-a9b3-4176-8509-7a1c685321e7"/>
@@ -569,7 +572,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="Angsana New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["							" + $P{reasonTxt} == null ? "" : $P{reasonTxt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["						            " + ($P{reasonTxt} == null ? "" : $P{reasonTxt} )]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

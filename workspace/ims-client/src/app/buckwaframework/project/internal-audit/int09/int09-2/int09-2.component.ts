@@ -72,17 +72,15 @@ export class Int092Component implements OnInit {
     const body = this.body;
     this.ajax.post(url, body, res => {
       if (res.status == 200 && res.statusText == "OK") {
-        var byteArray = new Uint8Array(res.json());
-        var blob = new Blob([byteArray], { type: "application/pdf" });
-        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-          window.navigator.msSaveOrOpenBlob(blob);
-        } else {
-          var objectUrl = URL.createObjectURL(blob);
-          window.open(objectUrl);
-        }
-        console.log(blob);
-        //window.open("ims-webapp/report/pdf/contract/" + data.workSheetDetailId);
-        console.log(res);
+        // var byteArray = new Uint8Array(res.json());
+        // var blob = new Blob([byteArray], { type: "application/pdf" });
+        // if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        //   window.navigator.msSaveOrOpenBlob(blob);
+        // } else {
+        //   var objectUrl = URL.createObjectURL(blob);
+        //   window.open(objectUrl);
+        // }
+        window.open("/ims-webapp/api/report/pdf/Contract/file");
       }
     });
   }
