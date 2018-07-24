@@ -1,14 +1,12 @@
-<div
-    class="ui top centered attached header segment"
-    style="background: #1e83db;color: white">
-    <span>สมุดสั่งการออกตรวจสอบภาษีสรรพสามิต</span>
-</div>
+<form (submit)="onSubmit($event)" ngNativeValidate>
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>สมุดสั่งการออกตรวจสอบภาษีสรรพสามิต</span>
+    </div>
 
-<div class="ui attached segment">
-    <div class="ui grid">
-        <div class="container">
-            <div class="ui form">
-                <table class="ui celled table" style="text-align: center;">
+    <div class="ui attached segment">
+        <div class="ui grid">
+            <div class="ui form" style="overflow-x: scroll; padding-left: 0;">
+                <table class="ui celled table" style="text-align: center;width: 100vw;border-radius: 0;">
                     <thead>
                         <tr>
                             <th>เลขที่</th>
@@ -21,148 +19,98 @@
                             <th>ผู้สั่งลงนาม</th>
                             <th>ผู้ตรวจลงนามรับทราบ</th>
                             <th>ได้ยื่นรายการแสดงผลการตรวจโดยรายงานที่ ลงวันที่ เดือน ปี</th>
-                            <th>ตำแหน่ง</th>
+                            <th>หมายเหตุ</th>
+                            <th>#</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                        <tr *ngFor="let ob of obj; let i = index">
+                            <td>
+                                <div class="ui transparent input">
+                                    <input type="text" name="numId{{i}}" id="numId{{i}}" [(ngModel)]="obj[i].numId" required>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ui transparent input">
+                                    <input type="text" name="chkDate{{i}}" id="chkDate{{i}}" [(ngModel)]="obj[i].chkDate" required>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ui transparent input">
+                                    <input type="text" name="checkName{{i}}" id="checkName{{i}}" [(ngModel)]="obj[i].checkName" required>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ui transparent input">
+                                    <input type="text" name="position{{i}}" id="position{{i}}" [(ngModel)]="obj[i].position" required>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ui transparent input">
+                                    <input type="text" name="chkOutDate{{i}}" id="chkOutDate{{i}}" [(ngModel)]="obj[i].chkOutDate" required>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ui transparent input">
+                                    <input type="text" name="chkWhere{{i}}" id="chkWhere{{i}}" [(ngModel)]="obj[i].chkWhere" required>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ui transparent input">
+                                    <input type="text" name="chkWhat{{i}}" id="chkWhat{{i}}" [(ngModel)]="obj[i].chkWhat" required>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ui transparent input">
+                                    <input type="text" name="whoToSign{{i}}" id="whoToSign{{i}}" [(ngModel)]="obj[i].whoToSign" required>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ui transparent input">
+                                    <input type="text" name="checkerOk{{i}}" id="checkerOk{{i}}" [(ngModel)]="obj[i].checkerOk" required>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ui transparent input">
+                                    <input type="text" name="dateToSend{{i}}" id="dateToSend{{i}}" [(ngModel)]="obj[i].dateToSend" required>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ui transparent input">
+                                    <input type="text" name="note{{i}}" id="note{{i}}" [(ngModel)]="obj[i].note">
+                                </div>
+                            </td>
+                            <td>
+                                <button *ngIf="i>=3" class="ui right floated mini red button" style="padding: 0.5em;" type="button" (click)="removeField(i)">
+                                    <i class="minus icon" style="margin-right: 0"></i>
+                                </button>
+                            </td>
                         </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-
                     </tbody>
                 </table>
             </div>
-
-
         </div>
     </div>
-</div>
 
-<div class="ui bottom centered attached segment">
-    <div class="ui center aligned grid">
-        <div class="eight wide column">
-            <button class="ui mini green button" type="button">
-                      <i class="save icon"></i>
-                      พิมพ์เอกสาร
-                    </button>
-            <button class="ui mini red button" type="button" (click)="onDiscard()">
-                      <i class="times icon"></i>
-                      ยกเลิก
-                    </button>
+    <div class="ui bottom centered attached segment">
+        <div class="ui center aligned grid">
+            <div class="four wide column">
+                <button class="ui left floated mini green button" type="button" (click)="onAddField()">
+                    <i class="plus icon"></i>
+                    เพิ่ม
+                </button>
+            </div>
+            <div class="eight wide column">
+                <button class="ui mini green button" type="submit">
+                    <i class="save icon"></i>
+                    พิมพ์เอกสาร
+                </button>
+                <button class="ui mini red button" type="button" (click)="onDiscard()">
+                    <i class="times icon"></i>
+                    ยกเลิก
+                </button>
+            </div>
+            <div class="four wide column"></div>
         </div>
     </div>
-</div>
+</form>

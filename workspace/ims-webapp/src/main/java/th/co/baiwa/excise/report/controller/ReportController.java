@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +31,7 @@ import net.sf.jasperreports.engine.JRException;
 import th.co.baiwa.buckwaframework.common.util.ThaiNumberUtils;
 import th.co.baiwa.excise.report.bean.ContractBean;
 import th.co.baiwa.excise.report.service.ReportService;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
 @RequestMapping("api/report")
@@ -93,6 +96,7 @@ public class ReportController {
 		params.put("presentTo", contract.getPresentTo());
 		params.put("reasonTxt", contract.getReasonTxt());
 		params.put("sendTo", contract.getSendTo());
+		byte[] reportFile = reportService.objectToPDF("Contract", params, null);
 		// return reportService.objectToPDF("Contract", params, null); // null
 	}
 
@@ -109,7 +113,11 @@ public class ReportController {
 		Gson gson = new Gson();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params = (Map<String, Object>) gson.fromJson(json, params.getClass());
-		byte[] report = reportService.objectToPDF(name, params, null); // null
+		List<Object> li = new ArrayList<Object>();
+		if(BeanUtils.isNotEmpty(params.get("Bean"))) {
+			li = (List<Object>) params.get("Bean");
+		}
+		byte[] report = reportService.objectToPDF(name, params, li); // null
 		//return report;
 	}
 }

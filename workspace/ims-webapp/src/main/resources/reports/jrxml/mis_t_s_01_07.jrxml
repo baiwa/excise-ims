@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="N_mis01-2" pageWidth="595" pageHeight="842" columnWidth="482" leftMargin="85" rightMargin="28" topMargin="28" bottomMargin="85" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -19,6 +19,42 @@
 			<bottomPen lineWidth="3.0" lineStyle="Dotted"/>
 		</box>
 	</style>
+	<parameter name="at1" class="java.lang.String"/>
+	<parameter name="at2" class="java.lang.String"/>
+	<parameter name="office" class="java.lang.String"/>
+	<parameter name="day" class="java.lang.String"/>
+	<parameter name="month" class="java.lang.String"/>
+	<parameter name="year" class="java.lang.String"/>
+	<parameter name="giveTo" class="java.lang.String"/>
+	<parameter name="giveTo1" class="java.lang.String"/>
+	<parameter name="giveTo2" class="java.lang.String"/>
+	<parameter name="giveTo3" class="java.lang.String"/>
+	<parameter name="giveTo4" class="java.lang.String"/>
+	<parameter name="giveTo5" class="java.lang.String"/>
+	<parameter name="position" class="java.lang.String"/>
+	<parameter name="position1" class="java.lang.String"/>
+	<parameter name="position2" class="java.lang.String"/>
+	<parameter name="position3" class="java.lang.String"/>
+	<parameter name="position4" class="java.lang.String"/>
+	<parameter name="position5" class="java.lang.String"/>
+	<parameter name="department" class="java.lang.String"/>
+	<parameter name="name" class="java.lang.String"/>
+	<parameter name="numExcise" class="java.lang.String"/>
+	<parameter name="numAt" class="java.lang.String"/>
+	<parameter name="group" class="java.lang.String"/>
+	<parameter name="alley" class="java.lang.String"/>
+	<parameter name="street" class="java.lang.String"/>
+	<parameter name="district" class="java.lang.String"/>
+	<parameter name="amphoe" class="java.lang.String"/>
+	<parameter name="province" class="java.lang.String"/>
+	<parameter name="postCode" class="java.lang.String"/>
+	<parameter name="outDate" class="java.lang.String"/>
+	<parameter name="section" class="java.lang.String"/>
+	<parameter name="cName" class="java.lang.String"/>
+	<parameter name="cPosition" class="java.lang.String"/>
+	<parameter name="chk1" class="java.lang.Boolean"/>
+	<parameter name="chk2" class="java.lang.Boolean"/>
+	<parameter name="chk3" class="java.lang.Boolean"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -26,7 +62,7 @@
 		<band height="659" splitType="Stretch">
 			<image>
 				<reportElement x="195" y="0" width="62" height="70" uuid="90ca04f2-82d8-4e03-92ba-af7e35dc179c"/>
-				<imageExpression><![CDATA["C:/Users/toffee/Desktop/img/logo1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["src/main/resources/reports/images/logo1.jpg"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement style="Topic" x="377" y="44" width="76" height="26" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
@@ -43,7 +79,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ที่"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="10" y="92" width="40" height="18" uuid="8369360c-e067-4c98-988d-f9122c31a47b"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -53,13 +89,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{at1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="50" y="92" width="3" height="18" uuid="febaaa54-9584-4056-9473-219f02448e88"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="53" y="92" width="69" height="18" uuid="14747aac-6856-4da5-a17d-b4618df39604"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -69,13 +106,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{at2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="221" y="111" width="18" height="18" uuid="6243755b-a27f-4410-a712-62a64897d5f2"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["วัน"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="239" y="111" width="40" height="18" uuid="238a282e-668d-4ea4-996a-a805f8594e6f"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -85,13 +123,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{day}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="76" y="139" width="145" height="18" uuid="17b21979-121c-4d0d-a216-bc079f6837b2"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["โดยหนังสือนี้แสดงให้ทราบว่า สำนัก"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="276" y="499" width="117" height="18" uuid="670e0dd6-c1dc-4bb8-8b46-0054525c519b"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -101,13 +140,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{cName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="249" y="518" width="33" height="18" uuid="d190f454-6830-4fdb-bc4f-469b95f9a0ad"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="0" y="561" width="158" height="18" uuid="fbccda1a-a926-49af-9ee2-cadac1bb9556"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -123,7 +163,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["โทร"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="20" y="579" width="138" height="18" uuid="7f8b0298-4caf-4adb-b191-6fe8ec58f38c"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -149,7 +189,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เดือน"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="308" y="111" width="60" height="18" uuid="2d7a32ef-d81f-40b9-b719-0344f6176f38"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -159,13 +199,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{month}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="368" y="111" width="18" height="18" uuid="7116c8cd-e2e0-4ad9-a058-b053251b6b7b"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["พ.ศ."]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="386" y="111" width="67" height="18" uuid="930925f4-b2a6-46c2-bf11-b9fc7b314e4d"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -175,8 +216,9 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="27" y="157" width="157" height="18" uuid="739453cd-5041-4f0e-9031-44f439538b45"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -186,13 +228,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{giveTo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="157" width="27" height="18" uuid="ef3cf906-565d-49b4-a655-e9629fc2d376"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ให้ได้"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="282" y="518" width="111" height="18" uuid="a9d45484-ed03-46c6-9fcc-aff2b8b02527"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -202,13 +245,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{cPosition}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="261" y="92" width="29" height="18" uuid="9e272ac3-3690-449f-8d4c-e1cdab5941fa"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["สำนัก"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="290" y="92" width="163" height="18" uuid="d125ca9c-ca4e-463f-ab60-8a0353020588"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -218,13 +262,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{office}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="357" width="454" height="18" uuid="388e6504-9780-4310-a104-bef81a44a738"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["แห่งพระราชบัญญัติภาษีสรรพสามิต พ.ศ. ๒๔๖๐"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="221" y="139" width="233" height="18" uuid="1884839d-d9e4-4904-b38d-e99be6cf7dff"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -234,13 +279,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{office}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="184" y="158" width="37" height="18" uuid="84380098-657c-44d7-9763-69f2d8fd93d8"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="221" y="158" width="233" height="18" uuid="ac0110af-5a98-43e1-ba74-519146d8aa31"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -250,13 +296,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{position}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="175" width="58" height="18" uuid="20e857a7-f1a4-4882-a597-0f97e9c31f09"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["พร้อมด้วย (๑)"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="58" y="175" width="126" height="18" uuid="10747942-ac5e-4709-9a2d-224688292a79"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -266,13 +313,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{giveTo1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="184" y="176" width="37" height="18" uuid="6ca432d7-debe-467d-b736-7a04c0d78d6b"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="221" y="176" width="233" height="18" uuid="fa317395-455c-4cb2-a2c9-e39bc1e218f1"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -282,13 +330,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{position1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="193" width="20" height="18" uuid="a0f68f79-c717-4cf8-a4a0-38fb9f2bd550"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["(๒)"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="20" y="193" width="164" height="18" uuid="f40e6bfa-3da6-4bf8-919c-458e72878f1d"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -298,13 +347,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{giveTo2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="184" y="194" width="37" height="18" uuid="43a01644-603b-44ee-a886-91d6a207e42e"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="221" y="194" width="233" height="18" uuid="28983667-883b-48b0-a301-29c8c88522eb"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -314,8 +364,9 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{position2}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="20" y="211" width="164" height="18" uuid="b822848d-63ef-4e36-80bf-c40da572a7f4"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -325,6 +376,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{giveTo3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="211" width="20" height="18" uuid="09fd06dd-c953-4167-8ebb-1a0fd6143a27"/>
@@ -336,7 +388,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="221" y="212" width="233" height="18" uuid="690650ad-98c9-4093-bbee-13ef11aecb1e"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -346,13 +398,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{position3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="229" width="20" height="18" uuid="2682a4e1-8515-4dcf-8b66-0fd76f9b66f5"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["(๔)"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="20" y="229" width="164" height="18" uuid="eac8c533-3bf6-4c7f-b967-5342c3fd9745"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -362,13 +415,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{giveTo4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="184" y="230" width="37" height="18" uuid="b035d526-9918-4029-bf58-021e9cd6939a"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="221" y="231" width="233" height="18" uuid="864f9aeb-0825-4368-af4b-ee39098ebf86"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -378,8 +432,9 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{position4}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="20" y="248" width="164" height="18" uuid="3f70b032-e0ad-4f7c-bb0b-73d95811cf0e"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -389,6 +444,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{giveTo5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="248" width="20" height="18" uuid="29c9281b-3552-43c6-ac0e-259312e290a1"/>
@@ -400,7 +456,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="221" y="249" width="233" height="18" uuid="ae790872-554e-426b-b1b2-78ef1aa69147"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -410,13 +466,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{position5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="267" width="194" height="18" uuid="176eee6b-72f3-4770-b226-09e7458c2e46"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["มาทำการตรวจสอบภาษี ณ สถานประกอบการของ"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="194" y="266" width="260" height="18" uuid="38fab90b-1fe9-44ed-becd-95fd5602e757"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -426,6 +483,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{department}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="285" width="17" height="18" uuid="63ed2289-257b-486d-ba2e-da39bf05dda9"/>
@@ -437,7 +495,7 @@
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{chk1} ? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="31" y="285" width="77" height="18" uuid="a2702bb3-6ed4-4870-aa8c-a935a6fc65c3"/>
@@ -449,7 +507,7 @@
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{chk2} ? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="122" y="285" width="49" height="18" uuid="8eb4d30d-b2e3-49ec-a607-582ef92d64dd"/>
@@ -461,7 +519,7 @@
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{chk3} ? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="196" y="285" width="76" height="18" uuid="7793de7b-6f63-47f2-ad99-ebd175307391"/>
@@ -473,7 +531,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ชื่อ "]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="290" y="285" width="164" height="18" uuid="257c1086-dfa3-4151-a54b-cbe912fcf97b"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -483,13 +541,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="303" width="100" height="18" uuid="92f6b7b8-757c-4832-a05e-e360692b77dc"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ทะเบียนสรรพสามิตเลขที่"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="100" y="303" width="190" height="18" uuid="50376bc3-c052-4bbf-930b-0aad19e7d3b5"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -499,13 +558,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{numExcise}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="290" y="303" width="44" height="18" uuid="dcdbd168-b99c-42f1-85c0-bab0c0c4393d"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตั้งอยู่เลขที่"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="334" y="303" width="48" height="18" uuid="38be1f44-1d35-4402-ad4e-8c6774f13240"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -515,13 +575,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{numAt}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="382" y="303" width="28" height="18" uuid="1afc91ea-e180-4dda-b5b6-e6588ffe3ca5"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["หมู่ที่"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="410" y="303" width="44" height="18" uuid="fa8dd996-6f82-474e-95e5-56107bdfbe67"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -531,13 +592,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{group}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="321" width="47" height="18" uuid="66635ca8-b613-45a7-ad56-1f93ca44e2a4"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตรอก/ซอย "]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="47" y="321" width="112" height="18" uuid="bfd258b9-b284-4d85-adc6-e38210abe90e"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -547,13 +609,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{alley}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="159" y="321" width="23" height="18" uuid="6d311736-963a-4bde-b183-98a2b19c4037"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ถนน "]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="182" y="321" width="108" height="18" uuid="765ae12d-f9de-4fcd-85ed-00115c02a723"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -563,13 +626,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{street}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="290" y="321" width="51" height="18" uuid="cabaa2bb-1869-487e-bdb2-164965656c4c"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำบล/แขวง"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="341" y="321" width="112" height="18" uuid="e4ba6ce2-e210-4443-abbc-ccaba49e762a"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -579,13 +643,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{district}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="339" width="47" height="18" uuid="835554be-4564-4144-986a-15c5869ca2fc"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["อำเภอ/เขต"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="47" y="339" width="112" height="18" uuid="bdcd70dd-50ec-42c5-a61f-04e0175d432e"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -595,13 +660,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{amphoe}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="159" y="339" width="30" height="18" uuid="09703819-dd39-4ff6-8533-31260c17947c"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["จังหวัด"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="189" y="339" width="100" height="18" uuid="bedaf6bd-ce80-4c0e-8dd2-7ecd3f90c459"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -611,13 +677,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{province}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="290" y="339" width="56" height="18" uuid="401fae87-be02-4fce-9fab-5a6cdeb4e1c4"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["รหัสไปรษณีย์"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="346" y="339" width="108" height="18" uuid="4c0107ca-58f2-4853-b869-01a178143ea1"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -627,6 +694,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{postCode}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="75" y="375" width="395" height="18" uuid="1867139a-1609-40be-a0ee-2049ea247e57"/>
@@ -643,7 +711,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตามหมายเลขโทรศัพท์"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="90" y="411" width="112" height="18" uuid="3314828c-e4a0-4730-bb36-994aa2414c3e"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -659,7 +727,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["และขอให้ท่านอำนวยความสะดวกแก่พนักงานเจ้าหน้าที่ด้วย"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="270" y="481" width="128" height="18" uuid="50b807bb-fe07-4247-8cb7-b253cc42dc60"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
