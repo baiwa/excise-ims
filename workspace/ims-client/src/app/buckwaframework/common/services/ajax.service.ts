@@ -83,4 +83,23 @@ export class AjaxService {
       .then(success)
       .catch(errorFn);
   }
+
+  upload(url: string, body: any, success: any, error?: any, header?: Headers) {
+    if (AjaxService.isDebug) {
+      console.log("URL : ", AjaxService.CONTEXT_PATH + url);
+      console.log("Params : ", body);
+    }
+    var headers = new Headers();
+    let errorFn = this.handleError;
+    if (error) {
+      errorFn = error;
+    }
+    console.log(body, " ", headers);
+
+    return this.http
+      .post(AjaxService.CONTEXT_PATH + url, body, { headers: headers })
+      .toPromise()
+      .then(success)
+      .catch(errorFn);
+  }
 }
