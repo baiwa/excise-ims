@@ -5,6 +5,7 @@ import {
   formatter,
   digit
 } from "../../../../../common/helper/datepicker";
+import { DecimalFormat } from "../../../../../common/helper";
 
 declare var $: any;
 @Component({
@@ -20,7 +21,9 @@ export class Ope041Component implements OnInit {
   startDate: any;
   endDate: any;
   MonthDataList: MonthData;
-  fileEx: any;
+  fileExel: File[];
+  analysNumber: any;
+  row: any;
 
   constructor(private ajax: AjaxService) {
     this.exciseIdArr = "";
@@ -43,6 +46,8 @@ export class Ope041Component implements OnInit {
       monthRecieve5: "",
       monthRecieve6: ""
     };
+    this.row = [["", ""], ["", ""], ["", ""], ["", ""], ["", ""], ["", ""]];
+    this.fileExel = new Array<File>(); // initial file array
   }
 
   ngOnInit() {
@@ -125,47 +130,44 @@ export class Ope041Component implements OnInit {
     });
   };
 
-  // uploadData() {
-  //   this.startDate = (<HTMLInputElement>(
-  //     document.getElementById("startDate")
-  //   )).value;
-  //   this.endDate = (<HTMLInputElement>document.getElementById("endDate")).value;
-  //   this.showData = true;
-  //   console.log(this.exciseId);
-  //   console.log(this.startDate);
-  //   console.log(this.endDate);
-
-  //   const date_str1 = this.startDate.split(" ");
-  //   date_str1[0] = digit(TextDateTH.months.indexOf(date_str1[0]) + 1);
-  //   const startDateSplit = date_str1[0] + "/" + date_str1[1];
-  //   console.log(startDateSplit);
-
-  //   const date_str2 = this.endDate.split(" ");
-  //   date_str2[0] = digit(TextDateTH.months.indexOf(date_str2[0]) + 1);
-  //   const endDateSplit = date_str2[0] + "/" + date_str2[1];
-  //   console.log(endDateSplit);
-  // }
-
   // clearData() {
   //   this.showData = false;
   // }
 
-  onUpload = e => {
+  onUpload = (event: any) => {
     // Prevent actual form submission
-    e.preventDefault();
-    // this.startDate = e.target["startDate"].value;
+    event.preventDefault();
+
+    //send form data
+    const form = $("#upload-form")[0];
+    let formBody = new FormData(form);
+
+    let url = `upload/excel`;
+    this.ajax.upload(url, formBody, res => {
+      this.row = res.json();
+      for (let i = 0; i < this.row.length; i++) {
+        for (let j = 0; j < this.row[i].length; j++) {
+          this.row[i][j] = this.DF(this.row[i][j].toString());
+        }
+      }
+      console.log(this.row);
+    });
   };
 
   onChangeUpload = (event: any) => {
-    let reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
-      let file = event.target.files[0];
-      reader.readAsDataURL(file);
-      console.log(file);
+      let reader = new FileReader();
 
-      reader.onload = (event: any) => {
-        console.log(event.target.result);
+      reader.onload = (e: any) => {
+        const f = {
+          name: event.target.files[0].name,
+          type: event.target.files[0].type,
+          value: e.target.result
+        };
+        this.fileExel = [f];
+        console.log(this.fileExel);
       };
+      reader.readAsDataURL(event.target.files[0]);
     }
   };
 
@@ -174,21 +176,16 @@ export class Ope041Component implements OnInit {
     e.preventDefault();
     this.startDate = e.target["startDate"].value;
     this.endDate = e.target["endDate"].value;
-    console.log(this.exciseId);
-    console.log(this.startDate);
-    console.log(this.endDate);
 
     //change formatter first date input value
     const date_str1 = this.startDate.split(" ");
     date_str1[0] = digit(TextDateTH.months.indexOf(date_str1[0]) + 1);
     const startDateSplit = date_str1[0] + "/" + date_str1[1];
-    console.log(startDateSplit);
 
     //change formatter end date input value
     const date_str2 = this.endDate.split(" ");
     date_str2[0] = digit(TextDateTH.months.indexOf(date_str2[0]) + 1);
     const endDateSplit = date_str2[0] + "/" + date_str2[1];
-    console.log(endDateSplit);
 
     const URL =
       AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdMonthList";
@@ -201,13 +198,17 @@ export class Ope041Component implements OnInit {
       },
       res => {
         this.MonthDataList = res.length == 0 ? new MonthData() : res[0];
-        console.log(this.MonthDataList);
       }
     );
 
     //update data
     this.showData = true;
   };
+
+  DF(what) {
+    const df = new DecimalFormat("#,###.00");
+    return df.format(what);
+  }
 }
 
 class MonthData {
@@ -223,4 +224,11 @@ class MonthData {
   monthRecieve4: any;
   monthRecieve5: any;
   monthRecieve6: any;
+}
+
+class File {
+  [x: string]: any;
+  name: string;
+  type: string;
+  value: any;
 }

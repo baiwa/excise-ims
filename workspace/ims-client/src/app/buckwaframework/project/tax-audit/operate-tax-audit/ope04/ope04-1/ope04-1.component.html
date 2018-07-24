@@ -111,8 +111,8 @@
                         <tr>
                             <td>1</td>
                             <td>{{MonthDataList.product1}}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{row[0][0]}}</td>
+                            <td>{{row[0][1]}}</td>
                             <td>{{MonthDataList.monthRecieve1}}</td>
                             <!-- <td>
                                 <span class="ui green horizontal label right aligned" style="float: right;">0</span>
@@ -127,8 +127,8 @@
                         <tr>
                             <td>2</td>
                             <td>{{MonthDataList.product2}}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{row[1][0]}}</td>
+                            <td>{{row[1][1]}}</td>
                             <td>{{MonthDataList.monthRecieve2}}</td>
                             <!-- <td>
                                 <span class="ui green horizontal label right aligned" style="float: right;">0</span>
@@ -143,8 +143,8 @@
                         <tr>
                             <td>3</td>
                             <td>{{MonthDataList.product3}}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{row[2][0]}}</td>
+                            <td>{{row[2][1]}}</td>
                             <td>{{MonthDataList.monthRecieve3}}</td>
                             <!-- <td>
                                 <span class="ui green horizontal label right aligned" style="float: right;">0</span>
@@ -160,8 +160,8 @@
                         <tr>
                             <td>4</td>
                             <td>{{MonthDataList.product4}}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{row[3][0]}}</td>
+                            <td>{{row[3][1]}}</td>
                             <td>{{MonthDataList.monthRecieve4}}</td>
                             <!-- <td>
                                 <span class="ui green horizontal label right aligned" style="float: right;">0</span>
@@ -177,8 +177,8 @@
                         <tr>
                             <td>5</td>
                             <td>{{MonthDataList.product5}}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{row[4][0]}}</td>
+                            <td>{{row[4][1]}}</td>
                             <td>{{MonthDataList.monthRecieve5}}</td>
                             <!-- <td>
                                 <span class="ui green horizontal label right aligned" style="float: right;">0</span>
@@ -194,8 +194,8 @@
                         <tr>
                             <td>6</td>
                             <td>{{MonthDataList.product6}}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{row[5][0]}}</td>
+                            <td>{{row[5][1]}}</td>
                             <td>{{MonthDataList.monthRecieve6}}</td>
                             <!-- <td>
                                 <span class="ui green horizontal label right aligned" style="float: right;">0</span>
@@ -230,27 +230,27 @@
             <span>อัพโหลด Template ข้อมูลสำหรับการรับวัตถุดิบ</span>
         </div>
 
-        <form ngNativeValidate (submit)="onUpload($event)">
+        <form id="upload-form" ngNativeValidate (submit)="onUpload($event)">
             <div class="ui attached segment">
                 <div class="ui form">
                     <div class="inline fields">
                         <div class="eight wide field ">
                             <label class="custom-label-w-25">เลือกไฟล์ Template ข้อมูล</label>
-                            <input type="file" name="fileEx" id="fileEx" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="onChangeUpload($event)" required>
+                            <input type="file" name="fileExel" id="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="onChangeUpload($event)" required>
                         </div>
                     </div>
                 </div>
 
                 <div class="ui center aligned grid">
                     <div class="four wide column">
-                        <button class="ui mini primary button">
-            <i class="upload icon"></i>
-            อัพโหลด
-          </button>
-                        <button class="ui mini button">
-            <i class="trash outline icon"></i>
-            ลบไฟล์
-          </button>
+                        <button class="ui mini primary button" type="submit">
+                            <i class="upload icon"></i>
+                            อัพโหลด
+                        </button>
+                        <button class="ui mini button" type="reset">
+                            <i class="trash outline icon"></i>
+                            ลบไฟล์
+                        </button>
                     </div>
                 </div>
             </div>
