@@ -8,7 +8,7 @@
 	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
-	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="14"/>
+	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16"/>
 	<style name="data" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="14">
 		<box>
 			<pen lineWidth="0.0" lineStyle="Dotted"/>
@@ -38,7 +38,7 @@
 		<![CDATA[]]>
 	</queryString>
 	<pageHeader>
-		<band height="652" splitType="Stretch">
+		<band height="718" splitType="Stretch">
 			<image isUsingCache="false">
 				<reportElement isPrintRepeatedValues="false" x="195" y="0" width="60" height="60" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
@@ -54,12 +54,12 @@
 				<textFieldExpression><![CDATA["บันทึกผลการวิเคราะห์การชำระภาษีสรรพสามิต"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="-1" y="108" width="21" height="19" uuid="17b21979-121c-4d0d-a216-bc079f6837b2"/>
+				<reportElement style="TextDetail" x="-1" y="108" width="21" height="22" uuid="17b21979-121c-4d0d-a216-bc079f6837b2"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ราย"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="14" y="102" width="204" height="19" uuid="a2a8c9f4-2834-4e20-804f-3aa5024dced2"/>
+				<reportElement style="data" x="15" y="103" width="204" height="19" uuid="a2a8c9f4-2834-4e20-804f-3aa5024dced2"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -71,12 +71,12 @@
 				<textFieldExpression><![CDATA[$P{item}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="-1" y="127" width="100" height="19" uuid="5a466d6f-40b0-4dd6-a21b-47c8822c47be"/>
+				<reportElement style="TextDetail" x="-1" y="129" width="120" height="22" uuid="5a466d6f-40b0-4dd6-a21b-47c8822c47be"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ทะเบียนสรรพสามิตเลขที่"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="92" y="122" width="361" height="19" uuid="5f69a886-39c0-4836-9ecc-01463e8c08ef"/>
+				<reportElement style="data" x="104" y="124" width="349" height="19" uuid="5f69a886-39c0-4836-9ecc-01463e8c08ef"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -88,12 +88,12 @@
 				<textFieldExpression><![CDATA[$P{exciseId}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="-1" y="145" width="21" height="19" uuid="16d3018e-70cf-4fbc-9469-4843601d07e7"/>
+				<reportElement style="TextDetail" x="-1" y="149" width="31" height="22" uuid="16d3018e-70cf-4fbc-9469-4843601d07e7"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ที่อยู่"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="17" y="140" width="436" height="19" uuid="accbba75-3070-44ac-a9c6-97fa0ae55b2b"/>
+				<reportElement style="data" x="19" y="144" width="434" height="19" uuid="accbba75-3070-44ac-a9c6-97fa0ae55b2b"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -107,12 +107,12 @@
 				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="-1" y="163" width="102" height="19" uuid="219b9b45-9c33-48e1-9fc6-29ee67c1ad84"/>
+				<reportElement style="TextDetail" x="-1" y="167" width="120" height="22" uuid="219b9b45-9c33-48e1-9fc6-29ee67c1ad84"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["รอบระยะเวลาที่ตรวจสอบ"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="94" y="160" width="359" height="19" uuid="96c6a242-5b28-46bb-9d92-a0946cd6b64a"/>
+				<reportElement style="data" x="109" y="164" width="344" height="19" uuid="96c6a242-5b28-46bb-9d92-a0946cd6b64a"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -124,12 +124,12 @@
 				<textFieldExpression><![CDATA[$P{dateFrom}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="-1" y="289" width="23" height="19" uuid="ebb92fc5-4fe0-4064-bbd9-c2f09491f9e3"/>
+				<reportElement style="TextDetail" x="-1" y="310" width="31" height="22" uuid="ebb92fc5-4fe0-4064-bbd9-c2f09491f9e3"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เรียน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="203" y="417" width="117" height="19" uuid="0490a3f8-51ad-474c-a952-f35e050dfa6c"/>
+				<reportElement style="data" x="203" y="436" width="117" height="19" uuid="0490a3f8-51ad-474c-a952-f35e050dfa6c"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -141,7 +141,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="203" y="435" width="117" height="19" uuid="e77db48d-94b8-4f18-9caa-d1f26c69561c"/>
+				<reportElement style="data" x="203" y="456" width="117" height="19" uuid="e77db48d-94b8-4f18-9caa-d1f26c69561c"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -153,27 +153,27 @@
 				<textFieldExpression><![CDATA[$P{analysName} == null ? "" : $P{analysName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="197" y="435" width="6" height="19" uuid="239ea194-307a-49fe-a910-42af84351c40"/>
+				<reportElement style="TextDetail" x="199" y="462" width="6" height="22" uuid="239ea194-307a-49fe-a910-42af84351c40"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="320" y="435" width="6" height="19" uuid="62937ab8-692c-4526-90a1-0ba170c166e1"/>
+				<reportElement style="TextDetail" x="321" y="461" width="6" height="22" uuid="62937ab8-692c-4526-90a1-0ba170c166e1"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="221" y="489" width="6" height="19" uuid="646cd5c3-8f95-45ef-8052-f64588c53069"/>
+				<reportElement style="TextDetail" x="232" y="525" width="6" height="22" uuid="646cd5c3-8f95-45ef-8052-f64588c53069"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="286" y="489" width="6" height="19" uuid="c3ff5d06-7771-4b2b-a6b4-d089079e5b1f"/>
+				<reportElement style="TextDetail" x="285" y="525" width="6" height="22" uuid="c3ff5d06-7771-4b2b-a6b4-d089079e5b1f"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="227" y="489" width="59" height="19" uuid="5316fe6b-e3d5-41ae-95b5-3912fa7b5d02"/>
+				<reportElement style="data" x="234" y="519" width="50" height="19" uuid="5316fe6b-e3d5-41ae-95b5-3912fa7b5d02"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -185,7 +185,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="292" y="489" width="34" height="18" uuid="9724b427-882d-4663-8041-8d7b8b8e5ec3"/>
+				<reportElement style="data" x="288" y="520" width="32" height="18" uuid="9724b427-882d-4663-8041-8d7b8b8e5ec3"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -197,7 +197,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="194" y="489" width="27" height="19" uuid="c6e1a3be-f9df-495c-a7e1-b8d214edfcf9"/>
+				<reportElement style="data" x="203" y="519" width="27" height="19" uuid="c6e1a3be-f9df-495c-a7e1-b8d214edfcf9"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -209,36 +209,36 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="139" y="381" width="10" height="19" uuid="a8398076-939d-44ee-9b46-c0249e06c1a4"/>
+				<reportElement positionType="Float" x="138" y="408" width="30" height="19" uuid="a8398076-939d-44ee-9b46-c0249e06c1a4"/>
 				<textElement verticalAlignment="Bottom">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{accept} ? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="139" y="399" width="10" height="19" uuid="74c7e816-1599-4b15-bcfa-fa62ae36b086"/>
+				<reportElement x="138" y="425" width="30" height="19" uuid="74c7e816-1599-4b15-bcfa-fa62ae36b086"/>
 				<textElement verticalAlignment="Bottom">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{other} ? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="169" y="381" width="41" height="19" uuid="a127d463-e909-406d-a573-d8bc3580efe5"/>
+				<reportElement style="TextDetail" x="158" y="405" width="41" height="22" uuid="a127d463-e909-406d-a573-d8bc3580efe5"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["อนุมัติ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="169" y="399" width="21" height="19" uuid="dc704157-c83c-44c7-bf35-249f9e2b541e"/>
+				<reportElement style="TextDetail" x="158" y="423" width="21" height="22" uuid="dc704157-c83c-44c7-bf35-249f9e2b541e"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA["อื่นๆ"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["อื่น ๆ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="218" y="108" width="60" height="19" uuid="83db931b-d505-4a18-bfcd-bf4a215c5a2e"/>
+				<reportElement style="TextDetail" x="218" y="108" width="70" height="22" uuid="83db931b-d505-4a18-bfcd-bf4a215c5a2e"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ประเภทกิจการ"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="274" y="102" width="179" height="19" uuid="83d07c38-4f52-4630-ba94-22e694e2bf39"/>
+				<reportElement style="data" x="281" y="103" width="172" height="19" uuid="83d07c38-4f52-4630-ba94-22e694e2bf39"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -250,37 +250,37 @@
 				<textFieldExpression><![CDATA[$P{workType}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="-1" y="181" width="102" height="19" uuid="de7160cc-a9b3-4176-8509-7a1c685321e7"/>
+				<reportElement style="TextDetail" x="-1" y="185" width="110" height="22" uuid="de7160cc-a9b3-4176-8509-7a1c685321e7"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ข้อมูลที่ใช้ในการวิเคราะห์"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="31" y="217" width="20" height="19" uuid="87233aa5-4b43-4fe7-8f10-21cb35d998cc"/>
+				<reportElement style="TextDetail" x="31" y="223" width="20" height="22" uuid="87233aa5-4b43-4fe7-8f10-21cb35d998cc"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["(๒)"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="31" y="235" width="20" height="19" uuid="f11471a1-1669-4f0f-af86-5e977cf7f38d"/>
+				<reportElement style="TextDetail" x="31" y="243" width="20" height="22" uuid="f11471a1-1669-4f0f-af86-5e977cf7f38d"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["(๓)"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="31" y="253" width="20" height="19" uuid="ab96b537-4371-4fdc-9af5-de99122e43c9"/>
+				<reportElement style="TextDetail" x="31" y="263" width="20" height="22" uuid="ab96b537-4371-4fdc-9af5-de99122e43c9"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["(๔)"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="31" y="271" width="20" height="19" uuid="c0943149-7509-438d-81c1-bb4fde79da8b"/>
+				<reportElement style="TextDetail" x="31" y="283" width="20" height="22" uuid="c0943149-7509-438d-81c1-bb4fde79da8b"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["(๕)"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="31" y="199" width="20" height="19" uuid="7d496e68-32a3-4517-8306-a49a2e60ce46"/>
+				<reportElement style="TextDetail" x="31" y="203" width="20" height="22" uuid="7d496e68-32a3-4517-8306-a49a2e60ce46"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["(๑)"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="45" y="194" width="318" height="19" uuid="dd2ac461-ce0c-4784-84de-962db9143587"/>
+				<reportElement style="data" x="45" y="198" width="318" height="19" uuid="dd2ac461-ce0c-4784-84de-962db9143587"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -292,7 +292,7 @@
 				<textFieldExpression><![CDATA[$P{analys1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="45" y="212" width="318" height="19" uuid="a074c32c-f89f-4541-b51c-77ba240b840a"/>
+				<reportElement style="data" x="45" y="219" width="318" height="19" uuid="a074c32c-f89f-4541-b51c-77ba240b840a"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -304,7 +304,7 @@
 				<textFieldExpression><![CDATA[$P{analys2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="46" y="230" width="318" height="19" uuid="9f3f2f76-f94b-4eba-93d4-932231097575"/>
+				<reportElement style="data" x="45" y="240" width="318" height="19" uuid="9f3f2f76-f94b-4eba-93d4-932231097575"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -316,7 +316,7 @@
 				<textFieldExpression><![CDATA[$P{analys3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="46" y="248" width="318" height="19" uuid="0dd6ae32-4980-4068-ba8c-e11d5518b740"/>
+				<reportElement style="data" x="45" y="261" width="318" height="19" uuid="0dd6ae32-4980-4068-ba8c-e11d5518b740"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -328,7 +328,7 @@
 				<textFieldExpression><![CDATA[$P{analys4}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="46" y="266" width="318" height="19" uuid="3d9d7d90-8c45-445d-8eda-b48dd0798766"/>
+				<reportElement style="data" x="45" y="282" width="318" height="19" uuid="3d9d7d90-8c45-445d-8eda-b48dd0798766"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -340,7 +340,7 @@
 				<textFieldExpression><![CDATA[$P{analys5}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="19" y="283" width="214" height="19" uuid="8c8f3b39-e28d-4775-b050-c00b25941753"/>
+				<reportElement style="data" x="21" y="305" width="214" height="19" uuid="8c8f3b39-e28d-4775-b050-c00b25941753"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -352,12 +352,12 @@
 				<textFieldExpression><![CDATA[$P{sendTo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="31" y="308" width="239" height="19" uuid="afee14af-c60a-458b-b708-8af1bd74e6f0"/>
+				<reportElement style="TextDetail" x="33" y="328" width="285" height="22" uuid="afee14af-c60a-458b-b708-8af1bd74e6f0"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตามที่ได้ทำการวิเคราะห์ข้อมูลรายดังกล่าวข้างต้นแล้วปรากฏว่า"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="271" y="307" width="182" height="19" uuid="00f48b89-1f94-475d-ae88-d2487f5b8fce"/>
+				<reportElement style="data" x="296" y="323" width="155" height="19" uuid="00f48b89-1f94-475d-ae88-d2487f5b8fce"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -369,7 +369,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="0" y="325" width="453" height="19" uuid="2ec754b3-d9b2-49ba-a01b-c4482bfeba14"/>
+				<reportElement style="data" x="-1" y="342" width="452" height="19" uuid="2ec754b3-d9b2-49ba-a01b-c4482bfeba14"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -381,7 +381,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="0" y="343" width="453" height="19" uuid="0f11753d-db64-4f53-98c1-5a5cc11fe4c3"/>
+				<reportElement style="data" x="-1" y="362" width="452" height="19" uuid="0f11753d-db64-4f53-98c1-5a5cc11fe4c3"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -393,7 +393,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="0" y="362" width="453" height="19" uuid="9dcf8162-b0e2-4211-b438-d921193dfe5f"/>
+				<reportElement style="data" x="-1" y="382" width="452" height="19" uuid="9dcf8162-b0e2-4211-b438-d921193dfe5f"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -405,12 +405,12 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="31" y="381" width="59" height="19" uuid="5eba1b0a-ed24-4cbd-988d-16d31ba6afe8"/>
+				<reportElement style="TextDetail" x="31" y="405" width="69" height="22" uuid="5eba1b0a-ed24-4cbd-988d-16d31ba6afe8"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["จึงเห็นสมควร"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="190" y="399" width="130" height="19" uuid="1cf7f39b-a1fc-4284-8deb-1c7f45a7bab2"/>
+				<reportElement style="data" x="180" y="417" width="138" height="19" uuid="1cf7f39b-a1fc-4284-8deb-1c7f45a7bab2"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -422,12 +422,12 @@
 				<textFieldExpression><![CDATA[$P{otherTxt} == null ? "" : $P{otherTxt}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="320" y="417" width="41" height="19" uuid="2fb54762-c421-41d2-b58f-7dfb33e8b7f6"/>
+				<reportElement style="TextDetail" x="321" y="440" width="100" height="22" uuid="2fb54762-c421-41d2-b58f-7dfb33e8b7f6"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ผู้วิเคราะห์"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="203" y="453" width="117" height="19" uuid="b12226a9-87f9-466c-a8bb-7c7dd88cda46"/>
+				<reportElement style="data" x="203" y="477" width="117" height="19" uuid="b12226a9-87f9-466c-a8bb-7c7dd88cda46"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -439,7 +439,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="203" y="471" width="117" height="19" uuid="37ec4205-0ff8-4ecc-ab6e-7e78da44ccad"/>
+				<reportElement style="data" x="203" y="498" width="117" height="19" uuid="37ec4205-0ff8-4ecc-ab6e-7e78da44ccad"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -451,56 +451,42 @@
 				<textFieldExpression><![CDATA[$P{analysControl} == null ? "" : $P{analysControl}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="197" y="471" width="6" height="19" uuid="c4e256d7-d3b1-450f-aec0-2fec889822a3"/>
+				<reportElement style="TextDetail" x="199" y="503" width="6" height="22" uuid="c4e256d7-d3b1-450f-aec0-2fec889822a3"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="320" y="471" width="6" height="18" uuid="ea30fbbd-300f-4859-a7ce-9437c8eeaa8d"/>
+				<reportElement style="TextDetail" x="321" y="502" width="6" height="22" uuid="ea30fbbd-300f-4859-a7ce-9437c8eeaa8d"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="320" y="453" width="41" height="18" uuid="87ee2ff2-0a47-432b-a988-b63f80cac57a"/>
+				<reportElement style="TextDetail" x="321" y="481" width="100" height="22" uuid="87ee2ff2-0a47-432b-a988-b63f80cac57a"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA["ผู้ควบคุม"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ผู้ควบคุมการวิเคราะห์"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="169" y="507" width="123" height="19" uuid="c7512b6b-9d08-4b7a-90bc-dc20f9345be9"/>
+				<reportElement style="TextDetail" x="165" y="544" width="141" height="22" uuid="c7512b6b-9d08-4b7a-90bc-dc20f9345be9"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["คำสั่งผู้บังคับบัญชาตามสายงาน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="31" y="525" width="10" height="19" uuid="1fba6b77-0f6f-4234-986c-ca822279668c"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="DejaVu Sans"/>
-				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="50" y="525" width="41" height="19" uuid="8ae10ffb-7964-43ee-b441-faeb8cc6a84e"/>
+				<reportElement style="TextDetail" x="50" y="562" width="41" height="22" uuid="8ae10ffb-7964-43ee-b441-faeb8cc6a84e"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["อนุมัติ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="121" y="525" width="10" height="19" uuid="ab6b0914-56d5-47dd-a23b-ec39f558e2df"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="DejaVu Sans"/>
-				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="140" y="525" width="41" height="19" uuid="06fcc8be-bd25-4aad-b52e-5b468576bb11"/>
+				<reportElement style="TextDetail" x="140" y="562" width="41" height="22" uuid="06fcc8be-bd25-4aad-b52e-5b468576bb11"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ไม่อนุมัติ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="50" y="543" width="168" height="19" uuid="8bfed156-db4d-4563-a5e1-5ceb70b59a39"/>
+				<reportElement style="TextDetail" x="50" y="580" width="192" height="22" uuid="8bfed156-db4d-4563-a5e1-5ceb70b59a39"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA["ให้ดำนวนการขออนุมัติออกหนังสือเรียกได้"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ให้คำนวณการขออนุมัติออกหนังสือเรียกได้"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="203" y="561" width="117" height="19" uuid="54ad903c-cea7-4722-aa1a-53de77fa9658"/>
+				<reportElement style="data" x="202" y="599" width="118" height="19" uuid="54ad903c-cea7-4722-aa1a-53de77fa9658"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -512,7 +498,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="203" y="579" width="117" height="19" uuid="020f974f-001d-4e94-9b39-249bb0cdd4fb"/>
+				<reportElement style="data" x="202" y="619" width="118" height="19" uuid="020f974f-001d-4e94-9b39-249bb0cdd4fb"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -524,17 +510,17 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="197" y="579" width="6" height="19" uuid="abf0babc-a7c3-4a73-a264-4a4536be82e7"/>
+				<reportElement style="TextDetail" x="197" y="624" width="6" height="22" uuid="abf0babc-a7c3-4a73-a264-4a4536be82e7"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="320" y="579" width="6" height="18" uuid="bd55f0cc-d44a-45f6-9b60-5c8cfc9f1a58"/>
+				<reportElement style="TextDetail" x="321" y="621" width="6" height="22" uuid="bd55f0cc-d44a-45f6-9b60-5c8cfc9f1a58"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="236" y="597" width="84" height="19" uuid="33c83672-b356-43dd-80c9-469ecb06ea2b"/>
+				<reportElement style="data" x="238" y="639" width="82" height="19" uuid="33c83672-b356-43dd-80c9-469ecb06ea2b"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -546,17 +532,17 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="198" y="597" width="38" height="19" uuid="fa03a30a-6d62-4913-a0c0-f08de0cab0d1"/>
+				<reportElement style="TextDetail" x="198" y="644" width="52" height="22" uuid="fa03a30a-6d62-4913-a0c0-f08de0cab0d1"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="198" y="615" width="38" height="19" uuid="547c59c2-6446-4898-94c8-c64a52c717db"/>
+				<reportElement style="TextDetail" x="198" y="663" width="52" height="22" uuid="547c59c2-6446-4898-94c8-c64a52c717db"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["วันเดือนปี"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="236" y="615" width="84" height="19" uuid="d4cf72c7-a234-42cb-8e79-1534d6224b9c"/>
+				<reportElement style="data" x="242" y="659" width="78" height="19" uuid="d4cf72c7-a234-42cb-8e79-1534d6224b9c"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -568,12 +554,26 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="308" width="453" height="73" uuid="3c95d6c7-7af3-4949-86e9-c23214c94137"/>
+				<reportElement style="TextDetail" x="-1" y="328" width="452" height="72" uuid="3c95d6c7-7af3-4949-86e9-c23214c94137"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="5"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Angsana New" size="16"/>
+					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA["						            " + ($P{reasonTxt} == null ? "" : $P{reasonTxt} )]]></textFieldExpression>
+				<textFieldExpression><![CDATA["						            	       " + ($P{reasonTxt} == null ? "" : $P{reasonTxt} )]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="120" y="564" width="30" height="19" uuid="991d2f46-e4ca-4773-baba-86616f9afd8f"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="30" y="564" width="30" height="19" uuid="c8bf9f74-7836-4ef3-a14d-29cd37c425f3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

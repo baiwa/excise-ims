@@ -70,7 +70,7 @@ public class ReportService {
 		
 		JRDataSource dataSource = null;
 		
-		if (BeanUtils.isNotEmpty(params.get("logo").toString())) {
+		if (BeanUtils.isNotEmpty(params.get("logo"))) {
 			String logo = params.get("logo").toString();
 			params.remove("logo");
 			params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, logo));
