@@ -10,17 +10,17 @@ export class Ts0108Component implements OnInit {
   @Output() discard = new EventEmitter<any>();
 
   add: number;
-  obj: Ts0108[];
+  obj: Ts0108;
+  beans: Bean[];
 
   constructor(private ajax: AjaxService) {
     this.add = 0;
-    this.obj = [];
+    this.obj = new Ts0108();
+    this.beans = [new Bean()];
   }
 
   ngOnInit() {
-    for (let i = 0; i < 3; i++) {
-      this.onAddField();
-    }
+    this.onAddField();
   }
 
   onDiscard = () => {
@@ -30,30 +30,30 @@ export class Ts0108Component implements OnInit {
   };
 
   onAddField = () => {
-    this.obj.push(new Ts0108());
+    this.beans.push(new Bean());
     this.add++;
   };
 
   removeField = i => {
-    this.obj.splice(i);
+    this.beans.splice(i, 1);
   };
 
   onSubmit = e => {
     e.preventDefault();
     const url = "report/pdf/ts/mis_t_s_01_08";
-    this.ajax.post(
-      url,
-      `'${JSON.stringify({ Bean: this.obj }).toString()}'`,
-      res => {
-        if (res.status == 200 && res.statusText == "OK") {
-          window.open("/ims-webapp/api/report/pdf/mis_t_s_01_08/file");
-        }
+    this.ajax.post(url, `'${JSON.stringify(this.obj).toString()}'`, res => {
+      if (res.status == 200 && res.statusText == "OK") {
+        window.open("/ims-webapp/api/report/pdf/mis_t_s_01_08/file");
       }
-    );
+    });
   };
 }
 
 class Ts0108 {
+  Bean: Bean[];
+}
+
+class Bean {
   [x: string]: any;
   numId: string;
   chkDate: string;

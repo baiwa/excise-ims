@@ -42,6 +42,7 @@ public class ReportService {
 
 		Map<String, Object> params = new HashMap<>();
 		params.put("sendTo", "ผมชื่อ เฟรม แฟน น้องมุ๊ก ข้อความทดสอบ");
+		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, "garuda-emblem.jpg"));
 		List<ExampleBean> exampleList = new ArrayList<>();
 		ExampleBean exBean = null;
 		for (int i = 0; i < num; i++) {
@@ -66,13 +67,14 @@ public class ReportService {
 	}
 
 	public byte[] objectToPDF(String name, Map<String, Object> params, List<Object> bean) throws IOException, JRException {
-		String reportName = name != null ? name : "Example";
-
-//		List<ContractBean> conList = new ArrayList<>();
-//		contract.setDateFixed(new Date());
-//		conList.add(contract);
 		
 		JRDataSource dataSource = null;
+		
+		if (BeanUtils.isNotEmpty(params.get("logo").toString())) {
+			String logo = params.get("logo").toString();
+			params.remove("logo");
+			params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, logo));
+		}
 		
 		if (BeanUtils.isEmpty(bean)) {
 			dataSource = new JREmptyDataSource();
@@ -80,12 +82,12 @@ public class ReportService {
 			dataSource = new JRBeanCollectionDataSource(bean);
 		}
 
-		JasperPrint jasperPrint = ReportUtils.exportReport(reportName, params, dataSource); // JRBeanCollectionDataSource(exampleList)
+		JasperPrint jasperPrint = ReportUtils.exportReport(name, params, dataSource); // JRBeanCollectionDataSource(exampleList)
 		// JasperPrint jasperPrint = ReportUtils.exportReport(jasperFile, params, new
 		// JREmptyDataSource());
 
 		byte[] reportFile = JasperExportManager.exportReportToPdf(jasperPrint);
-		IOUtils.write(reportFile, new FileOutputStream(new File(PATH_EXPORT + reportName + ".pdf"))); // /tmp/excise/ims/report/
+		IOUtils.write(reportFile, new FileOutputStream(new File(PATH_EXPORT + name + ".pdf"))); // /tmp/excise/ims/report/
 
 		ReportUtils.closeResourceFileInputStream(params);
 

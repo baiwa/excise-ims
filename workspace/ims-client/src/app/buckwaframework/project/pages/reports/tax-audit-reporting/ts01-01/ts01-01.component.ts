@@ -73,6 +73,7 @@ export class Ts0101Component implements OnInit {
 }
 
 class Ts0101 {
+  logo: string = "logo.jpg";
   [x: string]: any;
   item: string;
   workType: string;

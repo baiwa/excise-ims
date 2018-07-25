@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Employee" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="0105c85f-c2dc-4e81-949e-8014a855cf94">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -19,7 +19,8 @@
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="180" splitType="Stretch">
+		<band height="180" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 			<frame>
 				<reportElement x="0" y="80" width="400" height="80" uuid="a8e4e2fa-42dc-46dd-b9ed-992bb9fd0429"/>
 				<box>
@@ -104,8 +105,8 @@
 				</textField>
 			</frame>
 			<image isUsingCache="false">
-				<reportElement x="100" y="0" width="340" height="70" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
-				<imageExpression><![CDATA["src/main/resources/static/images/stsmlogo.png"]]></imageExpression>
+				<reportElement isPrintRepeatedValues="false" x="245" y="0" width="70" height="70" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
@@ -159,8 +160,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Prevent">
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+		<band height="20">
 			<textField isStretchWithOverflow="true">
 				<reportElement stretchType="ContainerHeight" x="0" y="0" width="60" height="20" uuid="683113e6-575a-4f51-b81a-e45dd6ff69f2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="03d4ab5e-f460-4be6-9f55-85d371e630f2"/>
