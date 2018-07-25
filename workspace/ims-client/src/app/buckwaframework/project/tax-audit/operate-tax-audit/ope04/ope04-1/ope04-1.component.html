@@ -45,23 +45,23 @@
                     </div>
 
                     <div class="inline fields">
-                        <div class="nine wide field required">
-                            <label class="custom-label-w-20">รอบระยะเวลาการตรวจสอบ</label>
-                            <div class="eight wide field">
-                                <div class="ui calendar" id="calendarFront" style="width:100%">
-                                    <div class="ui input left icon">
-                                        <i class="time icon"></i>
-                                        <input type="text" name="startDate" id="startDate" autocomplete="off" [attr.readonly]="null" placeholder="MM/YYYY" [attr.required]="true">
-                                    </div>
+                        <div class="three wide field">
+                            <label class="custom-label-w-25">รอบระยะเวลาการตรวจสอบ</label>
+                        </div>
+                        <div class="four wide field">
+                            <div class="ui calendar" id="calendarFront" style="width:100%">
+                                <div class="ui input left icon">
+                                    <i class="time icon"></i>
+                                    <input type="text" name="startDate" id="startDate" autocomplete="off" [attr.readonly]="null" placeholder="MM/YYYY" [attr.required]="true">
                                 </div>
                             </div>
-                            <div class="eight wide field">
-                                <label>-</label>
-                                <div class="ui calendar" id="calendarLast" style="width:100%">
-                                    <div class="ui input left icon">
-                                        <i class="time icon"></i>
-                                        <input type="text" name="endDate" id="endDate" autocomplete="off" [attr.readonly]="null" placeholder="MM/YYYY" [attr.required]="true">
-                                    </div>
+                        </div>
+                        <div class="four wide field">
+                            <label>-</label>
+                            <div class="ui calendar" id="calendarLast" style="width:100%">
+                                <div class="ui input left icon">
+                                    <i class="time icon"></i>
+                                    <input type="text" name="endDate" id="endDate" autocomplete="off" [attr.readonly]="null" placeholder="MM/YYYY" [attr.required]="true">
                                 </div>
                             </div>
                         </div>
@@ -87,9 +87,9 @@
         <div class="ui segment" *ngIf="showData">
             <div class="ui grid center aligned">
                 <div class="sixteen wide column">
-                    บ. ฮอนด้า มอเตอร์ ประเทศไทย
+                    {{firstDataList.companyName}}
                     <br> กระดาษทำการรับวัตถุดิบ
-                    <br> เดือน พ.ย. 2559 - ส.ค. 2559
+                    <br> เดือน {{startDate}} - {{endDate}}
                 </div>
             </div>
             <br>
@@ -108,7 +108,7 @@
                         </tr>
                     </thead>
                     <tbody style="text-align: center;">
-                        <tr>
+                        <tr *ngIf="row[1][0] != ''">
                             <td>1</td>
                             <td>{{MonthDataList.product1}}</td>
                             <td>{{row[1][0]}}</td>
@@ -117,11 +117,11 @@
                             <td>{{row[1][2]}}</td>
                             <td><span class="ui orange horizontal label right aligned" style="float: right;">{{max[1]}}</span></td>
                             <td>
-                                <span *ngIf="diff[1]<0" class="ui red horizontal label right aligned" style="float: right;">{{diff[1]}}</span>
-                                <span *ngIf="diff[1]>=0" class="ui green horizontal label right aligned" style="float: right;">{{diff[1]}}</span>
+                                <span *ngIf="diff[1][0] == '-'" class="ui red horizontal label right aligned" style="float: right;">{{diff[1]}}</span>
+                                <span *ngIf="diff[1][0] != '-'" class="ui green horizontal label right aligned" style="float: right;">{{diff[1]}}</span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="row[1][0] != ''">
                             <td>2</td>
                             <td>{{MonthDataList.product2}}</td>
                             <td>{{row[2][0]}}</td>
@@ -130,11 +130,11 @@
                             <td>{{row[2][2]}}</td>
                             <td><span class="ui orange horizontal label right aligned" style="float: right;">{{max[2]}}</span></td>
                             <td>
-                                <span *ngIf="diff[2]<0" class="ui red horizontal label right aligned" style="float: right;">{{diff[2]}}</span>
-                                <span *ngIf="diff[2]>=0" class="ui green horizontal label right aligned" style="float: right;">{{diff[2]}}</span>
+                                <span *ngIf="diff[2][0] == '-'" class="ui red horizontal label right aligned" style="float: right;">{{diff[2]}}</span>
+                                <span *ngIf="diff[2][0] != '-'" class="ui green horizontal label right aligned" style="float: right;">{{diff[2]}}</span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="row[1][0] != ''">
                             <td>3</td>
                             <td>{{MonthDataList.product3}}</td>
                             <td>{{row[3][0]}}</td>
@@ -143,11 +143,11 @@
                             <td>{{row[3][2]}}</td>
                             <td><span class="ui orange horizontal label right aligned" style="float: right;">{{max[3]}}</span></td>
                             <td>
-                                <span *ngIf="diff[3]<0" class="ui red horizontal label right aligned" style="float: right;">{{diff[3]}}</span>
-                                <span *ngIf="diff[3]>=0" class="ui green horizontal label right aligned" style="float: right;">{{diff[3]}}</span>
+                                <span *ngIf="diff[3][0] == '-'" class="ui red horizontal label right aligned" style="float: right;">{{diff[3]}}</span>
+                                <span *ngIf="diff[3][0] != '-'" class="ui green horizontal label right aligned" style="float: right;">{{diff[3]}}</span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="row[1][0] != ''">
                             <td>4</td>
                             <td>{{MonthDataList.product4}}</td>
                             <td>{{row[4][0]}}</td>
@@ -156,11 +156,11 @@
                             <td>{{row[4][2]}}</td>
                             <td><span class="ui orange horizontal label right aligned" style="float: right;">{{max[4]}}</span></td>
                             <td>
-                                <span *ngIf="diff[4]<0" class="ui red horizontal label right aligned" style="float: right;">{{diff[4]}}</span>
-                                <span *ngIf="diff[4]>=0" class="ui green horizontal label right aligned" style="float: right;">{{diff[4]}}</span>
+                                <span *ngIf="diff[4][0] == '-'" class="ui red horizontal label right aligned" style="float: right;">{{diff[4]}}</span>
+                                <span *ngIf="diff[4][0] != '-'" class="ui green horizontal label right aligned" style="float: right;">{{diff[4]}}</span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="row[1][0] != ''">
                             <td>5</td>
                             <td>{{MonthDataList.product5}}</td>
                             <td>{{row[5][0]}}</td>
@@ -171,11 +171,11 @@
                                 <span class="ui orange horizontal label right aligned" style="float: right;">{{max[5]}}</span>
                             </td>
                             <td>
-                                <span *ngIf="diff[5]<0" class="ui red horizontal label right aligned" style="float: right;">{{diff[5]}}</span>
-                                <span *ngIf="diff[5]>=0" class="ui green horizontal label right aligned" style="float: right;">{{diff[5]}}</span>
+                                <span *ngIf="diff[5][0] == '-'" class="ui red horizontal label right aligned" style="float: right;">{{diff[5]}}</span>
+                                <span *ngIf="diff[5][0] != '-'" class="ui green horizontal label right aligned" style="float: right;">{{diff[5]}}</span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="row[1][0] != ''">
                             <td>6</td>
                             <td>{{MonthDataList.product6}}</td>
                             <td>{{row[6][0]}}</td>
@@ -186,8 +186,8 @@
                                 <span class="ui orange horizontal label right aligned" style="float: right;">{{max[6]}}</span>
                             </td>
                             <td>
-                                <span *ngIf="diff[6]<0" class="ui red horizontal label right aligned" style="float: right;">{{diff[6]}}</span>
-                                <span *ngIf="diff[6]>=0" class="ui green horizontal label right aligned" style="float: right;">{{diff[6]}}</span>
+                                <span *ngIf="diff[6][0] == '-'" class="ui red horizontal label right aligned" style="float: right;">{{diff[6]}}</span>
+                                <span *ngIf="diff[6][0] != '-'" class="ui green horizontal label right aligned" style="float: right;">{{diff[6]}}</span>
                             </td>
                         </tr>
                     </tbody>
@@ -200,7 +200,7 @@
             <i class="print icon"></i>
             พิมพ์กระดาษทำการ
           </button>
-                    <button class="ui mini button" (click)="clearData()">
+                    <button class="ui mini button" (click)="clearData()" type="reset">
             <i class="refresh icon"></i>
             ล้างข้อมูล
           </button>

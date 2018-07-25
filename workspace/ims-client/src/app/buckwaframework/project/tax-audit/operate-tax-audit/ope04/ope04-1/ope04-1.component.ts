@@ -143,6 +143,19 @@ export class Ope041Component implements OnInit {
   };
 
   clearData() {
+    for (let i = 0; i < this.row.length; i++) {
+      this.max[i] = 0;
+      this.diff[i] = 0;
+      for (let j = 0; j < this.row[i].length; j++) {
+        //find max value
+        this.max[i] = "";
+        //find difference value
+        this.row[i][j] = "";
+      }
+      this.diff[i] = 0;
+      this.max[i] = 0;
+    }
+
     this.showData = false;
   }
 
@@ -167,6 +180,9 @@ export class Ope041Component implements OnInit {
           this.row[i][j] = this.DF(this.row[i][j].toString());
         }
         this.diff[i] = res.json()[i][0] - this.max[i];
+        this.diff[i] = this.DF(
+          this.toFixed(parseFloat(this.diff[i])).toString()
+        );
         this.max[i] = this.DF(this.toFixed(parseFloat(this.max[i])).toString());
       }
     });
