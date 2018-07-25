@@ -24,6 +24,8 @@ export class Ope041Component implements OnInit {
   fileExel: File[];
   analysNumber: any;
   row: any;
+  max: any;
+  diff: any;
 
   constructor(private ajax: AjaxService) {
     this.exciseIdArr = "";
@@ -46,7 +48,17 @@ export class Ope041Component implements OnInit {
       monthRecieve5: "",
       monthRecieve6: ""
     };
-    this.row = [["", ""], ["", ""], ["", ""], ["", ""], ["", ""], ["", ""]];
+    this.row = [
+      ["", ""],
+      ["", ""],
+      ["", ""],
+      ["", ""],
+      ["", ""],
+      ["", ""],
+      ["", ""]
+    ];
+    this.max = [0, 0, 0, 0, 0, 0, 0];
+    this.diff = [0, 0, 0, 0, 0, 0, 0];
     this.fileExel = new Array<File>(); // initial file array
   }
 
@@ -130,9 +142,9 @@ export class Ope041Component implements OnInit {
     });
   };
 
-  // clearData() {
-  //   this.showData = false;
-  // }
+  clearData() {
+    this.showData = false;
+  }
 
   onUpload = (event: any) => {
     // Prevent actual form submission
@@ -146,11 +158,17 @@ export class Ope041Component implements OnInit {
     this.ajax.upload(url, formBody, res => {
       this.row = res.json();
       for (let i = 0; i < this.row.length; i++) {
+        this.max[i] = 0;
+        this.diff[i] = 0;
         for (let j = 0; j < this.row[i].length; j++) {
+          //find max value
+          this.max[i] = this.row[i][j] > 0 ? this.row[i][j] : this.max[i];
+          //find difference value
           this.row[i][j] = this.DF(this.row[i][j].toString());
         }
+        this.diff[i] = res.json()[i][0] - this.max[i];
+        this.max[i] = this.DF(this.toFixed(parseFloat(this.max[i])).toString());
       }
-      console.log(this.row);
     });
   };
 
@@ -165,7 +183,6 @@ export class Ope041Component implements OnInit {
           value: e.target.result
         };
         this.fileExel = [f];
-        console.log(this.fileExel);
       };
       reader.readAsDataURL(event.target.files[0]);
     }
@@ -208,6 +225,24 @@ export class Ope041Component implements OnInit {
   DF(what) {
     const df = new DecimalFormat("#,###.00");
     return df.format(what);
+  }
+
+  toFixed(x) {
+    if (Math.abs(x) < 1.0) {
+      var e = parseInt(x.toString().split("e-")[1]);
+      if (e) {
+        x *= Math.pow(10, e - 1);
+        x = "0." + new Array(e).join("0") + x.toString().substring(2);
+      }
+    } else {
+      var e = parseInt(x.toString().split("+")[1]);
+      if (e > 20) {
+        e -= 20;
+        x /= Math.pow(10, e);
+        x += new Array(e + 1).join("0");
+      }
+    }
+    return x;
   }
 }
 

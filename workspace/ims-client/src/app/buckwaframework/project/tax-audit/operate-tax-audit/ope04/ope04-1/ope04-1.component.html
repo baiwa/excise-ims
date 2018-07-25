@@ -99,114 +99,96 @@
                         <tr style="text-align: center;">
                             <th>ลำดับ</th>
                             <th>รายการ</th>
-                            <th>ใบกำกับภาษีซื้อ</th>
-                            <th>บัญชีประจำวัน ภส 07 - 01</th>
-                            <th>งบเดือน (ภส.07 - 04)</th>
-                            <!-- <th>ผลต่างของคู่ข้อมูล</th>
+                            <th>ใบกำกับภาษี</th>
+                            <th>บัญชีประจำวัน</th>
+                            <th>งบเดือน</th>
+                            <th>{{row[0][2]}}</th>
+                            <th>ค่าสูงสุดของข้อมูล</th>
                             <th>ผลต่างของคู่ข้อมูล</th>
-                            <th>ผลต่างของคู่ข้อมูล</th> -->
                         </tr>
                     </thead>
                     <tbody style="text-align: center;">
                         <tr>
                             <td>1</td>
                             <td>{{MonthDataList.product1}}</td>
-                            <td>{{row[0][0]}}</td>
-                            <td>{{row[0][1]}}</td>
+                            <td>{{row[1][0]}}</td>
+                            <td>{{row[1][1]}}</td>
                             <td>{{MonthDataList.monthRecieve1}}</td>
-                            <!-- <td>
-                                <span class="ui green horizontal label right aligned" style="float: right;">0</span>
-                            </td>
+                            <td>{{row[1][2]}}</td>
+                            <td><span class="ui orange horizontal label right aligned" style="float: right;">{{max[1]}}</span></td>
                             <td>
-                                <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+                                <span *ngIf="diff[1]<0" class="ui red horizontal label right aligned" style="float: right;">{{diff[1]}}</span>
+                                <span *ngIf="diff[1]>=0" class="ui green horizontal label right aligned" style="float: right;">{{diff[1]}}</span>
                             </td>
-                            <td>
-                                <span class="ui red horizontal label right aligned" style="float: right;">-30</span>
-                            </td> -->
                         </tr>
                         <tr>
                             <td>2</td>
                             <td>{{MonthDataList.product2}}</td>
-                            <td>{{row[1][0]}}</td>
-                            <td>{{row[1][1]}}</td>
+                            <td>{{row[2][0]}}</td>
+                            <td>{{row[2][1]}}</td>
                             <td>{{MonthDataList.monthRecieve2}}</td>
-                            <!-- <td>
-                                <span class="ui green horizontal label right aligned" style="float: right;">0</span>
-                            </td>
+                            <td>{{row[2][2]}}</td>
+                            <td><span class="ui orange horizontal label right aligned" style="float: right;">{{max[2]}}</span></td>
                             <td>
-                                <span class="ui red horizontal label right aligned" style="float: right;">-5</span>
+                                <span *ngIf="diff[2]<0" class="ui red horizontal label right aligned" style="float: right;">{{diff[2]}}</span>
+                                <span *ngIf="diff[2]>=0" class="ui green horizontal label right aligned" style="float: right;">{{diff[2]}}</span>
                             </td>
-                            <td>
-                                <span class="ui green horizontal label right aligned" style="float: right;">0</span>
-                            </td> -->
                         </tr>
                         <tr>
                             <td>3</td>
                             <td>{{MonthDataList.product3}}</td>
-                            <td>{{row[2][0]}}</td>
-                            <td>{{row[2][1]}}</td>
+                            <td>{{row[3][0]}}</td>
+                            <td>{{row[3][1]}}</td>
                             <td>{{MonthDataList.monthRecieve3}}</td>
-                            <!-- <td>
-                                <span class="ui green horizontal label right aligned" style="float: right;">0</span>
-                            </td>
-
+                            <td>{{row[3][2]}}</td>
+                            <td><span class="ui orange horizontal label right aligned" style="float: right;">{{max[3]}}</span></td>
                             <td>
-                                <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+                                <span *ngIf="diff[3]<0" class="ui red horizontal label right aligned" style="float: right;">{{diff[3]}}</span>
+                                <span *ngIf="diff[3]>=0" class="ui green horizontal label right aligned" style="float: right;">{{diff[3]}}</span>
                             </td>
-                            <td>
-                                <span class="ui red horizontal label right aligned" style="float: right;">-5</span>
-                            </td> -->
                         </tr>
                         <tr>
                             <td>4</td>
                             <td>{{MonthDataList.product4}}</td>
-                            <td>{{row[3][0]}}</td>
-                            <td>{{row[3][1]}}</td>
+                            <td>{{row[4][0]}}</td>
+                            <td>{{row[4][1]}}</td>
                             <td>{{MonthDataList.monthRecieve4}}</td>
-                            <!-- <td>
-                                <span class="ui green horizontal label right aligned" style="float: right;">0</span>
-                            </td>
-
+                            <td>{{row[4][2]}}</td>
+                            <td><span class="ui orange horizontal label right aligned" style="float: right;">{{max[4]}}</span></td>
                             <td>
-                                <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+                                <span *ngIf="diff[4]<0" class="ui red horizontal label right aligned" style="float: right;">{{diff[4]}}</span>
+                                <span *ngIf="diff[4]>=0" class="ui green horizontal label right aligned" style="float: right;">{{diff[4]}}</span>
                             </td>
-                            <td>
-                                <span class="ui red horizontal label right aligned" style="float: right;">-5</span>
-                            </td> -->
                         </tr>
                         <tr>
                             <td>5</td>
                             <td>{{MonthDataList.product5}}</td>
-                            <td>{{row[4][0]}}</td>
-                            <td>{{row[4][1]}}</td>
+                            <td>{{row[5][0]}}</td>
+                            <td>{{row[5][1]}}</td>
                             <td>{{MonthDataList.monthRecieve5}}</td>
-                            <!-- <td>
-                                <span class="ui green horizontal label right aligned" style="float: right;">0</span>
-                            </td>
-
+                            <td>{{row[5][2]}}</td>
                             <td>
-                                <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+                                <span class="ui orange horizontal label right aligned" style="float: right;">{{max[5]}}</span>
                             </td>
                             <td>
-                                <span class="ui red horizontal label right aligned" style="float: right;">-5</span>
-                            </td> -->
+                                <span *ngIf="diff[5]<0" class="ui red horizontal label right aligned" style="float: right;">{{diff[5]}}</span>
+                                <span *ngIf="diff[5]>=0" class="ui green horizontal label right aligned" style="float: right;">{{diff[5]}}</span>
+                            </td>
                         </tr>
                         <tr>
                             <td>6</td>
                             <td>{{MonthDataList.product6}}</td>
-                            <td>{{row[5][0]}}</td>
-                            <td>{{row[5][1]}}</td>
+                            <td>{{row[6][0]}}</td>
+                            <td>{{row[6][1]}}</td>
                             <td>{{MonthDataList.monthRecieve6}}</td>
-                            <!-- <td>
-                                <span class="ui green horizontal label right aligned" style="float: right;">0</span>
-                            </td>
-
+                            <td>{{row[6][2]}}</td>
                             <td>
-                                <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+                                <span class="ui orange horizontal label right aligned" style="float: right;">{{max[6]}}</span>
                             </td>
                             <td>
-                                <span class="ui red horizontal label right aligned" style="float: right;">-5</span>
-                            </td> -->
+                                <span *ngIf="diff[6]<0" class="ui red horizontal label right aligned" style="float: right;">{{diff[6]}}</span>
+                                <span *ngIf="diff[6]>=0" class="ui green horizontal label right aligned" style="float: right;">{{diff[6]}}</span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

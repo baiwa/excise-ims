@@ -39,15 +39,18 @@ public class UploadFileExciseService {
 			Row row;
 			Cell cell;
 
-			for (int i = 1; i <= 6; i++) {
+			for (int i = 0; i <= 6; i++) {
 				row = sheet.getRow(i);
 				li = new ArrayList<Object>();
-				for (int j = 2; j <= 3; j++) {
-					cell = row.getCell(j);
-					li.add(new Float(cell.toString()));
+				for (int j = 2; j <= 5; j++) {
+					if(j != 4) {
+						cell = row.getCell(j);
+						li.add(cell.toString());
+					}
 				}
 				res.add(li);
 			}
+			
 			return res;
 		}
 
