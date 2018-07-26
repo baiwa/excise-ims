@@ -1,3 +1,4 @@
+<form (submit)="onSubmit($event)" ngNativeValidate>
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
     <span>บันทึกผลการตรวจการเสียภาษีสรรพสามิต</span>
 </div>
@@ -16,7 +17,7 @@
                     </div>
 
                     <div class="two wide field">
-                        <input type="text">
+                        <input type="text" name="date1" [(ngModel)]="obj.date1">
                     </div>
 
                     <div class="one wide field" style="padding-right: 0px;">
@@ -24,7 +25,7 @@
                     </div>
 
                     <div class="two wide field">
-                        <input type="text">
+                        <input type="text"  name="monht1" [(ngModel)]="obj.monht1">
                     </div>
 
                     <div class="one wide field">
@@ -32,7 +33,7 @@
                     </div>
 
                     <div class="two wide field">
-                        <input type="text">
+                        <input type="text" name="buddhist1" [(ngModel)]="obj.buddhist1">
                     </div>
                 </div>
 
@@ -42,7 +43,7 @@
                     </div>
 
                     <div class="five wide field">
-                        <input type="text">
+                        <input type="text" name="myName1"  [(ngModel)]="obj.myName1">
                     </div>
 
                     <div class="two wide field">
@@ -50,7 +51,7 @@
                     </div>
 
                     <div class="three wide field">
-                        <input type="text">
+                        <input type="text" name="postion1"  [(ngModel)]="obj.postion1">
                     </div>
 
                     <div class="two wide field">
@@ -58,7 +59,7 @@
                     </div>
 
                     <div class="two wide field">
-                        <input type="text">
+                        <input type="text" name="dateCheck1" [(ngModel)]="obj.dateCheck1">
                     </div>
                 </div>
 
@@ -68,7 +69,7 @@
                     </div>
 
                     <div class="four wide field">
-                        <input type="text">
+                        <input type="text" name="bookNumber1"  [(ngModel)]="obj.bookNumber1">
                     </div>
 
                     <div class="nine wide field">
@@ -81,22 +82,22 @@
                     </div>
 
                     <div class="five wide field">
-                        <input type="text">
+                        <input type="text" name="Nameplace1" [(ngModel)]="obj.Nameplace1">
                     </div>
 
                     <div class="nine wide field" style="padding: 0px;">
                         <div class="ui checkbox">
-                            <input type="checkbox" name="example">
+                            <input type="checkbox" name="factory1"  [(ngModel)]="obj.factory1">
                             <label>โรงงานอุตสาหกรรม</label>
                         </div>
 
                         <div class="ui checkbox" style="padding-right: 5px;">
-                            <input type="checkbox" name="example">
+                            <input type="checkbox" name="brothel1" [(ngModel)]="obj.brothel1">
                             <label>สถานบริการ</label>
                         </div>
                         &nbsp;
                         <div class="ui checkbox">
-                            <input type="checkbox" name="example">
+                            <input type="checkbox" name="importer1" [(ngModel)]="obj.importer1">
                             <label>สถานประกอบการผู้นำเข้า</label>
                         </div>
                     </div>
@@ -118,7 +119,7 @@
                     </div>
 
                     <div class="six wide field">
-                        <input type="text">
+                        <input type="text" name="checkInOn1" [(ngModel)]="obj.checkInOn1">
                     </div>
 
                     <div class="two wide field">
@@ -126,7 +127,7 @@
                     </div>
 
                     <div class="six wide field">
-                        <input type="text">
+                        <input type="text"  name="acditor1" [(ngModel)]="obj.acditor1">
                     </div>
                 </div>
 
@@ -136,7 +137,7 @@
                     </div>
 
                     <div class="five wide field">
-                        <input type="text">
+                        <input type="text" name="checktime1" [(ngModel)]="obj.checktime1">
                     </div>
 
                     <div class="eight wide field">
@@ -145,14 +146,14 @@
 
             </div>
         </div>
-        <div class="ui two wide column">&nbsp;</div>
+        <div class="ui two wide column" >&nbsp;</div>
     </div>
 </div>
 
 <div class="ui bottom centered attached segment">
     <div class="ui center aligned grid">
         <div class="eight wide column">
-            <button class="ui mini green button" type="button">
+            <button class="ui mini green button" type="submit">
                   <i class="save icon"></i>
                   พิมพ์เอกสาร
                 </button>
@@ -163,3 +164,4 @@
         </div>
     </div>
 </div>
+</form>
