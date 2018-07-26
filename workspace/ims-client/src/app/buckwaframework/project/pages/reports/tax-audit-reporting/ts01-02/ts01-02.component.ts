@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AjaxService } from "../../../../../common/services";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-ts01-02',
@@ -15,10 +16,12 @@ export class Ts0102Component implements OnInit {
   obj: Ts0102;
 
   constructor(
+    private route: ActivatedRoute,
     private ajax: AjaxService
   ) {
     this.add = 0;
     this.obj = new Ts0102();
+    this.obj.exciseId = this.route.snapshot.queryParams["exciseId"];
   }
 
   ngOnInit() {
@@ -33,6 +36,36 @@ export class Ts0102Component implements OnInit {
   onAddField = () => {
     this.add++;
   };
+
+
+  optionAddress = () => {
+    const optionURL = "excise/detail/textFullAddressByExciseId";
+    this.ajax.post(optionURL, {
+      exciseId: this.obj.exciseId
+
+      
+    }, res => {
+      console.log(res.json());
+      this.obj.address = res.json();
+      
+    });
+  };
+
+  // optionAddress = () => {
+  //   const optionURL = "excise/detail/objectAddressByExciseId";
+  //   this.ajax.post(optionURL, {
+  //     exciseId: this.obj.exciseId
+
+      
+  //   }, res => {
+  //     console.log(res.json());
+  //     var dat = res.json();
+  //     this.obj.address = dat.homeNumber;
+  //   });
+  // };
+
+
+
   onSubmit = e => {
     e.preventDefault();
     const url = "report/pdf/ts/mis_t_s_01_02";
@@ -74,6 +107,6 @@ class Ts0102 {
   date: string;
   case: string;
   signature: string;
-  position:string;
+  position: string;
 
 }

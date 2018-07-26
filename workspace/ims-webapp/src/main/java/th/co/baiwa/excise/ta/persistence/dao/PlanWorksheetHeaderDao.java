@@ -548,4 +548,22 @@ public class PlanWorksheetHeaderDao {
 		
 		return exciseMonthList;
 	}
+	
+	
+	
+	public List<String> queryExciseIdFindByAddress(String exciseId) {
+		StringBuilder sql = new StringBuilder(" SELECT FACTORY_ADDRESS ");
+		sql.append(" FROM TA_PLAN_WORK_SHEET_HEADER H ");
+		sql.append(" WHERE H.EXCISE_ID = ? ");
+		sql.append(" ORDER BY H.WORK_SHEET_HEADER_ID DESC");
+		List<String> address = jdbcTemplate.query(sql.toString(), new Object[] { exciseId },
+				new RowMapper<String>() {
+					public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+						return rs.getString(1);
+					}
+				});
+		return address;
+	}
+	
+	
 }

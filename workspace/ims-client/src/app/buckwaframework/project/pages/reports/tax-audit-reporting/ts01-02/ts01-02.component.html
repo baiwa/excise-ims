@@ -22,8 +22,8 @@
                             <div class="one wide field">
                                 <p>เรียน: </p>
                             </div>
-                            <div class="four wide field" name="sendTo" [(ngModel)]="obj.sendTo" required>
-                                <input type="text">
+                            <div class="four wide field" >
+                                <input type="text" name="sendTo" [(ngModel)]="obj.sendTo" required>
                             </div>
                             <div class="one wide field">
                                 <p>ด้วย : </p>
@@ -84,7 +84,7 @@
                                 <p>ทะเบียนสรรพสามิตเลขที่ : </p>
                             </div>
                             <div class="nine wide field">
-                                <input type="text" name="exciseId" [(ngModel)]="obj.exciseId" required >
+                                <input type="text" id="exciseId" name="exciseId" [(ngModel)]="obj.exciseId" (change)="optionAddress()" required >
                             </div>
                         </div>
 

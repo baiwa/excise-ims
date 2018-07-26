@@ -29,6 +29,8 @@ import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetDetail;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeader;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
+import th.co.baiwa.excise.domain.CommonAddress;
+
 import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
@@ -48,16 +50,19 @@ public class PlanWorksheetHeaderService {
 	@Autowired
 	private ExciseTaxReceiveDao exciseTaxReceiveDao;
 
-	public String insertPlanWorksheetHeaderService(MockupVo mockupVo, Date startBackDate, int month, String productType) {
+	public String insertPlanWorksheetHeaderService(MockupVo mockupVo, Date startBackDate, int month,
+			String productType) {
 
 		logger.info("PlanWorksheetHeaderService.insertPlanWorksheetHeaderService");
 		List<String> monthNameList = exciseTaxReceiveDao.queryMonthShotName(startBackDate, month);
-		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-01-" + planWorksheetHeaderDao.getAnalysNumber();
+		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-01-"
+				+ planWorksheetHeaderDao.getAnalysNumber();
 		Date saveDate = new Date();
 		logger.info("get analysNumber : " + analysNumber);
 		PlanWorksheetHeader planWorksheetHeader = null;
 		List<ExciseTaxReceive> taxReciveList = null;
-		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseRegistionNumber(productType, mockupVo.getCondition());
+		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao
+				.queryByExciseRegistionNumber(productType, mockupVo.getCondition());
 		for (ExciseRegistartionNumber exciseRegistartionNumber : regisNumberList) {
 			planWorksheetHeader = new PlanWorksheetHeader();
 			planWorksheetHeader.setAnalysNumber(analysNumber);
@@ -71,7 +76,8 @@ public class PlanWorksheetHeaderService {
 			planWorksheetHeader.setExciseOwnerArea1(exciseRegistartionNumber.getTaexciseSectorArea());
 			planWorksheetHeader.setMonthDate(mockupVo.getStartBackDate());
 			planWorksheetHeader.setFullMonth(new BigDecimal(month));
-			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(exciseRegistartionNumber.getExciseId(), startBackDate, month);
+			taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(
+					exciseRegistartionNumber.getExciseId(), startBackDate, month);
 			BigDecimal totalAmount = new BigDecimal(0);
 			int countReciveMonth = 0;
 			int firstMonth = 0;
@@ -83,15 +89,19 @@ public class PlanWorksheetHeaderService {
 				for (int i = 0; i < taxReciveList.size(); i++) {
 					ExciseTaxReceive taxRecive = taxReciveList.get(i);
 
-					String amount = taxRecive.getExciseTaxReceiveAmount() != null ? taxRecive.getExciseTaxReceiveAmount().trim().replaceAll(",", "") : "0";
+					String amount = taxRecive.getExciseTaxReceiveAmount() != null
+							? taxRecive.getExciseTaxReceiveAmount().trim().replaceAll(",", "")
+							: "0";
 					try {
 						totalAmount = totalAmount.add(new BigDecimal(amount));
 					} catch (Exception e) {
 						totalAmount = totalAmount.add(new BigDecimal(0));
 					}
-					if (taxRecive.getExciseTaxReceiveMonth() != null && taxRecive.getExciseTaxReceiveMonth().length() > 0) {
+					if (taxRecive.getExciseTaxReceiveMonth() != null
+							&& taxRecive.getExciseTaxReceiveMonth().length() > 0) {
 						countReciveMonth++;
-						int indexOfMonthNameList = monthNameList.indexOf(taxReciveList.get(i).getExciseTaxReceiveMonth());
+						int indexOfMonthNameList = monthNameList
+								.indexOf(taxReciveList.get(i).getExciseTaxReceiveMonth());
 						if (indexOfMonthNameList != -1) {
 							if (indexOfMonthNameList < monthNameList.size() / 2) {
 								if (!"0".equals(amount)) {
@@ -139,7 +149,9 @@ public class PlanWorksheetHeaderService {
 				planWorksheetDetail.setExciseId(taxRecive.getExciseId());
 				planWorksheetDetail.setCreatedBy(UserLoginUtils.getCurrentUsername());
 				planWorksheetDetail.setCreatedDate(saveDate);
-				String amountDetail = taxRecive.getExciseTaxReceiveAmount() != null ? taxRecive.getExciseTaxReceiveAmount().trim().replaceAll(",", "") : "0";
+				String amountDetail = taxRecive.getExciseTaxReceiveAmount() != null
+						? taxRecive.getExciseTaxReceiveAmount().trim().replaceAll(",", "")
+						: "0";
 				planWorksheetDetail.setAmount(new BigDecimal(amountDetail));
 				planWorksheetDetailList.add(planWorksheetDetail);
 			}
@@ -165,7 +177,8 @@ public class PlanWorksheetHeaderService {
 		PlanWorksheetHeaderDetail planShow = new PlanWorksheetHeaderDetail();
 		PlanWorksheetDetail planDetail;
 		for (PlanWorksheetHeader planWorksheetHeader : planWorksheetHeaderList) {
-			if (planWorksheetHeader != null && !planWorksheetHeader.getWorksheetHeaderId().equals(planShow.getWorksheetHeaderId())) {
+			if (planWorksheetHeader != null
+					&& !planWorksheetHeader.getWorksheetHeaderId().equals(planShow.getWorksheetHeaderId())) {
 				if (planShow.getWorksheetHeaderId() != null) {
 					PlanWorksheetHeaderDetailList.add(planShow);
 				}
@@ -274,8 +287,10 @@ public class PlanWorksheetHeaderService {
 		String endMonthDate = valueList.get(valueList.size() - 1);
 		String splitStart[] = startMonthDate.split(" ");
 		String splitEnd[] = endMonthDate.split(" ");
-		startMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitStart[0])] + " 25" + splitStart[1];
-		endMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitEnd[0])] + " 25" + splitEnd[1];
+		startMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitStart[0])]
+				+ " 25" + splitStart[1];
+		endMonthDate = DateConstant.monthName()[Arrays.asList(DateConstant.monthShotName()).indexOf(splitEnd[0])]
+				+ " 25" + splitEnd[1];
 		valueList = new ArrayList<String>();
 		valueList.add(startMonthDate);
 		valueList.add(endMonthDate);
@@ -295,7 +310,8 @@ public class PlanWorksheetHeaderService {
 	}
 
 	public void updateStatusFlg(RequestFilterMapping vo) {
-		String workSheetNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-02-" + planWorksheetHeaderDao.getWorksheetNumber();
+		String workSheetNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-02-"
+				+ planWorksheetHeaderDao.getWorksheetNumber();
 		vo.setWorkShheetNumber(workSheetNumber);
 		planWorksheetHeaderDao.updateStatusFlg(vo);
 	}
@@ -314,32 +330,32 @@ public class PlanWorksheetHeaderService {
 		planWorksheetHeader.setFullMonth(new BigDecimal(month));
 		return planWorksheetHeaderDao.queryProductTypeList(planWorksheetHeader);
 	}
-	
+
 	public List<String> getExciseIdFlagSFromHeader() {
 		return planWorksheetHeaderDao.queryExciseIdFlagSFromHeader();
 	}
-	
+
 	public List<Object> queryExciseIdFlagSDataList(String exciseId) {
-		List<Object> valueList = planWorksheetHeaderDao.queryExciseIdFlagSDataList(exciseId);	
+		List<Object> valueList = planWorksheetHeaderDao.queryExciseIdFlagSDataList(exciseId);
 		return valueList;
 	}
-	
+
 	public List<Object> queryExciseIdFromAccDTL(String exciseId, String start, String end) {
 		String[] startData = start.split("/");
 		String[] endData = end.split("/");
-		
+
 		Calendar startCal = Calendar.getInstance();
 		startCal.set(Integer.parseInt(startData[1]), Integer.parseInt(startData[0]), 1);
 		Calendar endCal = Calendar.getInstance();
 		endCal.set(Integer.parseInt(endData[1]), Integer.parseInt(endData[0]), 1);
 		int backMonth = 1;
-		while(!isEqualsDate(startCal.getTime(), endCal.getTime())) {
+		while (!isEqualsDate(startCal.getTime(), endCal.getTime())) {
 			endCal.add(Calendar.MONTH, -1);
 			backMonth++;
 		}
 		return planWorksheetHeaderDao.queryExciseIdFromAccDTL(exciseId, endCal.getTime(), backMonth);
 	}
-	
+
 	public boolean isEqualsDate(Date date1, Date date2) {
 		SimpleDateFormat simple = new SimpleDateFormat("yyyyMM");
 		return simple.format(date1).equals(simple.format(date2));
@@ -349,4 +365,75 @@ public class PlanWorksheetHeaderService {
 		return planWorksheetHeaderDao.queryPlanWorksheetHeaderCriteria(criteria);
 	}
 
+	public String queryExciseIdFindByAddress(String exciseId) {
+		List<String> valueList = planWorksheetHeaderDao.queryExciseIdFindByAddress(exciseId);
+		String dataAddress = "";
+		if(BeanUtils.isNotEmpty(valueList)) {
+			 dataAddress = valueList.get(0);
+		}
+		return dataAddress;
+	}
+
+	
+	public CommonAddress splitAddress(String exciseId) {
+		List<String> valueList = planWorksheetHeaderDao.queryExciseIdFindByAddress(exciseId);
+		CommonAddress address = new CommonAddress();
+		
+		for (String str : valueList) {
+			String[] arr = str.split(" ");
+			for (int i = 0; i < arr.length; i++) {
+				if (arr[i] == arr[0] || arr[i].indexOf("/") != -1) {
+					address.setHomeNumber(arr[0]);
+				} else if (arr[i].indexOf("หมู่ที่") != -1) {
+					address.setMoo(arr[i].replace("หมู่ที่", ""));
+				} else if (arr[i].indexOf("อาคาร") != -1 || arr[i].indexOf("ตึก") != -1
+						|| arr[i].indexOf("บ้าน") != -1) {
+					address.setBuilding(arr[i].replace("อาคาร", "").replace("ตึก", "").replace("บ้าน", ""));
+				} else if (arr[i].indexOf("ชั้น") != -1) {
+					address.setLevel(arr[i].replace("ชั้น", ""));
+				} else if (arr[i].indexOf("ซอย") != -1) {
+					address.setByWay(arr[i].replace("ซอย", ""));
+				} else if (arr[i].indexOf("ถนน") != -1) {
+					address.setStreet(arr[i].replace("ถนน", ""));
+				} else if (arr[i].indexOf("แขวง") != -1 || arr[i].indexOf("ตำบล") != -1) {
+					address.setTambol(arr[i].replace("แขวง", "").replace("ตำบล", ""));
+				} else if (arr[i].indexOf("เขต") != -1 || arr[i].indexOf("อำเภอ") != -1) {
+					address.setDistrict(arr[i].replace("เขต", "").replace("อำเภอ", ""));
+				} else if (arr[i].indexOf("จังหวัด") != -1) {
+					address.setProvince(arr[i].replace("จังหวัด", ""));
+				} else if (arr[i] == arr[arr.length - 1]) {
+					address.setZipCode(arr[arr.length - 1]);
+				}
+			}
+			for (int i = 0; i < arr.length; i++) {
+
+				if (address.getHomeNumber() == null) {
+					address.setHomeNumber("-");
+				} else if (address.getMoo() == null) {
+					address.setMoo("-");
+				} else if (address.getBuilding() == null) {
+					address.setBuilding("-");
+				} else if (address.getLevel() == null) {
+					address.setLevel("-");
+				} else if (address.getByWay() == null) {
+					address.setByWay("-");
+				} else if (address.getStreet() == null) {
+					address.setStreet("-");
+				} else if (address.getTambol() == null) {
+					address.setTambol("-");
+				} else if (address.getDistrict() == null) {
+					address.setDistrict("-");
+				} else if (address.getProvince() == null) {
+					address.setProvince("-");
+				} else if (address.getZipCode() == null) {
+					address.setZipCode("-");
+				}
+
+			}
+			System.out.println(address.toString());
+			
+		}
+
+		return address;
+	}
 }
