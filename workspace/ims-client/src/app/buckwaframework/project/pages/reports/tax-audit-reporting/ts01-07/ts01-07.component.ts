@@ -75,7 +75,7 @@ class Ts0107 {
   section: string;
   cName: string;
   cPoition: string;
-  chk1: boolean;
-  chk2: boolean;
-  chk3: boolean;
+  chk1: boolean = false;
+  chk2: boolean = false;
+  chk3: boolean = false;
 }

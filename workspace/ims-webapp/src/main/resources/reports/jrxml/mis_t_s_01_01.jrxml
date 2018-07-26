@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="N_mis01-2" pageWidth="595" pageHeight="842" columnWidth="482" leftMargin="85" rightMargin="28" topMargin="28" bottomMargin="85" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="N_mis01-2" pageWidth="595" pageHeight="842" columnWidth="441" leftMargin="89" rightMargin="65" topMargin="56" bottomMargin="70" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
@@ -38,18 +38,18 @@
 		<![CDATA[]]>
 	</queryString>
 	<pageHeader>
-		<band height="718" splitType="Stretch">
+		<band height="685" splitType="Stretch">
 			<image isUsingCache="false">
 				<reportElement isPrintRepeatedValues="false" x="195" y="0" width="60" height="60" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement style="Topic" x="377" y="50" width="76" height="27" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
+				<reportElement style="Topic" x="370" y="50" width="71" height="27" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตส. ๐๑-๐๑"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="Topic" x="-1" y="78" width="454" height="30" uuid="861f16b3-f966-4bff-b95f-486a25fe61c6"/>
+				<reportElement style="Topic" x="-1" y="78" width="442" height="30" uuid="861f16b3-f966-4bff-b95f-486a25fe61c6"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA["บันทึกผลการวิเคราะห์การชำระภาษีสรรพสามิต"]]></textFieldExpression>
 			</textField>
@@ -76,7 +76,7 @@
 				<textFieldExpression><![CDATA["ทะเบียนสรรพสามิตเลขที่"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="104" y="124" width="349" height="19" uuid="5f69a886-39c0-4836-9ecc-01463e8c08ef"/>
+				<reportElement style="data" x="104" y="124" width="337" height="19" uuid="5f69a886-39c0-4836-9ecc-01463e8c08ef"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -93,7 +93,7 @@
 				<textFieldExpression><![CDATA["ที่อยู่"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="19" y="144" width="434" height="19" uuid="accbba75-3070-44ac-a9c6-97fa0ae55b2b"/>
+				<reportElement style="data" x="19" y="144" width="422" height="19" uuid="accbba75-3070-44ac-a9c6-97fa0ae55b2b"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -112,7 +112,7 @@
 				<textFieldExpression><![CDATA["รอบระยะเวลาที่ตรวจสอบ"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="109" y="164" width="344" height="19" uuid="96c6a242-5b28-46bb-9d92-a0946cd6b64a"/>
+				<reportElement style="data" x="109" y="164" width="332" height="19" uuid="96c6a242-5b28-46bb-9d92-a0946cd6b64a"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -213,14 +213,14 @@
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{accept} ? "\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{accept} && $P{accept} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement x="138" y="425" width="30" height="19" uuid="74c7e816-1599-4b15-bcfa-fa62ae36b086"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{other} ? "\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{other} && $P{other} != null) ? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="158" y="405" width="41" height="22" uuid="a127d463-e909-406d-a573-d8bc3580efe5"/>
@@ -238,7 +238,7 @@
 				<textFieldExpression><![CDATA["ประเภทกิจการ"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="281" y="103" width="172" height="19" uuid="83d07c38-4f52-4630-ba94-22e694e2bf39"/>
+				<reportElement style="data" x="281" y="103" width="160" height="19" uuid="83d07c38-4f52-4630-ba94-22e694e2bf39"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -357,7 +357,7 @@
 				<textFieldExpression><![CDATA["ตามที่ได้ทำการวิเคราะห์ข้อมูลรายดังกล่าวข้างต้นแล้วปรากฏว่า"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="296" y="323" width="155" height="19" uuid="00f48b89-1f94-475d-ae88-d2487f5b8fce"/>
+				<reportElement style="data" x="296" y="323" width="145" height="19" uuid="00f48b89-1f94-475d-ae88-d2487f5b8fce"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -369,7 +369,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="-1" y="342" width="452" height="19" uuid="2ec754b3-d9b2-49ba-a01b-c4482bfeba14"/>
+				<reportElement style="data" x="-1" y="342" width="442" height="19" uuid="2ec754b3-d9b2-49ba-a01b-c4482bfeba14"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -381,7 +381,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="-1" y="362" width="452" height="19" uuid="0f11753d-db64-4f53-98c1-5a5cc11fe4c3"/>
+				<reportElement style="data" x="-1" y="362" width="442" height="19" uuid="0f11753d-db64-4f53-98c1-5a5cc11fe4c3"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -393,7 +393,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="-1" y="382" width="452" height="19" uuid="9dcf8162-b0e2-4211-b438-d921193dfe5f"/>
+				<reportElement style="data" x="-1" y="382" width="442" height="19" uuid="9dcf8162-b0e2-4211-b438-d921193dfe5f"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -554,7 +554,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="-1" y="328" width="452" height="72" uuid="3c95d6c7-7af3-4949-86e9-c23214c94137"/>
+				<reportElement style="TextDetail" x="-1" y="328" width="442" height="73" uuid="3c95d6c7-7af3-4949-86e9-c23214c94137"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="5"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="TH Sarabun New" size="14"/>
