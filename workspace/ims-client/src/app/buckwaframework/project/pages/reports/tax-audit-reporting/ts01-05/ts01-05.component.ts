@@ -64,6 +64,7 @@ export class Ts0105Component implements OnInit {
 
 class Ts0105 {
   [x: string]: any;
+  logo: string = "logo1.jpg";
   at1: string;
   at2: string;
   office: string;

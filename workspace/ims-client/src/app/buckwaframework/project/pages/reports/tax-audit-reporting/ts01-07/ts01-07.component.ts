@@ -42,6 +42,8 @@ export class Ts0107Component implements OnInit {
 }
 
 class Ts0107 {
+  [x: string]: any;
+  logo: string = "logo1.jpg";
   at1: string;
   at2: string;
   office: string;
