@@ -17,8 +17,8 @@ public class Role extends BaseEntity {
 	private static final long serialVersionUID = -3833918994291979045L;
 
 	@Id
-	@GeneratedValue(generator = "ROLE_SEQ", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "ROLE_SEQ", sequenceName = "ADM_ROLE_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADM_ROLE_GEN")
+	@SequenceGenerator(name = "ADM_ROLE_GEN", sequenceName = "ADM_ROLE_SEQ", allocationSize = 1)
 	@Column(name = "ROLE_ID")
 	private Long roleId;
 

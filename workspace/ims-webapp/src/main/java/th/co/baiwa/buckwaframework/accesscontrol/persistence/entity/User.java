@@ -17,8 +17,8 @@ public class User extends BaseEntity {
 	private static final long serialVersionUID = 8469283616859080045L;
 
 	@Id
-	@GeneratedValue(generator = "USER_SEQ", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "USER_SEQ", sequenceName = "ADM_USER_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADM_USER_GEN")
+	@SequenceGenerator(name = "ADM_USER_GEN", sequenceName = "ADM_USER_SEQ", allocationSize = 1)
 	@Column(name = "USER_ID")
 	private Long userId;
 

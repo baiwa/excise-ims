@@ -16,13 +16,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.persistence.repository.support.CommonSimpleJpaRepository;
 
 @Configuration
 @EnableJpaRepositories(
 	basePackages = {
 		"th.co.baiwa.buckwaframework",
 		"th.go.excise.ims"
-	}
+	},
+	repositoryBaseClass = CommonSimpleJpaRepository.class
 )
 @EnableTransactionManagement
 public class DataSourceConfig {

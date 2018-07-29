@@ -17,8 +17,8 @@ public class Operation extends BaseEntity {
 	private static final long serialVersionUID = -5628927546154517795L;
 
 	@Id
-	@GeneratedValue(generator = "OPERATION_SEQ", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "OPERATION_SEQ", sequenceName = "ADM_OPERATION_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADM_OPERATION_GEN")
+	@SequenceGenerator(name = "ADM_OPERATION_GEN", sequenceName = "ADM_OPERATION_SEQ", allocationSize = 1)
 	@Column(name = "OPERATION_ID")
 	private Long operationId;
 
