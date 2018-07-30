@@ -1,13 +1,36 @@
 package th.co.baiwa.buckwaframework.preferences.persistence.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
+@Entity
+@Table(name = "SYS_MESSAGE")
 public class Message extends BaseEntity {
 
+	private static final long serialVersionUID = -2541426099627546386L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SYS_MESSAGE_GEN")
+	@SequenceGenerator(name = "SYS_MESSAGE_GEN", sequenceName = "SYS_MESSAGE_SEQ", allocationSize = 1)
+	@Column(name = "MESSAGE_ID")
 	private Long messageId;
+
+	@Column(name = "MESSAGE_CODE")
 	private String messageCode;
+
+	@Column(name = "MESSAGE_EN")
 	private String messageEn;
+
+	@Column(name = "MESSAGE_TH")
 	private String messageTh;
+
+	@Column(name = "MESSAGE_TYPE")
 	private String messageType;
 
 	public Long getMessageId() {

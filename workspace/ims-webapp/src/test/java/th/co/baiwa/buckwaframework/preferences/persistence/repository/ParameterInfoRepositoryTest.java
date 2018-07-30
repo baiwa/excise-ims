@@ -1,4 +1,4 @@
-package th.co.baiwa.buckwaframework.preferences.persistence.dao;
+package th.co.baiwa.buckwaframework.preferences.persistence.repository;
 
 import java.util.List;
 
@@ -19,62 +19,38 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
 @SpringBootTest
 @WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
 @ActiveProfiles(value = PROFILE.UNITTEST)
-public class ParameterInfoDaoTest {
+public class ParameterInfoRepositoryTest {
 	
 	@Autowired
-	private ParameterInfoDao parameterInfoDao;
+	private ParameterInfoRepository parameterInfoRepository;
 	
 	@Test
 	public void test_findAll() {
 		System.out.println("- - - - - findAll - - - - -");
-		List<ParameterInfo> paramInfoList = parameterInfoDao.findAll();
+		List<ParameterInfo> paramInfoList = parameterInfoRepository.findAll();
 		System.out.println(paramInfoList);
 		Assert.assertNotEquals(0, paramInfoList.size());
 	}
 	
 	@Test
-	public void test_findById_Found() {
-		System.out.println("- - - - - findById_Found - - - - -");
-		ParameterInfo paramInfo = parameterInfoDao.findById(1L);
+	public void test_findOne() {
+		System.out.println("- - - - - findOne - - - - -");
+		ParameterInfo paramInfo = parameterInfoRepository.findOne(1L);
 		System.out.println(paramInfo);
 		Assert.assertNotNull(paramInfo);
 	}
 	
 	@Test
-	public void test_findById_NotFound() {
-		System.out.println("- - - - - findById_NotFound - - - - -");
-		ParameterInfo paramInfo = parameterInfoDao.findById(99L);
-		System.out.println(paramInfo);
-		Assert.assertNull(paramInfo);
-	}
-	
-	@Test
 	public void test_findByParamGroupId() {
 		System.out.println("- - - - - findByParamGroupId - - - - -");
-		List<ParameterInfo> paramInfoList = parameterInfoDao.findByParamGroupId(2L);
+		List<ParameterInfo> paramInfoList = parameterInfoRepository.findByParamGroupId(2L);
 		System.out.println(paramInfoList);
 		Assert.assertNotEquals(0, paramInfoList.size());
 	}
 	
-	@Test
-	public void test_count() {
-		System.out.println("- - - - - count - - - - -");
-		int count = parameterInfoDao.count();
-		System.out.println(count);
-		Assert.assertNotEquals(0, count);
-	}
-	
-	@Test
-	public void test_countByParamGroupId() {
-		System.out.println("- - - - - countByParamGroupId - - - - -");
-		int count = parameterInfoDao.countByParamGroupId(2L);
-		System.out.println(count);
-		Assert.assertNotEquals(0, count);
-	}
-	
 	//@Test
-	public void test_insert() {
-		System.out.println("- - - - - insert - - - - -");
+	public void test_save_new() {
+		System.out.println("- - - - - save_new - - - - -");
 		ParameterInfo paramInfo = new ParameterInfo();
 		paramInfo.setParamGroupId(2L);
 		paramInfo.setParamCode("TEST2");
@@ -86,24 +62,21 @@ public class ParameterInfoDaoTest {
 		paramInfo.setValue6("v6");
 		paramInfo.setIsDefault(FLAG.N_FLAG);
 		paramInfo.setSortingOrder(1);
-		Long pk = parameterInfoDao.insert(paramInfo);
-		Assert.assertNotNull(pk);
+		parameterInfoRepository.save(paramInfo);
 	}
 	
 	//@Test
-	public void test_update() {
-		System.out.println("- - - - - update - - - - -");
-		ParameterInfo paramInfo = parameterInfoDao.findById(2L);
+	public void test_save_update() {
+		System.out.println("- - - - - save_update - - - - -");
+		ParameterInfo paramInfo = parameterInfoRepository.findOne(33L);
 		paramInfo.setValue2("edit");
-		int updateRow = parameterInfoDao.update(paramInfo);
-		Assert.assertEquals(1, updateRow);
+		parameterInfoRepository.save(paramInfo);
 	}
 	
 	//@Test
 	public void test_delete() {
 		System.out.println("- - - - - delete - - - - -");
-		int updateRow = parameterInfoDao.delete(2L);
-		Assert.assertEquals(1, updateRow);
+		parameterInfoRepository.delete(33L);
 	}
 	
 }

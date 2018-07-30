@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
-import th.co.baiwa.buckwaframework.common.util.WebContextUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 
 @RestController
@@ -26,6 +26,13 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 public class PreferencesRestController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PreferencesRestController.class);
+	
+	private final ApplicationCache applicationCache;
+	
+	@Autowired
+	public PreferencesRestController(ApplicationCache applicationCache) {
+		this.applicationCache = applicationCache;
+	}
 	
 	@GetMapping
 	@ApiOperation(
@@ -39,7 +46,6 @@ public class PreferencesRestController {
 	public ResponseEntity<?> reloadCache() {
 		logger.info("reloadCache");
 		
-		ApplicationCache applicationCache = (ApplicationCache) WebContextUtils.getBean("applicationCache");
 		applicationCache.reloadCache();
 		
 		Map<String, String> map = new HashMap<>();

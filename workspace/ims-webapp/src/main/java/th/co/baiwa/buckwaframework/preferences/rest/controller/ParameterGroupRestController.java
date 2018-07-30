@@ -30,8 +30,12 @@ public class ParameterGroupRestController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ParameterGroupRestController.class);
 	
+	private final ParameterGroupService parameterGroupService;
+	
 	@Autowired
-	private ParameterGroupService parameterGroupService;
+	public ParameterGroupRestController(ParameterGroupService parameterGroupService) {
+		this.parameterGroupService = parameterGroupService;
+	}
 	
 	@GetMapping
 	@ApiOperation(

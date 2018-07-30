@@ -34,8 +34,12 @@ public class MessageRestController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MessageRestController.class);
 	
+	private final MessageService messageService;
+	
 	@Autowired
-	private MessageService messageService;
+	public MessageRestController(MessageService messageService) {
+		this.messageService = messageService;
+	}
 	
 	@GetMapping
 	@ApiOperation(
@@ -72,7 +76,7 @@ public class MessageRestController {
 		message.setMessageType(messageType);
 		logger.info("search by {}", message);
 		
-		List<Message> resultList = messageService.getMessageList(start, length,message);
+		List<Message> resultList = messageService.getMessageList(message, start, length);
 		Integer recordsTotal = messageService.countMessage();
 		
 		ResponseDataTable<Message> response = new ResponseDataTable<Message>();

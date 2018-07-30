@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.SysAuditHistoryAction;
 
-@Repository("sysAuditHistoryActionDao")
+@Repository
 public class SysAuditHistoryActionDao {
 	
 	@Autowired

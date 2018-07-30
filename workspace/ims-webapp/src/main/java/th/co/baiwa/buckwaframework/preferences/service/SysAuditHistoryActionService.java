@@ -9,7 +9,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.dao.SysAuditHistoryAc
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.SysAuditHistoryAction;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 
-@Service("sysAuditHistoryActionService")
+@Service
 public class SysAuditHistoryActionService {
 	
 	@Autowired

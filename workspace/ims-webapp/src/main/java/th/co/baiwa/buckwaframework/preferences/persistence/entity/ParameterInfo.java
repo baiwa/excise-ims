@@ -1,20 +1,55 @@
 package th.co.baiwa.buckwaframework.preferences.persistence.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
+@Entity
+@Table(name = "SYS_PARAMETER_INFO")
 public class ParameterInfo extends BaseEntity {
 
+	private static final long serialVersionUID = 5841123178056803593L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SYS_PARAMETER_INFO_GEN")
+	@SequenceGenerator(name = "SYS_PARAMETER_INFO_GEN", sequenceName = "SYS_PARAMETER_INFO_SEQ", allocationSize = 1)
+	@Column(name = "PARAM_INFO_ID")
 	private Long paramInfoId;
+
+	@Column(name = "PARAM_GROUP_ID")
 	private Long paramGroupId;
+
+	@Column(name = "PARAM_CODE")
 	private String paramCode;
+
+	@Column(name = "VALUE_1")
 	private String value1;
+
+	@Column(name = "VALUE_2")
 	private String value2;
+
+	@Column(name = "VALUE_3")
 	private String value3;
+
+	@Column(name = "VALUE_4")
 	private String value4;
+
+	@Column(name = "VALUE_5")
 	private String value5;
+
+	@Column(name = "VALUE_6")
 	private String value6;
-	private String isDefault;
+
+	@Column(name = "SORTING_ORDER")
 	private Integer sortingOrder;
+
+	@Column(name = "IS_DEFAULT")
+	private String isDefault;
 
 	public Long getParamInfoId() {
 		return paramInfoId;
@@ -88,20 +123,20 @@ public class ParameterInfo extends BaseEntity {
 		this.value6 = value6;
 	}
 
-	public String getIsDefault() {
-		return isDefault;
-	}
-
-	public void setIsDefault(String isDefault) {
-		this.isDefault = isDefault;
-	}
-
 	public Integer getSortingOrder() {
 		return sortingOrder;
 	}
 
 	public void setSortingOrder(Integer sortingOrder) {
 		this.sortingOrder = sortingOrder;
+	}
+
+	public String getIsDefault() {
+		return isDefault;
+	}
+
+	public void setIsDefault(String isDefault) {
+		this.isDefault = isDefault;
 	}
 
 }

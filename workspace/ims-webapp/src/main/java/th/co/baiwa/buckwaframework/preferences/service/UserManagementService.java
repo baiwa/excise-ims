@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.preferences.persistence.dao.UserManagementDao;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.UserManagement;
 
-@Service("userManagementService")
+@Service
 public class UserManagementService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserManagementService.class);

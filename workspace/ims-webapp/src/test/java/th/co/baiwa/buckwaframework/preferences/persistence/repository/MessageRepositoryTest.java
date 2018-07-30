@@ -1,5 +1,6 @@
-package th.co.baiwa.buckwaframework.preferences.persistence.dao;
+package th.co.baiwa.buckwaframework.preferences.persistence.repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -19,69 +20,56 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 @SpringBootTest
 @WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
 @ActiveProfiles(value = PROFILE.UNITTEST)
-public class MessageDaoTest {
+public class MessageRepositoryTest {
 	
 	@Autowired
-	private MessageDao messageDao;
+	private MessageRepository messageRepository;
 	
 	@Test
 	public void test_findAll() {
 		System.out.println("- - - - - findAll - - - - -");
-		List<Message> messageList = messageDao.findAll();
-		System.out.println(messageList);
-		Assert.assertNotEquals(0, messageList.size());
+		List<Message> messageList = (List<Message>) messageRepository.findAll();
+		messageList.forEach(System.out::println);
 	}
 	
 	@Test
-	public void test_findById_Found() {
-		System.out.println("- - - - - findById - - - - -");
-		Message message = messageDao.findById(1L);
+	public void test_findOne() {
+		System.out.println("- - - - - findOne - - - - -");
+		Message message = messageRepository.findOne(1L);
 		System.out.println(message);
 		Assert.assertNotNull(message);
 	}
 	
-	@Test
-	public void test_findById_NotFound() {
-		System.out.println("- - - - - findById - - - - -");
-		Message message = messageDao.findById(99L);
-		System.out.println(message);
-		Assert.assertNull(message);
-	}
-	
-	@Test
-	public void test_count() {
-		System.out.println("- - - - - count - - - - -");
-		int count = messageDao.count();
-		System.out.println(count);
-		Assert.assertNotEquals(0, count);
-	}
-	
 	//@Test
-	public void test_insert() {
-		System.out.println("- - - - - insert - - - - -");
+	public void test_save_new() {
+		System.out.println("- - - - - save_new - - - - -");
 		Message message = new Message();
 		message.setMessageCode("msg_code");
 		message.setMessageEn("desc en");
 		message.setMessageTh("desc th");
 		message.setMessageType(MESSAGE_TYPE.INFO);
-		messageDao.insert(message);
+		messageRepository.save(message);
 	}
 	
 	//@Test
-	public void test_update() {
-		System.out.println("- - - - - update - - - - -");
-		Message message = new Message();
+	public void test_save_update() {
+		System.out.println("- - - - - save_update - - - - -");
+		Message message = messageRepository.findOne(61L);
 		message.setMessageEn("desc en edit");
-		message.setMessageId(1L);
-		int updateRow = messageDao.update(message);
-		Assert.assertEquals(1, updateRow);
+		messageRepository.save(message);
 	}
 	
 	//@Test
 	public void test_delete() {
 		System.out.println("- - - - - delete - - - - -");
-		int updateRow = messageDao.delete(2L);
-		Assert.assertEquals(1, updateRow);
+		messageRepository.delete(61L);
+	}
+	
+	//@Test
+	public void test_deleteByCollection() {
+		System.out.println("- - - - - deleteByCollection - - - - -");
+		List<Long> ids = Arrays.asList(63L, 64L, 65L);
+		messageRepository.delete(ids);
 	}
 	
 }

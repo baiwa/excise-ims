@@ -7,40 +7,43 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.preferences.persistence.dao.ParameterGroupDao;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterGroup;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterGroupRepository;
 
-@Service("parameterGroupService")
+@Service
 public class ParameterGroupService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ParameterGroupService.class);
 	
+	private final ParameterGroupRepository parameterGroupRepository;
+	
 	@Autowired
-	private ParameterGroupDao parameterGroupDao;
+	public ParameterGroupService(ParameterGroupRepository parameterGroupRepository) {
+		this.parameterGroupRepository = parameterGroupRepository;
+	}
 	
 	public List<ParameterGroup> getParameterGroupList(Integer start, Integer length) {
 		logger.info("getParameterGroupList");
 		
-		return parameterGroupDao.findAll();
+		return parameterGroupRepository.findAll();
 	}
 	
 	public ParameterGroup getParameterGroupById(Long paramGroupId) {
 		logger.info("getParameterGroupById paramGroupId={}", paramGroupId);
 		
-		return parameterGroupDao.findById(paramGroupId);
+		return parameterGroupRepository.findOne(paramGroupId);
 	}
 	
-	public int countParameterGroup() {
+	public long countParameterGroup() {
 		logger.info("countParameterGroup");
 		
-		return parameterGroupDao.count();
+		return parameterGroupRepository.count();
 	}
 	
 	public ParameterGroup insertParameterGroup(ParameterGroup parameterGroup) {
 		logger.info("insertParameterGroup");
 		
-		Long paramGroupId = parameterGroupDao.insert(parameterGroup);
-		parameterGroup.setParamGroupId(paramGroupId);
+		parameterGroupRepository.save(parameterGroup);
 		
 		return parameterGroup;
 	}
@@ -48,13 +51,13 @@ public class ParameterGroupService {
 	public void updateParameterGroup(ParameterGroup parameterGroup) {
 		logger.info("updateParameterGroup");
 		
-		parameterGroupDao.update(parameterGroup);
+		parameterGroupRepository.save(parameterGroup);
 	}
 	
 	public void deleteParameterGroup(Long paramGroupId) {
 		logger.info("deleteParameterGroup");
 		
-		parameterGroupDao.delete(paramGroupId);
+		parameterGroupRepository.delete(paramGroupId);
 	}
 	
 }

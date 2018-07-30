@@ -7,44 +7,43 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.preferences.persistence.dao.MessageDao;
-import th.co.baiwa.buckwaframework.preferences.persistence.dao.SEQDao;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.MessageRepository;
 
-@Service("messageService")
+@Service
 public class MessageService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
 	
-	@Autowired
-	private MessageDao messageDao;
+	private final MessageRepository messageRepository;
 	
 	@Autowired
-	private SEQDao seqDao;
+	public MessageService(MessageRepository messageRepository) {
+		this.messageRepository = messageRepository;
+	}
 	
-	public List<Message> getMessageList(Integer start, Integer length, Message message) {
+	public List<Message> getMessageList(Message message, Integer start, Integer length) {
 		logger.info("getMessageAll");
 		
-		return messageDao.findAll(start, length, message);
+		return messageRepository.findByCriteria(message, start, length);
 	}
 	
 	public Message getMessageById(Long messageId) {
 		logger.info("getMessage messageId={}", messageId);
 		
-		return messageDao.findById(messageId);
+		return messageRepository.findOne(messageId);
 	}
 	
 	public int countMessage() {
 		logger.info("countMessage");
 		
-		return messageDao.count();
+		return (int) messageRepository.count();
 	}
 	
 	public Message insertMessage(Message message) {
 		logger.info("insertMessage");
-		message.setMessageId(seqDao.autoNumberRunningBySeqName("SYS_MESSAGE_SEQ").longValue());
-		Long messageId = messageDao.insert(message);
-		message.setMessageId(messageId);
+		
+		messageRepository.save(message);
 		
 		return message;
 	}
@@ -52,14 +51,13 @@ public class MessageService {
 	public void updateMessage(Message message) {
 		logger.info("updateMessage");
 		
-		messageDao.update(message);
+		messageRepository.save(message);
 	}
 	
 	public void deleteMessage(List<Long> ids) {
 		logger.info("deleteMessage");
-		for(Long id : ids){
-			messageDao.delete(id);
-		}
+		
+		messageRepository.delete(ids);
 	}
 	
 }

@@ -6,24 +6,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants.MESSAGE_LANG;
-import th.co.baiwa.buckwaframework.preferences.persistence.dao.MessageDao;
-import th.co.baiwa.buckwaframework.preferences.persistence.dao.ParameterGroupDao;
-import th.co.baiwa.buckwaframework.preferences.persistence.dao.ParameterInfoDao;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterGroup;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.MessageRepository;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterGroupRepository;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterInfoRepository;
 import th.co.baiwa.excise.ta.service.ListOfValueService;
 import th.co.baiwa.excise.utils.BeanUtils;
 
+@Component
 public class ApplicationCache {
 	
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(ApplicationCache.class);
 	
 	private static final ConcurrentHashMap<String, ParameterGroupWrapper> PARAMETER_GROUP_MAP = new ConcurrentHashMap<String, ParameterGroupWrapper>();
 	private static final ConcurrentHashMap<Long, ParameterInfo> PARAMETER_INFO_MAP = new ConcurrentHashMap<Long, ParameterInfo>();
@@ -31,18 +35,23 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<String, Object> COMMON_CACHE = new ConcurrentHashMap<String, Object>();
 	private static final ConcurrentHashMap<String, List<Lov>> LOV_GROUP_VALUE = new ConcurrentHashMap<String, List<Lov>>();
 	
-	@Autowired
-	private ParameterGroupDao parameterGroupDao;
+	private final ParameterGroupRepository parameterGroupRepository;
+	private final ParameterInfoRepository parameterInfoRepository;
+	private final MessageRepository messageRepository;
+	private final ListOfValueService listOfValueService;
 	
 	@Autowired
-	private ParameterInfoDao parameterInfoDao;
-	
-	@Autowired
-	private MessageDao messageDao;
-	
-	@Autowired
-	private ListOfValueService listOfValueService;
-	
+	public ApplicationCache(
+			ParameterGroupRepository parameterGroupRepository,
+			ParameterInfoRepository parameterInfoRepository,
+			MessageRepository messageRepository,
+			ListOfValueService listOfValueService) {
+		super();
+		this.parameterGroupRepository = parameterGroupRepository;
+		this.parameterInfoRepository = parameterInfoRepository;
+		this.messageRepository = messageRepository;
+		this.listOfValueService = listOfValueService;
+	}
 	
 	/********************* Method for Get Cache - Start *********************/
 	
@@ -125,6 +134,7 @@ public class ApplicationCache {
 	
 	
 	/** Reload */
+	@PostConstruct
 	public synchronized void reloadCache() {
 		logger.info("ApplicationCache Reloading...");
 		
@@ -132,7 +142,6 @@ public class ApplicationCache {
 		
 		loadMessage();
 		
-		//loadCommonCache();
 		loadLov();
 		
 		logger.info("ApplicationCache Reloaded");
@@ -144,12 +153,12 @@ public class ApplicationCache {
 		PARAMETER_GROUP_MAP.clear();
 		PARAMETER_INFO_MAP.clear();
 		
-		List<ParameterGroup> paramGroupList = parameterGroupDao.findAll();
+		List<ParameterGroup> paramGroupList = parameterGroupRepository.findAll();
 		List<ParameterInfo> paramInfoList = null;
 		for (ParameterGroup paramGroup : paramGroupList) {
-			logger.debug("load ParameterGroup [id] : " + paramGroup.getParamGroupId() + " \t,[parameterGroupCode] : " + paramGroup.getParamGroupCode());
+			logger.debug("load ParameterGroup [id] : " + paramGroup.getParamGroupId() + ",\t[parameterGroupCode] : " + paramGroup.getParamGroupCode());
 			
-			paramInfoList = parameterInfoDao.findByParamGroupId(paramGroup.getParamGroupId());
+			paramInfoList = parameterInfoRepository.findByParamGroupId(paramGroup.getParamGroupId());
 			for (ParameterInfo paramInfo : paramInfoList) {
 				PARAMETER_INFO_MAP.put(paramInfo.getParamInfoId(), paramInfo);
 			}
@@ -167,22 +176,13 @@ public class ApplicationCache {
 		
 		MESSAGE_MAP.clear();
 		
-		List<Message> messageList = messageDao.findAll();
+		List<Message> messageList = messageRepository.findAll();
 		for (Message message : messageList) {
 			MESSAGE_MAP.put(message.getMessageCode(), message);
 		}
 		
 		logger.info("load Message loaded [" + MESSAGE_MAP.size() + "]");
 	}
-	
-//	private void loadCommonCache() {
-//		logger.info("load CommonCache loading...");
-//		
-//		COMMON_CACHE.clear();
-//		//COMMON_CACHE.put(COMMON_CACHE_NAME.REQUEST_TAB_MAP, requestTabMap);
-//		
-//		logger.info("load CommonCache loaded");
-//	}
 	
 	private void loadLov() {
 		logger.info("load List Of value loading...");

@@ -25,7 +25,7 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 @Transactional
-@Repository("userManagementDao")
+@Repository
 public class UserManagementDao {
 
 	private final String ADM_USER_SEQ = "ADM_USER_SEQ";

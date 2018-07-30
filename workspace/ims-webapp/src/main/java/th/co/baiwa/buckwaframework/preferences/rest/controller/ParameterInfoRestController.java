@@ -30,8 +30,12 @@ public class ParameterInfoRestController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ParameterInfoRestController.class);
 	
+	private final ParameterInfoService parameterInfoService;
+	
 	@Autowired
-	private ParameterInfoService parameterInfoService;
+	public ParameterInfoRestController(ParameterInfoService parameterInfoService) {
+		this.parameterInfoService = parameterInfoService;
+	}
 	
 	@GetMapping
 	@ApiOperation(
