@@ -2,6 +2,7 @@ package th.co.baiwa.buckwaframework.common.persistence.repository.support;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -75,6 +76,13 @@ public class CommonSimpleJpaRepository<T, ID extends Serializable> extends Simpl
 			em.merge(baseEntity);
 		} else {
 			super.delete(entity);
+		}
+	}
+
+	@Transactional
+	public void delete(Collection<ID> ids) {
+		for (ID id : ids) {
+			delete(id);
 		}
 	}
 

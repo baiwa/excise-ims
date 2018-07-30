@@ -1,6 +1,7 @@
 package th.co.baiwa.buckwaframework.common.persistence.repository;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -32,5 +33,13 @@ public interface CommonJpaCrudRepository<T extends BaseEntity, ID extends Serial
 	 */
 	@Query("select count(1) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "'")
 	long count();
+	
+	/**
+	 * Deletes the given entities by id.
+	 * 
+	 * @param ids
+	 * @throws IllegalArgumentException in case the given entity is {@literal null}.
+	 */
+	void delete(Collection<ID> ids);
 	
 }
