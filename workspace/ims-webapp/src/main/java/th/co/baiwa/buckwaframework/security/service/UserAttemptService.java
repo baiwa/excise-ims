@@ -24,11 +24,16 @@ public class UserAttemptService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserAttemptService.class);
 	
-	@Autowired
-	private UserAttemptRepository userAttemptRepository;
+	private final UserAttemptRepository userAttemptRepository;
+	private final UserRepository userRepository;
 	
 	@Autowired
-	private UserRepository userRepository;
+	public UserAttemptService(
+			UserAttemptRepository userAttemptRepository,
+			UserRepository userRepository) {
+		this.userAttemptRepository = userAttemptRepository;
+		this.userRepository = userRepository;
+	}
 	
 	public void resetFailAttempt(String username) {
 		logger.info("resetFailAttempt username={}", username);

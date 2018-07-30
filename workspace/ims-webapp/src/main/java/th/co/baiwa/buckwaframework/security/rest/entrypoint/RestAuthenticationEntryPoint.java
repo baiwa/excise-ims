@@ -9,8 +9,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
- * The Entry Point will not redirect to any sort of Login - it will return the
- * 401
+ * The Entry Point will not redirect to any sort of Login - it will return the 401
  */
 public final class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

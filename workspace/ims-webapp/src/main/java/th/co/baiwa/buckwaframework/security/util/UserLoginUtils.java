@@ -4,8 +4,8 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
-import th.co.baiwa.buckwaframework.security.model.UserBean;
-import th.co.baiwa.buckwaframework.security.model.UserDetails;
+import th.co.baiwa.buckwaframework.security.domain.UserBean;
+import th.co.baiwa.buckwaframework.security.domain.UserDetails;
 
 public class UserLoginUtils {
 

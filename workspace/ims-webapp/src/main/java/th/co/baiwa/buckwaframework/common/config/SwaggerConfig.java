@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import com.fasterxml.classmate.TypeResolver;
 import com.google.common.collect.Lists;
 
 import springfox.documentation.builders.PathSelectors;
@@ -43,8 +44,12 @@ public class SwaggerConfig {
 	
 	@Primary
 	@Bean
-	public ApiListingScanner addExtraOperations(ApiDescriptionReader apiDescriptionReader, ApiModelReader apiModelReader, DocumentationPluginsManager pluginsManager) {
-		return new FormLoginOperations(apiDescriptionReader, apiModelReader, pluginsManager);
+	public ApiListingScanner addExtraOperations(
+			ApiDescriptionReader apiDescriptionReader,
+			ApiModelReader apiModelReader,
+			DocumentationPluginsManager pluginsManager,
+			TypeResolver typeResolver) {
+		return new FormLoginOperations(apiDescriptionReader, apiModelReader, pluginsManager, typeResolver);
 	}
 	
 }

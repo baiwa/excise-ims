@@ -15,8 +15,12 @@ public class RoleService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(RoleService.class);
 	
+	private final RoleRepository roleRepository;
+	
 	@Autowired
-	private RoleRepository roleRepository;
+	public RoleService(RoleRepository roleRepository) {
+		this.roleRepository = roleRepository;
+	}
 	
 	public List<Role> getRoleAll() {
 		logger.info("getAllRole");

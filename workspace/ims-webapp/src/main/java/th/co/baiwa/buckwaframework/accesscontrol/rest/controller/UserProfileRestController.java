@@ -20,12 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
-import th.co.baiwa.buckwaframework.security.model.UserDetails;
+import th.co.baiwa.buckwaframework.security.domain.UserDetails;
 
 @RestController
 @RequestMapping("/api/access-control/user-profile")
 public class UserProfileRestController {
-	private Logger logger = LoggerFactory.getLogger(UserProfileRestController.class);
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserProfileRestController.class);
 	
 	@GetMapping
 	public ResponseEntity<?> userProfile(Authentication authentication) {
@@ -52,12 +53,12 @@ public class UserProfileRestController {
 		return new ResponseEntity<ResponseData<List<String>>>(response, HttpStatus.OK);
 	}
 	
-	@GetMapping("/hasRole/{role}")
+	@GetMapping("/has-role/{role}")
 	public boolean hasRole(@PathVariable("role") String role, HttpServletRequest request) {
 		return request.isUserInRole(role);
 	}
 	
-	@GetMapping("/hasAuthority/{authority}")
+	@GetMapping("/has-authority/{authority}")
 	public boolean hasAuthority(@PathVariable("authority") String authority, Authentication authentication) {
 		boolean authorized = false;
 		if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {

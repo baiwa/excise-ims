@@ -34,12 +34,16 @@ import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.URL;
 
 public class FormLoginOperations extends ApiListingScanner {
 	
-	@Autowired
-	private TypeResolver typeResolver;
+	private final TypeResolver typeResolver;
 	
 	@Autowired
-	public FormLoginOperations(ApiDescriptionReader apiDescriptionReader, ApiModelReader apiModelReader, DocumentationPluginsManager pluginsManager) {
+	public FormLoginOperations(
+			ApiDescriptionReader apiDescriptionReader,
+			ApiModelReader apiModelReader,
+			DocumentationPluginsManager pluginsManager,
+			TypeResolver typeResolver) {
 		super(apiDescriptionReader, apiModelReader, pluginsManager);
+		this.typeResolver = typeResolver;
 	}
 	
 	@Override

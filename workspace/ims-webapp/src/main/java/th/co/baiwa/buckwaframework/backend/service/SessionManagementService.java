@@ -10,9 +10,9 @@ import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.security.model.UserDetails;
+import th.co.baiwa.buckwaframework.security.domain.UserDetails;
 
-@Service("sessionManagementService")
+@Service
 public class SessionManagementService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(SessionManagementService.class);

@@ -17,8 +17,12 @@ public class UserDetailsRepository {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserDetailsRepository.class);
 	
+	private final CommonJdbcTemplate commonJdbcTemplate;
+	
 	@Autowired
-	private CommonJdbcTemplate commonJdbcTemplate;
+	public UserDetailsRepository(CommonJdbcTemplate commonJdbcTemplate) {
+		this.commonJdbcTemplate = commonJdbcTemplate;
+	}
 	
 	public List<GrantedAuthority> findGrantedRoleByUserId(Long userId) {
 		logger.debug("findGrantedRoleByUserId userId={}", userId);

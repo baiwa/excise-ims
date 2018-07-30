@@ -22,23 +22,18 @@ public class JdbcAuthenticationProvider extends DaoAuthenticationProvider {
 	
 	private static final Logger logger = LoggerFactory.getLogger(JdbcAuthenticationProvider.class);
 	
+	private final UserAttemptService userAttemptService;
+	
 	@Autowired
-	@Qualifier("userDetailsService")
-	@Override
-	public void setUserDetailsService(UserDetailsService userDetailsService) {
+	public JdbcAuthenticationProvider(
+			@Qualifier("userDetailsService") UserDetailsService userDetailsService,
+			@Qualifier("passwordEncoder") Object passwordEncoder,
+			UserAttemptService userAttemptService) {
 		super.setUserDetailsService(userDetailsService);
-	}
-	
-	@Autowired
-	@Qualifier("passwordEncoder")
-	@Override
-	public void setPasswordEncoder(Object passwordEncoder) {
 		super.setPasswordEncoder(passwordEncoder);
+		this.userAttemptService = userAttemptService;
 	}
-	
-	@Autowired
-	private UserAttemptService userAttemptService;
-	
+
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		logger.info("authenticate");

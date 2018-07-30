@@ -30,8 +30,12 @@ public class RoleRestController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(RoleRestController.class);
 	
-	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	public RoleRestController(RoleService roleService) {
+		this.roleService = roleService;
+	}
 	
 	@GetMapping
 	public ResponseEntity<?> getAll(@RequestParam("draw") Integer draw, @RequestParam("start") Integer start, @RequestParam("length") Integer length) {

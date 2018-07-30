@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.UserRepository;
 import th.co.baiwa.buckwaframework.common.util.BooleanToStringConverter;
-import th.co.baiwa.buckwaframework.security.model.UserDetails;
+import th.co.baiwa.buckwaframework.security.domain.UserDetails;
 import th.co.baiwa.buckwaframework.security.persistence.repository.UserDetailsRepository;
 
 @Service
@@ -22,11 +22,16 @@ public class UserDetailsService implements org.springframework.security.core.use
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserDetailsService.class);
 	
-	@Autowired
 	private UserRepository userRepository;
+	private UserDetailsRepository userDetailsRepository;
 	
 	@Autowired
-	private UserDetailsRepository userDetailsRepository;
+	public UserDetailsService(
+			UserRepository userRepository,
+			UserDetailsRepository userDetailsRepository) {
+		this.userRepository = userRepository;
+		this.userDetailsRepository = userDetailsRepository;
+	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
