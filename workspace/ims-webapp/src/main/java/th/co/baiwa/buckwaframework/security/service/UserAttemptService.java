@@ -19,7 +19,7 @@ import th.co.baiwa.buckwaframework.security.persistence.entity.UserAttempt;
 import th.co.baiwa.buckwaframework.security.persistence.repository.UserAttemptRepository;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 
-@Service("userAttemptService")
+@Service
 public class UserAttemptService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserAttemptService.class);

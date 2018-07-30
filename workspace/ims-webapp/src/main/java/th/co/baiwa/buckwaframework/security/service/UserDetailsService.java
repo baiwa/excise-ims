@@ -17,7 +17,7 @@ import th.co.baiwa.buckwaframework.common.util.BooleanToStringConverter;
 import th.co.baiwa.buckwaframework.security.model.UserDetails;
 import th.co.baiwa.buckwaframework.security.persistence.repository.UserDetailsRepository;
 
-@Service("userDetailsService")
+@Service
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserDetailsService.class);

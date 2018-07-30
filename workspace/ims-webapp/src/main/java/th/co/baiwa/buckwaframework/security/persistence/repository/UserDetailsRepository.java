@@ -12,10 +12,10 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.security.persistence.mapper.GrantedAuthorityRowMapper;
 
-@Repository("userDetailsRepository")
+@Repository
 public class UserDetailsRepository {
 	
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(UserDetailsRepository.class);
 	
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;

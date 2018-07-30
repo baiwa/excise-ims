@@ -13,7 +13,7 @@ import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.exampleproject.examplemodule.persistence.entity.BuckwaTest;
 import th.co.baiwa.exampleproject.examplemodule.persistence.mapper.BuckwaTestRowMapper;
 
-@Repository("buckwaTestDao")
+@Repository
 public class BuckwaTestDao {
 	
 	@Autowired

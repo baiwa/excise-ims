@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import th.co.baiwa.exampleproject.examplemodule.persistence.dao.BuckwaTestDao;
 import th.co.baiwa.exampleproject.examplemodule.persistence.entity.BuckwaTest;
 
-@Service("buckwaTestService")
+@Service
 public class BuckwaTestService {
 	
 	@Autowired

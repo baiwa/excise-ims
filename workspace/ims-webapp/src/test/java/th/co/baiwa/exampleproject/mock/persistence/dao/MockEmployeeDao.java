@@ -21,7 +21,7 @@ import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.exampleproject.mock.persistence.entity.MockEmployee;
 import th.co.baiwa.exampleproject.mock.persistence.mapper.MockEmployeeRowMapper;
 
-@Repository("mockEmployeeDao")
+@Repository
 public class MockEmployeeDao {
 	
 	@Autowired

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.RoleRepository;
 
-@Service("roleService")
+@Service
 public class RoleService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(RoleService.class);
