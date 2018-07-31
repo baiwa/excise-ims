@@ -29,6 +29,7 @@ public class PlanWorksheetHeaderDetail extends DataTableRequest{
 	private String status;
 	private String startDate;
 	private String endDate;
+	private String type;
 	
 	
 	private String amount1;
@@ -339,6 +340,12 @@ public class PlanWorksheetHeaderDetail extends DataTableRequest{
 	}
 	public String getNo3() {
 		return no3;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }
