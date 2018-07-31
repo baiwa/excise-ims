@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
@@ -28,10 +29,10 @@ public class MessageRepositoryImpl implements MessageRepositoryCustom {
 	}
 	
 	@Override
-	public List<Message> findByCriteria(Message message, Integer start, Integer length) {
-		logger.debug("findByCriteria message={}, start={}, length={}",
+	public List<Message> findByCriteria(Message message, Pageable pageable) {
+		logger.debug("findByCriteria message={}, pageable={}",
 			ToStringBuilder.reflectionToString(message, ToStringStyle.JSON_STYLE),
-			start, length);
+			pageable);
 		
 		StringBuilder builder = new StringBuilder();
 		builder.append(" SELECT MESSAGE_ID, MESSAGE_CODE, MESSAGE_EN, MESSAGE_TH, MESSAGE_TYPE ");
@@ -60,7 +61,7 @@ public class MessageRepositoryImpl implements MessageRepositoryCustom {
 		builder.append(" ORDER BY MESSAGE_CODE ");
 		
 		return commonJdbcTemplate.executeQuery(
-			OracleUtils.limitForDataTable(builder, start, length),
+			OracleUtils.limit(builder.toString(), pageable),
 			params.toArray(),
 			MessageRowMapper.getInstance()
 		);

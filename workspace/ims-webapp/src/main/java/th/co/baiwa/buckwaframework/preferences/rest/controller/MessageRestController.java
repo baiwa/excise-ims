@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ import io.swagger.annotations.ApiOperation;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
+import th.co.baiwa.buckwaframework.common.domain.DataTablesPageRequest;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.service.MessageService;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
@@ -76,7 +78,9 @@ public class MessageRestController {
 		message.setMessageType(messageType);
 		logger.info("search by {}", message);
 		
-		List<Message> resultList = messageService.getMessageList(message, start, length);
+		Pageable pageable = new DataTablesPageRequest(start, length);
+		
+		List<Message> resultList = messageService.getMessageList(message, pageable);
 		Integer recordsTotal = messageService.countMessage();
 		
 		ResponseDataTable<Message> response = new ResponseDataTable<Message>();

@@ -3,16 +3,20 @@ package th.co.baiwa.buckwaframework.preferences.persistence.repository;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
+import th.co.baiwa.buckwaframework.common.domain.DataTablesPageRequest;
 import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants.MESSAGE_TYPE;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 
@@ -38,6 +42,17 @@ public class MessageRepositoryTest {
 		Message message = messageRepository.findOne(1L);
 		System.out.println(message);
 		Assert.assertNotNull(message);
+	}
+	
+	//@Test
+	public void test_findByCriteria() {
+		System.out.println("- - - - - findByCriteria - - - - -");
+		
+		Message message = new Message();
+		Pageable pageable = new DataTablesPageRequest(0, 2);
+		
+		List<Message> messageList = messageRepository.findByCriteria(message, pageable);
+		messageList.forEach(s -> System.out.println(ToStringBuilder.reflectionToString(s, ToStringStyle.JSON_STYLE)));
 	}
 	
 	//@Test

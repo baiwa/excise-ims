@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
@@ -22,10 +23,10 @@ public class MessageService {
 		this.messageRepository = messageRepository;
 	}
 	
-	public List<Message> getMessageList(Message message, Integer start, Integer length) {
+	public List<Message> getMessageList(Message message, Pageable pageable) {
 		logger.info("getMessageAll");
 		
-		return messageRepository.findByCriteria(message, start, length);
+		return messageRepository.findByCriteria(message, pageable);
 	}
 	
 	public Message getMessageById(Long messageId) {
