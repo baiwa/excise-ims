@@ -73,6 +73,21 @@ public class ApplicationCache {
 		return LOV_GROUP_VALUE.get(lovType);
 	}
 	
+	public static List<Lov> getListOfValueByValueType(String lovType,String subType) {
+		List<Lov> lovBySubtype = new ArrayList<Lov>();
+		List<Lov> lovList = LOV_GROUP_VALUE.get(lovType);
+		if(BeanUtils.isNotEmpty(subType)) {
+			for (Lov lov : lovList) {
+				if(subType.equals(lov.getSubType())) {
+					lovBySubtype.add(lov);
+				}
+			}
+		}else {
+			return lovList;
+		}
+		
+		return lovBySubtype;
+	}
 	
 	
 	static final class ParameterGroupWrapper {
