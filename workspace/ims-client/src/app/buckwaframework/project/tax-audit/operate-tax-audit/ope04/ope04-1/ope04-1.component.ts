@@ -144,8 +144,6 @@ export class Ope041Component implements OnInit {
 
   clearData() {
     for (let i = 0; i < this.row.length; i++) {
-      this.max[i] = 0;
-      this.diff[i] = 0;
       for (let j = 0; j < this.row[i].length; j++) {
         //find max value
         this.max[i] = "";
@@ -226,11 +224,14 @@ export class Ope041Component implements OnInit {
       URL,
       {
         exciseId: this.exciseId,
+        type: "W",
         startDate: startDateSplit,
         endDate: endDateSplit
       },
       res => {
-        this.MonthDataList = res.length == 0 ? new MonthData() : res[0];
+        console.log(res);
+        this.MonthDataList = res.length == 0 ? "" : res[0];
+        console.log(this.MonthDataList);
       }
     );
 

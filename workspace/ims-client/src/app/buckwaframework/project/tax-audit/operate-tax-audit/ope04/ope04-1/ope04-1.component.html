@@ -108,86 +108,94 @@
                         </tr>
                     </thead>
                     <tbody style="text-align: center;">
-                        <tr *ngIf="row[1][0] != ''">
+                        <tr *ngIf="MonthDataList != ''">
                             <td>1</td>
                             <td>{{MonthDataList.product1}}</td>
                             <td>{{row[1][0]}}</td>
                             <td>{{row[1][1]}}</td>
                             <td>{{MonthDataList.monthRecieve1}}</td>
                             <td>{{row[1][2]}}</td>
-                            <td><span class="ui orange horizontal label right aligned" style="float: right;">{{max[1]}}</span></td>
-                            <td>
-                                <span *ngIf="diff[1][0] == '-'" class="ui red horizontal label right aligned" style="float: right;">{{diff[1]}}</span>
-                                <span *ngIf="diff[1][0] != '-'" class="ui green horizontal label right aligned" style="float: right;">{{diff[1]}}</span>
+                            <td>{{max[1]}}</td>
+                            <td *ngIf="diff[1][0] == '-'" style=" background-color: red">
+                                <span style="float: right; color: white"><b>{{diff[1]}}</b></span>
+                            </td>
+                            <td *ngIf="diff[1][0] != '-'" style="background-color: #00da00">
+                                <span style="float: right; color: white"><b>{{diff[1]}}</b></span>
                             </td>
                         </tr>
-                        <tr *ngIf="row[1][0] != ''">
+                        <tr *ngIf="MonthDataList != ''">
                             <td>2</td>
                             <td>{{MonthDataList.product2}}</td>
                             <td>{{row[2][0]}}</td>
                             <td>{{row[2][1]}}</td>
                             <td>{{MonthDataList.monthRecieve2}}</td>
                             <td>{{row[2][2]}}</td>
-                            <td><span class="ui orange horizontal label right aligned" style="float: right;">{{max[2]}}</span></td>
-                            <td>
-                                <span *ngIf="diff[2][0] == '-'" class="ui red horizontal label right aligned" style="float: right;">{{diff[2]}}</span>
-                                <span *ngIf="diff[2][0] != '-'" class="ui green horizontal label right aligned" style="float: right;">{{diff[2]}}</span>
+                            <td>{{max[2]}}</td>
+                            <td *ngIf="diff[2][0] == '-'" style=" background-color: red">
+                                <span style="float: right; color: white"><b>{{diff[2]}}</b></span>
+                            </td>
+                            <td *ngIf="diff[2][0] != '-'" style="background-color: #00da00">
+                                <span style="float: right; color: white"><b>{{diff[2]}}</b></span>
                             </td>
                         </tr>
-                        <tr *ngIf="row[1][0] != ''">
+                        <tr *ngIf="MonthDataList != ''">
                             <td>3</td>
                             <td>{{MonthDataList.product3}}</td>
                             <td>{{row[3][0]}}</td>
                             <td>{{row[3][1]}}</td>
                             <td>{{MonthDataList.monthRecieve3}}</td>
                             <td>{{row[3][2]}}</td>
-                            <td><span class="ui orange horizontal label right aligned" style="float: right;">{{max[3]}}</span></td>
-                            <td>
-                                <span *ngIf="diff[3][0] == '-'" class="ui red horizontal label right aligned" style="float: right;">{{diff[3]}}</span>
-                                <span *ngIf="diff[3][0] != '-'" class="ui green horizontal label right aligned" style="float: right;">{{diff[3]}}</span>
+                            <td>{{max[3]}}</td>
+                            <td *ngIf="diff[3][0] == '-'" style=" background-color: red">
+                                <span style="float: right; color: white"><b>{{diff[3]}}</b></span>
+                            </td>
+                            <td *ngIf="diff[3][0] != '-'" style="background-color: #00da00">
+                                <span style="float: right; color: white"><b>{{diff[3]}}</b></span>
                             </td>
                         </tr>
-                        <tr *ngIf="row[1][0] != ''">
+                        <tr *ngIf="MonthDataList != ''">
                             <td>4</td>
                             <td>{{MonthDataList.product4}}</td>
                             <td>{{row[4][0]}}</td>
                             <td>{{row[4][1]}}</td>
                             <td>{{MonthDataList.monthRecieve4}}</td>
                             <td>{{row[4][2]}}</td>
-                            <td><span class="ui orange horizontal label right aligned" style="float: right;">{{max[4]}}</span></td>
-                            <td>
-                                <span *ngIf="diff[4][0] == '-'" class="ui red horizontal label right aligned" style="float: right;">{{diff[4]}}</span>
-                                <span *ngIf="diff[4][0] != '-'" class="ui green horizontal label right aligned" style="float: right;">{{diff[4]}}</span>
+                            <td>{{max[4]}}</td>
+                            <td *ngIf="diff[4][0] == '-'" style=" background-color: red">
+                                <span style="float: right; color: white"><b>{{diff[4]}}</b></span>
+                            </td>
+                            <td *ngIf="diff[4][0] != '-'" style="background-color: #00da00">
+                                <span style="float: right; color: white"><b>{{diff[4]}}</b></span>
                             </td>
                         </tr>
-                        <tr *ngIf="row[1][0] != ''">
+                        <tr *ngIf="MonthDataList != ''">
                             <td>5</td>
                             <td>{{MonthDataList.product5}}</td>
                             <td>{{row[5][0]}}</td>
                             <td>{{row[5][1]}}</td>
                             <td>{{MonthDataList.monthRecieve5}}</td>
                             <td>{{row[5][2]}}</td>
-                            <td>
-                                <span class="ui orange horizontal label right aligned" style="float: right;">{{max[5]}}</span>
+                            <td>{{max[5]}}</td>
+                            <td *ngIf="diff[5][0] == '-'" style=" background-color: red">
+                                <span style="float: right; color: white"><b>{{diff[5]}}</b></span>
                             </td>
-                            <td>
-                                <span *ngIf="diff[5][0] == '-'" class="ui red horizontal label right aligned" style="float: right;">{{diff[5]}}</span>
-                                <span *ngIf="diff[5][0] != '-'" class="ui green horizontal label right aligned" style="float: right;">{{diff[5]}}</span>
+                            <td *ngIf="diff[5][0] != '-'" style="background-color: #00da00">
+                                <span style="float: right; color: white"><b>{{diff[5]}}</b></span>
                             </td>
                         </tr>
-                        <tr *ngIf="row[1][0] != ''">
+                        <tr *ngIf="MonthDataList != ''">
                             <td>6</td>
                             <td>{{MonthDataList.product6}}</td>
                             <td>{{row[6][0]}}</td>
                             <td>{{row[6][1]}}</td>
                             <td>{{MonthDataList.monthRecieve6}}</td>
                             <td>{{row[6][2]}}</td>
-                            <td>
-                                <span class="ui orange horizontal label right aligned" style="float: right;">{{max[6]}}</span>
+                            <td>{{max[6]}}</td>
+                            <td *ngIf="diff[6][0] == '-'" style=" background-color: red">
+                                <span style="float: right; color: white"><b>{{diff[6]}}</b></span>
                             </td>
-                            <td>
-                                <span *ngIf="diff[6][0] == '-'" class="ui red horizontal label right aligned" style="float: right;">{{diff[6]}}</span>
-                                <span *ngIf="diff[6][0] != '-'" class="ui green horizontal label right aligned" style="float: right;">{{diff[6]}}</span>
+                            <td *ngIf="diff[6][0] != '-'" style="background-color: #00da00">
+                                <span style="float: right; color: white"><b>{{diff[6]}}</b></span>
                             </td>
                         </tr>
                     </tbody>

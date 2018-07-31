@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.excise.domain.form.AccMonth0407DTL;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeader;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetVo;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
@@ -35,6 +36,7 @@ public class PlanWorksheetHeaderDao {
 		String analysNumber = map != null ? (String) map.get("SEQ") : null;
 		return analysNumber.trim();
 	}
+
 	public String getWorksheetNumber() {
 		String sql = "SELECT TO_CHAR(WORKSHEET_NUMBER_SEQ.nextval, '00000') as SEQ FROM DUAL";
 		Map<String, Object> map = jdbcTemplate.queryForMap(sql);
@@ -156,7 +158,7 @@ public class PlanWorksheetHeaderDao {
 		return planWorksheetHeaderList;
 
 	}
-	
+
 	public String queryWorkSheetNumber(String analysNumber) {
 		String sql = " SELECT DISTINCT H.WORK_SHEET_NUMBER FROM TA_PLAN_WORK_SHEET_HEADER H WHERE H.WORK_SHEET_NUMBER IS NOT NULL AND H.ANALYS_NUMBER = ? ";
 		List<Object> valueList = new ArrayList<Object>();
@@ -166,7 +168,7 @@ public class PlanWorksheetHeaderDao {
 				return rs.getString(1);
 			}
 		});
-		return ( result == null || result.size() == 0 ) ? "" : result.get(0);
+		return (result == null || result.size() == 0) ? "" : result.get(0);
 	}
 
 	public List<PlanWorksheetHeader> queryPlanWorksheetHeader(RequestFilterMapping vo) {
@@ -176,17 +178,17 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" select * from TA_PLAN_WORK_SHEET_HEADER H ");
 		sql.append(" where H.ANALYS_NUMBER = ? ");
 		valueList.add(vo.getAnalysNumber());
-		
+
 		if (BeanUtils.isNotEmpty(vo.getProductType())) {
 			sql.append(" AND H.PRODUCT_TYPE = ? ");
 			valueList.add(vo.getProductType());
 		}
-		
+
 		if (BeanUtils.isNotEmpty(vo.getSector())) {
 			sql.append(" AND H.EXCISE_OWNER_AREA_1 = ? ");
 			valueList.add(vo.getSector());
 		}
-		
+
 		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
@@ -208,9 +210,11 @@ public class PlanWorksheetHeaderDao {
 					if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i])
 							|| !"0.00".equals(percentTo[i])) {
 						if (i == 0) {
-							sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+							sql.append(
+									" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 						} else {
-							sql.append("OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+							sql.append(
+									"OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 						}
 						valueList.add(monthFrom[i]);
 						valueList.add(monthTo[i]);
@@ -221,7 +225,7 @@ public class PlanWorksheetHeaderDao {
 						sql.append(" ) ");
 					}
 				}
-			}else {
+			} else {
 				sql.append(" AND ( ");
 				sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 				sql.append(" ) ");
@@ -241,7 +245,7 @@ public class PlanWorksheetHeaderDao {
 		return planWorksheetHeaderList;
 
 	}
-	
+
 	public List<PlanWorksheetHeader> queryPlanWorksheetHeaderFullDataNoPaging(RequestFilterMapping vo) {
 		logger.debug("queryPlanWorksheetHeader");
 		List<Object> valueList = new ArrayList<Object>();
@@ -249,24 +253,24 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" select * from TA_PLAN_WORK_SHEET_HEADER H ");
 		sql.append(" where H.ANALYS_NUMBER = ? ");
 		valueList.add(vo.getAnalysNumber());
-		
+
 		if (BeanUtils.isNotEmpty(vo.getProductType())) {
 			sql.append(" AND H.PRODUCT_TYPE = ? ");
 			valueList.add(vo.getProductType());
 		}
-		
+
 		if (BeanUtils.isNotEmpty(vo.getSector())) {
 			sql.append(" AND H.EXCISE_OWNER_AREA_1 = ? ");
 			valueList.add(vo.getSector());
 		}
-		
+
 		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
 		} else {
 			sql.append(" AND H.FLAG != 'N' ");
 		}
-		
+
 		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2())
 				&& BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
 			String[] monthFrom = vo.getNum1().split(",");
@@ -281,9 +285,11 @@ public class PlanWorksheetHeaderDao {
 					if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i])
 							|| !"0.00".equals(percentTo[i])) {
 						if (i == 0) {
-							sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+							sql.append(
+									" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 						} else {
-							sql.append("OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+							sql.append(
+									"OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 						}
 						valueList.add(monthFrom[i]);
 						valueList.add(monthTo[i]);
@@ -294,7 +300,7 @@ public class PlanWorksheetHeaderDao {
 						sql.append(" ) ");
 					}
 				}
-			}else {
+			} else {
 				sql.append(" AND ( ");
 				sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 				sql.append(" ) ");
@@ -304,14 +310,15 @@ public class PlanWorksheetHeaderDao {
 				valueList.add(percentFrom[indexFilter]);
 				valueList.add(percentTo[indexFilter]);
 			}
-			
+
 		}
-		
+
 		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
 		logger.info(sql.toString());
-		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMapping);
+		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate.query(sql.toString(), valueList.toArray(),
+				fieldMapping);
 		return planWorksheetHeaderList;
-		
+
 	}
 
 	public long queryCountByPlanWorksheetHeader(RequestFilterMapping vo) {
@@ -347,9 +354,11 @@ public class PlanWorksheetHeaderDao {
 					if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i])
 							|| !"0.00".equals(percentTo[i])) {
 						if (i == 0) {
-							sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+							sql.append(
+									" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 						} else {
-							sql.append("OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+							sql.append(
+									"OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 						}
 						valueList.add(monthFrom[i]);
 						valueList.add(monthTo[i]);
@@ -360,7 +369,7 @@ public class PlanWorksheetHeaderDao {
 						sql.append(" ) ");
 					}
 				}
-			}else {
+			} else {
 				sql.append(" AND ( ");
 				sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 				sql.append(" ) ");
@@ -439,21 +448,23 @@ public class PlanWorksheetHeaderDao {
 				});
 		return listMonth;
 	}
-	
+
 	public void updateStatusFlg(RequestFilterMapping vo) {
 		logger.info("AnalysNumber: ", vo.getAnalysNumber());
 		StringBuilder sql = new StringBuilder("UPDATE TA_PLAN_WORK_SHEET_HEADER SET FLAG = ? ,WORK_SHEET_NUMBER = ? ");
 		sql.append(" Where ANALYS_NUMBER = ? AND ");
 		sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
-		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2())&& BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
+		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2())
+				&& BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
 			String[] monthFrom = vo.getNum1().split(",");
 			String[] monthTo = vo.getNum2().split(",");
 			String[] percentFrom = vo.getPercent1().split(",");
 			String[] percentTo = vo.getPercent2().split(",");
 			for (int i = 0; i < monthFrom.length; i++) {
-				if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i]) || !"0.00".equals(percentTo[i])) {
+				if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i])
+						|| !"0.00".equals(percentTo[i])) {
 					List<Object> objList = new ArrayList<Object>();
-					objList.add("N"+(i+1));
+					objList.add("N" + (i + 1));
 					objList.add(vo.getWorkShheetNumber());
 					objList.add(vo.getAnalysNumber());
 					objList.add(monthFrom[i]);
@@ -462,13 +473,13 @@ public class PlanWorksheetHeaderDao {
 					objList.add(percentTo[i]);
 					jdbcTemplate.update(sql.toString(), objList.toArray());
 				}
-				
+
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	public List<String> queryProductTypeList(PlanWorksheetHeader criteria) {
 
 		List<Object> valueList = new ArrayList<Object>();
@@ -488,7 +499,7 @@ public class PlanWorksheetHeaderDao {
 			valueList.add(criteria.getFullMonth());
 		}
 
-		List<String> productType = jdbcTemplate.query(sql.toString(),valueList.toArray(), new RowMapper<String>() {
+		List<String> productType = jdbcTemplate.query(sql.toString(), valueList.toArray(), new RowMapper<String>() {
 			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
 				return rs.getString(1);
 			}
@@ -496,7 +507,7 @@ public class PlanWorksheetHeaderDao {
 		return productType;
 
 	}
-	
+
 	public List<String> queryExciseIdFlagSFromHeader() {
 		String sql = "select DISTINCT H.EXCISE_ID from TA_PLAN_WORK_SHEET_HEADER H where H.ANALYS_NUMBER is not null and h.FLAG = 'S' ";
 		List<String> exciseList = jdbcTemplate.query(sql, new RowMapper<String>() {
@@ -506,7 +517,7 @@ public class PlanWorksheetHeaderDao {
 		});
 		return exciseList;
 	}
-	
+
 	public List<Object> queryExciseIdFlagSDataList(String exciseId) {
 		String sql = "select * from TA_PLAN_WORK_SHEET_HEADER H where H.EXCISE_ID = ? and H.ANALYS_NUMBER is not null";
 		List<Object> exciseList = jdbcTemplate.query(sql.toString(), new Object[] { exciseId },
@@ -516,54 +527,77 @@ public class PlanWorksheetHeaderDao {
 						map.put("analysNumber", rs.getString("ANALYS_NUMBER"));
 						map.put("companyName", rs.getString("COMPANY_NAME"));
 						map.put("productType", rs.getString("PRODUCT_TYPE"));
-						
+
 						return map;
 					}
 				});
 		return exciseList;
 	}
-	
-	public List<Object> queryExciseIdFromAccDTL(String exciseId, Date date, int backMonth) {
-		String sql = "select * from TA_EXCISE_ACC_MONTH_04_07_DTL D where D.EXCISE_ID = ? and D.ACC_MONTH in (SELECT REPLACE(TO_CHAR( add_MONTHS( ?, LEVEL-? ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) Month_AFTER FROM dual CONNECT BY LEVEL <= ?) ";
-		List<Object> exciseMonthList = jdbcTemplate.query(sql.toString(), new Object[] { exciseId, date, backMonth, backMonth },
-				new RowMapper<Object>() {
-					public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-						Map<String, Object> map = new HashMap<String, Object>();
-						map.put("product1", rs.getString("PRODUCT_1"));
-						map.put("product2", rs.getString("PRODUCT_2"));
-						map.put("product3", rs.getString("PRODUCT_3"));
-						map.put("product4", rs.getString("PRODUCT_4"));
-						map.put("product5", rs.getString("PRODUCT_5"));
-						map.put("product6", rs.getString("PRODUCT_6"));
-						map.put("monthRecieve1", rs.getString("MONTH_RECIEVE_1"));
-						map.put("monthRecieve2", rs.getString("MONTH_RECIEVE_2"));
-						map.put("monthRecieve3", rs.getString("MONTH_RECIEVE_3"));
-						map.put("monthRecieve4", rs.getString("MONTH_RECIEVE_4"));
-						map.put("monthRecieve5", rs.getString("MONTH_RECIEVE_5"));
-						map.put("monthRecieve6", rs.getString("MONTH_RECIEVE_6"));
-						
-						return map;
-					}
-				});
-		
-		return exciseMonthList;
+
+
+	public List<AccMonth0407DTL> queryExciseIdFromAccDTL(String exciseId, String type, Date date, int backMonth) {
+
+		List<Object> valueList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT * ");
+		sql.append(" FROM TA_EXCISE_ACC_MONTH_04_07_DTL D ");
+		sql.append(" WHERE D.EXCISE_ID = ? ");
+		sql.append(" AND D.TYPE = ?  ");
+		sql.append(" AND D.ACC_MONTH IN  ");
+		sql.append(
+				" (SELECT REPLACE(TO_CHAR( add_MONTHS( ?, LEVEL-? ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) Month_AFTER ");
+		sql.append(" FROM dual ");
+		sql.append(" CONNECT BY LEVEL <= ? ) ");
+
+		valueList.add(exciseId);
+		valueList.add(type);
+		valueList.add(date);
+		valueList.add(backMonth);
+		valueList.add(backMonth);
+
+		List<AccMonth0407DTL> exciseIdFromAccDTLList = jdbcTemplate.query(sql.toString(), valueList.toArray(),
+				fieldMappingAccMonthVo);
+		return exciseIdFromAccDTLList;
+
 	}
-	
-	
-	
+
 	public List<String> queryExciseIdFindByAddress(String exciseId) {
 		StringBuilder sql = new StringBuilder(" SELECT FACTORY_ADDRESS ");
 		sql.append(" FROM TA_PLAN_WORK_SHEET_HEADER H ");
 		sql.append(" WHERE H.EXCISE_ID = ? ");
 		sql.append(" ORDER BY H.WORK_SHEET_HEADER_ID DESC");
-		List<String> address = jdbcTemplate.query(sql.toString(), new Object[] { exciseId },
-				new RowMapper<String>() {
-					public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-						return rs.getString(1);
-					}
-				});
+		List<String> address = jdbcTemplate.query(sql.toString(), new Object[] { exciseId }, new RowMapper<String>() {
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
 		return address;
 	}
-	
-	
+
+	private RowMapper<AccMonth0407DTL> fieldMappingAccMonthVo = new RowMapper<AccMonth0407DTL>() {
+		@Override
+		public AccMonth0407DTL mapRow(ResultSet rs, int rowNum) throws SQLException {
+			AccMonth0407DTL ac = new AccMonth0407DTL();
+			ac.setId(rs.getString("TA_EXCISE_ACC_DTL_04_07_ID"));
+			ac.setProduct1(rs.getString("PRODUCT_1"));
+			ac.setProduct2(rs.getString("PRODUCT_2"));
+			ac.setProduct3(rs.getString("PRODUCT_3"));
+			ac.setProduct4(rs.getString("PRODUCT_4"));
+			ac.setProduct5(rs.getString("PRODUCT_5"));
+			ac.setProduct6(rs.getString("PRODUCT_6"));
+			ac.setMonthRecieve1(rs.getString("MONTH_RECIEVE_1"));
+			ac.setMonthRecieve2(rs.getString("MONTH_RECIEVE_2"));
+			ac.setMonthRecieve3(rs.getString("MONTH_RECIEVE_3"));
+			ac.setMonthRecieve4(rs.getString("MONTH_RECIEVE_4"));
+			ac.setMonthRecieve5(rs.getString("MONTH_RECIEVE_5"));
+			ac.setMonthRecieve6(rs.getString("MONTH_RECIEVE_6"));
+			ac.setAccMonth(rs.getString("ACC_MONTH"));
+			ac.setTA_EXCISE_ACC_DTL_04_07_ID(rs.getString("TA_EXCISE_ACC_DTL_04_07_ID"));
+			ac.setTA_EXCISE_ACC_HDR_04_07_ID(rs.getString("TA_EXCISE_ACC_HDR_04_07_ID"));
+			ac.setExciseId(rs.getString("EXCISE_ID"));
+			ac.setType(rs.getString("TYPE"));
+			return ac;
+		}
+	};
+
 }

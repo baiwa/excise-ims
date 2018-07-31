@@ -28,7 +28,7 @@ public class UploadFileExciseController {
 	@PostMapping("excel")
 	@ResponseBody
 	public List<Object> excel(@ModelAttribute FormUpload mainForm) throws EncryptedDocumentException, InvalidFormatException, IOException{
-		logger.debug("mainForm : " + mainForm.getFileExel());
+		logger.debug("mainForm : " + mainForm);
 		return uploadFileExciseService.readFileExcel(mainForm);
 	}
 

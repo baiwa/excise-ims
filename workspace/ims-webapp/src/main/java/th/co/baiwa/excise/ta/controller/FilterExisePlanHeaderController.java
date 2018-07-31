@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.domain.form.AccMonth0407DTL;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
@@ -90,9 +91,9 @@ public class FilterExisePlanHeaderController {
 	
 	@PostMapping("/getDataExciseIdMonthList")
 	@ResponseBody
-	public List<Object> getExciseIdFromAccDTL(@ModelAttribute PlanWorksheetHeaderDetail vo) {
-		logger.info("ExciseId : " + vo.getExciseId(), "StartDate : " + vo.getStartDate(), "EndDate : " + vo.getEndDate());
-		return planWorksheetHeaderService.queryExciseIdFromAccDTL(vo.getExciseId(), vo.getStartDate(), vo.getEndDate());
+	public List<AccMonth0407DTL> getExciseIdFromAccDTL(@ModelAttribute AccMonth0407DTL vo) {
+		logger.info("ExciseId : " + vo.getExciseId(), "TYPE : " + vo.getType(), "StartDate : " + vo.getStartDate(), "EndDate : " + vo.getEndDate());
+		return planWorksheetHeaderService.queryExciseIdFromAccDTL(vo.getExciseId(), vo.getType(), vo.getStartDate(), vo.getEndDate());
 	}
 
 }
