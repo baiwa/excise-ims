@@ -79,7 +79,7 @@ public class UserManagementDao {
 		logger.debug("findAll");
 		
 		StringBuilder sqBuilder = new StringBuilder();
-		sqBuilder.append(" SELECT user_id, username, password,SECTOR, enabled, account_non_expired, ");
+		sqBuilder.append(" SELECT user_id, username, password,SECTOR, EXCISE_BASE_CONTROL , enabled, account_non_expired, ");
 		sqBuilder.append(" credentials_non_expired, account_non_locked, is_deleted ");
 		sqBuilder.append(" FROM adm_user ");
 		sqBuilder.append(" WHERE is_deleted = ? ");
@@ -146,6 +146,7 @@ public class UserManagementDao {
 			"account_non_locked",
 			"IS_DELETED",
 			"VERSION",
+			"EXCISE_BASE_CONTROL",
 			"created_by",
 			"created_date",
 			"updated_by",
@@ -165,6 +166,7 @@ public class UserManagementDao {
 			userManagement.getAccountNonLocked(),
 			"N",
 			"1",
+			userManagement.getExciseBaseControl(),
 			UserLoginUtils.getCurrentUsername(),
 			new Date(),
 			UserLoginUtils.getCurrentUsername(),

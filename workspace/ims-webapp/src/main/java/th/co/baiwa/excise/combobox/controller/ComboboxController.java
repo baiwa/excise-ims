@@ -63,5 +63,12 @@ public class ComboboxController {
 		List<String> li = planWorksheetHeaderService.getExciseIdFlagSFromHeader();
 		return li;
 	}
+	
+	@PostMapping("/getExciseBaseControl")
+	@ResponseBody
+	public List<Lov> getExciseBaseControl() {
+		List<Lov> lov = ApplicationCache.getListOfValueByValueType("EXCISE_BASE_CONTROL");
+		return lov;
+	}
 
 }

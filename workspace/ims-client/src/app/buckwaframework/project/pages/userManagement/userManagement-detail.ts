@@ -22,19 +22,22 @@ export class UserManagementDetailPage implements OnInit {
   userManagementUpdate: UserManagement;
   passwordRule: any;
   userRule: any;
+
   $form: any;
 
   isRequired: string = "";
   typePassword: string;
   sector: any[];
+  exciseBaseControlList: any[];
 
   constructor(
     private ajaxService: AjaxService,
     private messageBarService: MessageBarService,
     private location: Location,
     private router: Router,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+
+  ) { }
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
@@ -80,6 +83,7 @@ export class UserManagementDetailPage implements OnInit {
       this.isRequired = "required";
     }
     this.querySecorByLov();
+    this.getExciseBaseControl();
   }
 
   ngAfterViewInit() {
@@ -88,11 +92,10 @@ export class UserManagementDetailPage implements OnInit {
 
   querySecorByLov() {
     //pavit 13/06/2561 table list_of_value at lov Type
-    const URL =
-      AjaxService.CONTEXT_PATH + "preferences/userManagement/setorList";
+    const URL = AjaxService.CONTEXT_PATH + "preferences/userManagement/setorList";
     var parameter = {};
 
-    $.post(URL, function(data) {
+    $.post(URL, function (data) {
       this.sector = data;
       var option = "";
       for (var i = 0; i < data.length; i++) {
@@ -100,11 +103,19 @@ export class UserManagementDetailPage implements OnInit {
           "<option name=" + data[i].value + ">" + data[i].value + "</option>";
       }
       document.getElementById("selectSector").innerHTML = option;
-    }).fail(function() {
+    }).fail(function () {
       console.error("error");
     });
   }
 
+  getExciseBaseControl() {
+    var parameter = {};
+    var url = "combobox/controller/getExciseBaseControl";
+    this.ajaxService.post(url, parameter, res => {
+      this.exciseBaseControlList = res.json();
+      console.log(this.exciseBaseControlList);
+    });
+  }
   formInit(): void {
     this.ruleInit();
     this.$form.form({
@@ -128,9 +139,9 @@ export class UserManagementDetailPage implements OnInit {
           prompt: EMPTY_MESSAGE
         },
         {
-          type: "regExp[/^[a-zA-Z0-9_-]{1,30}$/]",
+          type: "regExp[/^[a-zA-Z0-9_-]{0,30}$/]",
           prompt:
-            "กรุณากรอกตัวอักษรพิมพ์เล็กและใหญ่อย่างน้อย 1 ตัวอักษร และตัวเลขอย่างน้อย 1 ตัวอักษร"
+            "กรุณากรอกตัวอักษรพิมพ์เล็กและใหญ่หรือตัวเลขเท่านั้น"
         }
       ]
     };
@@ -151,10 +162,9 @@ export class UserManagementDetailPage implements OnInit {
           prompt: "กรุณากรอกข้อมูล {ruleValue} ตัวอักษร"
         },
         {
-          type:
-            "regExp[/^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/]",
+          type: "regExp[/^[a-zA-Z0-9_-]{0,30}$/]",
           prompt:
-            "กรุณากรอกตัวอักษรพิมพ์เล็กและใหญ่อย่างน้อย 1 ตัวอักษร และตัวเลขอย่างน้อย 1 ตัวอักษร"
+            "กรุณากรอกตัวอักษรพิมพ์เล็กและใหญ่หรือตัวเลขเท่านั้น"
         }
       ]
     };
@@ -178,7 +188,7 @@ export class UserManagementDetailPage implements OnInit {
       //check exist username
       const getURL = `preferences/userManagement/exist/${
         userManagementAdd.username
-      }`;
+        }`;
       this.ajaxService.get(
         getURL,
         (success: Response) => {

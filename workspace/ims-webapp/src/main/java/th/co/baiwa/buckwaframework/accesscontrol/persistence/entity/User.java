@@ -39,6 +39,9 @@ public class User extends BaseEntity {
 
 	@Column(name = "ACCOUNT_NON_LOCKED")
 	private String accountNonLocked;
+	
+	@Column(name = "EXCISE_BASE_CONTROL")
+	private String exciseBaseControl;
 
 	public Long getUserId() {
 		return userId;
@@ -95,5 +98,14 @@ public class User extends BaseEntity {
 	public void setAccountNonLocked(String accountNonLocked) {
 		this.accountNonLocked = accountNonLocked;
 	}
+
+	public String getExciseBaseControl() {
+		return exciseBaseControl;
+	}
+
+	public void setExciseBaseControl(String exciseBaseControl) {
+		this.exciseBaseControl = exciseBaseControl;
+	}
+
 
 }

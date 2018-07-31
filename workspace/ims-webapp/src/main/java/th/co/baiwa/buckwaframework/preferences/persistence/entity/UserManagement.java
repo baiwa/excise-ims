@@ -10,6 +10,7 @@ public class UserManagement {
 	private String accountNonExpired;
 	private String credentialsNonExpired;
 	private String accountNonLocked;
+	private String exciseBaseControl;
 	private String isDeleted;
 	private String version;
 	
@@ -72,6 +73,12 @@ public class UserManagement {
 	}
 	public void setIsDeleted(String isDeleted) {
 		this.isDeleted = isDeleted;
+	}
+	public String getExciseBaseControl() {
+		return exciseBaseControl;
+	}
+	public void setExciseBaseControl(String exciseBaseControl) {
+		this.exciseBaseControl = exciseBaseControl;
 	}
 	
 }

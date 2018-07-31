@@ -57,6 +57,9 @@
                             <label>Enabled</label>
                         </div>
                     </div>
+
+                </div>
+                <div class="fields">
                     <div class="three wide field">
                         <label>ภาค</label>
                         <div id="sectorSelectOption" class="ui checkbox">
@@ -65,6 +68,15 @@
                             </select>
                         </div>
                     </div>
+                    <div class="three wide field">
+                        <label>สิทธิ์การทำงาน</label>
+                        <div id="sectorSelectOption" class="ui checkbox">
+                            <select class="ui dropdown ai" id="exciseBaseControl" name="exciseBaseControl">
+                                <option *ngFor="let item of exciseBaseControlList; index as i;" value="{{item.value1}}">{{item.value2}}</option>
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="fields">
                     <div class="sixteen wide field">

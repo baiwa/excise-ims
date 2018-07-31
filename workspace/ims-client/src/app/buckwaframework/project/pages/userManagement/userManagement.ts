@@ -21,7 +21,7 @@ export class UserManagementPage implements OnInit {
     private router: Router,
     private ajaxService: AjaxService,
     private messageBarService: MessageBarService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.$form = $("#userManagementForm");
@@ -74,7 +74,7 @@ export class UserManagementPage implements OnInit {
       ajax: {
         type: "GET",
         url: URL,
-        data: function(params) {
+        data: function (params) {
           params["username"] = $("#username").val();
           params["enabled"] = $("#enabled").checkbox("is checked") ? "Y" : "";
           params["accountNonExpired"] = $("#accountNonExpired").checkbox(
@@ -98,7 +98,7 @@ export class UserManagementPage implements OnInit {
       columns: [
         {
           data: "userId",
-          render: function(data, type, full, meta) {
+          render: function (data, type, full, meta) {
             return (
               '<div class="ui checkbox tableDt"><input name="checkUserId" value="' +
               data +
@@ -108,13 +108,14 @@ export class UserManagementPage implements OnInit {
         },
         { data: "username" },
         { data: "sector" },
+        { data: "exciseBaseControl" },
         { data: "enabled" },
         { data: "accountNonExpired" },
         { data: "credentialsNonExpired" },
         { data: "accountNonLocked" },
         {
           data: "userId",
-          render: function() {
+          render: function () {
             return '<button type="button" class="ui mini button edit"><i class="pencil icon"></i> Edit</button>';
           }
         }
