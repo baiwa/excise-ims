@@ -19,6 +19,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.MockupVo;
+import th.co.baiwa.excise.domain.form.AccMonth0407DTL;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseRegisttionNumberDao;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseTaxReceiveDao;
 import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetDetailDao;
@@ -340,20 +341,24 @@ public class PlanWorksheetHeaderService {
 		return valueList;
 	}
 
-	public List<Object> queryExciseIdFromAccDTL(String exciseId, String start, String end) {
+	public List<AccMonth0407DTL> queryExciseIdFromAccDTL(String exciseId, String type, String start, String end) {
 		String[] startData = start.split("/");
 		String[] endData = end.split("/");
 
 		Calendar startCal = Calendar.getInstance();
 		startCal.set(Integer.parseInt(startData[1]), Integer.parseInt(startData[0]), 1);
+		Calendar endCalforUse = Calendar.getInstance();
+		endCalforUse.set(Integer.parseInt(endData[1]), Integer.parseInt(endData[0]), 1);
+
 		Calendar endCal = Calendar.getInstance();
 		endCal.set(Integer.parseInt(endData[1]), Integer.parseInt(endData[0]), 1);
+
 		int backMonth = 1;
 		while (!isEqualsDate(startCal.getTime(), endCal.getTime())) {
 			endCal.add(Calendar.MONTH, -1);
 			backMonth++;
 		}
-		return planWorksheetHeaderDao.queryExciseIdFromAccDTL(exciseId, endCal.getTime(), backMonth);
+		return planWorksheetHeaderDao.queryExciseIdFromAccDTL(exciseId, type, endCalforUse.getTime(), backMonth);
 	}
 
 	public boolean isEqualsDate(Date date1, Date date2) {
@@ -368,17 +373,16 @@ public class PlanWorksheetHeaderService {
 	public String queryExciseIdFindByAddress(String exciseId) {
 		List<String> valueList = planWorksheetHeaderDao.queryExciseIdFindByAddress(exciseId);
 		String dataAddress = "";
-		if(BeanUtils.isNotEmpty(valueList)) {
-			 dataAddress = valueList.get(0);
+		if (BeanUtils.isNotEmpty(valueList)) {
+			dataAddress = valueList.get(0);
 		}
 		return dataAddress;
 	}
 
-	
 	public CommonAddress splitAddress(String exciseId) {
 		List<String> valueList = planWorksheetHeaderDao.queryExciseIdFindByAddress(exciseId);
 		CommonAddress address = new CommonAddress();
-		
+
 		for (String str : valueList) {
 			String[] arr = str.split(" ");
 			for (int i = 0; i < arr.length; i++) {
@@ -388,7 +392,8 @@ public class PlanWorksheetHeaderService {
 					address.setMoo(arr[i].replace("หมู่ที่", ""));
 				} else if (arr[i].indexOf("อาคาร") != -1 || arr[i].indexOf("ตึก") != -1
 						|| arr[i].indexOf("บ้าน") != -1) {
-					address.setBuilding(arr[i].replace("อาคาร", "").replace("ตึก", "").replace("บ้าน", ""));
+					address.setBuilding(
+							arr[i].replace("อาคาร", "").replace("ตึก", "").replace("บ้าน", ""));
 				} else if (arr[i].indexOf("ชั้น") != -1) {
 					address.setLevel(arr[i].replace("ชั้น", ""));
 				} else if (arr[i].indexOf("ซอย") != -1) {
@@ -431,7 +436,7 @@ public class PlanWorksheetHeaderService {
 
 			}
 			System.out.println(address.toString());
-			
+
 		}
 
 		return address;
