@@ -16,6 +16,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,22 +43,14 @@ public class ReportController {
 	@Autowired
 	private ReportService reportService;
 	
-	public ReportController() {
-		File f = new File("c:/reports"); // initial file (folder)
-		if (!f.exists()) { // check folder exists
-			if (f.mkdirs()) {
-				logger.info("Directory is created!");
-			} else {
-				logger.error("Failed to create directory!");
-			}
-		}
-	}
+	@Value("${app.datasource.path.report}")
+	private String path;
 
 	@GetMapping("/pdf/{name}/file")
 	@ResponseBody
 	public void pdfSomething(@PathVariable("name") String name, HttpServletResponse response) throws Exception {
 
-		File file = new File("c:/reports/" + name + ".pdf");
+		File file = new File(path + name + ".pdf");
 		byte[] reportFile = IOUtils.toByteArray(new FileInputStream(file)); // null
 
 		response.setContentType("application/pdf");

@@ -14,6 +14,7 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -35,11 +36,26 @@ import th.co.baiwa.excise.report.bean.ContractBean;
 @Service
 public class ReportService {
 
-	private static String PATH_EXPORT = "c:/reports/";
+	@Value("${app.datasource.path.report}")
+	private String PATH_EXPORT;
 
 	private Logger logger = LoggerFactory.getLogger(ReportService.class);
 
+	public void initialService() {
+		File f = new File(PATH_EXPORT); // initial file (folder)
+		if (!f.exists()) { // check folder exists
+			if (f.mkdirs()) {
+				logger.info("Directory is created!");
+			} else {
+				logger.error("Failed to create directory!");
+			}
+		}
+	}
+
 	public byte[] exampleToPDF(Integer num) throws IOException, JRException {
+		// Folder Exist ??
+		initialService();
+
 		String reportName = "Example";
 
 		Map<String, Object> params = new HashMap<>();
@@ -69,6 +85,8 @@ public class ReportService {
 	}
 
 	public byte[] objectToPDF(String name, String param) throws IOException, JRException {
+		// Folder Exist ??
+		initialService();
 
 		Gson gson = new Gson();
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -106,7 +124,9 @@ public class ReportService {
 
 	public byte[] objectToPDF(String name, Map<String, Object> params, List<Object> bean)
 			throws IOException, JRException {
-
+		// Folder Exist ??
+		initialService();
+		
 		JRDataSource dataSource = null;
 
 		if (BeanUtils.isNotEmpty(params.get("logo"))) {

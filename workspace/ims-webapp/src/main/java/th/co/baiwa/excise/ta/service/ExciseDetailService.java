@@ -30,7 +30,7 @@ public class ExciseDetailService {
 
 	private Logger logger = LoggerFactory.getLogger(ExciseDetailService.class);
 	
-	@Value("${app.datasource.path}")
+	@Value("${app.datasource.path.upload}")
 	private String pathed;
 	
 	@Autowired
