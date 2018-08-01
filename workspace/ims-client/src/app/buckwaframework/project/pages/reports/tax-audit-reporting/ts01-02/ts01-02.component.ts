@@ -92,6 +92,7 @@ export class Ts0102Component implements OnInit {
 }
 
 class Ts0102 {
+  logo: string = "logo.jpg";
   [x: string]: any;
   sendTo: string;
   department: string;
