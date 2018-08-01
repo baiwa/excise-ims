@@ -15,19 +15,19 @@
               <p>วันที่ : </p>
             </div>
             <div class="two wide field">
-              <input type="text" name="day" [(ngModel)]="obj.day">
+              <input type="text" name="day" (keyup)="onKeyUp($event, 'day')" [(ngModel)]="obj.day">
             </div>
             <div class="one wide field" style="padding-right: 0px;">
               <p>เดือน : </p>
             </div>
             <div class="two wide field">
-              <input type="text" name="month" [(ngModel)]="obj.month">
+              <input type="text" name="month" (keyup)="onKeyUp($event, 'month')" [(ngModel)]="obj.month">
             </div>
             <div class="one wide field">
               <p>ปี : </p>
             </div>
             <div class="two wide field">
-              <input type="text" name="year" [(ngModel)]="obj.year">
+              <input type="text" name="years" (keyup)="onKeyUp($event, 'years')" [(ngModel)]="obj.years">
             </div>
           </div>
 
@@ -36,7 +36,7 @@
               <p>เรียน : </p>
             </div>
             <div class="six wide field">
-              <input type="text" name="sendTo" [(ngModel)]="obj.sendTo">
+              <input type="text" name="sendTo" (keyup)="onKeyUp($event, 'sendTo')" [(ngModel)]="obj.sendTo">
             </div>
           </div>
 
@@ -45,13 +45,13 @@
               <p>ทะเบียนสรรพสามิตเลขที่ : </p>
             </div>
             <div class="four wide field">
-              <input type="text" name="exciseId" [(ngModel)]="obj.exciseId">
+              <input type="text" name="exciseId" (keyup)="onKeyUp($event, 'exciseId')" [(ngModel)]="obj.exciseId">
             </div>
             <div class="four wide field">
               <p>รอบระยะเวลาที่ตรวจสอบภาษี : </p>
             </div>
             <div class="four wide field">
-              <input type="text" name="dateFrom" [(ngModel)]="obj.dateFrom">
+              <input type="text" name="dateFrom" (keyup)="onKeyUp($event, 'dateFrom')" [(ngModel)]="obj.dateFrom">
             </div>
           </div>
 
@@ -60,13 +60,13 @@
               <p>ผลการตรวจสอบภาษีสรรพสามิตราย :</p>
             </div>
             <div class="five wide field">
-              <input type="text" name="resultFor" [(ngModel)]="obj.resultFor">
+              <input type="text" name="resultFor" (keyup)="onKeyUp($event, 'resultFor')" [(ngModel)]="obj.resultFor">
             </div>
             <div class="three wide field">
               <p>ประเภทกิจการ : </p>
             </div>
             <div class="three wide field">
-              <input type="text" name="businessType" [(ngModel)]="obj.businessType">
+              <input type="text" name="businessType" (keyup)="onKeyUp($event, 'businessType')" [(ngModel)]="obj.businessType">
             </div>
           </div>
 
@@ -78,7 +78,7 @@
 
           <div class="inline fields">
             <div class="fourteen wide field">
-              <textarea name="details" [(ngModel)]="obj.details" cols="30" rows="3" style="resize: none;"></textarea>
+              <textarea name="details" [(ngModel)]="obj.details" (keyup)="onKeyUp($event, 'details')" cols="30" rows="3" style="resize: none;"></textarea>
             </div>
           </div>
 

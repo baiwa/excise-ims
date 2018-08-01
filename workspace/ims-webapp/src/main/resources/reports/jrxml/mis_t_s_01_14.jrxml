@@ -1529,7 +1529,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="23">
+		<band height="21">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="125" y="0" width="53" height="18" uuid="1c6cf680-e96b-4b4f-82d3-d42a8793b736"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
@@ -1596,20 +1596,6 @@
 				</textElement>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="53" y="0" width="64" height="18" uuid="6d76d5e6-c048-4dd4-b535-87e6e7c785f7"/>
-				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
-					<pen lineWidth="1.5" lineStyle="Dotted"/>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="0" y="0" width="44" height="18" uuid="9e556938-2bcf-4c7a-b089-ab709ee439fd"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -1623,7 +1609,7 @@
 				</textElement>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="0" y="4" width="44" height="18" uuid="947cc921-87b1-421c-aeae-96f5c2eeef53"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="0" y="3" width="44" height="18" uuid="947cc921-87b1-421c-aeae-96f5c2eeef53"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1637,12 +1623,12 @@
 				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="53" y="4" width="64" height="18" uuid="2d5235a1-36d8-4f64-b987-bdfc880e38de"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="53" y="0" width="64" height="18" uuid="2d5235a1-36d8-4f64-b987-bdfc880e38de"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
@@ -1650,7 +1636,7 @@
 				</textElement>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="125" y="4" width="53" height="18" uuid="44e1bb66-9c4e-4bfa-8c98-f6b0d43cf0b6"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="125" y="3" width="53" height="18" uuid="44e1bb66-9c4e-4bfa-8c98-f6b0d43cf0b6"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1664,7 +1650,7 @@
 				<textFieldExpression><![CDATA[$F{money}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="187" y="4" width="53" height="18" uuid="e4c69ec4-97d6-4cc5-94f3-654e66fe4650"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="187" y="3" width="53" height="18" uuid="e4c69ec4-97d6-4cc5-94f3-654e66fe4650"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1678,7 +1664,7 @@
 				<textFieldExpression><![CDATA[$F{chip}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="249" y="4" width="53" height="18" uuid="25cc2527-f969-45f2-bc9b-102b40c91792"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="249" y="3" width="53" height="18" uuid="25cc2527-f969-45f2-bc9b-102b40c91792"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1692,7 +1678,7 @@
 				<textFieldExpression><![CDATA[$F{extra}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="311" y="4" width="64" height="18" uuid="e5033a5f-936a-4878-8ed6-bc45c1c44294"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="311" y="3" width="64" height="18" uuid="e5033a5f-936a-4878-8ed6-bc45c1c44294"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1706,7 +1692,7 @@
 				<textFieldExpression><![CDATA[$F{local}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="383" y="4" width="58" height="18" uuid="aa2b88bf-5f74-487e-90ac-53699ddba947"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="383" y="3" width="58" height="18" uuid="aa2b88bf-5f74-487e-90ac-53699ddba947"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1718,6 +1704,20 @@
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sum}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="data" positionType="FixRelativeToBottom" stretchType="ContainerHeight" x="53" y="3" width="64" height="18" uuid="6d76d5e6-c048-4dd4-b535-87e6e7c785f7"/>
+				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

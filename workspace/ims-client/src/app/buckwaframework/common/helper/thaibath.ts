@@ -12,6 +12,22 @@ export function ThaiNumberToText(Number) {
   return ArabicNumberToText(Number);
 }
 
+export function ThaiNumber(Number) {
+  for(let i=0; i<Number.length; i++) {
+    Number = Number.replace("0", "๐");
+    Number = Number.replace("1", "๑");
+    Number = Number.replace("2", "๒");
+    Number = Number.replace("3", "๓");
+    Number = Number.replace("4", "๔");
+    Number = Number.replace("5", "๕");
+    Number = Number.replace("6", "๖");
+    Number = Number.replace("7", "๗");
+    Number = Number.replace("8", "๘");
+    Number = Number.replace("9", "๙");
+  }
+  return Number;
+}
+
 export function ArabicNumberToText(Number) {
   var Number = CheckNumber(Number);
   var NumberArray = new Array(
@@ -97,4 +113,4 @@ export function CheckNumber(Number) {
   return Number;
 }
 
-export default { ThaiNumberToText, ArabicNumberToText, CheckNumber };
+export default { ThaiNumberToText, ThaiNumber, ArabicNumberToText, CheckNumber };

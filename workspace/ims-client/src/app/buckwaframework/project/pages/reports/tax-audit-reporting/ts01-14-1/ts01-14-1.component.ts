@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { AjaxService } from "../../../../../common/services";
+import { ThaiNumber } from "../../../../../common/helper";
 
 @Component({
   selector: "app-ts01-14-1",
@@ -31,6 +32,11 @@ export class Ts01141Component implements OnInit {
       }
     });
   };
+  
+  onKeyUp = (e: any, str: string) => {
+    e.preventDefault();
+    this.obj[str] = ThaiNumber(e.target.value.toString());
+  };
 }
 
 class Ts01141 {
@@ -39,7 +45,7 @@ class Ts01141 {
   sendTo: string;
   day: string;
   month: string;
-  year: string;
+  years: string;
   resultFor: string;
   businessType: string;
   exciseId: string;

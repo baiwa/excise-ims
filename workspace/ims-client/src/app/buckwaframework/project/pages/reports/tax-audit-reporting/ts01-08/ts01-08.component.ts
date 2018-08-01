@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { AjaxService } from "../../../../../common/services";
+import { ThaiNumber } from "../../../../../common/helper";
 
 @Component({
   selector: "app-ts01-08",
@@ -38,9 +39,20 @@ export class Ts0108Component implements OnInit {
     this.beans.splice(i, 1);
   };
 
+  onKeyUpBean = (e: any, str: string, index: any) => {
+    e.preventDefault();
+    this.beans[index][str] = ThaiNumber(e.target.value.toString());
+  };
+  
+  onKeyUp = (e: any, str: string) => {
+    e.preventDefault();
+    this.obj[str] = ThaiNumber(e.target.value.toString());
+  };
+
   onSubmit = e => {
     e.preventDefault();
     const url = "report/pdf/ts/mis_t_s_01_08";
+    this.obj.Bean = this.beans;
     this.ajax.post(url, `'${JSON.stringify(this.obj).toString()}'`, res => {
       if (res.status == 200 && res.statusText == "OK") {
         window.open("/ims-webapp/api/report/pdf/mis_t_s_01_08/file");

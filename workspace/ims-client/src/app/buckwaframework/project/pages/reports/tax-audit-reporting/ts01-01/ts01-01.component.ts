@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { AjaxService } from "../../../../../common/services";
+import { ThaiNumber } from "../../../../../common/helper";
 
 @Component({
   selector: "app-ts01-01",
@@ -39,6 +40,11 @@ export class Ts0101Component implements OnInit {
         "เกิดข้อผิดพลาด"
       );
     }
+  };
+
+  onKeyUp = (e: any, str: string) => {
+    e.preventDefault();
+    this.obj[str] = ThaiNumber(e.target.value.toString());
   };
 
   onDelField = index => {

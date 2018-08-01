@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { AjaxService } from "../../../../../common/services";
+import { ThaiNumber } from "../../../../../common/helper";
 
 @Component({
   selector: "app-ts01-07",
@@ -28,6 +29,11 @@ export class Ts0107Component implements OnInit {
 
   onAddField = () => {
     this.add++;
+  };
+
+  onKeyUp = (e: any, str: string) => {
+    e.preventDefault();
+    this.obj[str] = ThaiNumber(e.target.value.toString());
   };
 
   onSubmit = e => {

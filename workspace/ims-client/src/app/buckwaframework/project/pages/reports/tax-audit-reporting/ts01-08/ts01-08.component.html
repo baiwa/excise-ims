@@ -27,57 +27,57 @@
                         <tr *ngFor="let bean of beans; let i = index">
                             <td>
                                 <div class="ui transparent input">
-                                    <input type="text" name="numId{{i}}" id="numId{{i}}" [(ngModel)]="beans[i].numId" required>
+                                    <input type="text" name="numId{{i}}" id="numId{{i}}" (keyup)="onKeyUpBean($event, 'numId', i)" [(ngModel)]="beans[i].numId" >
                                 </div>
                             </td>
                             <td>
                                 <div class="ui transparent input">
-                                    <input type="text" name="chkDate{{i}}" id="chkDate{{i}}" [(ngModel)]="beans[i].chkDate" required>
+                                    <input type="text" name="chkDate{{i}}" id="chkDate{{i}}" (keyup)="onKeyUpBean($event, 'chkDate', i)" [(ngModel)]="beans[i].chkDate" >
                                 </div>
                             </td>
                             <td>
                                 <div class="ui transparent input">
-                                    <input type="text" name="checkName{{i}}" id="checkName{{i}}" [(ngModel)]="beans[i].checkName" required>
+                                    <input type="text" name="checkName{{i}}" id="checkName{{i}}" (keyup)="onKeyUpBean($event, 'checkName', i)" [(ngModel)]="beans[i].checkName" >
                                 </div>
                             </td>
                             <td>
                                 <div class="ui transparent input">
-                                    <input type="text" name="position{{i}}" id="position{{i}}" [(ngModel)]="beans[i].position" required>
+                                    <input type="text" name="position{{i}}" id="position{{i}}" (keyup)="onKeyUpBean($event, 'position', i)" [(ngModel)]="beans[i].position" >
                                 </div>
                             </td>
                             <td>
                                 <div class="ui transparent input">
-                                    <input type="text" name="chkOutDate{{i}}" id="chkOutDate{{i}}" [(ngModel)]="beans[i].chkOutDate" required>
+                                    <input type="text" name="chkOutDate{{i}}" id="chkOutDate{{i}}" (keyup)="onKeyUpBean($event, 'chkOutDate', i)" [(ngModel)]="beans[i].chkOutDate" >
                                 </div>
                             </td>
                             <td>
                                 <div class="ui transparent input">
-                                    <input type="text" name="chkWhere{{i}}" id="chkWhere{{i}}" [(ngModel)]="beans[i].chkWhere" required>
+                                    <input type="text" name="chkWhere{{i}}" id="chkWhere{{i}}" (keyup)="onKeyUpBean($event, 'chkWhere', i)" [(ngModel)]="beans[i].chkWhere" >
                                 </div>
                             </td>
                             <td>
                                 <div class="ui transparent input">
-                                    <input type="text" name="chkWhat{{i}}" id="chkWhat{{i}}" [(ngModel)]="beans[i].chkWhat" required>
+                                    <input type="text" name="chkWhat{{i}}" id="chkWhat{{i}}" (keyup)="onKeyUpBean($event, 'chkWhat', i)" [(ngModel)]="beans[i].chkWhat" >
                                 </div>
                             </td>
                             <td>
                                 <div class="ui transparent input">
-                                    <input type="text" name="whoToSign{{i}}" id="whoToSign{{i}}" [(ngModel)]="beans[i].whoToSign" required>
+                                    <input type="text" name="whoToSign{{i}}" id="whoToSign{{i}}" (keyup)="onKeyUpBean($event, 'whoToSign', i)" [(ngModel)]="beans[i].whoToSign" >
                                 </div>
                             </td>
                             <td>
                                 <div class="ui transparent input">
-                                    <input type="text" name="checkerOk{{i}}" id="checkerOk{{i}}" [(ngModel)]="beans[i].checkerOk" required>
+                                    <input type="text" name="checkerOk{{i}}" id="checkerOk{{i}}" (keyup)="onKeyUpBean($event, 'checkerOk', i)" [(ngModel)]="beans[i].checkerOk" >
                                 </div>
                             </td>
                             <td>
                                 <div class="ui transparent input">
-                                    <input type="text" name="dateToSend{{i}}" id="dateToSend{{i}}" [(ngModel)]="beans[i].dateToSend" required>
+                                    <input type="text" name="dateToSend{{i}}" id="dateToSend{{i}}" (keyup)="onKeyUpBean($event, 'dateToSend', i)" [(ngModel)]="beans[i].dateToSend" >
                                 </div>
                             </td>
                             <td>
                                 <div class="ui transparent input">
-                                    <input type="text" name="note{{i}}" id="note{{i}}" [(ngModel)]="beans[i].note">
+                                    <input type="text" name="note{{i}}" id="note{{i}}" (keyup)="onKeyUpBean($event, 'note', i)" [(ngModel)]="beans[i].note">
                                 </div>
                             </td>
                             <td>

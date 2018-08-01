@@ -31,30 +31,30 @@
                   <label class="custom-label-w-18" style="width: 20% !important;">ที่</label>
                 </div>
                 <div class="five wide field">
-                  <input type="text" name="at1" [(ngModel)]="obj.at1">
+                  <input type="text" name="at1" (keyup)="onKeyUp($event, 'at1')" [(ngModel)]="obj.at1">
                 </div>
                 <div class="two wide field">
                   <p style="text-align: center; width: 100%"> / </p>
                 </div>
                 <div class="five wide field">
-                  <input type="text" name="at2" [(ngModel)]="obj.at2">
+                  <input type="text" name="at2" (keyup)="onKeyUp($event, 'at2')" [(ngModel)]="obj.at2">
                 </div>
               </div>
             </div>
             <div class="eight wide field">
               <label class="custom-label-w-18" style="width: 20% !important;">สำนัก</label>
-              <input type="text" name="office" [(ngModel)]="obj.office" style="width: 100%">
+              <input type="text" name="office" [(ngModel)]="obj.office" (keyup)="onKeyUp($event, 'office')" style="width: 100%">
             </div>
           </div>
 
           <div class="inline fields">
             <div class="eight wide field">
               <label class="custom-label-w-18" style="width: 20% !important;">เรื่อง</label>
-              <input type="text" name="topic" [(ngModel)]="obj.topic" style="width: 100%">
+              <input type="text" name="topic" [(ngModel)]="obj.topic" (keyup)="onKeyUp($event, 'topic')" style="width: 100%">
             </div>
             <div class="eight wide field">
               <label class="custom-label-w-18" style="width: 20% !important;">เรียน</label>
-              <input type="text" name="sendTo" [(ngModel)]="obj.sendTo" style="width: 100%">
+              <input type="text" name="sendTo" [(ngModel)]="obj.sendTo" (keyup)="onKeyUp($event, 'sendTo')" style="width: 100%">
             </div>
           </div>
 
@@ -91,7 +91,7 @@
               <label class="custom-label-w-18">
                 &nbsp;&nbsp;&nbsp;{{i+1}}.
               </label>
-              <input type="text">
+              <input type="text" name="item{{i+1}}" [(ngModel)]="obj['item' + (i+1)]" (keyup)="onKeyUp($event, 'item' + (i+1))">
             </div>
           </div>
 
@@ -101,13 +101,18 @@
               <div class="ui calendar" style="width:100%" id="nut_date">
                 <div class="ui input left icon">
                   <i class="calendar icon"></i>
-                  <input type="text" name="date2" [(ngModel)]="obj.date2" style="width:100%" placeholder="วัน/เดือน/ปี">
+                  <input type="text" name="date2" [(ngModel)]="obj.date2" (keyup)="onKeyUp($event, 'date2')" style="width:100%" placeholder="วัน/เดือน/ปี">
                 </div>
               </div>
             </div>
             <div class="six wide field">
               <label class="custom-label-w-18">เวลา</label>
-              <input type="text">
+              <div class="ui calendar" style="width:100%" id="time1">
+                <div class="ui input left icon">
+                  <i class="calendar icon"></i>
+                  <input type="text" name="time1" [(ngModel)]="obj.time1" style="width:100%" placeholder="เวลา">
+                </div>
+              </div>
               <label class="custom-label-w-18">&nbsp;&nbsp;น.</label>
             </div>
           </div>
@@ -124,7 +129,12 @@
             </div>
             <div class="six wide field">
               <label class="custom-label-w-18">เวลา</label>
-              <input type="text">
+              <div class="ui calendar" style="width:100%" id="time2">
+                <div class="ui input left icon">
+                  <i class="calendar icon"></i>
+                  <input type="text" name="time2" [(ngModel)]="obj.time2" style="width:100%" placeholder="เวลา">
+                </div>
+              </div>
               <label class="custom-label-w-18">&nbsp;&nbsp;น.</label>
             </div>
           </div>

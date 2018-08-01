@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 
 import { TextDateTH, formatter } from "../../../../../common/helper/datepicker";
 import { AjaxService } from "../../../../../common/services";
+import { ThaiNumber } from "../../../../../common/helper";
 declare var jQuery: any;
 declare var $: any;
 
@@ -70,9 +71,70 @@ export class Ts0114Component implements OnInit {
       }
     });
   };
+
+  onKeyUp = (e: any, str: string) => {
+    e.preventDefault();
+    this.obj[str] = ThaiNumber(e.target.value.toString());
+  };
+
+  onKeyUpBean = (e: any, str: string, index) => {
+    e.preventDefault();
+    this.obj[index][str] = ThaiNumber(e.target.value.toString());
+  };
 }
 
 class Ts0114 {
+  [x: string]: any;
+  logo: string = "logo.jpg";
+  taxPrayer: string;
+  exciseId: string;
+  addressId: string;
+  alley: string;
+  street: string;
+  district: string;
+  amphoe: string;
+  province: string;
+  postcode: string;
+  tel: string;
+  tele: string;
+  businessType: string;
+  inspector: string;
+  department: string;
+  day1: string;
+  day2: string;
+  day3: string;
+  month1: string;
+  month2: string;
+  month3: string;
+  year1: string;
+  year2: string;
+  year3: string;
+  kk: string;
+  date1: string;
+  date2: string;
+  date3: string;
+  from: string;
+  to: string;
+  toMonth: string;
+  toDay: string;
+  chk1: boolean = false;
+  chk2: boolean = false;
+  chk3: boolean = false;
+  chk3Txt: string;
+  where: string;
+  doc1: string;
+  doc2: string;
+  doc3: string;
+  doc4: string;
+  doc5: string;
+  doc6: string;
+  doc7: string;
+  doc8: string;
+  doc9: string;
+  times: string;
+  resonTxt: string;
+  checker: string;
+  position: string;
   Bean: Bean[];
 }
 

@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
+import { AjaxService } from '../../../../../common/services';
+import { ThaiNumber } from '../../../../../common/helper';
 declare var jQuery: any;
 declare var $: any;
 
@@ -13,10 +15,12 @@ export class Ts01142Component implements OnInit {
 
   @Output() discard = new EventEmitter<any>();
 
-  numbers:number[];
+  obj: Ts01142;
+  beans: Bean[];
 
-  constructor() {
-    this.numbers = [1,2,3];
+  constructor(private ajax: AjaxService) {
+    this.obj = new Ts01142();
+    this.beans = [new Bean];
   }
 
   ngOnInit() {
@@ -49,14 +53,66 @@ export class Ts01142Component implements OnInit {
   };
 
   onAddField = () => {
-    let num = this.numbers[this.numbers.length-1];
-    this.numbers.push(num+1);
-    this.numbers.sort();
+    this.beans.push(new Bean());
   };
   
   onDelField = index => {
-    this.numbers.splice(index, 1);
-    this.numbers.sort();
+    this.beans.splice(index, 1);
   };
   
+  onSubmit = e => {
+    e.preventDefault();
+    const url = "report/pdf/ts/mis_t_s_01_14_2";
+    this.obj.Bean = this.beans;
+    this.ajax.post(url, `'${JSON.stringify(this.obj).toString()}'`, res => {
+      if (res.status == 200 && res.statusText == "OK") {
+        window.open("/ims-webapp/api/report/pdf/mis_t_s_01_14_2/file");
+      }
+    });
+  };
+  
+  onKeyUp = (e: any, str: string) => {
+    e.preventDefault();
+    this.obj[str] = ThaiNumber(e.target.value.toString());
+  };
+
+  onKeyUpBean = (e: any, str: string, index) => {
+    e.preventDefault();
+    this.beans[index][str] = ThaiNumber(e.target.value.toString());
+  };
+}
+
+class Ts01142 {
+  [x: string]: any;
+  logo: string = "logo.jpg";
+  taxPayer: string;
+  department: string;
+  dateFrom: string;
+  productType: string;
+  exicseId: string;
+  taxChecker: string;
+  day: string;
+  month: string;
+  year: string;
+  chk1: boolean = false;
+  chk2: boolean = false;
+  chk3: boolean = false;
+  Bean: Bean[];
+}
+
+class Bean {
+  [x: string]: any;
+  date: string;
+  locateAt: string;
+  valueFromChk: string;
+  taxRate: string;
+  taxExcise: string;
+  taxPaid: string;
+  tax: string;
+  chip: string;
+  extra: string;
+  total: string;
+  taxLocal: string;
+  taxTotal: string;
+  month: string;
 }

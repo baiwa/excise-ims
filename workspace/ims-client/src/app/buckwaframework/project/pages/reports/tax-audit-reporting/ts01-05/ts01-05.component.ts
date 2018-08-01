@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 
 import { TextDateTH, formatter } from "../../../../../common/helper/datepicker";
 import { AjaxService } from "../../../../../common/services";
-declare var jQuery: any;
+import { ThaiNumber } from "../../../../../common/helper";
 declare var $: any;
 
 @Component({
@@ -23,25 +23,30 @@ export class Ts0105Component implements OnInit {
   }
 
   ngOnInit() {
+    $("#time1").calendar({
+      type: "time",
+      text: TextDateTH,
+      formatter: formatter('เวลา')
+    });
     $("#begin_date").calendar({
       type: "date",
       text: TextDateTH,
-      formatter: formatter()
+      formatter: formatter('วดป')
     });
     $("#end_date").calendar({
       type: "date",
       text: TextDateTH,
-      formatter: formatter()
+      formatter: formatter('วดป')
     });
     $("#nut_date").calendar({
       type: "date",
       text: TextDateTH,
-      formatter: formatter()
+      formatter: formatter('วดป')
     });
     $("#nut1_date").calendar({
       type: "date",
       text: TextDateTH,
-      formatter: formatter()
+      formatter: formatter('วดป')
     });
   }
 
@@ -49,6 +54,11 @@ export class Ts0105Component implements OnInit {
     // on click this view hide them
     // ... Don't change or delete this
     this.discard.emit(false);
+  };
+
+  onKeyUp = (e: any, str: string) => {
+    e.preventDefault();
+    this.obj[str] = ThaiNumber(e.target.value.toString());
   };
 
   onSubmit = e => {
