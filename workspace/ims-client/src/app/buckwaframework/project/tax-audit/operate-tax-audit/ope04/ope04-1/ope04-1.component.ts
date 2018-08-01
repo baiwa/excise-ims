@@ -48,15 +48,28 @@ export class Ope041Component implements OnInit {
       monthRecieve5: "",
       monthRecieve6: ""
     };
-    this.row = [
-      ["", ""],
-      ["", ""],
-      ["", ""],
-      ["", ""],
-      ["", ""],
-      ["", ""],
-      ["", ""]
-    ];
+    // this.row = [
+    //   ["", ""],
+    //   ["", ""],
+    //   ["", ""],
+    //   ["", ""],
+    //   ["", ""],
+    //   ["", ""],
+    //   ["", ""]
+    // ];
+
+    this.row = [];
+    for (let i = 0; i < 7; i++) {
+      this.row.push({
+        column1: "",
+        column2: "",
+        column3: "",
+        column4: "",
+        column5: "",
+        column6: ""
+      });
+    }
+
     this.max = [0, 0, 0, 0, 0, 0, 0];
     this.diff = [0, 0, 0, 0, 0, 0, 0];
     this.fileExel = new Array<File>(); // initial file array
@@ -130,6 +143,7 @@ export class Ope041Component implements OnInit {
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdList";
     $.post(URL, { exciseId: this.exciseId }, res => {
       this.firstDataList = res[0];
+      console.log(this.firstDataList);
       (<HTMLInputElement>(
         document.getElementById("companyName")
       )).value = this.firstDataList.companyName;
@@ -167,22 +181,47 @@ export class Ope041Component implements OnInit {
 
     let url = `upload/excel`;
     this.ajax.upload(url, formBody, res => {
+      console.log(res.json());
       this.row = res.json();
-      for (let i = 0; i < this.row.length; i++) {
+
+      for (let i = 1; i <= 6; i++) {
         this.max[i] = 0;
-        this.diff[i] = 0;
-        for (let j = 0; j < this.row[i].length; j++) {
+        for (let j = 4; j <= 6; j++) {
           //find max value
-          this.max[i] = this.row[i][j] > 0 ? this.row[i][j] : this.max[i];
-          //find difference value
-          this.row[i][j] = this.DF(this.row[i][j].toString());
+          if (j != 5) {
+            this.max[i] =
+              parseFloat(this.row[i]["column" + j]) > this.max[i]
+                ? parseFloat(this.row[i]["column" + j])
+                : this.max[i];
+          }
         }
-        this.diff[i] = res.json()[i][0] - this.max[i];
+        this.max[i] =
+          this.MonthDataList["monthRecieve" + i] > this.max[i]
+            ? this.MonthDataList["monthRecieve" + i]
+            : this.max[i];
+        this.diff[i] = parseFloat(this.row[i]["column3"]) - this.max[i];
         this.diff[i] = this.DF(
           this.toFixed(parseFloat(this.diff[i])).toString()
         );
-        this.max[i] = this.DF(this.toFixed(parseFloat(this.max[i])).toString());
+        console.log(this.diff[i]);
       }
+
+      // for (let i = 0; i < this.row.length; i++) {
+      //   this.max[i] = 0;
+      //   this.diff[i] = 0;
+      //   for (let j = 0; j < this.row[i].length; j++) {
+      //     //find max value
+      //     this.max[i] = this.row[i][j] > 0 ? this.row[i][j] : this.max[i];
+      //     //find difference value
+      //     this.row[i][j] = this.DF(this.row[i][j].toString());
+      //   }
+      //   this.diff[i] = res.json()[i][0] - this.max[i];
+      //   this.diff[i] = this.DF(
+      //     this.toFixed(parseFloat(this.diff[i])).toString()
+      //   );
+      //   this.max[i] = this.DF(this.toFixed(parseFloat(this.max[i])).toString());
+      //   console.log(this.row[0]);
+      // }
     });
   };
 
@@ -283,4 +322,13 @@ class File {
   name: string;
   type: string;
   value: any;
+}
+
+class Column {
+  column1: any;
+  column2: any;
+  column3: any;
+  column4: any;
+  column5: any;
+  column6: any;
 }
