@@ -110,14 +110,7 @@ public class ReportController {
 	@PostMapping("/pdf/ts/{report}")
 	@ResponseBody // byte[]
 	public void pdfTs(@PathVariable("report") String name, @RequestBody String json) throws IOException, JRException { // byte[]
-		Gson gson = new Gson();
-		Map<String, Object> params = new HashMap<String, Object>();
-		params = (Map<String, Object>) gson.fromJson(json, params.getClass());
-		List<Object> li = new ArrayList<Object>();
-		if(BeanUtils.isNotEmpty(params.get("Bean"))) {
-			li = (List<Object>) params.get("Bean");
-		}
-		byte[] report = reportService.objectToPDF(name, params, li); // null
+		byte[] report = reportService.objectToPDF(name, json); // null
 		//return report;
 	}
 }

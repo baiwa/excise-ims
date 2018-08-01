@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -32,7 +34,7 @@ import th.co.baiwa.excise.report.bean.ContractBean;
 
 @Service
 public class ReportService {
-	
+
 	private static String PATH_EXPORT = "c:/reports/";
 
 	private Logger logger = LoggerFactory.getLogger(ReportService.class);
@@ -66,16 +68,53 @@ public class ReportService {
 		return reportFile;
 	}
 
-	public byte[] objectToPDF(String name, Map<String, Object> params, List<Object> bean) throws IOException, JRException {
-		
+	public byte[] objectToPDF(String name, String param) throws IOException, JRException {
+
+		Gson gson = new Gson();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params = (Map<String, Object>) gson.fromJson(param, params.getClass());
+		List<Object> bean = new ArrayList<Object>();
+		if (BeanUtils.isNotEmpty(params.get("Bean"))) {
+			bean = (List<Object>) params.get("Bean");
+		}
+
 		JRDataSource dataSource = null;
-		
+
 		if (BeanUtils.isNotEmpty(params.get("logo"))) {
 			String logo = params.get("logo").toString();
 			params.remove("logo");
 			params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, logo));
 		}
-		
+
+		if (BeanUtils.isEmpty(bean)) {
+			dataSource = new JREmptyDataSource();
+		} else {
+			dataSource = new JRBeanCollectionDataSource(bean);
+		}
+
+		JasperPrint jasperPrint = ReportUtils.exportReport(name, params, dataSource); // JRBeanCollectionDataSource(exampleList)
+		// JasperPrint jasperPrint = ReportUtils.exportReport(jasperFile, params, new
+		// JREmptyDataSource());
+
+		byte[] reportFile = JasperExportManager.exportReportToPdf(jasperPrint);
+		IOUtils.write(reportFile, new FileOutputStream(new File(PATH_EXPORT + name + ".pdf"))); // /tmp/excise/ims/report/
+
+		ReportUtils.closeResourceFileInputStream(params);
+
+		return reportFile;
+	}
+
+	public byte[] objectToPDF(String name, Map<String, Object> params, List<Object> bean)
+			throws IOException, JRException {
+
+		JRDataSource dataSource = null;
+
+		if (BeanUtils.isNotEmpty(params.get("logo"))) {
+			String logo = params.get("logo").toString();
+			params.remove("logo");
+			params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, logo));
+		}
+
 		if (BeanUtils.isEmpty(bean)) {
 			dataSource = new JREmptyDataSource();
 		} else {
