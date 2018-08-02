@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
+import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.ExciseAuthenRepository;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.RoleRepository;
 
 @Service
@@ -21,6 +22,8 @@ public class RoleService {
 	public RoleService(RoleRepository roleRepository) {
 		this.roleRepository = roleRepository;
 	}
+	
+	
 	
 	public List<Role> getRoleAll() {
 		logger.info("getAllRole");

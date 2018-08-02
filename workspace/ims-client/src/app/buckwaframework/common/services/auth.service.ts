@@ -19,15 +19,15 @@ export class AuthService {
   private userSubject = new Subject<User>();
   private user: User = new User();
   private isLoggedIn: boolean = false;
-
+  private intertalAuditPageList = [];
   // store the URL so we can redirect after logging in
   redirectUrl: string;
-
+  private authenPages: String[];
   constructor(
     private http: Http,
     private ajaxService: AjaxService,
     private router: Router
-  ) {}
+  ) { }
 
   login(userBean: User): Promise<any> {
     let body = `username=${userBean.username}&password=${userBean.password}`;
@@ -62,6 +62,8 @@ export class AuthService {
     });
   }
 
+
+
   authState(): Observable<User> {
     return this.userSubject.asObservable();
   }
@@ -79,6 +81,31 @@ export class AuthService {
     return this.user;
   }
 
+  renderByPage(pages) {
+    //console.log(this.user);
+    var countInpage = 0;
+    var empty = '';
+    if (this.authenPages != null && this.authenPages != undefined && this.authenPages.length > 0) {
+      var pageList = pages.split(',');
+      var showPage = false;
+      pageList.forEach(element => {
+
+        if (this.authenPages.indexOf(element) >= 0) {
+          showPage = true;
+          countInpage++;
+
+        }
+      });
+
+    } else {
+      return this.isLoggedIn;
+    }
+    //console.log(this.isLoggedIn && countInpage > 0);
+    return this.isLoggedIn && countInpage > 0;
+  }
+
+
+
   getUserProfile(): Promise<boolean> {
     const usrProfile = "access-control/user-profile";
     let p = new Promise<boolean>((resolve, reject) => {
@@ -89,6 +116,8 @@ export class AuthService {
           let body: any = res.json();
           this.user.username = body.data.username;
           this.isLoggedIn = true;
+          this.authenPages = body.data.exciseBaseControl;
+          //console.log(body.data);
           resolve(true);
         },
         (resError: Response) => {

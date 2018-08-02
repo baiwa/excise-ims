@@ -17,15 +17,16 @@ export class LoginPage implements OnInit {
   constructor(
     public authService: AuthService,
     private messageBarService: MessageBarService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onLogin() {
     this.loading = true;
     const user: User = {
       username: this.username,
-      password: this.password
+      password: this.password,
+      exciseBaseControl: null
     };
     this.authService
       .login(user)

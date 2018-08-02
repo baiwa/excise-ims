@@ -28,6 +28,7 @@ public class UserManagementRowMapper implements RowMapper<UserManagement> {
 		userManagement.setAccountNonExpired(rs.getString("account_non_expired"));
 		userManagement.setCredentialsNonExpired(rs.getString("credentials_non_expired"));
 		userManagement.setAccountNonLocked(rs.getString("account_non_locked"));
+		userManagement.setExciseBaseControl(rs.getString("EXCISE_BASE_CONTROL"));
 		return userManagement;
 	}
 }

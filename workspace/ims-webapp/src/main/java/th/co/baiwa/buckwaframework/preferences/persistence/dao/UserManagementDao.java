@@ -62,7 +62,7 @@ public class UserManagementDao {
 		
 		String sql =
 			" SELECT user_id, username, password,SECTOR, enabled, account_non_expired, " + 
-			" credentials_non_expired, account_non_locked, is_deleted FROM adm_user " + 
+			" credentials_non_expired, account_non_locked, is_deleted , EXCISE_BASE_CONTROL FROM adm_user " + 
 			" WHERE is_deleted = ?" +
 			" AND username = ? ";
 		

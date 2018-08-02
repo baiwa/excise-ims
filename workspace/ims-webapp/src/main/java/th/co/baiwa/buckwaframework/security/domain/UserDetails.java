@@ -12,6 +12,7 @@ public class UserDetails extends User implements UserBean {
 	private Long userId;
 	// Add More Information about USER here.
 	
+	private String[] exciseBaseControl ;
 	
 	// Constructor
 	public UserDetails(String username, String password, boolean enabled,boolean accountNonExpired,
@@ -34,6 +35,14 @@ public class UserDetails extends User implements UserBean {
 	
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String[] getExciseBaseControl() {
+		return exciseBaseControl;
+	}
+
+	public void setExciseBaseControl(String[] exciseBaseControl) {
+		this.exciseBaseControl = exciseBaseControl;
 	}
 	
 }

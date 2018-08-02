@@ -25,7 +25,7 @@ public class UserRepositoryTest {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Test
+//	@Test
 	public void test_findAll() {
 		System.out.println("- - - - - findAll - - - - -");
 		List<User> userList = userRepository.findAll();
@@ -33,7 +33,7 @@ public class UserRepositoryTest {
 		Assert.assertNotEquals(0, userList.size());
 	}
 
-	@Test
+//	@Test
 	public void test_findOne_Found() {
 		System.out.println("- - - - - findOne_Found - - - - -");
 		User user = userRepository.findOne(1L);
@@ -41,7 +41,7 @@ public class UserRepositoryTest {
 		Assert.assertNotNull(user);
 	}
 
-	@Test
+//	@Test
 	public void test_findOne_NotFound() {
 		System.out.println("- - - - - findOne_NotFound - - - - -");
 		User user = userRepository.findOne(99L);
@@ -57,7 +57,7 @@ public class UserRepositoryTest {
 		Assert.assertNotNull(user);
 	}
 
-	@Test
+//	@Test
 	public void test_findByUsername_NotFound() {
 		System.out.println("- - - - - findByUsername_NotFound - - - - -");
 		User user = userRepository.findByUsername("notExist");
@@ -65,7 +65,7 @@ public class UserRepositoryTest {
 		Assert.assertNull(user);
 	}
 
-	@Test
+//	@Test
 	public void test_count() {
 		System.out.println("- - - - - count - - - - -");
 		long count = userRepository.count();

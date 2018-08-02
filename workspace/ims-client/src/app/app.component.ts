@@ -28,11 +28,12 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private translateService: TranslateService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.translateService.use("th");
     this.user = this.authService.getUser();
+    console.log(this.user);
   }
 
   logout() {
