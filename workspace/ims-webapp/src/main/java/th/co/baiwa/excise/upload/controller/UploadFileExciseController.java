@@ -33,15 +33,10 @@ public class UploadFileExciseController {
 	@ResponseBody
 	public List<FormUpload> excel(@ModelAttribute FormUpload mainForm) throws EncryptedDocumentException, InvalidFormatException, IOException{
 		logger.debug("mainForm : " + mainForm);
-		List<String> headerList = new ArrayList<>();
-//		List<Lov> lovHeaderColumnList = ApplicationCache.getListOfValueByValueType("COLUMN_NAME", "OPE04-1");
 		List<FormUpload> fuList = new ArrayList<>();
 		FormUpload fu = new FormUpload();
-//		for (Lov lov : lovHeaderColumnList) {
-//			headerList.add(lov.getValue1());
-//		}
-		List<String[]> xxx = uploadFileExciseService.readFileExcel(mainForm);
-		for (String[] stringArr : xxx) {
+		List<String[]> ListfileEx = uploadFileExciseService.readFileExcel(mainForm);
+		for (String[] stringArr : ListfileEx) {
 			fu = new FormUpload();
 			for(int i = 0 ; i < stringArr.length ; i++) {
 				if(i == 0) {

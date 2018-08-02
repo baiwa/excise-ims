@@ -1,6 +1,6 @@
 package th.co.baiwa.excise.upload.service;
 
-import java.io.FileInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,44 +22,6 @@ import th.co.baiwa.excise.domain.form.FormUpload;
 import th.co.baiwa.excise.ta.service.ExciseDetailService;
 
 @Service
-//public class UploadFileExciseService {
-//
-//	private Logger logger = LoggerFactory.getLogger(ExciseDetailService.class);
-//
-//	public List<Object> readFileExcel(FormUpload multipartFile)
-//			throws IOException, EncryptedDocumentException, InvalidFormatException {
-//		logger.info("UploadFileExciseService.readFileExcel");
-//
-//		if ( multipartFile.getFileExel() != null) {
-//			byte[] byt =  multipartFile.getFileExel().getBytes();
-//			Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(byt));
-//			// Get Sheet at index 0
-//			Sheet sheet = workbook.getSheetAt(0);
-//
-//			List<Object> res = new ArrayList<Object>();
-//			List<Object> li = new ArrayList<Object>(); 
-//			Row row;
-//			Cell cell;
-//
-//			for (int i = 0; i <= 6; i++) {
-//				row = sheet.getRow(i);
-//				li = new ArrayList<Object>();
-//				for (int j = 2; j <= 5; j++) {
-//					if(j != 4) {
-//						cell = row.getCell(j);
-//						li.add(cell.toString());
-//					}
-//				}
-//				res.add(li);
-//			}
-//			
-//			return res;
-//		}
-//
-//		return null;
-//	}
-//
-//}
 public class UploadFileExciseService {
 	
 	private Logger logger = LoggerFactory.getLogger(ExciseDetailService.class);
@@ -67,7 +29,8 @@ public class UploadFileExciseService {
 	public List<String[]> readFileExcel(FormUpload multipartFile)
 			throws IOException, EncryptedDocumentException, InvalidFormatException {
 		logger.info("UploadFileExciseService.readFileExcel");
-		Workbook workbook = WorkbookFactory.create(new FileInputStream("C:\\file.xlsx"));
+		byte[] byt =  multipartFile.getFileExel().getBytes();
+		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(byt));
 		Sheet sheet = workbook.getSheetAt(0);
 		int totalRows = sheet.getPhysicalNumberOfRows();
 
@@ -80,7 +43,7 @@ public class UploadFileExciseService {
 		for (short colIx = minColIx; colIx < maxColIx; colIx++) { // loop from first to last index
 			Cell cell = row.getCell(colIx); // get the cell
 			map.put(cell.getStringCellValue(), cell.getColumnIndex()); // add the cell contents (name of column) and
-			headerNameList.add(cell.getStringCellValue());														// cell index to the map
+			headerNameList.add(cell.getStringCellValue()); // cell index to the map
 		}
 
 		List<String[]> listOfDataFromReport = new ArrayList<String[]>();
