@@ -50,7 +50,7 @@ export var formatter = (what: string = "") => {
             h = now.getHours(),
             m = now.getMinutes(),
             s = now.getSeconds();
-          return ThaiNumber(digit(h)) + ':' + ThaiNumber(digit(m)) + ':' + ThaiNumber(digit(s));
+          return digit(h) + ':' + digit(m); // + ':' + digit(s);
         }
       };
     case "ว":
@@ -58,7 +58,7 @@ export var formatter = (what: string = "") => {
         date: function (date, settings) {
           if (!date) return "";
           let day = date.getDate();
-          return ThaiNumber(digit(day));
+          return digit(day);
         }
       };
     case "ด":
@@ -74,7 +74,7 @@ export var formatter = (what: string = "") => {
         date: function (date, settings) {
           if (!date) return "";
           let year = date.getFullYear() + 543;
-          return ThaiNumber(year.toString());
+          return year.toString();
         }
       };
     case "วดป":
@@ -91,7 +91,7 @@ export var formatter = (what: string = "") => {
           let day = date.getDate();
           let month = date.getMonth();
           let year = date.getFullYear() + 543;
-          return ThaiNumber(digit(day)) + " " + TextDateTH.months[month] + " " + ThaiNumber(year.toString());
+          return digit(day) + " " + TextDateTH.months[month] + " " + year.toString();
         }
       };
     case "day":

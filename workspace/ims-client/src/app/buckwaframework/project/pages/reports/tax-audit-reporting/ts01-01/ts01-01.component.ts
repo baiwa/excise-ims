@@ -42,11 +42,6 @@ export class Ts0101Component implements OnInit {
     }
   };
 
-  onKeyUp = (e: any, str: string) => {
-    e.preventDefault();
-    this.obj[str] = ThaiNumber(e.target.value.toString());
-  };
-
   onDelField = index => {
     this.obj["analys" + (index + 1)] = "";
     this.numbers.splice(index, 1);

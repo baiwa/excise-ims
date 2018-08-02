@@ -14,7 +14,7 @@
               <label>ทะเบียนสรรพสามิตเลขที่ :</label>
             </div>
             <div class="nine wide field">
-              <input type="text" name="exciseId" (keyup)="onKeyUp($event, 'exciseId')" [(ngModel)]="obj.exciseId" required>
+              <input type="text" name="exciseId" [(ngModel)]="obj.exciseId" required>
             </div>
           </div>
 
@@ -26,7 +26,7 @@
               </label>
             </div>
             <div class="five wide field">
-              <input type="text" name="item" (keyup)="onKeyUp($event, 'item')" [(ngModel)]="obj.item" required>
+              <input type="text" name="item" [(ngModel)]="obj.item" required>
             </div>
             <div class="three wide field">
               <label>
@@ -34,7 +34,7 @@
               </label>
             </div>
             <div class="four  wide field">
-              <input type="text" name="workType" (keyup)="onKeyUp($event, 'workType')" [(ngModel)]="obj.workType" required>
+              <input type="text" name="workType" [(ngModel)]="obj.workType" required>
             </div>
           </div>
 
@@ -48,7 +48,7 @@
           <div class="inline fields">
             <div class="two wide field"></div>
             <div class="thirteen wide field">
-              <textarea name="address" (keyup)="onKeyUp($event, 'address')" [(ngModel)]="obj.address" rows="2" style="resize: none" maxLength="200" required></textarea>
+              <textarea name="address" [(ngModel)]="obj.address" rows="2" style="resize: none" maxLength="200" required></textarea>
             </div>
           </div>
 
@@ -60,7 +60,7 @@
               </label>
             </div>
             <div class="three wide field">
-              <input type="text" name="from" (keyup)="onKeyUp($event, 'from')" [(ngModel)]="obj.from" required>
+              <input type="text" name="from" [(ngModel)]="obj.from" required>
             </div>
             <div class="one wide field">
               <label>
@@ -68,7 +68,7 @@
               </label>
             </div>
             <div class="four  wide field">
-              <input type="text" name="to" (keyup)="onKeyUp($event, 'to')" [(ngModel)]="obj.to" required>
+              <input type="text" name="to" [(ngModel)]="obj.to" required>
             </div>
           </div>
 
@@ -85,7 +85,7 @@
               <label class="custom-label-w-18">
                 {{i+1}}.
               </label>
-              <input type="text" name="analys{{i+1}}" (keyup)="onKeyUp($event, 'analys' + (i+1))" [(ngModel)]="obj['analys' + (i+1)]" required> &nbsp;&nbsp;
+              <input type="text" name="analys{{i+1}}" [(ngModel)]="obj['analys' + (i+1)]" required> &nbsp;&nbsp;
               <a disabled *ngIf="i<=2" style="width:16%;box-shadow: none; cursor: default; color: transparent !important; box-shadow: 0 0 0 1px transparent inset!important;">
                 <i class="times icon"></i> ลบ
               </a>
@@ -111,7 +111,7 @@
               <label>เรียน:</label>
             </div>
             <div class="five wide field">
-              <input type="text" name="sendTo" (keyup)="onKeyUp($event, 'sendTo')" [(ngModel)]="obj.sendTo" required>
+              <input type="text" name="sendTo" [(ngModel)]="obj.sendTo" required>
             </div>
           </div>
 
@@ -127,7 +127,7 @@
           <div class="inline fields">
             <div class="two wide field"></div>
             <div class="thirteen wide field">
-              <textarea rows="2" style="resize: none;" maxLength="200" name="reasonTxt" (keyup)="onKeyUp($event, 'reasonTxt')" [(ngModel)]="obj.reasonTxt" required></textarea>
+              <textarea rows="2" style="resize: none;" maxLength="200" name="reasonTxt" [(ngModel)]="obj.reasonTxt" required></textarea>
             </div>
           </div>
 
@@ -149,7 +149,7 @@
             <div class="seven wide field">
               &nbsp;&nbsp;
               <div class="ui {{ obj.agreeBox !== 'other' && 'disabled' }} input">
-                <input type="text" (keyup)="onKeyUp($event, 'otherTxt')" [(ngModel)]="obj.otherTxt" name="otherTxt" id="otherTxt">
+                <input type="text" [(ngModel)]="obj.otherTxt" name="otherTxt" id="otherTxt">
               </div>
             </div>
           </div>
@@ -162,7 +162,7 @@
               </label>
             </div>
             <div class="four wide field">
-              <input type="text" name="analysName" (keyup)="onKeyUp($event, 'analysName')" [(ngModel)]="obj.analysName" required>
+              <input type="text" name="analysName" [(ngModel)]="obj.analysName" required>
             </div>
             <div class="three wide field">
               <label>
@@ -170,7 +170,7 @@
               </label>
             </div>
             <div class="four wide field">
-              <input type="text" name="analysControl" (keyup)="onKeyUp($event, 'analysControl')" [(ngModel)]="obj.analysControl" required>
+              <input type="text" name="analysControl" [(ngModel)]="obj.analysControl" required>
             </div>
           </div>
 

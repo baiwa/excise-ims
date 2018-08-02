@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { AjaxService } from "../../../../../common/services";
-import { ThaiNumber } from "../../../../../common/helper";
-
+import { ThaiNumber, TextDateTH, formatter } from "../../../../../common/helper";
+declare var $: any;
 @Component({
   selector: "app-ts01-07",
   templateUrl: "./ts01-07.component.html",
@@ -19,7 +19,18 @@ export class Ts0107Component implements OnInit {
     this.obj = new Ts0107();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    $("#date").calendar({
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('วดป')
+    });
+    $("#outDate").calendar({
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('วดป')
+    });
+  }
 
   onDiscard = () => {
     // on click this view hide them
@@ -31,14 +42,14 @@ export class Ts0107Component implements OnInit {
     this.add++;
   };
 
-  onKeyUp = (e: any, str: string) => {
-    e.preventDefault();
-    this.obj[str] = ThaiNumber(e.target.value.toString());
-  };
-
   onSubmit = e => {
     e.preventDefault();
     const url = "report/pdf/ts/mis_t_s_01_07";
+    // Date
+    this.obj.day = $("#date .ui input").val().split(" ")[0];
+    this.obj.month = $("#date .ui input").val().split(" ")[1];
+    this.obj.year = $("#date .ui input").val().split(" ")[2];
+    this.obj.outDate = $("#outDate .ui input").val();
     this.ajax.post(url, `'${JSON.stringify(this.obj).toString()}'`, res => {
       if (res.status == 200 && res.statusText == "OK") {
         window.open("/ims-webapp/api/report/pdf/mis_t_s_01_07/file");

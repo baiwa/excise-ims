@@ -13,12 +13,9 @@ declare var $: any;
 export class Ts0105Component implements OnInit {
   @Output() discard = new EventEmitter<any>();
 
-  numbers: number[];
-
   obj: Ts0105;
 
   constructor(private ajax: AjaxService) {
-    this.numbers = [1, 2, 3];
     this.obj = new Ts0105();
   }
 
@@ -28,22 +25,27 @@ export class Ts0105Component implements OnInit {
       text: TextDateTH,
       formatter: formatter('เวลา')
     });
-    $("#begin_date").calendar({
+    $("#time2").calendar({
+      type: "time",
+      text: TextDateTH,
+      formatter: formatter('เวลา')
+    });
+    $("#date").calendar({
       type: "date",
       text: TextDateTH,
       formatter: formatter('วดป')
     });
-    $("#end_date").calendar({
+    $("#date1").calendar({
       type: "date",
       text: TextDateTH,
       formatter: formatter('วดป')
     });
-    $("#nut_date").calendar({
+    $("#date2").calendar({
       type: "date",
       text: TextDateTH,
       formatter: formatter('วดป')
     });
-    $("#nut1_date").calendar({
+    $("#date3").calendar({
       type: "date",
       text: TextDateTH,
       formatter: formatter('วดป')
@@ -56,14 +58,23 @@ export class Ts0105Component implements OnInit {
     this.discard.emit(false);
   };
 
-  onKeyUp = (e: any, str: string) => {
-    e.preventDefault();
-    this.obj[str] = ThaiNumber(e.target.value.toString());
-  };
-
   onSubmit = e => {
     e.preventDefault();
     const url = "report/pdf/ts/mis_t_s_01_05";
+    // Date
+    let date = $("#date .ui input").val().split(" ");
+    this.obj.day = date[0];
+    this.obj.month = date[1];
+    this.obj.year = date[2];
+    // Dates
+    this.obj.date1 = $("#date1 .ui input").val();
+    this.obj.date2 = $("#date2 .ui input").val();
+    this.obj.date3 = $("#date3 .ui input").val();
+    // Times
+    this.obj.time1 = $("#time1 .ui input").val();
+    this.obj.time2 = $("#time2 .ui input").val();
+    // Monitor
+    console.log(this.obj);
     this.ajax.post(url, `'${JSON.stringify(this.obj).toString()}'`, res => {
       if (res.status == 200 && res.statusText == "OK") {
         window.open("/ims-webapp/api/report/pdf/mis_t_s_01_05/file");

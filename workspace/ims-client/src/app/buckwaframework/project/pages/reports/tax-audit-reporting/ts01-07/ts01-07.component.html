@@ -16,24 +16,13 @@
                             <p>วันที่ : </p>
                         </div>
 
-                        <div class="two wide field">
-                            <input type="text" name="day" [(ngModel)]="obj.day">
-                        </div>
-
-                        <div class="one wide field" style="padding-right: 0px;">
-                            <p>เดือน : </p>
-                        </div>
-
-                        <div class="two wide field">
-                            <input type="text" name="month" [(ngModel)]="obj.month">
-                        </div>
-
-                        <div class="one wide field">
-                            <p>ปี : </p>
-                        </div>
-
-                        <div class="two wide field">
-                            <input type="text" name="year" [(ngModel)]="obj.year">
+                        <div class="eight wide field">
+                            <div class="ui calendar" style="width:100%" id="date">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" style="width:100%" name="date" autocomplete="off" [(ngModel)]="obj.date" placeholder="วัน เดือน ปี" required>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -43,7 +32,7 @@
                         </div>
 
                         <div class="two wide field">
-                            <input type="text" name="at1" (keyup)="onKeyUp($event, 'at1')" [(ngModel)]="obj.at1">
+                            <input type="text" name="at1" [(ngModel)]="obj.at1">
                         </div>
 
                         <div class="one wide field" style="padding-left: 14px;">
@@ -51,7 +40,7 @@
                         </div>
 
                         <div class="two wide field">
-                            <input type="text" name="at2" (keyup)="onKeyUp($event, 'at2')" [(ngModel)]="obj.at2">
+                            <input type="text" name="at2" [(ngModel)]="obj.at2">
                         </div>
 
                         <div class="two wide field">
@@ -62,7 +51,7 @@
                         </div>
 
                         <div class="six wide field">
-                            <input type="text" name="office" (keyup)="onKeyUp($event, 'office')" [(ngModel)]="obj.office">
+                            <input type="text" name="office" [(ngModel)]="obj.office">
                         </div>
                     </div>
 
@@ -72,7 +61,7 @@
                         </div>
 
                         <div class="six wide field">
-                            <input type="text" name="giveTo" (keyup)="onKeyUp($event, 'giveTo')" [(ngModel)]="obj.giveTo">
+                            <input type="text" name="giveTo" [(ngModel)]="obj.giveTo">
                         </div>
 
                         <div class="two wide field">
@@ -80,7 +69,7 @@
                         </div>
 
                         <div class="six wide field">
-                            <input type="text" name="position" (keyup)="onKeyUp($event, 'position')" [(ngModel)]="obj.position">
+                            <input type="text" name="position" [(ngModel)]="obj.position">
                         </div>
                     </div>
 
@@ -91,7 +80,7 @@
 
                         <div class="six wide field">
                             ๑&nbsp;
-                            <input type="text" name="giveTo1" (keyup)="onKeyUp($event, 'giveTo1')" [(ngModel)]="obj.giveTo1">
+                            <input type="text" name="giveTo1" [(ngModel)]="obj.giveTo1">
                         </div>
 
                         <div class="two wide field">
@@ -99,7 +88,7 @@
                         </div>
 
                         <div class="six wide field">
-                            <input type="text" name="position1" (keyup)="onKeyUp($event, 'position1')" [(ngModel)]="obj.position1">
+                            <input type="text" name="position1" [(ngModel)]="obj.position1">
                         </div>
                     </div>
 
@@ -109,7 +98,7 @@
 
                         <div class="six wide field">
                             ๒&nbsp;
-                            <input type="text" name="giveTo2" (keyup)="onKeyUp($event, 'giveTo2')" [(ngModel)]="obj.giveTo2">
+                            <input type="text" name="giveTo2" [(ngModel)]="obj.giveTo2">
                         </div>
 
                         <div class="two wide field">
@@ -117,7 +106,7 @@
                         </div>
 
                         <div class="six wide field">
-                            <input type="text" name="position2" (keyup)="onKeyUp($event, 'position2')" [(ngModel)]="obj.position2">
+                            <input type="text" name="position2" [(ngModel)]="obj.position2">
                         </div>
                     </div>
 
@@ -127,7 +116,7 @@
 
                         <div class="six wide field">
                             ๓&nbsp;
-                            <input type="text" name="giveTo3" (keyup)="onKeyUp($event, 'giveTo3')" [(ngModel)]="obj.giveTo3">
+                            <input type="text" name="giveTo3" [(ngModel)]="obj.giveTo3">
                         </div>
 
                         <div class="two wide field">
@@ -135,7 +124,7 @@
                         </div>
 
                         <div class="six wide field">
-                            <input type="text" name="position3" (keyup)="onKeyUp($event, 'position3')" [(ngModel)]="obj.position3">
+                            <input type="text" name="position3" [(ngModel)]="obj.position3">
                         </div>
                     </div>
 
@@ -145,7 +134,7 @@
 
                         <div class="six wide field">
                             ๔&nbsp;
-                            <input type="text" name="giveTo4" (keyup)="onKeyUp($event, 'giveTo4')" [(ngModel)]="obj.giveTo4">
+                            <input type="text" name="giveTo4" [(ngModel)]="obj.giveTo4">
                         </div>
 
                         <div class="two wide field">
@@ -153,7 +142,7 @@
                         </div>
 
                         <div class="six wide field">
-                            <input type="text" name="position4" (keyup)="onKeyUp($event, 'position4')" [(ngModel)]="obj.position4">
+                            <input type="text" name="position4" [(ngModel)]="obj.position4">
                         </div>
                     </div>
 
@@ -163,7 +152,7 @@
 
                         <div class="six wide field">
                             ๕&nbsp;
-                            <input type="text" name="giveTo5" (keyup)="onKeyUp($event, 'giveTo5')" [(ngModel)]="obj.giveTo5">
+                            <input type="text" name="giveTo5" [(ngModel)]="obj.giveTo5">
                         </div>
 
                         <div class="two wide field">
@@ -171,7 +160,7 @@
                         </div>
 
                         <div class="six wide field">
-                            <input type="text" name="position5" (keyup)="onKeyUp($event, 'position5')" [(ngModel)]="obj.position5">
+                            <input type="text" name="position5" [(ngModel)]="obj.position5">
                         </div>
                     </div>
 
@@ -181,7 +170,7 @@
                         </div>
 
                         <div class="ten wide field">
-                            <input type="text" name="department" (keyup)="onKeyUp($event, 'department')" [(ngModel)]="obj.department">
+                            <input type="text" name="department" [(ngModel)]="obj.department">
                         </div>
                     </div>
 
@@ -208,7 +197,7 @@
                         </div>
 
                         <div class="three wide field">
-                            <input type="text" name="name" (keyup)="onKeyUp($event, 'name')" [(ngModel)]="obj.name">
+                            <input type="text" name="name" [(ngModel)]="obj.name">
                         </div>
                     </div>
 
@@ -218,7 +207,7 @@
                         </div>
 
                         <div class="eight wide field">
-                            <input type="text" name="numExcise" (keyup)="onKeyUp($event, 'numExcise')" [(ngModel)]="obj.numExcise">
+                            <input type="text" name="numExcise" [(ngModel)]="obj.numExcise">
                         </div>
                     </div>
 
@@ -228,7 +217,7 @@
                         </div>
 
                         <div class="thirteen wide field">
-                            <textarea name="numAt" [(ngModel)]="obj.numAt" (keyup)="onKeyUp($event, 'numAt')" cols="30" rows="4" style="resize: none;"></textarea>
+                            <textarea name="numAt" [(ngModel)]="obj.numAt" cols="30" rows="4" style="resize: none;"></textarea>
                         </div>
                     </div>
 
@@ -238,7 +227,12 @@
                         </div>
 
                         <div class="five wide field">
-                            <input type="text" name="outDate" (keyup)="onKeyUp($event, 'outDate')" [(ngModel)]="obj.outDate">
+                            <div class="ui calendar" style="width:100%" id="outDate">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" style="width:100%" name="outDate" autocomplete="off" [(ngModel)]="obj.outDate" placeholder="วัน เดือน ปี" required>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="one wide field">
@@ -249,7 +243,7 @@
                         </div>
 
                         <div class="five wide field">
-                            <input type="text" name="section" (keyup)="onKeyUp($event, 'section')" [(ngModel)]="obj.section">
+                            <input type="text" name="section" [(ngModel)]="obj.section">
                         </div>
                     </div>
 
@@ -259,7 +253,7 @@
                         </div>
 
                         <div class="four wide field">
-                            <input type="text" name="cName" (keyup)="onKeyUp($event, 'cName')" [(ngModel)]="obj.cName">
+                            <input type="text" name="cName" [(ngModel)]="obj.cName">
                         </div>
 
                         <div class="two wide field">
@@ -270,7 +264,7 @@
                         </div>
 
                         <div class="five wide field">
-                            <input type="text" name="cPosition" (keyup)="onKeyUp($event, 'cPosition')" [(ngModel)]="obj.cPosition">
+                            <input type="text" name="cPosition" [(ngModel)]="obj.cPosition">
                         </div>
                     </div>
 
