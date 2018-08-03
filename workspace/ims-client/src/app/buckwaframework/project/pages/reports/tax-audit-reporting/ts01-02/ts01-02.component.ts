@@ -42,29 +42,12 @@ export class Ts0102Component implements OnInit {
     const optionURL = "excise/detail/textFullAddressByExciseId";
     this.ajax.post(optionURL, {
       exciseId: this.obj.exciseId
-
-      
     }, res => {
       console.log(res.json());
       this.obj.address = res.json();
-      
+
     });
   };
-
-  // optionAddress = () => {
-  //   const optionURL = "excise/detail/objectAddressByExciseId";
-  //   this.ajax.post(optionURL, {
-  //     exciseId: this.obj.exciseId
-
-      
-  //   }, res => {
-  //     console.log(res.json());
-  //     var dat = res.json();
-  //     this.obj.address = dat.homeNumber;
-  //   });
-  // };
-
-
 
   onSubmit = e => {
     e.preventDefault();
