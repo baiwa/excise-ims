@@ -1,6 +1,6 @@
 
 
-<form (submit)="onSubmit($event)" ngNativeValidate> 
+<form (submit)="onSubmit($event)" > 
   <div class="ui top centered attached header segment"
         style="background: #1e83db;color: white">
     <span>หนังสือเรียกตามพระราชบัญญัติสรรพสามิต พ.ศ. ๒๕๖๐</span>
@@ -150,13 +150,13 @@
                     <label>สถานที่ตั้งเลขที่</label>
                   </div>
                   <div class="five wide field ui {{ obj.addressBox === true && 'disabled' }} input">
-                    <input type="text"  name="homeNumberC" [(ngModel)]="obj.homeNumberC"   [disabled]="obj.addressBox == 'true'" required >
+                    <input type="text"  name="homeNumber1" [(ngModel)]="obj.homeNumber1"  required >
                   </div>
                   <div class="two wide field">
                       <label>ตรอก/ซอย</label>
                   </div>
                   <div class="six wide field ui {{ obj.addressBox === true && 'disabled' }} input">
-                    <input type="text"  name="byWayC" [(ngModel)]="obj.byWayC"  required >
+                    <input type="text"  name="byWay1" [(ngModel)]="obj.byWay1"  required >
                   </div>
               </div>
 
@@ -165,13 +165,13 @@
                     <label>ถนน</label>
                   </div>
                   <div class="five wide field ui {{ obj.addressBox === true && 'disabled' }} input">
-                    <input type="text"  name="streetC" [(ngModel)]="obj.streetC"  required >
+                    <input type="text"  name="street1" [(ngModel)]="obj.street1"  required >
                   </div>
                   <div class="two wide field">
                       <label>ตำบล/แขวง</label>
                   </div>
                   <div class="six wide field ui {{ obj.addressBox === true && 'disabled' }} input">
-                    <input type="text"  name="tambolC" [(ngModel)]="obj.tambolC"  required >
+                    <input type="text"  name="tambol1" [(ngModel)]="obj.tambol1"  required >
                   </div>
               </div>
               
@@ -180,13 +180,13 @@
                     <label>อำเภอ/เขต</label>
                   </div>
                   <div class="five wide field ui {{ obj.addressBox === true && 'disabled' }} input">
-                    <input type="text"  name="districtC" [(ngModel)]="obj.districtC"  required >
+                    <input type="text"  name="district1" [(ngModel)]="obj.district1"  required >
                   </div>
                   <div class="two wide field">
                       <label>จังหวัด</label>
                   </div>
                   <div class="six wide field ui {{ obj.addressBox === true && 'disabled' }} input">
-                    <input type="text"  name="provinceC" [(ngModel)]="obj.provinceC"  required >
+                    <input type="text"  name="province1" [(ngModel)]="obj.province1"  required >
                   </div>
               </div>
 
@@ -195,7 +195,7 @@
                     <label>รหัสไปรษณีย์</label>
                   </div>
                   <div class="five wide field ui {{ obj.addressBox === true && 'disabled' }} input">
-                    <input type="text"  name="zipCodeC" [(ngModel)]="obj.zipCodeC"  required >
+                    <input type="text"  name="zipCode1" [(ngModel)]="obj.zipCode1"  required >
                   </div>
               </div>
               

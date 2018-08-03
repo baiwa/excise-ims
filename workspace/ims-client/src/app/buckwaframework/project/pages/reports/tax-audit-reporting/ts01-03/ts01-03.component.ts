@@ -27,6 +27,7 @@ export class Ts0103Component implements OnInit {
   }
 
   ngOnInit() {
+
     $('#begin_date').calendar({
       type: 'date',
       text: TextDateTH,
@@ -67,21 +68,21 @@ export class Ts0103Component implements OnInit {
 
   isAddress = () => {
     if (this.obj.addressBox !== true) {
-      this.obj.homeNumberC = this.obj.homeNumber;
-      this.obj.byWayC = this.obj.byWay;
-      this.obj.streetC = this.obj.street;
-      this.obj.tambolC = this.obj.tambol;
-      this.obj.districtC = this.obj.district;
-      this.obj.provinceC = this.obj.province;
-      this.obj.zipCodeC = this.obj.zipCode;
+      this.obj.homeNumber1 = this.obj.homeNumber;
+      this.obj.byWay1 = this.obj.byWay;
+      this.obj.street1 = this.obj.street;
+      this.obj.tambol1 = this.obj.tambol;
+      this.obj.district1 = this.obj.district;
+      
+      
     } else {
-      this.obj.homeNumberC = "";
-      this.obj.byWayC = "";
-      this.obj.streetC = "";
-      this.obj.tambolC = "";
-      this.obj.districtC = "";
-      this.obj.provinceC = "";
-      this.obj.zipCodeC = "";
+      this.obj.homeNumber1 = "";
+      this.obj.byWay1 = "";
+      this.obj.street1 = "";
+      this.obj.tambol1 = "";
+      this.obj.district1 = "";
+      
+      
     }
   }
 
@@ -116,7 +117,7 @@ class Ts0103 {
   office: string;
   department: string;
 
-  date1: string;
+  // date1: string;
 
   agreeBox: string;
   factory: boolean;
@@ -127,9 +128,6 @@ class Ts0103 {
   exciseId: string;
 
   homeNumber: string;
-  moo: string;
-  building: string;
-  level: string;
   byWay: string;
   street: string;
   tambol: string;
@@ -137,23 +135,21 @@ class Ts0103 {
   province: string;
   zipCode: string;
 
+  homeNumber1: string;
+  byWay1: string;
+  street1: string;
+  tambol1: string;
+  district1: string;
+  province1: string;
+  zipCode1: string;
+
   addressBox: boolean;
-  homeNumberC: string;
-  mooC: string;
-  buildingC: string;
-  levelC: string;
-  byWayC: string;
-  streetC: string;
-  tambolC: string;
-  districtC: string;
-  provinceC: string;
-  zipCodeC: string;
 
   with: string;
   article: string;
   group: string;
   location: string;
-  date2: string;
+  //date2: string;
   document: string;
 
   signature: string;
