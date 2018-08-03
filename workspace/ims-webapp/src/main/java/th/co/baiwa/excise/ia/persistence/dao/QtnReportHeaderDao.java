@@ -18,7 +18,7 @@ import th.co.baiwa.excise.utils.OracleUtils;
 public class QtnReportHeaderDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	private String sqlTemplate = " SELECT * FROM IA_QTN_REPORT_HEADER H WHERE 1 = 1 ";
+	private String sqlTemplate = " SELECT * FROM IA_QTN_REPORT H WHERE 1 = 1 ";
 	
 	public List<QtnReportHeader> findByCriteria(QtnReportHeader qtnReportHeader) {
 		List<Object> paramList = new ArrayList<Object>();
@@ -92,7 +92,7 @@ public class QtnReportHeaderDao {
 	
 	public Integer createQtnReportHeader(QtnReportHeader qtnReportHeader){
 		List<Object> paramList = new ArrayList<Object>();
-		String sql = "INSERT INTO IA_QTN_REPORT_HEADER (QTN_REPORT_HDR_ID,QTN_REPORT_HDR_NAME,CREATOR,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE) VALUES (IA_QTN_REPORT_HEADER_SEQ.nextval,?,?,?,?,?,?)";
+		String sql = "INSERT INTO IA_QTN_REPORT (QTN_REPORT_HDR_ID,QTN_REPORT_HDR_NAME,CREATOR,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE) VALUES (IA_QTN_REPORT_SEQ.nextval,?,?,?,?,?,?)";
 		paramList.add(qtnReportHeader.getQtnReportHdrName());
 		paramList.add(qtnReportHeader.getCreator());
 		paramList.add(qtnReportHeader.getCreatedBy());

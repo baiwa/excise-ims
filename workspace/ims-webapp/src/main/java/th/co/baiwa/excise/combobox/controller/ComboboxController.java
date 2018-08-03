@@ -70,5 +70,19 @@ public class ComboboxController {
 		List<Lov> lov = ApplicationCache.getListOfValueByValueType("EXCISE_BASE_CONTROL");
 		return lov;
 	}
+	
+	@PostMapping("/getRiskName")
+	@ResponseBody
+	public List<Lov> getRiskName() {
+		List<Lov> lov = ApplicationCache.getListOfValueByValueType("RISK_NAME");
+		return lov;
+	}
+	
+	@PostMapping("/getRiskLevel")
+	@ResponseBody
+	public List<Lov> getRiskLevel() {
+		List<Lov> lov = ApplicationCache.getListOfValueByValueType("RISK_LEVEL");
+		return lov;
+	}
 
 }
