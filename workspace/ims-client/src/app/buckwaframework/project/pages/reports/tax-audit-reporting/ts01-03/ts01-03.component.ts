@@ -28,15 +28,20 @@ export class Ts0103Component implements OnInit {
 
   ngOnInit() {
 
-    $('#begin_date').calendar({
+    $('#date1').calendar({
       type: 'date',
       text: TextDateTH,
-      formatter: formatter()
+      formatter: formatter('วดป')
     });
-    $('#end_date').calendar({
+    $('#date2').calendar({
       type: 'date',
       text: TextDateTH,
-      formatter: formatter()
+      formatter: formatter('วดป')
+    });
+    $("#time").calendar({
+      type: "time",
+      text: TextDateTH,
+      formatter: formatter('เวลา')
     });
   }
 
@@ -73,16 +78,16 @@ export class Ts0103Component implements OnInit {
       this.obj.street1 = this.obj.street;
       this.obj.tambol1 = this.obj.tambol;
       this.obj.district1 = this.obj.district;
-      
-      
+      this.obj.province1 = this.obj.province;
+      this.obj.zipCode1 = this.obj.zipCode;
     } else {
       this.obj.homeNumber1 = "";
       this.obj.byWay1 = "";
       this.obj.street1 = "";
       this.obj.tambol1 = "";
       this.obj.district1 = "";
-      
-      
+      this.obj.province1 = "";
+      this.obj.zipCode1 = "";
     }
   }
 
@@ -90,6 +95,20 @@ export class Ts0103Component implements OnInit {
   onSubmit = e => {
     e.preventDefault();
     const url = "report/pdf/ts/mis_t_s_01_03";
+
+    // Date
+    let date1 = $("#date1 .ui input").val().split(" ");
+    this.obj.day1 = date1[0];
+    this.obj.month1 = date1[1];
+    this.obj.year1 = date1[2];
+    let date2 = $("#date2 .ui input").val().split(" ");
+    this.obj.day2 = date2[0];
+    this.obj.month2 = date2[1];
+    this.obj.year2 = date2[2];
+    // Times
+    this.obj.time = $("#time .ui input").val();
+
+
     if (this.obj.agreeBox == "factory") {
       this.obj.factory = true;
       this.obj.service = false;
@@ -115,10 +134,14 @@ class Ts0103 {
   logo: string = "logo1.jpg";
   [x: string]: any;
   office: string;
+  day1: string;
+  month1: string;
+  year1: string;
+  day2: string;
+  month2: string;
+  year2: string;
+  time: string;
   department: string;
-
-  // date1: string;
-
   agreeBox: string;
   factory: boolean;
   service: boolean;
@@ -149,10 +172,7 @@ class Ts0103 {
   article: string;
   group: string;
   location: string;
-  //date2: string;
   document: string;
-
   signature: string;
   phoneNumber: string;
-
 }

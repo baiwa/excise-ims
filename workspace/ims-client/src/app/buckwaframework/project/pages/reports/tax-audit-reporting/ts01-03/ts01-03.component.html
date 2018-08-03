@@ -1,6 +1,6 @@
 
 
-<form (submit)="onSubmit($event)" > 
+<form (submit)="onSubmit($event)" ngNativeValidate> 
   <div class="ui top centered attached header segment"
         style="background: #1e83db;color: white">
     <span>หนังสือเรียกตามพระราชบัญญัติสรรพสามิต พ.ศ. ๒๕๖๐</span>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="eight wide field">
                   <label class="custom-label-w-18" style="width: 10% !important;">วันที่</label>
-                  <div class="ui calendar" style="width:100%" id="begin_date">
+                  <div class="ui calendar" style="width:100%" id="date1">
                     <div class="ui input left icon">
                       <i class="calendar icon"></i>
                       <input type="text"  placeholder="วัน/เดือน/ปี">
@@ -220,9 +220,37 @@
               </div>
 
               <div class="inline fields">
-                <div class="sixteen wide field">
-                  <label class="custom-label-w-20">ให้ท่านไป ณ</label>
+                <div class="three wide field">
+                    <label>ให้ท่านไป ณ</label>
+                </div>
+                <div class="thirteen wide field">
                   <input type="text"  name="location" [(ngModel)]="obj.location"  required >
+                </div>
+              </div>
+
+              <div class="inline fields">
+                <div class="three wide field">
+                  <label>ในวันที่</label>
+                </div>
+                <div class="five wide field">
+                  <div class="ui calendar" style="width: 100%" id="date2">
+                    <div class="ui input left icon">
+                      <i class="calendar icon"></i>
+                      <input type="text"  placeholder="วัน/เดือน/ปี">
+                    </div>
+                  </div>
+                </div>
+                <div class="two wide field">
+                    <label>เวลา</label>
+                </div>
+                <div class="six wide field">
+                  <div class="ui calendar" style="width:100%" id="time">
+                    <div class="ui input left icon">
+                      <i class="calendar icon"></i>
+                      <input type="text" name="time" autocomplete="off" [(ngModel)]="obj.time1" style="width:100%" placeholder="เวลา">
+                    </div>
+                  </div>
+                  <label class="custom-label-w-18">&nbsp;&nbsp;น.</label>
                 </div>
               </div>
 
@@ -233,20 +261,10 @@
               </div>
 
               <div class="inline fields">
-                <div class="sixteen wide field">
-                  <label class="custom-label-w-20">วันที่</label>
-                  <div class="ui calendar" style="width: 100%" id="end_date">
-                    <div class="ui input left icon">
-                      <i class="calendar icon"></i>
-                      <input type="text"  placeholder="วัน/เดือน/ปี">
-                    </div>
-                  </div>
+                <div class="three wide field">
+                    <label>ให้ท่านนำ</label>
                 </div>
-              </div>
-
-              <div class="inline fields">
-                <div class="sixteen wide field">
-                  <label class="custom-label-w-20">ให้ท่านนำ</label>
+                <div class="thirteen wide field">
                   <input type="text"  name="document" [(ngModel)]="obj.document"  required >
                 </div>
               </div>
