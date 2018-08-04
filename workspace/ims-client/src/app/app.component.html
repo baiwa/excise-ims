@@ -195,7 +195,7 @@
 
     <div class="right menu ">
         <a class="item " *ngIf="!authService.getLogin() " style="color:white; " [routerLink]="[ '/login'] ">เข้าสู่ระบบ</a>
-        <div class="item " *ngIf="authService.getLogin() " style=" color:White ">{{user.username}}</div>
+        <div class="item " *ngIf="authService.getLogin() " style=" color:White ">{{authService.getUser().username}}</div>
         <a class="item " *ngIf="authService.getLogin() " (click)="logout() " style=" color:White ">Logout</a>
     </div>
 </div>
