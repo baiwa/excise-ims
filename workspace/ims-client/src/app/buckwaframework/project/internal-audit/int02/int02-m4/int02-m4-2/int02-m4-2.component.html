@@ -1,0 +1,86 @@
+<div class="ui grid" style="margin: 2%">
+    <div class="sixteen wide column segments">
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+            <span>สรุปผลแบบสอบทานระบบการควบคุมภายใน</span>
+        </div>
+
+        <div class="ui attached segment">
+            <div class="ui grid">
+                <div class="ui centered fiveteen wide column">
+                    <div class="ui form">
+                        <div class="inline fields">
+                            <div class="two wide field">
+                                &nbsp;
+                            </div>
+                            <div class="six wide field">
+                                <label class="custom-label-w-20">จำนวนหน่วยงานที่ตอบกลับแบบสอบทาน :</label>
+                            </div>
+                            <div class="four wide field">
+                                <label class="custom-label-w-20" style="text-align: left;">????</label>
+                            </div>
+                            <div class="four wide field">
+                                <button class="ui mini orange button" type="button" (click)="show()">
+                                    <i class="save icon"></i>
+                                    รายชื่อ
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="ui vertical accordion menu" style="width: 100%;">
+                            <div class="item" *ngFor="let dataProvince of province let i = index">
+                                <div class="title" style="color: black;">
+                                    <div class="inline fields">
+                                        <div class="eight wide field">
+                                            <i class="dropdown icon"></i> {{dataProvince}}
+                                        </div>
+                                        <div class="four wide field">
+                                            ผ่านเกณฑ์ : 2
+                                        </div>
+                                        <div class="four wide field">
+                                            ไม่ผ่านเกณฑ์ : 3
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <table id="datatable" class="ui small celled table aligned hover">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" style="text-align: center !important">ด้าน</th>
+                                                <th rowspan="2" style="text-align: center !important">มี/ใช่</th>
+                                                <th rowspan="2" style="text-align: center !important">ไม่มี/ไม่ใช่</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let list of topics; let a = index">
+                                                <td class="center">{{list["0"]}}</td>
+                                                <td class="center">{{list["1"]}}</td>
+                                                <td class="center">{{list["2"]}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui bottom centered attached segment">
+            <div class="ui center aligned grid">
+                <div class="eight wide column">
+                    <!-- <button class="ui mini green button" type="submit">
+                        <i class="save icon"></i>
+                        สร้างเอกสาร
+                    </button>
+                    <button class="ui mini red button" (click)="onDiscard(false)" type="reset">
+                        <i class="times icon"></i>
+                        ยกเลิก
+                    </button> -->
+                    <button type="button" (click)="back()" class="ui mini grey button">กลับ</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

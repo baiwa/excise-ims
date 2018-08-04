@@ -1,15 +1,18 @@
 package th.co.baiwa.excise.report.service;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -27,11 +30,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
-import th.co.baiwa.buckwaframework.common.util.ThaiNumberUtils;
 import th.co.baiwa.excise.report.bean.ExampleBean;
-import th.co.baiwa.excise.report.controller.ReportController;
 import th.co.baiwa.excise.utils.BeanUtils;
-import th.co.baiwa.excise.report.bean.ContractBean;
 
 @Service
 public class ReportService {
@@ -151,5 +151,19 @@ public class ReportService {
 		ReportUtils.closeResourceFileInputStream(params);
 
 		return reportFile;
+	}
+
+	public void viewPdf(String name, HttpServletResponse response) throws Exception {
+		File file = new File(PATH_EXPORT + name + ".pdf");
+		byte[] reportFile = IOUtils.toByteArray(new FileInputStream(file)); // null
+
+		response.setContentType("application/pdf");
+		response.addHeader("Content-Disposition", "inline;filename=" + name + ".pdf");
+		response.setContentLength(reportFile.length);
+
+		OutputStream responseOutputStream = response.getOutputStream();
+		for (byte bytes : reportFile) {
+			responseOutputStream.write(bytes);
+		}
 	}
 }

@@ -12,6 +12,8 @@ export class Int02M4Component implements OnInit, OnDestroy {
   topics: any[][];
   province: any[];
 
+  step: any;
+
   constructor() {
     this.topics = [
       ["ด้านการเงิน", "2", "6", "1"],
@@ -19,7 +21,7 @@ export class Int02M4Component implements OnInit, OnDestroy {
       ["ด้านระบบ e-payment", "4", "1", "7"],
       ["ด้านระบบ GFMIS", "1", "3", "10"]
     ];
-
+    this.step = '';
     this.province = ["สสพ.แม่ฮ่องสอน", "สสพ.นนทบุรี", "สสพ.ลำปาง"];
   }
 
@@ -42,4 +44,9 @@ export class Int02M4Component implements OnInit, OnDestroy {
       $(".ui.modal.show").modal("hide");
     });
   }
+
+  getStep(event) {
+    this.step = event;
+  }
+  
 }

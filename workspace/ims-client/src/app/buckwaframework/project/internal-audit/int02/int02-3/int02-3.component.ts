@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { MessageBarService } from "../../../../common/services/message-bar.service";
 
-import { ExciseService } from "../../../../common/services/excise.service";
 import { AjaxService } from "../../../../common/services/ajax.service";
-
-declare var jQuery: any;
 declare var $: any;
 
 @Component({
@@ -24,18 +21,23 @@ export class Int023Component implements OnInit {
 
   headerId: number;
 
+  datas: Condition[];
+
   constructor(
     private ajax: AjaxService,
     private router: Router,
     private route: ActivatedRoute,
     private msg: MessageBarService
-    
-  ) { }
+
+  ) {
+    this.datas = [];
+    for(let i=0; i<3; i++) {
+      this.datas.push(new Condition());
+    }
+  }
 
   ngOnInit() {
     this.headerId = this.route.snapshot.queryParams["id"];
-
-    var router = this.router;
     console.log("initDatatable");
     const URL =
       AjaxService.CONTEXT_PATH + "ia/int02/queryQuestionnaireDetailByCriteria";
@@ -52,18 +54,16 @@ export class Int023Component implements OnInit {
       "ajax": {
         "type": "POST",
         "url": URL,
-        "data": {
-  
-        }
+        "data": {}
       },
       "columns": [
         {
-          render: function(data, type, full, meta) {
+          render: function (data, type, full, meta) {
             return `<input type="checkbox" name="chk${meta.row}" id="chk${
               meta.row
-            }" value="${$("<div/>")
-              .text(data)
-              .html()}">`;
+              }" value="${$("<div/>")
+                .text(data)
+                .html()}">`;
           },
           className: "center"
         },
@@ -72,27 +72,13 @@ export class Int023Component implements OnInit {
           "className": "left"
         }
       ]
-  
+
     });
-    
-
-
 
     /*-------add row--------*/
     this.numbers = [1];
     this.minorDetail = [];
-
-
   }
-
-  
-
-
-
-
-
-
-
 
   onAddField = () => {
     let num = this.numbers.length;
@@ -106,17 +92,16 @@ export class Int023Component implements OnInit {
       );
     }
   };
+
   onDelField = index => {
     this.numbers.splice(index, 1);
     this.minorDetail.splice(index, 1);
   };
 
   onSend = () => {
-
     this.mainDetail = (<HTMLInputElement>document.getElementById("mainDetail")).value;
     console.log("mainDetail :: " + this.mainDetail)
     console.log(this.minorDetail);
-
     /*--------------------Go Send back-end-----------------------------------*/
     const insretURL = "ia/int02/createQuestionnaireDetail";
     this.ajax.post(insretURL, {
@@ -133,4 +118,22 @@ export class Int023Component implements OnInit {
       }
     });
   };
+
+  addRow() {
+    this.datas.length < 5 && this.datas.push(new Condition());
+  }
+
+  delRow(index) {
+    this.datas.splice(index, 1);
+  }
+}
+
+class Condition {
+  [x: string]: any;
+  seq: any;
+  operator: any;
+  value1: any;
+  value2: any;
+  risk: any;
+  score: any;
 }

@@ -68,7 +68,7 @@ export class Int092Component implements OnInit {
 
   contractPdf(event) {
     event.preventDefault();
-    const url = "report/pdf/contract"; //contract
+    const url = "report/pdf/contract/try"; //contract
     const body = this.body;
     this.ajax.post(url, body, res => {
       if (res.status == 200 && res.statusText == "OK") {

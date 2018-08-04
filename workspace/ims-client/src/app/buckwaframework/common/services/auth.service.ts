@@ -84,19 +84,13 @@ export class AuthService {
   renderByPage(pages) {
     //console.log(this.user);
     var countInpage = 0;
-    var empty = '';
     if (this.authenPages != null && this.authenPages != undefined && this.authenPages.length > 0) {
       var pageList = pages.split(',');
-      var showPage = false;
       pageList.forEach(element => {
-
         if (this.authenPages.indexOf(element) >= 0) {
-          showPage = true;
           countInpage++;
-
         }
       });
-
     } else {
       return this.isLoggedIn;
     }

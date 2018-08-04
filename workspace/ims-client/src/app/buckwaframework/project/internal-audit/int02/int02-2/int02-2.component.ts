@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Location } from "@angular/common";
 import { AjaxService } from "../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
@@ -15,11 +16,18 @@ export class Int022Component implements OnInit {
   departmentName: any;
   departmentNameNew: any;
   datatable: any;
+  datas: Condition[];
   constructor(
     private router: Router,
     private ajax: AjaxService,
-    private messageBarService: MessageBarService
-  ) {}
+    private messageBarService: MessageBarService,
+    private _location: Location
+  ) {
+    this.datas = [];
+    for(let i=0; i<3; i++) {
+      this.datas.push(new Condition());
+    }
+  }
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
@@ -114,48 +122,43 @@ export class Int022Component implements OnInit {
         },
         {
           render: function(data, type, full, meta) {
-            return `<i class="edit icon" id="edit-${
+            return `<button class="ui icon yellow mini button" id="edit-${
               full.qtnReportHdrId
             }" value="edit-${
               full.qtnReportHdrId
-            }" ></i>&nbsp;&nbsp;&nbsp; <i class="trash alternate icon" id="delete-${
-              full.qtnReportHdrId
-            }" value="delete-${full.qtnReportHdrId}" ></i>`;
+            }"><i class="edit icon"></i></button>`;
           },
           className: "center"
         }
       ]
     });
     var table = this.datatable;
-    $("#datatable tbody").on("click", "i", function() {
+    $("#datatable tbody").on("click", "button", function() {
       var data = table.row($(this).parents("tr")).data();
       console.log(table.row($(this).parents("tr")).row());
       console.log(data.qtnReportHdrId);
-      var idClick = this.id;
-      var actionClick = idClick.split("-")[0];
-      console.log(actionClick);
-      if ("edit" == actionClick) {
+      if ("edit" == this.id.split("-")[0]) {
         router.navigate(["/int02/3"], {
-          queryParams: { id: idClick.split("-")[1] }
+          queryParams: { id: this.id.split("-")[1] }
         });
       } else {
         //delete case
-        this.messageBarService.comfirm(res => {
-          if (!res) return false;
-          const deleteURL = `preferences/userManagement/`;
-          this.ajaxService.delete(
-            deleteURL,
-            (success: Response) => {
-              let body: any = success.json();
-              this.messageBarService.success("ลบข้อมูลสำเร็จ.");
-              this.search();
-            },
-            (error: Response) => {
-              let body: any = error.json();
-              this.messageBarService.error(body.error);
-            }
-          );
-        }, "ยืนยันการลบ.");
+        // this.messageBarService.comfirm(res => {
+        //   if (!res) return false;
+        //   const deleteURL = `preferences/userManagement/`;
+        //   this.ajaxService.delete(
+        //     deleteURL,
+        //     (success: Response) => {
+        //       let body: any = success.json();
+        //       this.messageBarService.success("ลบข้อมูลสำเร็จ.");
+        //       this.search();
+        //     },
+        //     (error: Response) => {
+        //       let body: any = error.json();
+        //       this.messageBarService.error(body.error);
+        //     }
+        //   );
+        // }, "ยืนยันการลบ.");
       }
     });
 
@@ -186,12 +189,8 @@ export class Int022Component implements OnInit {
     });
   }
 
-  clickEditFunction(index) {
-    console.log(index);
-  }
-
-  clickDeleteFunctionFunction(index) {
-    console.log(index);
+  onCancel(): void {
+    this.router.navigate(['/int02/1']);
   }
 
   popupEditData() {
@@ -201,4 +200,22 @@ export class Int022Component implements OnInit {
   closePopupEdit() {
     $("#modalEditData").modal("hide");
   }
+
+  addRow() {
+    this.datas.length < 5 && this.datas.push(new Condition());
+  }
+
+  delRow(index) {
+    this.datas.splice(index, 1);
+  }
+}
+
+class Condition {
+  [x: string]: any;
+  seq: any;
+  operator: any;
+  value1: any;
+  value2: any;
+  risk: any;
+  score: any;
 }

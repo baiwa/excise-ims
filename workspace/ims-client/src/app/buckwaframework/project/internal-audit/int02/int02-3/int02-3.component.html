@@ -1,123 +1,183 @@
 <form (submit)="onSend()">
-<div class="ui grid">
-  <div class="sixteen wide column">
-    <h2 class="ui header">ตรวจสอบภายใน</h2>
+  <div class="ui grid">
+    <div class="sixteen wide column">
+      <h2 class="ui header">ตรวจสอบภายใน</h2>
 
-    <div class="ui top attached header">
-      <span>แบบสอบทานระบบการควบคุมภายใน ด้านการเงิน</span>
-    </div>
+      <div class="ui top attached header">
+        <span>แบบสอบทานระบบการควบคุมภายใน ด้านการเงิน</span>
+      </div>
 
-    <div class="ui attached segment">
-      <div class="ui form">
+      <div class="ui attached segment">
+        <div class="ui form">
 
-        <div class="inline fields">
-          <div class="ten wide field">
-            <label>รายละเอียดแบบสอบทาน (เดิม)</label>
-          </div>
-          <div class="six wide field">
-            <label>Search:&nbsp;&nbsp;</label>
-            <div class="ui left icon input">
-              <i class="search icon"></i>
-              <input type="text" placeholder="Search..." class="custom" name="" id="" >
+          <div class="inline fields">
+            <div class="ten wide field">
+              <label>รายละเอียดแบบสอบทาน (เดิม)</label>
+            </div>
+            <div class="six wide field">
+              <label>Search:&nbsp;&nbsp;</label>
+              <div class="ui left icon input">
+                <i class="search icon"></i>
+                <input type="text" placeholder="Search..." class="custom" name="" id="">
+              </div>
             </div>
           </div>
-        </div>
-
-      </div>
-    </div>
-    
-    <div class="ui segment ">
-      <div class="ui grid ">
-        <div class="sixteen wide column ">
-
-          <table id="datatable" class="ui small celled table aligned hover ">
-            <thead>
-              <tr>
-                <th style="text-align: center !important ;width: 5%"></th>
-                <th style="text-align: center !important ;width: 95%">รายการ</th>
-              </tr>
-            </thead>
-            <tbody>
-              
-            </tbody>
-          </table>
 
         </div>
       </div>
-    </div>
+
+      <div class="ui segment ">
+        <div class="ui grid ">
+          <div class="sixteen wide column ">
+
+            <table id="datatable" class="ui small celled table aligned hover ">
+              <thead>
+                <tr>
+                  <th style="text-align: center !important ;width: 5%"></th>
+                  <th style="text-align: center !important ;width: 95%">รายการ</th>
+                </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
 
 
-    <div class="ui attached segment">
-      <div class="ui form">
+      <div class="ui attached segment">
+        <div class="ui form">
 
           <div class="inline fields">
             <div class="ten wide field">
               <label>รายละเอียดแบบสอบทาน (ใหม่)</label>
             </div>
           </div>
-          
+
           <div class="inline fields">
-              <div class="two wide field ">
-                  <label>ข้อหลัก</label>
-              </div>
-              <div class="twelve wide field ">
-                  <input  class="custom" type="text" id="mainDetail" name="mainDetail" value="" [attr.required]="true" >
-              </div>
+            <div class="two wide field ">
+              <label>ข้อหลัก</label>
+            </div>
+            <div class="twelve wide field ">
+              <input class="custom" type="text" id="mainDetail" name="mainDetail" value="" [attr.required]="true">
+            </div>
           </div>
-          <div  class="inline fields" *ngFor="let num of numbers; let i = index" [attr.data-index]="i">
-              <div class="two wide field ">
-                  <label>ข้อย่อย</label>
-              </div>
-              <div class="ten wide field ">
-                  <input  class="custom" type="text" id="minorDetail{{i}}" name="minorDetail{{i}}" [(ngModel)]="minorDetail[i]" value="" [attr.required]="true" >
-              </div>
-              <div class="two wide field ">
-                  <a   (click)="onDelField(i)"  style="cursor: pointer;color: red">
-                    <i class="delete icon"></i>
-                  </a>
-              </div>
-          </div>
-          <div class="inline fields">
-              <div class="two wide field "></div>
-              <div class="ten wide field "></div>
-              <div class="two wide field ">
-                  <a   class=" primary  " (click)="onAddField()" style="cursor:  pointer;">
-                    <i class="add icon"></i>
-                  </a>
-              </div>
+          <div class="inline fields" *ngFor="let num of numbers; let i = index" [attr.data-index]="i">
+            <div class="two wide field ">
+              <label>ข้อย่อย</label>
+            </div>
+            <div class="ten wide field ">
+              <input class="custom" type="text" id="minorDetail{{i}}" name="minorDetail{{i}}" [(ngModel)]="minorDetail[i]" value="" [attr.required]="true">
+            </div>
+            <div class="two wide field ">
+              <a (click)="onDelField(i)" style="cursor: pointer;color: red">
+                <i class="delete icon"></i>
+              </a>
+            </div>
           </div>
           <div class="inline fields">
-              <div class="two wide field ">
-              </div>
-              <div class="field">
-                  <button type="button" style="margin-left: auto" class="ui mini primary button left floated" >
-                    <i class="add icon"></i>
-                    เพิ่มข้อหลัก
-                  </button>
-                  <button type="submit" style="margin-left: auto" class="ui mini primary button left floated" >
-                      <i class="save icon"></i>
-                      บันทึก
-                  </button>
-              </div>
+            <div class="two wide field "></div>
+            <div class="ten wide field "></div>
+            <div class="two wide field ">
+              <a class=" primary  " (click)="onAddField()" style="cursor:  pointer;">
+                <i class="add icon"></i>
+              </a>
+            </div>
+          </div>
+          <div class="inline fields">
+            <div class="two wide field ">
+            </div>
+            <div class="field">
+              <button type="button" style="margin-left: auto" class="ui mini primary button left floated">
+                <i class="add icon"></i>
+                เพิ่มข้อหลัก
+              </button>
+              <button type="submit" style="margin-left: auto" class="ui mini primary button left floated">
+                <i class="save icon"></i>
+                บันทึก
+              </button>
+            </div>
           </div>
 
-        
         </div>
       </div>
 
-      </div>
-
-
+    </div>
   </div>
-
-
-  <div class="ui center aligned grid">
+  <div class="ui segment">
+    <div class="ui grid">
       <div class="sixteen wide column">
-          <button class="ui mini primary button" >
-              <i class="save icon"></i>
-              บันทึก
-          </button>
+        <table class="ui small celled table aligned hover">
+          <thead>
+            <tr>
+              <th style="text-align: center">ที่</th>
+              <th style="text-align: center">เงื่อนไข</th>
+              <th style="text-align: center">ค่าที่ 1</th>
+              <th style="text-align: center">ถึง</th>
+              <th style="text-align: center">ค่าที่ 2</th>
+              <th style="text-align: center">ระดับความเสียง</th>
+              <th style="text-align: center">คะแนนความเสียง</th>
+              <th style="text-align: center">#</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of datas; let i=index">
+              <td class="aligned center">{{i+1}}</td>
+              <td class="aligned center">
+                <select class="ui fluid dropdown">
+                  <option value="ระหว่าง">ระหว่าง</option>
+                  <option value="มากกว่า">มากกว่า</option>
+                  <option value="น้อยกว่า">น้อยกว่า</option>
+                  <option value="เท่ากับ">เท่ากับ</option>
+                </select>
+              </td>
+              <td class="aligned center">
+                <div class="ui input">
+                  <input type="text">
+                </div>
+              </td>
+              <td class="aligned center">-</td>
+              <td class="aligned center">
+                <div class="ui input">
+                  <input type="text">
+                </div>
+              </td>
+              <td class="aligned center">
+                <select class="ui fluid dropdown">
+                  <option value="ต่ำมาก">ต่ำมาก</option>
+                  <option value="ต่ำ">ต่ำ</option>
+                  <option value="ปานกลาง">ปานกลาง</option>
+                  <option value="สูง">สูง</option>
+                  <option value="สูงมาก">สูงมาก</option>
+                </select>
+              </td>
+              <td class="aligned center">
+                <div class="ui input">
+                  <input type="text">
+                </div>
+              </td>
+              <td class="aligned center">
+                <button class="ui icon red mini button" type="button" (click)="delRow(i)">
+                  <i class="times icon"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="ui icon green left floated mini button" type="button" (click)="addRow()">
+          <i class="plus icon"></i>
+        </button>
       </div>
+    </div>
+  </div>
+  <div class="ui center aligned grid">
+    <div class="sixteen wide column">
+      <button class="ui mini primary button">
+        <i class="save icon"></i>
+        บันทึก
+      </button>
+    </div>
   </div>
 </form>
- 

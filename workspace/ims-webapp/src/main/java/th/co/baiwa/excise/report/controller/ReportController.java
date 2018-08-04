@@ -1,22 +1,15 @@
 package th.co.baiwa.excise.report.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,14 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 import com.lowagie.text.BadElementException;
 
 import net.sf.jasperreports.engine.JRException;
 import th.co.baiwa.buckwaframework.common.util.ThaiNumberUtils;
 import th.co.baiwa.excise.report.bean.ContractBean;
 import th.co.baiwa.excise.report.service.ReportService;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
 @RequestMapping("api/report")
@@ -42,28 +33,14 @@ public class ReportController {
 
 	@Autowired
 	private ReportService reportService;
-	
-	@Value("${app.datasource.path.report}")
-	private String path;
 
 	@GetMapping("/pdf/{name}/file")
 	@ResponseBody
 	public void pdfSomething(@PathVariable("name") String name, HttpServletResponse response) throws Exception {
-
-		File file = new File(path + name + ".pdf");
-		byte[] reportFile = IOUtils.toByteArray(new FileInputStream(file)); // null
-
-		response.setContentType("application/pdf");
-		response.addHeader("Content-Disposition", "inline;filename=" + name + ".pdf");
-		response.setContentLength(reportFile.length);
-
-		OutputStream responseOutputStream = response.getOutputStream();
-		for (byte bytes : reportFile) {
-			responseOutputStream.write(bytes);
-		}
+		reportService.viewPdf(name, response);
 	}
 
-	@PostMapping("/pdf/contract")
+	@PostMapping("/pdf/contract/try")
 	@ResponseBody
 	public void pdfContract(@RequestBody ContractBean contract) throws Exception {
 		DecimalFormat formatter = new DecimalFormat("#,###.00");

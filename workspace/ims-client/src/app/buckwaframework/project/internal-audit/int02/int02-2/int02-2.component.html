@@ -1,18 +1,13 @@
 <div id="int02-2" class="ui grid">
-
-
-
   <div class="sixteen wide column">
-    <h2 class="ui header">ตรวจสอบภายใน</h2>
 
+    <h2 class="ui header">ตรวจสอบภายใน</h2>
     <div class="ui top attached header">
       <span>แบบสอบทานระบบการควบคุมภายใน</span>
     </div>
 
-
     <div class="ui attached segment">
       <div class="ui form">
-
         <div class="inline fields">
           <div class="field">
             <label>ด้านที่ตรวจ (เดิม)</label>
@@ -20,7 +15,6 @@
               <option aria-placeholder="ด้านที่ตรวจ (เดิม)"></option>
               <option *ngFor="let list of departmentNameArr" ng-value="list.value">{{list.description}}</option>
             </select>
-
           </div>
           <div class="field">
             <label>ด้านที่ตรวจ (ใหม่)</label>
@@ -39,16 +33,12 @@
             </button>
           </div>
         </div>
-
       </div>
     </div>
 
     <div class="ui segment">
-
       <div class="ui grid">
-
         <div class="sixteen wide column ">
-
           <table id="datatable" class="ui small celled table aligned hover">
             <thead>
               <tr>
@@ -61,25 +51,91 @@
             <tbody>
             </tbody>
           </table>
-          <div class="inline fields">
-
-
-            <button type="button" style="margin-left: auto" class="ui mini primary button center floated">
-              <i class="angle left icon"></i>
-              กลับ
-            </button>
-
-
-            <button type="button" style="margin-left: auto" class="ui mini primary button center floated">
-              <i class="save icon"></i>
-              ส่งแบบสอบทาน
-            </button>
-
-            <div class="inline fields"></div>
-
-          </div>
-
         </div>
       </div>
     </div>
+
+    <div class="ui segment">
+      <div class="ui grid">
+        <div class="sixteen wide column">
+          <table class="ui small celled table aligned hover">
+            <thead>
+              <tr>
+                <th style="text-align: center">ที่</th>
+                <th style="text-align: center">เงื่อนไข</th>
+                <th style="text-align: center">ค่าที่ 1</th>
+                <th style="text-align: center">ถึง</th>
+                <th style="text-align: center">ค่าที่ 2</th>
+                <th style="text-align: center">ระดับความเสียง</th>
+                <th style="text-align: center">คะแนนความเสียง</th>
+                <th style="text-align: center">#</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of datas; let i=index">
+                <td class="aligned center">{{i+1}}</td>
+                <td class="aligned center">
+                  <select class="ui fluid dropdown">
+                    <option value="ระหว่าง">ระหว่าง</option>
+                    <option value="มากกว่า">มากกว่า</option>
+                    <option value="น้อยกว่า">น้อยกว่า</option>
+                    <option value="เท่ากับ">เท่ากับ</option>
+                  </select>
+                </td>
+                <td class="aligned center">
+                  <div class="ui input">
+                    <input type="text">
+                  </div>
+                </td>
+                <td class="aligned center">-</td>
+                <td class="aligned center">
+                  <div class="ui input">
+                    <input type="text">
+                  </div>
+                </td>
+                <td class="aligned center">
+                  <select class="ui fluid dropdown">
+                    <option value="ต่ำมาก">ต่ำมาก</option>
+                    <option value="ต่ำ">ต่ำ</option>
+                    <option value="ปานกลาง">ปานกลาง</option>
+                    <option value="สูง">สูง</option>
+                    <option value="สูงมาก">สูงมาก</option>
+                  </select>
+                </td>
+                <td class="aligned center">
+                  <div class="ui input">
+                    <input type="text">
+                  </div>
+                </td>
+                <td class="aligned center">
+                  <button class="ui icon red mini button" type="button" (click)="delRow(i)">
+                    <i class="times icon"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="ui icon green left floated mini button" type="button" (click)="addRow()">
+            <i class="plus icon"></i>
+          </button>
+        </div>
+        <div class="sixteen wide column">
+          <div class="ui centered grid inline fields" style="padding-bottom: 1em">
+            <div class="ui mini buttons">
+              <button type="button" (click)="onCancel()" style="margin-left: auto" class="ui mini grey button center floated">
+                <i class="angle left icon"></i>
+                กลับ
+              </button>
+              <button class="ui primary mini button">บันทึก</button>
+              <button type="button" style="margin-left: auto" class="ui mini green button center floated">
+                <i class="save icon"></i>
+                ส่งแบบสอบทาน
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
+</div>

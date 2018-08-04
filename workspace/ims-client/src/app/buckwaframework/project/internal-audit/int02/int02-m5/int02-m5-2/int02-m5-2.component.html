@@ -1,0 +1,103 @@
+<div class="ui grid" style="margin: 2%">
+    <div class="sixteen wide column segments">
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+            <span>ค้นหารายงานการประเมินผลและการปรับปรุงการควบคุมภายใน (แบบ ปย.2)</span>
+        </div>
+        <div class="ui attached segment">
+            <div class="ui centered grid row">
+                <div class="ui centered fourteen wide column">
+                    <div class="ui centered row grid">
+                        <div class="ui centered fifteen wide column" style="padding: 14px 14px 0 14px !important;">
+                            <div class="ui form">
+                                <div class="inline aligned center fields">
+                                    <div class="six wide centered field">
+                                        <label>สรรพสามิตภาค: </label>
+                                    </div>
+                                    <div class="ten centered wide field">
+                                        <div class="ui input">
+                                            <input type="text">
+                                        </div>
+                                    </div>
+                                    <div class="six wide centered field">
+                                        <label>สรรพสามิตพื้นที่: </label>
+                                    </div>
+                                    <div class="ten centered wide field">
+                                        <div class="ui input">
+                                            <input type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="inline aligned center fields">
+                                    <div class="six wide centered field">
+                                        <label>สรรพสามิตพื้นที่สาขา: </label>
+                                    </div>
+                                    <div class="ten centered wide field">
+                                        <div class="ui input">
+                                            <input type="text">
+                                        </div>
+                                    </div>
+                                    <div class="six wide centered field">
+                                        <label>ปีงบประมาณ: </label>
+                                    </div>
+                                    <div class="ten centered wide field">
+                                        <div class="ui input">
+                                            <input type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui centered row grid">
+                    <div class="ui centered two wide column" style="padding: 0;">
+                        <div class="ui form">
+                            <div class="inline fields">
+                                <div class="sixteen aligned center wide field">
+                                    <button class="fluid ui green mini button" (click)="search()" type="button">ค้นหา</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sixteen wide column segments">
+        <div class="ui attached segment">
+            <table class="ui celled table" id="datatable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ที่</th>
+                        <th>ชื่อส่วนงานย่อย</th>
+                        <th>ปีงบประมาณ</th>
+                        <th>วันที่บันทึก</th>
+                        <th>ผู้บันทึก</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let i of list">
+                        <td>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="chk{{i}}">
+                                <label></label>
+                            </div>
+                        </td>
+                        <td>{{i}}</td>
+                        <td>ชื่อส่วนงานย่อย สำนักงานสรรพสามิตพื้นที่เชียงราย สาขาเมืองเชียงราย</td>
+                        <td>2561</td>
+                        <td>05/07/2561</td>
+                        <td>นางสาวจิตดี ใจมั่น</td>
+                        <td>
+                            <button class="ui mini button">รายละเอียด</button>
+                            <button class="ui mini button">export</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
