@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AjaxService, MessageBarService } from '../../../../../common/services';
+import { ActivatedRoute } from '@angular/router';
 declare var jQuery: any;
 declare var $: any;
 
@@ -10,17 +11,22 @@ declare var $: any;
 })
 export class Ts0113Component implements OnInit {
 
-  
+
   @Output() discard = new EventEmitter<any>();
   numbers: number[];
   obj: Ts0113;
   add: number;
 
-  constructor(   private messageBarService: MessageBarService,
+
+  constructor(
+    private messageBarService: MessageBarService,
+    private route: ActivatedRoute,
     private ajax: AjaxService) {
     this.add = 0;
     this.numbers = [1, 2, 3];
     this.obj = new Ts0113();
+
+    this.obj.exciseId = this.route.snapshot.queryParams["exciseId"];
   }
 
   ngOnInit() {
@@ -49,21 +55,44 @@ export class Ts0113Component implements OnInit {
     this.numbers.splice(index, 1);
   };
 
-  
+  optionAddress = () => {
+    const optionURL = "excise/detail/objectAddressByExciseId";
+    this.ajax.post(optionURL, {
+      exciseId: this.obj.exciseId
+    }, res => {
+      console.log(res.json());
+      var dat = res.json();
+      this.obj.homeNumber = dat.homeNumber;
+      this.obj.byWay = dat.byWay;
+      this.obj.street = dat.street;
+      this.obj.tambol = dat.tambol;
+      this.obj.district = dat.district;
+      this.obj.province = dat.province;
+      this.obj.zipCode = dat.zipCode;
+    });
+  };
+
+
   onSubmit = e => {
     e.preventDefault();
     const url = "report/pdf/ts/mis_t_s_01_13";
-  
+    if (this.obj.agreeBox == "factory") {
+      this.obj.factory1 = true;
+      this.obj.brothel1 = false;
+      this.obj.importer1 = false;
+    } else if (this.obj.agreeBox == " brothel1") {
+      this.obj.factory1 = false;
+      this.obj. brothel1 = true;
+      this.obj.importer1 = false;
+    } else if (this.obj.agreeBox == "importer1") {
+      this.obj.factory1 = false;
+      this.obj.importer1 = false;
+      this.obj.importer1 = true;
+    }
     this.ajax.post(url, `'${JSON.stringify(this.obj).toString()}'`, res => {
       if (res.status == 200 && res.statusText == "OK") {
-        // var byteArray = new Uint8Array(res.json());
-        // var blob = new Blob([byteArray], { type: "application/pdf" });
-        // if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-        //   window.navigator.msSaveOrOpenBlob(blob);
-        // } else {
-        //   var objectUrl = URL.createObjectURL(blob);
-        //   window.open(objectUrl);
-        // }
+
+
         window.open("/ims-webapp/api/report/pdf/mis_t_s_01_13/file");
       }
     });
@@ -71,13 +100,12 @@ export class Ts0113Component implements OnInit {
 }
 
 class Ts0113 {
-  
-  factory1: boolean = false;
-  brothel1: boolean = false;
-  importer1: boolean = false;
+  exciseId: string;
+  logo: string = "logo1.jpg";
+ 
   myName1: string;
   date1: string;
-  monht1: string; 
+  monht1: string;
   buddhist1: string;
   postion1: string;
   Nameplace1: string;
@@ -87,7 +115,28 @@ class Ts0113 {
   checktime1: string;
   dateCheck1: string;
   acditor1: string;
- 
+
+
+
+  agreeBox: string;
+  factory1: boolean = false;
+  brothel1: boolean = false;
+  importer1: boolean = false;
+
+
+  homeNumber: string;
+  moo: string;
+  building: string;
+  level: string;
+  byWay: string;
+  street: string;
+  tambol: string;
+  district: string;
+  province: string;
+  zipCode: string;
+
+
+
 
 
 }

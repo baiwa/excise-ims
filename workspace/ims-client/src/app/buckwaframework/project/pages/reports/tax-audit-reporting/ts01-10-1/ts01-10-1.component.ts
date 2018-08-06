@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-
+import { AjaxService } from "../../../../../common/services";
 import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
 declare var jQuery: any;
 declare var $: any;
@@ -10,36 +10,15 @@ declare var $: any;
   styleUrls: ['./ts01-10-1.component.css']
 })
 export class Ts01101Component implements OnInit {
-
+  obj: Ts011001;
   @Output() discard = new EventEmitter<any>();
 
-  numbers:number[];
-
-  constructor() {
-    this.numbers = [1,2,3];
+  constructor(private ajax: AjaxService) {
+    this.obj = new Ts011001();
   }
 
   ngOnInit() {
-    $('#begin_date').calendar({
-      type: 'date',
-      text: TextDateTH,
-      formatter: formatter()
-    });
-    $('#end_date').calendar({
-      type: 'date',
-      text: TextDateTH,
-      formatter: formatter()
-    });
-    $('#nut_date').calendar({
-      type: 'date',
-      text: TextDateTH,
-      formatter: formatter()
-    });
-    $('#nut1_date').calendar({
-      type: 'date',
-      text: TextDateTH,
-      formatter: formatter()
-    });
+   
   }
 
   onDiscard = () => {
@@ -48,4 +27,19 @@ export class Ts01101Component implements OnInit {
     this.discard.emit(false);
   };
   
+  onSubmit = e => {
+    e.preventDefault();
+    const url = "report/pdf/ts/mis_t_s_01_10_1";
+    this.ajax.post(url, `'${JSON.stringify(this.obj).toString()}'`, res => {
+      if (res.status == 200 && res.statusText == "OK") {
+        window.open("/ims-webapp/api/report/pdf/mis_t_s_01_10_1/file");
+      }
+    });
+  };
+
+}
+class Ts011001 {
+  [x: string]: any;
+  number: string;
+  item: string;
 }

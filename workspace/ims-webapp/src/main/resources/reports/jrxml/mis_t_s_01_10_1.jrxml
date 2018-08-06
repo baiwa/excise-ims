@@ -1,68 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="N_mis01-2" pageWidth="595" pageHeight="842" columnWidth="482" leftMargin="85" rightMargin="28" topMargin="28" bottomMargin="85" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="N_mis01-2" pageWidth="595" pageHeight="842" columnWidth="449" leftMargin="90" rightMargin="56" topMargin="56" bottomMargin="70" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="Angsana New" fontSize="18" isBold="true"/>
-	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="Angsana New" fontSize="14"/>
-	<style name="data" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="Angsana New" fontSize="16">
+	<property name="com.jaspersoft.studio.unit." value="cm"/>
+	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="19" isBold="true"/>
+	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="17"/>
+	<style name="data" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="17">
 		<box>
 			<pen lineWidth="0.0" lineStyle="Dotted"/>
 			<bottomPen lineWidth="3.0" lineStyle="Dotted"/>
 		</box>
 	</style>
+	<parameter name="number" class="java.lang.String"/>
+	<parameter name="item" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<pageHeader>
-		<band height="659" splitType="Stretch">
+	<detail>
+		<band height="692" splitType="Stretch">
 			<textField>
-				<reportElement style="Topic" x="377" y="44" width="76" height="26" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<reportElement style="Topic" x="369" y="23" width="80" height="26" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตส. ๐๑-๑๐/๑"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="367" y="16" width="33" height="18" uuid="b332243d-6a0f-4901-af6b-32e1ad830be3"/>
+				<reportElement style="TextDetail" x="374" y="0" width="30" height="23" uuid="b332243d-6a0f-4901-af6b-32e1ad830be3"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["แผ่นที่"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="400" y="16" width="54" height="18" uuid="abfdfbab-5142-4105-b780-de9e49b9729a"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="data" x="404" y="0" width="45" height="23" uuid="abfdfbab-5142-4105-b780-de9e49b9729a"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{number}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="0" y="52" width="72" height="18" uuid="327ae8d9-9a34-4b9a-aa87-43a32e69db11"/>
+				<reportElement style="TextDetail" x="0" y="27" width="78" height="23" uuid="327ae8d9-9a34-4b9a-aa87-43a32e69db11"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["คำให้การต่อ ของ"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="72" y="52" width="134" height="18" uuid="ea6bb8f5-08ef-4355-8ce0-f120bc0bde72"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="data" x="78" y="27" width="152" height="23" uuid="ea6bb8f5-08ef-4355-8ce0-f120bc0bde72"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="1" y="276" width="453" height="18" uuid="ee244bdf-6244-4985-8786-2a42cb528932"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="404" y="0" width="45" height="17" uuid="66d42d4c-d7a4-4ed1-86ed-d653beb3fc70"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -70,10 +65,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="0" y="295" width="453" height="18" uuid="6beb0ba1-e58e-47b8-a3b0-0e6be6e8e4f4"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="78" y="27" width="152" height="17" uuid="ed7fc406-d799-4827-81da-5f8bec7de1bb"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -81,21 +76,22 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="1" y="332" width="453" height="18" uuid="939efbb7-9b07-4434-b620-7f31ec78b075"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="data" x="0" y="51" width="449" height="582" uuid="19b01f8f-e645-4a9a-b2a5-1fafa8b1b07d"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$P{item}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="1" y="313" width="453" height="18" uuid="95c9ea10-dfb5-4141-bea0-0adea72b19d5"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="51" width="449" height="17" uuid="3c52ef63-20fa-4100-935d-64bb8b500003"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -103,10 +99,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="1" y="370" width="453" height="18" uuid="4c754e2d-8b7d-4096-b2c1-cafbf4856892"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="73" width="449" height="17" uuid="8f381522-436d-481e-8277-6ce857001873"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -114,10 +110,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="1" y="351" width="453" height="18" uuid="3d06d452-a5fe-4402-a404-aa74e54691f3"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="116" width="449" height="17" uuid="e31abf37-0d8b-4a4e-9363-dd03ccba6d95"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -125,10 +121,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="1" y="407" width="453" height="18" uuid="064a7994-97ae-4b0e-ad50-574ea4cfa788"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="95" width="449" height="17" uuid="220bd9e3-5ba3-4f20-859c-64f4b72313ba"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -136,10 +132,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="1" y="388" width="453" height="18" uuid="a3c2ae8d-5681-47d5-998d-a63b56361aaa"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="159" width="449" height="17" uuid="5e4f2dc5-29bb-485c-8261-70c938532454"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -147,10 +143,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="1" y="444" width="453" height="18" uuid="b8d6011e-d437-4a60-90e0-cdb3fd36c47b"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="137" width="449" height="17" uuid="79ae5fc0-324e-41f5-aff5-fd1844f646a1"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -158,10 +154,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="1" y="425" width="453" height="18" uuid="a33f3bca-cb02-402c-a985-7d9897ae40b8"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="201" width="449" height="17" uuid="480943c8-ffc5-4bba-af14-72cf750a2b86"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -169,10 +165,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="1" y="463" width="453" height="18" uuid="60eae4b5-6a8f-4161-ae9d-3c6ec5544f0c"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="180" width="449" height="17" uuid="19474785-1030-47d4-9a88-bece059ee5c5"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -180,10 +176,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="1" y="70" width="453" height="18" uuid="12b04530-a5ae-4238-a7a1-b5ee3b4f3128"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="244" width="449" height="17" uuid="b72e4d23-4932-4ff4-8c6d-8b1cfe17661c"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -191,10 +187,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="1" y="89" width="453" height="18" uuid="831f14d2-52c0-4fdd-a841-85d1b881a2f7"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="223" width="449" height="17" uuid="4fba4fc7-3acc-40c4-a37e-4c3c182e4cce"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -202,10 +198,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="2" y="126" width="453" height="18" uuid="61398122-4b9b-47ba-b0c5-8028b3121e93"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="265" width="449" height="17" uuid="c23a86cd-115b-4f2e-a318-835c405be1df"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -213,10 +209,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="2" y="107" width="453" height="18" uuid="320fb73c-909c-45e6-a2ea-e05ba1e2f9fa"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="307" width="449" height="17" uuid="3909f114-d5b2-4dc5-8dc0-eef2237428a3"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -224,10 +220,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="2" y="164" width="453" height="18" uuid="43ff0095-c2cd-4a49-ab2c-d0ef36be493a"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="287" width="449" height="17" uuid="4bf3bc6d-5efb-47ec-922a-cd0b9a4d09e0"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -235,10 +231,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="2" y="145" width="453" height="18" uuid="dae0a5f7-2b44-4571-8400-d51c8723673b"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="350" width="449" height="17" uuid="70e0208b-261b-4c04-9473-8c762720f42f"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -246,10 +242,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="2" y="201" width="453" height="18" uuid="2f875cf2-543c-4f08-9c12-36f3f0974954"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="328" width="449" height="17" uuid="2f49e895-e5f0-428e-a67a-a3bea92e0b9e"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -257,10 +253,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="2" y="182" width="453" height="18" uuid="9d436fd2-fa44-4b75-8673-1850d13d9557"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="392" width="449" height="17" uuid="4cb0b608-d54e-4a3e-bfea-7675ac89d051"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -268,10 +264,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="2" y="238" width="453" height="18" uuid="68b67fda-ae89-4aeb-9f2a-dc3cc15f6cd0"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="371" width="449" height="17" uuid="44ece96c-3ce0-43fe-bf29-424b1919d349"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -279,10 +275,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="2" y="219" width="453" height="18" uuid="7435eed1-cb2e-4cb1-92eb-be581678ba7e"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="435" width="449" height="17" uuid="27622ad1-e5c9-40d3-a5ce-0e0bebfd0b07"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -290,10 +286,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="2" y="257" width="453" height="18" uuid="38b5809f-f769-4078-b446-211cd5f18e09"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="414" width="449" height="17" uuid="4f3412b8-ff2b-4d6c-a504-90330187fab8"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -301,10 +297,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="0" y="482" width="453" height="18" uuid="a7e4cf7f-3ba1-440c-9148-2f2d492f9726"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="456" width="449" height="17" uuid="251fe18b-bec2-45d5-9cdb-bd8720aa51c8"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -312,10 +308,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="0" y="463" width="453" height="18" uuid="f7932108-05fb-4367-b069-15611ef3b1b7"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="499" width="449" height="17" uuid="cab66393-9132-4efc-b761-1d4786b07ddb"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -323,10 +319,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="0" y="519" width="453" height="18" uuid="3eae4589-9b2c-4832-8837-ab25b08409be"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="478" width="449" height="17" uuid="28120b61-b9a0-4eea-962e-b516f2b3b393"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -334,10 +330,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="0" y="500" width="453" height="18" uuid="96b881eb-9270-474a-a34a-3d2acc0a272c"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="542" width="449" height="17" uuid="fbcab1cf-8e98-49db-85e2-ea79c50cf9cf"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -345,10 +341,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="0" y="556" width="453" height="18" uuid="faf70707-3333-4ae2-910a-40fed406d079"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="520" width="449" height="17" uuid="e53460cf-6dc9-4955-8d1c-9f3f58a20e60"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -356,10 +352,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="0" y="537" width="453" height="18" uuid="7364eef7-748a-4540-8cc8-69259e3cb6fd"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="605" width="449" height="17" uuid="9cd911c9-84e8-44e8-a8f2-7e591929eca9"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -367,10 +363,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="data" x="0" y="575" width="453" height="18" uuid="09afc936-dee2-4361-a577-f3b591d80aec"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="583" width="449" height="17" uuid="69dc9fdb-ea4e-4594-a111-e90e72edb3e3"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -378,8 +374,19 @@
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="562" width="449" height="17" uuid="b8d1eddf-70c4-4824-810c-8f7cd8a71246"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 			</textField>
 		</band>
-	</pageHeader>
+	</detail>
 </jasperReport>
