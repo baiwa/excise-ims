@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +25,14 @@ import th.co.baiwa.excise.ws.CurrentDateService;
 @Service
 public class DateConstant {
 
+	private static Logger logger = LoggerFactory.getLogger(DateConstant.class);
+	
 	public static final Locale LOCAL_TH = new Locale("th", "TH");
 //	public static final String[] MONTH_SHOT_NAMES = { "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.","ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค." };
 //	public static final String[] MONTH_NAMES = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
 	public static final String YYYYMMDD = "yyyyMMdd";
+	
+	public final static String DD_MM_YYYY = "dd/MM/yyyy";
 	
 	@Autowired
 	private static CurrentDateService currentDateService;
@@ -118,5 +125,18 @@ public class DateConstant {
 	public static String DateToString(Date date, String pattern, Locale locale) {
 		SimpleDateFormat format = new SimpleDateFormat(pattern, locale);
 		return format.format(date);
+	}
+	
+	public static String convertDateEnDDMMYYYYFormat(Date date) {
+		String dateString = "";
+		try {
+			if (date != null) {
+				dateString = DateFormatUtils.format(date, DD_MM_YYYY);
+			}
+		} catch (Exception e) {
+			logger.error("Error convertDateEnDDMMYYYYFormat : ", e);
+		}
+
+		return dateString;
 	}
 }
