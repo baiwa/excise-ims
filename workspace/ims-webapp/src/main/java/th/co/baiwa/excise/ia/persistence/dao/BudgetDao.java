@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.Budget;
-import th.co.baiwa.excise.ia.persistence.vo.Int0911FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int09211FormVo;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
@@ -24,7 +24,7 @@ public class BudgetDao {
 	
 	private final String SQL_IA_TRAVEL_COST_WS_HEADER = "SELECT * FROM IA_TRAVEL_COST_WS_HEADER WHERE 1=1";
 	
-	public Long count(Int0911FormVo formVo) {
+	public Long count(Int09211FormVo formVo) {
 		
 		StringBuilder sql = new StringBuilder(SQL_IA_TRAVEL_COST_WS_HEADER);
 		List<Object> params = new ArrayList<>();
@@ -44,7 +44,7 @@ public class BudgetDao {
         return count;
     }
 
-	public List<Budget> findAll(Int0911FormVo formVo) {
+	public List<Budget> findAll(Int09211FormVo formVo) {
 		
 		StringBuilder sql = new StringBuilder(SQL_IA_TRAVEL_COST_WS_HEADER);
 		List<Object> params = new ArrayList<>();

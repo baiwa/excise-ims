@@ -1,6 +1,6 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
-public class Int0911FormVo {
+public class Int09211FormVo {
 	private String year;
 	private String department;
 	private String searchFlag;

@@ -1,0 +1,55 @@
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+  <span>รายงานประมาณการค่าใช้จ่ายในการเดินทาง</span>
+</div>
+<div class="ui form center aligned" id="int09-1"  ngNativeValidate>
+  <div class="ui attached  segment">
+
+    <input type="hidden" id="searchFlag">
+    <div class="ui grid">
+        <div class="two wide column"></div>
+        <div class="two wide column"><label>ปีงบประมาณ</label></div>
+        <div class="four wide column"><input type="text" id="money"></div>
+        <div class="two wide column"><label>หน่วยงาน</label></div>
+        <div class="four wide column"><input type="text" id="department"></div>
+        <div class="two wide column"></div>
+        <div class="two wide column"></div>
+      </div>
+
+    <div class="ui center aligned grid">
+      <div class="eight wide column">
+        <button class="ui  primary button" type="button" (click)="clickSearch()">
+          ค้นหา
+        </button>
+        <button class="ui  grey button" type="button" (click)="clickClear()">
+          ล้างข้อมูล
+        </button>
+        <button class="ui  green button" type="button" routerLink="/int09/1/1">
+          สร้าง
+        </button>
+      </div>
+    </div>
+    <br>
+
+
+    <br>
+      <table id="tableData" class="ui small celled table" style="width: 100%">
+        <thead>
+          <tr style="text-align: center;">
+            <th ><input id="checkAllSap" type="checkbox" (click)="clickCheckAll($event)"/></th>
+            <th>ลำดับที่</th>
+            <th>หน่วยงาน</th>
+            <th>วันที่</th>
+            <th>ผู้สร้าง</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+       
+      </table>
+      <br><br>
+    <div class="ui form center aligned grid">
+        <button class="ui red button">ลบ</button>
+    </div>  
+    <br>  
+    </div>        
+        
+  </div>

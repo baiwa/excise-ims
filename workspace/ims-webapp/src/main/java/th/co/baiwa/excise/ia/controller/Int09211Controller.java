@@ -11,28 +11,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.entity.Budget;
-import th.co.baiwa.excise.ia.persistence.vo.Int0911FormVo;
-import th.co.baiwa.excise.ia.service.Int0911Service;
+import th.co.baiwa.excise.ia.persistence.vo.Int09211FormVo;
+import th.co.baiwa.excise.ia.service.Int09211Service;
 
 @Controller
-@RequestMapping("api/ia/int0911")
-public class Int0911Controller {
+@RequestMapping("api/ia/int09211")
+public class Int09211Controller {
 
-	private static Logger logger = LoggerFactory.getLogger(Int0911Controller.class);
+	private static Logger logger = LoggerFactory.getLogger(Int09211Controller.class);
 	
 	@Autowired
-	private Int0911Service int0911Service;
+	private Int09211Service int0911Service;
 	
 	@PostMapping("/list")
 	@ResponseBody
-	public DataTableAjax<Budget> list(@RequestBody Int0911FormVo formVo){
+	public DataTableAjax<Budget> list(@RequestBody Int09211FormVo formVo){
 		DataTableAjax<Budget> list = null;
-		//try {
+		try {
 			 list = int0911Service.findAll(formVo);
-		//	 logger.info("Data {} row",list.getData().size());
-		//} catch (Exception e) {
-		//.error("Error ! ==> Int0911Controller method findAll");
-		//}
+			 logger.info("Data {} row",list.getData().size());
+		} catch (Exception e) {
+			logger.error("Error ! ==> Int0911Controller method findAll");
+		}
 		
 		return list;
 	}
