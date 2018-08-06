@@ -1,0 +1,55 @@
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>รายงานประมาณการค่าใช้จ่ายในการเดินทาง</span>
+  </div>
+  <div class="ui form center aligned" id="int09-1"  ngNativeValidate>
+    <div class="ui attached  segment">
+      <div class="ui grid">
+          <div class="two wide column"></div>
+          <div class="two wide column"><label>สรรพสามิตภาค</label></div>
+          <div class="four wide column"><input type="text" id="money"></div>
+          <div class="two wide column"><label>สรรพสามิตพื้นที่</label></div>
+          <div class="four wide column"><input type="text" id="department"></div>
+          <div class="two wide column"></div>
+          <div class="two wide column"></div>
+      </div>
+      <div class="ui grid">
+          <div class="two wide column"></div>
+          <div class="two wide column"><label>สรพพสามิตสาขา</label></div>
+          <div class="four wide column"><input type="text" id="money"></div>
+          <div class="two wide column"><label>หน่วยงานผู้ตรวจ</label></div>
+          <div class="four wide column"><input type="text" id="department"></div>
+          <div class="two wide column"></div>
+          <div class="two wide column"></div>
+      </div>
+      <div class="ui grid">
+          <div class="three wide column"></div>
+          <div class="two wide column"><label>ตั้งแต่วันที่</label></div>
+          <div class="three wide column">
+            <div class="ui calendar" id="startDate">
+              <div class="ui input left icon">
+                  <i class="time icon"></i>
+                  <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+              </div>
+            </div>
+        </div>
+          <div class="two wide column"><label>ถึง</label></div>
+          <div class="three wide column">
+              <div class="ui calendar" id="endDate">
+                  <div class="ui input left icon">
+                      <i class="time icon"></i>
+                      <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                  </div>
+              </div>
+          </div>
+          <div class="two wide column"></div>
+          <div class="three wide column"></div>
+      </div>
+  
+      <div class="ui form center aligned grid">
+          <button class="ui  primary button" type="button" >
+              บันทึก
+            </button>
+      </div>  
+      <br>      
+    </div>
+  </div>

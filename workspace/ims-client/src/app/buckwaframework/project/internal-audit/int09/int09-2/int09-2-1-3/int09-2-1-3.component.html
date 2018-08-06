@@ -1,0 +1,174 @@
+
+    <div class="ui   center aligned segment">
+      <p>ปะมาณการค่าใช้จ่ายในการเดินทางไปราชการ</p>
+      <p>หน่วยงาน กลุ่มตรวจสอบภายใน</p>
+      <p>เดินทางไปราชการที่ สำนักงานสรรพสามิตพื้นที่เลย</p>
+      <p>ตั้งแต่วันที่ 17 มิถุนายน 2561 - 30 มิถุนายน 2561</p>
+    </div>
+<br>
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>รายงานประมาณการค่าใช้จ่ายในการเดินทาง</span>
+  </div>
+  <div class="ui form center aligned" id="int09-1"  ngNativeValidate>
+    <div class="ui attached  segment">
+      <div class="ui grid">
+          <div class="three wide column ui right aligned"><label>คำนำหน้าชื่อ</label></div>
+          <div class="three wide column"><input id="money" type="text"></div>
+          <div class="two wide column right aligned"><label>ชื่อ</label></div>
+          <div class="three wide column"><input id="department" type="text"></div>
+          <div class="one wide column right aligned"><label>นามสกุล</label></div>
+          <div class="three wide column"><input id="money" type="text"></div>
+      </div>
+      <div class="ui grid">      
+          <div class="three wide column right aligned"><label>ตำแหน่ง</label></div>
+          <div class="three wide column"><input type="text" id="money"></div>
+          <div class="two wide column right aligned"><label>ประเภท</label></div>
+          <div class="three wide column"><input type="text" id="department"></div>
+          <div class="one wide column right aligned"><label>ระดับ</label></div>
+          <div class="three wide column"><input type="text" id="money"></div>     
+      </div>      
+      <div class="ui grid">
+          <div class="three wide column ui right aligned"><label>วันขออนุญาต</label></div>
+          <div class="three wide column">
+              <div class="ui calendar" id="appoveDate">
+                  <div class="ui input left icon">
+                      <i class="time icon"></i>
+                      <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                  </div>
+              </div>
+          </div>
+          <div class="two wide column ui right aligned"><label>วันเขียนเบิก</label></div>
+          <div class="three wide column">
+              <div class="ui calendar" id="withdrawDate">
+                  <div class="ui input left icon">
+                      <i class="time icon"></i>
+                      <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="ui grid">
+          <div class="three wide column ui right aligned"><label>เดินทางจาก</label></div>
+          <div class="three wide column ui right aligned">
+          <select class="ui dropdown">
+              <option value="">สนง. - บ้าน</option>
+              <option value="1">บ้าน - สนง.</option>
+              <option value="0">Female</option>
+          </select>
+        </div>
+        <div class="two wide column ui right aligned"><label>กรณีฝึกอบรม</label></div>
+          <div class="three wide column ui right aligned">
+          <select class="ui dropdown">
+              <option value="">ไม่เลี้ยงอาหาร</option>
+              <option value="1">เลี้ยงอาหาร 1 มื้อ </option>
+              <option value="0">เลี้ยงอาหาร 2 มื้อ</option>
+              <option value="0">เลี้ยงอาหาร 3 มื้อ</option>
+          </select>
+        </div>
+      </div>
+      <div class="ui grid">
+          <div class="three wide column ui right aligned"><label>วัน เวลา ออกเดินทาง</label></div>
+          <div class="three wide column">
+              <div class="ui calendar" id="startGoDate">
+                  <div class="ui input left icon">
+                      <i class="time icon"></i>
+                      <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                  </div>
+              </div>
+          </div>
+          <div class="two wide column ui right aligned"><label>วัน เวลา กลับถึง</label></div>
+          <div class="three wide column">
+              <div class="ui calendar" id="endGoDate">
+                  <div class="ui input left icon">
+                      <i class="time icon"></i>
+                      <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="ui grid">
+          <div class="three wide column ui right aligned"><label>จำนวนวันเข้าพัก</label></div>
+          <div class="three wide column"><input id="money" type="text"></div>
+          <div class="two wide column right aligned"><label>ประเภทการเบิก</label></div>
+          <div class="two wide column"><input id="department" type="text"></div>
+          <div class="two wide column right aligned"><label>ประเภทห้องพัก</label></div>
+          <div class="three wide column"><input id="money" type="text"></div>
+      </div>
+      <div class="ui grid">
+          <div class="three wide column right aligned"><label>หมายเหตุ</label></div>
+          <div class="ten wide column">
+          <div class="ui form " style="width: 100%">
+              <div class="field">                
+                <textarea></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="three wide column"></div>
+      </div>
+  
+      <div class="ui form center aligned grid">
+          <button class="ui  primary button" type="button" >บันทึก</button>
+      </div>  
+      <br>      
+    </div>  
+  
+    
+  </div>
+  <!-- <div class="ui segment">
+      <div style="overflow-x: scroll;">
+        <table id="int09213TableData" class="ui small celled table"  style="width:100%">
+          <thead>
+            <tr>
+              <th rowspan="2" style="text-align: center !important"><input id="checkAllSap" type="checkbox" (click)="clickCheckAll($event)"/></th>
+              <th rowspan="2" style="text-align: center !important">ลำดับที่</th>
+              <th rowspan="2" style="text-align: center !important">ชื่อ</th>
+              <th rowspan="2" style="text-align: center !important">ตำแหน่ง</th>
+              <th colspan="2" style="text-align: center !important">ค่าเบี้ยเลี้ยง</th>
+              <th colspan="2" style="text-align: center !important">ค่าเช่าที่พัก</th>
+              <th rowspan="2" style="text-align: center !important">วัน</th>
+              <th rowspan="2" style="text-align: center !important">จำนวนเงิน</th>
+              <th rowspan="2" style="text-align: center !important">วัน</th>
+              <th rowspan="2" style="text-align: center !important">จำนวนเงิน</th>
+              <th rowspan="2" style="text-align: center !important">ค่าพาหนะ</th>
+              <th rowspan="2" style="text-align: center !important">ค่าใช้จ่ายอื่น</th>
+              <th rowspan="2" style="text-align: center !important">รวมเป็นเงิน</th>
+              <th rowspan="2" style="text-align: center !important">หมายเหตุ</th>
+              <th rowspan="2" style="text-align: center !important">Action</th>
+              
+            </tr>
+            <tr>
+              <th style="text-align: center !important">วัน</th>
+              <th style="text-align: center !important">จำนวนเงิน</th>
+              <th style="text-align: center !important">วัน</th>
+              <th style="text-align: center !important">จำนวนเงิน</th>
+            </tr>
+          </thead>
+        </table>
+      </div> 
+  </div> -->
+  <div class="ui segment">
+        <table id="tableData" class="ui small celled table"  style="width:100%">
+          <thead>
+            <tr>
+              <th  style="text-align: center !important"><input id="checkAllSap" type="checkbox" (click)="clickCheckAll($event)"/></th>
+              <th  style="text-align: center !important">ลำดับที่</th>
+              <th  style="text-align: center !important">ชื่อ</th>
+              <th  style="text-align: center !important">ตำแหน่ง</th>
+              <th style="text-align: center !important">วัน</th>
+
+              <th style="text-align: center !important">จำนวนเงิน</th>
+              <th style="text-align: center !important">วัน</th>
+              <th style="text-align: center !important">จำนวนเงิน</th>          
+              <th  style="text-align: center !important">ค่าพาหนะ</th>
+              <th  style="text-align: center !important">ค่าใช้จ่ายอื่น</th>
+              
+              <th  style="text-align: center !important">รวมเป็นเงิน</th>
+              <th  style="text-align: center !important">หมายเหตุ</th>
+              <th  style="text-align: center !important">Action</th>        
+            </tr>
+          </thead>
+        </table>
+  </div>
+
+ 
+  
