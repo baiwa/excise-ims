@@ -53,8 +53,7 @@ export class TaxAuditReportingComponent implements OnInit {
         "ตส. 01-14/2",
         "ตส. 01-15",
         "ตส. 01-16",
-        "ตส. 01-17",
-        "ตส. 01-17/1",
+        "ตส. 01-17/1",      
         "ตส. 01-18",
         "ตส. 01-19"
       ]
