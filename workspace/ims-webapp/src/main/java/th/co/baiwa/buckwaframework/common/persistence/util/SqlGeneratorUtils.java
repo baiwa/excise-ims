@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import org.springframework.util.CollectionUtils;
 
+import th.co.baiwa.excise.utils.BeanUtils;
+
 public class SqlGeneratorUtils {
 	
 	public static String genSqlSelect(String tableName, Collection<String> selectFieldNameList, Collection<String> conditionFieldNameList) {
@@ -46,5 +48,13 @@ public class SqlGeneratorUtils {
 		}
 		return builder.toString();
 	}
+	
+	public static String oracleSqlWhereCondition(String fieldName, String value) {
+		if(BeanUtils.isNotEmpty(value) && (value.indexOf("*") > 0 || value.indexOf("%") >0)) {
+			return " AND "+fieldName +" like ?";
+		}
+		return " AND "+fieldName +" = ?";
+	}
+	
 	
 }
