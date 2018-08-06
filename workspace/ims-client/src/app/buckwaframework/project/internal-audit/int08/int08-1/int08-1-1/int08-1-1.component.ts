@@ -47,7 +47,8 @@ export class Int0811Component implements OnInit {
   }
 
   uploadData() {
-    this.showData = true;
+    //this.showData = true;
+
   }
 
   clearData() {
