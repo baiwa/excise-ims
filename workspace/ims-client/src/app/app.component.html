@@ -20,17 +20,20 @@
                 </div>
             </div>
             <div class="ui simple dropdown item " *ngIf="authService.renderByPage('int08')">
-                <i class="dropdown icon "></i> ประเมินความเสี่ยง
+                <i class="dropdown icon "></i> การประเมินความเสี่ยง
                 <div class="menu " style="margin:20px; ">
-                    <a class="item " [routerLink]="[ '/int08/1/1'] " *ngIf="authService.renderByPage('int08/1/1')" routerLinkActive="active ">ประเมินความเสี่ยงโครงการ</a>
-                    <div class="ui dropdown item " routerLinkActive="active" *ngIf="authService.renderByPage('int08-1')">
-                        <i class="dropdown icon "></i>ประเมินความเสี่ยงระบบสารสนเทศหลักของกรม
+                    <a class="item " [routerLink]="[ '/int08/1/1'] " *ngIf="authService.renderByPage('int08/1/1')" routerLinkActive="active ">ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</a>
+                    <a class="item " [routerLink]="[ '/int08/1/1'] " *ngIf="authService.renderByPage('int08/1/1')" routerLinkActive="active ">ประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต</a>
+                    <a class="item " [routerLink]="[ '/int08/1/1'] " *ngIf="authService.renderByPage('int08/1/1')" routerLinkActive="active ">ประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่</a>
+                    <!-- <div class="ui dropdown item " routerLinkActive="active" *ngIf="authService.renderByPage('int08-1')">
+                        <i class="dropdown icon "></i>ประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต
+                        <i class="dropdown icon "></i>ประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่
                         <div class="menu ">
                             <a class="item " [routerLink]="[ '/int08/2'] " *ngIf="authService.renderByPage('int08/2')" routerLinkActive="active ">ประเมินความเสี่ยงระบบสารสนเทศ (จำนวนครั้งที่ระบบใช้งานไม่ได้)</a>
                             <a class="item " [routerLink]="[ '/int08/2/1'] " *ngIf="authService.renderByPage('int08/2/1')" routerLinkActive="active ">ประเมินความเสี่ยงระบบสารสนเทศ (ร้อยละความเห็น)</a>
                         </div>
-                    </div>
-                    <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('int08-2')">
+                    </div> -->
+                    <!-- <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('int08-2')">
                         <i class="dropdown icon "></i>ประเมินความเสี่ยงภาคพื้นที่
                         <div class="menu ">
                             <a class="item " [routerLink]="[ '/int08/3/1'] " routerLinkActive="active ">ประเมินความเสี่ยงความถี่การตรวจ</a>
@@ -40,7 +43,7 @@
                             <a class="item " [routerLink]="[ '/int08/3/5'] " routerLinkActive="active ">ประเมินความเสี่ยงระบบควบคุมภายใน</a>
                             <a class="item " [routerLink]="[ '/int08/3/6'] " routerLinkActive="active ">ประเมินความเสี่ยงภาคพื้นที่รวม</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="ui dropdown item " *ngIf="authService.renderByPage('int01')">
