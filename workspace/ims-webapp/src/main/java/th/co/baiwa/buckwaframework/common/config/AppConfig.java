@@ -17,7 +17,8 @@ import org.springframework.stereotype.Service;
 	useDefaultFilters = false,
 	basePackages = {
 		"th.co.baiwa.buckwaframework",
-		"th.go.excise.ims"
+		"th.go.excise.ims",
+		"th.co.baiwa.excise"
 	},
 	includeFilters = {
 		@ComponentScan.Filter(

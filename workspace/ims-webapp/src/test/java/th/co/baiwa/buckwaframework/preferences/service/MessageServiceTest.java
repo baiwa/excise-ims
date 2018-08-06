@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants.MESSAGE_TYPE;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
+import th.co.baiwa.excise.ia.persistence.repository.RiskAssRiskWsHdrRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,6 +25,9 @@ public class MessageServiceTest {
 	
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private RiskAssRiskWsHdrRepository riskAssRiskWsHdrRepository;;
 	
 	@Test
 	public void test_getMessageList() {
@@ -34,7 +39,7 @@ public class MessageServiceTest {
 //		}
 	}
 	
-	@Test
+	//@Test
 	public void test_getMessageById_Found() {
 		System.out.println("- - - - - getMessageById_Found - - - - -");
 		Message message = messageService.getMessageById(3L);
@@ -45,12 +50,11 @@ public class MessageServiceTest {
 	@Test
 	public void test_getMessageById_NotFound() {
 		System.out.println("- - - - - getMessageById_NotFound - - - - -");
-		Message message = messageService.getMessageById(99L);
-		Assert.assertNull(message);
-		System.out.println(message);
+		 List<RiskAssRiskWsHdr> message = riskAssRiskWsHdrRepository.findAll();
+		System.out.println(message.get(0));
 	}
 	
-	@Test
+	//@Test
 	public void test_getMessageCount() {
 		System.out.println("- - - - - getMessageCount - - - - -");
 		int count = messageService.countMessage();

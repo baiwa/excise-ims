@@ -40,7 +40,8 @@ import th.co.baiwa.starter.thymeleaf.stsm.web.conversion.VarietyFormatter;
 	basePackages = {
 		"th.co.baiwa.buckwaframework",
 		"th.co.baiwa.starter",
-		"th.go.excise.ims"
+		"th.go.excise.ims",
+		"th.co.baiwa.excise"
 		
 	},
 	includeFilters = {
