@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.dao.QtnReportHeaderDao;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
@@ -26,12 +28,22 @@ public class QtnReportHeaderService {
 		return qtnReportHeaderDao.findByCriteria(qtnReportHeader);
 	}
 	
-	public Integer createQtnReportHeader(QtnReportHeader qtnReportHeader) {
-//		String reportHeaderCode = NumberUtils.toStringFormat(seqDao.autoNumberRunningBySeqName("IA_QTN_HEADER_CODE_SEQ").longValue(), "H0000");
-		qtnReportHeader.setCreator(UserLoginUtils.getCurrentUsername());
-		qtnReportHeader.setCreatedBy(UserLoginUtils.getCurrentUsername());
-		qtnReportHeader.setCreatedDate(new Date());
-		return qtnReportHeaderDao.createQtnReportHeader(qtnReportHeader);
+	public Message createQtnReportHeader(QtnReportHeader qtnReportHeader) {
+		List<QtnReportHeader> qtnReportHeaderList = qtnReportHeaderDao.findByCriteria(qtnReportHeader);	
+		Message message;
+		if(qtnReportHeaderList != null  || qtnReportHeaderList.size() == 0) {
+			qtnReportHeader.setCreator(UserLoginUtils.getCurrentUsername());
+			qtnReportHeader.setCreatedBy(UserLoginUtils.getCurrentUsername());
+			qtnReportHeader.setCreatedDate(new Date());
+			if(qtnReportHeaderDao.createQtnReportHeader(qtnReportHeader) > 0) {
+				message = ApplicationCache.getMessage("MSG_00002");
+			} else {
+				message = ApplicationCache.getMessage("MSG_00003");
+			}
+		}else {
+			message = ApplicationCache.getMessage("MSG_00004");
+		}
+		return message;
 	}
 	
 	

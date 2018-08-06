@@ -2,14 +2,38 @@ package th.co.baiwa.excise.ia.persistence.entity;
 
 import java.math.BigDecimal;
 
-import th.co.baiwa.excise.domain.BaseEntity;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
+
+
+@Entity
+@Table(name = "IA_QTN_REPORT")
 public class QtnReportHeader extends BaseEntity {
 
+	
+	private static final long serialVersionUID = -2919566743738637379L;
+	
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_QTN_REPORT_GEN")
+	@SequenceGenerator(name = "IA_QTN_REPORT_GEN", sequenceName = "IA_QTN_REPORT_SEQ", allocationSize = 1)
+	@Column(name = "QTN_REPORT_HDR_ID")
 	private BigDecimal qtnReportHdrId;
+	
+	@Column(name = "QTN_REPORT_HDR_NAME")
 	private String qtnReportHdrName;
+	
+	@Column(name = "CREATOR")
 	private String creator;
 
+	
 	public BigDecimal getQtnReportHdrId() {
 		return qtnReportHdrId;
 	}

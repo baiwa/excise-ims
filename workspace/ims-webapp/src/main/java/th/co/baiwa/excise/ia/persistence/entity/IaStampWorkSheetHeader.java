@@ -2,10 +2,14 @@ package th.co.baiwa.excise.ia.persistence.entity;
 
 import java.math.BigDecimal;
 
-import th.co.baiwa.excise.domain.BaseEntity;
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 public class IaStampWorkSheetHeader extends BaseEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8373234435218350293L;
 	private BigDecimal workSheetHeaderId;
 	private String workSheetType;
 	private String workSheetExanminationLevel;

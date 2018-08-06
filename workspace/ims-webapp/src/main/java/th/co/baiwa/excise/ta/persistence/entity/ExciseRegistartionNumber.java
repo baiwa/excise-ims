@@ -3,7 +3,7 @@ package th.co.baiwa.excise.ta.persistence.entity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import th.co.baiwa.excise.domain.BaseEntity;
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 public class ExciseRegistartionNumber extends BaseEntity {
 

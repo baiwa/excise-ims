@@ -2,6 +2,7 @@ package th.co.baiwa.buckwaframework.common.persistence.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -12,6 +13,7 @@ import javax.persistence.Version;
 import org.apache.commons.lang3.StringUtils;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
@@ -29,30 +31,31 @@ public abstract class BaseEntity implements Serializable {
 	protected String createdBy;
 
 	@Column(name = "CREATED_DATE", updatable = false)
-	protected LocalDateTime createdDate;
+	protected Date createdDate;
 
 	@Column(name = "UPDATED_BY", nullable = true)
 	protected String updatedBy;
 
 	@Column(name = "UPDATED_DATE", nullable = true)
-	protected LocalDateTime updatedDate;
+	protected Date updatedDate;
 
 	@PrePersist
 	public void prePersist() {
 		isDeleted = FLAG.N_FLAG;
 		version = 1;
 		if (StringUtils.isBlank(createdBy)) {
-			createdBy = "SYS_CREATE";
+			createdBy = UserLoginUtils.getCurrentUsername();
 		}
-		createdDate = LocalDateTime.now();
+		createdDate = new Date();
 	}
 
 	@PreUpdate
 	public void preUpdate() {
 		if (StringUtils.isBlank(updatedBy)) {
-			updatedBy = "SYS_UPDATE";
+			updatedBy = UserLoginUtils.getCurrentUsername();
 		}
-		updatedDate = LocalDateTime.now();
+		version++;
+		updatedDate = new Date();
 	}
 
 	public String getIsDeleted() {
@@ -71,13 +74,7 @@ public abstract class BaseEntity implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public LocalDateTime getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(LocalDateTime createdDate) {
-		this.createdDate = createdDate;
-	}
+	
 
 	public String getUpdatedBy() {
 		return updatedBy;
@@ -87,12 +84,30 @@ public abstract class BaseEntity implements Serializable {
 		this.updatedBy = updatedBy;
 	}
 
-	public LocalDateTime getUpdatedDate() {
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getUpdatedDate() {
 		return updatedDate;
 	}
 
-	public void setUpdatedDate(LocalDateTime updatedDate) {
+	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+
+	
 
 }

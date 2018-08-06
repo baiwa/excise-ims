@@ -102,7 +102,7 @@ public class MockEmployeeDaoTest {
 		mockEmployee.setWorkingDate(new Date());
 		mockEmployee.setIsDeleted("N");
 		mockEmployee.setCreatedBy("SU");
-		mockEmployee.setCreatedDate(LocalDateTime.now());
+		mockEmployee.setCreatedDate(new Date());
 		mockEmployeeDao.insertBySimpleJdbcInsert(mockEmployee);
 		
 		System.out.println("after insert count: " + mockEmployeeDao.count());

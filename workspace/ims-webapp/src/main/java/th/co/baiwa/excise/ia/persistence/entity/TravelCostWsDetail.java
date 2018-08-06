@@ -2,9 +2,13 @@ package th.co.baiwa.excise.ia.persistence.entity;
 
 import java.math.BigDecimal;
 
-import th.co.baiwa.excise.domain.BaseEntity;
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 public class TravelCostWsDetail extends BaseEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4184127479575824656L;
 	private BigDecimal workSheetDetailId;
 	private String headerId;
 	private String name;

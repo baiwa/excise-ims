@@ -2,7 +2,7 @@ package th.co.baiwa.excise.ta.persistence.entity;
 
 import java.math.BigDecimal;
 
-import th.co.baiwa.excise.domain.BaseEntity;
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 public class PdtDrawingWsDtl extends BaseEntity {
 	private BigDecimal taPdtDrawingWsDtlId;

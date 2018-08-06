@@ -1,9 +1,8 @@
 package th.co.baiwa.buckwaframework.preferences.persistence.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
-import th.co.baiwa.excise.domain.BaseEntity;
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 public class Lov extends BaseEntity{
 	private BigDecimal lovId;

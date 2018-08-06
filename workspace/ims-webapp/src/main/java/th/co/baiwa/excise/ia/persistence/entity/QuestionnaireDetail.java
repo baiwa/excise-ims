@@ -2,9 +2,13 @@ package th.co.baiwa.excise.ia.persistence.entity;
 
 import java.math.BigDecimal;
 
-import th.co.baiwa.excise.domain.BaseEntity;
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 public class QuestionnaireDetail extends BaseEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6161252031624870357L;
 	private BigDecimal qtnDetailId;
 	private BigDecimal masterId;
 	private String headerCode;

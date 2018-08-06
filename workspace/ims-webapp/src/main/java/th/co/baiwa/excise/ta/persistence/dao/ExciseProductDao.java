@@ -49,7 +49,7 @@ public class ExciseProductDao {
 		List<Object> valueList = new ArrayList<Object>();
 		if (value != null) {
 			valueList.add(value.getExciseId());
-			valueList.add(value.getCreateDate());
+			valueList.add(value.getCreatedDate());
 			valueList.add(value.getUploadPath());
 			valueList.add(value.getCreatedBy());
 			valueList.add(value.getCreatedDate());

@@ -2,8 +2,6 @@ package th.co.baiwa.excise.ta.persistence.entity;
 
 import java.util.List;
 
-import th.co.baiwa.excise.ta.persistence.entity.ExciseTax;
-
 public class ExciseDetail extends PlanWorksheetHeader{
 	private List<ExciseFileUpload> file;
     private List<ExciseTax> exciseTax;

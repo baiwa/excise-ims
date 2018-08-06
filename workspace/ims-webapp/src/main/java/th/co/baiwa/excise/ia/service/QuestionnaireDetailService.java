@@ -45,7 +45,7 @@ public class QuestionnaireDetailService {
 		questionnaireDetail.setQtnDetailId(detailId);
 		questionnaireDetail.setHeaderCode("H001");
 		questionnaireDetail.setQtnMainDetail(int023MappingVO.getMainDetail());
-		questionnaireDetail.setVersion(BigDecimal.ZERO);
+		questionnaireDetail.setVersion(1);
 		questionnaireDetail.setIsDeleted("N");
 		questionnaireDetail.setCreatedBy(userlogin);
 		questionnaireDetail.setCreatedDate(processDate);
@@ -59,7 +59,7 @@ public class QuestionnaireDetailService {
 			questionnaireDetail.setMasterId(detailId);
 			questionnaireDetail.setHeaderCode("FIXED HEADER_CODE");
 			questionnaireDetail.setQtnMainDetail(minorDetail);
-			questionnaireDetail.setVersion(BigDecimal.ZERO);
+			questionnaireDetail.setVersion(1);
 			questionnaireDetail.setIsDeleted("N");
 			questionnaireDetail.setCreatedBy(userlogin);
 			questionnaireDetail.setCreatedDate(processDate);

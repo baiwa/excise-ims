@@ -39,13 +39,7 @@ public class Int02Controller {
 	@ResponseBody
 	public Message addHeaderQuestionnaire(@RequestBody QtnReportHeader qtnReportHeader) {
 		logger.info("Add QtnReportHeader");
-		Message message = null;
-		Integer insertCountRow = qtnReportHeaderService.createQtnReportHeader(qtnReportHeader);
-		if (BeanUtils.isNotEmpty(insertCountRow) && insertCountRow.intValue() == 1) {
-			message = ApplicationCache.getMessage("MSG_00002");
-		} else {
-			message = ApplicationCache.getMessage("MSG_00003");
-		}
+		Message message = qtnReportHeaderService.createQtnReportHeader(qtnReportHeader);
 		return message;
 	}
 
@@ -60,12 +54,8 @@ public class Int02Controller {
 	public Message deleteQtnReportHeaderByCriteria(QtnReportHeader qtnReportHeader) {
 		logger.info("queryQtnReportHeaderByCriteria");
 		Message message = null;
-		Integer insertCountRow = qtnReportHeaderService.deleteQtnReportHeader(qtnReportHeader);
-		if (BeanUtils.isNotEmpty(insertCountRow) && insertCountRow.intValue() == 1) {
-			message = ApplicationCache.getMessage("MSG_00002");
-		} else {
-			message = ApplicationCache.getMessage("MSG_00003");
-		}
+		qtnReportHeaderService.deleteQtnReportHeader(qtnReportHeader);
+		message = ApplicationCache.getMessage("MSG_00002");
 		return message;
 	}
 

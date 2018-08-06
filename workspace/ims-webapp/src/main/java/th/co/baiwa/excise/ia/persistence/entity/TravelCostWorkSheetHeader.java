@@ -3,10 +3,14 @@ package th.co.baiwa.excise.ia.persistence.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import th.co.baiwa.excise.domain.BaseEntity;
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 public class TravelCostWorkSheetHeader extends BaseEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5680513329445529721L;
 	private BigDecimal workSheetHeaderId;
 	private String workSheetHeaderName;
 	private String departmentName;

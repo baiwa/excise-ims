@@ -89,7 +89,6 @@ public class ExciseDetailService {
         		excise.setUploadPath(path);
         		excise.setCreatedBy(UserLoginUtils.getCurrentUsername());
         		excise.setUpdatedBy(UserLoginUtils.getCurrentUsername());
-        		excise.setCreateDate(in);
         		excise.setCreatedDate(in);
         		excise.setUpdatedDate(in);
         		exciseFileUploadDao.insertExciseFileUpload(excise); // insert to database
