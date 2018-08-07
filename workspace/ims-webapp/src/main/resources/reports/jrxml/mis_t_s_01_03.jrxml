@@ -118,10 +118,10 @@
 				<textFieldExpression><![CDATA["สำนัก"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="221" y="38" width="14" height="19" uuid="f1897361-2dbc-4b81-9b22-4b6dc2c49536"/>
+				<reportElement style="TextDetail" x="215" y="38" width="20" height="19" uuid="f1897361-2dbc-4b81-9b22-4b6dc2c49536"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA["วัน"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["วันที่"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="273" y="38" width="23" height="19" uuid="87a51463-4e45-445e-bd69-35b3e26b8a62"/>
