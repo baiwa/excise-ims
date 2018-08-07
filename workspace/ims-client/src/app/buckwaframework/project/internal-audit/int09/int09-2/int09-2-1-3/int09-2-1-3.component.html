@@ -1,31 +1,38 @@
-
-    <div class="ui   center aligned segment">
-      <p>ปะมาณการค่าใช้จ่ายในการเดินทางไปราชการ</p>
-      <p>หน่วยงาน กลุ่มตรวจสอบภายใน</p>
-      <p>เดินทางไปราชการที่ สำนักงานสรรพสามิตพื้นที่เลย</p>
-      <p>ตั้งแต่วันที่ 17 มิถุนายน 2561 - 30 มิถุนายน 2561</p>
-    </div>
-<br>
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
     <span>รายงานประมาณการค่าใช้จ่ายในการเดินทาง</span>
   </div>
   <div class="ui form center aligned" id="int09-1"  ngNativeValidate>
     <div class="ui attached  segment">
+        <div class="ui container center aligned ">
+            <p><b>ปะมาณการค่าใช้จ่ายในการเดินทางไปราชการ</b></p>
+            <p><b>หน่วยงาน กลุ่มตรวจสอบภายใน</b></p>
+            <p><b>เดินทางไปราชการที่ สำนักงานสรรพสามิตพื้นที่เลย</b></p>
+            <p><b>ตั้งแต่วันที่ 17 มิถุนายน 2561 - 30 มิถุนายน 2561</b></p>
+        </div>
+        <br><br>
+        <input type="hidden" id="idEdit">
       <div class="ui grid">
           <div class="three wide column ui right aligned"><label>คำนำหน้าชื่อ</label></div>
-          <div class="three wide column"><input id="money" type="text"></div>
+          <div class="three wide column">
+            <select class="ui dropdown" id="prefix" name="prefix">
+                <option value="">นาย</option>
+                <option value="1">นาย</option>
+                <option value="2">นางสาว</option>
+                <option value="3">นาง</option>
+            </select>
+          </div>
           <div class="two wide column right aligned"><label>ชื่อ</label></div>
-          <div class="three wide column"><input id="department" type="text"></div>
+          <div class="three wide column"><input id="name" type="text"></div>
           <div class="one wide column right aligned"><label>นามสกุล</label></div>
-          <div class="three wide column"><input id="money" type="text"></div>
+          <div class="three wide column"><input id="last" type="text"></div>
       </div>
       <div class="ui grid">      
           <div class="three wide column right aligned"><label>ตำแหน่ง</label></div>
-          <div class="three wide column"><input type="text" id="money"></div>
+          <div class="three wide column"><input type="text" id="position"></div>
           <div class="two wide column right aligned"><label>ประเภท</label></div>
-          <div class="three wide column"><input type="text" id="department"></div>
+          <div class="three wide column"><input type="text" id="type"></div>
           <div class="one wide column right aligned"><label>ระดับ</label></div>
-          <div class="three wide column"><input type="text" id="money"></div>     
+          <div class="three wide column"><input type="text" id="level"></div>     
       </div>      
       <div class="ui grid">
           <div class="three wide column ui right aligned"><label>วันขออนุญาต</label></div>
@@ -50,15 +57,15 @@
       <div class="ui grid">
           <div class="three wide column ui right aligned"><label>เดินทางจาก</label></div>
           <div class="three wide column ui right aligned">
-          <select class="ui dropdown">
+          <select class="ui dropdown" id="goFrom" name="goFrom">
               <option value="">สนง. - บ้าน</option>
               <option value="1">บ้าน - สนง.</option>
-              <option value="0">Female</option>
+              <option value="2">สนง. - บ้าน</option>
           </select>
         </div>
         <div class="two wide column ui right aligned"><label>กรณีฝึกอบรม</label></div>
           <div class="three wide column ui right aligned">
-          <select class="ui dropdown">
+          <select class="ui dropdown"  id="food" name="food">
               <option value="">ไม่เลี้ยงอาหาร</option>
               <option value="1">เลี้ยงอาหาร 1 มื้อ </option>
               <option value="0">เลี้ยงอาหาร 2 มื้อ</option>
@@ -88,18 +95,18 @@
       </div>
       <div class="ui grid">
           <div class="three wide column ui right aligned"><label>จำนวนวันเข้าพัก</label></div>
-          <div class="three wide column"><input id="money" type="text"></div>
+          <div class="three wide column"><input id="numberLive" type="text"></div>
           <div class="two wide column right aligned"><label>ประเภทการเบิก</label></div>
-          <div class="two wide column"><input id="department" type="text"></div>
+          <div class="two wide column"><input id="typeWithdrawal" type="text"></div>
           <div class="two wide column right aligned"><label>ประเภทห้องพัก</label></div>
-          <div class="three wide column"><input id="money" type="text"></div>
+          <div class="three wide column"><input id="typeRoom" type="text"></div>
       </div>
       <div class="ui grid">
           <div class="three wide column right aligned"><label>หมายเหตุ</label></div>
           <div class="ten wide column">
           <div class="ui form " style="width: 100%">
               <div class="field">                
-                <textarea></textarea>
+                <textarea id="note"></textarea>
               </div>
             </div>
           </div>
@@ -110,64 +117,53 @@
           <button class="ui  primary button" type="button" >บันทึก</button>
       </div>  
       <br>      
-    </div>  
-  
-    
+    </div>        
   </div>
-  <!-- <div class="ui segment">
-      <div style="overflow-x: scroll;">
-        <table id="int09213TableData" class="ui small celled table"  style="width:100%">
-          <thead>
-            <tr>
-              <th rowspan="2" style="text-align: center !important"><input id="checkAllSap" type="checkbox" (click)="clickCheckAll($event)"/></th>
-              <th rowspan="2" style="text-align: center !important">ลำดับที่</th>
-              <th rowspan="2" style="text-align: center !important">ชื่อ</th>
-              <th rowspan="2" style="text-align: center !important">ตำแหน่ง</th>
-              <th colspan="2" style="text-align: center !important">ค่าเบี้ยเลี้ยง</th>
-              <th colspan="2" style="text-align: center !important">ค่าเช่าที่พัก</th>
-              <th rowspan="2" style="text-align: center !important">วัน</th>
-              <th rowspan="2" style="text-align: center !important">จำนวนเงิน</th>
-              <th rowspan="2" style="text-align: center !important">วัน</th>
-              <th rowspan="2" style="text-align: center !important">จำนวนเงิน</th>
-              <th rowspan="2" style="text-align: center !important">ค่าพาหนะ</th>
-              <th rowspan="2" style="text-align: center !important">ค่าใช้จ่ายอื่น</th>
-              <th rowspan="2" style="text-align: center !important">รวมเป็นเงิน</th>
-              <th rowspan="2" style="text-align: center !important">หมายเหตุ</th>
-              <th rowspan="2" style="text-align: center !important">Action</th>
-              
-            </tr>
-            <tr>
-              <th style="text-align: center !important">วัน</th>
-              <th style="text-align: center !important">จำนวนเงิน</th>
-              <th style="text-align: center !important">วัน</th>
-              <th style="text-align: center !important">จำนวนเงิน</th>
-            </tr>
-          </thead>
-        </table>
-      </div> 
-  </div> -->
-  <div class="ui segment">
-        <table id="tableData" class="ui small celled table"  style="width:100%">
-          <thead>
-            <tr>
-              <th  style="text-align: center !important"><input id="checkAllSap" type="checkbox" (click)="clickCheckAll($event)"/></th>
-              <th  style="text-align: center !important">ลำดับที่</th>
-              <th  style="text-align: center !important">ชื่อ</th>
-              <th  style="text-align: center !important">ตำแหน่ง</th>
-              <th style="text-align: center !important">วัน</th>
 
-              <th style="text-align: center !important">จำนวนเงิน</th>
-              <th style="text-align: center !important">วัน</th>
-              <th style="text-align: center !important">จำนวนเงิน</th>          
-              <th  style="text-align: center !important">ค่าพาหนะ</th>
-              <th  style="text-align: center !important">ค่าใช้จ่ายอื่น</th>
-              
-              <th  style="text-align: center !important">รวมเป็นเงิน</th>
-              <th  style="text-align: center !important">หมายเหตุ</th>
-              <th  style="text-align: center !important">Action</th>        
-            </tr>
-          </thead>
-        </table>
+  <div class="ui segment"> 
+        <table id="tableData" class="ui small celled table"  style="width:100%">
+                <thead>
+                  <tr>
+                    <th rowspan="2" style="text-align: center !important"><input id="checkAllSap" type="checkbox" (click)="clickCheckAll($event)"/></th>
+                    <th rowspan="2" style="text-align: center !important">ลำดับที่</th>
+                    <th rowspan="2" style="text-align: center !important">ชื่อ</th>
+                    <th rowspan="2" style="text-align: center !important">ตำแหน่ง</th>
+                    <th colspan="2" style="text-align: center !important">ค่าเบี้ยเลี้ยง</th>
+                    <th colspan="2" style="text-align: center !important">ค่าเช่าที่พัก</th>             
+                    <th rowspan="2" style="text-align: center !important">ค่าพาหนะ</th>
+                    <th rowspan="2" style="text-align: center !important">ค่าใช้จ่ายอื่น</th>
+                    <th rowspan="2" style="text-align: center !important">รวมเป็นเงิน</th>
+                    <th rowspan="2" style="text-align: center !important">หมายเหตุ</th>
+                    <th rowspan="2" style="text-align: center !important">Action</th>
+                    
+                  </tr>
+                  <tr>
+                    <th style="text-align: center !important">วัน</th>
+                    <th style="text-align: center !important">จำนวนเงิน</th>
+                    <th style="text-align: center !important">วัน</th>
+                    <th style="text-align: center !important">จำนวนเงิน</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th colspan="4">รวม</th>
+                        <th id="allowanceDate"></th>
+                        <th id="allowanceCost"></th>
+                        <th id="rentDate"></th>
+                        <th id="rentCost"></th>
+                        <th id="travelCost"></th>                          
+                        <th colspan="4"></th>
+                    </tr>
+                    </tfoot>
+              </table>      
+        <div class="ui form center aligned grid">
+            <button class="ui  grey button" type="button" routerLink="/int09/2-1-2" ><i class="reply icon"></i>กลับ</button>
+            <button class="ui  primary button" type="button" ><i class="trash alternate outline icon"></i> ลบ</button>
+            <button class="ui  primary button" type="button" ><i class="save outline icon"></i> บันทึก</button>
+            <button class="ui  primary button" type="button" ><i class="external alternate icon"></i>Export</button>
+            <button class="ui  green button" type="button" ><i class="file outline icon"></i> สัญญาการยืมเงิน</button>
+        </div> 
+        <br> 
   </div>
 
  
