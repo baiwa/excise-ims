@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
 import { Router } from "@angular/router";
 
 declare var $: any;
@@ -8,7 +8,7 @@ declare var $: any;
     templateUrl: "./int02-m5-2.component.html",
     styleUrls: ["./int02-m5-2.component.css"]
 })
-export class Int02M52Component implements OnInit, OnDestroy {
+export class Int02M52Component implements OnInit, OnDestroy, AfterViewInit {
 
     list: any;
     datatable: any;
@@ -20,10 +20,9 @@ export class Int02M52Component implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy(): void {
-    }
+    ngOnInit(): void { }
 
-    ngOnInit(): void {
+    ngAfterViewInit(): void {
         this.datatable = $("#datatable").DataTable({
             engthChange: false,
             searching: false,
@@ -37,6 +36,8 @@ export class Int02M52Component implements OnInit, OnDestroy {
             pagingType: "full_numbers"
         });
     }
+
+    ngOnDestroy(): void { }
 
     search(): void {
         this.router.navigate(['/int02/m5/2/1']);

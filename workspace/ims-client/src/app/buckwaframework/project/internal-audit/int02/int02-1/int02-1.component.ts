@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AjaxService } from '../../../../common/services';
 declare var $: any;
 @Component({
   selector: 'app-int02-1',
@@ -9,9 +10,18 @@ export class Int021Component implements OnInit {
 
   datatable: any;
 
-  constructor() { }
+  sideName: string;
+  sideNameArr: any;
+
+  constructor(private ajax: AjaxService) {
+    this.sideNameArr = [];
+  }
 
   ngOnInit() {
+    const URL = 'combobox/controller/comboboxHeaderQuestionnaire';
+    this.ajax.post(URL, {}, res => {
+      this.sideNameArr = res.json();
+    });
     this.initialTable();
   }
 

@@ -25,7 +25,7 @@ public class QtnReportHeader extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_QTN_REPORT_GEN")
 	@SequenceGenerator(name = "IA_QTN_REPORT_GEN", sequenceName = "IA_QTN_REPORT_SEQ", allocationSize = 1)
 	@Column(name = "QTN_REPORT_HDR_ID")
-	private BigDecimal qtnReportHdrId;
+	private Long qtnReportHdrId;
 	
 	@Column(name = "QTN_REPORT_HDR_NAME")
 	private String qtnReportHdrName;
@@ -34,11 +34,11 @@ public class QtnReportHeader extends BaseEntity {
 	private String creator;
 
 	
-	public BigDecimal getQtnReportHdrId() {
+	public Long getQtnReportHdrId() {
 		return qtnReportHdrId;
 	}
 
-	public void setQtnReportHdrId(BigDecimal qtnReportHdrId) {
+	public void setQtnReportHdrId(Long qtnReportHdrId) {
 		this.qtnReportHdrId = qtnReportHdrId;
 	}
 

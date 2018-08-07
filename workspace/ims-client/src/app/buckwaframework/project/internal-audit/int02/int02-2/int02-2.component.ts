@@ -17,14 +17,18 @@ export class Int022Component implements OnInit {
   departmentNameNew: any;
   datatable: any;
   datas: Condition[];
+  chk: any;
+  self: this;
   constructor(
     private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
     private _location: Location
   ) {
+    this.self = this;
     this.datas = [];
-    for(let i=0; i<3; i++) {
+    this.chk = [];
+    for (let i = 0; i < 3; i++) {
       this.datas.push(new Condition());
     }
   }
@@ -34,57 +38,65 @@ export class Int022Component implements OnInit {
     $(".ui.dropdown.ai").css("width", "100%");
     this.departmentNameArr = "";
     const URL = "combobox/controller/comboboxHeaderQuestionnaire";
-
     this.ajax.post(URL, {}, res => {
-      console.log(res.json());
       this.departmentNameArr = res.json();
     });
     this.initDatatable();
-  }
-
-  addHeaderQuestionnaire() {
-    console.log(this.departmentNameNew);
-    console.log(this.departmentName);
-    var departmentValue = "";
-    if (
-      this.departmentName != null &&
-      this.departmentName != undefined &&
-      this.departmentName != ""
-    ) {
-      departmentValue = this.departmentName;
-    }
-    if (
-      this.departmentNameNew != null &&
-      this.departmentNameNew != undefined &&
-      this.departmentNameNew != ""
-    ) {
-      if (departmentValue != "") {
-        this.messageBarService.errorModal(
-          "ระบบสามารถเพิ่มข้อมูลได้เพียงหนึ่งช่องทาง กรุณาเพิ่มข้อมูลใหม่",
-          "แจ้งเตือน"
-        );
-        return "";
+    // Edited or Added ???
+    $("#datatable tbody").on("click", "button", e => {
+      const { id } = e.target;
+      this.datatable.row($(this).parents("tr")).data();
+      if ("edit" == id.split("-")[0]) {
+        this.router.navigate(["/int02/3"], {
+          queryParams: { id: id.split("-")[1] }
+        });
       } else {
-        departmentValue = this.departmentNameNew;
-      }
-    }
-    const URL = "ia/int02/addHeaderQuestionnaire";
-    this.ajax.post(URL, { qtnReportHdrName: departmentValue }, res => {
-      console.log(res.json());
-      var message = res.json();
-      console.log(message.messageType);
-      if (message.messageType == "E") {
-        this.messageBarService.errorModal(message.messageTh, "แจ้งเตือน");
-      } else {
-        this.messageBarService.successModal(
-          message.messageTh,
-          "บันทึกข้อมูลสำเร็จ"
-        );
+        console.log("Added ???");
       }
     });
-    this.datatable.destroy();
-    this.initDatatable();
+
+    // Checked ???
+    $("#datatable tbody").on("click", "input", e => {
+      const { id, checked } = e.target;
+      if ("chk" == id.split("-")[0] && checked) {
+        this.chk.push(id.split("-")[1]);
+      } else {
+        this.chk.splice(this.chk.findIndex(obj => id.split("-")[1] == obj), 1);
+      }
+      console.log(this.chk);
+    });
   }
+
+  isNotNull(variables) {
+    return variables != null && variables != undefined && variables != "";
+  }
+
+  addHeaderQuestionnaire(event: any) {
+    event.preventDefault();
+    var departmentValue = "";
+    if (this.isNotNull(this.departmentName) || this.isNotNull(this.departmentNameNew)) {
+      if (this.isNotNull(this.departmentNameNew)) {
+        departmentValue = this.departmentNameNew;
+      }
+      if (this.isNotNull(this.departmentName)) {
+        departmentValue = this.departmentName;
+      }
+      const URL = "ia/int02/addHeaderQuestionnaire";
+      this.ajax.post(URL, { qtnReportHdrName: departmentValue }, res => {
+        var message = res.json();
+        if (message.messageType == "E") {
+          alert(message.messageTh);
+        } else {
+          alert(message.messageTh);
+          this.reTable();
+        }
+      });
+    } else {
+      alert("ระบบสามารถเพิ่มข้อมูลได้เพียงหนึ่งช่องทาง กรุณาเพิ่มข้อมูลใหม่");
+    }
+  }
+
+
 
   initDatatable(): void {
     var router = this.router;
@@ -96,7 +108,7 @@ export class Int022Component implements OnInit {
       lengthChange: false,
       searching: false,
       select: true,
-      ordering: true,
+      ordering: false,
       pageLength: 10,
       processing: true,
       serverSide: true,
@@ -108,6 +120,17 @@ export class Int022Component implements OnInit {
         data: {}
       },
       columns: [
+        {
+          orderable: false,
+          render: function (data, type, full, meta) {
+            return `<input type="checkbox" name="chk-${
+              full.qtnReportHdrId
+              }" id="chk-${
+              full.qtnReportHdrId
+              }">`;
+          },
+          className: "center"
+        },
         {
           data: "qtnReportHdrId",
           className: "center"
@@ -121,45 +144,16 @@ export class Int022Component implements OnInit {
           className: "center"
         },
         {
-          render: function(data, type, full, meta) {
+          render: function (data, type, full, meta) {
             return `<button class="ui icon yellow mini button" id="edit-${
               full.qtnReportHdrId
-            }" value="edit-${
+              }" value="edit-${
               full.qtnReportHdrId
-            }"><i class="edit icon"></i></button>`;
+              }"><i class="edit icon"></i></button>`;
           },
           className: "center"
         }
       ]
-    });
-    var table = this.datatable;
-    $("#datatable tbody").on("click", "button", function() {
-      var data = table.row($(this).parents("tr")).data();
-      console.log(table.row($(this).parents("tr")).row());
-      console.log(data.qtnReportHdrId);
-      if ("edit" == this.id.split("-")[0]) {
-        router.navigate(["/int02/3"], {
-          queryParams: { id: this.id.split("-")[1] }
-        });
-      } else {
-        //delete case
-        // this.messageBarService.comfirm(res => {
-        //   if (!res) return false;
-        //   const deleteURL = `preferences/userManagement/`;
-        //   this.ajaxService.delete(
-        //     deleteURL,
-        //     (success: Response) => {
-        //       let body: any = success.json();
-        //       this.messageBarService.success("ลบข้อมูลสำเร็จ.");
-        //       this.search();
-        //     },
-        //     (error: Response) => {
-        //       let body: any = error.json();
-        //       this.messageBarService.error(body.error);
-        //     }
-        //   );
-        // }, "ยืนยันการลบ.");
-      }
     });
 
     $("#datatable tbody tr").css({
@@ -168,18 +162,53 @@ export class Int022Component implements OnInit {
     });
 
     //on click row
-    $("#datatable tbody").on("click", "tr", function(e) {
-      $("#exciseBtn").prop("disabled", false);
-      $("#datatable tbody tr").css({
-        "background-color": "white",
-        cursor: "pointer"
-      });
+    // $("#datatable tbody").on("click", "tr", function (e) {
+    //   $("#exciseBtn").prop("disabled", false);
+    //   $("#datatable tbody tr").css({
+    //     "background-color": "white",
+    //     cursor: "pointer"
+    //   });
 
-      $(this).css("background-color", "rgb(197,217,241)");
-    });
+    //   $(this).css("background-color", "rgb(197,217,241)");
+    // });
   }
 
-  deleteData() {}
+  deleteHeaderQuestionnaire() {
+    const URL = "ia/int02/delHeaderQuestionnaire";
+    console.log(`${URL}/${this.chk.toString()}`);
+    this.ajax.delete(`${URL}/${this.chk.toString()}`,
+      res => {
+        console.log("Response", res);
+        this.reTable();
+      }
+    );
+  }
+
+  reTable = () => {
+    this.chk = [];
+    $("#chk").prop('checked', false);
+    this.datatable.destroy();
+    this.initDatatable();
+  }
+
+  clickChkAll = event => {
+    if (event.target.checked) {
+      var node = $('#datatable').DataTable().rows().nodes();
+      $.each(node, (index, value) => {
+        const id = $(value).find('input')[0].id;
+        this.chk.push(id.split("-")[1]);
+        $(value).find('input')[0].checked = true;
+      });
+    } else {
+      var node = $('#datatable').DataTable().rows().nodes();
+      $.each(node, (index, value) => {
+        const id = $(value).find('input')[0].id;
+        this.chk.splice(this.chk.findIndex(obj => id.split("-")[1] == obj), 1);
+        $(value).find('input')[0].checked = false;
+      });
+    }
+    console.log(this.chk);
+  }
 
   linkToDetail(headerId) {
     this.router.navigate(["/int02/3"], {

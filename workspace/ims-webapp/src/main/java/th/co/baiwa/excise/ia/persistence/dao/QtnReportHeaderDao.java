@@ -41,6 +41,7 @@ public class QtnReportHeaderDao {
 	public List<QtnReportHeader> findByCriteriaDataTable(QtnReportHeader qtnReportHeader,int start, int length) {
 		List<Object> paramList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlTemplate); 
+		sql.append(" AND H.IS_DELETED = 'N' ");
 		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnReportHdrId())) {
 			sql.append("AND H.QTN_REPORT_HDR_ID = ? ");
 			paramList.add(qtnReportHeader.getQtnReportHdrId());
@@ -58,6 +59,7 @@ public class QtnReportHeaderDao {
 	public long countQtnReportHeader(QtnReportHeader qtnReportHeader) {
 		List<Object> paramList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlTemplate); 
+		sql.append(" AND H.IS_DELETED = 'N' ");
 		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnReportHdrId())) {
 			sql.append("AND H.QTN_REPORT_HDR_ID = ? ");
 			paramList.add(qtnReportHeader.getQtnReportHdrId());
@@ -76,7 +78,7 @@ public class QtnReportHeaderDao {
 		@Override
 		public QtnReportHeader mapRow(ResultSet rs, int arg1) throws SQLException {
 			QtnReportHeader vo = new QtnReportHeader();
-			vo.setQtnReportHdrId(rs.getBigDecimal("QTN_REPORT_HDR_ID"));
+			vo.setQtnReportHdrId(rs.getLong("QTN_REPORT_HDR_ID"));
 			vo.setQtnReportHdrName(rs.getString("QTN_REPORT_HDR_NAME"));
 			vo.setCreator(rs.getString("CREATOR"));
 			vo.setCreatedBy(rs.getString("CREATED_BY"));

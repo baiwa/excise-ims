@@ -7,33 +7,34 @@
     </div>
 
     <div class="ui attached segment">
-      <div class="ui form">
-        <div class="inline fields">
+      <form class="ui form" (submit)="addHeaderQuestionnaire($event)" ngNativeValidate>
+        <div class="inline three fields">
           <div class="field">
             <label>ด้านที่ตรวจ (เดิม)</label>
-            <select class="ui dropdown ai" name="departmentName" id="departmentName" [(ngModel)]="departmentName">
-              <option aria-placeholder="ด้านที่ตรวจ (เดิม)"></option>
+            <select class="ui search selection dropdown ai" name="departmentName" id="departmentName" [(ngModel)]="departmentName">
+              <option value="">ด้านที่ตรวจ (เดิม)</option>
               <option *ngFor="let list of departmentNameArr" ng-value="list.value">{{list.description}}</option>
             </select>
           </div>
           <div class="field">
             <label>ด้านที่ตรวจ (ใหม่)</label>
-            <input type="text" placeholder="หน่วยรับตรวจ" class="custom" name="departmentNameNew" id="departmentNameNew" [(ngModel)]="departmentNameNew">
+            <input type="text" style="width: 100%" placeholder="หน่วยรับตรวจ" name="departmentNameNew" id="departmentNameNew" [(ngModel)]="departmentNameNew">
           </div>
           <div class="field">
-            <button type="button" style="margin-left: auto" class="ui mini primary button right floated" (click)="addHeaderQuestionnaire()">
-              <i class="add icon"></i>
-              เพิ่ม
-            </button>
-          </div>
-          <div class="field">
-            <button type="button" style="margin-left: auto" class="ui mini primary button right floated" (click)="deleteHeaderQuestionnaire()">
-              <i class="delete icon"></i>
-              ลบ
-            </button>
+            <label></label>
+            <div class="ui input" style="margin-top: 1.25em;">
+              <button type="submit" style="margin-left: auto;" class="ui mini primary button">
+                <i class="add icon"></i>
+                เพิ่ม
+              </button>
+              <button type="button" style="margin-left: auto;" class="ui mini {{ chk.length == 0 && 'disabled' }} red button" (click)="deleteHeaderQuestionnaire()">
+                <i class="delete icon"></i>
+                ลบ
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
 
     <div class="ui segment">
@@ -42,6 +43,9 @@
           <table id="datatable" class="ui small celled table aligned hover">
             <thead>
               <tr>
+                <th style="text-align: center !important">
+                  <input type="checkbox" name="chk" id="chk" (click)="clickChkAll($event)">
+                </th>
                 <th style="text-align: center !important">ลำดับ</th>
                 <th style="text-align: center !important">แบบสอบทานด้าน</th>
                 <th style="text-align: center !important">สร้างโดย</th>
