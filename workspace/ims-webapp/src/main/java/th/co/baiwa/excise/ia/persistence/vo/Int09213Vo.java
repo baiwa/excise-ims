@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public class Int09213Vo {
 	private String workSheetDetailId;
 	private String headerId;
+	private String prefix;
 	private String name;
 	private String lastName;
 	private String position;
@@ -24,6 +25,14 @@ public class Int09213Vo {
 	private String updatedDate;
 	private String isDeleted;
 	private BigDecimal version;
+
+	public String getPrefix() {
+		return prefix;
+	}
+
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
 
 	public String getWorkSheetDetailId() {
 		return workSheetDetailId;
