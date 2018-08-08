@@ -1,0 +1,68 @@
+<!-- start step -->
+
+<div class="ui ordered steps" style="width: 100%;">
+    <div class="active step">
+      <div class="content">
+        <div class="title"></div>
+        <div class="description">รายละเอียดหัวกระดาษทำการ</div>
+      </div>
+    </div>
+    <div class="disabled  step">
+      <div class="content">
+        <div class="title"></div>
+        <div class="description">หลักฐานการจ่ายเงิน (แบบ 8708 ส่วนที่ 2)</div>
+      </div>
+    </div>
+    <div class="disabled  step">
+      <div class="content">
+        <div class="title"></div>
+        <div class="description">ใบเบิกค่าใช้จ่ายฯ (แบบ 8708 ส่วนที่ 1)</div>
+      </div>
+    </div>
+    <div class="disabled  step">
+        <div class="content">
+          <div class="title"></div>
+          <div class="description">แนบหลักฐาน</div>
+        </div>
+      </div>
+  </div>
+<!-- end step -->
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>รายงานประมาณการค่าใช้จ่ายในการเดินทาง</span>
+</div>
+<div class="ui form center aligned" id="int09-1"  ngNativeValidate>
+  <div class="ui attached  segment">
+
+    <input type="hidden" id="searchFlag">
+    <div class="ui grid">
+        <input type="hidden" id="searchFlag">
+        <div class="two wide column"></div>
+        <div class="two wide column"><label>ชื่อส่วนราชการ</label></div>
+        <div class="four wide column"><input type="text" id="nameOrg"></div>
+        <div class="two wide column"><label>ประเภทเอกสาร</label></div>
+        <div class="four wide column">
+            <div class="four wide column"><input type="text" id="nameOrg"></div>
+        </div>
+        <div class="two wide column"></div>
+        <div class="two wide column"></div>
+    </div>
+    <div class="ui grid">
+        <div class="four wide column ui right aligned"><label>วัน เวลา ออกเดินทาง</label></div>
+        <div class="four wide column">
+            <div class="ui calendar" id="date">
+                <div class="ui input left icon">
+                    <i class="time icon"></i>
+                    <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                </div>
+            </div>
+        </div>
+        <div class="eight wide column ui right aligned"></div>        
+    </div>
+
+    <div class="ui center aligned grid">
+      <div class="eight wide column">
+        <button class="ui  primary button" routerLink="/int09/2-2-3" type="button" >บันทึก</button>
+      </div>
+    </div>
+    </div>
+  </div>

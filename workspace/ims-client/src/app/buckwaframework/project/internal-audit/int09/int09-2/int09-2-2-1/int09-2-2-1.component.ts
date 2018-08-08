@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var jQuery: any;
 declare var $: any;
 
 @Component({
-  selector: 'app-int09-2-1-1',
-  templateUrl: './int09-2-1-1.component.html'
+  selector: 'app-int09-2-2-1',
+  templateUrl: './int09-2-2-1.component.html'
 })
-export class Int09211Component implements OnInit {
+export class Int09221Component implements OnInit {
 
   constructor() { }
 
@@ -14,10 +15,14 @@ export class Int09211Component implements OnInit {
     $("#searchFlag").val("TRUE");
     $('#tableData').DataTable().ajax.reload();
   }
+  
   clickClear = function(){
-    $("#money").val("");
-    $("#department").val("");
+    $("#money").val("");  
     $("#searchFlag").val("FALSE");
+
+    $("#department").prop('selectedIndex',0);    
+    $("#department").dropdown('clear');
+    
     $('#tableData').DataTable().ajax.reload();
   }
 
@@ -96,12 +101,14 @@ export class Int09211Component implements OnInit {
     });
   
   }
+
   ngOnInit() {
-   
   }
+  ngAfterViewInit() {
+    $('.ui.dropdown').dropdown();
 
-  ngAfterViewInit(){
     this.dataTable();
-  }
 
+    
+  }
 }

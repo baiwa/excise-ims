@@ -5,25 +5,24 @@ declare var jQuery: any;
 declare var $: any;
 
 @Component({
-  selector: 'app-int09-2-1-3',
-  templateUrl: './int09-2-1-3.component.html'
+  selector: 'app-int09-2-2-3',
+  templateUrl: './int09-2-2-3.component.html'
 })
-export class Int09213Component implements OnInit {
+export class Int09223Component implements OnInit {
 
   allowanceDate;
   allowanceCost;
   rentDate;
   rentCost;
   travelCost;
-
-  constructor() { 
+  
+  constructor() {
     this.allowanceDate = 0;
     this.allowanceCost = 0;
     this.rentDate = 0;
     this.rentCost = 0;
     this.travelCost = 0;
   }
-
   calenda = function () {
     $("#appoveDate").calendar({
       maxDate: new Date(),
@@ -50,46 +49,46 @@ export class Int09213Component implements OnInit {
       formatter: formatter()
     });
   }
-  clickCheckAll = event=>{
+  clickCheckAll = event => {
     if (event.target.checked) {
-      var node =  $('#tableData').DataTable().rows().nodes();
-       $.each(node, function (index, value) {
-        $(this).find('input').prop('checked',true);
-       });
-    }else{
-      var node =  $('#tableData').DataTable().rows().nodes();
-       $.each(node, function (index, value) {
-        $(this).find('input').prop('checked',false); 
-       });
+      var node = $('#tableData').DataTable().rows().nodes();
+      $.each(node, function (index, value) {
+        $(this).find('input').prop('checked', true);
+      });
+    } else {
+      var node = $('#tableData').DataTable().rows().nodes();
+      $.each(node, function (index, value) {
+        $(this).find('input').prop('checked', false);
+      });
     }
   }
 
-  dataTable = function(){
+  dataTable = function () {
     var table = $('#tableData').DataTable({
       "serverSide": false,
       "searching": false,
       "ordering": false,
       "processing": true,
-      "scrollX": true,      
-      "ajax" : {
-        "url" : '/ims-webapp/api/ia/int09213/list',
+      "scrollX": true,
+      "ajax": {
+        "url": '/ims-webapp/api/ia/int09213/list',
         "contentType": "application/json",
-        "type" : "GET",
+        "type": "GET",
       },
-          
+
       "columns": [
         {
           "data": "workSheetDetailId",
-           "render": function (data, type, row, meta) {
+          "render": function (data, type, row, meta) {
             return '<input type="checkbox">';
           },
-          "className": "ui center aligned" 
-        },{
+          "className": "ui center aligned"
+        }, {
           "data": "workSheetDetailId",
-           "render": function (data, type, row, meta) {
+          "render": function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           },
-          "className": "ui center aligned" 
+          "className": "ui center aligned"
         }, {
           "data": "name"
         }, {
@@ -98,33 +97,33 @@ export class Int09213Component implements OnInit {
         }, {
           "data": "allowanceDate",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "allowanceCost",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "rentDate",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "rentCost",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "travelCost",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "otherCost",
           "className": "ui center aligned"
         },
         {
           "data": "sumCost",
           "clasName": "ui center aligned"
-        },{
+        }, {
           "data": "note",
           "className": "ui center aligned"
         }, {
           "data": "note",
-          "render" : function(data,type,row){
-            var btn = '<button type="button" class="ui yellow button btn-edit">แก้ไข</button>';
-              return btn;
+          "render": function (data, type, row) {
+            var btn = '<button type="button" class="mini ui yellow button btn-edit">แก้ไข</button>';
+            return btn;
           },
           "className": "ui center aligned"
         }
@@ -147,15 +146,15 @@ export class Int09213Component implements OnInit {
     });
 
     //button edit
-     table.on('click', 'tbody tr button.btn-edit', function () {
-			var closestRow = $(this).closest('tr');
-      var data = table.row(closestRow).data();      
+    table.on('click', 'tbody tr button.btn-edit', function () {
+      var closestRow = $(this).closest('tr');
+      var data = table.row(closestRow).data();
       console.log(data);
 
       //set date on form
-      $("#idEdit").val(data.workSheetDetailId);      
+      $("#idEdit").val(data.workSheetDetailId);
       $("#prefix").val(data.workSheetDetailId);
-      $("#name").val(data.name );
+      $("#name").val(data.name);
       $("#last").val(data.lastName);
       $("#position").val(data.position);
       $("#type").val(data.category);
@@ -172,19 +171,19 @@ export class Int09213Component implements OnInit {
       $("#note").val(data.workSheetDetailId);
 
 
-     
-    }); 
-  
-  }
 
+    });
+
+  }
   ngOnInit() {
   }
   ngAfterViewInit() {
+
     this.dataTable();
     $('.ui.dropdown').dropdown();
 
     this.calenda();
-    
+
   }
 
 }
