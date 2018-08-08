@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: "2-1-1", component: Int09211Component },
   { path: "2-1-2", component: Int09212Component },
   { path: "2-1-3", component: Int09213Component },
+  { path: "2-1-4", component: Int092Component },
   { path: "2-2-1", component: Int09221Component },
   { path: "2-2-2", component: Int09222Component },
   { path: "2-2-3", component: Int09223Component },
