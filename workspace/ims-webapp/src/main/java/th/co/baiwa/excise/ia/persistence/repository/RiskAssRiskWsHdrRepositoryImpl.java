@@ -37,9 +37,11 @@ public class RiskAssRiskWsHdrRepositoryImpl implements RiskAssRiskWsHdrRepositor
 		params.add(FLAG.N_FLAG);
 		if(BeanUtils.isNotEmpty(riskAssRiskWsHdr.getRiskHrdId())) {
 			sql.append("AND RISK_HRD_ID = ? ");
+			params.add(riskAssRiskWsHdr.getRiskHrdId());
 		}
 		if(BeanUtils.isNotEmpty(riskAssRiskWsHdr.getRiskHdrName())) {
 			sql.append(SqlGeneratorUtils.oracleSqlWhereCondition("RISK_HDR_NAME", riskAssRiskWsHdr.getRiskHdrName()));
+			params.add(riskAssRiskWsHdr.getRiskHdrName());
 		}
 		sql.append(" ORDER BY RISK_HRD_ID ");
 		return commonJdbcTemplate.executeQuery(sql.toString(), params.toArray(), riskAssRiskWsHdrMappingRow);
@@ -53,6 +55,7 @@ public class RiskAssRiskWsHdrRepositoryImpl implements RiskAssRiskWsHdrRepositor
 			riskAssRiskWsHdr.setRiskHrdId(rs.getLong("RISK_HRD_ID"));
 			riskAssRiskWsHdr.setRiskHdrName(rs.getString("RISK_HDR_NAME"));
 			riskAssRiskWsHdr.setIsDeleted(rs.getString("IS_DELETED"));
+			riskAssRiskWsHdr.setActive("ACTIVE");
 			riskAssRiskWsHdr.setCreatedBy(rs.getString("CREATED_BY"));
 			riskAssRiskWsHdr.setCreatedDate(rs.getDate("CREATED_DATE"));
 			riskAssRiskWsHdr.setUpdatedBy(rs.getString("UPDATED_BY"));

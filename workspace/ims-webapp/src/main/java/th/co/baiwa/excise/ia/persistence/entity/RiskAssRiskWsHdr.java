@@ -28,6 +28,10 @@ public class RiskAssRiskWsHdr extends BaseEntity{
 	private String riskHdrName;
 	
 	
+	@Column(name = "ACTIVE")
+	private String active;
+	
+	
 	
 	public String getRiskHdrName() {
 		return riskHdrName;
@@ -40,6 +44,12 @@ public class RiskAssRiskWsHdr extends BaseEntity{
 	}
 	public void setRiskHrdId(Long riskHrdId) {
 		this.riskHrdId = riskHrdId;
+	}
+	public String getActive() {
+		return active;
+	}
+	public void setActive(String active) {
+		this.active = active;
 	}
 	
 	

@@ -1,27 +1,44 @@
 <div class="ui grid">
-  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-    <span>กำหนดปัจจัยเสี่ยงประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
-  </div>
-  <div class="ui attached segment">
-    <div class="ui form">
-      <div class="inline fields">
-        <div class="four wide field "></div>
-        <div class="two wide field ">
-          <label>ปัจจัยเสี่ยง</label>
+  <div class="sixteen wide column">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดปัจจัยเสี่ยงประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
+    </div>
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="four wide field "></div>
+          <div class="two wide field ">
+            <label>ปัจจัยเสี่ยง</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="ปัจจัยเสี่ยง" class="custom" name="riskHdrName" id="riskHdrName" [(ngModel)]="riskHdrName">
+          </div>
+          <div class="four wide field ">
+            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+              <i class="add icon"></i>
+              เพิ่ม
+            </button>
+          </div>
         </div>
-        <div class="four wide field ">
-          <input type="text" placeholder="ปัจจัยเสี่ยง" class="custom">
-        </div>
+        <table id="dataTable" class="ui small celled table">
+          <thead>
+            <tr>
+              <th>ลำดับ</th>
+              <th>ปัจจัยเสี่ยง</th>
+              <th>วันที่สร้าง</th>
+              <th>ผู้สร้าง</th>
+              <th>สถานะการใช้งาน</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+        </table>
 
-        <div class="four wide field ">
-          <button class="ui mini primary button" (click)="Create()">
-            <i class="add icon"></i>
-            เพิ่ม
-          </button>
-        </div>
       </div>
 
-    </div>
 
+
+
+
+    </div>
   </div>
 </div>

@@ -9,6 +9,7 @@ import { Int0811Component } from './int08-1-1/int08-1-1.component';
 import { Int0812Component } from './int08-1-2/int08-1-2.component';
 import { Int0813Component } from './int08-1-3/int08-1-3.component';
 import { Int0814Component } from './int08-1-4/int08-1-4.component';
+import { FormsModule } from '../../../../../../../node_modules/@angular/forms';
 
 const routes: Routes = [
   { path: '', component: Int081Component, canActivate: [AuthGuard] },
@@ -21,7 +22,8 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   declarations: [
     Int081Component,
