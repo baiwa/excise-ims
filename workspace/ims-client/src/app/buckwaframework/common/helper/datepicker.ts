@@ -71,6 +71,10 @@ export var formatter = (what: string = "") => {
       };
     case "ป":
       return {
+        cell: function (cell, date, cellOptions) {
+          let year = date.getFullYear() + 543;
+          cell[0].innerHTML = year;
+        },
         header: function (date, mode, settings) {
           //return a string to show on the header for the given 'date' and 'mode'
           if (!date) return "";
