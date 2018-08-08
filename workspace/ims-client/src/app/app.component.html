@@ -209,25 +209,7 @@
         <a class="item " *ngIf="authService.getLogin() " (click)="logout() " style=" color:White ">Logout</a>
     </div>
 </div>
-
-<div id="confirm " class="ui mini test modal transition hidden baiwa-confirm-modal " style="height: 0; ">
-    <div class="header ">
-        การยืนยัน
-    </div>
-    <div class="content ">
-        <p>ต้องการลบหรือไม่?</p>
-    </div>
-    <div class="actions ">
-        <div class="ui negative button ">
-            ยกเลิก
-        </div>
-        <div class="ui positive right labeled icon button ">
-            ยืนยัน
-            <i class="checkmark icon "></i>
-        </div>
-    </div>
-</div>
-<div class="ui tiny test modal transition hidden baiwa-alert " style="height: 0; ">
+<div class="ui tiny test modal transition hidden baiwa-alert" style="height: 0;">
     <div class="header ">
         Delete Your Account
     </div>
@@ -238,16 +220,34 @@
         <div class="ui approve button ">OK</div>
     </div>
 </div>
-<div id="alert " class="ui mini modal transition hidden " style="height: 0; ">
-    <div class="ui header " id="alert-header ">
+<div id="alert" class="ui mini modal transition hidden" style="height: 0;">
+    <div class="ui header" id="alert-header">
         เกิดข้อผิดพลาด
     </div>
-    <div class="content " id="alert-content ">
+    <div class="content" id="alert-content">
         <p></p>
     </div>
-    <div class="actions " id="alert-actions ">
-        <div class="ui mini primary cancel button center floated ">
-            <i class="remove icon "></i> ปิด
+    <div class="actions" id="alert-actions">
+        <div class="ui mini primary cancel button center floated">
+            <i class="remove icon"></i> ปิด
+        </div>
+    </div>
+</div>
+
+<div id="confirm" class="ui mini modal transition hidden" style="height: 0;">
+    <div class="ui header">
+        การยืนยัน
+    </div>
+    <div class="content">
+        <p>ต้องการลบหรือไม่?</p>
+    </div>
+    <div class="actions">
+        <div class="ui negative button">
+            ยกเลิก
+        </div>
+        <div class="ui positive right labeled icon button">
+            ยืนยัน
+            <i class="checkmark icon"></i>
         </div>
     </div>
 </div>

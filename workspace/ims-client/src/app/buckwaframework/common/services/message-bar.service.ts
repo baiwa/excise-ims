@@ -45,8 +45,8 @@ export class MessageBarService {
   }
 
   comfirm(func: Function, message: string, title: string = "การยืนยัน") {
-    $(".baiwa-confirm-modal div.header").html(title);
-    $(".baiwa-confirm-modal div.content").html(message);
+    $("#confirm div.header").html(title);
+    $("#confirm div.content").html(message);
     $("#confirm")
       .modal({
         onApprove: function(element) {

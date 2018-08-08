@@ -23,6 +23,8 @@ export class Int023Component implements OnInit {
 
   datas: Condition[];
 
+  chk: any;
+
   constructor(
     private ajax: AjaxService,
     private router: Router,
@@ -31,19 +33,36 @@ export class Int023Component implements OnInit {
 
   ) {
     this.datas = [];
-    for(let i=0; i<3; i++) {
+    this.chk = [];
+    for (let i = 0; i < 3; i++) {
       this.datas.push(new Condition());
     }
   }
 
   ngOnInit() {
     this.headerId = this.route.snapshot.queryParams["id"];
-    console.log("initDatatable");
+    this.numbers = [1];
+    this.minorDetail = [];
+
+    this.initDatatable();
+
+    // Checked ???
+    $("#datatable tbody").on("click", "input", e => {
+      const { id, checked } = e.target;
+      if ("chk" == id.split("-")[0] && checked) {
+        this.chk.push(id.split("-")[1]);
+      } else {
+        this.chk.splice(this.chk.findIndex(obj => id.split("-")[1] == obj), 1);
+      }
+    });
+  }
+
+  initDatatable() {
     const URL =
       AjaxService.CONTEXT_PATH + "ia/int02/queryQuestionnaireDetailByCriteria";
     this.datatable = $('#datatable').DataTable({
       "lengthChange": false,
-      "searching": false,
+      "searching": true,
       "select": true,
       "ordering": false,
       "pageLength": 10,
@@ -58,12 +77,12 @@ export class Int023Component implements OnInit {
       },
       "columns": [
         {
-          render: function (data, type, full, meta) {
-            return `<input type="checkbox" name="chk${meta.row}" id="chk${
-              meta.row
-              }" value="${$("<div/>")
-                .text(data)
-                .html()}">`;
+          render: (data, type, full, meta) => {
+            return `<input type="checkbox" name="chk-${
+              full.qtnDetailId
+              }" id="chk-${
+              full.qtnDetailId
+              }">`;
           },
           className: "center"
         },
@@ -74,10 +93,30 @@ export class Int023Component implements OnInit {
       ]
 
     });
+  }
 
-    /*-------add row--------*/
-    this.numbers = [1];
-    this.minorDetail = [];
+  clickChkAll = event => {
+    var node = $('#datatable').DataTable().rows().nodes();
+    if (event.target.checked) {
+      $.each(node, (index, value) => {
+        const id = $(value).find('input')[0].id;
+        this.chk.push(id.split("-")[1]);
+        $(value).find('input')[0].checked = true;
+      });
+    } else {
+      $.each(node, (index, value) => {
+        const id = $(value).find('input')[0].id;
+        this.chk.splice(this.chk.findIndex(obj => id.split("-")[1] == obj), 1);
+        $(value).find('input')[0].checked = false;
+      });
+    }
+  }
+
+  reTable = () => {
+    this.chk = [];
+    $("#chk").prop('checked', false);
+    this.datatable.destroy();
+    this.initDatatable();
   }
 
   onAddField = () => {

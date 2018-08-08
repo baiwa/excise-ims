@@ -18,7 +18,7 @@ import th.co.baiwa.excise.utils.OracleUtils;
 public class QtnReportHeaderDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	private String sqlTemplate = " SELECT * FROM IA_QTN_REPORT H WHERE 1 = 1 ";
+	private String sqlTemplate = " SELECT * FROM IA_QTN_REPORT_HEADER H WHERE 1 = 1 ";
 	
 	public List<QtnReportHeader> findByCriteria(QtnReportHeader qtnReportHeader) {
 		List<Object> paramList = new ArrayList<Object>();
@@ -56,6 +56,7 @@ public class QtnReportHeaderDao {
 		
 		return qtnReportHeaderList;
 	}
+	
 	public long countQtnReportHeader(QtnReportHeader qtnReportHeader) {
 		List<Object> paramList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlTemplate); 

@@ -7,45 +7,26 @@
         <span>แบบสอบทานระบบการควบคุมภายใน ด้านการเงิน</span>
       </div>
 
-      <div class="ui attached segment">
-        <div class="ui form">
-
-          <div class="inline fields">
-            <div class="ten wide field">
-              <label>รายละเอียดแบบสอบทาน (เดิม)</label>
-            </div>
-            <div class="six wide field">
-              <label>Search:&nbsp;&nbsp;</label>
-              <div class="ui left icon input">
-                <i class="search icon"></i>
-                <input type="text" placeholder="Search..." class="custom" name="" id="">
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="ui segment ">
-        <div class="ui grid ">
-          <div class="sixteen wide column ">
-
-            <table id="datatable" class="ui small celled table aligned hover ">
+      <div class="ui segment">
+        <div class="ui grid">
+          <div class="sixteen wide column">
+            <label>รายละเอียดแบบสอบทาน (เดิม)</label>
+            <table id="datatable" class="ui small celled table aligned hover">
               <thead>
                 <tr>
-                  <th style="text-align: center !important ;width: 5%"></th>
+                  <th style="text-align: center !important ;width: 5%">
+                    <input type="checkbox" name="chk" id="chk" (click)="clickChkAll($event)">
+                  </th>
                   <th style="text-align: center !important ;width: 95%">รายการ</th>
                 </tr>
               </thead>
               <tbody>
-
+                <!-- DATA HERE -->
               </tbody>
             </table>
-
           </div>
         </div>
       </div>
-
 
       <div class="ui attached segment">
         <div class="ui form">
@@ -57,37 +38,37 @@
           </div>
 
           <div class="inline fields">
-            <div class="two wide field ">
+            <div class="two wide field">
               <label>ข้อหลัก</label>
             </div>
-            <div class="twelve wide field ">
+            <div class="twelve wide field">
               <input class="custom" type="text" id="mainDetail" name="mainDetail" value="" [attr.required]="true">
             </div>
           </div>
           <div class="inline fields" *ngFor="let num of numbers; let i = index" [attr.data-index]="i">
-            <div class="two wide field ">
+            <div class="two wide field">
               <label>ข้อย่อย</label>
             </div>
-            <div class="ten wide field ">
+            <div class="ten wide field">
               <input class="custom" type="text" id="minorDetail{{i}}" name="minorDetail{{i}}" [(ngModel)]="minorDetail[i]" value="" [attr.required]="true">
             </div>
-            <div class="two wide field ">
+            <div class="two wide field">
               <a (click)="onDelField(i)" style="cursor: pointer;color: red">
                 <i class="delete icon"></i>
               </a>
             </div>
           </div>
           <div class="inline fields">
-            <div class="two wide field "></div>
-            <div class="ten wide field "></div>
-            <div class="two wide field ">
-              <a class=" primary  " (click)="onAddField()" style="cursor:  pointer;">
+            <div class="two wide field"></div>
+            <div class="ten wide field"></div>
+            <div class="two wide field">
+              <a class="primary" (click)="onAddField()" style="cursor: pointer;">
                 <i class="add icon"></i>
               </a>
             </div>
           </div>
           <div class="inline fields">
-            <div class="two wide field ">
+            <div class="two wide field">
             </div>
             <div class="field">
               <button type="button" style="margin-left: auto" class="ui mini primary button left floated">

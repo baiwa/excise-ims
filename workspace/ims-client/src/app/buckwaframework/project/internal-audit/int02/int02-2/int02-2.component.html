@@ -12,8 +12,8 @@
           <div class="field">
             <label>ด้านที่ตรวจ (เดิม)</label>
             <select class="ui search selection dropdown ai" name="departmentName" id="departmentName" [(ngModel)]="departmentName">
-              <option value="">ด้านที่ตรวจ (เดิม)</option>
-              <option *ngFor="let list of departmentNameArr" ng-value="list.value">{{list.description}}</option>
+              <option value="0">ด้านที่ตรวจ (เดิม)</option>
+              <option *ngFor="let list of departmentNameArr" value="{{list.description}}">{{list.description}}</option>
             </select>
           </div>
           <div class="field">

@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.ia.Int023MappingVO;
+import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
+import th.co.baiwa.excise.ia.service.QtnMasterService;
 import th.co.baiwa.excise.ia.service.QtnReportHeaderService;
 import th.co.baiwa.excise.ia.service.QuestionnaireDetailService;
 
 import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.excise.utils.NumberUtils;
 
 @Controller
 @RequestMapping("api/ia/int02")
@@ -36,12 +40,40 @@ public class Int02Controller {
 	@Autowired
 	private QuestionnaireDetailService questionnaireDetailService;
 	
-
-	@PostMapping("/addHeaderQuestionnaire")
+	@Autowired
+	private QtnMasterService qtnMasterService;
+	
+	@PostMapping("/qtn_master/datatable")
 	@ResponseBody
-	public Message addHeaderQuestionnaire(@RequestBody QtnReportHeader qtnReportHeader) {
+	public ResponseDataTable<QtnMaster> qtnMaster(DataTableRequest dataTableRequest) {
+		logger.info("Query qtnMaster");
+		return qtnMasterService.findAllQtnMaster();
+	}
+	
+	@PostMapping("/save_qtn_master")
+	@ResponseBody
+	public CommonMessage<QtnMaster> saveQtnMaster(@RequestBody QtnMaster qtnMaster) {
+		logger.info("Saved to saveMaster");
+		return qtnMasterService.saveQtnMaster(qtnMaster);
+	}
+	
+	@DeleteMapping("/delete_qtn_master/{id}")
+	@ResponseBody
+	public Message deleteQtnMaster(@PathVariable("id") String id) {
+		return qtnMasterService.deleteQtnMaster(id);
+	}
+
+	@PostMapping("/save_qtn_report_header")
+	@ResponseBody
+	public Message saveQtnReportHeader(@RequestBody QtnReportHeader qtnReportHeader) {
 		logger.info("Add QtnReportHeader");
 		return qtnReportHeaderService.saveQtnReportHeader(qtnReportHeader);
+	}
+	
+	@DeleteMapping("/delete_qtn_report_header/{id}")
+	@ResponseBody
+	public Message deleteQtnReportHeader(@PathVariable("id") String id) {
+		return qtnReportHeaderService.deleteQtnReportHeader(id);
 	}
 
 	@PostMapping("/queryQtnReportHeaderByCriteria")
@@ -82,12 +114,6 @@ public class Int02Controller {
 		logger.info("queryQuestionnaireDetailByCriteria");
 		return questionnaireDetailService.findByCriteriaForDatatable(new QuestionnaireDetail(), dataTableRequest);
 		
-	}
-	
-	@DeleteMapping("/delHeaderQuestionnaire/{id}")
-	@ResponseBody
-	public Message deleteHeaderQuestionnaire(@PathVariable("id") String id) {
-		return qtnReportHeaderService.deleteQtnReportHeader(id);
 	}
 
 }

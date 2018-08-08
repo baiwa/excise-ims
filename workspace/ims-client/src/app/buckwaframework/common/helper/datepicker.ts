@@ -39,7 +39,7 @@ export var TextDateTH = {
 export var digit = number => {
   return (number < 10 ? "0" : "") + number;
 };
-
+// formatter("ป")
 export var formatter = (what: string = "") => {
   switch (what) {
     case "เวลา":
@@ -71,6 +71,12 @@ export var formatter = (what: string = "") => {
       };
     case "ป":
       return {
+        header: function (date, mode, settings) {
+          //return a string to show on the header for the given 'date' and 'mode'
+          if (!date) return "";
+          let year = date.getFullYear() + 543;
+          return year;
+        },
         date: function (date, settings) {
           if (!date) return "";
           let year = date.getFullYear() + 543;

@@ -18,24 +18,50 @@ export class Int021Component implements OnInit {
   }
 
   ngOnInit() {
-    const URL = 'combobox/controller/comboboxHeaderQuestionnaire';
-    this.ajax.post(URL, {}, res => {
-      this.sideNameArr = res.json();
-    });
-    this.initialTable();
+    // const URL = 'combobox/controller/comboboxHeaderQuestionnaire';
+    // this.ajax.post(URL, {}, res => {
+    //   this.sideNameArr = res.json();
+    // });
+    this.initDatatable();
   }
 
-  initialTable() {
+  initDatatable(): void {
+    const URL = `${AjaxService.CONTEXT_PATH}ia/int02/qtn_master/datatable`;
     this.datatable = $("#datatable").DataTable({
       lengthChange: false,
       searching: false,
       select: true,
-      ordering: true,
-      pageLength: 5,
-      // processing: true,
-      // serverSide: true,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: true,
       paging: true,
-      pagingType: "full_numbers"
+      pagingType: "full_numbers",
+      ajax: {
+        type: "POST",
+        url: URL,
+        data: {}
+      },
+      columns: [
+        {
+          data: "qtnMasterId",
+          className: "center"
+        },
+        {
+          data: "qtnName",
+          className: "center"
+        },
+        {
+          data: "qtnYear",
+          className: "center"
+        },
+        {
+          render: (data, type, full, meta) => {
+            return `<button class="ui icon yellow mini button" id="edit-${full.qtnMasterId}" value="edit-${full.qtnMasterId}"><i class="edit icon"></i></button>`;
+          },
+          className: "center"
+        }
+      ]
     });
   }
 
