@@ -25,7 +25,7 @@ export class Int09211Component implements OnInit {
     $('#tableData').DataTable().ajax.reload();
   }
   clickClear = function () {
-    $("#year").val("");
+    $("#year1").val("");
     $("#department").val("");
     $("#searchFlag").val("FALSE");
     this.officeDropdown();

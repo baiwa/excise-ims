@@ -14,7 +14,7 @@ export class Int09213Component implements OnInit {
   allowanceCost;
   rentDate;
   rentCost;
-  travelCost;
+  travelCost; 
 
   hideA: boolean = false;
 
@@ -80,6 +80,20 @@ export class Int09213Component implements OnInit {
     }
   }
 
+  setSession = function(){
+    $.ajax({
+      url: "/ims-webapp/api/ia/int09213/setSession", 
+      contentType: "application/json",
+      type: "GET",
+       data: function (d) {
+        return JSON.stringify($.extend({}, d, {
+        }));
+      },
+      success: function (data) {
+        console.log("set session seccess.");
+      }
+    });
+  }
   dataTable = function(){
     var table = $('#tableData').DataTable({
       "serverSide": false,
@@ -194,6 +208,7 @@ export class Int09213Component implements OnInit {
   }
 
   ngOnInit() {
+    this.setSession();
   }
   ngAfterViewInit() {
     $("#typeRoomLabel").hide();
