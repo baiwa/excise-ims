@@ -8,9 +8,21 @@
     <div class="ui grid">
         <div class="two wide column"></div>
         <div class="two wide column"><label>ปีงบประมาณ</label></div>
-        <div class="four wide column"><input type="text" id="money"></div>
+        <div class="four wide column">
+          <div class="ui calendar" id="year">
+            <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" name="date-raw" id="year1" autocomplete="off" [attr.readonly]="null" placeholder="yyyy" [attr.required]="true">
+            </div>
+        </div></div>
         <div class="two wide column"><label>หน่วยงาน</label></div>
-        <div class="four wide column"><input type="text" id="department"></div>
+        <div class="four wide column">
+          <div class="ui form">
+            <div class="field">
+              <select class="ui search dropdown" id="department"></select>
+            </div>
+          </div>
+        </div>
         <div class="two wide column"></div>
         <div class="two wide column"></div>
       </div>

@@ -104,6 +104,20 @@ export var formatter = (what: string = "") => {
           return digit(day) + " " + TextDateTH.months[month] + " " + year.toString();
         }
       };
+    case "วดปเวลา":
+      return {
+        datetime: function (date, mode, settings) {
+          //return a string to show on the header for the given 'date' and 'mode'
+          if (!date) return "";
+          let day = date.getDate();
+          let month = date.getMonth();
+          let year = date.getFullYear() + 543;
+          let h = date.getHours();
+          let m = date.getMinutes();
+          let s = date.getSeconds();
+          return day +" " + TextDateTH.monthsShort[month]+ " " + year + " " + digit(h) + ":" + digit(m);
+        },
+      };
     case "day":
       return {
         date: function (date, settings) {

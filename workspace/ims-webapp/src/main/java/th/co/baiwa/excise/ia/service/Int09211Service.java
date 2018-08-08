@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.BudgetDao;
 import th.co.baiwa.excise.ia.persistence.entity.Budget;
@@ -31,6 +32,11 @@ public class Int09211Service {
 		
 		
 		return dataTableAjax;		
+	}
+	
+	//position dropdown
+	public List<LabelValueBean> departmentDropdown(){
+		return budgetDao.departmentDropdown();
 	}
 
 }

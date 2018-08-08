@@ -16,12 +16,29 @@ export class Int09213Component implements OnInit {
   rentCost;
   travelCost;
 
+  hideA: boolean = false;
+
   constructor() { 
     this.allowanceDate = 0;
     this.allowanceCost = 0;
     this.rentDate = 0;
     this.rentCost = 0;
     this.travelCost = 0;
+  }
+
+  typeRoom = function() {
+    var id = $("#typeWithdrawal").val();
+  //  e.target.value == 1 || e.target.value == "" ?  this.hideA = false :  this.hideA = true;
+   if( id==0 || id==2 || id==3 ){
+    $("#typeRoomLabel").show();
+    $("#typeRoomValue").show(function(){
+      $(".ui.dropdown").dropdown();
+    });
+   }else{
+    $("#typeRoomLabel").hide();
+    $("#typeRoomValue").hide();
+   }
+   
   }
 
   calenda = function () {
@@ -39,15 +56,14 @@ export class Int09213Component implements OnInit {
     });
     $("#startGoDate").calendar({
       maxDate: new Date(),
-      type: "date",
+      type: "datetime",
       text: TextDateTH,
-      formatter: formatter()
+      formatter : formatter("วดปเวลา")
     });
     $("#endGoDate").calendar({
       maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
+      type: "datetime",
+      formatter : formatter("วดปเวลา")
     });
   }
   clickCheckAll = event=>{
@@ -180,6 +196,8 @@ export class Int09213Component implements OnInit {
   ngOnInit() {
   }
   ngAfterViewInit() {
+    $("#typeRoomLabel").hide();
+    $("#typeRoomValue").hide();
     this.dataTable();
     $('.ui.dropdown').dropdown();
 

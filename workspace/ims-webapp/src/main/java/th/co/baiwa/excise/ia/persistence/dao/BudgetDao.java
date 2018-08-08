@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ia.persistence.entity.Budget;
 import th.co.baiwa.excise.ia.persistence.vo.Int09211FormVo;
 import th.co.baiwa.excise.utils.OracleUtils;
@@ -50,7 +51,7 @@ public class BudgetDao {
 		List<Object> params = new ArrayList<>();
 		
 		if (StringUtils.isNotBlank(formVo.getYear())) {
-			sql.append(" AND  TO_CHAR(UPDATED_DATE, 'YYYYMMDD') = ? ");
+			sql.append(" AND  TO_CHAR(UPDATED_DATE, 'YYYY') = ? ");
 			params.add(formVo.getYear());
 			
 		}
@@ -93,5 +94,20 @@ public class BudgetDao {
 	    		return vo;
 	    	}
 	    };
+	    
+	    
+	    public List<LabelValueBean> departmentDropdown() {
+	    	String SQL = "SELECT * FROM SYS_LOV  WHERE TYPE='SECTOR_LIST' ";
+	    	return jdbcTemplate.query(SQL, departmentDropdownRowmapper);
+	    }
+	    
+		private RowMapper<LabelValueBean> departmentDropdownRowmapper = new RowMapper<LabelValueBean>() {
+			@Override
+			public LabelValueBean mapRow(java.sql.ResultSet rs, int rowNum) throws SQLException {
+				LabelValueBean lv = new LabelValueBean(rs.getString("SUB_TYPE_DESCRIPTION"), rs.getString("SUB_TYPE"));
+
+				return lv;
+			}
+		};
 
 }
