@@ -1,3 +1,4 @@
+<form (submit)="onSubmit($event)" >
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
     <span>หนังสือแจ้งผลการตรวจสอบภาษีสรรพสามิต</span>
 </div>
@@ -231,11 +232,12 @@
             <div class="ui two wide column">&nbsp;</div>
         </div>
     </div>
+</div>
 
     <div class="ui bottom centered attached segment">
         <div class="ui center aligned grid">
             <div class="eight wide column">
-                <button class="ui mini green button" type="button">
+                <button class="ui mini green button" type="submit">
               <i class="save icon"></i>
               พิมพ์เอกสาร
             </button>
@@ -245,4 +247,6 @@
             </button>
             </div>
         </div>
-    </div>
+        </div>
+ 
+</form>
