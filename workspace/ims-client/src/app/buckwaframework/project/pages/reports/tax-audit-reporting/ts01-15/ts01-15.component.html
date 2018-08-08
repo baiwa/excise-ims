@@ -1,3 +1,4 @@
+<form (submit)="onSubmit($event)" >
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
     <span>บันทึกข้อตกลงยินยอมการชำระภาษีสรรพสามิต</span>
 </div>
@@ -191,7 +192,7 @@
 <div class="ui bottom centered attached segment">
     <div class="ui center aligned grid">
         <div class="eight wide column">
-            <button class="ui mini green button" type="button">
+            <button class="ui mini green button" type="submit">
           <i class="save icon"></i>
           พิมพ์เอกสาร
         </button>
@@ -202,3 +203,4 @@
         </div>
     </div>
 </div>
+</form>

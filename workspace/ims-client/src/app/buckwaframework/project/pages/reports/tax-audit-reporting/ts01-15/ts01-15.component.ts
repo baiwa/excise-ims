@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
+import { AjaxService } from '../../../../../common/services';
 declare var jQuery: any;
 declare var $: any;
 
@@ -9,13 +10,16 @@ declare var $: any;
   templateUrl: './ts01-15.component.html',
 })
 export class Ts0115Component implements OnInit {
-
+  obj: Ts0115;
   @Output() discard = new EventEmitter<any>();
 
   numbers:number[];
+  beans: Bean[];
 
-  constructor() {
+  constructor(private ajax: AjaxService) {
     this.numbers = [1,2,3];
+    this.beans = [new Bean()];
+    this.obj = new Ts0115();
   }
 
   ngOnInit() {
@@ -37,5 +41,38 @@ export class Ts0115Component implements OnInit {
     this.numbers.splice(index, 1);
     this.numbers.sort();
   };
+
+  optionAddress = () => {
+    const optionURL = "excise/detail/objectAddressByExciseId";
+    this.ajax.post(optionURL, {
+      exciseId: this.obj.exciseId
+    }, res => {
+      console.log(res.json());
+      var dat = res.json();
+   
+    });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+    const url = "report/pdf/ts/mis_t_s_01_15";
+    this.obj.Bean = this.beans;
+    this.ajax.post(url, `'${JSON.stringify(this.obj).toString()}'`, res => {
+      if (res.status == 200 && res.statusText == "OK") {
+        window.open("/ims-webapp/api/report/pdf/mis_t_s_01_15/file");
+      }
+    });
+  };
+
+
   
+}
+class Ts0115 {
+  logo: string = "logo.jpg";
+  [x: string]: any;
+  Bean: Bean[]
+}
+
+class Bean {
+
 }

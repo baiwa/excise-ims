@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
+import { AjaxService } from '../../../../../common/services';
 declare var jQuery: any;
 declare var $: any;
 
@@ -9,15 +10,16 @@ declare var $: any;
   templateUrl: './ts01-16.component.html',
 })
 export class Ts0116Component implements OnInit {
-
+  obj: Ts0116;
   @Output() discard = new EventEmitter<any>();
 
   numbers:number[];
   numbers2:number[];
 
-  constructor() {
+  constructor(private ajax: AjaxService) {
     this.numbers = [1,2,3];
     this.numbers2 = [1,2,3];
+    this.obj = new Ts0116();
   }
 
   ngOnInit() {
@@ -50,5 +52,33 @@ export class Ts0116Component implements OnInit {
     this.numbers2.splice(index, 1);
     this.numbers2.sort();
   };
+
   
+  optionAddress = () => {
+    const optionURL = "excise/detail/objectAddressByExciseId";
+    this.ajax.post(optionURL, {
+      exciseId: this.obj.exciseId
+    }, res => {
+      console.log(res.json());
+      var dat = res.json();
+   
+    });
+  };
+
+
+  onSubmit = e => {
+    e.preventDefault();
+    const url = "report/pdf/ts/mis_t_s_01_16";
+    this.ajax.post(url, `'${JSON.stringify(this.obj).toString()}'`, res => {
+      if (res.status == 200 && res.statusText == "OK") {
+        window.open("/ims-webapp/api/report/pdf/mis_t_s_01_16/file");
+      }
+    });
+  };
+  
+}
+class Ts0116 {
+  logo: string = "logo.jpg";
+  [x: string]: any;
+
 }
