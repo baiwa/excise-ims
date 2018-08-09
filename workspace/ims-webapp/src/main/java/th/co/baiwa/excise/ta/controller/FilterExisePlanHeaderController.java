@@ -1,6 +1,9 @@
 package th.co.baiwa.excise.ta.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +20,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.constant.CreatePaperConstants.CREATEPAPERCONSTANTS;
+import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.domain.form.AccMonth0407DTL;
+import th.co.baiwa.excise.domain.form.AccMonth0407DTLVo;
+import th.co.baiwa.excise.domain.form.FormUpload;
+import th.co.baiwa.excise.domain.form.OPEDataTable;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
 @RequestMapping("api/filter/exise")
@@ -73,7 +82,7 @@ public class FilterExisePlanHeaderController {
 		}
 		return msg;
 	}
-	
+
 	@GetMapping("/apiList")
 	@ResponseBody
 	public ResponseDataTable<PlanWorksheetHeaderDetail> apiList(@ModelAttribute RequestFilterMapping vo) {
@@ -81,19 +90,39 @@ public class FilterExisePlanHeaderController {
 		System.out.println(vo.getAnalysNumber());
 		return planWorksheetHeaderService.queryPlanWorksheetHeaderDetil(vo);
 	}
-	
+
 	@PostMapping("/getDataExciseIdList")
 	@ResponseBody
 	public List<Object> queryExciseIdFlagSDataList(@ModelAttribute PlanWorksheetHeaderDetail vo) {
 		logger.info("ExciseId : " + vo.getExciseId());
 		return planWorksheetHeaderService.queryExciseIdFlagSDataList(vo.getExciseId());
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	@PostMapping("/getDataExciseIdMonthList")
 	@ResponseBody
-	public List<AccMonth0407DTL> getExciseIdFromAccDTL(@ModelAttribute AccMonth0407DTL vo) {
-		logger.info("ExciseId : " + vo.getExciseId(), "TYPE : " + vo.getType(), "StartDate : " + vo.getStartDate(), "EndDate : " + vo.getEndDate());
-		return planWorksheetHeaderService.queryExciseIdFromAccDTL(vo.getExciseId(), vo.getType(), vo.getStartDate(), vo.getEndDate());
+	public DataTableAjax<OPEDataTable> getExciseIdFromAccDTL(@ModelAttribute AccMonth0407DTL vo,HttpServletRequest httpServletRequest) {
+		List<OPEDataTable> result = planWorksheetHeaderService.queryExciseIdFromAccDTL(vo.getExciseId(), vo.getType(),vo.getStartDate(), vo.getEndDate());
+		List<FormUpload> fromFile = (List<FormUpload>) httpServletRequest.getSession().getAttribute(CREATEPAPERCONSTANTS.UPLOAD_OBJTEM);
+		if(BeanUtils.isNotEmpty(fromFile)) {
+			result = planWorksheetHeaderService.sumData(fromFile, result);
+			httpServletRequest.getSession().setAttribute(CREATEPAPERCONSTANTS.UPLOAD_OBJTEM , null);
+		}
+		DataTableAjax<OPEDataTable> dataTableAjax = new DataTableAjax<>();
+		dataTableAjax.setRecordsTotal(Long.valueOf(result.size()));
+		dataTableAjax.setRecordsFiltered(Long.valueOf(result.size()));
+		dataTableAjax.setData(result);
+		return dataTableAjax;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@PostMapping("/getSessionEmptyData")
+	@ResponseBody
+	public ResponseDataTable<OPEDataTable> getSession(@ModelAttribute AccMonth0407DTL vo, HttpServletRequest httpServletRequest) {
+		List<AccMonth0407DTLVo> objList = new ArrayList<>(); 
+		httpServletRequest.getSession().setAttribute(CREATEPAPERCONSTANTS.TABLE_ACC_MONTH, objList);
+				
+		return null;
 	}
 
 }

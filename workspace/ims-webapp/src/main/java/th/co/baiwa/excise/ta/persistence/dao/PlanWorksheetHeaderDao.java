@@ -539,21 +539,23 @@ public class PlanWorksheetHeaderDao {
 
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
+		
+		sql.append(" WITH THAI_MONTH AS ");
+		sql.append(" ( SELECT REPLACE(TO_CHAR( add_MONTHS( ? , LEVEL-? ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) MONTH_AFTER ");
+		sql.append(" FROM dual ");
+		sql.append(" CONNECT BY LEVEL <= ? ) ");
 		sql.append(" SELECT * ");
 		sql.append(" FROM TA_EXCISE_ACC_MONTH_04_07_DTL D ");
 		sql.append(" WHERE D.EXCISE_ID = ? ");
 		sql.append(" AND D.TYPE = ?  ");
-		sql.append(" AND D.ACC_MONTH IN  ");
-		sql.append(
-				" (SELECT REPLACE(TO_CHAR( add_MONTHS( ?, LEVEL-? ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) Month_AFTER ");
-		sql.append(" FROM dual ");
-		sql.append(" CONNECT BY LEVEL <= ? ) ");
+		sql.append(" AND D.ACC_MONTH IN (SELECT * FROM THAI_MONTH)  ");
+		sql.append(" AND ROWNUM <= 1 ");
 
-		valueList.add(exciseId);
-		valueList.add(type);
 		valueList.add(date);
 		valueList.add(backMonth);
 		valueList.add(backMonth);
+		valueList.add(exciseId);
+		valueList.add(type);
 
 		List<AccMonth0407DTL> exciseIdFromAccDTLList = jdbcTemplate.query(sql.toString(), valueList.toArray(),
 				fieldMappingAccMonthVo);
@@ -578,6 +580,8 @@ public class PlanWorksheetHeaderDao {
 		@Override
 		public AccMonth0407DTL mapRow(ResultSet rs, int rowNum) throws SQLException {
 			AccMonth0407DTL ac = new AccMonth0407DTL();
+//			List<String> product = new ArrayList<String>();
+//			List<String> monthRecieve = new ArrayList<String>();
 			ac.setId(rs.getString("TA_EXCISE_ACC_DTL_04_07_ID"));
 			ac.setProduct1(rs.getString("PRODUCT_1"));
 			ac.setProduct2(rs.getString("PRODUCT_2"));
@@ -591,11 +595,24 @@ public class PlanWorksheetHeaderDao {
 			ac.setMonthRecieve4(rs.getString("MONTH_RECIEVE_4"));
 			ac.setMonthRecieve5(rs.getString("MONTH_RECIEVE_5"));
 			ac.setMonthRecieve6(rs.getString("MONTH_RECIEVE_6"));
+//			product.add(rs.getString("PRODUCT_2"));
+//			product.add(rs.getString("PRODUCT_3"));
+//			product.add(rs.getString("PRODUCT_4"));
+//			product.add(rs.getString("PRODUCT_5"));
+//			product.add(rs.getString("PRODUCT_6"));
+//			monthRecieve.add(rs.getString("MONTH_RECIEVE_1"));
+//			monthRecieve.add(rs.getString("MONTH_RECIEVE_2"));
+//			monthRecieve.add(rs.getString("MONTH_RECIEVE_3"));
+//			monthRecieve.add(rs.getString("MONTH_RECIEVE_4"));
+//			monthRecieve.add(rs.getString("MONTH_RECIEVE_5"));
+//			monthRecieve.add(rs.getString("MONTH_RECIEVE_6"));
 			ac.setAccMonth(rs.getString("ACC_MONTH"));
 			ac.setTA_EXCISE_ACC_DTL_04_07_ID(rs.getString("TA_EXCISE_ACC_DTL_04_07_ID"));
 			ac.setTA_EXCISE_ACC_HDR_04_07_ID(rs.getString("TA_EXCISE_ACC_HDR_04_07_ID"));
 			ac.setExciseId(rs.getString("EXCISE_ID"));
 			ac.setType(rs.getString("TYPE"));
+//			ac.setProduct(product);
+//			ac.setMonthRecieve(monthRecieve);
 			return ac;
 		}
 	};

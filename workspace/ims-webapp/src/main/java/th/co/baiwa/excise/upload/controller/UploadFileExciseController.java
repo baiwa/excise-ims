@@ -2,8 +2,9 @@ package th.co.baiwa.excise.upload.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -16,8 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
-import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.constant.CreatePaperConstants.CREATEPAPERCONSTANTS;
 import th.co.baiwa.excise.domain.form.FormUpload;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
 
@@ -31,7 +31,7 @@ public class UploadFileExciseController {
 
 	@PostMapping("excel")
 	@ResponseBody
-	public List<FormUpload> excel(@ModelAttribute FormUpload mainForm) throws EncryptedDocumentException, InvalidFormatException, IOException{
+	public List<FormUpload> excel(@ModelAttribute FormUpload mainForm ,  HttpServletRequest httpServletRequest) throws EncryptedDocumentException, InvalidFormatException, IOException{
 		logger.debug("mainForm : " + mainForm);
 		List<FormUpload> fuList = new ArrayList<>();
 		FormUpload fu = new FormUpload();
@@ -56,6 +56,8 @@ public class UploadFileExciseController {
 			fuList.add(fu);
 		}
 		
+		
+		httpServletRequest.getSession().setAttribute(CREATEPAPERCONSTANTS.UPLOAD_OBJTEM, fuList);
 		
 		return fuList;
 	}
