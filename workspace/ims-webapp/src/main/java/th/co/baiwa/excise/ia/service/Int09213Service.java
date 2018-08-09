@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.excise.constant.IaConstant.REPORT;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.TravelCostDetailDao;
@@ -46,9 +47,8 @@ public class Int09213Service {
 	}
 	
 	public List<LabelValueBean> dropdownListType(Int09213FormVo formVo){
-		String lovIdMaster = "";
-		String typeLov = "";
-		return 	travelCostDetailDao.drodownList(lovIdMaster, typeLov);
+		String typeLov ="";
+		return 	travelCostDetailDao.drodownList(REPORT.LOV_ID_MASTER, typeLov);
 	}
 
 }
