@@ -84,7 +84,7 @@
             </div>
         </form>
 
-        <div class="ui segment" *ngIf="showData">
+        <div class="ui segment" id="showData">
             <div class="ui grid center aligned">
                 <div class="sixteen wide column">
                     {{firstDataList.companyName}}
@@ -94,7 +94,7 @@
             </div>
             <br>
             <div style="overflow-x: scroll;">
-                <table class="ui small celled table" style="width: 120%;">
+                <table class="ui small celled table" style="width: 120%;" id="showDt">
                     <thead>
                         <tr style="text-align: center;">
                             <th>ลำดับ</th>
@@ -107,98 +107,6 @@
                             <th>ผลต่างของคู่ข้อมูล</th>
                         </tr>
                     </thead>
-                    <tbody style="text-align: center;">
-                        <tr *ngIf="MonthDataList != null">
-                            <td>1</td>
-                            <td>{{MonthDataList.product1}}</td>
-                            <td>{{row[1].column3}}</td>
-                            <td>{{row[1].column4}}</td>
-                            <td>{{MonthDataList.monthRecieve1}}</td>
-                            <td>{{row[1].column6}}</td>
-                            <td>{{max[1]}}</td>
-                            <td *ngIf="diff[1] != '0'" style=" background-color: red">
-                                <span style="float: right; color: white"><b>{{diff[1]}}</b></span>
-                            </td>
-                            <td *ngIf="diff[1] == '0'" style="background-color: #00da00">
-                                <span style="float: right; color: white"><b>{{diff[1]}}</b></span>
-                            </td>
-                        </tr>
-                        <tr *ngIf="MonthDataList != null">
-                            <td>2</td>
-                            <td>{{MonthDataList.product2}}</td>
-                            <td>{{row[2].column3}}</td>
-                            <td>{{row[2].column4}}</td>
-                            <td>{{MonthDataList.monthRecieve2}}</td>
-                            <td>{{row[2].column6}}</td>
-                            <td>{{max[2]}}</td>
-                            <td *ngIf="diff[2] != '0'" style=" background-color: red">
-                                <span style="float: right; color: white"><b>{{diff[2]}}</b></span>
-                            </td>
-                            <td *ngIf="diff[2] == '0'" style="background-color: #00da00">
-                                <span style="float: right; color: white"><b>{{diff[2]}}</b></span>
-                            </td>
-                        </tr>
-                        <tr *ngIf="MonthDataList != null">
-                            <td>3</td>
-                            <td>{{MonthDataList.product3}}</td>
-                            <td>{{row[3].column3}}</td>
-                            <td>{{row[3].column4}}</td>
-                            <td>{{MonthDataList.monthRecieve3}}</td>
-                            <td>{{row[3].column6}}</td>
-                            <td>{{max[3]}}</td>
-                            <td *ngIf="diff[3] != '0'" style=" background-color: red">
-                                <span style="float: right; color: white"><b>{{diff[3]}}</b></span>
-                            </td>
-                            <td *ngIf="diff[3] == '0'" style="background-color: #00da00">
-                                <span style="float: right; color: white"><b>{{diff[3]}}</b></span>
-                            </td>
-                        </tr>
-                        <tr *ngIf="MonthDataList != null">
-                            <td>4</td>
-                            <td>{{MonthDataList.product4}}</td>
-                            <td>{{row[4].column3}}</td>
-                            <td>{{row[4].column4}}</td>
-                            <td>{{MonthDataList.monthRecieve4}}</td>
-                            <td>{{row[4].column6}}</td>
-                            <td>{{max[4]}}</td>
-                            <td *ngIf="diff[4] != '0'" style=" background-color: red">
-                                <span style="float: right; color: white"><b>{{diff[4]}}</b></span>
-                            </td>
-                            <td *ngIf="diff[4] == '0'" style="background-color: #00da00">
-                                <span style="float: right; color: white"><b>{{diff[4]}}</b></span>
-                            </td>
-                        </tr>
-                        <tr *ngIf="MonthDataList != null">
-                            <td>5</td>
-                            <td>{{MonthDataList.product5}}</td>
-                            <td>{{row[5].column3}}</td>
-                            <td>{{row[5].column4}}</td>
-                            <td>{{MonthDataList.monthRecieve5}}</td>
-                            <td>{{row[5].column6}}</td>
-                            <td>{{max[5]}}</td>
-                            <td *ngIf="diff[5] != '0'" style=" background-color: red">
-                                <span style="float: right; color: white"><b>{{diff[5]}}</b></span>
-                            </td>
-                            <td *ngIf="diff[5] == '0'" style="background-color: #00da00">
-                                <span style="float: right; color: white"><b>{{diff[5]}}</b></span>
-                            </td>
-                        </tr>
-                        <tr *ngIf="MonthDataList != null">
-                            <td>6</td>
-                            <td>{{MonthDataList.product6}}</td>
-                            <td>{{row[6].column3}}</td>
-                            <td>{{row[6].column4}}</td>
-                            <td>{{MonthDataList.monthRecieve6}}</td>
-                            <td>{{row[6].column6}}</td>
-                            <td>{{max[6]}}</td>
-                            <td *ngIf="diff[6] != '0'" style=" background-color: red">
-                                <span style="float: right; color: white"><b>{{diff[6]}}</b></span>
-                            </td>
-                            <td *ngIf="diff[6] == '0'" style="background-color: #00da00">
-                                <span style="float: right; color: white"><b>{{diff[6]}}</b></span>
-                            </td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
             <br>
@@ -208,7 +116,7 @@
             <i class="print icon"></i>
             พิมพ์กระดาษทำการ
           </button>
-                    <button class="ui mini button" (click)="clearData()" type="reset">
+                    <button class="ui mini button" (click)="clearAll()" type="reset">
             <i class="refresh icon"></i>
             ล้างข้อมูล
           </button>
