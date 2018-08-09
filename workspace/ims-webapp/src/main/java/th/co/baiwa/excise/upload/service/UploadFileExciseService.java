@@ -36,7 +36,6 @@ public class UploadFileExciseService {
 
 		Map<String, Integer> map = new HashMap<String, Integer>(); // Create map
 		Row row = sheet.getRow(0); // Get first row
-		// following is boilerplate from the java doc
 		short minColIx = row.getFirstCellNum(); // get the first column index for a row
 		short maxColIx = row.getLastCellNum(); // get the last column index for a row
 		List<String> headerNameList = new ArrayList<String>();
@@ -51,14 +50,17 @@ public class UploadFileExciseService {
 		for (int x = 0; x < totalRows; x++) {
 			Row dataRow = sheet.getRow(x); // get row 1 to row n (rows containing data)
 			rowData = new String[headerNameList.size()];
-			if (dataRow != null) {
+			if ( dataRow != null ) {
 				for (String data : headerNameList) {
 					int idn = map.get(data);
 					Cell cell = dataRow.getCell(idn);
 					rowData[idn] = getCellValue(cell);
 				}
+				
 			}
-			listOfDataFromReport.add(rowData);
+			if(rowData[0] != "") {
+				listOfDataFromReport.add(rowData);
+			}
 		}
 
 		return listOfDataFromReport;

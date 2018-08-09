@@ -31,6 +31,7 @@ public class DateConstant {
 //	public static final String[] MONTH_SHOT_NAMES = { "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.","ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค." };
 //	public static final String[] MONTH_NAMES = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
 	public static final String YYYYMMDD = "yyyyMMdd";
+	public static final String MM_YYYY = "MM/yyyy";
 	
 	public final static String DD_MM_YYYY = "dd/MM/yyyy";
 	
@@ -79,6 +80,7 @@ public class DateConstant {
 		return monthListReturn;
 	}
 	
+	
 	public static String[] monthShotName() {
 		List<String> valueList = new ArrayList<String>();
 		List<Lov> lovList = ApplicationCache.getListOfValueByValueType("MONTH_SHOT_NAMES");
@@ -105,9 +107,15 @@ public class DateConstant {
 
 	}
 	
-	public static Date StringtoDate(String txt, String pattern) throws ParseException {
+	public static Date StringtoDate(String txt, String pattern) {
 		
-		return StringtoDate(txt, pattern, LOCAL_TH);
+		try {
+			return StringtoDate(txt, pattern, LOCAL_TH);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static String DateToString(Date date, String pattern) {

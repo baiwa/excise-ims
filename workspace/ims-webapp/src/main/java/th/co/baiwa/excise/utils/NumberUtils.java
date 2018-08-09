@@ -114,4 +114,15 @@ public class NumberUtils {
 		DecimalFormat formatter = new DecimalFormat(format);
 		return formatter.format(number);
 	}
+	
+	public static long stringToLong(String val) {
+		BigDecimal strToLong = new BigDecimal(val);
+		long returnValue = 0;
+		try {
+			returnValue = strToLong.longValue();
+		} catch (Exception e) {
+
+		}
+		return returnValue;
+	}
 }

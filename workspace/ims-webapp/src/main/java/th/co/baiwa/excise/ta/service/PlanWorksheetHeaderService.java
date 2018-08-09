@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -19,8 +18,11 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.domain.CommonAddress;
 import th.co.baiwa.excise.domain.MockupVo;
 import th.co.baiwa.excise.domain.form.AccMonth0407DTL;
+import th.co.baiwa.excise.domain.form.FormUpload;
+import th.co.baiwa.excise.domain.form.OPEDataTable;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseRegisttionNumberDao;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseTaxReceiveDao;
 import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetDetailDao;
@@ -31,9 +33,8 @@ import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetDetail;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeader;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
-import th.co.baiwa.excise.domain.CommonAddress;
-
 import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.excise.utils.NumberUtils;
 
 @Service
 public class PlanWorksheetHeaderService {
@@ -342,7 +343,7 @@ public class PlanWorksheetHeaderService {
 		return valueList;
 	}
 
-	public List<AccMonth0407DTL> queryExciseIdFromAccDTL(String exciseId, String type, String start, String end) {
+	public List<OPEDataTable> queryExciseIdFromAccDTL(String exciseId, String type, String start, String end) {
 		String[] startData = start.split("/");
 		String[] endData = end.split("/");
 
@@ -359,7 +360,48 @@ public class PlanWorksheetHeaderService {
 			endCal.add(Calendar.MONTH, -1);
 			backMonth++;
 		}
-		return planWorksheetHeaderDao.queryExciseIdFromAccDTL(exciseId, type, endCalforUse.getTime(), backMonth);
+
+		List<AccMonth0407DTL> listData = planWorksheetHeaderDao.queryExciseIdFromAccDTL(exciseId, type,
+				endCalforUse.getTime(), backMonth);
+		AccMonth0407DTL database = listData.get(0);
+		List<OPEDataTable> opeDataTableList = new ArrayList<OPEDataTable>();
+		OPEDataTable opeDataTable = new OPEDataTable();
+		opeDataTable.setNo("1");
+		opeDataTable.setProduct(database.getProduct1());
+		opeDataTable.setMonthRecieve(database.getMonthRecieve1());
+		opeDataTableList.add(opeDataTable);
+
+		opeDataTable = new OPEDataTable();
+		opeDataTable.setNo("2");
+		opeDataTable.setProduct(database.getProduct2());
+		opeDataTable.setMonthRecieve(database.getMonthRecieve2());
+		opeDataTableList.add(opeDataTable);
+
+		opeDataTable = new OPEDataTable();
+		opeDataTable.setNo("3");
+		opeDataTable.setProduct(database.getProduct3());
+		opeDataTable.setMonthRecieve(database.getMonthRecieve3());
+		opeDataTableList.add(opeDataTable);
+
+		opeDataTable = new OPEDataTable();
+		opeDataTable.setNo("4");
+		opeDataTable.setProduct(database.getProduct4());
+		opeDataTable.setMonthRecieve(database.getMonthRecieve4());
+		opeDataTableList.add(opeDataTable);
+
+		opeDataTable = new OPEDataTable();
+		opeDataTable.setNo("5");
+		opeDataTable.setProduct(database.getProduct5());
+		opeDataTable.setMonthRecieve(database.getMonthRecieve5());
+		opeDataTableList.add(opeDataTable);
+
+		opeDataTable = new OPEDataTable();
+		opeDataTable.setNo("6");
+		opeDataTable.setProduct(database.getProduct6());
+		opeDataTable.setMonthRecieve(database.getMonthRecieve6());
+		opeDataTableList.add(opeDataTable);
+
+		return opeDataTableList;
 	}
 
 	public boolean isEqualsDate(Date date1, Date date2) {
@@ -393,8 +435,7 @@ public class PlanWorksheetHeaderService {
 					address.setMoo(arr[i].replace("หมู่ที่", ""));
 				} else if (arr[i].indexOf("อาคาร") != -1 || arr[i].indexOf("ตึก") != -1
 						|| arr[i].indexOf("บ้าน") != -1) {
-					address.setBuilding(
-							arr[i].replace("อาคาร", "").replace("ตึก", "").replace("บ้าน", ""));
+					address.setBuilding(arr[i].replace("อาคาร", "").replace("ตึก", "").replace("บ้าน", ""));
 				} else if (arr[i].indexOf("ชั้น") != -1) {
 					address.setLevel(arr[i].replace("ชั้น", ""));
 				} else if (arr[i].indexOf("ซอย") != -1) {
@@ -412,7 +453,6 @@ public class PlanWorksheetHeaderService {
 				}
 			}
 			for (int i = 0; i < arr.length; i++) {
-
 				if (address.getHomeNumber() == null) {
 					address.setHomeNumber("-");
 				} else if (address.getMoo() == null) {
@@ -434,12 +474,57 @@ public class PlanWorksheetHeaderService {
 				} else if (address.getZipCode() == null) {
 					address.setZipCode("-");
 				}
-
 			}
 			System.out.println(address.toString());
-
 		}
-
 		return address;
+	}
+	
+	public List<OPEDataTable> sumData(List<FormUpload> formUploadList, List<OPEDataTable> opeDataTableList) {
+		List<OPEDataTable> returnDataList = new ArrayList<OPEDataTable>();
+		if (BeanUtils.isNotEmpty(formUploadList)) {
+			for (OPEDataTable opeData : opeDataTableList) {
+				for (FormUpload formUpload : formUploadList) {
+					if (opeData.getProduct().equals(formUpload.getColumn2())) {
+						opeData.setDayRecieve(formUpload.getColumn4());
+						opeData.setExd1(formUpload.getColumn6());
+						opeData.setTaxInvoice(formUpload.getColumn3());
+						if (NumberUtils.stringToLong(opeData.getMonthRecieve()) > NumberUtils.stringToLong(opeData.getDayRecieve())) {
+							opeData.setCalMax(opeData.getMonthRecieve());
+						} else {
+							opeData.setCalMax(opeData.getDayRecieve());
+
+						}
+						if (NumberUtils.stringToLong(opeData.getExd1()) > NumberUtils.stringToLong(opeData.getCalMax())) {
+							opeData.setCalMax(opeData.getExd1());
+						}
+
+						opeData.setDiff((NumberUtils.stringToLong(opeData.getTaxInvoice()) - NumberUtils.stringToLong(opeData.getCalMax()))+"");
+						break;
+					}
+				}
+				returnDataList.add(opeData); 
+			}
+		}
+		OPEDataTable opeDataTable;
+		FormUpload formUpload;
+		for (int  i = 1 ; i < formUploadList.size() ; i++) {
+			formUpload = new FormUpload();
+			formUpload = formUploadList.get(i);
+			boolean isExist = false;
+			for (OPEDataTable opeData : opeDataTableList) {
+				if (opeData.getProduct().equals(formUpload.getColumn2())) {
+					isExist = true;
+				}
+			}
+			if (!isExist) {
+				opeDataTable = new OPEDataTable();
+				opeDataTable.setTaxInvoice(formUpload.getColumn3());
+				opeDataTable.setDayRecieve(formUpload.getColumn4());
+				opeDataTable.setExd1(formUpload.getColumn6());
+				returnDataList.add(opeDataTable);
+			}
+		}
+		return returnDataList;
 	}
 }

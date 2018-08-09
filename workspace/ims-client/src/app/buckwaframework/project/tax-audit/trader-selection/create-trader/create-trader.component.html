@@ -23,18 +23,22 @@
                     <div class="three wide required field">
                         <label>ระยะเวลาที่ตรวจสอบ</label>
                     </div>
-                    <div class="ui calendar" id="calendar">
+                    <div class="three wide field ui calendar" id="calendar">
                         <div class="ui input left icon">
                             <i class="time icon"></i>
-                            <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="MM/YYYY" [attr.required]="true">
+                            <input type="calendar" id="calendarraw" name="calendarraw" [attr.required]="true" autocomplete="off">
                         </div>
                     </div>
                     <div class="one wide field"></div>
+
                     <div class="two wide field">
-                        <label>ย้อนหลังไป</label>
+                        <label>ถึง</label>
                     </div>
-                    <div class="two wide field ">
-                        <input type="number" step="2" name="num-raw" [attr.min]="2" [attr.max]="24" [attr.required]="true">
+                    <div class="three wide field ui calendar" id="calendar1">
+                        <div class="ui input left icon">
+                            <i class="time icon"></i>
+                            <input type="calendar" id="calendar1raw" name="calendar1raw" [attr.required]="true"  autocomplete="off">
+                        </div>
                     </div>
                     <div class="one wide field">
                         <label>เดือน</label>
