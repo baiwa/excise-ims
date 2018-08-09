@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.excise.constant.IaConstant.REPORT;
+import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int09213FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int09213Vo;
@@ -70,6 +71,12 @@ public class Int09213Controller {
 		List<Int09213Vo> dataTableSession = (List<Int09213Vo>) httpServletRequest.getSession().getAttribute(REPORT.TABLE_INT09213);
 		return "success";
 		
+	}
+	
+	@PostMapping("/listDropdown")
+	@ResponseBody
+	public List<LabelValueBean> dropdownList(@RequestBody Int09213FormVo formVo){
+		return int09213Service.dropdownListType(formVo);
 	}
 
 }

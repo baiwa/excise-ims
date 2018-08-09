@@ -34,7 +34,7 @@ public class Int09211Service {
 		return dataTableAjax;		
 	}
 	
-	//position dropdown
+	//department dropdown
 	public List<LabelValueBean> departmentDropdown(){
 		return budgetDao.departmentDropdown();
 	}

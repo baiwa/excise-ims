@@ -1,3 +1,5 @@
+import { Headers } from '@angular/http';
+import { ExciseService } from './../../../../../common/services/excise.service';
 import { TextDateTH, formatter } from './../../../../../common/helper/datepicker';
 import { Component, OnInit } from '@angular/core';
 
@@ -15,15 +17,25 @@ export class Int09213Component implements OnInit {
   rentDate;
   rentCost;
   travelCost; 
-
+  hesderTxt;
   hideA: boolean = false;
 
-  constructor() { 
+  constructor( 
+    private exciseService:ExciseService
+  ) { 
     this.allowanceDate = 0;
     this.allowanceCost = 0;
     this.rentDate = 0;
     this.rentCost = 0;
     this.travelCost = 0;
+    this.hesderTxt={
+      startDateInput: "",
+      endDateInput : "",
+      sector : "",
+      area : "",
+      branch : "",
+      department : ""
+    };
   }
 
   typeRoom = function() {
@@ -209,13 +221,16 @@ export class Int09213Component implements OnInit {
 
   ngOnInit() {
     this.setSession();
+    console.log(this.exciseService.getData());
+    this.hesderTxt = this.exciseService.getData() != undefined && this.exciseService.getData();
   }
   ngAfterViewInit() {
+    //getData from 2-1-2
+
     $("#typeRoomLabel").hide();
     $("#typeRoomValue").hide();
     this.dataTable();
     $('.ui.dropdown').dropdown();
-
     this.calenda();
     
   }

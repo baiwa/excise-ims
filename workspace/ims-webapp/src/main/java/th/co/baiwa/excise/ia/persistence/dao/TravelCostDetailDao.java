@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ia.persistence.vo.Int09213Vo;
 import th.co.baiwa.excise.utils.OracleUtils;
 
@@ -70,4 +71,17 @@ public class TravelCostDetailDao {
 	    		return vo;
 	    	}
 	    };
+	    
+		public List<LabelValueBean> drodownList(String lovIdMaster,String typeLov){
+			String SQL = "SELECT * FROM SYS_LOV WHERE TYPE=? AND LOV_ID_MASTER= ?";
+			return jdbcTemplate.query(SQL,new Object[] {typeLov,lovIdMaster} ,ropdownListRowmapper);
+		}
+		private RowMapper<LabelValueBean> ropdownListRowmapper = new RowMapper<LabelValueBean>() {
+		    	@Override
+		    	public LabelValueBean mapRow(ResultSet rs, int arg1) throws SQLException {
+		    		LabelValueBean  lv = new LabelValueBean(rs.getString("TYPE_DESCRIPTION"),rs.getString("LOV_ID"));
+		    		return lv;
+		    	}
+
+		};
 }

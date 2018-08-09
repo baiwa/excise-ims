@@ -8,6 +8,7 @@
             <p><b>หน่วยงาน กลุ่มตรวจสอบภายใน</b></p>
             <p><b>เดินทางไปราชการที่ สำนักงานสรรพสามิตพื้นที่เลย</b></p>
             <p><b>ตั้งแต่วันที่ 17 มิถุนายน 2561 - 30 มิถุนายน 2561</b></p>
+            <p><b>{{hesderTxt.sector}}</b></p>
         </div>
         <br><br>
         <input type="hidden" id="idEdit">
@@ -16,9 +17,9 @@
           <div class="three wide column">
             <select class="ui dropdown" id="prefix" name="prefix">
                 <option value="">นาย</option>
-                <option value="1">นาย</option>
-                <option value="2">นางสาว</option>
-                <option value="3">นาง</option>
+                <option value="0">นาย</option>
+                <option value="1">นางสาว</option>
+                <option value="2">นาง</option>
             </select>
           </div>
           <div class="two wide column right aligned"><label>ชื่อ</label></div>
@@ -68,9 +69,10 @@
           <div class="three wide column ui right aligned">
           <select class="ui dropdown"  id="food" name="food">
               <option value="">ไม่เลี้ยงอาหาร</option>
+              <option value="0">ไม่เลี้ยงอาหาร</option>
               <option value="1">เลี้ยงอาหาร 1 มื้อ </option>
-              <option value="0">เลี้ยงอาหาร 2 มื้อ</option>
-              <option value="0">เลี้ยงอาหาร 3 มื้อ</option>
+              <option value="2">เลี้ยงอาหาร 2 มื้อ</option>
+              <option value="3">เลี้ยงอาหาร 3 มื้อ</option>
           </select>
         </div>
       </div>
@@ -177,7 +179,7 @@
             <button class="ui  primary button" type="button" ><i class="trash alternate outline icon"></i> ลบ</button>
             <button class="ui  primary button" type="button" ><i class="save outline icon"></i> บันทึก</button>
             <button class="ui  primary button" type="button" routerLink="/int09/2-1-4"><i class="external alternate icon"></i>Export</button>
-            <button class="ui  green button" type="button" ><i class="file outline icon"></i> สัญญาการยืมเงิน</button>
+            <button class="ui  green button" type="button" routerLink="/int09/2-1-4"><i class="file outline icon"></i> สัญญาการยืมเงิน</button>
         </div> 
         <br> 
   </div>

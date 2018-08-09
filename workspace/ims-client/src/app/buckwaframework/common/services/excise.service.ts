@@ -4,6 +4,7 @@ import { AjaxService } from "./ajax.service";
 
 @Injectable()
 export class ExciseService {
+  private data: any;
   private excise: Excise[];
   private before: string;
   private last: string;
@@ -21,6 +22,14 @@ export class ExciseService {
 
   constructor(private ajax: AjaxService) {
     this.excise = new Array<Excise>();
+  }
+
+  setData(data: any) { // ExciseService.setData({ eiei: "555" });
+    console.log("data : " ,data);
+    this.data = data;
+  }
+  getData() { // const data = ExciseService.getData();
+    return this.data;
   }
 
   add(data: Excise): void {

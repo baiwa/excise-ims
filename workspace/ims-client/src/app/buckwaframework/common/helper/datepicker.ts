@@ -115,7 +115,7 @@ export var formatter = (what: string = "") => {
           let h = date.getHours();
           let m = date.getMinutes();
           let s = date.getSeconds();
-          return day +" " + TextDateTH.monthsShort[month]+ " " + year + " " + digit(h) + ":" + digit(m);
+          return digit(day) +"/" + digit(month) + "/" + year + " " + digit(h) + ":" + digit(m);
         },
       };
     case "day":

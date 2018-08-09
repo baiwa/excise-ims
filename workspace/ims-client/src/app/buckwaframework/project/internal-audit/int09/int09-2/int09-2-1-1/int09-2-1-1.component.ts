@@ -25,11 +25,13 @@ export class Int09211Component implements OnInit {
     $('#tableData').DataTable().ajax.reload();
   }
   clickClear = function () {
+    this.deparmentDropdown();
     $("#year1").val("");
     $("#department").val("");
     $("#searchFlag").val("FALSE");
-    this.officeDropdown();
+    
     $('#tableData').DataTable().ajax.reload();
+    
   }
 
   clickCheckAll = event => {
@@ -46,7 +48,7 @@ export class Int09211Component implements OnInit {
     }
   }
 
-  officeDropdown = function () {
+  deparmentDropdown = function () {
     $.ajax({
       url: "/ims-webapp/api/ia/int09211/departmentDropdown", 
       contentType: "application/json",
@@ -55,7 +57,7 @@ export class Int09211Component implements OnInit {
         return JSON.stringify($.extend({}, d, {}));
       },
       success: function (data) {
-        var str = "<option value='0'>หน่วยงาน</option>";
+        var str = "<option value=''>หน่วยงาน</option>";
         data.map( obj => {
           str +="<option value='"+obj.value+"'>"+obj.label+"</option>";          
         });
@@ -131,9 +133,10 @@ export class Int09211Component implements OnInit {
   }
 
   ngAfterViewInit() {
+    $(".ui .dropdown").dropdown();
     this.dataTable();
     this.calenda();
-    this.officeDropdown();
+    this.deparmentDropdown();
   }
 
 }
