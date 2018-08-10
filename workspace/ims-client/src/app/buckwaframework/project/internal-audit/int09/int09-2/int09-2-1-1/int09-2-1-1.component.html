@@ -20,7 +20,8 @@
           <div class="ui form">
             <div class="field">
               <select class="ui search dropdown" id="department">
-                <option value="">หน่วยงาน</option>
+                <option value="0">หน่วยงาน</option>
+                <!-- <option *ngFor="let data of deparmentList" value="{{data.value}}">{{data.label}}</option> -->
               </select>
             </div>
           </div>
@@ -60,7 +61,7 @@
       </table>
       <br><br>
     <div class="ui form center aligned grid">
-        <button class="ui red button">ลบ</button>
+        <button class="ui red button" (click)="clickDelete()">ลบ</button>
     </div>  
     <br>  
     </div>        

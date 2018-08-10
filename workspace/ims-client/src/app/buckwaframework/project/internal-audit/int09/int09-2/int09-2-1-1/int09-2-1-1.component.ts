@@ -1,3 +1,5 @@
+import { MessageBarService } from './../../../../../common/services/message-bar.service';
+import { AjaxService } from './../../../../../common/services/ajax.service';
 import { TextDateTH, formatter } from './../../../../../common/helper/datepicker';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,7 +11,8 @@ declare var $: any;
 })
 export class Int09211Component implements OnInit {
 
-  constructor() { }
+  deparmentList : any;
+  constructor(private message: MessageBarService) { }
 
 
    calenda = function () {
@@ -24,13 +27,11 @@ export class Int09211Component implements OnInit {
     $("#searchFlag").val("TRUE");
     $('#tableData').DataTable().ajax.reload();
   }
-  clickClear = function () {
+  clickClear = ()  =>{   
     this.deparmentDropdown();
     $("#year1").val("");
-    $("#department").val("");
     $("#searchFlag").val("FALSE");
-    
-    $('#tableData').DataTable().ajax.reload();
+    $("department").val("0");
     
   }
 
@@ -48,7 +49,21 @@ export class Int09211Component implements OnInit {
     }
   }
 
-  deparmentDropdown = function () {
+  clickDelete = () => {
+    if($('#tableData').DataTable().rows().count() == 0 ){
+      this.message.alert("ไม่มีข้อมูล")
+      return false
+    }
+    this.message.comfirm((res) => {
+      if(res){
+        console.log("top");
+      }
+      
+    },"ลบรายการ");
+  }
+
+  deparmentDropdown = function(){
+   
     $.ajax({
       url: "/ims-webapp/api/ia/int09211/departmentDropdown", 
       contentType: "application/json",
@@ -57,9 +72,11 @@ export class Int09211Component implements OnInit {
         return JSON.stringify($.extend({}, d, {}));
       },
       success: function (data) {
-        var str = "<option value=''>หน่วยงาน</option>";
-        data.map( obj => {
-          str +="<option value='"+obj.value+"'>"+obj.label+"</option>";          
+
+        var str = '';
+        str +='<option value="0">หน่วยงาน</option>';  
+        $.each( data, function( key, value ) {
+          str +="<option value='"+value.value+"'>"+value.label+"</option>";  
         });
 
         $("#department").html(str).dropdown();
@@ -67,7 +84,11 @@ export class Int09211Component implements OnInit {
     });
   }
 
-  dataTable = function () {
+  isNotNull(obj: any): boolean {
+    return obj == "0";
+  }
+
+  dataTable = () => {
     var table = $('#tableData').DataTable({
       "serverSide": false,
       "searching": false,
@@ -78,10 +99,10 @@ export class Int09211Component implements OnInit {
         "url": '/ims-webapp/api/ia/int09211/list',
         "contentType": "application/json",
         "type": "POST",
-        "data": function (d) {
+        "data": (d) => {
           return JSON.stringify($.extend({}, d, {
             "year": $("#year1").val(),
-            "department": $("#department").val(),
+            "department": this.isNotNull($("#department").val()) ? "" : $("#department").val(),
             "searchFlag": $("#searchFlag").val()
           }));
         },
@@ -104,14 +125,14 @@ export class Int09211Component implements OnInit {
           "data": "department"
         }, {
           "data": "updatedDate",
-          "className": "ui center aligned"
+          "className": "ui center aligned",         
         }, {
           "data": "createdBy",
           "className": "ui center aligned"
         }, {
           "data": "createdBy",
           "render": function (data, type, row) {
-            var btn = '<a class="btn-edit">รายละเอียด</a>';
+            var btn = '<button class="ui mini primary button btn-edit">รายละเอียด</button>';
             return btn;
           },
           "className": "ui center aligned"
@@ -120,14 +141,15 @@ export class Int09211Component implements OnInit {
     });
 
     //button edit
-    table.on('click', 'tbody tr a.btn-edit', function () {
+    table.on('click', 'tbody tr button.btn-edit', function () {
       var closestRow = $(this).closest('tr');
       var data = table.row(closestRow).data();
       console.log(data);
 
-    });
-
+    }); 
   }
+
+  
   ngOnInit() {
 
   }
