@@ -82,10 +82,11 @@ public class BudgetDao {
 	    		vo.setVersion(rs.getString("VERSION"));
 	    		
 	    		//format date
-	    		String createdDate = DateConstant.convertDateEnDDMMYYYYFormat(rs.getDate("CREATED_DATE"));
-	    		String updatedDate = DateConstant.convertDateEnDDMMYYYYFormat(rs.getDate("UPDATED_DATE"));
-	    		String startDate = DateConstant.convertDateEnDDMMYYYYFormat(rs.getDate("START_DATE"));
-	    		String endDate = DateConstant.convertDateEnDDMMYYYYFormat(rs.getDate("END_DATE"));
+	    		
+	    		String createdDate = DateConstant.DateToString(rs.getDate("CREATED_DATE"), "dd/MM/yyyy");
+	    		String updatedDate = DateConstant.DateToString(rs.getDate("UPDATED_DATE"), "dd/MM/yyyy");
+	    		String startDate = DateConstant.DateToString(rs.getDate("START_DATE"), "dd/MM/yyyy");
+	    		String endDate = DateConstant.DateToString(rs.getDate("END_DATE"), "dd/MM/yyyy");
 	    		
 	    		vo.setCraetedDate(createdDate);	    		
 	    		vo.setUpdatedDate(updatedDate);

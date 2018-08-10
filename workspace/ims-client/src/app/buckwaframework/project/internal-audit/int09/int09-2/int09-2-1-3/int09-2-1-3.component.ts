@@ -1,3 +1,4 @@
+import { AjaxService } from './../../../../../common/services/ajax.service';
 import { Headers } from '@angular/http';
 import { ExciseService } from './../../../../../common/services/excise.service';
 import { TextDateTH, formatter } from './../../../../../common/helper/datepicker';
@@ -19,9 +20,14 @@ export class Int09213Component implements OnInit {
   travelCost; 
   hesderTxt;
   hideA: boolean = false;
+  typeDropdown : any;
+  levelDropdown : any;
+  dataDropdown : any;
+  
 
   constructor( 
-    private exciseService:ExciseService
+    private exciseService:ExciseService,
+    private ajax:AjaxService
   ) { 
     this.allowanceDate = 0;
     this.allowanceCost = 0;
@@ -39,8 +45,7 @@ export class Int09213Component implements OnInit {
   }
 
   typeRoom = function() {
-    var id = $("#typeWithdrawal").val();
-  //  e.target.value == 1 || e.target.value == "" ?  this.hideA = false :  this.hideA = true;
+  var id = $("#typeWithdrawal").val();
    if( id==0 || id==2 || id==3 ){
     $("#typeRoomLabel").show();
     $("#typeRoomValue").show(function(){
@@ -90,6 +95,32 @@ export class Int09213Component implements OnInit {
         $(this).find('input').prop('checked',false); 
        });
     }
+  }
+
+  typeDropdownList =() =>{
+
+    this.dataDropdown = {
+      lovIdMaster : "305"
+    }
+    const URL =  "ia/int09213/listDropdown";
+  
+     this.ajax.post(URL, this.dataDropdown, res => {   
+       this.typeDropdown = res.json();
+    });
+  }
+  typeDropdownOnChange = event => {
+
+    let id = $("#type").val();
+    this.dataDropdown = {
+      lovIdMaster : id
+    }
+     const URL =  "ia/int09213/listDropdown";
+  
+     this.ajax.post(URL, this.dataDropdown, res => {     
+       console.log(res.json());
+       this.levelDropdown = res.json();
+    });
+
   }
 
   setSession = function(){
@@ -221,12 +252,11 @@ export class Int09213Component implements OnInit {
 
   ngOnInit() {
     this.setSession();
-    console.log(this.exciseService.getData());
     this.hesderTxt = this.exciseService.getData() != undefined && this.exciseService.getData();
   }
   ngAfterViewInit() {
     //getData from 2-1-2
-
+    this.typeDropdownList();
     $("#typeRoomLabel").hide();
     $("#typeRoomValue").hide();
     this.dataTable();

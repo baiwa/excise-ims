@@ -47,8 +47,8 @@ public class Int09213Service {
 	}
 	
 	public List<LabelValueBean> dropdownListType(Int09213FormVo formVo){
-		String typeLov ="";
-		return 	travelCostDetailDao.drodownList(REPORT.LOV_ID_MASTER, typeLov);
+		
+		return 	travelCostDetailDao.drodownList(formVo.getLovIdMaster());
 	}
 
 }

@@ -72,9 +72,9 @@ public class TravelCostDetailDao {
 	    	}
 	    };
 	    
-		public List<LabelValueBean> drodownList(String lovIdMaster,String typeLov){
-			String SQL = "SELECT * FROM SYS_LOV WHERE TYPE=? AND LOV_ID_MASTER= ?";
-			return jdbcTemplate.query(SQL,new Object[] {typeLov,lovIdMaster} ,ropdownListRowmapper);
+		public List<LabelValueBean> drodownList(String lovIdMaster){
+			String SQL = "SELECT * FROM SYS_LOV WHERE TYPE='ACC_FEE' AND LOV_ID_MASTER= ?";
+			return jdbcTemplate.query(SQL,new Object[] {lovIdMaster} ,ropdownListRowmapper);
 		}
 		private RowMapper<LabelValueBean> ropdownListRowmapper = new RowMapper<LabelValueBean>() {
 		    	@Override

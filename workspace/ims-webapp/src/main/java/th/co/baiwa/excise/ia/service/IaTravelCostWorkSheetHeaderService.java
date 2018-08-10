@@ -12,16 +12,18 @@ import th.co.baiwa.excise.ia.persistence.entity.Budget;
 import th.co.baiwa.excise.ia.persistence.vo.Int09211FormVo;
 
 @Service
-public class Int09211Service {	
+public class IaTravelCostWorkSheetHeaderService {	
 	
 	@Autowired
 	private BudgetDao budgetDao; 
 	
 	public DataTableAjax<Budget> findAll(Int09211FormVo formVo){			
 		
+		//query data
 		List<Budget> list = budgetDao.findAll(formVo);
 		Long count = budgetDao.count(formVo);
 		
+		//set data table
 		DataTableAjax<Budget> dataTableAjax = new DataTableAjax<>();
 		
 		if ("TRUE".equalsIgnoreCase(formVo.getSearchFlag())) {
@@ -29,8 +31,7 @@ public class Int09211Service {
 			dataTableAjax.setRecordsFiltered(count);
 			dataTableAjax.setData(list);
 		}
-		
-		
+				
 		return dataTableAjax;		
 	}
 	

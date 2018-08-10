@@ -16,7 +16,7 @@ import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.entity.Budget;
 import th.co.baiwa.excise.ia.persistence.vo.Int09211FormVo;
-import th.co.baiwa.excise.ia.service.Int09211Service;
+import th.co.baiwa.excise.ia.service.IaTravelCostWorkSheetHeaderService;
 
 @Controller
 @RequestMapping("api/ia/int09211")
@@ -25,7 +25,7 @@ public class Int09211Controller {
 	private static Logger logger = LoggerFactory.getLogger(Int09211Controller.class);
 	
 	@Autowired
-	private Int09211Service int0911Service;
+	private IaTravelCostWorkSheetHeaderService int0911Service;
 	
 	@PostMapping("/list")
 	@ResponseBody

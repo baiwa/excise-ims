@@ -22,7 +22,7 @@
           <div class="three wide column ui right aligned"><label>คำนำหน้าชื่อ</label></div>
           <div class="three wide column">
             <select class="ui dropdown" id="prefix" name="prefix">
-                <option value="">นาย</option>
+                <option value="">เลือกคำนำหน้า</option>
                 <option value="0">นาย</option>
                 <option value="1">นางสาว</option>
                 <option value="2">นาง</option>
@@ -37,9 +37,19 @@
           <div class="three wide column right aligned"><label>ตำแหน่ง</label></div>
           <div class="three wide column"><input type="text" id="position"></div>
           <div class="two wide column right aligned"><label>ประเภท</label></div>
-          <div class="three wide column"><input type="text" id="type"></div>
+          <div class="three wide column">
+                <select class="ui dropdown" id="type" name="type" (change)="typeDropdownOnChange($evnet)">
+                    <option value="">เลือกประเภท</option>
+                    <option *ngFor="let data of typeDropdown" value="{{data.value}}">{{data.label}}</option>
+                </select>             
+            </div>
           <div class="one wide column right aligned"><label>ระดับ</label></div>
-          <div class="three wide column"><input type="text" id="level"></div>     
+          <div class="three wide column">
+                <select class="ui dropdown" id="level" name="level">
+                    <option value="">เลือกระดับ</option>
+                    <option *ngFor="let data of levelDropdown" value="{{data.value}}">{{data.label}}</option> 
+                </select>           
+            </div>     
       </div>      
       <div class="ui grid">
           <div class="three wide column ui right aligned"><label>วันขออนุญาต</label></div>
@@ -65,16 +75,16 @@
           <div class="three wide column ui right aligned"><label>เดินทางจาก</label></div>
           <div class="three wide column ui right aligned">
           <select class="ui dropdown" id="goFrom" name="goFrom">
-              <option value="">สนง. - บ้าน</option>
-              <option value="1">บ้าน - สนง.</option>
-              <option value="2">สนง. - บ้าน</option>
-              <option value="3">สนง. - สนง.</option>
+              <option value="">เดินทางจาก</option>
+              <option value="0">บ้าน - สนง.</option>
+              <option value="1">สนง. - บ้าน</option>
+              <option value="2">สนง. - สนง.</option>
           </select>
         </div>
         <div class="two wide column ui right aligned"><label>กรณีฝึกอบรม</label></div>
           <div class="three wide column ui right aligned">
           <select class="ui dropdown"  id="food" name="food">
-              <option value="">ไม่เลี้ยงอาหาร</option>
+              <option value="">เลือกกรณีฝึกอบรม</option>
               <option value="0">ไม่เลี้ยงอาหาร</option>
               <option value="1">เลี้ยงอาหาร 1 มื้อ </option>
               <option value="2">เลี้ยงอาหาร 2 มื้อ</option>

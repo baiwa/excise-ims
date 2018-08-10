@@ -16,6 +16,15 @@ public class Int09213FormVo {
 	private String numberLive;
 	private String typeRoom;
 	private String note;
+	private String lovIdMaster;
+
+	public String getLovIdMaster() {
+		return lovIdMaster;
+	}
+
+	public void setLovIdMaster(String lovIdMaster) {
+		this.lovIdMaster = lovIdMaster;
+	}
 
 	public String getPosition() {
 		return position;
