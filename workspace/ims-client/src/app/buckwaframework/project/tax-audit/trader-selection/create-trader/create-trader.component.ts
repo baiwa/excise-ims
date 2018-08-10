@@ -15,8 +15,14 @@ export class CreateTraderComponent implements OnInit {
   formatter1: any;
   formatter2: any;
   selectedStartMonth: any;
+  selectedSEndMonth: any;
+  selectStartDateObj: any;
+  selectEndDateObj: any;
   constructor(private ajax: AjaxService, private router: Router) {
     this.selectedStartMonth = null;
+    this.selectedSEndMonth = null;
+    this.selectStartDateObj = null;
+    this.selectEndDateObj = null;
     this.formatter1 = formatter('ดป');
     this.formatter2 = formatter('ดป');
     this.formatter1.cell = (cell, date, cellOptions) => {  
@@ -57,7 +63,8 @@ console.log("this.formatter1 :", this.formatter1.cell);
       text: TextDateTH,
       formatter: this.formatter1,
       onChange: (date) => {
-        this.selectedStartMonth = date.getMonth();     
+        this.selectedStartMonth = date.getMonth();
+        this.selectStartDateObj = date;   
       }
     });
     $("#calendar1").calendar({
@@ -67,14 +74,15 @@ console.log("this.formatter1 :", this.formatter1.cell);
       text: TextDateTH,
       formatter: this.formatter2,
       onChange: (date) => {
-     
+     this.selectedSEndMonth = date.getMonth();
+     this.selectEndDateObj = date;
       }
     });
   }
   monthDiff(d1, d2) {
     var months;
     months = (d2.getFullYear() - d1.getFullYear()) * 12;
-    months -= d1.getMonth() + 1;
+    months -=  d1.getMonth() + 1;
     months += d2.getMonth();
     return months <= 0 ? 1 : months + 1;
   }
@@ -87,7 +95,7 @@ console.log("this.formatter1 :", this.formatter1.cell);
     const date_str = date_split[0] + "/" + date_split[1];
     const num = this.month + 1;
     this.router.navigate(["/analyst-basic-data-trader"], {
-      queryParams: { from: date_str, month: num }
+      queryParams: { from: date_str, month: this.monthDiff(this.selectStartDateObj , this.selectEndDateObj)+1}
     });
   };
 

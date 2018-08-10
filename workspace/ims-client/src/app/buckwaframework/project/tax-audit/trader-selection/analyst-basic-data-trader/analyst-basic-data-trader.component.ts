@@ -72,6 +72,8 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     // subscribe to router event
     this.from = this.route.snapshot.queryParams["from"];
     this.month = this.route.snapshot.queryParams["month"];
+    console.log(this.month);
+
     //split function
     var from_split = this.from.split("/");
     var currDate = new Date();
@@ -367,6 +369,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         '" ,"className":"right amount"}, ';
     }
     for (var i = 0; i < this.month / 2; i++) {
+      console.log(i);
       if (i != this.month / 2 - 1) {
         json +=
           ' { "data": "exciseLatestTaxReceiveAmount' +
@@ -380,6 +383,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       }
     }
     json += "]";
+    console.log(json);
     let jsonMapping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable({
       lengthChange: false,
@@ -402,6 +406,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
           month: this.month
         }
       },
+      
       columns: jsonMapping,
       fnDrawCallback: function(oSettings) {
         if ($(".amount").length > 0) {
@@ -424,5 +429,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.onLoading = false;
     }, 500);
+    console.log(json);
   }
 }
