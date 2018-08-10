@@ -14,22 +14,42 @@ export class CreateTraderComponent implements OnInit {
   month: any;
   formatter1: any;
   formatter2: any;
+  selectedStartMonth: any;
   constructor(private ajax: AjaxService, private router: Router) {
+    this.selectedStartMonth = null;
     this.formatter1 = formatter('ดป');
     this.formatter2 = formatter('ดป');
-    this.formatter1.cell = (cell, date, cellOptions) => {
-      console.log(cell, date, cellOptions)
-      if(date.getMonth()%TextDateTH.months.findIndex(obj => obj == $("#calendarraw").val().split(" ")[0])
-    )
-      cell[0].className = "link disabled";
+    this.formatter1.cell = (cell, date, cellOptions) => {  
+      if(date.getMonth()%TextDateTH.months.findIndex(obj => obj == $("#calendarraw").val().split(" ")[0])) {      
+      }
     }
     this.formatter2.cell = (cell, date, cellOptions) => {
-      console.log(cell, date, cellOptions)
-      cell[0].className = "link disabled";
+      if(date.valueOf() > new Date().valueOf()){
+        cell[0].className = "link disabled";
+        return;
+      }  
+
+      if(this.selectedStartMonth % 2 === 0 ){
+        if((date.getMonth() % 2) === 1){
+          cell[0].className = "link";
+        }else{
+          cellOptions.disabled = true;
+          cell[0].className = "link disabled";
+        }
+      }  else if(this.selectedStartMonth % 2 === 1) {
+        if((date.getMonth() % 2) === 0){
+          cell[0].className = "link";
+        }else{
+          cell[0].className = "link disabled";
+        }
+      }
     }
   }
 
   ngOnInit(): void {
+
+console.log("this.formatter1 :", this.formatter1.cell);
+
     $("#calendar").calendar({
       endCalendar: $("#calendar1"),
       maxDate: new Date(),
@@ -37,14 +57,7 @@ export class CreateTraderComponent implements OnInit {
       text: TextDateTH,
       formatter: this.formatter1,
       onChange: (date) => {
-        if ($("#calendar1raw").val() !== null) {
-          var st1 = $("#calendar1raw")
-            .val()
-            .split(" ");
-          var d2 = new Date(st1[1] - 543, TextDateTH.months.findIndex(obj => obj == st1[0]), 1);
-          var d1 = date;
-          this.month = this.monthDiff(d1, d2)
-        }
+        this.selectedStartMonth = date.getMonth();     
       }
     });
     $("#calendar1").calendar({
@@ -54,14 +67,7 @@ export class CreateTraderComponent implements OnInit {
       text: TextDateTH,
       formatter: this.formatter2,
       onChange: (date) => {
-        if ($("#calendarraw").val() !== null) {
-          var st1 = $("#calendarraw")
-            .val()
-            .split(" ");
-          var d1 = new Date(st1[1] - 543, TextDateTH.months.findIndex(obj => obj == st1[0]), 1);
-          var d2 = date;
-          this.month = this.monthDiff(d1, d2)
-        }
+     
       }
     });
   }
