@@ -39,6 +39,19 @@ export class Ope041Component implements OnInit, AfterViewInit {
       analysNumber: "",
       productType: ""
     };
+    this.startDateSplit = "";
+    this.endDateSplit = "";
+    this.row = [];
+    for (var i = 0; i < 1; i++) {
+      this.row.push({
+        column1: "",
+        column2: "",
+        column3: "",
+        column4: "",
+        column5: "",
+        column6: ""
+      });
+    }
 
     this.fileExel = new Array<File>(); // initial file array
   }
@@ -154,7 +167,6 @@ export class Ope041Component implements OnInit, AfterViewInit {
       url,
       formBody,
       res => {
-        console.log(res.json());
         this.row = res.json();
         this.showDt.destroy();
         this.initDatatable();
@@ -235,39 +247,38 @@ export class Ope041Component implements OnInit, AfterViewInit {
           className: "center"
         },
         {
-          className: "center",
+          className: "right",
           render: (data, type, full, meta) => {
             return this.DF(full.taxInvoice);
           }
         },
         {
-          className: "center",
+          className: "right",
           render: (data, type, full, meta) => {
             return this.DF(full.dayRecieve);
           }
         },
         {
-          className: "center",
+          className: "right",
           render: (data, type, full, meta) => {
             return this.DF(full.monthRecieve);
           }
         },
         {
-          className: "center",
+          className: "right",
           render: (data, type, full, meta) => {
             return this.DF(full.exd1);
           }
         },
         {
-          className: "center",
+          className: "right",
           render: (data, type, full, meta) => {
             return this.DF(full.calMax);
           }
         },
         {
-          className: "center amount",
+          className: "right amount",
           render: (data, type, full, meta) => {
-            console.log(typeof this.DF(full.diff));
             return this.DF(full.diff);
           }
         }
@@ -276,13 +287,13 @@ export class Ope041Component implements OnInit, AfterViewInit {
         if ($(".amount").length > 0) {
           $(".amount").each(function() {
             if (this.innerHTML === "0") {
-              this.className = "center amount green";
+              this.className = "right amount green";
             }
             if (
               +this.innerHTML.split(",").join("") > 0 ||
               +this.innerHTML.split(",").join("") < 0
             ) {
-              this.className = "center amount red";
+              this.className = "right amount red";
             }
             if (this.innerHTML == null || this.innerHTML === "") {
               this.className = "center amount null";
