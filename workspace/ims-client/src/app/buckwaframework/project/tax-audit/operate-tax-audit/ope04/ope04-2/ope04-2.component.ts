@@ -1,26 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { AjaxService } from '../../../../../common/services';
-import { TextDateTH, DecimalFormat, digit } from '../../../../../common/helper';
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { AjaxService } from "../../../../../common/services/ajax.service";
+import {
+  TextDateTH,
+  formatter,
+  digit
+} from "../../../../../common/helper/datepicker";
+import { DecimalFormat } from "../../../../../common/helper";
+
 declare var $: any;
 @Component({
-  selector: 'ope04-2',
-  templateUrl: './ope04-2.component.html',
-  styleUrls: ['./ope04-2.component.css']
+  selector: "ope04-2",
+  templateUrl: "./ope04-2.component.html",
+  styleUrls: ["./ope04-2.component.css"]
 })
-export class Ope042Component implements OnInit {
-  public showData: boolean = false;
+export class Ope042Component implements OnInit, AfterViewInit {
   exciseId: any;
   exciseIdArr: any;
   firstDataList: any;
   startDate: any;
   endDate: any;
-  MonthDataList: MonthData;
+  MonthDataList: any;
   fileExel: File[];
   analysNumber: any;
   row: any;
   max: any;
   diff: any;
-
+  monthRecieveArr: any;
+  rowShift: any;
+  showDt: any;
+  startDateSplit: any;
+  endDateSplit: any;
+  rowAndColumn: any;
 
   constructor(private ajax: AjaxService) {
     this.exciseIdArr = "";
@@ -29,23 +39,10 @@ export class Ope042Component implements OnInit {
       analysNumber: "",
       productType: ""
     };
-    this.MonthDataList = {
-      product1: "",
-      product2: "",
-      product3: "",
-      product4: "",
-      product5: "",
-      product6: "",
-      monthRecieve1: "",
-      monthRecieve2: "",
-      monthRecieve3: "",
-      monthRecieve4: "",
-      monthRecieve5: "",
-      monthRecieve6: ""
-    };
-
+    this.startDateSplit = "";
+    this.endDateSplit = "";
     this.row = [];
-    for (let i = 0; i < 7; i++) {
+    for (var i = 0; i < 1; i++) {
       this.row.push({
         column1: "",
         column2: "",
@@ -56,14 +53,12 @@ export class Ope042Component implements OnInit {
       });
     }
 
-    this.max = [0, 0, 0, 0, 0, 0, 0];
-    this.diff = [0, 0, 0, 0, 0, 0, 0];
     this.fileExel = new Array<File>(); // initial file array
   }
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
-    $(".ui.dropdown.ope04-2").css("width", "100%");
+    $(".ui.dropdown.ope04-1").css("width", "100%");
 
     $("#calendarFront").calendar({
       endCalendar: $("#calendarLast"),
@@ -120,7 +115,17 @@ export class Ope042Component implements OnInit {
         this.firstDataList = res[0];
       });
     });
+
+    // get exciseId in input box
+    const URL2 = AjaxService.CONTEXT_PATH + "/filter/exise/getSessionEmptyData";
+    $.post(URL2, res => {});
   }
+
+  ngAfterViewInit(): void {
+    $("#showData").hide();
+  }
+
+  ngOnDestroy(): void {}
 
   changeExiseId = () => {
     this.exciseId = (<HTMLInputElement>(
@@ -141,23 +146,13 @@ export class Ope042Component implements OnInit {
     });
   };
 
-  clearData() {
-    this.row = [];
-    for (let i = 0; i < 7; i++) {
-      this.row.push({
-        column1: "",
-        column2: "",
-        column3: "",
-        column4: "",
-        column5: "",
-        column6: ""
-      });
-    }
-    this.max = [0, 0, 0, 0, 0, 0, 0];
-    this.diff = [0, 0, 0, 0, 0, 0, 0];
-
-    this.showData = false;
-  }
+  clearAll = () => {
+    $("#showData").hide();
+    $("#showDt")
+      .dataTable()
+      .fnClearTable();
+    this.showDt.destroy();
+  };
 
   onUpload = (event: any) => {
     // Prevent actual form submission
@@ -168,34 +163,18 @@ export class Ope042Component implements OnInit {
     let formBody = new FormData(form);
 
     let url = `upload/excel`;
-    this.ajax.upload(url, formBody, res => {
-      this.row = res.json();
-
-      for (let i = 1; i <= 6; i++) {
-        this.max[i] = 0;
-        for (let j = 4; j <= 6; j++) {
-          //find max value
-          if (j != 5) {
-            this.max[i] =
-              parseFloat(this.row[i]["column" + j]) > this.max[i]
-                ? parseFloat(this.row[i]["column" + j])
-                : this.max[i];
-          }
-        }
-        this.max[i] =
-          this.MonthDataList["monthRecieve" + i] > this.max[i]
-            ? this.MonthDataList["monthRecieve" + i]
-            : this.max[i];
-        this.diff[i] = parseFloat(this.row[i]["column3"]) - this.max[i];
-
-        //set format "#,###"
-        this.row[i]["column3"] = this.DF(this.row[i]["column3"]);
-        this.row[i]["column4"] = this.DF(this.row[i]["column4"]);
-        this.row[i]["column6"] = this.DF(this.row[i]["column6"]);
-        this.max[i] = this.DF(this.max[i].toString());
-        this.diff[i] = this.DF(this.diff[i].toString());
+    this.ajax.upload(
+      url,
+      formBody,
+      res => {
+        this.row = res.json();
+        this.showDt.destroy();
+        this.initDatatable();
       }
-    });
+      // err => {
+      //   alert("asdmiosdfhi");
+      // }
+    );
   };
 
   onChangeUpload = (event: any) => {
@@ -215,6 +194,7 @@ export class Ope042Component implements OnInit {
   };
 
   onClickShow = e => {
+    $("#showData").show();
     // Prevent actual form submission
     e.preventDefault();
     this.startDate = e.target["startDate"].value;
@@ -223,43 +203,120 @@ export class Ope042Component implements OnInit {
     //change formatter first date input value
     const date_str1 = this.startDate.split(" ");
     date_str1[0] = digit(TextDateTH.months.indexOf(date_str1[0]) + 1);
-    const startDateSplit = date_str1[0] + "/" + date_str1[1];
+    this.startDateSplit = date_str1[0] + "/" + date_str1[1];
 
     //change formatter end date input value
     const date_str2 = this.endDate.split(" ");
     date_str2[0] = digit(TextDateTH.months.indexOf(date_str2[0]) + 1);
-    const endDateSplit = date_str2[0] + "/" + date_str2[1];
+    this.endDateSplit = date_str2[0] + "/" + date_str2[1];
 
-    const URL =
-      AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdMonthList";
-    $.post(
-      URL,
-      {
-        exciseId: this.exciseId,
-        type: "W",
-        startDate: startDateSplit,
-        endDate: endDateSplit
-      },
-      res => {
-        if (res.length == 0) {
-          this.MonthDataList = null;
-        } else {
-          this.MonthDataList = res[0];
-          for (let i = 1; i <= 6; i++) {
-            this.MonthDataList["monthRecieve" + i] = this.DF(
-              this.MonthDataList["monthRecieve" + i]
-            ).toString();
-          }
-        }
-      }
-    );
-
-    //update data
-    this.showData = true;
+    this.initDatatable();
   };
 
+  initDatatable(): void {
+    const URL =
+      AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdMonthList";
+    this.showDt = $("#showDt").DataTable({
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      processing: true,
+      serverSide: false,
+      paging: false,
+      pagingType: "full_numbers",
+
+      ajax: {
+        type: "POST",
+        url: URL,
+        data: {
+          exciseId: this.exciseId,
+          type: "T",
+          startDate: this.startDateSplit,
+          endDate: this.endDateSplit
+        }
+      },
+      columns: [
+        {
+          render: function(data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "center"
+        },
+        {
+          data: "product",
+          className: "center"
+        },
+        {
+          className: "right",
+          render: (data, type, full, meta) => {
+            return this.DF(full.taxInvoice);
+          }
+        },
+        {
+          className: "right",
+          render: (data, type, full, meta) => {
+            return this.DF(full.dayRecieve);
+          }
+        },
+        {
+          className: "right",
+          render: (data, type, full, meta) => {
+            return this.DF(full.monthRecieve);
+          }
+        },
+        {
+          className: "right",
+          render: (data, type, full, meta) => {
+            return this.DF(full.exd1);
+          }
+        },
+        {
+          className: "right",
+          render: (data, type, full, meta) => {
+            return this.DF(full.calMax);
+          }
+        },
+        {
+          className: "right amount",
+          render: (data, type, full, meta) => {
+            return this.DF(full.diff);
+          }
+        }
+      ],
+      fnDrawCallback: function(oSettings) {
+        if ($(".amount").length > 0) {
+          $(".amount").each(function() {
+            if (this.innerHTML === "0") {
+              this.className = "right amount green";
+            }
+            if (
+              +this.innerHTML.split(",").join("") > 0 ||
+              +this.innerHTML.split(",").join("") < 0
+            ) {
+              this.className = "right amount red";
+            }
+            if (this.innerHTML == null || this.innerHTML === "") {
+              this.className = "center amount null";
+              this.innerHTML = "-";
+            }
+          });
+        }
+      }
+    });
+  }
+
+  getClassBydata(value) {
+    if (value.length === 0) {
+      return "null";
+    } else if (+value === 0) {
+      return "green";
+    } else if (+value) {
+      return "red";
+    }
+  }
+
   DF(what) {
-    const df = new DecimalFormat("#,###");
+    const df = new DecimalFormat("###,###");
     return df.format(what);
   }
 
@@ -282,33 +339,9 @@ export class Ope042Component implements OnInit {
   }
 }
 
-class MonthData {
-  product1: any;
-  product2: any;
-  product3: any;
-  product4: any;
-  product5: any;
-  product6: any;
-  monthRecieve1: any;
-  monthRecieve2: any;
-  monthRecieve3: any;
-  monthRecieve4: any;
-  monthRecieve5: any;
-  monthRecieve6: any;
-}
-
 class File {
   [x: string]: any;
   name: string;
   type: string;
   value: any;
-}
-
-class Column {
-  column1: any;
-  column2: any;
-  column3: any;
-  column4: any;
-  column5: any;
-  column6: any;
 }
