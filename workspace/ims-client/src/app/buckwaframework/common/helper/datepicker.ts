@@ -87,6 +87,19 @@ export var formatter = (what: string = "") => {
           return year.toString();
         }
       };
+    case "ดป":
+      return {
+        header: function (date, mode, settings) {
+          //return a string to show on the header for the given 'date' and 'mode'
+          return date.getFullYear() + 543;
+        },
+        date: function (date, settings) {
+          if (!date) return "";
+          let month = date.getMonth();
+          let year = date.getFullYear() + 543;
+          return TextDateTH.months[month] + " " + year;
+        }
+      };
     case "วดป":
       return {
         header: function (date, mode, settings) {
