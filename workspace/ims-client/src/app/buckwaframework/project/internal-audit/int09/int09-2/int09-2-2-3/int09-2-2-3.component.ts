@@ -1,3 +1,4 @@
+import { AjaxService } from './../../../../../common/services/ajax.service';
 import { TextDateTH, formatter } from './../../../../../common/helper/datepicker';
 import { Component, OnInit } from '@angular/core';
 
@@ -15,8 +16,11 @@ export class Int09223Component implements OnInit {
   rentDate;
   rentCost;
   travelCost;
+  typeDropdown : any;
+  levelDropdown : any;
+  dataDropdown : any;
   
-  constructor() {
+  constructor( private ajax:AjaxService) {
     this.allowanceDate = 0;
     this.allowanceCost = 0;
     this.rentDate = 0;
@@ -62,6 +66,33 @@ export class Int09223Component implements OnInit {
       });
     }
   }
+
+  typeDropdownList =() =>{
+
+    this.dataDropdown = {
+      lovIdMaster : "305"
+    }
+    const URL =  "ia/int09223/listDropdown";
+  
+     this.ajax.post(URL, this.dataDropdown, res => {   
+       this.typeDropdown = res.json();
+    });
+  }
+  typeDropdownOnChange = event => {
+
+    let id = $("#type").val();
+    this.dataDropdown = {
+      lovIdMaster : id
+    }
+     const URL =  "ia/int09223/listDropdown";
+  
+     this.ajax.post(URL, this.dataDropdown, res => {     
+       console.log(res.json());
+       this.levelDropdown = res.json();
+    });
+
+  }
+
 
   dataTable = function () {
     var table = $('#tableData').DataTable({
@@ -181,7 +212,7 @@ export class Int09223Component implements OnInit {
 
     this.dataTable();
     $('.ui.dropdown').dropdown();
-
+    this.typeDropdownList();
     this.calenda();
 
   }

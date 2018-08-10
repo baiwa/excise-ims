@@ -9,11 +9,16 @@
           <input type="hidden" id="searchFlag">
           <div class="two wide column"></div>
           <div class="two wide column"><label>ปีงบประมาณ</label></div>
-          <div class="four wide column"><input type="text" id="money"></div>
+          <div class="four wide column"><div class="ui calendar" id="year">
+            <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" name="date-raw" id="year1" autocomplete="off" [attr.readonly]="null" placeholder="yyyy" [attr.required]="true">
+            </div>
+          </div>
+        </div>          
           <div class="two wide column"><label>ประเภทเอกสาร</label></div>
           <div class="four wide column">
-            <select class="ui search dropdown" id="department">
-                <option value="">ทั้งหมด</option>
+            <select class="ui search dropdown" id="doctype">
                 <option value="0">ทั้งหมด</option>
                 <option value="1">หลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ</option>
                 <option value="2">ใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ</option>
@@ -49,7 +54,7 @@
         </table>
         <br><br>
       <div class="ui form center aligned grid">
-          <button class="ui red button">ลบ</button>
+          <button class="ui red button"  (click)="clickDelete()">ลบ</button>
       </div>  
       <br>  
       </div>        

@@ -59,9 +59,19 @@
             <div class="three wide column right aligned"><label>ตำแหน่ง</label></div>
             <div class="three wide column"><input type="text" id="position"></div>
             <div class="two wide column right aligned"><label>ประเภท</label></div>
-            <div class="three wide column"><input type="text" id="type"></div>
+            <div class="three wide column">
+                <select class="ui dropdown" id="type" name="type" (change)="typeDropdownOnChange($evnet)">
+                    <option value="">เลือกประเภท</option>
+                    <option *ngFor="let data of typeDropdown" value="{{data.value}}">{{data.label}}</option>
+                </select>  
+            </div>
             <div class="one wide column right aligned"><label>ระดับ</label></div>
-            <div class="three wide column"><input type="text" id="level"></div>     
+            <div class="three wide column">
+                <select class="ui dropdown" id="level" name="level">
+                    <option value="">เลือกระดับ</option>
+                    <option *ngFor="let data of levelDropdown" value="{{data.value}}">{{data.label}}</option> 
+                </select> 
+            </div>     
         </div>      
         <div class="ui grid">
             <div class="three wide column ui right aligned"><label>วันขออนุญาต</label></div>

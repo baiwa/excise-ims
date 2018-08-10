@@ -1,3 +1,5 @@
+import { TextDateTH, formatter } from './../../../../../common/helper/datepicker';
+import { MessageBarService } from './../../../../../common/services/message-bar.service';
 import { Component, OnInit } from '@angular/core';
 
 declare var jQuery: any;
@@ -9,7 +11,16 @@ declare var $: any;
 })
 export class Int09221Component implements OnInit {
 
-  constructor() { }
+  constructor(private message:MessageBarService) { }
+
+  calenda = function () {
+    $("#year").calendar({
+      maxDate: new Date(),
+      type: "year",
+      text: TextDateTH,
+      formatter: formatter("ป")
+    });
+  }
 
   clickSearch = function(){
     $("#searchFlag").val("TRUE");
@@ -25,6 +36,19 @@ export class Int09221Component implements OnInit {
     
     $('#tableData').DataTable().ajax.reload();
   }
+  clickDelete = () => {
+    if($('#tableData').DataTable().rows().count() == 0 ){
+      this.message.alert("ไม่มีข้อมูล")
+      return false
+    }
+    this.message.comfirm((res) => {
+      if(res){
+        console.log("top");
+      }
+      
+    },"ลบรายการ");
+  }
+
 
   clickCheckAll = event=>{
     if (event.target.checked) {
@@ -41,6 +65,7 @@ export class Int09221Component implements OnInit {
   }
 
   dataTable = function(){
+    $("#doctype").val() == 0 ? "":$("doctype").val();
     var table = $('#tableData').DataTable({
       "serverSide": false,
       "searching": false,
@@ -84,7 +109,7 @@ export class Int09221Component implements OnInit {
         }, {
           "data": "createdBy",
           "render" : function(data,type,row){
-            var btn = '<a class="btn-edit">รายละเอียด</a>';
+            var btn = '<button class="ui mini primary button btn-edit">รายละเอียด</button>';
               return btn;
           },
           "className": "ui center aligned"
@@ -93,7 +118,7 @@ export class Int09221Component implements OnInit {
     });
 
     //button edit
-    table.on('click', 'tbody tr a.btn-edit', function () {
+    table.on('click', 'tbody tr button.btn-edit', function () {
 			var closestRow = $(this).closest('tr');
       var data = table.row(closestRow).data();      
       console.log(data);
@@ -106,7 +131,7 @@ export class Int09221Component implements OnInit {
   }
   ngAfterViewInit() {
     $('.ui.dropdown').dropdown();
-
+    this.calenda();
     this.dataTable();
 
     
