@@ -36,22 +36,31 @@
         </div>
         <div class="ui grid">      
             <div class="three wide column right aligned"><label>ตำแหน่ง</label></div>
-            <div class="three wide column"><input type="text" id="position"></div>
-            <div class="two wide column right aligned"><label>ประเภท</label></div>
-            <div class="three wide column">
-                    <select class="ui dropdown"  id="type" (change)="typeDropdownOnChange($evnet)">
+            <div class="three wide column"><input type="text" id="position"></div>           
+        </div>    
+        <div class="ui grid">                
+                <div class="two wide column right aligned"><label>ประเภท</label></div>
+                <div class="three wide column">
+                    <select class="ui dropdown"  id="type" (change)="subTypeDropdownOnChange($event)">
                         <option value="">เลือกประเภท</option>
                         <option *ngFor="let data of typeDropdown" value="{{data.value}}">{{data.label}}</option>
                     </select>             
                 </div>
-            <div class="one wide column right aligned"><label>ระดับ</label></div>
-            <div class="three wide column">
+                <div class="one wide column right aligned"><label>subtype</label></div>
+                <div class="three wide column">
+                    <select class="ui dropdown"  id="subtype" (change)="levelDropdownOnChange($event)">
+                        <option value="">เลือกระดับ</option>
+                        <option *ngFor="let data of subtypeDropdown" value="{{data.value}}">{{data.label}}</option> 
+                    </select>           
+                </div>   
+                <div class="one wide column right aligned"><label>ระดับ</label></div>
+                <div class="three wide column">
                     <select class="ui dropdown"  id="level">
                         <option value="">เลือกระดับ</option>
                         <option *ngFor="let data of levelDropdown" value="{{data.value}}">{{data.label}}</option> 
                     </select>           
                 </div>     
-        </div>      
+        </div>  
         <div class="ui grid">
             <div class="three wide column ui right aligned"><label>วันขออนุญาต</label></div>
             <div class="three wide column">
@@ -120,17 +129,17 @@
             <div class="two wide column">
                 <select class="ui dropdown"   id="typeWithdrawal" (change)="typeRoom()">                    
                     <option value="">เลือก </option>
-                    <option value="0">ปกติ </option>
-                    <option value="1">เหมาจ่าย</option>
-                    <option value="2">อบรมประเภท ก</option>
-                    <option value="3">อบรมประเภท ข</option>
+                    <option value="1">ปกติ </option>
+                    <option value="2">เหมาจ่าย</option>
+                    <option value="3">อบรมประเภท ก</option>
+                    <option value="4">อบรมประเภท ข</option>
                 </select>
                 </div>
         
             <div id="typeRoomLabel"   class="three wide column right aligned"><label>ประเภทห้องพัก</label></div>
             <div id="typeRoomValue"  class="three wide column">            
                     <select class="ui dropdown"  id="typeRoom" >
-                        <option value="0">ห้องเดี่ยว</option>
+                        <option value="">เลือก</option>
                         <option value="1">ห้องเดี่ยว </option>
                         <option value="2">ห้องคู่</option>
                     </select>

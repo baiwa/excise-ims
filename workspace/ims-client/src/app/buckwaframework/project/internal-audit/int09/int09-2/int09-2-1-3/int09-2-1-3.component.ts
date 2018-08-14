@@ -1,7 +1,7 @@
 import { AjaxService } from './../../../../../common/services/ajax.service';
 import { Headers } from '@angular/http';
 import { ExciseService } from './../../../../../common/services/excise.service';
-import { TextDateTH, formatter } from './../../../../../common/helper/datepicker';
+import { TextDateTH, formatter, stringToDate } from './../../../../../common/helper/datepicker';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 
@@ -22,6 +22,7 @@ export class Int09213Component implements OnInit {
   hesderTxt;
   hideA: boolean = false;
   typeDropdown: any;
+  subtypeDropdown: any;
   levelDropdown: any;
   dataDropdown: any;
 
@@ -53,6 +54,7 @@ export class Int09213Component implements OnInit {
         $(".ui.dropdown").dropdown();
       });
     } else {
+      $("#typeRoomValue").va("");
       $("#typeRoomLabel").hide();
       $("#typeRoomValue").hide();
     }
@@ -109,9 +111,21 @@ export class Int09213Component implements OnInit {
       this.typeDropdown = res.json();
     });
   }
-  typeDropdownOnChange = event => {
+  subTypeDropdownOnChange = (event) => {
+    let id = event.target.value;
+    this.dataDropdown = {
+      lovIdMaster: id
+    }
+    const URL = "ia/int09213/listDropdown";
 
-    let id = $("#type").val();
+    this.ajax.post(URL, this.dataDropdown, res => {
+      console.log(res.json());
+      this.subtypeDropdown = res.json();
+    });
+
+  }
+  levelDropdownOnChange = (event) => {
+    let id = event.target.value;
     this.dataDropdown = {
       lovIdMaster: id
     }
@@ -260,9 +274,10 @@ export class Int09213Component implements OnInit {
     if (prefix == "1") prefix = "นาย";
     if (prefix == "2") prefix = "นางสาว";
     if (prefix == "3") prefix = "นาง";
+    
 
-
-
+    moment.locale('th');
+    console.log(stringToDate(e.target.startGoDateData.value) instanceof Date);
     //json data
     let data = {
       prefix: prefix,
@@ -280,11 +295,13 @@ export class Int09213Component implements OnInit {
       numberLive: e.target.numberLive.value,
       typeWithdrawal: e.target.typeWithdrawal.value,
       typeRoom: e.target.typeRoom.value,
-      note: e.target.note.value
+      note: e.target.note.value,
+      datetop : stringToDate(e.target.startGoDateData.value),
+      days : this.momentDiff(e.target.startGoDateData.value,e.target.endGoDateData.value)
     }
 
     const URL = "ia/int09213/addData";
-    this.ajax.post(URL, JSON.stringify(data), res => {
+    this.ajax.post(URL,data, res => {
       console.log(res.json());
     });
 
@@ -293,23 +310,18 @@ export class Int09213Component implements OnInit {
 
   momentDiff = (start,end) => {
 
-    console.log("Start Date : ",start);
-    // var a = moment({year:2018, month: 0, day: 29, hour: 12, minute : 30, second:0});
-    // var b = moment({year:2018, month: 0, day: 29, hour: 10, minute : 25, second:0});
-   // let locale = new Date('14/07/2018');
-   // console.log("locale : ",locale);
-    //locale.locale('th');
-    let a = moment(new Date(), "DD/MM/YYYY HH:mm");
-    let b = moment("14/08/2018 15:00", "DD/MM/YYYY HH:mm");
-    // console.log("A : ",a);
-    //console.log("B : ",locale);
+      let _start = stringToDate(start);
+      let _end = stringToDate(end);
+      let momentStart = moment(_start);
+      let momentEnd = moment(_end);
 
-    console.log("Diff",a.diff(b, 'hours',true));
-  }
+      return momentEnd.diff(momentStart, 'days',true);
+
+  } 
 
   ngOnInit() {
 
-   this.momentDiff(new Date(),new Date());
+   this.momentDiff("13/08/2561 00:00","14/08/2561 12:00");
     this.setSession();
     this.hesderTxt = this.exciseService.getData() != undefined && this.exciseService.getData();
   }

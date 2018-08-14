@@ -165,6 +165,7 @@ export var formatter = (what: string = "") => {
           return digit(month) + "/" + year;
         }
       };
+  
     default:
       return {
         header: function (date, mode, settings) {
@@ -194,4 +195,33 @@ export var ThaiFormatter = date => {
   return date.toLocaleDateString("th-TH", options);
 };
 
-export default { TextDateTH, formatter, digit, ThaiFormatter };
+export var stringToDate = (date) => {
+
+      let strSpit = date.split(/[ ,]+/);
+      if(strSpit.length > 1){
+
+          let _date = strSpit[0]; //date 
+          let _time = strSpit[1]; //time
+        
+          //sub date
+          let dateSpit = _date.split('/');
+          let _dd = dateSpit[0];
+          let _mm = dateSpit[1];
+          let _yyyy =  parseInt(dateSpit[2])-543;
+          let mmddyyyytime = _mm+"/"+_dd+"/"+_yyyy+" "+_time;// mm/dd/yyyy time
+
+          return new Date(mmddyyyytime);
+
+      }else{
+
+        let dateSpit = date.split('/');
+        let _dd = dateSpit[0];
+        let _mm = dateSpit[1];
+        let _yyyy =  parseInt(dateSpit[2])-543;
+        let mmddyyyy = _mm+"/"+_dd+"/"+_yyyy;// mm/dd/yyyy time
+     
+        return new Date(mmddyyyy);
+      }
+};
+
+export default { TextDateTH, formatter, digit, ThaiFormatter,stringToDate };
