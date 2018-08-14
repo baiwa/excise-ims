@@ -1,0 +1,74 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดปัจจัยเสี่ยงประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
+    </div>
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="two wide field "></div>
+          <div class="two wide field ">
+            <label class="ui right ">ชื่อกระดาษทำการ</label>
+          </div>
+          <div class="ten wide field ">
+            <input type="text" placeholder="ชื่อกระดาษทำการ" class="custom" name="riskHrdPaperName" id="riskHrdPaperName" [(ngModel)]="riskHrdPaperName">
+          </div>
+
+        </div>
+        <div class="inline fields">
+          <div class="two wide field "></div>
+          <div class="two wide field">
+            <label>ปีงบประมาณ</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="buggetYear" id="buggetYear" [(ngModel)]="buggetYear">
+          </div>
+          <div class="two wide field ">
+            <label>ผู้ตรวจ</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="ผู้ตรวจ" class="custom" name="userCheck" id="userCheck" [(ngModel)]="userCheck">
+          </div>
+        </div>
+        <table id="dataTable" class="ui small celled table">
+          <thead>
+            <tr>
+              <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+              <th rowspan="2" style="text-align: center !important" class="four wide field ">โครงการตามยุทธศาสตร์</th>
+              <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
+              <th colspan="4" style="text-align: center !important">งบประมาณที่ใช้ตามแผนยุทธศาสตร์</th>
+              <th rowspan="2" style="text-align: center !important">เงินงบประมาณที่
+                <br/>กรมอนุมัติ</th>
+              <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
+            </tr>
+            <tr>
+              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">เงินงบประมาณ</th>
+              <th style="text-align: center !important">เงินท้องถิ่น</th>
+              <th style="text-align: center !important">เงินอื่น ๆ </th>
+              <th style="text-align: center !important">รวม</th>
+              <th style="text-align: center !important">RL</th>
+              <th style="text-align: center !important">แปลค่า</th>
+            </tr>
+          </thead>
+        </table>
+        <div class="inline fields"></div>
+        <div class="inline fields ">
+          <div class="sixteen wide field ">
+            <div class="six wide field "></div>
+            <button class="ui mini primary button" (click)="saveRiskAssRiskWsDtl()">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+              กำหนดเงื่อนไข RL
+            </button>
+            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+              Export
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

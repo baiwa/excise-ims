@@ -1,4 +1,4 @@
-package th.co.baiwa.excise.ia.persistence.dao;
+package th.co.baiwa.buckwaframework.preferences.persistence.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,15 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.excise.utils.BeanUtils;
 
-@Repository
-public class LovDao {
+public class LovRepositoryImpl implements LovRepositoryCustom{
 
-	private Logger logger = LoggerFactory.getLogger(LovDao.class);
+	private Logger logger = LoggerFactory.getLogger(LovRepositoryImpl.class);
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -56,8 +54,8 @@ public class LovDao {
 		@Override
 		public Lov mapRow(ResultSet rs, int arg1) throws SQLException {
 			Lov lov = new Lov();
-			lov.setLovId(rs.getBigDecimal("LOV_ID"));
-			lov.setLovIdMaster(rs.getBigDecimal("LOV_ID_MASTER"));
+			lov.setLovId(rs.getLong("LOV_ID"));
+			lov.setLovIdMaster(rs.getLong("LOV_ID_MASTER"));
 			lov.setType(rs.getString("TYPE"));
 			lov.setTypeDescription(rs.getString("TYPE_DESCRIPTION"));
 			lov.setSubType(rs.getString("SUB_TYPE"));

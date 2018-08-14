@@ -55,7 +55,7 @@ public class RiskAssRiskWsHdrRepositoryImpl implements RiskAssRiskWsHdrRepositor
 			riskAssRiskWsHdr.setRiskHrdId(rs.getLong("RISK_HRD_ID"));
 			riskAssRiskWsHdr.setRiskHdrName(rs.getString("RISK_HDR_NAME"));
 			riskAssRiskWsHdr.setIsDeleted(rs.getString("IS_DELETED"));
-			riskAssRiskWsHdr.setActive("ACTIVE");
+			riskAssRiskWsHdr.setActive(rs.getString("ACTIVE"));
 			riskAssRiskWsHdr.setCreatedBy(rs.getString("CREATED_BY"));
 			riskAssRiskWsHdr.setCreatedDate(rs.getDate("CREATED_DATE"));
 			riskAssRiskWsHdr.setUpdatedBy(rs.getString("UPDATED_BY"));

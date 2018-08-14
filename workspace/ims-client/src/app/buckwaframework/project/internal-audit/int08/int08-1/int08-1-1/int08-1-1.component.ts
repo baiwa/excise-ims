@@ -1,5 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Location } from "@angular/common";
+import { AjaxService } from "../../../../../common/services/ajax.service";
+import { MessageBarService } from "../../../../../common/services/message-bar.service";
+import { Router, ActivatedRoute, Params } from "@angular/router";
 declare var $: any;
 @Component({
   selector: "int08-1-1",
@@ -9,8 +12,14 @@ declare var $: any;
 export class Int0811Component implements OnInit {
   showData: boolean = false;
   public data: String[];
+  buggetYear: any;
 
-  constructor() {
+
+
+  constructor(private router: Router,
+    private ajax: AjaxService,
+    private messageBarService: MessageBarService,
+    private _location: Location) {
     this.data = [
       "ประเมินความเสี่ยงโครงการ - งบประมาณ",
       "ประเมินความเสี่ยงโครงการ - ประสิทธิภาพ",
@@ -51,8 +60,32 @@ export class Int0811Component implements OnInit {
 
   }
 
+  createBuggetYear() {
+    console.log(this.buggetYear);
+    const URL = "ia/int08/createBuggetYear";
+
+    this.ajax.post(URL, { buggetYear: this.buggetYear }, res => {
+      var message = res.json();
+      this.messageBarService.successModal(message.messageTh, "สำเร็จ");
+
+      this.router.navigate(["/int08/1/4"], {
+        queryParams: { buggetYear: this.buggetYear }
+      });
+    }, errRes => {
+      var message = errRes.json();
+      this.messageBarService.errorModal(message.messageTh);
+
+    });
+  }
+
   clearData() {
     this.showData = false;
+  }
+
+  changeBuggetYear = event => {
+
+    console.log(event)
+
   }
 
   popupEditData() {

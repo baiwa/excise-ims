@@ -27,31 +27,63 @@ public class RiskAssRiskWsHdr extends BaseEntity{
 	@Column(name = "RISK_HDR_NAME")
 	private String riskHdrName;
 	
-	
 	@Column(name = "ACTIVE")
 	private String active;
 	
+	@Column(name = "RISK_HDR_PAPER_NAME")
+	private String riskHrdPaperName;
 	
+	@Column(name = "BUDGET_YEAR")
+	private String buggetYear;
 	
-	public String getRiskHdrName() {
-		return riskHdrName;
-	}
-	public void setRiskHdrName(String riskHdrName) {
-		this.riskHdrName = riskHdrName;
-	}
+	@Column(name = "USER_CHECK")
+	private String userCheck;
+
 	public Long getRiskHrdId() {
 		return riskHrdId;
 	}
+
 	public void setRiskHrdId(Long riskHrdId) {
 		this.riskHrdId = riskHrdId;
 	}
+
+	public String getRiskHdrName() {
+		return riskHdrName;
+	}
+
+	public void setRiskHdrName(String riskHdrName) {
+		this.riskHdrName = riskHdrName;
+	}
+
 	public String getActive() {
 		return active;
 	}
+
 	public void setActive(String active) {
 		this.active = active;
 	}
-	
-	
-	
+
+	public String getRiskHrdPaperName() {
+		return riskHrdPaperName;
+	}
+
+	public void setRiskHrdPaperName(String riskHrdPaperName) {
+		this.riskHrdPaperName = riskHrdPaperName;
+	}
+
+	public String getBuggetYear() {
+		return buggetYear;
+	}
+
+	public void setBuggetYear(String buggetYear) {
+		this.buggetYear = buggetYear;
+	}
+
+	public String getUserCheck() {
+		return userCheck;
+	}
+
+	public void setUserCheck(String userCheck) {
+		this.userCheck = userCheck;
+	}
 }

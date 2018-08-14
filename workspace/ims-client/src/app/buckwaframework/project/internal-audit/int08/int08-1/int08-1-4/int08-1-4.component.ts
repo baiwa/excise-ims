@@ -17,6 +17,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
 
   riskHdrName: any;
   datatable: any;
+  buggetYear: any;
 
   constructor(private router: Router,
     private ajax: AjaxService,
@@ -36,7 +37,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
     console.log(this.riskHdrName);
     const URL = "ia/int08/addRiskAssRiskWsHdr";
 
-    this.ajax.post(URL, { riskHdrName: this.riskHdrName, active: 'Y' }, res => {
+    this.ajax.post(URL, { riskHdrName: this.riskHdrName, buggetYear: this.buggetYear, active: 'Y' }, res => {
       var message = res.json();
       this.messageBarService.successModal(message.messageTh, "สำเร็จ");
       this.riskHdrName = "";
@@ -75,6 +76,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
           className: "center"
         },
         { data: "riskHdrName" },
+        { data: "buggetYear" },
         { data: "createdBy" },
         { data: "createdDate" },
         { data: "active" },
@@ -93,7 +95,9 @@ export class Int0814Component implements OnInit, AfterViewInit {
         $("td > .dtl", row).bind("click", () => {
           console.log("dtl");
           console.log(data.riskHrdId);
-
+          this.router.navigate(["/int08/1/5"], {
+            queryParams: { id: data.riskHrdId }
+          });
 
 
         })
