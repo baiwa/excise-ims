@@ -8,6 +8,9 @@ import { ParameterGroupService } from "./parameterGroup.service";
 import { ParameterInfoService } from "./parameterInfo.service";
 import { TranslateService } from "./translate.service";
 import { TravelService } from "./travel.service";
+import { CanDeactivateGuard } from "./deactivate.service";
+import { DialogService } from "./dialog.service";
+import { IaService } from "./ia.service";
 
 export {
   MessageBarService,
@@ -19,5 +22,8 @@ export {
   ParameterGroupService,
   ParameterInfoService,
   TranslateService,
-  TravelService
+  TravelService,
+  CanDeactivateGuard,
+  DialogService,
+  IaService
 };

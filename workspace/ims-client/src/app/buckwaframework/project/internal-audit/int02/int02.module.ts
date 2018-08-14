@@ -16,10 +16,11 @@ import { Int02M51Component } from "./int02-m5/int02-m5-1/int02-m5-1.component";
 import { Int02M511Component } from "./int02-m5/int02-m5-1/int02-m5-1-1/int02-m5-1-1.component";
 import { Int02M52Component } from "./int02-m5/int02-m5-2/int02-m5-2.component";
 import { Int02M521Component } from "./int02-m5/int02-m5-2/int02-m5-2-1/int02-m5-2-1.component";
+import { CanDeactivateGuard } from "../../../common/services";
 
 const routes: Routes = [
   { path: "1", component: Int021Component },
-  { path: "2", component: Int022Component },
+  { path: "2", component: Int022Component, canDeactivate: [CanDeactivateGuard] },
   { path: "3", component: Int023Component },
   { path: "m2", component: Int02M2Component },
   { path: "m3", component: Int02M3Component },

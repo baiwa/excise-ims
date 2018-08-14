@@ -22,7 +22,8 @@ export class AjaxService {
     }
     let httpHeader = AjaxService.JSON_HEADER;
     if (header) {
-      httpHeader = AjaxService.FORM_HEADER;
+      httpHeader = header;
+      // httpHeader = AjaxService.FORM_HEADER;
     }
     let errorFn = this.handleError;
     if (error) {
@@ -71,7 +72,8 @@ export class AjaxService {
     }
     let httpHeader = AjaxService.JSON_HEADER;
     if (header) {
-      httpHeader = AjaxService.FORM_HEADER;
+      httpHeader = header;
+      // httpHeader = AjaxService.FORM_HEADER;
     }
     let errorFn = this.handleError;
     if (error) {

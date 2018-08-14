@@ -3,6 +3,7 @@ import { numberWithCommas, thaiNumber } from "./number";
 import { Prices } from "./travel";
 import { ThaiNumberToText, ArabicNumberToText, CheckNumber, ThaiNumber } from "./thaibath";
 import { DecimalFormat } from "./decimalformat";
+import { toFormData } from "./formdata";
 
 export {
   // DatePicker
@@ -21,5 +22,7 @@ export {
   ArabicNumberToText,
   CheckNumber,
   // DecimalFormat
-  DecimalFormat
+  DecimalFormat,
+  // FormData
+  toFormData
 };

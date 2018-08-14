@@ -1,4 +1,4 @@
-import { ThaiNumber } from ".";
+import * as moment from "moment";
 
 export var TextDateTH = {
   days: ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"],
@@ -53,53 +53,6 @@ export var formatter = (what: string = "") => {
           return digit(h) + ':' + digit(m); // + ':' + digit(s);
         }
       };
-    case "ว":
-      return {
-        date: function (date, settings) {
-          if (!date) return "";
-          let day = date.getDate();
-          return digit(day);
-        }
-      };
-    case "ด":
-      return {
-        date: function (date, settings) {
-          if (!date) return "";
-          let month = date.getMonth();
-          return TextDateTH.months[month];
-        }
-      };
-    case "ป":
-      return {
-        cell: function (cell, date, cellOptions) {
-          let year = date.getFullYear() + 543;
-          cell[0].innerHTML = year;
-        },
-        header: function (date, mode, settings) {
-          //return a string to show on the header for the given 'date' and 'mode'
-          if (!date) return "";
-          let year = date.getFullYear() + 543;
-          return year;
-        },
-        date: function (date, settings) {
-          if (!date) return "";
-          let year = date.getFullYear() + 543;
-          return year.toString();
-        }
-      };
-    case "ดป":
-      return {
-        header: function (date, mode, settings) {
-          //return a string to show on the header for the given 'date' and 'mode'
-          return date.getFullYear() + 543;
-        },
-        date: function (date, settings) {
-          if (!date) return "";
-          let month = date.getMonth();
-          let year = date.getFullYear() + 543;
-          return TextDateTH.months[month] + " " + year;
-        }
-      };
     case "วดป":
       return {
         header: function (date, mode, settings) {
@@ -128,11 +81,18 @@ export var formatter = (what: string = "") => {
           let h = date.getHours();
           let m = date.getMinutes();
           let s = date.getSeconds();
-          return digit(day) +"/" + digit(month) + "/" + year + " " + digit(h) + ":" + digit(m);
+          return digit(day) + "/" + digit(month) + "/" + year + " " + digit(h) + ":" + digit(m);
         },
       };
     case "day":
       return {
+        header: function (date, mode, settings) {
+          //return a string to show on the header for the given 'date' and 'mode'
+          let _date = toDateLocale(date);
+          let _year = _date[0].split("/")[2];
+          let _month = TextDateTH.months[parseInt(_date[0].split("/")[1]) - 1];
+          return `${_month} ${_year}`;
+        },
         date: function (date, settings) {
           if (!date) return "";
           let day = date.getDate();
@@ -141,43 +101,62 @@ export var formatter = (what: string = "") => {
       };
     case "month":
       return {
+        header: function (date, mode, settings) {
+          //return a string to show on the header for the given 'date' and 'mode'
+          let _date = toDateLocale(date);
+          let _year = _date[0].split("/")[2];
+          return _year;
+        },
         date: function (date, settings) {
-          if (!date) return "";
-          let month = date.getMonth() + 1;
-          return digit(month);
+          //return a string to show on the header for the given 'date' and 'mode'
+          let _date = toDateLocale(date);
+          let _month = TextDateTH.months[parseInt(_date[0].split("/")[1])];
+          return _month;
         }
       };
     case "year":
       return {
+        cell: function (cell, date, cellOptions) {
+          let _date = toDateLocale(date);
+          let _year = _date[0].split("/")[2];
+          cell[0].innerHTML = _year;
+        },
         header: function (date, mode, settings) {
           //return a string to show on the header for the given 'date' and 'mode'
-          return date.getFullYear() + 543;
-        },
-        cell: function (cell, date, cellOptions) {
-          //customize the calendar cell, cellOptions is:
-          //{ mode: string, adjacent: boolean, disabled: boolean, active: boolean, today: boolean }
-          cell[0].innerHTML = parseInt(cell[0].innerHTML) + 543;
+          let _date = toDateLocale(date);
+          let _year = _date[0].split("/")[2];
+          return _year;
         },
         date: function (date, settings) {
-          if (!date) return "";
-          let year = date.getFullYear() + 543;
-          return year;
+          //return a string to show on the header for the given 'date' and 'mode'
+          let _date = toDateLocale(date);
+          let _year = _date[0].split("/")[2];
+          return _year;
         }
       };
     case "day-month":
       return {
+        header: function (date, mode, settings) {
+          //return a string to show on the header for the given 'date' and 'mode'
+          let _date = toDateLocale(date);
+          let _year = _date[0].split("/")[2];
+          let _month = TextDateTH.months[parseInt(_date[0].split("/")[1]) - 1];
+          return `${_month} ${_year}`;
+        },
         date: function (date, settings) {
-          if (!date) return "";
-          let day = date.getDate();
-          let month = date.getMonth() + 1;
-          return digit(day) + "/" + digit(month);
+          let _date = toDateLocale(date);
+          let _month = TextDateTH.months[parseInt(_date[0].split("/")[1]) - 1];
+          let _day = parseInt(_date[0].split("/")[0]);
+          return `${_day} ${_month}`;
         }
       };
     case "month-year":
       return {
         header: function (date, mode, settings) {
           //return a string to show on the header for the given 'date' and 'mode'
-          return date.getFullYear() + 543;
+          let _date = toDateLocale(date);
+          let _year = _date[0].split("/")[2];
+          return _year;
         },
         date: function (date, settings) {
           if (!date) return "";
@@ -204,6 +183,11 @@ export var formatter = (what: string = "") => {
       };
   }
 };
+
+export var toDateLocale = (date) => {
+  const _date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  return _date.toLocaleString('th-TH', { timeZone: 'UTC' }).split(" ");
+}
 
 export var ThaiFormatter = date => {
   const options = { year: "numeric", month: "long", day: "numeric" };
