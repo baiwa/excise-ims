@@ -1,149 +1,166 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
 public class Int09213FormVo {
-	private String id;
-	private String prefix;
-	private String name;
-	private String last;
-	private String position;
-	private String type;
-	private String level;
-	private String approveDate;
-	private String withdrawalDate;
-	private String goFrom;
-	private String startGoDate;
-	private String endGoDate;
-	private String numberLive;
-	private String typeRoom;
-	private String note;
-	private String lovIdMaster;
+    private String id;
+    private String prefix;
+    private String name;
+    private String last;
+    private String position;
+    private String type;
+    private String level;
+    private String appoveDateData;
+    private String withdrawDateData;
+    private String goFrom;
+    private String food;
+    private String startGoDateData;
+    private String endGoDateData;
+    private String typeWithdrawal;
+    private String numberLive;
+    private String typeRoom;
+    private String note;
+    private String lovIdMaster;
 
-	public String getLovIdMaster() {
-		return lovIdMaster;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setLovIdMaster(String lovIdMaster) {
-		this.lovIdMaster = lovIdMaster;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getPosition() {
-		return position;
-	}
+    public String getPrefix() {
+        return prefix;
+    }
 
-	public void setPosition(String position) {
-		this.position = position;
-	}
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getPrefix() {
-		return prefix;
-	}
+    public String getLast() {
+        return last;
+    }
 
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
-	}
+    public void setLast(String last) {
+        this.last = last;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getPosition() {
+        return position;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setPosition(String position) {
+        this.position = position;
+    }
 
-	public String getLast() {
-		return last;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setLast(String last) {
-		this.last = last;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getLevel() {
+        return level;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setLevel(String level) {
+        this.level = level;
+    }
 
-	public String getLevel() {
-		return level;
-	}
+    public String getAppoveDateData() {
+        return appoveDateData;
+    }
 
-	public void setLevel(String level) {
-		this.level = level;
-	}
+    public void setAppoveDateData(String appoveDateData) {
+        this.appoveDateData = appoveDateData;
+    }
 
-	public String getApproveDate() {
-		return approveDate;
-	}
+    public String getWithdrawDateData() {
+        return withdrawDateData;
+    }
 
-	public void setApproveDate(String approveDate) {
-		this.approveDate = approveDate;
-	}
+    public void setWithdrawDateData(String withdrawDateData) {
+        this.withdrawDateData = withdrawDateData;
+    }
 
-	public String getWithdrawalDate() {
-		return withdrawalDate;
-	}
+    public String getGoFrom() {
+        return goFrom;
+    }
 
-	public void setWithdrawalDate(String withdrawalDate) {
-		this.withdrawalDate = withdrawalDate;
-	}
+    public void setGoFrom(String goFrom) {
+        this.goFrom = goFrom;
+    }
 
-	public String getGoFrom() {
-		return goFrom;
-	}
+    public String getFood() {
+        return food;
+    }
 
-	public void setGoFrom(String goFrom) {
-		this.goFrom = goFrom;
-	}
+    public void setFood(String food) {
+        this.food = food;
+    }
 
-	public String getStartGoDate() {
-		return startGoDate;
-	}
+    public String getStartGoDateData() {
+        return startGoDateData;
+    }
 
-	public void setStartGoDate(String startGoDate) {
-		this.startGoDate = startGoDate;
-	}
+    public void setStartGoDateData(String startGoDateData) {
+        this.startGoDateData = startGoDateData;
+    }
 
-	public String getEndGoDate() {
-		return endGoDate;
-	}
+    public String getEndGoDateData() {
+        return endGoDateData;
+    }
 
-	public void setEndGoDate(String endGoDate) {
-		this.endGoDate = endGoDate;
-	}
+    public void setEndGoDateData(String endGoDateData) {
+        this.endGoDateData = endGoDateData;
+    }
 
-	public String getNumberLive() {
-		return numberLive;
-	}
+    public String getTypeWithdrawal() {
+        return typeWithdrawal;
+    }
 
-	public void setNumberLive(String numberLive) {
-		this.numberLive = numberLive;
-	}
+    public void setTypeWithdrawal(String typeWithdrawal) {
+        this.typeWithdrawal = typeWithdrawal;
+    }
 
-	public String getTypeRoom() {
-		return typeRoom;
-	}
+    public String getNumberLive() {
+        return numberLive;
+    }
 
-	public void setTypeRoom(String typeRoom) {
-		this.typeRoom = typeRoom;
-	}
+    public void setNumberLive(String numberLive) {
+        this.numberLive = numberLive;
+    }
 
-	public String getNote() {
-		return note;
-	}
+    public String getTypeRoom() {
+        return typeRoom;
+    }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    public void setTypeRoom(String typeRoom) {
+        this.typeRoom = typeRoom;
+    }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getLovIdMaster() {
+        return lovIdMaster;
+    }
+
+    public void setLovIdMaster(String lovIdMaster) {
+        this.lovIdMaster = lovIdMaster;
+    }
 }

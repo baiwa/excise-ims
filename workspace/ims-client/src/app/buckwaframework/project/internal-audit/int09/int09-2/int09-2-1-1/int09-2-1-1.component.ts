@@ -54,6 +54,11 @@ export class Int09211Component implements OnInit {
       this.message.alert("ไม่มีข้อมูล")
       return false
     }
+
+    if (!$('input[type="checkbox"]').is(':checked')) {
+      this.message.alert("กรุณาเลือกรายการ")
+      return false
+  }
     this.message.comfirm((res) => {
       if(res){
         console.log("top");

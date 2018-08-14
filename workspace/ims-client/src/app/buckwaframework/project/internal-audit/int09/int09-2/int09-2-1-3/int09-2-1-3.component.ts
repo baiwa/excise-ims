@@ -3,6 +3,7 @@ import { Headers } from '@angular/http';
 import { ExciseService } from './../../../../../common/services/excise.service';
 import { TextDateTH, formatter } from './../../../../../common/helper/datepicker';
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 
 declare var jQuery: any;
 declare var $: any;
@@ -17,45 +18,45 @@ export class Int09213Component implements OnInit {
   allowanceCost;
   rentDate;
   rentCost;
-  travelCost; 
+  travelCost;
   hesderTxt;
   hideA: boolean = false;
-  typeDropdown : any;
-  levelDropdown : any;
-  dataDropdown : any;
-  
+  typeDropdown: any;
+  levelDropdown: any;
+  dataDropdown: any;
 
-  constructor( 
-    private exciseService:ExciseService,
-    private ajax:AjaxService
-  ) { 
+
+  constructor(
+    private exciseService: ExciseService,
+    private ajax: AjaxService
+  ) {
     this.allowanceDate = 0;
     this.allowanceCost = 0;
     this.rentDate = 0;
     this.rentCost = 0;
     this.travelCost = 0;
-    this.hesderTxt={
+    this.hesderTxt = {
       startDateInput: "",
-      endDateInput : "",
-      sector : "",
-      area : "",
-      branch : "",
-      department : ""
+      endDateInput: "",
+      sector: "",
+      area: "",
+      branch: "",
+      department: ""
     };
   }
 
-  typeRoom = function() {
-  var id = $("#typeWithdrawal").val();
-   if( id==0 || id==2 || id==3 ){
-    $("#typeRoomLabel").show();
-    $("#typeRoomValue").show(function(){
-      $(".ui.dropdown").dropdown();
-    });
-   }else{
-    $("#typeRoomLabel").hide();
-    $("#typeRoomValue").hide();
-   }
-   
+  typeRoom = function () {
+    var id = $("#typeWithdrawal").val();
+    if (id == 0 || id == 2 || id == 3) {
+      $("#typeRoomLabel").show();
+      $("#typeRoomValue").show(function () {
+        $(".ui.dropdown").dropdown();
+      });
+    } else {
+      $("#typeRoomLabel").hide();
+      $("#typeRoomValue").hide();
+    }
+
   }
 
   calenda = function () {
@@ -75,60 +76,60 @@ export class Int09213Component implements OnInit {
       maxDate: new Date(),
       type: "datetime",
       text: TextDateTH,
-      formatter : formatter("วดปเวลา")
+      formatter: formatter("วดปเวลา")
     });
     $("#endGoDate").calendar({
       maxDate: new Date(),
       type: "datetime",
-      formatter : formatter("วดปเวลา")
+      formatter: formatter("วดปเวลา")
     });
   }
-  clickCheckAll = event=>{
+  clickCheckAll = event => {
     if (event.target.checked) {
-      var node =  $('#tableData').DataTable().rows().nodes();
-       $.each(node, function (index, value) {
-        $(this).find('input').prop('checked',true);
-       });
-    }else{
-      var node =  $('#tableData').DataTable().rows().nodes();
-       $.each(node, function (index, value) {
-        $(this).find('input').prop('checked',false); 
-       });
+      var node = $('#tableData').DataTable().rows().nodes();
+      $.each(node, function (index, value) {
+        $(this).find('input').prop('checked', true);
+      });
+    } else {
+      var node = $('#tableData').DataTable().rows().nodes();
+      $.each(node, function (index, value) {
+        $(this).find('input').prop('checked', false);
+      });
     }
   }
 
-  typeDropdownList =() =>{
+  typeDropdownList = () => {
 
     this.dataDropdown = {
-      lovIdMaster : "305"
+      lovIdMaster: "305"
     }
-    const URL =  "ia/int09213/listDropdown";
-  
-     this.ajax.post(URL, this.dataDropdown, res => {   
-       this.typeDropdown = res.json();
+    const URL = "ia/int09213/listDropdown";
+
+    this.ajax.post(URL, this.dataDropdown, res => {
+      this.typeDropdown = res.json();
     });
   }
   typeDropdownOnChange = event => {
 
     let id = $("#type").val();
     this.dataDropdown = {
-      lovIdMaster : id
+      lovIdMaster: id
     }
-     const URL =  "ia/int09213/listDropdown";
-  
-     this.ajax.post(URL, this.dataDropdown, res => {     
-       console.log(res.json());
-       this.levelDropdown = res.json();
+    const URL = "ia/int09213/listDropdown";
+
+    this.ajax.post(URL, this.dataDropdown, res => {
+      console.log(res.json());
+      this.levelDropdown = res.json();
     });
 
   }
 
-  setSession = function(){
+  setSession = function () {
     $.ajax({
-      url: "/ims-webapp/api/ia/int09213/setSession", 
+      url: "/ims-webapp/api/ia/int09213/setSession",
       contentType: "application/json",
       type: "GET",
-       data: function (d) {
+      data: function (d) {
         return JSON.stringify($.extend({}, d, {
         }));
       },
@@ -137,32 +138,32 @@ export class Int09213Component implements OnInit {
       }
     });
   }
-  dataTable = function(){
+  dataTable = function () {
     var table = $('#tableData').DataTable({
       "serverSide": false,
       "searching": false,
       "ordering": false,
       "processing": true,
-      "scrollX": true,      
-      "ajax" : {
-        "url" : '/ims-webapp/api/ia/int09213/list',
+      "scrollX": true,
+      "ajax": {
+        "url": '/ims-webapp/api/ia/int09213/list',
         "contentType": "application/json",
-        "type" : "GET",
+        "type": "GET",
       },
-          
+
       "columns": [
         {
           "data": "workSheetDetailId",
-           "render": function (data, type, row, meta) {
+          "render": function (data, type, row, meta) {
             return '<input type="checkbox">';
           },
-          "className": "ui center aligned" 
-        },{
+          "className": "ui center aligned"
+        }, {
           "data": "workSheetDetailId",
-           "render": function (data, type, row, meta) {
+          "render": function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           },
-          "className": "ui center aligned" 
+          "className": "ui center aligned"
         }, {
           "data": "name"
         }, {
@@ -171,33 +172,33 @@ export class Int09213Component implements OnInit {
         }, {
           "data": "allowanceDate",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "allowanceCost",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "rentDate",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "rentCost",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "travelCost",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "otherCost",
           "className": "ui center aligned"
         },
         {
           "data": "sumCost",
           "clasName": "ui center aligned"
-        },{
+        }, {
           "data": "note",
           "className": "ui center aligned"
         }, {
           "data": "note",
-          "render" : function(data,type,row){
+          "render": function (data, type, row) {
             var btn = '<button type="button" class="ui yellow button btn-edit">แก้ไข</button>';
-              return btn;
+            return btn;
           },
           "className": "ui center aligned"
         }
@@ -215,20 +216,20 @@ export class Int09213Component implements OnInit {
         $(row)[0].childNodes[2].innerHTML = this.allowanceCost;
         $(row)[0].childNodes[3].innerHTML = this.rentDate;
         $(row)[0].childNodes[4].innerHTML = this.rentCost;
-        $(row)[0].childNodes[5].innerHTML = this.travelCost;        
+        $(row)[0].childNodes[5].innerHTML = this.travelCost;
       },
     });
 
     //button edit
-     table.on('click', 'tbody tr button.btn-edit', function () {
-			var closestRow = $(this).closest('tr');
-      var data = table.row(closestRow).data();      
+    table.on('click', 'tbody tr button.btn-edit', function () {
+      var closestRow = $(this).closest('tr');
+      var data = table.row(closestRow).data();
       console.log(data);
 
       //set date on form
-      $("#idEdit").val(data.workSheetDetailId);      
+      $("#idEdit").val(data.workSheetDetailId);
       $("#prefix").val(data.workSheetDetailId);
-      $("#name").val(data.name );
+      $("#name").val(data.name);
       $("#last").val(data.lastName);
       $("#position").val(data.position);
       $("#type").val(data.category);
@@ -245,12 +246,70 @@ export class Int09213Component implements OnInit {
       $("#note").val(data.workSheetDetailId);
 
 
-     
-    }); 
-  
+
+    });
+
+  }
+
+  onSubmit = (e) => {
+    //not reload page
+    e.preventDefault();
+
+    //validate form
+    let prefix = e.target.prefix.value
+    if (prefix == "1") prefix = "นาย";
+    if (prefix == "2") prefix = "นางสาว";
+    if (prefix == "3") prefix = "นาง";
+
+
+
+    //json data
+    let data = {
+      prefix: prefix,
+      name: e.target.name.value,
+      last: e.target.last.value,
+      position: e.target.position.value,
+      type: e.target.type.value,
+      level: e.target.level.value,
+      appoveDateData: e.target.appoveDateData.value,
+      withdrawDateData: e.target.withdrawDateData.value,
+      goFrom: e.target.goFrom.value,
+      food: e.target.food.value,
+      startGoDateData: e.target.startGoDateData.value,
+      endGoDateData: e.target.endGoDateData.value,
+      numberLive: e.target.numberLive.value,
+      typeWithdrawal: e.target.typeWithdrawal.value,
+      typeRoom: e.target.typeRoom.value,
+      note: e.target.note.value
+    }
+
+    const URL = "ia/int09213/addData";
+    this.ajax.post(URL, JSON.stringify(data), res => {
+      console.log(res.json());
+    });
+
+
+  }
+
+  momentDiff = (start,end) => {
+
+    console.log("Start Date : ",start);
+    // var a = moment({year:2018, month: 0, day: 29, hour: 12, minute : 30, second:0});
+    // var b = moment({year:2018, month: 0, day: 29, hour: 10, minute : 25, second:0});
+   // let locale = new Date('14/07/2018');
+   // console.log("locale : ",locale);
+    //locale.locale('th');
+    let a = moment(new Date(), "DD/MM/YYYY HH:mm");
+    let b = moment("14/08/2018 15:00", "DD/MM/YYYY HH:mm");
+    // console.log("A : ",a);
+    //console.log("B : ",locale);
+
+    console.log("Diff",a.diff(b, 'hours',true));
   }
 
   ngOnInit() {
+
+   this.momentDiff(new Date(),new Date());
     this.setSession();
     this.hesderTxt = this.exciseService.getData() != undefined && this.exciseService.getData();
   }
@@ -262,7 +321,7 @@ export class Int09213Component implements OnInit {
     this.dataTable();
     $('.ui.dropdown').dropdown();
     this.calenda();
-    
+
   }
 
 }

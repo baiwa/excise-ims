@@ -35,7 +35,8 @@
             "../node_modules/semantic-ui/dist/components/dropdown.min.js",
             "../node_modules/datatables.net/js/jquery.dataTables.js",
             "../node_modules/datatables.net-se/js/dataTables.semanticui.js",
-            "../node_modules/semantic-ui-calendar/dist/calendar.js"
+            "../node_modules/semantic-ui-calendar/dist/calendar.js",
+            "../node_modules/moment/min/moment.min.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {

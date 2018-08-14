@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +22,7 @@ import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int09213FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int09213Vo;
-import th.co.baiwa.excise.ia.service.Int09213Service;
+import th.co.baiwa.excise.ia.service.IaTravelCostWorkSheetDetailService;
 
 @Controller
 @RequestMapping("api/ia/int09213")
@@ -32,7 +31,7 @@ public class Int09213Controller {
 	private static Logger logger = LoggerFactory.getLogger(Int09213Controller.class);
 	
 	@Autowired
-	private Int09213Service int09213Service;
+	private IaTravelCostWorkSheetDetailService iaTravelCostWorkSheetDetailService;
 	
 	
 	@GetMapping("/list")
@@ -42,7 +41,7 @@ public class Int09213Controller {
 		try {
 			@SuppressWarnings("unchecked")
 			List<Int09213Vo> dataTableSession = (List<Int09213Vo>) httpServletRequest.getSession().getAttribute(REPORT.TABLE_INT09213);
-			 list = int09213Service.findAll(dataTableSession);
+			 list = iaTravelCostWorkSheetDetailService.findAll(dataTableSession);
 			 logger.info("Data {} row",list.getData().size());
 		} catch (Exception e) {
 			logger.error("Error ! ==> Int0911Controller method findAll");
@@ -66,18 +65,18 @@ public class Int09213Controller {
 	
 	@PostMapping("/addData")
 	@ResponseBody
-	public String addData(@RequestBody Int09213FormVo formVo,HttpServletRequest httpServletRequest) {
+	public Int09213FormVo addData(@RequestBody Int09213FormVo formVo,HttpServletRequest httpServletRequest) {
 		
 		@SuppressWarnings("unchecked")
 		List<Int09213Vo> dataTableSession = (List<Int09213Vo>) httpServletRequest.getSession().getAttribute(REPORT.TABLE_INT09213);
-		return "success";
+		return formVo;
 		
 	}
 	
 	@PostMapping("/listDropdown")
 	@ResponseBody
 	public List<LabelValueBean> dropdownList(@RequestBody Int09213FormVo formVo){
-		return int09213Service.dropdownListType(formVo);
+		return iaTravelCostWorkSheetDetailService.dropdownListType(formVo);
 	}
 
 }

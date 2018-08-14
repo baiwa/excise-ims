@@ -1,9 +1,9 @@
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
     <span>รายงานประมาณการค่าใช้จ่ายในการเดินทาง</span>
   </div>
-  <div class="ui form center aligned" id="int09-1"  ngNativeValidate>
+  <div class="ui form center aligned" >
     <div class="ui attached  segment">
-        <form ngNativeValidate>
+        <form ngNativeValidate (submit)="onSubmit($event)">
             <div class="ui container center aligned ">
                 <p><b>ปะมาณการค่าใช้จ่ายในการเดินทางไปราชการ</b></p>
                 <p><b>หน่วยงาน กลุ่มตรวจสอบภายใน</b></p>
@@ -22,15 +22,15 @@
         <div class="ui grid">
             <div class="three wide column ui right aligned"><label>คำนำหน้าชื่อ</label></div>
             <div class="three wide column">
-                <select class="ui dropdown" id="prefix" name="prefix">
+                <select class="ui dropdown" id="prefix">
                     <option value="">เลือกคำนำหน้า</option>
-                    <option value="0">นาย</option>
-                    <option value="1">นางสาว</option>
-                    <option value="2">นาง</option>
+                    <option value="1">นาย</option>
+                    <option value="2">นางสาว</option>
+                    <option value="3">นาง</option>
                 </select>
             </div>
             <div class="two wide column right aligned"><label>ชื่อ</label></div>
-            <div class="three wide column"><input id="name" type="text" required></div>
+            <div class="three wide column"><input id="name" type="text" ></div>
             <div class="one wide column right aligned"><label>นามสกุล</label></div>
             <div class="three wide column"><input id="last" type="text"></div>
         </div>
@@ -39,14 +39,14 @@
             <div class="three wide column"><input type="text" id="position"></div>
             <div class="two wide column right aligned"><label>ประเภท</label></div>
             <div class="three wide column">
-                    <select class="ui dropdown" id="type" name="type" (change)="typeDropdownOnChange($evnet)">
+                    <select class="ui dropdown"  id="type" (change)="typeDropdownOnChange($evnet)">
                         <option value="">เลือกประเภท</option>
                         <option *ngFor="let data of typeDropdown" value="{{data.value}}">{{data.label}}</option>
                     </select>             
                 </div>
             <div class="one wide column right aligned"><label>ระดับ</label></div>
             <div class="three wide column">
-                    <select class="ui dropdown" id="level" name="level">
+                    <select class="ui dropdown"  id="level">
                         <option value="">เลือกระดับ</option>
                         <option *ngFor="let data of levelDropdown" value="{{data.value}}">{{data.label}}</option> 
                     </select>           
@@ -58,7 +58,7 @@
                 <div class="ui calendar" id="appoveDate">
                     <div class="ui input left icon">
                         <i class="time icon"></i>
-                        <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                        <input type="text"  id="appoveDateData" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                 <div class="ui calendar" id="withdrawDate">
                     <div class="ui input left icon">
                         <i class="time icon"></i>
-                        <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                        <input type="text" name="withdrawDateData" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
                     </div>
                 </div>
             </div>
@@ -75,21 +75,21 @@
         <div class="ui grid">
             <div class="three wide column ui right aligned"><label>เดินทางจาก</label></div>
             <div class="three wide column ui right aligned">
-            <select class="ui dropdown" id="goFrom" name="goFrom">
+            <select class="ui dropdown" id="goFrom" >
                 <option value="">เดินทางจาก</option>
-                <option value="0">บ้าน - สนง.</option>
-                <option value="1">สนง. - บ้าน</option>
-                <option value="2">สนง. - สนง.</option>
+                <option value="1">บ้าน - สนง.</option>
+                <option value="2">สนง. - บ้าน</option>
+                <option value="3">สนง. - สนง.</option>
             </select>
             </div>
             <div class="two wide column ui right aligned"><label>กรณีฝึกอบรม</label></div>
             <div class="three wide column ui right aligned">
-            <select class="ui dropdown"  id="food" name="food">
+            <select class="ui dropdown"  id="food">
                 <option value="">เลือกกรณีฝึกอบรม</option>
-                <option value="0">ไม่เลี้ยงอาหาร</option>
-                <option value="1">เลี้ยงอาหาร 1 มื้อ </option>
-                <option value="2">เลี้ยงอาหาร 2 มื้อ</option>
-                <option value="3">เลี้ยงอาหาร 3 มื้อ</option>
+                <option value="1">ไม่เลี้ยงอาหาร</option>
+                <option value="2">เลี้ยงอาหาร 1 มื้อ </option>
+                <option value="3">เลี้ยงอาหาร 2 มื้อ</option>
+                <option value="4">เลี้ยงอาหาร 3 มื้อ</option>
             </select>
             </div>
         </div>
@@ -99,7 +99,7 @@
                 <div class="ui calendar" id="startGoDate">
                     <div class="ui input left icon">
                         <i class="time icon"></i>
-                        <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                        <input type="text" id="startGoDateData" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                 <div class="ui calendar" id="endGoDate">
                     <div class="ui input left icon">
                         <i class="time icon"></i>
-                        <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                        <input type="text" id="endGoDateData" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
                     </div>
                 </div>
             </div>
@@ -118,8 +118,8 @@
             <div class="two wide column"><input id="numberLive" type="text"></div>
             <div class="two wide column right aligned"><label>ประเภทการเบิก</label></div>
             <div class="two wide column">
-                <select class="ui dropdown"  id="typeWithdrawal" name="typeWithdrawal" (change)="typeRoom()">
-                    <option value="">ปกติ</option>
+                <select class="ui dropdown"   id="typeWithdrawal" (change)="typeRoom()">                    
+                    <option value="">เลือก </option>
                     <option value="0">ปกติ </option>
                     <option value="1">เหมาจ่าย</option>
                     <option value="2">อบรมประเภท ก</option>
@@ -130,7 +130,7 @@
             <div id="typeRoomLabel"   class="three wide column right aligned"><label>ประเภทห้องพัก</label></div>
             <div id="typeRoomValue"  class="three wide column">            
                     <select class="ui dropdown"  id="typeRoom" >
-                        <option value="">ห้องเดี่ยว</option>
+                        <option value="0">ห้องเดี่ยว</option>
                         <option value="1">ห้องเดี่ยว </option>
                         <option value="2">ห้องคู่</option>
                     </select>
