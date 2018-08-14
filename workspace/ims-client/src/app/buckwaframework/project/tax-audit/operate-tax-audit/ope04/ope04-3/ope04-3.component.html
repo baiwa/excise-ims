@@ -99,37 +99,22 @@
         </div>
       </div>
 
-      <table class="ui small celled table">
-        <thead>
-          <tr style="text-align: center;">
-            <th>ลำดับ</th>
-            <th>รายการ</th>
-            <th>ยอดคงเหลือตามบัญชี (ภส 07-01)</th>
-            <th>ยอดคงเหลือจากการตรวจนับ</th>
-            <th>ผลต่าง</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>C RS CVT ZB7</td>
-            <td>2563</td>
-            <td>2311</td>
-            <td>
-              <span class="ui red horizontal label right aligned" style="float: right;">-252</span>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>C 1.8S CVT ZA5</td>
-            <td>221</td>
-            <td>221</td>
-            <td>
-              <span class="ui green horizontal label right aligned" style="float: right;">0</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div style="overflow-x: scroll;">
+        <table class="ui small celled table" style="width: 120%;" id="showDt">
+            <thead>
+                <tr style="text-align: center;">
+                    <th>ลำดับ</th>
+                    <th>รายการ</th>
+                    <th>ใบเบิกวัตถุดิบ</th>
+                    <th>บัญชีประจำวัน</th>
+                    <th>งบเดือน</th>
+                    <th>{{row[0].column6}}</th>
+                    <th>ค่าสูงสุดของข้อมูล</th>
+                    <th>ผลต่างของคู่ข้อมูล</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 
       <div class="ui center aligned grid">
         <div class="six wide column">

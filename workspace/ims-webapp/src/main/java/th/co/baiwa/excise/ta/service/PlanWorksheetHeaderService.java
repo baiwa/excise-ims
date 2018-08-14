@@ -57,6 +57,8 @@ public class PlanWorksheetHeaderService {
 			String productType) {
 
 		logger.info("PlanWorksheetHeaderService.insertPlanWorksheetHeaderService");
+		List<PlanWorksheetDetail> planWorksheetDetailList = new ArrayList<PlanWorksheetDetail>();
+		List<PlanWorksheetHeader> planWorksheetHeaderList = new ArrayList<PlanWorksheetHeader>();
 		List<String> monthNameList = exciseTaxReceiveDao.queryMonthShotName(startBackDate, month);
 		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-01-"
 				+ planWorksheetHeaderDao.getAnalysNumber();
@@ -67,6 +69,7 @@ public class PlanWorksheetHeaderService {
 		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao
 				.queryByExciseRegistionNumber(productType, mockupVo.getCondition());
 		for (ExciseRegistartionNumber exciseRegistartionNumber : regisNumberList) {
+			logger.info("set PlanWorksheetHeader : "+ exciseRegistartionNumber.getExciseId());
 			planWorksheetHeader = new PlanWorksheetHeader();
 			planWorksheetHeader.setAnalysNumber(analysNumber);
 			planWorksheetHeader.setExciseId(exciseRegistartionNumber.getExciseId());
@@ -129,11 +132,10 @@ public class PlanWorksheetHeaderService {
 					percenttage = new BigDecimal(calAmount);
 					percenttage.setScale(2, RoundingMode.UP);
 				} catch (Exception e) {
-					e.printStackTrace();
 					percenttage = new BigDecimal(0);
 				}
 			}
-
+			logger.info("set PlanWorksheetDetail : "+ exciseRegistartionNumber.getExciseId());
 			planWorksheetHeader.setTotalMonth(new BigDecimal(countReciveMonth));
 			planWorksheetHeader.setPercentage(percenttage);
 			planWorksheetHeader.setFirstMonth(new BigDecimal(firstMonth));
@@ -141,10 +143,10 @@ public class PlanWorksheetHeaderService {
 			planWorksheetHeader.setFlag("N");
 			planWorksheetHeader.setCreatedBy(UserLoginUtils.getCurrentUsername());
 			planWorksheetHeader.setCreatedDate(saveDate);
-
-			planWorksheetHeaderDao.insertPlanWorksheetHeader(planWorksheetHeader);
+			
+			planWorksheetHeaderList.add(planWorksheetHeader);
 			PlanWorksheetDetail planWorksheetDetail = null;
-			List<PlanWorksheetDetail> planWorksheetDetailList = new ArrayList<PlanWorksheetDetail>();
+			
 			for (ExciseTaxReceive taxRecive : taxReciveList) {
 				planWorksheetDetail = new PlanWorksheetDetail();
 				planWorksheetDetail.setAnalysNumber(analysNumber);
@@ -158,9 +160,10 @@ public class PlanWorksheetHeaderService {
 				planWorksheetDetail.setAmount(new BigDecimal(amountDetail));
 				planWorksheetDetailList.add(planWorksheetDetail);
 			}
-			planWorksheetDetailDao.insertPlanWorksheetDetail(planWorksheetDetailList);
 
 		}
+		planWorksheetHeaderDao.insertPlanWorksheetHeader(planWorksheetHeaderList);
+		planWorksheetDetailDao.insertPlanWorksheetDetail(planWorksheetDetailList);
 		return analysNumber;
 	}
 

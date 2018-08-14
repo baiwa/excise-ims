@@ -69,13 +69,17 @@ public class PlanWorksheetHeaderDao {
 
 	}
 
-	public void insertPlanWorksheetHeader(PlanWorksheetHeader value) {
+	public void insertPlanWorksheetHeader(List<PlanWorksheetHeader> valueList) {
 		// inti SQL for insert to database
 		StringBuilder sql = new StringBuilder(
 				" INSERT INTO TA_PLAN_WORK_SHEET_HEADER (WORK_SHEET_HEADER_ID,ANALYS_NUMBER,EXCISE_ID,COMPANY_NAME,FACTORY_NAME,FACTORY_ADDRESS,EXCISE_OWNER_AREA,PRODUCT_TYPE,EXCISE_OWNER_AREA_1,TOTAL_AMOUNT,PERCENTAGE,TOTAL_MONTH,DECIDE_TYPE,FLAG,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE,FIRST_MONTH,LAST_MONTH,MONTH_DATE,FULL_MONTH)");
 		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
 		// for to set Object
-		jdbcTemplate.update(sql.toString(), planWorksheetHeaderToArrayObject(value));
+		List<Object[]> objArrayOfList = new ArrayList<Object[]>();
+		for (PlanWorksheetHeader value : valueList) {
+			objArrayOfList.add(planWorksheetHeaderToArrayObject(value));
+		}
+		jdbcTemplate.batchUpdate(sql.toString(),objArrayOfList );
 	}
 
 	public int updatePlanWorksheetHeaderFlag(String flag, String analysNum, String exciseId) {
