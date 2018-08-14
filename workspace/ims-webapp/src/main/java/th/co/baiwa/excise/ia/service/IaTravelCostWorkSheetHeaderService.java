@@ -35,6 +35,7 @@ public class IaTravelCostWorkSheetHeaderService {
 		DataTableAjax<Budget> dataTableAjax = new DataTableAjax<>();
 		
 		if ("TRUE".equalsIgnoreCase(formVo.getSearchFlag())) {
+			dataTableAjax.setDraw(formVo.getDraw() + 1);
 			dataTableAjax.setRecordsTotal(count);
 			dataTableAjax.setRecordsFiltered(count);
 			dataTableAjax.setData(list);

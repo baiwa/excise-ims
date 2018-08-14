@@ -3,154 +3,156 @@
   </div>
   <div class="ui form center aligned" id="int09-1"  ngNativeValidate>
     <div class="ui attached  segment">
-        <div class="ui container center aligned ">
-            <p><b>ปะมาณการค่าใช้จ่ายในการเดินทางไปราชการ</b></p>
-            <p><b>หน่วยงาน กลุ่มตรวจสอบภายใน</b></p>
-            <p><b>เดินทางไปราชการที่ สำนักงานสรรพสามิตพื้นที่เลย</b></p>
-            <p><b>ตั้งแต่วันที่ 17 มิถุนายน 2561 - 30 มิถุนายน 2561</b></p>
-            <p><b>{{hesderTxt.sector}}</b></p>
-            <p><b>{{hesderTxt.area}}</b></p>
-            <p><b>{{hesderTxt.branch}}</b></p>
-            <p><b>{{hesderTxt.department}}</b></p>
-            <p><b>{{hesderTxt.startDateInput}} - {{hesderTxt.endDateInput}}</b></p>
-            
-            
-        </div>
-        <br><br>
-        <input type="hidden" id="idEdit">
-      <div class="ui grid">
-          <div class="three wide column ui right aligned"><label>คำนำหน้าชื่อ</label></div>
-          <div class="three wide column">
-            <select class="ui dropdown" id="prefix" name="prefix">
-                <option value="">เลือกคำนำหน้า</option>
-                <option value="0">นาย</option>
-                <option value="1">นางสาว</option>
-                <option value="2">นาง</option>
-            </select>
-          </div>
-          <div class="two wide column right aligned"><label>ชื่อ</label></div>
-          <div class="three wide column"><input id="name" type="text"></div>
-          <div class="one wide column right aligned"><label>นามสกุล</label></div>
-          <div class="three wide column"><input id="last" type="text"></div>
-      </div>
-      <div class="ui grid">      
-          <div class="three wide column right aligned"><label>ตำแหน่ง</label></div>
-          <div class="three wide column"><input type="text" id="position"></div>
-          <div class="two wide column right aligned"><label>ประเภท</label></div>
-          <div class="three wide column">
-                <select class="ui dropdown" id="type" name="type" (change)="typeDropdownOnChange($evnet)">
-                    <option value="">เลือกประเภท</option>
-                    <option *ngFor="let data of typeDropdown" value="{{data.value}}">{{data.label}}</option>
-                </select>             
+        <form ngNativeValidate>
+            <div class="ui container center aligned ">
+                <p><b>ปะมาณการค่าใช้จ่ายในการเดินทางไปราชการ</b></p>
+                <p><b>หน่วยงาน กลุ่มตรวจสอบภายใน</b></p>
+                <p><b>เดินทางไปราชการที่ สำนักงานสรรพสามิตพื้นที่เลย</b></p>
+                <p><b>ตั้งแต่วันที่ 17 มิถุนายน 2561 - 30 มิถุนายน 2561</b></p>
+                <p><b>{{hesderTxt.sector}}</b></p>
+                <p><b>{{hesderTxt.area}}</b></p>
+                <p><b>{{hesderTxt.branch}}</b></p>
+                <p><b>{{hesderTxt.department}}</b></p>
+                <p><b>{{hesderTxt.startDateInput}} - {{hesderTxt.endDateInput}}</b></p>
+                
+                
             </div>
-          <div class="one wide column right aligned"><label>ระดับ</label></div>
-          <div class="three wide column">
-                <select class="ui dropdown" id="level" name="level">
-                    <option value="">เลือกระดับ</option>
-                    <option *ngFor="let data of levelDropdown" value="{{data.value}}">{{data.label}}</option> 
-                </select>           
-            </div>     
-      </div>      
-      <div class="ui grid">
-          <div class="three wide column ui right aligned"><label>วันขออนุญาต</label></div>
-          <div class="three wide column">
-              <div class="ui calendar" id="appoveDate">
-                  <div class="ui input left icon">
-                      <i class="time icon"></i>
-                      <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
-                  </div>
-              </div>
-          </div>
-          <div class="two wide column ui right aligned"><label>วันเขียนเบิก</label></div>
-          <div class="three wide column">
-              <div class="ui calendar" id="withdrawDate">
-                  <div class="ui input left icon">
-                      <i class="time icon"></i>
-                      <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="ui grid">
-          <div class="three wide column ui right aligned"><label>เดินทางจาก</label></div>
-          <div class="three wide column ui right aligned">
-          <select class="ui dropdown" id="goFrom" name="goFrom">
-              <option value="">เดินทางจาก</option>
-              <option value="0">บ้าน - สนง.</option>
-              <option value="1">สนง. - บ้าน</option>
-              <option value="2">สนง. - สนง.</option>
-          </select>
-        </div>
-        <div class="two wide column ui right aligned"><label>กรณีฝึกอบรม</label></div>
-          <div class="three wide column ui right aligned">
-          <select class="ui dropdown"  id="food" name="food">
-              <option value="">เลือกกรณีฝึกอบรม</option>
-              <option value="0">ไม่เลี้ยงอาหาร</option>
-              <option value="1">เลี้ยงอาหาร 1 มื้อ </option>
-              <option value="2">เลี้ยงอาหาร 2 มื้อ</option>
-              <option value="3">เลี้ยงอาหาร 3 มื้อ</option>
-          </select>
-        </div>
-      </div>
-      <div class="ui grid">
-          <div class="three wide column ui right aligned"><label>วัน เวลา ออกเดินทาง</label></div>
-          <div class="three wide column">
-              <div class="ui calendar" id="startGoDate">
-                  <div class="ui input left icon">
-                      <i class="time icon"></i>
-                      <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
-                  </div>
-              </div>
-          </div>
-          <div class="two wide column ui right aligned"><label>วัน เวลา กลับถึง</label></div>
-          <div class="three wide column">
-              <div class="ui calendar" id="endGoDate">
-                  <div class="ui input left icon">
-                      <i class="time icon"></i>
-                      <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="ui grid">
-          <div class="three wide column ui right aligned"><label>จำนวนวันเข้าพัก</label></div>
-          <div class="two wide column"><input id="numberLive" type="text"></div>
-          <div class="two wide column right aligned"><label>ประเภทการเบิก</label></div>
-          <div class="two wide column">
-            <select class="ui dropdown"  id="typeWithdrawal" name="typeWithdrawal" (change)="typeRoom()">
-                <option value="">ปกติ</option>
-                <option value="0">ปกติ </option>
-                <option value="1">เหมาจ่าย</option>
-                <option value="2">อบรมประเภท ก</option>
-                <option value="3">อบรมประเภท ข</option>
-            </select>
-            </div>
-     
-          <div id="typeRoomLabel"   class="three wide column right aligned"><label>ประเภทห้องพัก</label></div>
-          <div id="typeRoomValue"  class="three wide column">            
-                <select class="ui dropdown"  id="typeRoom" >
-                    <option value="">ห้องเดี่ยว</option>
-                    <option value="1">ห้องเดี่ยว </option>
-                    <option value="2">ห้องคู่</option>
+            <br><br>
+            <input type="hidden" id="idEdit">
+        <div class="ui grid">
+            <div class="three wide column ui right aligned"><label>คำนำหน้าชื่อ</label></div>
+            <div class="three wide column">
+                <select class="ui dropdown" id="prefix" name="prefix">
+                    <option value="">เลือกคำนำหน้า</option>
+                    <option value="0">นาย</option>
+                    <option value="1">นางสาว</option>
+                    <option value="2">นาง</option>
                 </select>
             </div>
-      </div>
-      <div class="ui grid">
-          <div class="three wide column right aligned"><label>หมายเหตุ</label></div>
-          <div class="ten wide column">
-          <div class="ui form " style="width: 100%">
-              <div class="field">                
-                <textarea id="note"></textarea>
-              </div>
+            <div class="two wide column right aligned"><label>ชื่อ</label></div>
+            <div class="three wide column"><input id="name" type="text" required></div>
+            <div class="one wide column right aligned"><label>นามสกุล</label></div>
+            <div class="three wide column"><input id="last" type="text"></div>
+        </div>
+        <div class="ui grid">      
+            <div class="three wide column right aligned"><label>ตำแหน่ง</label></div>
+            <div class="three wide column"><input type="text" id="position"></div>
+            <div class="two wide column right aligned"><label>ประเภท</label></div>
+            <div class="three wide column">
+                    <select class="ui dropdown" id="type" name="type" (change)="typeDropdownOnChange($evnet)">
+                        <option value="">เลือกประเภท</option>
+                        <option *ngFor="let data of typeDropdown" value="{{data.value}}">{{data.label}}</option>
+                    </select>             
+                </div>
+            <div class="one wide column right aligned"><label>ระดับ</label></div>
+            <div class="three wide column">
+                    <select class="ui dropdown" id="level" name="level">
+                        <option value="">เลือกระดับ</option>
+                        <option *ngFor="let data of levelDropdown" value="{{data.value}}">{{data.label}}</option> 
+                    </select>           
+                </div>     
+        </div>      
+        <div class="ui grid">
+            <div class="three wide column ui right aligned"><label>วันขออนุญาต</label></div>
+            <div class="three wide column">
+                <div class="ui calendar" id="appoveDate">
+                    <div class="ui input left icon">
+                        <i class="time icon"></i>
+                        <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="three wide column"></div>
-      </div>
-  
-      <div class="ui form center aligned grid">
-          <button class="ui  primary button" type="button" >บันทึก</button>
-      </div>  
-      <br>      
+            <div class="two wide column ui right aligned"><label>วันเขียนเบิก</label></div>
+            <div class="three wide column">
+                <div class="ui calendar" id="withdrawDate">
+                    <div class="ui input left icon">
+                        <i class="time icon"></i>
+                        <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui grid">
+            <div class="three wide column ui right aligned"><label>เดินทางจาก</label></div>
+            <div class="three wide column ui right aligned">
+            <select class="ui dropdown" id="goFrom" name="goFrom">
+                <option value="">เดินทางจาก</option>
+                <option value="0">บ้าน - สนง.</option>
+                <option value="1">สนง. - บ้าน</option>
+                <option value="2">สนง. - สนง.</option>
+            </select>
+            </div>
+            <div class="two wide column ui right aligned"><label>กรณีฝึกอบรม</label></div>
+            <div class="three wide column ui right aligned">
+            <select class="ui dropdown"  id="food" name="food">
+                <option value="">เลือกกรณีฝึกอบรม</option>
+                <option value="0">ไม่เลี้ยงอาหาร</option>
+                <option value="1">เลี้ยงอาหาร 1 มื้อ </option>
+                <option value="2">เลี้ยงอาหาร 2 มื้อ</option>
+                <option value="3">เลี้ยงอาหาร 3 มื้อ</option>
+            </select>
+            </div>
+        </div>
+        <div class="ui grid">
+            <div class="three wide column ui right aligned"><label>วัน เวลา ออกเดินทาง</label></div>
+            <div class="three wide column">
+                <div class="ui calendar" id="startGoDate">
+                    <div class="ui input left icon">
+                        <i class="time icon"></i>
+                        <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                    </div>
+                </div>
+            </div>
+            <div class="two wide column ui right aligned"><label>วัน เวลา กลับถึง</label></div>
+            <div class="three wide column">
+                <div class="ui calendar" id="endGoDate">
+                    <div class="ui input left icon">
+                        <i class="time icon"></i>
+                        <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui grid">
+            <div class="three wide column ui right aligned"><label>จำนวนวันเข้าพัก</label></div>
+            <div class="two wide column"><input id="numberLive" type="text"></div>
+            <div class="two wide column right aligned"><label>ประเภทการเบิก</label></div>
+            <div class="two wide column">
+                <select class="ui dropdown"  id="typeWithdrawal" name="typeWithdrawal" (change)="typeRoom()">
+                    <option value="">ปกติ</option>
+                    <option value="0">ปกติ </option>
+                    <option value="1">เหมาจ่าย</option>
+                    <option value="2">อบรมประเภท ก</option>
+                    <option value="3">อบรมประเภท ข</option>
+                </select>
+                </div>
+        
+            <div id="typeRoomLabel"   class="three wide column right aligned"><label>ประเภทห้องพัก</label></div>
+            <div id="typeRoomValue"  class="three wide column">            
+                    <select class="ui dropdown"  id="typeRoom" >
+                        <option value="">ห้องเดี่ยว</option>
+                        <option value="1">ห้องเดี่ยว </option>
+                        <option value="2">ห้องคู่</option>
+                    </select>
+                </div>
+        </div>
+        <div class="ui grid">
+            <div class="three wide column right aligned"><label>หมายเหตุ</label></div>
+            <div class="ten wide column">
+            <div class="ui form " style="width: 100%">
+                <div class="field">                
+                    <textarea id="note"></textarea>
+                </div>
+                </div>
+            </div>
+            <div class="three wide column"></div>
+        </div>
+    
+        <div class="ui form center aligned grid">
+            <button class="ui  primary button" type="submit" >บันทึก</button>
+        </div>  
+        <br> 
+    </form>     
     </div>        
   </div>
 

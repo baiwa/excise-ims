@@ -1,24 +1,25 @@
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
     <span>รายงานประมาณการค่าใช้จ่ายในการเดินทาง</span>
   </div>
-  <form (ngSubmit)="saveAndNext($event)">
-  <div class="ui form center aligned" id="int09-1"  ngNativeValidate >
+  <form (ngSubmit)="saveAndNext($event)" ngNativeValidate>
+  <div class="ui form center aligned" id="int09-1"   >
     <div class="ui attached  segment">
+        
         <div class="ui two column centered grid">
             <div class="two wide column"><label>สรรพสามิตภาค</label></div>
-            <div class="five wide column"><input type="text" id="sector" name="sector"></div>           
+            <div class="five wide column"><input type="text" id="sector" name="sector" required></div>           
         </div>
         <div class="ui two column centered grid">       
             <div class="two wide column"><label>สรรพสามิตพื้นที่</label></div>
-            <div class="five wide column"><input type="text" id="area" name="area"></div> 
+            <div class="five wide column"><input type="text" id="area" name="area" required></div> 
         </div>
         <div class="ui two column centered grid">       
             <div class="two wide column"><label>สรพพสามิตสาขา</label></div>
-            <div class="five wide column"><input type="text" id="branch" name="branch"></div>
+            <div class="five wide column"><input type="text" id="branch" name="branch" required></div>
         </div>
         <div class="ui two column centered grid">       
             <div class="two wide column"><label>หน่วยงานผู้ตรวจ</label></div>
-            <div class="five wide column"><input type="text" id="department" name="department"></div>
+            <div class="five wide column"><input type="text" id="department" name="department" required></div>
         </div>     
       <div class="ui grid">
           <div class="three wide column"></div>
@@ -27,7 +28,7 @@
             <div class="ui calendar" id="startDate">
               <div class="ui input left icon">
                   <i class="time icon"></i>
-                  <input type="text" id="startDateInput" name="startDateInput" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                  <input type="text" id="startDateInput" name="startDateInput" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true" required>
               </div>
             </div>
         </div>
@@ -36,7 +37,7 @@
               <div class="ui calendar" id="endDate">
                   <div class="ui input left icon">
                       <i class="time icon"></i>
-                      <input type="text"id="endDateInput"  name="endDateInput" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                      <input type="text"id="endDateInput"  name="endDateInput" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true" required>
                   </div>
               </div>
           </div>
@@ -47,7 +48,7 @@
       <div class="ui form center aligned grid">
           <button class="ui  primary button" type="submit" ><i class="file outline icon"></i> บันทึก</button>
       </div>  
-      <br>      
+      <br>    
     </div>
   </div>
 </form>

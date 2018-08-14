@@ -61,7 +61,9 @@ public class BudgetDao {
 			params.add(formVo.getDepartment());
 			
 		}
-        List<Budget> list = jdbcTemplate.query(sql.toString(), params.toArray(), budgetRowmapper);
+		
+		String sqlLimit = OracleUtils.limitForDataTable(sql.toString(), formVo.getStart(),formVo.getLength());
+        List<Budget> list = jdbcTemplate.query(sqlLimit, params.toArray(), budgetRowmapper);
         return list;
     }
 	

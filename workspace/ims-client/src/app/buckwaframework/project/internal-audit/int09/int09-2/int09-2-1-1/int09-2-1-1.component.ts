@@ -62,7 +62,7 @@ export class Int09211Component implements OnInit {
     },"ลบรายการ");
   }
 
-  deparmentDropdown = function(){
+  deparmentDropdown = () =>{
    
     $.ajax({
       url: "/ims-webapp/api/ia/int09211/departmentDropdown", 
@@ -90,7 +90,7 @@ export class Int09211Component implements OnInit {
 
   dataTable = () => {
     var table = $('#tableData').DataTable({
-      "serverSide": false,
+      "serverSide": true,
       "searching": false,
       "ordering": false,
       "processing": true,
