@@ -366,9 +366,13 @@ public class PlanWorksheetHeaderService {
 
 		List<AccMonth0407DTL> listData = planWorksheetHeaderDao.queryExciseIdFromAccDTL(exciseId, type,
 				endCalforUse.getTime(), backMonth);
-		AccMonth0407DTL database = listData.get(0);
+		
 		List<OPEDataTable> opeDataTableList = new ArrayList<OPEDataTable>();
 		OPEDataTable opeDataTable = new OPEDataTable();
+		
+		if(BeanUtils.isNotEmpty(listData)) {
+		AccMonth0407DTL database = listData.get(0);
+		
 		opeDataTable.setNo("1");
 		opeDataTable.setProduct(database.getProduct1());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve1());
@@ -403,6 +407,7 @@ public class PlanWorksheetHeaderService {
 		opeDataTable.setProduct(database.getProduct6());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve6());
 		opeDataTableList.add(opeDataTable);
+		}
 
 		return opeDataTableList;
 	}

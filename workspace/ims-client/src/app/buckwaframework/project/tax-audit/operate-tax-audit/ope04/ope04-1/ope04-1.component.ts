@@ -210,6 +210,9 @@ export class Ope041Component implements OnInit, AfterViewInit {
     date_str2[0] = digit(TextDateTH.months.indexOf(date_str2[0]) + 1);
     this.endDateSplit = date_str2[0] + "/" + date_str2[1];
 
+    if (this.showDt != null && this.showDt != undefined) {
+      this.showDt.destroy();
+    }
     this.initDatatable();
   };
 
