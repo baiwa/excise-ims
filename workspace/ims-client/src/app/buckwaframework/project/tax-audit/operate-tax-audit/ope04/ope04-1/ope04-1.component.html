@@ -1,3 +1,5 @@
+
+
 <div class="ui grid">
     <div class="sixteen wide column">
         <h2 class="ui header">สร้างกระดาษทำการรับวัตถุดิบ</h2>
@@ -12,35 +14,35 @@
                     <div class="inline fields">
                         <div class="eight wide field ">
                             <label class="custom-label-w-25">ทะเบียนสรรพสามิต</label>
-                            <select class="ui search dropdown ope04-1" name="exciseId" id="exciseId" (change)="changeExiseId()" style="width: 100% !important">
+                            <select class="ui search dropdown ope04-1" name="exciseId" id="exciseId" (change)="changeExiseId()" [(ngModel)]="ojb.exciseId" style="width: 100% !important">
                           <option *ngFor="let list of exciseIdArr" value="{{list}}">{{list}}</option>
                       </select>
                         </div>
                         <div class="eight wide field ">
                             <label class="custom-label-w-20">เลขประจำตัวผู้เสียภาษี</label>
-                            <input type="text" class="custom-readonly" placeholder="เลขประจำตัวผู้เสียภาษี" readonly="" value="-">
+                            <input type="text" name="taxNumber" id="taxNumber" class="custom-readonly"   [(ngModel)]="ojb.taxNumber" placeholder="เลขประจำตัวผู้เสียภาษี" readonly="" value="-">
                         </div>
                     </div>
 
                     <div class="inline fields">
                         <div class="eight wide field">
                             <label class="custom-label-w-25">ผู้ประกอบการ </label>
-                            <input type="text" class="custom-readonly" placeholder="ผู้ประกอบการ" name="companyName" id="companyName" readonly="" value="{{firstDataList.companyName}}">
+                            <input type="text" class="custom-readonly" placeholder="ผู้ประกอบการ" [(ngModel)]="ojb.companyName" name="companyName" id="companyName" readonly="" value="{{firstDataList.companyName}}">
                         </div>
                         <div class="eight wide field ">
                             <label class="custom-label-w-20">เลขที่วิเคราะห์</label>
-                            <input type="text" class="custom-readonly" placeholder="เลขที่วิเคราะห์" name="analysNumber" id="analysNumber" readonly="" value="{{firstDataList.analysNumber}}">
+                            <input type="text" class="custom-readonly" placeholder="เลขที่วิเคราะห์"  [(ngModel)]="ojb.analysNumber" name="analysNumber" id="analysNumber" readonly="" value="{{firstDataList.analysNumber}}">
                         </div>
                     </div>
 
                     <div class="inline fields">
                         <div class="eight wide field">
                             <label class="custom-label-w-25">ประเภท </label>
-                            <input type="text" class="custom-readonly" placeholder="ประเภท" readonly="" value="-">
+                            <input type="text" class="custom-readonly" placeholder="ประเภท" [(ngModel)]="ojb.prouectType" readonly="" id="prouectType" name="prouectType" value="-">
                         </div>
                         <div class="eight wide field ">
                             <label class="custom-label-w-20">พิกัด</label>
-                            <input type="text" class="custom-readonly" placeholder="พิกัด" name="productType" id="productType" readonly="" value="{{firstDataList.productType}}">
+                            <input type="text" class="custom-readonly" placeholder="พิกัด" [(ngModel)]="ojb.productType" name="productType" id="productType" readonly="" value="{{firstDataList.productType}}">
                         </div>
                     </div>
 
@@ -52,7 +54,7 @@
                             <div class="ui calendar" id="calendarFront" style="width:100%">
                                 <div class="ui input left icon">
                                     <i class="time icon"></i>
-                                    <input type="text" name="startDate" id="startDate" autocomplete="off" [attr.readonly]="null" placeholder="MM/YYYY" [attr.required]="true">
+                                    <input type="text" name="startDate" id="startDate" [(ngModel)]="ojb.startDate" autocomplete="off"  placeholder="MM/YYYY" [attr.required]="true">
                                 </div>
                             </div>
                         </div>
@@ -61,7 +63,7 @@
                             <div class="ui calendar" id="calendarLast" style="width:100%">
                                 <div class="ui input left icon">
                                     <i class="time icon"></i>
-                                    <input type="text" name="endDate" id="endDate" autocomplete="off" [attr.readonly]="null" placeholder="MM/YYYY" [attr.required]="true">
+                                    <input type="text" name="endDate" id="endDate" autocomplete="off" [(ngModel)]="ojb.endDate" [attr.readonly]="null" placeholder="MM/YYYY" [attr.required]="true">
                                 </div>
                             </div>
                         </div>
@@ -112,7 +114,7 @@
             <br>
             <div class="ui center aligned grid">
                 <div class="six wide column">
-                    <button class="ui mini primary button">
+           <button class="ui mini primary button" (click)="addData()"  type="button">
             <i class="print icon"></i>
            บันทึกข้อมูล
           </button>
