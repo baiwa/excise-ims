@@ -19,6 +19,7 @@ public class Int09213Vo {
 	private BigDecimal otherCost;
 	private BigDecimal sumCost;
 	private String note;
+	private String numberLive;
 	private String createdBy;
 	private String createdDate;
 	private String updatedBy;
@@ -26,7 +27,15 @@ public class Int09213Vo {
 	private String isDeleted;
 	private BigDecimal version;
 
-	public String getPrefix() {
+    public String getNumberLive() {
+        return numberLive;
+    }
+
+    public void setNumberLive(String numberLive) {
+        this.numberLive = numberLive;
+    }
+
+    public String getPrefix() {
 		return prefix;
 	}
 

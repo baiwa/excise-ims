@@ -1,5 +1,5 @@
+import { MessageBarService } from './../../../../../common/services/message-bar.service';
 import { AjaxService } from './../../../../../common/services/ajax.service';
-import { Headers } from '@angular/http';
 import { ExciseService } from './../../../../../common/services/excise.service';
 import { TextDateTH, formatter, stringToDate } from './../../../../../common/helper/datepicker';
 import { Component, OnInit } from '@angular/core';
@@ -22,14 +22,15 @@ export class Int09213Component implements OnInit {
   hesderTxt;
   hideA: boolean = false;
   typeDropdown: any;
-  subtypeDropdown: any;
   levelDropdown: any;
+  typeWithdrawal: any;
   dataDropdown: any;
 
 
   constructor(
     private exciseService: ExciseService,
-    private ajax: AjaxService
+    private ajax: AjaxService,
+    private message : MessageBarService
   ) {
     this.allowanceDate = 0;
     this.allowanceCost = 0;
@@ -44,21 +45,6 @@ export class Int09213Component implements OnInit {
       branch: "",
       department: ""
     };
-  }
-
-  typeRoom = function () {
-    var id = $("#typeWithdrawal").val();
-    if (id == 0 || id == 2 || id == 3) {
-      $("#typeRoomLabel").show();
-      $("#typeRoomValue").show(function () {
-        $(".ui.dropdown").dropdown();
-      });
-    } else {
-      $("#typeRoomValue").va("");
-      $("#typeRoomLabel").hide();
-      $("#typeRoomValue").hide();
-    }
-
   }
 
   calenda = function () {
@@ -100,32 +86,52 @@ export class Int09213Component implements OnInit {
     }
   }
 
-  typeDropdownList = () => {
-
-    this.dataDropdown = {
-      lovIdMaster: "305"
+  typeRoom =  () => {
+    var id = $("#typeWithdrawal").val();
+    if (id == 0 || id == 2 || id == 3) {
+      $("#typeRoomLabel").show();
+      $("#typeRoomValue").show(function () {
+        $(".ui.dropdown").dropdown();
+      });
+    } else {
+      $("#typeRoomValue").va("");
+      $("#typeRoomLabel").hide();
+      $("#typeRoomValue").hide();
     }
-    const URL = "ia/int09213/listDropdown";
 
-    this.ajax.post(URL, this.dataDropdown, res => {
+  }
+
+  caseDropdownChange = (e) => {
+    $("#type").dropdown('restore defaults');
+
+    if(e.target.value=="306"){
+      $("#lebeltypeWithdrawal").show();
+      $("#selecttypeWithdrawal").show();
+      $("#typeRoomLabel").show();
+      $("#typeRoomValue").show();
+      this.setDataypeWithdrawal(e.target.value);
+    }else{
+      $("#typeWithdrawal").dropdown('restore defaults');      
+      $("#lebeltypeWithdrawal").hide();
+      $("#selecttypeWithdrawal").hide();
+
+      $("#typeRoom").dropdown('restore defaults');  
+      $("#typeRoomLabel").hide();
+      $("#typeRoomValue").hide();
+    }
+    
+
+    this.dataDropdown = { lovIdMaster:e.target.value }
+    const URL = "ia/int09213/listDropdown";
+    this.ajax.post(URL, JSON.stringify(this.dataDropdown), res => {
+      console.log("Response : ",res.json());
       this.typeDropdown = res.json();
     });
   }
-  subTypeDropdownOnChange = (event) => {
-    let id = event.target.value;
-    this.dataDropdown = {
-      lovIdMaster: id
-    }
-    const URL = "ia/int09213/listDropdown";
 
-    this.ajax.post(URL, this.dataDropdown, res => {
-      console.log(res.json());
-      this.subtypeDropdown = res.json();
-    });
-
-  }
-  levelDropdownOnChange = (event) => {
-    let id = event.target.value;
+  typeDropdownChange = (e) => {
+    $("#level").dropdown('restore defaults');
+    let id = e.target.value;
     this.dataDropdown = {
       lovIdMaster: id
     }
@@ -136,6 +142,30 @@ export class Int09213Component implements OnInit {
       this.levelDropdown = res.json();
     });
 
+  }
+
+  setDataypeWithdrawal = (data) => {
+    let _value = "";
+    let _label = "";
+    if(data=="306"){
+      _value = data;
+      _label = "ปกติ";
+    }
+
+    let dataJson = [
+      {
+        label : _label,
+        value : _value
+      },{
+        label : "การฝึกอบรมประเภท ก",
+        value : "337"
+      },{
+        label : "การฝึกอบรมประเภท ข",
+        value : "338"
+      }
+    ]
+    
+    this.typeWithdrawal = dataJson;
   }
 
   setSession = function () {
@@ -275,9 +305,6 @@ export class Int09213Component implements OnInit {
     if (prefix == "2") prefix = "นางสาว";
     if (prefix == "3") prefix = "นาง";
     
-
-    moment.locale('th');
-    console.log(stringToDate(e.target.startGoDateData.value) instanceof Date);
     //json data
     let data = {
       prefix: prefix,
@@ -296,13 +323,15 @@ export class Int09213Component implements OnInit {
       typeWithdrawal: e.target.typeWithdrawal.value,
       typeRoom: e.target.typeRoom.value,
       note: e.target.note.value,
-      datetop : stringToDate(e.target.startGoDateData.value),
       days : this.momentDiff(e.target.startGoDateData.value,e.target.endGoDateData.value)
     }
-
+    console.log(JSON.stringify(data));
+    //post data
     const URL = "ia/int09213/addData";
-    this.ajax.post(URL,data, res => {
+    this.ajax.post(URL,JSON.stringify(data), res => {
       console.log(res.json());
+      $('#tableData').DataTable().ajax.reload();
+      this.message.successModal("ทำรายสำเร็จ","แจ้งเตือน");
     });
 
 
@@ -320,14 +349,14 @@ export class Int09213Component implements OnInit {
   } 
 
   ngOnInit() {
-
-   this.momentDiff("13/08/2561 00:00","14/08/2561 12:00");
     this.setSession();
     this.hesderTxt = this.exciseService.getData() != undefined && this.exciseService.getData();
   }
   ngAfterViewInit() {
-    //getData from 2-1-2
-    this.typeDropdownList();
+    
+    $("#lebeltypeWithdrawal").hide();
+    $("#selecttypeWithdrawal").hide();
+    
     $("#typeRoomLabel").hide();
     $("#typeRoomValue").hide();
     this.dataTable();

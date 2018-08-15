@@ -1,10 +1,9 @@
 package th.co.baiwa.excise.ia.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.TravelCostDetailDao;
@@ -13,6 +12,10 @@ import th.co.baiwa.excise.ia.persistence.repository.DataTravelCostWsDetailReposi
 import th.co.baiwa.excise.ia.persistence.vo.Int09213FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int09213Vo;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class IaTravelCostWorkSheetDetailService {
 
@@ -20,45 +23,61 @@ public class IaTravelCostWorkSheetDetailService {
 	private TravelCostDetailDao travelCostDetailDao;
 
 	@Autowired
+    private LovRepository lovRepository;
+
+	@Autowired
     private DataTravelCostWsDetailRepository dataTravelCostWsDetailRepository;
+
 	public DataTableAjax<Int09213Vo> findAll(List<Int09213Vo> dataTableSession) {
 
+        DataTableAjax<Int09213Vo> dataTableAjax = new DataTableAjax<>();
+        List<Int09213Vo> list = new ArrayList<>();
 		Long count = Long.valueOf(dataTableSession.size());
 
-		DataTableAjax<Int09213Vo> dataTableAjax = new DataTableAjax<>();
+		if (count>0){
+            list = dataTableSession;
+        }
 
 		dataTableAjax.setRecordsTotal(count);
 		dataTableAjax.setRecordsFiltered(count);
-		dataTableAjax.setData(dataTableSession);
+		dataTableAjax.setData(list);
 
 		return dataTableAjax;
 	}
 	
 	public void addData(List<Int09213Vo> dataTableSession ,Int09213FormVo formVo) {
-		
-		//id
-		Integer id = (int) (Math.random() * 50 + 1);
-		
-		Int09213Vo vo = new Int09213Vo();
-		vo.setWorkSheetDetailId(id.toString());
-		vo.setPrefix(formVo.getPrefix());
-		vo.setName(formVo.getName());
-		vo.setLastName(formVo.getLast());
-		vo.setPosition(formVo.getPosition()); 		
-		
+
+
+        Lov lov = lovRepository.findByTypeAndLovId("ACC_FEE",Long.valueOf(formVo.getLevel()));
+        Int09213Vo vo = new Int09213Vo();
+
+        vo.setPrefix(formVo.getPrefix());
+        vo.setName(formVo.getName());
+        vo.setLastName(formVo.getLast());
+        vo.setPosition(formVo.getPosition());
+        vo.setAllowanceDate(new BigDecimal(formVo.getDays()));
+
+        BigDecimal day = new BigDecimal(formVo.getDays());
+        BigDecimal allowanceCost = new BigDecimal(lov.getValue5());
+        vo.setAllowanceCost(day.multiply(allowanceCost));
+
+        vo.setRentDate(new BigDecimal(formVo.getNumberLive()));
+        //check type room
+        if("1".equals(formVo.getTypeRoom())){
+            BigDecimal money = new BigDecimal(lov.getValue2());
+            vo.setRentCost(vo.getRentDate().multiply(money));
+        }
+        if ("2".equals(formVo.getTypeRoom())){
+            BigDecimal money = new BigDecimal(lov.getValue4());
+            vo.setRentCost(vo.getRentDate().multiply(money));
+        }
+
 		dataTableSession.add(vo);
 	}
 	
 	public List<LabelValueBean> dropdownListType(Int09213FormVo formVo){
 		return 	travelCostDetailDao.drodownList(formVo.getLovIdMaster());
 	}
-
-	public void addData(Int09213FormVo formVo, List<Int09213Vo> dataTableSession){
-
-        Int09213Vo voTable = new Int09213Vo();
-        dataTableSession.add(voTable);
-
-    }
 
     public void save(Int09213FormVo formVo, List<Int09213Vo> dataTableSession){
         for (Int09213Vo table:dataTableSession) {
