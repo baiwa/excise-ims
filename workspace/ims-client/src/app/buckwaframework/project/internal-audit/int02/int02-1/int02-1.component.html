@@ -7,52 +7,42 @@
     </div>
 
     <div class="ui attached segment">
-      <div class="ui form">
-
-        <!-- <div class="inline fields">
-          <div class="eight wide field">&nbsp;&nbsp;&nbsp;
-            <label class="custom-label-w-20">ชื่อหน่วยงาน</label>
-            <input [(ngModel)]="departmentName" class="custom">
-          </div>
-          <div class="eight wide field">&nbsp;&nbsp;&nbsp;
-            <label class="custom-label-w-20">หน่วยรับตรวจ</label>
-            <input [(ngModel)]="departmentNameChecking" class="custom">
-          </div>
-        </div> -->
-
-        <div class="inline fields">
-          <div class="eight wide field">&nbsp;&nbsp;&nbsp;
-            <label class="custom-label-w-20">วันที่</label>
-            <input [(ngModel)]="departmentName" class="custom">
-          </div>
-          <div class="eight wide field">&nbsp;&nbsp;&nbsp;
-            <label class="custom-label-w-20">ด้าน</label>
-            <select class="ui search selection dropdown full" name="sideName" id="sideName" [(ngModel)]="sideName">
-              <option value="">ด้าน</option>
-              <option *ngFor="let list of sideNameArr" ng-value="list.value">{{list.description}}</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="inline fields">
-          <div class="eleven wide field"></div>
-          <div class="five wide field">
-            <button type="button" style="margin-left: auto" class="ui mini primary button right floated">
-              <i class="search icon"></i>
-              ค้นหา
-            </button>
-            <button type="button" style="margin-left: auto" class="ui mini primary button right floated">
-              <i class="delete icon"></i>
-              ล้างข้อมูล
-            </button>
-            <button type="button" style="margin-left: auto" class="ui mini primary button right floated" [routerLink]="['/int02/2']">
-              <i class="add icon"></i>
-              สร้าง
-            </button>
+      <form class="ui form" (submit)="onSubmit($event)">
+        <div class="ui center aligned grid">
+          <div class="column fourteen wide">
+            <div class="inline fields">
+              <div class="two wide field"></div>
+              <div class="five wide field">
+                <label class="right aligned column">ชื่อ</label>
+                <input [(ngModel)]="qtnName" name="qtnName">
+              </div>
+              <div class="four wide field">
+                <label class="right aligned column">ปี</label>
+                <div class="ui calendar" style="width:100%" id="date">
+                  <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" style="width:100%" name="qtnYear" autocomplete="off" [(ngModel)]="qtnYear" placeholder="ปี" required>
+                  </div>
+                </div>
+              </div>
+              <div class="six wide field">
+                <button type="submit" (click)="typeOfSubmit = 'F'" class="ui mini primary button">
+                  <i class="search icon"></i>
+                  ค้นหา
+                </button>
+                <button type="submit" (click)="typeOfSubmit = 'S'" class="ui mini primary button">
+                  <i class="add icon"></i>
+                  สร้าง
+                </button>
+                <button type="reset" class="ui mini primary button">
+                  <i class="delete icon"></i>
+                  ล้างข้อมูล
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-
-      </div>
+      </form>
     </div>
 
     <div class="ui segment">
@@ -61,18 +51,18 @@
           <table id="datatable" style="width: 100%;" class="ui small collapsing celled table aligned hover">
             <thead>
               <tr>
-                <th style="text-align: center !important">ลำดับ</th>
+                <th style="text-align: center !important; width: 60px">ลำดับ</th>
                 <th style="text-align: center !important">ชื่อ</th>
                 <th style="text-align: center !important">ปี</th>
-                <th style="text-align: center !important">#</th>
+                <th style="text-align: center !important; width: 40px">#</th>
               </tr>
             </thead>
             <tbody></tbody>
           </table>
         </div>
-        <div class="two wide column centered column" style="margin-top: -59px;">
+        <!-- <div class="two wide column centered column" style="margin-top: -59px;">
           <button class="fluid ui red mini button">ลบ</button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

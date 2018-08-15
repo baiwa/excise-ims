@@ -54,6 +54,20 @@ public class QtnReportHeaderService {
 		}
 		return message;
 	}
+	
+	public Message saveQtnReportHeader(List<QtnReportHeader> qtnReportHeader) {
+		Message msg;
+		for(QtnReportHeader qtn: qtnReportHeader) {
+			qtn.setCreator(UserLoginUtils.getCurrentUsername());
+			qtn.setCreatedBy(UserLoginUtils.getCurrentUsername());
+		}
+		if (qtnReportHeaderRepository.save(qtnReportHeader) != null) {
+			msg = ApplicationCache.getMessage("MSG_00002");
+		} else {
+			msg = ApplicationCache.getMessage("MSG_00003");
+		}
+		return msg;
+	}
 
 	public Message saveQtnReportHeader(QtnReportHeader qtnReportHeader) {
 		Message msg;
@@ -71,16 +85,28 @@ public class QtnReportHeaderService {
 		}
 		return msg;
 	}
+	
+	public ResponseDataTable<QtnReportHeader> findForNullDatatable(DataTableRequest dataTableRequest) {
+		ResponseDataTable<QtnReportHeader> response = new ResponseDataTable<QtnReportHeader>();
+		response.setData(new ArrayList<QtnReportHeader>());
+		response.setStart(dataTableRequest.getStart().intValue());
+		response.setDraw(dataTableRequest.getDraw().intValue() + 1);
+		response.setLength(0);
+		response.setRecordsFiltered(0);
+		response.setRecordsTotal(0);
+		return response;
+	}
 
-	public ResponseDataTable<QtnReportHeader> findByCriteriaForDatatable(QtnReportHeader qtnReportHeader,
+	public ResponseDataTable<QtnReportHeader> findByMasterIdForDatatable(QtnReportHeader qtnReportHeader,
 			DataTableRequest dataTableRequest) {
-
 		ResponseDataTable<QtnReportHeader> responseDataTable = new ResponseDataTable<QtnReportHeader>();
 		List<QtnReportHeader> qtnReportHeaderList = qtnReportHeaderDao.findByCriteriaDataTable(qtnReportHeader,
 				dataTableRequest.getStart().intValue(), dataTableRequest.getLength().intValue());
+		long count = qtnReportHeaderList.size();
 		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
-		long count = qtnReportHeaderDao.countQtnReportHeader(qtnReportHeader);
+		responseDataTable.setStart(dataTableRequest.getStart().intValue());
 		responseDataTable.setData(qtnReportHeaderList);
+		responseDataTable.setLength((int) count);
 		responseDataTable.setRecordsTotal((int) count);
 		responseDataTable.setRecordsFiltered((int) count);
 		return responseDataTable;

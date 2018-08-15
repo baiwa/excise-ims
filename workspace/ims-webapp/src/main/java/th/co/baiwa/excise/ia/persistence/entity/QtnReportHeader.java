@@ -27,6 +27,17 @@ public class QtnReportHeader extends BaseEntity {
 	
 	@Column(name = "CREATOR")
 	private String creator;
+	
+	@Column(name = "QTN_MASTER_ID")
+	private Long qtnMasterId;
+
+	public Long getQtnMasterId() {
+		return qtnMasterId;
+	}
+
+	public void setQtnMasterId(Long qtnMasterId) {
+		this.qtnMasterId = qtnMasterId;
+	}
 
 	public Long getQtnReportHdrId() {
 		return qtnReportHdrId;

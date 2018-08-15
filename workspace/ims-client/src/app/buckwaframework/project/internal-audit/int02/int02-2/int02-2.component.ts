@@ -1,193 +1,267 @@
 import { Component, OnInit } from "@angular/core";
-import { AjaxService } from "../../../../common/services/ajax.service";
-import { MessageBarService } from "../../../../common/services/message-bar.service";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Observable } from "rxjs";
+import { DialogService, IaService, MessageBarService, AjaxService, AuthService } from "../../../../common/services";
+import { Headers } from "@angular/http";
+import { toFormData } from "../../../../common/helper";
+import { BaseModel } from "../../../../common/models";
 
 declare var $: any;
+
+const URL = {
+  DELETE_REPORT: "ia/int02/delete_qtn_report_header",
+  SAVE_REPORT: "ia/int02/save_qtn_report_header",
+  FIND_MASTER: "ia/int02/qtn_master_by_id",
+  SAVE_MASTER: "ia/int02/save_qtn_master",
+  DELETE_MASTER: "ia/int02/delete_qtn_master",
+  UPDATE_MASTER: "ia/int02/update_qtn_master",
+  COMBOBOX: "combobox/controller/comboboxHeaderQuestionnaire",
+  // DATATABLE: `${AjaxService.CONTEXT_PATH}ia/int02/qtn_report_header_by_master_id/datatable`
+  DATATABLE: `ia/int02/qtn_report_header_by_master_id/datatable`
+}
+
 @Component({
   selector: "app-int02-2",
   templateUrl: "./int02-2.component.html",
   styleUrls: ["./int02-2.component.css"]
 })
 export class Int022Component implements OnInit {
-  departmentNameArr: any;
+  departmentNameArr: any = "";
+  departmentNameNew: any = "";
   departmentName: any;
-  departmentNameNew: any;
-  datatable: any;
-  datas: Condition[];
-  chk: any;
+  datatable: Datatable[];
+  datas: Condition[] = [];
+  chk: Datatable[] = [];
+  chkDel: any = [];
+  qtnMaster: any;
+  qtnMasterId: any;
+  table: any;
+  id: any;
+  private saving: boolean = false;
+  private unsave: boolean = false;
+  private finished: boolean = false;
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private ajax: AjaxService,
-    private messageBarService: MessageBarService
+    private message: MessageBarService,
+    private dialog: DialogService,
+    private iaService: IaService,
+    private auth: AuthService
   ) {
-    this.datas = [];
-    this.chk = [];
+
     for (let i = 0; i < 3; i++) {
       this.datas.push(new Condition());
     }
+
+    window.addEventListener("beforeunload", (e) => {
+      const confirmationMessage = "\o/";
+      if (this.unsave) {
+        (e || window.event).returnValue = confirmationMessage;
+        return confirmationMessage;
+      }
+    });
+
+    // Initial Table Request
+    this.table = {
+      draw: 1,
+      start: 0,
+      length: 5
+    };
+
   }
 
   ngOnInit(): void {
+    // Dropdown
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
-    this.departmentNameArr = "";
-    const URL = "combobox/controller/comboboxHeaderQuestionnaire";
-    this.ajax.post(URL, {}, res => {
+    // Initial Page
+    this.init();
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.unsave) {
+      let confirm: any = this.dialog.confirm("ต้องการออกจากที่นี่หรือไม่?");
+      if (confirm.value) {
+        console.log("Exited...");
+      }
+      return confirm;
+    }
+    return true;
+  }
+
+  init() {
+    // QtnMasterId
+    this.qtnMasterId = this.route.snapshot.queryParams["id"] || "";
+    // QtnMaster Initial
+    if (this.qtnMasterId !== "") {
+      this.ajax.get(`${URL.FIND_MASTER}/${this.qtnMasterId}`, res => {
+        this.finished = true; // can click saved() `send questionaire`
+        this.qtnMaster = res.json();
+      });
+    } else {
+      this.unsave = true;
+      this.qtnMaster = this.iaService.getData();
+    }
+    // Combobox
+    this.ajax.post(URL.COMBOBOX, {}, res => {
       this.departmentNameArr = res.json();
     });
-    this.initDatatable();
-    // Edited or Added ???
-    $("#datatable tbody").on("click", "button", e => {
-      const { id } = e.currentTarget;
-      this.datatable.row($(e).parents("tr")).data();
-      if ("edit" == id.split("-")[0]) {
-        this.router.navigate(["/int02/3"], {
-          queryParams: { id: id.split("-")[1] }
-        });
-      } else {
-        console.log("Added ???");
-      }
-    });
-
-    // Checked ???
-    $("#datatable tbody").on("click", "input", e => {
-      const { id, checked } = e.target;
-      if ("chk" == id.split("-")[0] && checked) {
-        this.chk.push(id.split("-")[1]);
-      } else {
-        this.chk.splice(this.chk.findIndex(obj => id.split("-")[1] == obj), 1);
-      }
-    });
+    // Datatable
+    this.ajax.post(`${URL.DATATABLE}/${this.qtnMasterId}`, toFormData(this.table), res => {
+      this.datatable = res.json().data;
+    }, null, new Headers());
   }
 
-  isNotNull(variables): boolean {
-    return variables != null && variables != undefined && variables != "" && variables != 0;
-  }
-
-  addHeaderQuestionnaire(event: any): void {
+  onAdd(event: any): void {
     event.preventDefault();
-    console.log(event);
     var departmentValue = "";
     if (this.isNotNull(this.departmentName) || this.isNotNull(this.departmentNameNew)) {
+      // Checking not value
       if (this.isNotNull(this.departmentNameNew)) {
         departmentValue = this.departmentNameNew;
       }
       if (this.isNotNull(this.departmentName)) {
         departmentValue = this.departmentName;
       }
-      const URL = "ia/int02/save_qtn_report_header";
-      this.ajax.post(URL, { qtnReportHdrName: departmentValue }, res => {
-        var message = res.json();
-        if (message.messageType == "E") {
-          this.messageBarService.errorModal(message.messageTh, "เกิดข้อผิดพลาด");
-        } else {
-          // Alert
-          this.messageBarService.successModal(message.messageTh, "สำเร็จ");
-          this.reTable();
-          // departmentName
-          this.departmentNameNew = "";
-          this.departmentName = 0;
-        }
-      });
+      // Add Data to Datatable Array
+      const data = new Datatable();
+      data.qtnReportHdrId = `NEW_${this.getRndInteger(100, 999)}`;
+      data.qtnReportHdrName = departmentValue;
+      data.createdBy = this.auth.getUser().username;
+      data.status = "NEW";
+      this.datatable.push(data);
+      // After Saved ** Cleared Form
+      $("#departmentName").dropdown("restore defaults");
+      this.departmentNameNew = "";
+      this.unsave = true; // change status `unsave`
     } else {
       alert("ระบบสามารถเพิ่มข้อมูลได้เพียงหนึ่งช่องทาง กรุณาเพิ่มข้อมูลใหม่");
     }
   }
-
-  initDatatable(): void {
-    const URL = `${AjaxService.CONTEXT_PATH}ia/int02/queryQtnReportHeaderByCriteria`;
-    this.datatable = $("#datatable").DataTable({
-      lengthChange: false,
-      searching: false,
-      select: true,
-      ordering: false,
-      pageLength: 10,
-      processing: true,
-      serverSide: true,
-      paging: true,
-      pagingType: "full_numbers",
-      ajax: {
-        type: "POST",
-        url: URL,
-        data: {}
-      },
-      columns: [
-        {
-          render: (data, type, full, meta) => {
-            return `<input type="checkbox" name="chk-${
-              full.qtnReportHdrId
-              }" id="chk-${
-              full.qtnReportHdrId
-              }">`;
-          },
-          className: "center"
-        },
-        {
-          data: "qtnReportHdrId",
-          className: "center"
-        },
-        {
-          data: "qtnReportHdrName",
-          className: "center"
-        },
-        {
-          data: "creator",
-          className: "center"
-        },
-        {
-          render: (data, type, full, meta) => {
-            return `<button class="ui icon yellow mini button" id="edit-${full.qtnReportHdrId}" value="edit-${full.qtnReportHdrId}"><i class="edit icon"></i></button>`;
-          },
-          className: "center"
-        }
-      ]
-    });
-  }
-
-  deleteHeaderQuestionnaire(): void {
-    const URL = "ia/int02/delete_qtn_report_header";
-    this.messageBarService.comfirm(foo => {
-      let msg = "";
+  
+  onDelete(): void {
+    this.message.comfirm(foo => {
+      // let msg = "";
       if (foo) {
-        console.log(`${URL}/${this.chk.toString()}`);
-        this.ajax.delete(`${URL}/${this.chk.toString()}`,
-          res => {
-            console.log("Response", res.json());
-            msg = res.json().messageTh;
-            this.messageBarService.successModal(msg, "สำเร็จ");
-            this.reTable();
-          },
-          err => {
-            console.log("Error" ,err.json());
-            //msg = err.json().message.messageTh;
+        this.chk.forEach(obj_ => {
+          if (obj_.status === undefined) {
+            this.chkDel.push(obj_.qtnReportHdrId);
           }
-        );
+          this.datatable.splice(this.datatable.findIndex(_obj => _obj.qtnReportHdrId == obj_.qtnReportHdrId), 1);
+        });
+        this.chk = [];
+        $("#chk").prop("checked", false);
+        this.unsave = true; // change status `unsave`
       }
     }, "ต้องลบหรือไม่ ? ");
   }
+  
+  onSave(): void {
+    this.saving = true; // show loading button
+    if (this.qtnMaster.qtnMasterId == undefined) {
+      this.ajax.post(URL.SAVE_MASTER, this.qtnMaster, res => {
+        this.finished = true; // can click saved() `send questionaire`
+        const id = res.json().data.qtnMasterId;
+        this.qtnMaster = res.json().data;
+        this.qtnMasterId = id;
+        if (this.datatable != []) {
+          this.datatable.forEach(each => {
+            if (each.status !== undefined) {
+              each.qtnReportHdrId = null;
+              each.qtnMasterId = id;
+            }
+          });
+          this.ajax.post(URL.SAVE_REPORT, { data: this.datatable }, res => {
+            const msg = res.json();
+            this.unsave = false; // change status `unsave`
+            this.saving = false; // hide loading button
+            if (msg.messageType == "C") {
+              this.message.successModal(msg.messageTh);
+            } else {
+              this.message.errorModal(msg.messageTh);
+            }
+          });
+        } else {
+          this.saving = false; // hide loading button
+        }
+      });
+    } else {
+      const id = this.qtnMasterId;
+      if (this.datatable != []) {
+        this.datatable.forEach(each => {
+          if (each.status !== undefined) {
+            each.qtnReportHdrId = null;
+            each.qtnMasterId = id;
+          }
+        });
+        if (this.unsave) {
+          if (this.chkDel.length != 0) {
+            this.ajax.delete(`${URL.DELETE_REPORT}/${this.chkDel.toString()}`, res => {
+              const msg = res.json();
+              this.chkDel = []; // clear delete list
+              if (msg.messageType == "C") {
+                this.message.successModal(msg.messageTh);
+              } else {
+                this.message.errorModal(msg.messageTh);
+              }
+            });
+          }
+          this.ajax.post(URL.SAVE_REPORT, { data: this.datatable }, res => {
+            const msg = res.json();
+            this.unsave = false; // change status `unsave`
+            this.saving = false; // hide loading button
+            if (msg.messageType == "C") {
+              this.message.successModal(msg.messageTh);
+            } else {
+              this.message.errorModal(msg.messageTh);
+            }
+          });
+        }
+      }
+    }
+  }
 
-  reTable = () => {
-    this.chk = [];
-    $("#chk").prop('checked', false);
-    this.datatable.destroy();
-    this.initDatatable();
+  onSaved(): void {
+    this.message.comfirm(foo => {
+      if (foo) {
+        this.qtnMaster.qtnFinished = "Y";
+        this.ajax.post(`${URL.UPDATE_MASTER}/${this.qtnMasterId}`, this.qtnMaster, res => {
+          console.log(res.json());
+          alert("ส่งแบบสอบถามสำเร็จเรียบร้อยแล้ว");
+        });
+      }
+    }, "ต้องลบหรือไม่ ? ");
+  }
+  
+  onCancel(): void {
+    this.router.navigate(['/int02/1']);
+  }
+
+  isNotNull(variables): boolean {
+    return variables != null && variables != undefined && variables != "" && variables != 0;
+  }
+
+  clickChk = (event, index) => {
+    if (event.target.checked) {
+      this.chk.push(this.datatable[index]);
+    } else {
+      $("#chk").prop("checked", false);
+      this.chk.splice(this.chk.findIndex(ob => ob.qtnReportHdrId == this.datatable[index].qtnReportHdrId), 1);
+    }
   }
 
   clickChkAll = event => {
-    var node = $('#datatable').DataTable().rows().nodes();
     if (event.target.checked) {
-      $.each(node, (index, value) => {
-        const id = $(value).find('input')[0].id;
-        this.chk.push(id.split("-")[1]);
-        $(value).find('input')[0].checked = true;
+      this.datatable.map((obj, index) => {
+        this.chk.push(obj);
+        $(`#chk${index}`).prop('checked', true);
       });
     } else {
-      $.each(node, (index, value) => {
-        const id = $(value).find('input')[0].id;
-        this.chk.splice(this.chk.findIndex(obj => id.split("-")[1] == obj), 1);
-        $(value).find('input')[0].checked = false;
+      this.datatable.map((obj, index) => {
+        $(`#chk${index}`).prop('checked', false);
       });
+      this.chk = [];
     }
   }
 
@@ -199,16 +273,15 @@ export class Int022Component implements OnInit {
     });
   }
 
-  onCancel(): void {
-    this.router.navigate(['/int02/1']);
-  }
-
-  popupEditData(): void {
-    $("#modalEditData").modal("show");
-  }
-
-  closePopupEdit(): void {
-    $("#modalEditData").modal("hide");
+  setDepartmentName(what): void {
+    switch (what) {
+      case "new":
+        $("#departmentName").dropdown("restore defaults");
+        break;
+      case "old":
+        this.departmentNameNew = "";
+        break;
+    }
   }
 
   addRow(): void {
@@ -218,6 +291,19 @@ export class Int022Component implements OnInit {
   delRow(index): void {
     this.datas.splice(index, 1);
   }
+
+  getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+}
+
+class Datatable extends BaseModel {
+  [x: string]: any;
+  qtnReportHdrId: any;
+  qtnReportHdrName: string;
+  creator: string;
+  qtnMasterId: any;
 }
 
 class Condition {

@@ -7,18 +7,20 @@
     </div>
 
     <div class="ui attached segment">
-      <form class="ui form" (submit)="addHeaderQuestionnaire($event)" ngNativeValidate>
+      <form class="ui form" (submit)="onAdd($event)" ngNativeValidate>
         <div class="inline three fields">
           <div class="field">
             <label>ด้านที่ตรวจ (เดิม)</label>
-            <select class="ui search selection dropdown ai" name="departmentName" id="departmentName" [(ngModel)]="departmentName">
-              <option value="0">ด้านที่ตรวจ (เดิม)</option>
+            <select class="ui search selection dropdown ai" name="departmentName" id="departmentName" (change)="setDepartmentName('old')"
+              [(ngModel)]="departmentName">
+              <option value="">ด้านที่ตรวจ (เดิม)</option>
               <option *ngFor="let list of departmentNameArr" value="{{list.description}}">{{list.description}}</option>
             </select>
           </div>
           <div class="field">
             <label>ด้านที่ตรวจ (ใหม่)</label>
-            <input type="text" style="width: 100%" placeholder="หน่วยรับตรวจ" name="departmentNameNew" id="departmentNameNew" [(ngModel)]="departmentNameNew">
+            <input type="text" style="width: 100%" placeholder="หน่วยรับตรวจ" name="departmentNameNew" id="departmentNameNew" (keyup)="setDepartmentName('new')"
+              [(ngModel)]="departmentNameNew">
           </div>
           <div class="field">
             <label></label>
@@ -27,7 +29,7 @@
                 <i class="add icon"></i>
                 เพิ่ม
               </button>
-              <button type="button" style="margin-left: auto;" class="ui mini {{ chk.length == 0 && 'disabled' }} red button" (click)="deleteHeaderQuestionnaire()">
+              <button type="button" style="margin-left: auto;" class="ui mini {{ chk.length == 0 && 'disabled' }} red button" (click)="onDelete()">
                 <i class="delete icon"></i>
                 ลบ
               </button>
@@ -40,7 +42,7 @@
     <div class="ui segment">
       <div class="ui grid">
         <div class="sixteen wide column ">
-          <table id="datatable" class="ui small celled table aligned hover">
+          <table id="datatable" class="ui celled table">
             <thead>
               <tr>
                 <th style="text-align: center !important">
@@ -53,6 +55,20 @@
               </tr>
             </thead>
             <tbody>
+              <tr *ngFor="let obj of datatable; let i = index" class="{{ obj.status === 'NEW' && 'positive' }}">
+                <td class="center">
+                  <input type="checkbox" name="chk{{i}}" id="chk{{i}}" (click)="clickChk($event, i)">
+                </td>
+                <td class="center">{{i+1}}</td>
+                <td class="center">{{obj.qtnReportHdrName}}</td>
+                <td class="center">{{obj.createdBy}}</td>
+                <td class="center" *ngIf="obj.status === 'NEW'">-</td>
+                <td class="center" *ngIf="obj.status === undefined">
+                  <button class="ui mini icon button" type="button" (click)="linkToDetail(obj.qtnReportHdrId)">
+                    <i class="edit icon"></i>
+                  </button>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -130,8 +146,8 @@
                 <i class="angle left icon"></i>
                 กลับ
               </button>
-              <button class="ui primary mini button">บันทึก</button>
-              <button type="button" style="margin-left: auto" class="ui mini green button center floated">
+              <button class="ui primary {{ saving && 'loading' }} mini button {{!unsave && 'disabled'}} " type="button" (click)="onSave()">บันทึก</button>
+              <button type="button" style="margin-left: auto" (click)="onSaved()" class="ui mini green button center floated {{(!finished && !unsave) ? 'disabled' : ''}} ">
                 <i class="save icon"></i>
                 ส่งแบบสอบทาน
               </button>

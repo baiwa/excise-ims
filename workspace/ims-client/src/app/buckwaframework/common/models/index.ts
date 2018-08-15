@@ -11,6 +11,7 @@ import { File } from "./file";
 import { TravelCostHeader } from "./travelcostheader";
 import { TravelCostDetail } from "./travelcostdetail";
 import { Contract } from "./contract";
+import { BaseModel } from "./base";
 
 export {
   AlertMessage,
@@ -25,5 +26,6 @@ export {
   File,
   TravelCostHeader,
   TravelCostDetail,
-  Contract
+  Contract,
+  BaseModel
 };

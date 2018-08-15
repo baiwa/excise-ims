@@ -52,6 +52,11 @@ public class QtnReportHeaderDao {
 			paramList.add(qtnReportHeader.getQtnReportHdrName());
 		}
 		
+		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnMasterId())) {
+			sql.append("AND H.QTN_MASTER_ID = ? ");
+			paramList.add(qtnReportHeader.getQtnMasterId());
+		}
+		
 		List<QtnReportHeader> qtnReportHeaderList = jdbcTemplate.query(OracleUtils.limitForDataTable(sql, start, length), paramList.toArray(),rowMapper );
 		
 		return qtnReportHeaderList;

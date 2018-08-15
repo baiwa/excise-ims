@@ -1,10 +1,13 @@
 package th.co.baiwa.excise.ia.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,13 +22,12 @@ import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.ia.Int023MappingVO;
 import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
+import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeaderList;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
 import th.co.baiwa.excise.ia.service.QtnMasterService;
 import th.co.baiwa.excise.ia.service.QtnReportHeaderService;
 import th.co.baiwa.excise.ia.service.QuestionnaireDetailService;
-
 import th.co.baiwa.excise.utils.BeanUtils;
-import th.co.baiwa.excise.utils.NumberUtils;
 
 @Controller
 @RequestMapping("api/ia/int02")
@@ -43,6 +45,13 @@ public class Int02Controller {
 	@Autowired
 	private QtnMasterService qtnMasterService;
 	
+	@GetMapping("/qtn_master_by_id/{id}")
+	@ResponseBody
+	public QtnMaster qtnMasterById(@PathVariable("id") String id) {
+		logger.info("Query qtnMasterById {}", id);
+		return qtnMasterService.findByIdQtnMaster(id);
+	}
+	
 	@PostMapping("/qtn_master/datatable")
 	@ResponseBody
 	public ResponseDataTable<QtnMaster> qtnMaster(DataTableRequest dataTableRequest) {
@@ -57,6 +66,13 @@ public class Int02Controller {
 		return qtnMasterService.saveQtnMaster(qtnMaster);
 	}
 	
+	@PostMapping("/update_qtn_master/{id}")
+	@ResponseBody
+	public CommonMessage<QtnMaster> updateQtnMaster(@PathVariable("id") String id, @RequestBody QtnMaster qtnMaster) {
+		logger.info("Saved to updateQtnMaster {}", id);
+		return qtnMasterService.updateQtnMaster(id, qtnMaster);
+	}
+	
 	@DeleteMapping("/delete_qtn_master/{id}")
 	@ResponseBody
 	public Message deleteQtnMaster(@PathVariable("id") String id) {
@@ -65,8 +81,9 @@ public class Int02Controller {
 
 	@PostMapping("/save_qtn_report_header")
 	@ResponseBody
-	public Message saveQtnReportHeader(@RequestBody QtnReportHeader qtnReportHeader) {
-		logger.info("Add QtnReportHeader");
+	public Message saveQtnReportHeader(@RequestBody QtnReportHeaderList qtnReportHeaderList) {
+		logger.info("Add saveQtnReportHeader");
+		List<QtnReportHeader> qtnReportHeader = qtnReportHeaderList.getData();
 		return qtnReportHeaderService.saveQtnReportHeader(qtnReportHeader);
 	}
 	
@@ -75,13 +92,23 @@ public class Int02Controller {
 	public Message deleteQtnReportHeader(@PathVariable("id") String id) {
 		return qtnReportHeaderService.deleteQtnReportHeader(id);
 	}
-
-	@PostMapping("/queryQtnReportHeaderByCriteria")
+	
+	@PostMapping("/qtn_report_header_by_master_id/datatable")
 	@ResponseBody
-	public ResponseDataTable<QtnReportHeader> queryQtnReportHeaderByCriteria(DataTableRequest dataTableRequest) {
-		logger.info("queryQtnReportHeaderByCriteria");
-		return qtnReportHeaderService.findByCriteriaForDatatable(new QtnReportHeader(), dataTableRequest);
+	public ResponseDataTable<QtnReportHeader> qtnReportHeaderByMasterId(DataTableRequest dataTableRequest) {
+		logger.info("qtn_report_header_by_master_id");
+		return qtnReportHeaderService.findForNullDatatable(dataTableRequest);
 	}
+
+	@PostMapping("/qtn_report_header_by_master_id/datatable/{masterId}")
+	@ResponseBody
+	public ResponseDataTable<QtnReportHeader> qtnReportHeaderByMasterId(@PathVariable("masterId") String masterId, DataTableRequest dataTableRequest) {
+		logger.info("qtn_report_header_by_master_id {}", masterId);
+		QtnReportHeader qtn = new QtnReportHeader();
+		qtn.setQtnMasterId(Long.parseLong(masterId));
+		return qtnReportHeaderService.findByMasterIdForDatatable(qtn, dataTableRequest);
+	}
+	
 	@PostMapping("/deleteQtnReportHeaderByCriteria")
 	@ResponseBody
 	public Message deleteQtnReportHeaderByCriteria(QtnReportHeader qtnReportHeader) {

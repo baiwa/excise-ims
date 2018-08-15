@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { AjaxService } from '../../../../common/services';
+import { AjaxService, IaService } from '../../../../common/services';
+import { TextDateTH, formatter } from '../../../../common/helper';
+import { Router } from '@angular/router';
+
 declare var $: any;
+
+const URL = {
+  SAVE_MASTER : "ia/int02/save_qtn_master",
+  DATATABLE: `${AjaxService.CONTEXT_PATH}ia/int02/qtn_master/datatable`
+}
+
 @Component({
   selector: 'app-int02-1',
   templateUrl: './int02-1.component.html',
@@ -9,24 +18,42 @@ declare var $: any;
 export class Int021Component implements OnInit {
 
   datatable: any;
+  qtnName: string;
+  qtnYear: string;
+  typeOfSubmit: string;
 
-  sideName: string;
-  sideNameArr: any;
-
-  constructor(private ajax: AjaxService) {
-    this.sideNameArr = [];
+  constructor(private ajax: AjaxService, private router: Router, private iaService: IaService) {
+    this.typeOfSubmit = null;
+    this.qtnName = null;
+    this.qtnYear = null;
   }
 
   ngOnInit() {
-    // const URL = 'combobox/controller/comboboxHeaderQuestionnaire';
-    // this.ajax.post(URL, {}, res => {
-    //   this.sideNameArr = res.json();
-    // });
+
     this.initDatatable();
+
+    $("#date").calendar({
+      maxDate: new Date(),
+      type: "year",
+      text: TextDateTH,
+      formatter: formatter("year")
+    });
+
+    // Edited or Added ???
+    $("#datatable tbody").on("click", "button", e => {
+      const { id } = e.currentTarget;
+      this.datatable.row($(e).parents("tr")).data();
+      if ("edit" == id.split("-")[0]) {
+        this.router.navigate(["/int02/2"], {
+          queryParams: { id: id.split("-")[1] }
+        });
+      } else {
+        console.log("Other ???");
+      }
+    });
   }
 
   initDatatable(): void {
-    const URL = `${AjaxService.CONTEXT_PATH}ia/int02/qtn_master/datatable`;
     this.datatable = $("#datatable").DataTable({
       lengthChange: false,
       searching: false,
@@ -34,12 +61,12 @@ export class Int021Component implements OnInit {
       ordering: false,
       pageLength: 10,
       processing: true,
-      serverSide: true,
+      serverSide: false,
       paging: true,
       pagingType: "full_numbers",
       ajax: {
         type: "POST",
-        url: URL,
+        url: URL.DATATABLE,
         data: {}
       },
       columns: [
@@ -57,12 +84,38 @@ export class Int021Component implements OnInit {
         },
         {
           render: (data, type, full, meta) => {
-            return `<button class="ui icon yellow mini button" id="edit-${full.qtnMasterId}" value="edit-${full.qtnMasterId}"><i class="edit icon"></i></button>`;
+            let str = "";
+            if (full.qtnFinished == "Y") {
+              str = "";
+            } else {
+              str = `<button class="ui icon yellow mini button" id="edit-${full.qtnMasterId}" value="edit-${full.qtnMasterId}"><i class="edit icon"></i></button>`;
+            }
+            return str;
           },
           className: "center"
         }
       ]
     });
+  }
+
+  reDatatable = () => {
+    this.datatable.destroy();
+    this.initDatatable();
+  }
+
+  onSubmit = e => {
+    e.preventDefault();
+    const { qtnName, qtnYear } = e.target;
+    const data = {
+      qtnName: qtnName.value,
+      qtnYear: qtnYear.value
+    };
+    if (this.typeOfSubmit === 'S') {
+      this.iaService.setData(data);
+      this.router.navigate(['/int02/2']);
+    } else {
+      console.log('Searching... !?');
+    }
   }
 
 }
