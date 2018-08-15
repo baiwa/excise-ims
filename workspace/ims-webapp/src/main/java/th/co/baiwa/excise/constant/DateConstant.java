@@ -34,6 +34,7 @@ public class DateConstant {
 	public static final String MM_YYYY = "MM/yyyy";
 	
 	public final static String DD_MM_YYYY = "dd/MM/yyyy";
+	public final static String YYYY = "yyyy";
 	
 	@Autowired
 	private static CurrentDateService currentDateService;

@@ -3,6 +3,7 @@ package th.co.baiwa.excise.ia.persistence.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.jdbc.core.RowMapper;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
+import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -43,6 +45,10 @@ public class RiskAssRiskWsHdrRepositoryImpl implements RiskAssRiskWsHdrRepositor
 			sql.append(SqlGeneratorUtils.oracleSqlWhereCondition("RISK_HDR_NAME", riskAssRiskWsHdr.getRiskHdrName()));
 			params.add(riskAssRiskWsHdr.getRiskHdrName());
 		}
+		if(BeanUtils.isNotEmpty(riskAssRiskWsHdr.getBudgetYear())) {
+			sql.append(SqlGeneratorUtils.oracleSqlWhereCondition("BUDGET_YEAR", riskAssRiskWsHdr.getBudgetYear()));
+			params.add(riskAssRiskWsHdr.getBudgetYear());
+		}
 		sql.append(" ORDER BY RISK_HRD_ID ");
 		return commonJdbcTemplate.executeQuery(sql.toString(), params.toArray(), riskAssRiskWsHdrMappingRow);
 	}
@@ -54,12 +60,14 @@ public class RiskAssRiskWsHdrRepositoryImpl implements RiskAssRiskWsHdrRepositor
 			RiskAssRiskWsHdr riskAssRiskWsHdr = new RiskAssRiskWsHdr();
 			riskAssRiskWsHdr.setRiskHrdId(rs.getLong("RISK_HRD_ID"));
 			riskAssRiskWsHdr.setRiskHdrName(rs.getString("RISK_HDR_NAME"));
+			riskAssRiskWsHdr.setBudgetYear(rs.getString("BUDGET_YEAR"));
+			riskAssRiskWsHdr.setUserCheck(rs.getString("USER_CHECK"));
 			riskAssRiskWsHdr.setIsDeleted(rs.getString("IS_DELETED"));
 			riskAssRiskWsHdr.setActive(rs.getString("ACTIVE"));
 			riskAssRiskWsHdr.setCreatedBy(rs.getString("CREATED_BY"));
-			riskAssRiskWsHdr.setCreatedDate(rs.getDate("CREATED_DATE"));
+			riskAssRiskWsHdr.setCreatedDate(rs.getDate("CREATED_DATE" , Calendar.getInstance(DateConstant.LOCAL_TH)));
 			riskAssRiskWsHdr.setUpdatedBy(rs.getString("UPDATED_BY"));
-			riskAssRiskWsHdr.setUpdatedDate(rs.getDate("UPDATED_DATE"));
+			riskAssRiskWsHdr.setUpdatedDate(rs.getDate("UPDATED_DATE", Calendar.getInstance(DateConstant.LOCAL_TH)));
 			return riskAssRiskWsHdr;
 
 		}

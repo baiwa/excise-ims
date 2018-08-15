@@ -35,6 +35,10 @@ public class LovRepositoryImpl implements LovRepositoryCustom{
 				sql.append(" and TYPE = ?");
 				objList.add(lov.getType());
 			}
+			if (lov.getSubType() != null && lov.getSubType().length() > 0) {
+				sql.append(" and SUB_TYPE = ?");
+				objList.add(lov.getSubType());
+			}
 			if (lov.getValue1() != null && lov.getValue1().length() > 0) {
 				sql.append(" and VALUE1 = ?");
 				objList.add(lov.getValue1());

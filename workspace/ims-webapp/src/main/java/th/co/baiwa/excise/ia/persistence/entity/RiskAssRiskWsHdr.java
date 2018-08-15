@@ -34,7 +34,7 @@ public class RiskAssRiskWsHdr extends BaseEntity{
 	private String riskHrdPaperName;
 	
 	@Column(name = "BUDGET_YEAR")
-	private String buggetYear;
+	private String budgetYear;
 	
 	@Column(name = "USER_CHECK")
 	private String userCheck;
@@ -71,14 +71,6 @@ public class RiskAssRiskWsHdr extends BaseEntity{
 		this.riskHrdPaperName = riskHrdPaperName;
 	}
 
-	public String getBuggetYear() {
-		return buggetYear;
-	}
-
-	public void setBuggetYear(String buggetYear) {
-		this.buggetYear = buggetYear;
-	}
-
 	public String getUserCheck() {
 		return userCheck;
 	}
@@ -86,4 +78,14 @@ public class RiskAssRiskWsHdr extends BaseEntity{
 	public void setUserCheck(String userCheck) {
 		this.userCheck = userCheck;
 	}
+
+	public String getBudgetYear() {
+		return budgetYear;
+	}
+
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
+	}
+	
+	
 }

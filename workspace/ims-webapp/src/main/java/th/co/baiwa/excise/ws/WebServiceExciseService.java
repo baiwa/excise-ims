@@ -18,7 +18,7 @@ public class WebServiceExciseService {
 		RiskAssRiskWsDtl risk = new RiskAssRiskWsDtl();
 		risk.setRiskAssRiskDtlId(new Long(1));
 		risk.setProjectBase("โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ กรมสรรพสามิต (Network and Security System)");
-		risk.setDepartment("ศทส.");
+		risk.setDepartmentName("ศทส.");
 		risk.setBudget(new BigDecimal(55000000));
 		risk.setLocalBudget(new BigDecimal(0));
 		risk.setOtherMoney(new BigDecimal(0));
@@ -30,7 +30,7 @@ public class WebServiceExciseService {
 		risk = new RiskAssRiskWsDtl();
 		risk.setRiskAssRiskDtlId(new Long(2));
 		risk.setProjectBase("โครงการจัดหาเครื่องไมโครคอมพิวเตอร์ เครื่องคอมพิวเตอร์แบบพกพา และอุปกรณ์เพื่อทดแทนเครื่องเดิมและเพิ่มเติมเพื่อใช้ในการปฏิบัติงาน");
-		risk.setDepartment("ศทส.");
+		risk.setDepartmentName("ศทส.");
 		risk.setBudget(new BigDecimal(40800000));
 		risk.setLocalBudget(new BigDecimal(0));
 		risk.setOtherMoney(new BigDecimal(3000000));
@@ -41,7 +41,7 @@ public class WebServiceExciseService {
 		risk = new RiskAssRiskWsDtl();
 		risk.setRiskAssRiskDtlId(new Long(3));
 		risk.setProjectBase("โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ กรมสรรพสามิต (Network and Security System)");
-		risk.setDepartment("ศทส.");
+		risk.setDepartmentName("ศทส.");
 		risk.setBudget(new BigDecimal(55000000));
 		risk.setLocalBudget(new BigDecimal(0));
 		risk.setOtherMoney(new BigDecimal(0));
@@ -52,7 +52,7 @@ public class WebServiceExciseService {
 		risk = new RiskAssRiskWsDtl();
 		risk.setRiskAssRiskDtlId(new Long(4));
 		risk.setProjectBase("โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ กรมสรรพสามิต (Network and Security System)");
-		risk.setDepartment("ศทส.");
+		risk.setDepartmentName("ศทส.");
 		risk.setBudget(new BigDecimal(55000000));
 		risk.setLocalBudget(new BigDecimal(0));
 		risk.setOtherMoney(new BigDecimal(0));
@@ -63,7 +63,7 @@ public class WebServiceExciseService {
 		risk = new RiskAssRiskWsDtl();
 		risk.setRiskAssRiskDtlId(new Long(5));
 		risk.setProjectBase("โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ กรมสรรพสามิต (Network and Security System)");
-		risk.setDepartment("ศทส.");
+		risk.setDepartmentName("ศทส.");
 		risk.setBudget(new BigDecimal(55000000));
 		risk.setLocalBudget(new BigDecimal(0));
 		risk.setOtherMoney(new BigDecimal(0));
@@ -74,7 +74,7 @@ public class WebServiceExciseService {
 		risk = new RiskAssRiskWsDtl();
 		risk.setRiskAssRiskDtlId(new Long(6));
 		risk.setProjectBase("โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ กรมสรรพสามิต (Network and Security System)");
-		risk.setDepartment("ศทส.");
+		risk.setDepartmentName("ศทส.");
 		risk.setBudget(new BigDecimal(55000000));
 		risk.setLocalBudget(new BigDecimal(0));
 		risk.setOtherMoney(new BigDecimal(0));

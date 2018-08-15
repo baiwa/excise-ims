@@ -5,6 +5,14 @@ public class Combobox {
 	private String value;
 	private String description;
 
+	public Combobox(String value, String description ) {
+		this.value = value;
+		this.description = description;
+	}
+	public Combobox() {
+		
+	}
+	
 	public String getValue() {
 		return value;
 	}
