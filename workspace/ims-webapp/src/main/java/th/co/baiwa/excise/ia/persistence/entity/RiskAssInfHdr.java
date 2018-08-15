@@ -27,8 +27,30 @@ public class RiskAssInfHdr extends BaseEntity {
 	@Column(name = "RISK_ASS_INF_HDR_NAME")
 	private String riskAssInfHdrName;
 
+	@Column(name = "BUDGET_YEAR")
+	private String budgetYear;
+
+	@Column(name = "USER_CHECK")
+	private String userCheck;
+
 	@Column(name = "ACTIVE")
 	private String active;
+
+	public String getBudgetYear() {
+		return budgetYear;
+	}
+
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
+	}
+
+	public String getUserCheck() {
+		return userCheck;
+	}
+
+	public void setUserCheck(String userCheck) {
+		this.userCheck = userCheck;
+	}
 
 	public Long getRiskAssInfHdrId() {
 		return riskAssInfHdrId;
