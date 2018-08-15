@@ -219,7 +219,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' { "data": "no2" }, ';
     json += ' { "data": "no3" }, ';
     json += ' { "data": "exciseOwnerArea1" }, ';
-    json += ' { "data": "productType" }, ';
+    json += ' { "data": "productType" }, '
     json += ' { "data": "factoryAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
     json += ' { "data": "status" } ';

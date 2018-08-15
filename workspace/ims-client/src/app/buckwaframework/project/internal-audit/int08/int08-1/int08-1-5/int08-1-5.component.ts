@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
-import { Location } from "@angular/common";
+import { Location, NgIf } from "@angular/common";
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
@@ -15,9 +15,13 @@ declare var $: any;
 })
 export class Int0815Component implements OnInit {
   riskHrdPaperName: any;
-  buggetYear: any;
+  budgetYear: any;
   datatable: any;
   id: any;
+  riskAssRiskWsHdr: any;
+
+  userCheck: any;
+
   constructor(private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
@@ -25,7 +29,20 @@ export class Int0815Component implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.queryParams["id"];
+    this.findRiskById();
     this.initDatatable();
+  }
+
+  findRiskById() {
+    let url = "ia/int08/findRiskById"
+    this.ajax.post(url, { riskHrdId: this.id }, res => {
+
+      this.riskAssRiskWsHdr = res.json();
+      console.log(this.riskAssRiskWsHdr);
+      this.riskHrdPaperName = this.riskAssRiskWsHdr.riskHrdPaperName;
+      this.budgetYear = this.riskAssRiskWsHdr.budgetYear;
+      this.userCheck = this.riskAssRiskWsHdr.userCheck;
+    });
   }
 
   initDatatable(): void {
@@ -76,20 +93,42 @@ export class Int0815Component implements OnInit {
   saveRiskAssRiskWsDtl(): void {
     console.log(this.id);
     console.log(this.riskHrdPaperName);
-    console.log(this.buggetYear);
+    console.log(this.budgetYear);
+    this.riskAssRiskWsHdr.riskHrdPaperName = this.riskHrdPaperName;
     console.log(this.datatable.data());
-    var url = "ia/int08/saveRiskAssRiskWsDtl";
+    var msgMessage = "";
 
-    this.ajax.post(url, this.datatable.data(), res => {
-      console.log(res.json());
-      var message = res.json();
-      console.log(message.messageType);
-      if (message.messageType == 'E') {
-        this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
-      } else {
-        this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
-      }
-    });
+    if (this.userCheck == null || this.userCheck == undefined || this.userCheck == "") {
+      msgMessage = "กรุณากรอก \"ผู้ตรวจ\" ";
+    }
+
+    if (this.riskHrdPaperName == null || this.riskHrdPaperName == undefined || this.riskHrdPaperName == "") {
+      msgMessage = "กรุณากรอก \"ชื่อกระดาษทำการ\" ";
+    }
+
+    if (msgMessage == "") {
+      var url = "ia/int08/updateRiskAssRiskWsHdr";
+
+      this.ajax.post(url, this.riskAssRiskWsHdr, res => {
+        console.log(res.json());
+        var message = res.json();
+        console.log(message.messageType);
+        if (message.messageType == 'E') {
+          this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
+        } else {
+          this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
+          this.router.navigate(["/int08/1/4"], {
+            queryParams: { budgetYear: this.budgetYear }
+          });
+        }
+
+      });
+    } else {
+      this.messageBarService.errorModal(msgMessage);
+    }
+
+
+
   }
 
 }

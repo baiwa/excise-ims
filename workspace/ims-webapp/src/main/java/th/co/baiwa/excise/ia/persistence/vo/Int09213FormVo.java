@@ -1,7 +1,5 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
-import java.util.Date;
-
 public class Int09213FormVo {
     private String id;
     private String prefix;
@@ -21,22 +19,13 @@ public class Int09213FormVo {
     private String typeRoom;
     private String note;
     private String lovIdMaster;
-    private Integer days;
-    private Date datetop;
+    private String days;
 
-    public Date getDatetop() {
-        return datetop;
-    }
-
-    public void setDatetop(Date datetop) {
-        this.datetop = datetop;
-    }
-
-    public Integer getDays() {
+    public String getDays() {
         return days;
     }
 
-    public void setDays(Integer days) {
+    public void setDays(String days) {
         this.days = days;
     }
 

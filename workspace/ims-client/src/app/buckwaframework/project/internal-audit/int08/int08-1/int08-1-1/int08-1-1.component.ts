@@ -11,9 +11,9 @@ declare var $: any;
 })
 export class Int0811Component implements OnInit {
   showData: boolean = false;
-  public data: String[];
-  buggetYear: any;
-
+  data: String[];
+  budgetYear: any;
+  yearList: any[];
 
 
   constructor(private router: Router,
@@ -40,6 +40,8 @@ export class Int0811Component implements OnInit {
   ngOnInit() {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
+    this.getYearBackCount();
+
   }
 
   ngAfterViewInit() {
@@ -60,16 +62,29 @@ export class Int0811Component implements OnInit {
 
   }
 
-  createBuggetYear() {
-    console.log(this.buggetYear);
-    const URL = "ia/int08/createBuggetYear";
+  getYearBackCount() {
+    console.log(this.budgetYear);
+    const URL = "combobox/controller/getYearBackCount";
 
-    this.ajax.post(URL, { buggetYear: this.buggetYear }, res => {
-      var message = res.json();
-      this.messageBarService.successModal(message.messageTh, "สำเร็จ");
+    this.ajax.post(URL, {}, res => {
+      console.log("res.json()");
+      this.yearList = res.json();
+
+
+    });
+  }
+
+
+  createBudgetYear() {
+    console.log(this.budgetYear);
+    const URL = "ia/int08/createBudgetYear";
+
+    this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
+      // var message = res.json();
+      // this.messageBarService.successModal(message.messageTh, "สำเร็จ");
 
       this.router.navigate(["/int08/1/4"], {
-        queryParams: { buggetYear: this.buggetYear }
+        queryParams: { budgetYear: this.budgetYear }
       });
     }, errRes => {
       var message = errRes.json();
@@ -82,7 +97,7 @@ export class Int0811Component implements OnInit {
     this.showData = false;
   }
 
-  changeBuggetYear = event => {
+  changebudgetYear = event => {
 
     console.log(event)
 

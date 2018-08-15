@@ -91,8 +91,6 @@ export class Ts0113Component implements OnInit {
     }
     this.ajax.post(url, `'${JSON.stringify(this.obj).toString()}'`, res => {
       if (res.status == 200 && res.statusText == "OK") {
-
-
         window.open("/ims-webapp/api/report/pdf/mis_t_s_01_13/file");
       }
     });

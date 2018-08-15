@@ -17,27 +17,31 @@ export class Int0814Component implements OnInit, AfterViewInit {
 
   riskHdrName: any;
   datatable: any;
-  buggetYear: any;
+  budgetYear: any;
+  yearList: any[];
 
   constructor(private router: Router,
+    private route: ActivatedRoute,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
     private _location: Location) { }
 
   ngOnInit() {
     this.riskHdrName = "";
+    this.budgetYear = "";
     //this.initDatatable();
   }
   ngAfterViewInit() {
+    this.budgetYear = this.route.snapshot.queryParams["budgetYear"];
     this.initDatatable();
   }
 
 
   addRiskAssRiskWsHdr() {
-    console.log(this.riskHdrName);
+    console.log(this.budgetYear);
     const URL = "ia/int08/addRiskAssRiskWsHdr";
 
-    this.ajax.post(URL, { riskHdrName: this.riskHdrName, buggetYear: this.buggetYear, active: 'Y' }, res => {
+    this.ajax.post(URL, { riskHdrName: this.riskHdrName, budgetYear: this.budgetYear, active: 'Y' }, res => {
       var message = res.json();
       this.messageBarService.successModal(message.messageTh, "สำเร็จ");
       this.riskHdrName = "";
@@ -65,7 +69,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
       ajax: {
         type: "POST",
         url: URL,
-        data: {}
+        data: { budgetYear: this.budgetYear }
       },
       columns: [
 
@@ -76,7 +80,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
           className: "center"
         },
         { data: "riskHdrName" },
-        { data: "buggetYear" },
+        { data: "budgetYear" },
         { data: "createdBy" },
         { data: "createdDate" },
         { data: "active" },
@@ -123,6 +127,18 @@ export class Int0814Component implements OnInit, AfterViewInit {
         })
           ;
       }
+    });
+  }
+
+  getYearBackCount() {
+    console.log(this.budgetYear);
+    const URL = "combobox/controller/getYearBackCount";
+
+    this.ajax.post(URL, {}, res => {
+      console.log("res.json()");
+      this.yearList = res.json();
+
+
     });
   }
 

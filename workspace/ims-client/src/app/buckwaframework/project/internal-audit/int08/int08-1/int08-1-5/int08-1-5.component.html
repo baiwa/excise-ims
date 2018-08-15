@@ -11,7 +11,8 @@
             <label class="ui right ">ชื่อกระดาษทำการ</label>
           </div>
           <div class="ten wide field ">
-            <input type="text" placeholder="ชื่อกระดาษทำการ" class="custom" name="riskHrdPaperName" id="riskHrdPaperName" [(ngModel)]="riskHrdPaperName">
+            <input type="text" placeholder="ชื่อกระดาษทำการ" maxlength="100" class="custom" name="riskHrdPaperName" id="riskHrdPaperName"
+              [(ngModel)]="riskHrdPaperName">
           </div>
 
         </div>
@@ -21,7 +22,7 @@
             <label>ปีงบประมาณ</label>
           </div>
           <div class="four wide field ">
-            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="buggetYear" id="buggetYear" [(ngModel)]="buggetYear">
+            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear" disabled="disabled">
           </div>
           <div class="two wide field ">
             <label>ผู้ตรวจ</label>

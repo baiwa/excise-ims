@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.combobox.controller;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.combobox.entity.Combobox;
 import th.co.baiwa.excise.combobox.service.ComboboxService;
+import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 
 @Controller
@@ -84,6 +87,19 @@ public class ComboboxController {
 	public List<Lov> getRiskLevel() {
 		List<Lov> lov = ApplicationCache.getListOfValueByValueType("RISK_LEVEL");
 		return lov;
+	}
+	
+	@PostMapping("/getYearBackCount")
+	@ResponseBody
+	public List<Combobox> getYearBackCount() {
+		List<Combobox> yearComboboxList = new ArrayList<Combobox>();
+		Calendar cal = Calendar.getInstance();
+		for (int i = 0; i < 10 ; i++) {
+			String year = DateConstant.DateToString(cal.getTime(), DateConstant.YYYY);
+			yearComboboxList.add(new Combobox(year,year));
+			cal.add(Calendar.YEAR, -1);
+		}
+		return yearComboboxList;
 	}
 
 }

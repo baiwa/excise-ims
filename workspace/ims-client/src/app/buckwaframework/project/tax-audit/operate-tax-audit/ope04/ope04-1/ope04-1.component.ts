@@ -14,6 +14,7 @@ declare var $: any;
   styleUrls: ["./ope04-1.component.css"]
 })
 export class Ope041Component implements OnInit, AfterViewInit {
+  ojb : addData1;
   exciseId: any;
   exciseIdArr: any;
   firstDataList: any;
@@ -24,8 +25,11 @@ export class Ope041Component implements OnInit, AfterViewInit {
   analysNumber: any;
   row: any;
   max: any;
+  taxNumber : any;
   diff: any;
+  prouect : any;
   monthRecieveArr: any;
+  companyName: any;
   rowShift: any;
   showDt: any;
   startDateSplit: any;
@@ -39,6 +43,8 @@ export class Ope041Component implements OnInit, AfterViewInit {
       analysNumber: "",
       productType: ""
     };
+    this.ojb = new addData1();  
+    
     this.startDateSplit = "";
     this.endDateSplit = "";
     this.row = [];
@@ -134,15 +140,10 @@ export class Ope041Component implements OnInit, AfterViewInit {
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdList";
     $.post(URL, { exciseId: this.exciseId }, res => {
       this.firstDataList = res[0];
-      (<HTMLInputElement>(
-        document.getElementById("companyName")
-      )).value = this.firstDataList.companyName;
-      (<HTMLInputElement>(
-        document.getElementById("analysNumber")
-      )).value = this.firstDataList.analysNumber;
-      (<HTMLInputElement>(
-        document.getElementById("productType")
-      )).value = this.firstDataList.productType;
+      console.log(this.firstDataList);
+      this.ojb.companyName = this.firstDataList.companyName;
+      this.ojb.analysNumber = this.firstDataList.analysNumber;
+      this.ojb.prouectType = this.firstDataList.productType;
     });
   };
 
@@ -199,7 +200,8 @@ export class Ope041Component implements OnInit, AfterViewInit {
     e.preventDefault();
     this.startDate = e.target["startDate"].value;
     this.endDate = e.target["endDate"].value;
-
+    this.ojb.startDate = this.startDate;
+    this.ojb.endDate = this.endDate;
     //change formatter first date input value
     const date_str1 = this.startDate.split(" ");
     date_str1[0] = digit(TextDateTH.months.indexOf(date_str1[0]) + 1);
@@ -340,6 +342,13 @@ export class Ope041Component implements OnInit, AfterViewInit {
     }
     return x;
   }
+
+ addData(){
+  
+   console.log(this.ojb);
+
+}
+
 }
 
 class File {
@@ -347,4 +356,29 @@ class File {
   name: string;
   type: string;
   value: any;
+
+}
+
+class addData1{
+  exciseId: any = '';
+  companyName: any= '';
+  exciseIdArr: any= '';
+  firstDataList: any= '';
+  startDate: any= '';
+  endDate: any= '';
+  MonthDataList: any= '';
+  fileExel: File[];
+  analysNumber: any= '';
+  row: any= '';
+  max: any= '';
+  taxNumber : any= '';
+  diff: any= '';
+  prouectType : any= '';
+  subProuectType : any= '';
+  monthRecieveArr: any= '';
+  rowShift: any= '';
+  showDt: any= '';
+  startDateSplit: any= '';
+  endDateSplit: any= '';
+  rowAndColumn: any= '';
 }
