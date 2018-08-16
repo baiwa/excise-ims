@@ -87,7 +87,7 @@ export class AddExternalDataComponent implements OnInit {
   initDatatable(): void {
     const URL = AjaxService.CONTEXT_PATH + "filter/exise/list";
     var json = "";
-    json += ' { "lengthChange": false, ';
+    json += ' { "lengthChange": true, ';
     json += ' "searching": false, ';
     json += ' "select": true, ';
     json += ' "ordering": true, ';
@@ -112,7 +112,7 @@ export class AddExternalDataComponent implements OnInit {
     json += " } ";
     json += " }, ";
     json += ' "columns": [ ';
-    json += ' { "data": "worksheetHeaderId","className":"center" }, ';
+   
     json += ' { "data": "exciseId","className":"center" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
@@ -281,7 +281,7 @@ export class AddExternalDataComponent implements OnInit {
       trHeaderColumn += items[i];
     }
     var str =
-      '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> ' +
+     
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +

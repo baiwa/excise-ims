@@ -178,7 +178,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     var d = new Date();
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
     var json = "";
-    json += ' { "lengthChange": false, ';
+    json += ' { "lengthChange": true, ';
     json += ' "searching": false, ';
     json += ' "select": true, ';
     json += ' "ordering": true, ';
