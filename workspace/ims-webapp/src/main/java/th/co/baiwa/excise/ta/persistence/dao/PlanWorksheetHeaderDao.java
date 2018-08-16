@@ -584,8 +584,6 @@ public class PlanWorksheetHeaderDao {
 		@Override
 		public AccMonth0407DTL mapRow(ResultSet rs, int rowNum) throws SQLException {
 			AccMonth0407DTL ac = new AccMonth0407DTL();
-//			List<String> product = new ArrayList<String>();
-//			List<String> monthRecieve = new ArrayList<String>();
 			ac.setId(rs.getString("TA_EXCISE_ACC_DTL_04_07_ID"));
 			ac.setProduct1(rs.getString("PRODUCT_1"));
 			ac.setProduct2(rs.getString("PRODUCT_2"));
@@ -599,24 +597,11 @@ public class PlanWorksheetHeaderDao {
 			ac.setMonthRecieve4(rs.getString("MONTH_RECIEVE_4"));
 			ac.setMonthRecieve5(rs.getString("MONTH_RECIEVE_5"));
 			ac.setMonthRecieve6(rs.getString("MONTH_RECIEVE_6"));
-//			product.add(rs.getString("PRODUCT_2"));
-//			product.add(rs.getString("PRODUCT_3"));
-//			product.add(rs.getString("PRODUCT_4"));
-//			product.add(rs.getString("PRODUCT_5"));
-//			product.add(rs.getString("PRODUCT_6"));
-//			monthRecieve.add(rs.getString("MONTH_RECIEVE_1"));
-//			monthRecieve.add(rs.getString("MONTH_RECIEVE_2"));
-//			monthRecieve.add(rs.getString("MONTH_RECIEVE_3"));
-//			monthRecieve.add(rs.getString("MONTH_RECIEVE_4"));
-//			monthRecieve.add(rs.getString("MONTH_RECIEVE_5"));
-//			monthRecieve.add(rs.getString("MONTH_RECIEVE_6"));
 			ac.setAccMonth(rs.getString("ACC_MONTH"));
 			ac.setTA_EXCISE_ACC_DTL_04_07_ID(rs.getString("TA_EXCISE_ACC_DTL_04_07_ID"));
 			ac.setTA_EXCISE_ACC_HDR_04_07_ID(rs.getString("TA_EXCISE_ACC_HDR_04_07_ID"));
 			ac.setExciseId(rs.getString("EXCISE_ID"));
 			ac.setType(rs.getString("TYPE"));
-//			ac.setProduct(product);
-//			ac.setMonthRecieve(monthRecieve);
 			return ac;
 		}
 	};

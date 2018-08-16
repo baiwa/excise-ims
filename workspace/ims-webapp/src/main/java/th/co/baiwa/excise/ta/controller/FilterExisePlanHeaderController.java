@@ -103,10 +103,17 @@ public class FilterExisePlanHeaderController {
 	@ResponseBody
 	public DataTableAjax<OPEDataTable> getExciseIdFromAccDTL(@ModelAttribute AccMonth0407DTL vo,HttpServletRequest httpServletRequest) {
 		List<OPEDataTable> result = planWorksheetHeaderService.queryExciseIdFromAccDTL(vo.getExciseId(), vo.getType(),vo.getStartDate(), vo.getEndDate());
+
 		List<FormUpload> fromFile = (List<FormUpload>) httpServletRequest.getSession().getAttribute(CREATEPAPERCONSTANTS.UPLOAD_OBJTEM);
 		if(BeanUtils.isNotEmpty(fromFile)) {
 			result = planWorksheetHeaderService.sumData(fromFile, result);
 			httpServletRequest.getSession().setAttribute(CREATEPAPERCONSTANTS.UPLOAD_OBJTEM , null);
+			
+			List<AccMonth0407DTLVo> objList = new ArrayList<>(); 
+			 httpServletRequest.getSession().setAttribute(CREATEPAPERCONSTANTS.TABLE_ACC_MONTH, objList);
+			List<AccMonth0407DTLVo> dataSesion =  (List<AccMonth0407DTLVo>) httpServletRequest.getSession().getAttribute(CREATEPAPERCONSTANTS.TABLE_ACC_MONTH);
+			
+			planWorksheetHeaderService.setDataInSession(result, dataSesion);
 		}
 		DataTableAjax<OPEDataTable> dataTableAjax = new DataTableAjax<>();
 		dataTableAjax.setRecordsTotal(Long.valueOf(result.size()));

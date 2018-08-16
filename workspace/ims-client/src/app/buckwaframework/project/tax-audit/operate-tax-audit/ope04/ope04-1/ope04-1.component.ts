@@ -1,20 +1,18 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { AjaxService } from "../../../../../common/services/ajax.service";
-import {
-  TextDateTH,
-  formatter,
-  digit
-} from "../../../../../common/helper/datepicker";
+import { TextDateTH, digit } from "../../../../../common/helper/datepicker";
 import { DecimalFormat } from "../../../../../common/helper";
+import { MessageBarService } from "../../../../../common/services/message-bar.service";
 
 declare var $: any;
+
 @Component({
   selector: "ope04-1",
   templateUrl: "./ope04-1.component.html",
   styleUrls: ["./ope04-1.component.css"]
 })
 export class Ope041Component implements OnInit, AfterViewInit {
-  ojb : addData1;
+  obj: Data;
   exciseId: any;
   exciseIdArr: any;
   firstDataList: any;
@@ -24,27 +22,24 @@ export class Ope041Component implements OnInit, AfterViewInit {
   fileExel: File[];
   analysNumber: any;
   row: any;
-  max: any;
-  taxNumber : any;
   diff: any;
-  prouect : any;
   monthRecieveArr: any;
-  companyName: any;
-  rowShift: any;
   showDt: any;
   startDateSplit: any;
   endDateSplit: any;
-  rowAndColumn: any;
 
-  constructor(private ajax: AjaxService) {
+  constructor(
+    private ajax: AjaxService,
+    private messageBarService: MessageBarService
+  ) {
     this.exciseIdArr = "";
     this.firstDataList = {
       companyName: "",
       analysNumber: "",
       productType: ""
     };
-    this.ojb = new addData1();  
-    
+    this.obj = new Data();
+
     this.startDateSplit = "";
     this.endDateSplit = "";
     this.row = [];
@@ -118,6 +113,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
       const URL =
         AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdList";
       $.post(URL, { exciseId: this.exciseId }, res => {
+        this.obj = res[0];
         this.firstDataList = res[0];
       });
     });
@@ -139,11 +135,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
     )).value;
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdList";
     $.post(URL, { exciseId: this.exciseId }, res => {
-      this.firstDataList = res[0];
-      console.log(this.firstDataList);
-      this.ojb.companyName = this.firstDataList.companyName;
-      this.ojb.analysNumber = this.firstDataList.analysNumber;
-      this.ojb.prouectType = this.firstDataList.productType;
+      this.obj = res[0];
     });
   };
 
@@ -169,12 +161,20 @@ export class Ope041Component implements OnInit, AfterViewInit {
       formBody,
       res => {
         this.row = res.json();
+
+        // if (this.showDt != null && this.showDt != undefined) {
+        //   this.showDt.destroy();
+        // }
         this.showDt.destroy();
         this.initDatatable();
+        this.messageBarService.successModal("อัพโหลดข้อมูลสำเร็จ", "สำเร็จ");
+      },
+      err => {
+        this.messageBarService.errorModal(
+          "ไม่สามารถอัพโหลดข้อมูลได้",
+          "เกิดข้อผิดพลาด"
+        );
       }
-      // err => {
-      //   alert("asdmiosdfhi");
-      // }
     );
   };
 
@@ -200,8 +200,8 @@ export class Ope041Component implements OnInit, AfterViewInit {
     e.preventDefault();
     this.startDate = e.target["startDate"].value;
     this.endDate = e.target["endDate"].value;
-    this.ojb.startDate = this.startDate;
-    this.ojb.endDate = this.endDate;
+    this.obj.startDate = this.startDate;
+    this.obj.endDate = this.endDate;
     //change formatter first date input value
     const date_str1 = this.startDate.split(" ");
     date_str1[0] = digit(TextDateTH.months.indexOf(date_str1[0]) + 1);
@@ -226,7 +226,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
       searching: false,
       ordering: false,
       processing: true,
-      serverSide: false,
+      serverSide: true,
       paging: false,
       pagingType: "full_numbers",
 
@@ -310,15 +310,22 @@ export class Ope041Component implements OnInit, AfterViewInit {
     });
   }
 
-  getClassBydata(value) {
-    if (value.length === 0) {
-      return "null";
-    } else if (+value === 0) {
-      return "green";
-    } else if (+value) {
-      return "red";
-    }
-  }
+  saveTable = () => {
+    const URL = "ope/SaveTable";
+    this.ajax.post(
+      URL,
+      {},
+      res => {
+        this.messageBarService.successModal("บันทึกข้อมูลสำเร็จ", "สำเร็จ");
+      },
+      err => {
+        this.messageBarService.errorModal(
+          "ไม่สามารถบันทึกข้อมูลได้",
+          "เกิดข้อผิดพลาด"
+        );
+      }
+    );
+  };
 
   DF(what) {
     const df = new DecimalFormat("###,###");
@@ -342,13 +349,6 @@ export class Ope041Component implements OnInit, AfterViewInit {
     }
     return x;
   }
-
- addData(){
-  
-   console.log(this.ojb);
-
-}
-
 }
 
 class File {
@@ -356,29 +356,15 @@ class File {
   name: string;
   type: string;
   value: any;
-
 }
 
-class addData1{
-  exciseId: any = '';
-  companyName: any= '';
-  exciseIdArr: any= '';
-  firstDataList: any= '';
-  startDate: any= '';
-  endDate: any= '';
-  MonthDataList: any= '';
-  fileExel: File[];
-  analysNumber: any= '';
-  row: any= '';
-  max: any= '';
-  taxNumber : any= '';
-  diff: any= '';
-  prouectType : any= '';
-  subProuectType : any= '';
-  monthRecieveArr: any= '';
-  rowShift: any= '';
-  showDt: any= '';
-  startDateSplit: any= '';
-  endDateSplit: any= '';
-  rowAndColumn: any= '';
+class Data {
+  exciseId: any = "";
+  companyName: any = "";
+  startDate: any = "";
+  endDate: any = "";
+  analysNumber: any = "";
+  row: any = "";
+  startDateSplit: any = "";
+  endDateSplit: any = "";
 }
