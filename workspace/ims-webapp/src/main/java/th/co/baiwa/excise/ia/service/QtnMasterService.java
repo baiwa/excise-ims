@@ -52,13 +52,13 @@ public class QtnMasterService {
 		if (data != null) {
 			response.setData(data);
 			if (data.getQtnFinished().equals("Y"))
-				msg = ApplicationCache.getMessage("MSG_00006");
+				msg = ApplicationCache.getMessage("MSG_00007");
 			else 
 				msg = ApplicationCache.getMessage("MSG_00002");
 		} else {
 			response.setData(qtnMasterOne);
 			if (qtnMasterOne.getQtnFinished().equals("Y"))
-				msg = ApplicationCache.getMessage("MSG_00007");
+				msg = ApplicationCache.getMessage("MSG_00008");
 			else 
 				msg = ApplicationCache.getMessage("MSG_00003");
 		}

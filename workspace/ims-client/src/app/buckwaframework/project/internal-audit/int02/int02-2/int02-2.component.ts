@@ -29,7 +29,7 @@ export class Int022Component implements OnInit {
   departmentNameArr: any = "";
   departmentNameNew: any = "";
   departmentName: any;
-  datatable: Datatable[];
+  datatable: Datatable[] = undefined;
   datas: Condition[] = [];
   chk: Datatable[] = [];
   chkDel: any = [];
@@ -108,9 +108,7 @@ export class Int022Component implements OnInit {
       this.departmentNameArr = res.json();
     });
     // Datatable
-    this.ajax.post(`${URL.DATATABLE}/${this.qtnMasterId}`, toFormData(this.table), res => {
-      this.datatable = res.json().data;
-    }, null, new Headers());
+    this.loadTable();
   }
 
   onAdd(event: any): void {
@@ -176,6 +174,7 @@ export class Int022Component implements OnInit {
             const msg = res.json();
             this.unsave = false; // change status `unsave`
             this.saving = false; // hide loading button
+            this.loadTable(); // Datatable
             if (msg.messageType == "C") {
               this.message.successModal(msg.messageTh);
             } else {
@@ -211,6 +210,7 @@ export class Int022Component implements OnInit {
             const msg = res.json();
             this.unsave = false; // change status `unsave`
             this.saving = false; // hide loading button
+            this.loadTable(); // Datatable
             if (msg.messageType == "C") {
               this.message.successModal(msg.messageTh);
             } else {
@@ -227,15 +227,25 @@ export class Int022Component implements OnInit {
       if (foo) {
         this.qtnMaster.qtnFinished = "Y";
         this.ajax.post(`${URL.UPDATE_MASTER}/${this.qtnMasterId}`, this.qtnMaster, res => {
-          console.log(res.json());
-          alert("ส่งแบบสอบถามสำเร็จเรียบร้อยแล้ว");
+          const response = res.json();
+          if (response.msg.messageType == "C") {
+            this.message.successModal(response.msg.messageTh);
+          } else {
+            this.message.errorModal(response.msg.messageTh);
+          }
         });
       }
-    }, "ต้องลบหรือไม่ ? ");
+    }, "ต้องส่งแบบสอบทานหรือไม่ ? ");
   }
   
   onCancel(): void {
     this.router.navigate(['/int02/1']);
+  }
+
+  loadTable(): void {
+    this.ajax.post(`${URL.DATATABLE}/${this.qtnMasterId}`, toFormData(this.table), res => {
+      this.datatable = res.json().data;
+    }, null, new Headers());
   }
 
   isNotNull(variables): boolean {

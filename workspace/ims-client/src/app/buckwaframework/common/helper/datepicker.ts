@@ -53,6 +53,22 @@ export var formatter = (what: string = "") => {
           return digit(h) + ':' + digit(m); // + ':' + digit(s);
         }
       };
+    case "ดป":
+      return {
+        header: function (date, mode, settings) {
+          //return a string to show on the header for the given 'date' and 'mode'	
+          let _date = toDateLocale(date);
+          let _year = _date[0].split("/")[2];
+          return _year;
+        },
+        date: function (date, settings) {
+          if (!date) return "";
+          let _date = toDateLocale(date);
+          let _year = _date[0].split("/")[2];
+          let _month = date.getMonth();
+          return TextDateTH.months[_month] + " " + _year;
+        }
+      };
     case "วดป":
       return {
         header: function (date, mode, settings) {
@@ -165,7 +181,7 @@ export var formatter = (what: string = "") => {
           return digit(month) + "/" + year;
         }
       };
-  
+
     default:
       return {
         header: function (date, mode, settings) {
@@ -197,31 +213,31 @@ export var ThaiFormatter = date => {
 
 export var stringToDate = (date) => {
 
-      let strSpit = date.split(/[ ,]+/);
-      if(strSpit.length > 1){
+  let strSpit = date.split(/[ ,]+/);
+  if (strSpit.length > 1) {
 
-          let _date = strSpit[0]; //date 
-          let _time = strSpit[1]; //time
-        
-          //sub date
-          let dateSpit = _date.split('/');
-          let _dd = dateSpit[0];
-          let _mm = dateSpit[1];
-          let _yyyy =  parseInt(dateSpit[2])-543;
-          let mmddyyyytime = _mm+"/"+_dd+"/"+_yyyy+" "+_time;// mm/dd/yyyy time
+    let _date = strSpit[0]; //date 
+    let _time = strSpit[1]; //time
 
-          return new Date(mmddyyyytime);
+    //sub date
+    let dateSpit = _date.split('/');
+    let _dd = dateSpit[0];
+    let _mm = dateSpit[1];
+    let _yyyy = parseInt(dateSpit[2]) - 543;
+    let mmddyyyytime = _mm + "/" + _dd + "/" + _yyyy + " " + _time;// mm/dd/yyyy time
 
-      }else{
+    return new Date(mmddyyyytime);
 
-        let dateSpit = date.split('/');
-        let _dd = dateSpit[0];
-        let _mm = dateSpit[1];
-        let _yyyy =  parseInt(dateSpit[2])-543;
-        let mmddyyyy = _mm+"/"+_dd+"/"+_yyyy;// mm/dd/yyyy time
-     
-        return new Date(mmddyyyy);
-      }
+  } else {
+
+    let dateSpit = date.split('/');
+    let _dd = dateSpit[0];
+    let _mm = dateSpit[1];
+    let _yyyy = parseInt(dateSpit[2]) - 543;
+    let mmddyyyy = _mm + "/" + _dd + "/" + _yyyy;// mm/dd/yyyy time
+
+    return new Date(mmddyyyy);
+  }
 };
 
-export default { TextDateTH, formatter, digit, ThaiFormatter,stringToDate };
+export default { TextDateTH, formatter, digit, ThaiFormatter, stringToDate };

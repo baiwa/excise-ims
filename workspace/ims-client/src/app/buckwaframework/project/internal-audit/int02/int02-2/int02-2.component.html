@@ -39,9 +39,12 @@
       </form>
     </div>
 
-    <div class="ui segment">
+    <div class="ui segment dimmable">
+      <div class="ui active inverted dimmer" *ngIf="datatable == undefined">
+        <div class="ui loader"></div>
+      </div>
       <div class="ui grid">
-        <div class="sixteen wide column ">
+        <div class="sixteen wide column">
           <table id="datatable" class="ui celled table">
             <thead>
               <tr>
@@ -55,6 +58,9 @@
               </tr>
             </thead>
             <tbody>
+              <tr *ngIf="datatable != undefined && datatable.length == 0">
+                <td colspan="5">ยังไม่มีข้อมูล</td>
+              </tr>
               <tr *ngFor="let obj of datatable; let i = index" class="{{ obj.status === 'NEW' && 'positive' }}">
                 <td class="center">
                   <input type="checkbox" name="chk{{i}}" id="chk{{i}}" (click)="clickChk($event, i)">
