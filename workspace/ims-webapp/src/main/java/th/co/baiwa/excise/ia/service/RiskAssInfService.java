@@ -12,8 +12,10 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfHdrRepository;
 import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.excise.ws.WebServiceExciseService;
 
 @Service
 public class RiskAssInfService {
@@ -22,6 +24,10 @@ public class RiskAssInfService {
 
 	private final RiskAssInfHdrRepository riskAssInfHdrRepository;
 
+	
+	@Autowired
+	private WebServiceExciseService webServiceExciseService;
+	
 	@Autowired
 	public RiskAssInfService(RiskAssInfHdrRepository riskAssInfHdrRepository) {
 		this.riskAssInfHdrRepository = riskAssInfHdrRepository;
@@ -67,5 +73,9 @@ public class RiskAssInfService {
 		Message message = ApplicationCache.getMessage("MSG_00005");
 		return message;
 
+	}
+	
+	public List<RiskAssInfDtl> findRiskAssInfDtlByWebService() {
+		return webServiceExciseService.getRiskAssInfDtlList(new RiskAssInfDtl());
 	}
 }
