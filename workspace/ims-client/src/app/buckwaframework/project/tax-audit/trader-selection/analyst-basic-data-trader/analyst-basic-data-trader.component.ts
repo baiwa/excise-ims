@@ -108,7 +108,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       trHeaderColumn += items[i];
     }
     document.getElementById("trDrinamic").innerHTML =
-      '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> ' +
+    
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
@@ -342,7 +342,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     const URL = AjaxService.CONTEXT_PATH + "/working/test/list";
     var json = "";
     json += " [ ";
-    json += ' { "data": "exciseRegisttionNumberId","className":"center" }, ';
     json += ' { "data": "exciseId","className":"center" }, ';
     json += ' { "data": "exciseOperatorName" }, ';
     json += ' { "data": "exciseFacName" }, ';
