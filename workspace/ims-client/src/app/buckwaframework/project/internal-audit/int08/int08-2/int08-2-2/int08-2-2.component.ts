@@ -17,7 +17,7 @@ export class Int0822Component implements OnInit , AfterViewInit{
   
   riskAssInfHdrName: any;
   datatable: any;
-  buggetYear: any;
+  budgetYear: any;
   
   constructor(
     private router: Router,
@@ -46,7 +46,7 @@ export class Int0822Component implements OnInit , AfterViewInit{
       console.log(this.riskAssInfHdrName);
       const URL = "ia/int082/addRiskInfHdr";
 
-      this.ajax.post(URL, { riskAssInfHdrName: this.riskAssInfHdrName, buggetYear: this.buggetYear, active: 'Y' }, res => {
+      this.ajax.post(URL, { riskAssInfHdrName: this.riskAssInfHdrName, budgetYear: this.budgetYear, active: 'Y' }, res => {
         var message = res.json();
         this.messageBarService.successModal(message.messageTh, "สำเร็จ");
         this.riskAssInfHdrName = "";

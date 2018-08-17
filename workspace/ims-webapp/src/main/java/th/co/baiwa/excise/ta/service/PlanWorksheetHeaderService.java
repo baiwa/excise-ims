@@ -21,6 +21,7 @@ import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.CommonAddress;
 import th.co.baiwa.excise.domain.MockupVo;
 import th.co.baiwa.excise.domain.form.AccMonth0407DTL;
+import th.co.baiwa.excise.domain.form.AccMonth0407DTLVo;
 import th.co.baiwa.excise.domain.form.FormUpload;
 import th.co.baiwa.excise.domain.form.OPEDataTable;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseRegisttionNumberDao;
@@ -534,5 +535,23 @@ public class PlanWorksheetHeaderService {
 			}
 		}
 		return returnDataList;
+	}
+	
+	public void setDataInSession(List<OPEDataTable> result, List<AccMonth0407DTLVo> dataSesion) {
+		
+		for (OPEDataTable rs : result) {
+			AccMonth0407DTLVo obj = new AccMonth0407DTLVo();
+			
+			obj.setNo(rs.getNo());
+			obj.setProduct(rs.getProduct());
+			obj.setTaxInvoice(rs.getTaxInvoice());
+			obj.setDayRecieve(rs.getDayRecieve());
+			obj.setMonthRecieve(rs.getMonthRecieve());
+			obj.setExd1(rs.getExd1());
+			obj.setCalMax(rs.getCalMax());
+			obj.setDiff(rs.getDiff());	
+			dataSesion.add(obj);
+		}
+		
 	}
 }

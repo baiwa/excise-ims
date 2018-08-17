@@ -124,7 +124,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     //  trHeaderColumn += items[i];
     //}
     document.getElementById("trDrinamic").innerHTML =
-      '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> ' +
+     
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
@@ -178,7 +178,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     var d = new Date();
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
     var json = "";
-    json += ' { "lengthChange": false, ';
+    json += ' { "lengthChange": true, ';
     json += ' "searching": false, ';
     json += ' "select": true, ';
     json += ' "ordering": true, ';
@@ -205,8 +205,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
       '" ';
     json += " } ";
     json += " }, ";
-    json += ' "columns": [ ';
-    json += ' { "data": "worksheetHeaderId","className":"center" }, ';
+    json += ' "columns": [ ';   
     json += ' { "data": "exciseId","className":"center" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';

@@ -66,6 +66,16 @@ public class RiskAssInfDtl extends BaseEntity{
 	@Column(name = "DEC")
 	private BigDecimal dec;
 
+	@Column(name = "TOTAL")
+	private BigDecimal total;
+	
+	@Column(name="RL")
+	private String rl;
+	
+	@Column(name="VALUE_TRANSLATION")
+	private String valueTranslation;
+	
+	
 	
 	public Long getRiskAssInfDtlId() {
 		return riskAssInfDtlId;
@@ -151,5 +161,24 @@ public class RiskAssInfDtl extends BaseEntity{
 	public void setDec(BigDecimal dec) {
 		this.dec = dec;
 	}
-
+	public BigDecimal getTotal() {
+		return total;
+	}
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+	public String getRl() {
+		return rl;
+	}
+	public void setRl(String rl) {
+		this.rl = rl;
+	}
+	public String getValueTranslation() {
+		return valueTranslation;
+	}
+	public void setValueTranslation(String valueTranslation) {
+		this.valueTranslation = valueTranslation;
+	}
+	
+	
 }
