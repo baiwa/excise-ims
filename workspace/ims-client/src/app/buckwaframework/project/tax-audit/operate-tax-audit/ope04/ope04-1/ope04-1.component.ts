@@ -27,6 +27,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
   showDt: any;
   startDateSplit: any;
   endDateSplit: any;
+  dataTB: any;
 
   constructor(
     private ajax: AjaxService,
@@ -118,9 +119,8 @@ export class Ope041Component implements OnInit, AfterViewInit {
       });
     });
 
-    // get exciseId in input box
-    const URL2 = AjaxService.CONTEXT_PATH + "/filter/exise/getSessionEmptyData";
-    $.post(URL2, res => {});
+    // const URL2 = AjaxService.CONTEXT_PATH + "/filter/exise/getSessionEmptyData";
+    // $.post(URL2, res => {});
   }
 
   ngAfterViewInit(): void {
@@ -311,6 +311,12 @@ export class Ope041Component implements OnInit, AfterViewInit {
   }
 
   saveTable = () => {
+    this.dataTB = [];
+    for (var i = 0; i < this.showDt.data().length; i++) {
+      this.dataTB.push(this.showDt.data()[i]);
+    }
+    console.log(this.dataTB);
+
     const URL = "ope/SaveTable";
     this.ajax.post(
       URL,
