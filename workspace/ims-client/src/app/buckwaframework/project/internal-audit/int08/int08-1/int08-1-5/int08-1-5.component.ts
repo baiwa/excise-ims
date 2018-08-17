@@ -70,7 +70,7 @@ export class Int0815Component implements OnInit {
           className: "center"
         },
         { data: "projectBase" },
-        { data: "department" },
+        { data: "departmentName" },
         { data: "budget", render: $.fn.dataTable.render.number(',', '.', 2, '') },
         { data: "localBudget", render: $.fn.dataTable.render.number(',', '.', 2, '') },
         { data: "otherMoney", render: $.fn.dataTable.render.number(',', '.', 2, '') },
@@ -95,6 +95,7 @@ export class Int0815Component implements OnInit {
     console.log(this.riskHrdPaperName);
     console.log(this.budgetYear);
     this.riskAssRiskWsHdr.riskHrdPaperName = this.riskHrdPaperName;
+    this.riskAssRiskWsHdr.userCheck = this.userCheck;
     console.log(this.datatable.data());
     var msgMessage = "";
 
@@ -121,6 +122,11 @@ export class Int0815Component implements OnInit {
             queryParams: { budgetYear: this.budgetYear }
           });
         }
+
+      }, errRes => {
+        var message = errRes.json();
+        console.log(message);
+        this.messageBarService.errorModal(message.messageTh);
 
       });
     } else {

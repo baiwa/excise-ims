@@ -111,6 +111,10 @@ public class RiskAssRiskWsService {
 		
 	}
 	
+	public List<RiskAssRiskWsDtl> findByGroupRiskHrdId(Long riskHrdId) {
+		return riskAssRiskWsDtlRepository.findByGroupRiskHrdId(riskHrdId);
+	}
+	
 	public void updateRiskAssRiskWsDtl(List<RiskAssRiskWsDtl> riskAssRiskWsDtls) {
 		riskAssRiskWsDtlRepository.save(riskAssRiskWsDtls);
 	}
@@ -125,4 +129,6 @@ public class RiskAssRiskWsService {
 	public List<RiskAssRiskWsHdr> findByCriteria(RiskAssRiskWsHdr riskAssRiskWsHdr) {
 		return riskAssRiskWsHdrRepository.findByCriteria(riskAssRiskWsHdr);
 	}
+	
+	
 }

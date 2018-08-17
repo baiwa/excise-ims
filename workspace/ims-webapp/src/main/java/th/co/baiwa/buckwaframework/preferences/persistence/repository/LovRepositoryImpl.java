@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -20,17 +21,13 @@ public class LovRepositoryImpl implements LovRepositoryCustom{
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	private String sqlSelectTable = "SELECT * FROM SYS_LOV WHERE 1 = 1 ";
+	private String sqlSelectTable = "SELECT * FROM SYS_LOV WHERE IS_DELETED = '"+FLAG.N_FLAG+"' ";
 
 	public List<Lov> queryLovByCriteria(Lov lov , String orderBy) {
 		logger.info("queryLovByCriteria");
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlSelectTable);
 		if (lov != null) {
-			if (lov.getLovId() != null) {
-				sql.append(" and LOV_ID = ?");
-				objList.add(lov.getLovId());
-			}
 			if (lov.getType() != null && lov.getType().length() > 0) {
 				sql.append(" and TYPE = ?");
 				objList.add(lov.getType());
@@ -38,6 +35,10 @@ public class LovRepositoryImpl implements LovRepositoryCustom{
 			if (lov.getSubType() != null && lov.getSubType().length() > 0) {
 				sql.append(" and SUB_TYPE = ?");
 				objList.add(lov.getSubType());
+			}
+			if (lov.getLovId() != null) {
+				sql.append(" and LOV_ID = ?");
+				objList.add(lov.getLovId());
 			}
 			if (lov.getValue1() != null && lov.getValue1().length() > 0) {
 				sql.append(" and VALUE1 = ?");

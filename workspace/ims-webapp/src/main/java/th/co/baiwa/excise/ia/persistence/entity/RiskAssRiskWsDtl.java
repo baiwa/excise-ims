@@ -25,6 +25,10 @@ public class RiskAssRiskWsDtl extends BaseEntity{
 	@Column(name="RISK_ASS_RISK_DTL_ID")
 	private Long riskAssRiskDtlId;
 	
+	
+	@Column(name = "RISK_HRD_ID")
+	private Long riskHrdId; 
+	
 	@Column(name="PROJECT_BASE")
 	private String projectBase;
 	
@@ -154,6 +158,16 @@ public class RiskAssRiskWsDtl extends BaseEntity{
 
 	public void setValueTranslation(String valueTranslation) {
 		this.valueTranslation = valueTranslation;
+	}
+
+
+	public Long getRiskHrdId() {
+		return riskHrdId;
+	}
+
+
+	public void setRiskHrdId(Long riskHrdId) {
+		this.riskHrdId = riskHrdId;
 	}
 
 

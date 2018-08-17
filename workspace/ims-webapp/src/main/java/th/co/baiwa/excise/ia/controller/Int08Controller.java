@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.excise.constant.CreatePaperConstants.CREATEPAPERCONSTANTS;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
@@ -77,12 +76,15 @@ public class Int08Controller {
 
 	@PostMapping("/dataTableWebService1")
 	@ResponseBody
-	public ResponseDataTable<RiskAssRiskWsDtl> dataTableWebService1(DataTableRequest dataTableRequest,HttpServletRequest httpServletRequest) {
+	public ResponseDataTable<RiskAssRiskWsDtl> dataTableWebService1(DataTableRequest dataTableRequest,RiskAssRiskWsHdr riskAssRiskWsHdr,HttpServletRequest httpServletRequest) {
 		logger.info("dataTableWebService1");
+		List<RiskAssRiskWsDtl> riskAssRiskWsHdrList = null;
 		httpServletRequest.getSession().setAttribute(WS_SESSION_DATA , null);
-		
+		riskAssRiskWsHdrList = riskAssRiskWsHdrService.findByGroupRiskHrdId(riskAssRiskWsHdr.getRiskHrdId());
+		if(BeanUtils.isEmpty(riskAssRiskWsHdrList)) {
+			riskAssRiskWsHdrList = riskAssRiskWsHdrService.findRiskAssRiskDtlByWebService();
+		}
 		ResponseDataTable<RiskAssRiskWsDtl> responseDataTable = new ResponseDataTable<RiskAssRiskWsDtl>();
-		List<RiskAssRiskWsDtl> riskAssRiskWsHdrList = riskAssRiskWsHdrService.findRiskAssRiskDtlByWebService();
 		httpServletRequest.getSession().setAttribute(WS_SESSION_DATA , riskAssRiskWsHdrList);
 		responseDataTable.setData(riskAssRiskWsHdrList);
 		responseDataTable.setRecordsTotal((int) riskAssRiskWsHdrList.size());
@@ -103,13 +105,26 @@ public class Int08Controller {
 	}
 	
 	
-	@PostMapping("/updateRiskAssRiskWsDtl")
+	@PostMapping("/updateRiskAssRiskWsHdr")
 	@ResponseBody
-	public void updateRiskAssRiskWsHdr(@RequestBody RiskAssRiskWsHdr riskAssRiskWsHdr,HttpServletRequest httpServletRequest) {
+	public Message updateRiskAssRiskWsHdr(@RequestBody RiskAssRiskWsHdr riskAssRiskWsHdr,HttpServletRequest httpServletRequest) {
+		Message message = null;
 		logger.info("updateRiskAssRiskWsHdr" + riskAssRiskWsHdr.getRiskHrdId());
-		riskAssRiskWsHdrService.updateRiskAssRiskWsHdr(riskAssRiskWsHdr);
-		List<RiskAssRiskWsDtl> riskAssRiskWsDtlList = (List<RiskAssRiskWsDtl>) httpServletRequest.getSession().getAttribute(WS_SESSION_DATA);
-		riskAssRiskWsHdrService.updateRiskAssRiskWsDtl(riskAssRiskWsDtlList);
+		try {
+			riskAssRiskWsHdrService.updateRiskAssRiskWsHdr(riskAssRiskWsHdr);
+			@SuppressWarnings("unchecked")
+			List<RiskAssRiskWsDtl> riskAssRiskWsDtlList = (List<RiskAssRiskWsDtl>) httpServletRequest.getSession().getAttribute(WS_SESSION_DATA);
+			for (RiskAssRiskWsDtl riskAssRiskWsDtl : riskAssRiskWsDtlList) {
+				riskAssRiskWsDtl.setRiskHrdId(riskAssRiskWsHdr.getRiskHrdId());
+			}
+			riskAssRiskWsHdrService.updateRiskAssRiskWsDtl(riskAssRiskWsDtlList);
+			message = ApplicationCache.getMessage("MSG_00002");
+		} catch (Exception e) {
+			message = ApplicationCache.getMessage("MSG_00003");
+		}
+		
+		
+		return message;
 	}
 	
 	public RiskAssRiskWsService getRiskAssRiskWsHdrService() {

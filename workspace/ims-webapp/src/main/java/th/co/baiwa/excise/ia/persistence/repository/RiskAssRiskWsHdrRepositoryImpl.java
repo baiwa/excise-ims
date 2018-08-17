@@ -65,9 +65,9 @@ public class RiskAssRiskWsHdrRepositoryImpl implements RiskAssRiskWsHdrRepositor
 			riskAssRiskWsHdr.setIsDeleted(rs.getString("IS_DELETED"));
 			riskAssRiskWsHdr.setActive(rs.getString("ACTIVE"));
 			riskAssRiskWsHdr.setCreatedBy(rs.getString("CREATED_BY"));
-			riskAssRiskWsHdr.setCreatedDate(rs.getDate("CREATED_DATE" , Calendar.getInstance(DateConstant.LOCAL_TH)));
+			riskAssRiskWsHdr.setCreatedDate(rs.getDate("CREATED_DATE"));
 			riskAssRiskWsHdr.setUpdatedBy(rs.getString("UPDATED_BY"));
-			riskAssRiskWsHdr.setUpdatedDate(rs.getDate("UPDATED_DATE", Calendar.getInstance(DateConstant.LOCAL_TH)));
+			riskAssRiskWsHdr.setUpdatedDate(rs.getDate("UPDATED_DATE"));
 			return riskAssRiskWsHdr;
 
 		}
