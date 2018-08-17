@@ -1,4 +1,4 @@
-export class Request<T> {
+export class ManageReq<T> {
     save: T[] = [];
     delete: T[] = [];
 }

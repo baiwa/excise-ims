@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { DialogService, IaService, MessageBarService, AjaxService, AuthService } from "../../../../common/services";
 import { Headers } from "@angular/http";
 import { toFormData } from "../../../../common/helper";
-import { BaseModel } from "../../../../common/models";
+import { BaseModel, ManageReq } from "../../../../common/models";
 
 declare var $: any;
 
@@ -29,10 +29,11 @@ export class Int022Component implements OnInit {
   departmentNameArr: any = "";
   departmentNameNew: any = "";
   departmentName: any;
+  req: ManageReq<Datatable> = new ManageReq<Datatable>();
   datatable: Datatable[] = undefined;
   datas: Condition[] = [];
   chk: Datatable[] = [];
-  chkDel: any = [];
+  chkDel: Datatable[] = [];
   qtnMaster: any;
   qtnMasterId: any;
   table: any;
@@ -145,7 +146,7 @@ export class Int022Component implements OnInit {
       if (foo) {
         this.chk.forEach(obj_ => {
           if (obj_.status === undefined) {
-            this.chkDel.push(obj_.qtnReportHdrId);
+            this.chkDel.push(obj_);
           }
           this.datatable.splice(this.datatable.findIndex(_obj => _obj.qtnReportHdrId == obj_.qtnReportHdrId), 1);
         });
@@ -171,7 +172,8 @@ export class Int022Component implements OnInit {
               each.qtnMasterId = id;
             }
           });
-          this.ajax.post(URL.SAVE_REPORT, { data: this.datatable }, res => {
+          this.req.save = this.datatable; // save object to save 
+          this.ajax.post(URL.SAVE_REPORT, this.req, res => {
             const msg = res.json();
             this.unsave = false; // change status `unsave`
             this.saving = false; // hide loading button
@@ -196,18 +198,9 @@ export class Int022Component implements OnInit {
           }
         });
         if (this.unsave) {
-          if (this.chkDel.length != 0) {
-            this.ajax.delete(`${URL.DELETE_REPORT}/${this.chkDel.toString()}`, res => {
-              const msg = res.json();
-              this.chkDel = []; // clear delete list
-              if (msg.messageType == "C") {
-                this.message.successModal(msg.messageTh);
-              } else {
-                this.message.errorModal(msg.messageTh);
-              }
-            });
-          }
-          this.ajax.post(URL.SAVE_REPORT, { data: this.datatable }, res => {
+          this.req.save = this.datatable; // save object to save 
+          this.req.delete = this.chkDel; // save object to delete 
+          this.ajax.post(URL.SAVE_REPORT, this.req, res => {
             const msg = res.json();
             this.unsave = false; // change status `unsave`
             this.saving = false; // hide loading button

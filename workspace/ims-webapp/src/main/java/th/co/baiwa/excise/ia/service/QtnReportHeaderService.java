@@ -16,6 +16,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.domain.CommonManageReq;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.controller.Int08Controller;
 import th.co.baiwa.excise.ia.persistence.dao.QtnReportHeaderDao;
@@ -55,10 +56,37 @@ public class QtnReportHeaderService {
 		}
 		return message;
 	}
-	
+
+	public Message saveQtnReportHeader(CommonManageReq<QtnReportHeader> req) {
+		Message msg = ApplicationCache.getMessage("MSG_00003");
+		if (req.getSave().size() != 0) {
+			try {
+				qtnReportHeaderRepository.save(req.getSave());
+				msg = ApplicationCache.getMessage("MSG_00002");
+			} catch (Exception e) {
+				e.printStackTrace();
+				return msg;
+			}
+		}
+		if (req.getDelete().size() != 0) {
+			try {
+				List<Long> li = new ArrayList<>(); // List For Delete
+				for(QtnReportHeader qtn: req.getDelete()) {
+					li.add(qtn.getQtnReportHdrId());
+				}
+				qtnReportHeaderRepository.delete(li);
+				msg = ApplicationCache.getMessage("MSG_00002");
+			} catch (Exception e) {
+				e.printStackTrace();
+				return msg;
+			}
+		}
+		return msg;
+	}
+
 	public Message saveQtnReportHeader(List<QtnReportHeader> qtnReportHeader) {
 		Message msg;
-		for(QtnReportHeader qtn: qtnReportHeader) {
+		for (QtnReportHeader qtn : qtnReportHeader) {
 			qtn.setCreator(UserLoginUtils.getCurrentUsername());
 			qtn.setCreatedBy(UserLoginUtils.getCurrentUsername());
 		}
@@ -86,7 +114,7 @@ public class QtnReportHeaderService {
 		}
 		return msg;
 	}
-	
+
 	public ResponseDataTable<Int022Vo> findForNullDatatable(DataTableRequest dataTableRequest) {
 		ResponseDataTable<Int022Vo> response = new ResponseDataTable<Int022Vo>();
 		response.setData(new ArrayList<Int022Vo>());

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.domain.CommonManageReq;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.ia.Int023MappingVO;
@@ -83,10 +84,9 @@ public class Int02Controller {
 
 	@PostMapping("/save_qtn_report_header")
 	@ResponseBody
-	public Message saveQtnReportHeader(@RequestBody QtnReportHeaderReq qtnReportHeaderReq) {
+	public Message saveQtnReportHeader(@RequestBody CommonManageReq<QtnReportHeader> req) {
 		logger.info("Add saveQtnReportHeader");
-		List<QtnReportHeader> qtnReportHeader = qtnReportHeaderReq.getData();
-		return qtnReportHeaderService.saveQtnReportHeader(qtnReportHeader);
+		return qtnReportHeaderService.saveQtnReportHeader(req);
 	}
 	
 	@DeleteMapping("/delete_qtn_report_header/{id}")

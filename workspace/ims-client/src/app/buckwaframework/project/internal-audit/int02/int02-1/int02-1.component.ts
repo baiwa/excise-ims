@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AjaxService, IaService } from '../../../../common/services';
 import { TextDateTH, formatter } from '../../../../common/helper';
 import { Router } from '@angular/router';
+import { ManageReq, Message } from '../../../../common/models';
 
 declare var $: any;
 
 const URL = {
-  SAVE_MASTER : "ia/int02/save_qtn_master",
+  SAVE_MASTER: "ia/int02/save_qtn_master",
   DATATABLE: `${AjaxService.CONTEXT_PATH}ia/int02/qtn_master/datatable`
 }
 
