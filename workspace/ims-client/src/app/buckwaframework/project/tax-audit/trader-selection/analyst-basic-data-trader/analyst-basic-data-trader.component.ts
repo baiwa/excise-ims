@@ -12,6 +12,7 @@ declare var $: any;
 })
 export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
   listMenu: any[] = [];
+  listMenu1: any[] = [];
   valueForFontList: any[] = [];
   condition: any[] = [];
   valueForBackEndList: any[] = [];
@@ -31,6 +32,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
   firstNumber: any;
   lastNumber: any;
   loading: boolean;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -54,18 +56,21 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       "รถยนต์",
       "พรมและสิ่งทอปูพื้น",
       "แบตเตอรี่",
+     
+    ];
+    this.listMenu1 = [
       "ไนท์คลับและดิสโกเธค",
       "สถานอาบน้ำหรืออบตัวและนวด",
       "สนามแข่งม้า",
       "สนามกอล์ฟ"
-    ];
+    ]
     this.loading = false;
     this.numbers = [1];
     this.back = [];
     this.font = [];
     for (let i = 0; i < 3; i++) {
-      this.back.push(0);
-      this.font.push(0);
+      this.back.push();
+      this.font.push();
     }
 
     this.exciseProductType = "";
@@ -168,6 +173,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     });
 
     this.listMenu = this.checkProductType(this.listMenu);
+    this.listMenu1 = this.checkProductType(this.listMenu1);
     this.addHistory();
   }
 

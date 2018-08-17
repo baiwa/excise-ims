@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="four wide field ">
-                    <input type="text" name="font{{i}}" id="font{{i}}" (keyup)="onKeyUp($event, 'font'+i)" [attr.required]="true" [(ngModel)]="font[i]"
+                    <input type="text" placeholder="0" name="font{{i}}" id="font{{i}}" (keyup)="onKeyUp($event, 'font'+i)" [attr.required]="true" [(ngModel)]="font[i]"
                         value="">
                 </div>
 
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="four wide field ">
-                    <input type="text" name="back{{i}}" id="back{{i}}" (keyup)="onKeyUp($event, 'back'+i)" [attr.required]="true" [(ngModel)]="back[i]"
+                    <input type="text"  name="back{{i}}" id="back{{i}}" (keyup)="onKeyUp($event, 'back'+i)" [attr.required]="true" [(ngModel)]="back[i]"
                         value="">
                 </div>
 
@@ -186,6 +186,10 @@
                                 <div class="header">พิกัดสินค้า</div>
                                 <div class="menu">
                                     <div class="item hover {{exciseProductType == item && 'active'}}" *ngFor="let item of listMenu" (click)="selectExciseProductType(item)">- {{item}}</div>
+                                </div>
+                                <div class="header">พิกัดบริการ</div>
+                                <div class="menu">
+                                    <div class="item hover {{exciseProductType == item && 'active'}}" *ngFor="let item of listMenu1" (click)="selectExciseProductType(item)">- {{item}}</div>
                                 </div>
                             </div>
                         </div>
