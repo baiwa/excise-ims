@@ -4,6 +4,7 @@ import { ExciseService } from './../../../../../common/services/excise.service';
 import { TextDateTH, formatter, stringToDate } from './../../../../../common/helper/datepicker';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { DecimalFormat } from '../../../../../common/helper';
 
 declare var jQuery: any;
 declare var $: any;
@@ -14,29 +15,35 @@ declare var $: any;
 })
 export class Int09213Component implements OnInit {
 
+  table: any;
   allowanceDate;
   allowanceCost;
   rentDate;
   rentCost;
   travelCost;
+  otherCost;
+  sumCost;
   hesderTxt;
   hideA: boolean = false;
   typeDropdown: any;
   levelDropdown: any;
   typeWithdrawal: any;
   dataDropdown: any;
+  travelCostDetail: Detail[];
 
 
   constructor(
     private exciseService: ExciseService,
     private ajax: AjaxService,
-    private message : MessageBarService
+    private message: MessageBarService
   ) {
     this.allowanceDate = 0;
     this.allowanceCost = 0;
     this.rentDate = 0;
     this.rentCost = 0;
     this.travelCost = 0;
+    this.otherCost = 0;
+    this.sumCost = 0;
     this.hesderTxt = {
       startDateInput: "",
       endDateInput: "",
@@ -45,6 +52,7 @@ export class Int09213Component implements OnInit {
       branch: "",
       department: ""
     };
+    this.travelCostDetail = [];
   }
 
   calenda = function () {
@@ -86,7 +94,7 @@ export class Int09213Component implements OnInit {
     }
   }
 
-  typeRoom =  () => {
+  typeRoom = () => {
     var id = $("#typeWithdrawal").val();
     if (id == 0 || id == 2 || id == 3) {
       $("#typeRoomLabel").show();
@@ -104,27 +112,27 @@ export class Int09213Component implements OnInit {
   caseDropdownChange = (e) => {
     $("#type").dropdown('restore defaults');
 
-    if(e.target.value=="306"){
+    if (e.target.value == "306") {
       $("#lebeltypeWithdrawal").show();
       $("#selecttypeWithdrawal").show();
       $("#typeRoomLabel").show();
       $("#typeRoomValue").show();
       this.setDataypeWithdrawal(e.target.value);
-    }else{
-      $("#typeWithdrawal").dropdown('restore defaults');      
+    } else {
+      $("#typeWithdrawal").dropdown('restore defaults');
       $("#lebeltypeWithdrawal").hide();
       $("#selecttypeWithdrawal").hide();
 
-      $("#typeRoom").dropdown('restore defaults');  
+      $("#typeRoom").dropdown('restore defaults');
       $("#typeRoomLabel").hide();
       $("#typeRoomValue").hide();
     }
-    
 
-    this.dataDropdown = { lovIdMaster:e.target.value }
+
+    this.dataDropdown = { lovIdMaster: e.target.value }
     const URL = "ia/int09213/listDropdown";
     this.ajax.post(URL, JSON.stringify(this.dataDropdown), res => {
-      console.log("Response : ",res.json());
+      console.log("Response : ", res.json());
       this.typeDropdown = res.json();
     });
   }
@@ -147,43 +155,33 @@ export class Int09213Component implements OnInit {
   setDataypeWithdrawal = (data) => {
     let _value = "";
     let _label = "";
-    if(data=="306"){
+    if (data == "306") {
       _value = data;
       _label = "ปกติ";
     }
 
     let dataJson = [
       {
-        label : _label,
-        value : _value
-      },{
-        label : "การฝึกอบรมประเภท ก",
-        value : "337"
-      },{
-        label : "การฝึกอบรมประเภท ข",
-        value : "338"
+        label: _label,
+        value: _value
+      }, {
+        label: "การฝึกอบรมประเภท ก",
+        value: "337"
+      }, {
+        label: "การฝึกอบรมประเภท ข",
+        value: "338"
       }
     ]
-    
+
     this.typeWithdrawal = dataJson;
   }
 
-  setSession = function () {
-    $.ajax({
-      url: "/ims-webapp/api/ia/int09213/setSession",
-      contentType: "application/json",
-      type: "GET",
-      data: function (d) {
-        return JSON.stringify($.extend({}, d, {
-        }));
-      },
-      success: function (data) {
-        console.log("set session seccess.");
-      }
-    });
+  DF(what) {
+    const df = new DecimalFormat("###,###.00");
+    return df.format(what);
   }
-  dataTable = function () {
-    var table = $('#tableData').DataTable({
+  dataTable = () => {
+    this.table = $('#tableData').DataTable({
       "serverSide": false,
       "searching": false,
       "ordering": false,
@@ -194,7 +192,6 @@ export class Int09213Component implements OnInit {
         "contentType": "application/json",
         "type": "GET",
       },
-
       "columns": [
         {
           "data": "workSheetDetailId",
@@ -209,12 +206,15 @@ export class Int09213Component implements OnInit {
           },
           "className": "ui center aligned"
         }, {
-          "data": "name"
+          "data": "name",
+          "render": (data, type, row) => {
+            return row.prefix + " " + row.name + " " + row.lastName;
+          }
         }, {
           "data": "position",
           "className": "ui center aligned"
         }, {
-          "data": "allowanceDate",
+          "data": "allowanceDateDesc",
           "className": "ui center aligned"
         }, {
           "data": "allowanceCost",
@@ -224,7 +224,10 @@ export class Int09213Component implements OnInit {
           "className": "ui center aligned"
         }, {
           "data": "rentCost",
-          "className": "ui center aligned"
+          "className": "ui center aligned",
+          "render": (data, type, row) => {
+            return this.DF(data);
+          }
         }, {
           "data": "travelCost",
           "className": "ui center aligned"
@@ -241,55 +244,71 @@ export class Int09213Component implements OnInit {
         }, {
           "data": "note",
           "render": function (data, type, row) {
-            var btn = '<button type="button" class="ui yellow button btn-edit">แก้ไข</button>';
-            return btn;
+            return '<button type="button" class="ui yellow button btn-edit"><i class="edit icon"></i></button>';
+            
           },
           "className": "ui center aligned"
         }
       ],
       "footerCallback": (row, data, start, end, display) => {
-        console.log($(row));
+        
+        let allowanceDate=0;
+        let allowanceCost=0        
+        let rentDate=0
+        let rentCost=0
+        let travelCost=0
+        let otherCost=0
+        let sumCost=0;
+
         data.map(val => {
-          this.allowanceDate += val.allowanceDate;
-          this.allowanceCost += val.allowanceCost;
-          this.rentDate += val.rentDate;
-          this.rentCost += val.rentCost;
-          this.travelCost += val.travelCost;
+          allowanceDate += val.allowanceDate;
+          allowanceCost += val.allowanceCost;
+          rentDate += val.rentDate;
+          rentCost += val.rentCost;
+          travelCost += val.travelCost;
+          otherCost += val.otherCost;
+          sumCost += val.sumCost;
         });
-        $(row)[0].childNodes[1].innerHTML = this.allowanceDate;
-        $(row)[0].childNodes[2].innerHTML = this.allowanceCost;
-        $(row)[0].childNodes[3].innerHTML = this.rentDate;
-        $(row)[0].childNodes[4].innerHTML = this.rentCost;
-        $(row)[0].childNodes[5].innerHTML = this.travelCost;
+        $(row)[0].childNodes[1].innerHTML = allowanceDate;
+        $(row)[0].childNodes[2].innerHTML = allowanceCost;
+        $(row)[0].childNodes[3].innerHTML = rentDate;
+        $(row)[0].childNodes[4].innerHTML = rentCost;
+        $(row)[0].childNodes[5].innerHTML = travelCost;
+        $(row)[0].childNodes[6].innerHTML = otherCost;
+        $(row)[0].childNodes[7].innerHTML = sumCost;
       },
     });
 
+    this.table.clear().draw();
+    this.table.rows.add(this.travelCostDetail); // Add new data
+    this.table.columns.adjust().draw(); // Redraw the DataTable
+
     //button edit
-    table.on('click', 'tbody tr button.btn-edit', function () {
-      var closestRow = $(this).closest('tr');
-      var data = table.row(closestRow).data();
-      console.log(data);
+    this.table.on('click', 'tbody tr button.btn-edit', (e) =>{
+      var closestRow = $(e.target).closest('tr');
+      var data = this.table.row(closestRow).data();
+      console.log(closestRow);
 
       //set date on form
       $("#idEdit").val(data.workSheetDetailId);
-      $("#prefix").val(data.workSheetDetailId);
+      $("#prefix").val(data.prefix);
       $("#name").val(data.name);
       $("#last").val(data.lastName);
       $("#position").val(data.position);
       $("#type").val(data.category);
       $("#level").val(data.degree);
-      $("#appoveDate").val(data.workSheetDetailId);
-      $("#withdrawDate").val(data.workSheetDetailId);
-      $("#goFrom").val(data.workSheetDetailId);
-      $("#food").val(data.workSheetDetailId);
-      $("#startGoDate").val(data.workSheetDetailId);
-      $("#endGoDate").val(data.workSheetDetailId);
-      $("#numberLive").val(data.workSheetDetailId);
-      $("#typeWithdrawal").val(data.workSheetDetailId);
-      $("#typeRoom").val(data.workSheetDetailId);
-      $("#note").val(data.workSheetDetailId);
+      $("#appoveDate").val("");
+      $("#withdrawDate").val("");
+      $("#goFrom").val("");
+      $("#food").val("");
+      $("#startGoDate").val("");
+      $("#endGoDate").val("");
+      $("#numberLive").val("");
+      $("#typeWithdrawal").val("");
+      $("#typeRoom").val("");
+      $("#note").val("");
 
-
+      console.log(this.travelCostDetail);
 
     });
 
@@ -300,14 +319,14 @@ export class Int09213Component implements OnInit {
     e.preventDefault();
 
     //validate form
-    let prefix = e.target.prefix.value
-    if (prefix == "1") prefix = "นาย";
-    if (prefix == "2") prefix = "นางสาว";
-    if (prefix == "3") prefix = "นาง";
-    
+    // let prefix = 
+    // // if (prefix == "1") prefix = "นาย";
+    // // if (prefix == "2") prefix = "นางสาว";
+    // // if (prefix == "3") prefix = "นาง";   
+  
     //json data
     let data = {
-      prefix: prefix,
+      prefix: e.target.prefix.value,
       name: e.target.name.value,
       last: e.target.last.value,
       position: e.target.position.value,
@@ -323,40 +342,47 @@ export class Int09213Component implements OnInit {
       typeWithdrawal: e.target.typeWithdrawal.value,
       typeRoom: e.target.typeRoom.value,
       note: e.target.note.value,
-      days : this.momentDiff(e.target.startGoDateData.value,e.target.endGoDateData.value)
+      travelCost: e.target.travelCost.value,
+      otherCost: e.target.otherCost.value,
+      days: this.momentDiff(e.target.startGoDateData.value, e.target.endGoDateData.value)
     }
-    console.log(JSON.stringify(data));
+
+
     //post data
     const URL = "ia/int09213/addData";
-    this.ajax.post(URL,JSON.stringify(data), res => {
-      console.log(res.json());
-      $('#tableData').DataTable().ajax.reload();
-      this.message.successModal("ทำรายสำเร็จ","แจ้งเตือน");
+    this.ajax.post(URL, JSON.stringify(data), res => {
+      this.travelCostDetail.push(res.json());
+      console.log("Push array : ", this.travelCostDetail);
+      // $('#tableData').DataTable().ajax.reload();
+      this.table.clear().draw();
+      this.table.rows.add(this.travelCostDetail); // Add new data
+      this.table.columns.adjust().draw(); // Redraw the DataTable
+      this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
     });
 
 
   }
 
-  momentDiff = (start,end) => {
+  momentDiff = (start, end) => {
 
-      let _start = stringToDate(start);
-      let _end = stringToDate(end);
-      let momentStart = moment(_start);
-      let momentEnd = moment(_end);
+    //cal date
+    let _start = stringToDate(start);
+    let _end = stringToDate(end);
+    let momentStart = moment(_start);
+    let momentEnd = moment(_end);
 
-      return momentEnd.diff(momentStart, 'days',true);
-
-  } 
+    return momentEnd.diff(momentStart, 'hours');
+  }
 
   ngOnInit() {
-    this.setSession();
+
     this.hesderTxt = this.exciseService.getData() != undefined && this.exciseService.getData();
   }
   ngAfterViewInit() {
-    
+
     $("#lebeltypeWithdrawal").hide();
     $("#selecttypeWithdrawal").hide();
-    
+
     $("#typeRoomLabel").hide();
     $("#typeRoomValue").hide();
     this.dataTable();
@@ -365,4 +391,33 @@ export class Int09213Component implements OnInit {
 
   }
 
+
+
+}
+
+class Detail {
+  allowanceCost: any;
+  allowanceDate: any;
+  allowanceDateDesc: any;
+  category: any;
+  createdBy: any;
+  createdDate: any;
+  degree: any;
+  headerId: any;
+  isDeleted: any;
+  lastName: any;
+  name: any;
+  note: any;
+  numberLive: any;
+  otherCost: any;
+  position: any;
+  prefix: any;
+  rentCost: any;
+  rentDate: any;
+  sumCost: any;
+  travelCost: any;
+  updatedBy: any;
+  updatedDate: any;
+  version: any;
+  workSheetDetailId: any;
 }

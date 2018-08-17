@@ -3,9 +3,13 @@ package th.co.baiwa.excise.ia.persistence.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -85,13 +89,15 @@ public class BudgetDao {
 	    		
 	    		//format date
 	    		
-	    		String createdDate = DateConstant.DateToString(rs.getDate("CREATED_DATE"), "dd/MM/yyyy");
+	    		//String createdDate = DateConstant.DateToString(rs.getDate("CREATED_DATE"), "dd/MM/yyyy");
+                Date date =  rs.getDate("CREATED_DATE");
+                String createdDate = DateFormatUtils.format(rs.getDate("CREATED_DATE"), "dd/MM/yyyy", DateConstant.LOCAL_TH);
 	    		String updatedDate = DateConstant.DateToString(rs.getDate("UPDATED_DATE"), "dd/MM/yyyy");
 	    		String startDate = DateConstant.DateToString(rs.getDate("START_DATE"), "dd/MM/yyyy");
 	    		String endDate = DateConstant.DateToString(rs.getDate("END_DATE"), "dd/MM/yyyy");
 	    		
 	    		vo.setCraetedDate(createdDate);	    		
-	    		vo.setUpdatedDate(updatedDate);
+	    		vo.setUpdatedDate(createdDate);
 	    		vo.setStartDate(startDate);
 	    		vo.setEndDate(endDate);
 	    		

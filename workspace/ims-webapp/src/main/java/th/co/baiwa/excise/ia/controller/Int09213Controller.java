@@ -30,41 +30,32 @@ public class Int09213Controller {
 	
 	@GetMapping("/list")
 	@ResponseBody
-	public DataTableAjax<Int09213Vo> list(HttpServletRequest httpServletRequest){
-		DataTableAjax<Int09213Vo> list = null;
-		try {
+	public DataTableAjax<Int09213Vo> list(){
+		DataTableAjax<Int09213Vo> list = new DataTableAjax<>();
+		/*try {
 			@SuppressWarnings("unchecked")
 			List<Int09213Vo> dataTableSession = (List<Int09213Vo>) httpServletRequest.getSession().getAttribute(REPORT.TABLE_INT09213);
 			 list = iaTravelCostWorkSheetDetailService.findAll(dataTableSession);
 			 logger.info("Data {} row",list.getData().size());
 		} catch (Exception e) {
 			logger.error("Error ! ==> Int0911Controller method findAll");
-		}
+		}*/
 		
 		return list;
 	}
-	
-	@GetMapping("/setSession")
-	@ResponseBody
-	public ResponseEntity<?> setSession(HttpServletRequest httpServletRequest) {
-		
-		List<Int09213Vo> voList = new ArrayList<>();
-		
-		httpServletRequest.getSession().setAttribute(REPORT.TABLE_INT09213, voList);
-	
-		
-		Int09213Vo vo = new Int09213Vo();
-		return new ResponseEntity<Int09213Vo>(vo, HttpStatus.OK);
-	}
-	
+
 	@PostMapping("/addData")
 	@ResponseBody
-	public Int09213FormVo addData(@RequestBody Int09213FormVo formVo,HttpServletRequest httpServletRequest) {
-		
-		@SuppressWarnings("unchecked")
-		List<Int09213Vo> dataTableSession = (List<Int09213Vo>) httpServletRequest.getSession().getAttribute(REPORT.TABLE_INT09213);
-		iaTravelCostWorkSheetDetailService.addData(dataTableSession,formVo);
-		return formVo;
+	public Int09213Vo addData(@RequestBody Int09213FormVo formVo) {
+        Int09213Vo data = new Int09213Vo();
+		try {
+             data = iaTravelCostWorkSheetDetailService.addData(formVo);
+            logger.info("Add data success.");
+        }catch (Exception e){
+		    logger.error("Add data fail!.");
+        }
+
+		return data;
 		
 	}
 	

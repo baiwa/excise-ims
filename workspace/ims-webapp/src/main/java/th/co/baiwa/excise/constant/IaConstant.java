@@ -6,7 +6,8 @@ public class IaConstant {
     }
 
     public static class VALUE {
-
+        public static final String DAY ="วัน";
+        public static final String HOUR ="ชั่วโมง";
         public static final String HOME_OFFICE_TRAVEL="บ้าน - สำนักงาน";
         public static final String OFFICE_HOME_TRAVEL="สำนักงาน - บ้าน";
         public static final String OFFICE_OFFICE_TRAVEL="สำนักงาน - สำนักงาน";

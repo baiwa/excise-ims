@@ -20,6 +20,24 @@ public class Int09213FormVo {
     private String note;
     private String lovIdMaster;
     private String days;
+    private String otherCost;
+    private String travelCost;
+
+    public String getOtherCost() {
+        return otherCost;
+    }
+
+    public void setOtherCost(String otherCost) {
+        this.otherCost = otherCost;
+    }
+
+    public String getTravelCost() {
+        return travelCost;
+    }
+
+    public void setTravelCost(String travelCost) {
+        this.travelCost = travelCost;
+    }
 
     public String getDays() {
         return days;
