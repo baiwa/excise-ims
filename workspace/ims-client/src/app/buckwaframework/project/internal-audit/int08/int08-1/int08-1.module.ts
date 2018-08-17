@@ -11,6 +11,7 @@ import { Int0813Component } from './int08-1-3/int08-1-3.component';
 import { Int0814Component } from './int08-1-4/int08-1-4.component';
 import { FormsModule } from '../../../../../../../node_modules/@angular/forms';
 import { Int0815Component } from './int08-1-5/int08-1-5.component';
+import { Int0816Component } from './int08-1-6/int08-1-6.component';
 
 const routes: Routes = [
   { path: '', component: Int081Component, canActivate: [AuthGuard] },
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: '2', component: Int0812Component, canActivate: [AuthGuard] },
   { path: '3', component: Int0813Component, canActivate: [AuthGuard] },
   { path: '4', component: Int0814Component, canActivate: [AuthGuard] },
-  { path: '5', component: Int0815Component, canActivate: [AuthGuard] }
+  { path: '5', component: Int0815Component, canActivate: [AuthGuard] },
+  { path: '6', component: Int0816Component, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -33,7 +35,8 @@ const routes: Routes = [
     Int0812Component,
     Int0813Component,
     Int0814Component,
-    Int0815Component
+    Int0815Component,
+    Int0816Component
   ],
   exports: [RouterModule]
 })

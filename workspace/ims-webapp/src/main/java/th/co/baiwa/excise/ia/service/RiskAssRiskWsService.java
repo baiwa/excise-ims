@@ -24,7 +24,7 @@ import th.co.baiwa.excise.ws.WebServiceExciseService;
 public class RiskAssRiskWsService {
 	private static final Logger logger = LoggerFactory.getLogger(RiskAssRiskWsService.class);
 	private final RiskAssRiskWsHdrRepository riskAssRiskWsHdrRepository;
-	private final String BUGGET_YEAR = "BUGGET_YEAR";
+	private final String BUDGET_YEAR = "BUDGET_YEAR";
 	private final String RISK_CONFIG = "RISK_CONFIG";
 	private final String INT08_1 = "INT08-1";
 	
@@ -87,8 +87,9 @@ public class RiskAssRiskWsService {
 	
 	public Message createBuggetYear(RiskAssRiskWsHdr riskAssRiskWsHdr) {
 		Message message = null;
-		Lov lov = new Lov(BUGGET_YEAR);
+		Lov lov = new Lov(BUDGET_YEAR);
 		lov.setValue1(riskAssRiskWsHdr.getBudgetYear());
+		lov.setSubType(INT08_1);
 		List<Lov> lovList = lovRepository.queryLovByCriteria(lov, null);
 		if(lovList == null || lovList.size() == 0) {
 			lovRepository.save(lov);

@@ -1,9 +1,7 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
-import { Location, NgIf } from "@angular/common";
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { Alert } from "../../../../../../../../node_modules/@types/selenium-webdriver";
 
 declare var jQuery: any;
 declare var $: any;
@@ -133,8 +131,17 @@ export class Int0815Component implements OnInit {
       this.messageBarService.errorModal(msgMessage);
     }
 
+  }
 
-
+  cancelFlow() {
+    this.messageBarService.comfirm(foo => {
+      // let msg = "";
+      if (foo) {
+        this.router.navigate(["/int08/1/4"], {
+          queryParams: { budgetYear: this.budgetYear }
+        });
+      }
+    }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
   }
 
 }

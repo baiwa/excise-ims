@@ -19,16 +19,18 @@ export class Int0814Component implements OnInit, AfterViewInit {
   datatable: any;
   budgetYear: any;
   yearList: any[];
+  wsRiskList: any[];
 
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
-    private messageBarService: MessageBarService,
-    private _location: Location) { }
+    private messageBarService: MessageBarService
+  ) { }
 
   ngOnInit() {
     this.riskHdrName = "";
     this.budgetYear = "";
+    this.wsRiskList = ["ปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ", "ปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ"];
     //this.initDatatable();
   }
   ngAfterViewInit() {
@@ -98,11 +100,17 @@ export class Int0814Component implements OnInit, AfterViewInit {
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {
           console.log("dtl");
-          console.log(data.riskHrdId);
-          this.router.navigate(["/int08/1/5"], {
-            queryParams: { id: data.riskHrdId }
-          });
-
+          console.log(data.riskHdrName);
+          console.log(this.wsRiskList.indexOf(data.riskHdrName));
+          if (this.wsRiskList.indexOf(data.riskHdrName) >= 0) {
+            this.router.navigate(["/int08/1/5"], {
+              queryParams: { id: data.riskHrdId }
+            });
+          } else {
+            this.router.navigate(["/int08/1/6"], {
+              queryParams: { id: data.riskHrdId }
+            });
+          }
 
         })
         $("td > .del", row).bind("click", () => {
