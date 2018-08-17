@@ -386,11 +386,12 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     console.log(json);
     let jsonMapping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable({
-      lengthChange: false,
+      lengthChange: true,
       searching: false,
+      scrollX: true,
       select: true,
       ordering: true,
-      pageLength: 10,
+      pageLength: 5,
       processing: true,
       serverSide: true,
       paging: true,

@@ -21,9 +21,11 @@ import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.ia.Int023MappingVO;
 import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
+import th.co.baiwa.excise.ia.persistence.entity.QtnReportDetail;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
-import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeaderList;
+import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeaderReq;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
+import th.co.baiwa.excise.ia.persistence.vo.Int022Vo;
 import th.co.baiwa.excise.ia.service.QtnMasterService;
 import th.co.baiwa.excise.ia.service.QtnReportHeaderService;
 import th.co.baiwa.excise.ia.service.QuestionnaireDetailService;
@@ -81,9 +83,9 @@ public class Int02Controller {
 
 	@PostMapping("/save_qtn_report_header")
 	@ResponseBody
-	public Message saveQtnReportHeader(@RequestBody QtnReportHeaderList qtnReportHeaderList) {
+	public Message saveQtnReportHeader(@RequestBody QtnReportHeaderReq qtnReportHeaderReq) {
 		logger.info("Add saveQtnReportHeader");
-		List<QtnReportHeader> qtnReportHeader = qtnReportHeaderList.getData();
+		List<QtnReportHeader> qtnReportHeader = qtnReportHeaderReq.getData();
 		return qtnReportHeaderService.saveQtnReportHeader(qtnReportHeader);
 	}
 	
@@ -95,18 +97,30 @@ public class Int02Controller {
 	
 	@PostMapping("/qtn_report_header_by_master_id/datatable")
 	@ResponseBody
-	public ResponseDataTable<QtnReportHeader> qtnReportHeaderByMasterId(DataTableRequest dataTableRequest) {
+	public ResponseDataTable<Int022Vo> qtnReportHeaderByMasterId(DataTableRequest dataTableRequest) {
 		logger.info("qtn_report_header_by_master_id");
 		return qtnReportHeaderService.findForNullDatatable(dataTableRequest);
 	}
 
 	@PostMapping("/qtn_report_header_by_master_id/datatable/{masterId}")
 	@ResponseBody
-	public ResponseDataTable<QtnReportHeader> qtnReportHeaderByMasterId(@PathVariable("masterId") String masterId, DataTableRequest dataTableRequest) {
+	public ResponseDataTable<Int022Vo> qtnReportHeaderByMasterId(@PathVariable("masterId") String masterId, DataTableRequest dataTableRequest) {
 		logger.info("qtn_report_header_by_master_id {}", masterId);
 		QtnReportHeader qtn = new QtnReportHeader();
 		qtn.setQtnMasterId(Long.parseLong(masterId));
 		return qtnReportHeaderService.findByMasterIdForDatatable(qtn, dataTableRequest);
+	}
+	
+	@PostMapping("/qtn_report_detail_by_hdr_id/datatable/")
+	@ResponseBody
+	public ResponseDataTable<QtnReportDetail> qtnReportDetailByHdrId(DataTableRequest dataTableRequest) {
+		return null;
+	}
+	
+	@PostMapping("/qtn_report_detail_by_hdr_id/datatable/{hdrId}")
+	@ResponseBody
+	public ResponseDataTable<QtnReportDetail> qtnReportDetailByHdrId(@PathVariable("hdrId") String hdtId, DataTableRequest dataTableRequest) {
+		return null;
 	}
 	
 	@PostMapping("/deleteQtnReportHeaderByCriteria")

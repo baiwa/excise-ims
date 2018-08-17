@@ -133,11 +133,12 @@ export class Int022Component implements OnInit {
       $("#departmentName").dropdown("restore defaults");
       this.departmentNameNew = "";
       this.unsave = true; // change status `unsave`
+      $("#chk").prop("checked", false);
     } else {
       alert("ระบบสามารถเพิ่มข้อมูลได้เพียงหนึ่งช่องทาง กรุณาเพิ่มข้อมูลใหม่");
     }
   }
-  
+
   onDelete(): void {
     this.message.comfirm(foo => {
       // let msg = "";
@@ -154,7 +155,7 @@ export class Int022Component implements OnInit {
       }
     }, "ต้องลบหรือไม่ ? ");
   }
-  
+
   onSave(): void {
     this.saving = true; // show loading button
     if (this.qtnMaster.qtnMasterId == undefined) {
@@ -237,13 +238,14 @@ export class Int022Component implements OnInit {
       }
     }, "ต้องส่งแบบสอบทานหรือไม่ ? ");
   }
-  
+
   onCancel(): void {
     this.router.navigate(['/int02/1']);
   }
 
   loadTable(): void {
     this.ajax.post(`${URL.DATATABLE}/${this.qtnMasterId}`, toFormData(this.table), res => {
+      console.log(res);
       this.datatable = res.json().data;
     }, null, new Headers());
   }
@@ -306,6 +308,10 @@ export class Int022Component implements OnInit {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
+  notNullDepartment(): boolean {
+    return !this.isNotNull(this.departmentName) && !this.isNotNull(this.departmentNameNew);
+  }
+
 }
 
 class Datatable extends BaseModel {
@@ -314,6 +320,7 @@ class Datatable extends BaseModel {
   qtnReportHdrName: string;
   creator: string;
   qtnMasterId: any;
+  hasChild: any = "FALSE";
 }
 
 class Condition {

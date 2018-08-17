@@ -53,7 +53,7 @@ public class QtnMasterService {
 			response.setData(data);
 			if (data.getQtnFinished().equals("Y"))
 				msg = ApplicationCache.getMessage("MSG_00007");
-			else 
+			else
 				msg = ApplicationCache.getMessage("MSG_00002");
 		} else {
 			response.setData(qtnMasterOne);

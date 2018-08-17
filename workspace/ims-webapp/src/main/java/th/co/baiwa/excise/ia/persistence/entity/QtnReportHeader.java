@@ -18,7 +18,7 @@ public class QtnReportHeader extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_QTN_REPORT_GEN")
-	@SequenceGenerator(name = "IA_QTN_REPORT_GEN", sequenceName = "IA_QTN_REPORT_SEQ", allocationSize = 1)
+	@SequenceGenerator(name = "IA_QTN_REPORT_GEN", sequenceName = "IA_QTN_REPORT_HEADER_SEQ", allocationSize = 1)
 	@Column(name = "QTN_REPORT_HDR_ID")
 	private Long qtnReportHdrId;
 	

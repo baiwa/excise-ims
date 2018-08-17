@@ -5,6 +5,11 @@ import { MessageBarService } from "../../../../common/services/message-bar.servi
 import { AjaxService } from "../../../../common/services/ajax.service";
 declare var $: any;
 
+const URL = {
+  DATATABLE: AjaxService.CONTEXT_PATH + "ia/int02/queryQuestionnaireDetailByCriteria",
+  DATATABLE2: "ia/int02/"
+};
+
 @Component({
   selector: "app-int02-3",
   templateUrl: "./int02-3.component.html",
@@ -18,6 +23,7 @@ export class Int023Component implements OnInit {
   mainDetail: string;
 
   datatable: any;
+  datatable2: any;
 
   headerId: number;
 
@@ -58,8 +64,6 @@ export class Int023Component implements OnInit {
   }
 
   initDatatable() {
-    const URL =
-      AjaxService.CONTEXT_PATH + "ia/int02/queryQuestionnaireDetailByCriteria";
     this.datatable = $('#datatable').DataTable({
       "lengthChange": false,
       "searching": true,
@@ -72,17 +76,13 @@ export class Int023Component implements OnInit {
       "pagingType": "full_numbers",
       "ajax": {
         "type": "POST",
-        "url": URL,
+        "url": URL.DATATABLE,
         "data": {}
       },
       "columns": [
         {
           render: (data, type, full, meta) => {
-            return `<input type="checkbox" name="chk-${
-              full.qtnDetailId
-              }" id="chk-${
-              full.qtnDetailId
-              }">`;
+            return `<input type="checkbox" name="chk-${full.qtnDetailId}" id="chk-${full.qtnDetailId}">`;
           },
           className: "center"
         },
@@ -91,7 +91,34 @@ export class Int023Component implements OnInit {
           "className": "left"
         }
       ]
-
+    });
+    this.datatable2 = $('#datatable2').DataTable({
+      "lengthChange": false,
+      "searching": true,
+      "select": true,
+      "ordering": false,
+      "pageLength": 10,
+      "processing": true,
+      "serverSide": true,
+      "paging": true,
+      "pagingType": "full_numbers",
+      "ajax": {
+        "type": "POST",
+        "url": URL.DATATABLE,
+        "data": {}
+      },
+      "columns": [
+        {
+          render: (data, type, full, meta) => {
+            return `<input type="checkbox" name="chk2-${full.qtnDetailId}" id="chk2-${full.qtnDetailId}">`;
+          },
+          className: "center"
+        },
+        {
+          "data": "qtnMainDetail",
+          "className": "left"
+        }
+      ]
     });
   }
 

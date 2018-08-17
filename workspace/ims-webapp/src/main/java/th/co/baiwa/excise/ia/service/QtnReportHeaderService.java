@@ -21,6 +21,7 @@ import th.co.baiwa.excise.ia.controller.Int08Controller;
 import th.co.baiwa.excise.ia.persistence.dao.QtnReportHeaderDao;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
 import th.co.baiwa.excise.ia.persistence.repository.QtnReportHeaderRepository;
+import th.co.baiwa.excise.ia.persistence.vo.Int022Vo;
 
 @Service
 public class QtnReportHeaderService {
@@ -33,12 +34,12 @@ public class QtnReportHeaderService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public List<QtnReportHeader> findByCriteria(QtnReportHeader qtnReportHeader) {
+	public List<Int022Vo> findByCriteria(QtnReportHeader qtnReportHeader) {
 		return qtnReportHeaderDao.findByCriteria(qtnReportHeader);
 	}
 
 	public Message createQtnReportHeader(QtnReportHeader qtnReportHeader) {
-		List<QtnReportHeader> qtnReportHeaderList = qtnReportHeaderDao.findByCriteria(qtnReportHeader);
+		List<Int022Vo> qtnReportHeaderList = qtnReportHeaderDao.findByCriteria(qtnReportHeader);
 		Message message;
 		if (qtnReportHeaderList != null || qtnReportHeaderList.size() == 0) {
 			qtnReportHeader.setCreator(UserLoginUtils.getCurrentUsername());
@@ -71,7 +72,7 @@ public class QtnReportHeaderService {
 
 	public Message saveQtnReportHeader(QtnReportHeader qtnReportHeader) {
 		Message msg;
-		List<QtnReportHeader> qtn = qtnReportHeaderDao.findByCriteria(qtnReportHeader);
+		List<Int022Vo> qtn = qtnReportHeaderDao.findByCriteria(qtnReportHeader);
 		if (qtn != null || qtn.size() == 0) {
 			qtnReportHeader.setCreator(UserLoginUtils.getCurrentUsername());
 			qtnReportHeader.setCreatedBy(UserLoginUtils.getCurrentUsername());
@@ -86,9 +87,9 @@ public class QtnReportHeaderService {
 		return msg;
 	}
 	
-	public ResponseDataTable<QtnReportHeader> findForNullDatatable(DataTableRequest dataTableRequest) {
-		ResponseDataTable<QtnReportHeader> response = new ResponseDataTable<QtnReportHeader>();
-		response.setData(new ArrayList<QtnReportHeader>());
+	public ResponseDataTable<Int022Vo> findForNullDatatable(DataTableRequest dataTableRequest) {
+		ResponseDataTable<Int022Vo> response = new ResponseDataTable<Int022Vo>();
+		response.setData(new ArrayList<Int022Vo>());
 		response.setStart(dataTableRequest.getStart().intValue());
 		response.setDraw(dataTableRequest.getDraw().intValue() + 1);
 		response.setLength(0);
@@ -97,12 +98,12 @@ public class QtnReportHeaderService {
 		return response;
 	}
 
-	public ResponseDataTable<QtnReportHeader> findByMasterIdForDatatable(QtnReportHeader qtnReportHeader,
+	public ResponseDataTable<Int022Vo> findByMasterIdForDatatable(QtnReportHeader qtnReportHeader,
 			DataTableRequest dataTableRequest) {
-		ResponseDataTable<QtnReportHeader> responseDataTable = new ResponseDataTable<QtnReportHeader>();
-		List<QtnReportHeader> qtnReportHeaderList = qtnReportHeaderDao.findByCriteriaDataTable(qtnReportHeader,
+		ResponseDataTable<Int022Vo> responseDataTable = new ResponseDataTable<Int022Vo>();
+		List<Int022Vo> qtnReportHeaderList = qtnReportHeaderDao.findByCriteriaDataTable(qtnReportHeader,
 				dataTableRequest.getStart().intValue(), dataTableRequest.getLength().intValue());
-		long count = qtnReportHeaderList.size();
+		long count = qtnReportHeaderDao.countQtnReportHeader(qtnReportHeader);
 		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
 		responseDataTable.setStart(dataTableRequest.getStart().intValue());
 		responseDataTable.setData(qtnReportHeaderList);
@@ -110,7 +111,6 @@ public class QtnReportHeaderService {
 		responseDataTable.setRecordsTotal((int) count);
 		responseDataTable.setRecordsFiltered((int) count);
 		return responseDataTable;
-
 	}
 
 	public int deleteQtnReportHeader(QtnReportHeader qtnReportHeader) {

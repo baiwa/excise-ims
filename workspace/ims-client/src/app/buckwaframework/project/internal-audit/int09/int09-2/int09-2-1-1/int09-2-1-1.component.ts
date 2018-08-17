@@ -18,9 +18,9 @@ export class Int09211Component implements OnInit {
    calenda = function () {
     $("#year").calendar({
       maxDate: new Date(),
-      type: "year",
+      type: "month",
       text: TextDateTH,
-      formatter: formatter("ป")
+      formatter: formatter("ดป")
     });
   }
   clickSearch = function () {

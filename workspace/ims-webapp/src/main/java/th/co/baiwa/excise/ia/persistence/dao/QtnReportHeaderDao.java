@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
+import th.co.baiwa.excise.ia.persistence.vo.Int022Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.utils.OracleUtils;
 
@@ -20,7 +21,7 @@ public class QtnReportHeaderDao {
 	private JdbcTemplate jdbcTemplate;
 	private String sqlTemplate = " SELECT * FROM IA_QTN_REPORT_HEADER H WHERE 1 = 1 ";
 	
-	public List<QtnReportHeader> findByCriteria(QtnReportHeader qtnReportHeader) {
+	public List<Int022Vo> findByCriteria(QtnReportHeader qtnReportHeader) {
 		List<Object> paramList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlTemplate); 
 		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnReportHdrId())) {
@@ -33,15 +34,18 @@ public class QtnReportHeaderDao {
 			paramList.add(qtnReportHeader.getQtnReportHdrName());
 		}
 		
-		List<QtnReportHeader> qtnReportHeaderList = jdbcTemplate.query(sql.toString(), paramList.toArray(),rowMapper );
+		List<Int022Vo> qtnReportHeaderList = jdbcTemplate.query(sql.toString(), paramList.toArray(),rowMapper );
 		
 		return qtnReportHeaderList;
 	}
 	
-	public List<QtnReportHeader> findByCriteriaDataTable(QtnReportHeader qtnReportHeader,int start, int length) {
+	public List<Int022Vo> findByCriteriaDataTable(QtnReportHeader qtnReportHeader,int start, int length) {
 		List<Object> paramList = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder(sqlTemplate); 
+		String str = " SELECT H.*, DECODE(D.QTN_REPORT_HDR_ID, null, 'FALSE', 'TRUE') DETAIL FROM IA_QTN_REPORT_HEADER H ";
+		StringBuilder sql = new StringBuilder(str);
+		sql.append(" LEFT JOIN IA_QTN_REPORT_DETAIL D ON D.QTN_REPORT_HDR_ID = H.QTN_REPORT_HDR_ID WHERE 1=1 ");
 		sql.append(" AND H.IS_DELETED = 'N' ");
+		
 		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnReportHdrId())) {
 			sql.append("AND H.QTN_REPORT_HDR_ID = ? ");
 			paramList.add(qtnReportHeader.getQtnReportHdrId());
@@ -57,7 +61,7 @@ public class QtnReportHeaderDao {
 			paramList.add(qtnReportHeader.getQtnMasterId());
 		}
 		
-		List<QtnReportHeader> qtnReportHeaderList = jdbcTemplate.query(OracleUtils.limitForDataTable(sql, start, length), paramList.toArray(),rowMapper );
+		List<Int022Vo> qtnReportHeaderList = jdbcTemplate.query(OracleUtils.limitForDataTable(sql, start, length), paramList.toArray(),rowMapper );
 		
 		return qtnReportHeaderList;
 	}
@@ -79,11 +83,11 @@ public class QtnReportHeaderDao {
 	}
 	
 	
-	private RowMapper<QtnReportHeader> rowMapper = new RowMapper<QtnReportHeader>() {
+	private RowMapper<Int022Vo> rowMapper = new RowMapper<Int022Vo>() {
 
 		@Override
-		public QtnReportHeader mapRow(ResultSet rs, int arg1) throws SQLException {
-			QtnReportHeader vo = new QtnReportHeader();
+		public Int022Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int022Vo vo = new Int022Vo();
 			vo.setQtnReportHdrId(rs.getLong("QTN_REPORT_HDR_ID"));
 			vo.setQtnReportHdrName(rs.getString("QTN_REPORT_HDR_NAME"));
 			vo.setCreator(rs.getString("CREATOR"));
@@ -91,9 +95,8 @@ public class QtnReportHeaderDao {
 			vo.setCreatedDate(rs.getDate("CREATED_DATE"));
 			vo.setUpdatedBy(rs.getString("UPDATED_BY"));
 			vo.setUpdatedDate(rs.getDate("UPDATED_DATE"));
-			
+			vo.setHasChild(rs.getString("DETAIL"));
 			return vo;
-
 		}
 
 	};

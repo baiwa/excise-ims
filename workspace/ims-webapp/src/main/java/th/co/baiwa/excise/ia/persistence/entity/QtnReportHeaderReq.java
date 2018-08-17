@@ -2,7 +2,7 @@ package th.co.baiwa.excise.ia.persistence.entity;
 
 import java.util.List;
 
-public class QtnReportHeaderList {
+public class QtnReportHeaderReq {
 	private List<QtnReportHeader> data;
 
 	public List<QtnReportHeader> getData() {

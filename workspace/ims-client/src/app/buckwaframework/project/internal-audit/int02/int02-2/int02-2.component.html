@@ -25,7 +25,7 @@
           <div class="field">
             <label></label>
             <div class="ui input" style="margin-top: 1.25em;">
-              <button type="submit" style="margin-left: auto;" class="ui mini primary button">
+              <button type="submit" style="margin-left: auto;" class="ui mini primary button {{ notNullDepartment() ? 'disabled' : '' }}">
                 <i class="add icon"></i>
                 เพิ่ม
               </button>
@@ -70,8 +70,13 @@
                 <td class="center">{{obj.createdBy}}</td>
                 <td class="center" *ngIf="obj.status === 'NEW'">-</td>
                 <td class="center" *ngIf="obj.status === undefined">
-                  <button class="ui mini icon button" type="button" (click)="linkToDetail(obj.qtnReportHdrId)">
+                  <button *ngIf="obj.hasChild == 'FALSE'" class="ui mini green icon button" type="button" (click)="linkToDetail(obj.qtnReportHdrId)">
+                    <i class="plus icon"></i>
+                    สร้าง
+                  </button>
+                  <button *ngIf="obj.hasChild == 'TRUE'" class="ui mini yellow icon button" type="button" (click)="linkToDetail(obj.qtnReportHdrId)">
                     <i class="edit icon"></i>
+                    แก้ไข
                   </button>
                 </td>
               </tr>
