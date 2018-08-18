@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,16 +138,40 @@ public class DateConstant {
 		return format.format(date);
 	}
 	
-	public static String convertDateEnDDMMYYYYFormat(Date date) {
+	public static String convertDateToStrDDMMYYYY(Date date) {
 		String dateString = "";
 		try {
 			if (date != null) {
-				dateString = DateFormatUtils.format(date, DD_MM_YYYY);
+				dateString = DateFormatUtils.format(date, DD_MM_YYYY,LOCAL_TH);
 			}
 		} catch (Exception e) {
-			logger.error("Error convertDateEnDDMMYYYYFormat : ", e);
+			logger.error("Error convertDateToStrDDMMYYYY : ", e);
 		}
-
 		return dateString;
 	}
+	
+	public static Date convertStrDDMMYYYYToDate(String ddMMyyyy) {
+		Date dateString = null;
+		try {
+			if (StringUtils.isNotBlank(ddMMyyyy)) {
+				dateString = DateUtils.parseDate(ddMMyyyy, LOCAL_TH, DD_MM_YYYY);
+			}
+		} catch (Exception e) {
+			logger.error("Error convertStrDDMMYYYYToDate : ", e);
+		}
+		return dateString;
+	}
+	
+	public static Date convertStrYYYYToDate(String yyyy) {
+		Date date = null;
+		try {
+			if (StringUtils.isNotBlank(yyyy)) {
+				date = DateUtils.parseDate(yyyy, LOCAL_TH, YYYY);
+			}
+		} catch (Exception e) {
+			logger.error("Error convertStrYYYYToDate : ", e);
+		}
+		return date;
+	}	
+	
 }
