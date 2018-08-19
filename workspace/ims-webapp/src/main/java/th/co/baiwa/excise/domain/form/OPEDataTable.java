@@ -1,6 +1,10 @@
 package th.co.baiwa.excise.domain.form;
 
-public class OPEDataTable {
+public class OPEDataTable extends FormUpload {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5205777718981944231L;
 	private String no;
 	private String product;
 	private String taxInvoice;

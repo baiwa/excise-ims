@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class FormUpload implements Serializable {
+public class FormUpload extends AccMonth0407DTL implements Serializable{
 	
 	/**
 	 * 

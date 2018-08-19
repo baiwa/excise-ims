@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import th.co.baiwa.excise.domain.form.AccMonth0407DTLVo;
+import th.co.baiwa.excise.domain.form.OPEDataTable;
 
 @Repository
 public class ReceiveRmatWsDetailDao {
@@ -19,8 +19,7 @@ public class ReceiveRmatWsDetailDao {
 
 	private Logger logger = LoggerFactory.getLogger(ReceiveRmatWsDetailDao.class);
 	
-	
-	public void insertTableReceiveRmatWsDetail(AccMonth0407DTLVo data ) {
+	public void insertTableReceiveRmatWsDetail(OPEDataTable value ) {
 		// inti SQL for insert to database
 		StringBuilder sql = new StringBuilder(" INSERT INTO TA_RECEIVE_RMAT_WS_DETAIL "
 				+ "(TA_RECEIVE_RMAT_WS_DETAIL_ID,"
@@ -31,35 +30,18 @@ public class ReceiveRmatWsDetailDao {
 				+ "MONTH_BOOK,"
 				+ "EXTERNAL_DATA)");
 		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nextval,?,?,?,?,?,?) ");
-		// for to set Object
 		
+		// for to set Object
 		List<Object> params = new ArrayList<>();
-		params.add(data.getNo());
-		params.add(data.getProduct());
-		params.add(data.getTaxInvoice());
-		params.add(data.getDayRecieve());
-		params.add(data.getMonthRecieve());
-		params.add(data.getExd1());
-//		List<Object[]> objArrayOfList = new ArrayList<Object[]>();
-//		for (AccMonth0407DTLVo value : dataSesion) {
-//			objArrayOfList.add(receiveRmatWsDetailToArrayObject(value));
-//		}
+		params.add(value.getNo());
+		params.add(value.getProduct());
+		params.add(value.getTaxInvoice());
+		params.add(value.getDayRecieve());
+		params.add(value.getMonthRecieve());
+		params.add(value.getExd1());
+		
 		logger.info("SQL : {}",sql.toString());
 		jdbcTemplate.update(sql.toString(),params.toArray());
-	}
-	
-	private Object[] receiveRmatWsDetailToArrayObject(AccMonth0407DTLVo value) {
-
-		List<Object> valueList = new ArrayList<Object>();
-		if (value != null) {
-			valueList.add(value.getNo());
-			valueList.add(value.getProduct());
-			valueList.add(value.getTaxInvoice());
-			valueList.add(value.getDayRecieve());
-			valueList.add(value.getMonthRecieve());
-			valueList.add(value.getExd1());
-		}
-		return valueList.toArray();
-	}
+	}	
 
 }

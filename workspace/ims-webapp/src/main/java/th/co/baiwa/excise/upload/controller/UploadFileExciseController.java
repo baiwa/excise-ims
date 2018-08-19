@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.slf4j.Logger;
@@ -17,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.excise.constant.CreatePaperConstants.CREATEPAPERCONSTANTS;
+import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.domain.form.FormUpload;
+import th.co.baiwa.excise.domain.form.OPEDataTable;
+import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
 
 @Controller
@@ -28,10 +28,13 @@ public class UploadFileExciseController {
 
 	@Autowired
 	UploadFileExciseService uploadFileExciseService;
+	
+	@Autowired
+	PlanWorksheetHeaderService planWorksheetHeaderService;
 
 	@PostMapping("excel")
 	@ResponseBody
-	public List<FormUpload> excel(@ModelAttribute FormUpload mainForm ,  HttpServletRequest httpServletRequest) throws EncryptedDocumentException, InvalidFormatException, IOException{
+	public DataTableAjax<OPEDataTable> excel(@ModelAttribute FormUpload mainForm) throws EncryptedDocumentException, InvalidFormatException, IOException{
 		logger.debug("mainForm : " + mainForm);
 		List<FormUpload> fuList = new ArrayList<>();
 		FormUpload fu = new FormUpload();
@@ -56,10 +59,12 @@ public class UploadFileExciseController {
 			fuList.add(fu);
 		}
 		
-		
-		httpServletRequest.getSession().setAttribute(CREATEPAPERCONSTANTS.UPLOAD_OBJTEM, fuList);
-		
-		return fuList;
+		List<OPEDataTable> result = planWorksheetHeaderService.sumData(fuList, mainForm);
+		DataTableAjax<OPEDataTable> dataTableAjax = new DataTableAjax<>();
+		dataTableAjax.setRecordsTotal(Long.valueOf(result.size()));
+		dataTableAjax.setRecordsFiltered(Long.valueOf(result.size()));
+		dataTableAjax.setData(result);
+		return dataTableAjax;
 	}
 
 }

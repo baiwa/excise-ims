@@ -21,7 +21,6 @@ import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.CommonAddress;
 import th.co.baiwa.excise.domain.MockupVo;
 import th.co.baiwa.excise.domain.form.AccMonth0407DTL;
-import th.co.baiwa.excise.domain.form.AccMonth0407DTLVo;
 import th.co.baiwa.excise.domain.form.FormUpload;
 import th.co.baiwa.excise.domain.form.OPEDataTable;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseRegisttionNumberDao;
@@ -489,7 +488,47 @@ public class PlanWorksheetHeaderService {
 		return address;
 	}
 	
-	public List<OPEDataTable> sumData(List<FormUpload> formUploadList, List<OPEDataTable> opeDataTableList) {
+	public List<OPEDataTable> sumData(List<FormUpload> formUploadList, FormUpload mainForm) {
+
+		List<OPEDataTable> opeDataTableList = new ArrayList<OPEDataTable>();
+		OPEDataTable opeDataTable = new OPEDataTable();
+		FormUpload database = mainForm;
+		
+		opeDataTable.setNo("1");
+		opeDataTable.setProduct(database.getProduct1());
+		opeDataTable.setMonthRecieve(database.getMonthRecieve1());
+		opeDataTableList.add(opeDataTable);
+
+		opeDataTable = new OPEDataTable();
+		opeDataTable.setNo("2");
+		opeDataTable.setProduct(database.getProduct2());
+		opeDataTable.setMonthRecieve(database.getMonthRecieve2());
+		opeDataTableList.add(opeDataTable);
+
+		opeDataTable = new OPEDataTable();
+		opeDataTable.setNo("3");
+		opeDataTable.setProduct(database.getProduct3());
+		opeDataTable.setMonthRecieve(database.getMonthRecieve3());
+		opeDataTableList.add(opeDataTable);
+
+		opeDataTable = new OPEDataTable();
+		opeDataTable.setNo("4");
+		opeDataTable.setProduct(database.getProduct4());
+		opeDataTable.setMonthRecieve(database.getMonthRecieve4());
+		opeDataTableList.add(opeDataTable);
+
+		opeDataTable = new OPEDataTable();
+		opeDataTable.setNo("5");
+		opeDataTable.setProduct(database.getProduct5());
+		opeDataTable.setMonthRecieve(database.getMonthRecieve5());
+		opeDataTableList.add(opeDataTable);
+
+		opeDataTable = new OPEDataTable();
+		opeDataTable.setNo("6");
+		opeDataTable.setProduct(database.getProduct6());
+		opeDataTable.setMonthRecieve(database.getMonthRecieve6());
+		opeDataTableList.add(opeDataTable);
+		
 		List<OPEDataTable> returnDataList = new ArrayList<OPEDataTable>();
 		if (BeanUtils.isNotEmpty(formUploadList)) {
 			for (OPEDataTable opeData : opeDataTableList) {
@@ -502,12 +541,12 @@ public class PlanWorksheetHeaderService {
 							opeData.setCalMax(opeData.getMonthRecieve());
 						} else {
 							opeData.setCalMax(opeData.getDayRecieve());
-
+							
 						}
 						if (NumberUtils.stringToLong(opeData.getExd1()) > NumberUtils.stringToLong(opeData.getCalMax())) {
 							opeData.setCalMax(opeData.getExd1());
 						}
-
+						
 						opeData.setDiff((NumberUtils.stringToLong(opeData.getTaxInvoice()) - NumberUtils.stringToLong(opeData.getCalMax()))+"");
 						break;
 					}
@@ -515,7 +554,7 @@ public class PlanWorksheetHeaderService {
 				returnDataList.add(opeData); 
 			}
 		}
-		OPEDataTable opeDataTable;
+		OPEDataTable opeDataTable1;
 		FormUpload formUpload;
 		for (int  i = 1 ; i < formUploadList.size() ; i++) {
 			formUpload = new FormUpload();
@@ -527,31 +566,14 @@ public class PlanWorksheetHeaderService {
 				}
 			}
 			if (!isExist) {
-				opeDataTable = new OPEDataTable();
-				opeDataTable.setTaxInvoice(formUpload.getColumn3());
-				opeDataTable.setDayRecieve(formUpload.getColumn4());
-				opeDataTable.setExd1(formUpload.getColumn6());
-				returnDataList.add(opeDataTable);
+				opeDataTable1 = new OPEDataTable();
+				opeDataTable1.setTaxInvoice(formUpload.getColumn3());
+				opeDataTable1.setDayRecieve(formUpload.getColumn4());
+				opeDataTable1.setExd1(formUpload.getColumn6());
+				returnDataList.add(opeDataTable1);
 			}
 		}
 		return returnDataList;
 	}
-	
-	public void setDataInSession(List<OPEDataTable> result, List<AccMonth0407DTLVo> dataSesion) {
-		
-		for (OPEDataTable rs : result) {
-			AccMonth0407DTLVo obj = new AccMonth0407DTLVo();
-			
-			obj.setNo(rs.getNo());
-			obj.setProduct(rs.getProduct());
-			obj.setTaxInvoice(rs.getTaxInvoice());
-			obj.setDayRecieve(rs.getDayRecieve());
-			obj.setMonthRecieve(rs.getMonthRecieve());
-			obj.setExd1(rs.getExd1());
-			obj.setCalMax(rs.getCalMax());
-			obj.setDiff(rs.getDiff());	
-			dataSesion.add(obj);
-		}
-		
-	}
+
 }
