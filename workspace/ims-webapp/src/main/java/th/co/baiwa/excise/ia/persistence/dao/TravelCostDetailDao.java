@@ -62,8 +62,8 @@ public class TravelCostDetailDao {
 	    		vo.setVersion(rs.getBigDecimal("VERSION"));
 	    		
 	    		//format date
-	    		String createdDate = DateConstant.convertDateEnDDMMYYYYFormat(rs.getDate("CREATED_DATE"));
-	    		String updatedDate = DateConstant.convertDateEnDDMMYYYYFormat(rs.getDate("UPDATED_DATE"));
+	    		String createdDate = DateConstant.convertDateToStrDDMMYYYY(rs.getDate("CREATED_DATE"));
+	    		String updatedDate = DateConstant.convertDateToStrDDMMYYYY(rs.getDate("UPDATED_DATE"));
 	    		
 	    		vo.setCreatedDate(createdDate);	    		
 	    		vo.setUpdatedDate(updatedDate);

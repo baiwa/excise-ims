@@ -12,15 +12,18 @@ declare var $: any;
 export class Int09211Component implements OnInit {
 
   deparmentList : any;
-  constructor(private message: MessageBarService) { }
+  constructor(
+    private message: MessageBarService,
+    private ajax : AjaxService
+  ) { }
 
 
    calenda = function () {
     $("#year").calendar({
       maxDate: new Date(),
-      type: "month",
+      type: "year",
       text: TextDateTH,
-      formatter: formatter("ดป")
+      formatter: formatter("ป")
     });
   }
   clickSearch = function () {
@@ -28,10 +31,9 @@ export class Int09211Component implements OnInit {
     $('#tableData').DataTable().ajax.reload();
   }
   clickClear = ()  =>{   
-    this.deparmentDropdown();
     $("#year1").val("");
     $("#searchFlag").val("FALSE");
-    $("department").val("0");
+    $("#department").dropdown("restore defaults");
     
   }
 
@@ -68,29 +70,11 @@ export class Int09211Component implements OnInit {
   }
 
   deparmentDropdown = () =>{
-   
-    $.ajax({
-      url: "/ims-webapp/api/ia/int09211/departmentDropdown", 
-      contentType: "application/json",
-      type: "GET",
-      data: function (d) {
-        return JSON.stringify($.extend({}, d, {}));
-      },
-      success: function (data) {
 
-        var str = '';
-        str +='<option value="0">หน่วยงาน</option>';  
-        $.each( data, function( key, value ) {
-          str +="<option value='"+value.value+"'>"+value.label+"</option>";  
-        });
-
-        $("#department").html(str).dropdown();
-      }
+    const URL = "ia/int09211/departmentDropdown";
+    this.ajax.get(URL, res => {
+      this.deparmentList = res.json();
     });
-  }
-
-  isNotNull(obj: any): boolean {
-    return obj == "0";
   }
 
   dataTable = () => {
@@ -107,7 +91,7 @@ export class Int09211Component implements OnInit {
         "data": (d) => {
           return JSON.stringify($.extend({}, d, {
             "year": $("#year1").val(),
-            "department": this.isNotNull($("#department").val()) ? "" : $("#department").val(),
+            "department": $("#department").val(),
             "searchFlag": $("#searchFlag").val()
           }));
         },
@@ -129,7 +113,7 @@ export class Int09211Component implements OnInit {
         }, {
           "data": "department"
         }, {
-          "data": "updatedDate",
+          "data": "startDate",
           "className": "ui center aligned",         
         }, {
           "data": "createdBy",

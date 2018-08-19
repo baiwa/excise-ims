@@ -5,11 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -19,7 +16,6 @@ import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ia.persistence.entity.Budget;
 import th.co.baiwa.excise.ia.persistence.vo.Int09211FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int09213FormVo;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
@@ -36,12 +32,13 @@ public class BudgetDao {
 		List<Object> params = new ArrayList<>();
 		
 		if (StringUtils.isNotBlank(formVo.getYear())) {
-			sql.append(" AND  TO_CHAR(UPDATED_DATE, 'YYYYMMDD') = ? ");
-			params.add(formVo.getYear());
+			sql.append(" AND  TO_CHAR(START_DATE, 'YYYY') = TO_CHAR( ? ,'YYYY') ");
+			Date year = DateConstant.convertStrYYYYToDate(formVo.getYear());
+			params.add(year);
 			
 		}
 		if (StringUtils.isNotBlank(formVo.getDepartment())) {
-			sql.append(" AND DEPARTMENT_NAME = ?");
+			sql.append(" AND DEPARTMENT_ID = ?");
 			params.add(formVo.getDepartment());
 			
 		}
@@ -56,12 +53,13 @@ public class BudgetDao {
 		List<Object> params = new ArrayList<>();
 		
 		if (StringUtils.isNotBlank(formVo.getYear())) {
-			sql.append(" AND  TO_CHAR(UPDATED_DATE, 'YYYY') = ? ");
-			params.add(formVo.getYear());
+			sql.append(" AND  TO_CHAR(START_DATE, 'YYYY') = TO_CHAR( ? ,'YYYY') ");
+			Date year = DateConstant.convertStrYYYYToDate(formVo.getYear());
+			params.add(year);
 			
 		}
 		if (StringUtils.isNotBlank(formVo.getDepartment())) {
-			sql.append(" AND DEPARTMENT_NAME = ?");
+			sql.append(" AND DEPARTMENT_ID = ?");
 			params.add(formVo.getDepartment());
 			
 		}
@@ -79,27 +77,12 @@ public class BudgetDao {
 	    		vo.setId(rs.getString("WORK_SHEET_HEADER_ID"));
 	    		vo.setWorkSheetHeaderName(rs.getString("WORK_SHEET_HEADER_NAME"));
 	    		vo.setDepartment(rs.getString("DEPARTMENT_NAME"));
-	    		vo.setStartDate(rs.getString("START_DATE"));
-	    		vo.setEndDate(rs.getString("END_DATE"));
 	    		vo.setDescription(rs.getString("DESCRIPTION"));
-	    		vo.setCreatedBy(rs.getString("CREATED_BY"));	    		
-	    		vo.setUpdatedBy(rs.getString("UPDATED_BY"));
-	    		vo.setIsDate(rs.getString("IS_DELETED"));
-	    		vo.setVersion(rs.getString("VERSION"));
+	    		vo.setCreatedBy(rs.getString("CREATED_BY"));	    
 	    		
 	    		//format date
-	    		
-	    		//String createdDate = DateConstant.DateToString(rs.getDate("CREATED_DATE"), "dd/MM/yyyy");
-                Date date =  rs.getDate("CREATED_DATE");
-                String createdDate = DateFormatUtils.format(rs.getDate("CREATED_DATE"), "dd/MM/yyyy", DateConstant.LOCAL_TH);
-	    		String updatedDate = DateConstant.DateToString(rs.getDate("UPDATED_DATE"), "dd/MM/yyyy");
-	    		String startDate = DateConstant.DateToString(rs.getDate("START_DATE"), "dd/MM/yyyy");
-	    		String endDate = DateConstant.DateToString(rs.getDate("END_DATE"), "dd/MM/yyyy");
-	    		
-	    		vo.setCraetedDate(createdDate);	    		
-	    		vo.setUpdatedDate(createdDate);
+	    		String startDate = DateConstant.convertDateToStrDDMMYYYY(rs.getDate("START_DATE"));
 	    		vo.setStartDate(startDate);
-	    		vo.setEndDate(endDate);
 	    		
 	    		return vo;
 	    	}

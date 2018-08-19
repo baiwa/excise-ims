@@ -102,7 +102,7 @@ export class Int09213Component implements OnInit {
         $(".ui.dropdown").dropdown();
       });
     } else {
-      $("#typeRoomValue").va("");
+      $("#typeRoomValue").val("");
       $("#typeRoomLabel").hide();
       $("#typeRoomValue").hide();
     }
@@ -287,28 +287,27 @@ export class Int09213Component implements OnInit {
     this.table.on('click', 'tbody tr button.btn-edit', (e) =>{
       var closestRow = $(e.target).closest('tr');
       var data = this.table.row(closestRow).data();
-      console.log(closestRow);
+      console.log(data);     
 
       //set date on form
       $("#idEdit").val(data.workSheetDetailId);
-      $("#prefix").val(data.prefix);
-      $("#name").val(data.name);
-      $("#last").val(data.lastName);
-      $("#position").val(data.position);
-      $("#type").val(data.category);
-      $("#level").val(data.degree);
-      $("#appoveDate").val("");
-      $("#withdrawDate").val("");
-      $("#goFrom").val("");
-      $("#food").val("");
-      $("#startGoDate").val("");
-      $("#endGoDate").val("");
-      $("#numberLive").val("");
-      $("#typeWithdrawal").val("");
-      $("#typeRoom").val("");
-      $("#note").val("");
-
-      console.log(this.travelCostDetail);
+      $("#prefix").val(data.prefixForm);
+      $("#name").val(data.nameForm);
+      $("#last").val(data.lastForm);
+      $("#position").val(data.positionForm);
+      $("#type").val(data.typeForm);
+      $("#level").val(data.levelForm);
+      $("#appoveDate").val(data.appoveDateDataForm);
+      $("#withdrawDate").val(data.withdrawDateDataForm);
+      $("#goFrom").val(data.goFromForm);
+      $("#food").val(data.foodForm);
+      $("#startGoDate").val(data.startGoDateDataForm);
+      $("#endGoDate").val(data.endGoDateDataForm);
+      $("#numberLive").val(data.numberLiveForm);
+      $("#typeWithdrawal").val(data.typeWithdrawalForm);
+      $("#typeRoom").val(data.typeRoomForm);
+      $("#note").val(data.note);
+      $("#editFlag").val("edit");
 
     });
 
@@ -317,15 +316,12 @@ export class Int09213Component implements OnInit {
   onSubmit = (e) => {
     //not reload page
     e.preventDefault();
-
-    //validate form
-    // let prefix = 
-    // // if (prefix == "1") prefix = "นาย";
-    // // if (prefix == "2") prefix = "นางสาว";
-    // // if (prefix == "3") prefix = "นาง";   
+     
   
     //json data
     let data = {
+      idEdit : e.target.idEdit.value,
+      editFlag : e.target.editFlag.value,
       prefix: e.target.prefix.value,
       name: e.target.name.value,
       last: e.target.last.value,
@@ -351,13 +347,23 @@ export class Int09213Component implements OnInit {
     //post data
     const URL = "ia/int09213/addData";
     this.ajax.post(URL, JSON.stringify(data), res => {
-      this.travelCostDetail.push(res.json());
+      //success 
+      if($("#editFlag").val() == 'edit'){
+          const index = this.travelCostDetail.findIndex(obj => obj.workSheetDetailId == res.json().workSheetDetailId);
+          console.log("id : ",res.json().workSheetDetailId);
+          console.log("Index : ", index);
+          this.travelCostDetail[index] = res.json();
+      }else{
+        this.travelCostDetail.push(res.json());
+      }
+     
       console.log("Push array : ", this.travelCostDetail);
       // $('#tableData').DataTable().ajax.reload();
       this.table.clear().draw();
       this.table.rows.add(this.travelCostDetail); // Add new data
       this.table.columns.adjust().draw(); // Redraw the DataTable
       this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
+      $("#editFlag").val("");
     });
 
 

@@ -1,193 +1,211 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
 public class Int09213FormVo {
-    private String id;
-    private String prefix;
-    private String name;
-    private String last;
-    private String position;
-    private String type;
-    private String level;
-    private String appoveDateData;
-    private String withdrawDateData;
-    private String goFrom;
-    private String food;
-    private String startGoDateData;
-    private String endGoDateData;
-    private String typeWithdrawal;
-    private String numberLive;
-    private String typeRoom;
-    private String note;
-    private String lovIdMaster;
-    private String days;
-    private String otherCost;
-    private String travelCost;
+	private String id;
+	private String prefix;
+	private String name;
+	private String last;
+	private String position;
+	private String type;
+	private String level;
+	private String appoveDateData;
+	private String withdrawDateData;
+	private String goFrom;
+	private String food;
+	private String startGoDateData;
+	private String endGoDateData;
+	private String typeWithdrawal;
+	private String numberLive;
+	private String typeRoom;
+	private String note;
+	private String lovIdMaster;
+	private String days;
+	private String otherCost;
+	private String travelCost;
+	private String editFlag;
+	private String idEdit;
 
-    public String getOtherCost() {
-        return otherCost;
-    }
+	public String getIdEdit() {
+		return idEdit;
+	}
 
-    public void setOtherCost(String otherCost) {
-        this.otherCost = otherCost;
-    }
+	public void setIdEdit(String idEdit) {
+		this.idEdit = idEdit;
+	}
 
-    public String getTravelCost() {
-        return travelCost;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setTravelCost(String travelCost) {
-        this.travelCost = travelCost;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public String getDays() {
-        return days;
-    }
+	public String getPrefix() {
+		return prefix;
+	}
 
-    public void setDays(String days) {
-        this.days = days;
-    }
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getPrefix() {
-        return prefix;
-    }
+	public String getLast() {
+		return last;
+	}
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
+	public void setLast(String last) {
+		this.last = last;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getPosition() {
+		return position;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setPosition(String position) {
+		this.position = position;
+	}
 
-    public String getLast() {
-        return last;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public void setLast(String last) {
-        this.last = last;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public String getPosition() {
-        return position;
-    }
+	public String getLevel() {
+		return level;
+	}
 
-    public void setPosition(String position) {
-        this.position = position;
-    }
+	public void setLevel(String level) {
+		this.level = level;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public String getAppoveDateData() {
+		return appoveDateData;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public void setAppoveDateData(String appoveDateData) {
+		this.appoveDateData = appoveDateData;
+	}
 
-    public String getLevel() {
-        return level;
-    }
+	public String getWithdrawDateData() {
+		return withdrawDateData;
+	}
 
-    public void setLevel(String level) {
-        this.level = level;
-    }
+	public void setWithdrawDateData(String withdrawDateData) {
+		this.withdrawDateData = withdrawDateData;
+	}
 
-    public String getAppoveDateData() {
-        return appoveDateData;
-    }
+	public String getGoFrom() {
+		return goFrom;
+	}
 
-    public void setAppoveDateData(String appoveDateData) {
-        this.appoveDateData = appoveDateData;
-    }
+	public void setGoFrom(String goFrom) {
+		this.goFrom = goFrom;
+	}
 
-    public String getWithdrawDateData() {
-        return withdrawDateData;
-    }
+	public String getFood() {
+		return food;
+	}
 
-    public void setWithdrawDateData(String withdrawDateData) {
-        this.withdrawDateData = withdrawDateData;
-    }
+	public void setFood(String food) {
+		this.food = food;
+	}
 
-    public String getGoFrom() {
-        return goFrom;
-    }
+	public String getStartGoDateData() {
+		return startGoDateData;
+	}
 
-    public void setGoFrom(String goFrom) {
-        this.goFrom = goFrom;
-    }
+	public void setStartGoDateData(String startGoDateData) {
+		this.startGoDateData = startGoDateData;
+	}
 
-    public String getFood() {
-        return food;
-    }
+	public String getEndGoDateData() {
+		return endGoDateData;
+	}
 
-    public void setFood(String food) {
-        this.food = food;
-    }
+	public void setEndGoDateData(String endGoDateData) {
+		this.endGoDateData = endGoDateData;
+	}
 
-    public String getStartGoDateData() {
-        return startGoDateData;
-    }
+	public String getTypeWithdrawal() {
+		return typeWithdrawal;
+	}
 
-    public void setStartGoDateData(String startGoDateData) {
-        this.startGoDateData = startGoDateData;
-    }
+	public void setTypeWithdrawal(String typeWithdrawal) {
+		this.typeWithdrawal = typeWithdrawal;
+	}
 
-    public String getEndGoDateData() {
-        return endGoDateData;
-    }
+	public String getNumberLive() {
+		return numberLive;
+	}
 
-    public void setEndGoDateData(String endGoDateData) {
-        this.endGoDateData = endGoDateData;
-    }
+	public void setNumberLive(String numberLive) {
+		this.numberLive = numberLive;
+	}
 
-    public String getTypeWithdrawal() {
-        return typeWithdrawal;
-    }
+	public String getTypeRoom() {
+		return typeRoom;
+	}
 
-    public void setTypeWithdrawal(String typeWithdrawal) {
-        this.typeWithdrawal = typeWithdrawal;
-    }
+	public void setTypeRoom(String typeRoom) {
+		this.typeRoom = typeRoom;
+	}
 
-    public String getNumberLive() {
-        return numberLive;
-    }
+	public String getNote() {
+		return note;
+	}
 
-    public void setNumberLive(String numberLive) {
-        this.numberLive = numberLive;
-    }
+	public void setNote(String note) {
+		this.note = note;
+	}
 
-    public String getTypeRoom() {
-        return typeRoom;
-    }
+	public String getLovIdMaster() {
+		return lovIdMaster;
+	}
 
-    public void setTypeRoom(String typeRoom) {
-        this.typeRoom = typeRoom;
-    }
+	public void setLovIdMaster(String lovIdMaster) {
+		this.lovIdMaster = lovIdMaster;
+	}
 
-    public String getNote() {
-        return note;
-    }
+	public String getDays() {
+		return days;
+	}
 
-    public void setNote(String note) {
-        this.note = note;
-    }
+	public void setDays(String days) {
+		this.days = days;
+	}
 
-    public String getLovIdMaster() {
-        return lovIdMaster;
-    }
+	public String getOtherCost() {
+		return otherCost;
+	}
 
-    public void setLovIdMaster(String lovIdMaster) {
-        this.lovIdMaster = lovIdMaster;
-    }
+	public void setOtherCost(String otherCost) {
+		this.otherCost = otherCost;
+	}
+
+	public String getTravelCost() {
+		return travelCost;
+	}
+
+	public void setTravelCost(String travelCost) {
+		this.travelCost = travelCost;
+	}
+
+	public String getEditFlag() {
+		return editFlag;
+	}
+
+	public void setEditFlag(String editFlag) {
+		this.editFlag = editFlag;
+	}
 }

@@ -50,8 +50,13 @@ public class IaTravelCostWorkSheetDetailService {
 	
 	public Int09213Vo addData(Int09213FormVo formVo) {
         Random rand = new Random();
-
-        int  randomId = rand.nextInt(50) + 1;
+        int  randomId = 0;
+        if (StringUtils.isNotBlank(formVo.getEditFlag())) {
+        	  randomId = Integer.parseInt(formVo.getIdEdit());
+		}else {
+			  randomId = rand.nextInt(50) + 1;
+		}
+        
 
         Lov lov = lovRepository.findByTypeAndLovId("ACC_FEE",Long.valueOf(formVo.getLevel()));
 
@@ -147,13 +152,11 @@ public class IaTravelCostWorkSheetDetailService {
         boolean breakLoop = false;
         int hour = Integer.parseInt(hours);
         int day = 0;
-        int hourDesc = 0;
         while (!breakLoop) {
             if (hour >= 24) { //hours > 24
                 hour -= 24;
                 day++;
             } else {  //hours < 24
-                hourDesc = hour;
                 if (hour>5){
                     hour=5;
                 }else{

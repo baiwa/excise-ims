@@ -1,16 +1,15 @@
 package th.co.baiwa.excise.ia.service;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.BudgetDao;
 import th.co.baiwa.excise.ia.persistence.entity.Budget;
 import th.co.baiwa.excise.ia.persistence.vo.Int09211FormVo;
-
-import java.util.List;
 
 @Service
 public class IaTravelCostWorkSheetHeaderService {	
@@ -19,13 +18,7 @@ public class IaTravelCostWorkSheetHeaderService {
 	private BudgetDao budgetDao; 
 	
 	public DataTableAjax<Budget> findAll(Int09211FormVo formVo){			
-		
-		///Year - 543
-		if (StringUtils.isNotBlank(formVo.getYear())) {
-			int year = NumberUtils.toInt(formVo.getYear());
-			formVo.setYear(Integer.toString(year-543));
-		}
-				
+			
 		//query data
 		List<Budget> list = budgetDao.findAll(formVo);
 		Long count = budgetDao.count(formVo);
