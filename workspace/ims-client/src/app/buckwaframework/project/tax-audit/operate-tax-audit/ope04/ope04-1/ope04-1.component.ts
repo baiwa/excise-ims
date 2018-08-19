@@ -118,9 +118,6 @@ export class Ope041Component implements OnInit, AfterViewInit {
         this.firstDataList = res[0];
       });
     });
-
-    // const URL2 = AjaxService.CONTEXT_PATH + "/filter/exise/getSessionEmptyData";
-    // $.post(URL2, res => {});
   }
 
   ngAfterViewInit(): void {
@@ -148,25 +145,103 @@ export class Ope041Component implements OnInit, AfterViewInit {
   };
 
   onUpload = (event: any) => {
+    this.dataTB = [];
+    for (var i = 0; i < this.showDt.data().length; i++) {
+      this.dataTB.push(this.showDt.data()[i]);
+    }
+
     // Prevent actual form submission
     event.preventDefault();
 
     //send form data
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
-
-    let url = `upload/excel`;
+    for (var i = 0; i < this.showDt.data().length; i++) {
+      formBody.append("product" + (i + 1), this.dataTB[i].product);
+      formBody.append("monthRecieve" + (i + 1), this.dataTB[i].monthRecieve);
+    }
+    console.log(formBody);
+    let url = "/upload/excel";
     this.ajax.upload(
       url,
       formBody,
       res => {
         this.row = res.json();
+        if (this.showDt != null && this.showDt != undefined) {
+          this.showDt.destroy();
+        }
+        this.showDt = $("#showDt").DataTable({
+          lengthChange: false,
+          searching: false,
+          ordering: false,
+          pageLength: 10,
+          processing: true,
+          serverSide: false,
+          paging: false,
+          data: this.row.data,
+          columns: [
+            {
+              render: function(data, type, row, meta) {
+                return meta.row + meta.settings._iDisplayStart + 1;
+              },
+              className: "center"
+            },
+            {
+              data: "product",
+              className: "center"
+            },
+            {
+              data: "taxInvoice",
+              render: $.fn.dataTable.render.number(",", ".", 0, ""),
+              className: "right"
+            },
+            {
+              data: "dayRecieve",
+              render: $.fn.dataTable.render.number(",", ".", 0, ""),
+              className: "right"
+            },
+            {
+              data: "monthRecieve",
+              render: $.fn.dataTable.render.number(",", ".", 0, ""),
+              className: "right"
+            },
+            {
+              data: "exd1",
+              render: $.fn.dataTable.render.number(",", ".", 0, ""),
+              className: "right"
+            },
+            {
+              data: "calMax",
+              render: $.fn.dataTable.render.number(",", ".", 0, ""),
+              className: "right"
+            },
+            {
+              data: "diff",
+              render: $.fn.dataTable.render.number(",", ".", 0, ""),
+              className: "right amount"
+            }
+          ],
+          fnDrawCallback: function(oSettings) {
+            if ($(".amount").length > 0) {
+              $(".amount").each(function() {
+                if (this.innerHTML === "0") {
+                  this.className = "right amount green";
+                }
+                if (
+                  +this.innerHTML.split(",").join("") > 0 ||
+                  +this.innerHTML.split(",").join("") < 0
+                ) {
+                  this.className = "right amount red";
+                }
+                if (this.innerHTML == null || this.innerHTML === "") {
+                  this.className = "center amount null";
+                  this.innerHTML = "-";
+                }
+              });
+            }
+          }
+        });
 
-        // if (this.showDt != null && this.showDt != undefined) {
-        //   this.showDt.destroy();
-        // }
-        this.showDt.destroy();
-        this.initDatatable();
         this.messageBarService.successModal("อัพโหลดข้อมูลสำเร็จ", "สำเร็จ");
       },
       err => {
@@ -316,11 +391,10 @@ export class Ope041Component implements OnInit, AfterViewInit {
       this.dataTB.push(this.showDt.data()[i]);
     }
     console.log(this.dataTB);
-
-    const URL = "ope/SaveTable";
+    const URL = "/ope/SaveTable";
     this.ajax.post(
       URL,
-      {},
+      JSON.stringify(this.dataTB),
       res => {
         this.messageBarService.successModal("บันทึกข้อมูลสำเร็จ", "สำเร็จ");
       },
