@@ -24,7 +24,7 @@ public class BudgetDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private final String SQL_IA_TRAVEL_COST_WS_HEADER = "SELECT * FROM IA_TRAVEL_COST_WS_HEADER WHERE 1=1";
+	private final String SQL_IA_TRAVEL_COST_WS_HEADER = "SELECT * FROM IA_TRAVEL_COST_WS_HEADER WHERE IS_DELETED='N' ";
 	
 	public Long count(Int09211FormVo formVo) {
 		
@@ -64,8 +64,8 @@ public class BudgetDao {
 			
 		}
 		
-		String sqlLimit = OracleUtils.limitForDataTable(sql.toString(), formVo.getStart(),formVo.getLength());
-        List<Budget> list = jdbcTemplate.query(sqlLimit, params.toArray(), budgetRowmapper);
+		//String sqlLimit = OracleUtils.limitForDataTable(sql.toString(), formVo.getStart(),formVo.getLength());
+        List<Budget> list = jdbcTemplate.query(sql.toString(), params.toArray(), budgetRowmapper);
         return list;
     }
 	

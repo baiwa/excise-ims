@@ -17,15 +17,15 @@ public class HeaderDetailDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	    
-		public List<LabelValueBean> drodownList(String type,String lovIdMaster){
-			String SQL = "SELECT * FROM SYS_LOV WHERE TYPE=? AND LOV_ID_MASTER= ?";
-			return jdbcTemplate.query(SQL,new Object[] {type,lovIdMaster} ,ropdownListRowmapper);
+		public List<LabelValueBean> drodownList(String lovIdMaster){
+			String SQL = "SELECT * FROM SYS_LOV WHERE  LOV_ID_MASTER= ?";
+			return jdbcTemplate.query(SQL,new Object[] {lovIdMaster} ,ropdownListRowmapper);
 		}
 		
 		private RowMapper<LabelValueBean> ropdownListRowmapper = new RowMapper<LabelValueBean>() {
 		    	@Override
 		    	public LabelValueBean mapRow(ResultSet rs, int arg1) throws SQLException {
-		    		LabelValueBean  lv = new LabelValueBean(rs.getString("TYPE_DESCRIPTION"),rs.getString("LOV_ID"));
+		    		LabelValueBean  lv = new LabelValueBean(rs.getString("SUB_TYPE_DESCRIPTION"),rs.getString("LOV_ID"));
 		    		return lv;
 		    	}
 

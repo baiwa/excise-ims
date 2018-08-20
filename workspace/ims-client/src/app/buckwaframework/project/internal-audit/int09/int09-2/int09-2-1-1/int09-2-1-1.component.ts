@@ -60,10 +60,28 @@ export class Int09211Component implements OnInit {
     if (!$('input[type="checkbox"]').is(':checked')) {
       this.message.alert("กรุณาเลือกรายการ")
       return false
-  }
+    }
+
+    var dataList = [];
+		var node =  $('#tableData').DataTable().rows().nodes();
+		$.each(node, function (index, value) {
+			if ($(this).find('input[type=checkbox]').is(':checked')) {
+		    	var data =  $('#tableData').DataTable().rows().data()[index];
+          dataList.push(parseInt(data.id));
+		    }
+    });
     this.message.comfirm((res) => {
       if(res){
-        console.log("top");
+        const URL = "ia/int09211/delete";
+    this.ajax.post(URL,dataList, res => {
+      const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $('#tableData').DataTable().ajax.reload();
+    });
       }
       
     },"ลบรายการ");
@@ -79,7 +97,7 @@ export class Int09211Component implements OnInit {
 
   dataTable = () => {
     var table = $('#tableData').DataTable({
-      "serverSide": true,
+      "serverSide": false,
       "searching": false,
       "ordering": false,
       "processing": true,

@@ -1,22 +1,19 @@
 package th.co.baiwa.excise.ia.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.*;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.entity.Budget;
 import th.co.baiwa.excise.ia.persistence.vo.Int09211FormVo;
 import th.co.baiwa.excise.ia.service.IaTravelCostWorkSheetHeaderService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("api/ia/int09211")
@@ -46,5 +43,18 @@ public class Int09211Controller {
 	public List<LabelValueBean> departmentDropdown(){
 		return int0911Service.departmentDropdown();
 	}
+
+	@PostMapping("/delete")
+    @ResponseBody
+    public Message delete(@RequestBody List<Long> ids){
+
+        try {
+            int0911Service.delete(ids);
+        } catch (Exception e) {
+            return ApplicationCache.getMessage("MSG_00006");
+        }
+        return ApplicationCache.getMessage("MSG_00005");
+
+    }
 	
 }

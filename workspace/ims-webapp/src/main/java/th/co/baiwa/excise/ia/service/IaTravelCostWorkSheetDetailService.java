@@ -102,6 +102,7 @@ public class IaTravelCostWorkSheetDetailService {
         vo.setNameForm( formVo.getName());
         vo.setLastForm(formVo.getLast());
         vo.setPositionForm(formVo.getPosition());
+        vo.setCaseForm(formVo.getCaseType());
         vo.setTypeForm(formVo.getType());
         vo.setLevelForm(formVo.getLevel());
         vo.setAppoveDateDataForm(formVo.getAppoveDateData());

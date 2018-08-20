@@ -1,21 +1,36 @@
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
     <span>รายงานประมาณการค่าใช้จ่ายในการเดินทาง</span>
   </div>
-  <form (ngSubmit)="saveAndNext($event)" ngNativeValidate>
+  <form (submit)="saveAndNext($event)" ngNativeValidate>
   <div class="ui form center aligned" id="int09-1"   >
     <div class="ui attached  segment">
         
         <div class="ui two column centered grid">
             <div class="two wide column"><label>สรรพสามิตภาค</label></div>
-            <div class="five wide column"><input type="text" id="sector" name="sector" required></div>           
+            <div class="five wide column">
+                <select class="ui dropdown search selection" id="sector" (change)="sectorOnchange($event)">
+                    <option value="">เลือก</option>
+                    <option *ngFor="let data of sectorList" value="{{data.value}}">{{data.label}}</option>
+                </select>
+            </div>           
         </div>
         <div class="ui two column centered grid">       
             <div class="two wide column"><label>สรรพสามิตพื้นที่</label></div>
-            <div class="five wide column"><input type="text" id="area" name="area" required></div> 
+            <div class="five wide column">
+                <select class="ui dropdown search selection" id="area" (change)="areaOnChange($event)">
+                    <option value="">เลือก</option>
+                    <option *ngFor="let data of areaDropdown" value="{{data.value}}">{{data.label}}</option>
+                </select>
+            </div> 
         </div>
         <div class="ui two column centered grid">       
             <div class="two wide column"><label>สรพพสามิตสาขา</label></div>
-            <div class="five wide column"><input type="text" id="branch" name="branch" required></div>
+            <div class="five wide column">
+                <select class="ui dropdown search selection" id="branch" >
+                    <option value="">เลือก</option>
+                    <option *ngFor="let data of branchDropdown" value="{{data.value}}">{{data.label}}</option>
+                </select>
+            </div>
         </div>
         <div class="ui two column centered grid">       
             <div class="two wide column"><label>หน่วยงานผู้ตรวจ</label></div>
