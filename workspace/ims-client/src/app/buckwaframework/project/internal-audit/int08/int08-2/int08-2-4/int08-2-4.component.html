@@ -1,0 +1,234 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>รายละเอียดหัวกระดาษทำการ</span>
+    </div>
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="two wide field "></div>
+          <div class="two wide field ">
+            <label class="ui right ">ชื่อกระดาษทำการ</label>
+          </div>
+          <div class="ten wide field ">
+            <input type="text" placeholder="ชื่อกระดาษทำการ" maxlength="100" class="custom" name="riskHrdPaperName" id="riskHrdPaperName"
+              [(ngModel)]="riskHrdPaperName">
+          </div>
+
+        </div>
+        <div class="inline fields">
+          <div class="two wide field "></div>
+          <div class="two wide field">
+            <label>ปีงบประมาณ</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear" disabled="disabled">
+          </div>
+          <div class="two wide field ">
+            <label>ผู้ตรวจ</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="ผู้ตรวจ" class="custom" name="userCheck" id="userCheck" [(ngModel)]="userCheck">
+          </div>
+        </div>
+
+        <div class="inline fields"></div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="sixteen wide column">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>เพิ่มข้อมูลกระดาษทำการ</span>
+    </div>
+    <div class="ui attached segment">
+      <div class="ui form">
+
+        <div class="ui top attached tabular menu">
+          <a class="item active" data-tab="first">เพิ่มข้อมูล</a>
+          <a class="item " data-tab="second">เพิ่มข้อมูล Excel File</a>
+        </div>
+
+        <div class="ui bottom attached tab segment active" data-tab="first">
+          <div class="inline fields">
+            <div class="two wide field "></div>
+            <div class="two wide field">
+              <label>ชื่อระบบสารสนเทศ</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="ชื่อระบบสารสนเทศ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear" >
+            </div>
+            <div class="two wide field ">
+              <label>ค่าความเสี่ยง</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="ค่าความเสี่ยง" class="custom" name="userCheck" id="userCheck" [(ngModel)]="userCheck">
+            </div>
+          </div>
+          <br>
+          <div class="inline fields">
+            <div class="sixteen wide field ">
+              <div class="seven wide field "></div>
+              <button class="ui mini primary button" (click)="addObjRiskDtl() ">
+                <i class="save icon"></i>
+                เพิ่ม
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui bottom attached tab segment " data-tab="second">
+          <div class="inline fields">
+            <div class="five wide field "></div>
+            <div class="five wide field ">
+              <input type="file" />
+            </div>
+            <button class="ui mini primary button">
+              ตัวอย่างแบบฟอร์มนำเข้าระบบ
+            </button>
+          </div>
+          <br>
+          <div class="inline fields">
+            <div class="sixteen wide field ">
+              <div class="seven wide field "></div>
+              <button class="ui mini primary button" (click)="addObjRiskDtl() ">
+                <i class="save icon"></i>
+                เพิ่ม
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <table id="dataTable"  class="ui small celled table" style="width: 100%;">
+          <thead>
+            <tr>
+              <th  rowspan="2" style="text-align: center !important">ลำดับ</th>
+              <th  rowspan="2" style="text-align: center !important" class="ten wide field ">ระบบสารสนเทศฯ ของกรมสรรพสามิต</th>
+              <th  rowspan="2" style="text-align: center !important" class="two wide field ">ค่าความเสี่ยง</th>
+              <th  colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
+            </tr>
+            <tr>
+              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
+              <th style="text-align: center !important">แปลค่า</th>
+            </tr>
+          </thead>
+        </table>
+
+        <div class="inline fields"></div>
+        <div class="inline fields ">
+          <div class="sixteen wide field ">
+            <div class="six wide field "></div>
+            <button class="ui mini primary button" (click)="saveRiskAssInfHdr()">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <button class="ui mini primary button" (click)="modalConditionRL()">
+              กำหนดเงื่อนไข RL
+            </button>
+            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+              Export
+            </button>
+            <button class="ui mini primary button" (click)="cancelFlow()">
+              ยกเลิก
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="ui fullscreen modal hidden transition " id="ConditionRL">
+  <div class="header " style="text-align: center" >กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</div>
+  <div class="content">
+      <div class="sixteen wide column">
+          <table class="ui small celled table aligned hover">
+            <thead>
+              <tr>
+                <th style="text-align: center !important">ที่</th>
+                <th style="text-align: center !important" class="two wide field ">เงื่อนไข</th>
+                <th style="text-align: center !important" >ค่าเริ่มต้น</th>
+                <th style="text-align: center !important" >ถึง</th>
+                <th style="text-align: center !important" >ค่าสิ้นสุด</th>
+                <th style="text-align: center !important" class="two wide field ">ค่า RL</th>
+                <th style="text-align: center !important">แปลงค่า</th>
+                <th style="text-align: center !important" class="two wide field ">สี</th>
+                <th style="text-align: center !important">#</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="aligned center">1</td>
+                <td class="aligned center">
+                  <select class="ui fluid dropdown" id="selectConditionRick">
+                    <option value="ระหว่าง">ระหว่าง</option>
+                    <option value="มากกว่า">มากกว่า</option>
+                    <option value="น้อยกว่า">น้อยกว่า</option>
+                    <option value="เท่ากับ">เท่ากับ</option>
+                  </select>
+                </td>
+                <td class="aligned center">
+                  <div class="ui input">
+                    <input type="text">
+                  </div>
+                </td>
+                <td class="aligned center">-</td>
+                <td class="aligned center">
+                  <div class="ui input">
+                    <input type="text">
+                  </div>
+                </td>
+                <td class="aligned center">
+                  <select class="ui fluid dropdown" id="selectConvertValue">
+                    <option value="ต่ำมาก">ต่ำมาก</option>
+                    <option value="ต่ำ">ต่ำ</option>
+                    <option value="ปานกลาง">ปานกลาง</option>
+                    <option value="สูง">สูง</option>
+                    <option value="สูงมาก">สูงมาก</option>
+                  </select>
+                </td>
+                <td class="aligned center">
+                  <div class="ui input">
+                    <input type="text">
+                  </div>
+                </td>
+                <td class="aligned center">
+                    <select class="ui fluid dropdown" id="selectColor">
+                      <option value="ต่ำมาก">แดง</option>
+                      <option value="ต่ำ">เหลือง</option>
+                      <option value="ปานกลาง">เขียว</option>
+                    </select>
+                  </td>
+                <td class="aligned center">
+                  <button class="ui icon red mini button" type="button" (click)="delRow(i)">
+                    <i class="times icon"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+  </div>
+  <div class="actions">
+      <div class="ui center aligned grid">
+        <div class="sixteen wide column">
+          <button class="ui mini primary button" (click)="addRow()">
+            <i class="add icon"></i>
+            เพิ่ม
+          </button>
+          <button class="ui mini primary button width-100">
+            <i class="save icon"></i>
+            บันทึก
+          </button>
+          <button class="ui mini button width-100" (click)="closeConditionRL()">
+            <i class="close icon"></i>
+            ปิด
+          </button>
+        </div>
+      </div>
+    </div>
+</div>

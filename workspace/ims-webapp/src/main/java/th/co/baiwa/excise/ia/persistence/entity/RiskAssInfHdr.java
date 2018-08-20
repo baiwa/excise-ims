@@ -27,6 +27,9 @@ public class RiskAssInfHdr extends BaseEntity {
 	@Column(name = "RISK_ASS_INF_HDR_NAME")
 	private String riskAssInfHdrName;
 
+	@Column(name = "RISK_INF_PAPER_NAME")
+	private String riskInfPaperName;
+
 	@Column(name = "BUDGET_YEAR")
 	private String budgetYear;
 
@@ -68,6 +71,14 @@ public class RiskAssInfHdr extends BaseEntity {
 		this.riskAssInfHdrName = riskAssInfHdrName;
 	}
 
+	public String getRiskInfPaperName() {
+		return riskInfPaperName;
+	}
+
+	public void setRiskInfPaperName(String riskInfPaperName) {
+		this.riskInfPaperName = riskInfPaperName;
+	}
+	
 	public String getActive() {
 		return active;
 	}
