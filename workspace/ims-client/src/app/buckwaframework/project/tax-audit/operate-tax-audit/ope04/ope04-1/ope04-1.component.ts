@@ -138,10 +138,8 @@ export class Ope041Component implements OnInit, AfterViewInit {
 
   clearAll = () => {
     $("#showData").hide();
-    $("#showDt")
-      .dataTable()
-      .fnClearTable();
-    this.showDt.destroy();
+    // this.showDt.fnClearTable();
+    this.showDt.clear().draw();
   };
 
   onUpload = (event: any) => {

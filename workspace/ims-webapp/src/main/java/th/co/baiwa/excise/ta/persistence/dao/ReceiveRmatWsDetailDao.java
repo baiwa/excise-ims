@@ -28,8 +28,10 @@ public class ReceiveRmatWsDetailDao {
 				+ "PURCHASE_TAX_INV,"
 				+ "DAY_BOOK,"
 				+ "MONTH_BOOK,"
-				+ "EXTERNAL_DATA)");
-		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nextval,?,?,?,?,?,?) ");
+				+ "EXTERNAL_DATA,"
+				+ "MAX_VALUES,"
+				+ "RESULT)");
+		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nextval,?,?,?,?,?,?,?,?) ");
 		
 		// for to set Object
 		List<Object> params = new ArrayList<>();
@@ -39,6 +41,8 @@ public class ReceiveRmatWsDetailDao {
 		params.add(value.getDayRecieve());
 		params.add(value.getMonthRecieve());
 		params.add(value.getExd1());
+		params.add(value.getCalMax());
+		params.add(value.getDiff());
 		
 		logger.info("SQL : {}",sql.toString());
 		jdbcTemplate.update(sql.toString(),params.toArray());
