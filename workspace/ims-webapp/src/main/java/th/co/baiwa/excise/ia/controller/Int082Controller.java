@@ -18,6 +18,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
+
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.service.RiskAssInfService;
 import th.co.baiwa.excise.utils.BeanUtils;
@@ -32,6 +33,11 @@ public class Int082Controller {
 	
 	@Autowired
 	private RiskAssInfService riskAssInfService;
+	
+	@Autowired
+	public Int082Controller(RiskAssInfService riskAssInfService) {
+		this.riskAssInfService = riskAssInfService;
+	}
 	
 	@PostMapping("/addRiskInfHdr")
 	@ResponseBody
@@ -48,9 +54,10 @@ public class Int082Controller {
 	
 	@PostMapping("/searchRiskInfHdr")
 	@ResponseBody
-	public ResponseDataTable<RiskAssInfHdr> searchRiskAssInfHdr(DataTableRequest dataTableRequest) {
-		logger.info("queryRiskInfHdrByCriteria");
-		return riskAssInfService.findByCriteriaForDatatable(new RiskAssInfHdr() , dataTableRequest);
+	public ResponseDataTable<RiskAssInfHdr> searchRiskAssInfHdr(RiskAssInfHdr riskAssInfHdr ,DataTableRequest dataTableRequest) {
+		logger.info("queryRiskInfHdrfindByBuggetYear");
+		logger.info("BuggetYear : " + riskAssInfHdr.getBudgetYear());
+		return riskAssInfService.findByCriteriaForDatatable( riskAssInfHdr, dataTableRequest);
 	}
 	
 	@PostMapping("/deleteRiskInfHdr")
@@ -76,5 +83,47 @@ public class Int082Controller {
 		responseDataTable.setRecordsFiltered((int) riskAssInfDtlList.size());
 		return responseDataTable;
 	}
+	
+	@PostMapping("/createBudgetYear")
+	@ResponseBody
+	public Message createBuggetYear(@RequestBody RiskAssInfHdr riskAssInfHdr) {
+		logger.info("Add createBuggetYear : " + riskAssInfHdr.getBudgetYear());
+		Message message =  null;
+		if(BeanUtils.isNotEmpty(riskAssInfHdr.getBudgetYear())){
+			message = riskAssInfService.createBudgetYear(riskAssInfHdr);
+		}
+		return message;
+	}
+	
+	@PostMapping("/findRiskById")
+	@ResponseBody
+	public RiskAssInfHdr findRiskById(@RequestBody RiskAssInfHdr riskAssInfHdr) {
+		logger.info("findRiskById : " + riskAssInfHdr.getRiskAssInfHdrId());
+		return riskAssInfService.findById(riskAssInfHdr.getRiskAssInfHdrId());
+	}
+	
+	@PostMapping("/updateRiskAssInfHdr")
+	@ResponseBody
+	public Message updateRiskAssInfHdr(@RequestBody RiskAssInfHdr riskAssInfHdr,HttpServletRequest httpServletRequest) {
+		Message message = null;
+		logger.info("updateRiskAssInfHdrById : " + riskAssInfHdr.getRiskAssInfHdrId());
+		try {
+			riskAssInfService.updateRiskAssInfHdr(riskAssInfHdr);
+			@SuppressWarnings("unchecked")
+			List<RiskAssInfDtl> riskAssInfDtlList = (List<RiskAssInfDtl>) httpServletRequest.getSession().getAttribute(INF_SESSION_DATA);
+			for (RiskAssInfDtl riskAssInfDtl : riskAssInfDtlList) {
+				riskAssInfDtl.setRiskAssInfDtlId(riskAssInfHdr.getRiskAssInfHdrId());
+			}
+			
+			riskAssInfService.updateRiskAssInfDtl(riskAssInfDtlList);
+			message = ApplicationCache.getMessage("MSG_00002");
+		} catch (Exception e) {
+			message = ApplicationCache.getMessage("MSG_00003");
+		}
+		
+		
+		return message;
+	}
+	
 	
 }

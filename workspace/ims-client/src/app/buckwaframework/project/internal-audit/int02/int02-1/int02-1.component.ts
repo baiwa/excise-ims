@@ -28,6 +28,8 @@ export class Int021Component implements OnInit {
     this.qtnName = null;
     this.qtnYear = null;
   }
+  
+
 
   ngOnInit() {
 
@@ -100,6 +102,7 @@ export class Int021Component implements OnInit {
   }
 
   reDatatable = () => {
+     
     this.datatable.destroy();
     this.initDatatable();
   }

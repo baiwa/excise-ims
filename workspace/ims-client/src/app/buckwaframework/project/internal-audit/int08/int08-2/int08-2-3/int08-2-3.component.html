@@ -11,7 +11,7 @@
             <label class="ui right ">ชื่อกระดาษทำการ</label>
           </div>
           <div class="ten wide field ">
-            <input type="text" placeholder="ชื่อกระดาษทำการ" class="custom" name="riskHrdPaperName" id="riskHrdPaperName" [(ngModel)]="riskHrdPaperName">
+            <input type="text" placeholder="ชื่อกระดาษทำการ" class="custom" name="riskInfPaperName" id="riskInfPaperName" [(ngModel)]="riskInfPaperName">
           </div>
 
         </div>
@@ -21,7 +21,7 @@
             <label>ปีงบประมาณ</label>
           </div>
           <div class="four wide field ">
-            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear">
+            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear" disabled="disabled">
           </div>
           <div class="two wide field ">
             <label>ผู้ตรวจ</label>
@@ -62,7 +62,7 @@
         <div class="inline fields ">
           <div class="sixteen wide field ">
             <div class="six wide field "></div>
-            <button class="ui mini primary button" (click)="saveRiskAssRiskWsDtl()">
+            <button class="ui mini primary button" (click)="saveRiskAssInfHdr()">
               <i class="save icon"></i>
               บันทึก
             </button>
@@ -71,6 +71,9 @@
             </button>
             <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
               Export
+            </button>
+            <button class="ui mini primary button" (click)="cancelFlow()">
+              ยกเลิก
             </button>
           </div>
 

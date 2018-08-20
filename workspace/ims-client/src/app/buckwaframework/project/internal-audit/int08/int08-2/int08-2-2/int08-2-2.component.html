@@ -14,12 +14,6 @@
                       <div class="four wide field ">
                         <input type="text" placeholder="ปัจจัยเสี่ยง" maxlength="100" name="riskAssInfHdrName" id="riskAssInfHdrName" [(ngModel)]="riskAssInfHdrName" >
                       </div>
-                      <div class="two wide field">
-                        <label>ปีงบประมาณ</label>
-                      </div>
-                      <div class="four wide field ">
-                        <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear">
-                      </div>
                       <div class="four wide field ">
                         <button class="ui mini primary button" (click)="addRiskAssInfHdr()" >
                           <i class="add icon"></i>
@@ -50,8 +44,11 @@
                         <i class="save icon"></i>
                         บันทึก
                       </button>
-                      <button class="ui mini primary button" >
+                      <button class="ui mini primary button" (click)="determineRiskTotal()">
                         กำหนดเงื่อนไขปัจจัยเสี่ยงรวม
+                      </button>
+                      <button class="ui mini primary button" (click)="cancelFlow()">
+                          ยกเลิก
                       </button>
                     </div>
           
