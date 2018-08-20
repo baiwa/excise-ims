@@ -161,10 +161,17 @@
 		<!-- <groupId>mysql</groupId> -->
 		<!-- <artifactId>mysql-connector-java</artifactId> -->
 		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.oracle</groupId> -->
+		<!-- <artifactId>ojdbc6</artifactId> -->
+		<!-- <version>${ojdbc6.version}</version> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>${ojdbc6.version}</version>
+			<artifactId>ojdbc7</artifactId>
+			<version>12.1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ojdbc7.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
