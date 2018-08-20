@@ -13,8 +13,10 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
+import th.co.baiwa.excise.ia.persistence.repository.RiskAssOtherDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssRiskWsDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssRiskWsHdrRepository;
 import th.co.baiwa.excise.utils.BeanUtils;
@@ -27,15 +29,18 @@ public class RiskAssRiskWsService {
 	private final String BUDGET_YEAR = "BUDGET_YEAR";
 	private final String RISK_CONFIG = "RISK_CONFIG";
 	private final String INT08_1 = "INT08-1";
-	
+
 	@Autowired
 	private WebServiceExciseService webServiceExciseService;
-	
+
 	@Autowired
 	private LovRepository lovRepository;
-	
+
 	@Autowired
 	private RiskAssRiskWsDtlRepository riskAssRiskWsDtlRepository;
+	
+	@Autowired
+	private RiskAssOtherDtlRepository riskAssOtherDtlRepository;
 
 	@Autowired
 	public RiskAssRiskWsService(RiskAssRiskWsHdrRepository riskAssRiskWsHdrRepository) {
@@ -62,7 +67,7 @@ public class RiskAssRiskWsService {
 	public ResponseDataTable<RiskAssRiskWsHdr> findByCriteriaForDatatable(RiskAssRiskWsHdr riskAssRiskWsHdr, DataTableRequest dataTableRequest) {
 
 		ResponseDataTable<RiskAssRiskWsHdr> responseDataTable = new ResponseDataTable<RiskAssRiskWsHdr>();
-		List<RiskAssRiskWsHdr> riskAssRiskWsHdrList = riskAssRiskWsHdrRepository.findByCriteria(riskAssRiskWsHdr);
+		List<RiskAssRiskWsHdr> riskAssRiskWsHdrList = riskAssRiskWsHdrRepository.findByBudgetYear(riskAssRiskWsHdr.getBudgetYear());
 		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
 		responseDataTable.setData(riskAssRiskWsHdrList);
 		responseDataTable.setRecordsTotal((int) riskAssRiskWsHdrList.size());
@@ -70,8 +75,7 @@ public class RiskAssRiskWsService {
 		return responseDataTable;
 
 	}
-	
-	
+
 	public List<RiskAssRiskWsDtl> findRiskAssRiskDtlByWebService() {
 		return webServiceExciseService.getRiskAssRiskWsDtlList(new RiskAssRiskWsDtl());
 
@@ -84,14 +88,14 @@ public class RiskAssRiskWsService {
 		return message;
 
 	}
-	
+
 	public Message createBuggetYear(RiskAssRiskWsHdr riskAssRiskWsHdr) {
 		Message message = null;
 		Lov lov = new Lov(BUDGET_YEAR);
 		lov.setValue1(riskAssRiskWsHdr.getBudgetYear());
 		lov.setSubType(INT08_1);
 		List<Lov> lovList = lovRepository.queryLovByCriteria(lov, null);
-		if(lovList == null || lovList.size() == 0) {
+		if (lovList == null || lovList.size() == 0) {
 			lovRepository.save(lov);
 			Lov dataInit = new Lov(RISK_CONFIG);
 			dataInit.setSubType(INT08_1);
@@ -102,34 +106,48 @@ public class RiskAssRiskWsService {
 				insertConfigData.setRiskHdrName(lov2.getValue1());
 				insertConfigData.setBudgetYear(riskAssRiskWsHdr.getBudgetYear());
 				riskAssRiskWsHdrRepository.save(insertConfigData);
-				
+
 			}
 			message = ApplicationCache.getMessage("MSG_00002");
-		}else {
+		} else {
 			message = ApplicationCache.getMessage("MSG_00004");
 		}
 		return message;
-		
+
 	}
-	
+
 	public List<RiskAssRiskWsDtl> findByGroupRiskHrdId(Long riskHrdId) {
 		return riskAssRiskWsDtlRepository.findByGroupRiskHrdId(riskHrdId);
 	}
-	
+
 	public void updateRiskAssRiskWsDtl(List<RiskAssRiskWsDtl> riskAssRiskWsDtls) {
 		riskAssRiskWsDtlRepository.save(riskAssRiskWsDtls);
 	}
-	
+
 	public RiskAssRiskWsHdr findById(Long id) {
 		return riskAssRiskWsHdrRepository.findOne(id);
 	}
+
 	public void updateRiskAssRiskWsHdr(RiskAssRiskWsHdr riskAssRiskWsHdr) {
 		riskAssRiskWsHdrRepository.save(riskAssRiskWsHdr);
 	}
-
+	
 	public List<RiskAssRiskWsHdr> findByCriteria(RiskAssRiskWsHdr riskAssRiskWsHdr) {
 		return riskAssRiskWsHdrRepository.findByCriteria(riskAssRiskWsHdr);
 	}
 	
+	public List<RiskAssOtherDtl> findByRiskHrdId(Long riskHrdId) {
+		return riskAssOtherDtlRepository.findByRiskHrdId(riskHrdId);
+	}
 	
+	public void updateRiskAssOtherDtl(RiskAssOtherDtl riskAssOtherDtl) {
+		if(riskAssOtherDtl.getIsDeleted().equals("N") && riskAssOtherDtl.getRiskOtherDtlId() == 0) {
+			riskAssOtherDtlRepository.save(riskAssOtherDtl);
+		}else if(riskAssOtherDtl.getIsDeleted().equals("Y")){
+			RiskAssOtherDtl databaseData = riskAssOtherDtlRepository.findOne(riskAssOtherDtl.getRiskOtherDtlId());
+			riskAssOtherDtlRepository.delete(databaseData);
+		}
+		
+	}
+
 }

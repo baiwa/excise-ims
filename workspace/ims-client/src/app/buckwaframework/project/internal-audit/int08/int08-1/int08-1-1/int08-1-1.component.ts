@@ -76,21 +76,25 @@ export class Int0811Component implements OnInit {
 
 
   createBudgetYear() {
-    console.log(this.budgetYear);
-    const URL = "ia/int08/createBudgetYear";
+    if (this.budgetYear != null && this.budgetYear != undefined && this.budgetYear != '') {
+      console.log(this.budgetYear);
+      const URL = "ia/int08/createBudgetYear";
 
-    this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
-      // var message = res.json();
-      // this.messageBarService.successModal(message.messageTh, "สำเร็จ");
+      this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
+        // var message = res.json();
+        // this.messageBarService.successModal(message.messageTh, "สำเร็จ");
 
-      this.router.navigate(["/int08/1/4"], {
-        queryParams: { budgetYear: this.budgetYear }
+        this.router.navigate(["/int08/1/4"], {
+          queryParams: { budgetYear: this.budgetYear }
+        });
+      }, errRes => {
+        var message = errRes.json();
+        this.messageBarService.errorModal(message.messageTh);
+
       });
-    }, errRes => {
-      var message = errRes.json();
-      this.messageBarService.errorModal(message.messageTh);
-
-    });
+    } else {
+      this.messageBarService.errorModal('กรุณาเลือก ปีงบประมาณ');
+    }
   }
 
   clearData() {

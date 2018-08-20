@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 
-import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.ExciseAuthen;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;

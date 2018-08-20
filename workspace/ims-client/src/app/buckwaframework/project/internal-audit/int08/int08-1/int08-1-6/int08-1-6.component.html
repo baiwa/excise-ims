@@ -35,56 +35,103 @@
         <div class="inline fields"></div>
 
       </div>
+
     </div>
+
+
   </div>
-
-
   <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>เพิ่มข้อมูลกระดาษทำการ</span>
     </div>
+
     <div class="ui attached segment">
       <div class="ui form">
-        <div class="inline fields">
-          <div class="two wide field "></div>
-          <div class="two wide field ">
-            <label class="ui right ">ชื่อโครงการ</label>
+        <div class="ui top attached tabular menu">
+          <a class="active item" data-tab="first">เพิ่มข้อมูล</a>
+          <a class="item" data-tab="second">เพิ่มข้อมูล Excel File</a>
+        </div>
+        <div class="ui bottom attached active tab segment" data-tab="first">
+          <div class="inline fields">
+            <div class="two wide field "></div>
+            <div class="two wide field ">
+              <label class="ui right ">ชื่อโครงการ</label>
+            </div>
+            <div class="ten wide field ">
+              <input type="text" placeholder="ชื่อโครงการ" maxlength="100" class="custom" name="projectBase" id="projectBase" [(ngModel)]="projectBase">
+            </div>
+
           </div>
-          <div class="ten wide field ">
-            <input type="text" placeholder="ชื่อโครงการ" maxlength="100" class="custom" name="riskHrdPaperName" id="riskHrdPaperName"
-              [(ngModel)]="riskHrdPaperName">
+          <div class="inline fields">
+            <div class="two wide field "></div>
+            <div class="two wide field">
+              <label>ชื่อหน่วยงาน</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="ชื่อหน่วยงาน" class="custom" name="departmentName" id="departmentName" [(ngModel)]="departmentName">
+            </div>
+            <div class="two wide field ">
+              <label>ค่าความเสี่ยง</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="ค่าความเสี่ยง" class="custom" name="riskCost" id="riskCost" [(ngModel)]="riskCost">
+            </div>
           </div>
 
+          <div class="inline fields"></div>
+          <div class="inline fields">
+            <div class="sixteen wide field ">
+              <div class="seven wide field "></div>
+              <button class="ui mini primary button" (click)="addObjRiskDtl() ">
+                <i class="save icon"></i>
+                เพิ่ม
+              </button>
+
+            </div>
+
+          </div>
         </div>
-        <div class="inline fields">
-          <div class="two wide field "></div>
-          <div class="two wide field">
-            <label>ชื่อหน่วยงาน</label>
-          </div>
-          <div class="four wide field ">
-            <input type="text" placeholder="ชื่อหน่วยงาน" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear" disabled="disabled">
-          </div>
-          <div class="two wide field ">
-            <label>ค่าความเสี่ยง</label>
-          </div>
-          <div class="four wide field ">
-            <input type="text" placeholder="ค่าความเสี่ยง" class="custom" name="userCheck" id="userCheck" [(ngModel)]="userCheck">
-          </div>
+        <div class="ui bottom attached tab segment" data-tab="second">
+          Second
         </div>
 
-        <div class="inline fields"></div>
-        <div class="inline fields">
+        <table id="dataTable" class="ui small celled table">
+          <thead>
+            <tr>
+              <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+              <th rowspan="2" style="text-align: center !important" class="four wide field ">โครงการตามยุทธศาสตร์</th>
+              <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
+              <th rowspan="2" style="text-align: center !important">ค่าความเสี่ยง</th>
+              <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
+              <th rowspan="2" style="text-align: center !important"></th>
+            </tr>
+            <tr>
+              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
+              <th style="text-align: center !important">แปลค่า</th>
+            </tr>
+          </thead>
+        </table>
+        <div class="inline fields ">
           <div class="sixteen wide field ">
-            <div class="seven wide field "></div>
-            <button class="ui mini primary button" (click)="addObjRiskDtl() ">
+            <div class="six wide field "></div>
+            <button class="ui mini primary button" (click)="saveRiskAssRiskWsDtl()">
               <i class="save icon"></i>
-              เพิ่ม
+              บันทึก
             </button>
-
+            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+              กำหนดเงื่อนไข RL
+            </button>
+            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+              Export
+            </button>
+            <button class="ui mini primary button" (click)="cancelFlow()">
+              ยกเลิก
+            </button>
           </div>
 
         </div>
       </div>
     </div>
   </div>
+
 </div>

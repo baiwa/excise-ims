@@ -18,6 +18,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
 import th.co.baiwa.excise.ia.service.RiskAssRiskWsService;
@@ -126,6 +127,51 @@ public class Int08Controller {
 		
 		return message;
 	}
+	
+	
+	
+	@PostMapping("/saveRiskAssOther")
+	@ResponseBody
+	public Message saveRiskAssOther(@RequestBody RiskAssRiskWsHdr riskAssRiskWsHdr) {
+		Message message = null;
+		logger.info("saveRiskAssOther" + riskAssRiskWsHdr.getRiskHrdId());
+		try {
+			riskAssRiskWsHdrService.updateRiskAssRiskWsHdr(riskAssRiskWsHdr);
+			message = ApplicationCache.getMessage("MSG_00002");
+		} catch (Exception e) {
+			message = ApplicationCache.getMessage("MSG_00003");
+		}
+		
+		
+		return message;
+	}
+	
+	@PostMapping("/saveRiskAssDtlOther")
+	@ResponseBody
+	public Message saveRiskAssDtlOther(@RequestBody RiskAssOtherDtl riskAssOtherDtl) {
+		Message message = null;
+		logger.info("saveRiskAssDtlOther" + riskAssOtherDtl.getRiskHrdId());
+		try {
+			riskAssRiskWsHdrService.updateRiskAssOtherDtl(riskAssOtherDtl);
+			message = ApplicationCache.getMessage("MSG_00002");
+		} catch (Exception e) {
+			message = ApplicationCache.getMessage("MSG_00003");
+		}
+		
+		return message;
+	}
+	
+	@PostMapping("/findRiskOtherDtlByRiskHrdId")
+	@ResponseBody
+	public List<RiskAssOtherDtl> findRiskOtherDtlByRiskHrdId(@RequestBody RiskAssOtherDtl riskAssOtherDtl) {
+		logger.info("findRiskOtherDtlByRiskHrdId" + riskAssOtherDtl.getRiskHrdId());
+		return riskAssRiskWsHdrService.findByRiskHrdId(riskAssOtherDtl.getRiskHrdId());
+	}
+	
+	
+	
+	
+	
 	
 	public RiskAssRiskWsService getRiskAssRiskWsHdrService() {
 		return riskAssRiskWsHdrService;

@@ -89,9 +89,6 @@ export class Int0815Component implements OnInit {
 
 
   saveRiskAssRiskWsDtl(): void {
-    console.log(this.id);
-    console.log(this.riskHrdPaperName);
-    console.log(this.budgetYear);
     this.riskAssRiskWsHdr.riskHrdPaperName = this.riskHrdPaperName;
     this.riskAssRiskWsHdr.userCheck = this.userCheck;
     console.log(this.datatable.data());
