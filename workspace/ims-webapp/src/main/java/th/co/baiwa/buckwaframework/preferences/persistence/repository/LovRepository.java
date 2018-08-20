@@ -6,7 +6,8 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 
 public interface LovRepository extends CommonJpaCrudRepository<Lov, Long>, LovRepositoryCustom {
+	
         Lov findByTypeAndLovId(String type, Long lovId);
-        
+        Lov findByLovId(Long lovId);        
         List<Lov> findByTypeAndLovIdMasterIsNull(String type);
 }

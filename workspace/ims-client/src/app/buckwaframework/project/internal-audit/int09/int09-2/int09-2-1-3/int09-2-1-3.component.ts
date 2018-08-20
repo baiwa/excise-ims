@@ -245,20 +245,20 @@ export class Int09213Component implements OnInit {
           "data": "note",
           "render": function (data, type, row) {
             return '<button type="button" class="ui yellow button btn-edit"><i class="edit icon"></i></button>';
-            
+
           },
           "className": "ui center aligned"
         }
       ],
       "footerCallback": (row, data, start, end, display) => {
-        
-        let allowanceDate=0;
-        let allowanceCost=0        
-        let rentDate=0
-        let rentCost=0
-        let travelCost=0
-        let otherCost=0
-        let sumCost=0;
+
+        let allowanceDate = 0;
+        let allowanceCost = 0
+        let rentDate = 0
+        let rentCost = 0
+        let travelCost = 0
+        let otherCost = 0
+        let sumCost = 0;
 
         data.map(val => {
           allowanceDate += val.allowanceDate;
@@ -284,19 +284,29 @@ export class Int09213Component implements OnInit {
     this.table.columns.adjust().draw(); // Redraw the DataTable
 
     //button edit
-    this.table.on('click', 'tbody tr button.btn-edit', (e) =>{
+    this.table.on('click', 'tbody tr button.btn-edit', (e) => {
       var closestRow = $(e.target).closest('tr');
       var data = this.table.row(closestRow).data();
-      console.log(data);     
+      console.log(data);
 
       //set date on form
       $("#idEdit").val(data.workSheetDetailId);
       $("#prefix").val(data.prefixForm);
+      $("#prefix").dropdown('set selected');
+
       $("#name").val(data.nameForm);
       $("#last").val(data.lastForm);
       $("#position").val(data.positionForm);
+
+      $("#case").val(data.caseForm);
+      $("#case").dropdown('set selected');
       $("#type").val(data.typeForm);
+      $("#type").dropdown('set selected');
       $("#level").val(data.levelForm);
+      $("#level").dropdown('set selected');
+      
+     
+     
       $("#appoveDate").val(data.appoveDateDataForm);
       $("#withdrawDate").val(data.withdrawDateDataForm);
       $("#goFrom").val(data.goFromForm);
@@ -316,16 +326,18 @@ export class Int09213Component implements OnInit {
   onSubmit = (e) => {
     //not reload page
     e.preventDefault();
-     
-  
+
+
     //json data
     let data = {
-      idEdit : e.target.idEdit.value,
-      editFlag : e.target.editFlag.value,
+      headerId: e.target.headerId.value,
+      idEdit: e.target.idEdit.value,
+      editFlag: e.target.editFlag.value,
       prefix: e.target.prefix.value,
       name: e.target.name.value,
       last: e.target.last.value,
       position: e.target.position.value,
+      caseType : e.target.case.value,
       type: e.target.type.value,
       level: e.target.level.value,
       appoveDateData: e.target.appoveDateData.value,
@@ -348,22 +360,41 @@ export class Int09213Component implements OnInit {
     const URL = "ia/int09213/addData";
     this.ajax.post(URL, JSON.stringify(data), res => {
       //success 
-      if($("#editFlag").val() == 'edit'){
-          const index = this.travelCostDetail.findIndex(obj => obj.workSheetDetailId == res.json().workSheetDetailId);
-          console.log("id : ",res.json().workSheetDetailId);
-          console.log("Index : ", index);
-          this.travelCostDetail[index] = res.json();
-      }else{
+      if ($("#editFlag").val() == 'edit') {
+        const index = this.travelCostDetail.findIndex(obj => obj.workSheetDetailId == res.json().workSheetDetailId);
+        console.log("id : ", res.json().workSheetDetailId);
+        console.log("Index : ", index);
+        this.travelCostDetail[index] = res.json();
+      } else {
         this.travelCostDetail.push(res.json());
       }
-     
+
       console.log("Push array : ", this.travelCostDetail);
       // $('#tableData').DataTable().ajax.reload();
       this.table.clear().draw();
       this.table.rows.add(this.travelCostDetail); // Add new data
       this.table.columns.adjust().draw(); // Redraw the DataTable
       this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
+
+      //form reset
       $("#editFlag").val("");
+      $("#prefix").dropdown('restore defaults');
+      $("#name").val("")
+      $("#last").val("")
+      $("#position").val("")
+      $("#case").dropdown('restore defaults');
+      $("#type").dropdown('restore defaults');
+      $("#level").dropdown('restore defaults');
+      $("#appoveDate").val("")
+      $("#withdrawDate").val("")
+      $("#goFrom").dropdown('restore defaults');
+      $("#food").dropdown('restore defaults');
+      $("#startGoDateData").val("")
+      $("#endGoDateData").val("")
+      $("#numberLive").val("")
+      $("#travelCost").val("")
+      $("#otherCost").val("")
+      $("#note").val("")
     });
 
 

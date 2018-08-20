@@ -1,7 +1,7 @@
 
 import { Router } from '@angular/router';
 import { ExciseService } from './../../../../../common/services/excise.service';
-import { TextDateTH, formatter } from './../../../../../common/helper/datepicker';
+import { TextDateTH, formatter, fullMonth } from './../../../../../common/helper/datepicker';
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../../../../../common/services';
 
@@ -17,7 +17,8 @@ declare var $: any;
 export class Int09212Component implements OnInit {
 
   sectorList : any;
-  dataDropdown : any;
+  areaDropdown : any;
+  branchDropdown : any;
   constructor(
     private exciseService:ExciseService,
     private router: Router,
@@ -46,24 +47,45 @@ export class Int09212Component implements OnInit {
     });
   }
   sectorOnchange = (e) => {
-    let date = { lovIdMaster: e.target.value }
+    let data = { lovIdMaster: e.target.value }
     const URL = "ia/int09212/listDropdown";
-    this.ajax.post(URL, JSON.stringify(this.dataDropdown), res => {
-      console.log("Response : ", res.json());
-      this.dataDropdown = res.json();
+    this.ajax.post(URL, JSON.stringify(data), res => {
+      this.areaDropdown = res.json();
+    });
+  }
+
+  areaOnChange =  (e) => {
+    let data = { lovIdMaster: e.target.value }
+    const URL = "ia/int09212/listDropdown";
+    this.ajax.post(URL, JSON.stringify(data), res => {
+      this.branchDropdown = res.json();
     });
   }
 
   saveAndNext = event => {
+    event.preventDefault();
     const { startDateInput,endDateInput, sector,area, branch ,department} = event.target;
+    
     const data = {
-      startDateInput: startDateInput.value,
-      endDateInput : endDateInput.value,
+      startDateDisplay : fullMonth(startDateInput.value),
+      endDateDisplay : fullMonth(endDateInput.value),
+      startDate : startDateInput.value,
+      endDate : endDateInput.value,
       sector : sector.value,
       area : area.value,
       branch : branch.value,
-      department : department.value
+      sectorDesc : $( "#sector option:selected" ).text(),
+      areaDesc : $( "#area option:selected" ).text(),
+      branchDesc : $( "#branch option:selected" ).text(),
+      department : department.value,
+      headerId : ""
     };
+    
+    //save Data Ia_Travel_Cost_Ws_Header
+    const URL = "ia/int09212/save";
+    this.ajax.post(URL, JSON.stringify(data), res => {
+      data.headerId = res.json();      
+    });
     this.exciseService.setData(data);
     this.exciseService.getData();
     setTimeout(() => { this.router.navigate(["/int09/2-1-3"]) }, 200);

@@ -1,3 +1,4 @@
+
 import * as moment from "moment";
 
 export var TextDateTH = {
@@ -235,5 +236,17 @@ export var stringToDate = (date) => {
     return new Date(mmddyyyy);
   }
 };
+export var fullMonth = (date) => {
 
-export default { TextDateTH, formatter, digit, ThaiFormatter, stringToDate };
+    let dateSpit = date.split('/');
+    let _dd = dateSpit[0];
+    let _mm = dateSpit[1];
+    let _yyyy = parseInt(dateSpit[2]);
+
+    let month = TextDateTH.months[_mm-1];
+    let ddfullmonthyyyy = parseInt(_dd) + " " + month + " " + _yyyy;// full month
+
+    return ddfullmonthyyyy;
+  };
+
+export default { TextDateTH, formatter, digit, ThaiFormatter, stringToDate,fullMonth };

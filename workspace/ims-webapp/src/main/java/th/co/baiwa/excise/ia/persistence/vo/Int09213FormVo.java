@@ -6,6 +6,7 @@ public class Int09213FormVo {
 	private String name;
 	private String last;
 	private String position;
+	private String caseType;
 	private String type;
 	private String level;
 	private String appoveDateData;
@@ -24,6 +25,14 @@ public class Int09213FormVo {
 	private String travelCost;
 	private String editFlag;
 	private String idEdit;
+
+	public String getCaseType() {
+		return caseType;
+	}
+
+	public void setCaseType(String caseType) {
+		this.caseType = caseType;
+	}
 
 	public String getIdEdit() {
 		return idEdit;
