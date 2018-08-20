@@ -14,6 +14,14 @@ declare var $: any;
   styleUrls: ['./int08-2-3.component.css']
 })
 export class Int0823Component implements OnInit {
+
+  riskInfPaperName: any;
+  budgetYear: any;
+  
+  id: any;
+  userCheck: any;
+  riskAssInfHdr: any;
+
   datatable: any;
 
   constructor(
@@ -24,9 +32,23 @@ export class Int0823Component implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.id = this.route.snapshot.queryParams["id"];
+    this.findRiskById();
     this.initDatatable();
   }
 
+  findRiskById() {
+    let url = "ia/int082/findRiskById"
+    this.ajax.post(url, { riskAssInfHdrId: this.id }, res => {
+      this.riskAssInfHdr = res.json();
+
+
+      console.log(this.riskAssInfHdr);
+      this.riskInfPaperName = this.riskAssInfHdr.riskInfPaperName;
+      this.budgetYear = this.riskAssInfHdr.budgetYear;
+      this.userCheck = this.riskAssInfHdr.userCheck;
+    });
+  }
 
   initDatatable(): void {
     const URL = AjaxService.CONTEXT_PATH + "ia/int082/dataTableWebService";
@@ -77,6 +99,70 @@ export class Int0823Component implements OnInit {
       ]
 
     });
+  }
+
+  saveRiskAssInfHdr(): void {
+    this.riskInfPaperName  = $('#riskInfPaperName').val().trim();
+    this.userCheck  = $('#userCheck').val().trim();
+
+    
+    console.log("แสดงค่าที่กรอกข้อมูล");
+    console.log(this.id);
+    console.log(this.riskInfPaperName);
+    console.log(this.budgetYear);
+    this.riskAssInfHdr.riskInfPaperName = this.riskInfPaperName;
+    this.riskAssInfHdr.userCheck = this.userCheck;
+   
+  
+
+    console.log(this.datatable.data());
+    var msgMessage = "";
+
+    if (this.userCheck == null || this.userCheck == undefined || this.userCheck == "") {
+      msgMessage = "กรุณากรอก \"ผู้ตรวจ\" ";
+    }
+
+    if (this.riskInfPaperName == null || this.riskInfPaperName == undefined || this.riskInfPaperName == "") {
+      msgMessage = "กรุณากรอก \"ชื่อกระดาษทำการ\" ";
+    }
+
+    if (msgMessage == "") {
+      var url = "ia/int082/updateRiskAssInfHdr";
+
+      this.ajax.post(url, this.riskAssInfHdr, res => {
+        console.log(res.json());
+        var message = res.json();
+        console.log(message.messageType);
+        if (message.messageType == 'E') {
+          this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
+        } else {
+          this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
+          this.router.navigate(["/int08/2/2"], {
+            queryParams: { budgetYear: this.budgetYear }
+          });
+        }
+
+      }, errRes => {
+        var message = errRes.json();
+        console.log(message);
+        this.messageBarService.errorModal(message.messageTh);
+
+      });
+    } else {
+      this.messageBarService.errorModal(msgMessage);
+    }
+
+  }
+
+  cancelFlow() {
+    this.messageBarService.comfirm(foo => {
+      // let msg = "";
+      if (foo) {
+        this.router.navigate(["/int08/2/2"], {
+          queryParams: { budgetYear: this.budgetYear }
+        });
+      }
+    }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
   }
 
 }

@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfHdrRepository;
+import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfDtlRepository;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 
@@ -23,7 +26,15 @@ public class RiskAssInfService {
 	private static final Logger logger = LoggerFactory.getLogger(RiskAssInfService.class);
 
 	private final RiskAssInfHdrRepository riskAssInfHdrRepository;
-
+	private final String BUDGET_YEAR = "BUDGET_YEAR";
+	private final String RISK_CONFIG = "RISK_CONFIG";
+	private final String INT08_2 = "INT08-2";
+	
+	@Autowired
+	private LovRepository lovRepository;
+	
+	@Autowired
+	private RiskAssInfDtlRepository riskAssInfDtlRepository;
 	
 	@Autowired
 	private WebServiceExciseService webServiceExciseService;
@@ -75,7 +86,50 @@ public class RiskAssInfService {
 
 	}
 	
+	
+	public Message createBudgetYear(RiskAssInfHdr riskAssInfHdr) {
+		Message message = null;
+		Lov lov = new Lov(BUDGET_YEAR);
+		lov.setValue1(riskAssInfHdr.getBudgetYear());
+		lov.setSubType(INT08_2);
+		
+		List<Lov> lovList = lovRepository.queryLovByCriteria(lov, null);
+		if(lovList == null || lovList.size() == 0) {
+			lovRepository.save(lov);
+			Lov dataInit = new Lov(RISK_CONFIG);
+			dataInit.setSubType(INT08_2);
+
+			RiskAssInfHdr insertConfigData = null;
+			List<Lov> lovInitList = lovRepository.queryLovByCriteria(dataInit, null);
+			for (Lov lov2 : lovInitList) {
+				insertConfigData = new RiskAssInfHdr();
+				insertConfigData.setRiskAssInfHdrName(lov2.getValue1());
+				insertConfigData.setBudgetYear(riskAssInfHdr.getBudgetYear());
+				riskAssInfHdrRepository.save(insertConfigData);	
+			}
+			message = ApplicationCache.getMessage("MSG_00002");
+		}else {
+			message = ApplicationCache.getMessage("MSG_00004");
+		}
+		return message;
+		
+	}
+	
+	
+	
 	public List<RiskAssInfDtl> findRiskAssInfDtlByWebService() {
 		return webServiceExciseService.getRiskAssInfDtlList(new RiskAssInfDtl());
+	}
+	
+	
+	public RiskAssInfHdr findById(Long id) {
+		return  riskAssInfHdrRepository.findOne(id);
+	}
+	
+	public void updateRiskAssInfHdr(RiskAssInfHdr riskAssInfHdr) {
+		riskAssInfHdrRepository.save(riskAssInfHdr);
+	}
+	public void updateRiskAssInfDtl(List<RiskAssInfDtl> riskAssInfDtls) {
+		riskAssInfDtlRepository.save(riskAssInfDtls);
 	}
 }

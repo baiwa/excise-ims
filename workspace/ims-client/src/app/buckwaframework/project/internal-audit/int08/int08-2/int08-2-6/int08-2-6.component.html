@@ -1,0 +1,336 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+
+
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>สร้างกระดาษทำการประเมินความเสี่ยงระบบสารสนเทศหลักของกรมฯ
+      </span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="five wide field "></div>
+          <div class="five wide field ">
+            <input type="file" />
+          </div>
+          <button class="ui mini primary button">
+            ตัวอย่างแบบฟอร์มนำเข้าระบบ
+          </button>
+        </div>
+      </div>
+
+      <div class="ui center aligned grid">
+        <div class="sixteen wide column">
+          <button class="ui mini primary button" (click)="uploadData()">
+            <i class="upload icon"></i>
+            อัพโหลด
+          </button>
+          <button class="ui mini button" (click)="clearData()">
+            <i class="refresh icon"></i>
+            ล้างข้อมูล
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ui segment" *ngIf="showData">
+      <div class="ui right aligned grid">
+        <div class="sixteen wide column">
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="setting icon"></i>
+            กำหนด RL
+          </button>
+          <button class="ui mini primary button">
+            <i class=" save icon"></i>
+            บันทึก
+          </button>
+          <button class="ui mini primary button">
+            <i class="print icon"></i>
+            พิมพ์
+          </button>
+          <div class="ui mini primary button">
+            <div class="ui simple dropdown item">
+              ส่งออก
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <div class="item">PDF</div>
+                <div class="item">Excel</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="ui grid center aligned">
+        <div class="sixteen wide column">
+          กระดาษทำการประเมินความเสี่ยงความมั่นคงปลอดภัยของระบบสารสนเทศหลักของกรมฯ
+          <br> ปีงบประมาณ พ.ศ. 2561
+          <br> กลุ่มตรวจสอบภายใน กรมสรรพสามิต
+        </div>
+      </div>
+
+      <div class="ui eight column grid">
+        <div class="column right aligned">
+          ปัจจัยเสี่ยง:
+        </div>
+
+        <div class="column" style="width: 30%;">
+          3. ร้อยละความเห็นหน่วยงานที่ต้องการปรับปรุง
+          <br> ระบบสารสนเทศไม่สามารถใช้งานได้
+          <br> ระบบสารสนเทศไม่สามารถใช้งานได้
+          <br> ระบบสารสนเทศไม่สามารถใช้งานได้
+        </div>
+
+        <div class="column" style="width: 10%;">
+          &nbsp;
+          <br> อยู่ระหว่าง
+          <br> อยู่ระหว่าง
+          <br> อยู่ระหว่าง
+        </div>
+
+        <div class="column" style="width: 5%;">
+          &nbsp;
+          <br>0-20
+          <br>21-60
+          <br>61-100
+        </div>
+
+        <div class="column right aligned" style="width: 10%;">
+          &nbsp;
+          <br> กำหนดค่าเป็น
+          <br> กำหนดค่าเป็น
+          <br> กำหนดค่าเป็น
+        </div>
+
+        <div class="column" style="width: 5%;">
+          &nbsp;
+          <br> 1
+          <br> 2
+          <br> 3
+        </div>
+
+        <div class="column" style="width: 10%;">
+          &nbsp;
+          <br> กำหนดค่าเป็น
+          <br> กำหนดค่าเป็น
+          <br> กำหนดค่าเป็น
+        </div>
+
+        <div class="column" style="width: 5%;">
+          &nbsp;
+          <br> ต่ำ
+          <br> กลาง
+          <br> สูง
+        </div>
+      </div>
+      <br>
+
+
+
+      <div style="overflow-x: scroll;">
+        <table id="tableData" class="ui small celled table">
+          <thead>
+            <tr style="text-align: center;">
+              <th rowspan="2">ลำดับ</th>
+              <th rowspan="2">ระบบงานสารสนเทศหลักของกรมฯ</th>
+              <th rowspan="2">ร้อยละความเห็นหน่วยงานที่ต้องการปรับปรุง </th>
+              <th colspan="2">ประเมินความเสี่ยง </th>
+
+            </tr>
+            <tr style="text-align: center;">
+              <th style="width: 8%;">RL</th>
+              <th style="width: 8%;">แปลค่า</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>ระบบงานการขออนุญาต (ใบอนุญาต)</td>
+              <td>38</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>ระบบงานรายได้</td>
+              <td>21.7</td>
+              <td class="bg-yellow">2</td>
+              <td class="bg-yellow">กลาง</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>ระบบงานทะเบียนสรรพสามิต</td>
+              <td>6.5</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>ระบบคืน ยกเว้นและลดหย่อนภาษี (คืน, ยกเว้น)</td>
+              <td>13</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>ระบบงานวิเคราะห์รายการภาษี</td>
+              <td>12</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>ระบบวิชาการกำหนดมูลค่า</td>
+              <td>5.4</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>ระบบเครื่องดื่ม</td>
+              <td>3.3</td>
+              <td class="bg-green">1</td>
+              <td class="bg-green">ต่ำ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="modalInt082" class="ui modal hidden transition">
+  <i class="close icon"></i>
+  <div class="header">
+    กำหนดเงื่อนไข RL และแปลงค่าประเมินความเสี่ยงระบบสารสนเทศหลักของกรมฯ
+
+  </div>
+
+  <div class="content">
+    <div class="ui form">
+
+
+      <table id="tableSetting" class="ui small celled table" style="width: 100%;">
+        <thead>
+          <tr class="center aligned">
+            <th>เงื่อนไขที่</th>
+            <th>เงื่อนไข</th>
+            <th>ค่าที่ 1</th>
+            <th>ถึง</th>
+            <th>ค่าที่ 2</th>
+            <th>ค่า RL</th>
+            <th>แปลงค่า</th>
+            <th>สี</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>
+              <select id="selectCondition1" class="ui dropdown ai">
+                <option value="1">Less Than</option>
+                <option value="0">Between</option>
+                <option value="2">More Than</option>
+              </select>
+            </td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td>1</td>
+            <td>ต่ำ</td>
+            <td>
+              <select id="selectColor1" class="ui dropdown ai">
+                <option value="0">เขียว</option>
+                <option value="1">เหลือง</option>
+                <option value="2">แดง</option>
+              </select>
+            </td>
+            <td>
+              <a href="javascript:;">
+                ลบ
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>
+              <select id="selectCondition2" class="ui dropdown ai">
+                <option value="0">Between</option>
+                <option value="1">Less Than</option>
+                <option value="2">More Than</option>
+              </select>
+            </td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td>2</td>
+            <td>กลาง</td>
+            <td>
+              <select id="selectColor2" class="ui dropdown ai">
+                <option value="0">เหลือง</option>
+                <option value="1">เขียว</option>
+                <option value="2">แดง</option>
+              </select>
+            </td>
+            <td>
+              <a href="javascript:;">
+                ลบ
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>
+              <select id="selectCondition3" class="ui dropdown ai">
+                <option value="0">More Than</option>
+                <option value="1">Between</option>
+                <option value="2">Less Than</option>
+              </select>
+            </td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td>3</td>
+            <td>สูง</td>
+            <td>
+              <select id="selectColor3" class="ui dropdown ai">
+                <option value="0">แดง</option>
+                <option value="1">เหลือง</option>
+                <option value="2">เขียว</option>
+              </select>
+            </td>
+            <td>
+              <a href="javascript:;">
+                ลบ
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button">
+          <i class="add icon"></i>
+          เพิ่ม
+        </button>
+        <button class="ui mini primary button width-100">
+          <i class="save icon"></i>
+          บันทึก
+        </button>
+        <button class="ui mini button width-100" (click)="closePopupEdit()">
+          <i class="close icon"></i>
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
