@@ -14,8 +14,6 @@ export class Ope044Component implements OnInit {
 
   ngOnInit() {
 
-    $(".ui.dropdown").dropdown();
-    $(".ui.dropdown.ope04-1").css("width", "100%");
 
     $("#calendarFront").calendar({
       endCalendar: $("#calendarLast"),
