@@ -21,7 +21,7 @@ import { CanDeactivateGuard } from "../../../common/services";
 const routes: Routes = [
   { path: "1", component: Int021Component },
   { path: "2", component: Int022Component, canDeactivate: [CanDeactivateGuard] },
-  { path: "3", component: Int023Component },
+  { path: "3", component: Int023Component, canDeactivate: [CanDeactivateGuard] },
   { path: "m2", component: Int02M2Component },
   { path: "m3", component: Int02M3Component },
   { path: "m4", component: Int02M4Component },

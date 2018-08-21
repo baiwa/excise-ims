@@ -1,7 +1,5 @@
 package th.co.baiwa.excise.ia.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +20,15 @@ import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.ia.Int023MappingVO;
 import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
-import th.co.baiwa.excise.ia.persistence.entity.QtnReportDetail;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
-import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeaderReq;
+import th.co.baiwa.excise.ia.persistence.entity.QtnReportMain;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
 import th.co.baiwa.excise.ia.persistence.vo.Int022Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int023FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int023Vo;
 import th.co.baiwa.excise.ia.service.QtnMasterService;
 import th.co.baiwa.excise.ia.service.QtnReportHeaderService;
+import th.co.baiwa.excise.ia.service.QtnReportMainService;
 import th.co.baiwa.excise.ia.service.QuestionnaireDetailService;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -41,6 +41,8 @@ public class Int02Controller {
 	@Autowired
 	private QtnReportHeaderService qtnReportHeaderService;
 
+	@Autowired
+	private QtnReportMainService qtnReportMainService;
 	
 	@Autowired
 	private QuestionnaireDetailService questionnaireDetailService;
@@ -48,6 +50,11 @@ public class Int02Controller {
 	@Autowired
 	private QtnMasterService qtnMasterService;
 	
+	/*
+	 * 
+	 * CRUD TABLE `IA_QTN_MASTER`
+	 * 
+	 * */
 	@GetMapping("/qtn_master_by_id/{id}")
 	@ResponseBody
 	public QtnMaster qtnMasterById(@PathVariable("id") String id) {
@@ -81,7 +88,12 @@ public class Int02Controller {
 	public Message deleteQtnMaster(@PathVariable("id") String id) {
 		return qtnMasterService.deleteQtnMaster(id);
 	}
-
+	
+	/*
+	 * 
+	 * CRUD TABLE `IA_QTN_REPORT_HEADER`
+	 * 
+	 * */
 	@PostMapping("/save_qtn_report_header")
 	@ResponseBody
 	public Message saveQtnReportHeader(@RequestBody CommonManageReq<QtnReportHeader> req) {
@@ -111,16 +123,24 @@ public class Int02Controller {
 		return qtnReportHeaderService.findByMasterIdForDatatable(qtn, dataTableRequest);
 	}
 	
-	@PostMapping("/qtn_report_detail_by_hdr_id/datatable/")
+	/*
+	 * 
+	 * CRUD TABLE `IA_QTN_REPORT_MAIN`
+	 * 
+	 * */
+	@PostMapping("/save_qtn_report_detail")
 	@ResponseBody
-	public ResponseDataTable<QtnReportDetail> qtnReportDetailByHdrId(DataTableRequest dataTableRequest) {
+	public Message saveQtnReportDetail(@RequestBody CommonManageReq<Int023FormVo> vo) {
 		return null;
 	}
 	
 	@PostMapping("/qtn_report_detail_by_hdr_id/datatable/{hdrId}")
 	@ResponseBody
-	public ResponseDataTable<QtnReportDetail> qtnReportDetailByHdrId(@PathVariable("hdrId") String hdtId, DataTableRequest dataTableRequest) {
-		return null;
+	public ResponseDataTable<Int023Vo> qtnReportDetailByHdrId(@PathVariable("hdrId") String hdrId, DataTableRequest dataTableRequest) {
+		logger.info("qtn_report_detail_by_hdr_id {}", hdrId);
+		QtnReportMain qtn = new QtnReportMain();
+		qtn.setQtnReportHdrId(Long.parseLong(hdrId));
+		return qtnReportMainService.findQtnReport(qtn, dataTableRequest);
 	}
 	
 	@PostMapping("/deleteQtnReportHeaderByCriteria")
@@ -146,7 +166,6 @@ public class Int02Controller {
 			message = ApplicationCache.getMessage("MSG_00003");
 		}
 		return message;
-
 	}
 	
 	@PostMapping("/queryQuestionnaireDetailByCriteria")
@@ -154,7 +173,6 @@ public class Int02Controller {
 	public ResponseDataTable<QuestionnaireDetail> queryQuestionnaireDetailByCriteria(DataTableRequest dataTableRequest) {
 		logger.info("queryQuestionnaireDetailByCriteria");
 		return questionnaireDetailService.findByCriteriaForDatatable(new QuestionnaireDetail(), dataTableRequest);
-		
 	}
 
 }

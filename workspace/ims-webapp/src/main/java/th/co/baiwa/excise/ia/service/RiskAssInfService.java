@@ -36,8 +36,8 @@ public class RiskAssInfService {
 	@Autowired
 	private RiskAssInfDtlRepository riskAssInfDtlRepository;
 	
-	@Autowired
-	private WebServiceExciseService webServiceExciseService;
+//	@Autowired
+//	private WebServiceExciseService webServiceExciseService;
 	
 	@Autowired
 	public RiskAssInfService(RiskAssInfHdrRepository riskAssInfHdrRepository) {
@@ -118,7 +118,8 @@ public class RiskAssInfService {
 	
 	
 	public List<RiskAssInfDtl> findRiskAssInfDtlByWebService() {
-		return webServiceExciseService.getRiskAssInfDtlList(new RiskAssInfDtl());
+//		return webServiceExciseService.getRiskAssInfDtlList(new RiskAssInfDtl());
+		return null;
 	}
 	
 	
