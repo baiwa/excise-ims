@@ -43,7 +43,7 @@ public class WebServiceExciseService {
 	@Value("${ws.excise.endpointIncFri8020}")
 	private String endpointIncFri8020;
 
-	private Object restfulService(String endPoint, Object object ) {
+	private String restfulService(String endPoint, Object object ) {
 
 		RequestServiceExcise requestRestful = new RequestServiceExcise();
 		requestRestful.setSystemid(systemId);
@@ -53,15 +53,14 @@ public class WebServiceExciseService {
 		requestRestful.setRequestData(object);
 		Gson gson = new Gson();
 		String json = gson.toJson(requestRestful);
-		logger.info("Body Service : "+ json);
+		logger.info("Body Service request : "+ json);
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<String> entity = new HttpEntity<String>(json, headers);
 		ResponseEntity<String> response = restTemplate.exchange(endPoint, HttpMethod.POST, entity, String.class);
-		String jsonRes = response.getBody();
-		Object obj = gson.fromJson(jsonRes, Object.class);
-		return obj;
+		logger.info("Body Service response: "+ response.getBody());
+		return response.getBody();
 	}
 
 	public ResponseServiceExcise IncFri8020(String officeCode, String yearMonthFrom, String yearMonthTo, String dateType, String pageNo, String dataPerPage) {
@@ -73,8 +72,10 @@ public class WebServiceExciseService {
 		incFri8020.setDateType(dateType);
 		incFri8020.setPageNo(pageNo);
 		incFri8020.setDataPerPage(dataPerPage);
-		ResponseServiceExcise responseData = (ResponseServiceExcise)restfulService(endpointIncFri8020, incFri8020);
-		return responseData;
+		String responseData = restfulService(endpointIncFri8020, incFri8020);
+		Gson gson = new Gson();
+		ResponseServiceExcise responseServiceExcise = gson.fromJson(responseData, ResponseServiceExcise.class);
+		return responseServiceExcise;
 	}
 	
 	
