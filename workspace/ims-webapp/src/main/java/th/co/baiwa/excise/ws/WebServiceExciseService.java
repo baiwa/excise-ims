@@ -4,14 +4,80 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
+import com.google.gson.Gson;
+
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
+import th.co.baiwa.excise.ws.entity.api.RequestServiceExcise;
+import th.co.baiwa.excise.ws.entity.api.ResponseServiceExcise;
+import th.co.baiwa.excise.ws.entity.reques.IncFri8020;
 
 @Service
 public class WebServiceExciseService {
 
+	private static final Logger logger = LoggerFactory.getLogger(WebServiceExciseService.class);
+
+	@Value("${ws.excise.ipaddress}")
+	private String ipAddress;
+
+	@Value("${ws.excise.username}")
+	private String username;
+
+	@Value("${ws.excise.password}")
+	private String password;
+
+	@Value("${ws.excise.systemid}")
+	private String systemId;
+
+	@Value("${ws.excise.endpointIncFri8020}")
+	private String endpointIncFri8020;
+
+	private Object restfulService(String endPoint, Object object ) {
+
+		RequestServiceExcise requestRestful = new RequestServiceExcise();
+		requestRestful.setSystemid(systemId);
+		requestRestful.setUsername(username);
+		requestRestful.setPassword(password);
+		requestRestful.setIpaddress(ipAddress);
+		requestRestful.setRequestData(object);
+		Gson gson = new Gson();
+		String json = gson.toJson(requestRestful);
+		logger.info("Body Service : "+ json);
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> entity = new HttpEntity<String>(json, headers);
+		ResponseEntity<String> response = restTemplate.exchange(endPoint, HttpMethod.POST, entity, String.class);
+		String jsonRes = response.getBody();
+		Object obj = gson.fromJson(jsonRes, Object.class);
+		return obj;
+	}
+
+	public ResponseServiceExcise IncFri8020(String officeCode, String yearMonthFrom, String yearMonthTo, String dateType, String pageNo, String dataPerPage) {
+		logger.info("restful API : IncFri8020");
+		IncFri8020 incFri8020 = new IncFri8020();
+		incFri8020.setOfficeCode(officeCode);
+		incFri8020.setYearMonthFrom(yearMonthFrom);
+		incFri8020.setYearMonthTo(yearMonthTo);
+		incFri8020.setDateType(dateType);
+		incFri8020.setPageNo(pageNo);
+		incFri8020.setDataPerPage(dataPerPage);
+		ResponseServiceExcise responseData = (ResponseServiceExcise)restfulService(endpointIncFri8020, incFri8020);
+		return responseData;
+	}
+	
+	
 	public List<RiskAssRiskWsDtl> getRiskAssRiskWsDtlList(RiskAssRiskWsDtl riskAssRiskWsDtl) {
 		List<RiskAssRiskWsDtl> riskAssRiskWsDtlList = new ArrayList<RiskAssRiskWsDtl>();
 		RiskAssRiskWsDtl risk = new RiskAssRiskWsDtl();

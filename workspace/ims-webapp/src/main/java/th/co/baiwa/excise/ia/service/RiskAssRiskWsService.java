@@ -70,8 +70,8 @@ public class RiskAssRiskWsService {
 		List<RiskAssRiskWsHdr> riskAssRiskWsHdrList = riskAssRiskWsHdrRepository.findByBudgetYear(riskAssRiskWsHdr.getBudgetYear());
 		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
 		responseDataTable.setData(riskAssRiskWsHdrList);
-		responseDataTable.setRecordsTotal((int) riskAssRiskWsHdrList.size());
-		responseDataTable.setRecordsFiltered((int) riskAssRiskWsHdrList.size());
+		responseDataTable.setRecordsTotal(riskAssRiskWsHdrList.size());
+		responseDataTable.setRecordsFiltered(riskAssRiskWsHdrList.size());
 		return responseDataTable;
 
 	}

@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssRiskWsDtlRepository;
+import th.co.baiwa.excise.ws.WebServiceExciseService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,6 +24,9 @@ public class RiskAssRiskWsServiceTest {
 	@Autowired
 	private RiskAssRiskWsDtlRepository riskAssRiskWsDtlRepository;
 	
+	@Autowired
+	private WebServiceExciseService webServiceExciseService;
+	
 //	@Test
 	public void testNaja() {
 		new Date();
@@ -32,7 +36,7 @@ public class RiskAssRiskWsServiceTest {
 		riskAssRiskWsHdrList.forEach(r -> System.out.println(r.getCreatedDate()));
 		
 	}
-	@Test
+//	@Test
 	public void findAll() {
 		new Date();
 		RiskAssRiskWsHdr riskAssRiskWsHdr = new RiskAssRiskWsHdr();
@@ -41,8 +45,6 @@ public class RiskAssRiskWsServiceTest {
 				riskAssRiskWsDtls.forEach(r -> System.out.println(r.getCreatedDate()));
 		
 	}
-	
-	
 	
 	
 }
