@@ -16,7 +16,7 @@ declare var $: any;
     styleUrls: ['select-form.component.css']
 })
 export class SelectFormComponent implements OnInit {
-
+    obj: Data;
     private showSubMenuMat: boolean = false;
     private showSubMenuIns: boolean = false;
     private showSubMenuTax: boolean = false;
@@ -28,7 +28,7 @@ export class SelectFormComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute
     ) {
-
+        this.obj = new Data();
     }
 
     ngOnInit(): void {
@@ -61,4 +61,12 @@ export class SelectFormComponent implements OnInit {
         this.showSubMenuIns = false;
         this.showSubMenuTax = true;
     }
+}
+class Data {
+    companyName: any = "";
+    startDate: any = "";
+    endDate: any = "";
+    analysNumber: any = "";
+    startDateSplit: any = "";
+    endDateSplit: any = "";
 }
