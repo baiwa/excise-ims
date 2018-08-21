@@ -91,16 +91,4 @@ public class FilterExisePlanHeaderController {
 		return planWorksheetHeaderService.queryExciseIdFlagSDataList(vo.getExciseId());
 	}
 
-	@PostMapping("/getDataExciseIdMonthList")
-	@ResponseBody
-	public DataTableAjax<OPEDataTable> getExciseIdFromAccDTL(@ModelAttribute AccMonth0407DTL vo) {
-		List<OPEDataTable> result = planWorksheetHeaderService.queryExciseIdFromAccDTL(vo.getExciseId(), vo.getType(),vo.getStartDate(), vo.getEndDate());
-
-		DataTableAjax<OPEDataTable> dataTableAjax = new DataTableAjax<>();
-		dataTableAjax.setRecordsTotal(Long.valueOf(result.size()));
-		dataTableAjax.setRecordsFiltered(Long.valueOf(result.size()));
-		dataTableAjax.setData(result);
-		return dataTableAjax;
-	}
-
 }

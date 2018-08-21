@@ -19,7 +19,7 @@ public class ReceiveRmatWsDetailDao {
 
 	private Logger logger = LoggerFactory.getLogger(ReceiveRmatWsDetailDao.class);
 	
-	public void insertTableReceiveRmatWsDetail(OPEDataTable value ) {
+	public void insertTableReceiveRmatWsDetail(OPEDataTable value) {
 		// inti SQL for insert to database
 		StringBuilder sql = new StringBuilder(" INSERT INTO TA_RECEIVE_RMAT_WS_DETAIL "
 				+ "(TA_RECEIVE_RMAT_WS_DETAIL_ID,"
@@ -31,7 +31,7 @@ public class ReceiveRmatWsDetailDao {
 				+ "EXTERNAL_DATA,"
 				+ "MAX_VALUES,"
 				+ "RESULT)");
-		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nextval,?,?,?,?,?,?,?,?) ");
+		sql.append(" values(TA_RECEIVE_RMAT_WS_DETAIL_SEQ.nextval,?,?,?,?,?,?,?,?) ");
 		
 		// for to set Object
 		List<Object> params = new ArrayList<>();
@@ -46,6 +46,27 @@ public class ReceiveRmatWsDetailDao {
 		
 		logger.info("SQL : {}",sql.toString());
 		jdbcTemplate.update(sql.toString(),params.toArray());
-	}	
+	}
+	
+	public void insertTableReceiveRmatWsHeader(OPEDataTable valueHeader) {
+		// inti SQL for insert to database
+		StringBuilder sql = new StringBuilder(" INSERT INTO TA_RECEIVE_RMAT_WS_HEADER "
+				+ "(TA_RECEIVE_RMAT_HEADER_ID,"
+				+ "EXCISE_ID,"
+				+ "TA_ANALYSIS_ID,"
+				+ "START_DATE,"
+				+ "END_DATE)");
+		sql.append(" values(TA_RECEIVE_RMAT_WS_HEADER_SEQ.nextval,?,?,?,?) ");
+		
+		// for to set Object
+		List<Object> params = new ArrayList<>();
+		params.add(valueHeader.getExciseId());
+		params.add(valueHeader.getAnalysNumber());
+		params.add(valueHeader.getStartDate());
+		params.add(valueHeader.getEndDate());
+		
+		logger.info("SQL : {}",sql.toString());
+		jdbcTemplate.update(sql.toString(),params.toArray());
+	}
 
 }

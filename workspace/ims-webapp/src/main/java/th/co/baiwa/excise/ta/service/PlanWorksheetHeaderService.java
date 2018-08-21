@@ -534,6 +534,7 @@ public class PlanWorksheetHeaderService {
 			for (OPEDataTable opeData : opeDataTableList) {
 				for (FormUpload formUpload : formUploadList) {
 					if (opeData.getProduct().equals(formUpload.getColumn2())) {
+						opeData.setColumn6(formUpload.getColumn6());
 						opeData.setDayRecieve(formUpload.getColumn4());
 						opeData.setExd1(formUpload.getColumn6());
 						opeData.setTaxInvoice(formUpload.getColumn3());
@@ -572,6 +573,9 @@ public class PlanWorksheetHeaderService {
 				opeDataTable1.setExd1(formUpload.getColumn6());
 				returnDataList.add(opeDataTable1);
 			}
+		}
+		if(BeanUtils.isNotEmpty(returnDataList)) {
+			returnDataList.get(0).setColumnName(formUploadList.get(0).getColumn6());
 		}
 		return returnDataList;
 	}
