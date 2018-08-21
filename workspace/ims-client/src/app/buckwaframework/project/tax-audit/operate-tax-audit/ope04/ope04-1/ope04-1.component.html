@@ -102,8 +102,7 @@
                             <th>ใบกำกับภาษี</th>
                             <th>บัญชีประจำวัน</th>
                             <th>งบเดือน</th>
-                            <th></th>
-                            <!-- {{row[0].column6}} -->
+                            <th>{{emptyColumn}}</th>
                             <th>ค่าสูงสุดของข้อมูล</th>
                             <th>ผลต่างของคู่ข้อมูล</th>
                         </tr>
@@ -134,8 +133,13 @@
                 <div class="ui form">
                     <div class="inline fields">
                         <div class="eight wide field ">
-                            <label class="custom-label-w-25">เลือกไฟล์ Template ข้อมูล</label>
-                            <input type="file" name="fileExel" id="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="onChangeUpload($event)" required>
+                            <label class="custom-label-w-15">เลือกไฟล์ Template ข้อมูล</label>
+                            <div>
+                                <input class="inputfile" type="file" name="fileExel" id="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="onChangeUpload($event)" required>
+                                <label for="fileExel" class="ui mini blue butt-upload button">
+                                    <i class="ui fa-file-excel-o icon"></i> เลือกไฟล์
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
