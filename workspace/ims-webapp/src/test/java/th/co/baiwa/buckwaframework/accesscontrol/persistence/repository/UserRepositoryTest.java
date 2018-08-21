@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
+import th.co.baiwa.excise.ws.WebServiceExciseService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,7 +30,7 @@ public class UserRepositoryTest {
 	public void test_findAll() {
 		System.out.println("- - - - - findAll - - - - -");
 		List<User> userList = userRepository.findAll();
-		System.out.println(userList);
+		userList.forEach(r-> System.out.println(r.getCreatedDate()));
 		Assert.assertNotEquals(0, userList.size());
 	}
 
@@ -49,7 +50,7 @@ public class UserRepositoryTest {
 		Assert.assertNull(user);
 	}
 
-	@Test
+//	@Test
 	public void test_findByUsername_Found() {
 		System.out.println("- - - - - findByUsername_Found - - - - -");
 		User user = userRepository.findByUsername("admin");
@@ -99,6 +100,12 @@ public class UserRepositoryTest {
 	public void test_delete() {
 		System.out.println("- - - - - delete - - - - -");
 		userRepository.delete(82L);
+	}
+	
+	@Test
+	public void wsNa() {
+		System.out.println("- - - - - wsNa - - - - -");
+//		webServiceExciseService.testWs();
 	}
 
 }
