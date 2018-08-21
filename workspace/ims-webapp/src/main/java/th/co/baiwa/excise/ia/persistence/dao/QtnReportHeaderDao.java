@@ -41,9 +41,9 @@ public class QtnReportHeaderDao {
 	
 	public List<Int022Vo> findByCriteriaDataTable(QtnReportHeader qtnReportHeader,int start, int length) {
 		List<Object> paramList = new ArrayList<Object>();
-		String str = " SELECT H.*, DECODE(D.QTN_REPORT_HDR_ID, null, 'FALSE', 'TRUE') DETAIL FROM IA_QTN_REPORT_HEADER H ";
+		String str = " SELECT DISTINCT H.*, DECODE(M.QTN_REPORT_HDR_ID, null, 'FALSE', 'TRUE') DETAIL FROM IA_QTN_REPORT_HEADER H ";
 		StringBuilder sql = new StringBuilder(str);
-		sql.append(" LEFT JOIN IA_QTN_REPORT_DETAIL D ON D.QTN_REPORT_HDR_ID = H.QTN_REPORT_HDR_ID WHERE 1=1 ");
+		sql.append(" LEFT JOIN IA_QTN_REPORT_MAIN M ON M.QTN_REPORT_HDR_ID = H.QTN_REPORT_HDR_ID WHERE 1=1 ");
 		sql.append(" AND H.IS_DELETED = 'N' ");
 		
 		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnReportHdrId())) {

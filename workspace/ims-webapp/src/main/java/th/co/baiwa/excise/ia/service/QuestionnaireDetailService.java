@@ -74,7 +74,6 @@ public class QuestionnaireDetailService {
 
 	
 	public ResponseDataTable<QuestionnaireDetail> findByCriteriaForDatatable(QuestionnaireDetail questionnaireDetail , DataTableRequest dataTableRequest) {
-		
 		ResponseDataTable<QuestionnaireDetail> responseDataTable = new ResponseDataTable<QuestionnaireDetail>();
 		List<QuestionnaireDetail> questionnaireDetailList = questionnaireDetailDao.findByCriteriaDataTable(questionnaireDetail, dataTableRequest.getStart().intValue(), dataTableRequest.getLength().intValue());
 		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
@@ -83,7 +82,5 @@ public class QuestionnaireDetailService {
 		responseDataTable.setRecordsTotal((int) count);
 		responseDataTable.setRecordsFiltered((int) count);
 		return responseDataTable;
-				
-				
 	}
 }

@@ -14,8 +14,8 @@
             <table id="datatable" class="ui small celled table aligned hover">
               <thead>
                 <tr>
-                  <th style="text-align: center !important ;width: 5%">
-                    <input type="checkbox" name="chk" id="chk" (click)="clickChkAll($event)">
+                  <th style="text-align: left !important ;width: 5%">
+                    <input type="checkbox" name="chk" id="chk" (click)="clickChkAll($event, '')">
                   </th>
                   <th style="text-align: center !important ;width: 95%">รายการ</th>
                 </tr>
@@ -29,22 +29,33 @@
       </div>
 
       <div class="ui segment">
-        <div class="ui grid">
+        <div class="ui centered grid">
           <div class="sixteen wide column">
             <label>รายละเอียดแบบสอบทาน (ใหม่)</label>
             <table id="datatable2" class="ui small celled table aligned hover">
               <thead>
                 <tr>
-                  <th style="text-align: center !important ;width: 5%">
-                    <input type="checkbox" name="chk2" id="chk2" (click)="clickChkAll($event)">
+                  <th style="text-align: left !important ;width: 5%">
+                    <input type="checkbox" name="chk2" id="chk2" (click)="chkAll($event)">
                   </th>
                   <th style="text-align: center !important ;width: 95%">รายการ</th>
                 </tr>
               </thead>
               <tbody>
-                <!-- DATA HERE -->
+                <tr *ngFor="let t of table; let i = index">
+                  <td>
+                    <input type="checkbox" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="t.qtnReportHdrId !== undefined" (change)="chck(t.qtnReportManId, 'man', $event)">
+                    <input type="checkbox" style="margin-left: 2em" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="t.qtnReportHdrId === undefined" (change)="chck(t.qtnReportDtlId, 'dtl', $event)">
+                  </td>
+                  <td>{{t.qtnMainDetail}}</td>
+                </tr>
               </tbody>
             </table>
+          </div>
+          <div class="sixteen wide center aligned column">
+            <button type="button" (click)="delete()" class="ui red {{ chk2.length==0 && 'disabled'}} mini button">
+              <i class="trash icon"></i> ลบ
+            </button>
           </div>
         </div>
       </div>
@@ -125,7 +136,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of datas; let i=index">
+            <tr *ngFor="let d of cond; let i=index">
               <td class="aligned center">{{i+1}}</td>
               <td class="aligned center">
                 <select class="ui fluid dropdown">
@@ -161,14 +172,14 @@
                 </div>
               </td>
               <td class="aligned center">
-                <button class="ui icon red mini button" type="button" (click)="delRow(i)">
+                <button class="ui icon red mini button" type="button" (click)="delCond(i)">
                   <i class="times icon"></i>
                 </button>
               </td>
             </tr>
           </tbody>
         </table>
-        <button class="ui icon green left floated mini button" type="button" (click)="addRow()">
+        <button class="ui icon green left floated mini button" type="button" (click)="addCond()">
           <i class="plus icon"></i>
         </button>
       </div>
@@ -176,7 +187,7 @@
   </div>
   <div class="ui center aligned grid">
     <div class="sixteen wide column">
-      <button class="ui mini primary button">
+      <button type="button" class="ui mini primary {{ !unsave() && 'disabled' }} button">
         <i class="save icon"></i>
         บันทึก
       </button>
