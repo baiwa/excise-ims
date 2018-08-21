@@ -598,8 +598,6 @@ public class PlanWorksheetHeaderDao {
 			ac.setMonthRecieve5(rs.getString("MONTH_RECIEVE_5"));
 			ac.setMonthRecieve6(rs.getString("MONTH_RECIEVE_6"));
 			ac.setAccMonth(rs.getString("ACC_MONTH"));
-			ac.setTA_EXCISE_ACC_DTL_04_07_ID(rs.getString("TA_EXCISE_ACC_DTL_04_07_ID"));
-			ac.setTA_EXCISE_ACC_HDR_04_07_ID(rs.getString("TA_EXCISE_ACC_HDR_04_07_ID"));
 			ac.setExciseId(rs.getString("EXCISE_ID"));
 			ac.setType(rs.getString("TYPE"));
 			return ac;

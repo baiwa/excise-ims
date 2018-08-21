@@ -13,6 +13,8 @@ public class OPEDataTable extends FormUpload {
 	private String exd1;
 	private String calMax;
 	private String diff;
+	private String columnName;
+	
 	public String getNo() {
 		return no;
 	}
@@ -60,6 +62,12 @@ public class OPEDataTable extends FormUpload {
 	}
 	public void setDiff(String diff) {
 		this.diff = diff;
+	}
+	public String getColumnName() {
+		return columnName;
+	}
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
 	}
 	
 }
