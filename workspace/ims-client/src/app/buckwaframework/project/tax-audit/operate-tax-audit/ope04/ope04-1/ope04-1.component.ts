@@ -150,7 +150,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
       formBody.append("monthRecieve" + (i + 1), this.dataTB[i].monthRecieve);
     }
 
-    let url = "/upload/excel";
+    let url = "/ope041/excel";
     this.ajax.upload(
       url,
       formBody,
@@ -237,8 +237,6 @@ export class Ope041Component implements OnInit, AfterViewInit {
             }
           }
         });
-
-        this.messageBarService.successModal("อัพโหลดข้อมูลสำเร็จ", "สำเร็จ");
       },
       err => {
         this.messageBarService.errorModal(
@@ -293,7 +291,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
   };
 
   initDatatable(): void {
-    const URL = AjaxService.CONTEXT_PATH + "/upload/excel";
+    const URL = AjaxService.CONTEXT_PATH + "/ope041/excel";
     this.showDt = $("#showDt").DataTable({
       lengthChange: false,
       searching: false,
@@ -378,6 +376,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
 
   saveTable = () => {
     this.dataTB = [];
+    //push data Criteria header
     this.dataTB.push({
       exciseId: this.exciseId,
       analysNumber: this.obj.analysNumber,
@@ -385,39 +384,17 @@ export class Ope041Component implements OnInit, AfterViewInit {
       endDate: this.endDateSplit
     });
 
+    //push datatable #showDt
     for (var i = 0; i < this.showDt.data().length; i++) {
       this.dataTB.push(this.showDt.data()[i]);
     }
 
-    // this.dataHeader = [];
-    // this.dataHeader.push({
-    //   exciseId: this.exciseId,
-    //   analysNumber: this.obj.analysNumber,
-    //   startDate: this.startDateSplit,
-    //   endDate: this.endDateSplit
-    // });
-
-    console.log(this.dataTB);
-
-    const URL = "/ope/SaveTable";
+    const URL = "/ope041/saveTable";
     this.ajax.post(
       URL,
       JSON.stringify(this.dataTB),
       res => {
         this.messageBarService.successModal("บันทึกข้อมูลสำเร็จ", "สำเร็จ");
-        // this.ajax.post(
-        //   URL,
-        //   JSON.stringify(this.dataHeader),
-        //   res => {
-        //     this.messageBarService.successModal("บันทึกข้อมูลสำเร็จ", "สำเร็จ");
-        //   },
-        //   err => {
-        //     this.messageBarService.errorModal(
-        //       "ไม่สามารถบันทึกข้อมูลได้",
-        //       "เกิดข้อผิดพลาด"
-        //     );
-        //   }
-        // );
       },
       err => {
         this.messageBarService.errorModal(
