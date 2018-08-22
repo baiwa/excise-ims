@@ -16,13 +16,13 @@ declare var $: any;
 })
 export class DropdownComponent {
 
-    @ViewChild('dropdown') el:ElementRef;
+    @ViewChild('dropdown') el: ElementRef;
 
     @Input() placeholder: string;
     @Input() datas: Dropdown[];
 
     ngAfterViewInit() {
-        
+
         $(this.el.nativeElement).dropdown({
             values: this.datas,
             placeholder: this.placeholder

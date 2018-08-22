@@ -12,6 +12,7 @@ import { Int0814Component } from './int08-1-4/int08-1-4.component';
 import { FormsModule } from '../../../../../../../node_modules/@angular/forms';
 import { Int0815Component } from './int08-1-5/int08-1-5.component';
 import { Int0816Component } from './int08-1-6/int08-1-6.component';
+import { ConditionComponent } from '../../../../common/components/condition/condition.component';
 
 const routes: Routes = [
   { path: '', component: Int081Component, canActivate: [AuthGuard] },
@@ -36,7 +37,8 @@ const routes: Routes = [
     Int0813Component,
     Int0814Component,
     Int0815Component,
-    Int0816Component
+    Int0816Component,
+    ConditionComponent
   ],
   exports: [RouterModule]
 })

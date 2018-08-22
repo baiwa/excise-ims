@@ -34,7 +34,6 @@ import { HomePage } from "./buckwaframework/project/pages/home/home";
 import { LoginPage } from "./buckwaframework/project/pages/login/login";
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +42,7 @@ import { LoginPage } from "./buckwaframework/project/pages/login/login";
     TranslatePipe,
     HomePage,
     LoginPage,
-  
+
   ],
   imports: [
     BrowserModule,
@@ -70,4 +69,4 @@ import { LoginPage } from "./buckwaframework/project/pages/login/login";
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

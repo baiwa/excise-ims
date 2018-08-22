@@ -28,7 +28,6 @@ export class Int0816Component implements OnInit {
   riskDataList: RiskData[] = [];
   dataTableList: RiskData[] = [];
   riskHrdData: RiskHrdData;
-  datas: Condition[];
   isConditionShow: any;
 
   fileExel: File[];
@@ -48,10 +47,7 @@ export class Int0816Component implements OnInit {
     this.riskHrdData = new RiskHrdData();
     this.id = this.route.snapshot.queryParams["id"];
     this.findRiskById();
-    this.datas = [];
-    for (let i = 0; i < 3; i++) {
-      this.datas.push(new Condition());
-    }
+
     this.isConditionShow = false;
     // $("#ConditionRL").modal("show");
     //$("#ConditionRL").modal("hide");
@@ -107,15 +103,13 @@ export class Int0816Component implements OnInit {
   }
 
   onUpload = (event: any) => {
-    console.log(555);
-    // Prevent actual form submission
     event.preventDefault();
 
 
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
 
-    let url = "/upload/excelINT081";
+    let url = "ia/int08/excelINT081";
     this.ajax.upload(
       url,
       formBody,
@@ -332,21 +326,12 @@ export class Int0816Component implements OnInit {
     this.isConditionShow = true;
   }
 
-  closeConditionRL() {
+  closeConditionRL(e) {
     this.isConditionShow = false;
   }
 
-  addRow() {
-    this.datas.length < 5 && this.datas.push(new Condition());
-  }
 
-  delRow(index) {
-    if (this.datas.length > 3) {
-      this.datas.splice(index, 1);
-    } else {
-      this.messageBarService.errorModal("เงื่อนไขต้องมีอย่างน้อย 3 เงื่อนไข");
-    }
-  }
+
 }
 
 class RiskData {
@@ -368,16 +353,7 @@ class RiskHrdData {
 
 }
 
-class Condition {
-  [x: string]: any;
-  seq: any;
-  conditionRick: any;
-  value1: any;
-  value2: any;
-  valueRL: any;
-  convertValue: any;
-  color: any;
-}
+
 class File {
   [x: string]: any;
   name: string;

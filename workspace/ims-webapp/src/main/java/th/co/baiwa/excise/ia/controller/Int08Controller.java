@@ -1,6 +1,8 @@
 
 package th.co.baiwa.excise.ia.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,8 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
 import th.co.baiwa.excise.ia.service.RiskAssRiskWsService;
+import th.co.baiwa.excise.ta.persistence.entity.Ope041Vo;
+import th.co.baiwa.excise.upload.service.UploadFileExciseService;
 import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
@@ -34,6 +39,9 @@ public class Int08Controller {
 	
 	@Autowired
 	private RiskAssRiskWsService riskAssRiskWsHdrService;
+	
+	@Autowired
+	UploadFileExciseService uploadFileExciseService;
 	
 	@Autowired
 	public Int08Controller(RiskAssRiskWsService riskAssRiskWsHdrService) {
@@ -168,7 +176,33 @@ public class Int08Controller {
 		return riskAssRiskWsHdrService.findByRiskHrdId(riskAssOtherDtl.getRiskHrdId());
 	}
 	
-	
+	@PostMapping("excelINT081")
+	@ResponseBody
+	public List<RiskAssOtherDtl> excelINT081(@ModelAttribute Ope041Vo mainForm) throws Exception {
+		List<RiskAssOtherDtl> excelData = new ArrayList<RiskAssOtherDtl>();
+		if (mainForm.getFileExel() != null) {
+			RiskAssOtherDtl row = new RiskAssOtherDtl();
+			List<String[]> ListfileEx = uploadFileExciseService.readFileExcel(mainForm);
+			for (int j = 1; j < ListfileEx.size(); j++) {
+				String[] stringArr = ListfileEx.get(j);
+
+				row = new RiskAssOtherDtl();
+				for (int i = 0; i < stringArr.length; i++) {
+					if (i == 0) {
+						row.setRiskOtherDtlId(new Long(i + 1));
+					} else if (i == 1) {
+						row.setProjectBase(stringArr[i]);
+					} else if (i == 2) {
+						row.setDepartmentName(stringArr[i]);
+					} else if (i == 3) {
+						row.setRiskCost(new BigDecimal(stringArr[i]));
+					}
+				}
+				excelData.add(row);
+			}
+		}
+		return excelData;
+	}
 	
 	
 	
