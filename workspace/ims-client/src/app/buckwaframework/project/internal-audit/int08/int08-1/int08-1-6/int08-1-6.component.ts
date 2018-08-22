@@ -3,7 +3,8 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { forEach } from "@angular/router/src/utils/collection";
-
+import { TextDateTH, digit } from "../../../../../common/helper/datepicker";
+import { DecimalFormat } from "../../../../../common/helper";
 
 
 declare var jQuery: any;
@@ -14,7 +15,6 @@ declare var $: any;
   styleUrls: ['./int08-1-6.component.css']
 })
 export class Int0816Component implements OnInit {
-
   riskAssRiskWsHdr: any;
   id: any;
   riskHrdPaperName: any;
@@ -24,22 +24,51 @@ export class Int0816Component implements OnInit {
   departmentName: any = '';
   riskCost: any = '';
   datatable: any;
-  //riskData: RiskData;
+  riskData: RiskData;
   riskDataList: RiskData[] = [];
   dataTableList: RiskData[] = [];
   riskHrdData: RiskHrdData;
+  datas: Condition[];
+  isConditionShow: any;
+
+  fileExel: File[];
+
 
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
     private messageBarService: MessageBarService
-  ) { }
-
+  ) {
+    this.fileExel = new Array<File>(); // initial file array
+  }
+  uu
   ngOnInit() {
+    //$(".ui.dropdown").dropdown();
+    $('.menu .item').tab()
     this.riskHrdData = new RiskHrdData();
     this.id = this.route.snapshot.queryParams["id"];
     this.findRiskById();
+    this.datas = [];
+    for (let i = 0; i < 3; i++) {
+      this.datas.push(new Condition());
+    }
+    this.isConditionShow = false;
+    // $("#ConditionRL").modal("show");
+    //$("#ConditionRL").modal("hide");
+
   }
+
+  ngAfterViewInit() {
+
+
+  }
+
+  getConditionShow() {
+    return this.isConditionShow;
+  }
+
+
+
   findRiskById() {
     let url = "ia/int08/findRiskById"
     this.ajax.post(url, { riskHrdId: this.id }, res => {
@@ -76,6 +105,38 @@ export class Int0816Component implements OnInit {
       });
     });
   }
+
+  onUpload = (event: any) => {
+    console.log(555);
+    // Prevent actual form submission
+    event.preventDefault();
+
+
+    const form = $("#upload-form")[0];
+    let formBody = new FormData(form);
+
+    let url = "/upload/excelINT081";
+    this.ajax.upload(
+      url,
+      formBody,
+      res => {
+        console.log(res.json());
+
+        res.json().forEach(element => {
+          let riskData = new RiskData();
+          riskData.projectBase = element.projectBase;
+          riskData.departmentName = element.departmentName;
+          riskData.riskCost = element.riskCost;
+          riskData.isDeleted = 'N';
+          riskData.riskHrdId = this.riskAssRiskWsHdr.riskHrdId;
+          this.riskDataList.push(riskData);
+
+        });
+        this.initDatatable();
+
+      }
+    );
+  };
 
   initDatatable(): void {
 
@@ -242,7 +303,21 @@ export class Int0816Component implements OnInit {
     }
 
   }
+  onChangeUpload = (event: any) => {
+    if (event.target.files && event.target.files.length > 0) {
+      let reader = new FileReader();
 
+      reader.onload = (e: any) => {
+        const f = {
+          name: event.target.files[0].name,
+          type: event.target.files[0].type,
+          value: e.target.result
+        };
+        this.fileExel = [f];
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  };
   cancelFlow() {
     this.messageBarService.comfirm(foo => {
       // let msg = "";
@@ -252,6 +327,25 @@ export class Int0816Component implements OnInit {
         });
       }
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
+  }
+  modalConditionRL() {
+    this.isConditionShow = true;
+  }
+
+  closeConditionRL() {
+    this.isConditionShow = false;
+  }
+
+  addRow() {
+    this.datas.length < 5 && this.datas.push(new Condition());
+  }
+
+  delRow(index) {
+    if (this.datas.length > 3) {
+      this.datas.splice(index, 1);
+    } else {
+      this.messageBarService.errorModal("เงื่อนไขต้องมีอย่างน้อย 3 เงื่อนไข");
+    }
   }
 }
 
@@ -272,4 +366,30 @@ class RiskHrdData {
   budgetYear: any = '';
   userCheck: any = '';
 
+}
+
+class Condition {
+  [x: string]: any;
+  seq: any;
+  conditionRick: any;
+  value1: any;
+  value2: any;
+  valueRL: any;
+  convertValue: any;
+  color: any;
+}
+class File {
+  [x: string]: any;
+  name: string;
+  type: string;
+  value: any;
+}
+
+class Data {
+  companyName: any = "";
+  startDate: any = "";
+  endDate: any = "";
+  analysNumber: any = "";
+  startDateSplit: any = "";
+  endDateSplit: any = "";
 }

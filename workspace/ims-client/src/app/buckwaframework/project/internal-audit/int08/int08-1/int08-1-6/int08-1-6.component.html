@@ -1,5 +1,5 @@
 <div class="ui grid">
-  <div class="sixteen wide column">
+  <div class="sixteen wide column" *ngIf="!getConditionShow()">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>รายละเอียดหัวกระดาษทำการ</span>
     </div>
@@ -40,7 +40,7 @@
 
 
   </div>
-  <div class="sixteen wide column">
+  <div class="sixteen wide column ">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>เพิ่มข้อมูลกระดาษทำการ</span>
     </div>
@@ -92,7 +92,37 @@
           </div>
         </div>
         <div class="ui bottom attached tab segment" data-tab="second">
-          Second
+          <form id="upload-form" ngNativeValidate (submit)="onUpload($event)">
+            <div class="ui attached segment">
+              <div class="ui form">
+                <div class="inline fields">
+                  <div class="eight wide field ">
+                    <label class="custom-label-w-15">เลือกไฟล์ Template ข้อมูล</label>
+                    <div>
+                      <input class="inputfile" type="file" name="fileExel" id="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        (change)="onChangeUpload($event)" required>
+                      <label for="fileExel" class="ui mini blue butt-upload button">
+                        <i class="ui fa-file-excel-o icon"></i> เลือกไฟล์
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui center aligned grid">
+                <div class="four wide column">
+                  <button class="ui mini primary button" type="submit">
+                    <i class="upload icon"></i>
+                    อัพโหลด
+                  </button>
+                  <button class="ui mini button" type="reset">
+                    <i class="trash outline icon"></i>
+                    ลบไฟล์
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
 
         <table id="dataTable" class="ui small celled table">
@@ -111,6 +141,7 @@
             </tr>
           </thead>
         </table>
+        <div class="inline fields "></div>
         <div class="inline fields ">
           <div class="sixteen wide field ">
             <div class="six wide field "></div>
@@ -118,7 +149,7 @@
               <i class="save icon"></i>
               บันทึก
             </button>
-            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+            <button class="ui mini primary button" (click)="modalConditionRL()">
               กำหนดเงื่อนไข RL
             </button>
             <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
@@ -131,6 +162,105 @@
 
         </div>
       </div>
+    </div>
+  </div>
+  <div class="sixteen wide column" *ngIf="getConditionShow()">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields ">
+          <table id="dataTable" class="ui small celled table">
+            <thead>
+              <tr>
+                <th style="text-align: center !important">ที่</th>
+                <th style="text-align: center !important">เงื่อนไข</th>
+                <th style="text-align: center !important">ค่าเริ่มต้น</th>
+                <th style="text-align: center !important"></th>
+                <th style="text-align: center !important">ค่าสิ้นสุด</th>
+                <th style="text-align: center !important">ค่า RL</th>
+                <th style="text-align: center !important">แปลงค่า</th>
+                <th style="text-align: center !important">สี</th>
+                <th style="text-align: center !important"></th>
+              </tr>
+
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of datas; let i=index">
+                <td class="aligned center">{{i+1}}</td>
+                <td class="aligned center">
+
+                  <select class="ui dropdown ai" id="selectConditionRick" [attr.required]="true" [(ngModel)]="datas[i].conditionRick">
+                    <option value="ระหว่าง">ระหว่าง</option>
+                    <option value="มากกว่า">มากกว่า</option>
+                    <option value="น้อยกว่า">น้อยกว่า</option>
+                    <option value="เท่ากับ">เท่ากับ</option>
+                  </select>
+                </td>
+                <td class="aligned center">
+                  <div class="ui input">
+                    <input type="text">
+                  </div>
+                </td>
+                <td class="aligned center">-</td>
+                <td class="aligned center">
+                  <div class="ui input">
+                    <input type="text">
+                  </div>
+                </td>
+                <td class="aligned center">
+                  <select class="ui fluid dropdown" id="selectConvertValue">
+                    <option value="ต่ำมาก">ต่ำมาก</option>
+                    <option value="ต่ำ">ต่ำ</option>
+                    <option value="ปานกลาง">ปานกลาง</option>
+                    <option value="สูง">สูง</option>
+                    <option value="สูงมาก">สูงมาก</option>
+                  </select>
+                </td>
+                <td class="aligned center">
+                  <div class="ui input">
+                    <input type="text">
+                  </div>
+                </td>
+                <td class="aligned center">
+                  <select class="ui fluid dropdown" id="selectColor">
+                    <option value="ต่ำมาก">แดง</option>
+                    <option value="ต่ำ">เหลือง</option>
+                    <option value="ปานกลาง">เขียว</option>
+                  </select>
+                </td>
+                <td class="aligned center">
+                  <button class="ui icon red mini button" type="button" (click)="delRow(i)">
+                    <i class="times icon"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="inline fields "></div>
+        <div class="inline fields ">
+          <div class="sixteen wide field ">
+            <div class="six wide field "></div>
+            <button class="ui mini primary button" (click)="addRow()">
+              <i class="add icon"></i>
+              เพิ่ม
+            </button>
+            <button class="ui mini primary button width-100" (click)="saveCondition()">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <button class="ui mini button width-100" (click)="closeConditionRL()">
+              <i class="close icon"></i>
+              ปิด
+            </button>
+          </div>
+        </div>
+      </div>
+      <br/>
+
     </div>
   </div>
 
