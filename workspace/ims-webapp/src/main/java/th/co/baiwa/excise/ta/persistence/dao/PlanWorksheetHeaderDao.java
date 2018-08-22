@@ -429,14 +429,6 @@ public class PlanWorksheetHeaderDao {
 		return analysList;
 	}
 
-	private RowMapper<String> fieldMappingAnalysNumber = new RowMapper<String>() {
-		@Override
-		public String mapRow(ResultSet rs, int arg1) throws SQLException {
-
-			return rs.getString("ANALYS_NUMBER");
-		}
-	};
-
 	public List<String> getStartDateAndEndDateFromAnalysNumber(String analysNumber) {
 		StringBuilder sql = new StringBuilder(" SELECT DISTINCT D.MONTH ");
 		sql.append(" FROM TA_PLAN_WORK_SHEET_HEADER H ");

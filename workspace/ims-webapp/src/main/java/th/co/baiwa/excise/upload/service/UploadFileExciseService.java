@@ -19,10 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.domain.form.FormUpload;
-import th.co.baiwa.excise.domain.form.OPEDataTable;
 import th.co.baiwa.excise.ta.service.ExciseDetailService;
-import th.co.baiwa.excise.utils.BeanUtils;
-import th.co.baiwa.excise.utils.NumberUtils;
 
 @Service
 public class UploadFileExciseService {

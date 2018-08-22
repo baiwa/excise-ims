@@ -20,7 +20,6 @@ public class ReceiveRmatWsDetailDao {
 	private Logger logger = LoggerFactory.getLogger(ReceiveRmatWsDetailDao.class);
 	
 	public void insertTableReceiveRmatWsDetail(OPEDataTable value) {
-		// inti SQL for insert to database
 		StringBuilder sql = new StringBuilder(" INSERT INTO TA_RECEIVE_RMAT_WS_DETAIL "
 				+ "(TA_RECEIVE_RMAT_WS_DETAIL_ID,"
 				+ "RECEIVE_RMAT_DETAIL_NO,"
@@ -49,7 +48,6 @@ public class ReceiveRmatWsDetailDao {
 	}
 	
 	public void insertTableReceiveRmatWsHeader(OPEDataTable valueHeader) {
-		// inti SQL for insert to database
 		StringBuilder sql = new StringBuilder(" INSERT INTO TA_RECEIVE_RMAT_WS_HEADER "
 				+ "(TA_RECEIVE_RMAT_HEADER_ID,"
 				+ "EXCISE_ID,"
