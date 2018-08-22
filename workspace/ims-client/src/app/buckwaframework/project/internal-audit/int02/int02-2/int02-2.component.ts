@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { DialogService, IaService, MessageBarService, AjaxService, AuthService } from "../../../../common/services";
 import { Headers } from "@angular/http";
 import { toFormData } from "../../../../common/helper";
-import { BaseModel, ManageReq } from "../../../../common/models";
+import { BaseModel, ManageReq, TableReq } from "../../../../common/models";
 
 declare var $: any;
 
@@ -36,7 +36,7 @@ export class Int022Component implements OnInit {
   chkDel: Datatable[] = [];
   qtnMaster: any;
   qtnMasterId: any;
-  table: any;
+  table: TableReq = new TableReq();
   id: any;
   private saving: boolean = false;
   private unsave: boolean = false;
@@ -63,13 +63,6 @@ export class Int022Component implements OnInit {
       }
     });
 
-    // Initial Table Request
-    this.table = {
-      draw: 1,
-      start: 0,
-      length: 5
-    };
-
   }
 
   ngOnInit(): void {
@@ -94,6 +87,8 @@ export class Int022Component implements OnInit {
   init() {
     // QtnMasterId
     this.qtnMasterId = this.route.snapshot.queryParams["id"] || "";
+    // Datatable
+    this.loadTable();
     // QtnMaster Initial
     if (this.qtnMasterId !== "") {
       this.ajax.get(`${URL.FIND_MASTER}/${this.qtnMasterId}`, res => {
@@ -108,8 +103,6 @@ export class Int022Component implements OnInit {
     this.ajax.post(URL.COMBOBOX, {}, res => {
       this.departmentNameArr = res.json();
     });
-    // Datatable
-    this.loadTable();
   }
 
   onAdd(event: any): void {
@@ -125,7 +118,7 @@ export class Int022Component implements OnInit {
       }
       // Add Data to Datatable Array
       const data = new Datatable();
-      data.qtnReportHdrId = `NEW_${this.getRndInteger(100, 999)}`;
+      data.qtnReportHdrId = `NEW_${this.getRndInteger(10000, 99999)}`;
       data.qtnReportHdrName = departmentValue;
       data.createdBy = this.auth.getUser().username;
       data.status = "NEW";
@@ -142,7 +135,6 @@ export class Int022Component implements OnInit {
 
   onDelete(): void {
     this.message.comfirm(foo => {
-      // let msg = "";
       if (foo) {
         this.chk.forEach(obj_ => {
           if (obj_.status === undefined) {
@@ -238,7 +230,8 @@ export class Int022Component implements OnInit {
 
   loadTable(): void {
     this.ajax.post(`${URL.DATATABLE}/${this.qtnMasterId}`, toFormData(this.table), res => {
-      console.log(res);
+      let len: number = parseInt(res.json().recordsTotal) / 5;
+      this.table.recordsTotal = Math.ceil(len);
       this.datatable = res.json().data;
     }, null, new Headers());
   }
@@ -303,6 +296,13 @@ export class Int022Component implements OnInit {
 
   notNullDepartment(): boolean {
     return !this.isNotNull(this.departmentName) && !this.isNotNull(this.departmentNameNew);
+  }
+
+  pageChange(e) {
+    // Change Table Object
+    this.table.start = e - 5;
+    // Loading Table
+    this.loadTable();
   }
 
 }

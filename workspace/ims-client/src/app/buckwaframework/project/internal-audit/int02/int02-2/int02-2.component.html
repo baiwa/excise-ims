@@ -40,9 +40,6 @@
     </div>
 
     <div class="ui segment dimmable">
-      <div class="ui active inverted dimmer" *ngIf="datatable == undefined">
-        <div class="ui loader"></div>
-      </div>
       <div class="ui grid">
         <div class="sixteen wide column">
           <table id="datatable" class="ui celled table">
@@ -61,7 +58,7 @@
               <tr *ngIf="datatable != undefined && datatable.length == 0">
                 <td class="center" colspan="5">ยังไม่มีข้อมูล</td>
               </tr>
-              <tr *ngFor="let obj of datatable; let i = index" class="{{ obj.status === 'NEW' && 'positive' }}">
+              <tr *ngFor="let obj of datatable; let i = index" class="{{ obj.status === 'NEW' ? 'positive' : '' }}">
                 <td class="center">
                   <input type="checkbox" name="chk{{i}}" id="chk{{i}}" (click)="clickChk($event, i)">
                 </td>
@@ -81,6 +78,19 @@
                 </td>
               </tr>
             </tbody>
+            <tfoot>
+              <tr>
+                <th colspan="5">
+                  <pagination
+                    [class]="'right floated'"
+                    [step]="table.step"
+                    [active]="(table.start/5) + 1"
+                    [pages]="table.recordsTotal"
+                    (length)="pageChange($event)">
+                  </pagination>
+                </th>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>

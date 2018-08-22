@@ -43,8 +43,8 @@ public class QtnReportHeaderDao {
 		List<Object> paramList = new ArrayList<Object>();
 		String str = " SELECT DISTINCT H.*, DECODE(M.QTN_REPORT_HDR_ID, null, 'FALSE', 'TRUE') DETAIL FROM IA_QTN_REPORT_HEADER H ";
 		StringBuilder sql = new StringBuilder(str);
-		sql.append(" LEFT JOIN IA_QTN_REPORT_MAIN M ON M.QTN_REPORT_HDR_ID = H.QTN_REPORT_HDR_ID WHERE 1=1 ");
-		sql.append(" AND H.IS_DELETED = 'N' ");
+		sql.append("LEFT JOIN IA_QTN_REPORT_MAIN M ON M.QTN_REPORT_HDR_ID = H.QTN_REPORT_HDR_ID WHERE 1=1 ");
+		sql.append("AND H.IS_DELETED = 'N' ");
 		
 		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnReportHdrId())) {
 			sql.append("AND H.QTN_REPORT_HDR_ID = ? ");
@@ -61,23 +61,33 @@ public class QtnReportHeaderDao {
 			paramList.add(qtnReportHeader.getQtnMasterId());
 		}
 		
-		List<Int022Vo> qtnReportHeaderList = jdbcTemplate.query(OracleUtils.limitForDataTable(sql, start, length), paramList.toArray(),rowMapper );
+		List<Int022Vo> qtnReportHeaderList = jdbcTemplate.query(OracleUtils.limitForDataTable(sql, start, length), paramList.toArray(), rowMapper);
 		
 		return qtnReportHeaderList;
 	}
 	
 	public long countQtnReportHeader(QtnReportHeader qtnReportHeader) {
 		List<Object> paramList = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder(sqlTemplate); 
-		sql.append(" AND H.IS_DELETED = 'N' ");
+		String str = " SELECT DISTINCT H.*, DECODE(M.QTN_REPORT_HDR_ID, null, 'FALSE', 'TRUE') DETAIL FROM IA_QTN_REPORT_HEADER H ";
+		StringBuilder sql = new StringBuilder(str);
+		sql.append("LEFT JOIN IA_QTN_REPORT_MAIN M ON M.QTN_REPORT_HDR_ID = H.QTN_REPORT_HDR_ID WHERE 1=1 ");
+		sql.append("AND H.IS_DELETED = 'N' ");
+		
 		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnReportHdrId())) {
 			sql.append("AND H.QTN_REPORT_HDR_ID = ? ");
 			paramList.add(qtnReportHeader.getQtnReportHdrId());
 		}
+		
 		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnReportHdrName())) {
 			sql.append("AND H.QTN_REPORT_HDR_NAME = ? ");
 			paramList.add(qtnReportHeader.getQtnReportHdrName());
 		}
+		
+		if(BeanUtils.isNotEmpty(qtnReportHeader.getQtnMasterId())) {
+			sql.append("AND H.QTN_MASTER_ID = ? ");
+			paramList.add(qtnReportHeader.getQtnMasterId());
+		}
+		
 		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()), paramList.toArray(),Long.class);
 		return count;
 	}
@@ -89,6 +99,7 @@ public class QtnReportHeaderDao {
 		public Int022Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Int022Vo vo = new Int022Vo();
 			vo.setQtnReportHdrId(rs.getLong("QTN_REPORT_HDR_ID"));
+			vo.setQtnMasterId(rs.getLong("QTN_MASTER_ID"));
 			vo.setQtnReportHdrName(rs.getString("QTN_REPORT_HDR_NAME"));
 			vo.setCreator(rs.getString("CREATOR"));
 			vo.setCreatedBy(rs.getString("CREATED_BY"));
@@ -111,10 +122,8 @@ public class QtnReportHeaderDao {
 		paramList.add(qtnReportHeader.getUpdatedBy());
 		paramList.add(qtnReportHeader.getUpdatedDate());
 		return jdbcTemplate.update(sql.toString(), paramList.toArray());
-		
-		
-		
 	}
+	
 	public Integer deleteQtnReportHeader(QtnReportHeader qtnReportHeader){
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder("DELETE FROM IA_QUESTIONNAIRE_HEADER  WHERE 1=1");
@@ -123,9 +132,6 @@ public class QtnReportHeaderDao {
 			objList.add(qtnReportHeader.getQtnReportHdrId());
 		}
 		return jdbcTemplate.update(sql.toString(), objList.toArray());
-		
-		
-		
 	}
 	
 }

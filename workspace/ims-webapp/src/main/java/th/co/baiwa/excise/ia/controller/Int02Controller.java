@@ -131,7 +131,7 @@ public class Int02Controller {
 	@PostMapping("/save_qtn_report_detail")
 	@ResponseBody
 	public Message saveQtnReportDetail(@RequestBody CommonManageReq<Int023FormVo> vo) {
-		return null;
+		return qtnReportMainService.saveQtnReport(vo);
 	}
 	
 	@PostMapping("/qtn_report_detail_by_hdr_id/datatable/{hdrId}")
