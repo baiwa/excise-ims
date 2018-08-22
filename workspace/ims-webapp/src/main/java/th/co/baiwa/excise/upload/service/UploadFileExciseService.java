@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.excise.domain.form.FormUpload;
+import th.co.baiwa.excise.ta.persistence.entity.Ope041Vo;
 import th.co.baiwa.excise.ta.service.ExciseDetailService;
 
 @Service
@@ -26,7 +26,7 @@ public class UploadFileExciseService {
 	
 	private Logger logger = LoggerFactory.getLogger(ExciseDetailService.class);
 	
-	public List<String[]> readFileExcel(FormUpload multipartFile)
+	public List<String[]> readFileExcel(Ope041Vo multipartFile)
 			throws IOException, EncryptedDocumentException, InvalidFormatException {
 		logger.info("UploadFileExciseService.readFileExcel");
 		byte[] byt =  multipartFile.getFileExel().getBytes();

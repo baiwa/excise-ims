@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import th.co.baiwa.excise.domain.form.OPEDataTable;
+import th.co.baiwa.excise.ta.persistence.entity.Ope041DataTable;
 
 @Repository
 public class ReceiveRmatWsDetailDao {
@@ -19,7 +19,7 @@ public class ReceiveRmatWsDetailDao {
 
 	private Logger logger = LoggerFactory.getLogger(ReceiveRmatWsDetailDao.class);
 	
-	public void insertTableReceiveRmatWsDetail(OPEDataTable value) {
+	public void insertTableReceiveRmatWsDetail(Ope041DataTable value) {
 		StringBuilder sql = new StringBuilder(" INSERT INTO TA_RECEIVE_RMAT_WS_DETAIL "
 				+ "(TA_RECEIVE_RMAT_WS_DETAIL_ID,"
 				+ "RECEIVE_RMAT_DETAIL_NO,"
@@ -47,7 +47,7 @@ public class ReceiveRmatWsDetailDao {
 		jdbcTemplate.update(sql.toString(),params.toArray());
 	}
 	
-	public void insertTableReceiveRmatWsHeader(OPEDataTable valueHeader) {
+	public void insertTableReceiveRmatWsHeader(Ope041DataTable valueHeader) {
 		StringBuilder sql = new StringBuilder(" INSERT INTO TA_RECEIVE_RMAT_WS_HEADER "
 				+ "(TA_RECEIVE_RMAT_HEADER_ID,"
 				+ "EXCISE_ID,"

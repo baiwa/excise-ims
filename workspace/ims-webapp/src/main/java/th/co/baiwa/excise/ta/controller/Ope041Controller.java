@@ -17,9 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.domain.form.AccMonth0407DTL;
-import th.co.baiwa.excise.domain.form.FormUpload;
-import th.co.baiwa.excise.domain.form.OPEDataTable;
+import th.co.baiwa.excise.ta.persistence.entity.Ope041DataTable;
+import th.co.baiwa.excise.ta.persistence.entity.Ope041Vo;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 import th.co.baiwa.excise.ta.service.ReceiveRmatWsDetailService;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
@@ -40,18 +39,18 @@ public class Ope041Controller {
 	
 	@PostMapping("excel")
 	@ResponseBody
-	public DataTableAjax<OPEDataTable> excel(@ModelAttribute FormUpload mainForm, AccMonth0407DTL vo) throws EncryptedDocumentException, InvalidFormatException, IOException{
-		List<OPEDataTable> result = new ArrayList<OPEDataTable>();
-		if((BeanUtils.isNotEmpty(mainForm.getStartDate())) && (BeanUtils.isNotEmpty(mainForm.getEndDate()))) {
+	public DataTableAjax<Ope041DataTable> excel(@ModelAttribute Ope041Vo vo) throws EncryptedDocumentException, InvalidFormatException, IOException{
+		List<Ope041DataTable> result = new ArrayList<Ope041DataTable>();
+		if((BeanUtils.isNotEmpty(vo.getStartDate())) && (BeanUtils.isNotEmpty(vo.getEndDate()))) {
 			result = planWorksheetHeaderService.queryExciseIdFromAccDTL(vo.getExciseId(), vo.getType(),vo.getStartDate(), vo.getEndDate());
 		}
 		
-		if(mainForm.getFileExel() != null) {
-			List<FormUpload> fuList = new ArrayList<>();
-			FormUpload fu = new FormUpload();
-			List<String[]> ListfileEx = uploadFileExciseService.readFileExcel(mainForm);
+		if(vo.getFileExel() != null) {
+			List<Ope041Vo> fuList = new ArrayList<>();
+			Ope041Vo fu = new Ope041Vo();
+			List<String[]> ListfileEx = uploadFileExciseService.readFileExcel(vo);
 				for (String[] stringArr : ListfileEx) {
-					fu = new FormUpload();
+					fu = new Ope041Vo();
 					for(int i = 0 ; i < stringArr.length ; i++) {
 						if(i == 0) {
 							fu.setColumn1(stringArr[i]);
@@ -69,10 +68,10 @@ public class Ope041Controller {
 					}
 					fuList.add(fu);
 				}
-			result = planWorksheetHeaderService.sumData(fuList, mainForm);
+			result = planWorksheetHeaderService.sumData(fuList, vo);
 		}
 		
-		DataTableAjax<OPEDataTable> dataTableAjax = new DataTableAjax<>();
+		DataTableAjax<Ope041DataTable> dataTableAjax = new DataTableAjax<>();
 		dataTableAjax.setRecordsTotal(Long.valueOf(result.size()));
 		dataTableAjax.setRecordsFiltered(Long.valueOf(result.size()));
 		dataTableAjax.setData(result);
@@ -81,7 +80,7 @@ public class Ope041Controller {
 
 	@PostMapping("/saveTable")
 	@ResponseBody
-	public ResponseEntity<?> listdata(@RequestBody List<OPEDataTable> allData) {
+	public ResponseEntity<?> listdata(@RequestBody List<Ope041DataTable> allData) {
 		try {
 			receiveRmatWsDetailService.insertReceiveRmatWsDetailService(allData);
 			return new ResponseEntity<>(HttpStatus.OK);

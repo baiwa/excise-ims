@@ -20,15 +20,14 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.CommonAddress;
 import th.co.baiwa.excise.domain.MockupVo;
-import th.co.baiwa.excise.domain.form.AccMonth0407DTL;
-import th.co.baiwa.excise.domain.form.FormUpload;
-import th.co.baiwa.excise.domain.form.OPEDataTable;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseRegisttionNumberDao;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseTaxReceiveDao;
 import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetDetailDao;
 import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetHeaderDao;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseRegistartionNumber;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseTaxReceive;
+import th.co.baiwa.excise.ta.persistence.entity.Ope041DataTable;
+import th.co.baiwa.excise.ta.persistence.entity.Ope041Vo;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetDetail;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeader;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
@@ -346,7 +345,7 @@ public class PlanWorksheetHeaderService {
 		return valueList;
 	}
 
-	public List<OPEDataTable> queryExciseIdFromAccDTL(String exciseId, String type, String start, String end) {
+	public List<Ope041DataTable> queryExciseIdFromAccDTL(String exciseId, String type, String start, String end) {
 		String[] startData = start.split("/");
 		String[] endData = end.split("/");
 
@@ -364,45 +363,45 @@ public class PlanWorksheetHeaderService {
 			backMonth++;
 		}
 
-		List<AccMonth0407DTL> listData = planWorksheetHeaderDao.queryExciseIdFromAccDTL(exciseId, type,
+		List<Ope041Vo> listData = planWorksheetHeaderDao.queryExciseIdFromAccDTL(exciseId, type,
 				endCalforUse.getTime(), backMonth);
 		
-		List<OPEDataTable> opeDataTableList = new ArrayList<OPEDataTable>();
-		OPEDataTable opeDataTable = new OPEDataTable();
+		List<Ope041DataTable> opeDataTableList = new ArrayList<Ope041DataTable>();
+		Ope041DataTable opeDataTable = new Ope041DataTable();
 		
 		if(BeanUtils.isNotEmpty(listData)) {
-		AccMonth0407DTL database = listData.get(0);
+		Ope041Vo database = listData.get(0);
 		
 		opeDataTable.setNo("1");
 		opeDataTable.setProduct(database.getProduct1());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve1());
 		opeDataTableList.add(opeDataTable);
 
-		opeDataTable = new OPEDataTable();
+		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo("2");
 		opeDataTable.setProduct(database.getProduct2());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve2());
 		opeDataTableList.add(opeDataTable);
 
-		opeDataTable = new OPEDataTable();
+		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo("3");
 		opeDataTable.setProduct(database.getProduct3());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve3());
 		opeDataTableList.add(opeDataTable);
 
-		opeDataTable = new OPEDataTable();
+		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo("4");
 		opeDataTable.setProduct(database.getProduct4());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve4());
 		opeDataTableList.add(opeDataTable);
 
-		opeDataTable = new OPEDataTable();
+		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo("5");
 		opeDataTable.setProduct(database.getProduct5());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve5());
 		opeDataTableList.add(opeDataTable);
 
-		opeDataTable = new OPEDataTable();
+		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo("6");
 		opeDataTable.setProduct(database.getProduct6());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve6());
@@ -488,51 +487,51 @@ public class PlanWorksheetHeaderService {
 		return address;
 	}
 	
-	public List<OPEDataTable> sumData(List<FormUpload> formUploadList, FormUpload mainForm) {
+	public List<Ope041DataTable> sumData(List<Ope041Vo> formUploadList, Ope041Vo vo) {
 
-		List<OPEDataTable> opeDataTableList = new ArrayList<OPEDataTable>();
-		OPEDataTable opeDataTable = new OPEDataTable();
-		FormUpload database = mainForm;
+		List<Ope041DataTable> opeDataTableList = new ArrayList<Ope041DataTable>();
+		Ope041DataTable opeDataTable = new Ope041DataTable();
+		Ope041Vo database = vo;
 		
 		opeDataTable.setNo("1");
 		opeDataTable.setProduct(database.getProduct1());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve1());
 		opeDataTableList.add(opeDataTable);
 
-		opeDataTable = new OPEDataTable();
+		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo("2");
 		opeDataTable.setProduct(database.getProduct2());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve2());
 		opeDataTableList.add(opeDataTable);
 
-		opeDataTable = new OPEDataTable();
+		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo("3");
 		opeDataTable.setProduct(database.getProduct3());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve3());
 		opeDataTableList.add(opeDataTable);
 
-		opeDataTable = new OPEDataTable();
+		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo("4");
 		opeDataTable.setProduct(database.getProduct4());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve4());
 		opeDataTableList.add(opeDataTable);
 
-		opeDataTable = new OPEDataTable();
+		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo("5");
 		opeDataTable.setProduct(database.getProduct5());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve5());
 		opeDataTableList.add(opeDataTable);
 
-		opeDataTable = new OPEDataTable();
+		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo("6");
 		opeDataTable.setProduct(database.getProduct6());
 		opeDataTable.setMonthRecieve(database.getMonthRecieve6());
 		opeDataTableList.add(opeDataTable);
 		
-		List<OPEDataTable> returnDataList = new ArrayList<OPEDataTable>();
+		List<Ope041DataTable> returnDataList = new ArrayList<Ope041DataTable>();
 		if (BeanUtils.isNotEmpty(formUploadList)) {
-			for (OPEDataTable opeData : opeDataTableList) {
-				for (FormUpload formUpload : formUploadList) {
+			for (Ope041DataTable opeData : opeDataTableList) {
+				for (Ope041Vo formUpload : formUploadList) {
 					if (opeData.getProduct().equals(formUpload.getColumn2())) {
 						opeData.setColumn6(formUpload.getColumn6());
 						opeData.setDayRecieve(formUpload.getColumn4());
@@ -555,19 +554,19 @@ public class PlanWorksheetHeaderService {
 				returnDataList.add(opeData); 
 			}
 		}
-		OPEDataTable opeDataTable1;
-		FormUpload formUpload;
+		Ope041DataTable opeDataTable1;
+		Ope041Vo formUpload;
 		for (int  i = 1 ; i < formUploadList.size() ; i++) {
-			formUpload = new FormUpload();
+			formUpload = new Ope041Vo();
 			formUpload = formUploadList.get(i);
 			boolean isExist = false;
-			for (OPEDataTable opeData : opeDataTableList) {
+			for (Ope041DataTable opeData : opeDataTableList) {
 				if (opeData.getProduct().equals(formUpload.getColumn2())) {
 					isExist = true;
 				}
 			}
 			if (!isExist) {
-				opeDataTable1 = new OPEDataTable();
+				opeDataTable1 = new Ope041DataTable();
 				opeDataTable1.setTaxInvoice(formUpload.getColumn3());
 				opeDataTable1.setDayRecieve(formUpload.getColumn4());
 				opeDataTable1.setExd1(formUpload.getColumn6());

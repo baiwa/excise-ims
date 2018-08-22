@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import th.co.baiwa.excise.domain.form.AccMonth0407DTL;
+import th.co.baiwa.excise.ta.persistence.entity.Ope041Vo;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeader;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetVo;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
@@ -531,7 +531,7 @@ public class PlanWorksheetHeaderDao {
 	}
 
 
-	public List<AccMonth0407DTL> queryExciseIdFromAccDTL(String exciseId, String type, Date date, int backMonth) {
+	public List<Ope041Vo> queryExciseIdFromAccDTL(String exciseId, String type, Date date, int backMonth) {
 
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
@@ -553,7 +553,7 @@ public class PlanWorksheetHeaderDao {
 		valueList.add(exciseId);
 		valueList.add(type);
 
-		List<AccMonth0407DTL> exciseIdFromAccDTLList = jdbcTemplate.query(sql.toString(), valueList.toArray(),
+		List<Ope041Vo> exciseIdFromAccDTLList = jdbcTemplate.query(sql.toString(), valueList.toArray(),
 				fieldMappingAccMonthVo);
 		return exciseIdFromAccDTLList;
 
@@ -572,10 +572,10 @@ public class PlanWorksheetHeaderDao {
 		return address;
 	}
 
-	private RowMapper<AccMonth0407DTL> fieldMappingAccMonthVo = new RowMapper<AccMonth0407DTL>() {
+	private RowMapper<Ope041Vo> fieldMappingAccMonthVo = new RowMapper<Ope041Vo>() {
 		@Override
-		public AccMonth0407DTL mapRow(ResultSet rs, int rowNum) throws SQLException {
-			AccMonth0407DTL ac = new AccMonth0407DTL();
+		public Ope041Vo mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Ope041Vo ac = new Ope041Vo();
 			ac.setId(rs.getString("TA_EXCISE_ACC_DTL_04_07_ID"));
 			ac.setProduct1(rs.getString("PRODUCT_1"));
 			ac.setProduct2(rs.getString("PRODUCT_2"));
