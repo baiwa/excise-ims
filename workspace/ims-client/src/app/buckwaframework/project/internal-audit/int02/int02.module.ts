@@ -17,6 +17,7 @@ import { Int02M511Component } from "./int02-m5/int02-m5-1/int02-m5-1-1/int02-m5-
 import { Int02M52Component } from "./int02-m5/int02-m5-2/int02-m5-2.component";
 import { Int02M521Component } from "./int02-m5/int02-m5-2/int02-m5-2-1/int02-m5-2-1.component";
 import { CanDeactivateGuard } from "../../../common/services";
+import { PaginationComponent } from "../../../common/components/pagination.component";
 
 const routes: Routes = [
   { path: "1", component: Int021Component },
@@ -34,6 +35,9 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes), CommonModule, FormsModule],
   declarations: [
+    // Usage Component
+    PaginationComponent,
+    // HEAD Component
     Int021Component,
     Int022Component,
     Int023Component,

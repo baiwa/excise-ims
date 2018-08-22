@@ -13,6 +13,7 @@ import { TravelCostDetail } from "./travelcostdetail";
 import { Contract } from "./contract";
 import { BaseModel } from "./base";
 import { ManageReq } from "./request";
+import { TableReq } from "./table";
 
 export {
   AlertMessage,
@@ -29,5 +30,6 @@ export {
   TravelCostDetail,
   Contract,
   BaseModel,
-  ManageReq
+  ManageReq,
+  TableReq
 };
