@@ -12,12 +12,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
@@ -166,12 +168,12 @@ public class DateConstant {
 		Date date = null;
 		try {
 			if (StringUtils.isNotBlank(yyyy)) {
-				date = DateUtils.parseDate(yyyy, LOCAL_TH, YYYY);
+				date = DateUtils.parseDate(StringUtils.trim(yyyy),LOCAL_TH, YYYY);
 			}
 		} catch (Exception e) {
 			logger.error("Error convertStrYYYYToDate : ", e);
 		}
 		return date;
-	}	
-	
+	}
+
 }

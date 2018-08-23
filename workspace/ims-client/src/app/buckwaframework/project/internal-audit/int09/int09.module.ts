@@ -13,6 +13,7 @@ import { Int09223Component } from './int09-2/int09-2-2-3/int09-2-2-3.component';
 import { Int09224Component } from './int09-2/int09-2-2-4/int09-2-2-4.component';
 import { Int09225Component } from './int09-2/int09-2-2-5/int09-2-2-5.component';
 import { Int09214Component } from './int09-2/int09-2-1-4/int09-2-1-4.component';
+import { Int092141Component } from './int09-2/int09-2-1-4/int09-2-1-4-1/int09-2-1-4-1.component';
 
 const routes: Routes = [
   { path: "1", loadChildren: "./int09-1/int09-1.module#Int091Module" },
@@ -38,7 +39,7 @@ const routes: Routes = [
     Int09213Component, 
     Int09221Component, 
     Int09222Component, 
-    Int09223Component, Int09224Component, Int09225Component, Int09214Component],
+    Int09223Component, Int09224Component, Int09225Component, Int09214Component, Int092141Component],
   exports: [RouterModule]
   
 })

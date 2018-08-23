@@ -38,7 +38,7 @@ public class BudgetDao {
 			
 		}
 		if (StringUtils.isNotBlank(formVo.getDepartment())) {
-			sql.append(" AND DEPARTMENT_ID = ?");
+			sql.append(" AND DEPARTMENT_NAME = ?");
 			params.add(formVo.getDepartment());
 			
 		}
@@ -59,7 +59,7 @@ public class BudgetDao {
 			
 		}
 		if (StringUtils.isNotBlank(formVo.getDepartment())) {
-			sql.append(" AND DEPARTMENT_ID = ?");
+			sql.append(" AND DEPARTMENT_NAME = ?");
 			params.add(formVo.getDepartment());
 			
 		}

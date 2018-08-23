@@ -7,8 +7,8 @@
         
         <div class="ui two column centered grid">
             <div class="two wide column"><label>สรรพสามิตภาค</label></div>
-            <div class="five wide column">
-                <select class="ui dropdown search selection" id="sector" (change)="sectorOnchange($event)">
+            <div class="five wide column field" >
+                <select class="ui dropdown search selection" id="sector" name="sector" (change)="sectorOnchange($event)">
                     <option value="">เลือก</option>
                     <option *ngFor="let data of sectorList" value="{{data.value}}">{{data.label}}</option>
                 </select>
@@ -16,8 +16,8 @@
         </div>
         <div class="ui two column centered grid">       
             <div class="two wide column"><label>สรรพสามิตพื้นที่</label></div>
-            <div class="five wide column">
-                <select class="ui dropdown search selection" id="area" (change)="areaOnChange($event)">
+            <div class="five wide column field">
+                <select class="ui dropdown search selection" id="area" name="area" (change)="areaOnChange($event)">
                     <option value="">เลือก</option>
                     <option *ngFor="let data of areaDropdown" value="{{data.value}}">{{data.label}}</option>
                 </select>
@@ -25,8 +25,8 @@
         </div>
         <div class="ui two column centered grid">       
             <div class="two wide column"><label>สรพพสามิตสาขา</label></div>
-            <div class="five wide column">
-                <select class="ui dropdown search selection" id="branch" >
+            <div class="five wide column field">
+                <select class="ui dropdown search selection" id="branch" name="branch" >
                     <option value="">เลือก</option>
                     <option *ngFor="let data of branchDropdown" value="{{data.value}}">{{data.label}}</option>
                 </select>
@@ -34,7 +34,7 @@
         </div>
         <div class="ui two column centered grid">       
             <div class="two wide column"><label>หน่วยงานผู้ตรวจ</label></div>
-            <div class="five wide column"><input type="text" id="department" name="department" required></div>
+            <div class="five wide column field"><input type="text" id="department" name="department" ></div>
         </div>     
       <div class="ui grid">
           <div class="three wide column"></div>
@@ -43,7 +43,7 @@
             <div class="ui calendar" id="startDate">
               <div class="ui input left icon">
                   <i class="time icon"></i>
-                  <input type="text" id="startDateInput" name="startDateInput" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true" required>
+                  <input type="text" id="startDateInput" name="startDateInput" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true" >
               </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
               <div class="ui calendar" id="endDate">
                   <div class="ui input left icon">
                       <i class="time icon"></i>
-                      <input type="text"id="endDateInput"  name="endDateInput" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true" required>
+                      <input type="text"id="endDateInput"  name="endDateInput" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true" >
                   </div>
               </div>
           </div>

@@ -304,8 +304,6 @@ export class Int09213Component implements OnInit {
       $("#type").dropdown('set selected');
       $("#level").val(data.levelForm);
       $("#level").dropdown('set selected');
-      
-     
      
       $("#appoveDate").val(data.appoveDateDataForm);
       $("#withdrawDate").val(data.withdrawDateDataForm);
