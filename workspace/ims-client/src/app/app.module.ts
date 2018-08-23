@@ -28,8 +28,6 @@ import {
 
 // components
 import { AppComponent } from "./app.component";
-import { MessageBarComponent } from "./buckwaframework/common/components/message-bar.component";
-import { DropdownComponent } from "./buckwaframework/common/components/dropdown.component";
 import { HomePage } from "./buckwaframework/project/pages/home/home";
 import { LoginPage } from "./buckwaframework/project/pages/login/login";
 
@@ -37,12 +35,9 @@ import { LoginPage } from "./buckwaframework/project/pages/login/login";
 @NgModule({
   declarations: [
     AppComponent,
-    MessageBarComponent,
-    DropdownComponent,
     TranslatePipe,
     HomePage,
-    LoginPage,
-
+    LoginPage
   ],
   imports: [
     BrowserModule,
