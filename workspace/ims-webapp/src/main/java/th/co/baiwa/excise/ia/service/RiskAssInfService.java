@@ -15,10 +15,15 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfOtherDtl;
+
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfHdrRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfDtlRepository;
+import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfOtherDtlRepository;
+
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
+
 
 @Service
 public class RiskAssInfService {
@@ -31,13 +36,18 @@ public class RiskAssInfService {
 	private final String INT08_2 = "INT08-2";
 	
 	@Autowired
+	private WebServiceExciseService webServiceExciseService;
+	
+	@Autowired
 	private LovRepository lovRepository;
+	
+	@Autowired
+	private RiskAssInfOtherDtlRepository riskAssInfOtherDtlRepository;
 	
 	@Autowired
 	private RiskAssInfDtlRepository riskAssInfDtlRepository;
 	
-//	@Autowired
-//	private WebServiceExciseService webServiceExciseService;
+	
 	
 	@Autowired
 	public RiskAssInfService(RiskAssInfHdrRepository riskAssInfHdrRepository) {
@@ -118,8 +128,8 @@ public class RiskAssInfService {
 	
 	
 	public List<RiskAssInfDtl> findRiskAssInfDtlByWebService() {
-//		return webServiceExciseService.getRiskAssInfDtlList(new RiskAssInfDtl());
-		return null;
+	return webServiceExciseService.getRiskAssInfDtlList(new RiskAssInfDtl());
+		
 	}
 	
 	
@@ -132,5 +142,18 @@ public class RiskAssInfService {
 	}
 	public void updateRiskAssInfDtl(List<RiskAssInfDtl> riskAssInfDtls) {
 		riskAssInfDtlRepository.save(riskAssInfDtls);
+	}
+	
+	public List<RiskAssInfOtherDtl> findByOtherRiskHrdId(Long riskInfHrdId) {
+		return riskAssInfOtherDtlRepository.findByRiskInfHrdId(riskInfHrdId);
+	}
+	
+	public void updateRiskAssInfOtherDtl(RiskAssInfOtherDtl riskAssInfOtherDtl) {
+		if(riskAssInfOtherDtl.getIsDeleted().equals("N") && riskAssInfOtherDtl.getRiskAssInfOtherId() == 0) {
+			riskAssInfOtherDtlRepository.save(riskAssInfOtherDtl);
+		}else if(riskAssInfOtherDtl.getIsDeleted().equals("Y")){
+			RiskAssInfOtherDtl databaseData = riskAssInfOtherDtlRepository.findOne(riskAssInfOtherDtl.getRiskAssInfOtherId());
+			riskAssInfOtherDtlRepository.delete(databaseData);
+		}
 	}
 }

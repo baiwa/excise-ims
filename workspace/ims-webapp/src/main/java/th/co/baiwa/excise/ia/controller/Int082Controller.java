@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.ia.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +21,12 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfOtherDtl;
 
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.service.RiskAssInfService;
+import th.co.baiwa.excise.ta.persistence.entity.Ope041Vo;
+import th.co.baiwa.excise.upload.service.UploadFileExciseService;
 import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
@@ -30,6 +36,9 @@ public class Int082Controller {
 	private Logger logger = LoggerFactory.getLogger(Int082Controller.class);
 	
 	private final String INF_SESSION_DATA = "INF_SESSION_DATA";
+	
+	@Autowired
+	UploadFileExciseService uploadFileExciseService;
 	
 	@Autowired
 	private RiskAssInfService riskAssInfService;
@@ -59,6 +68,9 @@ public class Int082Controller {
 		logger.info("BuggetYear : " + riskAssInfHdr.getBudgetYear());
 		return riskAssInfService.findByCriteriaForDatatable( riskAssInfHdr, dataTableRequest);
 	}
+	
+	
+	
 	
 	@PostMapping("/deleteRiskInfHdr")
 	@ResponseBody
@@ -121,6 +133,72 @@ public class Int082Controller {
 			message = ApplicationCache.getMessage("MSG_00003");
 		}
 		
+		
+		return message;
+	}
+	
+	@PostMapping("/findRiskAssInfOtherDtlByRiskHrdId")
+	@ResponseBody
+	public List<RiskAssInfOtherDtl> findRiskAssInfOtherDtlByRiskHrdId(@RequestBody RiskAssInfOtherDtl riskAssInfOtherDtl) {
+		logger.info("findRiskAssInfOtherDtlByRiskHrdId : " + riskAssInfOtherDtl.getRiskInfHrdId());
+		return riskAssInfService.findByOtherRiskHrdId(riskAssInfOtherDtl.getRiskInfHrdId());
+	}
+	
+	@PostMapping("excelINT082")
+	@ResponseBody
+	public List<RiskAssInfOtherDtl> excelINT081(@ModelAttribute Ope041Vo mainForm) throws Exception {
+		List<RiskAssInfOtherDtl> excelData = new ArrayList<RiskAssInfOtherDtl>();
+		if (mainForm.getFileExel() != null) {
+			RiskAssInfOtherDtl row = new RiskAssInfOtherDtl();
+			List<String[]> ListfileEx = uploadFileExciseService.readFileExcel(mainForm);
+			for (int j = 1; j < ListfileEx.size(); j++) {
+				String[] stringArr = ListfileEx.get(j);
+
+				row = new RiskAssInfOtherDtl();
+				for (int i = 0; i < stringArr.length; i++) {
+					if (i == 0) {
+						row.setRiskAssInfOtherId(new Long(i + 1));
+					} else if (i == 1) {
+						row.setRiskAssInfOtherName(stringArr[i]);
+						
+					} else if (i == 2) {
+						row.setRiskCost(new BigDecimal(stringArr[i]));
+						
+					} 
+				}
+				excelData.add(row);
+			}
+		}
+		return excelData;
+	}
+	
+	
+	@PostMapping("/saveRiskInfPaperName")
+	@ResponseBody
+	public Message saveRiskInfPaperName(@RequestBody RiskAssInfHdr riskAssInfHdr) {
+		Message message = null;
+		logger.info("saveRiskInfPaperName" + riskAssInfHdr.getRiskAssInfHdrId());
+		try {
+			riskAssInfService.updateRiskAssInfHdr(riskAssInfHdr);
+			
+			message = ApplicationCache.getMessage("MSG_00002");
+		} catch (Exception e) {
+			message = ApplicationCache.getMessage("MSG_00003");
+		}
+		return message;
+	}
+	
+	@PostMapping("/saveRiskAssInfOther")
+	@ResponseBody
+	public Message saveRiskAssInfOther(@RequestBody RiskAssInfOtherDtl riskAssInfOtherDtl) {
+		Message message = null;
+		logger.info("saveRiskAssDtlOther" + riskAssInfOtherDtl.getRiskInfHrdId());
+		try {
+			riskAssInfService.updateRiskAssInfOtherDtl(riskAssInfOtherDtl);
+			message = ApplicationCache.getMessage("MSG_00002");
+		} catch (Exception e) {
+			message = ApplicationCache.getMessage("MSG_00003");
+		}
 		
 		return message;
 	}

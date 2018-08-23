@@ -21,7 +21,7 @@ export class Int0821Component implements OnInit {
   riskInfPaperName: any;
   riskAssInfHdrName: any;
   budgetYear: any;
-  yearList: any[];
+
   
   infRiskList: any[];
   datatable: any;
@@ -35,7 +35,7 @@ export class Int0821Component implements OnInit {
   ngOnInit() {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
-
+      
      this.riskAssInfHdrName = "";
      this.budgetYear = "";
      this.infRiskList = ["ปัจจัยเสี่ยงจำนวนครั้งการใช้งานไม่ได้ของระบบ"];
@@ -50,52 +50,48 @@ export class Int0821Component implements OnInit {
     
   }
   ngAfterViewInit() {
-    this.initDatatable();
+    // this.initDatatable();
   }
  
 
   createBudgetYear() {
-    
     this.budgetYear = $('#budgetYear').val().trim();
     console.log(this.budgetYear);
-    
-    const URL = "ia/int082/createBudgetYear";
+    if( this.budgetYear == null || this.budgetYear == undefined || this.budgetYear=="" ){
+      this.messageBarService.errorModal("กรุณาเลือกปี พ.ศ. ในการสร้างปัจจัยเสี่ยง");
+    }else{ 
+          const URL = "ia/int082/createBudgetYear";
 
-    this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
-      // var message = res.json();
-      // this.messageBarService.successModal(message.messageTh, "สำเร็จ");
+          this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
+            // var message = res.json();
+            // this.messageBarService.successModal(message.messageTh, "สำเร็จ");
 
-      this.router.navigate(["/int08/2/2"], {
-         queryParams: { budgetYear: this.budgetYear }
-      });
-    }, errRes => {
-      var message = errRes.json();
-      this.messageBarService.errorModal(message.messageTh);
+            this.router.navigate(["/int08/2/2"], {
+              queryParams: { budgetYear: this.budgetYear }
+            });
+          }, errRes => {
+            var message = errRes.json();
+            this.messageBarService.errorModal(message.messageTh);
 
-    });
-  }
+          });
+        }
+      }
 
-  searchDataTable() {
+    searchBudgetYear() {
+      this.budgetYear = $('#budgetYear').val()
+      console.log(this.budgetYear);
+      if( this.budgetYear == null || this.budgetYear == undefined || this.budgetYear=="" ){
+        this.messageBarService.errorModal("กรุณาเลือกปี พ.ศ. ในการค้นหา");
+      }else{
+        this.initDatatable();
+      }
+    };
 
-    // this.budgetYear = $('#budgetYear').val().trim();
-    // console.log(this.budgetYear);
-    
-    // const URL = "ia/int082/createBudgetYear";
-
-    // this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
-    //   this.router.navigate(["/int08/2/2"], {
-    //      queryParams: { budgetYear: this.budgetYear }
-    //   });
-    // }, errRes => {
-    //   var message = errRes.json();
-    //   this.messageBarService.errorModal(message.messageTh);
-    // });
-    console.log("ค้นหาข้อมูลตาม พ.ศ.");
-    
-  }
-
-
+ 
   initDatatable(): void {
+    if (this.datatable != null || this.datatable != undefined) {
+      this.datatable.destroy();
+    }
     const URL = AjaxService.CONTEXT_PATH + "ia/int082/searchRiskInfHdr";
     console.log(URL);
     console.log(this.budgetYear);

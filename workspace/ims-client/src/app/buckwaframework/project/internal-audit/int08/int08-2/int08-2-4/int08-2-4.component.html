@@ -78,25 +78,37 @@
         </div>
 
         <div class="ui bottom attached tab segment " data-tab="second">
-          <div class="inline fields">
-            <div class="five wide field "></div>
-            <div class="five wide field ">
-              <input type="file" />
+          <form id="upload-form" ngNativeValidate (submit)="onUpload($event)">
+            <div class="ui attached segment">
+              <div class="ui form">
+                <div class="inline fields">
+                  <div class="eight wide field ">
+                    <label class="custom-label-w-15">เลือกไฟล์ Template ข้อมูล</label>
+                    <div>
+                      <input class="inputfile" type="file" name="fileExel" id="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        (change)="onChangeUpload($event)" required>
+                      <label for="fileExel" class="ui mini blue butt-upload button">
+                        <i class="ui fa-file-excel-o icon"></i> เลือกไฟล์
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui center aligned grid">
+                <div class="four wide column">
+                  <button class="ui mini primary button" type="submit">
+                    <i class="upload icon"></i>
+                    อัพโหลด
+                  </button>
+                  <button class="ui mini button" type="reset">
+                    <i class="trash outline icon"></i>
+                    ลบไฟล์
+                  </button>
+                </div>
+              </div>
             </div>
-            <button class="ui mini primary button">
-              ตัวอย่างแบบฟอร์มนำเข้าระบบ
-            </button>
-          </div>
-          <br>
-          <div class="inline fields">
-            <div class="sixteen wide field ">
-              <div class="seven wide field "></div>
-              <button class="ui mini primary button" (click)="addObjRiskDtl() ">
-                <i class="save icon"></i>
-                เพิ่ม
-              </button>
-            </div>
-          </div>
+          </form>
         </div>
         
         <table id="dataTable"  class="ui small celled table" style="width: 100%;">
@@ -106,6 +118,7 @@
               <th  rowspan="2" style="text-align: center !important" class="ten wide field ">ระบบสารสนเทศฯ ของกรมสรรพสามิต</th>
               <th  rowspan="2" style="text-align: center !important" class="two wide field ">ค่าความเสี่ยง</th>
               <th  colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
+              <th  rowspan="2" style="text-align: center !important">ลบ</th>
             </tr>
             <tr>
               <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
@@ -118,7 +131,7 @@
         <div class="inline fields ">
           <div class="sixteen wide field ">
             <div class="six wide field "></div>
-            <button class="ui mini primary button" (click)="saveRiskAssInfHdr()">
+            <button class="ui mini primary button"  (click)="saveRiskAssInfOtherDtl()">
               <i class="save icon"></i>
               บันทึก
             </button>
@@ -136,6 +149,20 @@
         </div>
 
       </div>
+    </div>
+  </div>
+
+  <div class="sixteen wide column" *ngIf="getConditionShow()">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <condition [riskId]="id" (out)="closeConditionRL($event)"></condition>
+      </div>
+      <br/>
+
     </div>
   </div>
 

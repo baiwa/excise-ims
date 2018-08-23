@@ -15,7 +15,7 @@
                 <div class="ui calendar" style="width:100%" id="year" >
                   <div class="ui input left icon">
                     <i class="calendar icon"></i>
-                    <input type="calendar"  id="budgetYear" placeholder="ปี"  maxlength="4"   name="budgetYear" [(ngModel)]="budgetYear" >
+                    <input type="calendar"  id="budgetYear" placeholder="ปี"     name="budgetYear" [(ngModel)]="budgetYear" readonly="" autocomplete="off" >
                   </div>
                 </div>
               </div>
@@ -36,7 +36,7 @@
         <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
-            <button class="ui mini primary button" (click)="searchDataTable()">
+            <button class="ui mini primary button" (click)="searchBudgetYear()">
               <i class="add icon"></i>
               ค้นหา
             </button>
