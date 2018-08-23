@@ -11,6 +11,7 @@ import { Observable } from '../../../../../../../node_modules/rxjs';
 declare var $: any;
 
 const URL = {
+  SAVE: "ia/int02/save_qtn_report_detail",
   DATATABLE: AjaxService.CONTEXT_PATH + "ia/int02/queryQuestionnaireDetailByCriteria",
   DATATABLE2: "ia/int02/qtn_report_detail_by_hdr_id/datatable"
   //DATATABLE2: AjaxService.CONTEXT_PATH + "ia/int02/qtn_report_detail_by_hdr_id/datatable"
@@ -25,10 +26,11 @@ export class Int023Component implements OnInit {
 
   numbers: number[] = [1];
   // Service Details
-  minorDetail: String[] = [];
-  mainDetail: string;
+  minorDetail: string[] = [];
+  mainDetail: string = "";
   // API Datatable
   data: Datatable[] = [];
+  datas: any[] = [{text: "5555"}, {text: "5555"}];
   // References Datatable
   datatable: any;
   option: any;
@@ -50,7 +52,8 @@ export class Int023Component implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private msg: MessageBarService,
-    private dialog: DialogService
+    private dialog: DialogService,
+    private message: MessageBarService
   ) {
     for (let i = 0; i < 3; i++) {
       this.cond.push(new Condition());
@@ -145,6 +148,7 @@ export class Int023Component implements OnInit {
   }
 
   initializeTable(): void {
+    this.table = [];
     this.ajax.post(`${URL.DATATABLE2}/${this.headerId}`, toFormData(this.option2), res => {
       let d = res.json().data;
       d.forEach(data => {
@@ -236,8 +240,16 @@ export class Int023Component implements OnInit {
     this.msg.comfirm(boo => {
       if (boo) {
         this.chk2.forEach(obj => {
-          this.req.delete.push(obj);
+          if (obj.qtnReportHdrId) {
+            obj.qtnFor = "M";
+          } else {
+            obj.qtnFor = "D";
+          }
+          if (obj.status === undefined) {
+            this.req.delete.push(obj);
+          }
           this.table = this.table.filter(ob => ob != obj);
+          this.req.save = this.table;
         });
         this.chk2 = [];
         $("#chk2").prop('checked', false);
@@ -268,11 +280,64 @@ export class Int023Component implements OnInit {
   onDelField = index => {
     this.numbers.splice(index, 1);
     this.minorDetail.splice(index, 1);
-  };
+  }
 
-  onSend = () => {
+  onSave = () => {
+    this.req.save.forEach( obj => {
+      if (obj.status !== undefined) {
+        if (obj.qtnFor === "M") {
+          obj.qtnReportManId = null;
+        } else {
+          obj.qtnReportManId = null;
+          obj.qtnReportDtlId = null;
+        }
+      }
+    });
+    this.ajax.post(URL.SAVE, this.req, res => {
+      this.req = new ManageReq<Int023FormVo>();
+      const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+        this.initializeTable();
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+    });
+  }
 
-  };
+  onAdd2Save = (e) => {
+    e.preventDefault();
+    let main: Int023FormVo = new Int023FormVo();
+    let detail: Int023FormVo;
+    let mainId = `MAN_${this.getRndInteger(10000, 99999)}`;
+    main.qtnReportHdrId = this.headerId.toString();
+    main.qtnReportManId = mainId;
+    main.qtnMainDetail = this.mainDetail;
+    main.qtnFor = "M";
+    main.status = "NEW";
+    this.table.push(main);
+    for(let i=0; i<this.numbers.length; i++) {
+      detail = new Int023FormVo();
+      detail.qtnReportDtlId = `DTL_${this.getRndInteger(10000, 99999)}`;
+      detail.qtnMainDetail = this.minorDetail[i];
+      detail.qtnReportManId = mainId;
+      detail.qtnFor = "D";
+      detail.status = "NEW";
+      this.table.push(detail);
+    }
+    this.table.forEach( obj => {
+      this.mainDetail = "";
+      this.minorDetail = [];
+      this.numbers = [1];
+      if (obj.qtnReportHdrId === undefined) {
+        obj.qtnFor = "D";
+        this.req.save = this.table;
+      } else {
+        obj.qtnFor = "M";
+        this.req.save = this.table;
+      }
+    });
+  }
 
   addCond() {
     this.cond.length < 5 && this.cond.push(new Condition());
@@ -281,6 +346,11 @@ export class Int023Component implements OnInit {
   delCond(index) {
     this.cond.splice(index, 1);
   }
+
+  getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
 }
 
 class Datatable extends BaseModel {

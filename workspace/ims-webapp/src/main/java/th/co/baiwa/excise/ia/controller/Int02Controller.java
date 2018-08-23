@@ -36,7 +36,7 @@ import th.co.baiwa.excise.utils.BeanUtils;
 @RequestMapping("api/ia/int02")
 public class Int02Controller {
 
-	private Logger logger = LoggerFactory.getLogger(Int02Controller.class);
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private QtnReportHeaderService qtnReportHeaderService;
@@ -131,6 +131,7 @@ public class Int02Controller {
 	@PostMapping("/save_qtn_report_detail")
 	@ResponseBody
 	public Message saveQtnReportDetail(@RequestBody CommonManageReq<Int023FormVo> vo) {
+		logger.info("called saveQtnReportDetail");
 		return qtnReportMainService.saveQtnReport(vo);
 	}
 	

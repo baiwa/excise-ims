@@ -82,9 +82,10 @@
               <tr>
                 <th colspan="5">
                   <pagination
-                    [class]="'right floated'"
                     [step]="table.step"
+                    [class]="'right floated'"
                     [active]="(table.start/5) + 1"
+                    [disabled]="chkDel.length !== 0"
                     [pages]="table.recordsTotal"
                     (length)="pageChange($event)">
                   </pagination>

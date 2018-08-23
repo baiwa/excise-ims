@@ -167,6 +167,8 @@ export class Int022Component implements OnInit {
           this.req.save = this.datatable; // save object to save 
           this.ajax.post(URL.SAVE_REPORT, this.req, res => {
             const msg = res.json();
+            this.table = new TableReq();
+            this.req = new ManageReq<Datatable>();
             this.unsave = false; // change status `unsave`
             this.saving = false; // hide loading button
             this.loadTable(); // Datatable
@@ -192,8 +194,11 @@ export class Int022Component implements OnInit {
         if (this.unsave) {
           this.req.save = this.datatable; // save object to save 
           this.req.delete = this.chkDel; // save object to delete 
+          this.chkDel = []; // after save clear delete list
           this.ajax.post(URL.SAVE_REPORT, this.req, res => {
             const msg = res.json();
+            this.table = new TableReq();
+            this.req = new ManageReq<Datatable>();
             this.unsave = false; // change status `unsave`
             this.saving = false; // hide loading button
             this.loadTable(); // Datatable

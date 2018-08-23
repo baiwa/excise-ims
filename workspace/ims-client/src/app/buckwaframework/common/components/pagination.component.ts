@@ -9,14 +9,14 @@ declare var $: any;
     selector: 'pagination',
     template: `
     <div #paginate class="ui {{ class }} mini pagination menu">
-        <a *ngIf="active !== 1" (click)="prev()" class="icon item">
+        <a *ngIf="active !== 1" (click)="prev()" class="icon item{{ disabled ? ' disabled': ''}}">
             <i class="left chevron icon"></i>
         </a>
         <a *ngIf="active === 1" class="icon item disabled">
             <i class="left chevron icon"></i>
         </a>
-        <a (click)="change(n.num)" class="{{ n.active ? 'active ' : '' }}item" *ngFor="let n of datas">{{n.num}}</a>
-        <a (click)="next()" *ngIf="active !== pages" class="icon item">
+        <a (click)="change(n.num)" class="{{ n.active ? 'active ' : '' }}item{{ disabled ? ' disabled': ''}}" *ngFor="let n of datas">{{n.num}}</a>
+        <a (click)="next()" *ngIf="active !== pages" class="icon item{{ disabled ? ' disabled': ''}}">
             <i class="right chevron icon"></i>
         </a>
         <a *ngIf="active === pages" class="icon item disabled">
@@ -36,6 +36,7 @@ export class PaginationComponent {
     @Input() pages: number;
     // Class
     @Input() class: string;
+    @Input() disabled: boolean;
 
     datas: any[] = [];
 
@@ -45,21 +46,27 @@ export class PaginationComponent {
     }
 
     prev() { // Prev Value
-        const { active, step } = this;
-        const num = (active * step) - step;
-        this.length.emit(num);
+        if (!this.disabled) {
+            const { active, step } = this;
+            const num = (active * step) - step;
+            this.length.emit(num);
+        }
     }
 
     change(n: number) { // Change Value
-        const { step } = this;
-        const num = (n * step);
-        this.length.emit(num);
+        if (!this.disabled) {
+            const { step } = this;
+            const num = (n * step);
+            this.length.emit(num);
+        }
     }
 
     next() { // Next Value
-        const { active, step } = this;
-        const num = (active * step) + step;
-        this.length.emit(num);
+        if (!this.disabled) {
+            const { active, step } = this;
+            const num = (active * step) + step;
+            this.length.emit(num);
+        }
     }
 
     doPaging(current, { range, pages, start = 1 }) {
@@ -69,7 +76,7 @@ export class PaginationComponent {
         while (i < end) {
             paging.push(
                 i == current ?
-                    { num: i++, active: true, hidden: false }: { num: i++, active: false, hidden: false}
+                    { num: i++, active: true, hidden: false } : { num: i++, active: false, hidden: false }
             )
         }
         return paging;

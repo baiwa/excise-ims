@@ -23,6 +23,7 @@ import th.co.baiwa.excise.ia.persistence.dao.QtnReportHeaderDao;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
 import th.co.baiwa.excise.ia.persistence.repository.QtnReportHeaderRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int022Vo;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class QtnReportHeaderService {
@@ -61,7 +62,15 @@ public class QtnReportHeaderService {
 		Message msg = ApplicationCache.getMessage("MSG_00003");
 		if (req.getSave().size() != 0) {
 			try {
-				qtnReportHeaderRepository.save(req.getSave());
+				List<QtnReportHeader> li = new ArrayList<>(); // List For Save
+				for(QtnReportHeader qtn: req.getSave()) {
+					if (BeanUtils.isEmpty(qtn.getQtnReportHdrId())) {
+						li.add(qtn);
+					} else {
+						li.add(qtnReportHeaderRepository.findOne(qtn.getQtnReportHdrId()));
+					}
+				}
+				qtnReportHeaderRepository.save(li);
 				msg = ApplicationCache.getMessage("MSG_00002");
 			} catch (Exception e) {
 				e.printStackTrace();

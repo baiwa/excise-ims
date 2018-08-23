@@ -11,11 +11,13 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.CommonManageReq;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.dao.QtnReportMainDao;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportDetail;
+import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportMain;
 import th.co.baiwa.excise.ia.persistence.repository.QtnReportDetailRepository;
 import th.co.baiwa.excise.ia.persistence.repository.QtnReportMainRepository;
@@ -59,26 +61,64 @@ public class QtnReportMainService {
 	}
 
 	public Message saveQtnReport(CommonManageReq<Int023FormVo> vo) {
-		Long main = 0L;
+		Long mainId = 0L;
 		Message msg = ApplicationCache.getMessage("MSG_00003");
+		String user = UserLoginUtils.getCurrentUsername();
 		if (vo.getSave().size() != 0) {
+			logger.info("saveQtnReport saved... !!~ ");
+			QtnReportMain m;
+			QtnReportDetail d;
 			for (Int023FormVo v : vo.getSave()) {
-				if (v.getQtnFor() == "M") { // For IA_QTN_REPORT_MAIN
-					main = null;
+				logger.info("For : {}", v.getQtnFor());
+				if (v.getQtnFor().equals("M")) { // For IA_QTN_REPORT_MAIN
+					if (BeanUtils.isEmpty(v.getQtnReportManId())) {
+						m = new QtnReportMain();
+						m.setCreatedBy(user);
+						m.setQtnMainDetail(v.getQtnMainDetail());
+						m.setQtnReportHdrId(Long.parseLong(v.getQtnReportHdrId()));
+					} else {
+						m = qtnReportMainRepository.findOne(Long.parseLong(v.getQtnReportManId()));
+					}
+					m = qtnReportMainRepository.save(m);
+					mainId = m.getQtnReportManId();
+					msg = ApplicationCache.getMessage("MSG_00002");
 				}
-				if (v.getQtnFor() == "D") { // For IA_QTN_REPORT_DETAIL
-					
+				if (v.getQtnFor().equals("D")) { // For IA_QTN_REPORT_DETAIL
+					if (BeanUtils.isEmpty(v.getQtnReportDtlId())) {
+						d = new QtnReportDetail();
+						d.setCreatedBy(user);
+						d.setQtnMainDetail(v.getQtnMainDetail());
+						d.setQtnReportManId(mainId);
+					} else {
+						d = qtnReportDetailRepository.findOne(Long.parseLong(v.getQtnReportDtlId()));
+					}
+					d = qtnReportDetailRepository.save(d);
+					msg = ApplicationCache.getMessage("MSG_00002");
 				}
 			}
 		}
 		if (vo.getDelete().size() != 0) {
-			for (Int023FormVo v: vo.getDelete()) {
-				if (v.getQtnFor() == "M") { // For IA_QTN_REPORT_MAIN
-					
+			logger.info("saveQtnReport deleted... !!~ ");
+			boolean[] has = { false, false };
+			List<Long> lim = new ArrayList<>();
+			List<Long> lid = new ArrayList<>();
+			for (Int023FormVo v : vo.getDelete()) {
+				if (v.getQtnFor().equals("M")) { // For IA_QTN_REPORT_MAIN
+					lim.add(Long.parseLong(v.getQtnReportManId()));
+					has[0] = true;
 				}
-				if (v.getQtnFor() == "D") { // For IA_QTN_REPORT_DETAIL
-					
+				if (v.getQtnFor().equals("D")) { // For IA_QTN_REPORT_DETAIL
+					lid.add(Long.parseLong(v.getQtnReportDtlId()));
+					has[1] = true;
 				}
+			}
+			if (has[0]) {
+				qtnReportMainRepository.delete(lim);
+				msg = ApplicationCache.getMessage("MSG_00002");
+			}
+			if (has[1]) {
+				qtnReportDetailRepository.delete(lid);
+				msg = ApplicationCache.getMessage("MSG_00002");
 			}
 		}
 		return msg;
