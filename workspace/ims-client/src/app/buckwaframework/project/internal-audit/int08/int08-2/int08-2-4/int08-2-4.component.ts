@@ -4,6 +4,7 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Alert } from "../../../../../../../../node_modules/@types/selenium-webdriver";
+import { log } from "util";
 
 declare var $: any;
 declare var $: any;
@@ -14,8 +15,7 @@ declare var $: any;
   styleUrls: ['./int08-2-4.component.css']
 })
 export class Int0824Component implements OnInit {
-  showData: boolean = false;
-
+  
   riskAssRiskInfHdr: any;
   
   id: any;
@@ -28,18 +28,26 @@ export class Int0824Component implements OnInit {
 
   datatable: any;
 
-  //Data: Data;
+
+  //Data
+  riskOtherData: RiskOtherData;
   riskOtherDataList: RiskOtherData[] = [];
   dataTableList: RiskOtherData[] = [];
 
   riskInfHrdData: RiskInfHrdData;
+
+  fileExel: File[];
+
+  isConditionShow: any;
 
   constructor(
     private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
     private route: ActivatedRoute
-  ) { }
+  ) {
+    this.fileExel = new Array<File>(); // initial file array
+   }
 
   ngOnInit() {
     $('.menu .item').tab();
@@ -47,40 +55,43 @@ export class Int0824Component implements OnInit {
     this.riskInfHrdData = new RiskInfHrdData();
     this.id = this.route.snapshot.queryParams["id"];
     this.findRiskById();
+
+    this.isConditionShow = false;
+    
   }
   ngAfterViewInit() {
    
   }
 
   findRiskById() {
-    let url = "ia/int08/findRiskById"
+    let url = "ia/int082/findRiskById"
     this.ajax.post(url, { riskAssInfHdrId: this.id }, res => {
-
+      
       this.riskAssRiskInfHdr = res.json();
-      console.log(this.riskAssRiskInfHdr);
+      console.log("ดาต้านะจ๊ะ",this.riskAssRiskInfHdr);
       this.riskInfPaperName = this.riskAssRiskInfHdr.riskInfPaperName;
       this.budgetYear = this.riskAssRiskInfHdr.budgetYear;
       this.userCheck = this.riskAssRiskInfHdr.userCheck;
+  
       this.riskInfHrdData.riskAssInfHdrId = this.riskAssRiskInfHdr.riskAssInfHdrId;
       this.riskInfHrdData.riskInfPaperName = this.riskInfPaperName;
       this.riskInfHrdData.userCheck = this.userCheck;
       this.riskInfHrdData.budgetYear = this.budgetYear;
       
-      url = "ia/int08/findRiskOtherDtlByRiskHrdId";
-      this.ajax.post(url, { riskAssInfOtherId: this.id }, res => {
+      url = "ia/int082/findRiskAssInfOtherDtlByRiskHrdId";
+      this.ajax.post(url, { riskInfHrdId: this.id }, res => {
         // this.riskDataList
         var jsonObjList = res.json();
         console.log("สำเร็จ", jsonObjList);
         for (let index = 0; index < jsonObjList.length; index++) {
           var element = jsonObjList[index];
           var riskOtherData = new RiskOtherData();
-          riskOtherData.riskAssInfOtherId = element.riskOtherDtlId;
-          riskOtherData.riskInfHrdId = element.riskHrdId;
-          riskOtherData.riskAssInfOtherName = element.projectBase;
+          riskOtherData.riskAssInfOtherId = element.riskAssInfOtherId;
+          riskOtherData.riskInfHrdId = element.riskInfHrdId;
+          riskOtherData.riskAssInfOtherName = element.riskAssInfOtherName;
           riskOtherData.riskCost = element.riskCost;
           riskOtherData.isDeleted = 'N';
           this.riskOtherDataList.push(riskOtherData);
-
         }
         this.initDatatable();
       }, errRes => {
@@ -89,7 +100,52 @@ export class Int0824Component implements OnInit {
     });
   }
 
-  
+  onUpload = (event: any) => {
+    console.log("test onUpload");
+    // Prevent actual form submission
+    event.preventDefault();
+
+    const form = $("#upload-form")[0];
+    let formBody = new FormData(form);
+
+    let url = "ia/int082/excelINT082";
+    this.ajax.upload(
+      url,
+      formBody,
+      res => {
+        console.log(res.json());
+
+        res.json().forEach(element => {
+          let riskOtherData = new RiskOtherData();
+          riskOtherData.riskAssInfOtherName = element.riskAssInfOtherName;
+          riskOtherData.riskCost = element.riskCost;
+          riskOtherData.isDeleted = 'N';
+          riskOtherData.riskInfHrdId = this.riskAssRiskInfHdr.riskAssInfHdrId;
+          this.riskOtherDataList.push(riskOtherData);
+
+        });
+        this.initDatatable();
+
+      }
+    );
+  };
+
+  onChangeUpload = (event: any) => {
+    if (event.target.files && event.target.files.length > 0) {
+      let reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        const f = {
+          name: event.target.files[0].name,
+          type: event.target.files[0].type,
+          value: e.target.result
+        };
+        this.fileExel = [f];
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  };
+
   initDatatable(): void {
 
     if (this.datatable != null || this.datatable != undefined) {
@@ -174,16 +230,16 @@ export class Int0824Component implements OnInit {
     riskOtherData.riskAssInfOtherName = this.riskAssInfOtherName;
     riskOtherData.riskCost = this.riskCost;
     riskOtherData.isDeleted = 'N';
-    riskOtherData.riskInfHrdId = this.riskAssRiskInfHdr.riskInfHrdId;
+    riskOtherData.riskInfHrdId = this.riskAssRiskInfHdr.riskAssInfHdrId;
 
     this.riskOtherDataList.push(riskOtherData);
-    console.log("riskOtherDataList", this.riskOtherDataList);
+    console.log("riskOtherDataList ลงตาราง แต่ยังไม่ลง table", this.riskOtherDataList);
     this.initDatatable();
     this.riskAssInfOtherName = '';
     this.riskCost = '';
   }
 
-  saveRiskAssRiskWsDtl(): void {
+  saveRiskAssInfOtherDtl(): void {
     //console.log("saveRiskAssRiskWsDtl", this.riskHrdPaperName);
     var msgMessage = "";
     var countInfOther = 0;
@@ -211,8 +267,8 @@ export class Int0824Component implements OnInit {
     }
 
     if (msgMessage == "") {
-      var url = "ia/int08/saveRiskAssOther";
-      var urlDtl = "ia/int08/saveRiskAssDtlOther";
+      var url = "ia/int082/saveRiskInfPaperName";
+      var urlDtl = "ia/int082/saveRiskAssInfOther";
       this.ajax.post(url, this.riskAssRiskInfHdr, res => {
         var message = res.json();
         //console.log(message.messageType);
@@ -232,7 +288,7 @@ export class Int0824Component implements OnInit {
 
           }
           this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
-          this.router.navigate(["/int08/1/4"], {
+          this.router.navigate(["/int08/2/2"], {
             queryParams: { budgetYear: this.budgetYear }
           });
 
@@ -250,22 +306,6 @@ export class Int0824Component implements OnInit {
 
   }
 
-  uploadData() {
-    this.showData = true;
-  }
-
-  clearData() {
-    this.showData = false;
-  }
-
-  popupEditData() {
-   
-  }
-
-  closePopupEdit() {
-   
-  }
-  
   cancelFlow() {
     this.messageBarService.comfirm(foo => {
       // let msg = "";
@@ -276,6 +316,21 @@ export class Int0824Component implements OnInit {
       }
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
   }
+
+
+  getConditionShow() {
+    return this.isConditionShow;
+  }
+
+  modalConditionRL() {
+    this.isConditionShow = true;
+  }
+
+  closeConditionRL() {
+    this.isConditionShow = false;
+  }
+
+
 
 }
 
@@ -295,4 +350,11 @@ class RiskInfHrdData {
   riskInfPaperName: any = '';
   budgetYear: any = '';
   userCheck: any = '';
+}
+
+class File {
+  [x: string]: any;
+  name: string;
+  type: string;
+  value: any;
 }
