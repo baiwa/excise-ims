@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.excise.domain.CommonAddress;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseDetail;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseFile;
-import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetVo;
 import th.co.baiwa.excise.ta.persistence.entity.Response;
+import th.co.baiwa.excise.ta.persistence.vo.PlanWorksheetVo;
 import th.co.baiwa.excise.ta.service.ExciseDetailService;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 

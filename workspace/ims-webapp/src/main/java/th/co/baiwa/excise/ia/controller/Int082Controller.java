@@ -25,7 +25,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfOtherDtl;
 
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.service.RiskAssInfService;
-import th.co.baiwa.excise.ta.persistence.entity.Ope041Vo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
 import th.co.baiwa.excise.utils.BeanUtils;
 

@@ -1,4 +1,4 @@
-package th.co.baiwa.excise.ta.persistence.entity;
+package th.co.baiwa.excise.ta.persistence.vo;
 
 import java.util.Date;
 
@@ -33,7 +33,6 @@ public class Ope041Vo {
 	private String column4;
 	private String column5;
 	private String column6;
-	
 	public String getId() {
 		return id;
 	}

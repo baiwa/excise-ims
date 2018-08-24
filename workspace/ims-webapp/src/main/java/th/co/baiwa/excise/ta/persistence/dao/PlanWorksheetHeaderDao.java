@@ -16,10 +16,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import th.co.baiwa.excise.ta.persistence.entity.Ope041Vo;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeader;
-import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetVo;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
+import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
+import th.co.baiwa.excise.ta.persistence.vo.PlanWorksheetVo;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.utils.OracleUtils;
 
