@@ -81,13 +81,8 @@
             <tfoot>
               <tr>
                 <th colspan="5">
-                  <pagination
-                    [step]="table.step"
-                    [class]="'right floated'"
-                    [active]="(table.start/5) + 1"
-                    [disabled]="chkDel.length !== 0"
-                    [pages]="table.recordsTotal"
-                    (length)="pageChange($event)">
+                  <pagination [step]="table.step" [class]="'right floated'" [active]="(table.start/5) + 1" [disabled]="chkDel.length !== 0"
+                    [pages]="table.recordsTotal" (length)="pageChange($event)">
                   </pagination>
                 </th>
               </tr>
@@ -100,80 +95,24 @@
     <div class="ui segment">
       <div class="ui grid">
         <div class="sixteen wide column">
-          <table class="ui small celled table aligned hover">
-            <thead>
-              <tr>
-                <th style="text-align: center">ที่</th>
-                <th style="text-align: center">เงื่อนไข</th>
-                <th style="text-align: center">ค่าที่ 1</th>
-                <th style="text-align: center">ถึง</th>
-                <th style="text-align: center">ค่าที่ 2</th>
-                <th style="text-align: center">ระดับความเสียง</th>
-                <th style="text-align: center">คะแนนความเสียง</th>
-                <th style="text-align: center">#</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let data of datas; let i=index">
-                <td class="aligned center">{{i+1}}</td>
-                <td class="aligned center">
-                  <select class="ui fluid dropdown">
-                    <option value="ระหว่าง">ระหว่าง</option>
-                    <option value="มากกว่า">มากกว่า</option>
-                    <option value="น้อยกว่า">น้อยกว่า</option>
-                    <option value="เท่ากับ">เท่ากับ</option>
-                  </select>
-                </td>
-                <td class="aligned center">
-                  <div class="ui input">
-                    <input type="text">
-                  </div>
-                </td>
-                <td class="aligned center">-</td>
-                <td class="aligned center">
-                  <div class="ui input">
-                    <input type="text">
-                  </div>
-                </td>
-                <td class="aligned center">
-                  <select class="ui fluid dropdown">
-                    <option value="ต่ำมาก">ต่ำมาก</option>
-                    <option value="ต่ำ">ต่ำ</option>
-                    <option value="ปานกลาง">ปานกลาง</option>
-                    <option value="สูง">สูง</option>
-                    <option value="สูงมาก">สูงมาก</option>
-                  </select>
-                </td>
-                <td class="aligned center">
-                  <div class="ui input">
-                    <input type="text">
-                  </div>
-                </td>
-                <td class="aligned center">
-                  <button class="ui icon red mini button" type="button" (click)="delRow(i)">
-                    <i class="times icon"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <button class="ui icon green left floated mini button" type="button" (click)="addRow()">
-            <i class="plus icon"></i>
-          </button>
+          <condition class="ui form" [riskId]="qtnMasterId" [riskType]="'QTN_HEADER'" [page]="'int02-2'"></condition>
         </div>
-        <div class="sixteen wide column">
-          <div class="ui centered grid inline fields" style="padding-bottom: 1em">
-            <div class="ui mini buttons">
-              <button type="button" (click)="onCancel()" style="margin-left: auto" class="ui mini grey button center floated">
-                <i class="angle left icon"></i>
-                กลับ
-              </button>
-              <button class="ui primary {{ saving && 'loading' }} mini button {{!unsave && 'disabled'}} " type="button" (click)="onSave()">บันทึก</button>
-              <button type="button" style="margin-left: auto" (click)="onSaved()" class="ui mini green button center floated {{(!finished && !unsave) ? 'disabled' : ''}} ">
-                <i class="save icon"></i>
-                ส่งแบบสอบทาน
-              </button>
-            </div>
+      </div>
+    </div>
+
+    <div class="ui grid">
+      <div class="sixteen wide column">
+        <div class="ui centered grid inline fields" style="padding: 1em 0">
+          <div class="ui mini buttons">
+            <button type="button" (click)="onCancel()" style="margin-left: auto" class="ui mini grey button center floated">
+              <i class="angle left icon"></i>
+              กลับ
+            </button>
+            <button class="ui primary {{ saving && 'loading' }} mini button {{!unsave && 'disabled'}} " type="button" (click)="onSave()">บันทึก</button>
+            <button type="button" style="margin-left: auto" (click)="onSaved()" class="ui mini green button center floated {{(!finished && !unsave) ? 'disabled' : ''}} ">
+              <i class="save icon"></i>
+              ส่งแบบสอบทาน
+            </button>
           </div>
         </div>
       </div>

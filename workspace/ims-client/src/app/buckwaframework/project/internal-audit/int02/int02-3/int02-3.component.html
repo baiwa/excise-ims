@@ -70,7 +70,7 @@
         </div>
 
         <div class="inline fields">
-          <div class="two wide field">
+          <div class="two wide field topic">
             <label>ข้อหลัก</label>
           </div>
           <div class="twelve wide field">
@@ -78,39 +78,36 @@
           </div>
         </div>
         <div class="inline fields" *ngFor="let num of numbers; let i = index" [attr.data-index]="i">
-          <div class="two wide field">
-            <label>ข้อย่อย</label>
+          <div class="one wide field"></div>
+          <div class="two wide field topic">
+            <label>ข้อย่อย[{{ i+1 }}]</label>
           </div>
-          <div class="ten wide field">
+          <div class="eleven wide field">
             <input class="custom" type="text" id="minorDetail{{i}}" name="minorDetail{{i}}" [(ngModel)]="minorDetail[i]" [attr.required]="true">
           </div>
-          <div class="two wide field">
+          <div class="one wide field">
             <a (click)="onDelField(i)" style="cursor: pointer;color: red">
               <i class="delete icon"></i>
             </a>
           </div>
         </div>
         <div class="inline fields">
-          <div class="two wide field"></div>
-          <div class="ten wide field"></div>
-          <div class="two wide field">
+          <div class="three wide field"></div>
+          <div class="eleven wide field"></div>
+          <div class="one wide field">
             <a class="primary" (click)="onAddField()" style="cursor: pointer;">
               <i class="add icon"></i>
             </a>
           </div>
         </div>
         <div class="inline fields">
-          <div class="two wide field">
-          </div>
-          <div class="field">
-            <button type="button" style="margin-left: auto" class="ui mini primary button left floated">
-              <i class="add icon"></i>
-              เพิ่มข้อหลัก
-            </button>
-            <button type="submit" style="margin-left: auto" class="ui mini primary button left floated">
-              <i class="save icon"></i>
-              บันทึก
-            </button>
+          <div class="sixteen wide field">
+            <div class="ui center aligned grid btn">
+              <button type="submit" class="ui mini primary button">
+                <i class="save icon"></i>
+                เพิ่มข้อหลัก
+              </button>
+            </div>
           </div>
         </div>
       </form>
@@ -121,66 +118,7 @@
 <div class="ui segment">
   <div class="ui grid">
     <div class="sixteen wide column">
-      <table class="ui small celled table aligned hover">
-        <thead>
-          <tr>
-            <th style="text-align: center">ที่</th>
-            <th style="text-align: center">เงื่อนไข</th>
-            <th style="text-align: center">ค่าที่ 1</th>
-            <th style="text-align: center">ถึง</th>
-            <th style="text-align: center">ค่าที่ 2</th>
-            <th style="text-align: center">ระดับความเสียง</th>
-            <th style="text-align: center">คะแนนความเสียง</th>
-            <th style="text-align: center">#</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let d of cond; let i=index">
-            <td class="aligned center">{{i+1}}</td>
-            <td class="aligned center">
-              <select class="ui fluid dropdown">
-                <option value="ระหว่าง">ระหว่าง</option>
-                <option value="มากกว่า">มากกว่า</option>
-                <option value="น้อยกว่า">น้อยกว่า</option>
-                <option value="เท่ากับ">เท่ากับ</option>
-              </select>
-            </td>
-            <td class="aligned center">
-              <div class="ui input">
-                <input type="text">
-              </div>
-            </td>
-            <td class="aligned center">-</td>
-            <td class="aligned center">
-              <div class="ui input">
-                <input type="text">
-              </div>
-            </td>
-            <td class="aligned center">
-              <select class="ui fluid dropdown">
-                <option value="ต่ำมาก">ต่ำมาก</option>
-                <option value="ต่ำ">ต่ำ</option>
-                <option value="ปานกลาง">ปานกลาง</option>
-                <option value="สูง">สูง</option>
-                <option value="สูงมาก">สูงมาก</option>
-              </select>
-            </td>
-            <td class="aligned center">
-              <div class="ui input">
-                <input type="text">
-              </div>
-            </td>
-            <td class="aligned center">
-              <button class="ui icon red mini button" type="button" (click)="delCond(i)">
-                <i class="times icon"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button class="ui icon green left floated mini button" type="button" (click)="addCond()">
-        <i class="plus icon"></i>
-      </button>
+      <condition class="ui form" [riskId]="id" [riskType]="'QTN_MAIN'" [page]="'int02-3'"></condition>
     </div>
   </div>
 </div>

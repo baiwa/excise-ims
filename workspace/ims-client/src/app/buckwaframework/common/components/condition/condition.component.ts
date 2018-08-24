@@ -43,12 +43,8 @@ export class ConditionComponent implements OnInit {
           this.datas.push(new Condition());
         }
       }
-
     });
-
-
   }
-
 
   addRow() {
     this.datas.length < 5 && this.datas.push(new Condition());
@@ -61,17 +57,15 @@ export class ConditionComponent implements OnInit {
       this.messageBarService.errorModal("เงื่อนไขต้องมีอย่างน้อย 3 เงื่อนไข");
     }
   }
-  saveCondition() {
+
+  saveCondition(e) {
+    e.preventDefault();
     console.log("saveCondition");
     var message = "";
     var i = 1;
     this.datas.forEach(element => {
-
-
-
       i++;
       element.parentId = this.riskId;
-
       // parentId: any = '';
       // condition: any = '';
       // value1: any = '';
@@ -82,6 +76,7 @@ export class ConditionComponent implements OnInit {
     });
     if (i - 1 == this.datas.length) {
       var url = "ia/condition/insertCondition";
+      let data = [];
       this.datas.forEach(element => {
         element.parentId = this.riskId;
         element.riskType = this.riskType;
@@ -90,37 +85,52 @@ export class ConditionComponent implements OnInit {
         element.condition = element.condition == '' ? null : element.condition;
         element.value1 = element.value1 == '' ? null : element.value1;
         element.value2 = element.value2 == '' ? null : element.value2;
-        element.valueRL = element.valueRL == '' ? null : element.valueRL;
+        element.valueRl = element.valueRl == '' ? null : element.valueRl;
         element.color = element.color == '' ? null : element.color;
-        console.log(element);
-        this.ajax.post(url, element, res => {
-
-        });
-
+        data.push(element);
       });
-      this.messageBarService.successModal("ดำเนินการเพิ่มเงือนใขสำเร็จ");
-      this.out.emit(this.riskId);
-
+      this.ajax.post(url, { condition: data }, res => {
+        this.messageBarService.successModal("ดำเนินการเพิ่มเงือนใขสำเร็จ");
+        this.out.emit(this.riskId);
+      });
     }
   }
+
   cancel() {
     this.out.emit(this.riskId);
   }
 
-
   changeCondution(i) {
-    console.log($('#condition' + i).val());
-    if ($('#condition' + i).val() == "ระหว่าง") {
-      $('#value1' + i).prop("disabled", false);
-      $('#value2' + i).prop("disabled", false);
-    } else if ($('#condition' + i).val() == "มากกว่า") {
-      $('#value1' + i).prop("disabled", false);
-      $('#value2' + i).prop("disabled", true);
-    } else if ($('#condition' + i).val() == "น้อยกว่า") {
-      $('#value1' + i).prop("disabled", false);
-      $('#value2' + i).prop("disabled", true);
+    switch (this.datas[i].condition) {
+      case "<>":
+        $('#value1' + i).prop("disabled", false);
+        $('#value2' + i).prop("disabled", false);
+        $('#value2' + i).on('change', (e) => {
+          $('#value2' + i).attr({
+            min: $('#value1' + i).val() | 0
+          });
+          $('#value1' + i).attr({
+            max: e.target.value
+          });
+        });
+        $('#value1' + i).on('change', (e) => {
+          $('#value2' + i).attr({
+            min: e.target.value | 0
+          });
+          $('#value1' + i).attr({
+            max: $('#value2' + i).val()
+          });
+        });
+        break;
+      case ">":
+        $('#value1' + i).prop("disabled", false);
+        $('#value2' + i).prop("disabled", true);
+        break;
+      case "<":
+        $('#value1' + i).prop("disabled", false);
+        $('#value2' + i).prop("disabled", true);
+        break;
     }
-
   }
 
   isEmpty(value) {
@@ -137,7 +147,7 @@ class Condition {
   condition: any;
   value1: any;
   value2: any;
-  valueRL: any;
+  valueRl: any;
   convertValue: any;
   color: any;
   riskType: any = '';

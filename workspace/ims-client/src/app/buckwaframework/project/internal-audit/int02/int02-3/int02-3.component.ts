@@ -30,7 +30,6 @@ export class Int023Component implements OnInit {
   mainDetail: string = "";
   // API Datatable
   data: Datatable[] = [];
-  datas: any[] = [{text: "5555"}, {text: "5555"}];
   // References Datatable
   datatable: any;
   option: any;
@@ -73,6 +72,7 @@ export class Int023Component implements OnInit {
       start: 0,
       length: 5
     };
+    
   }
 
   ngOnInit() {
@@ -128,9 +128,7 @@ export class Int023Component implements OnInit {
       "columns": [
         {
           render: (data, type, full, meta) => {
-            if (parseInt(full.qtnDetailId) % 2 == 0)
-              return `<input type="checkbox" name="chk-${full.qtnDetailId}" id="chk-${full.qtnDetailId}">`;
-            else
+              // return `<input type="checkbox" name="chk-${full.qtnDetailId}" id="chk-${full.qtnDetailId}">`;
               return `<input type="checkbox" style="margin-left: 2em" name="chk-${full.qtnDetailId}" id="chk-${full.qtnDetailId}">`;
           },
           className: "left"

@@ -1,0 +1,10 @@
+.grid.btn {
+    width: 100%;
+}
+.topic {
+    text-align: right;
+}
+.topic label {
+    width: 100% !important;
+    text-align: right;
+}

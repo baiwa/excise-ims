@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
+import th.co.baiwa.excise.ia.persistence.vo.ConditionFormVo;
 import th.co.baiwa.excise.ia.service.ConditionService;
 
 @Controller
@@ -34,8 +36,8 @@ public class ConditionController {
 	
 	@PostMapping("/insertCondition")
 	@ResponseBody
-	public void insertCondition(@RequestBody Condition condition) {
-		conditionService.insertCondition(condition);
+	public Message insertCondition(@RequestBody ConditionFormVo condition) {
+		return conditionService.insertCondition(condition);
 	}
 
 }
