@@ -26,12 +26,12 @@ import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetDetailDao;
 import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetHeaderDao;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseRegistartionNumber;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseTaxReceive;
-import th.co.baiwa.excise.ta.persistence.entity.Ope041DataTable;
-import th.co.baiwa.excise.ta.persistence.entity.Ope041Vo;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetDetail;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeader;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
+import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
+import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.utils.NumberUtils;
 
@@ -372,39 +372,39 @@ public class PlanWorksheetHeaderService {
 		if(BeanUtils.isNotEmpty(listData)) {
 		Ope041Vo database = listData.get(0);
 		
-		opeDataTable.setNo("1");
+		opeDataTable.setNo(Long.valueOf("1"));
 		opeDataTable.setProduct(database.getProduct1());
-		opeDataTable.setMonthRecieve(database.getMonthRecieve1());
+		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve1()));
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
-		opeDataTable.setNo("2");
+		opeDataTable.setNo(Long.valueOf("2"));
 		opeDataTable.setProduct(database.getProduct2());
-		opeDataTable.setMonthRecieve(database.getMonthRecieve2());
+		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve2()));
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
-		opeDataTable.setNo("3");
+		opeDataTable.setNo(Long.valueOf("3"));
 		opeDataTable.setProduct(database.getProduct3());
-		opeDataTable.setMonthRecieve(database.getMonthRecieve3());
+		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve3()));
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
-		opeDataTable.setNo("4");
+		opeDataTable.setNo(Long.valueOf("4"));
 		opeDataTable.setProduct(database.getProduct4());
-		opeDataTable.setMonthRecieve(database.getMonthRecieve4());
+		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve4()));
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
-		opeDataTable.setNo("5");
+		opeDataTable.setNo(Long.valueOf("5"));
 		opeDataTable.setProduct(database.getProduct5());
-		opeDataTable.setMonthRecieve(database.getMonthRecieve5());
+		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve5()));
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
-		opeDataTable.setNo("6");
+		opeDataTable.setNo(Long.valueOf("6"));
 		opeDataTable.setProduct(database.getProduct6());
-		opeDataTable.setMonthRecieve(database.getMonthRecieve6());
+		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve6()));
 		opeDataTableList.add(opeDataTable);
 		}
 
@@ -492,40 +492,40 @@ public class PlanWorksheetHeaderService {
 		List<Ope041DataTable> opeDataTableList = new ArrayList<Ope041DataTable>();
 		Ope041DataTable opeDataTable = new Ope041DataTable();
 		Ope041Vo database = vo;
-		
-		opeDataTable.setNo("1");
+
+		opeDataTable.setNo(Long.valueOf("1"));
 		opeDataTable.setProduct(database.getProduct1());
-		opeDataTable.setMonthRecieve(database.getMonthRecieve1());
+		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve1()));
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
-		opeDataTable.setNo("2");
+		opeDataTable.setNo(Long.valueOf("2"));
 		opeDataTable.setProduct(database.getProduct2());
-		opeDataTable.setMonthRecieve(database.getMonthRecieve2());
+		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve2()));
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
-		opeDataTable.setNo("3");
+		opeDataTable.setNo(Long.valueOf("3"));
 		opeDataTable.setProduct(database.getProduct3());
-		opeDataTable.setMonthRecieve(database.getMonthRecieve3());
+		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve3()));
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
-		opeDataTable.setNo("4");
+		opeDataTable.setNo(Long.valueOf("4"));
 		opeDataTable.setProduct(database.getProduct4());
-		opeDataTable.setMonthRecieve(database.getMonthRecieve4());
+		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve4()));
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
-		opeDataTable.setNo("5");
+		opeDataTable.setNo(Long.valueOf("5"));
 		opeDataTable.setProduct(database.getProduct5());
-		opeDataTable.setMonthRecieve(database.getMonthRecieve5());
+		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve5()));
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
-		opeDataTable.setNo("6");
+		opeDataTable.setNo(Long.valueOf("6"));
 		opeDataTable.setProduct(database.getProduct6());
-		opeDataTable.setMonthRecieve(database.getMonthRecieve6());
+		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve6()));
 		opeDataTableList.add(opeDataTable);
 		
 		List<Ope041DataTable> returnDataList = new ArrayList<Ope041DataTable>();
@@ -534,20 +534,20 @@ public class PlanWorksheetHeaderService {
 				for (Ope041Vo formUpload : formUploadList) {
 					if (opeData.getProduct().equals(formUpload.getColumn2())) {
 						opeData.setColumn6(formUpload.getColumn6());
-						opeData.setDayRecieve(formUpload.getColumn4());
-						opeData.setExd1(formUpload.getColumn6());
-						opeData.setTaxInvoice(formUpload.getColumn3());
-						if (NumberUtils.stringToLong(opeData.getMonthRecieve()) > NumberUtils.stringToLong(opeData.getDayRecieve())) {
+						opeData.setDayRecieve(NumberUtils.stringToLong(formUpload.getColumn4()));
+						opeData.setExd1(NumberUtils.stringToLong(formUpload.getColumn6()));
+						opeData.setTaxInvoice(NumberUtils.stringToLong(formUpload.getColumn3()));
+						if (opeData.getMonthRecieve() > opeData.getDayRecieve()) {
 							opeData.setCalMax(opeData.getMonthRecieve());
 						} else {
 							opeData.setCalMax(opeData.getDayRecieve());
 							
 						}
-						if (NumberUtils.stringToLong(opeData.getExd1()) > NumberUtils.stringToLong(opeData.getCalMax())) {
+						if (opeData.getExd1() > opeData.getCalMax()) {
 							opeData.setCalMax(opeData.getExd1());
 						}
 						
-						opeData.setDiff((NumberUtils.stringToLong(opeData.getTaxInvoice()) - NumberUtils.stringToLong(opeData.getCalMax()))+"");
+						opeData.setDiff((opeData.getTaxInvoice() - opeData.getCalMax()));
 						break;
 					}
 				}
@@ -567,9 +567,9 @@ public class PlanWorksheetHeaderService {
 			}
 			if (!isExist) {
 				opeDataTable1 = new Ope041DataTable();
-				opeDataTable1.setTaxInvoice(formUpload.getColumn3());
-				opeDataTable1.setDayRecieve(formUpload.getColumn4());
-				opeDataTable1.setExd1(formUpload.getColumn6());
+				opeDataTable1.setTaxInvoice(NumberUtils.stringToLong(formUpload.getColumn3()));
+				opeDataTable1.setDayRecieve(NumberUtils.stringToLong(formUpload.getColumn4()));
+				opeDataTable1.setExd1(NumberUtils.stringToLong(formUpload.getColumn6()));
 				returnDataList.add(opeDataTable1);
 			}
 		}

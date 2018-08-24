@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.excise.ta.persistence.entity.Ope041Vo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.ta.service.ExciseDetailService;
 
 @Service

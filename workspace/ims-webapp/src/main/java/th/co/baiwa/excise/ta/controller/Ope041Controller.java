@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.ta.persistence.entity.Ope041DataTable;
-import th.co.baiwa.excise.ta.persistence.entity.Ope041Vo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
+import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
-import th.co.baiwa.excise.ta.service.ReceiveRmatWsDetailService;
+import th.co.baiwa.excise.ta.service.ReceiveRmatWsService;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -29,7 +29,7 @@ import th.co.baiwa.excise.utils.BeanUtils;
 public class Ope041Controller {
 
 	@Autowired
-	private ReceiveRmatWsDetailService receiveRmatWsDetailService;
+	private ReceiveRmatWsService receiveRmatWsService;
 	
 	@Autowired
 	private UploadFileExciseService uploadFileExciseService;
@@ -82,7 +82,7 @@ public class Ope041Controller {
 	@ResponseBody
 	public ResponseEntity<?> listdata(@RequestBody List<Ope041DataTable> allData) {
 		try {
-			receiveRmatWsDetailService.insertReceiveRmatWsDetailService(allData);
+			receiveRmatWsService.insertReceiveRmatWsService(allData);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
