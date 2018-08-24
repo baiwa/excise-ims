@@ -20,12 +20,15 @@ export class Int0815Component implements OnInit {
 
   userCheck: any;
 
+  isConditionShow: any;
   constructor(private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
-    private route: ActivatedRoute, ) { }
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
     this.id = this.route.snapshot.queryParams["id"];
     this.findRiskById();
     this.initDatatable();
@@ -139,6 +142,16 @@ export class Int0815Component implements OnInit {
         });
       }
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
+  }
+  getConditionShow() {
+    return this.isConditionShow;
+  }
+  modalConditionRL() {
+    this.isConditionShow = true;
+  }
+
+  closeConditionRL(e) {
+    this.isConditionShow = false;
   }
 
 }

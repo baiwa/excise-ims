@@ -28,7 +28,7 @@ public class ConditionController {
 	@ResponseBody
 	public List<Condition> findConditionByParentId(@RequestBody Condition condition) {
 		logger.info("findConditionByParentId" + (condition.getParentId()));
-		return conditionService.findConditionByParentId(condition.getParentId().longValue());
+		return conditionService.findConditionByParentId(condition.getParentId() , condition.getRiskType() , condition.getPage());
 	}
 	
 	

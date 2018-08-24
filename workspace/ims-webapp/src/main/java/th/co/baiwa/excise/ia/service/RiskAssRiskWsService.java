@@ -67,13 +67,17 @@ public class RiskAssRiskWsService {
 	public ResponseDataTable<RiskAssRiskWsHdr> findByCriteriaForDatatable(RiskAssRiskWsHdr riskAssRiskWsHdr, DataTableRequest dataTableRequest) {
 
 		ResponseDataTable<RiskAssRiskWsHdr> responseDataTable = new ResponseDataTable<RiskAssRiskWsHdr>();
-		List<RiskAssRiskWsHdr> riskAssRiskWsHdrList = riskAssRiskWsHdrRepository.findByBudgetYear(riskAssRiskWsHdr.getBudgetYear());
+		List<RiskAssRiskWsHdr> riskAssRiskWsHdrList = findByBudgetYear(riskAssRiskWsHdr.getBudgetYear());
 		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
 		responseDataTable.setData(riskAssRiskWsHdrList);
 		responseDataTable.setRecordsTotal(riskAssRiskWsHdrList.size());
 		responseDataTable.setRecordsFiltered(riskAssRiskWsHdrList.size());
 		return responseDataTable;
 
+	}
+	
+	public List<RiskAssRiskWsHdr> findByBudgetYear(String year){
+		return riskAssRiskWsHdrRepository.findByBudgetYear(year);
 	}
 
 	public List<RiskAssRiskWsDtl> findRiskAssRiskDtlByWebService() {

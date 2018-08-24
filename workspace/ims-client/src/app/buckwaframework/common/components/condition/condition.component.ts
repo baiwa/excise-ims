@@ -15,6 +15,8 @@ export class ConditionComponent implements OnInit {
 
   datas: Condition[];
   @Input() riskId: any;
+  @Input() riskType: any;
+  @Input() page: any;
   @Output() out: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private messageBarService: MessageBarService,
@@ -25,7 +27,7 @@ export class ConditionComponent implements OnInit {
     this.datas = [];
     console.log("ngOnInit");
     var url = "ia/condition/findConditionByParentId";
-    this.ajax.post(url, { parentId: this.riskId }, res => {
+    this.ajax.post(url, { parentId: this.riskId, riskType: this.riskType, page: this.page }, res => {
       var data = res.json();
       data.forEach(element => {
         this.datas.push(element);
@@ -82,12 +84,15 @@ export class ConditionComponent implements OnInit {
       var url = "ia/condition/insertCondition";
       this.datas.forEach(element => {
         element.parentId = this.riskId;
+        element.riskType = this.riskType;
+        element.page = this.page;
         element.conditionId = element.conditionId == '' ? null : element.conditionId;
         element.condition = element.condition == '' ? null : element.condition;
         element.value1 = element.value1 == '' ? null : element.value1;
         element.value2 = element.value2 == '' ? null : element.value2;
         element.valueRL = element.valueRL == '' ? null : element.valueRL;
         element.color = element.color == '' ? null : element.color;
+        console.log(element);
         this.ajax.post(url, element, res => {
 
         });
@@ -135,4 +140,6 @@ class Condition {
   valueRL: any;
   convertValue: any;
   color: any;
+  riskType: any = '';
+  page: any;
 }

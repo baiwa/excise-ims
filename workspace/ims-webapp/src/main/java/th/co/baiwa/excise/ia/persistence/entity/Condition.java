@@ -51,6 +51,12 @@ public class Condition extends BaseEntity{
 	@Column(name="CONVERT_VALUE")
 	private String convertValue;
 	
+	@Column(name="RISK_TYPE")
+	private String riskType;
+	
+	@Column(name="PAGE")
+	private String page;
+	
 	public Long getConditionId() {
 		return conditionId;
 	}
@@ -115,6 +121,22 @@ public class Condition extends BaseEntity{
 
 	public void setConvertValue(String convertValue) {
 		this.convertValue = convertValue;
+	}
+
+	public String getRiskType() {
+		return riskType;
+	}
+
+	public void setRiskType(String riskType) {
+		this.riskType = riskType;
+	}
+
+	public String getPage() {
+		return page;
+	}
+
+	public void setPage(String page) {
+		this.page = page;
 	}
 	
 	

@@ -60,6 +60,9 @@ public class RiskAssRiskWsDtl extends BaseEntity{
 	@Column(name="VALUE_TRANSLATION")
 	private String valueTranslation;
 	
+	@Column(name="RISK_TYPE")
+	private String riskType;
+	
 
 	public RiskAssRiskWsDtl() {
 	}

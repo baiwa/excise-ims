@@ -22,8 +22,8 @@ public class ConditionService {
 		
 	}
 	
-	public List<Condition> findConditionByParentId(Long parentId){
+	public List<Condition> findConditionByParentId(Long parentId , String riskType , String page){
 		logger.info("insertCondition in "+ parentId);
-		return conditionRepository.findConditionByParentId(parentId);
+		return conditionRepository.findConditionByParentId(parentId, riskType, page);
 	}
 }

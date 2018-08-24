@@ -39,7 +39,8 @@
               <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
               <th colspan="4" style="text-align: center !important">งบประมาณที่ใช้ตามแผนยุทธศาสตร์</th>
               <th rowspan="2" style="text-align: center !important">เงินงบประมาณที่
-                <br/>กรมอนุมัติ</th>
+                <br/>กรมอนุมัติ
+              </th>
               <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
             </tr>
             <tr>
@@ -60,7 +61,7 @@
               <i class="save icon"></i>
               บันทึก
             </button>
-            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+            <button class="ui mini primary button" (click)="modalConditionRL()">
               กำหนดเงื่อนไข RL
             </button>
             <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
@@ -73,6 +74,19 @@
 
         </div>
       </div>
+    </div>
+  </div>
+  <div class="sixteen wide column" *ngIf="getConditionShow()">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <condition [riskId]="id" [riskType]="'MAIN'" [page]="'int08-1-5'" (out)="closeConditionRL($event)"></condition>
+      </div>
+      <br/>
+
     </div>
   </div>
 </div>

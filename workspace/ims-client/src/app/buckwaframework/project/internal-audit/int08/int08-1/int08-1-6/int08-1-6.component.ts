@@ -82,7 +82,6 @@ export class Int0816Component implements OnInit {
       this.ajax.post(url, { riskHrdId: this.id }, res => {
         // this.riskDataList
         var jsonObjList = res.json();
-        console.log("555555", jsonObjList);
         for (let index = 0; index < jsonObjList.length; index++) {
           var element = jsonObjList[index];
           var riskData = new RiskData();
@@ -261,6 +260,7 @@ export class Int0816Component implements OnInit {
     if (msgMessage == "") {
       var url = "ia/int08/saveRiskAssOther";
       var urlDtl = "ia/int08/saveRiskAssDtlOther";
+      this.riskAssRiskWsHdr.riskType = 'OTHER';
       this.ajax.post(url, this.riskAssRiskWsHdr, res => {
         var message = res.json();
         //console.log(message.messageType);
@@ -329,8 +329,6 @@ export class Int0816Component implements OnInit {
   closeConditionRL(e) {
     this.isConditionShow = false;
   }
-
-
 
 }
 

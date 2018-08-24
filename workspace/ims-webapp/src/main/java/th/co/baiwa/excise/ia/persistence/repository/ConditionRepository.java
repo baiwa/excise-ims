@@ -10,6 +10,6 @@ import th.co.baiwa.excise.ia.persistence.entity.Condition;
 
 public interface ConditionRepository extends CommonJpaCrudRepository<Condition, Long>{
 
-	@Query("select r from Condition r where r.isDeleted = '" + FLAG.N_FLAG + "' and r.parentId = ?1")
-	public List<Condition> findConditionByParentId(Long parentId);
+	@Query("select r from Condition r where r.isDeleted = '" + FLAG.N_FLAG + "' and r.parentId = ?1 and r.riskType = ?2 and r.page = ?3")
+	public List<Condition> findConditionByParentId(Long parentId , String riskType , String page);
 }

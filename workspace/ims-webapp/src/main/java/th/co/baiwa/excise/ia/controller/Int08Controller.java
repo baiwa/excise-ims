@@ -55,8 +55,6 @@ public class Int08Controller {
 		Message message =  null;
 		if(BeanUtils.isNotEmpty(riskAssRiskWsHdr.getRiskHdrName())){
 			message = riskAssRiskWsHdrService.createRiskAssRiskWsHdrRepository(riskAssRiskWsHdr);
-		}else {
-			message = ApplicationCache.getMessage("XXXXXX");
 		}
 		return message;
 	}
@@ -144,6 +142,7 @@ public class Int08Controller {
 		Message message = null;
 		logger.info("saveRiskAssOther" + riskAssRiskWsHdr.getRiskHrdId());
 		try {
+			
 			riskAssRiskWsHdrService.updateRiskAssRiskWsHdr(riskAssRiskWsHdr);
 			message = ApplicationCache.getMessage("MSG_00002");
 		} catch (Exception e) {
@@ -204,8 +203,11 @@ public class Int08Controller {
 		return excelData;
 	}
 	
-	
-	
+	@PostMapping("/findByBudgetYear")
+	@ResponseBody
+	public List<RiskAssRiskWsHdr> findByBudgetYear(@RequestBody RiskAssRiskWsHdr riskAssRiskWsHdr) {
+		return riskAssRiskWsHdrService.findByBudgetYear(riskAssRiskWsHdr.getBudgetYear());
+	}
 	
 	public RiskAssRiskWsService getRiskAssRiskWsHdrService() {
 		return riskAssRiskWsHdrService;

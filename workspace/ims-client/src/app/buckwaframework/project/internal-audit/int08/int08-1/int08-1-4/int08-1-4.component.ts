@@ -160,6 +160,12 @@ export class Int0814Component implements OnInit, AfterViewInit {
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
   }
 
+  configAllCondition() {
+    this.router.navigate(["/int08/1/7"], {
+      queryParams: { budgetYear: this.budgetYear }
+    });
+  }
+
 
 
 }
