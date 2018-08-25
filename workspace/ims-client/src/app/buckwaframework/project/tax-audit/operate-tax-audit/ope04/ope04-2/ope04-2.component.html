@@ -13,23 +13,23 @@
                         <div class="eight wide field ">
                             <label class="custom-label-w-25">ทะเบียนสรรพสามิต</label>
                             <select class="ui search dropdown ope04-1" name="exciseId" id="exciseId" (change)="changeExiseId()" style="width: 100% !important">
-                          <option *ngFor="let list of exciseIdArr" value="{{list}}">{{list}}</option>
-                      </select>
+                              <option *ngFor="let list of exciseIdArr">{{list}}</option>
+                          </select>
                         </div>
                         <div class="eight wide field ">
                             <label class="custom-label-w-20">เลขประจำตัวผู้เสียภาษี</label>
-                            <input type="text" class="custom-readonly" placeholder="เลขประจำตัวผู้เสียภาษี" readonly="" value="-">
+                            <input type="text" name="taxNumber" id="taxNumber" class="custom-readonly" placeholder="เลขประจำตัวผู้เสียภาษี" readonly="" value="-">
                         </div>
                     </div>
 
                     <div class="inline fields">
                         <div class="eight wide field">
                             <label class="custom-label-w-25">ผู้ประกอบการ </label>
-                            <input type="text" class="custom-readonly" placeholder="ผู้ประกอบการ" name="companyName" id="companyName" readonly="" value="{{firstDataList.companyName}}">
+                            <input type="text" class="custom-readonly" placeholder="ผู้ประกอบการ" [(ngModel)]="obj.companyName" name="companyName" id="companyName" readonly="">
                         </div>
                         <div class="eight wide field ">
                             <label class="custom-label-w-20">เลขที่วิเคราะห์</label>
-                            <input type="text" class="custom-readonly" placeholder="เลขที่วิเคราะห์" name="analysNumber" id="analysNumber" readonly="" value="{{firstDataList.analysNumber}}">
+                            <input type="text" class="custom-readonly" placeholder="เลขที่วิเคราะห์" [(ngModel)]="obj.analysNumber" name="analysNumber" id="analysNumber" readonly="">
                         </div>
                     </div>
 
@@ -40,7 +40,7 @@
                         </div>
                         <div class="eight wide field ">
                             <label class="custom-label-w-20">พิกัด</label>
-                            <input type="text" class="custom-readonly" placeholder="พิกัด" name="productType" id="productType" readonly="" value="{{firstDataList.productType}}">
+                            <input type="text" class="custom-readonly" placeholder="พิกัด" [(ngModel)]="obj.productType" name="productType" id="productType" readonly="">
                         </div>
                     </div>
 
@@ -52,7 +52,7 @@
                             <div class="ui calendar" id="calendarFront" style="width:100%">
                                 <div class="ui input left icon">
                                     <i class="time icon"></i>
-                                    <input type="text" name="startDate" id="startDate" autocomplete="off" [attr.readonly]="null" placeholder="MM/YYYY" [attr.required]="true">
+                                    <input type="text" name="startDate" id="startDate" [(ngModel)]="obj.startDate" autocomplete="off" placeholder="MM/YYYY" [attr.required]="true">
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             <div class="ui calendar" id="calendarLast" style="width:100%">
                                 <div class="ui input left icon">
                                     <i class="time icon"></i>
-                                    <input type="text" name="endDate" id="endDate" autocomplete="off" [attr.readonly]="null" placeholder="MM/YYYY" [attr.required]="true">
+                                    <input type="text" name="endDate" id="endDate" autocomplete="off" [(ngModel)]="obj.endDate" [attr.readonly]="null" placeholder="MM/YYYY" [attr.required]="true">
                                 </div>
                             </div>
                         </div>
@@ -71,13 +71,13 @@
                     <div class="ui center aligned grid">
                         <div class="six wide column">
                             <button class="ui mini primary button" type="submit">
-                <i class="file icon"></i>
-                แสดงกระดาษทำการ
-              </button>
+                    <i class="file icon"></i>
+                    แสดงกระดาษทำการ
+                  </button>
                             <button class="ui mini button" type="reset">
-                <i class="close icon"></i>
-                ยกเลิก
-              </button>
+                    <i class="close icon"></i>
+                    ยกเลิก
+                  </button>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                             <th>ใบเบิกวัตถุดิบ</th>
                             <th>บัญชีประจำวัน</th>
                             <th>งบเดือน</th>
-                            <th>{{row[0].column6}}</th>
+                            <th>{{emptyColumn}}</th>
                             <th>ค่าสูงสุดของข้อมูล</th>
                             <th>ผลต่างของคู่ข้อมูล</th>
                         </tr>
@@ -112,14 +112,14 @@
             <br>
             <div class="ui center aligned grid">
                 <div class="six wide column">
-                    <button class="ui mini primary button">
-            <i class="print icon"></i>
-            บันทึกข้อมูล
-          </button>
+                    <button class="ui mini primary button" (click)="saveTable()" type="button">
+                <i class="print icon"></i>
+               บันทึกข้อมูล
+              </button>
                     <button class="ui mini button" (click)="clearAll()" type="reset">
-            <i class="refresh icon"></i>
-            ล้างข้อมูล
-          </button>
+                <i class="refresh icon"></i>
+                ล้างข้อมูล
+              </button>
                 </div>
             </div>
         </div>
@@ -133,8 +133,13 @@
                 <div class="ui form">
                     <div class="inline fields">
                         <div class="eight wide field ">
-                            <label class="custom-label-w-25">เลือกไฟล์ Template ข้อมูล</label>
-                            <input type="file" name="fileExel" id="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="onChangeUpload($event)" required>
+                            <label class="custom-label-w-15">เลือกไฟล์ Template ข้อมูล</label>
+                            <div>
+                                <input class="inputfile" type="file" name="fileExel" id="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="onChangeUpload($event)" required>
+                                <label for="fileExel" class="ui mini blue butt-upload button">
+                                        <i class="ui fa-file-excel-o icon"></i> เลือกไฟล์
+                                    </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -142,13 +147,13 @@
                 <div class="ui center aligned grid">
                     <div class="four wide column">
                         <button class="ui mini primary button" type="submit">
-                            <i class="upload icon"></i>
-                            อัพโหลด
-                        </button>
+                                <i class="upload icon"></i>
+                                อัพโหลด
+                            </button>
                         <button class="ui mini button" type="reset">
-                            <i class="trash outline icon"></i>
-                            ลบไฟล์
-                        </button>
+                                <i class="trash outline icon"></i>
+                                ลบไฟล์
+                            </button>
                     </div>
                 </div>
             </div>
@@ -158,9 +163,9 @@
         <div class="ui grid center aligned">
             <div class="sixteen wide column">
                 <button class="ui mini button" routerLink="/select-form/สินค้า/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน">
-          <i class="arrow left icon"></i>
-          ย้อนกลับ
-        </button>
+              <i class="arrow left icon"></i>
+              ย้อนกลับ
+            </button>
             </div>
         </div>
     </div>
