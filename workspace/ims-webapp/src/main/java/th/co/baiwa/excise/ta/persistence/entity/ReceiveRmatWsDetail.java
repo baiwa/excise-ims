@@ -25,7 +25,7 @@ public class ReceiveRmatWsDetail extends BaseEntity  {
 	private static final long serialVersionUID = -8640233448291592034L;
 
 	@Id
-	@SequenceGenerator(name="TA_RECEIVE_RMAT_WS_DETAIL_GEN", sequenceName="TA_RECEIVE_RMAT_WS_DETAIL_SEQ")
+	@SequenceGenerator(name="TA_RECEIVE_RMAT_WS_DETAIL_GEN", sequenceName="TA_RECEIVE_RMAT_WS_DETAIL_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TA_RECEIVE_RMAT_WS_DETAIL_GEN")
 	@Column(name="TA_RECEIVE_RMAT_WS_DETAIL_ID")
 	private long taReceiveRmatWsDetailId;

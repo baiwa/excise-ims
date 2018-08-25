@@ -27,7 +27,7 @@ public class ReceiveRmatWsHeader extends BaseEntity  {
 	private static final long serialVersionUID = -3168569609847439736L;
 
 	@Id
-	@SequenceGenerator(name="TA_RECEIVE_RMAT_WS_HEADER_GEN", sequenceName="TA_RECEIVE_RMAT_WS_HEADER_SEQ")
+	@SequenceGenerator(name="TA_RECEIVE_RMAT_WS_HEADER_GEN", sequenceName="TA_RECEIVE_RMAT_WS_HEADER_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TA_RECEIVE_RMAT_WS_HEADER_GEN")
 	@Column(name="TA_RECEIVE_RMAT_HEADER_ID")
 	private long taReceiveRmatHeaderId;

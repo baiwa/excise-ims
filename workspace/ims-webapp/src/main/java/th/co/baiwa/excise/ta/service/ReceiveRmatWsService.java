@@ -16,30 +16,31 @@ import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class ReceiveRmatWsService {
-
 	private Logger logger = LoggerFactory.getLogger(ReceiveRmatWsService.class);
 
 	@Autowired
 	private ReceiveRmatWsDetailRepository receiveRmatWsDetailRepository;
-	
+
 	@Autowired
 	private ReceiveRmatWsHeaderRepository receiveRmatWsHeaderRepository;
-	
-public void insertReceiveRmatWsService(List<Ope041DataTable> allData) {
+
+	public void insertReceiveRmatWsService(List<Ope041DataTable> allData) {
 		logger.info("Save Ope041");
-		for (Ope041DataTable value : allData) {	
-			
+		ReceiveRmatWsHeader receiveRmatWsHeader = null;
+		for (Ope041DataTable value : allData) {
+
 			if (BeanUtils.isNotEmpty(value.getExciseId())) {
-				ReceiveRmatWsHeader hd = new ReceiveRmatWsHeader(); 
+				ReceiveRmatWsHeader hd = new ReceiveRmatWsHeader();
 				hd.setExciseId(value.getExciseId());
 				hd.setTaAnalysisId(value.getAnalysNumber());
 				hd.setStartDate(value.getStartDate());
 				hd.setEndDate(value.getEndDate());
-				receiveRmatWsHeaderRepository.save(hd);
+				receiveRmatWsHeader = receiveRmatWsHeaderRepository.save(hd);
 			}
 
 			if (BeanUtils.isEmpty(value.getExciseId())) {
 				ReceiveRmatWsDetail dtl = new ReceiveRmatWsDetail();
+				dtl.setTaReceiveRmatHeaderId(receiveRmatWsHeader.getTaReceiveRmatHeaderId());
 				dtl.setReceiveRmatDetailNo(value.getNo());
 				dtl.setReceiveRmatDetailOrder(value.getProduct());
 				dtl.setPurchaseTaxInv(value.getTaxInvoice());
@@ -50,8 +51,7 @@ public void insertReceiveRmatWsService(List<Ope041DataTable> allData) {
 				dtl.setResult(value.getDiff());
 				receiveRmatWsDetailRepository.save(dtl);
 			}
-		}			
+		}
 	}
-	
-	
+
 }
