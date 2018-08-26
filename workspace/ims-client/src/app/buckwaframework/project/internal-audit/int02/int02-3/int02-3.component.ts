@@ -24,9 +24,8 @@ const URL = {
 })
 export class Int023Component implements OnInit {
 
-  numbers: number[] = [1];
   // Service Details
-  minorDetail: string[] = [];
+  minorDetail: string[] = [""];
   mainDetail: string = "";
   // API Datatable
   data: Datatable[] = [];
@@ -72,7 +71,7 @@ export class Int023Component implements OnInit {
       start: 0,
       length: 5
     };
-    
+
   }
 
   ngOnInit() {
@@ -128,8 +127,8 @@ export class Int023Component implements OnInit {
       "columns": [
         {
           render: (data, type, full, meta) => {
-              // return `<input type="checkbox" name="chk-${full.qtnDetailId}" id="chk-${full.qtnDetailId}">`;
-              return `<input type="checkbox" style="margin-left: 2em" name="chk-${full.qtnDetailId}" id="chk-${full.qtnDetailId}">`;
+            // return `<input type="checkbox" name="chk-${full.qtnDetailId}" id="chk-${full.qtnDetailId}">`;
+            return `<input type="checkbox" style="margin-left: 2em" name="chk-${full.qtnDetailId}" id="chk-${full.qtnDetailId}">`;
           },
           className: "left"
         },
@@ -263,9 +262,7 @@ export class Int023Component implements OnInit {
   }
 
   onAddField = () => {
-    let num = this.numbers.length;
-    if (num < 5) {
-      this.numbers.push(num + 1);
+    if (this.minorDetail.length < 5) {
       this.minorDetail.push("");
     } else {
       this.msg.errorModal(
@@ -276,12 +273,11 @@ export class Int023Component implements OnInit {
   };
 
   onDelField = index => {
-    this.numbers.splice(index, 1);
     this.minorDetail.splice(index, 1);
   }
 
   onSave = () => {
-    this.req.save.forEach( obj => {
+    this.req.save.forEach(obj => {
       if (obj.status !== undefined) {
         if (obj.qtnFor === "M") {
           obj.qtnReportManId = null;
@@ -314,7 +310,7 @@ export class Int023Component implements OnInit {
     main.qtnFor = "M";
     main.status = "NEW";
     this.table.push(main);
-    for(let i=0; i<this.numbers.length; i++) {
+    for (let i = 0; i < this.minorDetail.length; i++) {
       detail = new Int023FormVo();
       detail.qtnReportDtlId = `DTL_${this.getRndInteger(10000, 99999)}`;
       detail.qtnMainDetail = this.minorDetail[i];
@@ -323,17 +319,15 @@ export class Int023Component implements OnInit {
       detail.status = "NEW";
       this.table.push(detail);
     }
-    this.table.forEach( obj => {
+    this.table.forEach(obj => {
       this.mainDetail = "";
       this.minorDetail = [];
-      this.numbers = [1];
-      if (obj.qtnReportHdrId === undefined) {
+      if (obj.qtnReportHdrId) {
         obj.qtnFor = "D";
-        this.req.save = this.table;
       } else {
         obj.qtnFor = "M";
-        this.req.save = this.table;
       }
+      this.req.save = this.table;
     });
   }
 
@@ -359,9 +353,9 @@ class Datatable extends BaseModel {
 
 class Int023FormVo extends BaseModel {
   [x: string]: any;
-  qtnReportHdrId: string;
-  qtnReportManId: string;
-  qtnReportDtlId: string;
+  qtnReportHdrId: string = null;
+  qtnReportManId: string = null;
+  qtnReportDtlId: string = null;
   qtnMainDetail: string = "";
   qtnFor: string = "";
 }

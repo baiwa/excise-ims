@@ -43,8 +43,8 @@
             <tbody>
               <tr *ngFor="let t of table; let i = index">
                 <td>
-                  <input type="checkbox" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="t.qtnReportHdrId !== undefined" (change)="chck(t.qtnReportManId, 'man', $event)">
-                  <input type="checkbox" style="margin-left: 2em" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="t.qtnReportHdrId === undefined"
+                  <input type="checkbox" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="t.qtnReportHdrId" (change)="chck(t.qtnReportManId, 'man', $event)">
+                  <input type="checkbox" style="margin-left: 2em" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="!t.qtnReportHdrId"
                     (change)="chck(t.qtnReportDtlId, 'dtl', $event)">
                 </td>
                 <td>{{t.qtnMainDetail}}</td>
@@ -77,7 +77,7 @@
             <input class="custom" type="text" id="mainDetail" name="mainDetail" [(ngModel)]="mainDetail" [attr.required]="true">
           </div>
         </div>
-        <div class="inline fields" *ngFor="let num of numbers; let i = index" [attr.data-index]="i">
+        <div class="inline fields" *ngFor="let min of minorDetail; let i = index" [attr.data-index]="i">
           <div class="one wide field"></div>
           <div class="two wide field topic">
             <label>ข้อย่อย[{{ i+1 }}]</label>
@@ -118,7 +118,7 @@
 <div class="ui segment">
   <div class="ui grid">
     <div class="sixteen wide column">
-      <condition class="ui form" [riskId]="id" [riskType]="'QTN_MAIN'" [page]="'int02-3'"></condition>
+      <condition class="ui form" [riskId]="headerId" [riskType]="'QTN_MAIN'" [page]="'int02-3'"></condition>
     </div>
   </div>
 </div>

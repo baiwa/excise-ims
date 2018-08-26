@@ -144,6 +144,12 @@ public class Int02Controller {
 		return qtnReportMainService.findQtnReport(qtn, dataTableRequest);
 	}
 	
+	/*
+	 * 
+	 * CRUD TABLE `IA_QUESTIONNAIRE_MAIN_DETAIL`
+	 * CRUD TABLE `IA_QUESTIONNAIRE_MINOR_DETAIL`
+	 * 
+	 * */
 	@PostMapping("/deleteQtnReportHeaderByCriteria")
 	@ResponseBody
 	public Message deleteQtnReportHeaderByCriteria(QtnReportHeader qtnReportHeader) {
