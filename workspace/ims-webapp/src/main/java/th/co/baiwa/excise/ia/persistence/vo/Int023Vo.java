@@ -5,7 +5,7 @@ import java.util.List;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportDetail;
 
-public class Int023Vo extends BaseEntity {
+public class Int023Vo<T> extends BaseEntity {
 	
 	private static final long serialVersionUID = -1729645795213148437L;
 
@@ -15,7 +15,7 @@ public class Int023Vo extends BaseEntity {
 	
 	private String qtnMainDetail;
 	
-	private List<QtnReportDetail> detail; 
+	private List<T> detail; 
 
 	public Long getQtnReportHdrId() {
 		return qtnReportHdrId;
@@ -33,11 +33,11 @@ public class Int023Vo extends BaseEntity {
 		this.qtnReportManId = qtnReportManId;
 	}
 
-	public List<QtnReportDetail> getDetail() {
+	public List<T> getDetail() {
 		return detail;
 	}
 
-	public void setDetail(List<QtnReportDetail> detail) {
+	public void setDetail(List<T> detail) {
 		this.detail = detail;
 	}
 

@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.excise.ia.persistence.entity.QtnReportDetail;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportMain;
 import th.co.baiwa.excise.ia.persistence.vo.Int023Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
@@ -27,7 +28,7 @@ public class QtnReportMainDao {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public List<Int023Vo> findQtnReport(QtnReportMain qtn, int start, int length) {
+	public List<Int023Vo<QtnReportDetail>> findQtnReport(QtnReportMain qtn, int start, int length) {
 		List<Object> paramList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(_SQL);
 		sql.append(" AND M.IS_DELETED = 'N' ");
@@ -37,7 +38,7 @@ public class QtnReportMainDao {
 			paramList.add(qtn.getQtnReportHdrId());
 		}
 
-		List<Int023Vo> qtnReportDetail = jdbcTemplate.query(OracleUtils.limitForDataTable(sql, start, length),
+		List<Int023Vo<QtnReportDetail>> qtnReportDetail = jdbcTemplate.query(OracleUtils.limitForDataTable(sql, start, length),
 				paramList.toArray(), rowMapper);
 
 		return qtnReportDetail;
@@ -56,11 +57,11 @@ public class QtnReportMainDao {
 		return count;
 	}
 
-	private RowMapper<Int023Vo> rowMapper = new RowMapper<Int023Vo>() {
+	private RowMapper<Int023Vo<QtnReportDetail>> rowMapper = new RowMapper<Int023Vo<QtnReportDetail>>() {
 
 		@Override
-		public Int023Vo mapRow(ResultSet rs, int arg1) throws SQLException {
-			Int023Vo vo = new Int023Vo();
+		public Int023Vo<QtnReportDetail> mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int023Vo<QtnReportDetail> vo = new Int023Vo<QtnReportDetail>();
 			vo.setQtnReportHdrId(rs.getLong("QTN_REPORT_HDR_ID"));
 			vo.setQtnReportManId(rs.getLong("QTN_REPORT_MAN_ID"));
 			vo.setQtnMainDetail(rs.getString("QTN_MAIN_DETAIL"));
