@@ -13,7 +13,7 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Entity
 @Table(name = "IA_QUESTIONNAIRE_MAIN_DETAIL")
 public class QuestionnaireMain extends BaseEntity {
-	
+
 	private static final long serialVersionUID = -8620136711978296093L;
 
 	@Id

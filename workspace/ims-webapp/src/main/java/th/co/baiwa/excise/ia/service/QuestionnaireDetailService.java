@@ -16,7 +16,12 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.ia.Int023MappingVO;
 import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireDetailDao;
+import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireMainDao;
+import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireMinorDao;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
+import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMain;
+import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMinor;
+import th.co.baiwa.excise.ia.persistence.vo.Int023Vo;
 
 @Service
 public class QuestionnaireDetailService {
@@ -24,9 +29,40 @@ public class QuestionnaireDetailService {
 	
 	@Autowired
 	private QuestionnaireDetailDao questionnaireDetailDao;
+	
+	@Autowired
+	private QuestionnaireMainDao qtnMainDao;
+	
+	@Autowired
+	private QuestionnaireMinorDao qtnMinorDao;
 
 	@Autowired
 	private SEQDao seqDao;
+	
+	public ResponseDataTable<Int023Vo<QuestionnaireMinor>> findByCriteria(DataTableRequest req) {
+		ResponseDataTable<Int023Vo<QuestionnaireMinor>> resp = new ResponseDataTable<Int023Vo<QuestionnaireMinor>>();
+		List<Int023Vo<QuestionnaireMinor>> int023 = new ArrayList<>();
+		List<QuestionnaireMain> main = qtnMainDao.findForInt023(req.getStart(), req.getLength());
+		logger.info(" start: {} length: {} mainSize: {}", req.getStart(), req.getLength(), main.size());
+		Long oldId = 0L;
+		for(QuestionnaireMain ma: main) {
+			if (ma.getQtnMainDetailId() != oldId) {
+				logger.info("{}", oldId);
+				oldId = ma.getQtnMainDetailId();
+				Int023Vo<QuestionnaireMinor> in023 = new Int023Vo<QuestionnaireMinor>();
+				QuestionnaireMinor min = new QuestionnaireMinor();
+				List<QuestionnaireMinor> minor = new ArrayList<QuestionnaireMinor>();
+				min.setMainId(oldId);
+				minor = qtnMinorDao.findByCriteria(min, 0, 0);
+				in023.setQtnReportManId(ma.getQtnMainDetailId());
+				in023.setQtnMainDetail(ma.getQtnMainDetail());
+				in023.setDetail(minor);
+				int023.add(in023);
+			}
+		}
+		resp.setData(int023);
+		return resp;
+	}
 
 	public List<QuestionnaireDetail> findByCriteria(QuestionnaireDetail QuestionnaireDetail) {
 		return questionnaireDetailDao.findByCriteria(QuestionnaireDetail);

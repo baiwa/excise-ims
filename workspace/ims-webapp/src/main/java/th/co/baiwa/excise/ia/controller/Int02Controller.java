@@ -21,12 +21,16 @@ import th.co.baiwa.excise.domain.CommonManageReq;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.ia.Int023MappingVO;
+import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireMainDao;
+import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireMinorDao;
 import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportDetail;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportMain;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
+import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMain;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMinor;
+import th.co.baiwa.excise.ia.persistence.repository.QuestionnaireMainDetailRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int022Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int023FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int023Vo;
@@ -154,6 +158,12 @@ public class Int02Controller {
 	 * CRUD TABLE `IA_QUESTIONNAIRE_MINOR_DETAIL`
 	 * 
 	 * */
+	@PostMapping("/questionnaire_detail/datatable")
+	@ResponseBody
+	public ResponseDataTable<Int023Vo<QuestionnaireMinor>> questionnaireDetail(DataTableRequest req) {
+		return questionnaireDetailService.findByCriteria(req);
+	}
+	
 	@PostMapping("/deleteQtnReportHeaderByCriteria")
 	@ResponseBody
 	public Message deleteQtnReportHeaderByCriteria(QtnReportHeader qtnReportHeader) {
@@ -168,7 +178,6 @@ public class Int02Controller {
 	@ResponseBody
 	public Message createQuestionnaireDetail(@RequestBody Int023MappingVO int023MappingVO) {
 		logger.info("createQuestionnaireDetail");
-		System.out.println(int023MappingVO.toString());
 		Message message = null;
 		Integer insertCountRow = questionnaireDetailService.createQuestionnaireDetail(int023MappingVO);
 		if (BeanUtils.isNotEmpty(insertCountRow) && insertCountRow.intValue() > 0) {

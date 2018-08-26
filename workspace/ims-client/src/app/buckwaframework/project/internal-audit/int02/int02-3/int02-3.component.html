@@ -14,48 +14,21 @@
             <thead>
               <tr>
                 <th style="text-align: left !important ;width: 5%">
-                  <input type="checkbox" name="chk" id="chk" (click)="clickChkAll($event, '')">
+                  <input type="checkbox" name="chk1" id="chk1" (click)="chkAll($event, '_table', 1)">
                 </th>
                 <th style="text-align: center !important ;width: 95%">รายการ</th>
               </tr>
             </thead>
             <tbody>
-              <!-- DATA HERE -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="ui segment">
-      <div class="ui centered grid">
-        <div class="sixteen wide column">
-          <label>รายละเอียดแบบสอบทาน (ใหม่)</label>
-          <table id="datatable2" class="ui small celled table aligned hover">
-            <thead>
-              <tr>
-                <th style="text-align: left !important ;width: 5%">
-                  <input type="checkbox" name="chk2" id="chk2" (click)="chkAll($event)">
-                </th>
-                <th style="text-align: center !important ;width: 95%">รายการ</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let t of table; let i = index">
+              <tr *ngFor="let t of _table; let i = index">
                 <td>
-                  <input type="checkbox" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="t.qtnReportHdrId" (change)="chck(t.qtnReportManId, 'man', $event)">
-                  <input type="checkbox" style="margin-left: 2em" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="!t.qtnReportHdrId"
-                    (change)="chck(t.qtnReportDtlId, 'dtl', $event)">
+                  <input type="checkbox" id="chk1-{{i}}" name="chk1-{{i}}" *ngIf="t.qtnReportHdrId" (change)="chck(t.qtnReportManId, 'man', $event, 1, '_table')">
+                  <input type="checkbox" style="margin-left: 2em" id="chk1-{{i}}" name="chk1-{{i}}" *ngIf="!t.qtnReportHdrId" (change)="chck(t.qtnReportDtlId, 'dtl', $event, 1, 'table')">
                 </td>
                 <td>{{t.qtnMainDetail}}</td>
               </tr>
             </tbody>
           </table>
-        </div>
-        <div class="sixteen wide center aligned column">
-          <button type="button" (click)="delete()" class="ui red {{ chk2.length==0 && 'disabled'}} mini button">
-            <i class="trash icon"></i> ลบ
-          </button>
         </div>
       </div>
     </div>
@@ -111,6 +84,38 @@
           </div>
         </div>
       </form>
+    </div>
+
+    <div class="ui segment">
+      <div class="ui centered grid">
+        <div class="sixteen wide column">
+          <label>รายละเอียดแบบสอบทาน (ใหม่)</label>
+          <table id="datatable2" class="ui small celled table aligned hover">
+            <thead>
+              <tr>
+                <th style="text-align: left !important ;width: 5%">
+                  <input type="checkbox" name="chk2" id="chk2" (click)="chkAll($event,'table', 2)">
+                </th>
+                <th style="text-align: center !important ;width: 95%">รายการ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of table; let i = index">
+                <td>
+                  <input type="checkbox" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="t.qtnReportHdrId" (change)="chck(t.qtnReportManId, 'man', $event, 2, 'table')">
+                  <input type="checkbox" style="margin-left: 2em" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="!t.qtnReportHdrId" (change)="chck(t.qtnReportDtlId, 'dtl', $event, 2, 'table')">
+                </td>
+                <td>{{t.qtnMainDetail}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="sixteen wide center aligned column">
+          <button type="button" (click)="delete()" class="ui red {{ chk2.length==0 ? 'disabled' : ''}} mini button">
+            <i class="trash icon"></i> ลบ
+          </button>
+        </div>
+      </div>
     </div>
 
   </div>

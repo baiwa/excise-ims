@@ -13,7 +13,8 @@ declare var $: any;
 const URL = {
   SAVE: "ia/int02/save_qtn_report_detail",
   DATATABLE: AjaxService.CONTEXT_PATH + "ia/int02/queryQuestionnaireDetailByCriteria",
-  DATATABLE2: "ia/int02/qtn_report_detail_by_hdr_id/datatable"
+  DATATABLE2: "ia/int02/qtn_report_detail_by_hdr_id/datatable",
+  _DATATABLE: "ia/int02/questionnaire_detail/datatable"
   //DATATABLE2: AjaxService.CONTEXT_PATH + "ia/int02/qtn_report_detail_by_hdr_id/datatable"
 };
 
@@ -38,12 +39,13 @@ export class Int023Component implements OnInit {
   // Condition
   cond: Condition[] = [];
   // Checkbox
-  chk: any[] = [];
+  chk1: Int023FormVo[] = [];
   chk2: Int023FormVo[] = [];
   // Request
   req: ManageReq<Int023FormVo> = new ManageReq<Int023FormVo>();
   // Data
   table: Int023FormVo[] = [];
+  _table: Int023FormVo[] = [];
 
   constructor(
     private ajax: AjaxService,
@@ -66,6 +68,11 @@ export class Int023Component implements OnInit {
     });
 
     // Initial Table Request
+    this.option = {
+      draw: 1,
+      start: 0,
+      length: 5
+    };
     this.option2 = {
       draw: 1,
       start: 0,
@@ -78,18 +85,8 @@ export class Int023Component implements OnInit {
     // ID from url
     this.headerId = this.route.snapshot.queryParams["id"];
 
-    this.initDatatable();
+    // this.initDatatable();
     this.initializeTable();
-
-    // Checked chk
-    $("#datatable tbody").on("click", "input", e => {
-      const { id, checked } = e.target;
-      if ("chk" == id.split("-")[0] && checked) {
-        this.chk.push(id.split("-")[1]);
-      } else {
-        this.chk.splice(this.chk.findIndex(obj => id.split("-")[1] == obj), 1);
-      }
-    });
 
   }
 
@@ -146,6 +143,24 @@ export class Int023Component implements OnInit {
 
   initializeTable(): void {
     this.table = [];
+    this._table = [];
+    this.ajax.post(`${URL._DATATABLE}`, toFormData(this.option), res => {
+      let d = res.json().data;
+      d.forEach(data => {
+        let qtn = new Int023FormVo();
+        qtn.qtnReportHdrId = "NOT NULL";
+        qtn.qtnReportManId = `OLD_${data.qtnReportManId}`;
+        qtn.qtnMainDetail = data.qtnMainDetail;
+        this._table.push(qtn);
+        data.detail.forEach(obj => {
+          let _qtn = new Int023FormVo();
+          _qtn.qtnReportManId = `OLD_${obj.mainId}`;
+          _qtn.qtnReportDtlId = obj.qtnMinorId;
+          _qtn.qtnMainDetail = obj.qtnMinorDetail;
+          this._table.push(_qtn);
+        });
+      });
+    }, null, new Headers());
     this.ajax.post(`${URL.DATATABLE2}/${this.headerId}`, toFormData(this.option2), res => {
       let d = res.json().data;
       d.forEach(data => {
@@ -165,70 +180,52 @@ export class Int023Component implements OnInit {
     }, null, new Headers());
   }
 
-  clickChkAll = (event, id) => {
-    var node = $(`#datatable${id}`).DataTable().rows().nodes();
-    if (event.target.checked) {
-      $.each(node, (index, value) => {
-        const id = $(value).find('input')[0].id;
-        this.chk.push(id.split("-")[1]);
-        $(value).find('input')[0].checked = true;
-      });
-    } else {
-      $.each(node, (index, value) => {
-        const id = $(value).find('input')[0].id;
-        this.chk.splice(this.chk.findIndex(obj => id.split("-")[1] == obj), 1);
-        $(value).find('input')[0].checked = false;
-      });
-    }
-  }
-
-  chck = (id, what, e) => {
+  chck = (id, what, e, i, table) => {
     e.preventDefault();
     switch (what) {
       case 'man':
-        this.chk2 = this.chk2.filter(obj => obj.qtnReportManId != id);
-        this.table.map((obj, index) => {
+        this[`chk${i}`] = this[`chk${i}`].filter(obj => obj.qtnReportManId != id);
+        this[`${table}`].map((obj, index) => {
           if (obj.qtnReportManId == id) {
             if (e.target.checked) {
-              this.chk2.push(obj);
-              $(`#chk2-${index}`)[0].checked = true;
+              this[`chk${i}`].push(obj);
+              $(`#chk${i}-${index}`)[0].checked = true;
             } else {
-              const del = this.chk2.findIndex(ob => ob.qtnReportManId == id);
-              del != -1 && this.chk2.splice(del, 1);
-              $(`#chk2-${index}`)[0].checked = false;
+              const del = this[`chk${i}`].findIndex(ob => ob.qtnReportManId == id);
+              del != -1 && this[`chk${i}`].splice(del, 1);
+              $(`#chk${i}-${index}`)[0].checked = false;
             }
           }
         })
         break;
       case 'dtl':
-        this.table.map((obj, index) => {
+        this[`${table}`].map((obj, index) => {
           if (obj.qtnReportDtlId == id) {
             if (e.target.checked) {
-              this.chk2.push(obj);
-              $(`#chk2-${index}`)[0].checked = true;
+              this[`chk${i}`].push(obj);
+              $(`#chk${i}-${index}`)[0].checked = true;
             } else {
-              const del = this.chk2.findIndex(ob => ob.qtnReportDtlId == id);
-              del != -1 && this.chk2.splice(del, 1);
-              $(`#chk2-${index}`)[0].checked = false;
+              const del = this[`chk${i}`].findIndex(ob => ob.qtnReportDtlId == id);
+              del != -1 && this[`chk${i}`].splice(del, 1);
+              $(`#chk${i}-${index}`)[0].checked = false;
             }
           }
         })
         break;
     }
-    const { table, chk2 } = this;
-    table.length == chk2.length ? $("#chk2").prop('checked', true) : $("#chk2").prop('checked', false);
+    this[`${table}`].length == this[`chk${i}`].length ? $(`#chk${i}`).prop('checked', true) : $(`#chk${i}`).prop('checked', false);
   }
 
-  chkAll = (event) => {
+  chkAll = (event, table, i) => {
     if (event.target.checked) {
-      this.chk2 = this.table;
-      this.table.map((obj, index) => {
-        $(`#chk2-${index}`)[0].checked = true;
+      this[`chk${i}`] = this[`${table}`];
+      this[`${table}`].map((obj, index) => {
+        $(`#chk${i}-${index}`)[0].checked = true;
       });
     } else {
-      this.chk2 = [];
-      this.table.map((obj, index) => {
-        $(`#chk2-${index}`)[0].checked = false;
+      this[`chk${i}`] = [];
+      this[`${table}`].map((obj, index) => {
+        $(`#chk${i}-${index}`)[0].checked = false;
       });
     }
   }
@@ -252,13 +249,6 @@ export class Int023Component implements OnInit {
         $("#chk2").prop('checked', false);
       }
     }, "ต้องการลบข้อมูลจริงหรือไม่?");
-  }
-
-  reTable = () => {
-    this.chk = [];
-    $("#chk").prop('checked', false);
-    this.datatable.destroy();
-    this.initDatatable();
   }
 
   onAddField = () => {
@@ -301,26 +291,55 @@ export class Int023Component implements OnInit {
 
   onAdd2Save = (e) => {
     e.preventDefault();
-    let main: Int023FormVo = new Int023FormVo();
-    let detail: Int023FormVo;
-    let mainId = `MAN_${this.getRndInteger(10000, 99999)}`;
-    main.qtnReportHdrId = this.headerId.toString();
-    main.qtnReportManId = mainId;
-    main.qtnMainDetail = this.mainDetail;
-    main.qtnFor = "M";
-    main.status = "NEW";
-    this.table.push(main);
-    for (let i = 0; i < this.minorDetail.length; i++) {
-      detail = new Int023FormVo();
-      detail.qtnReportDtlId = `DTL_${this.getRndInteger(10000, 99999)}`;
-      detail.qtnMainDetail = this.minorDetail[i];
-      detail.qtnReportManId = mainId;
-      detail.qtnFor = "D";
-      detail.status = "NEW";
-      this.table.push(detail);
-      if (i == this.minorDetail.length - 1 ) {
-        this.mainDetail = "";
-        this.minorDetail = [""];
+    if (this.mainDetail) {
+      let main: Int023FormVo = new Int023FormVo();
+      let detail: Int023FormVo;
+      let mainId = `MAN_${this.getRndInteger(10000, 99999)}`;
+      main.qtnReportHdrId = this.headerId.toString();
+      main.qtnReportManId = mainId;
+      main.qtnMainDetail = this.mainDetail;
+      main.qtnFor = "M";
+      main.status = "NEW";
+      this.table.push(main);
+      for (let i = 0; i < this.minorDetail.length; i++) {
+        detail = new Int023FormVo();
+        detail.qtnReportDtlId = `DTL_${this.getRndInteger(10000, 99999)}`;
+        detail.qtnMainDetail = this.minorDetail[i];
+        detail.qtnReportManId = mainId;
+        detail.qtnFor = "D";
+        detail.status = "NEW";
+        this.table.push(detail);
+        if (i == this.minorDetail.length - 1) {
+          this.table.forEach(obj => {
+            if (!obj.qtnReportHdrId) {
+              obj.qtnFor = "D";
+            } else {
+              obj.qtnFor = "M";
+            }
+            this.req.save = this.table;
+          });
+          this.onAdd2SaveList();
+        }
+      }
+    } else {
+      this.onAdd2SaveList();
+    }
+  }
+
+  onAdd2SaveList = () => {
+    this.mainDetail = "";
+    this.minorDetail = [""];
+    for (let j = 0; j < this.chk1.length; j++) {
+      if (this.chk1[j].qtnReportHdrId) {
+        this.chk1[j].qtnFor = "M";
+        this.chk1[j].qtnReportHdrId = this.headerId.toString();
+      } else {
+        this.chk1[j].qtnFor = "D";
+      }
+      this.chk1[j].status = "NEW";
+      this.table.push(this.chk1[j]);
+      if (j == this.chk1.length - 1) {
+        this.chk1 = [];
         this.table.forEach(obj => {
           if (!obj.qtnReportHdrId) {
             obj.qtnFor = "D";
