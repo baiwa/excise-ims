@@ -6,7 +6,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
@@ -17,7 +16,6 @@ import th.co.baiwa.excise.domain.CommonManageReq;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.dao.QtnReportMainDao;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportDetail;
-import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportMain;
 import th.co.baiwa.excise.ia.persistence.repository.QtnReportDetailRepository;
 import th.co.baiwa.excise.ia.persistence.repository.QtnReportMainRepository;
@@ -39,17 +37,17 @@ public class QtnReportMainService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public ResponseDataTable<Int023Vo> findQtnReport(QtnReportMain qtn, DataTableRequest data) {
+	public ResponseDataTable<Int023Vo<QtnReportDetail>> findQtnReport(QtnReportMain qtn, DataTableRequest data) {
 		logger.info("findQtnReport");
-		List<Int023Vo> int023 = qtnReportMainDao.findQtnReport(qtn, data.getStart().intValue(),
+		List<Int023Vo<QtnReportDetail>> int023 = qtnReportMainDao.findQtnReport(qtn, data.getStart().intValue(),
 				data.getLength().intValue());
 		List<QtnReportDetail> detail;
-		for (Int023Vo vo : int023) {
+		for (Int023Vo<QtnReportDetail> vo : int023) {
 			detail = new ArrayList<QtnReportDetail>();
 			detail = qtnReportDetailRepository.findByQtnReportManId(vo.getQtnReportManId());
 			vo.setDetail(detail);
 		}
-		ResponseDataTable<Int023Vo> response = new ResponseDataTable<Int023Vo>();
+		ResponseDataTable<Int023Vo<QtnReportDetail>> response = new ResponseDataTable<Int023Vo<QtnReportDetail>>();
 		long count = qtnReportMainDao.countQtnReport(qtn);
 		response.setDraw(data.getDraw().intValue() + 1);
 		response.setStart(data.getStart().intValue());

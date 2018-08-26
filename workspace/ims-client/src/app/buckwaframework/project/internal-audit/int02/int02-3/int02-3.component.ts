@@ -318,17 +318,19 @@ export class Int023Component implements OnInit {
       detail.qtnFor = "D";
       detail.status = "NEW";
       this.table.push(detail);
-    }
-    this.table.forEach(obj => {
-      this.mainDetail = "";
-      this.minorDetail = [];
-      if (obj.qtnReportHdrId) {
-        obj.qtnFor = "D";
-      } else {
-        obj.qtnFor = "M";
+      if (i == this.minorDetail.length - 1 ) {
+        this.mainDetail = "";
+        this.minorDetail = [""];
+        this.table.forEach(obj => {
+          if (!obj.qtnReportHdrId) {
+            obj.qtnFor = "D";
+          } else {
+            obj.qtnFor = "M";
+          }
+          this.req.save = this.table;
+        });
       }
-      this.req.save = this.table;
-    });
+    }
   }
 
   addCond() {
