@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { DecimalFormat, TextDateTH, digit } from '../../../../../common/helper';
-import { AjaxService } from '../../../../../common/services';
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { DecimalFormat, TextDateTH, digit } from "../../../../../common/helper";
+import { AjaxService } from "../../../../../common/services";
+import { MessageBarService } from "../../../../../common/services/message-bar.service";
+
 declare var $: any;
 @Component({
-  selector: 'ope04-3',
-  templateUrl: './ope04-3.component.html',
-  styleUrls: ['./ope04-3.component.css']
+  selector: "ope04-3",
+  templateUrl: "./ope04-3.component.html",
+  styleUrls: ["./ope04-3.component.css"]
 })
-export class Ope043Component implements OnInit {
+export class Ope043Component implements OnInit, AfterViewInit {
+  obj: Data;
   exciseId: any;
   exciseIdArr: any;
   firstDataList: any;
@@ -15,38 +18,34 @@ export class Ope043Component implements OnInit {
   endDate: any;
   MonthDataList: any;
   fileExel: File[];
-  analysNumber: any;
   row: any;
-  max: any;
   diff: any;
   monthRecieveArr: any;
-  rowShift: any;
   showDt: any;
   startDateSplit: any;
   endDateSplit: any;
-  rowAndColumn: any;
+  dataTB: any;
+  dataHeader: any;
+  allData: any;
+  columnExcel1: any;
+  columnExcel2: any;
 
-  constructor(private ajax: AjaxService) {
+  constructor(
+    private ajax: AjaxService,
+    private messageBarService: MessageBarService
+  ) {
     this.exciseIdArr = "";
     this.firstDataList = {
       companyName: "",
-      analysNumber: "",
       productType: ""
     };
+    this.obj = new Data();
+
     this.startDateSplit = "";
     this.endDateSplit = "";
+    this.columnExcel1 = "";
+    this.columnExcel2 = "";
     this.row = [];
-    for (var i = 0; i < 1; i++) {
-      this.row.push({
-        column1: "",
-        column2: "",
-        column3: "",
-        column4: "",
-        column5: "",
-        column6: ""
-      });
-    }
-
     this.fileExel = new Array<File>(); // initial file array
   }
 
@@ -106,13 +105,10 @@ export class Ope043Component implements OnInit {
       const URL =
         AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdList";
       $.post(URL, { exciseId: this.exciseId }, res => {
+        this.obj = res[0];
         this.firstDataList = res[0];
       });
     });
-
-    // get exciseId in input box
-    const URL2 = AjaxService.CONTEXT_PATH + "/filter/exise/getSessionEmptyData";
-    $.post(URL2, res => {});
   }
 
   ngAfterViewInit(): void {
@@ -127,47 +123,122 @@ export class Ope043Component implements OnInit {
     )).value;
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdList";
     $.post(URL, { exciseId: this.exciseId }, res => {
-      this.firstDataList = res[0];
-      (<HTMLInputElement>(
-        document.getElementById("companyName")
-      )).value = this.firstDataList.companyName;
-      (<HTMLInputElement>(
-        document.getElementById("analysNumber")
-      )).value = this.firstDataList.analysNumber;
-      (<HTMLInputElement>(
-        document.getElementById("productType")
-      )).value = this.firstDataList.productType;
+      this.obj = res[0];
     });
   };
 
   clearAll = () => {
     $("#showData").hide();
-    $("#showDt")
-      .dataTable()
-      .fnClearTable();
-    this.showDt.destroy();
+    // this.showDt.fnClearTable();
+    this.showDt.clear().draw();
   };
 
   onUpload = (event: any) => {
     // Prevent actual form submission
     event.preventDefault();
+    this.dataTB = [];
+    for (var i = 0; i < this.showDt.data().length; i++) {
+      this.dataTB.push(this.showDt.data()[i]);
+    }
 
     //send form data
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
+    for (var i = 0; i < this.showDt.data().length; i++) {
+      formBody.append("product" + (i + 1), this.dataTB[i].order);
+      formBody.append("monthRecieve" + (i + 1), this.dataTB[i].counting);
+    }
 
-    let url = `upload/excel`;
+    let url = "/ope043/excel";
     this.ajax.upload(
       url,
       formBody,
       res => {
         this.row = res.json();
-        this.showDt.destroy();
-        this.initDatatable();
+        this.columnExcel1 = this.row.data[0].columnNameEx1;
+        this.columnExcel2 = this.row.data[0].columnNameEx2;
+        this.allData = [];
+        for (i = 0; i < this.row.data.length; i++) {
+          this.allData.push(this.row.data[i]);
+        }
+
+        if (this.showDt != null && this.showDt != undefined) {
+          this.showDt.destroy();
+        }
+
+        this.showDt = $("#showDt").DataTable({
+          lengthChange: false,
+          searching: false,
+          ordering: false,
+          pageLength: 10,
+          processing: true,
+          serverSide: false,
+          paging: false,
+          data: this.allData,
+          columns: [
+            {
+              render: function(data, type, row, meta) {
+                return meta.row + meta.settings._iDisplayStart + 1;
+              },
+              className: "center"
+            },
+            {
+              data: "order",
+              className: "center"
+            },
+            {
+              data: "ex1",
+              render: $.fn.dataTable.render.number(",", ".", 0, ""),
+              className: "right"
+            },
+            {
+              data: "ex2",
+              render: $.fn.dataTable.render.number(",", ".", 0, ""),
+              className: "right"
+            },
+            {
+              data: "counting",
+              render: $.fn.dataTable.render.number(",", ".", 0, ""),
+              className: "right"
+            },
+            {
+              data: "result1",
+              render: $.fn.dataTable.render.number(",", ".", 0, ""),
+              className: "right"
+            },
+            {
+              data: "result2",
+              render: $.fn.dataTable.render.number(",", ".", 0, ""),
+              className: "right amount"
+            }
+          ],
+          fnDrawCallback: function(oSettings) {
+            if ($(".amount").length > 0) {
+              $(".amount").each(function() {
+                if (this.innerHTML === "0") {
+                  this.className = "right amount green";
+                }
+                if (
+                  +this.innerHTML.split(",").join("") > 0 ||
+                  +this.innerHTML.split(",").join("") < 0
+                ) {
+                  this.className = "right amount red";
+                }
+                if (this.innerHTML == null || this.innerHTML === "") {
+                  this.className = "center amount null";
+                  this.innerHTML = "-";
+                }
+              });
+            }
+          }
+        });
+      },
+      err => {
+        this.messageBarService.errorModal(
+          "ไม่สามารถอัพโหลดข้อมูลได้",
+          "เกิดข้อผิดพลาด"
+        );
       }
-      // err => {
-      //   alert("asdmiosdfhi");
-      // }
     );
   };
 
@@ -194,6 +265,10 @@ export class Ope043Component implements OnInit {
     this.startDate = e.target["startDate"].value;
     this.endDate = e.target["endDate"].value;
 
+    //set for [(NgModel)]
+    this.obj.startDate = this.startDate;
+    this.obj.endDate = this.endDate;
+
     //change formatter first date input value
     const date_str1 = this.startDate.split(" ");
     date_str1[0] = digit(TextDateTH.months.indexOf(date_str1[0]) + 1);
@@ -204,12 +279,14 @@ export class Ope043Component implements OnInit {
     date_str2[0] = digit(TextDateTH.months.indexOf(date_str2[0]) + 1);
     this.endDateSplit = date_str2[0] + "/" + date_str2[1];
 
+    if (this.showDt != null && this.showDt != undefined) {
+      this.showDt.destroy();
+    }
     this.initDatatable();
   };
 
   initDatatable(): void {
-    const URL =
-      AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdMonthList";
+    const URL = AjaxService.CONTEXT_PATH + "/ope043/excel";
     this.showDt = $("#showDt").DataTable({
       lengthChange: false,
       searching: false,
@@ -217,14 +294,13 @@ export class Ope043Component implements OnInit {
       processing: true,
       serverSide: false,
       paging: false,
-      pagingType: "full_numbers",
 
       ajax: {
         type: "POST",
         url: URL,
         data: {
           exciseId: this.exciseId,
-          type: "W",
+          type: "T",
           startDate: this.startDateSplit,
           endDate: this.endDateSplit
         }
@@ -237,44 +313,33 @@ export class Ope043Component implements OnInit {
           className: "center"
         },
         {
-          data: "product",
+          data: "order",
           className: "center"
         },
         {
-          className: "right",
-          render: (data, type, full, meta) => {
-            return this.DF(full.taxInvoice);
-          }
+          data: "ex1",
+          render: $.fn.dataTable.render.number(",", ".", 0, ""),
+          className: "right"
         },
         {
-          className: "right",
-          render: (data, type, full, meta) => {
-            return this.DF(full.dayRecieve);
-          }
+          data: "ex2",
+          render: $.fn.dataTable.render.number(",", ".", 0, ""),
+          className: "right"
         },
         {
-          className: "right",
-          render: (data, type, full, meta) => {
-            return this.DF(full.monthRecieve);
-          }
+          data: "counting",
+          render: $.fn.dataTable.render.number(",", ".", 0, ""),
+          className: "right"
         },
         {
-          className: "right",
-          render: (data, type, full, meta) => {
-            return this.DF(full.exd1);
-          }
+          data: "result1",
+          render: $.fn.dataTable.render.number(",", ".", 0, ""),
+          className: "right"
         },
         {
-          className: "right",
-          render: (data, type, full, meta) => {
-            return this.DF(full.calMax);
-          }
-        },
-        {
-          className: "right amount",
-          render: (data, type, full, meta) => {
-            return this.DF(full.diff);
-          }
+          data: "result2",
+          render: $.fn.dataTable.render.number(",", ".", 0, ""),
+          className: "right amount"
         }
       ],
       fnDrawCallback: function(oSettings) {
@@ -299,15 +364,36 @@ export class Ope043Component implements OnInit {
     });
   }
 
-  getClassBydata(value) {
-    if (value.length === 0) {
-      return "null";
-    } else if (+value === 0) {
-      return "green";
-    } else if (+value) {
-      return "red";
+  saveTable = () => {
+    this.dataTB = [];
+    //push data Criteria header
+    this.dataTB.push({
+      exciseId: this.exciseId,
+      analysNumber: this.obj.analysNumber,
+      startDate: this.startDateSplit,
+      endDate: this.endDateSplit
+    });
+
+    //push datatable #showDt
+    for (var i = 0; i < this.showDt.data().length; i++) {
+      this.dataTB.push(this.showDt.data()[i]);
     }
-  }
+
+    const URL = "/ope043/saveTable";
+    this.ajax.post(
+      URL,
+      JSON.stringify(this.dataTB),
+      res => {
+        this.messageBarService.successModal("บันทึกข้อมูลสำเร็จ", "สำเร็จ");
+      },
+      err => {
+        this.messageBarService.errorModal(
+          "ไม่สามารถบันทึกข้อมูลได้",
+          "เกิดข้อผิดพลาด"
+        );
+      }
+    );
+  };
 
   DF(what) {
     const df = new DecimalFormat("###,###");
@@ -338,4 +424,13 @@ class File {
   name: string;
   type: string;
   value: any;
+}
+
+class Data {
+  companyName: any = "";
+  startDate: any = "";
+  endDate: any = "";
+  analysNumber: any = "";
+  startDateSplit: any = "";
+  endDateSplit: any = "";
 }
