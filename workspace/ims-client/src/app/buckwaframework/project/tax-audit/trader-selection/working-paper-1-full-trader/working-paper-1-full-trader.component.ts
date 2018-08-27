@@ -34,6 +34,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
   exciseProductType: any;
   flag: any = 'N';
   coordinates: any;
+
   constructor(private route: ActivatedRoute, private ex: ExciseService) {
     this._num1 = new Array();
     this._num2 = new Array();
@@ -239,16 +240,22 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
 
   changeCoordinates = () => {
     this.coordinates = $("#coordinates").val();
-    this.userManagementDt.destroy().draw();
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
+
     this.initDatatable();
   };
 
   FlagN = () => {
     this.flag = "N";
+
+    this.indexFilter = "N";
     if (this.userManagementDt != null) {
       this.userManagementDt.destroy();
     }
     this.initDatatable();
+
   };
 
   FlagNotN = () => {

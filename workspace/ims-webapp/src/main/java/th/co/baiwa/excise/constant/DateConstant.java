@@ -80,7 +80,6 @@ public class DateConstant {
 		Collections.sort(data);
 		for (Integer integer : data) {
 			monthListReturn.add(mapping.get(integer));
-			//System.out.println(mapping.get(integer));
 		}
 		return monthListReturn;
 	}

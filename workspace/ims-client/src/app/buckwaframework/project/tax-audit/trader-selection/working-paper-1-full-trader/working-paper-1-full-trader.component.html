@@ -115,9 +115,9 @@
                                     </a>
                                 </div>
                                 <div *ngFor="let num of _num1; let i = index" (click)="filterDataByCriteria(i)">
-                                    <a class="item">-เงื่อนไขที่ {{i+1}}</a>
+                                    <a class="item hover {{ ( indexFilter === i ) && 'active' }}">-เงื่อนไขที่ {{i+1}}</a>
                                 </div>
-                                <a class="item" (click)="FlagN()">-รายที่ไม่อยู่ในเงื่อนไข</a>
+                                <a class="item hover {{(( _num1.length>1)&&(indexFilter === 'N')) && 'active'}}" (click)="FlagN()">-รายที่ไม่อยู่ในเงื่อนไข</a>
                             </div>
 
                         </div>

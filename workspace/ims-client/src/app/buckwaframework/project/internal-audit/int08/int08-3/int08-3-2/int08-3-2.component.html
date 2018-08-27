@@ -1,474 +1,58 @@
 <div class="ui grid">
   <div class="sixteen wide column">
-
-
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>ประเมินการจัดเก็บรายได้ </span>
+      <span>กำหนดปัจจัยเสี่ยงประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
     </div>
-
     <div class="ui attached segment">
       <div class="ui form">
         <div class="inline fields">
-          <div class="two wide field "></div>
+          <div class="four wide field "></div>
           <div class="two wide field ">
-            <label>เดือน</label>
+            <label>ปัจจัยเสี่ยง</label>
           </div>
           <div class="four wide field ">
-            <select class="ui search dropdown">
-              <option value="0">มกราคม</option>
-              <option value="1">กุมพาพันธ์</option>
-              <option value="2">มีนาคม</option>
-              <option value="0">เมษายน</option>
-              <option value="1">พฤษภาคม</option>
-              <option value="2">มิถุนายน</option>
-              <option value="0">กรกฎาคม</option>
-              <option value="1">กันยายน</option>
-              <option value="2">สิงหาคม</option>
-              <option value="0">ตุลาตม</option>
-              <option value="1">พฤศจิกายน</option>
-              <option value="2">ธันวาคม</option>
-            </select>
+            <input type="text" placeholder="ปัจจัยเสี่ยง" class="custom" name="riskHdrName" id="riskHdrName" [(ngModel)]="riskHdrName">
           </div>
-          <div class="two wide field ">
-            <label>ปีงบประมาณ</label>
-          </div>
+
           <div class="four wide field ">
-            <select class="ui search dropdown">
-              <option value="0">2651</option>
-              <option value="1">2560</option>
-              <option value="2">2559</option>
-            </select>
+            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+              <i class="add icon"></i>
+              เพิ่ม
+            </button>
           </div>
         </div>
-      </div>
-      <br>
+        <table id="dataTable" class="ui small celled table">
+          <thead>
+            <tr>
 
-      <div class="ui center aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini primary button" (click)="uploadData()">
-            <i class="upload icon"></i>
-            อัพโหลด
-          </button>
-          <button class="ui mini button" (click)="clearData()">
-            <i class="refresh icon"></i>
-            ล้างข้อมูล
-          </button>
-        </div>
-      </div>
+              <th>ที่</th>
+              <th>ชื่อกระดาษทำการ</th>
 
-    </div>
-
-    <div class="ui segment" *ngIf="showData">
-      <div class="ui right aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini primary button" (click)="popupEditData()">
-            <i class="setting icon"></i>
-            กำหนด RL
-          </button>
-          <button class="ui mini primary button">
-            <i class=" save icon"></i>
-            บันทึก
-          </button>
-          <button class="ui mini primary button">
-            <i class="print icon"></i>
-            พิมพ์
-          </button>
-          <div class="ui mini primary button">
-            <div class="ui simple dropdown item">
-              ส่งออก
-              <i class="dropdown icon"></i>
-              <div class="menu">
-                <div class="item">PDF</div>
-                <div class="item">Excel</div>
-              </div>
-            </div>
+              <th>ปีงบประมาณ</th>
+              <th>วันที่สร้าง</th>
+              <th>ผู้สร้าง</th>
+              <th>สถานะการใช้งาน</th>
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+        <div class="inline fields"></div>
+        <div class="inline fields ">
+          <div class="sixteen wide field ">
+            <div class="six wide field "></div>
+            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <button class="ui mini primary button" (click)="configAllCondition()">
+              กำหนดเงื่อนไขปัจจัยเสี่ยงรวม
+            </button>
+            <button class="ui mini primary button" (click)="cancelFlow()">
+              ยกเลิก
+            </button>
           </div>
+
         </div>
-      </div>
-
-      <br>
-      <div class="ui grid center aligned">
-        <div class="sixteen wide column">
-          กระดาษทำการประเมินความเสี่ยงผลการจัดเก็บรายได้เปรียบเทียบประมาณการฯเพื่อพิจารณาคัดเลือกหน่วยงานรับตรวจสำนักงานสรรพสามิตภาค
-          พื้นที่ และสาขา
-          <br> ปีงบประมาณ พ.ศ. 2561
-          <br> กลุ่มตรวจสอบภายใน กรมสรรพสามิต
-        </div>
-      </div>
-      <div class="ui eight column grid">
-        <div class="column right aligned">
-          ปัจจัยเสี่ยง:
-        </div>
-
-        <div class="column" style="width: 30%;">
-          <span style="margin-left:1%"> 5. ประสิทธิภาพของการจัดเก็บรายได้ </span>
-          <br> ได้รับการตรวจสอบภายในแล้ว
-          <br> ได้รับการตรวจสอบภายในแล้ว
-          <br> ได้รับการตรวจสอบภายในแล้ว
-        </div>
-
-        <div class="column" style="width: 10%;">
-          &nbsp;
-          <br> น้อยกว่า
-          <br> อยู่ระหว่าง
-          <br> มากกว่า
-        </div>
-
-        <div class="column" style="width: 10%;" align="right">
-          &nbsp;
-          <br>0
-          <br>0-100
-          <br>
-          <span style="margin-right: 4%;">100</span>
-        </div>
-
-        <div class="column right aligned" style="width: 10%;">
-          &nbsp;
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-        </div>
-
-        <div class="column" style="width: 5%;">
-          &nbsp;
-          <br> 1
-          <br> 2
-          <br> 3
-        </div>
-
-        <div class="column" style="width: 10%;">
-          &nbsp;
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-        </div>
-
-        <div class="column" style="width: 5%;">
-          &nbsp;
-          <br> ต่ำ
-          <br> กลาง
-          <br> สูง
-        </div>
-      </div>
-
-      <br>
-
-      <table id="tableData" class="ui small celled table">
-        <thead>
-          <tr style="text-align: center;">
-            <th rowspan="2">ลำดับ</th>
-            <th rowspan="2" style="width: 40%">หน่วยงาน</th>
-            <th colspan="4">ผลการจัดเก็บรายได้เปรียบเทียบประมาณการจัดเก็บรายได้</th>
-            <th colspan="2">ความเสี่ยง</th>
-          </tr>
-          <tr style="text-align: center;">
-            <th style="border-left: 1px solid rgba(34,36,38,.1); width:8%;">ผลการจัดเก็บ</th>
-            <th style="width:8%;">ประมาณการ</th>
-            <th style="width:8%;">ผลต่าง</th>
-            <th style="width:8%;">อัตราสูงต่ำ</th>
-            <th style="width:8%;">RL</th>
-            <th style="width:8%;">แปลค่า</th>
-          </tr>
-        </thead>
-        <tbody>
-
-          <tr>
-            <td>1</td>
-            <td>สสพ.ปัตตานี</td>
-            <td>3.494</td>
-            <td>6.561</td>
-            <td>-3.07</td>
-            <td>-46.74</td>
-            <td class="bg-red">3</td>
-            <td class="bg-red">สูง</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>สสพ.บึงกาฬ</td>
-            <td>3.138</td>
-            <td>5.235</td>
-            <td>-2.1</td>
-            <td>-40.05</td>
-            <td class="bg-red">3</td>
-            <td class="bg-red">สูง</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>สสพ.ตาก</td>
-            <td>71.027</td>
-            <td>96.134</td>
-            <td>-25.11</td>
-            <td>-26.12</td>
-            <td class="bg-red">3</td>
-            <td class="bg-red">สูง</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>สสพ. พระนครศรีอยุธยา 1</td>
-            <td>13,239.13</td>
-            <td>17,345.86</td>
-            <td>-4,106.73</td>
-            <td>-23.68</td>
-            <td class="bg-red">3</td>
-            <td class="bg-red">สูง</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>สสพ.อุทัยธานี</td>
-            <td>16.611</td>
-            <td>21.264</td>
-            <td>-4.65</td>
-            <td>-21.88</td>
-            <td class="bg-red">3</td>
-            <td class="bg-red">สูง</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>สสพ.อุดรธานี</td>
-            <td>18.877</td>
-            <td>18.548</td>
-            <td>0.33</td>
-            <td>1.77</td>
-            <td class="bg-red"> 2</td>
-            <td class="bg-red">กลาง</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>สสพ.กำแพงเพชร</td>
-            <td>13,145.04</td>
-            <td>12,982.92</td>
-            <td>162.12</td>
-            <td>1.25</td>
-            <td class="bg-yellow">2</td>
-            <td class="bg-yellow">กลาง</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>สส.พท.อุบลราชธานี</td>
-            <td>2,527.32</td>
-            <td>2,496.34</td>
-            <td>30.98</td>
-            <td>1.24</td>
-            <td class="bg-yellow">2</td>
-            <td class="bg-yellow">กลาง</td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td>ภาคที่ 6</td>
-            <td>14,682.90</td>
-            <td>14,681.89</td>
-            <td>1.01</td>
-            <td>0.01</td>
-            <td class="bg-yellow">2</td>
-            <td class="bg-yellow">กลาง</td>
-          </tr>
-          <tr>
-            <td>12</td>
-            <td>สสพ.มุกดาหาร</td>
-            <td>18.556</td>
-            <td>11.769</td>
-            <td>6.79</td>
-            <td>57.67</td>
-            <td class="bg-yellow">2</td>
-            <td class="bg-yellow">กลาง</td>
-          </tr>
-          <tr>
-            <td>13</td>
-            <td>สส.พท.ยโสธร</td>
-            <td>5.52</td>
-            <td>3.695</td>
-            <td>1.83</td>
-            <td>49.39</td>
-            <td class="bg-yellow">2</td>
-            <td class="bg-yellow">กลาง</td>
-          </tr>
-          <tr>
-            <td>14</td>
-            <td>สสพ. สิงห์บุรี</td>
-            <td>4.221</td>
-            <td>2.877</td>
-            <td>1.34</td>
-            <td>46.74</td>
-            <td class="bg-yellow">2</td>
-            <td class="bg-yellow">กลาง</td>
-          </tr>
-          <tr>
-            <td>15</td>
-            <td>สสพ.ตราด</td>
-            <td>12.52</td>
-            <td>8.858</td>
-            <td>3.66</td>
-            <td>41.34</td>
-            <td class="bg-yellow">2</td>
-            <td class="bg-yellow">กลาง</td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td>สสพ.เพชรบุรี</td>
-            <td>64.635</td>
-            <td>27.745</td>
-            <td>36.89</td>
-            <td>132.96</td>
-            <td class="bg-green">1</td>
-            <td class="bg-green">ต่ำ</td>
-          </tr>
-          <tr>
-            <td>11</td>
-            <td>สสพ.กทม.2</td>
-            <td>588.558</td>
-            <td>288.015</td>
-            <td>300.54</td>
-            <td>104.35</td>
-            <td class="bg-green">1</td>
-            <td class="bg-green">ต่ำ</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <br>
-    <div class="ui center aligned grid">
-      <div class="sixteen wide column">
-        <button class="ui mini button" routerLink="/int08/3/1">
-          <i class="arrow left icon"></i>
-          ย้อนกลับ
-        </button>
-        <button class="ui mini button" routerLink="/int08/3/3">
-          ถัดไป
-          <i class="arrow right icon"></i>
-        </button>
-
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div id="modalInt0832" class="ui modal hidden transition">
-  <i class="close icon"></i>
-  <div class="header">
-    กำหนดเงื่อนไข RL และแปลงค่าประเมินการจัดเก็บรายได้
-  </div>
-
-  <div class="content">
-    <div class="ui form">
-
-      <table id="tableSetting" class="ui small celled table" style="width: 100%;">
-        <thead>
-          <tr class="center aligned">
-            <th>เงื่อนไขที่</th>
-            <th>เงื่อนไข</th>
-            <th>ค่าที่ 1</th>
-            <th>ถึง</th>
-            <th>ค่าที่ 2</th>
-            <th>ค่า RL</th>
-            <th>แปลงค่า</th>
-            <th>สี</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>
-              <select id="selectCondition1" class="ui dropdown ai">
-                <option value="1">Less Than</option>
-                <option value="0">Between</option>
-                <option value="2">More Than</option>
-              </select>
-            </td>
-            <td>0</td>
-            <td></td>
-            <td></td>
-            <td>1</td>
-            <td>ต่ำ</td>
-            <td>
-              <select id="selectColor1" class="ui dropdown ai">
-                <option value="0">เขียว</option>
-                <option value="1">เหลือง</option>
-                <option value="2">แดง</option>
-              </select>
-            </td>
-            <td>
-              <a href="javascript:;">
-                ลบ
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>
-              <select id="selectCondition2" class="ui dropdown ai">
-                <option value="0">Between</option>
-                <option value="1">Less Than</option>
-                <option value="2">More Than</option>
-              </select>
-            </td>
-            <td>0</td>
-            <td>ถึง</td>
-            <td>100</td>
-            <td>2</td>
-            <td>กลาง</td>
-            <td>
-              <select id="selectColor2" class="ui dropdown ai">
-                <option value="0">เหลือง</option>
-                <option value="1">เขียว</option>
-                <option value="2">แดง</option>
-              </select>
-            </td>
-            <td>
-              <a href="javascript:;">
-                ลบ
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>
-              <select id="selectCondition3" class="ui dropdown ai">
-                <option value="0">More Than</option>
-                <option value="1">Between</option>
-                <option value="2">Less Than</option>
-              </select>
-            </td>
-            <td>100</td>
-            <td></td>
-            <td></td>
-            <td>3</td>
-            <td>สูง</td>
-            <td>
-              <select id="selectColor3" class="ui dropdown ai">
-                <option value="0">แดง</option>
-                <option value="1">เหลือง</option>
-                <option value="1">เขียว</option>
-              </select>
-            </td>
-            <td>
-              <a href="javascript:;">
-                ลบ
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-    </div>
-  </div>
-
-  <div class="actions">
-    <div class="ui center aligned grid">
-      <div class="sixteen wide column">
-        <button class="ui mini primary button">
-          <i class="add icon"></i>
-          เพิ่ม
-        </button>
-        <button class="ui mini primary button width-100">
-          <i class="save icon"></i>
-          บันทึก
-        </button>
-        <button class="ui mini button width-100" (click)="closePopupEdit()">
-          <i class="close icon"></i>
-          ปิด
-        </button>
       </div>
     </div>
   </div>

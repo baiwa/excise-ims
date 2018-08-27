@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -285,7 +286,13 @@ public class PlanWorksheetHeaderService {
 	}
 
 	public List<String> getStartDateAndEndDateFromAnalysNumber(String analysNumber) {
-		List<String> valueList = planWorksheetHeaderDao.getStartDateAndEndDateFromAnalysNumber(analysNumber);
+		PlanWorksheetHeader planWorksheetHeader = new PlanWorksheetHeader();
+		planWorksheetHeader.setAnalysNumber(analysNumber);
+		List<PlanWorksheetHeader> planList = planWorksheetHeaderDao.queryPlanWorksheetHeaderCriteria(planWorksheetHeader);
+		planWorksheetHeader = planList.get(0);
+		
+		List<String> valueList = planWorksheetHeaderDao.getMonthFormPlanWorksheetHeader(DateConstant.StringtoDate(planWorksheetHeader.getMonthDate(), DateConstant.MM_YYYY), planWorksheetHeader.getFullMonth().longValue());
+//		List<String> valueList = planWorksheetHeaderDao.getStartDateAndEndDateFromAnalysNumber(analysNumber);
 		String countMonth = valueList != null ? valueList.size() + "" : "0";
 		valueList = DateConstant.sortMonthShotList(valueList);
 		String startMonthDate = valueList.get(0);

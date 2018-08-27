@@ -278,6 +278,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
 
   FlagN = () => {
     this.flag = "N";
+    this.indexFilter = "N";
     if (this.userManagementDt != null) {
       this.userManagementDt.destroy();
     }

@@ -1,5 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Location } from "@angular/common";
+import { AjaxService } from "../../../../../common/services/ajax.service";
+import { MessageBarService } from "../../../../../common/services/message-bar.service";
+import { Router, ActivatedRoute, Params } from "@angular/router";
+import { Alert } from "../../../../../../../../node_modules/@types/selenium-webdriver";
 
+declare var jQuery: any;
 declare var $: any;
 @Component({
   selector: "int08-3-2",
@@ -7,46 +13,158 @@ declare var $: any;
   styleUrls: ["./int08-3-2.component.css"]
 })
 export class Int0832Component implements OnInit {
-  showData: boolean = false;
 
-  constructor() {}
+  riskHdrName: any;
+  datatable: any;
+  budgetYear: any;
+  yearList: any[];
+  wsRiskList: any[];
+
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    private ajax: AjaxService,
+    private messageBarService: MessageBarService
+  ) { }
 
   ngOnInit() {
-    $(".ui.dropdown").dropdown();
-    $(".ui.dropdown.ai").css("width", "100%");
+    this.riskHdrName = "";
+    this.budgetYear = "";
+    this.wsRiskList = ["ปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ", "ปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ"];
+    //this.initDatatable();
   }
-
   ngAfterViewInit() {
-    $("#select1").hide();
-    $("#select2").hide();
-    $("#select3").hide();
-    $("#selectCondition1").dropdown();
-    $("#selectCondition2").dropdown();
-    $("#selectCondition3").dropdown();
-    $("#selectColor1").dropdown();
-    $("#selectColor2").dropdown();
-    $("#selectColor3").dropdown();
+    this.budgetYear = this.route.snapshot.queryParams["budgetYear"];
+    this.initDatatable();
   }
 
-  uploadData() {
-    this.showData = true;
+
+  addRiskAssRiskWsHdr() {
+    console.log(this.budgetYear);
+    const URL = "ia/int08/addRiskAssRiskWsHdr";
+
+    this.ajax.post(URL, { riskHdrName: this.riskHdrName, budgetYear: this.budgetYear, active: 'Y' }, res => {
+      var message = res.json();
+      this.messageBarService.successModal(message.messageTh, "สำเร็จ");
+      this.riskHdrName = "";
+      this.datatable.destroy();
+      this.initDatatable();
+    }, errRes => {
+      var message = errRes.json();
+      this.messageBarService.errorModal(message.messageTh);
+
+    });
+
   }
 
-  clearData() {
-    this.showData = false;
+  initDatatable(): void {
+    const URL = AjaxService.CONTEXT_PATH + "ia/int08/searchRiskAssRiskWsHdr";
+    console.log(URL);
+    this.datatable = $("#dataTable").DataTable({
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: true,
+      paging: false,
+      ajax: {
+        type: "POST",
+        url: URL,
+        data: { budgetYear: this.budgetYear }
+      },
+      columns: [
+
+        {
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "center"
+        },
+        { data: "riskHdrName" },
+        { data: "budgetYear" },
+        { data: "createdBy" },
+        { data: "createdDate" },
+        { data: "active" },
+        {
+          data: "riskHdrId",
+          render: function () {
+            return '<button type="button" class="ui mini button dtl"><i class="pencil icon"></i> รายละเอียด</button>'
+              + '<button type="button" class="ui mini button del"><i class="pencil icon"></i> ลบ</button>';
+          }
+        }
+      ],
+      columnDefs: [
+        { targets: [1, 2, 3, 4, 5], className: "center aligned" }
+      ],
+      rowCallback: (row, data, index) => {
+        $("td > .dtl", row).bind("click", () => {
+          console.log("dtl");
+          console.log(data.riskHdrName);
+          console.log(this.wsRiskList.indexOf(data.riskHdrName));
+          if (this.wsRiskList.indexOf(data.riskHdrName) >= 0) {
+            this.router.navigate(["/int08/1/5"], {
+              queryParams: { id: data.riskHrdId }
+            });
+          } else {
+            this.router.navigate(["/int08/1/6"], {
+              queryParams: { id: data.riskHrdId }
+            });
+          }
+
+        })
+        $("td > .del", row).bind("click", () => {
+          console.log("del");
+          console.log(data.riskHrdId);
+
+          const URL = "ia/int08/deleteRiskAssRiskWsHdr";
+
+          this.ajax.post(URL, { riskHrdId: data.riskHrdId }, res => {
+            var message = res.json();
+            this.riskHdrName = "";
+            this.messageBarService.successModal(message.messageTh, "สำเร็จ");
+            this.datatable.destroy();
+            this.initDatatable();
+          }, errRes => {
+            var message = errRes.json();
+
+            this.messageBarService.errorModal(message.messageTh);
+
+
+          });
+        })
+          ;
+      }
+    });
   }
 
-  popupEditData() {
-    $("#select1").show();
-    $("#select2").show();
-    $("#select3").show();
-    $("#modalInt0832").modal("show");
+  getYearBackCount() {
+    console.log(this.budgetYear);
+    const URL = "combobox/controller/getYearBackCount";
+
+    this.ajax.post(URL, {}, res => {
+      console.log("res.json()");
+      this.yearList = res.json();
+
+
+    });
+  }
+  cancelFlow() {
+    this.messageBarService.comfirm(foo => {
+      // let msg = "";
+      if (foo) {
+        this.router.navigate(["/int08/1/1"], {
+          queryParams: { budgetYear: this.budgetYear }
+        });
+      }
+    }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
   }
 
-  closePopupEdit() {
-    $("#select1").hide();
-    $("#select2").hide();
-    $("#select3").hide();
-    $("#modalInt0832").modal("hide");
+  configAllCondition() {
+    this.router.navigate(["/int08/1/7"], {
+      queryParams: { budgetYear: this.budgetYear }
+    });
   }
+
+
+
 }

@@ -63,8 +63,7 @@ public class PlanWorksheetHeaderDao {
 			valueList.add(criteria.getFullMonth());
 		}
 
-		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate.query(sql.toString(), valueList.toArray(),
-				fieldMapping);
+		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMapping);
 		return planWorksheetHeaderList;
 
 	}
@@ -79,7 +78,7 @@ public class PlanWorksheetHeaderDao {
 		for (PlanWorksheetHeader value : valueList) {
 			objArrayOfList.add(planWorksheetHeaderToArrayObject(value));
 		}
-		jdbcTemplate.batchUpdate(sql.toString(),objArrayOfList );
+		jdbcTemplate.batchUpdate(sql.toString(), objArrayOfList);
 	}
 
 	public int updatePlanWorksheetHeaderFlag(String flag, String analysNum, String exciseId) {
@@ -157,8 +156,7 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" where H.ANALYS_NUMBER = ? ");
 		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
 		valueList.add(analysNumber);
-		List<PlanWorksheetVo> planWorksheetHeaderList = jdbcTemplate.query(
-				OracleUtils.limitForDataTable(sql, start, length), valueList.toArray(), fieldMappingPlanWorksheetVo);
+		List<PlanWorksheetVo> planWorksheetHeaderList = jdbcTemplate.query(OracleUtils.limitForDataTable(sql, start, length), valueList.toArray(), fieldMappingPlanWorksheetVo);
 		return planWorksheetHeaderList;
 
 	}
@@ -199,26 +197,25 @@ public class PlanWorksheetHeaderDao {
 		} else {
 			sql.append(" AND H.FLAG != 'N' ");
 		}
-
-		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2())
-				&& BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
+		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2()) && BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
 			String[] monthFrom = vo.getNum1().split(",");
 			String[] monthTo = vo.getNum2().split(",");
 			String[] percentFrom = vo.getPercent1().split(",");
 			String[] percentTo = vo.getPercent2().split(",");
-			if (BeanUtils.isEmpty(vo.getIndexFilter())) {
+			if (BeanUtils.isEmpty(vo.getIndexFilter()) || "N".equals(vo.getIndexFilter())) {
 				for (int i = 0; i < monthFrom.length; i++) {
 					if (i == 0) {
+						if("N".equals(vo.getIndexFilter())) {
+							sql.append(" AND not( ");
+						}else {
 						sql.append(" AND ( ");
+						}
 					}
-					if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i])
-							|| !"0.00".equals(percentTo[i])) {
+					if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i]) || !"0.00".equals(percentTo[i])) {
 						if (i == 0) {
-							sql.append(
-									" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+							sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 						} else {
-							sql.append(
-									"OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+							sql.append("OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 						}
 						valueList.add(monthFrom[i]);
 						valueList.add(monthTo[i]);
@@ -241,11 +238,9 @@ public class PlanWorksheetHeaderDao {
 			}
 
 		}
-
 		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
 		logger.info(sql.toString());
-		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate.query(
-				OracleUtils.limitForDataTable(sql, vo.getStart(), vo.getLength()), valueList.toArray(), fieldMapping);
+		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate.query(OracleUtils.limitForDataTable(sql, vo.getStart(), vo.getLength()), valueList.toArray(), fieldMapping);
 		return planWorksheetHeaderList;
 
 	}
@@ -275,25 +270,23 @@ public class PlanWorksheetHeaderDao {
 			sql.append(" AND H.FLAG != 'N' ");
 		}
 
-		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2())
-				&& BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
+		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2()) && BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
 			String[] monthFrom = vo.getNum1().split(",");
 			String[] monthTo = vo.getNum2().split(",");
 			String[] percentFrom = vo.getPercent1().split(",");
 			String[] percentTo = vo.getPercent2().split(",");
-			if (BeanUtils.isEmpty(vo.getIndexFilter())) {
+			if (BeanUtils.isEmpty(vo.getIndexFilter())|| "N".equals(vo.getIndexFilter())) {
 				for (int i = 0; i < monthFrom.length; i++) {
-					if (i == 0) {
-						sql.append(" AND ( ");
+					if("N".equals(vo.getIndexFilter())) {
+						sql.append(" AND not( ");
+					}else {
+					sql.append(" AND ( ");
 					}
-					if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i])
-							|| !"0.00".equals(percentTo[i])) {
+					if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i]) || !"0.00".equals(percentTo[i])) {
 						if (i == 0) {
-							sql.append(
-									" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+							sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 						} else {
-							sql.append(
-									"OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+							sql.append("OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 						}
 						valueList.add(monthFrom[i]);
 						valueList.add(monthTo[i]);
@@ -319,8 +312,7 @@ public class PlanWorksheetHeaderDao {
 
 		sql.append(" order by H.WORK_SHEET_HEADER_ID ");
 		logger.info(sql.toString());
-		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate.query(sql.toString(), valueList.toArray(),
-				fieldMapping);
+		List<PlanWorksheetHeader> planWorksheetHeaderList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMapping);
 		return planWorksheetHeaderList;
 
 	}
@@ -343,26 +335,25 @@ public class PlanWorksheetHeaderDao {
 		} else {
 			sql.append(" AND H.FLAG != 'N' ");
 		}
-
-		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2())
-				&& BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
+		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2()) && BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
 			String[] monthFrom = vo.getNum1().split(",");
 			String[] monthTo = vo.getNum2().split(",");
 			String[] percentFrom = vo.getPercent1().split(",");
 			String[] percentTo = vo.getPercent2().split(",");
-			if (BeanUtils.isEmpty(vo.getIndexFilter())) {
+			if (BeanUtils.isEmpty(vo.getIndexFilter()) || "N".equals(vo.getIndexFilter())) {
 				for (int i = 0; i < monthFrom.length; i++) {
 					if (i == 0) {
+						if("N".equals(vo.getIndexFilter())) {
+							sql.append(" AND not( ");
+						}else {
 						sql.append(" AND ( ");
+						}
 					}
-					if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i])
-							|| !"0.00".equals(percentTo[i])) {
+					if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i]) || !"0.00".equals(percentTo[i])) {
 						if (i == 0) {
-							sql.append(
-									" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+							sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 						} else {
-							sql.append(
-									"OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
+							sql.append("OR (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
 						}
 						valueList.add(monthFrom[i]);
 						valueList.add(monthTo[i]);
@@ -385,9 +376,7 @@ public class PlanWorksheetHeaderDao {
 			}
 
 		}
-
-		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()), valueList.toArray(),
-				Long.class);
+		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()), valueList.toArray(), Long.class);
 		return count;
 	}
 
@@ -436,12 +425,11 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" ON H.ANALYS_NUMBER = D.ANALYS_NUMBER ");
 		sql.append(" AND H.EXCISE_ID = D.EXCISE_ID ");
 		sql.append(" WHERE H.ANALYS_NUMBER = ? ");
-		List<String> listMonth = jdbcTemplate.query(sql.toString(), new Object[] { analysNumber },
-				new RowMapper<String>() {
-					public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-						return rs.getString(1);
-					}
-				});
+		List<String> listMonth = jdbcTemplate.query(sql.toString(), new Object[] { analysNumber }, new RowMapper<String>() {
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
 		return listMonth;
 	}
 
@@ -450,15 +438,13 @@ public class PlanWorksheetHeaderDao {
 		StringBuilder sql = new StringBuilder("UPDATE TA_PLAN_WORK_SHEET_HEADER SET FLAG = ? ,WORK_SHEET_NUMBER = ? ");
 		sql.append(" Where ANALYS_NUMBER = ? AND ");
 		sql.append(" (( TOTAL_MONTH >= ?  AND TOTAL_MONTH <= ? ) AND (PERCENTAGE >= ? AND PERCENTAGE <= ?)) ");
-		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2())
-				&& BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
+		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2()) && BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
 			String[] monthFrom = vo.getNum1().split(",");
 			String[] monthTo = vo.getNum2().split(",");
 			String[] percentFrom = vo.getPercent1().split(",");
 			String[] percentTo = vo.getPercent2().split(",");
 			for (int i = 0; i < monthFrom.length; i++) {
-				if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i])
-						|| !"0.00".equals(percentTo[i])) {
+				if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i]) || !"0.00".equals(percentTo[i])) {
 					List<Object> objList = new ArrayList<Object>();
 					objList.add("N" + (i + 1));
 					objList.add(vo.getWorkShheetNumber());
@@ -516,26 +502,24 @@ public class PlanWorksheetHeaderDao {
 
 	public List<Object> queryExciseIdFlagSDataList(String exciseId) {
 		String sql = "select * from TA_PLAN_WORK_SHEET_HEADER H where H.EXCISE_ID = ? and H.ANALYS_NUMBER is not null";
-		List<Object> exciseList = jdbcTemplate.query(sql.toString(), new Object[] { exciseId },
-				new RowMapper<Object>() {
-					public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-						Map<String, Object> map = new HashMap<String, Object>();
-						map.put("analysNumber", rs.getString("ANALYS_NUMBER"));
-						map.put("companyName", rs.getString("COMPANY_NAME"));
-						map.put("productType", rs.getString("PRODUCT_TYPE"));
+		List<Object> exciseList = jdbcTemplate.query(sql.toString(), new Object[] { exciseId }, new RowMapper<Object>() {
+			public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("analysNumber", rs.getString("ANALYS_NUMBER"));
+				map.put("companyName", rs.getString("COMPANY_NAME"));
+				map.put("productType", rs.getString("PRODUCT_TYPE"));
 
-						return map;
-					}
-				});
+				return map;
+			}
+		});
 		return exciseList;
 	}
-
 
 	public List<Ope041Vo> queryExciseIdFromAccDTL(String exciseId, String type, Date date, int backMonth) {
 
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
-		
+
 		sql.append(" WITH THAI_MONTH AS ");
 		sql.append(" ( SELECT REPLACE(TO_CHAR( add_MONTHS( ? , LEVEL-? ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) MONTH_AFTER ");
 		sql.append(" FROM dual ");
@@ -553,8 +537,7 @@ public class PlanWorksheetHeaderDao {
 		valueList.add(exciseId);
 		valueList.add(type);
 
-		List<Ope041Vo> exciseIdFromAccDTLList = jdbcTemplate.query(sql.toString(), valueList.toArray(),
-				fieldMappingAccMonthVo);
+		List<Ope041Vo> exciseIdFromAccDTLList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingAccMonthVo);
 		return exciseIdFromAccDTLList;
 
 	}
@@ -595,5 +578,26 @@ public class PlanWorksheetHeaderDao {
 			return ac;
 		}
 	};
+
+	public List<String> getMonthFormPlanWorksheetHeader(Date date, Long backMonth) {
+
+		List<Object> valueList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT REPLACE(TO_CHAR( add_MONTHS( ? , LEVEL-? ) , ");
+		sql.append(" 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI') ");
+		sql.append(" , '  ', ' ' ) MONTH_AFTER ");
+		sql.append(" FROM dual ");
+		sql.append(" CONNECT BY LEVEL <= ? ");
+		valueList.add(date);
+		valueList.add(backMonth);
+		valueList.add(backMonth);
+		List<String> monthList = jdbcTemplate.query(sql.toString(), valueList.toArray(), new RowMapper<String>() {
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
+		return monthList;
+
+	}
 
 }
