@@ -38,7 +38,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private ex: ExciseService
-  ) {}
+  ) { }
 
   ngOnDestroy() {
     $(".ui.modal.condition").remove();
@@ -56,7 +56,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       "รถยนต์",
       "พรมและสิ่งทอปูพื้น",
       "แบตเตอรี่",
-     
+
     ];
     this.listMenu1 = [
       "ไนท์คลับและดิสโกเธค",
@@ -103,17 +103,17 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       }
       items.push(
         '<th style="text-align: center !important">' +
-          TextDateTH.monthsShort[m - 1] +
-          " " +
-          (yy + "").substr(2) +
-          "</th>"
+        TextDateTH.monthsShort[m - 1] +
+        " " +
+        (yy + "").substr(2) +
+        "</th>"
       );
     }
     for (var i = items.length - 1; i >= 0; i--) {
       trHeaderColumn += items[i];
     }
     document.getElementById("trDrinamic").innerHTML =
-    
+
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
@@ -168,7 +168,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     $("#exciseBtn").prop("disabled", true);
 
     //on click condition modal
-    $("#conditonModal").click(function() {
+    $("#conditonModal").click(function () {
       $(".ui.modal.condition").modal("show");
     });
 
@@ -187,7 +187,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       endMonth: this.last
     };
 
-    $.post(URL, parameter, function(data) {});
+    $.post(URL, parameter, function (data) { });
   }
   checkProductType = listMenu => {
     const URL = AjaxService.CONTEXT_PATH + "/working/test/checkDupProductType";
@@ -198,7 +198,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         month: this.month,
         exciseProductType: this.exciseProductType
       },
-      function(returnedData) {
+      function (returnedData) {
         for (var i = 0; i < returnedData.length; i++) {
           var dat = returnedData[i];
           var index = listMenu.indexOf(dat);
@@ -247,11 +247,11 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         exciseProductType: this.exciseProductType,
         conditionStr: conditionStr
       },
-      function(returnedData) {
+      function (returnedData) {
         router.navigate(["/create-working-paper-trader"]);
         this.loading = false;
       }
-    ).fail(function() {
+    ).fail(function () {
       console.error("error");
     });
   };
@@ -305,8 +305,8 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         );
         this.valueForBackEndList.push(
           this.replaceAllValue(this.font[i]) +
-            ":" +
-            this.replaceAllValue(this.back[i])
+          ":" +
+          this.replaceAllValue(this.back[i])
         );
       }
     }
@@ -317,7 +317,9 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
 
   selectExciseProductType(productionType): void {
     this.exciseProductType = productionType;
-    this.userManagementDt.destroy();
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
     this.initDatatable();
   }
 
@@ -338,7 +340,9 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       this.condition = conditionValue;
     }
 
-    this.userManagementDt.destroy();
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
     this.initDatatable();
   };
 
@@ -412,11 +416,11 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
           month: this.month
         }
       },
-      
+
       columns: jsonMapping,
-      fnDrawCallback: function(oSettings) {
+      fnDrawCallback: function (oSettings) {
         if ($(".amount").length > 0) {
-          $(".amount").each(function() {
+          $(".amount").each(function () {
             if (
               this.innerHTML == "" ||
               this.innerHTML == null ||

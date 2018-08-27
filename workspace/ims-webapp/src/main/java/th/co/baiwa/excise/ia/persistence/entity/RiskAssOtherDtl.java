@@ -1,6 +1,5 @@
 package th.co.baiwa.excise.ia.persistence.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -17,10 +16,13 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name="IA_RISK_ASS_OTHER_DTL")
-public class RiskAssOtherDtl extends BaseEntity implements Serializable {
+public class RiskAssOtherDtl extends BaseEntity{
 	
 
-	private static final long serialVersionUID = 1795343723581424698L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6645937545715561474L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RISK_ASS_OTHER_DTL_GEN")

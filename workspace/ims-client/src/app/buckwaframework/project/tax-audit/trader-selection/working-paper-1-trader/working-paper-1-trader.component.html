@@ -110,7 +110,8 @@
                         </div>
                         <div class="item">
                             <div class="menu">
-                                <a class="item hover {{(( _num1.length>1)&&(indexFilter === '')) && 'active'}}" *ngIf="_num1.length>1" (click)="filterAllDataByCriteria()">- เงื่อนไขทั้งหมด</a>
+                                <a class="item hover {{(( _num1.length>1)&&(indexFilter === '')) && 'active'}}" *ngIf="_num1.length>1" (click)="filterAllDataByCriteria()">-
+                                    เงื่อนไขทั้งหมด</a>
                             </div>
                             <div class="menu" *ngFor="let num of _num1; let i = index" (click)="filterDataByCriteria(i)">
                                 <a class="item hover {{ ( indexFilter === i ) && 'active' }}">- เงื่อนไขที่ {{i+1}}</a>
@@ -119,7 +120,7 @@
                         <div class="item">
                             <div class="menu">
                                 <a class="item hover {{(flag == 'N' || flag == '') && 'active'}}" (click)="FlagN()">- รายที่ไม่อยู่ในเงื่อนไข</a>
-                                <a class="item hover {{flag == 'NOT N' && 'active'}}" (click)="FlagNotN()">- รายที่อยู่ในเงื่อนไข</a>
+
                             </div>
                         </div>
                     </div>
@@ -129,7 +130,7 @@
                     <div style="overflow-x: scroll;overflow-y: hidden;padding-bottom: 14px;">
                         <table id="userManagementDt" class="ui small celled table aligned hover" style="width: 5000px;">
                             <thead id="trDrinamic">
-                                <tr>                                   
+                                <tr>
                                     <th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th>
                                     <th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th>
                                     <th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th>
@@ -144,7 +145,8 @@
                                     <th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th>
                                     <th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th>
                                     <th colspan="12" style="text-align: center !important">การชำระภาษี {{ month/2 }} เดือนแรก</th>
-                                    <th colspan="12" style="text-align: center !important">การชำระภาษี {{ month/2 }} เดือนหลัง </th>
+                                    <th colspan="12" style="text-align: center !important">การชำระภาษี {{ month/2 }} เดือนหลัง
+                                        </th>
                                     <th rowspan="2" style="text-align: center !important">เพิ่มข้อมูลภายนอก</th>
                                 </tr>
                             </thead>

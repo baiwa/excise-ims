@@ -116,13 +116,10 @@ export class Int0816Component implements OnInit {
         console.log(res.json());
 
         res.json().forEach(element => {
-          let riskData = new RiskData();
-          riskData.projectBase = element.projectBase;
-          riskData.departmentName = element.departmentName;
-          riskData.riskCost = element.riskCost;
-          riskData.isDeleted = 'N';
-          riskData.riskHrdId = this.riskAssRiskWsHdr.riskHrdId;
-          this.riskDataList.push(riskData);
+          element.isDeleted = 'N';
+
+          element.riskHrdId = this.id;
+          this.riskDataList.push(element);
 
         });
         this.initDatatable();
@@ -268,17 +265,16 @@ export class Int0816Component implements OnInit {
           this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
         } else {
 
-          for (let index = 0; index < this.riskDataList.length; index++) {
-            var dtl = this.riskDataList[index];
-            this.ajax.post(urlDtl, { riskOtherDtlId: dtl.riskOtherDtlId, riskHrdId: dtl.riskHrdId, departmentName: dtl.departmentName, projectBase: dtl.projectBase, isDeleted: dtl.isDeleted, riskCost: dtl.riskCost }, res => {
-              var message = res.json();
-              console.log(message);
-            }, errRes => {
-              var message = errRes.json();
-              console.log(message);
-            });
 
-          }
+          this.ajax.post(urlDtl, { riskAssOtherDtlList: this.riskDataList }, res => {
+            var message = res.json();
+            console.log(message);
+          }, errRes => {
+            var message = errRes.json();
+            console.log(message);
+          });
+
+
           this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
           this.router.navigate(["/int08/1/4"], {
             queryParams: { budgetYear: this.budgetYear }

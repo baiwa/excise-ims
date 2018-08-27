@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,6 +15,9 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
+import th.co.baiwa.excise.domain.Int0801Vo;
+import th.co.baiwa.excise.domain.RiskFullDataVo;
+import th.co.baiwa.excise.ia.persistence.entity.Condition;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
@@ -38,9 +43,12 @@ public class RiskAssRiskWsService {
 
 	@Autowired
 	private RiskAssRiskWsDtlRepository riskAssRiskWsDtlRepository;
-	
+
 	@Autowired
 	private RiskAssOtherDtlRepository riskAssOtherDtlRepository;
+
+	@Autowired
+	private ConditionService conditionService;
 
 	@Autowired
 	public RiskAssRiskWsService(RiskAssRiskWsHdrRepository riskAssRiskWsHdrRepository) {
@@ -75,8 +83,8 @@ public class RiskAssRiskWsService {
 		return responseDataTable;
 
 	}
-	
-	public List<RiskAssRiskWsHdr> findByBudgetYear(String year){
+
+	public List<RiskAssRiskWsHdr> findByBudgetYear(String year) {
 		return riskAssRiskWsHdrRepository.findByBudgetYear(year);
 	}
 
@@ -125,33 +133,137 @@ public class RiskAssRiskWsService {
 	}
 
 	public void updateRiskAssRiskWsDtl(List<RiskAssRiskWsDtl> riskAssRiskWsDtls) {
-		riskAssRiskWsDtlRepository.save(riskAssRiskWsDtls);
+		List<Condition> conditionList = conditionService.findConditionByParentId(riskAssRiskWsDtls.get(0).getRiskHrdId(), "MAIN", "int08-1-5");
+		if (BeanUtils.isNotEmpty(conditionList)) {
+			for (RiskAssRiskWsDtl riskAssRiskWsDtl : riskAssRiskWsDtls) {
+				for (Condition condition : conditionList) {
+					long value = riskAssRiskWsDtl.getApproveBudget().longValue();
+					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
+						riskAssRiskWsDtl.setRl(condition.getValueRl());
+						riskAssRiskWsDtl.setValueTranslation(condition.getColor());
+					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+						riskAssRiskWsDtl.setRl(condition.getValueRl());
+						riskAssRiskWsDtl.setValueTranslation(condition.getColor());
+					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+						riskAssRiskWsDtl.setRl(condition.getValueRl());
+						riskAssRiskWsDtl.setValueTranslation(condition.getColor());
+					}
+				}
+
+				riskAssRiskWsDtlRepository.save(riskAssRiskWsDtls);
+			}
+		}
 	}
 
 	public RiskAssRiskWsHdr findById(Long id) {
 		return riskAssRiskWsHdrRepository.findOne(id);
 	}
+	
+	public List<RiskAssRiskWsHdr> updatePercent(List<RiskAssRiskWsHdr> riskAssRiskWsHdrs) {
+		List<RiskAssRiskWsHdr> RiskAssRiskWsHdrList = new ArrayList<RiskAssRiskWsHdr>();
+		for (RiskAssRiskWsHdr riskAssRiskWsHdr : riskAssRiskWsHdrs) {
+			riskAssRiskWsHdrRepository.updatePercent(riskAssRiskWsHdr.getPercent(), riskAssRiskWsHdr.getRiskHrdId());
+			RiskAssRiskWsHdrList.add(riskAssRiskWsHdrRepository.findOne(riskAssRiskWsHdr.getRiskHrdId()));
+		}
+		return RiskAssRiskWsHdrList;
+	}
 
 	public void updateRiskAssRiskWsHdr(RiskAssRiskWsHdr riskAssRiskWsHdr) {
 		riskAssRiskWsHdrRepository.save(riskAssRiskWsHdr);
 	}
-	
+
 	public List<RiskAssRiskWsHdr> findByCriteria(RiskAssRiskWsHdr riskAssRiskWsHdr) {
 		return riskAssRiskWsHdrRepository.findByCriteria(riskAssRiskWsHdr);
 	}
-	
+
 	public List<RiskAssOtherDtl> findByRiskHrdId(Long riskHrdId) {
 		return riskAssOtherDtlRepository.findByRiskHrdId(riskHrdId);
 	}
 	
-	public void updateRiskAssOtherDtl(RiskAssOtherDtl riskAssOtherDtl) {
-		if(riskAssOtherDtl.getIsDeleted().equals("N") && riskAssOtherDtl.getRiskOtherDtlId() == 0) {
-			riskAssOtherDtlRepository.save(riskAssOtherDtl);
-		}else if(riskAssOtherDtl.getIsDeleted().equals("Y")){
-			RiskAssOtherDtl databaseData = riskAssOtherDtlRepository.findOne(riskAssOtherDtl.getRiskOtherDtlId());
-			riskAssOtherDtlRepository.delete(databaseData);
+	
+	public void updateRiskAssOtherDtl(List<RiskAssOtherDtl> riskAssOtherDtlList) {
+		List<Condition> conditionList = conditionService.findConditionByParentId(riskAssOtherDtlList.get(0).getRiskHrdId(), "OTHER", "int08-1-6");
+		if (BeanUtils.isNotEmpty(conditionList)) {
+			for (RiskAssOtherDtl riskAssOtherDtl : riskAssOtherDtlList) {
+				for (Condition condition : conditionList) {
+					long value = riskAssOtherDtl.getRiskCost().longValue();
+					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
+						riskAssOtherDtl.setRl(condition.getValueRl());
+						riskAssOtherDtl.setValueTranslation(condition.getColor());
+					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+						riskAssOtherDtl.setRl(condition.getValueRl());
+						riskAssOtherDtl.setValueTranslation(condition.getColor());
+					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+						riskAssOtherDtl.setRl(condition.getValueRl());
+						riskAssOtherDtl.setValueTranslation(condition.getColor());
+					}
+				}
+
+			}
+
 		}
-		
+		RiskAssOtherDtl databaseData;
+		for (RiskAssOtherDtl riskAssOtherDtl : riskAssOtherDtlList) {
+			if (riskAssOtherDtl.getIsDeleted().equals("N")) {
+				try {
+					databaseData = riskAssOtherDtlRepository.findOne(riskAssOtherDtl.getRiskOtherDtlId());
+					if (databaseData != null && databaseData.getRiskOtherDtlId() != null) {
+						databaseData.setProjectBase(riskAssOtherDtl.getProjectBase());
+						databaseData.setDepartmentName(riskAssOtherDtl.getDepartmentName());
+						databaseData.setRiskCost(riskAssOtherDtl.getRiskCost());
+						databaseData.setRl(riskAssOtherDtl.getRl());
+						databaseData.setValueTranslation(riskAssOtherDtl.getValueTranslation());
+						riskAssOtherDtlRepository.save(databaseData);
+					} else {
+						riskAssOtherDtlRepository.save(riskAssOtherDtl);
+					}
+				} catch (Exception e) {
+					riskAssOtherDtlRepository.save(riskAssOtherDtl);
+				}
+				
+			} else if (riskAssOtherDtl.getIsDeleted().equals("Y")) {
+				databaseData = riskAssOtherDtlRepository.findOne(riskAssOtherDtl.getRiskOtherDtlId());
+				riskAssOtherDtlRepository.delete(databaseData);
+			}
+		}
+
+	}
+
+	public List<RiskFullDataVo> searchFullRiskByBudgetYear(String budgetYear , List<String> riskHdrNameList) {
+		List<RiskFullDataVo> riskFullDataVoList= new ArrayList<RiskFullDataVo>();
+		RiskFullDataVo riskFullDataVo = new RiskFullDataVo();
+		List<Int0801Vo> projectDepName = riskAssRiskWsHdrRepository.findProjectBaseByBudgetYear(budgetYear);
+		int index = 1;
+		for (Int0801Vo projectBase : projectDepName) {
+			riskFullDataVo = new RiskFullDataVo();
+			int sumRl = 0;
+			riskFullDataVo.setId(index+"");
+			riskFullDataVo.setProjectBase(projectBase.getProjectBase());
+			riskFullDataVo.setDepartmentName(projectBase.getDepartmentName());
+			List<Int0801Vo> intList = riskAssRiskWsHdrRepository.findData(budgetYear, projectBase.getProjectBase() , projectBase.getDepartmentName());
+			List<String> rl = new ArrayList<String>();
+			String rlDate = "";
+			for (String riskHdrName : riskHdrNameList) {
+				rlDate = "";
+				for (Int0801Vo value : intList) {
+					if(value.getProjectBase().equals(riskHdrName)) {
+						sumRl += Integer.parseInt(value.getRl());
+						rlDate = value.getRl();
+						break;
+					}
+				}
+				if(BeanUtils.isNotEmpty(rlDate)) {
+					rl.add(rlDate); 
+				}else {
+					rl.add("0");
+				}
+			}
+			riskFullDataVo.setRl(rl);
+			riskFullDataVo.setSumRiskCost(sumRl+"");
+			riskFullDataVoList.add(riskFullDataVo);
+			index++;
+		}
+		return riskFullDataVoList;
 	}
 
 }

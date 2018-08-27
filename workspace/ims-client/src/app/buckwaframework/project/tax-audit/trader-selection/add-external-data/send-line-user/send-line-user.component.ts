@@ -41,6 +41,7 @@ export class SendLineUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("ngOnInit");
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     //get coordinates in select option
@@ -96,10 +97,10 @@ export class SendLineUserComponent implements OnInit {
       }
       items.push(
         '<th style="text-align: center !important">' +
-          TextDateTH.monthsShort[m - 1] +
-          " " +
-          (yy + "").substr(2) +
-          "</th>"
+        TextDateTH.monthsShort[m - 1] +
+        " " +
+        (yy + "").substr(2) +
+        "</th>"
       );
     }
 
@@ -144,7 +145,7 @@ export class SendLineUserComponent implements OnInit {
     this.initDatatable();
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   initDatatable(): void {
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
@@ -172,12 +173,12 @@ export class SendLineUserComponent implements OnInit {
       },
       columns: [
         {
-          render: function(data, type, full, meta) {
+          render: function (data, type, full, meta) {
             return `<input type="checkbox" name="chk${meta.row}" id="chk${
               meta.row
-            }" value="${$("<div/>")
-              .text(data)
-              .html()}">`;
+              }" value="${$("<div/>")
+                .text(data)
+                .html()}">`;
           },
           className: "center"
         },
@@ -214,7 +215,7 @@ export class SendLineUserComponent implements OnInit {
     };
 
     // Handle click on "Select all" control
-    $("#select-all").on("click", function() {
+    $("#select-all").on("click", function () {
       // Check/uncheck all checkboxes in the table
       var rows = sendLineUserCheckbox.rows({ search: "applied" }).nodes();
       $('input[type="checkbox"]', rows).prop("checked", this.checked);

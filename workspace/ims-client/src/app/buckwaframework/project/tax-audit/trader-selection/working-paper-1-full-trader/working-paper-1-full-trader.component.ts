@@ -27,10 +27,13 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
   _percent1: any;
   _percent2: any;
   month: any;
+
+  indexFilter: any;
   from: any;
   analysNumber: any;
   exciseProductType: any;
-
+  flag: any = 'N';
+  coordinates: any;
   constructor(private route: ActivatedRoute, private ex: ExciseService) {
     this._num1 = new Array();
     this._num2 = new Array();
@@ -57,7 +60,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
       percent2,
       analysNumber
     } = this.ex.getformNumber();
-
+    this.indexFilter = "";
     //set values
     this.before = before;
     this.last = last;
@@ -98,19 +101,20 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
       }
       items.push(
         '<th style="text-align: center !important">' +
-          TextDateTH.monthsShort[m - 1] +
-          " " +
-          (yy + "").substr(2) +
-          "</th>"
+        TextDateTH.monthsShort[m - 1] +
+        " " +
+        (yy + "").substr(2) +
+        "</th>"
       );
     }
+
 
     var trHeaderColumn = "";
     for (var i = items.length - 1; i >= 0; i--) {
       trHeaderColumn += items[i];
     }
     document.getElementById("trDrinamic").innerHTML =
-     
+
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
@@ -156,9 +160,27 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     this.initDatatable();
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
+  filterDataByCriteria(index) {
+    console.log(index);
+    this.indexFilter = index;
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
 
+    this.initDatatable();
+  }
+
+  filterAllDataByCriteria() {
+    console.log("filterAllDataByCriteria");
+    this.indexFilter = "";
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
+    this.initDatatable();
+  }
   initDatatable(): void {
+
     var d = new Date();
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
     var json = "";
@@ -176,7 +198,8 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
     json += ' "data": { ';
-    json += ' "flag": "N", ';
+    json += ' "flag": "' + this.flag + '", ';
+    json += ' "indexFilter": "' + this.indexFilter + '", ';
     json += ' "num1": "' + this.num1 + '", ';
     json += ' "num2": "' + this.num2 + '", ';
     json += ' "percent1": "' + this.percent1 + '", ';
@@ -184,7 +207,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     json += ' "analysNumber": "' + this.analysNumber + '" ';
     json += " } ";
     json += " }, ";
-    json += ' "columns": [ ';   
+    json += ' "columns": [ ';
     json += ' { "data": "exciseId","className":"center" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
@@ -213,4 +236,26 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
   }
+
+  changeCoordinates = () => {
+    this.coordinates = $("#coordinates").val();
+    this.userManagementDt.destroy().draw();
+    this.initDatatable();
+  };
+
+  FlagN = () => {
+    this.flag = "N";
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
+    this.initDatatable();
+  };
+
+  FlagNotN = () => {
+    this.flag = "NOT N";
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
+    this.initDatatable();
+  };
 }

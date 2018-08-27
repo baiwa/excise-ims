@@ -7,21 +7,27 @@ public class IncFri8020 {
 	@SerializedName("OfficeCode")
 	@Expose
 	private String officeCode;
+	
 	@SerializedName("YearMonthFrom")
 	@Expose
 	private String yearMonthFrom;
+	
 	@SerializedName("YearMonthTo")
 	@Expose
 	private String yearMonthTo;
+	
 	@SerializedName("DateType")
 	@Expose
 	private String dateType;
+	
 	@SerializedName("PageNo")
 	@Expose
 	private String pageNo;
+	
 	@SerializedName("DataPerPage")
 	@Expose
 	private String dataPerPage;
+	
 	public String getOfficeCode() {
 		return officeCode;
 	}

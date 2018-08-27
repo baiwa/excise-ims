@@ -22,13 +22,86 @@
 
       <table id="dataTable" class="ui small celled table">
         <thead id="trColumn">
-
-
-
         </thead>
-
+        <tbody id="tbody">
+        </tbody>
       </table>
-    </div>
 
+      <BR/>
+      <div class="inline fields latest-inline">
+        <div class="sixteen wide field">
+          <div class="ui center aligned grid btn">
+            <button class="ui mini primary button" (click)="saveRiskAssRiskWsDtl()">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <button class="ui mini primary button" (click)="modalConditionRL()">
+              กำหนดเงื่อนไข RL
+            </button>
+            <button class="ui mini primary button" (click)="modalpercent()">
+              กำหนดค่า %
+            </button>
+            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+              Export
+            </button>
+            <button class="ui mini primary button" (click)="cancelFlow()">
+              ยกเลิก
+            </button>
+          </div>
+
+        </div>
+      </div>
+      <BR/>
+    </div>
+    <BR/>
+    <div class="sixteen wide column" *ngIf="getConditionShow()">
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
+      </div>
+
+      <div class="ui attached segment">
+        <div class="ui form">
+          <condition [riskId]="budgetYear" [riskType]="'ALL'" [page]="'int08-1-7'" (out)="closeConditionRL($event)"></condition>
+        </div>
+        <br/>
+
+      </div>
+    </div>
+    <BR/>
+    <div class="sixteen wide column" *ngIf="getpercent()">
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>กำหนดค่าน้ำหนัก (%) โครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
+      </div>
+
+      <div class="ui attached segment">
+        <div class="ui form">
+          <div class="inline fields" *ngFor="let risk of riskAssRiskWsHdrList; index as i;">
+            <div class="two wide field "></div>
+            <div class="six wide field">
+              <label>{{risk.riskHdrName}}</label>
+            </div>
+            <div class="two wide field">
+              <input type="number" placeholder="น้ำหนักของ{{risk.riskHdrName}}" class="custom" [(ngModel)]="risk.percent">&nbsp;&nbsp;%
+            </div>
+          </div>
+        </div>
+        <br/>
+        <div class="inline fields latest-inline">
+          <div class="sixteen wide field">
+            <div class="ui center aligned grid btn">
+              <button class="ui mini primary button" (click)="savePercent()">
+                <i class="save icon"></i>
+                บันทึก
+              </button>
+              <button class="ui mini primary button" (click)="closepercent()">
+                ยกเลิก
+              </button>
+            </div>
+
+          </div>
+        </div>
+        <BR/>
+      </div>
+    </div>
   </div>
 </div>

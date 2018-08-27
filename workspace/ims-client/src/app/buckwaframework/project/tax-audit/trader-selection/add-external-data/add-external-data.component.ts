@@ -112,7 +112,7 @@ export class AddExternalDataComponent implements OnInit {
     json += " } ";
     json += " }, ";
     json += ' "columns": [ ';
-   
+
     json += ' { "data": "exciseId","className":"center" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
@@ -148,7 +148,7 @@ export class AddExternalDataComponent implements OnInit {
     });
 
     // on click row
-    $("#userManagementDt tbody").on("click", "tr", function() {
+    $("#userManagementDt tbody").on("click", "tr", function () {
       $("#exciseBtn").prop("disabled", false);
       $("#userManagementDt tbody tr").css({
         "background-color": "white",
@@ -174,13 +174,17 @@ export class AddExternalDataComponent implements OnInit {
 
   FlagN = () => {
     this.flag = "N";
-    this.userManagementDt.destroy();
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
     this.initDatatable();
   };
 
   FlagNotN = () => {
     this.flag = "NOT N";
-    this.userManagementDt.destroy();
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
     this.initDatatable();
   };
 
@@ -198,7 +202,9 @@ export class AddExternalDataComponent implements OnInit {
 
   changeSector = () => {
     this.sector = (<HTMLInputElement>document.getElementById("sector")).value;
-    this.userManagementDt.destroy();
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
     this.initDatatable();
   };
 
@@ -249,6 +255,7 @@ export class AddExternalDataComponent implements OnInit {
   };
 
   createTH = currYear => {
+    console.log("createTH", currYear);
     //split function
     var from_split = this.from.split("/");
 
@@ -269,10 +276,10 @@ export class AddExternalDataComponent implements OnInit {
       }
       items.push(
         '<th style="text-align: center !important">' +
-          TextDateTH.monthsShort[m - 1] +
-          " " +
-          (yy + "").substr(2) +
-          "</th>"
+        TextDateTH.monthsShort[m - 1] +
+        " " +
+        (yy + "").substr(2) +
+        "</th>"
       );
     }
 
@@ -281,7 +288,7 @@ export class AddExternalDataComponent implements OnInit {
       trHeaderColumn += items[i];
     }
     var str =
-     
+
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
@@ -323,6 +330,6 @@ export class AddExternalDataComponent implements OnInit {
       "</th>" +
       trHeaderColumn +
       "</tr>";
-    $("#trDrinamic").html(str);
+    document.getElementById("trDrinamic").innerHTML = str;
   };
 }

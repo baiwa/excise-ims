@@ -112,10 +112,10 @@ export class WorkingPaper1TraderComponent implements OnInit {
       }
       items.push(
         '<th style="text-align: center !important">' +
-          TextDateTH.monthsShort[m - 1] +
-          " " +
-          (yy + "").substr(2) +
-          "</th>"
+        TextDateTH.monthsShort[m - 1] +
+        " " +
+        (yy + "").substr(2) +
+        "</th>"
       );
     }
 
@@ -124,7 +124,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     //  trHeaderColumn += items[i];
     //}
     document.getElementById("trDrinamic").innerHTML =
-     
+
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
@@ -160,21 +160,26 @@ export class WorkingPaper1TraderComponent implements OnInit {
     this.initDatatable();
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   filterDataByCriteria(index) {
     this.indexFilter = index;
-    this.userManagementDt.destroy();
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
     this.initDatatable();
   }
 
   filterAllDataByCriteria() {
     this.indexFilter = "";
-    this.userManagementDt.destroy();
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
     this.initDatatable();
   }
 
   initDatatable(): void {
+
     var d = new Date();
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
     var json = "";
@@ -205,7 +210,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
       '" ';
     json += " } ";
     json += " }, ";
-    json += ' "columns": [ ';   
+    json += ' "columns": [ ';
     json += ' { "data": "exciseId","className":"center" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
@@ -257,10 +262,10 @@ export class WorkingPaper1TraderComponent implements OnInit {
         percent2: param4,
         analysNumber: this.analysNumber
       },
-      function(returnedData) {
+      function (returnedData) {
         router.navigate(["/add-external-data"]);
       }
-    ).fail(function() {
+    ).fail(function () {
       console.error("error");
     });
   }
@@ -273,13 +278,20 @@ export class WorkingPaper1TraderComponent implements OnInit {
 
   FlagN = () => {
     this.flag = "N";
-    this.userManagementDt.destroy();
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
     this.initDatatable();
   };
 
   FlagNotN = () => {
     this.flag = "NOT N";
-    this.userManagementDt.destroy();
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
     this.initDatatable();
   };
+
+
+
 }

@@ -14,14 +14,22 @@ export class Int0817Component implements OnInit {
   budgetYear: any;
   userCheck: any;
   columnList: any[];
+  percentList: any[];
   datatable: any;
+  isConditionShow: any;
+  ispercent: any;
+  riskAssRiskWsHdrList: any;
   constructor(private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute) {
+    this.isConditionShow = false;
+    this.ispercent = false;
+  }
 
   ngOnInit() {
     this.columnList = [];
+    this.percentList = [];
     this.budgetYear = this.route.snapshot.queryParams["budgetYear"];
     this.queryColumnNameListAndSetColumn();
   }
@@ -32,9 +40,12 @@ export class Int0817Component implements OnInit {
     this.ajax.post(url, { budgetYear: this.budgetYear }, res => {
       console.log(riskAssRiskWsHdr);
       var riskAssRiskWsHdr = res.json();
+      this.riskAssRiskWsHdrList = res.json();
+
       for (let i = 0; i < riskAssRiskWsHdr.length; i++) {
         const element = riskAssRiskWsHdr[i];
         this.columnList.push(element.riskHdrName);
+        this.percentList.push(0);
       }
 
       var trHTML = '<tr><th rowspan="2">ลำดับ</th> <th rowspan="2">โครงการตามยุทธศาสตร์</th><th rowspan="2">หน่วยงาน</th>';
@@ -42,8 +53,9 @@ export class Int0817Component implements OnInit {
         console.log(element);
         trHTML += '<th rowspan="2">' + element + '</th>';
       });
-      trHTML += '<th rowspan="2">รวม</th><th colspan="2">ประเมินความเสี่ยง</th></tr><tr><th>RL</th><th>แปลค่า</th></tr>';
+      trHTML += '<th rowspan="2"  >รวม</th><th colspan="2">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th>แปลค่า</th></tr>';
       $("#trColumn").html(trHTML);
+      this.initDatatable();
     }, errRes => {
       console.log(errRes);
     });
@@ -51,36 +63,81 @@ export class Int0817Component implements OnInit {
 
 
   initDatatable(): void {
-    const URL = AjaxService.CONTEXT_PATH + "ia/int08/searchRiskAssRiskWsHdr";
-    console.log(URL);
-    this.datatable = $("#dataTable").DataTable({
-      lengthChange: false,
-      searching: false,
-      ordering: false,
-      pageLength: 10,
-      processing: true,
-      serverSide: true,
-      paging: false,
-      ajax: {
-        type: "POST",
-        url: URL,
-        data: { budgetYear: this.budgetYear }
-      },
-      columns: [
+    var url = 'ia/int08/searchFullRiskByBudgetYear';
+    var hrmlTr = '';
+    this.ajax.post(url, { budgetYear: this.budgetYear, riskHrdNameList: this.columnList }, res => {
 
-        { render: function (data, type, row, meta) { return meta.row + meta.settings._iDisplayStart + 1; }, className: "center" },
-        { data: "riskHdrName" },
-        { data: "budgetYear" },
-        { data: "createdBy" },
-        { data: "createdDate" },
-        { data: "active" }
-      ]
+      res.json().forEach(element => {
+        console.log(element);
+        hrmlTr += "<tr>";
+        hrmlTr += "<td>" + element.id + "</td>";
+        hrmlTr += "<td>" + element.projectBase + "</td>";
+        hrmlTr += "<td>" + element.departmentName + "</td>";
+        element.rl.forEach(rl => {
+          hrmlTr += "<td>" + rl + "</td>";
+        });
+        hrmlTr += "<td>" + element.sumRiskCost + "</td>";
+        hrmlTr += "<td></td>";
+        hrmlTr += "<td></td>";
+        hrmlTr += "</tr>";
+      });
 
+      $("#tbody").html(hrmlTr);
+    }, errRes => {
+      console.log(errRes);
     });
   }
 
+  modalConditionRL() {
+    this.isConditionShow = true;
+  }
 
+  closeConditionRL(e) {
+    this.isConditionShow = false;
+  }
 
+  getConditionShow() {
+    return this.isConditionShow;
+  }
 
+  modalpercent() {
+    this.ispercent = true;
+  }
+
+  closepercent(e) {
+    this.ispercent = false;
+  }
+
+  getpercent() {
+    return this.ispercent;
+  }
+  cancelFlow() {
+    this.messageBarService.comfirm(foo => {
+      // let msg = "";
+      if (foo) {
+        this.router.navigate(["/int08/1/4"], {
+          queryParams: { budgetYear: this.budgetYear }
+        });
+      }
+    }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
+  }
+
+  savePercent() {
+    var sumpercen = 0;
+    this.riskAssRiskWsHdrList.forEach(element => {
+      sumpercen += element.percent;
+    });
+    if (sumpercen != 100) {
+      this.messageBarService.errorModal("น้ำหนักต้องรวมกันแล้วเป็น 100 %");
+      return "";
+    }
+    var url = 'ia/int08/updateRiskPercent';
+    this.ajax.post(url, { riskAssRiskWsHdrList: this.riskAssRiskWsHdrList }, res => {
+      this.riskAssRiskWsHdrList = res.json();
+      this.messageBarService.successModal("บันทึกน้ำหนักความเสี่ยงสำเร็จ");
+      this.ispercent = false;
+
+    });
+  }
 
 }

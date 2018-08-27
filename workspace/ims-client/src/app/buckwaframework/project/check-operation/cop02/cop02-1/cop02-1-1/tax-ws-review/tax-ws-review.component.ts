@@ -147,7 +147,7 @@ export class TaxWsReviewComponent implements OnInit {
     });
 
     // on click row
-    $("#userManagementDt tbody").on("click", "tr", function() {
+    $("#userManagementDt tbody").on("click", "tr", function () {
       $("#exciseBtn").prop("disabled", false);
       $("#userManagementDt tbody tr").css({
         "background-color": "white",
@@ -173,13 +173,18 @@ export class TaxWsReviewComponent implements OnInit {
 
   FlagN = () => {
     this.flag = "N";
-    this.userManagementDt.destroy();
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
+
     this.initDatatable();
   };
 
   FlagNotN = () => {
     this.flag = "NOT N";
-    this.userManagementDt.destroy();
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
     this.initDatatable();
   };
 
@@ -197,7 +202,9 @@ export class TaxWsReviewComponent implements OnInit {
 
   changeSector = () => {
     this.sector = (<HTMLInputElement>document.getElementById("sector")).value;
-    this.userManagementDt.destroy();
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
     this.initDatatable();
   };
 
@@ -268,10 +275,10 @@ export class TaxWsReviewComponent implements OnInit {
       }
       items.push(
         '<th style="text-align: center !important">' +
-          TextDateTH.monthsShort[m - 1] +
-          " " +
-          (yy + "").substr(2) +
-          "</th>"
+        TextDateTH.monthsShort[m - 1] +
+        " " +
+        (yy + "").substr(2) +
+        "</th>"
       );
     }
 

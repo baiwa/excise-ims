@@ -105,53 +105,7 @@ public class WebServiceExciseService {
 		risk.setApproveBudget(new BigDecimal(46800000));
 		riskAssRiskWsDtlList.add(risk);
 
-		risk = new RiskAssRiskWsDtl();
-		risk.setRiskAssRiskDtlId(new Long(3));
-		risk.setProjectBase(
-				"โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ กรมสรรพสามิต (Network and Security System)");
-		risk.setDepartmentName("ศทส.");
-		risk.setBudget(new BigDecimal(55000000));
-		risk.setLocalBudget(new BigDecimal(0));
-		risk.setOtherMoney(new BigDecimal(0));
-		risk.setSumMonth(new BigDecimal(55000000));
-		risk.setApproveBudget(new BigDecimal(55000000));
-		riskAssRiskWsDtlList.add(risk);
-
-		risk = new RiskAssRiskWsDtl();
-		risk.setRiskAssRiskDtlId(new Long(4));
-		risk.setProjectBase(
-				"โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ กรมสรรพสามิต (Network and Security System)");
-		risk.setDepartmentName("ศทส.");
-		risk.setBudget(new BigDecimal(55000000));
-		risk.setLocalBudget(new BigDecimal(0));
-		risk.setOtherMoney(new BigDecimal(0));
-		risk.setSumMonth(new BigDecimal(55000000));
-		risk.setApproveBudget(new BigDecimal(55000000));
-		riskAssRiskWsDtlList.add(risk);
-
-		risk = new RiskAssRiskWsDtl();
-		risk.setRiskAssRiskDtlId(new Long(5));
-		risk.setProjectBase(
-				"โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ กรมสรรพสามิต (Network and Security System)");
-		risk.setDepartmentName("ศทส.");
-		risk.setBudget(new BigDecimal(55000000));
-		risk.setLocalBudget(new BigDecimal(0));
-		risk.setOtherMoney(new BigDecimal(0));
-		risk.setSumMonth(new BigDecimal(55000000));
-		risk.setApproveBudget(new BigDecimal(55000000));
-		riskAssRiskWsDtlList.add(risk);
-
-		risk = new RiskAssRiskWsDtl();
-		risk.setRiskAssRiskDtlId(new Long(6));
-		risk.setProjectBase(
-				"โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ กรมสรรพสามิต (Network and Security System)");
-		risk.setDepartmentName("ศทส.");
-		risk.setBudget(new BigDecimal(55000000));
-		risk.setLocalBudget(new BigDecimal(0));
-		risk.setOtherMoney(new BigDecimal(0));
-		risk.setSumMonth(new BigDecimal(55000000));
-		risk.setApproveBudget(new BigDecimal(55000000));
-		riskAssRiskWsDtlList.add(risk);
+		
 		return riskAssRiskWsDtlList;
 	}
 

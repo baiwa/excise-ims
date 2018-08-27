@@ -21,6 +21,8 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
+import th.co.baiwa.excise.domain.Int0801Vo;
+import th.co.baiwa.excise.domain.RiskFullDataVo;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
@@ -155,13 +157,14 @@ public class Int08Controller {
 	
 	@PostMapping("/saveRiskAssDtlOther")
 	@ResponseBody
-	public Message saveRiskAssDtlOther(@RequestBody RiskAssOtherDtl riskAssOtherDtl) {
+	public Message saveRiskAssDtlOther(@RequestBody Int0801Vo int0801Vo) {
 		Message message = null;
-		logger.info("saveRiskAssDtlOther" + riskAssOtherDtl.getRiskHrdId());
+		logger.info("saveRiskAssDtlOther");
 		try {
-			riskAssRiskWsHdrService.updateRiskAssOtherDtl(riskAssOtherDtl);
+			riskAssRiskWsHdrService.updateRiskAssOtherDtl(int0801Vo.getRiskAssOtherDtlList());
 			message = ApplicationCache.getMessage("MSG_00002");
 		} catch (Exception e) {
+			e.printStackTrace();
 			message = ApplicationCache.getMessage("MSG_00003");
 		}
 		
@@ -207,6 +210,18 @@ public class Int08Controller {
 	@ResponseBody
 	public List<RiskAssRiskWsHdr> findByBudgetYear(@RequestBody RiskAssRiskWsHdr riskAssRiskWsHdr) {
 		return riskAssRiskWsHdrService.findByBudgetYear(riskAssRiskWsHdr.getBudgetYear());
+	}
+	
+	@PostMapping("/searchFullRiskByBudgetYear")
+	@ResponseBody
+	public List<RiskFullDataVo> searchFullRiskByBudgetYear(@RequestBody Int0801Vo int0801Vo) {
+		return riskAssRiskWsHdrService.searchFullRiskByBudgetYear(int0801Vo.getBudgetYear(), int0801Vo.getRiskHrdNameList());
+	}
+	
+	@PostMapping("/updateRiskPercent")
+	@ResponseBody
+	public List<RiskAssRiskWsHdr> updateRiskPercent(@RequestBody Int0801Vo  int0801Vo) {
+		return riskAssRiskWsHdrService.updatePercent(int0801Vo.getRiskAssRiskWsHdrList());
 	}
 	
 	public RiskAssRiskWsService getRiskAssRiskWsHdrService() {
