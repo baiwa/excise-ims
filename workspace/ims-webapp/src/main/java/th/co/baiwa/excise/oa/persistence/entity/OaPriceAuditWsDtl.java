@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.oa.persistence.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,13 +35,13 @@ public class OaPriceAuditWsDtl extends BaseEntity {
 	private String priceAuditWsDtlOrder;
 	
 	@Column(name="EXTERNAL_DATA")
-	private Long externalData;
+	private BigDecimal externalData;
 	
 	@Column(name="INVESTIGATE_DATA")
-	private Long investigateData;
+	private BigDecimal investigateData;
 	
 	@Column(name="PRICE_02_01")
-	private Long price0201;
+	private BigDecimal price0201;
 	
 	@Column(name="TAX_03_07")
 	private Long tax0307;
@@ -76,27 +78,27 @@ public class OaPriceAuditWsDtl extends BaseEntity {
 		this.priceAuditWsDtlOrder = priceAuditWsDtlOrder;
 	}
 
-	public Long getExternalData() {
+	public BigDecimal getExternalData() {
 		return externalData;
 	}
 
-	public void setExternalData(Long externalData) {
+	public void setExternalData(BigDecimal externalData) {
 		this.externalData = externalData;
 	}
 
-	public Long getInvestigateData() {
+	public BigDecimal getInvestigateData() {
 		return investigateData;
 	}
 
-	public void setInvestigateData(Long investigateData) {
+	public void setInvestigateData(BigDecimal investigateData) {
 		this.investigateData = investigateData;
 	}
 
-	public Long getPrice0201() {
+	public BigDecimal getPrice0201() {
 		return price0201;
 	}
 
-	public void setPrice0201(Long price0201) {
+	public void setPrice0201(BigDecimal price0201) {
 		this.price0201 = price0201;
 	}
 

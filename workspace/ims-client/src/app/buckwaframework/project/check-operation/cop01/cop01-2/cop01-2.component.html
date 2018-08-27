@@ -1,8 +1,8 @@
 <div class="ui grid">
     <div class="sixteen wide column">
-        <h2 class="ui header">จัดทำแผนการตรวจปฏิบัติการ</h2>
+        <h2 class="ui header">ค้นหาแผนการตรวจปฏิบัติการ</h2>
         <div class="ui top attached header">
-            <span>จัดทำแผนการตรวจปฏิบัติการ</span>
+            <span>ค้นหาแผนการตรวจปฏิบัติการ</span>
         </div>
         <div class="ui attached segment">
             <div class="ui form">
@@ -11,14 +11,17 @@
                     <div class="two wide field ">
                         <label>ปีงบประมาณ </label>
                     </div>
-                    <div class="seven wide field ">
-                        <input type="text" placeholder="" value="">
+                    <div class="ui calendar" id="calendar">
+                        <div class="ui input left icon">
+                            <i class="time icon"></i>
+                            <input type="calendar" id="planStart" name="planStart" [attr.required]="true"   autocomplete="off">
+                        </div>
                     </div>
                     <div class="four wide field "></div>
                 </div>
                 <br>
                 <div class="inline fields ui center aligned grid">
-                    <button class="ui mini primary button" routerLink="/cop01/3">ค้นหา</button>
+                    <button class="ui mini primary button" (click)="search()">ค้นหา</button>
                     <div class="one wide field "></div>
                     <button class="ui mini button">ยกเลิก</button>
                 </div>
