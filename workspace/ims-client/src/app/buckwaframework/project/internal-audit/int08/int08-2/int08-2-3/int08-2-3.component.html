@@ -62,14 +62,16 @@
         <div class="inline fields ">
           <div class="sixteen wide field ">
             <div class="six wide field "></div>
-            <button class="ui mini primary button" (click)="saveRiskAssInfHdr()">
+            <button class="ui mini primary button" (click)="saveRiskAssInfDtl()">
               <i class="save icon"></i>
               บันทึก
             </button>
-            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+            <button class="ui mini primary button" (click)="modalConditionRL()">
+              <i class="setting icon"></i>
               กำหนดเงื่อนไข RL
             </button>
-            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+            <button class="ui mini primary button" >
+              <i class="print icon"></i>
               Export
             </button>
             <button class="ui mini primary button" (click)="cancelFlow()">
@@ -81,4 +83,19 @@
       </div>
     </div>
   </div>
+
+  <div class="sixteen wide column" *ngIf="getConditionShow()">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <condition [riskId]="id" [riskType]="'MAIN'" [page]="'int08-2-3'" (out)="closeConditionRL($event)"></condition>
+      </div>
+      <br/>
+
+    </div>
+  </div>
+
 </div>

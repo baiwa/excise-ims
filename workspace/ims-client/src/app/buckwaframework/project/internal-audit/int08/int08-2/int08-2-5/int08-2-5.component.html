@@ -7,29 +7,16 @@
       <div class="ui form">
         <div class="inline fields">
           <div class="two wide field "></div>
-          <div class="two wide field ">
-            <label class="ui right ">ชื่อกระดาษทำการ</label>
-          </div>
-          <div class="ten wide field ">
-            <input type="text" placeholder="ชื่อกระดาษทำการ" class="custom" name="riskHrdPaperName" id="riskHrdPaperName" [(ngModel)]="riskHrdPaperName">
-          </div>
-
-        </div>
-        <div class="inline fields">
-          <div class="two wide field "></div>
           <div class="two wide field">
             <label>ปีงบประมาณ</label>
           </div>
-          <div class="four wide field ">
-            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear">
+          <div class="ten wide field ">
+            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear" disabled="disabled"
+              readonly>
           </div>
-          <div class="two wide field ">
-            <label>ผู้ตรวจ</label>
-          </div>
-          <div class="four wide field ">
-            <input type="text" placeholder="ผู้ตรวจ" class="custom" name="userCheck" id="userCheck" [(ngModel)]="userCheck">
-          </div>
+
         </div>
+       
         <div style="overflow-x: scroll;">
           <table id="dataTable"  class="ui small celled table" style="width: 140%;">
             <thead>
@@ -69,8 +56,8 @@
               <i class="print icon"></i>
               Export
             </button>
-            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
-              Export Teammate
+            <button class="ui mini primary button" (click)="cancelFlow()">
+              ยกเลิก
             </button>
           </div>
 

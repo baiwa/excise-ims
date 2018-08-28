@@ -10,25 +10,20 @@
               <div class="two wide field ">
                 <label>ปีงบประมาณ</label>
               </div>
-
               <div class="four wide field ">
                 <div class="ui calendar" style="width:100%" id="year" >
                   <div class="ui input left icon">
                     <i class="calendar icon"></i>
-                    <input type="calendar"  id="budgetYear" placeholder="ปี"     name="budgetYear" [(ngModel)]="budgetYear" readonly="" autocomplete="off" >
+                    <input type="calendar"  id="budgetYear" placeholder="ปี"  maxlength="4" name="budgetYear" [(ngModel)]="budgetYear" readonly="" autocomplete="off" >
                   </div>
                 </div>
               </div>
-
-
-
               <div class="two wide field ">
                 <label>ปัจจัยเสี่ยง</label>
               </div>
               <div class="four wide field ">
                 <select class="ui search dropdown">
-                  <option value="0">ปัจจัยเสี่ยงงบประมาณ </option>
-    
+                  <option *ngFor="let risk of riskList; index as i;" value="{{risk.value}}">{{risk.description}}</option>
                 </select>
               </div>
             </div>
@@ -36,15 +31,15 @@
         <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
-            <button class="ui mini primary button" (click)="searchBudgetYear()">
-              <i class="add icon"></i>
+            <button class="ui mini primary button" (click)="searchDataTable()">
+              <i class="search icon"></i>
               ค้นหา
             </button>
             <button class="ui mini button" (click)="clearData()">
               <i class="refresh icon"></i>
               ล้างข้อมูล
             </button>
-            <button class="ui mini primary button" (click)="createBudgetYear()">
+            <button class="ui mini primary button" (click)="createBudgetYear()" >
               <i class="add icon"></i>
               สร้าง
             </button>

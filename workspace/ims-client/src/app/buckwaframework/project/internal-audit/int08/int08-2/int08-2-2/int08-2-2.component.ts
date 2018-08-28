@@ -70,8 +70,8 @@ export class Int0822Component implements OnInit , AfterViewInit{
 
   initDatatable(): void {
     const URL = AjaxService.CONTEXT_PATH + "ia/int082/searchRiskInfHdr";
-    console.log(URL);
-    console.log(this.budgetYear);
+    // console.log(URL);
+    // console.log(this.budgetYear);
     this.datatable = $("#dataTable").DataTable({
       lengthChange: false,
       searching: false,
@@ -170,9 +170,9 @@ export class Int0822Component implements OnInit , AfterViewInit{
   }
 
 
-  determineRiskTotal() {
+  configAllCondition() {
     this.router.navigate(["/int08/2/5"], {
-      //queryParams: { id: data.riskAssInfHdrId }
+      queryParams: { budgetYear: this.budgetYear }
     });
   }
 }
