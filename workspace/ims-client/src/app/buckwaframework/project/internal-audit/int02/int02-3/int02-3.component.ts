@@ -5,7 +5,7 @@ import { MessageBarService } from "../../../../common/services/message-bar.servi
 import { AjaxService } from "../../../../common/services/ajax.service";
 import { BaseModel, ManageReq } from '../../../../common/models';
 import { toFormData } from '../../../../common/helper';
-import { Headers } from '../../../../../../../node_modules/@angular/http';
+import { Headers } from '@angular/http';
 import { DialogService } from '../../../../common/services';
 import { Observable } from '../../../../../../../node_modules/rxjs';
 declare var $: any;
@@ -46,6 +46,9 @@ export class Int023Component implements OnInit {
   // Data
   table: Int023FormVo[] = [];
   _table: Int023FormVo[] = [];
+  // Table
+  dt1: any;
+  dt2: any;
 
   constructor(
     private ajax: AjaxService,
@@ -71,12 +74,12 @@ export class Int023Component implements OnInit {
     this.option = {
       draw: 1,
       start: 0,
-      length: 5
+      length: 10
     };
     this.option2 = {
       draw: 1,
       start: 0,
-      length: 5
+      length: 10
     };
 
   }
@@ -84,10 +87,9 @@ export class Int023Component implements OnInit {
   ngOnInit() {
     // ID from url
     this.headerId = this.route.snapshot.queryParams["id"];
-
-    // this.initDatatable();
-    this.initializeTable();
-
+    this._initialTable();
+    this.initialTable();
+    
   }
 
   canDeactivate(): Observable<boolean> | boolean {
@@ -105,45 +107,10 @@ export class Int023Component implements OnInit {
     return this.req.save.length != 0 || this.req.delete.length != 0;
   }
 
-  initDatatable() {
-    this.datatable = $('#datatable').DataTable({
-      "lengthChange": false,
-      "searching": true,
-      "select": true,
-      "ordering": false,
-      "pageLength": 10,
-      "processing": true,
-      "serverSide": true,
-      "paging": true,
-      "pagingType": "full_numbers",
-      "ajax": {
-        "type": "POST",
-        "url": URL.DATATABLE,
-        "data": {}
-      },
-      "columns": [
-        {
-          render: (data, type, full, meta) => {
-            // return `<input type="checkbox" name="chk-${full.qtnDetailId}" id="chk-${full.qtnDetailId}">`;
-            return `<input type="checkbox" style="margin-left: 2em" name="chk-${full.qtnDetailId}" id="chk-${full.qtnDetailId}">`;
-          },
-          className: "left"
-        },
-        {
-          "data": "qtnMainDetail",
-          "className": "left"
-        }
-      ],
-      "drawCallback": (e, settings) => {
-        const data = e.json.data;
-        this.data = data;
-      }
-    });
-  }
-
-  initializeTable(): void {
-    this.table = [];
-    this._table = [];
+  _initialTable(loadmore = false): void {
+    if (!loadmore) {
+      this._table = [];
+    }
     this.ajax.post(`${URL._DATATABLE}`, toFormData(this.option), res => {
       let d = res.json().data;
       d.forEach(data => {
@@ -151,16 +118,27 @@ export class Int023Component implements OnInit {
         qtn.qtnReportHdrId = "NOT NULL";
         qtn.qtnReportManId = `OLD_${data.qtnReportManId}`;
         qtn.qtnMainDetail = data.qtnMainDetail;
-        this._table.push(qtn);
-        data.detail.forEach(obj => {
+        if (this._table.findIndex(obj => obj.qtnReportHdrId == "NOT NULL" && obj.qtnReportManId == data.qtnReportManId) == -1) {
+          this._table.push(qtn);
+        }
+        data.detail.forEach((obj, index) => {
           let _qtn = new Int023FormVo();
           _qtn.qtnReportManId = `OLD_${obj.mainId}`;
           _qtn.qtnReportDtlId = obj.qtnMinorId;
           _qtn.qtnMainDetail = obj.qtnMinorDetail;
-          this._table.push(_qtn);
+          if (this._table.findIndex(o => o.qtnReportDtlId == obj.qtnMinorId) == -1) {
+            $("#chk1").prop("checked", false);
+            this._table.push(_qtn);
+          }
         });
       });
     }, null, new Headers());
+  }
+
+  initialTable(loadmore = false): void {
+    if (!loadmore) {
+      this.table = [];
+    }
     this.ajax.post(`${URL.DATATABLE2}/${this.headerId}`, toFormData(this.option2), res => {
       let d = res.json().data;
       d.forEach(data => {
@@ -168,13 +146,18 @@ export class Int023Component implements OnInit {
         qtn.qtnReportHdrId = data.qtnReportHdrId;
         qtn.qtnReportManId = data.qtnReportManId;
         qtn.qtnMainDetail = data.qtnMainDetail;
-        this.table.push(qtn);
-        data.detail.forEach(obj => {
+        if (this.table.findIndex(obj => obj.qtnReportHdrId == data.qtnReportHdrId && obj.qtnReportManId == data.qtnReportManId) == -1) {
+          this.table.push(qtn);
+        }
+        data.detail.forEach((obj,index) => {
           let qtn = new Int023FormVo();
           qtn.qtnReportManId = data.qtnReportManId;
           qtn.qtnReportDtlId = obj.qtnReportDtlId;
           qtn.qtnMainDetail = obj.qtnMainDetail;
-          this.table.push(qtn);
+          if (this.table.findIndex(o => o.qtnReportDtlId == obj.qtnReportDtlId) == -1) {
+            $("#chk1").prop("checked", false);
+            this.table.push(qtn);
+          }
         });
       });
     }, null, new Headers());
@@ -219,14 +202,22 @@ export class Int023Component implements OnInit {
   chkAll = (event, table, i) => {
     if (event.target.checked) {
       this[`chk${i}`] = this[`${table}`];
-      this[`${table}`].map((obj, index) => {
-        $(`#chk${i}-${index}`)[0].checked = true;
-      });
+      if (this[`${table}`].length > 0) {
+        this[`${table}`].map((obj, index) => {
+          if ($(`#chk${i}-${index}`)[0]) {
+            $(`#chk${i}-${index}`)[0].checked = true;
+          }
+        });
+      }
     } else {
       this[`chk${i}`] = [];
-      this[`${table}`].map((obj, index) => {
-        $(`#chk${i}-${index}`)[0].checked = false;
-      });
+      if (this[`${table}`].length > 0) {
+        this[`${table}`].map((obj, index) => {
+          if ($(`#chk${i}-${index}`)[0]) {
+            $(`#chk${i}-${index}`)[0].checked = false;
+          }
+        });
+      }
     }
   }
 
@@ -249,6 +240,18 @@ export class Int023Component implements OnInit {
         $("#chk2").prop('checked', false);
       }
     }, "ต้องการลบข้อมูลจริงหรือไม่?");
+  }
+
+  onScroll(e, option) {
+    const { children, offsetHeight, scrollTop } = e.target;
+    if (scrollTop >= children[0].offsetHeight - offsetHeight) {
+      this[`${option}`].start += 10;
+      if (option === "option") {
+        this._initialTable(true);
+      } else {
+        this.initialTable(true);
+      }
+    }
   }
 
   onAddField = () => {
@@ -282,7 +285,7 @@ export class Int023Component implements OnInit {
       const msg = res.json();
       if (msg.messageType == "C") {
         this.message.successModal(msg.messageTh);
-        this.initializeTable();
+        this.initialTable();
       } else {
         this.message.errorModal(msg.messageTh);
       }

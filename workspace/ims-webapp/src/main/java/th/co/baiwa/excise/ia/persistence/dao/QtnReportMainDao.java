@@ -21,7 +21,7 @@ import th.co.baiwa.excise.utils.OracleUtils;
 @Repository
 public class QtnReportMainDao {
 
-	private static String _SQL = " SELECT M.* FROM IA_QTN_REPORT_MAIN M WHERE 1=1 ";
+	private static String _SQL = " SELECT M.* FROM IA_QTN_REPORT_MAIN M LEFT JOIN IA_QTN_REPORT_DETAIL D ON M.QTN_REPORT_MAN_ID = D.QTN_REPORT_MAN_ID WHERE 1=1 ";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
