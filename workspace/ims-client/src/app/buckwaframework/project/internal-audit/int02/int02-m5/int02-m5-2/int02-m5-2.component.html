@@ -54,7 +54,7 @@
                         <div class="ui form">
                             <div class="inline fields">
                                 <div class="sixteen aligned center wide field">
-                                    <button class="fluid ui green mini button" (click)="search()" type="button">ค้นหา</button>
+                                    <button class="ui blue button" (click)="search()" type="button">ค้นหา</button>
                                 </div>
                             </div>
                         </div>
@@ -62,42 +62,27 @@
                 </div>
             </div>
         </div>
+
+        <div class="ui segment">
+                <div class="ui grid">
+                  <div class="sixteen wide column">
+                    <table id="dataTable" style="width: 100%;" class="ui small collapsing celled table aligned hover">
+                      <thead>
+                        <tr>
+                          <th style="text-align: center">ชื่อส่วนงานย่อย</th>
+                          <th style="text-align: center">ปีงบประมาณ</th>
+                          <th style="text-align: center">วันที่บันทึก</th>
+                          <th style="text-align: center">ผู้บันทึก</th>
+                          <th style="text-align: center">จัดการ</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
     </div>
 
-    <div class="sixteen wide column segments">
-        <div class="ui attached segment">
-            <table class="ui celled table" id="datatable">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>ที่</th>
-                        <th>ชื่อส่วนงานย่อย</th>
-                        <th>ปีงบประมาณ</th>
-                        <th>วันที่บันทึก</th>
-                        <th>ผู้บันทึก</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let i of list">
-                        <td>
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="chk{{i}}">
-                                <label></label>
-                            </div>
-                        </td>
-                        <td>{{i}}</td>
-                        <td>ชื่อส่วนงานย่อย สำนักงานสรรพสามิตพื้นที่เชียงราย สาขาเมืองเชียงราย</td>
-                        <td>2561</td>
-                        <td>05/07/2561</td>
-                        <td>นางสาวจิตดี ใจมั่น</td>
-                        <td>
-                            <button class="ui mini button">รายละเอียด</button>
-                            <button class="ui mini button">export</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+
 </div>
