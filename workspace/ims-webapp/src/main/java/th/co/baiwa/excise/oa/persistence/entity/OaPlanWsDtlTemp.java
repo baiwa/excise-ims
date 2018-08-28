@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.oa.persistence.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,13 +34,13 @@ public class OaPlanWsDtlTemp extends BaseEntity {
 	private String year;
 	
 	@Column(name="AMOUNT")
-	private Long amount;
+	private BigDecimal amount;
 	
 	@Column(name="TOTAL_AMOUNT")
-	private Long totalAmount;
+	private BigDecimal totalAmount;
 	
 	@Column(name="PERCENTAGE")
-	private Long percentage;
+	private BigDecimal percentage;
 	
 	@Column(name="TOTAL_MONTH")
 	private Long totalMonth;
@@ -75,27 +77,27 @@ public class OaPlanWsDtlTemp extends BaseEntity {
 		this.year = year;
 	}
 
-	public Long getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Long amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 
-	public Long getTotalAmount() {
+	public BigDecimal getTotalAmount() {
 		return totalAmount;
 	}
 
-	public void setTotalAmount(Long totalAmount) {
+	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
-	public Long getPercentage() {
+	public BigDecimal getPercentage() {
 		return percentage;
 	}
 
-	public void setPercentage(Long percentage) {
+	public void setPercentage(BigDecimal percentage) {
 		this.percentage = percentage;
 	}
 

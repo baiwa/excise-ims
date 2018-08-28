@@ -10,21 +10,23 @@ import { Int0832Component } from './int08-3-2/int08-3-2.component';
 import { Int0834Component } from './int08-3-4/int08-3-4.component';
 import { Int0835Component } from './int08-3-5/int08-3-5.component';
 import { Int0836Component } from './int08-3-6/int08-3-6.component';
-
+import { FormsModule } from '../../../../../../../node_modules/@angular/forms';
+import { ComponentsModule } from '../../../../common/components/components.module';
 const routes: Routes = [
-    { path: '', component: Int083Component, canActivate: [AuthGuard] },
-    { path: '1', component: Int0831Component, canActivate: [AuthGuard] },
-    { path: '2', component: Int0832Component, canActivate: [AuthGuard] },
-    { path: '3', loadChildren: './int08-3-3/int08-3-3.module#Int0833Module' },
-    { path: '4', component: Int0834Component, canActivate: [AuthGuard] },
-    { path: '5', component: Int0835Component, canActivate: [AuthGuard] },
-    { path: '6', component: Int0836Component, canActivate: [AuthGuard] }
+  { path: '', component: Int083Component, canActivate: [AuthGuard] },
+  { path: '1', component: Int0831Component, canActivate: [AuthGuard] },
+  { path: '2', component: Int0832Component, canActivate: [AuthGuard] },
+  { path: '3', loadChildren: './int08-3-3/int08-3-3.module#Int0833Module' },
+  { path: '4', component: Int0834Component, canActivate: [AuthGuard] },
+  { path: '5', component: Int0835Component, canActivate: [AuthGuard] },
+  { path: '6', component: Int0836Component, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    CommonModule
+    CommonModule, FormsModule,
+    ComponentsModule
   ],
   declarations: [
     Int083Component,

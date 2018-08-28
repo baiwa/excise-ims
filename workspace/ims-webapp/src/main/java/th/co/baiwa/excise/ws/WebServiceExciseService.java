@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ws.entity.api.RequestServiceExcise;
@@ -42,6 +43,8 @@ public class WebServiceExciseService {
 
 	@Value("${ws.excise.endpointIncFri8020}")
 	private String endpointIncFri8020;
+	
+	
 
 	private String restfulService(String endPoint, Object object ) {
 
@@ -294,6 +297,11 @@ public class WebServiceExciseService {
 		riskAssInfDtlList.add(risk);
 
 		return riskAssInfDtlList;
+	}
+
+	public List<RiskAssExcAreaDtl> getRiskAssExcAreaDtlList(RiskAssExcAreaDtl riskAssExcAreaDtl) {
+		List<RiskAssExcAreaDtl> riskAssExcAreaDtlList = new ArrayList<RiskAssExcAreaDtl>();
+		return riskAssExcAreaDtlList;
 	}
 
 }

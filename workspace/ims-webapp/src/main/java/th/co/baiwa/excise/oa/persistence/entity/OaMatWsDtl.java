@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
@@ -32,10 +33,10 @@ public class OaMatWsDtl extends BaseEntity {
 	private String matWsDtlOrder;
 	
 	@Column(name="MAT_WS_DTL_BALANCE")
-	private Long matWsDtlBalance;
+	private BigDecimal  matWsDtlBalance;
 	
 	@Column(name="MAT_WS_DTL_COUNTING")
-	private Long matWsDtlCounting;
+	private BigDecimal matWsDtlCounting;
 	
 	public Long getMatWsDtlId() {
 		return matWsDtlId;
@@ -45,19 +46,21 @@ public class OaMatWsDtl extends BaseEntity {
 		this.matWsDtlId = matWsDtlId;
 	}
 
-	public Long getMatWsDtlBalance() {
+	
+
+	public BigDecimal getMatWsDtlBalance() {
 		return matWsDtlBalance;
 	}
 
-	public void setMatWsDtlBalance(Long matWsDtlBalance) {
+	public void setMatWsDtlBalance(BigDecimal matWsDtlBalance) {
 		this.matWsDtlBalance = matWsDtlBalance;
 	}
 
-	public Long getMatWsDtlCounting() {
+	public BigDecimal getMatWsDtlCounting() {
 		return matWsDtlCounting;
 	}
 
-	public void setMatWsDtlCounting(Long matWsDtlCounting) {
+	public void setMatWsDtlCounting(BigDecimal matWsDtlCounting) {
 		this.matWsDtlCounting = matWsDtlCounting;
 	}
 

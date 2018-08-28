@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.oa.persistence.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,10 +37,10 @@ public class OaTaxReduceWsDtl extends BaseEntity {
 	private Long productAmount2;
 	
 	@Column(name="TAX_AMOUNT")
-	private Long taxAmount;
+	private BigDecimal taxAmount;
 	
 	@Column(name="TAX_PER_PRODUCT")
-	private Long taxPerProduct;
+	private BigDecimal taxPerProduct;
 	
 	@Column(name="TAX_REDUCE_WS_DTL_ORDER")
 	private String taxReduceWsDtlOrder;
@@ -47,7 +49,7 @@ public class OaTaxReduceWsDtl extends BaseEntity {
 	private Long taxReduceWsHdrId;
 	
 	@Column(name="TOTAL_TAX")
-	private Long totalTax;
+	private BigDecimal totalTax;
 
 	public Long getTaxReduceWsDtlId() {
 		return taxReduceWsDtlId;
@@ -89,22 +91,6 @@ public class OaTaxReduceWsDtl extends BaseEntity {
 		this.productAmount2 = productAmount2;
 	}
 
-	public Long getTaxAmount() {
-		return taxAmount;
-	}
-
-	public void setTaxAmount(Long taxAmount) {
-		this.taxAmount = taxAmount;
-	}
-
-	public Long getTaxPerProduct() {
-		return taxPerProduct;
-	}
-
-	public void setTaxPerProduct(Long taxPerProduct) {
-		this.taxPerProduct = taxPerProduct;
-	}
-
 	public String getTaxReduceWsDtlOrder() {
 		return taxReduceWsDtlOrder;
 	}
@@ -121,13 +107,31 @@ public class OaTaxReduceWsDtl extends BaseEntity {
 		this.taxReduceWsHdrId = taxReduceWsHdrId;
 	}
 
-	public Long getTotalTax() {
+	public BigDecimal getTaxAmount() {
+		return taxAmount;
+	}
+
+	public void setTaxAmount(BigDecimal taxAmount) {
+		this.taxAmount = taxAmount;
+	}
+
+	public BigDecimal getTaxPerProduct() {
+		return taxPerProduct;
+	}
+
+	public void setTaxPerProduct(BigDecimal taxPerProduct) {
+		this.taxPerProduct = taxPerProduct;
+	}
+
+	public BigDecimal getTotalTax() {
 		return totalTax;
 	}
 
-	public void setTotalTax(Long totalTax) {
+	public void setTotalTax(BigDecimal totalTax) {
 		this.totalTax = totalTax;
 	}
+	
+	
 
 	
 

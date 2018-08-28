@@ -41,7 +41,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
 
   addRiskAssRiskWsHdr() {
     console.log(this.budgetYear);
-    const URL = "ia/int08/addRiskAssRiskWsHdr";
+    const URL = "ia/int083/addRiskAssRiskWsHdr";
 
     this.ajax.post(URL, { riskHdrName: this.riskHdrName, budgetYear: this.budgetYear, active: 'Y' }, res => {
       var message = res.json();
@@ -58,7 +58,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
   }
 
   initDatatable(): void {
-    const URL = AjaxService.CONTEXT_PATH + "ia/int08/searchRiskAssRiskWsHdr";
+    const URL = AjaxService.CONTEXT_PATH + "ia/int083/searchRiskAssRiskWsHdr";
     console.log(URL);
     this.datatable = $("#dataTable").DataTable({
       lengthChange: false,
@@ -117,7 +117,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
           console.log("del");
           console.log(data.riskHrdId);
 
-          const URL = "ia/int08/deleteRiskAssRiskWsHdr";
+          const URL = "ia/int083/deleteRiskAssRiskWsHdr";
 
           this.ajax.post(URL, { riskHrdId: data.riskHrdId }, res => {
             var message = res.json();

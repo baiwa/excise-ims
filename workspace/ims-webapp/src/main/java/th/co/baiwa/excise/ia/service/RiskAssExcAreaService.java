@@ -18,18 +18,18 @@ import th.co.baiwa.excise.domain.Int0801Vo;
 import th.co.baiwa.excise.domain.RiskFullDataVo;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
-import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
-import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaHdr;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssOtherDtlRepository;
-import th.co.baiwa.excise.ia.persistence.repository.RiskAssRiskWsDtlRepository;
-import th.co.baiwa.excise.ia.persistence.repository.RiskAssRiskWsHdrRepository;
+import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcAreaDtlRepository;
+import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcAreaHdrRepository;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 
 @Service
-public class RiskAssRiskWsService {
-	private static final Logger logger = LoggerFactory.getLogger(RiskAssRiskWsService.class);
-	private final RiskAssRiskWsHdrRepository riskAssRiskWsHdrRepository;
+public class RiskAssExcAreaService {
+	private static final Logger logger = LoggerFactory.getLogger(RiskAssExcAreaService.class);
+	private final RiskAssExcAreaHdrRepository riskAssRiskWsHdrRepository;
 	private final String BUDGET_YEAR = "BUDGET_YEAR";
 	private final String RISK_CONFIG = "RISK_CONFIG";
 	private final String INT08_1 = "INT08-1";
@@ -41,7 +41,7 @@ public class RiskAssRiskWsService {
 	private LovRepository lovRepository;
 
 	@Autowired
-	private RiskAssRiskWsDtlRepository riskAssRiskWsDtlRepository;
+	private RiskAssExcAreaDtlRepository riskAssExcAreaDtlRepository;
 
 	@Autowired
 	private RiskAssOtherDtlRepository riskAssOtherDtlRepository;
@@ -50,16 +50,16 @@ public class RiskAssRiskWsService {
 	private ConditionService conditionService;
 
 	@Autowired
-	public RiskAssRiskWsService(RiskAssRiskWsHdrRepository riskAssRiskWsHdrRepository) {
+	public RiskAssExcAreaService(RiskAssExcAreaHdrRepository riskAssRiskWsHdrRepository) {
 		this.riskAssRiskWsHdrRepository = riskAssRiskWsHdrRepository;
 	}
 
-	public Message createRiskAssRiskWsHdrRepository(RiskAssRiskWsHdr riskAssRiskWsHdr) {
+	public Message createRiskAssExcAreaHdrRepository(RiskAssExcAreaHdr riskAssRiskWsHdr) {
 		logger.info("Risk Name : " + riskAssRiskWsHdr.getRiskHdrName());
 		Message message = null;
-		List<RiskAssRiskWsHdr> riskWsHdrList = riskAssRiskWsHdrRepository.findByCriteria(riskAssRiskWsHdr);
+		List<RiskAssExcAreaHdr> riskWsHdrList = riskAssRiskWsHdrRepository.findByCriteria(riskAssRiskWsHdr);
 		if (BeanUtils.isEmpty(riskWsHdrList) && riskWsHdrList.size() == 0) {
-			RiskAssRiskWsHdr riskWsHdr = riskAssRiskWsHdrRepository.save(riskAssRiskWsHdr);
+			RiskAssExcAreaHdr riskWsHdr = riskAssRiskWsHdrRepository.save(riskAssRiskWsHdr);
 			if (BeanUtils.isNotEmpty(riskWsHdr.getRiskHrdId())) {
 				message = ApplicationCache.getMessage("MSG_00002");
 			} else {
@@ -71,10 +71,10 @@ public class RiskAssRiskWsService {
 		return message;
 	}
 
-	public ResponseDataTable<RiskAssRiskWsHdr> findByCriteriaForDatatable(RiskAssRiskWsHdr riskAssRiskWsHdr, DataTableRequest dataTableRequest) {
+	public ResponseDataTable<RiskAssExcAreaHdr> findByCriteriaForDatatable(RiskAssExcAreaHdr riskAssRiskWsHdr, DataTableRequest dataTableRequest) {
 
-		ResponseDataTable<RiskAssRiskWsHdr> responseDataTable = new ResponseDataTable<RiskAssRiskWsHdr>();
-		List<RiskAssRiskWsHdr> riskAssRiskWsHdrList = findByBudgetYear(riskAssRiskWsHdr.getBudgetYear());
+		ResponseDataTable<RiskAssExcAreaHdr> responseDataTable = new ResponseDataTable<RiskAssExcAreaHdr>();
+		List<RiskAssExcAreaHdr> riskAssRiskWsHdrList = findByBudgetYear(riskAssRiskWsHdr.getBudgetYear());
 		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
 		responseDataTable.setData(riskAssRiskWsHdrList);
 		responseDataTable.setRecordsTotal(riskAssRiskWsHdrList.size());
@@ -83,16 +83,16 @@ public class RiskAssRiskWsService {
 
 	}
 
-	public List<RiskAssRiskWsHdr> findByBudgetYear(String year) {
+	public List<RiskAssExcAreaHdr> findByBudgetYear(String year) {
 		return riskAssRiskWsHdrRepository.findByBudgetYear(year);
 	}
 
-	public List<RiskAssRiskWsDtl> findRiskAssRiskDtlByWebService() {
-		return webServiceExciseService.getRiskAssRiskWsDtlList(new RiskAssRiskWsDtl());
+	public List<RiskAssExcAreaDtl> findRiskAssRiskDtlByWebService() {
+		return webServiceExciseService.getRiskAssExcAreaDtlList(new RiskAssExcAreaDtl());
 
 	}
 
-	public Message deleteRiskAssRiskWsHdrRepository(RiskAssRiskWsHdr riskAssRiskWsHdr) {
+	public Message deleteRiskAssExcAreaHdrRepository(RiskAssExcAreaHdr riskAssRiskWsHdr) {
 		logger.info("Risk Name : " + riskAssRiskWsHdr.getRiskHdrName());
 		riskAssRiskWsHdrRepository.delete(riskAssRiskWsHdr.getRiskHrdId());
 		Message message = ApplicationCache.getMessage("MSG_00005");
@@ -100,7 +100,7 @@ public class RiskAssRiskWsService {
 
 	}
 
-	public Message createBuggetYear(RiskAssRiskWsHdr riskAssRiskWsHdr) {
+	public Message createBuggetYear(RiskAssExcAreaHdr riskAssRiskWsHdr) {
 		Message message = null;
 		Lov lov = new Lov(BUDGET_YEAR);
 		lov.setValue1(riskAssRiskWsHdr.getBudgetYear());
@@ -110,10 +110,10 @@ public class RiskAssRiskWsService {
 			lovRepository.save(lov);
 			Lov dataInit = new Lov(RISK_CONFIG);
 			dataInit.setSubType(INT08_1);
-			RiskAssRiskWsHdr insertConfigData = null;
+			RiskAssExcAreaHdr insertConfigData = null;
 			List<Lov> lovInitList = lovRepository.queryLovByCriteria(dataInit, null);
 			for (Lov lov2 : lovInitList) {
-				insertConfigData = new RiskAssRiskWsHdr();
+				insertConfigData = new RiskAssExcAreaHdr();
 				insertConfigData.setRiskHdrName(lov2.getValue1());
 				insertConfigData.setBudgetYear(riskAssRiskWsHdr.getBudgetYear());
 				riskAssRiskWsHdrRepository.save(insertConfigData);
@@ -127,14 +127,14 @@ public class RiskAssRiskWsService {
 
 	}
 
-	public List<RiskAssRiskWsDtl> findByGroupRiskHrdId(Long riskHrdId) {
-		return riskAssRiskWsDtlRepository.findByGroupRiskHrdId(riskHrdId);
+	public List<RiskAssExcAreaDtl> findByGroupRiskHrdId(Long riskHrdId) {
+		return riskAssExcAreaDtlRepository.findByGroupRiskHrdId(riskHrdId);
 	}
 
-	public void updateRiskAssRiskWsDtl(List<RiskAssRiskWsDtl> riskAssRiskWsDtls) {
+	public void updateRiskAssExcAreaDtl(List<RiskAssExcAreaDtl> riskAssRiskWsDtls) {
 		List<Condition> conditionList = conditionService.findConditionByParentId(riskAssRiskWsDtls.get(0).getRiskHrdId(), "MAIN", "int08-1-5");
 		if (BeanUtils.isNotEmpty(conditionList)) {
-			for (RiskAssRiskWsDtl riskAssRiskWsDtl : riskAssRiskWsDtls) {
+			for (RiskAssExcAreaDtl riskAssRiskWsDtl : riskAssRiskWsDtls) {
 				for (Condition condition : conditionList) {
 					long value = riskAssRiskWsDtl.getApproveBudget().longValue();
 					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
@@ -149,29 +149,29 @@ public class RiskAssRiskWsService {
 					}
 				}
 
-				riskAssRiskWsDtlRepository.save(riskAssRiskWsDtls);
+				riskAssExcAreaDtlRepository.save(riskAssRiskWsDtls);
 			}
 		}
 	}
 
-	public RiskAssRiskWsHdr findById(Long id) {
+	public RiskAssExcAreaHdr findById(Long id) {
 		return riskAssRiskWsHdrRepository.findOne(id);
 	}
 	
-	public List<RiskAssRiskWsHdr> updatePercent(List<RiskAssRiskWsHdr> riskAssRiskWsHdrs) {
-		List<RiskAssRiskWsHdr> RiskAssRiskWsHdrList = new ArrayList<RiskAssRiskWsHdr>();
-		for (RiskAssRiskWsHdr riskAssRiskWsHdr : riskAssRiskWsHdrs) {
+	public List<RiskAssExcAreaHdr> updatePercent(List<RiskAssExcAreaHdr> riskAssRiskWsHdrs) {
+		List<RiskAssExcAreaHdr> RiskAssExcAreaHdrList = new ArrayList<RiskAssExcAreaHdr>();
+		for (RiskAssExcAreaHdr riskAssRiskWsHdr : riskAssRiskWsHdrs) {
 			riskAssRiskWsHdrRepository.updatePercent(riskAssRiskWsHdr.getPercent(), riskAssRiskWsHdr.getRiskHrdId());
-			RiskAssRiskWsHdrList.add(riskAssRiskWsHdrRepository.findOne(riskAssRiskWsHdr.getRiskHrdId()));
+			RiskAssExcAreaHdrList.add(riskAssRiskWsHdrRepository.findOne(riskAssRiskWsHdr.getRiskHrdId()));
 		}
-		return RiskAssRiskWsHdrList;
+		return RiskAssExcAreaHdrList;
 	}
 
-	public void updateRiskAssRiskWsHdr(RiskAssRiskWsHdr riskAssRiskWsHdr) {
+	public void updateRiskAssExcAreaHdr(RiskAssExcAreaHdr riskAssRiskWsHdr) {
 		riskAssRiskWsHdrRepository.save(riskAssRiskWsHdr);
 	}
 
-	public List<RiskAssRiskWsHdr> findByCriteria(RiskAssRiskWsHdr riskAssRiskWsHdr) {
+	public List<RiskAssExcAreaHdr> findByCriteria(RiskAssExcAreaHdr riskAssRiskWsHdr) {
 		return riskAssRiskWsHdrRepository.findByCriteria(riskAssRiskWsHdr);
 	}
 

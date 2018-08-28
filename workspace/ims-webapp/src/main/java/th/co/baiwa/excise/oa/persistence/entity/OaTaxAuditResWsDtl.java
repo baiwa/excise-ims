@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.oa.persistence.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,25 +26,25 @@ public class OaTaxAuditResWsDtl extends BaseEntity {
 	private Long taxAuditResultWsDtlId;
 	
 	@Column(name="COST")
-	private Long cost;
+	private BigDecimal cost;
 
 	@Column(name="EXTRA_MONEY")
-	private Long extraMoney;
+	private BigDecimal extraMoney;
 	
 	@Column(name="FINE")
-	private Long fine;
+	private BigDecimal fine;
 	
 	@Column(name="FINE_TAX")
-	private Long fineTax;
+	private BigDecimal fineTax;
 
 	@Column(name="LOCAL_TAX")
-	private Long localTax;
+	private BigDecimal localTax;
 	
 	@Column(name="MONTH")
 	private String month;
 	
 	@Column(name="PRICE")
-	private Long price;
+	private BigDecimal price;
 	
 	@Column(name="TAX_AUDIT_RESULT_WS_HDR_ID")
 	private String taxAuditResultWsDtlOrder;
@@ -51,7 +53,7 @@ public class OaTaxAuditResWsDtl extends BaseEntity {
 	private Long taxAuditResultWsHdrId;
 	
 	@Column(name="TAX_PERCENTAGE")
-	private Long taxPercentage;
+	private BigDecimal taxPercentage;
 
 	@Column(name="VALUE")
 	private String value;
@@ -64,43 +66,43 @@ public class OaTaxAuditResWsDtl extends BaseEntity {
 		this.taxAuditResultWsDtlId = taxAuditResultWsDtlId;
 	}
 
-	public Long getCost() {
+	public BigDecimal getCost() {
 		return cost;
 	}
 
-	public void setCost(Long cost) {
+	public void setCost(BigDecimal cost) {
 		this.cost = cost;
 	}
 
-	public Long getExtraMoney() {
+	public BigDecimal getExtraMoney() {
 		return extraMoney;
 	}
 
-	public void setExtraMoney(Long extraMoney) {
+	public void setExtraMoney(BigDecimal extraMoney) {
 		this.extraMoney = extraMoney;
 	}
 
-	public Long getFine() {
+	public BigDecimal getFine() {
 		return fine;
 	}
 
-	public void setFine(Long fine) {
+	public void setFine(BigDecimal fine) {
 		this.fine = fine;
 	}
 
-	public Long getFineTax() {
+	public BigDecimal getFineTax() {
 		return fineTax;
 	}
 
-	public void setFineTax(Long fineTax) {
+	public void setFineTax(BigDecimal fineTax) {
 		this.fineTax = fineTax;
 	}
 
-	public Long getLocalTax() {
+	public BigDecimal getLocalTax() {
 		return localTax;
 	}
 
-	public void setLocalTax(Long localTax) {
+	public void setLocalTax(BigDecimal localTax) {
 		this.localTax = localTax;
 	}
 
@@ -112,11 +114,11 @@ public class OaTaxAuditResWsDtl extends BaseEntity {
 		this.month = month;
 	}
 
-	public Long getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(Long price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
@@ -136,11 +138,11 @@ public class OaTaxAuditResWsDtl extends BaseEntity {
 		this.taxAuditResultWsHdrId = taxAuditResultWsHdrId;
 	}
 
-	public Long getTaxPercentage() {
+	public BigDecimal getTaxPercentage() {
 		return taxPercentage;
 	}
 
-	public void setTaxPercentage(Long taxPercentage) {
+	public void setTaxPercentage(BigDecimal taxPercentage) {
 		this.taxPercentage = taxPercentage;
 	}
 
@@ -151,6 +153,7 @@ public class OaTaxAuditResWsDtl extends BaseEntity {
 	public void setValue(String value) {
 		this.value = value;
 	}
+
 	
 	
 
