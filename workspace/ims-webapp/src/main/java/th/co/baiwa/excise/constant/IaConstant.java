@@ -43,6 +43,7 @@ public class IaConstant {
             public static final String TRAINING_B = "4";
             public static final String TRAINING_B_DESC = "อบรมประเภท ข";
         }
+        
         public static class TYPE_ROOM {
             public static final String ONE = "1";
             public static final String ONE_DESC = "ห้องเดี่ยว";
@@ -50,6 +51,21 @@ public class IaConstant {
             public static final String TWO = "2";
             public static final String TWO_DESC = "ห้องคู่";
         }
+        
+        public static class IAPROOF_OF_PAYMENT_DOCUMENT_TYPE {
+            
+            public static final String ONE_DESC   = "หลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ";
+            public static final String ONE_CODE   = "1";
+
+            public static final String TWO_DESC   = "ใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ";
+            public static final String TWO_CODE   = "2";
+            
+            public static final String THREE_DESC = "เอกสารหลักฐานแนบ";
+            public static final String THREE_CODE = "3";
+        }
+        
+        
+        
 
 
     }

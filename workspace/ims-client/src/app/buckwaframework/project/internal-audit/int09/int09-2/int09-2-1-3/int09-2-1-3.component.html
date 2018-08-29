@@ -41,13 +41,13 @@
                 <div class="three wide column">
                     <select class="ui dropdown"  id="case" (change)="caseDropdownChange($event)" required>
                         <option value="">เลือก</option>
-                        <option value="306">ปกติ</option>
-                        <option value="324">เหมาจ่าย</option>                                        
+                        <option value="ปกติ">ปกติ</option>
+                        <option value="เหมาจ่าย">เหมาจ่าย</option>                                        
                     </select>             
                 </div>  
                 <div class="two wide column right aligned"><label>ประเภท</label></div>
                 <div class="three wide column">
-                    <select class="ui dropdown"  id="type" (change)="typeDropdownChange($event)" required>
+                    <select class="ui dropdown"  id="type" required>
                         <option value="">เลือก</option>
                         <option *ngFor="let data of typeDropdown" value="{{data.value}}">{{data.label}}</option>
                     </select>             

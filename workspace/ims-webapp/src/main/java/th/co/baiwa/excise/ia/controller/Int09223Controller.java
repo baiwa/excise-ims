@@ -19,9 +19,17 @@ public class Int09223Controller {
 
 	@Autowired
 	private Int09223Service int09223Service;
+	
 	@PostMapping("/listDropdown")
 	@ResponseBody
 	public List<LabelValueBean> dropdownList(@RequestBody Int09213FormVo formVo){
 		return int09223Service.dropdownListType(formVo);
 	}
+	
+	@PostMapping("/listDropdown2")
+	@ResponseBody
+	public List<LabelValueBean> dropdownList2(@RequestBody Int09213FormVo formVo){
+		return int09223Service.dropdownListType2(formVo);
+	}
 }
+

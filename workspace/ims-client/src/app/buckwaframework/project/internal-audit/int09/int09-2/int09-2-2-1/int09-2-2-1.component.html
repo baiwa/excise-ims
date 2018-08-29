@@ -1,5 +1,5 @@
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-    <span>รายงานประมาณการค่าใช้จ่ายในการเดินทาง</span>
+    <span>รายงานหลักฐานการชดใช้เงินยืม</span>
   </div>
   <div class="ui form center aligned" id="int09-1"  ngNativeValidate>
     <div class="ui attached  segment">
@@ -18,11 +18,14 @@
         </div>          
           <div class="two wide column"><label>ประเภทเอกสาร</label></div>
           <div class="four wide column">
-            <select class="ui search dropdown" id="doctype">
-                <option value="0">ทั้งหมด</option>
-                <option value="1">หลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ</option>
-                <option value="2">ใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ</option>
-            </select>
+              <div class="ui form">
+                  <div class="field">
+                    <select class="ui search dropdown" id="documentType">
+                      <option value="">ทั้งหมด</option>
+                      <option *ngFor="let data of documentTypeList" value="{{data.value}}">{{data.label}}</option> 
+                    </select>
+                  </div>
+                </div>
           </div>
           <div class="two wide column"></div>
           <div class="two wide column"></div>
@@ -32,7 +35,7 @@
         <div class="eight wide column">
           <button class="ui  primary button" type="button" (click)="clickSearch()">ค้นหา</button>
           <button class="ui  grey button" type="button" (click)="clickClear()"> ล้างข้อมูล</button>
-          <button class="ui  green button" type="button" routerLink="/int09/2-2-2">สร้าง</button>
+          <button class="ui  green button" type="button" (click)="clickCreate()">สร้าง</button>
         </div>
       </div>
       <br>
@@ -40,13 +43,15 @@
   
       <br>
         <table id="tableData" class="ui small celled table" style="width: 100%">
-          <thead>
+          <thead>							
             <tr style="text-align: center;">
               <th ><input id="checkAllSap" type="checkbox" (click)="clickCheckAll($event)"/></th>
               <th>ลำดับที่</th>
-              <th>หน่วยงาน</th>
-              <th>วันที่</th>
+              <th>วันที่สร้าง</th>
               <th>ผู้สร้าง</th>
+              <th>ประเภทเอกสาร</th>
+              <th>ผู้เบิก</th>
+              <th>ปีงบประมาณ</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -54,7 +59,7 @@
         </table>
         <br><br>
       <div class="ui form center aligned grid">
-          <button class="ui red button"  (click)="clickDelete()">ลบ</button>
+          <button class="ui red button"  (click)="clickDelete()">ลบรายการที่เลือก</button>
       </div>  
       <br>  
       </div>        

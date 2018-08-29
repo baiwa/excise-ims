@@ -12,14 +12,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
@@ -38,6 +36,7 @@ public class DateConstant {
 	public static final String MM_YYYY = "MM/yyyy";
 	
 	public final static String DD_MM_YYYY = "dd/MM/yyyy";
+	public final static String DD_MM_YYYY_HH_mm = "dd/MM/yyyy HH:mm";
 	public final static String YYYY = "yyyy";
 	
 	@Autowired
@@ -80,6 +79,7 @@ public class DateConstant {
 		Collections.sort(data);
 		for (Integer integer : data) {
 			monthListReturn.add(mapping.get(integer));
+			//System.out.println(mapping.get(integer));
 		}
 		return monthListReturn;
 	}
@@ -167,12 +167,24 @@ public class DateConstant {
 		Date date = null;
 		try {
 			if (StringUtils.isNotBlank(yyyy)) {
-				date = DateUtils.parseDate(StringUtils.trim(yyyy),LOCAL_TH, YYYY);
+				date = DateUtils.parseDate(yyyy, LOCAL_TH, YYYY);
 			}
 		} catch (Exception e) {
 			logger.error("Error convertStrYYYYToDate : ", e);
 		}
 		return date;
 	}
-
+	
+	public static Date convertStrDD_MM_YYYYToDate(String dateString) {
+		Date date = null;
+		try {
+			if (StringUtils.isNotBlank(dateString)) {
+				date = DateUtils.parseDate(dateString,LOCAL_TH,DD_MM_YYYY);
+			}
+		} catch (Exception e) {
+			logger.error("Error convertStrYYYYToDate : ", e);
+		}
+		return date;
+	}
+	
 }

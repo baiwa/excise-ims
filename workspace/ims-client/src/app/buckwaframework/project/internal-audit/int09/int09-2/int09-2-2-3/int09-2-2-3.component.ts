@@ -1,6 +1,8 @@
 import { AjaxService } from './../../../../../common/services/ajax.service';
 import { TextDateTH, formatter } from './../../../../../common/helper/datepicker';
 import { Component, OnInit } from '@angular/core';
+import { Router ,ActivatedRoute} from '@angular/router';
+
 
 declare var jQuery: any;
 declare var $: any;
@@ -16,37 +18,56 @@ export class Int09223Component implements OnInit {
   rentDate;
   rentCost;
   travelCost;
-  typeDropdown : any;
-  levelDropdown : any;
-  dataDropdown : any;
   
-  constructor( private ajax:AjaxService) {
+  typeDropdown : any;
+  trainingCaseDropdown: any;
+  withdrawTypeDropdown: any;
+  trainingRoomTypeDropdown: any;
+  gradeDropdown : any;
+  dataDropdown : any;
+
+  idProcessHead : any;
+  stateAgencyNameHead : any;
+  thosePickedHead : any;
+  fiscalYearInHead : any;
+  
+  constructor( private ajax:AjaxService,private route:ActivatedRoute) {
     this.allowanceDate = 0;
     this.allowanceCost = 0;
     this.rentDate = 0;
     this.rentCost = 0;
     this.travelCost = 0;
   }
+
+  setValue = ()=>{
+  let data = this.route.snapshot.queryParams["fiscalYear"].split("/");
+  let m = parseInt(data[1])-1;
+  this.idProcessHead = this.route.snapshot.queryParams["idProcess"];
+   this.stateAgencyNameHead = this.route.snapshot.queryParams["stateAgencyName"];
+   this.thosePickedHead = this.route.snapshot.queryParams["thosePicked"];
+   this.fiscalYearInHead = data[0]+" "+TextDateTH.months[m]+" "+data[2];
+  }
+
   calenda = function () {
-    $("#appoveDate").calendar({
+    $("#dateOfApplication").calendar({
       maxDate: new Date(),
       type: "date",
       text: TextDateTH,
       formatter: formatter()
     });
-    $("#withdrawDate").calendar({
+    $("#dateOfWithdrawal").calendar({
       maxDate: new Date(),
       type: "date",
       text: TextDateTH,
       formatter: formatter()
     });
-    $("#startGoDate").calendar({
+    $("#departureDate").calendar({
       maxDate: new Date(),
       type: "date",
       text: TextDateTH,
       formatter: formatter()
     });
-    $("#endGoDate").calendar({
+    $("#returnDate").calendar({
       maxDate: new Date(),
       type: "date",
       text: TextDateTH,
@@ -70,7 +91,7 @@ export class Int09223Component implements OnInit {
   typeDropdownList =() =>{
 
     this.dataDropdown = {
-      lovIdMaster : "305"
+      lovIdMaster : "306"
     }
     const URL =  "ia/int09223/listDropdown";
   
@@ -88,7 +109,46 @@ export class Int09223Component implements OnInit {
   
      this.ajax.post(URL, this.dataDropdown, res => {     
        console.log(res.json());
-       this.levelDropdown = res.json();
+       this.gradeDropdown = res.json();
+    });
+
+  }
+  trainingCaseDropdownList =() =>{
+
+    this.dataDropdown = {
+      lovIdMaster : "337"
+    }
+    const URL =  "ia/int09223/listDropdown";
+  
+     this.ajax.post(URL, this.dataDropdown, res => {   
+       this.trainingCaseDropdown = res.json();
+    });
+  }
+
+  withdrawTypeDropdownList =() =>{
+
+    this.dataDropdown = {
+      lovIdMaster : "336"
+    }
+    const URL =  "ia/int09223/listDropdown";
+  
+     this.ajax.post(URL, this.dataDropdown, res => {   
+       this.withdrawTypeDropdown = res.json();
+    });
+  }
+  
+
+  trainingRoomTypeDropdownList = event => {
+    let id = $("#withdrawType").val();
+    console.log("withdrawType : ",$("#withdrawType").val());
+    this.dataDropdown = {
+      lovIdMaster : id
+    }
+     const URL =  "ia/int09223/listDropdown2";
+  
+     this.ajax.post(URL, this.dataDropdown, res => {     
+       console.log(res.json());
+       this.trainingRoomTypeDropdown = res.json();
     });
 
   }
@@ -104,7 +164,13 @@ export class Int09223Component implements OnInit {
       "ajax": {
         "url": '/ims-webapp/api/ia/int09213/list',
         "contentType": "application/json",
-        "type": "GET",
+        "type" : "POST",
+        "data" : (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "idProcess" : $("#idProcess").val(),
+            "searchFlag" : $("#searchFlag").val()
+          }));
+        },  
       },
 
       "columns": [
@@ -206,13 +272,16 @@ export class Int09223Component implements OnInit {
     });
 
   }
-  ngOnInit() {
+  ngOnInit() { 
+    this.setValue();
   }
   ngAfterViewInit() {
-
+   
     this.dataTable();
     $('.ui.dropdown').dropdown();
     this.typeDropdownList();
+    this.trainingCaseDropdownList();
+    this.withdrawTypeDropdownList();
     this.calenda();
 
   }

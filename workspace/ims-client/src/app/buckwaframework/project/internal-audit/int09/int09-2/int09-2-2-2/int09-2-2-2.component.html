@@ -10,16 +10,22 @@
     <div class="disabled  step">
       <div class="content">
         <div class="title"></div>
-        <div class="description">หลักฐานการจ่ายเงิน (แบบ 8708 ส่วนที่ 2)</div>
+        <div class="description">หลักฐานการจ่ายเงิน <br>(แบบ 8708 ส่วนที่ 2)</div>
       </div>
     </div>
     <div class="disabled  step">
       <div class="content">
         <div class="title"></div>
-        <div class="description">ใบเบิกค่าใช้จ่ายฯ (แบบ 8708 ส่วนที่ 1)</div>
+        <div class="description">ใบเบิกค่าใช้จ่ายฯ <br>(แบบ 8708 ส่วนที่ 1)</div>
       </div>
     </div>
     <div class="disabled  step">
+        <div class="content">
+          <div class="title"></div>
+          <div class="description">เอกสารขอเบิก</div>
+        </div>
+      </div>
+      <div class="disabled  step">
         <div class="content">
           <div class="title"></div>
           <div class="description">แนบหลักฐาน</div>
@@ -38,21 +44,22 @@
         <input type="hidden" id="searchFlag">
         <div class="two wide column"></div>
         <div class="two wide column"><label>ชื่อส่วนราชการ</label></div>
-        <div class="four wide column"><input type="text" id="nameOrg"></div>
+        <div class="four wide column"><input type="text" id="stateAgencyName"></div>
         <div class="two wide column"><label>ผู้เบิก</label></div>
         <div class="four wide column">
-            <div class="four wide column"><input type="text" id="nameOrg"></div>
+            <div class="four wide column"><input type="text" id="thosePicked"></div>
         </div>
         <div class="two wide column"></div>
         <div class="two wide column"></div>
     </div>
-    <div class="ui grid">
-        <div class="four wide column ui right aligned"><label>วัน เวลา ออกเดินทาง</label></div>
+    <div class="ui grid"> 
+      <div class="two wide column"></div>
+      <div class="two wide column"><label>ลงวันที่</label></div>
         <div class="four wide column">
-            <div class="ui calendar" id="date">
+            <div class="ui calendar" id="fiscalYear">
                 <div class="ui input left icon">
                     <i class="time icon"></i>
-                    <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                    <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
                 </div>
             </div>
         </div>
@@ -61,7 +68,8 @@
 
     <div class="ui center aligned grid">
       <div class="eight wide column">
-        <button class="ui  primary button" routerLink="/int09/2-2-3" type="button" >บันทึก</button>
+        <button class="ui  grey button"    type="button" (click)="clickback()" ><i class="arrow left icon"></i> กลับ</button>
+        <button class="ui  primary button" type="button" (click)="clickSave()" ><i class="save outline icon"></i> บันทึก</button>
       </div>
     </div>
     </div>
