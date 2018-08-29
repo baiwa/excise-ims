@@ -165,8 +165,9 @@ export class Int0811Component implements OnInit {
         { data: "riskHdrName" },
         { data: "riskHrdPaperName" },
         { data: "budgetYear" },
-        { data: "createdBy" },
+
         { data: "createdDate" },
+        { data: "createdBy" },
         { data: "active" },
         {
           data: "riskHdrId",

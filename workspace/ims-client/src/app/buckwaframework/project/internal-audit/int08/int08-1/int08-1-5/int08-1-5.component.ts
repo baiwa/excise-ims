@@ -60,7 +60,7 @@ export class Int0815Component implements OnInit {
       ajax: {
         type: "POST",
         url: URL,
-        data: {}
+        data: { riskHrdId: this.id }
       },
       columns: [
 
