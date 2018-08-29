@@ -77,34 +77,21 @@
   </div>
 
   <div class="content">
-    <div class="ui grid">
-      <div class="centered row">
-        <div class="fourteen wide column">
-          <div class="ui form">
-            <div class="fields">
-              <div class="inline field">
-                <label>ประเภทเอกสาร</label>
-                <select class="ui dropdown search selection" id="sector" (change)="sectorOnchange($event)">
-                  <option value="">เลือก</option>
-                  <option *ngFor="let data of sectorList" value="{{data.value}}">{{data.label}}</option>
+      <div class="ui form">
+          <div class="inline fields">
+            <div class="three wide field"></div>
+            <div class="two wide field">
+              <label>ประเภทเอกสาร</label>
+            </div>
+            <div class="six wide field">
+                <select class="ui dropdown search selection" id="documentType"  style = "width:100%">
+                    <option value="">เลือก</option>
+                    <option *ngFor="let data of documentTypeList" value="{{data.value}}">{{data.label}}</option>
                 </select>
-              </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- <div class="two wide column"></div>
-      <div class="inline fields">
-        <label class="two wide field">ประเภทเอกสาร</label>
-        <div class="field">
-          <select class="ui dropdown search selection" id="sector" (change)="sectorOnchange($event)">
-            <option value="">เลือก</option>
-            <option *ngFor="let data of sectorList" value="{{data.value}}">{{data.label}}</option>
-          </select>
-        </div>
-      </div> -->
     </div>
-  </div>
 
   <div class="actions">
     <div class="ui red deny button">ยกเลิก</div>

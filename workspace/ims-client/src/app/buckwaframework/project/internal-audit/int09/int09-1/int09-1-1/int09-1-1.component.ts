@@ -24,6 +24,8 @@ declare var $: any;
 export class Int0911Component implements OnInit {
 
   searchFlag: String;
+  documentTypeList:any;
+
   constructor(
     private ajax: AjaxService,
     private router: Router,
@@ -32,6 +34,12 @@ export class Int0911Component implements OnInit {
     private travelService: TravelService
   ) { }
 
+  getDocumentTypeList (){
+    this.documentTypeList = [
+      {value:1,label:"เอกสาร 1"},
+      {value:2,label:"เอกสาร 2"},
+      {value:3,label:"เอกสาร 3"}]
+  }
   dataTable = function(){
     var table = $('#tableData').DataTable({
       "lengthChange":true,
@@ -162,9 +170,18 @@ export class Int0911Component implements OnInit {
   }
   addDocument (){
    console.log("Add Document : True");
+    if($('#documentType').val()==1){
+      this.router.navigate(['/int09/1/1/1']);
+    }else if($('#documentType').val()==2){
+      this.router.navigate(['/int09/1/1/1']);
+    }else if($('#documentType').val()==3){
+      this.router.navigate(['/int09/1/1/1']);
+    }
+    $('#modalAddDocument').modal('hide');
   }
 
   ngOnInit() {
+    this.getDocumentTypeList();
     this.dataTable();
     this.dataTable2();
   }
