@@ -30,8 +30,8 @@ public class RiskAssInfOtherDtl extends BaseEntity {
 	@Column(name = "RISK_INF_HRD_ID")
 	private Long riskInfHrdId;
 
-	@Column(name = "INF_OTHER_NAME")
-	private String riskAssInfOtherName;
+	@Column(name = "INF_NAME")
+	private String infName;
 
 	@Column(name = "RISK_COST")
 	private BigDecimal riskCost;
@@ -41,6 +41,17 @@ public class RiskAssInfOtherDtl extends BaseEntity {
 
 	@Column(name = "VALUE_TRANSLATION")
 	private String valueTranslation;
+
+	@Column(name = "COLOR")
+	private String color;
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
 
 	public Long getRiskAssInfOtherId() {
 		return riskAssInfOtherId;
@@ -58,12 +69,12 @@ public class RiskAssInfOtherDtl extends BaseEntity {
 		this.riskInfHrdId = riskInfHrdId;
 	}
 
-	public String getRiskAssInfOtherName() {
-		return riskAssInfOtherName;
+	public String getInfName() {
+		return infName;
 	}
 
-	public void setRiskAssInfOtherName(String riskAssInfOtherName) {
-		this.riskAssInfOtherName = riskAssInfOtherName;
+	public void setInfName(String infName) {
+		this.infName = infName;
 	}
 
 	public BigDecimal getRiskCost() {

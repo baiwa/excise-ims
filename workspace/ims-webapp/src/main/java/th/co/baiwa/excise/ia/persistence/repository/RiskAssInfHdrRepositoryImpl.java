@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
+import th.co.baiwa.excise.domain.Int0802Vo;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -76,4 +77,94 @@ public class RiskAssInfHdrRepositoryImpl implements RiskAssInfHdrRepositoryCusto
 			return assInfHdr;
 		}
 	};
+
+	@Override
+	public List<Int0802Vo> findInfNameByBudgetYear(String budgetYear) {
+		logger.info("findByCriteria");
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT DISTINCT INF_NAME FROM ( ");
+
+		sql.append(" SELECT D.INF_NAME FROM IA_RISK_ASS_INF_HDR H ");
+		sql.append(" LEFT JOIN IA_RISK_ASS_INF_DTL D ");
+		sql.append(" ON D.RISK_INF_HRD_ID = H.RISK_ASS_INF_HDR_ID ");
+		sql.append(" WHERE H.IS_DELETED = 'N' ");
+		sql.append(" AND H.BUDGET_YEAR = ? ");
+		sql.append(" AND D.IS_DELETED = 'N' ");
+		sql.append(" UNION ");
+
+		sql.append(" SELECT O.INF_NAME FROM IA_RISK_ASS_INF_HDR H ");
+		sql.append(" LEFT JOIN IA_RISK_ASS_INF_OTHER_DTL O ");
+		sql.append(" ON O.RISK_INF_HRD_ID = H.RISK_ASS_INF_HDR_ID ");
+		sql.append(" WHERE H.IS_DELETED = 'N' ");
+		sql.append(" AND H.BUDGET_YEAR = ? ");
+		sql.append(" AND O.IS_DELETED = 'N') ");
+
+		params.add(budgetYear);
+		params.add(budgetYear);
+		return commonJdbcTemplate.executeQuery(sql.toString(), params.toArray(), infMapping);
+	}
+
+	private RowMapper<Int0802Vo> infMapping = new RowMapper<Int0802Vo>() {
+
+		@Override
+		public Int0802Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int0802Vo int0802Vo = new Int0802Vo();
+			int0802Vo.setInfName(rs.getString("INF_NAME"));
+			return int0802Vo;
+		}
+
+	};
+
+	@Override
+	public List<Int0802Vo> findData(String budgetYear, String infName) {
+		logger.info("findByCriteria");
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append(" SELECT RISK_ASS_INF_HDR_NAME , INF_NAME,NVL(RL , 0) RL ,VALUE_TRANSLATION ");
+		sql.append(" FROM ");
+		sql.append(" ( ");
+		
+		sql.append(" SELECT H.RISK_ASS_INF_HDR_NAME, D.INF_NAME , D.RL , D.VALUE_TRANSLATION ");
+		sql.append(" FROM IA_RISK_ASS_INF_HDR H ");
+		sql.append(" left JOIN IA_RISK_ASS_INF_DTL D ");
+		sql.append(" ON D.RISK_INF_HRD_ID = H.RISK_ASS_INF_HDR_ID ");
+		sql.append(" WHERE H.IS_DELETED = 'N' ");
+		sql.append(" AND H.BUDGET_YEAR = ? ");
+		sql.append(" AND D.IS_DELETED = 'N' ");
+		sql.append(" AND D.INF_NAME = ? ");
+		sql.append(" UNION ");
+		
+		sql.append(" SELECT H.RISK_ASS_INF_HDR_NAME ,o.INF_NAME, O.RL , O.VALUE_TRANSLATION  ");
+		sql.append(" FROM IA_RISK_ASS_INF_HDR H ");
+		sql.append(" left JOIN IA_RISK_ASS_INF_OTHER_DTL O ");
+		sql.append(" ON O.RISK_INF_HRD_ID = H.RISK_ASS_INF_HDR_ID ");
+		sql.append(" WHERE H.IS_DELETED = 'N' ");
+		sql.append(" AND H.BUDGET_YEAR = ? ");
+		sql.append(" AND O.IS_DELETED = 'N' ");
+		sql.append(" AND O.INF_NAME = ? ");
+		sql.append(" ) ");
+		params.add(budgetYear);
+		params.add(infName);
+		params.add(budgetYear);
+		params.add(infName);
+		
+		return commonJdbcTemplate.executeQuery(sql.toString(), params.toArray(), mappingData);
+	}
+
+	private RowMapper<Int0802Vo> mappingData = new RowMapper<Int0802Vo>() {
+
+		@Override
+		public Int0802Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int0802Vo int0802Vo = new Int0802Vo();
+			int0802Vo.setInfName(rs.getString("INF_NAME"));
+			int0802Vo.setInfName(rs.getString("RISK_ASS_INF_HDR_NAME"));
+			int0802Vo.setRl(rs.getString("RL"));
+			return int0802Vo;
+
+		}
+
+	};
+	
 }

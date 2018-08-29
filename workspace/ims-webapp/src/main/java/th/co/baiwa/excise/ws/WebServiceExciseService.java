@@ -117,8 +117,7 @@ public class WebServiceExciseService {
 
 		RiskAssInfDtl risk = new RiskAssInfDtl();
 		risk.setRiskAssInfDtlId(new Long(1));
-		risk.setRiskAssInfDtlName(
-				"ระบบงาน E-Services ยื่นแบบผ่านอินเตอร์เน็ต UAT https://edserver2-uat.excise.go.th/staesw");
+		risk.setInfName("ระบบงาน E-Services ยื่นแบบผ่านอินเตอร์เน็ต UAT https://edserver2-uat.excise.go.th/staesw");
 		risk.setJan(new BigDecimal(10));
 		risk.setFeb(new BigDecimal(12));
 		risk.setMar(new BigDecimal(13));
@@ -127,7 +126,7 @@ public class WebServiceExciseService {
 		risk.setJun(new BigDecimal(28));
 		risk.setJul(new BigDecimal(16));
 		risk.setAug(new BigDecimal(0));
-		risk.setSeptember(new BigDecimal(20));
+		risk.setSep(new BigDecimal(20));
 		risk.setOct(new BigDecimal(18));
 		risk.setNov(new BigDecimal(7));
 		risk.setDec(new BigDecimal(9));
@@ -136,7 +135,7 @@ public class WebServiceExciseService {
 
 		risk = new RiskAssInfDtl();
 		risk.setRiskAssInfDtlId(new Long(2));
-		risk.setRiskAssInfDtlName("เว็บไซต์กรมสรรพสามิต www.excise.go.th");
+		risk.setInfName("เว็บไซต์กรมสรรพสามิต www.excise.go.th");
 		risk.setJan(new BigDecimal(15));
 		risk.setFeb(new BigDecimal(8));
 		risk.setMar(new BigDecimal(14));
@@ -145,7 +144,7 @@ public class WebServiceExciseService {
 		risk.setJun(new BigDecimal(18));
 		risk.setJul(new BigDecimal(14));
 		risk.setAug(new BigDecimal(17));
-		risk.setSeptember(new BigDecimal(9));
+		risk.setSep(new BigDecimal(9));
 		risk.setOct(new BigDecimal(11));
 		risk.setNov(new BigDecimal(1));
 		risk.setDec(new BigDecimal(16));
@@ -154,7 +153,7 @@ public class WebServiceExciseService {
 
 		risk = new RiskAssInfDtl();
 		risk.setRiskAssInfDtlId(new Long(3));
-		risk.setRiskAssInfDtlName("ระบบงานอีเมล์กรมสรรพสามิต http://mail.excise.go.th");
+		risk.setInfName("ระบบงานอีเมล์กรมสรรพสามิต http://mail.excise.go.th");
 		risk.setJan(new BigDecimal(8));
 		risk.setFeb(new BigDecimal(11));
 		risk.setMar(new BigDecimal(18));
@@ -163,7 +162,7 @@ public class WebServiceExciseService {
 		risk.setJun(new BigDecimal(18));
 		risk.setJul(new BigDecimal(21));
 		risk.setAug(new BigDecimal(14));
-		risk.setSeptember(new BigDecimal(10));
+		risk.setSep(new BigDecimal(10));
 		risk.setOct(new BigDecimal(8));
 		risk.setNov(new BigDecimal(5));
 		risk.setDec(new BigDecimal(3));
@@ -172,7 +171,7 @@ public class WebServiceExciseService {
 
 		risk = new RiskAssInfDtl();
 		risk.setRiskAssInfDtlId(new Long(4));
-		risk.setRiskAssInfDtlName("ระบบงานสารสนเทศหลัก http://Web.excise.go.th/EDINTRAWeb");
+		risk.setInfName("ระบบงานสารสนเทศหลัก http://Web.excise.go.th/EDINTRAWeb");
 		risk.setJan(new BigDecimal(9));
 		risk.setFeb(new BigDecimal(13));
 		risk.setMar(new BigDecimal(9));
@@ -181,7 +180,7 @@ public class WebServiceExciseService {
 		risk.setJun(new BigDecimal(0));
 		risk.setJul(new BigDecimal(14));
 		risk.setAug(new BigDecimal(18));
-		risk.setSeptember(new BigDecimal(0));
+		risk.setSep(new BigDecimal(0));
 		risk.setOct(new BigDecimal(8));
 		risk.setNov(new BigDecimal(11));
 		risk.setDec(new BigDecimal(13));
@@ -190,7 +189,7 @@ public class WebServiceExciseService {
 		
 		risk = new RiskAssInfDtl();
 		risk.setRiskAssInfDtlId(new Long(5));
-		risk.setRiskAssInfDtlName("ระบบความปลอดภัยกลาง (SSO) http://authen.excise.go.th/oiddas");
+		risk.setInfName("ระบบความปลอดภัยกลาง (SSO) http://authen.excise.go.th/oiddas");
 		risk.setJan(new BigDecimal(22));
 		risk.setFeb(new BigDecimal(0));
 		risk.setMar(new BigDecimal(12));
@@ -199,7 +198,7 @@ public class WebServiceExciseService {
 		risk.setJun(new BigDecimal(9));
 		risk.setJul(new BigDecimal(2));
 		risk.setAug(new BigDecimal(4));
-		risk.setSeptember(new BigDecimal(3));
+		risk.setSep(new BigDecimal(3));
 		risk.setOct(new BigDecimal(7));
 		risk.setNov(new BigDecimal(0));
 		risk.setDec(new BigDecimal(9));
@@ -208,7 +207,7 @@ public class WebServiceExciseService {
 		
 		risk = new RiskAssInfDtl();
 		risk.setRiskAssInfDtlId(new Long(6));
-		risk.setRiskAssInfDtlName("ระบบงานกรมสรรพสามิต (Main Access)");
+		risk.setInfName("ระบบงานกรมสรรพสามิต (Main Access)");
 		risk.setJan(new BigDecimal(7));
 		risk.setFeb(new BigDecimal(17));
 		risk.setMar(new BigDecimal(9));
@@ -217,7 +216,7 @@ public class WebServiceExciseService {
 		risk.setJun(new BigDecimal(4));
 		risk.setJul(new BigDecimal(11));
 		risk.setAug(new BigDecimal(3));
-		risk.setSeptember(new BigDecimal(7));
+		risk.setSep(new BigDecimal(7));
 		risk.setOct(new BigDecimal(0));
 		risk.setNov(new BigDecimal(4));
 		risk.setDec(new BigDecimal(2));
@@ -226,7 +225,7 @@ public class WebServiceExciseService {
 		
 		risk = new RiskAssInfDtl();
 		risk.setRiskAssInfDtlId(new Long(7));
-		risk.setRiskAssInfDtlName("ระบบงานโครงการรถยนต์ใหม่คันแรก (อินเตอร์เน็ต) https://firstcar.excise.go.th");
+		risk.setInfName("ระบบงานโครงการรถยนต์ใหม่คันแรก (อินเตอร์เน็ต) https://firstcar.excise.go.th");
 		risk.setJan(new BigDecimal(9));
 		risk.setFeb(new BigDecimal(4));
 		risk.setMar(new BigDecimal(12));
@@ -235,7 +234,7 @@ public class WebServiceExciseService {
 		risk.setJun(new BigDecimal(4));
 		risk.setJul(new BigDecimal(7));
 		risk.setAug(new BigDecimal(3));
-		risk.setSeptember(new BigDecimal(0));
+		risk.setSep(new BigDecimal(0));
 		risk.setOct(new BigDecimal(6));
 		risk.setNov(new BigDecimal(2));
 		risk.setDec(new BigDecimal(1));
@@ -244,7 +243,7 @@ public class WebServiceExciseService {
 		
 		risk = new RiskAssInfDtl();
 		risk.setRiskAssInfDtlId(new Long(8));
-		risk.setRiskAssInfDtlName("ระบบงานโครงการรถยนต์ใหม่คันแรก (อินทราเน็ต) http://ed-firstcar.excise.go.th");
+		risk.setInfName("ระบบงานโครงการรถยนต์ใหม่คันแรก (อินทราเน็ต) http://ed-firstcar.excise.go.th");
 		risk.setJan(new BigDecimal(2));
 		risk.setFeb(new BigDecimal(6));
 		risk.setMar(new BigDecimal(3));
@@ -253,7 +252,7 @@ public class WebServiceExciseService {
 		risk.setJun(new BigDecimal(7));
 		risk.setJul(new BigDecimal(5));
 		risk.setAug(new BigDecimal(9));
-		risk.setSeptember(new BigDecimal(1));
+		risk.setSep(new BigDecimal(1));
 		risk.setOct(new BigDecimal(2));
 		risk.setNov(new BigDecimal(4));
 		risk.setDec(new BigDecimal(0));
@@ -262,7 +261,7 @@ public class WebServiceExciseService {
 		
 		risk = new RiskAssInfDtl();
 		risk.setRiskAssInfDtlId(new Long(9));
-		risk.setRiskAssInfDtlName("ระบบงานสารบรรณบูรณาการ http://192.168.3.123.8080/EDCSClient Web/pages/publile");
+		risk.setInfName("ระบบงานสารบรรณบูรณาการ http://192.168.3.123.8080/EDCSClient Web/pages/publile");
 		risk.setJan(new BigDecimal(0));
 		risk.setFeb(new BigDecimal(5));
 		risk.setMar(new BigDecimal(7));
@@ -271,7 +270,7 @@ public class WebServiceExciseService {
 		risk.setJun(new BigDecimal(8));
 		risk.setJul(new BigDecimal(1));
 		risk.setAug(new BigDecimal(0));
-		risk.setSeptember(new BigDecimal(1));
+		risk.setSep(new BigDecimal(1));
 		risk.setOct(new BigDecimal(0));
 		risk.setNov(new BigDecimal(8));
 		risk.setDec(new BigDecimal(1));
@@ -280,7 +279,7 @@ public class WebServiceExciseService {
 		
 		risk = new RiskAssInfDtl();
 		risk.setRiskAssInfDtlId(new Long(10));
-		risk.setRiskAssInfDtlName("ระบบงานสารสนเทศกฏหมายภาษีสรรพสามิต http://law.excise.go.th/exciselaw");
+		risk.setInfName("ระบบงานสารสนเทศกฏหมายภาษีสรรพสามิต http://law.excise.go.th/exciselaw");
 		risk.setJan(new BigDecimal(4));
 		risk.setFeb(new BigDecimal(2));
 		risk.setMar(new BigDecimal(1));
@@ -289,12 +288,13 @@ public class WebServiceExciseService {
 		risk.setJun(new BigDecimal(2));
 		risk.setJul(new BigDecimal(3));
 		risk.setAug(new BigDecimal(2));
-		risk.setSeptember(new BigDecimal(3));
+		risk.setSep(new BigDecimal(3));
 		risk.setOct(new BigDecimal(4));
 		risk.setNov(new BigDecimal(1));
 		risk.setDec(new BigDecimal(2));
 		risk.setTotal(new BigDecimal(26));
 		riskAssInfDtlList.add(risk);
+
 
 		return riskAssInfDtlList;
 	}

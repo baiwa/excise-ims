@@ -76,7 +76,7 @@ export class Int0823Component implements OnInit {
           },
           className: "center"
         },
-        { data: "riskAssInfDtlName" },
+        { data: "infName" },
         { data: "jan", render: $.fn.dataTable.render.number(',') },
         { data: "feb", render: $.fn.dataTable.render.number(',') },
         { data: "mar", render: $.fn.dataTable.render.number(',') },
@@ -85,7 +85,7 @@ export class Int0823Component implements OnInit {
         { data: "jun", render: $.fn.dataTable.render.number(',') },
         { data: "jul", render: $.fn.dataTable.render.number(',') },
         { data: "aug", render: $.fn.dataTable.render.number(',') },
-        { data: "september", render: $.fn.dataTable.render.number(',') },
+        { data: "sep", render: $.fn.dataTable.render.number(',') },
         { data: "oct", render: $.fn.dataTable.render.number(',') },
         { data: "nov", render: $.fn.dataTable.render.number(',') },
         { data: "dec", render: $.fn.dataTable.render.number(',') },
@@ -104,20 +104,9 @@ export class Int0823Component implements OnInit {
   }
 
   saveRiskAssInfDtl(): void {
-    this.riskInfPaperName  = $('#riskInfPaperName').val().trim();
-    this.userCheck  = $('#userCheck').val().trim();
 
-    
-    console.log("แสดงค่าที่กรอกข้อมูล");
-    console.log(this.id);
-    console.log(this.riskInfPaperName);
-    console.log(this.budgetYear);
-    
     this.riskAssInfHdr.riskInfPaperName = this.riskInfPaperName;
     this.riskAssInfHdr.userCheck = this.userCheck;
-   
-  
-
     console.log(this.datatable.data());
     var msgMessage = "";
 

@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,6 +14,8 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
+import th.co.baiwa.excise.domain.Int0802Vo;
+import th.co.baiwa.excise.domain.RiskFullDataInt0802Vo;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
@@ -161,7 +164,7 @@ public class RiskAssInfService {
 					}
 				}
 
-				riskAssInfDtlRepository.save(riskAssInfDtls);
+				riskAssInfDtlRepository.save(riskAssInfDtl);
 			}
 		}
 	}
@@ -198,7 +201,7 @@ public class RiskAssInfService {
 				try {
 					databaseData = riskAssInfOtherDtlRepository.findOne(riskAssInfOtherDtl.getRiskAssInfOtherId());
 					if (databaseData != null && databaseData.getRiskAssInfOtherId() != null) {
-						databaseData.setRiskAssInfOtherName(riskAssInfOtherDtl.getRiskAssInfOtherName());
+						databaseData.setInfName(riskAssInfOtherDtl.getInfName());
 						databaseData.setRiskCost(riskAssInfOtherDtl.getRiskCost());
 						databaseData.setRl(riskAssInfOtherDtl.getRl());
 						databaseData.setValueTranslation(riskAssInfOtherDtl.getValueTranslation());
@@ -216,6 +219,43 @@ public class RiskAssInfService {
 			}
 		}
 
+	}
+	
+	
+public List<RiskFullDataInt0802Vo> searchFullRiskByBudgetYear(String budgetYear , List<String> riskAssInfHdrNameList) {
+		List<RiskFullDataInt0802Vo> riskFullDataVoList = new ArrayList<RiskFullDataInt0802Vo>();
+		RiskFullDataInt0802Vo riskFullDataVo = new RiskFullDataInt0802Vo();
+		List<Int0802Vo> infNameList = riskAssInfHdrRepository.findInfNameByBudgetYear(budgetYear);
+		int index = 1;
+		for (Int0802Vo infName : infNameList) {
+			riskFullDataVo = new RiskFullDataInt0802Vo();
+			int sumRl = 0;
+			riskFullDataVo.setId(index+"");
+			riskFullDataVo.setInfName(infName.getInfName());
+			List<Int0802Vo> intList = riskAssInfHdrRepository.findData(budgetYear, infName.getInfName());
+			List<String> rl = new ArrayList<String>();
+			String rlDate = "";
+			for (String riskAssInfHdrName : riskAssInfHdrNameList) {
+				rlDate = "";
+				for (Int0802Vo value : intList) {
+					if(value.getInfName().equals(riskAssInfHdrName)) {
+						sumRl += Integer.parseInt(value.getRl());
+						rlDate = value.getRl();
+						break;
+					}
+				}
+				if(BeanUtils.isNotEmpty(rlDate)) {
+					rl.add(rlDate); 
+				}else {
+					rl.add("0");
+				}
+			}
+			riskFullDataVo.setRl(rl);
+			riskFullDataVo.setSumRiskCost(sumRl+"");
+			riskFullDataVoList.add(riskFullDataVo);
+			index++;
+		}
+		return riskFullDataVoList;
 	}
 	
 	public List<RiskAssInfHdr> findByBudgetYear(String year){

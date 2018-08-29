@@ -8,7 +8,8 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 public class Int0802Vo {
 
 	private List<RiskAssInfOtherDtl> riskAssInfOtherDtlList;
-	private String riskAssInfOtherName;
+	private String infName;
+
 	private String riskAssInfHdrName;
 	private String rl;
 	private String budgetYear;
@@ -23,12 +24,12 @@ public class Int0802Vo {
 		this.riskAssInfOtherDtlList = riskAssInfOtherDtlList;
 	}
 
-	public String getRiskAssInfOtherName() {
-		return riskAssInfOtherName;
+	public String getInfName() {
+		return infName;
 	}
 
-	public void setRiskAssInfOtherName(String riskAssInfOtherName) {
-		this.riskAssInfOtherName = riskAssInfOtherName;
+	public void setInfName(String infName) {
+		this.infName = infName;
 	}
 
 	public String getRiskAssInfHdrName() {

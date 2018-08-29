@@ -23,7 +23,7 @@ export class Int0824Component implements OnInit {
   budgetYear: any;
   userCheck: any;
 
-  riskAssInfOtherName: any = '';
+  infName: any = '';
   riskCost: any = '';
 
   datatable: any;
@@ -88,7 +88,7 @@ export class Int0824Component implements OnInit {
           var riskOtherData = new RiskOtherData();
           riskOtherData.riskAssInfOtherId = element.riskAssInfOtherId;
           riskOtherData.riskInfHrdId = element.riskInfHrdId;
-          riskOtherData.riskAssInfOtherName = element.riskAssInfOtherName;
+          riskOtherData.infName = element.infName;
           riskOtherData.riskCost = element.riskCost;
           riskOtherData.isDeleted = 'N';
           this.riskOtherDataList.push(riskOtherData);
@@ -119,14 +119,7 @@ export class Int0824Component implements OnInit {
 
           element.riskInfHrdId = this.id;
           this.riskOtherDataList.push(element);
-         
-          // let riskOtherData = new RiskOtherData();
-          // riskOtherData.riskAssInfOtherName = element.riskAssInfOtherName;
-          // riskOtherData.riskCost = element.riskCost;
-          // riskOtherData.isDeleted = 'N';
-          // riskOtherData.riskInfHrdId = this.riskAssRiskInfHdr.riskAssInfHdrId;
-          // this.riskOtherDataList.push(riskOtherData);
-
+  
         });
         this.initDatatable();
 
@@ -179,7 +172,7 @@ export class Int0824Component implements OnInit {
           },
           className: "center"
         },
-        { data: "riskAssInfOtherName" },
+        { data: "infName" },
         { data: "riskCost", className: "right" },
         { data: "rl", className: "center" },
         { data: "valueTranslation", className: "center" },
@@ -198,7 +191,7 @@ export class Int0824Component implements OnInit {
             for (let i = 0; i < this.riskOtherDataList.length; i++) {
               const element = this.riskOtherDataList[i];
               if (element.riskAssInfOtherId != null && element.riskAssInfOtherId != undefined && element.riskAssInfOtherId != '') {
-                if (element.riskAssInfOtherId == this.dataTableList[index].riskAssInfOtherId && element.riskAssInfOtherName == this.dataTableList[index].riskAssInfOtherName) {
+                if (element.riskAssInfOtherId == this.dataTableList[index].riskAssInfOtherId && element.infName == this.dataTableList[index].infName) {
                   this.riskOtherDataList[i].isDeleted = 'Y';
                 }
 
@@ -207,7 +200,7 @@ export class Int0824Component implements OnInit {
           } else {
             for (let i = 0; i < this.riskOtherDataList.length; i++) {
               const element = this.riskOtherDataList[i];
-              if (element.riskAssInfOtherName == this.dataTableList[index].riskAssInfOtherName) {
+              if (element.infName == this.dataTableList[index].infName) {
                 this.riskOtherDataList.splice(i, 1);
               }
             }
@@ -221,7 +214,7 @@ export class Int0824Component implements OnInit {
 
   addObjRiskDtl() {
     var msgMessage = '';
-    if (this.riskAssInfOtherName == null || this.riskAssInfOtherName == undefined || this.riskAssInfOtherName == '') {
+    if (this.infName == null || this.infName == undefined || this.infName == '') {
       this.messageBarService.errorModal("กรุณากรอก \"ชื่อโครงการ\" ");
       return;
     }
@@ -231,7 +224,7 @@ export class Int0824Component implements OnInit {
     }
 
     let riskOtherData = new RiskOtherData();
-    riskOtherData.riskAssInfOtherName = this.riskAssInfOtherName;
+    riskOtherData.infName = this.infName;
     riskOtherData.riskCost = this.riskCost;
     riskOtherData.isDeleted = 'N';
     riskOtherData.riskInfHrdId = this.riskAssRiskInfHdr.riskAssInfHdrId;
@@ -239,7 +232,7 @@ export class Int0824Component implements OnInit {
     this.riskOtherDataList.push(riskOtherData);
     console.log("riskOtherDataList ลงตาราง แต่ยังไม่ลง table", this.riskOtherDataList);
     this.initDatatable();
-    this.riskAssInfOtherName = '';
+    this.infName = '';
     this.riskCost = '';
   }
 
@@ -342,7 +335,7 @@ export class Int0824Component implements OnInit {
 class RiskOtherData {
   riskAssInfOtherId: any = 0;
   riskInfHrdId: any = 0;
-  riskAssInfOtherName: any = '';
+  infName: any = '';
   riskCost: any = '';
   rl: any = '';
   valueTranslation: any = '';

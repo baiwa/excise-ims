@@ -21,6 +21,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.Int0802Vo;
+import th.co.baiwa.excise.domain.RiskFullDataInt0802Vo;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfOtherDtl;
 
@@ -116,8 +117,7 @@ public class Int082Controller {
 
 	@PostMapping("/updateRiskAssInfHdr")
 	@ResponseBody
-	public Message updateRiskAssInfHdr(@RequestBody RiskAssInfHdr riskAssInfHdr,
-			HttpServletRequest httpServletRequest) {
+	public Message updateRiskAssInfHdr(@RequestBody RiskAssInfHdr riskAssInfHdr,HttpServletRequest httpServletRequest) {
 		Message message = null;
 		logger.info("updateRiskAssInfHdrById : " + riskAssInfHdr.getRiskAssInfHdrId());
 		try {
@@ -126,12 +126,13 @@ public class Int082Controller {
 			List<RiskAssInfDtl> riskAssInfDtlList = (List<RiskAssInfDtl>) httpServletRequest.getSession()
 					.getAttribute(INF_SESSION_DATA);
 			for (RiskAssInfDtl riskAssInfDtl : riskAssInfDtlList) {
-				riskAssInfDtl.setRiskAssInfDtlId(riskAssInfHdr.getRiskAssInfHdrId());
+				riskAssInfDtl.setRiskInfHrdId(riskAssInfHdr.getRiskAssInfHdrId());
 			}
 
 			riskAssInfService.updateRiskAssInfDtl(riskAssInfDtlList);
 			message = ApplicationCache.getMessage("MSG_00002");
 		} catch (Exception e) {
+			e.printStackTrace();
 			message = ApplicationCache.getMessage("MSG_00003");
 		}
 
@@ -161,8 +162,7 @@ public class Int082Controller {
 					if (i == 0) {
 						row.setRiskAssInfOtherId(new Long(i + 1));
 					} else if (i == 1) {
-						row.setRiskAssInfOtherName(stringArr[i]);
-
+						row.setInfName(stringArr[i]);
 					} else if (i == 2) {
 						row.setRiskCost(new BigDecimal(stringArr[i]));
 
@@ -202,6 +202,18 @@ public class Int082Controller {
 		}
 
 		return message;
+	}
+	
+	@PostMapping("/findByBudgetYear")
+	@ResponseBody
+	public List<RiskAssInfHdr> findByBudgetYear(@RequestBody RiskAssInfHdr riskAssInfHdr) {
+		return riskAssInfService.findByBudgetYear(riskAssInfHdr.getBudgetYear());
+	}
+	
+	@PostMapping("/searchFullRiskByBudgetYear")
+	@ResponseBody
+	public List<RiskFullDataInt0802Vo> searchFullRiskByBudgetYear(@RequestBody Int0802Vo int0802Vo) {
+		return riskAssInfService.searchFullRiskByBudgetYear(int0802Vo.getBudgetYear(), int0802Vo.getRiskAssInfHdrNameList());
 	}
 
 }
