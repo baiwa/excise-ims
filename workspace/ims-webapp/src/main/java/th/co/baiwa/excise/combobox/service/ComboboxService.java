@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.excise.combobox.entity.Combobox;
 import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireHeaderDao;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireHeader;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
 import th.co.baiwa.excise.ia.service.RiskAssRiskWsService;
-
+import th.co.baiwa.excise.ia.service.RiskAssInfService;
 @Service
 public class ComboboxService {
 
@@ -20,6 +21,9 @@ public class ComboboxService {
 	
 	@Autowired
 	private RiskAssRiskWsService riskAssRiskWsHdrService;
+	
+	@Autowired
+	private RiskAssInfService riskAssInfService;
 	
 	public List<Combobox> findQuestionnaireHeader(){
 		List<Combobox> comboboxList = new ArrayList<Combobox>();
@@ -47,4 +51,17 @@ public class ComboboxService {
 		return comboboxList;
 	}
 	
+	public List<Combobox> findByRiskInfName(String year){
+		List<Combobox> comboboxList = new ArrayList<Combobox>();
+		
+		List<RiskAssInfHdr> riskAssInfHdrList = riskAssInfService.findByBudgetYear(year);
+		Combobox combobox = null;
+		for (RiskAssInfHdr riskAssInfHdr : riskAssInfHdrList) {
+			combobox = new Combobox();
+			combobox.setValue(riskAssInfHdr.getRiskAssInfHdrName());
+			combobox.setDescription(riskAssInfHdr.getRiskAssInfHdrName());
+			comboboxList.add(combobox);
+		}
+		return comboboxList;
+	}
 }

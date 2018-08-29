@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class IaService {
     
-    data: any;
+    data: any = null;
 
     constructor() {}
     

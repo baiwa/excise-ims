@@ -22,6 +22,8 @@ export class Int0823Component implements OnInit {
   userCheck: any;
   riskAssInfHdr: any;
 
+  isConditionShow: any;
+
   datatable: any;
 
   constructor(
@@ -60,7 +62,7 @@ export class Int0823Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: true,
-      paging: false,
+      paging: true,
       ajax: {
         type: "POST",
         url: URL,
@@ -101,7 +103,7 @@ export class Int0823Component implements OnInit {
     });
   }
 
-  saveRiskAssInfHdr(): void {
+  saveRiskAssInfDtl(): void {
     this.riskInfPaperName  = $('#riskInfPaperName').val().trim();
     this.userCheck  = $('#userCheck').val().trim();
 
@@ -110,6 +112,7 @@ export class Int0823Component implements OnInit {
     console.log(this.id);
     console.log(this.riskInfPaperName);
     console.log(this.budgetYear);
+    
     this.riskAssInfHdr.riskInfPaperName = this.riskInfPaperName;
     this.riskAssInfHdr.userCheck = this.userCheck;
    
@@ -163,6 +166,17 @@ export class Int0823Component implements OnInit {
         });
       }
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
+  }
+
+  getConditionShow() {
+    return this.isConditionShow;
+  }
+  modalConditionRL() {
+    this.isConditionShow = true;
+  }
+
+  closeConditionRL(e) {
+    this.isConditionShow = false;
   }
 
 }

@@ -18,6 +18,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.combobox.entity.Combobox;
 import th.co.baiwa.excise.combobox.service.ComboboxService;
 import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 
@@ -110,4 +111,9 @@ public class ComboboxController {
 		return comboboxService.findByBudgetYear(riskAssRiskWsHdr.getBudgetYear());
 	}
 
+	@PostMapping("/findByRiskInfName")
+	@ResponseBody
+	public List<Combobox> findByRiskInfName(@RequestBody RiskAssInfHdr riskAssInfHdr) {
+		return comboboxService.findByRiskInfName(riskAssInfHdr.getBudgetYear());
+	}
 }

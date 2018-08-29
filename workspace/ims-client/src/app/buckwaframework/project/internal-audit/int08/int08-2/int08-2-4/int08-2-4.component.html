@@ -136,9 +136,11 @@
               บันทึก
             </button>
             <button class="ui mini primary button" (click)="modalConditionRL()">
+              <i class="setting icon"></i>
               กำหนดเงื่อนไข RL
             </button>
             <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+              <i class="print icon"></i>
               Export
             </button>
             <button class="ui mini primary button" (click)="cancelFlow()">
@@ -159,7 +161,7 @@
 
     <div class="ui attached segment">
       <div class="ui form">
-        <condition [riskId]="id" (out)="closeConditionRL($event)"></condition>
+        <condition [riskId]="id" [riskType]="'OTHER'" [page]="'int08-2-4'" (out)="closeConditionRL($event)"></condition>
       </div>
       <br/>
 

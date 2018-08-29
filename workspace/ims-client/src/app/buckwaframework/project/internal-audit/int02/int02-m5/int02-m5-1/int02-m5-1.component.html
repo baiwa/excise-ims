@@ -33,7 +33,7 @@
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                            <input type="text">
+                                           <input type="text" id="subSectionName" name="subSectionName" [attr.required]="true"   autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="six wide centered field">
@@ -54,7 +54,8 @@
                         <div class="ui form">
                             <div class="inline fields">
                                 <div class="sixteen aligned center wide field">
-                                    <button class="fluid ui green mini button" (click)="create()" type="button">สร้าง</button>
+                                    <button class="ui blue button" (click)="search()"  type="button">ค้นหา</button>
+                                    <button class="ui green button" (click)="create()" type="button">ตรวจสอบ</button>
                                 </div>
                             </div>
                         </div>

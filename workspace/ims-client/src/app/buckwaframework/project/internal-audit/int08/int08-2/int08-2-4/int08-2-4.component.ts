@@ -101,8 +101,6 @@ export class Int0824Component implements OnInit {
   }
 
   onUpload = (event: any) => {
-    console.log("test onUpload");
-    // Prevent actual form submission
     event.preventDefault();
 
     const form = $("#upload-form")[0];
@@ -116,12 +114,18 @@ export class Int0824Component implements OnInit {
         console.log(res.json());
 
         res.json().forEach(element => {
-          let riskOtherData = new RiskOtherData();
-          riskOtherData.riskAssInfOtherName = element.riskAssInfOtherName;
-          riskOtherData.riskCost = element.riskCost;
-          riskOtherData.isDeleted = 'N';
-          riskOtherData.riskInfHrdId = this.riskAssRiskInfHdr.riskAssInfHdrId;
-          this.riskOtherDataList.push(riskOtherData);
+          
+          element.isDeleted = 'N';
+
+          element.riskInfHrdId = this.id;
+          this.riskOtherDataList.push(element);
+         
+          // let riskOtherData = new RiskOtherData();
+          // riskOtherData.riskAssInfOtherName = element.riskAssInfOtherName;
+          // riskOtherData.riskCost = element.riskCost;
+          // riskOtherData.isDeleted = 'N';
+          // riskOtherData.riskInfHrdId = this.riskAssRiskInfHdr.riskAssInfHdrId;
+          // this.riskOtherDataList.push(riskOtherData);
 
         });
         this.initDatatable();
@@ -269,6 +273,8 @@ export class Int0824Component implements OnInit {
     if (msgMessage == "") {
       var url = "ia/int082/saveRiskInfPaperName";
       var urlDtl = "ia/int082/saveRiskAssInfOther";
+      this.riskAssRiskInfHdr.riskType = 'OTHER';
+      
       this.ajax.post(url, this.riskAssRiskInfHdr, res => {
         var message = res.json();
         //console.log(message.messageType);
@@ -276,17 +282,15 @@ export class Int0824Component implements OnInit {
           this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
         } else {
 
-          for (let index = 0; index < this.riskOtherDataList.length; index++) {
-            var dtl = this.riskOtherDataList[index];
-            this.ajax.post(urlDtl, { riskAssInfOtherId: dtl.riskAssInfOtherId, riskInfHrdId: dtl.riskInfHrdId, riskAssInfOtherName: dtl.riskAssInfOtherName, isDeleted: dtl.isDeleted, riskCost: dtl.riskCost }, res => {
-              var message = res.json();
-              console.log(message);
-            }, errRes => {
-              var message = errRes.json();
-              console.log(message);
-            });
+          this.ajax.post(urlDtl, { riskAssInfOtherDtlList: this.riskOtherDataList }, res => {
+            var message = res.json();
+            console.log(message);
+          }, errRes => {
+            var message = errRes.json();
+            console.log(message);
+          });
 
-          }
+          
           this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
           this.router.navigate(["/int08/2/2"], {
             queryParams: { budgetYear: this.budgetYear }

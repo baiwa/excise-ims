@@ -15,16 +15,20 @@ declare var $: any;
   styleUrls: ["./int08-2-1.component.css"]
 })
 export class Int0821Component implements OnInit {
-  showData: boolean = false;
+
   data: String[];
   formatter: any;
   riskInfPaperName: any;
   riskAssInfHdrName: any;
   budgetYear: any;
 
-  
+
   infRiskList: any[];
   datatable: any;
+
+
+  riskList: any[];
+  isSearch: any = false;
 
   constructor(
     private router: Router,
@@ -35,60 +39,75 @@ export class Int0821Component implements OnInit {
   ngOnInit() {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
-      
-     this.riskAssInfHdrName = "";
-     this.budgetYear = "";
-     this.infRiskList = ["ปัจจัยเสี่ยงจำนวนครั้งการใช้งานไม่ได้ของระบบ"];
+
+    this.riskAssInfHdrName = "";
+    this.budgetYear = "";
+    this.infRiskList = ["ปัจจัยเสี่ยงจำนวนครั้งการใช้งานไม่ได้ของระบบ"];
 
     $('#year').calendar({
       type: 'year',
       text: TextDateTH,
-      formatter: formatter('ป')
-      
+      formatter: formatter('ป'),
+      onChange: (date) => {
+        console.log(date.getFullYear())
+        this.changeYear(date.getFullYear() + 543);
+      }
     });
 
-    
+
   }
   ngAfterViewInit() {
-    // this.initDatatable();
+
   }
- 
+
+  changeYear(year) {
+    this.budgetYear = year;
+    console.log(this.budgetYear);
+    const URL = "combobox/controller/findByRiskInfName";
+    this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
+
+      this.riskList = res.json();
+      console.log(this.riskList);
+    });
+  }
+
+
 
   createBudgetYear() {
     this.budgetYear = $('#budgetYear').val().trim();
     console.log(this.budgetYear);
-    if( this.budgetYear == null || this.budgetYear == undefined || this.budgetYear=="" ){
-      this.messageBarService.errorModal("กรุณาเลือกปี พ.ศ. ในการสร้างปัจจัยเสี่ยง");
-    }else{ 
-          const URL = "ia/int082/createBudgetYear";
+    if (this.budgetYear == null || this.budgetYear == undefined || this.budgetYear == "") {
+      this.messageBarService.errorModal("กรุณาเลือก ปีงบประมาณ ในการสร้างปัจจัยเสี่ยง");
+    } else {
+      const URL = "ia/int082/createBudgetYear";
 
-          this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
-            // var message = res.json();
-            // this.messageBarService.successModal(message.messageTh, "สำเร็จ");
+      this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
+        // var message = res.json();
+        // this.messageBarService.successModal(message.messageTh, "สำเร็จ");
 
-            this.router.navigate(["/int08/2/2"], {
-              queryParams: { budgetYear: this.budgetYear }
-            });
-          }, errRes => {
-            var message = errRes.json();
-            this.messageBarService.errorModal(message.messageTh);
+        this.router.navigate(["/int08/2/2"], {
+          queryParams: { budgetYear: this.budgetYear }
+        });
+      }, errRes => {
+        var message = errRes.json();
+        this.messageBarService.errorModal(message.messageTh);
 
-          });
-        }
-      }
+      });
+    }
+  }
 
-    searchBudgetYear() {
-      this.budgetYear = $('#budgetYear').val()
-      console.log(this.budgetYear);
-      if( this.budgetYear == null || this.budgetYear == undefined || this.budgetYear=="" ){
-        this.messageBarService.errorModal("กรุณาเลือกปี พ.ศ. ในการค้นหา");
-      }else{
-        this.initDatatable();
-      }
-    };
+  searchDataTable() {
+    this.budgetYear = $('#budgetYear').val().trim();
+    if (this.budgetYear != null && this.budgetYear != undefined && this.budgetYear != '') {
+    
+      this.initDatatable();
+    } else {
+      this.messageBarService.errorModal('กรุณาเลือก ปีงบประมาณ ในการค้นหาข้อมูล');
+    }
+  }
 
- 
   initDatatable(): void {
+    this.isSearch = true;
     if (this.datatable != null || this.datatable != undefined) {
       this.datatable.destroy();
     }
@@ -102,14 +121,14 @@ export class Int0821Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: true,
-      paging: false,
+      paging: true,
       ajax: {
         type: "POST",
         url: URL,
-        data: {budgetYear: this.budgetYear}
+        data: { budgetYear: this.budgetYear }
       },
       columns: [
-          
+
         {
           render: function (data, type, row, meta) {
             return `<input type="checkbox" >`;
@@ -122,7 +141,7 @@ export class Int0821Component implements OnInit {
           },
           className: "center"
         },
-       
+
         { data: "riskInfPaperName" },
         { data: "riskAssInfHdrName" },
         { data: "budgetYear" },
@@ -132,7 +151,7 @@ export class Int0821Component implements OnInit {
           data: "riskAssInfHdrId",
           render: function () {
             return '<button type="button" class="ui mini button dtl"><i class="pencil icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button del"><i class="pencil icon"></i> Export</button>';
+              + '<button type="button" class="ui mini button export"><i class="print icon"></i> Export</button>';
           }
         }
       ],
@@ -141,37 +160,37 @@ export class Int0821Component implements OnInit {
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {
-          console.log("dtl");
-          console.log(data.riskAssInfHdrId);
+          // console.log("dtl");
+          // console.log(data.riskAssInfHdrId);
 
-          if (this.infRiskList.indexOf(data.riskAssInfHdrName) >= 0) {
-            this.router.navigate(["/int08/2/3"], {
-              queryParams: { id: data.riskAssInfHdrId }
-            });
-          } else {
-            this.router.navigate(["/int08/2/4"], {
-              queryParams: { id: data.riskAssInfHdrId }
-            });
-          }
+          // if (this.infRiskList.indexOf(data.riskAssInfHdrName) >= 0) {
+          //   this.router.navigate(["/int08/2/3"], {
+          //     queryParams: { id: data.riskAssInfHdrId }
+          //   });
+          // } else {
+          //   this.router.navigate(["/int08/2/4"], {
+          //     queryParams: { id: data.riskAssInfHdrId }
+          //   });
+          // }
         })
 
-        $("td > .del", row).bind("click", () => {
-          console.log("del");
-          console.log(data.riskAssInfHdrId);
+        $("td > .export", row).bind("click", () => {
+          // console.log("del");
+          // console.log(data.riskAssInfHdrId);
 
-          const URL = "ia/int082/deleteRiskInfHdr";
+          // const URL = "ia/int082/deleteRiskInfHdr";
 
-          this.ajax.post(URL, { riskAssInfHdrId: data.riskAssInfHdrId }, res => {
-            var message = res.json();
-            this.riskAssInfHdrName = "";
-            this.messageBarService.successModal(message.messageTh, "สำเร็จ");
-            this.datatable.destroy();
-            this.initDatatable();
-          }, errRes => {
-            var message = errRes.json();
+          // this.ajax.post(URL, { riskAssInfHdrId: data.riskAssInfHdrId }, res => {
+          //   var message = res.json();
+          //   this.riskAssInfHdrName = "";
+          //   this.messageBarService.successModal(message.messageTh, "สำเร็จ");
+          //   this.datatable.destroy();
+          //   this.initDatatable();
+          // }, errRes => {
+          //   var message = errRes.json();
 
-            this.messageBarService.errorModal(message.messageTh);
-          });
+          //   this.messageBarService.errorModal(message.messageTh);
+          // });
         });
 
       }

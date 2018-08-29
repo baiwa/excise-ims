@@ -27,6 +27,9 @@ public class RiskAssInfDtl extends BaseEntity{
 	@Column(name = "RISK_ASS_INF_DTL_ID")
 	private Long riskAssInfDtlId;
 	
+	@Column(name = "RISK_INF_HRD_ID")
+	private Long riskInfHrdId;
+	
 	@Column(name = "RISK_ASS_INF_DTL_NAME")
 	private String riskAssInfDtlName;
 	
@@ -83,6 +86,14 @@ public class RiskAssInfDtl extends BaseEntity{
 	public void setRiskAssInfDtlId(Long riskAssInfDtlId) {
 		this.riskAssInfDtlId = riskAssInfDtlId;
 	}
+	
+	public Long getRiskInfHrdId() {
+		return riskInfHrdId;
+	}
+	public void setRiskInfHrdId(Long riskInfHrdId) {
+		this.riskInfHrdId = riskInfHrdId;
+	}
+	
 	public String getRiskAssInfDtlName() {
 		return riskAssInfDtlName;
 	}

@@ -84,4 +84,9 @@ public class TravelCostDetailDao {
 		    	}
 
 		};
+		public String drodownList2(String lovIdMaster){
+			String SQL = "SELECT (VALUE1||','||VALUE2||','||VALUE3||','||VALUE4) AS DATA FROM SYS_LOV WHERE TYPE='ACC_FEE' AND LOV_ID = ?";
+			return jdbcTemplate.queryForObject(SQL,new Object[] {lovIdMaster} ,String.class);
+		}
+		
 }
