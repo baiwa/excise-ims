@@ -139,17 +139,20 @@ public class RiskAssRiskWsService {
 					long value = riskAssRiskWsDtl.getApproveBudget().longValue();
 					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
 						riskAssRiskWsDtl.setRl(condition.getValueRl());
-						riskAssRiskWsDtl.setValueTranslation(condition.getColor());
+						riskAssRiskWsDtl.setColor(condition.getColor());
+						riskAssRiskWsDtl.setValueTranslation(condition.getConvertValue());
 					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
 						riskAssRiskWsDtl.setRl(condition.getValueRl());
-						riskAssRiskWsDtl.setValueTranslation(condition.getColor());
+						riskAssRiskWsDtl.setColor(condition.getColor());
+						riskAssRiskWsDtl.setValueTranslation(condition.getConvertValue());
 					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
 						riskAssRiskWsDtl.setRl(condition.getValueRl());
-						riskAssRiskWsDtl.setValueTranslation(condition.getColor());
+						riskAssRiskWsDtl.setColor(condition.getColor());
+						riskAssRiskWsDtl.setValueTranslation(condition.getConvertValue());
 					}
 				}
 
-				riskAssRiskWsDtlRepository.save(riskAssRiskWsDtls);
+				riskAssRiskWsDtlRepository.save(riskAssRiskWsDtl);
 			}
 		}
 	}
@@ -188,13 +191,16 @@ public class RiskAssRiskWsService {
 					long value = riskAssOtherDtl.getRiskCost().longValue();
 					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
 						riskAssOtherDtl.setRl(condition.getValueRl());
-						riskAssOtherDtl.setValueTranslation(condition.getColor());
+						riskAssOtherDtl.setColor(condition.getColor());
+						riskAssOtherDtl.setValueTranslation(condition.getConvertValue());
 					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
 						riskAssOtherDtl.setRl(condition.getValueRl());
-						riskAssOtherDtl.setValueTranslation(condition.getColor());
+						riskAssOtherDtl.setColor(condition.getColor());
+						riskAssOtherDtl.setValueTranslation(condition.getConvertValue());
 					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
 						riskAssOtherDtl.setRl(condition.getValueRl());
-						riskAssOtherDtl.setValueTranslation(condition.getColor());
+						riskAssOtherDtl.setColor(condition.getColor());
+						riskAssOtherDtl.setValueTranslation(condition.getConvertValue());
 					}
 				}
 
@@ -212,6 +218,7 @@ public class RiskAssRiskWsService {
 						databaseData.setRiskCost(riskAssOtherDtl.getRiskCost());
 						databaseData.setRl(riskAssOtherDtl.getRl());
 						databaseData.setValueTranslation(riskAssOtherDtl.getValueTranslation());
+						databaseData.setColor(riskAssOtherDtl.getColor());
 						riskAssOtherDtlRepository.save(databaseData);
 					} else {
 						riskAssOtherDtlRepository.save(riskAssOtherDtl);

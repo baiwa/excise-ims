@@ -60,6 +60,9 @@ public class RiskAssRiskWsDtl extends BaseEntity{
 	@Column(name="VALUE_TRANSLATION")
 	private String valueTranslation;
 	
+	@Column(name="COLOR")
+	private String color;
+	
 	
 
 	public RiskAssRiskWsDtl() {
@@ -173,6 +176,16 @@ public class RiskAssRiskWsDtl extends BaseEntity{
 
 	public void setRiskHrdId(Long riskHrdId) {
 		this.riskHrdId = riskHrdId;
+	}
+
+
+	public String getColor() {
+		return color;
+	}
+
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 

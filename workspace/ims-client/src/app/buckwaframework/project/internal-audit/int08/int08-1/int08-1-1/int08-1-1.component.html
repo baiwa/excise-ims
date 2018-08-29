@@ -75,7 +75,7 @@
           </button>
         </div>
       </div>
-      <table id="dataTable" class="ui small celled table" *ngIf="isSearch">
+      <table id="dataTable" class="ui small celled table">
         <thead>
           <tr>
             <th></th>
@@ -91,18 +91,218 @@
         </thead>
       </table>
     </div>
-
-  </div>
-  <div class="sixteen wide column">
-    <div class="ui large ordered steps" style="width: 100%;">
+    <BR/>
+    <div class="sixteen wide column" *ngIf="openForm1">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
       </div>
-      <div class="inline fields">
+      <div class="ui attached segment">
+        <div class="ui form">
+
+          <div class="ui center aligned grid">
+            <div class="sixteen wide column">
+              <label>ปีงบประมาณ {{riskAssRiskWsHdr.budgetYear}}</label>
+            </div>
+          </div>
 
 
+          <div class="inline fields">
+            <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr.riskHdrName}}</label>
+          </div>
+          <div class="inline fields">
+            <label>เงื่อนไขความเสี่ยง :</label>
+          </div>
+        </div>
+
+
+
+        <div *ngFor="let con of condition; let i=index">
+
+          <div class="ui form">
+            <div class="inline fields">
+              <div class="two wide field "></div>
+              <div class="two wide field ">
+                <label>งบประมาณที่ใช้ดำเนินงานโครงการ</label>
+              </div>
+              <div class="one wide field ">
+                <label>
+                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                </label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.value1}}</label>
+              </div>
+              <div class="one wide field ">
+                <label>ถึง</label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.value2 == null ? '-' : con.value2 }}</label>
+              </div>
+              <div class="one wide field ">
+                <label>ระดับความเสี่ยง</label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.convertValue}}</label>
+              </div>
+              <div class="two wide field ">
+                <label>คะแนนความเสี่ยง</label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.valueRl}}</label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="inline fields">
+          <table id="dataTableF1" class="ui small celled table">
+            <thead>
+              <tr>
+
+                <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+                <th rowspan="2" style="text-align: center !important">โครงการตามยุทธศาสตร์</th>
+                <th colspan="4" style="text-align: center !important">งบประมาณที่ใช้ตามแผนยุทธศาสตร์</th>
+                <th rowspan="2" style="text-align: center !important">เงินงบประมาณที่กรมอนุมัติ</th>
+                <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
+
+              </tr>
+              <tr>
+                <th style="text-align: center !important ;border-left: 1px solid rgba(34,36,38,.1) !important">เงินงบประมาณ</th>
+                <th style="text-align: center !important">เงินท้องถิ่น</th>
+                <th style="text-align: center !important">เงินอื่น ๆ </th>
+                <th style="text-align: center !important">รวม</th>
+                <th style="text-align: center !important">RL</th>
+                <th style="text-align: center !important">แปลค่า</th>
+              </tr>
+
+
+            </thead>
+          </table>
+
+        </div>
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button">
+              <i class=" add icon "></i>
+              Export
+            </button>
+            <button class="ui mini button " (click)="clearData() ">
+
+              กลับ
+            </button>
+
+          </div>
+        </div>
       </div>
-
     </div>
+
+
+
+    <div class="sixteen wide column" *ngIf="openForm2">
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>กระดาษทำการประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
+      </div>
+      <div class="ui attached segment">
+        <div class="ui form">
+
+          <div class="ui center aligned grid">
+            <div class="sixteen wide column">
+              <label>ปีงบประมาณ {{riskAssRiskWsHdr.budgetYear}}</label>
+            </div>
+          </div>
+
+
+          <div class="inline fields">
+            <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr.riskHdrName}}</label>
+          </div>
+          <div class="inline fields">
+            <label>เงื่อนไขความเสี่ยง :</label>
+          </div>
+        </div>
+
+
+
+        <div *ngFor="let con of condition; let i=index">
+
+          <div class="ui form">
+            <div class="inline fields">
+              <div class="two wide field "></div>
+              <div class="two wide field ">
+                <label>งบประมาณที่ใช้ดำเนินงานโครงการ</label>
+              </div>
+              <div class="one wide field ">
+                <label>
+                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                </label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.value1}}</label>
+              </div>
+              <div class="one wide field ">
+                <label>ถึง</label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.value2 == null ? '-' : con.value2 }}</label>
+              </div>
+              <div class="one wide field ">
+                <label>ระดับความเสี่ยง</label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.convertValue}}</label>
+              </div>
+              <div class="two wide field ">
+                <label>คะแนนความเสี่ยง</label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.valueRl}}</label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="inline fields">
+          <table id="dataTableF2" class="ui small celled table">
+            <thead>
+              <tr>
+                <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+                <th rowspan="2" style="text-align: center !important">โครงการตามยุทธศาสตร์</th>
+                <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
+                <th rowspan="2" style="text-align: center !important">ค่าความเสี่ยง</th>
+                <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
+              </tr>
+              <tr>
+                <th style="text-align: center !important ;border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
+                <th style="text-align: center !important">แปลค่า</th>
+              </tr>
+
+
+            </thead>
+          </table>
+
+        </div>
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button">
+              <i class=" add icon "></i>
+              Export
+            </button>
+            <button class="ui mini button " (click)="clearData() ">
+
+              กลับ
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
   </div>
 </div>

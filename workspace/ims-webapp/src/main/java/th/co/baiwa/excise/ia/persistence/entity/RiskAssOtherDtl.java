@@ -48,6 +48,8 @@ public class RiskAssOtherDtl extends BaseEntity{
 	@Column(name="VALUE_TRANSLATION")
 	private String valueTranslation;
 
+	@Column(name="COLOR")
+	private String color;
 	 
 	public String getDepartmentName() {
 		return departmentName;
@@ -103,6 +105,14 @@ public class RiskAssOtherDtl extends BaseEntity{
 
 	public void setRiskOtherDtlId(Long riskOtherDtlId) {
 		this.riskOtherDtlId = riskOtherDtlId;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 	

@@ -23,9 +23,11 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.Int0801Vo;
 import th.co.baiwa.excise.domain.RiskFullDataVo;
+import th.co.baiwa.excise.ia.persistence.entity.Condition;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
+import th.co.baiwa.excise.ia.service.ConditionService;
 import th.co.baiwa.excise.ia.service.RiskAssRiskWsService;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
@@ -44,6 +46,9 @@ public class Int08Controller {
 	
 	@Autowired
 	UploadFileExciseService uploadFileExciseService;
+	
+	@Autowired
+	private ConditionService conditionService;
 	
 	@Autowired
 	public Int08Controller(RiskAssRiskWsService riskAssRiskWsHdrService) {
@@ -222,6 +227,36 @@ public class Int08Controller {
 	@ResponseBody
 	public List<RiskAssRiskWsHdr> updateRiskPercent(@RequestBody Int0801Vo  int0801Vo) {
 		return riskAssRiskWsHdrService.updatePercent(int0801Vo.getRiskAssRiskWsHdrList());
+	}
+	
+	
+	@PostMapping("/queryCondition")
+	@ResponseBody
+	public List<Condition> queryCondition(@RequestBody Condition  condition) {
+		return conditionService.findConditionByParentId(condition.getParentId(), condition.getRiskType(), condition.getPage());
+	}
+	
+	
+	@PostMapping("/searchRiskAssRiskWsDtl")
+	@ResponseBody
+	public List<RiskAssRiskWsDtl> searchRiskAssRiskWsDtl(@RequestBody RiskAssRiskWsHdr riskAssRiskWsHdr) {
+		logger.info("dataTableRiskAssRiskWsDtl");
+		List<RiskAssRiskWsDtl> riskAssRiskWsHdrList = null;
+		riskAssRiskWsHdrList = riskAssRiskWsHdrService.findByGroupRiskHrdId(riskAssRiskWsHdr.getRiskHrdId());
+		
+		return riskAssRiskWsHdrList;
+	}
+	
+	@PostMapping("/findRiskAssOtherDtlByHeaderId")
+	@ResponseBody
+	public ResponseDataTable<RiskAssOtherDtl> findRiskAssOtherDtlByHeaderId(DataTableRequest dataTableRequest,RiskAssRiskWsHdr riskAssRiskWsHdr) {
+		logger.info("findRiskAssOtherDtlByHeaderId");
+		List<RiskAssOtherDtl> riskAssOtherDtlList = riskAssRiskWsHdrService.findByRiskHrdId(riskAssRiskWsHdr.getRiskHrdId());
+		ResponseDataTable<RiskAssOtherDtl> responseDataTable = new ResponseDataTable<RiskAssOtherDtl>();
+		responseDataTable.setData(riskAssOtherDtlList);
+		responseDataTable.setRecordsTotal(riskAssOtherDtlList.size());
+		responseDataTable.setRecordsFiltered(riskAssOtherDtlList.size());
+		return responseDataTable;
 	}
 	
 	public RiskAssRiskWsService getRiskAssRiskWsHdrService() {
