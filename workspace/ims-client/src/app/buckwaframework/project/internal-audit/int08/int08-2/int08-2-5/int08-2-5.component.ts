@@ -16,20 +16,25 @@ declare var $: any;
 })
 export class Int0825Component implements OnInit {
   
+  riskInfPaperName: any;
   budgetYear: any;
-  
+  userCheck: any;
   
   riskAssInfHdrList :any;
   columnList: any[];
   percentList: any[];
-
+  
+  datatable: any;
+  isConditionShow: any;
+  ispercent: any;
   constructor(
     private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
     private route: ActivatedRoute
   ) { 
-    
+    this.isConditionShow = false;
+    this.ispercent = false;
   }
 
   ngOnInit() {
@@ -95,6 +100,30 @@ export class Int0825Component implements OnInit {
     });
   }
 
+  modalConditionRL() {
+    this.isConditionShow = true;
+  }
+
+  closeConditionRL(e) {
+    this.isConditionShow = false;
+  }
+
+  getConditionShow() {
+    return this.isConditionShow;
+  }
+
+  modalpercent() {
+    this.ispercent = true;
+  }
+
+  closepercent(e) {
+    this.ispercent = false;
+  }
+
+  getpercent() {
+    return this.ispercent;
+  }
+
   cancelFlow() {
     this.messageBarService.comfirm(foo => {
       // let msg = "";
@@ -104,6 +133,24 @@ export class Int0825Component implements OnInit {
         });
       }
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
+  }
+
+  savePercent() {
+    var sumpercen = 0;
+    this.riskAssInfHdrList.forEach(element => {
+      sumpercen += element.percent;
+    });
+    if (sumpercen != 100) {
+      this.messageBarService.errorModal("น้ำหนักต้องรวมกันแล้วเป็น 100 %");
+      return "";
+    }
+    var url = 'ia/int082/updateRiskPercent';
+    this.ajax.post(url, { riskAssInfHdrList: this.riskAssInfHdrList }, res => {
+      this.riskAssInfHdrList = res.json();
+      this.messageBarService.successModal("บันทึกน้ำหนักความเสี่ยงสำเร็จ");
+      this.ispercent = false;
+
+    });
   }
 
 }

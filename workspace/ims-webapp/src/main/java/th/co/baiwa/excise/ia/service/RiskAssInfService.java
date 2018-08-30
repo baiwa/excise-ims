@@ -145,6 +145,9 @@ public class RiskAssInfService {
 		riskAssInfHdrRepository.save(riskAssInfHdr);
 	}
 
+	public List<RiskAssInfDtl> findByGroupRiskInfHrdId(Long riskInfHrdId) {
+		return riskAssInfDtlRepository.findByGroupRiskInfHrdId(riskInfHrdId);
+	}
 	
 	public void updateRiskAssInfDtl(List<RiskAssInfDtl> riskAssInfDtls) {
 		List<Condition> conditionList = conditionService.findConditionByParentId(riskAssInfDtls.get(0).getRiskInfHrdId(), "MAIN", "int08-2-3");
@@ -154,13 +157,16 @@ public class RiskAssInfService {
 					long value = riskAssInfDtl.getTotal().longValue();
 					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
 						riskAssInfDtl.setRl(condition.getValueRl());
-						riskAssInfDtl.setValueTranslation(condition.getColor());
+						riskAssInfDtl.setColor(condition.getColor());
+						riskAssInfDtl.setValueTranslation(condition.getConvertValue());
 					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
 						riskAssInfDtl.setRl(condition.getValueRl());
-						riskAssInfDtl.setValueTranslation(condition.getColor());
+						riskAssInfDtl.setColor(condition.getColor());
+						riskAssInfDtl.setValueTranslation(condition.getConvertValue());
 					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
 						riskAssInfDtl.setRl(condition.getValueRl());
-						riskAssInfDtl.setValueTranslation(condition.getColor());
+						riskAssInfDtl.setColor(condition.getColor());
+						riskAssInfDtl.setValueTranslation(condition.getConvertValue());
 					}
 				}
 
@@ -182,13 +188,16 @@ public class RiskAssInfService {
 					long value = riskAssInfOtherDtl.getRiskCost().longValue();
 					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
 						riskAssInfOtherDtl.setRl(condition.getValueRl());
-						riskAssInfOtherDtl.setValueTranslation(condition.getColor());
+						riskAssInfOtherDtl.setColor(condition.getColor());
+						riskAssInfOtherDtl.setValueTranslation(condition.getConvertValue());
 					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
 						riskAssInfOtherDtl.setRl(condition.getValueRl());
-						riskAssInfOtherDtl.setValueTranslation(condition.getColor());
+						riskAssInfOtherDtl.setColor(condition.getColor());
+						riskAssInfOtherDtl.setValueTranslation(condition.getConvertValue());
 					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
 						riskAssInfOtherDtl.setRl(condition.getValueRl());
-						riskAssInfOtherDtl.setValueTranslation(condition.getColor());
+						riskAssInfOtherDtl.setColor(condition.getColor());
+						riskAssInfOtherDtl.setValueTranslation(condition.getConvertValue());
 					}
 				}
 
@@ -205,6 +214,8 @@ public class RiskAssInfService {
 						databaseData.setRiskCost(riskAssInfOtherDtl.getRiskCost());
 						databaseData.setRl(riskAssInfOtherDtl.getRl());
 						databaseData.setValueTranslation(riskAssInfOtherDtl.getValueTranslation());
+						databaseData.setColor(riskAssInfOtherDtl.getColor());
+						
 						riskAssInfOtherDtlRepository.save(databaseData);
 					} else {
 						riskAssInfOtherDtlRepository.save(riskAssInfOtherDtl);
@@ -261,4 +272,14 @@ public List<RiskFullDataInt0802Vo> searchFullRiskByBudgetYear(String budgetYear 
 	public List<RiskAssInfHdr> findByBudgetYear(String year){
 		return riskAssInfHdrRepository.findByBudgetYear(year);
 	}
+	
+	public List<RiskAssInfHdr> updatePercent(List<RiskAssInfHdr> riskAssInfHdrs) {
+		List<RiskAssInfHdr> riskAssInfHdrList = new ArrayList<RiskAssInfHdr>();
+		for (RiskAssInfHdr riskAssInfHdr : riskAssInfHdrs) {
+			riskAssInfHdrRepository.updatePercent(riskAssInfHdr.getPercent(), riskAssInfHdr.getRiskAssInfHdrId());
+			riskAssInfHdrList.add(riskAssInfHdrRepository.findOne(riskAssInfHdr.getRiskAssInfHdrId()));
+		}
+		return riskAssInfHdrList;
+	}
+	
 }

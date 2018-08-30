@@ -24,7 +24,6 @@ import th.co.baiwa.excise.domain.Int0802Vo;
 import th.co.baiwa.excise.domain.RiskFullDataInt0802Vo;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfOtherDtl;
-
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.service.RiskAssInfService;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
@@ -82,18 +81,20 @@ public class Int082Controller {
 
 	@PostMapping("/dataTableWebService")
 	@ResponseBody
-	public ResponseDataTable<RiskAssInfDtl> dataTableWebService(DataTableRequest dataTableRequest,
-			HttpServletRequest httpServletRequest) {
+	public ResponseDataTable<RiskAssInfDtl> dataTableWebService(DataTableRequest dataTableRequest,RiskAssInfHdr riskAssInfHdr,HttpServletRequest httpServletRequest) {
 		logger.info("dataTableWebService");
+		List<RiskAssInfDtl> riskAssInfHdrList = null;
 		httpServletRequest.getSession().setAttribute(INF_SESSION_DATA, null);
-
+		riskAssInfHdrList = riskAssInfService.findByGroupRiskInfHrdId(riskAssInfHdr.getRiskAssInfHdrId());
+		if(BeanUtils.isEmpty(riskAssInfHdrList)) {
+			riskAssInfHdrList = riskAssInfService.findRiskAssInfDtlByWebService();
+		}
+		
 		ResponseDataTable<RiskAssInfDtl> responseDataTable = new ResponseDataTable<RiskAssInfDtl>();
-		List<RiskAssInfDtl> riskAssInfDtlList = riskAssInfService.findRiskAssInfDtlByWebService();
-
-		httpServletRequest.getSession().setAttribute(INF_SESSION_DATA, riskAssInfDtlList);
-		responseDataTable.setData(riskAssInfDtlList);
-		responseDataTable.setRecordsTotal((int) riskAssInfDtlList.size());
-		responseDataTable.setRecordsFiltered((int) riskAssInfDtlList.size());
+		httpServletRequest.getSession().setAttribute(INF_SESSION_DATA, riskAssInfHdrList);
+		responseDataTable.setData(riskAssInfHdrList);
+		responseDataTable.setRecordsTotal((int) riskAssInfHdrList.size());
+		responseDataTable.setRecordsFiltered((int) riskAssInfHdrList.size());
 		return responseDataTable;
 	}
 
@@ -123,8 +124,7 @@ public class Int082Controller {
 		try {
 			riskAssInfService.updateRiskAssInfHdr(riskAssInfHdr);
 			@SuppressWarnings("unchecked")
-			List<RiskAssInfDtl> riskAssInfDtlList = (List<RiskAssInfDtl>) httpServletRequest.getSession()
-					.getAttribute(INF_SESSION_DATA);
+			List<RiskAssInfDtl> riskAssInfDtlList = (List<RiskAssInfDtl>) httpServletRequest.getSession().getAttribute(INF_SESSION_DATA);
 			for (RiskAssInfDtl riskAssInfDtl : riskAssInfDtlList) {
 				riskAssInfDtl.setRiskInfHrdId(riskAssInfHdr.getRiskAssInfHdrId());
 			}
@@ -216,4 +216,11 @@ public class Int082Controller {
 		return riskAssInfService.searchFullRiskByBudgetYear(int0802Vo.getBudgetYear(), int0802Vo.getRiskAssInfHdrNameList());
 	}
 
+	@PostMapping("/updateRiskPercent")
+	@ResponseBody
+	public List<RiskAssInfHdr> updateRiskPercent(@RequestBody Int0802Vo  int0802Vo) {
+	return 	riskAssInfService.updatePercent(int0802Vo.getRiskAssInfHdrList());
+		
+	}
+	
 }

@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.ia.persistence.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,6 +40,13 @@ public class RiskAssInfHdr extends BaseEntity {
 
 	@Column(name = "ACTIVE")
 	private String active;
+	
+	@Column(name = "PERCENT")
+	private BigDecimal percent;
+	
+	
+	
+	
 
 	public String getBudgetYear() {
 		return budgetYear;
@@ -86,4 +95,13 @@ public class RiskAssInfHdr extends BaseEntity {
 	public void setActive(String active) {
 		this.active = active;
 	}
+	
+	public BigDecimal getPercent() {
+		return percent;
+	}
+
+	public void setPercent(BigDecimal percent) {
+		this.percent = percent;
+	}
+	
 }

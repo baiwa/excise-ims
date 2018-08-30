@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.persistence.repository;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -166,5 +167,17 @@ public class RiskAssInfHdrRepositoryImpl implements RiskAssInfHdrRepositoryCusto
 		}
 
 	};
+
+	@Override
+	public void updatePercent(BigDecimal percent, Long id) {
+		logger.info("findByCriteria");
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+
+		sql.append(" UPDATE  IA_RISK_ASS_INF_HDR SET PERCENT = ? WHERE RISK_ASS_INF_HDR_ID = ? ");
+		params.add(percent);
+		params.add(id);
+		commonJdbcTemplate.executeUpdate(sql.toString(), params.toArray());	
+	}
 	
 }

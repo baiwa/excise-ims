@@ -1,6 +1,7 @@
 package th.co.baiwa.excise.ia.persistence.repository;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import th.co.baiwa.excise.domain.Int0802Vo;
@@ -13,6 +14,6 @@ public interface RiskAssInfHdrRepositoryCustom {
 	public List<Int0802Vo> findInfNameByBudgetYear(String budgetYear);
 	public List<Int0802Vo> findData(String budgetYear, String infName);
 	
-	//public void updatePercent(BigDecimal percent , Long id);
+	public void updatePercent(BigDecimal percent , Long id);
 	
 }

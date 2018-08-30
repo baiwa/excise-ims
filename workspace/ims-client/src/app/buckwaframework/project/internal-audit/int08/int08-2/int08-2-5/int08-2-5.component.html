@@ -23,58 +23,88 @@
           <tbody id="tbody">
           </tbody>
         </table>
-  
-
-        <!-- <div style="overflow-x: scroll;">
-          <table id="dataTable"  class="ui small celled table" style="width: 140%;">
-            <thead>
-              <tr>
-                <th rowspan="2" style="text-align: center !important">ลำดับ</th>
-                <th rowspan="2" style="text-align: center !important" class="four wide field ">ระบบสารสนเทศฯ ของกรมสรรพสามิต</th>
-                <th rowspan="2" style="text-align: center !important" class="two wide field ">ปัจจัยเสี่ยงจำนวนครั้ง<br>การใช้งานไม่ได้<br>ของระบบ</th>
-                <th rowspan="2" style="text-align: center !important">ปัจจัยเสี่ยงอื่นๆ 1</th>
-                <th rowspan="2" style="text-align: center !important">ปัจจัยเสี่ยงอื่นๆ 2</th>
-                <th rowspan="2" style="text-align: center !important">ปัจจัยเสี่ยงอื่นๆ 3</th>
-                <th rowspan="2" style="text-align: center !important">รวม</th>
-                <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-              </tr>
-              <tr>
-                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-                <th style="text-align: center !important">แปลค่า</th>
-              </tr>
-            </thead>
-          </table>
-        </div> -->
-
-
-
+        
         <div class="inline fields"></div>
         <div class="inline fields ">
-          <div class="sixteen wide field ">
-            <div class="four wide field "></div>
-            <button class="ui mini primary button" (click)="saveRiskAssRiskWsDtl()">
-              <i class="save icon"></i>
-              บันทึก
-            </button>
-            <button class="ui mini primary button" (click)="modalConditionRL()">
-              <i class="setting icon"></i>
-              กำหนดเงื่อนไข RL
-            </button>
-            <button class="ui mini primary button" (click)="modalCondition()">
-              กำหนดค่า %
-            </button>
-            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
-              <i class="print icon"></i>
-              Export
-            </button>
-            <button class="ui mini primary button" (click)="cancelFlow()">
-              ยกเลิก
-            </button>
+          <div class="sixteen wide field " >
+             <div class="five wide field "></div> 
+              
+              <button class="ui mini primary button" (click)="saveRiskAssRiskWsDtl()">
+                <i class="save icon"></i>
+                บันทึก
+              </button>
+              <button class="ui mini primary button" (click)="modalConditionRL()">
+                <i class="setting icon"></i>
+                กำหนดเงื่อนไข RL
+              </button>
+              <button class="ui mini primary button" (click)="modalpercent()">
+                กำหนดค่า %
+              </button>
+              <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+                <i class="print icon"></i>
+                Export
+              </button>
+              <button class="ui mini primary button" (click)="cancelFlow()">
+                ยกเลิก
+              </button>
+           
           </div>
 
         </div>
       </div>
     </div>
   </div>
+
+  <div class="sixteen wide column" *ngIf="getConditionShow()">
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
+      </div>
+
+      <div class="ui attached segment">
+        <div class="ui form">
+          <condition [riskId]="budgetYear" [riskType]="'ALL'" [page]="'int08-2-5'" (out)="closeConditionRL($event)"></condition>
+        </div>
+        <br/>
+
+      </div>
+    </div>
+
+    <BR/>
+    
+    <div class="sixteen wide column" *ngIf="getpercent()">
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>กำหนดค่าน้ำหนัก (%) โครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
+      </div>
+
+      <div class="ui attached segment">
+        <div class="ui form">
+          <div class="inline fields" *ngFor="let risk of riskAssInfHdrList; index as i;">
+            <div class="two wide field "></div>
+            <div class="six wide field">
+              <label>{{risk.riskAssInfHdrName}}</label>
+            </div>
+            <div class="two wide field">
+              <input type="number" placeholder="น้ำหนักของ{{risk.riskAssInfHdrName}}" class="custom" [(ngModel)]="risk.percent">&nbsp;&nbsp;%
+            </div>
+          </div>
+        </div>
+        <br/>
+        <div class="inline fields latest-inline">
+          <div class="sixteen wide field">
+            <div class="ui center aligned grid btn">
+              <button class="ui mini primary button" (click)="savePercent()">
+                <i class="save icon"></i>
+                บันทึก
+              </button>
+              <button class="ui mini primary button" (click)="closepercent()">
+                ยกเลิก
+              </button>
+            </div>
+
+          </div>
+        </div>
+        <BR/>
+      </div>
+    </div>
 </div>
 
