@@ -17,11 +17,6 @@ body {
     display: block !important;
 }
 
-.ui.modal {
-    margin-top: -92.7px;
-    display: block !important;
-}
-
 input.custom-readonly,
 select.custom-readonly {
     background-color: #ccc !important;
