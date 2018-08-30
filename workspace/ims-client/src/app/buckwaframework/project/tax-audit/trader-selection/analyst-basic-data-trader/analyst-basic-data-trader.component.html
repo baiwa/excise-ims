@@ -1,4 +1,4 @@
-<div class="ui modal condition transition hidden" style="height: calc(6em + 14px);">
+<CommonModal [id]="'modal-condition'" [type]="'custom'" [size]="'large'">
     <i class="close icon"></i>
     <div class="header">
         <i class="add icon"></i> เพิ่มเงื่อนไข
@@ -34,8 +34,8 @@
                 </div>
 
                 <div class="four wide field ">
-                    <input type="text" placeholder="0" name="font{{i}}" id="font{{i}}" (keyup)="onKeyUp($event, 'font'+i)" [attr.required]="true" [(ngModel)]="font[i]"
-                        value="">
+                    <input type="text" placeholder="0" name="font{{i}}" id="font{{i}}" (keyup)="onKeyUp($event, 'font'+i)" [attr.required]="true"
+                        [(ngModel)]="font[i]" value="">
                 </div>
 
                 <div class="one wide field ">
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="four wide field ">
-                    <input type="text"  name="back{{i}}" id="back{{i}}" (keyup)="onKeyUp($event, 'back'+i)" [attr.required]="true" [(ngModel)]="back[i]"
+                    <input type="text" name="back{{i}}" id="back{{i}}" (keyup)="onKeyUp($event, 'back'+i)" [attr.required]="true" [(ngModel)]="back[i]"
                         value="">
                 </div>
 
@@ -94,6 +94,191 @@
                 </div>
             </div>
         </form>
+    </div>
+</CommonModal>
+
+
+<div class="ui grid">
+    <div class="sixteen wide column">
+        <h2 class="ui header">กระดาษทำการเปรียบเทียบการชำระภาษี {{month}} เดือนย้อนหลังของผู้ประกอบการ</h2>
+        <div class="ui top attached header">
+            <span>ข้อมูลการวิเคราห์รายได้ของผู้ประกอบการที่มีการชำระภาษีสรรพสามิต</span>
+        </div>
+        <div class="ui attached segment">
+            <div class="ui active inverted dimmer" *ngIf="loading">
+                <div class="ui text loader">Loading</div>
+            </div>
+            <div class="ui form">
+
+                <div class="inline fields">
+                    <div class="ten wide field">
+                    </div>
+                    <div class="six wide field">
+                        <label class="custom-label-w-25">เลขที่วิเคราะห์ข้อมูล</label>
+                        <input value="" readonly="" class="custom-readonly" />
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="sixteen wide field required">
+                        <label class="custom-label-w-25">ระหว่างวันที่ </label>
+                        <div class="four ui action input">
+                            <input type="text" placeholder="MM/YYYY" value="{{before}}" readonly="" class="custom-readonly">
+                            <button class="ui icon button">
+                                <i class="add to calendar icon"></i>
+                            </button>
+                        </div>
+                        <div class="field">
+                            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ถึง&nbsp;</label>
+                        </div>
+                        <div class="four ui action input">
+                            <input type="text" placeholder="MM/YYYY" value="{{last}}" class="custom-readonly" [readonly]="true">
+
+                            <button class="ui icon button">
+                                <i class="add to calendar icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="two  wide field ">
+                        <label>คำค้นหา</label>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    <div class="five wide field ">
+                        <input type="text" placeholder="" value="">
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="two wide field ">
+                        <button class="ui mini primary button" routerLink="/#/add-data?id=${data}">
+                            ค้นหา
+                        </button>
+                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="hidden" id="exciseId" value="EX" />
+                            <button id="exciseBtn" class="ui mini primary button" onclick="window.location='/#/add-data?id='+document.getElementById('exciseId').value+'&num=25610615-01-00330';">
+                                <i class="add icon"></i>
+                                เพิ่มข้อมูล
+                            </button> -->
+                    </div>
+                    <div class="two wide field ">
+                        <button class="ui mini primary button" id="conditonModal">
+                            เพิ่มเงื่อนไข
+                        </button>
+                    </div>
+                    <div class="five wide field">
+                        <label style="width: 5em;">เงื่อนไข</label>
+                        <select class="ui dropdown ai" name="condition" id="condition" (change)="changeCondition($event.target.value)">
+                            <option value="">ทั้งหมด</option>
+
+                            <option *ngFor="let item of valueForFontList; let i = index" value="{{valueForBackEndList[i]}}">{{item}}</option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="ui attached segment">
+                <div class="ui grid">
+                    <div class="three wide column" style="padding-right: 0;">
+                        <div class="ui vertical menu" style="width: auto">
+                            <div class="item">
+                                <div class="header">พิกัดสินค้า</div>
+                                <div class="menu">
+                                    <div class="item hover {{exciseProductType == item && 'active'}}" *ngFor="let item of listMenu" (click)="selectExciseProductType(item)">-
+                                        {{item}}
+                                    </div>
+                                </div>
+                                <div class="header">พิกัดบริการ</div>
+                                <div class="menu">
+                                    <div class="item hover {{exciseProductType == item && 'active'}}" *ngFor="let item of listMenu1" (click)="selectExciseProductType(item)">-
+                                        {{item}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="thirteen wide column">
+                        <div class="ui active inverted dimmer" *ngIf="onLoading">
+                            <div class="ui medium text loader">กำลังโหลด...</div>
+                        </div>
+                        <div>
+                            <!-- <div style="overflow-x: scroll;overflow-y: hidden;padding-bottom: 14px;"> -->
+                            <table id="userManagementDt" class="ui small celled table aligned hover" style="width: 500%">
+                                <thead id="trDrinamic">
+                                    <tr>
+                                        <th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th>
+                                        <th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th>
+                                        <th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th>
+                                        <th rowspan="2" style="text-align: center !important">พื้นที่</th>
+                                        <th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th>
+                                        <th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th>
+                                        <th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th>
+                                        <th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th>
+                                        <th rowspan="2" style="text-align: center !important">ภาค</th>
+                                        <th rowspan="2" style="text-align: center !important">พิกัด</th>
+                                        <th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th>
+                                        <th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th>
+                                        <th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th>
+                                        <th colspan="12" style="text-align: center !important">การชำระภาษี {{ month/2 }}
+                                            เดือนแรก
+                                        </th>
+                                        <th colspan="12" style="text-align: center !important">การชำระภาษี {{ month/2 }}
+                                            เดือนหลัง </th>
+                                        <th rowspan="2" style="text-align: center !important">เพิ่มข้อมูลภายนอก</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="border-left: 1px solid rgba(34,36,38,.1);">{{ month/2 }} เดือนแรก</th>
+                                        <th style="text-align: center !important">{{ month/2 }} เดือนหลัง </th>
+                                        <th style="text-align: center !important">2558</th>
+                                        <th style="text-align: center !important">2559</th>
+                                        <th style="text-align: center !important">2560</th>
+                                        <th style="text-align: center !important">พ.ค. 58</th>
+                                        <th style="text-align: center !important">มิ.ย. 58</th>
+                                        <th style="text-align: center !important">ก.ค. 58</th>
+                                        <th style="text-align: center !important">ส.ค. 58</th>
+                                        <th style="text-align: center !important">ก.ย. 58</th>
+                                        <th style="text-align: center !important">ต.ค. 58</th>
+                                        <th style="text-align: center !important">พ.ย. 58</th>
+                                        <th style="text-align: center !important">ธ.ค. 58</th>
+                                        <th style="text-align: center !important">ม.ค. 59</th>
+                                        <th style="text-align: center !important">ก.พ. 59</th>
+                                        <th style="text-align: center !important">มี.ค. 59</th>
+                                        <th style="text-align: center !important">เม.ย. 59 </th>
+                                        <th style="text-align: center !important">พ.ค. 58</th>
+                                        <th style="text-align: center !important">มิ.ย. 58</th>
+                                        <th style="text-align: center !important">ก.ค. 58</th>
+                                        <th style="text-align: center !important">ส.ค. 58</th>
+                                        <th style="text-align: center !important">ก.ย. 58</th>
+                                        <th style="text-align: center !important">ต.ค. 58</th>
+                                        <th style="text-align: center !important">พ.ย. 58</th>
+                                        <th style="text-align: center !important">ธ.ค. 58</th>
+                                        <th style="text-align: center !important">ม.ค. 59</th>
+                                        <th style="text-align: center !important">ก.พ. 59</th>
+                                        <th style="text-align: center !important">มี.ค. 59</th>
+                                        <th style="text-align: center !important">เม.ย. 59 </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui center aligned grid">
+                    <div class="sixteen wide column">
+                        <button type="button" (click)="onSend()" class="ui mini primary button {{ loading && 'loading' }}">
+                            <i class="add icon"></i>
+                            สร้างกระดาษทำการคัดเลือกราย
+                        </button>
+                        <button type="button" class="ui mini button" routerLink="/trader-selection">
+                            <i class="refresh icon"></i>
+                            ล้างข้อมูล
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -185,11 +370,15 @@
                             <div class="item">
                                 <div class="header">พิกัดสินค้า</div>
                                 <div class="menu">
-                                    <div class="item hover {{exciseProductType == item && 'active'}}" *ngFor="let item of listMenu" (click)="selectExciseProductType(item)">- {{item}}</div>
+                                    <div class="item hover {{exciseProductType == item && 'active'}}" *ngFor="let item of listMenu" (click)="selectExciseProductType(item)">-
+                                        {{item}}
+                                    </div>
                                 </div>
                                 <div class="header">พิกัดบริการ</div>
                                 <div class="menu">
-                                    <div class="item hover {{exciseProductType == item && 'active'}}" *ngFor="let item of listMenu1" (click)="selectExciseProductType(item)">- {{item}}</div>
+                                    <div class="item hover {{exciseProductType == item && 'active'}}" *ngFor="let item of listMenu1" (click)="selectExciseProductType(item)">-
+                                        {{item}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -199,10 +388,10 @@
                             <div class="ui medium text loader">กำลังโหลด...</div>
                         </div>
                         <div>
-                        <!-- <div style="overflow-x: scroll;overflow-y: hidden;padding-bottom: 14px;"> -->
+                            <!-- <div style="overflow-x: scroll;overflow-y: hidden;padding-bottom: 14px;"> -->
                             <table id="userManagementDt" class="ui small celled table aligned hover" style="width: 500%">
                                 <thead id="trDrinamic">
-                                    <tr>                                       
+                                    <tr>
                                         <th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th>
                                         <th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th>
                                         <th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th>
@@ -216,8 +405,11 @@
                                         <th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th>
                                         <th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th>
                                         <th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th>
-                                        <th colspan="12" style="text-align: center !important">การชำระภาษี {{ month/2 }} เดือนแรก</th>
-                                        <th colspan="12" style="text-align: center !important">การชำระภาษี {{ month/2 }} เดือนหลัง </th>
+                                        <th colspan="12" style="text-align: center !important">การชำระภาษี {{ month/2 }}
+                                            เดือนแรก
+                                        </th>
+                                        <th colspan="12" style="text-align: center !important">การชำระภาษี {{ month/2 }}
+                                            เดือนหลัง </th>
                                         <th rowspan="2" style="text-align: center !important">เพิ่มข้อมูลภายนอก</th>
                                     </tr>
                                     <tr>

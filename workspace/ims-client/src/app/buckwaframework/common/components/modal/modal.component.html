@@ -37,6 +37,6 @@
 </div>
 
 <!-- type: custom -->
-<div class="ui {{ size || 'mini' }} hidden transition modal" id="{{ id }}" *ngIf="chkType('custom')">
+<div class="ui {{ size || '' }} hidden transition modal" id="{{ id }}" *ngIf="chkType('custom')">
     <ng-content></ng-content>
 </div>
