@@ -36,9 +36,11 @@ export class Int0911Component implements OnInit {
 
   getDocumentTypeList (){
     this.documentTypeList = [
-      {value:1,label:"เอกสาร 1"},
-      {value:2,label:"เอกสาร 2"},
-      {value:3,label:"เอกสาร 3"}]
+      {value:1,label:"ประมาณการค่าใช้จ่าย"},
+      {value:2,label:"สัญญาการยืมเงิน"},
+      {value:3,label:"หลักฐานการจ่ายเงิน"},
+      {value:4,label:"ใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ"},
+      {value:5,label:"บันทึกข้อความ"}]
   }
   dataTable = function(){
     var table = $('#tableData').DataTable({
@@ -175,6 +177,10 @@ export class Int0911Component implements OnInit {
     }else if($('#documentType').val()==2){
       this.router.navigate(['/int09/1/1/1']);
     }else if($('#documentType').val()==3){
+      this.router.navigate(['/int09/1/1/1']);
+    }else if($('#documentType').val()==4){
+      this.router.navigate(['/int09/1/1/1']);
+    }else if($('#documentType').val()==5){
       this.router.navigate(['/int09/1/1/1']);
     }
     $('#modalAddDocument').modal('hide');
