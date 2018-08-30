@@ -12,7 +12,7 @@
                 <label class="custom-label-w-20">ด้าน</label>
             </div>
             <div class="seven wide field">
-                <input type="text">
+                <input type="text" name="sideExternal" id="sideExternal" [(ngModel)]="sideExternal">
             </div>
             <div class="four wide field">
                 &nbsp;
@@ -20,8 +20,19 @@
         </div>
     </div>
     <div class="actions">
-        <div class="ui green button">บันทึก</div>
-        <div class="ui red button" id="closeList">ยกเลิก</div>
+        <div class="ui center aligned grid" style="margin: 0px">
+            <div class="eight wide field">
+                <button class="ui small green button" type="button" (click)="saveSideExternal()">
+                    <i class="save icon"></i> บันทึก
+                </button>
+            </div>
+
+            <div class="eight wide field">
+                <button class="ui small red button" type="button" id="closeList">
+                    <i class="close icon"></i> ยกเลิก
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -29,22 +40,6 @@
     <div class="sixteen wide column segments">
         <div class="ui attached segment">
             <div class="ui grid">
-                <div class="ui centered twelve wide column">
-                    <div class="ui form">
-                        <div class="inline fields">
-                            <div class="eight wide field" style="text-align: center">
-                                <label class="custom-label-w-30" style="background: #1e83db;color: white">1. ด้านแบบสอบทานระบบการควบคุมภายใน</label>
-                            </div>
-                            <div class="two wide field">
-                                &nbsp;
-                            </div>
-                            <div class="eight wide field" style="text-align: center">
-                                <label class="custom-label-w-30" style="background: #1e83db;color: white">2. รายละเอียดแบบสอบทานระบบการควบคุมภายใน</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
                     <span>จัดการข้อมูลแบบสอบทานระบบการควบคุมภายใน</span>
                 </div>
@@ -53,65 +48,44 @@
                 <div class="centered fifteen wide column ">
                     <div class="inline fields">
                         <div class="eight wide field" style="text-align: right">
-                            <button class="ui mini green button" type="button" id="showList">
+                            <button class="ui small green button" type="button" (click)="addData()">
+                                    <!-- id="showList" -->
                                 <i class="add icon"></i>
                                 เพิ่ม
                             </button>
-                            <button class="ui mini red button" type="button">
+                            <button class="ui small red button" type="button" (click)="deleteData()">
                                 <i class="trash icon"></i>
                                 ลบ
                             </button>
                         </div>
                     </div>
-                    <table id="datatable" class="ui small celled table aligned hover">
+                    <table id="manageDataExternal" class="ui small celled table aligned hover" style="width:100%">
                         <thead>
                             <tr>
-                                <th style="text-align: center !important"><input type="checkbox"></th>
-                                <th style="text-align: center !important">ที่</th>
-                                <th style="text-align: center !important">ด้านแบบสอบทานระบบการควบคุมภายใน</th>
-                                <th colspan="2" style="text-align: center !important">Action</th>
+                                <th rowspan="2"><input id="checkAll" type="checkbox" (click)="clickCheckAll($event)" /></th>
+                                <th rowspan="2" style="text-align: center !important">ที่</th>
+                                <th rowspan="2" style="text-align: center !important">ด้านแบบสอบทานระบบการควบคุมภายใน</th>
+                                <th rowspan="1" colspan="2" style="text-align: center !important">#</th>
+                            </tr>
+                            <tr style="display:none">
+                                <td>ลบ</td>
+                                <td>เพิ่ม</td>
                             </tr>
                         </thead>
-                        <tbody>
+                        <!-- <tbody>
                             <tr>
-                                <td class="center"><input type="checkbox"></td>
-                                <td>Cell</td>
-                                <td>Cell</td>
-                                <td class="center">
-                                    <button class="ui mini orange button" type="button">
-                                        <i class="pencil icon"></i>
-                                        แก้ไข
-                                    </button>
-                                </td>
-                                <td class="center">
-                                    <button class="ui mini green button" type="button">
-                                        <i class="search icon"></i>
-                                        รายละเอียด
-                                    </button>
-                                </td>
+                                <td>Action 1</td>
+                                <td>Action 2</td>
+                                <td>Action 3</td>
+                                <td>Action 4</td>
+                                <td>Action 5</td>
                             </tr>
-                        </tbody>
+                        </tbody> -->
                     </table>
 
                 </div>
 
             </div>
         </div>
-
-        <!-- <div class="ui bottom centered attached segment">
-                <div class="ui center aligned grid">
-                    <div class="eight wide column">
-                        <button class="ui mini green button" type="submit">
-                        <i class="save icon"></i>
-                        สร้างเอกสาร
-                    </button>
-                        <button class="ui mini red button" (click)="onDiscard(false)" type="reset">
-                        <i class="times icon"></i>
-                        ยกเลิก
-                    </button>
-                    </div>
-                </div>
-            </div> -->
-
     </div>
 </div>

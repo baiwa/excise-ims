@@ -1,7 +1,16 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
+import { AjaxService, MessageBarService } from "../../../../common/services";
+import { Router } from "@angular/router";
 
 var jQuery: any;
 declare var $: any;
+
+const URL = {
+  DATATABLEINIT: AjaxService.CONTEXT_PATH + "ia/int02m3/showInit",
+  SAVEQTN_HEADER: "/ia/int02m3/saveQtnHeader",
+  UPDATEQTN_HEADER: "/ia/int02m3/updateQtnHeader",
+  DELETEQTN_HEADER: "/ia/int02m3/deleteQtnHeader/"
+};
 
 @Component({
   selector: "app-int02-m3",
@@ -9,19 +18,199 @@ declare var $: any;
   styleUrls: ["./int02-m3.component.css"]
 })
 export class Int02M3Component implements OnInit, OnDestroy {
-  constructor() {}
+  manageDataExternal: any;
+  sideExternal: any;
+  qtnHeaderName: any;
+  statusSave: String;
+  idSelect: any;
+
+  constructor(
+    private ajax: AjaxService,
+    private router: Router,
+    private messageBarService: MessageBarService
+  ) {
+    this.sideExternal = "";
+    this.statusSave = "";
+    this.idSelect = "";
+  }
 
   ngOnDestroy() {
     $(".ui.modal.show").remove();
   }
 
   ngOnInit() {
-    $("#showList").click(function() {
-      $(".ui.modal.show").modal("show");
-    });
+    this.initDatatable();
+    // $("#showList").click(function() {
+    //   (<HTMLInputElement>document.getElementById("sideExternal")).value = "";
+    //   $(".ui.modal.show").modal("show");
+    // });
 
     $("#closeList").click(function() {
       $(".ui.modal.show").modal("hide");
     });
+
+    // Edit or Read detail
+    $("#manageDataExternal tbody").on("click", "button", e => {
+      const { id } = e.currentTarget;
+      let idSplit = id.split("-");
+      this.idSelect = idSplit[1];
+      this.manageDataExternal.row($(e).parents("tr")).data();
+      if ("edit" == id.split("-")[0]) {
+        this.sideExternal = (<HTMLInputElement>(
+          document.getElementById(id)
+        )).value;
+        this.statusSave = "update";
+        $(".ui.modal.show").modal("show");
+      } else {
+        this.sideExternal = (<HTMLInputElement>(
+          document.getElementById(id)
+        )).value;
+        this.router.navigate(["/int02/m3/1"], {
+          queryParams: { qtnHeaderCode: this.sideExternal }
+        });
+      }
+    });
   }
+
+  clickCheckAll = event => {
+    if (event.target.checked) {
+      var node = $("#manageDataExternal")
+        .DataTable()
+        .rows()
+        .nodes();
+      $.each(node, function(index, value) {
+        $(this)
+          .find("input")
+          .prop("checked", true);
+      });
+    } else {
+      var node = $("#manageDataExternal")
+        .DataTable()
+        .rows()
+        .nodes();
+      $.each(node, function(index, value) {
+        $(this)
+          .find("input")
+          .prop("checked", false);
+      });
+    }
+  };
+
+  initDatatable(): void {
+    // const URL = AjaxService.CONTEXT_PATH + "ia/int02m3/showInit";
+    this.manageDataExternal = $("#manageDataExternal").DataTable({
+      serverSide: false,
+      searching: false,
+      ordering: false,
+      processing: true,
+      scrollX: true,
+      ajax: {
+        type: "POST",
+        url: URL.DATATABLEINIT
+      },
+      columns: [
+        {
+          render: function(data, type, full, meta) {
+            return `<input type="checkbox" name="chk-${meta.row}" id="chk-${
+              meta.row
+            }" value="${$("<div/>")
+              .text(full.qtnHeaderId)
+              .html()}">`;
+          },
+          className: "ui center aligned"
+        },
+        {
+          render: function(data, type, full, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "ui center aligned"
+        },
+        {
+          data: "qtnHeaderName",
+          className: "ui center aligned"
+        },
+        {
+          className: "ui center aligned",
+          render: function(data, type, full, meta) {
+            return `<button class="ui mini orange button" type="button" id="edit-${
+              full.qtnHeaderId
+            }" value="${
+              full.qtnHeaderName
+            }"> <i class="edit icon"></i> แก้ไข</button>`;
+          }
+        },
+        {
+          className: "ui center aligned",
+          render: function(data, type, full, meta) {
+            return `<button class="ui mini blue button" type="button" id="detail-${
+              full.qtnHeaderId
+            }" value="${
+              full.qtnHeaderCode
+            }"> <i class="search icon"></i> รายละเอียด</button>`;
+          }
+        }
+      ]
+    });
+  }
+
+  saveSideExternal = () => {
+    if (this.statusSave == "add") {
+      this.ajax.post(
+        URL.SAVEQTN_HEADER,
+        { qtnHeaderName: this.sideExternal },
+        res => {
+          let data = res.json();
+          this.messageBarService.successModal(data.msg.messageTh, "สำเร็จ");
+          this.manageDataExternal.ajax.reload();
+        },
+        err => {
+          this.messageBarService.errorModal(
+            "ไม่สามารถบันทึกได้",
+            "เกิดข้อผิดพลาด"
+          );
+        }
+      );
+    } else {
+      this.ajax.post(
+        `${URL.UPDATEQTN_HEADER}/${this.idSelect}`,
+        { qtnHeaderName: this.sideExternal },
+        res => {
+          let data = res.json();
+          this.messageBarService.successModal(data.msg.messageTh, "สำเร็จ");
+          this.manageDataExternal.ajax.reload();
+          $(".ui.modal.show").modal("hide");
+        },
+        err => {
+          this.messageBarService.errorModal(
+            "ไม่สามารถบันทึกได้",
+            "เกิดข้อผิดพลาด"
+          );
+        }
+      );
+    }
+  };
+
+  addData = () => {
+    this.sideExternal = "";
+    this.statusSave = "add";
+    $(".ui.modal.show").modal("show");
+  };
+
+  deleteData = () => {
+    var dataCheck = this.manageDataExternal.rows().data();
+    this.idSelect = [];
+    for (let i = 0; i < dataCheck.length; i++) {
+      if ($(`#chk-${i}`)[0].checked) {
+        let id = (<HTMLInputElement>document.getElementById(`chk-${i}`)).value;
+        this.idSelect.push(parseInt(id));
+      }
+    } //end for loops
+
+    this.ajax.delete(URL.DELETEQTN_HEADER + this.idSelect.join(), res => {
+      let data = res.json();
+      this.messageBarService.successModal(data.messageTh, "สำเร็จ");
+      $(".ui.modal.show").modal("hide");
+      this.manageDataExternal.ajax.reload();
+    });
+  };
 }
