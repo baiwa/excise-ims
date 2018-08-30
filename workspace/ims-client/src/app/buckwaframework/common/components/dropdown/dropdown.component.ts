@@ -1,6 +1,6 @@
 import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 
-import { Dropdown } from '../../common/models/dropdown';
+import { Dropdown } from '../../../common/models/dropdown';
 
 declare var jQuery: any;
 declare var $: any;

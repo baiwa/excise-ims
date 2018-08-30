@@ -1,11 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 
 // services
-import { MessageBarService } from "./../../common/services/message-bar.service";
-import { MessageService } from "./../../common/services/message.service";
+import { MessageBarService } from "../../../common/services/message-bar.service";
 
 // models
-import { AlertMessage } from "../models/alertMessage";
+import { AlertMessage } from "../../models/alertMessage";
 
 declare var $: any;
 
