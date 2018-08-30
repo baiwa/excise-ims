@@ -50,7 +50,7 @@ public class QuestionnaireHeaderDao {
 		@Override
 		public QuestionnaireHeader mapRow(ResultSet rs, int arg1) throws SQLException {
 			QuestionnaireHeader vo = new QuestionnaireHeader();
-			vo.setQtnHeaderId(rs.getBigDecimal("QTN_HEADER_ID"));
+			vo.setQtnHeaderId(rs.getLong("QTN_HEADER_ID"));
 			vo.setQtnHeaderCode(rs.getString("QTN_HEADER_CODE"));
 			vo.setQtnHeaderName(rs.getString("QTN_HEADER_NAME"));
 			vo.setCreatedBy(rs.getString("CREATED_BY"));
