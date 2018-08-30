@@ -7,6 +7,7 @@ import { AuthGuard } from "../../../../../common/services";
 import { FormsModule } from "@angular/forms";
 import { Int0911Component } from "./int09-1-1.component";
 import { Int09111Component } from "./int09-1-1-1/int09-1-1-1.component";
+import { ComponentsModule } from "app/buckwaframework/common/components/components.module";
 
 const routes: Routes = [
   { path: "", component: Int0911Component, canActivate: [AuthGuard] },
@@ -14,7 +15,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule, FormsModule],
+  imports: [RouterModule.forChild(routes), CommonModule, FormsModule, ComponentsModule],
   declarations: [Int0911Component,Int09111Component],
   exports: [RouterModule]
 })

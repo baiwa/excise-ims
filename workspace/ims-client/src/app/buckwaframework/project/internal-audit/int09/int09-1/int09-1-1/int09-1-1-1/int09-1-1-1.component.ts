@@ -115,8 +115,9 @@ export class Int09111Component implements OnInit, AfterViewInit {
   }
   saveData (){
     console.log("Save Data : True");
-     $('#modalAdd').modal('hide');
+     $('modalAdd').modal('hide');
    }
+
    modalAddHead (){
     $('#modalAddHead').modal('show');
   }
@@ -124,6 +125,11 @@ export class Int09111Component implements OnInit, AfterViewInit {
     console.log("Save Head : True");
      $('#modalAddHead').modal('hide');
    }
+  //  hideModal (){
+  //   $('#modalAddHead').modal('hide');
+  //   $('#modalAdd').modal('hide');
+  //  }
+
    clickCheckAll = event=>{
     if (event.target.checked) {
       var node =  $('#tableData').DataTable().rows().nodes();
@@ -141,6 +147,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
   ngOnInit() {
     this.dataTable();
     this.calenda();
+    // this.hideModal();
   }
   
 
