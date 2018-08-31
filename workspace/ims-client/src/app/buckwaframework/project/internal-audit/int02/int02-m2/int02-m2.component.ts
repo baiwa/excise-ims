@@ -19,8 +19,7 @@ export class Int02M2Component implements OnInit {
   }
 
   ngOnInit() {
-    $(".ui.dropdown").dropdown();
-    // $('.ui.accordion').accordion();
+    $(".ui.dropdown.ai").dropdown().css("width", "100%");
     $("#calendar").calendar({
       text: TextDateTH,
       type: "date",

@@ -16,7 +16,7 @@
                                 <label class="custom-label-w-20">จำนวนหน่วยงานที่ตอบกลับแบบสอบทาน :</label>
                             </div>
                             <div class="four wide field">
-                                <label class="custom-label-w-20" style="text-align: left;">????</label>
+                                <label class="custom-label-w-20" style="text-align: left;">{{ calcTotal() }}</label>
                             </div>
                             <div class="four wide field">
                                 <button class="ui mini orange button" type="button" (click)="show()">
@@ -26,35 +26,40 @@
                             </div>
                         </div>
 
-                        <div class="ui vertical accordion menu" style="width: 100%;">
-                            <div class="item" *ngFor="let dataProvince of province let i = index">
-                                <div class="title" style="color: black;">
+                        <div class="ui styled fluid accordion">
+                            <div *ngFor="let pro of province; let i = index">
+                                <div class="title">
                                     <div class="inline fields">
-                                        <div class="eight wide field">
-                                            <i class="dropdown icon"></i> {{dataProvince}}
+                                        <div class="seven wide field">
+                                            หน่วยงาน : {{ pro.title }}
                                         </div>
-                                        <div class="four wide field">
-                                            ผ่านเกณฑ์ : 2
+                                        <div class="three wide field">
+                                            ผ่านเกณฑ์ : {{ pro.pass }}
                                         </div>
-                                        <div class="four wide field">
-                                            ไม่ผ่านเกณฑ์ : 3
+                                        <div class="three wide field">
+                                            ไม่ผ่านเกณฑ์ : {{ pro.fail }}
+                                        </div>
+                                        <div class="three wide field">
+                                            ระดับความเสี่ยง : {{ pro.risk }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="content">
-                                    <table id="datatable" class="ui small celled table aligned hover">
+                                    <table id="datatable-{{pro.id}}" class="ui small celled table aligned hover">
                                         <thead>
-                                            <tr>
-                                                <th rowspan="2" style="text-align: center !important">ด้าน</th>
-                                                <th rowspan="2" style="text-align: center !important">มี/ใช่</th>
-                                                <th rowspan="2" style="text-align: center !important">ไม่มี/ไม่ใช่</th>
+                                            <tr style="text-align: center !important">
+                                                <th>ด้าน</th>
+                                                <th>มี/ใช่</th>
+                                                <th>ไม่มี/ไม่ใช่</th>
+                                                <th>ระดับความเสี่ยง</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let list of topics; let a = index">
-                                                <td class="center">{{list["0"]}}</td>
-                                                <td class="center">{{list["1"]}}</td>
-                                                <td class="center">{{list["2"]}}</td>
+                                            <tr *ngFor="let detail of pro.detail; let a = index">
+                                                <td class="center">{{ detail.title }}</td>
+                                                <td class="center">{{ detail.approve }}</td>
+                                                <td class="center">{{ detail.reject }}</td>
+                                                <td class="center">{{ detail.risk }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

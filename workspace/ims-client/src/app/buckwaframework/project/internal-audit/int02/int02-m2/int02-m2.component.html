@@ -1,106 +1,124 @@
 <div class="ui centered grid">
-    <div class="twelve wide column">
-        <div class="ui raised segments">
-            <div class="ui center aligned segment">
-                <h4>แบบสอบทานระบบการควบคุมภายใน</h4>
-            </div>
-            <div class="ui centered segment grid">
-                <form class="ui twelve wide form column" (submit)="search($event)">
-                    <div class="two inline fields">
-                        <div class="field">
-                            <label>สรรพสามิตภาค</label>
-                            <div class="ui input">
-                                <select class="ui selection dropdown">
-                                    <option value="">เลือกภาค</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
+    <div class="row">
+        <div class="column">
+            <div class="ui raised segments">
+                <div class="ui center aligned segment">
+                    <h4>แบบสอบทานระบบการควบคุมภายใน</h4>
+                </div>
+                <div class="ui centered segment grid">
+                    <form class="ui twelve wide form column" (submit)="search($event)">
+                        <div class="inline fields">
+                            <div class="two wide field">
+                                <label>สรรพสามิตภาค</label>
+                            </div>
+                            <div class="six wide field">
+                                <div class="ui input">
+                                    <select class="ui selection dropdown ai">
+                                        <option value="">เลือกภาค</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="two wide field">
+                                <label>ผู้สอบทาน</label>
+                            </div>
+                            <div class="six wide field">
+                                <div class="ui input">
+                                    <input type="text" placeholder="ผู้สอบทาน">
+                                </div>
                             </div>
                         </div>
-                        <div class="field">
-                            <label>ผู้สอบทาน</label>
-                            <input type="text" placeholder="ผู้สอบทาน">
-                        </div>
-                    </div>
-                    <div class="two inline fields">
-                        <div class="field">
-                            <label>สรรพสามิตพื้นที่</label>
-                            <div class="ui input">
-                                <select class="ui selection dropdown">
-                                    <option value="">เลือกพื้นที่</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
+                        <div class="inline fields">
+                            <div class="two wide field">
+                                <label>สรรพสามิตพื้นที่</label>
                             </div>
-                        </div>
-                        <div class="field">
-                            <label>วันที่</label>
-                            <div class="ui input">
-                                <div class="ui calendar" id="calendar">
-                                    <div class="ui input left icon">
-                                        <i class="time icon"></i>
-                                        <input type="calendar" readonly="" id="calendar_data" name="calendar_data" [attr.required]="true" autocomplete="off">
+                            <div class="six wide field">
+                                <div class="ui input">
+                                    <select class="ui selection dropdown ai">
+                                        <option value="">เลือกพื้นที่</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="two wide field">
+                                <label>วันที่</label>
+                            </div>
+                            <div class="six wide field">
+                                <div class="ui input">
+                                    <div class="ui calendar" id="calendar">
+                                        <div class="ui input left icon">
+                                            <i class="time icon"></i>
+                                            <input type="calendar" readonly="" placeholder="วัน/เดือน/ปี" id="calendar_data" name="calendar_data" [attr.required]="true"
+                                                autocomplete="off">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="ui centered grid inline field">
-                        <div class="two wide column">
-                            <button class="ui mini button primary" type="submit">ค้นหา</button>
+                        <div class="ui centered grid inline field">
+                            <div class="two wide column">
+                                <button class="ui mini button primary" type="submit">ค้นหา</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <div class="twelve wide column" *ngIf="questionnaire.length > 0">
-        <div class="ui styled fluid accordion" id="acc">
-            <div *ngFor="let qtn of questionnaire; let i = index">
-                <div class="{{ i==0 ? 'active' : ''}} title">
-                    <h4 class="text-center">{{ qtn.title }}</h4>
-                </div>
-                <div class="{{ i==0 ? 'active' : ''}} content">
-                    <table class="ui celled table">
-                        <thead>
-                            <tr>
-                                <th class="center aligned" rowspan="2">ที่</th>
-                                <th class="center aligned" rowspan="2">รายการ</th>
-                                <th class="center aligned">มี / ใช่</th>
-                                <th class="center aligned">ไม่มี / ไม่ใช่</th>
-                            </tr>
-                            <tr>
-                                <th class="border center aligned">สมบูรณ์</th>
-                                <th class="center aligned">ไม่สมบูรณ์</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let detail of qtn.detail; let i = index" class="{{ detail.headerId ? 'head' : '' }}">
+    <div class="row">
+        <div class="column" *ngIf="questionnaire.length > 0">
+            <div class="ui styled fluid accordion" id="acc">
+                <div *ngFor="let qtn of questionnaire; let i = index">
+                    <div class="{{ i==0 ? 'active' : ''}} title">
+                        <h4 class="text-center">{{ qtn.title }}</h4>
+                    </div>
+                    <div class="{{ i==0 ? 'active' : ''}} content">
+                        <table class="ui celled table">
+                            <thead class="text-center">
+                                <tr>
+                                    <th rowspan="2">ที่</th>
+                                    <th rowspan="2">รายการ</th>
+                                    <th>มี / ใช่</th>
+                                    <th>ไม่มี / ไม่ใช่</th>
+                                </tr>
+                                <tr>
+                                    <th class="border">สมบูรณ์</th>
+                                    <th>ไม่สมบูรณ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let detail of qtn.detail; let i = index" class="{{ detail.headerId ? 'head' : '' }}">
+                                    <td *ngIf="detail.headerId" class="text-center">{{detail.order}}</td>
+                                    <td *ngIf="detail.headerId" colspan="3">{{detail.content}}</td>
 
-                                <td *ngIf="detail.headerId" class="center aligned">{{detail.order}}</td>
-                                <td *ngIf="detail.headerId" colspan="3">{{detail.content}}</td>
-
-                                <td *ngIf="detail.detailId" class="right aligned">{{detail.order}}</td>
-                                <td *ngIf="detail.detailId">{{detail.content}}</td>
-                                <td *ngIf="detail.detailId">===</td>
-                                <td *ngIf="detail.detailId">===</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="ui form" *ngIf="qtn.conclusion">
-                        <div class="field">
-                            <label>สรุปผลการสอบทาน</label>
-                            <div class="ui input">
-                                <textarea name="" id="" rows="4"></textarea>
+                                    <td *ngIf="detail.detailId" class="text-right">{{detail.order}}</td>
+                                    <td *ngIf="detail.detailId">{{detail.content}}</td>
+                                    <td *ngIf="detail.detailId" class="text-center">
+                                        <input type="checkbox">
+                                    </td>
+                                    <td *ngIf="detail.detailId" class="text-center">
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="ui form" *ngIf="qtn.conclusion">
+                            <div class="field">
+                                <label class="text-left">สรุปผลการสอบทาน</label>
+                                <div class="ui input">
+                                    <textarea name="" id="" rows="4"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="ui grid">
-            <div class="save-btn center aligned column">
-                <button class="ui mini primary button">บันทึก</button>
+            <div class="ui grid">
+                <div class="save-btn center aligned column">
+                    <button class="ui mini primary button">บันทึก</button>
+                </div>
             </div>
         </div>
     </div>

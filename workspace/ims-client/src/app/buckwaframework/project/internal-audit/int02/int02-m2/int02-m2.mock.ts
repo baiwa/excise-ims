@@ -81,7 +81,7 @@ export const _Questionnaire: Questionnaire[] = [
     },
     { // Questionnaire 2
         title: "ด้านเจ้าหนี้",
-        conclusion: false,
+        conclusion: true,
         detail: [ // Detail[]
             {
                 order: "1",
@@ -97,7 +97,7 @@ export const _Questionnaire: Questionnaire[] = [
     },
     { // Questionnaire 3
         title: "ด้านระบบ e-payment",
-        conclusion: false,
+        conclusion: true,
         detail: [ // Detail[]
             {
                 order: "1",

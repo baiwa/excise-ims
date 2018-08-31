@@ -1,9 +1,22 @@
-.ui.calendar, input[type=calendar] {
+.ui.calendar, .ui.input, input[type=calendar] {
     width: 100% !important;
 }
-.text-center {
-    text-align: center;
+
+label {
+    width: 100% !important;
+    text-align: right;
 }
+
+.text-left {
+    text-align: left !important;
+}
+.text-center {
+    text-align: center !important;
+}
+.text-right {
+    text-align: right !important;
+}
+
 .head {
     background: whitesmoke;
 }

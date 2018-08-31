@@ -1,4 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Result, _Result } from "./int02-m4-2.mock";
+import { forEach } from "@angular/router/src/utils/collection";
 
 declare var $: any;
 
@@ -11,26 +13,22 @@ export class Int02M42Component implements OnInit {
 
   @Output() showList = new EventEmitter<any>();
 
-  topics: any[][];
-  province: any[];
+  total: number = 0;
+  province: Result[] = _Result;
 
   constructor() {
-    this.topics = [
-      ["ด้านการเงิน", "2", "6", "1"],
-      ["ด้านเจ้าหนี้", "2", "4", "3"],
-      ["ด้านระบบ e-payment", "4", "1", "7"],
-      ["ด้านระบบ GFMIS", "1", "3", "10"]
-    ];
-
-    this.province = ["สสพ.แม่ฮ่องสอน", "สสพ.นนทบุรี", "สสพ.ลำปาง"];
   }
 
   ngOnInit() {
-    $(".ui.accordion").accordion({
-      selector: {
-        trigger: ".title"
-      }
+    $(".ui.accordion").accordion();
+  }
+
+  calcTotal() {
+    this.total = 0;
+    this.province.forEach(obj => {
+      this.total += obj.detail.length;
     });
+    return this.total;
   }
 
   show() {
