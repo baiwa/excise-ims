@@ -300,7 +300,81 @@ public class WebServiceExciseService {
 	}
 
 	public List<RiskAssExcAreaDtl> getRiskAssExcAreaDtlList(RiskAssExcAreaDtl riskAssExcAreaDtl) {
+		logger.info("getRiskAssExcAreaDtlList WebService");
 		List<RiskAssExcAreaDtl> riskAssExcAreaDtlList = new ArrayList<RiskAssExcAreaDtl>();
+		
+		riskAssExcAreaDtl = new RiskAssExcAreaDtl();
+		riskAssExcAreaDtl.setDepartmentName("สสพ. พระนครศรีอยุธยา 2");
+		riskAssExcAreaDtl.setYears(new  BigDecimal(10));
+		riskAssExcAreaDtl.setCheckOutDate("28/01/2551");
+		riskAssExcAreaDtl.setCloseDate("01/02/2551");
+		riskAssExcAreaDtlList.add(riskAssExcAreaDtl);
+		
+		riskAssExcAreaDtl = new RiskAssExcAreaDtl();
+		riskAssExcAreaDtl.setDepartmentName("สสพ. อ่างทอง");
+		riskAssExcAreaDtl.setYears(new  BigDecimal(9));
+		riskAssExcAreaDtl.setCheckOutDate("28/01/2552");
+		riskAssExcAreaDtl.setCloseDate("01/02/2552");
+		riskAssExcAreaDtlList.add(riskAssExcAreaDtl);
+		
+		riskAssExcAreaDtl = new RiskAssExcAreaDtl();
+		riskAssExcAreaDtl.setDepartmentName("สสพ.จันทบุรี");
+		riskAssExcAreaDtl.setYears(new  BigDecimal(8));
+		riskAssExcAreaDtl.setCheckOutDate("28/01/2553");
+		riskAssExcAreaDtl.setCloseDate("01/02/2553");
+		riskAssExcAreaDtlList.add(riskAssExcAreaDtl);
+		
+		riskAssExcAreaDtl = new RiskAssExcAreaDtl();
+		riskAssExcAreaDtl.setDepartmentName("สสพ.ฉะเชิงเทรา");
+		riskAssExcAreaDtl.setYears(new  BigDecimal(7));
+		riskAssExcAreaDtl.setCheckOutDate("28/01/2554");
+		riskAssExcAreaDtl.setCloseDate("01/02/2554");
+		riskAssExcAreaDtlList.add(riskAssExcAreaDtl);
+		
+		riskAssExcAreaDtl = new RiskAssExcAreaDtl();
+		riskAssExcAreaDtl.setDepartmentName("สสพ.ชลบุรี 1");
+		riskAssExcAreaDtl.setYears(new  BigDecimal(6));
+		riskAssExcAreaDtl.setCheckOutDate("28/01/2555");
+		riskAssExcAreaDtl.setCloseDate("01/02/2555");
+		riskAssExcAreaDtlList.add(riskAssExcAreaDtl);
+		
+		riskAssExcAreaDtl = new RiskAssExcAreaDtl();
+		riskAssExcAreaDtl.setDepartmentName("สสพ.ชลบุรี 2");
+		riskAssExcAreaDtl.setYears(new  BigDecimal(5));
+		riskAssExcAreaDtl.setCheckOutDate("28/01/2556");
+		riskAssExcAreaDtl.setCloseDate("01/02/2556");
+		riskAssExcAreaDtlList.add(riskAssExcAreaDtl);
+		
+		riskAssExcAreaDtl = new RiskAssExcAreaDtl();
+		riskAssExcAreaDtl.setDepartmentName("สสพ.ตราด");
+		riskAssExcAreaDtl.setYears(new  BigDecimal(4));
+		riskAssExcAreaDtl.setCheckOutDate("28/01/2557");
+		riskAssExcAreaDtl.setCloseDate("01/02/2557");
+		riskAssExcAreaDtlList.add(riskAssExcAreaDtl);
+		
+		riskAssExcAreaDtl = new RiskAssExcAreaDtl();
+		riskAssExcAreaDtl.setDepartmentName("สสพ.นครนายก");
+		riskAssExcAreaDtl.setYears(new  BigDecimal(3));
+		riskAssExcAreaDtl.setCheckOutDate("28/01/2558");
+		riskAssExcAreaDtl.setCloseDate("01/02/2558");
+		riskAssExcAreaDtlList.add(riskAssExcAreaDtl);
+		
+		riskAssExcAreaDtl = new RiskAssExcAreaDtl();
+		riskAssExcAreaDtl.setDepartmentName("สสพ.ปราจีนบุรี");
+		riskAssExcAreaDtl.setYears(new  BigDecimal(2));
+		riskAssExcAreaDtl.setCheckOutDate("28/01/2559");
+		riskAssExcAreaDtl.setCloseDate("01/02/2559");
+		riskAssExcAreaDtlList.add(riskAssExcAreaDtl);
+		
+		riskAssExcAreaDtl = new RiskAssExcAreaDtl();
+		riskAssExcAreaDtl.setDepartmentName("สสพ.ระยอง 1");
+		riskAssExcAreaDtl.setYears(new  BigDecimal(1));
+		riskAssExcAreaDtl.setCheckOutDate("28/01/2560");
+		riskAssExcAreaDtl.setCloseDate("01/02/2560");
+		riskAssExcAreaDtlList.add(riskAssExcAreaDtl);
+		
+		
+		
 		return riskAssExcAreaDtlList;
 	}
 

@@ -32,7 +32,7 @@ public class RiskAssExcAreaService {
 	private final RiskAssExcAreaHdrRepository riskAssRiskWsHdrRepository;
 	private final String BUDGET_YEAR = "BUDGET_YEAR";
 	private final String RISK_CONFIG = "RISK_CONFIG";
-	private final String INT08_1 = "INT08-1";
+	private final String INT08_3 = "INT08-3";
 
 	@Autowired
 	private WebServiceExciseService webServiceExciseService;
@@ -104,12 +104,12 @@ public class RiskAssExcAreaService {
 		Message message = null;
 		Lov lov = new Lov(BUDGET_YEAR);
 		lov.setValue1(riskAssRiskWsHdr.getBudgetYear());
-		lov.setSubType(INT08_1);
+		lov.setSubType(INT08_3);
 		List<Lov> lovList = lovRepository.queryLovByCriteria(lov, null);
 		if (lovList == null || lovList.size() == 0) {
 			lovRepository.save(lov);
 			Lov dataInit = new Lov(RISK_CONFIG);
-			dataInit.setSubType(INT08_1);
+			dataInit.setSubType(INT08_3);
 			RiskAssExcAreaHdr insertConfigData = null;
 			List<Lov> lovInitList = lovRepository.queryLovByCriteria(dataInit, null);
 			for (Lov lov2 : lovInitList) {
@@ -132,20 +132,20 @@ public class RiskAssExcAreaService {
 	}
 
 	public void updateRiskAssExcAreaDtl(List<RiskAssExcAreaDtl> riskAssRiskWsDtls) {
-		List<Condition> conditionList = conditionService.findConditionByParentId(riskAssRiskWsDtls.get(0).getRiskHrdId(), "MAIN", "int08-1-5");
+		List<Condition> conditionList = conditionService.findConditionByParentId(riskAssRiskWsDtls.get(0).getRiskHrdId(), "MAIN", "int08-3-3");
 		if (BeanUtils.isNotEmpty(conditionList)) {
-			for (RiskAssExcAreaDtl riskAssRiskWsDtl : riskAssRiskWsDtls) {
+			for (RiskAssExcAreaDtl  riskAssExcAreaDtl : riskAssRiskWsDtls) {
 				for (Condition condition : conditionList) {
-					long value = riskAssRiskWsDtl.getApproveBudget().longValue();
+					long value = riskAssExcAreaDtl.getYears() != null  ? riskAssExcAreaDtl.getYears().longValue() : 0;
 					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
-						riskAssRiskWsDtl.setRl(condition.getValueRl());
-						riskAssRiskWsDtl.setValueTranslation(condition.getColor());
+						riskAssExcAreaDtl.setRl(condition.getValueRl());
+						riskAssExcAreaDtl.setValueTranslation(condition.getColor());
 					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
-						riskAssRiskWsDtl.setRl(condition.getValueRl());
-						riskAssRiskWsDtl.setValueTranslation(condition.getColor());
+						riskAssExcAreaDtl.setRl(condition.getValueRl());
+						riskAssExcAreaDtl.setValueTranslation(condition.getColor());
 					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
-						riskAssRiskWsDtl.setRl(condition.getValueRl());
-						riskAssRiskWsDtl.setValueTranslation(condition.getColor());
+						riskAssExcAreaDtl.setRl(condition.getValueRl());
+						riskAssExcAreaDtl.setValueTranslation(condition.getColor());
 					}
 				}
 

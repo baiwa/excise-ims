@@ -58,7 +58,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
   }
 
   initDatatable(): void {
-    const URL = AjaxService.CONTEXT_PATH + "ia/int083/searchRiskAssRiskWsHdr";
+    const URL = AjaxService.CONTEXT_PATH + "ia/int08/searchRiskAssRiskWsHdr";
     console.log(URL);
     this.datatable = $("#dataTable").DataTable({
       lengthChange: false,

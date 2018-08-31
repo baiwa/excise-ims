@@ -14,7 +14,7 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 
 @Entity
-@Table(name = "IA_RISK_ASS_RISK_WS_HDR")
+@Table(name = "IA_RISK_ASS_RISK_WS_HRD")
 public class RiskAssRiskWsHdr extends BaseEntity{
 	
 	

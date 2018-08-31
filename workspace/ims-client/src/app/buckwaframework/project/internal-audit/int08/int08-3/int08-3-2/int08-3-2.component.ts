@@ -29,7 +29,7 @@ export class Int0832Component implements OnInit {
   ngOnInit() {
     this.riskHdrName = "";
     this.budgetYear = "";
-    this.wsRiskList = ["ปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ", "ปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ"];
+    this.wsRiskList = ["ปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ", "ปัจจัยเสี่ยงผลการจัดเก็บรายได้", "ปัจจัยเสี่ยงผลการปราบปราม", "ปัจจัยเสี่ยงผลการปราบปรามด้านค่าปรับคดี", "ปัจจัยเสี่ยงการเงินและบัญชี", "ปัจจัยเสี่ยงระบบการควบคุมภายใน", "ปัจจัยเสี่ยงการส่งเงินเกิน 3 วัน", "ปัจจัยเสี่ยงแบบสอบทานระบบการควบคุมภายใน"];
     //this.initDatatable();
   }
   ngAfterViewInit() {
@@ -57,7 +57,7 @@ export class Int0832Component implements OnInit {
   }
 
   initDatatable(): void {
-    const URL = AjaxService.CONTEXT_PATH + "ia/int08/searchRiskAssRiskWsHdr";
+    const URL = AjaxService.CONTEXT_PATH + "ia/int083/searchRiskAssExcAreaHdr";
     console.log(URL);
     this.datatable = $("#dataTable").DataTable({
       lengthChange: false,
@@ -102,11 +102,11 @@ export class Int0832Component implements OnInit {
           console.log(data.riskHdrName);
           console.log(this.wsRiskList.indexOf(data.riskHdrName));
           if (this.wsRiskList.indexOf(data.riskHdrName) >= 0) {
-            this.router.navigate(["/int08/1/5"], {
+            this.router.navigate(["/int08/3/3"], {
               queryParams: { id: data.riskHrdId }
             });
           } else {
-            this.router.navigate(["/int08/1/6"], {
+            this.router.navigate(["/int08/3/4"], {
               queryParams: { id: data.riskHrdId }
             });
           }
@@ -116,7 +116,7 @@ export class Int0832Component implements OnInit {
           console.log("del");
           console.log(data.riskHrdId);
 
-          const URL = "ia/int08/deleteRiskAssRiskWsHdr";
+          const URL = "ia/int083/deleteRiskAssExcAreaHdr";
 
           this.ajax.post(URL, { riskHrdId: data.riskHrdId }, res => {
             var message = res.json();
@@ -152,7 +152,7 @@ export class Int0832Component implements OnInit {
     this.messageBarService.comfirm(foo => {
       // let msg = "";
       if (foo) {
-        this.router.navigate(["/int08/1/1"], {
+        this.router.navigate(["/int08/3/1"], {
           queryParams: { budgetYear: this.budgetYear }
         });
       }
@@ -160,7 +160,7 @@ export class Int0832Component implements OnInit {
   }
 
   configAllCondition() {
-    this.router.navigate(["/int08/1/7"], {
+    this.router.navigate(["/int08/3/5"], {
       queryParams: { budgetYear: this.budgetYear }
     });
   }

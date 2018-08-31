@@ -21,8 +21,8 @@ public class RiskAssExcAreaHdr extends BaseEntity{
 	private static final long serialVersionUID = 7005171568952161795L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RISK_ASS_RISK_WS_HDR_GEN")
-	@SequenceGenerator(name = "IA_RISK_ASS_RISK_WS_HDR_GEN", sequenceName = "IA_RISK_ASS_RISK_WS_HDR_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RISK_ASS_EXC_AREA_HRD_GEN")
+	@SequenceGenerator(name = "IA_RISK_ASS_EXC_AREA_HRD_GEN", sequenceName = "IA_RISK_ASS_EXC_AREA_HRD_SEQ", allocationSize = 1)
 	@Column(name = "RISK_HRD_ID")
 	private Long riskHrdId;
 	

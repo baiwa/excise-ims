@@ -80,7 +80,7 @@ export class Int0831Component implements OnInit {
     this.budgetYear = $('#budgetYear').val().trim();
     if (this.budgetYear != null && this.budgetYear != undefined && this.budgetYear != '') {
       console.log(this.budgetYear);
-      const URL = "ia/int08/createBudgetYear";
+      const URL = "ia/int083/createBudgetYear";
 
       this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
         // var message = res.json();

@@ -24,35 +24,32 @@ public class RiskAssExcAreaDtl extends BaseEntity{
 	private static final long serialVersionUID = 8256372668842679184L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RISK_ASS_RISK_WS_DTL_GEN")
-	@SequenceGenerator(name = "IA_RISK_ASS_RISK_WS_DTL_GEN", sequenceName = "IA_RISK_ASS_RISK_WS_DTL_SEQ", allocationSize = 1)
-	@Column(name="RISK_ASS_RISK_DTL_ID")
-	private Long riskAssRiskDtlId;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RISK_ASS_EXC_AREA_DTL_GEN")
+	@SequenceGenerator(name = "IA_RISK_ASS_EXC_AREA_DTL_GEN", sequenceName = "IA_RISK_ASS_EXC_AREA_DTL_SEQ", allocationSize = 1)
+	@Column(name="RISK_ASS_EXC_AREA_DTL_ID")
+	private Long riskAssExcAreaDtlId;
 	
 	
 	@Column(name = "RISK_HRD_ID")
 	private Long riskHrdId; 
 	
-	@Column(name="PROJECT_BASE")
-	private String projectBase;
-	
+
 	@Column(name="DEPARTMENT_NAME")
 	private String departmentName;
 	
-	@Column(name="BUDGET")
-	private BigDecimal budget;
+	@Column(name="CHECK_OUT_DATE")
+	private String checkOutDate;
 	
-	@Column(name="LOCAL_BUDGET")
-	private BigDecimal localBudget;
 	
-	@Column(name="OTHER_MONEY")
-	private BigDecimal otherMoney;
+	@Column(name="CLOSE_DATE")
+	private String closeDate;
 	
-	@Column(name="APPROVE_BUDGET")
-	private BigDecimal approveBudget;
 	
-	@Column(name="SUM_MONTH")
-	private BigDecimal sumMonth;
+	@Column(name="YEARS")
+	private BigDecimal years;
+	
+	@Column(name="COLOR")
+	private String color;
 	
 	@Column(name="RL")
 	private String rl;
@@ -60,31 +57,6 @@ public class RiskAssExcAreaDtl extends BaseEntity{
 	@Column(name="VALUE_TRANSLATION")
 	private String valueTranslation;
 	
-	
-
-	public RiskAssExcAreaDtl() {
-	}
-
-
-	public Long getRiskAssRiskDtlId() {
-		return riskAssRiskDtlId;
-	}
-
-
-	public void setRiskAssRiskDtlId(Long riskAssRiskDtlId) {
-		this.riskAssRiskDtlId = riskAssRiskDtlId;
-	}
-
-
-	public String getProjectBase() {
-		return projectBase;
-	}
-
-
-	public void setProjectBase(String projectBase) {
-		this.projectBase = projectBase;
-	}
-
 
 	public String getDepartmentName() {
 		return departmentName;
@@ -95,55 +67,6 @@ public class RiskAssExcAreaDtl extends BaseEntity{
 		this.departmentName = departmentName;
 	}
 
-
-	public BigDecimal getBudget() {
-		return budget;
-	}
-
-
-	public void setBudget(BigDecimal budget) {
-		this.budget = budget;
-	}
-
-
-	public BigDecimal getLocalBudget() {
-		return localBudget;
-	}
-
-
-	public void setLocalBudget(BigDecimal localBudget) {
-		this.localBudget = localBudget;
-	}
-
-
-	public BigDecimal getOtherMoney() {
-		return otherMoney;
-	}
-
-
-	public void setOtherMoney(BigDecimal otherMoney) {
-		this.otherMoney = otherMoney;
-	}
-
-
-	public BigDecimal getApproveBudget() {
-		return approveBudget;
-	}
-
-
-	public void setApproveBudget(BigDecimal approveBudget) {
-		this.approveBudget = approveBudget;
-	}
-
-
-	public BigDecimal getSumMonth() {
-		return sumMonth;
-	}
-
-
-	public void setSumMonth(BigDecimal sumMonth) {
-		this.sumMonth = sumMonth;
-	}
 
 
 	public String getRl() {
@@ -175,6 +98,55 @@ public class RiskAssExcAreaDtl extends BaseEntity{
 		this.riskHrdId = riskHrdId;
 	}
 
+
+	public String getCheckOutDate() {
+		return checkOutDate;
+	}
+
+
+	public void setCheckOutDate(String checkOutDate) {
+		this.checkOutDate = checkOutDate;
+	}
+
+
+	public String getCloseDate() {
+		return closeDate;
+	}
+
+
+	public void setCloseDate(String closeDate) {
+		this.closeDate = closeDate;
+	}
+
+
+	public BigDecimal getYears() {
+		return years;
+	}
+
+
+	public void setYears(BigDecimal years) {
+		this.years = years;
+	}
+
+
+	public String getColor() {
+		return color;
+	}
+
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+
+	public Long getRiskAssExcAreaDtlId() {
+		return riskAssExcAreaDtlId;
+	}
+
+
+	public void setRiskAssExcAreaDtlId(Long riskAssExcAreaDtlId) {
+		this.riskAssExcAreaDtlId = riskAssExcAreaDtlId;
+	}
 
 	
 }

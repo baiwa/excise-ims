@@ -33,7 +33,7 @@ public class RiskAssRiskWsHdrRepositoryImpl implements RiskAssRiskWsHdrRepositor
 		this.commonJdbcTemplate = commonJdbcTemplate;
 	}
 
-	private final String QUERY = "SELECT * FROM IA_RISK_ASS_RISK_WS_HDR WHERE IS_DELETED = ? ";
+	private final String QUERY = "SELECT * FROM IA_RISK_ASS_RISK_WS_HRD WHERE IS_DELETED = ? ";
 
 	@Override
 	public List<RiskAssRiskWsHdr> findByCriteria(RiskAssRiskWsHdr riskAssRiskWsHdr) {
@@ -84,14 +84,14 @@ public class RiskAssRiskWsHdrRepositoryImpl implements RiskAssRiskWsHdrRepositor
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT DISTINCT PROJECT_BASE,DEPARTMENT_NAME FROM ( "); 
-		sql.append(" SELECT D.PROJECT_BASE , D.DEPARTMENT_NAME FROM IA_RISK_ASS_RISK_WS_HDR H ");
+		sql.append(" SELECT D.PROJECT_BASE , D.DEPARTMENT_NAME FROM IA_RISK_ASS_RISK_WS_HRD H ");
 		sql.append(" LEFT JOIN IA_RISK_ASS_RISK_WS_DTL D ");
 		sql.append(" ON D.RISK_HRD_ID = H.RISK_HRD_ID ");
 		sql.append(" WHERE H.IS_DELETED = 'N' ");
 		sql.append(" AND H.BUDGET_YEAR = ? ");
 		sql.append(" AND D.IS_DELETED = 'N' ");
 		sql.append(" UNION ");
-		sql.append(" SELECT O.PROJECT_BASE , o.DEPARTMENT_NAME FROM IA_RISK_ASS_RISK_WS_HDR H ");
+		sql.append(" SELECT O.PROJECT_BASE , o.DEPARTMENT_NAME FROM IA_RISK_ASS_RISK_WS_HRD H ");
 		sql.append(" LEFT JOIN IA_RISK_ASS_OTHER_DTL O ");
 		sql.append(" ON O.RISK_HRD_ID = H.RISK_HRD_ID ");
 		sql.append(" WHERE H.IS_DELETED = 'N' ");
@@ -125,7 +125,7 @@ public class RiskAssRiskWsHdrRepositoryImpl implements RiskAssRiskWsHdrRepositor
 		sql.append(" FROM ");
 		sql.append(" ( ");
 		sql.append(" SELECT H.RISK_HDR_NAME, D.PROJECT_BASE , D.RL , D.VALUE_TRANSLATION , D.DEPARTMENT_NAME");
-		sql.append(" FROM IA_RISK_ASS_RISK_WS_HDR H ");
+		sql.append(" FROM IA_RISK_ASS_RISK_WS_HRD H ");
 		sql.append(" left JOIN IA_RISK_ASS_RISK_WS_DTL D ");
 		sql.append(" ON D.RISK_HRD_ID = H.RISK_HRD_ID ");
 		sql.append(" WHERE H.IS_DELETED = 'N' ");
@@ -135,7 +135,7 @@ public class RiskAssRiskWsHdrRepositoryImpl implements RiskAssRiskWsHdrRepositor
 		sql.append(" AND D.DEPARTMENT_NAME = ? ");
 		sql.append(" UNION ");
 		sql.append(" SELECT H.RISK_HDR_NAME ,o.PROJECT_BASE, O.RL , O.VALUE_TRANSLATION , O.DEPARTMENT_NAME ");
-		sql.append(" FROM IA_RISK_ASS_RISK_WS_HDR H ");
+		sql.append(" FROM IA_RISK_ASS_RISK_WS_HRD H ");
 		sql.append(" left JOIN IA_RISK_ASS_OTHER_DTL O ");
 		sql.append(" ON O.RISK_HRD_ID = H.RISK_HRD_ID ");
 		sql.append(" WHERE H.IS_DELETED = 'N' ");
@@ -173,7 +173,7 @@ public class RiskAssRiskWsHdrRepositoryImpl implements RiskAssRiskWsHdrRepositor
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
 
-		sql.append(" UPDATE  IA_RISK_ASS_RISK_WS_HDR SET PERCENT = ? WHERE RISK_HRD_ID = ? ");
+		sql.append(" UPDATE  IA_RISK_ASS_RISK_WS_HRD SET PERCENT = ? WHERE RISK_HRD_ID = ? ");
 		params.add(percent);
 		params.add(id);
 		commonJdbcTemplate.executeUpdate(sql.toString(), params.toArray());
