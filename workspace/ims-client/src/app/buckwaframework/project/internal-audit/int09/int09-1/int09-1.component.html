@@ -1,13 +1,15 @@
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
     <span>ค้นหาข้อมูลการเดินทาง</span>
-  </div>
-  <div class="ui form center aligned" id="int09-1"  ngNativeValidate>
+</div>
+<div class="ui form center aligned" id="int09-1" ngNativeValidate>
     <div class="ui attached  segment">
-      <input type="hidden" id="searchFlag">
+        <input type="hidden" id="searchFlag">
 
-      <div class="inline fields"> 
-          <div class="two wide field"></div>
-          <div class="two wide field"><label>วันที่สร้าง</label></div>
+        <div class="inline fields">
+            <div class="two wide field"></div>
+            <div class="two wide field">
+                <label>วันที่สร้าง</label>
+            </div>
             <div class="four wide field">
                 <div class="ui calendar" id="date" style="width: 100%;">
                     <div class="ui input left icon">
@@ -15,130 +17,244 @@
                         <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
                     </div>
                 </div>
-            </div>   
-            <div class="two wide field"><label>ถึง</label></div>
-              <div class="four wide field">
-                  <div class="ui calendar" id="date2" style="width: 100%;">
-                      <div class="ui input left icon">
-                          <i class="time icon"></i>
-                          <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
-                      </div>
-                  </div>
-              </div>     
-        </div>
-        <div class="inline fields"> 
-            <div class="two wide field"></div>
-            <div class="two wide field"><label>ผู้สร้าง</label></div>
-              <div class="four wide field">
-                  <input type="text" maxlength="1000"  name="name" required>
-              </div>      
-          </div>
-      <div class="inline fields">
-          <input type="hidden" id="searchFlag">
-          <div class="two wide field"></div>
-          <div class="two wide field"><label>ปีงบประมาณ</label></div>
-          <div class="four wide field column">
-            <div class="ui calendar" id="date3" style="width: 100%;">
-            <div class="ui input left icon">
-                <i class="time icon"></i>
-                <input type="text" name="date-raw" id="year1" autocomplete="off" [attr.readonly]="null" placeholder="ปปปป" [attr.required]="true">
             </div>
-          </div>
-        </div>          
-        <div class="two wide field"><label>ลงวันที่</label></div>
-        <div class="four wide field">
-            <div class="ui calendar" id="date4" style="width: 100%;" >
-                <div class="ui input left icon">
-                    <i class="time icon"></i>
-                    <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+            <div class="two wide field">
+                <label>ถึง</label>
+            </div>
+            <div class="four wide field">
+                <div class="ui calendar" id="date2" style="width: 100%;">
+                    <div class="ui input left icon">
+                        <i class="time icon"></i>
+                        <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                    </div>
                 </div>
             </div>
-        </div>  
         </div>
-        <div class="inline fields"> 
+        <div class="inline fields">
             <div class="two wide field"></div>
-            <div class="two wide field"><label>วันที่เดินทาง</label></div>
-              <div class="four wide field">
-                  <div class="ui calendar" id="date5" style="width: 100%;">
-                      <div class="ui input left icon">
-                          <i class="time icon"></i>
-                          <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
-                      </div>
-                  </div>
-              </div>   
-              <div class="two wide field"><label>วันที่ถึง</label></div>
+            <div class="two wide field">
+                <label>ผู้สร้าง</label>
+            </div>
+            <div class="four wide field">
+                <input type="text" maxlength="1000" name="name" required>
+            </div>
+        </div>
+        <div class="inline fields">
+            <input type="hidden" id="searchFlag">
+            <div class="two wide field"></div>
+            <div class="two wide field">
+                <label>ปีงบประมาณ</label>
+            </div>
+            <div class="four wide field column">
+                <div class="ui calendar" id="date3" style="width: 100%;">
+                    <div class="ui input left icon">
+                        <i class="time icon"></i>
+                        <input type="text" name="date-raw" id="year1" autocomplete="off" [attr.readonly]="null" placeholder="ปปปป" [attr.required]="true">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="inline fields">
+            <div class="two wide field"></div>
+            <div class="two wide field">
+                <label>วันที่เดินทาง</label>
+            </div>
+            <div class="four wide field">
+                <div class="ui calendar" id="date5" style="width: 100%;">
+                    <div class="ui input left icon">
+                        <i class="time icon"></i>
+                        <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                    </div>
+                </div>
+            </div>
+            <div class="two wide field">
+                <label>วันที่ถึง</label>
+            </div>
+            <div class="four wide field">
+                <div class="ui calendar" id="date6" style="width: 100%;">
+                    <div class="ui input left icon">
+                        <i class="time icon"></i>
+                        <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="inline fields">
+            <div class="four wide field"></div>
+            <div class="two wide field">
+                <label>เดินทางไป</label>
+            </div>
+        </div>
+        <div class="inline fields">
+            <div class="two wide field"></div>
+            <div class="two wide field">
+                <label>สรรพสามิตภาค</label>
+            </div>
+            <div class="four wide field">
+                <select class="ui dropdown search selection" style="width: 100%;" id="sector" (change)="sectorOnchange($event)">
+                    <option value="">เลือก</option>
+                    <option *ngFor="let data of sectorList" value="{{data.value}}">{{data.label}}</option>
+                </select>
+            </div>
+            <div class="two wide field">
+                <label>สรรพสามิตพื้นที่</label>
+            </div>
+            <div class="four wide field">
+                <select class="ui dropdown search selection" style="width: 100%;" id="area" (change)="areaOnChange($event)">
+                    <option value="">เลือก</option>
+                    <option *ngFor="let data of areaDropdown" value="{{data.value}}">{{data.label}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="inline fields">
+            <div class="two wide field"></div>
+            <div class="two wide field">
+                <label>สรพพสามิตสาขา</label>
+            </div>
+            <div class="four wide field">
+                <select class="ui dropdown search selection" style="width: 100%;" id="branch">
+                    <option value="">เลือก</option>
+                    <option *ngFor="let data of branchDropdown" value="{{data.value}}">{{data.label}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="ui center aligned grid">
+            <div class="eight wide column">
+                <button class="ui  primary button" type="button" (click)="clickSearch()">ค้นหา</button>
+                <button class="ui  grey button" type="button" (click)="clickClear()"> ล้างข้อมูล</button>
+                <button class="ui  green button" type="button" (click)="modalAddHead()">สร้าง</button>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+<br>
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>รายละเอียดการเดินทาง</span>
+</div>
+<div class="ui attached  segment">
+    <br>
+    <table id="tableData" class="ui small celled table nowrap" style="width: 100%">
+        <thead>
+
+            <tr>
+                <th style="text-align: center !important;">ลำดับที่</th>
+                <th style="text-align: center !important;">วันที่สร้าง</th>
+                <th style="text-align: center !important;">ผู้สร้าง</th>
+                <th style="text-align: center !important;">ปีงบประมาณ</th>
+                <th style="text-align: center !important;">ลงวันที่</th>
+                <th style="text-align: center !important;">วันที่เดินทาง</th>
+                <th style="text-align: center !important;">ถึงวันที่</th>
+                <th style="text-align: center !important;">เดินทางไป</th>
+                <th style="text-align: center !important;">สถานะการดำเนินการ</th>
+                <th style="text-align: center !important;width:180px !important">จัดการ</th>
+            </tr>
+
+        </thead>
+    </table>
+</div>
+
+<!-- add Haed modal -->
+<div class="ui large modal  transition hidden" id='modalAddHead'>
+
+    <div class="header" style="text-align: center !important;">
+        ระบุรายละเอียดหัวกระดาษปะมาณการค่าใช้จ่ายในการเดินทางไปราชการ
+    </div>
+
+    <div class="content">
+        <div class="ui form">
+
+            <input type="hidden" id="searchFlag">
+
+            <div class="inline fields">
+                <input type="hidden" id="searchFlag">
+                <div class="two wide field"></div>
+                <div class="two wide field">
+                    <label>ปีงบประมาณ</label>
+                </div>
+                <div class="four wide field column">
+                    <div class="ui calendar" id="modalDate1" style="width: 100%;">
+                        <div class="ui input left icon">
+                            <i class="time icon"></i>
+                            <input type="text" name="date-raw" id="year2" autocomplete="off" [attr.readonly]="null" placeholder="ปปปป" [attr.required]="true">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <div class="two wide field"></div>
+                <div class="two wide field">
+                    <label>วันที่เดินทาง</label>
+                </div>
                 <div class="four wide field">
-                    <div class="ui calendar" id="date6" style="width: 100%;">
+                    <div class="ui calendar" id="modalDate2" style="width: 100%;">
                         <div class="ui input left icon">
                             <i class="time icon"></i>
                             <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
                         </div>
                     </div>
-                </div>     
-          </div>
-          <div class="inline fields">
-              <div class="two wide field"></div>
-              <div class="two wide field"><label>สรรพสามิตภาค</label></div>
-              <div class="four wide field">
-                  <select class="ui dropdown search selection" style="width: 100%;" id="sector" (change)="sectorOnchange($event)">
-                      <option value="">เลือก</option>
-                      <option *ngFor="let data of sectorList" value="{{data.value}}">{{data.label}}</option>
-                  </select>
-              </div>                 
-              <div class="two wide field"><label>สรรพสามิตพื้นที่</label></div>
-              <div class="four wide field">
-                  <select class="ui dropdown search selection" style="width: 100%;" id="area" (change)="areaOnChange($event)">
-                      <option value="">เลือก</option>
-                      <option *ngFor="let data of areaDropdown" value="{{data.value}}">{{data.label}}</option>
-                  </select>
-              </div> 
-          </div>
-          <div class="inline fields">    
-              <div class="two wide field"></div>   
-              <div class="two wide field"><label>สรพพสามิตสาขา</label></div>
-              <div class="four wide field">
-                  <select class="ui dropdown search selection" style="width: 100%;" id="branch" >
-                      <option value="">เลือก</option>
-                      <option *ngFor="let data of branchDropdown" value="{{data.value}}">{{data.label}}</option>
-                  </select>
-              </div>
-          </div>
-  
-      <div class="ui center aligned grid">
-        <div class="eight wide column">
-          <button class="ui  primary button" type="button" (click)="clickSearch()">ค้นหา</button>
-          <button class="ui  grey button" type="button" (click)="clickClear()"> ล้างข้อมูล</button>
-          <button class="ui  green button" type="button" (click)="clickCreate()">สร้าง</button>
+                </div>
+                <div class="two wide field">
+                    <label>วันที่ถึง</label>
+                </div>
+                <div class="four wide field">
+                    <div class="ui calendar" id="modalDate3" style="width: 100%;">
+                        <div class="ui input left icon">
+                            <i class="time icon"></i>
+                            <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="inline fields">
+                <div class="four wide field"></div>
+                <div class="two wide field">
+                    <label>เดินทางไป</label>
+                </div>
+            </div>
+            <div class="inline fields">
+                <div class="two wide field"></div>
+                <div class="two wide field">
+                    <label>สรรพสามิตภาค</label>
+                </div>
+                <div class="four wide field">
+                    <select class="ui dropdown search selection" style="width: 100%;" id="sector" (change)="sectorOnchange($event)">
+                        <option value="">เลือก</option>
+                        <option *ngFor="let data of sectorList" value="{{data.value}}">{{data.label}}</option>
+                    </select>
+                </div>
+                <div class="two wide field">
+                    <label>สรรพสามิตพื้นที่</label>
+                </div>
+                <div class="four wide field">
+                    <select class="ui dropdown search selection" style="width: 100%;" id="area" (change)="areaOnChange($event)">
+                        <option value="">เลือก</option>
+                        <option *ngFor="let data of areaDropdown" value="{{data.value}}">{{data.label}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="inline fields">
+                <div class="two wide field"></div>
+                <div class="two wide field">
+                    <label>สรพพสามิตสาขา</label>
+                </div>
+                <div class="four wide field">
+                    <select class="ui dropdown search selection" style="width: 100%;" id="branch">
+                        <option value="">เลือก</option>
+                        <option *ngFor="let data of branchDropdown" value="{{data.value}}">{{data.label}}</option>
+                    </select>
+                </div>
+            </div>
         </div>
-      </div>
-      <br>
-  </div>
-</div>   
-  <br>
-  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>รายละเอียดการเดินทาง</span>
     </div>
-    <div class="ui attached  segment">
-      <br>
-        <table id="tableData" class="ui small celled table nowrap" style="width: 100%" >
-          <thead>	
 
-            <tr>
-              <th style="text-align: center !important;">ลำดับที่</th>
-              <th style="text-align: center !important;">วันที่สร้าง</th>
-              <th style="text-align: center !important;">ผู้สร้าง</th>
-              <th style="text-align: center !important;">ปีงบประมาณ</th>
-              <th style="text-align: center !important;">ลงวันที่</th>
-              <th style="text-align: center !important;">วันที่เดินทาง</th>
-              <th style="text-align: center !important;">ถึงวันที่</th>
-              <th style="text-align: center !important;">เดินทางไป</th>
-              <th style="text-align: center !important;">สถานะการดำเนินการ</th>
-              <th style="text-align: center !important;width:180px !important">จัดการ</th>
-            </tr>
 
-          </thead>
-        </table>
-    </div>   
-     
-          
-    
+    <div class="actions">
+        <div class="ui red deny button">ยกเลิก</div>
+        <div class="ui green button" (click)="saveHead()">ตกลง</div>
+    </div>
+</div>
+<!--End add Head modal -->

@@ -61,6 +61,25 @@ export class Int091Component implements OnInit {
       text: TextDateTH,
       formatter: formatter()
     });
+
+    $("#modalDate1").calendar({
+      maxDate: new Date(),
+      type: "year",
+      text: TextDateTH,
+      formatter: formatter("ป")
+    });
+    $("#modalDate2").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $("#modalDate3").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
   }
 
   clickSearch = function(){
@@ -143,7 +162,14 @@ export class Int091Component implements OnInit {
     });
 
   }
-
+  modalAddHead (){
+    $('#modalAddHead').modal('show');
+    this.calenda();
+  }
+  saveHead (){
+    console.log("Save Head : True");
+     $('#modalAddHead').modal('hide');
+   }
 
   ngOnInit() {
     this.dataTable();

@@ -1,3 +1,5 @@
 workspace/build_deployUAT.bat
 workspace/config/309TEST/application.properties
 workspace/config/UAT/application.properties
+/.metadata/
+/.recommenders/

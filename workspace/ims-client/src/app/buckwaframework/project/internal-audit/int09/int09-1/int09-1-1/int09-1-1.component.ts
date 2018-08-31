@@ -174,16 +174,21 @@ export class Int0911Component implements OnInit {
    console.log("Add Document : True");
     if($('#documentType').val()==1){
       this.router.navigate(['/int09/1/1/1']);
+      $('#modalAddDocument').modal('hide');
     }else if($('#documentType').val()==2){
       this.router.navigate(['/int09/1/1/1']);
+      $('#modalAddDocument').modal('hide');
     }else if($('#documentType').val()==3){
       this.router.navigate(['/int09/1/1/1']);
+      $('#modalAddDocument').modal('hide');
     }else if($('#documentType').val()==4){
       this.router.navigate(['/int09/1/1/1']);
+      $('#modalAddDocument').modal('hide');
     }else if($('#documentType').val()==5){
       this.router.navigate(['/int09/1/1/1']);
+      $('#modalAddDocument').modal('hide');
     }
-    $('#modalAddDocument').modal('hide');
+   
   }
 
   ngOnInit() {
