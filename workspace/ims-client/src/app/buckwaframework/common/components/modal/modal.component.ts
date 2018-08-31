@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 
 @Component({
-    selector: 'CommonModal',
+    selector: 'Modal',
     templateUrl: './modal.component.html',
     styleUrls: ['./modal.component.css']
 })

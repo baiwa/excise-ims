@@ -12,7 +12,7 @@ import { Int0834Component } from './int08-3-4/int08-3-4.component';
 import { Int0835Component } from './int08-3-5/int08-3-5.component';
 import { Int0836Component } from './int08-3-6/int08-3-6.component';
 import { FormsModule } from '../../../../../../../node_modules/@angular/forms';
-import { ComponentsModule } from '../../../../common/components/components.module';
+import { ConditionModule } from '../../../../common/components';
 const routes: Routes = [
   { path: '', component: Int083Component, canActivate: [AuthGuard] },
   { path: '1', component: Int0831Component, canActivate: [AuthGuard] },
@@ -26,8 +26,9 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    CommonModule, FormsModule,
-    ComponentsModule
+    CommonModule,
+    FormsModule,
+    ConditionModule
   ],
   declarations: [
     Int083Component,

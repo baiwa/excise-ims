@@ -1,0 +1,10 @@
+<div class="ui styled fluid accordion" id="{{id}}">
+    <div *ngFor="let li of list; let i = index">
+        <div class="{{ i==0 ? 'active' : ''}} title">
+            <h4 class="text-center">{{ li.title }}</h4>
+        </div>
+        <div class="{{ i==0 ? 'active' : ''}} content">
+            {{ li.content }}
+        </div>
+    </div>
+</div>
