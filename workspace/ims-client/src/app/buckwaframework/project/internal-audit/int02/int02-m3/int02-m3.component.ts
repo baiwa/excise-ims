@@ -40,10 +40,6 @@ export class Int02M3Component implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initDatatable();
-    // $("#showList").click(function() {
-    //   (<HTMLInputElement>document.getElementById("sideExternal")).value = "";
-    //   $(".ui.modal.show").modal("show");
-    // });
 
     $("#closeList").click(function() {
       $(".ui.modal.show").modal("hide");
@@ -97,13 +93,18 @@ export class Int02M3Component implements OnInit, OnDestroy {
   };
 
   initDatatable(): void {
-    // const URL = AjaxService.CONTEXT_PATH + "ia/int02m3/showInit";
     this.manageDataExternal = $("#manageDataExternal").DataTable({
       serverSide: false,
       searching: false,
       ordering: false,
       processing: true,
+      lengthChange: false,
       scrollX: true,
+      // pageLength: 10,
+      // paging: false,
+      // info: false,
+      // pagingType: "full_numbers",
+
       ajax: {
         type: "POST",
         url: URL.DATATABLEINIT
@@ -197,20 +198,30 @@ export class Int02M3Component implements OnInit, OnDestroy {
   };
 
   deleteData = () => {
-    var dataCheck = this.manageDataExternal.rows().data();
-    this.idSelect = [];
-    for (let i = 0; i < dataCheck.length; i++) {
-      if ($(`#chk-${i}`)[0].checked) {
-        let id = (<HTMLInputElement>document.getElementById(`chk-${i}`)).value;
-        this.idSelect.push(parseInt(id));
-      }
-    } //end for loops
+    if (!$('input[type="checkbox"]').is(":checked")) {
+      this.messageBarService.alert("กรุณาเลือกรายการ");
+      return false;
+    }
 
-    this.ajax.delete(URL.DELETEQTN_HEADER + this.idSelect.join(), res => {
-      let data = res.json();
-      this.messageBarService.successModal(data.messageTh, "สำเร็จ");
-      $(".ui.modal.show").modal("hide");
-      this.manageDataExternal.ajax.reload();
-    });
+    this.messageBarService.comfirm(res => {
+      if (res) {
+        var dataCheck = this.manageDataExternal.rows().data();
+        this.idSelect = [];
+        for (let i = 0; i < dataCheck.length; i++) {
+          if ($(`#chk-${i}`)[0].checked) {
+            let id = (<HTMLInputElement>document.getElementById(`chk-${i}`))
+              .value;
+            this.idSelect.push(parseInt(id));
+          }
+        } //end for loops
+
+        this.ajax.delete(URL.DELETEQTN_HEADER + this.idSelect.join(), res => {
+          let data = res.json();
+          this.messageBarService.successModal(data.messageTh, "สำเร็จ");
+          $(".ui.modal.show").modal("hide");
+          this.manageDataExternal.ajax.reload();
+        });
+      }
+    }, "ลบรายการ");
   };
 }
