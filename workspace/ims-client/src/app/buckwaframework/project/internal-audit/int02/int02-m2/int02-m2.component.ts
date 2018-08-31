@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
+import { TextDateTH, formatter } from "../../../../common/helper";
 
-var jQuery: any;
+import { Questionnaire, _Questionnaire } from "./int02-m2.mock";
+
 declare var $: any;
 
 @Component({
@@ -9,34 +11,29 @@ declare var $: any;
   styleUrls: ["./int02-m2.component.css"]
 })
 export class Int02M2Component implements OnInit {
-  DetailTest1: any[];
+
+  questionnaire: Questionnaire[] = [];
+
   constructor() {
-    this.DetailTest1 = ["mamsodjio", "asdkop", "kaopsdksaof", "akofpkakspod"];
+    // TODO
   }
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
+    // $('.ui.accordion').accordion();
+    $("#calendar").calendar({
+      text: TextDateTH,
+      type: "date",
+      formatter: formatter()
+    });
   }
 
-  onSubmit = (e, i) => {
+  search = (e) => {
     e.preventDefault();
-    var sector = (<HTMLInputElement>document.getElementById("sector")).value;
-    var area = (<HTMLInputElement>document.getElementById("area")).value;
-    var date = (<HTMLInputElement>document.getElementById("date")).value;
-    var test = (<HTMLInputElement>document.getElementById("test")).value;
-    var conclude = (<HTMLInputElement>document.getElementById("conclude"))
-      .value;
-    console.log(
-      "sector: ",
-      sector,
-      "area: ",
-      area,
-      "test: ",
-      test,
-      "date: ",
-      date,
-      "conclude: ",
-      conclude
-    );
-  };
+    this.questionnaire = _Questionnaire;
+    setTimeout(() => {
+      $('.ui.accordion').accordion();
+    }, 200);
+  }
+
 }

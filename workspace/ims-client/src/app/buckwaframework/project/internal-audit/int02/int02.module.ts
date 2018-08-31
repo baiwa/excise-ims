@@ -17,8 +17,8 @@ import { Int02M511Component } from "./int02-m5/int02-m5-1/int02-m5-1-1/int02-m5-
 import { Int02M52Component } from "./int02-m5/int02-m5-2/int02-m5-2.component";
 import { Int02M521Component } from "./int02-m5/int02-m5-2/int02-m5-2-1/int02-m5-2-1.component";
 import { CanDeactivateGuard } from "../../../common/services";
-import { ComponentsModule } from "../../../common/components/components.module";
 import { Int02M31Component } from "./int02-m3/int02-m3-1/int02-m3-1.component";
+import { PaginationModule, ConditionModule } from "../../../common/components";
 
 const routes: Routes = [
   { path: "1", component: Int021Component },
@@ -47,7 +47,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
-    ComponentsModule
+    // Components Modules
+    PaginationModule,
+    ConditionModule
   ],
   declarations: [
     // HEAD Component

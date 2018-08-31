@@ -6,6 +6,7 @@ import { DropdownComponent } from './dropdown/dropdown.component';
 import { MessageBarComponent } from './message-bar/message-bar.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ModalComponent } from './modal/modal.component';
+import { AccordionComponent } from './accordion/accordion.component';
 
 @NgModule({
     imports: [
@@ -13,6 +14,7 @@ import { ModalComponent } from './modal/modal.component';
         FormsModule
     ],
     declarations: [
+        AccordionComponent,
         ConditionComponent,
         DropdownComponent,
         MessageBarComponent,
@@ -21,6 +23,7 @@ import { ModalComponent } from './modal/modal.component';
     ],
     exports: [
         // Components
+        AccordionComponent,
         ConditionComponent,
         DropdownComponent,
         MessageBarComponent,
