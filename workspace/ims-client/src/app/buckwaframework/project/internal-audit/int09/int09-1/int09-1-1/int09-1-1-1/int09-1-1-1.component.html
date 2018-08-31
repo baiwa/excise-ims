@@ -29,22 +29,52 @@
     <thead>
 
       <tr>
-        <th>
-          <input id="checkAllSap" type="checkbox" (click)="clickCheckAll($event)" />
-        </th>
-        <th style="text-align: center !important;">ลำดับที่</th>
-        <th style="text-align: center !important;">วันที่สร้าง</th>
-        <th style="text-align: center !important;">ผู้สร้าง</th>
-        <th style="text-align: center !important;">ลงวันที่</th>
-        <th style="text-align: center !important;">ประเภทเอกสาร</th>
-        <th style="text-align: center !important;">เรื่อง</th>
-        <th style="text-align: center !important;">สถานะการดำเนินการ</th>
-        <th style="text-align: center !important;width:70px !important">จัดการ</th>
+        <th rowspan="2" style="text-align: center !important;"><input id="checkAllSap" type="checkbox" (click)="clickCheckAll($event)" /></th>
+        <th rowspan="2" style="text-align: center !important;">ลำดับที่</th>
+        <th rowspan="2" style="text-align: center !important;">ชื่อ</th>
+        <th rowspan="2" style="text-align: center !important;">ตำแหน่ง</th>
+        <th rowspan="1" colspan="2" style="text-align: center !important;">ค่าเบี้ยเลี้ยง</th>
+        <th rowspan="1" colspan="2" style="text-align: center !important;">ค่าเช่าที่พัก</th>
+        <th rowspan="2" style="text-align: center !important;">ค่าพาหนะ</th>
+        <th rowspan="2" style="text-align: center !important;">ค่าใช้จ่ายอื่น</th>
+        <th rowspan="2" style="text-align: center !important;">รวมเป็นเงิน</th>
+        <th rowspan="2" style="text-align: center !important;">หมายเหตุ</th>
+        <th rowspan="2" style="text-align: center !important;width:70px !important">จัดการ</th>
+      </tr>
+      <tr>			
+        <th style="text-align: center !important;">จำนวนวัน</th>
+        <th style="text-align: center !important;">จำนวนเงิน</th>
+        <th style="text-align: center !important;">จำนวนวัน</th>
+        <th style="text-align: center !important;">จำนวนเงิน</th>
       </tr>
 
     </thead>
-  </table>
+    <tfoot>
 
+      <tr>
+        <th rowspan="1" colspan="5" style="text-align: center !important;"> รวม </th>
+        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
+        <th rowspan="1" style="text-align: center !important;"></th>
+        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
+        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
+        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
+        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
+        <th colspan="2" style="text-align: center !important;"></th>
+      </tr>
+
+    </tfoot>
+  </table>
+  <div class="ui grid">
+    <div class="three wide column">
+      <label><b>หมายเหตุท้ายเอกสาร</b></label>
+    </div>
+    <div class="ten wide column">
+      <div class="ui form " style="width: 100%">
+        <textarea id="remark"></textarea>
+      </div>
+    </div>
+    <div class="three wide field"></div>
+  </div>
 </div>
 
 <!-- add modal -->

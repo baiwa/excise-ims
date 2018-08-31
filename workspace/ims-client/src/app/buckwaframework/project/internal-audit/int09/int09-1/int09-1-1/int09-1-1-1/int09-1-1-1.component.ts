@@ -77,12 +77,35 @@ export class Int09111Component implements OnInit, AfterViewInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          "data": "createdDate",
-          "className": "ui center aligned"
+          "data": "createdBy"
         }, {
           "data": "createdBy"
         }, {
-          "data": "createdDate","className": "ui center aligned"
+          "data": "createdDate",
+          "className": "ui right aligned",
+          "render": function (data, type, row, meta) {
+            return "12";
+          }
+        }, {
+          "data": "createdBy",
+          "className": "ui right aligned",
+          "render": function (data, type, row, meta) {
+            return "12,000";
+          }
+        }, {
+          "data": "createdDate",
+          "className": "ui right aligned",
+          "render": function (data, type, row, meta) {
+            return "12";
+          }
+        }, {
+          "data": "createdBy",
+          "className": "ui right aligned",
+          "render": function (data, type, row, meta) {
+            return "12,000";
+          }
+        }, {
+          "data": "createdBy"
         }, {
           "data": "createdBy"
         }, {
@@ -104,8 +127,8 @@ export class Int09111Component implements OnInit, AfterViewInit {
     //button edit>
     table.on('click', 'tbody tr button.btn-edit', ()=> {
 			var closestRow = $(this).closest('tr');
-      var data = table.row(closestRow).data();   
-      this.router.navigate(['/int09/2-2-3']);
+      var data = table.row(closestRow).data();  
+      this.modalAdd();
       console.log(data);
      
     });
