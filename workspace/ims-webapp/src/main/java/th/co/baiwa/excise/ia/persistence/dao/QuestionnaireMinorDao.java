@@ -39,7 +39,7 @@ public class QuestionnaireMinorDao {
 			paramList.add(questionnaireMinor.getMainId());
 		}
 		
-		String query = "";
+		String query = ""; sql.append("ORDER BY H.QTN_MINOR_ID ASC ");
 		if (BeanUtils.isNotEmpty(start)&&BeanUtils.isNotEmpty(length)&&length!=0) {
 			query = OracleUtils.limitForDataTable(sql.toString(), start, length);
 		} else {
