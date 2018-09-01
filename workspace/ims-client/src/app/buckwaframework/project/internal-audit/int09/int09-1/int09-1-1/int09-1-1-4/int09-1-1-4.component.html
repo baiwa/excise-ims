@@ -1,0 +1,346 @@
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+  <span>หัวกระดาษหลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ</span>
+</div>
+<div class="ui attached  segment">
+  <br>
+  <div class="inline fields" style="text-align: center !important;">หลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ</div>
+  <div class="inline fields" style="text-align: center !important;">ชื่อส่วนราชการ สำนักบริหารการคลังและรายได้ กรมสรรพสามิต จังหวัดกรุงเทพมหานคร</div>
+  <div class="inline fields" style="text-align: center !important;">ประกอบใบเบิกค่าใช้จ่ายในการเดินทางของ นายปาณศิริ ปานแก้ว ลงวันที่ 3 มีนาคม 2561</div>
+  <br>
+  <div class="ui center aligned grid">
+    <div class="eight wide column">
+      <button class="ui  primary button" type="button" (click)="modalAddHead()">แก้ไข</button>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+  <span>รายละเอียดค่าใช้จ่ายในการเดินทางไปราชการ</span>
+</div>
+
+<div class="ui attached  segment">
+  <div class="inline fields" style="text-align: right !important;">
+    <button class="ui green button" type="button" (click)="modalAdd()">เพิ่ม</button>
+  </div>
+  <table id="tableData" class="ui small celled table nowrap" style="width: 100%">
+    <thead>
+
+      <tr>
+        <th rowspan="2" style="text-align: center !important;">
+          <input id="checkAllSap" type="checkbox" (click)="clickCheckAll($event)" />
+        </th>
+        <th rowspan="2" style="text-align: center !important;">ลำดับที่</th>
+        <th rowspan="2" style="text-align: center !important;">ชื่อ</th>
+        <th rowspan="2" style="text-align: center !important;">ตำแหน่ง</th>
+        <th rowspan="1" colspan="4" style="text-align: center !important;">ค่าใช้จ่าย</th>
+        <th rowspan="2" style="text-align: center !important;">รวมเป็นเงิน</th>
+        <th rowspan="2" style="text-align: center !important;">หมายเหตุ</th>
+        <th rowspan="2" style="text-align: center !important;width:70px !important">จัดการ</th>
+      </tr>
+      <tr>			
+        <th style="text-align: center !important;">ค่าเบี้ยเลี้ยง</th>
+        <th style="text-align: center !important;">ค่าที่พัก</th>
+        <th style="text-align: center !important;">ค่าพาหนะ</th>
+        <th style="text-align: center !important;">ค่าใช้จ่ายอื่น</th>
+      </tr>
+
+    </thead>
+    <tfoot>
+
+      <tr>
+        <th rowspan="1" colspan="4" style="text-align: center !important;"> รวม </th>
+        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
+        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
+        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
+        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
+        <th rowspan="1" style="text-align: right !important;"> 180,000 </th>
+        <th colspan="2" style="text-align: center !important;"></th>
+      </tr>
+
+    </tfoot>
+  </table>
+  <div class="ui form center aligned grid">
+      <button class="ui  grey button" type="button" (click)="clickBack()">กลับ</button>
+      <button class="ui  red button" type="button" >ลบรายการที่เลือก</button>
+      <button class="ui  primary button" type="button" >บันทึก</button>
+  </div> 
+<br><br>
+</div>
+
+<!-- add modal -->
+<div class="ui large modal transition hidden" id='modalAdd'>
+  <div class="header" style="text-align: center !important;">
+    ระบุรายละเอียดค่าใช้จ่ายในการเดินทางไปราชการ
+  </div>
+
+  <div class="scrolling content">
+    <div class="ui form center aligned" id="int09-1" ngNativeValidate>
+
+      <input type="hidden" id="id">
+      <input type="hidden" id="idProcess">
+      <input type="hidden" id="name">
+
+
+      <div class="inline fields">
+        <div class="three wide field right aligned">
+          <label>ชื่อ</label>
+        </div>
+        <div class="three wide field">
+          <input id="nameForm" type="text">
+        </div>
+        <div class="two wide field right aligned">
+          <label>นามสกุล</label>
+        </div>
+        <div class="three wide field">
+          <input id="lastForm" type="text">
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="three wide field right aligned">
+          <label>ตำแหน่ง</label>
+        </div>
+        <div class="three wide field">
+          <input type="text" id="rank">
+        </div>
+        <div class="two wide field right aligned">
+          <label>ประเภท</label>
+        </div>
+        <div class="three wide field">
+          <select class="ui dropdown" id="type" name="type" (change)="typeDropdownOnChange($evnet)">
+            <option value="">เลือกประเภท</option>
+            <option *ngFor="let data of typeDropdown" value="{{data.value}}">{{data.label}}</option>
+          </select>
+        </div>
+        <div class="one wide field right aligned">
+          <label>ระดับ</label>
+        </div>
+        <div class="three wide field">
+          <select class="ui dropdown" id="grade" name="grade">
+            <option value="">เลือกระดับ</option>
+            <option *ngFor="let data of gradeDropdown" value="{{data.value}}">{{data.label}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="three wide field ui right aligned">
+          <label>วันขออนุญาต</label>
+        </div>
+        <div class="three wide field">
+          <div class="ui calendar" id="dateOfApplication" style="width: 100%">
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+            </div>
+          </div>
+        </div>
+        <div class="two wide field ui right aligned">
+          <label>วันเขียนเบิก</label>
+        </div>
+        <div class="three wide field">
+          <div class="ui calendar" id="dateOfWithdrawal" style="width: 100%">
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="three wide field ui right aligned">
+          <label>เดินทางจาก</label>
+        </div>
+        <div class="three wide field ui right aligned">
+          <select class="ui dropdown" id="travelFrom" name="travelFrom">
+            <option value="">เลือก</option>
+            <option value="1">บ้าน - สนง.</option>
+            <option value="2">สนง. - สนง.</option>
+            <option value="3">สนง. - บ้าน</option>
+          </select>
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="three wide field ui right aligned">
+          <label>วัน เวลา ออกเดินทาง</label>
+        </div>
+        <div class="three wide field">
+          <div class="ui calendar" id="departureDate" style="width: 100%">
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+            </div>
+          </div>
+        </div>
+        <div class="two wide field ui right aligned">
+          <label>วัน เวลา กลับถึง</label>
+        </div>
+        <div class="three wide field">
+          <div class="ui calendar" id="returnDate" style="width: 100%">
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="three wide field ui right aligned">
+          <label>กรณีฝึกอบรม</label>
+        </div>
+        <div class="three wide field">
+          <select class="ui dropdown" id="trainingCase" name="trainingCase">
+            <option value="">เลือกกรณีฝึกอบรม</option>
+            <option *ngFor="let data of trainingCaseDropdown" value="{{data.value}}">{{data.label}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="three wide field right aligned">
+          <label>ประเภทการเบิก</label>
+        </div>
+        <div class="three wide field">
+          <select class="ui dropdown" id="withdrawType" name="withdrawType" (change)="trainingRoomTypeDropdownList($evnet)">
+            <option value="">เลือกประเภทการเบิก</option>
+            <option *ngFor="let data of withdrawTypeDropdown" value="{{data.value}}">{{data.label}}</option>
+          </select>
+        </div>
+        <div class="two wide field right aligned">
+          <label>ประเภทห้องอบรม</label>
+        </div>
+        <div class="three wide field">
+          <select class="ui dropdown" id="trainingRoomType" name="trainingRoomType">
+            <option value="">เลือกประเภทห้องอบรม</option>
+            <option *ngFor="let data of trainingRoomTypeDropdown" value="{{data.value}}">{{data.label}}</option>
+          </select>
+        </div>
+
+      </div>
+      <div class="inline fields">
+        <div class="three wide field right aligned">
+          <label>กรณีที่พัก</label>
+        </div>
+        <div class="three wide field ui right aligned">
+          <select class="ui dropdown" id="accommodationCase" name="accommodationCase">
+            <option value="">เลือกกรณีที่พัก</option>
+            <option value="1">ปกติ</option>
+            <option value="2">เหมาจ่าย </option>
+          </select>
+        </div>
+        <div class="two wide field right aligned">
+          <label>ประเภทที่พัก</label>
+        </div>
+        <div class="three wide field ui right aligned">
+          <select class="ui dropdown" id="roomType" name="roomType">
+            <option value="">เลือกประที่พัก</option>
+            <option value="1">ห้องเดี่ยว</option>
+            <option value="2">ห้องคู่</option>
+          </select>
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="three wide field ui right aligned">
+          <label>จำนวนวันเข้าพัก</label>
+        </div>
+        <div class="three wide field">
+          <input id="numberOfDate" type="number" [attr.step]="1" required>
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="three wide field right aligned">
+          <label>ค่าพาหนะ</label>
+        </div>
+        <div class="three wide field">
+          <input type="number" id="travelExpense" [attr.step]="1" required>
+        </div>
+
+        <div class="two wide field right aligned">
+          <label>ค่าใช้จ่ายอื่น</label>
+        </div>
+        <div class="three wide field">
+          <input type="number" id="otherExpenses" [attr.step]="1" required>
+        </div>
+      </div>
+      <div class="ui grid">
+        <div class="three wide column">
+          <label>
+            <b>หมายเหตุ</b>
+          </label>
+        </div>
+        <div class="ten wide column">
+          <div class="ui form " style="width: 100%">
+            <textarea id="remark"></textarea>
+          </div>
+        </div>
+        <div class="three wide field"></div>
+      </div>
+      <br>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="ui red deny button">ยกเลิก</div>
+    <div class="ui green button" (click)="saveData()">บันทึก</div>
+  </div>
+</div>
+<!--End add modal -->
+
+<!-- add Haed modal -->
+<div class="ui large modal  transition hidden" id='modalAddHead'>
+
+  <div class="header" style="text-align: center !important;">
+    ระบุรายละเอียดหัวกระดาษหลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ
+  </div>
+
+  <div class="content">
+    <div class="ui form">
+
+      <input type="hidden" id="searchFlag">
+
+      <div class="inline fields">
+        <div class="one wide field"></div>
+        <div class="two wide field right aligned">
+          <label>ชื่อส่วนราชการ</label>
+        </div>
+        <div class="five wide field">
+          <input id="nameForm" type="text">
+        </div>
+        <div class="two wide field right aligned">
+          <label>จังหวัด</label>
+        </div>
+        <div class="five wide field">
+          <select class="ui dropdown search selection" style="width: 100%;" id="branch">
+            <option value="">เลือก</option>
+            <option *ngFor="let data of branchDropdown" value="{{data.value}}">{{data.label}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="one wide field"></div>
+        <div class="two wide field right aligned">
+          <label>ผู้เบิก</label>
+        </div>
+        <div class="five wide field">
+          <input id="nameForm" type="text">
+        </div>
+        <div class="two wide field">
+          <label>ลงวันที่</label>
+        </div>
+        <div class="five wide field">
+          <div class="ui calendar" id="date" style="width: 100%;">
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="ui red deny button">ยกเลิก</div>
+    <div class="ui green button" (click)="saveHead()">ตกลง</div>
+  </div>
+</div>
+<!--End add Head modal -->

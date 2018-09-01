@@ -68,6 +68,10 @@
       </thead>
     </table>
   </div>
+  <div class="ui form center aligned grid">
+      <button class="ui  grey button" type="button" (click)="clickBack()">กลับ</button>
+  </div> 
+  <br><br>
 </div>
 <!-- add modal -->
 <div class="ui large modal transition hidden" id='modalAddDocument'>
@@ -84,7 +88,8 @@
               <label>ประเภทเอกสาร</label>
             </div>
             <div class="six wide field">
-                <select class="ui dropdown search selection" id="documentType"  style = "width:100%">
+                <!-- (change)="onchangeDocumentType()" -->
+                <select class="ui dropdown search selection" id="documentType"  id="documentType" style = "width:100%">
                     <option value="">เลือก</option>
                     <option *ngFor="let data of documentTypeList" value="{{data.value}}">{{data.label}}</option>
                 </select>

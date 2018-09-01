@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
 import {
   TravelCostHeader,
   TravelCostDetail,
@@ -21,7 +21,7 @@ declare var $: any;
   templateUrl: "./int09-1-1.component.html",
   styleUrls: ["./int09-1-1.component.css"]
 })
-export class Int0911Component implements OnInit {
+export class Int0911Component implements OnInit, OnDestroy {
 
   searchFlag: String;
   documentTypeList:any;
@@ -42,6 +42,8 @@ export class Int0911Component implements OnInit {
       {value:4,label:"ใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ"},
       {value:5,label:"บันทึกข้อความ"}]
   }
+
+
   dataTable = function(){
     var table = $('#tableData').DataTable({
       "lengthChange":true,
@@ -172,25 +174,28 @@ export class Int0911Component implements OnInit {
   }
   addDocument (){
    console.log("Add Document : True");
+   $('#modalAddDocument').modal('hide');
     if($('#documentType').val()==1){
       this.router.navigate(['/int09/1/1/1']);
-      $('#modalAddDocument').modal('hide');
     }else if($('#documentType').val()==2){
-      this.router.navigate(['/int09/1/1/1']);
-      $('#modalAddDocument').modal('hide');
+      this.router.navigate(['/int09/1/1/2']);
     }else if($('#documentType').val()==3){
-      this.router.navigate(['/int09/1/1/1']);
-      $('#modalAddDocument').modal('hide');
+      this.router.navigate(['/int09/1/1/3']);
     }else if($('#documentType').val()==4){
-      this.router.navigate(['/int09/1/1/1']);
-      $('#modalAddDocument').modal('hide');
+      this.router.navigate(['/int09/1/1/4']);
     }else if($('#documentType').val()==5){
-      this.router.navigate(['/int09/1/1/1']);
-      $('#modalAddDocument').modal('hide');
+      this.router.navigate(['/int09/1/1/5']);
     }
    
   }
+  clickBack(){
+    this.router.navigate(['/int09/1']);
+  }
 
+  ngOnDestroy() {
+    $('#modalAddDocument').remove();
+  }
+  
   ngOnInit() {
     this.getDocumentTypeList();
     this.dataTable();

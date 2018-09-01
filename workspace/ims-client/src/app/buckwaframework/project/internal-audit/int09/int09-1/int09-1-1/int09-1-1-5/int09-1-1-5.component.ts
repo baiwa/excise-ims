@@ -17,11 +17,11 @@ import {
 import { TravelService } from "../../../../../../common/services/travel.service";
 declare var $: any;
 @Component({
-  selector: "app-int09-1-1-2",
-  templateUrl: "./int09-1-1-2.component.html",
-  styleUrls: ["./int09-1-1-2.component.css"]
+  selector: "app-int09-1-1-5",
+  templateUrl: "./int09-1-1-5.component.html",
+  styleUrls: ["./int09-1-1-5.component.css"]
 })
-export class Int09112Component implements OnInit, AfterViewInit {
+export class Int09115Component implements OnInit, AfterViewInit {
 
 
   constructor(
@@ -30,7 +30,7 @@ export class Int09112Component implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private msg: MessageBarService,
     private travelService: TravelService
-  ) {  }
+  ) {}
   calenda = function () {
     $("#date1").calendar({
       maxDate: new Date(),
@@ -52,6 +52,7 @@ export class Int09112Component implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
   }
+
  
   
 }

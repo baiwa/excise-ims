@@ -166,6 +166,11 @@ export class Int09111Component implements OnInit, AfterViewInit {
        });
     }
   }
+  
+  clickBack(){
+    this.router.navigate(['/int09/1/1']);
+  }
+
 
   ngOnInit() {
     this.dataTable();

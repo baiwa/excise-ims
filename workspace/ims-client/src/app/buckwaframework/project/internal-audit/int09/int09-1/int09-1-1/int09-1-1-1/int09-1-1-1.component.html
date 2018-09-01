@@ -58,14 +58,14 @@
         <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
         <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
         <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
-        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
+        <th rowspan="1" style="text-align: right !important;"> 180,000 </th>
         <th colspan="2" style="text-align: center !important;"></th>
       </tr>
 
     </tfoot>
   </table>
   <div class="ui grid">
-    <div class="three wide column">
+    <div class="three wide column" style="text-align: right !important;">
       <label><b>หมายเหตุท้ายเอกสาร</b></label>
     </div>
     <div class="ten wide column">
@@ -75,7 +75,16 @@
     </div>
     <div class="three wide field"></div>
   </div>
+
+  <div class="ui form center aligned grid">
+      <button class="ui  grey button" type="button" (click)="clickBack()">กลับ</button>
+      <button class="ui  red button" type="button" >ลบรายการที่เลือก</button>
+      <button class="ui  primary button" type="button" >บันทึก</button>
+  </div> 
+<br><br>
+
 </div>
+
 
 <!-- add modal -->
 <div class="ui large modal transition hidden" id='modalAdd'>
