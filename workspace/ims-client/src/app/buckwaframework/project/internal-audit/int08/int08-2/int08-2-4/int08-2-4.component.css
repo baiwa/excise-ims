@@ -20,5 +20,6 @@
 .butt-upload {
     position: absolute;
     top: 8px;
-    left: 208px;
+    /* left: 208px; */
+    left: 221px;
 }

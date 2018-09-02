@@ -82,7 +82,7 @@ export class Int0824Component implements OnInit {
       this.ajax.post(url, { riskInfHrdId: this.id }, res => {
         // this.riskDataList
         var jsonObjList = res.json();
-        console.log("สำเร็จ", jsonObjList);
+        console.log("สำเร็จ888", jsonObjList);
         for (let index = 0; index < jsonObjList.length; index++) {
           var element = jsonObjList[index];
           var riskOtherData = new RiskOtherData();
@@ -90,8 +90,12 @@ export class Int0824Component implements OnInit {
           riskOtherData.riskInfHrdId = element.riskInfHrdId;
           riskOtherData.infName = element.infName;
           riskOtherData.riskCost = element.riskCost;
+          riskOtherData.rl = element.rl;
+          riskOtherData.valueTranslation = element.valueTranslation;
+          riskOtherData.color = element.color;
           riskOtherData.isDeleted = 'N';
           this.riskOtherDataList.push(riskOtherData);
+        
         }
         this.initDatatable();
       }, errRes => {
@@ -166,7 +170,7 @@ export class Int0824Component implements OnInit {
       scrollY:true,
       scrollX: true,
       scrollCollapse: true,
-      paging: false,
+      paging: true,
       data: this.dataTableList,
       columns: [
         {
@@ -182,10 +186,26 @@ export class Int0824Component implements OnInit {
         {
           data: "riskAssInfHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button del"><i class="pencil icon"></i> ลบ </button>';
+            return '<button type="button" class="ui mini button primary del"><i class="trash alternate icon"></i> ลบ </button>';
           }
         }
       ],
+      createdRow: function (row, data, dataIndex) {
+        console.log("row");
+        console.log("data", data.color);
+        console.log("dataIndex", dataIndex);
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(3)').addClass('red');
+          $(row).find('td:eq(4)').addClass('red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(3)').addClass('green');
+          $(row).find('td:eq(4)').addClass('green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(3)').addClass('yellow');
+          $(row).find('td:eq(4)').addClass('yellow');
+        }
+
+      },
       rowCallback: (row, data, index) => {
 
         $("td > .del", row).bind("click", () => {
@@ -342,7 +362,9 @@ class RiskOtherData {
   riskCost: any = '';
   rl: any = '';
   valueTranslation: any = '';
+  color: any = '';
   isDeleted: any = '';
+
 }
 
 class RiskInfHrdData {

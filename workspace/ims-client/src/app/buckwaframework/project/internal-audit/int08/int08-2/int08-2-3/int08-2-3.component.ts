@@ -97,9 +97,25 @@ export class Int0823Component implements OnInit {
         { data: "valueTranslation" }
 
       ],
+      createdRow: function (row, data, dataIndex) {
+        console.log("row");
+        console.log("data", data.valueTranslation);
+        console.log("dataIndex", dataIndex);
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(15)').addClass('red');
+          $(row).find('td:eq(16)').addClass('red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(15)').addClass('green');
+          $(row).find('td:eq(16)').addClass('green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(15)').addClass('yellow');
+          $(row).find('td:eq(16)').addClass('yellow');
+        }
+
+      },
       columnDefs: [
-        { targets: [0, 16], className: "center aligned" },
-        { targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], className: "right aligned" },
+        { targets: [0,15,16], className: "center aligned" },
+        { targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], className: "right aligned" },
         { targets: [1], className: "left aligned" }
       ]
 

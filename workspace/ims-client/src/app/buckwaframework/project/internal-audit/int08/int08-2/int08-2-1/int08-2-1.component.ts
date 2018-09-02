@@ -144,12 +144,12 @@ export class Int0821Component implements OnInit {
       },
       columns: [
 
-        {
-          render: function (data, type, row, meta) {
-            return `<input type="checkbox" >`;
-          },
-          className: "center"
-        },
+        // {
+        //   render: function (data, type, row, meta) {
+        //     return `<input type="checkbox" >`;
+        //   },
+        //   className: "center"
+        // },
         {
           render: function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
@@ -165,13 +165,13 @@ export class Int0821Component implements OnInit {
         {
           data: "riskAssInfHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button dtl"><i class="pencil icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button export"><i class="print icon"></i> Export</button>';
+            return '<button type="button" class="ui mini button primary dtl"><i class="table icon"></i> รายละเอียด</button>'
+              + '<button type="button" class="ui mini button primary export"><i class="print icon"></i> Export</button>';
           }
         }
       ],
       columnDefs: [
-        { targets: [1, 2, 3, 4, 5], className: "center aligned" }
+        { targets: [0, 1, 2, 3, 4], className: "center aligned" }
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {
@@ -279,8 +279,8 @@ export class Int0821Component implements OnInit {
 
       },
       columnDefs: [
-        { targets: [0, 16], className: "center aligned" },
-        { targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], className: "right aligned" },
+        { targets: [0,15,16], className: "center aligned" },
+        { targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], className: "right aligned" },
         { targets: [1], className: "left aligned" }
       ]
 

@@ -61,12 +61,12 @@ export class Int0825Component implements OnInit {
         this.percentList.push(0);
       }
 
-      var trHTML = '<tr><th rowspan="2">ลำดับ</th> <th rowspan="2">ระบบสารสนเทศฯ ของกรมสรรพสามิต</th>';
+      var trHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> <th rowspan="2" style="text-align: center !important">ระบบสารสนเทศฯ ของกรมสรรพสามิต</th>';
       this.columnList.forEach(element => {
          console.log(element);
-         trHTML += '<th rowspan="2">' + element + '</th>';
+         trHTML += '<th rowspan="2" style="text-align: center !important; width:14%;">' + element + '</th>';
        });
-         trHTML += '<th rowspan="2"  >รวม</th><th colspan="2">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th>แปลค่า</th></tr>';
+         trHTML += '<th rowspan="2"  style="text-align: center !important;width:10%;">รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th style="text-align: center !important">แปลค่า</th></tr>';
           $("#trColumn").html(trHTML);
          this.initDatatable();
     }, errRes => {
@@ -78,17 +78,18 @@ export class Int0825Component implements OnInit {
     var url = 'ia/int082/searchFullRiskByBudgetYear';
     var hrmlTr = '';
     this.ajax.post(url, { budgetYear: this.budgetYear, riskAssInfHdrNameList: this.columnList }, res => {
-
+      
       res.json().forEach(element => {
+        
         console.log(element);
-        hrmlTr += "<tr>";
-        hrmlTr += "<td>" + element.id + "</td>";
-        hrmlTr += "<td>" + element.infName + "</td>";
+        hrmlTr += "<tr style='text-align: center !important'>";
+        hrmlTr += "<td >" + element.id + "</td>";
+        hrmlTr += "<td style='text-align: left !important'>" + element.infName + "</td>";
        
         element.rl.forEach(rl => {
-          hrmlTr += "<td>" + rl + "</td>";
+          hrmlTr += "<td style='text-align: right !important' >" + rl + "</td>";
         });
-        hrmlTr += "<td>" + element.sumRiskCost + "</td>";
+        hrmlTr += "<td style='text-align: right !important'>" + element.sumRiskCost + "</td>";
         hrmlTr += "<td></td>";
         hrmlTr += "<td></td>";
         hrmlTr += "</tr>";

@@ -105,14 +105,14 @@ export class Int0822Component implements OnInit , AfterViewInit{
         { data: "active" ,
           render: function (data, type, row, meta) {
             
-            return '<button type="button" class="ui mini button chk"><i class="pencil icon"></i>'+(data == "Y" ? "เปิด" : "ปิด") +'</button>';
+            return '<button type="button" class="ui mini button primary chk"><i class="power off icon"></i>'+(data == "Y" ? "เปิด" : "ปิด") +'</button>';
           }
         },
         {
           data: "riskAssInfHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button dtl"><i class="pencil icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button del"><i class="pencil icon"></i> ลบ</button>';
+            return '<button type="button" class="ui mini button primary dtl"><i class="table icon"></i> รายละเอียด</button>'
+              + '<button type="button" class="ui mini button primary del"><i class="trash alternate icon"></i> ลบ</button>';
           }
         }
       ],
