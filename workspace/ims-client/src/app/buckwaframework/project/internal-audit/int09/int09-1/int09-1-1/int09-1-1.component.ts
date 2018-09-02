@@ -73,15 +73,27 @@ export class Int0911Component implements OnInit, OnDestroy {
           "data": "createdDate",
           "className": "ui center aligned"
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return "นายนพรัช  โพนทอง";
+          }
         }, {
           "data": "createdDate","className": "ui center aligned"
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return "บันทึกข้อความ";
+          }
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return "ขออนุมัติเดินทางไปราชการ";
+          }
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return "อนุมัติ";
+          }
         },{
           "data": "id",
           "className": "ui center aligned",
@@ -134,9 +146,15 @@ export class Int0911Component implements OnInit, OnDestroy {
           "data": "createdDate",
           "className": "ui center aligned"
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return "นายนพรัช  โพนทอง";
+          }
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return "ใบเสร็จรับเงินค่าที่พักโรงแรมห้าดาว";
+          }
         }, {
           "data": "createdBy",
           "className": "ui center aligned",

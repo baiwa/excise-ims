@@ -77,9 +77,15 @@ export class Int09111Component implements OnInit, AfterViewInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return "นายนพรัช  โพนทอง";
+          }
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return "นักวิชาการตรวจสอบภายในชำนาญการพิเศษ";
+          }
         }, {
           "data": "createdDate",
           "className": "ui right aligned",
@@ -105,13 +111,25 @@ export class Int09111Component implements OnInit, AfterViewInit {
             return "12,000";
           }
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return "1,000";
+          }
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return "1,000";
+          }
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return "26,000";
+          }
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return " ";
+          }
         },{
           "data": "id",
           "className": "ui center aligned",

@@ -1,174 +1,381 @@
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-    <span>รายละเอียดสัญญาการยืมเงิน</span>
+  <span>รายละเอียดสัญญาการยืมเงิน</span>
+</div>
+<div class="ui attached  segment">
+  <br>
+  <div class="inline fields" style="text-align: center !important;">
+    <h1>สัญญาการยืมเงิน</h1>
   </div>
-  <div class="ui attached  segment">
-    <br>
-    <div class="inline fields" style="text-align: center !important;">
-      <h1>สัญญาการยืมเงิน</h1>
+  <br>
+  <div class="ui form">
+    <div class="ui grid">
+      <div class="thirteen wide column"></div>
+      <div class="three wide column" style="text-align: center !important;">
+        <label>เลขที่......................................</label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="two wide column" style="text-align: right !important;">
+        <label>ยื่นต่อ</label>
+      </div>
+      <div class="five wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">(๑)</div>
+      <div class="five wide column"></div>
+      <div class="three wide column" style="text-align: center !important;">
+        <label>วันครบกำหนด</label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="thirteen wide column"></div>
+      <div class="three wide column" style="text-align: center !important;">
+        <label>............................................</label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="two wide column" style="text-align: right !important;">
+        <label>ข้าพเจ้า</label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>ตำแหน่ง</label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>สังกัด</label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="two wide column" style="font-size: 0.9rem;text-align: right !important;">
+        <label>
+          มีความประสงค์ขอยืมเงินจาก
+        </label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+
+    </div>
+    <div class="ui grid">
+      <div class="two wide column" style="text-align: right !important;">
+        <label>(๒)เพื่อเป็นค่าใช้จ่ายในการ</label>
+      </div>
+      <div class="fourteen wide column">
+        <textarea rows="3" id="remark"></textarea>
+      </div>
+
     </div>
     <br>
-    <div class="ui form">
-        <div class="inline fields">
-            <div class="fourteen wide field"></div>
-            <div class="two wide field" >
-              <label>เลขที่......................................</label>
-            </div>
-          </div> 
-      <div class="inline fields">
-        <div class="one wide field"></div>
-        <div class="one wide field">
-          <label>ยื่นต่อ</label>
-        </div>
-        <div class="five wide field">
-          <input type="text" name="text" required>
-        </div>
-        <div class="one wide field">(๑)</div>
-        <div class="six wide field"></div>
-        <div class="two wide field" >
-          <label>วันครบกำหนด</label>
+    <div class="ui grid">
+      <div class="two wide column" style="text-align: right !important;">
+        <label>ตั้งแต่วันที่</label>
+      </div>
+      <div class="four wide column">
+        <div class="ui calendar" id="date1" style="width: 100%">
+          <div class="ui input left icon">
+            <i class="time icon"></i>
+            <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="ดด/ปปปป" [attr.required]="true">
+          </div>
         </div>
       </div>
-      <div class="inline fields">
-          <div class="fourteen wide field"></div>
-          <div class="two wide field" >
-            <label>.................................................</label>
+      <div class="one wide column">
+        <label>ถึงวันที่</label>
+      </div>
+      <div class="four wide column">
+        <div class="ui calendar" id="date1" style="width: 100%">
+          <div class="ui input left icon">
+            <i class="time icon"></i>
+            <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="ดด/ปปปป" [attr.required]="true">
           </div>
-        </div> 
-        <div class="inline fields">
-            <div class="one wide field"></div>
-            <div class="one wide field">
-              <label>ข้าพเจ้า</label>
+        </div>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="two wide column" style="text-align: right !important;">
+        <label>(๓)ดังรายละเอียดต่อไปนี้</label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+      <div class="two wide column">
+        <label>
+          - ค่าเบี้ยเลี้ยง
+        </label>
+      </div>
+
+      <div class="eight wide column"></div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>
+          บาท
+        </label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+      <div class="two wide column">
+        <label>
+          - ค่าที่พัก
+        </label>
+      </div>
+      <div class="eight wide column"></div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>
+          บาท
+        </label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+      <div class="two wide column">
+        <label>
+          - ค่าพาหนะ
+        </label>
+      </div>
+      <div class="eight wide column"></div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>
+          บาท
+        </label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+      <div class="two wide column">
+        <label>
+          - ค่าใช้จ่ายอื่น
+        </label>
+      </div>
+      <div class="eight wide column"></div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>
+          บาท
+        </label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+      <div class="two wide column">
+        <label>
+          (ตัวอักษร
+        </label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="two wide column">
+        <label>
+          ) รวมเงิน (บาท)
+        </label>
+      </div>
+      <div class="two wide column">
+        <label>
+          รวมเป็นเงิน
+        </label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>
+          บาท
+        </label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="four wide column"></div>
+      <div class="eleven wide column">
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ข้าพเจ้าสัญญาว่าจะปฏิบัติตามระเบียบของทางราชการทุกประการ &nbsp; และจะนำใบสำคัญคู่จ่ายที่ถูกต้อง
+        &nbsp; พร้อมทั้ง
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="four wide column"></div>
+      <div class="eleven wide column">
+        เงินเหลือจ่าย&nbsp;(ถ้ามี)&nbsp;ส่งภายในกำหนดไว้ในระเบียบการจ่ายเงินจากกองคลัง &nbsp; คือภายใน&nbsp; &nbsp; 15 &nbsp; &nbsp;
+        วัน &nbsp; นับแต่วันที่เดินทาง
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="four wide column"></div>
+      <div class="eleven wide column">
+        กลับมาถึง&nbsp;ถ้าข้าพเจ้าไม่ส่งตามกำหนด&nbsp;ข้ำพเจ้ายินยอมให้หักเงินเดือน&nbsp;ค่าจ้าง&nbsp;เบี้ยหวัด&nbsp;บำเหน็จ&nbsp;บำนาญ&nbsp;หรือเงินอื่นใด
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="four wide column"></div>
+      <div class="eleven wide column">
+        ที่ข้าพเจ้าพึงได้รับจากทางราชการ&nbsp;ชดใช้จำนวนเงินที่ยืมไปจนครบถ้วนได้ทันที
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="ui grid">
+      <div class="four wide column"></div>
+      <div class="four wide column">
+        <label>ลายมือชื่อ...........................................................................ผู้ยืม</label>
+      </div>
+      <div class="one wide column"></div>
+      <div class="three wide column">
+        <label>วันที่...........................................................</label>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="ui grid">
+      <div class="two wide column" style="text-align: right !important;">
+        <label>เสนอ</label>
+      </div>
+      <div class="three wide column" style="text-align: right !important;">
+        <label>อธิบดีกรมสรรพสามิต</label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="five wide column" style="text-align: right !important;">
+        <label>
+          ได้ตรวจสอบแล้ว &nbsp; &nbsp; เห็นสมควรอนุมัติให้ยืมตามใบยืมฉบับนี้ได้ &nbsp; &nbsp; จำนวน
+        </label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>
+          บาท
+        </label>
+      </div>
+    </div>
+    <div class="ui grid">
+        <div class="five wide column" style="text-align: right !important;">
+          <label>
+            ตัวอักษร
+          </label>
+        </div>
+        <div class="four wide column">
+          <input type="text" name="text" required>
+        </div>
+      </div>
+      <div class="ui grid">
+          <div class="four wide column"></div>
+          <div class="four wide column">
+            <label>ลงชื่อ...........................................................................</label>
+          </div>
+          <div class="one wide column"></div>
+          <div class="three wide column">
+            <label>วันที่...........................................................</label>
+          </div>
+        </div>
+        <br>
+    <br>
+        <div class="ui grid">
+            <div class="sixteen wide column" style="text-align: center !important;">
+              <label>คำอนุมัติ</label>
             </div>
-            <div class="four wide field">
+          </div>
+          <div class="ui grid">
+            <div class="five wide column" style="text-align: right !important;">
+              <label>
+                  อนุมัติให้ยืมตามเงื่อนไขข้างต้นได้ &nbsp; &nbsp; เป็นเงิน 
+              </label>
+            </div>
+            <div class="four wide column">
               <input type="text" name="text" required>
             </div>
-            <div class="one wide field">
-                <label>ตำแหน่ง</label>
-              </div>
-              <div class="four wide field">
-                <input type="text" name="text" required>
-              </div>
-              <div class="one wide field">
-                  <label>สังกัด</label>
-                </div>
-                <div class="four wide field">
-                  <input type="text" name="text" required>
-                </div>
+            <div class="one wide column">
+              <label>
+                บาท
+              </label>
+            </div>
           </div>
-          <div class="inline fields">
-              <div class="two wide field">
-                <label>มีความประสงค์ขอยืมเงินจาก</label>
+          <div class="ui grid">
+              <div class="five wide column" style="text-align: right !important;">
+                <label>
+                  ตัวอักษร
+                </label>
               </div>
-              <div class="four wide field">
+              <div class="four wide column">
                 <input type="text" name="text" required>
               </div>
-        
             </div>
             <div class="ui grid">
-                <div class="two wide column">
-                  <label>(๒)เพื่อเป็นค่าใช้จ่ายในการ</label>
+                <div class="four wide column"></div>
+                <div class="four wide column">
+                  <label>ลงชื่อผู้อนุมัติ...........................................................................</label>
                 </div>
-                <div class="fourteen wide column">
-                    <textarea rows="3" id="remark"></textarea>
+                <div class="one wide column"></div>
+                <div class="three wide column">
+                  <label>วันที่...........................................................</label>
                 </div>
-          
               </div>
-              <br>
-              <div class="inline fields">
-              <div class="one wide field"></div>
-              <div class="one wide field">
-                  <label>ตั้งแต่วันที่</label>
+              <div class="ui grid">
+                  <div class="sixteen wide column" style="text-align: center !important;">
+                    <label>ใบรับเงิน</label>
+                  </div>
                 </div>
-                <div class="four wide field">
-                  <div class="ui calendar" id="date1" style="width: 100%">
-                    <div class="ui input left icon">
-                      <i class="time icon"></i>
-                      <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="ดด/ปปปป" [attr.required]="true">
+                <div class="ui grid">
+                  <div class="five wide column" style="text-align: right !important;">
+                    <label>
+                        ได้รับเงินยืมจำนวน
+                    </label>
+                  </div>
+                  <div class="four wide column">
+                    <input type="text" name="text" required>
+                  </div>
+                  <div class="one wide column">
+                    <label>
+                      บาท
+                    </label>
+                  </div>
+                </div>
+                <div class="ui grid">
+                    <div class="five wide column" style="text-align: right !important;">
+                      <label>
+                        ตัวอักษร
+                      </label>
+                    </div>
+                    <div class="four wide column">
+                      <input type="text" name="text" required>
                     </div>
                   </div>
-                </div>
-                <div class="one wide field">
-                    <label>ถึงวันที่</label>
-                  </div>
-                  <div class="four wide field">
-                    <div class="ui calendar" id="date1" style="width: 100%">
-                      <div class="ui input left icon">
-                        <i class="time icon"></i>
-                        <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="ดด/ปปปป" [attr.required]="true">
+                  <div class="ui grid">
+                      <div class="four wide column"></div>
+                      <div class="four wide column">
+                        <label>รายมือชื่อ...........................................................................ผู้รับเงิน</label>
+                      </div>
+                      <div class="one wide column"></div>
+                      <div class="three wide column">
+                        <label>วันที่...........................................................</label>
                       </div>
                     </div>
-                   </div>
-                  </div>
-      <div class="inline fields">
-        <div class="two wide field"></div>
-        <div class="one wide field">
-          <label>ที่</label>
-        </div>
-        <div class="five wide field">
-          <input type="text" name="text" required>
-        </div>
-        <div class="one wide field">
-          <label>วันที่</label>
-        </div>
-        <div class="five wide field">
-          <div class="ui calendar" id="date1" style="width: 100%">
-            <div class="ui input left icon">
-              <i class="time icon"></i>
-              <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="ดด/ปปปป" [attr.required]="true">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="two wide field"></div>
-        <div class="one wide field">
-          <label>เรื่อง</label>
-        </div>
-        <div class="five wide field">
-          <input type="text" name="text" required>
-        </div>
-  
-      </div>
-      <div class="inline fields">
-        <div class="two wide field"></div>
-        <div class="one wide field">
-          <label>เรียน</label>
-        </div>
-        <div class="five wide field">
-          <input type="text" name="text" required>
-        </div>
-      </div>
-      <div class="inline fields">
-          <div class="three wide field"></div>
-          <div class="eleven wide field">
-              <textarea rows="20" id="remark"></textarea>
-          </div>
-      </div>
-      <div class="inline fields">
-          <div class="eight wide field"></div>
-          <div class="one wide field">
-            <label>ชื่อ</label>
-          </div>
-          <div class="five wide field">
-            <input type="text" name="text" required>
-          </div>
-    
-        </div>
-        <div class="inline fields">
-          <div class="eight wide field"></div>
-          <div class="one wide field">
-            <label>ตำแหน่ง</label>
-          </div>
-          <div class="five wide field">
-            <input type="text" name="text" required>
-          </div>
-        </div>
-    </div>
-    <br> <br> <br>
+      
+
+    <br>
+    <br>
+    <br>
     <div class="ui center aligned grid">
       <div class="eight wide column">
         <button class="ui  grey button" type="button" (click)="clickBack()">กลับ</button>
         <button class="ui  primary button" type="button" (click)="modalAddHead()">บันทึก</button>
       </div>
     </div>
+    <br>
   </div>

@@ -122,7 +122,10 @@ export class Int091Component implements OnInit {
           "data": "createdDate",
           "className": "ui center aligned"
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return "นายนพรัช  โพนทอง";
+          }
         }, {
           "data": "fiscalYear",
           "className": "ui center aligned",
@@ -136,9 +139,16 @@ export class Int091Component implements OnInit {
         }, {
           "data": "createdDate"
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "render": function (data, type, row, meta) {
+            return "สำนักงานสรรพสามิตพื้นที่สาขาเมืองเชียงราย";
+          }
         }, {
-          "data": "createdBy"
+          "data": "createdBy",
+          "className": "ui center aligned",
+          "render": function (data, type, row, meta) {
+            return "รออนุมัติประมาณการค่าใช้จ่าย";
+          }
         },{
           "data": "id",
           "className": "ui center aligned",

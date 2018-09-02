@@ -1,346 +1,609 @@
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-  <span>หัวกระดาษหลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ</span>
+  <span>รายละเอียดใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ</span>
 </div>
 <div class="ui attached  segment">
   <br>
-  <div class="inline fields" style="text-align: center !important;">หลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ</div>
-  <div class="inline fields" style="text-align: center !important;">ชื่อส่วนราชการ สำนักบริหารการคลังและรายได้ กรมสรรพสามิต จังหวัดกรุงเทพมหานคร</div>
-  <div class="inline fields" style="text-align: center !important;">ประกอบใบเบิกค่าใช้จ่ายในการเดินทางของ นายปาณศิริ ปานแก้ว ลงวันที่ 3 มีนาคม 2561</div>
   <br>
-  <div class="ui center aligned grid">
-    <div class="eight wide column">
-      <button class="ui  primary button" type="button" (click)="modalAddHead()">แก้ไข</button>
+  <br>
+  <div class="ui form">
+    <div class="ui grid">
+      <div class="two wide column">
+        <label>สัญญาเงินยืมเลขที่</label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>วันที่</label>
+      </div>
+      <div class="four wide column">
+        <div class="ui calendar" id="date1">
+          <div class="ui input left icon" style="width: 100%">
+            <i class="time icon"></i>
+            <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+          </div>
+        </div>
+      </div>
+      <div class="three wide column"></div>
+      <div class="two wide column" style="text-align: center !important;">
+        <label>ส่วนที่ ๑</label>
+      </div>
     </div>
-  </div>
-</div>
+    <div class="ui grid">
+      <div class="two wide column">
+        <label>ชื่อผู้ยืม</label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>จำนวนเงิน</label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">บาท</div>
+      <div class="two wide column"></div>
+      <div class="two wide column" style="text-align: center !important;">
+        <label>แบบ ๘๗๐๘</label>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="ui grid">
+      <div class="sixteen wide column" style="text-align: center !important;">
+        <h1>ใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ</h1>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="ui grid">
+      <div class="ten wide column"></div>
+      <div class="five wide column">ที่ทำการ กลุ่มตรวจสอบภายใน กรมสรรพสามิต</div>
+    </div>
+    <div class="ui grid">
+      <div class="ten wide column"></div>
+      <div class="one wide column">วันที่</div>
+      <div class="three wide column">
+        <div class="ui calendar" id="date1">
+          <div class="ui input left icon" style="width: 100%">
+            <i class="time icon"></i>
+            <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="two wide column">
+        <label>
+          เรื่อง
+        </label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="two wide column">
+        <label>
+          เรียน
+        </label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="two wide column">
+        <label>ตามคำสั่ง/บันทึก ที่</label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>ลงวันที</label>
+      </div>
+      <div class="four wide column">
+        <div class="ui calendar" id="date1">
+          <div class="ui input left icon" style="width: 100%">
+            <i class="time icon"></i>
+            <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="two wide column">
+        <label>ได้อนุมัติให้ ข้าพเจ้า</label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>ตำแหน่ง</label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+    </div>
 
+    <div class="ui grid">
+      <div class="two wide column">
+        <label>พร้อมด้วย</label>
+      </div>
+      <div class="nine wide column">
+        <textarea rows="10" id="remark"></textarea>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="two wide column">
+        <label>รายระเอียดการเดินทาง</label>
+      </div>
+      <div class="nine wide column">
+        <textarea rows="5" id="remark"></textarea>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="two wide column">
+        <label>ราชการครั้งนี้</label>
+      </div>
+      <div class="one wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>วัน</label>
+      </div>
+      <div class="one wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">ชั่วโมง</div>
+    </div>
+    <div class="ui grid">
+      <div class="two wide column">
+        <label>โดยออกเดินทางจาก</label>
+      </div>
+      <div class="four wide column">
+        <select class="ui dropdown search selection" style="width: 100%;" id="sector" (change)="sectorOnchange($event)">
+          <option value="">เลือก</option>
+          <option value="1">สนง.-บ้าน</option>
+          <option value="2">บ้าน-สนง.</option>
+          <option value="3">สนง.-สนง.</option>
+        </select>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="two wide column">
+        <label>วัน เวลา ออกเดินทาง</label>
+      </div>
+      <div class="four wide column">
+        <div class="ui calendar" id="date1">
+          <div class="ui input left icon" style="width: 100%">
+            <i class="time icon"></i>
+            <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+          </div>
+        </div>
+      </div>
+      <div class="two wide column">
+        <label>วัน เวลา กลับถึง</label>
+      </div>
+      <div class="four wide column">
+        <div class="ui calendar" id="date1">
+          <div class="ui input left icon" style="width: 100%">
+            <i class="time icon"></i>
+            <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="four wide column">
+        <label>ข้าพเจ้าขอเบิกค่าใช้จ่ายในการเดินทางไปราชการสำหรับ</label>
+      </div>
+      <div class="two wide column">
+        <div class="ui radio checkbox">
+          <input type="radio" name="radio1">
+          <label>ข้าพเจ้า</label>
+        </div>
+
+      </div>
+      <div class="two wide column">
+        <div class="ui radio checkbox">
+          <input type="radio" name="radio1">
+          <label>คณะเดินทาง</label>
+        </div>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+      <div class="three wide column">
+        <label>
+          ค่าเบี้ยเลี้ยงเดินทาง
+        </label>
+      </div>
+      <div class="three wide column"></div>
+      <div class="one wide column">
+        <label>
+          จำนวน
+        </label>
+      </div>
+      <div class="one wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>
+          วัน
+        </label>
+      </div>
+      <div class="one wide column">
+        <label>
+          รวม
+        </label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>
+          บาท
+        </label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+      <div class="two wide column">
+        <label>
+          ค่าเช่าที่พักประเภท
+        </label>
+      </div>
+      <div class="two wide column">
+        <select class="ui dropdown search selection" style="width: 100%;" id="sector" (change)="sectorOnchange($event)">
+          <option value="">เลือก</option>
+          <option value="1">ปกติ</option>
+          <option value="2">เหมาจ่าย</option>
+        </select>
+      </div>
+      <div class="two wide column"></div>
+      <div class="one wide column">
+        <label>
+          จำนวน
+        </label>
+      </div>
+      <div class="one wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>
+          วัน
+        </label>
+      </div>
+      <div class="one wide column">
+        <label>
+          รวม
+        </label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>
+          บาท
+        </label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+      <div class="two wide column">
+        <label>
+          ค่าพาหนะ
+        </label>
+      </div>
+      <div class="seven wide column"></div>
+      <div class="one wide column">
+        <label>
+          รวม
+        </label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>
+          บาท
+        </label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+      <div class="one wide column">
+        <label>
+          ค่าใช้จ่ายอื่น
+        </label>
+      </div>
+      <div class="one wide column" style="text-align:right !important;">(</div>
+      <div class="five wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="two wide column">)</div>
+      <div class="one wide column">
+        <label>
+          รวม
+        </label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>
+          บาท
+        </label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+
+      <div class="nine wide column"></div>
+
+      <div class="one wide column">
+        <label>
+          รวมเงินทั้งสิ้น
+        </label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="one wide column">
+        <label>
+          บาท
+        </label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+      <div class="two wide column">
+        <label>
+          จำนวนเงิน(ตัวอักษร)
+        </label>
+      </div>
+      <div class="five wide column">
+        <input type="text" name="text" required>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+      <div class="seven wide column">
+        <label>
+          ข้าพเจ้าขอรับรองว่ารายการที่กล่าวมาข้างต้นเป็นความจริง &nbsp; และหลักฐานการจ่ายที่ส่งมาด้วย &nbsp; &nbsp; &nbsp; จำนวน
+        </label>
+      </div>
+      <div class="one wide column">
+        <input type="text" name="text" required>
+      </div>
+      <div class="seven wide column">
+        <label>
+          ชุด &nbsp; &nbsp; &nbsp; ข้าพเจ้าขอรับรองว่ารายการที่กล่าวมาข้างต้นเป็นความจริง และหลักฐานการจ่ายที่ส่งมาด้วย
+        </label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="three wide column"></div>
+      <div class="four wide column">
+        <label>ลงชื่อ...........................................................................ผู้ขอรับเงิน</label>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+      <div class="two wide column">
+        <label>
+          ชื่อผู้ขอรับเงิน
+        </label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+    </div>
+    <div class="ui grid">
+      <div class="one wide column"></div>
+      <div class="two wide column">
+        <label>
+          ตำแหน่ง
+        </label>
+      </div>
+      <div class="four wide column">
+        <input type="text" name="text" required>
+      </div>
+    </div>
+
+  </div>
+
+
+  <br>
+  <br>
+  <br>
+
+  <br>
+</div>
 <br>
-
-<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-  <span>รายละเอียดค่าใช้จ่ายในการเดินทางไปราชการ</span>
-</div>
-
+<br>
+<br>
 <div class="ui attached  segment">
-  <div class="inline fields" style="text-align: right !important;">
-    <button class="ui green button" type="button" (click)="modalAdd()">เพิ่ม</button>
-  </div>
-  <table id="tableData" class="ui small celled table nowrap" style="width: 100%">
-    <thead>
-
-      <tr>
-        <th rowspan="2" style="text-align: center !important;">
-          <input id="checkAllSap" type="checkbox" (click)="clickCheckAll($event)" />
-        </th>
-        <th rowspan="2" style="text-align: center !important;">ลำดับที่</th>
-        <th rowspan="2" style="text-align: center !important;">ชื่อ</th>
-        <th rowspan="2" style="text-align: center !important;">ตำแหน่ง</th>
-        <th rowspan="1" colspan="4" style="text-align: center !important;">ค่าใช้จ่าย</th>
-        <th rowspan="2" style="text-align: center !important;">รวมเป็นเงิน</th>
-        <th rowspan="2" style="text-align: center !important;">หมายเหตุ</th>
-        <th rowspan="2" style="text-align: center !important;width:70px !important">จัดการ</th>
-      </tr>
-      <tr>			
-        <th style="text-align: center !important;">ค่าเบี้ยเลี้ยง</th>
-        <th style="text-align: center !important;">ค่าที่พัก</th>
-        <th style="text-align: center !important;">ค่าพาหนะ</th>
-        <th style="text-align: center !important;">ค่าใช้จ่ายอื่น</th>
-      </tr>
-
-    </thead>
-    <tfoot>
-
-      <tr>
-        <th rowspan="1" colspan="4" style="text-align: center !important;"> รวม </th>
-        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
-        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
-        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
-        <th rowspan="1" style="text-align: right !important;"> 36,000 </th>
-        <th rowspan="1" style="text-align: right !important;"> 180,000 </th>
-        <th colspan="2" style="text-align: center !important;"></th>
-      </tr>
-
-    </tfoot>
-  </table>
-  <div class="ui form center aligned grid">
-      <button class="ui  grey button" type="button" (click)="clickBack()">กลับ</button>
-      <button class="ui  red button" type="button" >ลบรายการที่เลือก</button>
-      <button class="ui  primary button" type="button" >บันทึก</button>
-  </div> 
-<br><br>
-</div>
-
-<!-- add modal -->
-<div class="ui large modal transition hidden" id='modalAdd'>
-  <div class="header" style="text-align: center !important;">
-    ระบุรายละเอียดค่าใช้จ่ายในการเดินทางไปราชการ
-  </div>
-
-  <div class="scrolling content">
-    <div class="ui form center aligned" id="int09-1" ngNativeValidate>
-
-      <input type="hidden" id="id">
-      <input type="hidden" id="idProcess">
-      <input type="hidden" id="name">
-
-
-      <div class="inline fields">
-        <div class="three wide field right aligned">
-          <label>ชื่อ</label>
+  <br>
+  <br>
+  <br>
+  <div class="ui form">
+    <div class="ui grid" style="text-align:center !important;">
+      <div class="sixteen wide column">-๒-</div>
+    </div>
+    <div class="ui grid">
+        <div class="eight wide column">
+          <label>ได้ตรวจสอบหลักฐานการเบิกจ่ายเงินที่แนบถูกต้องแล้วเห็นควรอนมุัติให้เบิกจ่ายได้</label>
         </div>
-        <div class="three wide field">
-          <input id="nameForm" type="text">
-        </div>
-        <div class="two wide field right aligned">
-          <label>นามสกุล</label>
-        </div>
-        <div class="three wide field">
-          <input id="lastForm" type="text">
+        <div class="eight wide column">
+          <label>อนุมัติให้จ่ายได้</label>
         </div>
       </div>
-      <div class="inline fields">
-        <div class="three wide field right aligned">
-          <label>ตำแหน่ง</label>
+    <div class="ui grid">
+        <div class="five wide column" style="text-align:center !important;">
+          <label>ลงชื่อ...........................................................................</label>
         </div>
-        <div class="three wide field">
-          <input type="text" id="rank">
-        </div>
-        <div class="two wide field right aligned">
-          <label>ประเภท</label>
-        </div>
-        <div class="three wide field">
-          <select class="ui dropdown" id="type" name="type" (change)="typeDropdownOnChange($evnet)">
-            <option value="">เลือกประเภท</option>
-            <option *ngFor="let data of typeDropdown" value="{{data.value}}">{{data.label}}</option>
-          </select>
-        </div>
-        <div class="one wide field right aligned">
-          <label>ระดับ</label>
-        </div>
-        <div class="three wide field">
-          <select class="ui dropdown" id="grade" name="grade">
-            <option value="">เลือกระดับ</option>
-            <option *ngFor="let data of gradeDropdown" value="{{data.value}}">{{data.label}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="three wide field ui right aligned">
-          <label>วันขออนุญาต</label>
-        </div>
-        <div class="three wide field">
-          <div class="ui calendar" id="dateOfApplication" style="width: 100%">
-            <div class="ui input left icon">
-              <i class="time icon"></i>
-              <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
-            </div>
-          </div>
-        </div>
-        <div class="two wide field ui right aligned">
-          <label>วันเขียนเบิก</label>
-        </div>
-        <div class="three wide field">
-          <div class="ui calendar" id="dateOfWithdrawal" style="width: 100%">
-            <div class="ui input left icon">
-              <i class="time icon"></i>
-              <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="three wide field ui right aligned">
-          <label>เดินทางจาก</label>
-        </div>
-        <div class="three wide field ui right aligned">
-          <select class="ui dropdown" id="travelFrom" name="travelFrom">
-            <option value="">เลือก</option>
-            <option value="1">บ้าน - สนง.</option>
-            <option value="2">สนง. - สนง.</option>
-            <option value="3">สนง. - บ้าน</option>
-          </select>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="three wide field ui right aligned">
-          <label>วัน เวลา ออกเดินทาง</label>
-        </div>
-        <div class="three wide field">
-          <div class="ui calendar" id="departureDate" style="width: 100%">
-            <div class="ui input left icon">
-              <i class="time icon"></i>
-              <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
-            </div>
-          </div>
-        </div>
-        <div class="two wide field ui right aligned">
-          <label>วัน เวลา กลับถึง</label>
-        </div>
-        <div class="three wide field">
-          <div class="ui calendar" id="returnDate" style="width: 100%">
-            <div class="ui input left icon">
-              <i class="time icon"></i>
-              <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="three wide field ui right aligned">
-          <label>กรณีฝึกอบรม</label>
-        </div>
-        <div class="three wide field">
-          <select class="ui dropdown" id="trainingCase" name="trainingCase">
-            <option value="">เลือกกรณีฝึกอบรม</option>
-            <option *ngFor="let data of trainingCaseDropdown" value="{{data.value}}">{{data.label}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="three wide field right aligned">
-          <label>ประเภทการเบิก</label>
-        </div>
-        <div class="three wide field">
-          <select class="ui dropdown" id="withdrawType" name="withdrawType" (change)="trainingRoomTypeDropdownList($evnet)">
-            <option value="">เลือกประเภทการเบิก</option>
-            <option *ngFor="let data of withdrawTypeDropdown" value="{{data.value}}">{{data.label}}</option>
-          </select>
-        </div>
-        <div class="two wide field right aligned">
-          <label>ประเภทห้องอบรม</label>
-        </div>
-        <div class="three wide field">
-          <select class="ui dropdown" id="trainingRoomType" name="trainingRoomType">
-            <option value="">เลือกประเภทห้องอบรม</option>
-            <option *ngFor="let data of trainingRoomTypeDropdown" value="{{data.value}}">{{data.label}}</option>
-          </select>
-        </div>
-
-      </div>
-      <div class="inline fields">
-        <div class="three wide field right aligned">
-          <label>กรณีที่พัก</label>
-        </div>
-        <div class="three wide field ui right aligned">
-          <select class="ui dropdown" id="accommodationCase" name="accommodationCase">
-            <option value="">เลือกกรณีที่พัก</option>
-            <option value="1">ปกติ</option>
-            <option value="2">เหมาจ่าย </option>
-          </select>
-        </div>
-        <div class="two wide field right aligned">
-          <label>ประเภทที่พัก</label>
-        </div>
-        <div class="three wide field ui right aligned">
-          <select class="ui dropdown" id="roomType" name="roomType">
-            <option value="">เลือกประที่พัก</option>
-            <option value="1">ห้องเดี่ยว</option>
-            <option value="2">ห้องคู่</option>
-          </select>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="three wide field ui right aligned">
-          <label>จำนวนวันเข้าพัก</label>
-        </div>
-        <div class="three wide field">
-          <input id="numberOfDate" type="number" [attr.step]="1" required>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="three wide field right aligned">
-          <label>ค่าพาหนะ</label>
-        </div>
-        <div class="three wide field">
-          <input type="number" id="travelExpense" [attr.step]="1" required>
-        </div>
-
-        <div class="two wide field right aligned">
-          <label>ค่าใช้จ่ายอื่น</label>
-        </div>
-        <div class="three wide field">
-          <input type="number" id="otherExpenses" [attr.step]="1" required>
+        <div class="three wide column"></div>
+        <div class="five wide column" style="text-align:center !important;">
+          <label>ลงชื่อ...........................................................................</label>
         </div>
       </div>
       <div class="ui grid">
-        <div class="three wide column">
-          <label>
-            <b>หมายเหตุ</b>
-          </label>
-        </div>
-        <div class="ten wide column">
-          <div class="ui form " style="width: 100%">
-            <textarea id="remark"></textarea>
+          <div class="five wide column" style="text-align:center !important;">
+            <label>(............................................................................................)</label>
+          </div>
+          <div class="three wide column"></div>
+          <div class="five wide column" style="text-align:center !important;">
+            <label>(............................................................................................)</label>
           </div>
         </div>
-        <div class="three wide field"></div>
-      </div>
-      <br>
-    </div>
-  </div>
-
-  <div class="actions">
-    <div class="ui red deny button">ยกเลิก</div>
-    <div class="ui green button" (click)="saveData()">บันทึก</div>
-  </div>
-</div>
-<!--End add modal -->
-
-<!-- add Haed modal -->
-<div class="ui large modal  transition hidden" id='modalAddHead'>
-
-  <div class="header" style="text-align: center !important;">
-    ระบุรายละเอียดหัวกระดาษหลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ
-  </div>
-
-  <div class="content">
-    <div class="ui form">
-
-      <input type="hidden" id="searchFlag">
-
-      <div class="inline fields">
-        <div class="one wide field"></div>
-        <div class="two wide field right aligned">
-          <label>ชื่อส่วนราชการ</label>
-        </div>
-        <div class="five wide field">
-          <input id="nameForm" type="text">
-        </div>
-        <div class="two wide field right aligned">
-          <label>จังหวัด</label>
-        </div>
-        <div class="five wide field">
-          <select class="ui dropdown search selection" style="width: 100%;" id="branch">
-            <option value="">เลือก</option>
-            <option *ngFor="let data of branchDropdown" value="{{data.value}}">{{data.label}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="one wide field"></div>
-        <div class="two wide field right aligned">
-          <label>ผู้เบิก</label>
-        </div>
-        <div class="five wide field">
-          <input id="nameForm" type="text">
-        </div>
-        <div class="two wide field">
-          <label>ลงวันที่</label>
-        </div>
-        <div class="five wide field">
-          <div class="ui calendar" id="date" style="width: 100%;">
-            <div class="ui input left icon">
-              <i class="time icon"></i>
-              <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+        <div class="ui grid">
+            <div class="five wide column" style="text-align:center !important;">
+              <label>ตำแหน่ง...........................................................................</label>
+            </div>
+            <div class="three wide column"></div>
+            <div class="five wide column" style="text-align:center !important;">
+              <label>ตำแหน่ง...........................................................................</label>
             </div>
           </div>
-        </div>
+          <div class="ui grid">
+              <div class="five wide column" style="text-align:center !important;">
+                <label>วันที่...........................................................................</label>
+              </div>
+              <div class="three wide column"></div>
+              <div class="five wide column" style="text-align:center !important;">
+                <label>วันที่...........................................................................</label>
+              </div>
+            </div>
+            <div class="ui grid">
+                <div class="one wide column"></div>
+                <div class="three wide column">
+                  <label>
+                      ได้รับเงินค่าใช้จ่ายในการเดินทางไปราชการ
+                  </label>
+                </div>
+                <div class="two wide column">
+                    <input type="text" name="text" required>
+                  </div>
+                <div class="one wide column" style="text-align:right !important;">ตัวอักษร</div>
+                <div class="six wide column">
+                  <input type="text" name="text" required>
+                </div>
+                <div class="two wide column">ไว้เป็นการถูกต้องแล้ว</div>
+              
+              </div>
+              <div class="ui grid">
+                  <div class="one wide column"></div>
+                  <div class="five wide column" style="text-align:center !important;">
+                    <label>ลงชื่อ...........................................................................ผู้รับเงิน</label>
+                  </div>
+                  <div class="three wide column"></div>
+                  <div class="five wide column" style="text-align:center !important;">
+                    <label>ลงชื่อ...........................................................................ผู้จ่ายเงิน</label>
+                  </div>
+                </div>
+                
+                <div class="ui grid">
+                    <div class="two wide column">
+                        <label>
+                          ชื่อผู้ขอรับเงิน
+                        </label>
+                      </div>
+                      <div class="four wide column">
+                        <input type="text" name="text" required>
+                      </div>
+                    <div class="three wide column"></div>
+                    <div class="five wide column" style="text-align:center !important;">
+                      <label>(............................................................................................)</label>
+                    </div>
+                  </div>
+                  <div class="ui grid">
+                         <div class="two wide column">
+                          <label>
+                              ตำแหน่ง
+                          </label>
+                        </div>
+                        <div class="four wide column">
+                          <input type="text" name="text" required>
+                        </div>
+                      <div class="three wide column"></div>
+                      <div class="five wide column" style="text-align:center !important;">
+                        <label>ตำแหน่ง...........................................................................</label>
+                      </div>
+                    </div>
+                    <div class="ui grid">
+                        <div class="two wide column">
+                            <label>
+                                วันที่
+                            </label>
+                          </div>
+                        <div class="four wide column">
+                            <div class="ui calendar" id="date1">
+                              <div class="ui input left icon" style="width: 100%">
+                                <i class="time icon"></i>
+                                <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                              </div>
+                            </div>
+                        </div>
+                        <div class="three wide column"></div>
+                        <div class="five wide column" style="text-align:center !important;">
+                          <label>วันที่...........................................................................</label>
+                        </div>
+                      </div>
+                      <div class="ui grid">
+                          <div class="two wide column">
+                            <label>รายระเอียดการเดินทาง</label>
+                          </div>
+                          <div class="nine wide column">
+                            <textarea rows="5" id="remark"></textarea>
+                          </div>
+                        </div>
+                        <div class="ui grid">
+                            <div class="sixteen wide column" style="text-align:center !important;">
+                             <label>
+                                ขอรับรองว่าหลักฐานการจ่าย &nbsp; รวมทั้งจำนวนที่ขอเบิกถูกต้องตามกฎหมายทุกประการ
+                             </label>
+                           </div>
+                           
+                       </div>
+                       <div class="ui grid">
+                          <div class="sixteen wide column" style="text-align:center !important;">
+                            <label>ลงชื่อ............................................................................ผู้บังคับบัญชา</label>
+                          </div>
+                        </div>
+                        <div class="ui grid">
+                            <div class="sixteen wide column" style="text-align:center !important;">
+                              <label>(..................................................................................................)</label>
+                            </div>
+                          </div>
+                          <div class="ui grid">
+                              <div class="two wide column">คำชี้แจง</div>
+                              <div class="twelve wide column">
+                                  ๑. กรณีเดินทางเป็นหมู่คณะและจัดทำใบเบิกค่าใช้จ่ายรวมฉบับเดียวกัน หากระยะเวลาในการเริ่มต้นและ สิ้นสุดการเดินทาง ของแต่ละบุคคลแตกต่างกัน ให้แสดงรายละเอียดของวันเวลาที่แตกต่างกันของบุคคลนั้นในช่องหมายเหตุ 
+                              </div>
+                            </div>
+                            <div class="ui grid">
+                                <div class="two wide column"></div>
+                                <div class="twelve wide column">
+                                    ๒. กรณียื่นขอเบิกค่าใช้จ่ายรายบุคคล ให้ผู้ขอรับเงินเป็นผู้ลงลายมือชื่อผู้รับเงินและวันเดือนปีที่รับ เงิน กรณีที่มีการยืม เงิน ให้ระบุวันที่ที่ได้รับเงินยืม เลขที่สัญญายืมและวันที่อนุมัติเงินยืมด้วย 
+                                </div>
+                              </div>
+                              <div class="ui grid">
+                                  <div class="two wide column"></div>
+                                  <div class="twelve wide column">
+                                      ๓. กรณีที่ยื่นขอเบิกค่าใช้จ่ายรวมเป็นหมู่คณะ ผู้ขอรับเงินมิต้องลงลายมือชื่อในช่องผู้รับเงิน ทั้งนี้   ให้ผู้มีสิทธิแต่ละคน ลงลายมือชื่อผู้รับเงินในหลักฐานการจ่ายเงิน (ส่วนที่ ๒) 
+                                  </div>
+                                </div>
+                                <br> <br>
+    <div class="ui center aligned grid">
+      <div class="eight wide column">
+        <button class="ui  grey button" type="button" (click)="clickBack()">กลับ</button>
+        <button class="ui  primary button" type="button" (click)="modalAddHead()">บันทึก</button>
       </div>
     </div>
   </div>
-
-  <div class="actions">
-    <div class="ui red deny button">ยกเลิก</div>
-    <div class="ui green button" (click)="saveHead()">ตกลง</div>
-  </div>
 </div>
-<!--End add Head modal -->
