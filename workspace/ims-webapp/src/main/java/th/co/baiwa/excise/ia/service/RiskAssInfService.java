@@ -82,8 +82,8 @@ public class RiskAssInfService {
 	public ResponseDataTable<RiskAssInfHdr> findByCriteriaForDatatable(RiskAssInfHdr riskAssInfHdr, DataTableRequest dataTableRequest) {
 		
 		ResponseDataTable<RiskAssInfHdr> responseDataTable = new ResponseDataTable<RiskAssInfHdr>();
-		List<RiskAssInfHdr> riskAssInfHdrList = riskAssInfHdrRepository.findByCriteria(riskAssInfHdr);
-		
+		List<RiskAssInfHdr> riskAssInfHdrList = findByBudgetYear(riskAssInfHdr.getBudgetYear());
+
 		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
 		responseDataTable.setData(riskAssInfHdrList);
 		responseDataTable.setRecordsTotal((int) riskAssInfHdrList.size());
@@ -177,6 +177,12 @@ public class RiskAssInfService {
 	
 	public List<RiskAssInfOtherDtl> findByOtherRiskHrdId(Long riskInfHrdId) {
 		return riskAssInfOtherDtlRepository.findByRiskInfHrdId(riskInfHrdId);
+	}
+	public void updateStatusRisk(RiskAssInfHdr riskAssInfHdr) {
+		RiskAssInfHdr riskInfHrd = riskAssInfHdrRepository.findOne(riskAssInfHdr.getRiskAssInfHdrId());
+		riskInfHrd.setActive(riskAssInfHdr.getActive());
+		riskAssInfHdrRepository.save(riskInfHrd);
+		
 	}
 	
 

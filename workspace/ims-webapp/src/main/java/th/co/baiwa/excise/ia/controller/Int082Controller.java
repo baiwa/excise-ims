@@ -64,8 +64,7 @@ public class Int082Controller {
 
 	@PostMapping("/searchRiskInfHdr")
 	@ResponseBody
-	public ResponseDataTable<RiskAssInfHdr> searchRiskAssInfHdr(RiskAssInfHdr riskAssInfHdr,
-			DataTableRequest dataTableRequest) {
+	public ResponseDataTable<RiskAssInfHdr> searchRiskAssInfHdr(DataTableRequest dataTableRequest ,RiskAssInfHdr riskAssInfHdr ) {
 		logger.info("queryRiskInfHdrfindByBuggetYear");
 		logger.info("BuggetYear : " + riskAssInfHdr.getBudgetYear());
 		return riskAssInfService.findByCriteriaForDatatable(riskAssInfHdr, dataTableRequest);
@@ -223,4 +222,22 @@ public class Int082Controller {
 		
 	}
 	
+	@PostMapping("/findRiskAssInfOtherDtlByHeaderId")
+	@ResponseBody
+	public ResponseDataTable<RiskAssInfOtherDtl> findRiskAssInfOtherDtlByHeaderId(DataTableRequest dataTableRequest,RiskAssInfHdr riskAssInfHdr) {
+		logger.info("findRiskAssOtherDtlByHeaderId");
+		List<RiskAssInfOtherDtl> riskAssInfOtherDtlList = riskAssInfService.findByOtherRiskHrdId(riskAssInfHdr.getRiskAssInfHdrId());
+		ResponseDataTable<RiskAssInfOtherDtl> responseDataTable = new ResponseDataTable<RiskAssInfOtherDtl>();
+		responseDataTable.setData(riskAssInfOtherDtlList);
+		responseDataTable.setRecordsTotal(riskAssInfOtherDtlList.size());
+		responseDataTable.setRecordsFiltered(riskAssInfOtherDtlList.size());
+		return responseDataTable;
+	}
+	
+	@PostMapping("/updateStatusRisk")
+	@ResponseBody
+	public void updateStatusRisk(@RequestBody RiskAssInfHdr riskAssInfHdr) {
+		riskAssInfService.updateStatusRisk(riskAssInfHdr);
+
+	}
 }

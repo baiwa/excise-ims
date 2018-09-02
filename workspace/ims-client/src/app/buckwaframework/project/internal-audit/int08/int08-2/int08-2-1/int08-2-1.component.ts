@@ -16,10 +16,12 @@ declare var $: any;
 })
 export class Int0821Component implements OnInit {
 
-  data: String[];
   formatter: any;
-  riskInfPaperName: any;
+
+  riskAssInfHdr: any;
+  riskAssInfHdrId : any;
   riskAssInfHdrName: any;
+  riskInfPaperName: any;
   budgetYear: any;
 
 
@@ -30,19 +32,30 @@ export class Int0821Component implements OnInit {
   riskList: any[];
   isSearch: any = false;
 
+  openForm1: any;
+  openForm2: any;
+  dataTableF1: any;
+  dataTableF2: any;
+
+  condition: any;
+
+  showData: boolean = false;
   constructor(
     private router: Router,
     private ajax: AjaxService,
+    private route: ActivatedRoute,
     private messageBarService: MessageBarService,
+    private _location: Location
   ) { }
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
-
-    this.riskAssInfHdrName = "";
-    this.budgetYear = "";
-    this.infRiskList = ["ปัจจัยเสี่ยงจำนวนครั้งการใช้งานไม่ได้ของระบบ"];
+    
+    this.budgetYear = this.route.snapshot.queryParams["budgetYear"];
+    if (this.budgetYear == null || this.budgetYear == undefined) {
+      this.budgetYear == 'xxxx';
+    }
 
     $('#year').calendar({
       type: 'year',
@@ -53,9 +66,12 @@ export class Int0821Component implements OnInit {
         this.changeYear(date.getFullYear() + 543);
       }
     });
-
-
+    this.openForm1 = false;
+    this.openForm2 = false;
+    this.infRiskList = ["ปัจจัยเสี่ยงจำนวนครั้งการใช้งานไม่ได้ของระบบ"];
+    this.initDatatable();
   }
+
   ngAfterViewInit() {
 
   }
@@ -82,9 +98,6 @@ export class Int0821Component implements OnInit {
       const URL = "ia/int082/createBudgetYear";
 
       this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
-        // var message = res.json();
-        // this.messageBarService.successModal(message.messageTh, "สำเร็จ");
-
         this.router.navigate(["/int08/2/2"], {
           queryParams: { budgetYear: this.budgetYear }
         });
@@ -99,7 +112,7 @@ export class Int0821Component implements OnInit {
   searchDataTable() {
     this.budgetYear = $('#budgetYear').val().trim();
     if (this.budgetYear != null && this.budgetYear != undefined && this.budgetYear != '') {
-    
+      this.isSearch = true;
       this.initDatatable();
     } else {
       this.messageBarService.errorModal('กรุณาเลือก ปีงบประมาณ ในการค้นหาข้อมูล');
@@ -107,7 +120,6 @@ export class Int0821Component implements OnInit {
   }
 
   initDatatable(): void {
-    this.isSearch = true;
     if (this.datatable != null || this.datatable != undefined) {
       this.datatable.destroy();
     }
@@ -121,6 +133,9 @@ export class Int0821Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: true,
+      scrollY:true,
+      scrollX: true,
+      scrollCollapse: true,
       paging: true,
       ajax: {
         type: "POST",
@@ -160,41 +175,210 @@ export class Int0821Component implements OnInit {
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {
-          // console.log("dtl");
-          // console.log(data.riskAssInfHdrId);
-
-          // if (this.infRiskList.indexOf(data.riskAssInfHdrName) >= 0) {
-          //   this.router.navigate(["/int08/2/3"], {
-          //     queryParams: { id: data.riskAssInfHdrId }
-          //   });
-          // } else {
-          //   this.router.navigate(["/int08/2/4"], {
-          //     queryParams: { id: data.riskAssInfHdrId }
-          //   });
-          // }
+         
+          if (this.infRiskList.indexOf(data.riskAssInfHdrName) >= 0) {
+            this.riskAssInfHdrId = data.riskAssInfHdrId;
+            this.renderForm1(data.riskAssInfHdrId);
+          } else {
+            this.riskAssInfHdrId = data.riskAssInfHdrId;
+            this.renderForm2(data.riskAssInfHdrId);
+          }
         })
 
         $("td > .export", row).bind("click", () => {
-          // console.log("del");
-          // console.log(data.riskAssInfHdrId);
-
-          // const URL = "ia/int082/deleteRiskInfHdr";
-
-          // this.ajax.post(URL, { riskAssInfHdrId: data.riskAssInfHdrId }, res => {
-          //   var message = res.json();
-          //   this.riskAssInfHdrName = "";
-          //   this.messageBarService.successModal(message.messageTh, "สำเร็จ");
-          //   this.datatable.destroy();
-          //   this.initDatatable();
-          // }, errRes => {
-          //   var message = errRes.json();
-
-          //   this.messageBarService.errorModal(message.messageTh);
-          // });
+         
         });
 
       }
     });
+  }
+
+  renderForm1(riskAssInfHdrId) {
+
+    console.log("riskAssInfHdrId", riskAssInfHdrId);
+    const URLHRD = "ia/int082/findRiskById";
+    this.ajax.post(URLHRD, { riskAssInfHdrId: riskAssInfHdrId }, res => {
+      this.riskAssInfHdr = res.json();
+      this.openForm1 = true;
+      this.openForm2 = false;
+      console.log("riskAssInfHdr", this.riskAssInfHdr);
+      const URL = "ia/condition/findConditionByParentId";
+      this.ajax.post(URL, { parentId: riskAssInfHdrId, riskType: 'MAIN', page: 'int08-2-3' }, res => {
+        this.condition = res.json();
+        console.log("condition", this.condition);
+
+        this.initDatatableF1();
+      });
+
+    });
+
+  }
+
+  initDatatableF1(): void {
+    if (this.dataTableF1 != null) {
+      this.dataTableF1.destroy();
+    }
+    const URL = AjaxService.CONTEXT_PATH + "ia/int082/dataTableWebService";
+    console.log(URL);
+    this.dataTableF1 = $("#dataTableF1").DataTable({
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: false,
+      scrollY:true,
+      scrollX: true,
+      scrollCollapse: true,
+      paging: true,
+      ajax: {
+        type: "POST",
+        url: URL,
+        data: { riskAssInfHdrId: this.riskAssInfHdrId }
+      },
+      columns: [
+
+        {
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "center"
+        },
+        { data: "infName" },
+        { data: "jan", render: $.fn.dataTable.render.number(',') },
+        { data: "feb", render: $.fn.dataTable.render.number(',') },
+        { data: "mar", render: $.fn.dataTable.render.number(',') },
+        { data: "april", render: $.fn.dataTable.render.number(',') },
+        { data: "may", render: $.fn.dataTable.render.number(',') },
+        { data: "jun", render: $.fn.dataTable.render.number(',') },
+        { data: "jul", render: $.fn.dataTable.render.number(',') },
+        { data: "aug", render: $.fn.dataTable.render.number(',') },
+        { data: "sep", render: $.fn.dataTable.render.number(',') },
+        { data: "oct", render: $.fn.dataTable.render.number(',') },
+        { data: "nov", render: $.fn.dataTable.render.number(',') },
+        { data: "dec", render: $.fn.dataTable.render.number(',') },
+        { data: "total", render: $.fn.dataTable.render.number(',') },
+        { data: "rl" },
+        { data: "valueTranslation" }
+
+      ], 
+      createdRow: function (row, data, dataIndex) {
+        console.log("row");
+        console.log("data", data.valueTranslation);
+        console.log("dataIndex", dataIndex);
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(15)').addClass('red');
+          $(row).find('td:eq(16)').addClass('red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(15)').addClass('green');
+          $(row).find('td:eq(16)').addClass('green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(15)').addClass('yellow');
+          $(row).find('td:eq(16)').addClass('yellow');
+        }
+
+      },
+      columnDefs: [
+        { targets: [0, 16], className: "center aligned" },
+        { targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], className: "right aligned" },
+        { targets: [1], className: "left aligned" }
+      ]
+
+    });
+  }
+
+
+  renderForm2(riskAssInfHdrId) {
+    console.log("riskAssInfHdrId", riskAssInfHdrId);
+    const URLHRD = "ia/int082/findRiskById";
+    this.ajax.post(URLHRD, { riskAssInfHdrId: riskAssInfHdrId }, res => {
+      this.riskAssInfHdr = res.json();
+      this.openForm1 = false;
+      this.openForm2 = true;
+      console.log("riskAssInfHdr", this.riskAssInfHdr);
+      const URL = "ia/condition/findConditionByParentId";
+      this.ajax.post(URL, { parentId: riskAssInfHdrId, riskType: 'OTHER', page: 'int08-2-4' }, res => {
+        this.condition = res.json();
+        console.log("condition", this.condition);
+        this.initDatatableF2();
+      });
+    });
+  }
+
+  initDatatableF2(): void {
+    if (this.dataTableF1 != null) {
+      this.dataTableF2.destroy();
+    }
+    const URL = AjaxService.CONTEXT_PATH + "ia/int082/findRiskAssInfOtherDtlByHeaderId";
+    console.log(URL);
+    this.dataTableF2 = $("#dataTableF2").DataTable({
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: false,
+      scrollY:true,
+      scrollX: true,
+      scrollCollapse: true,
+      paging: true,
+      ajax: {
+        type: "POST",
+        url: URL,
+        data: { riskAssInfHdrId: this.riskAssInfHdrId }
+      },
+      columns: [
+
+        {
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "center"
+        },
+
+        { data: "infName" },
+        { data: "riskCost", className: "right" },
+        { data: "rl", className: "center" },
+        { data: "valueTranslation", className: "center" },
+        
+
+      ], 
+      createdRow: function (row, data, dataIndex) {
+        console.log("row");
+        console.log("data", data.color);
+        console.log("dataIndex", dataIndex);
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(3)').addClass('red');
+          $(row).find('td:eq(4)').addClass('red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(3)').addClass('green');
+          $(row).find('td:eq(4)').addClass('green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(3)').addClass('yellow');
+          $(row).find('td:eq(4)').addClass('yellow');
+        }
+
+      },
+      columnDefs: [
+        { targets: [0,4], className: "center aligned" },
+        { targets: [2,3], className: "right aligned" },
+        { targets: [1], className: "left aligned" }
+      ]
+
+    });
+  }
+
+  clearDataForm1() {
+    this.openForm1 = false;
+  }
+
+  clearDataForm2() {
+    this.openForm2 = false;
+  }
+
+  clearData(){
+    this.budgetYear = "";
+    this.initDatatable();
   }
 
 }

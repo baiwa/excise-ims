@@ -163,6 +163,9 @@ export class Int0824Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: false,
+      scrollY:true,
+      scrollX: true,
+      scrollCollapse: true,
       paging: false,
       data: this.dataTableList,
       columns: [

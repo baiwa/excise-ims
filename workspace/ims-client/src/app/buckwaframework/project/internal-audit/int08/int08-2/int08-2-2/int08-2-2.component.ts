@@ -21,6 +21,9 @@ export class Int0822Component implements OnInit , AfterViewInit{
   yearList: any[];
   infRiskList: any[];
 
+  active: any;
+  sw:boolean;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -32,6 +35,7 @@ export class Int0822Component implements OnInit , AfterViewInit{
      this.riskAssInfHdrName = "";
      this.budgetYear = "";
      this.infRiskList = ["ปัจจัยเสี่ยงจำนวนครั้งการใช้งานไม่ได้ของระบบ"];
+     
   }
   ngAfterViewInit() {
     this.budgetYear = this.route.snapshot.queryParams["budgetYear"];
@@ -69,6 +73,7 @@ export class Int0822Component implements OnInit , AfterViewInit{
 
 
   initDatatable(): void {
+    
     const URL = AjaxService.CONTEXT_PATH + "ia/int082/searchRiskInfHdr";
     // console.log(URL);
     // console.log(this.budgetYear);
@@ -97,7 +102,12 @@ export class Int0822Component implements OnInit , AfterViewInit{
         { data: "budgetYear" },
         { data: "createdDate" },
         { data: "createdBy" },
-        { data: "active" },
+        { data: "active" ,
+          render: function (data, type, row, meta) {
+            
+            return '<button type="button" class="ui mini button chk"><i class="pencil icon"></i>'+(data == "Y" ? "เปิด" : "ปิด") +'</button>';
+          }
+        },
         {
           data: "riskAssInfHdrId",
           render: function () {
@@ -123,6 +133,21 @@ export class Int0822Component implements OnInit , AfterViewInit{
               queryParams: { id: data.riskAssInfHdrId }
             });
           }
+        });
+        $("td > .chk", row).bind("click", () => {
+          console.log("chk");
+          console.log(row);
+          console.log(data);
+          console.log(index);
+          
+           const URL = "ia/int082/updateStatusRisk";
+           var newActive = data.active == 'N' ? 'Y' : 'N';
+           this.ajax.post(URL, { riskAssInfHdrId: data.riskAssInfHdrId , active : newActive }, res => {
+             //console.log(res.json());
+             this.datatable.destroy();
+             this.initDatatable();
+           });
+        
         })
 
         $("td > .del", row).bind("click", () => {
@@ -164,7 +189,10 @@ export class Int0822Component implements OnInit , AfterViewInit{
     this.messageBarService.comfirm(foo => {
       // let msg = "";
       if (foo) {
-        this.router.navigate(["/int08/2/1"]);
+        this.router.navigate(["/int08/2/1"], {
+          queryParams: { budgetYear: this.budgetYear }
+        }
+      );
       }
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
   }
@@ -175,4 +203,6 @@ export class Int0822Component implements OnInit , AfterViewInit{
       queryParams: { budgetYear: this.budgetYear }
     });
   }
+
+
 }
