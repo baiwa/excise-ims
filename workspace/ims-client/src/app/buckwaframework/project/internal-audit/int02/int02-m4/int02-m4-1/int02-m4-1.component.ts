@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
+import { TextDateTH, formatter } from "../../../../../common/helper";
 
 declare var $: any;
 
@@ -15,7 +16,13 @@ export class Int02M41Component implements OnInit, OnDestroy {
 
     ngOnDestroy() { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        $("#calendar").calendar({
+            type: "year",
+            text: TextDateTH,
+            formatter: formatter("year")
+        });
+    }
 
     search() {
         this.searchValue.emit("step1");

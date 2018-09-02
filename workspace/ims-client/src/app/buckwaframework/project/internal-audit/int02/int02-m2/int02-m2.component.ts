@@ -2,8 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter } from "../../../../common/helper";
 
 import { Questionnaire, _Questionnaire } from "./int02-m2.mock";
+import { AjaxService } from "../../../../common/services";
 
 declare var $: any;
+
+const URL = {
+  DATA: "ia/int02m2/"
+};
 
 @Component({
   selector: "app-int02-m2",
@@ -14,7 +19,7 @@ export class Int02M2Component implements OnInit {
 
   questionnaire: Questionnaire[] = [];
 
-  constructor() {
+  constructor(private ajaxService: AjaxService) {
     // TODO
   }
 
@@ -33,6 +38,17 @@ export class Int02M2Component implements OnInit {
     setTimeout(() => {
       $('.ui.accordion').accordion();
     }, 200);
+    // this.ajaxService.get(URL.DATA, res => {
+    //   this.questionnaire = res.json();
+    //   setTimeout(() => {
+    //     $('.ui.accordion').accordion();
+    //   }, 200);
+    // });
+  }
+
+  save(event) {
+    event.preventDefault();
+    console.log(this.questionnaire);
   }
 
 }

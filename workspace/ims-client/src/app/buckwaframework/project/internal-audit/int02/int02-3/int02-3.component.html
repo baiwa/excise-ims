@@ -16,10 +16,13 @@
                 <table class="ui small celled table aligned hover dataTable no-footer" role="grid" style="margin-left: 0px; width: 100%;">
                   <thead>
                     <tr>
-                      <th style="text-align: left !important ;width: 5%">
-                        <input type="checkbox" name="chk1" id="chk1" (click)="chkAll($event, '_table', 1)">
+                      <th style="text-align: left !important ;width: 8%">
+                        <div class="ui checkbox">
+                          <input type="checkbox" name="chk1" id="chk1" (click)="chkAll($event, '_table', 1)">
+                          <label></label>
+                        </div>
                       </th>
-                      <th style="text-align: center !important ;width: 95%">รายการ</th>
+                      <th style="text-align: center !important ;width: 92%">รายการ</th>
                     </tr>
                   </thead>
                 </table>
@@ -29,17 +32,23 @@
               <table class="ui small celled table aligned hover dataTable no-footer" id="datatable" role="grid" style="width: 100%;">
                 <thead>
                   <tr>
-                    <th style="text-align: left !important ;width: 5%;display: none"></th>
-                    <th style="text-align: left !important ;width: 95%;display: none"></th>
+                    <th style="text-align: left !important ;width: 8%;display: none"></th>
+                    <th style="text-align: left !important ;width: 92%;display: none"></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let t of _table; let i = index">
-                    <td style="width: 5%;">
-                      <input type="checkbox" id="chk1-{{i}}" name="chk1-{{i}}" *ngIf="t.qtnReportHdrId" (change)="chck(t.qtnReportManId, 'man', $event, 1, '_table')">
-                      <input type="checkbox" style="margin-left: 2em" id="chk1-{{i}}" name="chk1-{{i}}" *ngIf="!t.qtnReportHdrId" (change)="chck(t.qtnReportDtlId, 'dtl', $event, 1, '_table')">
+                    <td style="width: 8%;">
+                      <div class="ui checkbox" *ngIf="t.qtnReportHdrId">
+                        <input type="checkbox" id="chk1-{{i}}" name="chk1-{{i}}" *ngIf="t.qtnReportHdrId" (change)="chck(t.qtnReportManId, 'man', $event, 1, '_table')">
+                        <label></label>
+                      </div>
+                      <div class="ui checkbox" style="margin-left: 2.5em" *ngIf="!t.qtnReportHdrId">
+                        <input type="checkbox" id="chk1-{{i}}" name="chk1-{{i}}" *ngIf="!t.qtnReportHdrId" (change)="chck(t.qtnReportDtlId, 'dtl', $event, 1, '_table')">
+                        <label></label>
+                      </div>
                     </td>
-                    <td style="width: 95%;">{{t.qtnMainDetail}}</td>
+                    <td style="width: 92%;">{{t.qtnMainDetail}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -131,10 +140,13 @@
                 <table class="ui small celled table aligned hover dataTable no-footer" role="grid" style="margin-left: 0px; width: 100%;">
                   <thead>
                     <tr>
-                      <th style="text-align: left !important ;width: 5%">
-                        <input type="checkbox" name="chk2" id="chk2" (click)="chkAll($event, 'table', 2)">
+                      <th style="text-align: left !important ;width: 8%">
+                        <div class="ui checkbox">
+                          <input type="checkbox" name="chk2" id="chk2" (click)="chkAll($event, 'table', 2)">
+                          <label></label>
+                        </div>
                       </th>
-                      <th style="text-align: center !important ;width: 95%">รายการ</th>
+                      <th style="text-align: center !important ;width: 92%">รายการ</th>
                     </tr>
                   </thead>
                 </table>
@@ -144,17 +156,23 @@
               <table class="ui small celled table aligned hover dataTable no-footer" id="datatable" role="grid" style="width: 100%;">
                 <thead>
                   <tr>
-                    <th style="text-align: left !important ;width: 5%;display: none"></th>
-                    <th style="text-align: left !important ;width: 95%;display: none"></th>
+                    <th style="text-align: left !important ;width: 8%;display: none"></th>
+                    <th style="text-align: left !important ;width: 92%;display: none"></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let t of table; let i = index">
-                    <td style="width: 5%;">
-                      <input type="checkbox" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="t.qtnReportHdrId" (change)="chck(t.qtnReportManId, 'man', $event, 2, 'table')">
-                      <input type="checkbox" style="margin-left: 2em" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="!t.qtnReportHdrId" (change)="chck(t.qtnReportDtlId, 'dtl', $event, 2, 'table')">
+                    <td style="width: 8%;">
+                      <div class="ui checkbox" *ngIf="t.qtnReportHdrId">
+                        <input type="checkbox" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="t.qtnReportHdrId" (change)="chck(t.qtnReportManId, 'man', $event, 2, '_table')">
+                        <label></label>
+                      </div>
+                      <div class="ui checkbox" style="margin-left: 2.5em" *ngIf="!t.qtnReportHdrId">
+                        <input type="checkbox" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="!t.qtnReportHdrId" (change)="chck(t.qtnReportDtlId, 'dtl', $event, 2, '_table')">
+                        <label></label>
+                      </div>
                     </td>
-                    <td style="width: 95%;">{{t.qtnMainDetail}}</td>
+                    <td style="width: 92%;">{{t.qtnMainDetail}}</td>
                   </tr>
                 </tbody>
               </table>

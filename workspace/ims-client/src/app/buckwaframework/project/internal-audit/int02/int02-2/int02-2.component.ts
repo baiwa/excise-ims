@@ -219,10 +219,11 @@ export class Int022Component implements OnInit {
         this.qtnMaster.qtnFinished = "Y";
         this.ajax.post(`${URL.UPDATE_MASTER}/${this.qtnMasterId}`, this.qtnMaster, res => {
           const response = res.json();
-          if (response.msg.messageType == "C") {
-            this.message.successModal(response.msg.messageTh);
+          const { messageTh, messageType } = response.msg;
+          if (messageType == "C") {
+            this.message.successModal(messageTh);
           } else {
-            this.message.errorModal(response.msg.messageTh);
+            this.message.errorModal(messageTh);
           }
         });
       }

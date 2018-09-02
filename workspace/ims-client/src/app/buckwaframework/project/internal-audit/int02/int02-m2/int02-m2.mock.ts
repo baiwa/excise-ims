@@ -7,6 +7,7 @@ export class Questionnaire {
 }
 
 class Detail {
+    [x: string]: any;
     order?: string;
     headerId?: any;
     detailId?: any;

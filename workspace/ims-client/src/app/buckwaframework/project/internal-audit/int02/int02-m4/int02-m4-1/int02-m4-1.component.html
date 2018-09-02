@@ -8,13 +8,19 @@
             <div class="ui centered grid row">
                 <div class="ui centered sixteen wide column">
                     <div class="ui centered row grid">
-                        <div class="ui centered eight wide column" style="padding: 14px 0 0 0 !important;">
+                        <div class="ui centered six wide column" style="padding: 14px 0 0 0 !important;">
                             <div class="ui form">
                                 <div class="inline aligned center fields">
-                                    <div class="sixteen centered wide field">
-                                        <label>ปีงบประมาณ: </label>
+                                    <div class="six wide field">
+                                        <label class="text-right">ปีงบประมาณ: </label>
+                                    </div>
+                                    <div class="six wide field">
                                         <div class="ui input">
-                                            <input type="text">
+                                            <div class="ui calendar" id="calendar">
+                                                <div class="ui input">
+                                                    <input type="calendar" readonly="" placeholder="ปี" id="calendar_data" name="calendar_data" [attr.required]="true" autocomplete="off">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

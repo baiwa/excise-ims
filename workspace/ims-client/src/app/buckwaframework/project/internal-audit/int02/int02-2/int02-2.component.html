@@ -46,7 +46,10 @@
             <thead>
               <tr>
                 <th style="text-align: center !important">
-                  <input type="checkbox" name="chk" id="chk" (click)="clickChkAll($event)">
+                  <div class="ui checkbox">
+                    <input type="checkbox" name="chk" id="chk" (click)="clickChkAll($event)">
+                    <label></label>
+                  </div>
                 </th>
                 <th style="text-align: center !important">ลำดับ</th>
                 <th style="text-align: center !important">แบบสอบทานด้าน</th>
@@ -60,7 +63,10 @@
               </tr>
               <tr *ngFor="let obj of datatable; let i = index" class="{{ obj.status === 'NEW' ? 'positive' : '' }}">
                 <td class="center">
-                  <input type="checkbox" name="chk{{i}}" id="chk{{i}}" (click)="clickChk($event, i)">
+                  <div class="ui checkbox">
+                    <input type="checkbox" name="chk{{i}}" id="chk{{i}}" (click)="clickChk($event, i)">
+                    <label></label>
+                  </div>
                 </td>
                 <td class="center">{{i+1}}</td>
                 <td class="center">{{obj.qtnReportHdrName}}</td>
