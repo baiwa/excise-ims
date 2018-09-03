@@ -116,4 +116,11 @@ public class ComboboxController {
 	public List<Combobox> findByRiskInfName(@RequestBody RiskAssInfHdr riskAssInfHdr) {
 		return comboboxService.findByRiskInfName(riskAssInfHdr.getBudgetYear());
 	}
+	
+	@PostMapping("/getDropByTypeAndParentId")
+	@ResponseBody
+	public List<Lov> findDropByTypeAndParentId(@RequestBody Lov lov) {
+		logger.info("findDropByTypeAndParentId Type : "+lov.getType() + "|| parentId : "+ lov.getLovIdMaster() );
+		return ApplicationCache.getListOfValueByTypeParentId(lov.getType(), lov.getLovIdMaster());
+	}
 }
