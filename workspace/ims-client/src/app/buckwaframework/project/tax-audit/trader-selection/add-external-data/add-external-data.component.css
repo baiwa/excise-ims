@@ -7,3 +7,7 @@
 .active {
     color: black !important;
 }
+
+.hidden {
+    display: none;
+}
