@@ -27,6 +27,8 @@ export class AddExternalDataComponent implements OnInit {
   sector: any;
   sectorArr: any;
 
+  loading: boolean = true;
+
   constructor(
     private ex: ExciseService,
     private router: Router,
@@ -42,7 +44,6 @@ export class AddExternalDataComponent implements OnInit {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     $("#exciseBtn").prop("disabled", true);
-
     //get coordinates in select option
     const URL = "combobox/controller/getCoordinates";
     this.ajax.post(URL, {}, res => {
@@ -88,6 +89,7 @@ export class AddExternalDataComponent implements OnInit {
     const URL = AjaxService.CONTEXT_PATH + "filter/exise/list";
     var json = "";
     json += ' { "lengthChange": true, ';
+    json += ' "scrollX": true, ';
     json += ' "searching": false, ';
     json += ' "select": true, ';
     json += ' "ordering": true, ';
@@ -140,6 +142,7 @@ export class AddExternalDataComponent implements OnInit {
     json += "] } ";
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
+    this.loading = false;
 
     // on init table
     $("#userManagementDt tbody tr").css({
