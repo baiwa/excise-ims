@@ -20,3 +20,28 @@
 #tableSetting tr td:nth-child(6) {
     text-align: right;
 }
+
+.animate-show-hide.ng-hide {
+    opacity: 0;
+  }
+  
+  .animate-show-hide.ng-hide-add,
+  .animate-show-hide.ng-hide-remove {
+    transition: all linear 0.5s;
+  }
+  
+  .check-element {
+    border: 1px solid black;
+    opacity: 1;
+    padding: 10px;
+  } 
+.inputfile {
+    padding-right: 25px !important;
+    padding-left: 40px !important;
+}
+
+.butt-upload {
+    position: absolute;
+    top: 8px;
+    left: 223px;
+}
