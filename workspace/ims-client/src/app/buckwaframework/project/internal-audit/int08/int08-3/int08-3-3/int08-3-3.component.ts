@@ -101,31 +101,40 @@ export class Int0833Component implements OnInit {
       msgMessage = "กรุณากรอก \"ชื่อกระดาษทำการ\" ";
     }
 
-    if (msgMessage == "") {
-      var url = "ia/int083/updateRiskAssRiskWsHdr";
+    var url = "ia/condition/findConditionByParentId";
+    this.ajax.post(url, { parentId: this.id, riskType: 'MAIN', page: 'int08-3-3' }, res => {
+      var conditionList = res.json();
+      if (conditionList.length == 0) {
+        msgMessage = "กรุณากำหนดเงื่อนไข RL";
+      }
+      if (msgMessage == "") {
+        var url = "ia/int083/updateRiskAssExcAreaHdr";
 
-      this.ajax.post(url, this.riskAssRiskWsHdr, res => {
-        console.log(res.json());
-        var message = res.json();
-        console.log(message.messageType);
-        if (message.messageType == 'E') {
-          this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
-        } else {
-          this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
-          this.router.navigate(["/int08/1/4"], {
-            queryParams: { budgetYear: this.budgetYear }
-          });
-        }
+        this.ajax.post(url, this.riskAssRiskWsHdr, res => {
+          console.log(res.json());
+          var message = res.json();
+          console.log(message.messageType);
+          if (message.messageType == 'E') {
+            this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
+          } else {
+            this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
+            this.router.navigate(["/int08/3/2"], {
+              queryParams: { budgetYear: this.budgetYear }
+            });
+          }
 
-      }, errRes => {
-        var message = errRes.json();
-        console.log(message);
-        this.messageBarService.errorModal(message.messageTh);
+        }, errRes => {
+          var message = errRes.json();
+          console.log(message);
+          this.messageBarService.errorModal(message.messageTh);
 
-      });
-    } else {
-      this.messageBarService.errorModal(msgMessage);
-    }
+        });
+      } else {
+        this.messageBarService.errorModal(msgMessage);
+      }
+
+    });
+
 
   }
 

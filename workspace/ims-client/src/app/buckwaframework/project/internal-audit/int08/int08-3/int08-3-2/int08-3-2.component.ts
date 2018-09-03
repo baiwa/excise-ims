@@ -40,7 +40,7 @@ export class Int0832Component implements OnInit {
 
   addRiskAssRiskWsHdr() {
     console.log(this.budgetYear);
-    const URL = "ia/int08/addRiskAssRiskWsHdr";
+    const URL = "ia/int083/addRiskAssExcAreaHdr";
 
     this.ajax.post(URL, { riskHdrName: this.riskHdrName, budgetYear: this.budgetYear, active: 'Y' }, res => {
       var message = res.json();

@@ -44,7 +44,7 @@ public class Int083Controller {
 	private RiskAssExcAreaService riskAssExcAreaService;
 	
 	@Autowired
-	UploadFileExciseService uploadFileExciseService;
+	private UploadFileExciseService uploadFileExciseService;
 	
 	@Autowired
 	public Int083Controller(RiskAssExcAreaService riskAssExcAreaService) {
@@ -130,6 +130,7 @@ public class Int083Controller {
 			riskAssExcAreaService.updateRiskAssExcAreaDtl(riskAssRiskWsDtlList);
 			message = ApplicationCache.getMessage("MSG_00002");
 		} catch (Exception e) {
+			e.printStackTrace();
 			message = ApplicationCache.getMessage("MSG_00003");
 		}
 		
@@ -158,11 +159,11 @@ public class Int083Controller {
 	
 	@PostMapping("/saveRiskAssDtlOther")
 	@ResponseBody
-	public Message saveRiskAssDtlOther(@RequestBody Int0801Vo int0801Vo) {
+	public Message saveRiskAssDtlOther(@RequestBody Int0803Vo int0803Vo) {
 		Message message = null;
 		logger.info("saveRiskAssDtlOther");
 		try {
-			riskAssExcAreaService.updateRiskAssOtherDtl(int0801Vo.getRiskAssOtherDtlList());
+			riskAssExcAreaService.updateRiskAssOtherDtl(int0803Vo.getRiskAssExcOtherDtlList());
 			message = ApplicationCache.getMessage("MSG_00002");
 		} catch (Exception e) {
 			e.printStackTrace();

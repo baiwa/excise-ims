@@ -3,12 +3,11 @@ package th.co.baiwa.excise.domain;
 import java.util.List;
 
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaHdr;
-import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
-import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOtherDtl;
 
 public class Int0803Vo {
 
-	private List<RiskAssOtherDtl> riskAssOtherDtlList;
+	private List<RiskAssExcOtherDtl> riskAssExcOtherDtlList;
 	private String projectBase;
 	private String riskHrdName;
 	private String rl;
@@ -17,13 +16,6 @@ public class Int0803Vo {
 	private String departmentName;
 	private List<RiskAssExcAreaHdr> riskAssExcAreaHdrList;
 
-	public List<RiskAssOtherDtl> getRiskAssOtherDtlList() {
-		return riskAssOtherDtlList;
-	}
-
-	public void setRiskAssOtherDtlList(List<RiskAssOtherDtl> riskAssOtherDtlList) {
-		this.riskAssOtherDtlList = riskAssOtherDtlList;
-	}
 
 	public String getProjectBase() {
 		return projectBase;
@@ -79,6 +71,14 @@ public class Int0803Vo {
 
 	public void setRiskAssExcAreaHdrList(List<RiskAssExcAreaHdr> riskAssExcAreaHdrList) {
 		this.riskAssExcAreaHdrList = riskAssExcAreaHdrList;
+	}
+
+	public List<RiskAssExcOtherDtl> getRiskAssExcOtherDtlList() {
+		return riskAssExcOtherDtlList;
+	}
+
+	public void setRiskAssExcOtherDtlList(List<RiskAssExcOtherDtl> riskAssExcOtherDtlList) {
+		this.riskAssExcOtherDtlList = riskAssExcOtherDtlList;
 	}
 
 

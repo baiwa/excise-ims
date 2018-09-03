@@ -1,588 +1,186 @@
 <div class="ui grid">
-  <div class="sixteen wide column">
-
+  <div class="sixteen wide column" *ngIf="!getConditionShow()">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>สร้างกระดาษทำการประเมินความเสี่ยงการเงินและบัญชี
-      </span>
+      <span>รายละเอียดหัวกระดาษทำการ</span>
+    </div>
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="two wide field "></div>
+          <div class="two wide field ">
+            <label class="ui right ">ชื่อกระดาษทำการ</label>
+          </div>
+          <div class="ten wide field ">
+            <input type="text" placeholder="ชื่อกระดาษทำการ" maxlength="100" class="custom" name="riskHrdPaperName" id="riskHrdPaperName"
+              [(ngModel)]="riskHrdPaperName">
+          </div>
+
+        </div>
+        <div class="inline fields">
+          <div class="two wide field "></div>
+          <div class="two wide field">
+            <label>ปีงบประมาณ</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear" disabled="disabled">
+          </div>
+          <div class="two wide field ">
+            <label>ผู้ตรวจ</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="ผู้ตรวจ" class="custom" name="userCheck" id="userCheck" [(ngModel)]="userCheck">
+          </div>
+        </div>
+
+        <div class="inline fields"></div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+  <div class="sixteen wide column ">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>เพิ่มข้อมูลกระดาษทำการ</span>
     </div>
 
     <div class="ui attached segment">
       <div class="ui form">
-        <div class="inline fields">
-          <div class="five wide field "></div>
-          <div class="five wide field ">
-            <input type="file" />
-          </div>
-          <button class="ui mini primary button">
-            ตัวอย่างแบบฟอร์มนำเข้าระบบ
-          </button>
+        <div class="ui top attached tabular menu">
+          <a class="active item" data-tab="first">เพิ่มข้อมูล</a>
+          <a class="item" data-tab="second">เพิ่มข้อมูล Excel File</a>
         </div>
-      </div>
+        <div class="ui bottom attached active tab segment" data-tab="first">
 
-      <div class="ui center aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini primary button" (click)="uploadData()">
-            <i class="upload icon"></i>
-            อัพโหลด
-          </button>
-          <button class="ui mini button" (click)="clearData()">
-            <i class="refresh icon"></i>
-            ล้างข้อมูล
-          </button>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="ui segment" *ngIf="showData">
-      <div class="ui right aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini primary button" (click)="popupEditData()">
-            <i class="setting icon"></i>
-            กำหนด RL
-          </button>
-          <button class="ui mini primary button">
-            <i class=" save icon"></i>
-            บันทึก
-          </button>
-          <button class="ui mini primary button">
-            <i class="print icon"></i>
-            พิมพ์
-          </button>
-          <div class="ui mini primary button">
-            <div class="ui simple dropdown item">
-              ส่งออก
-              <i class="dropdown icon"></i>
-              <div class="menu">
-                <div class="item">PDF</div>
-                <div class="item">Excel</div>
-              </div>
+          <div class="inline fields">
+            <div class="two wide field "></div>
+            <div class="two wide field">
+              <label>สรรพสามิตภาค</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="สรรพสามิตภาค" class="custom" name="exciseSetor" id="exciseSetor" [(ngModel)]="exciseSetor">
+            </div>
+            <div class="two wide field ">
+              <label>สรรพสามิตพื้นที่</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="สรรพสามิตพื้นที่" class="custom" name="exciseArea" id="exciseArea" [(ngModel)]="exciseArea">
             </div>
           </div>
-        </div>
-      </div>
-      <br>
-      <div class="ui grid center aligned">
-        <div class="sixteen wide column">
-          กระดาษทำการประเมินความเสี่ยงการเงินและบัญชีเพื่อพิจารณาคัดเลือกหน่วยงานรับตรวจสำนักงานสรรพสามิตภาค พื้นที่ และสาขา
-          <br> ปีงบประมาณ พ.ศ. 2561
-          <br> กลุ่มตรวจสอบภายใน กรมสรรพสามิต
-        </div>
-      </div>
 
-      <div class="ui nine column grid">
-        <div class="column">
-          ปัจจัยเสี่ยง:
+          <div class="inline fields">
+            <div class="two wide field "></div>
+            <div class="two wide field">
+              <label>สรรพสามิตสาขา</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="สรรพสามิตสาขา" class="custom" name="exciseBranch" id="exciseBranch" [(ngModel)]="exciseBranch">
+            </div>
+            <div class="two wide field ">
+              <label>ค่าความเสี่ยง</label>
+            </div>
+            <div class="four wide field ">
+              <input type="text" placeholder="ค่าความเสี่ยง" class="custom" name="riskCost" id="riskCost" [(ngModel)]="riskCost">
+            </div>
+          </div>
+
+          <div class="inline fields"></div>
+          <div class="inline fields">
+            <div class="sixteen wide field ">
+              <div class="seven wide field "></div>
+              <button class="ui mini primary button" (click)="addObjRiskDtl() ">
+                <i class="save icon"></i>
+                เพิ่ม
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="second">
+          <form id="upload-form" ngNativeValidate (submit)="onUpload($event)">
+            <div class="ui attached segment">
+              <div class="ui form">
+                <div class="inline fields">
+                  <div class="eight wide field ">
+                    <label class="custom-label-w-15">เลือกไฟล์ Template ข้อมูล</label>
+                    <div>
+                      <input class="inputfile" type="file" name="fileExel" id="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        (change)="onChangeUpload($event)" required>
+                      <label for="fileExel" class="ui mini blue butt-upload button">
+                        <i class="ui fa-file-excel-o icon"></i> เลือกไฟล์
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui center aligned grid">
+                <div class="four wide column">
+                  <button class="ui mini primary button" type="submit">
+                    <i class="upload icon"></i>
+                    อัพโหลด
+                  </button>
+                  <button class="ui mini button" type="reset">
+                    <i class="trash outline icon"></i>
+                    ลบไฟล์
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
 
-        <div class="column" style="width: 20%;">
-          7. ความเสี่ยงด้านการเงินและบัญชี
-        </div>
-
-        <div class="column" style="width: 14%; margin-left: -8%;">
-          &nbsp;
-          <br> ระดับคะแนน
-          <br> ระดับคะแนน
-          <br> ระดับคะแนน
-        </div>
-
-        <div class="column" style="width: 8%;">
-          &nbsp;
-          <br> อยู่ระหว่าง
-          <br> อยู่ระหว่าง
-          <br> อยู่ระหว่าง
-        </div>
-
-        <div class="column right aligned" style="width: 10%;">
-          &nbsp;
-          <br> 4 - 6
-          <br> 7 - 9
-          <br>
-          <span style="margin-right: 1%;">10 - 12</span>
-        </div>
-
-        <div class="column" style="width: 12%;">
-          &nbsp;
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-        </div>
-
-        <div class="column" style="width: 6%;">
-          &nbsp;
-          <br> 1
-          <br> 2
-          <br> 3
-        </div>
-
-        <div class="column" style="width: 12%;">
-          &nbsp;
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-          <br> กำหนดค่าเป็น
-        </div>
-
-        <div class="column" style="width: 5%;">
-          &nbsp;
-          <br> ต่ำ
-          <br> กลาง
-          <br> สูง
-        </div>
-      </div>
-      <br>
-      <div style="overflow-x: scroll;">
-        <table id="tableData" class="ui small celled table" style="width: 120%;">
+        <table id="dataTable" class="ui small celled table">
           <thead>
-            <tr style="text-align: center;">
-              <th rowspan="3">ลำดับ</th>
-              <th rowspan="3">หน่วยงาน</th>
-              <th colspan="12">ความรู้ความสามารถ</th>
-              <th rowspan="3">รวม</th>
-              <th colspan="2" rowspan="2">ความเสี่ยง</th>
+            <tr>
+              <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+              <th rowspan="2" style="text-align: center !important" class="four wide field ">หน่วยงาน</th>
+              <th rowspan="2" style="text-align: center !important">ค่าความเสี่ยง</th>
+              <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
+              <th rowspan="2" style="text-align: center !important"></th>
             </tr>
-            <tr style="text-align: center;">
-              <th colspan="3" style="border-left: 1px solid rgba(34,36,38,.1);">ปสก.</th>
-              <th colspan="3">โยกย้าย</th>
-              <th colspan="3">ทักษะความรู้ความเข้าใจ</th>
-              <th colspan="3">การสอบทาน</th>
-            </tr>
-            <tr style="text-align: center;">
-              <th style="border-left: 1px solid rgba(34,36,38,.1); width:8%;">&gt;3 ปี</th>
-              <th style="width:8%;">1-2ปี</th>
-              <th style="width:8%;">&lt;1ปี</th>
-              <th style="width:8%;">ไม่มีภายใน 2 ปี</th>
-              <th style="width:8%;">1-2 ปี</th>
-              <th style="width:8%;">6-12 ด</th>
-              <th style="width:8%;">5 ครั้งขึ้นไป</th>
-              <th style="width:8%;">3-4 ครั้ง</th>
-              <th style="width:8%;">1-2 ครั้ง</th>
-              <th style="width:8%;">ประจำทุกเดือน</th>
-              <th style="width:8%;">รายไตรมาส</th>
-              <th style="width:8%;">ไม่มี</th>
-              <th style="width:8%;">RL</th>
-              <th style="width:8%;">แปลค่า</th>
+            <tr>
+              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
+              <th style="text-align: center !important">แปลค่า</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>>3 ปี</td>
-              <td>1-2ปี</td>
-              <td>
-                1ปี</td>
-              <td>ไม่มีภายใน 2 ปี</td>
-              <td>1-2 ปี</td>
-              <td>6-12 ด</td>
-              <td>5 ครั้งขึ้นไป</td>
-              <td>3-4 ครั้ง</td>
-              <td>1-2 ครั้ง</td>
-              <td>ประจำทุกเดือน</td>
-              <td>รายไตรมาส</td>
-              <td>ไม่มี</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>สสพ.นครนายก</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>9</td>
-              <td class="bg-yellow">2</td>
-              <td class="bg-yellow">กลาง</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>สสพ.ตราด</td>
-              <td>0</td>
-              <td>2</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>8</td>
-              <td class="bg-yellow">2</td>
-              <td class="bg-yellow">กลาง</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>สสพ.ระยอง 2*</td>
-              <td>0</td>
-              <td>2</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>8</td>
-              <td class="bg-yellow">2</td>
-              <td class="bg-yellow">กลาง</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>สสพ. ปทุมธานี 2</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>0</td>
-              <td>2</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>8</td>
-              <td class="bg-yellow">2</td>
-              <td class="bg-yellow">กลาง</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>สสพ.พิษณุโลก</td>
-              <td>0</td>
-              <td>2</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>8</td>
-              <td class="bg-yellow">2</td>
-              <td class="bg-yellow">กลาง</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>สสพ.เพชรบูรณ์</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>0</td>
-              <td>2</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>8</td>
-              <td class="bg-yellow">2</td>
-              <td class="bg-yellow">กลาง</td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>สสพ.สกลนคร</td>
-              <td>0</td>
-              <td>2</td>
-              <td>0</td>
-              <td>0</td>
-              <td>2</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>7</td>
-              <td class="bg-yellow">2</td>
-              <td class="bg-yellow">กลาง</td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>สสพ.ฉะเชิงเทรา</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>2</td>
-              <td>0</td>
-              <td>0</td>
-              <td>2</td>
-              <td>0</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>5</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>สสพ.ชลบุรี 1*</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>5</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>สสพ.ชลบุรี 2*</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>5</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>11</td>
-              <td>สสพ.สมุทรปราการ 2*</td>
-              <td>0</td>
-              <td>0</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>0</td>
-              <td>1</td>
-              <td>0</td>
-              <td>5</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>12</td>
-              <td>สส.พท.ชัยภูมิ</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>2</td>
-              <td>0</td>
-              <td>0</td>
-              <td>2</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>5</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>13</td>
-              <td>สส.พท.นครราชสีมา</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>5</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-            <tr>
-              <td>14</td>
-              <td>สสพ.มหาสารคาม</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>1</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>3</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>5</td>
-              <td class="bg-green">1</td>
-              <td class="bg-green">ต่ำ</td>
-            </tr>
-          </tbody>
         </table>
-
-      </div>
-    </div>
-    <div id="modalInt0834" class="ui modal hidden transition">
-      <i class="close icon"></i>
-      <div class="header">
-        กำหนดเงื่อนไข RL และแปลงค่าประเมินคดีด้านจำนวนคดี
-      </div>
-
-      <div class="content">
-        <div class="ui form">
-
-
-          <table id="tableSetting" class="ui small celled table" style="width: 100%;">
-            <thead>
-              <tr class="center aligned">
-                <th>เงื่อนไขที่</th>
-                <th>เงื่อนไข</th>
-                <th>ค่าที่ 1</th>
-                <th>ถึง</th>
-                <th>ค่าที่ 2</th>
-                <th>ค่า RL</th>
-                <th>แปลงค่า</th>
-                <th>สี</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>
-                  <select id="selectCondition1" class="ui dropdown ai">
-                    <option value="1">Less Than</option>
-                    <option value="0">Between</option>
-                    <option value="2">More Than</option>
-                  </select>
-                </td>
-                <td>0</td>
-                <td></td>
-                <td></td>
-                <td>1</td>
-                <td>ต่ำ</td>
-                <td>
-                  <select id="selectColor1" class="ui dropdown ai">
-                    <option value="0">เขียว</option>
-                    <option value="1">เหลือง</option>
-                    <option value="2">แดง</option>
-                  </select>
-                </td>
-                <td>
-                  <a href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>
-                  <select id="selectCondition2" class="ui dropdown ai">
-                    <option value="0">Between</option>
-                    <option value="1">Less Than</option>
-                    <option value="2">More Than</option>
-                  </select>
-                </td>
-                <td>0</td>
-                <td>ถึง</td>
-                <td>100</td>
-                <td>2</td>
-                <td>กลาง</td>
-                <td>
-                  <select id="selectColor2" class="ui dropdown ai">
-                    <option value="0">เหลือง</option>
-                    <option value="1">เขียว</option>
-                    <option value="2">แดง</option>
-                  </select>
-                </td>
-                <td>
-                  <a href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>
-                  <select id="selectCondition3" class="ui dropdown ai">
-                    <option value="0">More Than</option>
-                    <option value="1">Between</option>
-                    <option value="2">Less Than</option>
-                  </select>
-                </td>
-                <td>100</td>
-                <td></td>
-                <td></td>
-                <td>3</td>
-                <td>สูง</td>
-                <td>
-                  <select id="selectColor3" class="ui dropdown ai">
-                    <option value="0">แดง</option>
-                    <option value="1">เหลือง</option>
-                    <option value="2">เขียว</option>
-                  </select>
-                </td>
-                <td>
-                  <a href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-        </div>
-      </div>
-
-      <div class="actions">
-        <div class="ui center aligned grid">
-          <div class="sixteen wide column">
-            <button class="ui mini primary button width-100">
-              <i class="add icon"></i>
-              เพิ่ม
-            </button>
-            <button class="ui mini primary button width-100">
+        <div class="inline fields "></div>
+        <div class="inline fields ">
+          <div class="sixteen wide field ">
+            <div class="six wide field "></div>
+            <button class="ui mini primary button" (click)="saveRiskAssRiskWsDtl()">
               <i class="save icon"></i>
               บันทึก
             </button>
-            <button class="ui mini button width-100" (click)="closePopupEdit()">
-              <i class="close icon"></i>
-              ปิด
+            <button class="ui mini primary button" (click)="modalConditionRL()">
+              กำหนดเงื่อนไข RL
+            </button>
+            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+              Export
+            </button>
+            <button class="ui mini primary button" (click)="cancelFlow()">
+              ยกเลิก
             </button>
           </div>
+
         </div>
       </div>
     </div>
+  </div>
+  <div class="sixteen wide column" *ngIf="getConditionShow()">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <condition [riskId]="id" [riskType]="'OTHER'" [page]="'int08-3-4'" (out)="closeConditionRL($event)"></condition>
+      </div>
+      <br/>
+    </div>
+  </div>
+
+</div>

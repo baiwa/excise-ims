@@ -31,14 +31,14 @@
             <input type="text" placeholder="ผู้ตรวจ" class="custom" name="userCheck" id="userCheck" [(ngModel)]="userCheck">
           </div>
         </div>
-        <table id="dataTable" class="ui small celled table">
+
+        <table id="dataTable" class="ui celled table ">
           <thead>
             <tr>
               <th rowspan="2" style="text-align: center !important">ลำดับ</th>
               <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
               <th rowspan="2" style="text-align: center !important">วันที่ออกตรวจ</th>
               <th rowspan="2" style="text-align: center !important">วันที่ปิดตรวจ</th>
-              <th rowspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
               <th rowspan="2" style="text-align: center !important">จำนวนปี</th>
               <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
             </tr>
@@ -49,6 +49,7 @@
             </tr>
           </thead>
         </table>
+
         <div class="inline fields"></div>
         <div class="inline fields ">
           <div class="sixteen wide field ">
@@ -79,7 +80,7 @@
 
     <div class="ui attached segment">
       <div class="ui form">
-        <condition [riskId]="id" [riskType]="'MAIN'" [page]="'int08-1-5'" (out)="closeConditionRL($event)"></condition>
+        <condition [riskId]="id" [riskType]="'MAIN'" [page]="'int08-3-3'" (out)="closeConditionRL($event)"></condition>
       </div>
       <br/>
 
