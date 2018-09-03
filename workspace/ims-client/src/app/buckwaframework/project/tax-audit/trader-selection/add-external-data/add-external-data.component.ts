@@ -157,7 +157,7 @@ export class AddExternalDataComponent implements OnInit {
       $("#exciseId").val(
         $(this)
           .children()
-          .toArray()[1].innerHTML
+          .toArray()[0].innerHTML
       );
       $(this).css("background-color", "rgb(197,217,241)");
     });
