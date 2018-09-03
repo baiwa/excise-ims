@@ -124,6 +124,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdList";
     $.post(URL, { exciseId: this.exciseId }, res => {
       this.obj = res[0];
+      this.firstDataList = this.obj;
     });
   };
 
