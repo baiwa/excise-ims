@@ -6,57 +6,48 @@
                     <h4>แบบสอบทานระบบการควบคุมภายใน</h4>
                 </div>
                 <div class="ui centered segment grid">
-                    <form class="ui twelve wide form column" (submit)="search($event)" ngNativeValidate>
+                    <form class="ui twelve wide form column" (ngSubmit)="onSubmit(f)" #f="ngForm">
                         <div class="inline fields">
-                            <div class="two wide field">
+                            <div class="three wide field">
                                 <label>สรรพสามิตภาค</label>
                             </div>
-                            <div class="six wide field">
+                            <div class="five wide field {{ checkValid('sector', f) ? 'error' : ''  }} ">
                                 <div class="ui input">
-                                    <select class="ui selection dropdown ai" name="quarter">
+                                    <select class="ui selection dropdown ai" name="sector" (change)="onSectorChange($event)" required ngModel>
                                         <option value="">เลือกภาค</option>
-                                        <option value="1">ภาคที่ 5</option>
-                                        <option value="2">ภาคที่ 6</option>
-                                        <option value="3">ภาคที่ 7</option>
-                                        <option value="4">ภาคที่ 8</option>
-                                        <option value="5">ภาคที่ 9</option>
+                                        <option value="{{sector.value1}}" *ngFor="let sector of sectors">{{sector.value1}}</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="two wide field">
+                            <div class="three wide field">
                                 <label>ผู้สอบทาน</label>
                             </div>
-                            <div class="six wide field">
+                            <div class="five wide field">
                                 <div class="ui input">
                                     <input type="text" name="checker" placeholder="ผู้สอบทาน">
                                 </div>
                             </div>
                         </div>
                         <div class="inline fields">
-                            <div class="two wide field">
+                            <div class="three wide field">
                                 <label>สรรพสามิตพื้นที่</label>
                             </div>
-                            <div class="six wide field">
+                            <div class="five wide field {{ checkValid('locate', f) ? 'error' : '' }} ">
                                 <div class="ui input">
-                                    <select class="ui selection dropdown ai" name="locate">
+                                    <select class="ui selection dropdown ai" name="locate" required ngModel>
                                         <option value="">เลือกพื้นที่</option>
-                                        <option value="1">พื้นที่เชียงใหม่</option>
-                                        <option value="2">พื้นที่กรุงเทพฯและปริมณฑล</option>
-                                        <option value="3">พื้นที่ชัยนาท</option>
-                                        <option value="4">พื้นที่ขอนแก่น</option>
-                                        <option value="5">พื้นที่สงขลา</option>
+                                        <option value="{{locate.subTypeDescription}}" *ngFor="let locate of locates">{{locate.subTypeDescription}}</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="two wide field">
+                            <div class="three wide field">
                                 <label>วันที่</label>
                             </div>
-                            <div class="six wide field">
+                            <div class="five wide field {{ checkValid('calendar_data', f) ? 'error' : '' }}">
                                 <div class="ui input">
                                     <div class="ui calendar" id="calendar">
-                                        <div class="ui input">
-                                            <input type="calendar" readonly="" placeholder="วัน/เดือน/ปี" id="calendar_data" name="calendar_data" [attr.required]="true"
-                                                autocomplete="off">
+                                        <div class="ui input {{ checkValid('calendar_data', f) ? 'error' : ''  }}">
+                                            <input type="calendar" readonly="" placeholder="ปี" id="calendar_data" name="calendar_data" autocomplete="off" required ngModel>
                                         </div>
                                     </div>
                                 </div>
@@ -102,13 +93,15 @@
                                     <td *ngIf="detail.detailId">{{detail.content}}</td>
                                     <td *ngIf="detail.detailId" class="text-center">
                                         <div class="ui checkbox">
-                                            <input type="radio" name="chk{{i+1}}{{j+1}}" [(ngModel)]="questionnaire[i].detail[j].point" value="yes" id="chk{{i+1}}{{j+1}}" required>
+                                            <input type="radio" name="chk{{i+1}}{{j+1}}" [(ngModel)]="questionnaire[i].detail[j].point" value="yes" id="chk{{i+1}}{{j+1}}"
+                                                required>
                                             <label></label>
                                         </div>
                                     </td>
                                     <td *ngIf="detail.detailId" class="text-center">
                                         <div class="ui checkbox">
-                                            <input type="radio" name="chk{{i+1}}{{j+1}}" [(ngModel)]="questionnaire[i].detail[j].point" value="no" id="chk{{i+1}}{{j+1}}" required>
+                                            <input type="radio" name="chk{{i+1}}{{j+1}}" [(ngModel)]="questionnaire[i].detail[j].point" value="no" id="chk{{i+1}}{{j+1}}"
+                                                required>
                                             <label></label>
                                         </div>
                                     </td>

@@ -7,39 +7,62 @@
     </div>
 
     <div class="ui attached segment">
-      <form class="ui form" (submit)="onSubmit($event)">
+      <form class="ui form" (ngSubmit)="onSubmit(f)" #f="ngForm">
         <div class="ui center aligned grid">
           <div class="column fourteen wide">
             <div class="inline fields">
-              <div class="two wide field"></div>
-              <div class="five wide field">
-                <label class="right aligned column">ชื่อ</label>
-                <input [(ngModel)]="qtnName" name="qtnName">
+                <div class="three wide field">
+                    <label>สรรพสามิตภาค</label>
+                </div>
+                <div class="five wide field {{ checkValid('sector', f) ? 'error' : ''  }} ">
+                    <div class="ui input">
+                        <select class="ui selection dropdown ai" name="sector" (change)="onSectorChange($event)" required ngModel>
+                            <option value="">เลือกภาค</option>
+                            <option value="{{sector.value1}}" *ngFor="let sector of sectors">{{sector.value1}}</option>
+                        </select>
+                    </div>
+                </div>
+              <div class="three wide field">
+                <label>สรรพสามิตพื้นที่</label>
               </div>
-              <div class="four wide field">
-                <label class="right aligned column">ปี</label>
-                <div class="ui calendar" style="width:100%" id="date">
-                  <div class="ui input left icon">
-                    <i class="calendar icon"></i>
-                    <input type="text" style="width:100%" name="qtnYear" autocomplete="off" [(ngModel)]="qtnYear" placeholder="ปี" required>
+              <div class="five wide field {{ checkValid('locate', f) ? 'error' : ''  }} ">
+                <div class="ui input">
+                  <select class="ui selection dropdown ai" name="locate" required ngModel>
+                    <option value="">เลือกพื้นที่</option>
+                    <option value="{{locate.subTypeDescription}}" *ngFor="let locate of locates">{{locate.subTypeDescription}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="three wide field">
+                <label>ปีงบประมาณ</label>
+              </div>
+              <div class="five wide field {{ checkValid('calendar_data', f) ? 'error' : ''  }} ">
+                <div class="ui input">
+                  <div class="ui calendar" id="calendar">
+                    <div class="ui input {{ checkValid('calendar_data', f) ? 'error' : ''  }} ">
+                      <input type="calendar" readonly="" placeholder="ปี" id="calendar_data" name="calendar_data"
+                        autocomplete="off" required ngModel>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="six wide field">
-                <button type="submit" (click)="typeOfSubmit = 'F'" class="ui mini primary button">
-                  <i class="search icon"></i>
-                  ค้นหา
-                </button>
-                <button type="submit" (click)="typeOfSubmit = 'S'" class="ui mini green button">
-                  <i class="add icon"></i>
-                  สร้าง
-                </button>
-                <button type="reset" class="ui mini red button">
-                  <i class="delete icon"></i>
-                  ล้างข้อมูล
-                </button>
-              </div>
             </div>
+          </div>
+          <div class="column fourteen wide center aligned">
+            <button type="submit" (click)="typeOfSubmit = 'F'" class="ui mini primary button">
+              <i class="search icon"></i>
+              ค้นหา
+            </button>
+            <button type="submit" (click)="typeOfSubmit = 'S'" class="ui mini green button">
+              <i class="add icon"></i>
+              สร้าง
+            </button>
+            <button type="reset" class="ui mini red button">
+              <i class="delete icon"></i>
+              ล้างข้อมูล
+            </button>
           </div>
         </div>
       </form>
@@ -48,13 +71,15 @@
     <div class="ui segment">
       <div class="ui grid">
         <div class="sixteen wide column">
-          <table id="datatable" style="width: 100%;" class="ui small collapsing celled table aligned hover">
+          <table id="datatable" style="width: 100%;" class="ui small collapsing celled table aligned hover nowrap">
             <thead>
-              <tr>
-                <th style="text-align: center !important; width: 60px">ลำดับ</th>
-                <th style="text-align: center !important">ชื่อ</th>
-                <th style="text-align: center !important">ปี</th>
-                <th style="text-align: center !important; width: 40px">#</th>
+              <tr style="text-align: center !important;">
+                <th>ลำดับ</th>
+                <th>สรรพสามิตภาค</th>
+                <th>สรรพสามิตพื้นที่</th>
+                <th>ผู้สร้างแบบสอบทาน</th>
+                <th>ปีงบประมาณ</th>
+                <th style="width: 40px">#</th>
               </tr>
             </thead>
             <tbody></tbody>

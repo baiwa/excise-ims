@@ -1,7 +1,5 @@
 package th.co.baiwa.excise.ia.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +19,12 @@ import th.co.baiwa.excise.domain.CommonManageReq;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.ia.Int023MappingVO;
-import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireMainDao;
-import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireMinorDao;
 import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportDetail;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportMain;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
-import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMain;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMinor;
-import th.co.baiwa.excise.ia.persistence.repository.QuestionnaireMainDetailRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int022Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int023FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int023Vo;

@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AjaxService, IaService } from '../../../../common/services';
 import { TextDateTH, formatter } from '../../../../common/helper';
 import { Router } from '@angular/router';
-import { ManageReq, Message } from '../../../../common/models';
+import { NgForm } from '@angular/forms';
+import { toDateLocale } from '../../../../common/helper/datepicker';
 
 declare var $: any;
 
 const URL = {
   SAVE_MASTER: "ia/int02/save_qtn_master",
-  DATATABLE: `${AjaxService.CONTEXT_PATH}ia/int02/qtn_master/datatable`
+  DATATABLE: `${AjaxService.CONTEXT_PATH}ia/int02/qtn_master/datatable`,
+  LOV_SECTOR: `combobox/controller/getDropByTypeAndParentId`
 }
 
 @Component({
@@ -18,7 +20,10 @@ const URL = {
 })
 export class Int021Component implements OnInit {
 
+  @ViewChild('f') form: NgForm;
   datatable: any;
+  sectors: any[] = [];
+  locates: any[] = [];
   qtnName: string;
   qtnYear: string;
   typeOfSubmit: string;
@@ -28,18 +33,26 @@ export class Int021Component implements OnInit {
     this.qtnName = null;
     this.qtnYear = null;
   }
-  
-
 
   ngOnInit() {
 
+    this.ajax.post(URL.LOV_SECTOR, { type: "SECTOR_VALUE"}, res => { // SECTOR
+      this.sectors = res.json();
+    });
+
+    $(".ui.dropdown.ai").dropdown().css("width", "100%");
+
     this.initDatatable();
 
-    $("#date").calendar({
+    $("#calendar").calendar({
       maxDate: new Date(),
       type: "year",
       text: TextDateTH,
-      formatter: formatter("year")
+      formatter: formatter("year"),
+      onChange: (date, text, mode) => {
+        let _year = toDateLocale(date)[0].split("/")[2];
+        this.form.value.calendar_data = _year;
+      }
     });
 
     // Edited or Added ???
@@ -59,6 +72,7 @@ export class Int021Component implements OnInit {
   initDatatable(): void {
     this.datatable = $("#datatable").DataTable({
       lengthChange: false,
+      scrollX: true,
       searching: false,
       select: true,
       ordering: false,
@@ -78,7 +92,15 @@ export class Int021Component implements OnInit {
           className: "center"
         },
         {
-          data: "qtnName",
+          data: "qtnSector",
+          className: "center"
+        },
+        {
+          data: "qtnLocate",
+          className: "center"
+        },
+        {
+          data: "createdBy",
           className: "center"
         },
         {
@@ -102,23 +124,42 @@ export class Int021Component implements OnInit {
   }
 
   reDatatable = () => {
-     
+
     this.datatable.destroy();
     this.initDatatable();
   }
 
-  onSubmit = e => {
-    e.preventDefault();
-    const { qtnName, qtnYear } = e.target;
-    const data = {
-      qtnName: qtnName.value,
-      qtnYear: qtnYear.value
-    };
-    if (this.typeOfSubmit === 'S') {
-      this.iaService.setData(data);
-      this.router.navigate(['/int02/2']);
+  onSubmit = (form: NgForm) => {
+    const { calendar_data, sector, locate } = form.value;
+    if (calendar_data != "" && sector != "" && locate != "") {
+      const data = {
+        qtnName: `${sector} ${locate}`,
+        qtnSector: sector,
+        qtnLocate: locate,
+        qtnYear: calendar_data
+      };
+      if (this.typeOfSubmit === 'S') {
+        this.iaService.setData(data);
+        this.router.navigate(['/int02/2']);
+      } else {
+        console.log('Searching... !?');
+      }
     } else {
-      console.log('Searching... !?');
+      console.log(form);
+    }
+  }
+
+  checkValid(name, f: NgForm) {
+    return f.value[name] == '' && !f.valid && f.submitted;
+  }
+
+  onSectorChange(e) {
+    e.preventDefault();
+    let id = this.sectors.find(obj => obj.value1 == e.target.value).lovId;
+    if (id != "") {
+      this.ajax.post(URL.LOV_SECTOR, { type: "SECTOR_VALUE", lovIdMaster: id }, res => {
+        this.locates = res.json();
+      });
     }
   }
 
