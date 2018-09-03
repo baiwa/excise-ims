@@ -124,7 +124,6 @@ export class Ope041Component implements OnInit, AfterViewInit {
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdList";
     $.post(URL, { exciseId: this.exciseId }, res => {
       this.obj = res[0];
-      this.firstDataList = this.obj;
     });
   };
 
@@ -274,6 +273,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
     //set for [(NgModel)]
     this.obj.startDate = this.startDate;
     this.obj.endDate = this.endDate;
+    this.firstDataList = this.obj;
 
     //change formatter first date input value
     const date_str1 = this.startDate.split(" ");
