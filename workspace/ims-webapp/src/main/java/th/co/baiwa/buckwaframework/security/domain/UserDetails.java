@@ -14,6 +14,8 @@ public class UserDetails extends User implements UserBean {
 	
 	private String[] exciseBaseControl ;
 	
+	private String officeCode;
+	
 	// Constructor
 	public UserDetails(String username, String password, boolean enabled,boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
@@ -43,6 +45,12 @@ public class UserDetails extends User implements UserBean {
 
 	public void setExciseBaseControl(String[] exciseBaseControl) {
 		this.exciseBaseControl = exciseBaseControl;
+	}
+
+	@Override
+	public String officeCode() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
