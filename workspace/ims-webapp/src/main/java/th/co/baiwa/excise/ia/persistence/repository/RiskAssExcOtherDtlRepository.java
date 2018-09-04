@@ -13,6 +13,6 @@ public interface RiskAssExcOtherDtlRepository extends CommonJpaCrudRepository<Ri
 	
 	
 	@Query("select r from RiskAssExcOtherDtl r where r.isDeleted = '" + FLAG.N_FLAG + "' and r.riskHrdId = ?1")
-	public List<RiskAssOtherDtl> findByRiskHrdId(Long riskHrdId);
+	public List<RiskAssExcOtherDtl> findByRiskHrdId(Long riskHrdId);
 	
 }

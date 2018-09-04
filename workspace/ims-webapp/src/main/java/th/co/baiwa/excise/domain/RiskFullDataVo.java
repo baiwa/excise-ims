@@ -8,6 +8,9 @@ public class RiskFullDataVo {
 	private String departmentName;
 	private List<String> rl;
 	private String sumRiskCost;
+	private String rlAll;
+	private String color;
+	private String valueTranslation;
 	
 	public String getProjectBase() {
 		return projectBase;
@@ -40,6 +43,24 @@ public class RiskFullDataVo {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getRlAll() {
+		return rlAll;
+	}
+	public void setRlAll(String rlAll) {
+		this.rlAll = rlAll;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
+	public String getValueTranslation() {
+		return valueTranslation;
+	}
+	public void setValueTranslation(String valueTranslation) {
+		this.valueTranslation = valueTranslation;
 	}
 	
 	

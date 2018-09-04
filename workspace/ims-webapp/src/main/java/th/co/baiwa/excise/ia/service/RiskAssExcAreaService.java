@@ -14,14 +14,12 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
-import th.co.baiwa.excise.domain.Int0801Vo;
+import th.co.baiwa.excise.domain.Int0803Vo;
 import th.co.baiwa.excise.domain.RiskFullDataVo;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
-import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOtherDtl;
-import th.co.baiwa.excise.ia.persistence.repository.RiskAssOtherDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcAreaDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcAreaHdrRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcOtherDtlRepository;
@@ -49,7 +47,7 @@ public class RiskAssExcAreaService {
 	private RiskAssExcAreaDtlRepository riskAssExcAreaDtlRepository;
 
 	@Autowired
-	private RiskAssOtherDtlRepository riskAssOtherDtlRepository;
+	private RiskAssExcOtherDtlRepository reAssExcOtherDtlRepository;
 
 	@Autowired
 	private ConditionService conditionService;
@@ -184,8 +182,8 @@ public class RiskAssExcAreaService {
 		return riskAssExcAreaHdrRepository.findByCriteria(riskAssRiskWsHdr);
 	}
 
-	public List<RiskAssOtherDtl> findByRiskHrdId(Long riskHrdId) {
-		return riskAssOtherDtlRepository.findByRiskHrdId(riskHrdId);
+	public List<RiskAssExcOtherDtl> findByRiskHrdId(Long riskHrdId) {
+		return reAssExcOtherDtlRepository.findByRiskHrdId(riskHrdId);
 	}
 	
 	
@@ -219,9 +217,7 @@ public class RiskAssExcAreaService {
 				try {
 					databaseData = riskAssExcOtherDtlRepository.findOne(riskAssOtherDtl.getRiskOtherDtlId());
 					if (databaseData != null && databaseData.getRiskOtherDtlId() != null) {
-						databaseData.setExciseArea(riskAssOtherDtl.getExciseArea());
-						databaseData.setExciseBranch(riskAssOtherDtl.getExciseBranch());
-						databaseData.setExciseSetor(riskAssOtherDtl.getExciseSetor());
+						databaseData.setDepartmentName(riskAssOtherDtl.getDepartmentName());
 						databaseData.setRiskCost(riskAssOtherDtl.getRiskCost());
 						databaseData.setRl(riskAssOtherDtl.getRl());
 						databaseData.setValueTranslation(riskAssOtherDtl.getValueTranslation());
@@ -241,23 +237,24 @@ public class RiskAssExcAreaService {
 
 	}
 
-	public List<RiskFullDataVo> searchFullRiskByBudgetYear(String budgetYear , List<String> riskHdrNameList) {
+	public List<RiskFullDataVo> searchFullRiskByBudgetYear(String budgetYear , List<String> depNameList) {
+		List<Condition> conditionList = conditionService.findConditionByParentId(new Long(budgetYear), "ALL", "int08-3-5");
 		List<RiskFullDataVo> riskFullDataVoList= new ArrayList<RiskFullDataVo>();
 		RiskFullDataVo riskFullDataVo = new RiskFullDataVo();
-		List<Int0801Vo> projectDepName = riskAssExcAreaHdrRepository.findProjectBaseByBudgetYear(budgetYear);
+		List<Int0803Vo> projectDepName = riskAssExcAreaHdrRepository.findProjectBaseByBudgetYear(budgetYear);
 		int index = 1;
-		for (Int0801Vo projectBase : projectDepName) {
+		for (Int0803Vo projectBase : projectDepName) {
 			riskFullDataVo = new RiskFullDataVo();
 			int sumRl = 0;
 			riskFullDataVo.setId(index+"");
 			riskFullDataVo.setProjectBase(projectBase.getProjectBase());
 			riskFullDataVo.setDepartmentName(projectBase.getDepartmentName());
-			List<Int0801Vo> intList = riskAssExcAreaHdrRepository.findData(budgetYear, projectBase.getProjectBase() , projectBase.getDepartmentName());
+			List<Int0803Vo> intList = riskAssExcAreaHdrRepository.findData(budgetYear,  projectBase.getDepartmentName());
 			List<String> rl = new ArrayList<String>();
 			String rlDate = "";
-			for (String riskHdrName : riskHdrNameList) {
+			for (String riskHdrName : depNameList) {
 				rlDate = "";
-				for (Int0801Vo value : intList) {
+				for (Int0803Vo value : intList) {
 					if(value.getProjectBase().equals(riskHdrName)) {
 						sumRl += Integer.parseInt(value.getRl());
 						rlDate = value.getRl();
@@ -272,6 +269,22 @@ public class RiskAssExcAreaService {
 			}
 			riskFullDataVo.setRl(rl);
 			riskFullDataVo.setSumRiskCost(sumRl+"");
+			for (Condition condition : conditionList) {
+				long value = sumRl;
+				if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
+					riskFullDataVo.setRlAll(condition.getValueRl());
+					riskFullDataVo.setColor(condition.getColor());
+					riskFullDataVo.setValueTranslation(condition.getConvertValue());
+				} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+					riskFullDataVo.setRlAll(condition.getValueRl());
+					riskFullDataVo.setColor(condition.getColor());
+					riskFullDataVo.setValueTranslation(condition.getConvertValue());
+				} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+					riskFullDataVo.setRlAll(condition.getValueRl());
+					riskFullDataVo.setColor(condition.getColor());
+					riskFullDataVo.setValueTranslation(condition.getConvertValue());
+				}
+			}
 			riskFullDataVoList.add(riskFullDataVo);
 			index++;
 		}

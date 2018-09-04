@@ -26,7 +26,7 @@ import th.co.baiwa.excise.domain.Int0803Vo;
 import th.co.baiwa.excise.domain.RiskFullDataVo;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaHdr;
-import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOtherDtl;
 import th.co.baiwa.excise.ia.service.RiskAssExcAreaService;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
@@ -175,30 +175,28 @@ public class Int083Controller {
 	
 	@PostMapping("/findRiskOtherDtlByRiskHrdId")
 	@ResponseBody
-	public List<RiskAssOtherDtl> findRiskOtherDtlByRiskHrdId(@RequestBody RiskAssOtherDtl riskAssOtherDtl) {
-		logger.info("findRiskOtherDtlByRiskHrdId" + riskAssOtherDtl.getRiskHrdId());
-		return riskAssExcAreaService.findByRiskHrdId(riskAssOtherDtl.getRiskHrdId());
+	public List<RiskAssExcOtherDtl> findRiskOtherDtlByRiskHrdId(@RequestBody RiskAssExcOtherDtl riskAssExcOtherDtl) {
+		logger.info("findRiskOtherDtlByRiskHrdId" + riskAssExcOtherDtl.getRiskHrdId());
+		return riskAssExcAreaService.findByRiskHrdId(riskAssExcOtherDtl.getRiskHrdId());
 	}
 	
-	@PostMapping("excelINT081")
+	@PostMapping("excelINT083")
 	@ResponseBody
-	public List<RiskAssOtherDtl> excelINT081(@ModelAttribute Ope041Vo mainForm) throws Exception {
-		List<RiskAssOtherDtl> excelData = new ArrayList<RiskAssOtherDtl>();
+	public List<RiskAssExcOtherDtl> excelINT081(@ModelAttribute Ope041Vo mainForm) throws Exception {
+		List<RiskAssExcOtherDtl> excelData = new ArrayList<RiskAssExcOtherDtl>();
 		if (mainForm.getFileExel() != null) {
-			RiskAssOtherDtl row = new RiskAssOtherDtl();
+			RiskAssExcOtherDtl row = new RiskAssExcOtherDtl();
 			List<String[]> ListfileEx = uploadFileExciseService.readFileExcel(mainForm);
 			for (int j = 1; j < ListfileEx.size(); j++) {
 				String[] stringArr = ListfileEx.get(j);
 
-				row = new RiskAssOtherDtl();
+				row = new RiskAssExcOtherDtl();
 				for (int i = 0; i < stringArr.length; i++) {
 					if (i == 0) {
 						row.setRiskOtherDtlId(new Long(i + 1));
 					} else if (i == 1) {
-						row.setProjectBase(stringArr[i]);
-					} else if (i == 2) {
 						row.setDepartmentName(stringArr[i]);
-					} else if (i == 3) {
+					} else if (i == 2) {
 						row.setRiskCost(new BigDecimal(stringArr[i]));
 					}
 				}

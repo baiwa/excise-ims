@@ -17,12 +17,10 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.excise.ws.CurrentDateService;
 
 @Service
 public class DateConstant {
@@ -39,15 +37,7 @@ public class DateConstant {
 	public final static String DD_MM_YYYY_HH_mm = "dd/MM/yyyy HH:mm";
 	public final static String YYYY = "yyyy";
 	
-	@Autowired
-	private static CurrentDateService currentDateService;
 	
-	
-	public static Date getExcideDate() {
-		Date exciseDate = currentDateService.exciseSystemDate();
-		
-		return exciseDate;
-	}
 	
 	public static List<String> startBackDate(Date date, int backDate) {
 		List<String> monthList = new ArrayList<>();
