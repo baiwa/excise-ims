@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +18,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 
+import baiwa.co.th.ws.LoginLdap;
+import baiwa.co.th.ws.Response;
+import th.co.baiwa.exampleproject.ws.consumer.currentdate.operation.CurrentDate;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
@@ -45,7 +49,16 @@ public class WebServiceExciseService {
 	private String endpointIncFri8020;
 	
 	
+	@Autowired
+	private LoginLdap loginLdapProxy;
+	
 
+	public Response webServiceLdap(String user , String pass) {
+		Response response = loginLdapProxy.login(user, pass);
+		System.out.println(response.toString());
+		return response;
+	}
+	
 	private String restfulService(String endPoint, Object object ) {
 
 		RequestServiceExcise requestRestful = new RequestServiceExcise();
