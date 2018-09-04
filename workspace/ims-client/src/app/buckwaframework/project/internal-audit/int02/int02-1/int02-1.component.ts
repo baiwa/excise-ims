@@ -23,7 +23,7 @@ export class Int021Component implements OnInit {
   @ViewChild('f') form: NgForm;
   datatable: any;
   sectors: any[] = [];
-  locates: any[] = [];
+  areas: any[] = [];
   qtnName: string;
   qtnYear: string;
   typeOfSubmit: string;
@@ -96,7 +96,7 @@ export class Int021Component implements OnInit {
           className: "center"
         },
         {
-          data: "qtnLocate",
+          data: "qtnArea",
           className: "center"
         },
         {
@@ -130,12 +130,12 @@ export class Int021Component implements OnInit {
   }
 
   onSubmit = (form: NgForm) => {
-    const { calendar_data, sector, locate } = form.value;
-    if (calendar_data != "" && sector != "" && locate != "") {
+    const { calendar_data, sector, area } = form.value;
+    if (calendar_data != "" && sector != "" && area != "") {
       const data = {
-        qtnName: `${sector} ${locate}`,
+        qtnName: `${sector} ${area}`,
         qtnSector: sector,
-        qtnLocate: locate,
+        qtnArea: area,
         qtnYear: calendar_data
       };
       if (this.typeOfSubmit === 'S') {
@@ -158,7 +158,7 @@ export class Int021Component implements OnInit {
     let id = this.sectors.find(obj => obj.value1 == e.target.value).lovId;
     if (id != "") {
       this.ajax.post(URL.LOV_SECTOR, { type: "SECTOR_VALUE", lovIdMaster: id }, res => {
-        this.locates = res.json();
+        this.areas = res.json();
       });
     }
   }

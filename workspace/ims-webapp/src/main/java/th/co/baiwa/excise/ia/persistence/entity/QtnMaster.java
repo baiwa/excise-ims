@@ -35,8 +35,8 @@ public class QtnMaster extends BaseEntity {
 	@Column(name = "QTN_SECTOR")
 	private String qtnSector;
 	
-	@Column(name = "QTN_LOCATE")
-	private String qtnLocate;
+	@Column(name = "QTN_AREA")
+	private String qtnArea;
 	
 	public String getQtnSector() {
 		return qtnSector;
@@ -44,11 +44,11 @@ public class QtnMaster extends BaseEntity {
 	public void setQtnSector(String qtnSector) {
 		this.qtnSector = qtnSector;
 	}
-	public String getQtnLocate() {
-		return qtnLocate;
+	public String getQtnArea() {
+		return qtnArea;
 	}
-	public void setQtnLocate(String qtnLocate) {
-		this.qtnLocate = qtnLocate;
+	public void setQtnArea(String qtnArea) {
+		this.qtnArea = qtnArea;
 	}
 	public String getQtnFinished() {
 		return qtnFinished;

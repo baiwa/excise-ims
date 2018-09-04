@@ -2,14 +2,14 @@ import { Component, Input, OnDestroy } from "@angular/core";
 
 declare var $: any;
 @Component({
-    selector: 'Modal',
+    selector: 'ui-modal',
     templateUrl: './modal.component.html',
     styleUrls: ['./modal.component.css']
 })
 export class ModalComponent implements OnDestroy{
 
-    @Input() success: boolean = false; // change button in modal type: alert
-    @Input() type: string = "alert"; // custom confirm alert
+    @Input() success: boolean; // change button in modal type: alert
+    @Input() type: string; // custom confirm alert
     @Input() size: string; // mini tiny small large
     @Input() title: string; // title of header
     @Input() id: string; // id of modal

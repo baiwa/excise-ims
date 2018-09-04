@@ -307,10 +307,11 @@ export class Int023Component implements OnInit {
       for (let i = 0; i < this.minorDetail.length; i++) {
         detail = new Int023FormVo();
         detail.qtnReportDtlId = `DTL_${this.getRndInteger(10000, 99999)}`;
-        detail.qtnMainDetail = this.minorDetail[i];
+        detail.qtnMainDetail = $(`#minorDetail${i}`).val();
         detail.qtnReportManId = mainId;
         detail.qtnFor = "D";
         detail.status = "NEW";
+        $(`#minorDetail${i}`).val("");
         this.table.push(detail);
         if (i == this.minorDetail.length - 1) {
           this.table.forEach(obj => {

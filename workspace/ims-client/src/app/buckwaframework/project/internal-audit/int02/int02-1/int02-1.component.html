@@ -25,11 +25,11 @@
               <div class="three wide field">
                 <label>สรรพสามิตพื้นที่</label>
               </div>
-              <div class="five wide field {{ checkValid('locate', f) ? 'error' : ''  }} ">
+              <div class="five wide field {{ checkValid('area', f) ? 'error' : ''  }} ">
                 <div class="ui input">
-                  <select class="ui selection dropdown ai" name="locate" required ngModel>
+                  <select class="ui selection dropdown ai" name="area" required ngModel>
                     <option value="">เลือกพื้นที่</option>
-                    <option value="{{locate.subTypeDescription}}" *ngFor="let locate of locates">{{locate.subTypeDescription}}</option>
+                    <option value="{{area.subTypeDescription}}" *ngFor="let area of areas">{{area.subTypeDescription}}</option>
                   </select>
                 </div>
               </div>
