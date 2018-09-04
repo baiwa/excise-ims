@@ -59,13 +59,20 @@
               <label>สรรพสามิตภาค</label>
             </div>
             <div class="four wide field ">
-              <input type="text" placeholder="สรรพสามิตภาค" class="custom" name="exciseSetor" id="exciseSetor" [(ngModel)]="exciseSetor">
+              <!-- <input type="text" placeholder="สรรพสามิตภาค" class="custom" name="exciseSetor" id="exciseSetor" [(ngModel)]="exciseSetor"> -->
+              <select class="ui search dropdown" id="exciseSetor" [(ngModel)]="exciseSetor" (change)="sectorChange()">
+                <option *ngFor="let sector of exciseSetorList; index as i;" value="{{sector.lovId}}">{{sector.value3}}</option>
+
+              </select>
             </div>
             <div class="two wide field ">
               <label>สรรพสามิตพื้นที่</label>
             </div>
             <div class="four wide field ">
-              <input type="text" placeholder="สรรพสามิตพื้นที่" class="custom" name="exciseArea" id="exciseArea" [(ngModel)]="exciseArea">
+              <!-- <input type="text" placeholder="สรรพสามิตพื้นที่" class="custom" name="exciseArea" id="exciseArea" [(ngModel)]="exciseArea"> -->
+              <select class="ui search dropdown" id="exciseArea" [(ngModel)]="exciseArea" (change)="areaChange()">
+                <option *ngFor="let area of exciseAreaList; index as i;" value="{{area.lovId}}">{{area.subTypeDescription}}</option>
+              </select>
             </div>
           </div>
 
@@ -75,7 +82,11 @@
               <label>สรรพสามิตสาขา</label>
             </div>
             <div class="four wide field ">
-              <input type="text" placeholder="สรรพสามิตสาขา" class="custom" name="exciseBranch" id="exciseBranch" [(ngModel)]="exciseBranch">
+              <!-- <input type="text" placeholder="สรรพสามิตสาขา" class="custom" name="exciseBranch" id="exciseBranch" [(ngModel)]="exciseBranch"> -->
+              <select class="ui search dropdown" id="exciseBranch" [(ngModel)]="exciseBranch" (change)="branchChange()">
+                <option *ngFor="let branch of exciseBranchList; index as i;" value="{{branch.lovId}}">{{branch.subTypeDescription}}</option>
+
+              </select>
             </div>
             <div class="two wide field ">
               <label>ค่าความเสี่ยง</label>

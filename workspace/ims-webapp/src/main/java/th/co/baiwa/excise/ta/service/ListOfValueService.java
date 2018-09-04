@@ -14,6 +14,7 @@ public class ListOfValueService {
 	
 	@Autowired
 	private LovRepository lovRepository;
+	
 	public List<Lov> queryLovByCriteria(Lov lov, String oderby){
 		return lovRepository.queryLovByCriteria(lov, oderby);
 	}

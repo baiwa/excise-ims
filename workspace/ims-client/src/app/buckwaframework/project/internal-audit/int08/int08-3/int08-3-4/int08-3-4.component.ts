@@ -30,8 +30,10 @@ export class Int0834Component implements OnInit {
   isConditionShow: any;
 
   fileExel: File[];
-
-
+  exciseSetorList: any[] = [];
+  exciseAreaList: any[] = [];
+  exciseBranchList: any[] = [];
+  departmentName: any;
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
@@ -39,17 +41,20 @@ export class Int0834Component implements OnInit {
   ) {
     this.fileExel = new Array<File>(); // initial file array
   }
-  uu
+
   ngOnInit() {
     //$(".ui.dropdown").dropdown();
-    $('.menu .item').tab()
+    $('.menu .item').tab();
+    //console.log('ngOnInit');
     this.riskHrdData = new RiskHrdData();
     this.id = this.route.snapshot.queryParams["id"];
     this.findRiskById();
-
     this.isConditionShow = false;
-    // $("#ConditionRL").modal("show");
-    //$("#ConditionRL").modal("hide");
+    let url = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(url, { type: 'SECTOR_VALUE' }, res => {
+      this.exciseSetorList = res.json();
+      console.log("getDropByTypeAndParentId", this.exciseSetorList);
+    });
 
   }
 
@@ -69,7 +74,7 @@ export class Int0834Component implements OnInit {
     this.ajax.post(url, { riskHrdId: this.id }, res => {
 
       this.riskAssRiskWsHdr = res.json();
-      console.log(this.riskAssRiskWsHdr);
+      //console.log(this.riskAssRiskWsHdr);
       this.riskHrdPaperName = this.riskAssRiskWsHdr.riskHrdPaperName;
       this.budgetYear = this.riskAssRiskWsHdr.budgetYear;
       this.userCheck = this.riskAssRiskWsHdr.userCheck;
@@ -86,17 +91,18 @@ export class Int0834Component implements OnInit {
           var riskData = new RiskData();
           riskData.riskOtherDtlId = element.riskOtherDtlId;
           riskData.riskHrdId = element.riskHrdId;
-          riskData.exciseArea = element.exciseArea;
-          riskData.exciseBranch = element.exciseBranch;
-          riskData.exciseSetor = element.exciseSetor;
+          riskData.departmentName = element.departmentName;
+
           riskData.riskCost = element.riskCost;
+          riskData.rl = element.rl;
+          riskData.valueTranslation = element.valueTranslation;
           riskData.isDeleted = 'N';
           this.riskDataList.push(riskData);
 
         }
         this.initDatatable();
       }, errRes => {
-        console.log("66666", errRes);
+        //console.log("error", errRes);
       });
     });
   }
@@ -113,11 +119,11 @@ export class Int0834Component implements OnInit {
       url,
       formBody,
       res => {
-        console.log(res.json());
+        //console.log(res.json());
 
         res.json().forEach(element => {
           element.isDeleted = 'N';
-
+          element.riskOtherDtlId = null;
           element.riskHrdId = this.id;
           this.riskDataList.push(element);
 
@@ -137,7 +143,7 @@ export class Int0834Component implements OnInit {
     this.riskDataList.forEach(element => {
       if (element.isDeleted == 'N') {
         this.dataTableList.push(element);
-        console.log(element);
+        //console.log(element);
       }
     });
 
@@ -157,7 +163,7 @@ export class Int0834Component implements OnInit {
           },
           className: "center"
         },
-        { data: "หน่วยงาน" },
+        { data: "departmentName" },
         { data: "riskCost", className: "right" },
         { data: "rl", className: "center" },
         { data: "valueTranslation", className: "center" },
@@ -171,12 +177,12 @@ export class Int0834Component implements OnInit {
       rowCallback: (row, data, index) => {
 
         $("td > .del", row).bind("click", () => {
-          console.log(index);
+          //console.log(index);
           if (this.dataTableList[index].riskOtherDtlId != null && this.dataTableList[index].riskOtherDtlId != undefined && this.dataTableList[index].riskOtherDtlId != '') {
             for (let i = 0; i < this.riskDataList.length; i++) {
               const element = this.riskDataList[i];
               if (element.riskOtherDtlId != null && element.riskOtherDtlId != undefined && element.riskOtherDtlId != '') {
-                if (element.riskOtherDtlId == this.dataTableList[index].riskOtherDtlId && element.exciseArea == this.dataTableList[index].exciseArea && element.exciseBranch == this.dataTableList[index].exciseBranch && element.exciseSetor == this.dataTableList[index].exciseSetor) {
+                if (element.riskOtherDtlId == this.dataTableList[index].riskOtherDtlId && element.departmentName == this.dataTableList[index].departmentName) {
                   this.riskDataList[i].isDeleted = 'Y';
                 }
 
@@ -185,7 +191,7 @@ export class Int0834Component implements OnInit {
           } else {
             for (let i = 0; i < this.riskDataList.length; i++) {
               const element = this.riskDataList[i];
-              if (element.exciseArea == this.dataTableList[index].exciseArea && element.exciseBranch == this.dataTableList[index].exciseBranch && element.exciseSetor == this.dataTableList[index].exciseSetor) {
+              if (element.departmentName == this.dataTableList[index].departmentName) {
                 this.riskDataList.splice(i, 1);
               }
             }
@@ -199,32 +205,49 @@ export class Int0834Component implements OnInit {
 
   addObjRiskDtl() {
     var msgMessage = '';
-    if (this.exciseSetor == null || this.exciseSetor == undefined || this.exciseSetor == '') {
-      this.messageBarService.errorModal("กรุณากรอก \"สรรพสามิตภาค\" ");
+    // if (this.exciseSetor == null || this.exciseSetor == undefined || this.exciseSetor == '') {
+    //   this.messageBarService.errorModal("กรุณากรอก \"สรรพสามิตภาค\" ");
+    //   return;
+    // }
+    // if (this.exciseArea == null || this.exciseArea == undefined || this.exciseArea == '') {
+    //   this.messageBarService.errorModal("กรุณากรอก \" สรรพสามิตพื้นที่\" ");
+    //   return;
+    // }
+    // if (this.exciseBranch == null || this.exciseBranch == undefined || this.exciseBranch == '') {
+    //   this.messageBarService.errorModal("กรุณากรอก \"สรรพสามิตสาขา\" ");
+    //   return;
+    // }
+
+    if (this.departmentName == null || this.departmentName == undefined || this.departmentName == '') {
+      this.messageBarService.errorModal("กรุณากรอก \"ส่วนงานที่ต้องการประเมินความเสียง\" ");
       return;
     }
-    if (this.exciseArea == null || this.exciseArea == undefined || this.exciseArea == '') {
-      this.messageBarService.errorModal("กรุณากรอก \" สรรพสามิตพื้นที่\" ");
-      return;
-    }
-    if (this.exciseBranch == null || this.exciseBranch == undefined || this.exciseBranch == '') {
-      this.messageBarService.errorModal("กรุณากรอก \"สรรพสามิตสาขา\" ");
-      return;
-    }
+
+
     if (this.riskCost == null || this.riskCost == undefined || this.riskCost == '') {
       this.messageBarService.errorModal("กรุณากรอก \"ค่าความเสี่ยง\" ");
       return;
     }
+
+
+
+    // if (this.exciseBranch == null || this.exciseBranch == undefined || this.exciseBranch == '') {
+    //   departmentName = 'สพพ. ' + this.exciseBranch;
+    // } else if (this.exciseArea == null || this.exciseArea == undefined || this.exciseArea == '') {
+    //   departmentName = 'สพพ. ' + this.exciseArea;
+    // } else if (this.exciseSetor == null || this.exciseSetor == undefined || this.exciseSetor == '') {
+    //   departmentName = 'สพพ. ' + this.exciseSetor;
+    // }
+
     let riskData = new RiskData();
-    riskData.exciseArea = this.exciseArea;
-    riskData.exciseBranch = this.exciseBranch;
-    riskData.exciseSetor = this.exciseSetor;
+    riskData.departmentName = 'สพพ. ' + this.departmentName;
+
     riskData.riskCost = this.riskCost;
     riskData.isDeleted = 'N';
     riskData.riskHrdId = this.riskAssRiskWsHdr.riskHrdId;
 
     this.riskDataList.push(riskData);
-    console.log("riskDataList", this.riskDataList);
+    //console.log("riskDataList", this.riskDataList);
     this.initDatatable();
     this.exciseArea = '';
     this.exciseBranch = '';
@@ -233,7 +256,7 @@ export class Int0834Component implements OnInit {
   }
 
   saveRiskAssRiskWsDtl(): void {
-    //console.log("saveRiskAssRiskWsDtl", this.riskHrdPaperName);
+    ////console.log("saveRiskAssRiskWsDtl", this.riskHrdPaperName);
     var msgMessage = "";
     var countProject = 0;
     this.riskDataList.forEach(element => {
@@ -248,7 +271,7 @@ export class Int0834Component implements OnInit {
     this.riskAssRiskWsHdr.riskHrdPaperName = this.riskHrdPaperName;
     this.riskAssRiskWsHdr.userCheck = this.userCheck;
     this.riskAssRiskWsHdr.budgetYear = this.budgetYear;
-    //console.log(this.riskHrdData)
+    ////console.log(this.riskHrdData)
 
 
     if (this.userCheck == null || this.userCheck == undefined || this.userCheck == "") {
@@ -260,36 +283,39 @@ export class Int0834Component implements OnInit {
     }
 
     if (msgMessage == "") {
-      var url = "ia/int08/saveRiskAssOther";
-      var urlDtl = "ia/int08/saveRiskAssDtlOther";
+      var url = "ia/int083/saveRiskAssOther";
+      var urlDtl = "ia/int083/saveRiskAssDtlOther";
       this.riskAssRiskWsHdr.riskType = 'OTHER';
       this.ajax.post(url, this.riskAssRiskWsHdr, res => {
         var message = res.json();
-        //console.log(message.messageType);
+        ////console.log(message.messageType);
         if (message.messageType == 'E') {
           this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
         } else {
 
 
-          this.ajax.post(urlDtl, { riskAssOtherDtlList: this.riskDataList }, res => {
+          this.ajax.post(urlDtl, { riskAssExcOtherDtlList: this.riskDataList }, res => {
             var message = res.json();
-            console.log(message);
+            this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
+            this.router.navigate(["/int08/3/2"], {
+              queryParams: { budgetYear: this.budgetYear }
+            });
+            //console.log(message);
           }, errRes => {
             var message = errRes.json();
-            console.log(message);
+            this.messageBarService.errorModal(message.messageTh);
+
+            //console.log(message);
           });
 
 
-          this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
-          this.router.navigate(["/int08/1/4"], {
-            queryParams: { budgetYear: this.budgetYear }
-          });
+
 
         }
 
       }, errRes => {
         var message = errRes.json();
-        //console.log(message);
+        ////console.log(message);
         this.messageBarService.errorModal(message.messageTh);
 
       });
@@ -317,7 +343,7 @@ export class Int0834Component implements OnInit {
     this.messageBarService.comfirm(foo => {
       // let msg = "";
       if (foo) {
-        this.router.navigate(["/int08/1/4"], {
+        this.router.navigate(["/int08/3/2"], {
           queryParams: { budgetYear: this.budgetYear }
         });
       }
@@ -331,13 +357,40 @@ export class Int0834Component implements OnInit {
     this.isConditionShow = false;
   }
 
+  sectorChange() {
+    console.log(this.exciseSetor);
+    this.departmentName = $("#exciseSetor option:selected").text();
+    //console.log($('#exciseSetor').val());
+    let url = "combobox/controller/getDropByTypeAndParentId";
+    this.exciseBranchList = [];
+    this.ajax.post(url, { type: 'SECTOR_VALUE', lovIdMaster: this.exciseSetor }, res => {
+
+      this.exciseAreaList = res.json();
+      console.log(this.exciseAreaList);
+    });
+  }
+  branchChange() {
+    this.departmentName = $("#exciseBranch option:selected").text();
+  }
+
+
+  areaChange() {
+    console.log(this.exciseArea);
+    this.departmentName = $("#exciseArea option:selected").text();
+    //console.log($('#exciseSetor').val());
+    let url = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(url, { type: 'SECTOR_VALUE', lovIdMaster: this.exciseArea }, res => {
+
+      this.exciseBranchList = res.json();
+      console.log(this.exciseBranchList);
+    });
+  }
 }
 
 class RiskData {
-  exciseArea: any = '';
-  exciseSetor: any = '';
+  departmentName: any = '';
+
   riskHrdId: any = 0;
-  exciseBranch: any = '';
   riskCost: any = '';
   rl: any = '';
   valueTranslation: any = '';

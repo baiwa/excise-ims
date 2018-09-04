@@ -1,8 +1,13 @@
 package th.co.baiwa.excise.ia.persistence.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
@@ -20,23 +25,16 @@ public class RiskAssExcOtherDtl extends BaseEntity{
 	private static final long serialVersionUID = 8610100576522683110L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RISK_ASS_EXC_OTHER_DTL_GEN")
+	@SequenceGenerator(name = "IA_RISK_ASS_EXC_OTHER_DTL_GEN", sequenceName = "IA_RISK_ASS_EXC_OTHER_DTL_SEQ", allocationSize = 1)
 	@Column(name="RISK_OTHER_DTL_ID")
 	private Long riskOtherDtlId;
 
 	@Column(name="COLOR")
 	private String color;
 
-	@Column(name="EXCISE_AREA")
-	private String exciseArea;
-
-	@Column(name="EXCISE_BRANCH")
-	private String exciseBranch;
-
-	@Column(name="EXCISE_SETOR")
-	private String exciseSetor;
-	
-	@Column(name="LOCATION_CODE")
-	private String locationCode;
+	@Column(name="DEPARTMENT_NAME")
+	private String departmentName;
 
 	@Column(name="RISK_HRD_ID")
 	private Long riskHrdId;
@@ -48,7 +46,7 @@ public class RiskAssExcOtherDtl extends BaseEntity{
 	private String valueTranslation;
 	
 	@Column(name="RISK_COST")
-	private Long riskCost;
+	private BigDecimal riskCost;
 
 
 
@@ -67,41 +65,6 @@ public class RiskAssExcOtherDtl extends BaseEntity{
 	public void setColor(String color) {
 		this.color = color;
 	}
-
-
-	public String getExciseArea() {
-		return this.exciseArea;
-	}
-
-	public void setExciseArea(String exciseArea) {
-		this.exciseArea = exciseArea;
-	}
-
-	public String getExciseBranch() {
-		return this.exciseBranch;
-	}
-
-	public void setExciseBranch(String exciseBranch) {
-		this.exciseBranch = exciseBranch;
-	}
-
-	public String getExciseSetor() {
-		return this.exciseSetor;
-	}
-
-	public void setExciseSetor(String exciseSetor) {
-		this.exciseSetor = exciseSetor;
-	}
-
-
-	public String getLocationCode() {
-		return this.locationCode;
-	}
-
-	public void setLocationCode(String locationCode) {
-		this.locationCode = locationCode;
-	}
-
 	
 	public String getRl() {
 		return this.rl;
@@ -128,12 +91,20 @@ public class RiskAssExcOtherDtl extends BaseEntity{
 		this.riskHrdId = riskHrdId;
 	}
 
-	public Long getRiskCost() {
+	public BigDecimal getRiskCost() {
 		return riskCost;
 	}
 
-	public void setRiskCost(Long riskCost) {
+	public void setRiskCost(BigDecimal riskCost) {
 		this.riskCost = riskCost;
+	}
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
 	}
 
 	
