@@ -289,7 +289,7 @@ export class Int0811Component implements OnInit {
 
 
   initDatatableF2(): void {
-    if (this.dataTableF1 != null) {
+    if (this.dataTableF2 != null) {
       this.dataTableF2.destroy();
     }
     const URL = AjaxService.CONTEXT_PATH + "ia/int08/findRiskAssOtherDtlByHeaderId";
