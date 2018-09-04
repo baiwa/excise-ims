@@ -1,0 +1,99 @@
+package th.co.baiwa.excise.ia.persistence.dao;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+
+import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.domain.LabelValueBean;
+import th.co.baiwa.excise.ia.persistence.vo.Int0511FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int0511Vo;
+import th.co.baiwa.excise.utils.OracleUtils;
+
+@Repository
+public class CheckStampAreaDao {
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+	private final String SQL = "SELECT * FROM IA_STAMP_DETAIL";
+
+	public Long count(Int0511FormVo formVo) {
+
+		StringBuilder sql = new StringBuilder(SQL);
+		List<Object> params = new ArrayList<>();
+
+		String countSql = OracleUtils.countForDatatable(sql);
+		Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+		return count;
+	}
+
+	public List<Int0511Vo> findAll(Int0511FormVo formVo) {
+
+		StringBuilder sql = new StringBuilder(SQL);
+		List<Object> params = new ArrayList<>();
+
+		List<Int0511Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), stamRowmapper);
+		return list;
+
+	}
+
+	private RowMapper<Int0511Vo> stamRowmapper = new RowMapper<Int0511Vo>() {
+		@Override
+		public Int0511Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int0511Vo vo = new Int0511Vo();
+
+			vo.setDateOfPay(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("DATE_OF_PAY")));
+			vo.setStatus(rs.getString("STATUS"));
+			vo.setDepartmentName(rs.getString("DEPARTMENT_NAME"));
+			vo.setBookNumberWithdrawStamp(rs.getString("BOOK_NUMBER_WITHDRAW_STAMP"));
+			vo.setDateWithdrawStamp(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("DATE_WITHDRAW_STAMP")));
+			vo.setBookNumberDeliverStamp(rs.getString("BOOK_NUMBER_DELIVER_STAMP"));
+			vo.setDateDeliverStamp(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("DATE_DELIVER_STAMP")));
+			vo.setFivePartNumber(rs.getString("FIVE_PART_NUMBER"));
+			vo.setCreatedDate(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("CREATED_DATE")));
+			vo.setStampCheckDate(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("STAMP_CHECK_DATE")));
+			vo.setStampChecker(rs.getString("STAMP_CHECKER"));
+			vo.setStampBrand(rs.getString("STAMP_BRAND"));
+			vo.setNumberOfBook(rs.getBigDecimal("NUMBER_OF_BOOK"));
+			vo.setNumberOfStamp(rs.getBigDecimal("NUMBER_OF_STAMP"));
+			vo.setValueOfStampPrinted(rs.getBigDecimal("VALUE_OF_STAMP_PRINTED"));
+			vo.setSumOfValue(rs.getBigDecimal("SUM_OF_VALUE"));
+			vo.setSerialNumber(rs.getString("SERIAL_NUMBER"));
+			vo.setNote(rs.getString("NOTE"));
+			
+			vo.setWorkSheetDetailId(rs.getString("WORK_SHEET_DETAIL_ID"));
+			return vo;
+		}
+	};
+
+	public List<LabelValueBean> sector() {
+		String SQL = "SELECT * FROM Sys_Lov where TYPE='SECTOR_VALUE' and LOV_ID_MASTER is null";
+		return jdbcTemplate.query(SQL, SoctorRowmapper);
+	}
+
+	private RowMapper<LabelValueBean> SoctorRowmapper = new RowMapper<LabelValueBean>() {
+		@Override
+		public LabelValueBean mapRow(java.sql.ResultSet rs, int rowNum) throws SQLException {
+			return new LabelValueBean(rs.getString("VALUE1"), rs.getString("LOV_ID"));
+		}
+	};
+
+	public List<LabelValueBean> area(String id) {
+		String SQL = "SELECT * FROM SYS_LOV WHERE LOV_ID_MASTER=? AND TYPE='SECTOR_VALUE' ";
+		return jdbcTemplate.query(SQL, new Object[] { id }, areaRowmapper);
+	}
+
+	private RowMapper<LabelValueBean> areaRowmapper = new RowMapper<LabelValueBean>() {
+		@Override
+		public LabelValueBean mapRow(java.sql.ResultSet rs, int rowNum) throws SQLException {
+			return new LabelValueBean(rs.getString("SUB_TYPE_DESCRIPTION"), rs.getString("LOV_ID"));
+		}
+	};
+}
