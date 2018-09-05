@@ -63,11 +63,32 @@ public class IaConstant {
             public static final String THREE_DESC = "เอกสารหลักฐานแนบ";
             public static final String THREE_CODE = "3";
         }
-        
-        
-        
-
-
+    }
+    
+    public static class IA_REGIS_TRACK_CONTROL {
+    	
+    	public static class STATUS {
+        	public static final String TRACKING_FIRST_CODE = "1";
+        	public static final String TRACKING_FIRST_DESC = "แจ้งติดตามครั่งที่ 1";
+        	
+        	public static final String RESULT_OPT_FIRST_CODE = "2";
+        	public static final String RESULT_OPT_FIRST_DESC = "แจ้งผลการดำเนินงานครั้งที่ 1";
+        	
+        	public static final String REPORT_TRACKING_FIRST_CODE = "3";
+        	public static final String REPORT_TRACKING_FIRST_DESC = "รายงานการติดตามครั้งที่ 1";
+        	
+        	public static final String TRACKING_SECOND_CODE = "4";
+        	public static final String TRACKING_SECOND_DESC = "แจ้งติดตามครั้งที่ 2";
+        	
+        	public static final String RESULT_OPT_SECOND_CODE = "5";
+        	public static final String RESULT_OPT_SECOND_DESC = "แจ้งผลการดำเนินงานครั้งที่ 2";
+        	
+        	public static final String REPORT_TRACKING_SECOND_CODE = "6";
+        	public static final String REPORT_TRACKING_SECOND_DESC = "รายงานการติดตามครั้งที่ 2";
+        	
+        	public static final String COMPLETE_CODE = "7";
+        	public static final String COMPLETE_DESC = "เสร็จสิ้น";
+    	}
     }
 }
 
