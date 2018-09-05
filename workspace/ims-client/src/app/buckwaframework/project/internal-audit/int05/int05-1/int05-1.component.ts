@@ -18,19 +18,19 @@ export class Int051Component implements OnInit {
   formModal: FormModal = new FormModal();
   constructor(
     private ajax: AjaxService,
-    private message : MessageBarService) {
+    private message: MessageBarService) {
   }
 
 
   ngOnInit() {
     this.$form = $("#formSearch");
-    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").dropdown().css('width', '100%');
     this.sectorDropdown();
     this.calenda();
     this.table();
   }
   ngAfterViewInit() {
-    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").dropdown().css('width', '100%');;
   }
   sectorDropdown = () => {
     const URL = "ia/int0511/sector";
@@ -39,15 +39,16 @@ export class Int051Component implements OnInit {
     });
   }
   sectorOnchange = (e) => {
+    $("#area").dropdown('restore defaults');
     const URL = "ia/int0511/area";
     let params = e.target.value;
     this.ajax.post(URL, params, res => {
-
       console.log("Id : ", res.json());
       this.area = res.json();
     });
   }
   areaOnchange = (e) => {
+    $("#branch").dropdown('restore defaults');
     const URL = "ia/int0511/area";
     let params = e.target.value;
     this.ajax.post(URL, params, res => {
@@ -58,14 +59,19 @@ export class Int051Component implements OnInit {
   }
 
   onClear = () => {
-    this.$form.form("clear");
-    $("#srachFlag").val("FALSE");
+    console.log("Clear");
+    $(".ui.dropdown.ai").dropdown('restore defaults');
+    $("#dateForm").val("");
+    $("#dateTo").val("");
+    $("#searchFlag").val("FALSE");
     $("#dataTable").DataTable().ajax.reload();
   }
 
-  onSubmit = () => {
+  onSearch = () => {
     $("#searchFlag").val("TRUE");
     $("#dataTable").DataTable().ajax.reload();
+
+
   }
 
   calenda = () => {
@@ -115,26 +121,26 @@ export class Int051Component implements OnInit {
     });
   }
 
-  modalEditSubmit=()=> {    
+  modalEditSubmit = () => {
     this.message.comfirm((res) => {
-      if(res){
-        const URL='ia/int0511/save'
-    
-        let data = {     
-          "data" : this.formModal
+      if (res) {
+        const URL = 'ia/int0511/save'
+
+        let data = {
+          "data": this.formModal
         };
-        this.ajax.post(URL,JSON.stringify(data),
-        res => {
-          this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
-          $("#dataTable").DataTable().ajax.reload();
-        },error => {
-          this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
-      });
-    }      
+        this.ajax.post(URL, JSON.stringify(data),
+          res => {
+            this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
+            $("#dataTable").DataTable().ajax.reload();
+          }, error => {
+            this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
+          });
+      }
     }, "ยืนยันการทำรายการ");
 
-    
-    
+
+
   }
 
   table = () => {
@@ -150,9 +156,9 @@ export class Int051Component implements OnInit {
         "type": "POST",
         "data": (d) => {
           return JSON.stringify($.extend({}, d, {
-            "sector": $("#sector").val(),
-            "area": $("#area").val(),
-            "branch": $("#branch").val(),
+            "sector": $("#sector option:selected").text(),
+            "area": $("#area option:selected").text(),
+            "branch": $("#branch option:selected").text(),
             "dateForm": $("#dateForm").val(),
             "dateTo": $("#dateTo").val(),
             "searchFlag": $("#searchFlag").val()
@@ -233,11 +239,11 @@ export class Int051Component implements OnInit {
         }
       ]
     });
-    table.on('click', 'tbody tr button.btn-detail', (e)=> {
+    table.on('click', 'tbody tr button.btn-detail', (e) => {
       var closestRow = $(e.target).closest('tr');
       var data = table.row(closestRow).data();
       console.log(data);
-      
+
       $('#modal-detail').modal({ autofocus: false }).modal('show');
       setTimeout(() => {
         this.formModal.dateOfPay = data.dateOfPay;
@@ -268,7 +274,7 @@ export class Int051Component implements OnInit {
         this.formModal.valueOfStampPrinted = data.valueOfStampPrinted;
         this.formModal.workSheetDetailId = data.workSheetDetailId;
         this.formModal.fileName = data.fileName;
-      },50);
+      }, 50);
     });
     table.on('click', 'tbody tr button.btn-edit', (e) => {
       var closestRow = $(e.target).closest('tr');
@@ -311,28 +317,28 @@ export class Int051Component implements OnInit {
       }, 50);
 
     });
-    table.on('click', 'tbody tr button.btn-delete', (e)=> {
+    table.on('click', 'tbody tr button.btn-delete', (e) => {
       var closestRow = $(e.target).closest('tr');
       var data = table.row(closestRow).data();
       console.log(data);
 
       this.message.comfirm((res) => {
-        if(res){
-          const URL='ia/int0511/delete'
-          
-          let Data = {     
-            "data" : data
+        if (res) {
+          const URL = 'ia/int0511/delete'
+
+          let Data = {
+            "data": data
           };
           console.log(Data);
-          this.ajax.post(URL,JSON.stringify(Data),
-          res => {
-            this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
-            $("#dataTable").DataTable().ajax.reload();
-          },error => {
-            this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
-        });
-      }      
-      }, "","ยืนยันการลบ");
+          this.ajax.post(URL, JSON.stringify(Data),
+            res => {
+              this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
+              $("#dataTable").DataTable().ajax.reload();
+            }, error => {
+              this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
+            });
+        }
+      }, "", "ยืนยันการลบ");
 
     });
   }
@@ -366,5 +372,5 @@ class FormModal {
   stampCodeEnd: string = null;
   note: string = null;
   createdDate: string = null;
-  fileName : string = null;
+  fileName: string = null;
 }

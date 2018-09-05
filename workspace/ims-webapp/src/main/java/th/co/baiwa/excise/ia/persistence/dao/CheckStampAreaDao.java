@@ -80,7 +80,7 @@ public class CheckStampAreaDao {
 	};
 
 	public List<LabelValueBean> sector() {
-		String SQL = "SELECT * FROM Sys_Lov where TYPE='SECTOR_VALUE' and LOV_ID_MASTER is null";
+		String SQL = "SELECT * FROM Sys_Lov where TYPE='SECTOR_VALUE' and LOV_ID_MASTER is null ORDER BY SUB_TYPE ASC";
 		return jdbcTemplate.query(SQL, SoctorRowmapper);
 	}
 
@@ -92,7 +92,7 @@ public class CheckStampAreaDao {
 	};
 
 	public List<LabelValueBean> area(String id) {
-		String SQL = "SELECT * FROM SYS_LOV WHERE LOV_ID_MASTER=? AND TYPE='SECTOR_VALUE' ";
+		String SQL = "SELECT * FROM SYS_LOV WHERE LOV_ID_MASTER=? AND TYPE='SECTOR_VALUE' ORDER BY SUB_TYPE ASC";
 		return jdbcTemplate.query(SQL, new Object[] { id }, areaRowmapper);
 	}
 
