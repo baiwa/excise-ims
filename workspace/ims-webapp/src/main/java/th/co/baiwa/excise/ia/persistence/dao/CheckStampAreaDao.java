@@ -22,7 +22,7 @@ public class CheckStampAreaDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private final String SQL = "SELECT * FROM IA_STAMP_DETAIL";
+	private final String SQL = "SELECT * FROM IA_STAMP_DETAIL WHERE IS_DELETED='N' ORDER BY CREATED_DATE DESC";
 
 	public Long count(Int0511FormVo formVo) {
 
@@ -38,7 +38,7 @@ public class CheckStampAreaDao {
 
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
-
+		
 		List<Int0511Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), stamRowmapper);
 		return list;
 
@@ -57,7 +57,7 @@ public class CheckStampAreaDao {
 			vo.setBookNumberDeliverStamp(rs.getString("BOOK_NUMBER_DELIVER_STAMP"));
 			vo.setDateDeliverStamp(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("DATE_DELIVER_STAMP")));
 			vo.setFivePartNumber(rs.getString("FIVE_PART_NUMBER"));
-			vo.setCreatedDate(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("CREATED_DATE")));
+			vo.setFivePartDate(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("FIVE_PART_DATE")));
 			vo.setStampCheckDate(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("STAMP_CHECK_DATE")));
 			vo.setStampChecker(rs.getString("STAMP_CHECKER"));
 			vo.setStampBrand(rs.getString("STAMP_BRAND"));
@@ -68,7 +68,13 @@ public class CheckStampAreaDao {
 			vo.setSerialNumber(rs.getString("SERIAL_NUMBER"));
 			vo.setNote(rs.getString("NOTE"));
 			
-			vo.setWorkSheetDetailId(rs.getString("WORK_SHEET_DETAIL_ID"));
+			vo.setWorkSheetDetailId(rs.getString("WORK_SHEET_DETAIL_ID"));			
+			vo.setStampType(rs.getString("STAMP_TYPE"));
+			vo.setTaxStamp(rs.getBigDecimal("TAX_STAMP"));
+			vo.setStampCodeStart(rs.getString("STAMP_CODE_START"));
+			vo.setStampCodeEnd(rs.getString("STAMP_CODE_END"));
+			vo.setFileName(rs.getString("FILE_NAME"));
+			
 			return vo;
 		}
 	};

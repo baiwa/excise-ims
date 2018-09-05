@@ -30,6 +30,15 @@ public class Int0511Vo {
 	private String stampCodeEnd;
 	private String note;
 	private String createdDate;
+	private String fileName;
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
 	public String getWorkSheetDetailId() {
 		return workSheetDetailId;

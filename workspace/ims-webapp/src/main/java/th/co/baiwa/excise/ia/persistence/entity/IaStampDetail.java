@@ -104,6 +104,9 @@ public class IaStampDetail extends BaseEntity {
 	@Column(name = "VALUE_OF_STAMP_PRINTED")
 	private BigDecimal valueOfStampPrinted;
 
+	@Column(name = "FILE_NAME")
+	private String fileName;
+
 	public long getWorkSheetDetailId() {
 		return workSheetDetailId;
 	}
@@ -310,6 +313,14 @@ public class IaStampDetail extends BaseEntity {
 
 	public void setValueOfStampPrinted(BigDecimal valueOfStampPrinted) {
 		this.valueOfStampPrinted = valueOfStampPrinted;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 }

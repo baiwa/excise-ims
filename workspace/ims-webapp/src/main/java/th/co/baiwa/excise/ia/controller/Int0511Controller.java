@@ -20,24 +20,38 @@ import th.co.baiwa.excise.ia.service.Int0511Service;
 @RequestMapping("api/ia/int0511")
 public class Int0511Controller {
 
-	@Autowired	
+	@Autowired
 	private Int0511Service int0511Service;
 
 	@PostMapping("/findAll")
-    @ResponseBody
-    public DataTableAjax<Int0511Vo> findAll(@RequestBody Int0511FormVo formVo){
+	@ResponseBody
+	public DataTableAjax<Int0511Vo> findAll(@RequestBody Int0511FormVo formVo) {
 		return int0511Service.findAll(formVo);
-    }
-	
+	}
+
 	@GetMapping("/sector")
 	@ResponseBody
-	public List<LabelValueBean> sector(){
+	public List<LabelValueBean> sector() {
 		return int0511Service.sector();
 	}
-	
+
 	@PostMapping("/area")
 	@ResponseBody
-	public List<LabelValueBean> area(@RequestBody String id){
+	public List<LabelValueBean> area(@RequestBody String id) {
 		return int0511Service.area(id);
+	}
+
+	@PostMapping("/save")
+	@ResponseBody
+	public Int0511FormVo save(@RequestBody Int0511FormVo formVo) {
+		int0511Service.save(formVo);
+		return formVo;
+	}
+	
+	@PostMapping("/delete")
+	@ResponseBody
+	public Int0511FormVo delete(@RequestBody Int0511FormVo formVo) {
+		int0511Service.delete(formVo);
+		return formVo;
 	}
 }

@@ -15,7 +15,16 @@ public class Int0511FormVo extends DataTableRequest {
 	private String dateForm;
 	private String dateTo;
 	private List<Int0511Vo> dataList;
+	private Int0511Vo data;
 	private String searchFlag;
+
+	public Int0511Vo getData() {
+		return data;
+	}
+
+	public void setData(Int0511Vo data) {
+		this.data = data;
+	}
 
 	public List<Int0511Vo> getDataList() {
 		return dataList;
