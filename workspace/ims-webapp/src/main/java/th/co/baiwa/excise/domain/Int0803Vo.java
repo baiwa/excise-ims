@@ -4,6 +4,7 @@ import java.util.List;
 
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOtherDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcRecDtl;
 
 public class Int0803Vo {
 
@@ -15,6 +16,7 @@ public class Int0803Vo {
 	private List<String> riskHrdNameList;
 	private String departmentName;
 	private List<RiskAssExcAreaHdr> riskAssExcAreaHdrList;
+	private List<RiskAssExcRecDtl> riskAssExcRecDtlList;
 
 
 	public String getProjectBase() {
@@ -79,6 +81,14 @@ public class Int0803Vo {
 
 	public void setRiskAssExcOtherDtlList(List<RiskAssExcOtherDtl> riskAssExcOtherDtlList) {
 		this.riskAssExcOtherDtlList = riskAssExcOtherDtlList;
+	}
+
+	public List<RiskAssExcRecDtl> getRiskAssExcRecDtlList() {
+		return riskAssExcRecDtlList;
+	}
+
+	public void setRiskAssExcRecDtlList(List<RiskAssExcRecDtl> riskAssExcRecDtlList) {
+		this.riskAssExcRecDtlList = riskAssExcRecDtlList;
 	}
 
 

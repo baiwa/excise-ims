@@ -20,9 +20,11 @@ import th.co.baiwa.excise.ia.persistence.entity.Condition;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOtherDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcRecDtl;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcAreaDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcAreaHdrRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcOtherDtlRepository;
+import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcRecDtlRepository;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 
@@ -51,6 +53,9 @@ public class RiskAssExcAreaService {
 
 	@Autowired
 	private ConditionService conditionService;
+	
+	@Autowired
+	private RiskAssExcRecDtlRepository riskAssExcRecDtlRepository;
 
 	@Autowired
 	public RiskAssExcAreaService(RiskAssExcAreaHdrRepository riskAssRiskWsHdrRepository) {
@@ -75,7 +80,7 @@ public class RiskAssExcAreaService {
 	}
 
 	public ResponseDataTable<RiskAssExcAreaHdr> findByCriteriaForDatatable(RiskAssExcAreaHdr riskAssRiskWsHdr, DataTableRequest dataTableRequest) {
-
+		logger.info("findByCriteriaForDatatable");
 		ResponseDataTable<RiskAssExcAreaHdr> responseDataTable = new ResponseDataTable<RiskAssExcAreaHdr>();
 		List<RiskAssExcAreaHdr> riskAssRiskWsHdrList = findByBudgetYear(riskAssRiskWsHdr.getBudgetYear());
 		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
@@ -87,10 +92,12 @@ public class RiskAssExcAreaService {
 	}
 
 	public List<RiskAssExcAreaHdr> findByBudgetYear(String year) {
+		logger.info("findByBudgetYear : "+ year);
 		return riskAssExcAreaHdrRepository.findByBudgetYear(year);
 	}
 
 	public List<RiskAssExcAreaDtl> findRiskAssRiskDtlByWebService() {
+		logger.info("findRiskAssRiskDtlByWebService");
 		return webServiceExciseService.getRiskAssExcAreaDtlList(new RiskAssExcAreaDtl());
 
 	}
@@ -104,6 +111,7 @@ public class RiskAssExcAreaService {
 	}
 
 	public Message createBuggetYear(RiskAssExcAreaHdr riskAssRiskWsHdr) {
+		logger.info("findRiskAssRiskDtlByWebService : "+ riskAssRiskWsHdr.getBudgetYear());
 		Message message = null;
 		Lov lov = new Lov(BUDGET_YEAR);
 		lov.setValue1(riskAssRiskWsHdr.getBudgetYear());
@@ -131,10 +139,12 @@ public class RiskAssExcAreaService {
 	}
 
 	public List<RiskAssExcAreaDtl> findByGroupRiskHrdId(Long riskHrdId) {
+		logger.info("findByGroupRiskHrdId : "+ riskHrdId);
 		return riskAssExcAreaDtlRepository.findByGroupRiskHrdId(riskHrdId);
 	}
 
 	public void updateRiskAssExcAreaDtl(List<RiskAssExcAreaDtl> riskAssRiskWsDtls) {
+		logger.info("updateRiskAssExcAreaDtl : ");
 		List<Condition> conditionList = conditionService.findConditionByParentId(riskAssRiskWsDtls.get(0).getRiskHrdId(), "MAIN", "int08-3-3");
 		if (BeanUtils.isNotEmpty(conditionList)) {
 			for (RiskAssExcAreaDtl  riskAssExcAreaDtl : riskAssRiskWsDtls) {
@@ -162,10 +172,12 @@ public class RiskAssExcAreaService {
 	}
 
 	public RiskAssExcAreaHdr findById(Long id) {
+		logger.info("RiskAssExcAreaHdr findById : "+ id);
 		return riskAssExcAreaHdrRepository.findOne(id);
 	}
 	
 	public List<RiskAssExcAreaHdr> updatePercent(List<RiskAssExcAreaHdr> riskAssRiskWsHdrs) {
+		logger.info("updatePercent");
 		List<RiskAssExcAreaHdr> RiskAssExcAreaHdrList = new ArrayList<RiskAssExcAreaHdr>();
 		for (RiskAssExcAreaHdr riskAssRiskWsHdr : riskAssRiskWsHdrs) {
 			riskAssExcAreaHdrRepository.updatePercent(riskAssRiskWsHdr.getPercent(), riskAssRiskWsHdr.getRiskHrdId());
@@ -175,19 +187,23 @@ public class RiskAssExcAreaService {
 	}
 
 	public void updateRiskAssExcAreaHdr(RiskAssExcAreaHdr riskAssRiskWsHdr) {
+		logger.info("updateRiskAssExcAreaHdr");
 		riskAssExcAreaHdrRepository.save(riskAssRiskWsHdr);
 	}
 
 	public List<RiskAssExcAreaHdr> findByCriteria(RiskAssExcAreaHdr riskAssRiskWsHdr) {
+		logger.info("RiskAssExcAreaHdr findByCriteria");
 		return riskAssExcAreaHdrRepository.findByCriteria(riskAssRiskWsHdr);
 	}
 
 	public List<RiskAssExcOtherDtl> findByRiskHrdId(Long riskHrdId) {
+		logger.info("RiskAssExcOtherDtl findByRiskHrdId : " + riskHrdId);
 		return reAssExcOtherDtlRepository.findByRiskHrdId(riskHrdId);
 	}
 	
 	
 	public void updateRiskAssOtherDtl(List<RiskAssExcOtherDtl> riskAssExcOtherDtlList) {
+		logger.info("updateRiskAssOtherDtl");
 		List<Condition> conditionList = conditionService.findConditionByParentId(riskAssExcOtherDtlList.get(0).getRiskHrdId(), "OTHER", "int08-3-4");
 		if (BeanUtils.isNotEmpty(conditionList)) {
 			for (RiskAssExcOtherDtl riskAssOtherDtl : riskAssExcOtherDtlList) {
@@ -238,6 +254,7 @@ public class RiskAssExcAreaService {
 	}
 
 	public List<RiskFullDataVo> searchFullRiskByBudgetYear(String budgetYear , List<String> depNameList) {
+		logger.info("searchFullRiskByBudgetYear : " + budgetYear);
 		List<Condition> conditionList = conditionService.findConditionByParentId(new Long(budgetYear), "ALL", "int08-3-5");
 		List<RiskFullDataVo> riskFullDataVoList= new ArrayList<RiskFullDataVo>();
 		RiskFullDataVo riskFullDataVo = new RiskFullDataVo();
@@ -289,6 +306,51 @@ public class RiskAssExcAreaService {
 			index++;
 		}
 		return riskFullDataVoList;
+	}
+	
+	// riskAssExcRecDtlRepository //
+	public List<RiskAssExcRecDtl> findriskAssExcRecDtlByHrdId(Long riskHrdId){
+		logger.info("RiskAssExcRecDtl findriskAssExcRecDtlByHrd: " + riskHrdId);
+		return  riskAssExcRecDtlRepository.findByRiskHrdId(riskHrdId);
+	}
+	
+	public RiskAssExcRecDtl saveRiskAssExcRecDtl(RiskAssExcRecDtl riskAssExcRecDtl){
+		logger.info("saveRiskAssExcRecDtl");
+		return  riskAssExcRecDtlRepository.save(riskAssExcRecDtl);
+	}
+	
+	public List<RiskAssExcRecDtl> RiskAssExcAreaDtlByWebService() {
+		logger.info("RiskAssExcAreaDtlByWebService");
+		return webServiceExciseService.RiskAssExcAreaDtlByWebService(new RiskAssExcRecDtl());
+
+	}
+	
+	
+	public void updateRiskAssExcRecDtl(List<RiskAssExcRecDtl> riskAssExcRecDtlList) {
+		logger.info("updateRiskAssExcAreaDtl : ");
+		List<Condition> conditionList = conditionService.findConditionByParentId(riskAssExcRecDtlList.get(0).getRiskHrdId(), "MAIN", "int08-3-6");
+		if (BeanUtils.isNotEmpty(conditionList)) {
+			for (RiskAssExcRecDtl  riskAssExcRecDtl : riskAssExcRecDtlList) {
+				for (Condition condition : conditionList) {
+					long value = riskAssExcRecDtl.getPercenDiff() != null  ? riskAssExcRecDtl.getPercenDiff().longValue() : 0;
+					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
+						riskAssExcRecDtl.setRl(condition.getValueRl());
+						riskAssExcRecDtl.setColor(condition.getColor());
+						riskAssExcRecDtl.setValueTranslation(condition.getConvertValue());
+					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+						riskAssExcRecDtl.setRl(condition.getValueRl());
+						riskAssExcRecDtl.setColor(condition.getColor());
+						riskAssExcRecDtl.setValueTranslation(condition.getConvertValue());
+					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+						riskAssExcRecDtl.setRl(condition.getValueRl());
+						riskAssExcRecDtl.setColor(condition.getColor());
+						riskAssExcRecDtl.setValueTranslation(condition.getConvertValue());
+					}
+				}
+
+				riskAssExcRecDtlRepository.save(riskAssExcRecDtl);
+			}
+		}
 	}
 
 }

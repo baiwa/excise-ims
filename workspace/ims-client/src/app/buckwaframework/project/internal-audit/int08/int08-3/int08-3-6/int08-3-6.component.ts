@@ -46,7 +46,7 @@ export class Int0836Component implements OnInit {
   }
 
   initDatatable(): void {
-    const URL = AjaxService.CONTEXT_PATH + "ia/int083/dataTableWebService1";
+    const URL = AjaxService.CONTEXT_PATH + "ia/int083/dataTableWebService2";
     console.log(URL);
     this.datatable = $("#dataTable").DataTable({
       lengthChange: false,
@@ -70,17 +70,20 @@ export class Int0836Component implements OnInit {
           className: "center"
         },
         { data: "departmentName" },
-        { data: "checkOutDate" },
-        { data: "closeDate" },
-        { data: "years" },
+        { data: "resultsIncome", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "budgetIncome", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "budgetDiff", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "percenDiff", render: $.fn.dataTable.render.number(',', '.', 2, '') },
 
         { data: "rl" },
         { data: "valueTranslation" }
 
       ],
       columnDefs: [
-        { targets: [0, 2, 3, 4, 5, 6], className: "center aligned" },
-        { targets: [1], className: "left aligned" }
+        { targets: [0, 6, 7], className: "center aligned" },
+        { targets: [1], className: "left aligned" },
+        { targets: [2, 3, 4, 5], className: "right aligned" }
+
       ]
 
     });
@@ -102,13 +105,13 @@ export class Int0836Component implements OnInit {
     }
 
     var url = "ia/condition/findConditionByParentId";
-    this.ajax.post(url, { parentId: this.id, riskType: 'MAIN', page: 'int08-3-3' }, res => {
+    this.ajax.post(url, { parentId: this.id, riskType: 'MAIN', page: 'int08-3-6' }, res => {
       var conditionList = res.json();
       if (conditionList.length == 0) {
         msgMessage = "กรุณากำหนดเงื่อนไข RL";
       }
       if (msgMessage == "") {
-        var url = "ia/int083/updateRiskAssExcAreaHdr";
+        var url = "ia/int083/updateRiskAssExcRecDtl";
 
         this.ajax.post(url, this.riskAssRiskWsHdr, res => {
           console.log(res.json());

@@ -28,6 +28,7 @@ import th.co.baiwa.excise.domain.RiskFullDataVo;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOtherDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcRecDtl;
 import th.co.baiwa.excise.ia.service.RiskAssExcAreaService;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
@@ -245,6 +246,48 @@ public class Int083Controller {
 		List<RiskAssExcAreaDtl> riskAssRiskWsHdrList = null;
 		riskAssRiskWsHdrList = riskAssExcAreaService.findByGroupRiskHrdId(riskAssRiskWsHdr.getRiskHrdId());
 		return riskAssRiskWsHdrList;
+	}
+	
+	
+	@PostMapping("/dataTableWebService2")
+	@ResponseBody
+	public ResponseDataTable<RiskAssExcRecDtl> dataTableWebService2(DataTableRequest dataTableRequest,RiskAssExcRecDtl riskAssExcRecDtl,HttpServletRequest httpServletRequest) {
+		logger.info("dataTableWebService2");
+		List<RiskAssExcRecDtl> riskAssExcRecDtlList = null;
+		httpServletRequest.getSession().setAttribute(WS_SESSION_DATA , null);
+		riskAssExcRecDtlList = riskAssExcAreaService.findriskAssExcRecDtlByHrdId(riskAssExcRecDtl.getRiskHrdId());
+		if(BeanUtils.isEmpty(riskAssExcRecDtlList)) {
+			riskAssExcRecDtlList = riskAssExcAreaService.RiskAssExcAreaDtlByWebService();
+		}
+		ResponseDataTable<RiskAssExcRecDtl> responseDataTable = new ResponseDataTable<RiskAssExcRecDtl>();
+		httpServletRequest.getSession().setAttribute(WS_SESSION_DATA , riskAssExcRecDtlList);
+		responseDataTable.setData(riskAssExcRecDtlList);
+		responseDataTable.setRecordsTotal((int) riskAssExcRecDtlList.size());
+		responseDataTable.setRecordsFiltered((int) riskAssExcRecDtlList.size());
+		return responseDataTable;
+	}
+	
+	@PostMapping("/updateRiskAssExcRecDtl")
+	@ResponseBody
+	public Message updateRiskAssExcRecDtl(@RequestBody RiskAssExcAreaHdr riskAssRiskWsHdr,HttpServletRequest httpServletRequest) {
+		Message message = null;
+		logger.info("updateRiskAssExcAreaHdr" + riskAssRiskWsHdr.getRiskHrdId());
+		try {
+			riskAssExcAreaService.updateRiskAssExcAreaHdr(riskAssRiskWsHdr);
+			@SuppressWarnings("unchecked")
+			List<RiskAssExcRecDtl> riskAssRiskWsDtlList = (List<RiskAssExcRecDtl>) httpServletRequest.getSession().getAttribute(WS_SESSION_DATA);
+			for (RiskAssExcRecDtl riskAssRiskWsDtl : riskAssRiskWsDtlList) {
+				riskAssRiskWsDtl.setRiskHrdId(riskAssRiskWsHdr.getRiskHrdId());
+			}
+			riskAssExcAreaService.updateRiskAssExcRecDtl(riskAssRiskWsDtlList);
+			message = ApplicationCache.getMessage("MSG_00002");
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = ApplicationCache.getMessage("MSG_00003");
+		}
+		
+		
+		return message;
 	}
 
 }
