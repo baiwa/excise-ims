@@ -4,7 +4,7 @@ import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { Int021Component } from "./int02-1/int02-1.component";
 import { Int022Component } from "./int02-2/int02-2.component";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Int023Component } from "./int02-3/int02-3.component";
 import { Int02M2Component } from "./int02-m2/int02-m2.component";
 import { Int02M3Component } from "./int02-m3/int02-m3.component";
@@ -47,6 +47,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     // Components Modules
     PaginationModule,
     ConditionModule

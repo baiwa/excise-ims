@@ -19,7 +19,7 @@ export class Int0832Component implements OnInit {
   budgetYear: any;
   yearList: any[];
   wsRiskList: any[];
-
+  pageList: any[];
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
@@ -29,7 +29,8 @@ export class Int0832Component implements OnInit {
   ngOnInit() {
     this.riskHdrName = "";
     this.budgetYear = "";
-    this.wsRiskList = ["ปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ", "ปัจจัยเสี่ยงผลการจัดเก็บรายได้", "ปัจจัยเสี่ยงผลการปราบปราม", "ปัจจัยเสี่ยงผลการปราบปรามด้านค่าปรับคดี", "ปัจจัยเสี่ยงการเงินและบัญชี", "ปัจจัยเสี่ยงระบบการควบคุมภายใน", "ปัจจัยเสี่ยงการส่งเงินเกิน 3 วัน", "ปัจจัยเสี่ยงแบบสอบทานระบบการควบคุมภายใน"];
+    this.wsRiskList = ["ปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ", "ปัจจัยเสี่ยงผลการจัดเก็บรายได้", "ปัจจัยเสี่ยงผลการปราบปรามด้านค่าปรับคดี", "ปัจจัยเสี่ยงผลการปราบปรามด้านจำนวนคดี", "ปัจจัยเสี่ยงการเงินและบัญชี", "ปัจจัยเสี่ยงระบบการควบคุมภายใน", "ปัจจัยเสี่ยงการส่งเงินเกิน 3 วัน", "ปัจจัยเสี่ยงแบบสอบทานระบบการควบคุมภายใน"];
+    this.pageList = ["/int08/3/3", "/int08/3/6", "/int08/3/7", "/int08/3/8", "/int08/3/9", "/int08/3/10", "/int08/3/11", "/int08/3/12"];
     //this.initDatatable();
   }
   ngAfterViewInit() {
@@ -94,15 +95,17 @@ export class Int0832Component implements OnInit {
         }
       ],
       columnDefs: [
-        { targets: [1, 2, 3, 4, 5], className: "center aligned" }
+        { targets: [0, 2, 3, 4, 5], className: "center aligned" },
+        { targets: [1], className: "left aligned" }
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {
           console.log("dtl");
           console.log(data.riskHdrName);
           console.log(this.wsRiskList.indexOf(data.riskHdrName));
-          if (this.wsRiskList.indexOf(data.riskHdrName) >= 0) {
-            this.router.navigate(["/int08/3/3"], {
+          var indexPage = this.wsRiskList.indexOf(data.riskHdrName);
+          if (indexPage >= 0) {
+            this.router.navigate([this.pageList[indexPage]], {
               queryParams: { id: data.riskHrdId }
             });
           } else {
@@ -126,7 +129,6 @@ export class Int0832Component implements OnInit {
             this.initDatatable();
           }, errRes => {
             var message = errRes.json();
-
             this.messageBarService.errorModal(message.messageTh);
 
 

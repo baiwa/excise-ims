@@ -205,18 +205,7 @@ export class Int0834Component implements OnInit {
 
   addObjRiskDtl() {
     var msgMessage = '';
-    // if (this.exciseSetor == null || this.exciseSetor == undefined || this.exciseSetor == '') {
-    //   this.messageBarService.errorModal("กรุณากรอก \"สรรพสามิตภาค\" ");
-    //   return;
-    // }
-    // if (this.exciseArea == null || this.exciseArea == undefined || this.exciseArea == '') {
-    //   this.messageBarService.errorModal("กรุณากรอก \" สรรพสามิตพื้นที่\" ");
-    //   return;
-    // }
-    // if (this.exciseBranch == null || this.exciseBranch == undefined || this.exciseBranch == '') {
-    //   this.messageBarService.errorModal("กรุณากรอก \"สรรพสามิตสาขา\" ");
-    //   return;
-    // }
+
 
     if (this.departmentName == null || this.departmentName == undefined || this.departmentName == '') {
       this.messageBarService.errorModal("กรุณากรอก \"ส่วนงานที่ต้องการประเมินความเสียง\" ");
@@ -230,14 +219,6 @@ export class Int0834Component implements OnInit {
     }
 
 
-
-    // if (this.exciseBranch == null || this.exciseBranch == undefined || this.exciseBranch == '') {
-    //   departmentName = 'สพพ. ' + this.exciseBranch;
-    // } else if (this.exciseArea == null || this.exciseArea == undefined || this.exciseArea == '') {
-    //   departmentName = 'สพพ. ' + this.exciseArea;
-    // } else if (this.exciseSetor == null || this.exciseSetor == undefined || this.exciseSetor == '') {
-    //   departmentName = 'สพพ. ' + this.exciseSetor;
-    // }
 
     let riskData = new RiskData();
     riskData.departmentName = 'สพพ. ' + this.departmentName;

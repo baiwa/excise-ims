@@ -11,17 +11,17 @@
     </div>
 
     <div class="row" *ngIf="!loading">
-        <form class="column" *ngIf="questionnaire.length > 0" (submit)="save($event)" ngNativeValidate>
+        <form class="column ui form" *ngIf="questionnaire.length > 0" (submit)="save(f)" #f="ngForm">
             <div class="ui styled fluid accordion" id="acc">
                 <div *ngFor="let qtn of questionnaire; let i = index">
                     <div class="{{ i==0 ? 'active' : ''}} title">
                         <h4 class="text-center">{{ qtn.title }}</h4>
                     </div>
                     <div class="{{ i==0 ? 'active' : ''}} content">
-                        <table class="ui celled table">
+                        <table class="ui celled table" *ngIf="qtn.detail.length>0">
                             <thead class="text-center">
                                 <tr>
-                                    <th rowspan="2">ที่</th>
+                                    <th rowspan="2" style="width: 5%">ที่</th>
                                     <th rowspan="2">รายการ</th>
                                     <th>มี / ใช่</th>
                                     <th>ไม่มี / ไม่ใช่</th>
@@ -39,27 +39,31 @@
                                     <td *ngIf="detail.detailId" class="text-right">{{detail.order}}</td>
                                     <td *ngIf="detail.detailId">{{detail.content}}</td>
                                     <td *ngIf="detail.detailId" class="text-center">
-                                        <div class="ui checkbox">
-                                            <input type="radio" name="point{{i+1}}{{j+1}}" [(ngModel)]="questionnaire[i].detail[j].point" value="yes" id="chk{{i+1}}{{j+1}}"
-                                                required>
-                                            <label></label>
+                                        <div class="field {{ validClass('point' + questionnaire[i].detail[j].detailId, f) }}">
+                                            <div class="ui checkbox">
+                                                <input type="radio" name="point{{questionnaire[i].detail[j].detailId}}" [(ngModel)]="questionnaire[i].detail[j].point" value="yes"
+                                                    id="point{{questionnaire[i].detail[j].detailId}}" required ngModel>
+                                                <label></label>
+                                            </div>
                                         </div>
                                     </td>
                                     <td *ngIf="detail.detailId" class="text-center">
-                                        <div class="ui checkbox">
-                                            <input type="radio" name="point{{i+1}}{{j+1}}" [(ngModel)]="questionnaire[i].detail[j].point" value="no" id="chk{{i+1}}{{j+1}}"
-                                                required>
-                                            <label></label>
+                                        <div class="field {{ validClass('point' + questionnaire[i].detail[j].detailId, f) }}">
+                                            <div class="ui checkbox">
+                                                <input type="radio" name="point{{questionnaire[i].detail[j].detailId}}" [(ngModel)]="questionnaire[i].detail[j].point" value="no"
+                                                    id="point{{questionnaire[i].detail[j].detailId}}" required ngModel>
+                                                <label></label>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="ui form" *ngIf="qtn.conclusion">
-                            <div class="field">
+                        <div class="ui form" *ngIf="qtn.conclusion && qtn.detail.length>0">
+                            <div class="field {{ validClass('conclusion' + questionnaire[i].detail[0].headerId, f) }}">
                                 <label class="text-left">สรุปผลการสอบทาน</label>
                                 <div class="ui input">
-                                    <textarea name="" id="" rows="4"></textarea>
+                                    <textarea name="conclusion{{questionnaire[i].detail[0].headerId}}" id="conclusion{{questionnaire[i].headerId}}" rows="4" required ngModel></textarea>
                                 </div>
                             </div>
                         </div>

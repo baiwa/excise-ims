@@ -64,6 +64,7 @@ export class Int0835Component implements OnInit {
 
   initDatatable(): void {
     var url = 'ia/int083/searchFullRiskByBudgetYear';
+
     var hrmlTr = '';
     this.ajax.post(url, { budgetYear: this.budgetYear, riskHrdNameList: this.columnList }, res => {
 

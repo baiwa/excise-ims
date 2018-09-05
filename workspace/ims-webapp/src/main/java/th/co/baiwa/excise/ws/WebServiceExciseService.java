@@ -20,7 +20,6 @@ import com.google.gson.Gson;
 
 import baiwa.co.th.ws.LoginLdap;
 import baiwa.co.th.ws.Response;
-import th.co.baiwa.exampleproject.ws.consumer.currentdate.operation.CurrentDate;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
