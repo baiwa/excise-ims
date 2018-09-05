@@ -4,17 +4,18 @@
 <div class="ui form center aligned" id="int09-1" ngNativeValidate>
     <div class="ui attached  segment">
         <input type="hidden" id="searchFlag">
-
+        <input type="hidden" id="travelTo">
+        <input type="hidden" id="travelToId">
         <div class="inline fields">
             <div class="two wide field"></div>
             <div class="two wide field">
                 <label>วันที่สร้าง</label>
             </div>
             <div class="four wide field">
-                <div class="ui calendar" id="date" style="width: 100%;">
-                    <div class="ui input left icon">
+                <div class="ui calendar" id="date"  style="width: 100%;" >
+                    <div class="ui input left icon" >
                         <i class="time icon"></i>
-                        <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                        <input type="text" id="dateFrom" name="date-raw"  autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
                     </div>
                 </div>
             </div>
@@ -25,22 +26,32 @@
                 <div class="ui calendar" id="date2" style="width: 100%;">
                     <div class="ui input left icon">
                         <i class="time icon"></i>
-                        <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                        <input type="text" id="dateTo" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
                     </div>
                 </div>
             </div>
-        </div>
+        </div>	
+
         <div class="inline fields">
             <div class="two wide field"></div>
             <div class="two wide field">
                 <label>ผู้สร้าง</label>
             </div>
             <div class="four wide field">
-                <input type="text" maxlength="1000" name="name" required>
+                <input id="createdBy" type="text" maxlength="1000" name="name" required>
+            </div>
+            <div class="two wide field">
+                <label>ประเภทการเบิก</label>
+            </div>
+            <div class="four wide field">
+                <select class="ui dropdown search selection" style="width: 100%;" id="pickedType" >
+                    <option value="">เลือก</option>
+                    <option *ngFor="let data of pickedTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
+                </select>
             </div>
         </div>
         <div class="inline fields">
-            <input type="hidden" id="searchFlag">
+       
             <div class="two wide field"></div>
             <div class="two wide field">
                 <label>ปีงบประมาณ</label>
@@ -49,21 +60,30 @@
                 <div class="ui calendar" id="date3" style="width: 100%;">
                     <div class="ui input left icon">
                         <i class="time icon"></i>
-                        <input type="text" name="date-raw" id="year1" autocomplete="off" [attr.readonly]="null" placeholder="ปปปป" [attr.required]="true">
+                        <input id="fiscalYear" type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="ปปปป" [attr.required]="true">
                     </div>
                 </div>
+            </div>
+            <div class="two wide field">
+                <label>สถานะการดำเนินการ</label>
+            </div>
+            <div class="four wide field">
+                <select class="ui dropdown search selection" style="width: 100%;" id="status">
+                    <option value="">เลือก</option>
+                    <option *ngFor="let data of statusList" value="{{data.lovId}}">{{data.typeDescription}}</option>
+                </select>
             </div>
         </div>
         <div class="inline fields">
             <div class="two wide field"></div>
             <div class="two wide field">
                 <label>วันที่เดินทาง</label>
-            </div>
+            </div>     
             <div class="four wide field">
-                <div class="ui calendar" id="date5" style="width: 100%;">
+                <div class="ui calendar" id="date4" style="width: 100%;">
                     <div class="ui input left icon">
                         <i class="time icon"></i>
-                        <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                        <input type="text" id="departureDate" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
                     </div>
                 </div>
             </div>
@@ -71,10 +91,10 @@
                 <label>วันที่ถึง</label>
             </div>
             <div class="four wide field">
-                <div class="ui calendar" id="date6" style="width: 100%;">
+                <div class="ui calendar" id="date5" style="width: 100%;">
                     <div class="ui input left icon">
                         <i class="time icon"></i>
-                        <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                        <input type="text" id="returnDate" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
                     </div>
                 </div>
             </div>
@@ -92,18 +112,18 @@
                 <label>สรรพสามิตภาค</label>
             </div>
             <div class="four wide field">
-                <select class="ui dropdown search selection" style="width: 100%;" id="sector" (change)="sectorOnchange($event)">
+                <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)">
                     <option value="">เลือก</option>
-                    <option *ngFor="let data of sectorList" value="{{data.value}}">{{data.label}}</option>
+                    <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                 </select>
             </div>
             <div class="two wide field">
                 <label>สรรพสามิตพื้นที่</label>
             </div>
             <div class="four wide field">
-                <select class="ui dropdown search selection" style="width: 100%;" id="area" (change)="areaOnChange($event)">
+                <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)">
                     <option value="">เลือก</option>
-                    <option *ngFor="let data of areaDropdown" value="{{data.value}}">{{data.label}}</option>
+                    <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                 </select>
             </div>
         </div>
@@ -113,9 +133,9 @@
                 <label>สรพพสามิตสาขา</label>
             </div>
             <div class="four wide field">
-                <select class="ui dropdown search selection" style="width: 100%;" id="branch">
+                <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3"  (change)="setTravelTo($event)" >
                     <option value="">เลือก</option>
-                    <option *ngFor="let data of branchDropdown" value="{{data.value}}">{{data.label}}</option>
+                    <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                 </select>
             </div>
         </div>
@@ -143,8 +163,8 @@
                 <th style="text-align: center !important;">ลำดับที่</th>
                 <th style="text-align: center !important;">วันที่สร้าง</th>
                 <th style="text-align: center !important;">ผู้สร้าง</th>
+                <th style="text-align: center !important;">ประเภทการเบิก</th>
                 <th style="text-align: center !important;">ปีงบประมาณ</th>
-                <th style="text-align: center !important;">ลงวันที่</th>
                 <th style="text-align: center !important;">วันที่เดินทาง</th>
                 <th style="text-align: center !important;">ถึงวันที่</th>
                 <th style="text-align: center !important;">เดินทางไป</th>
@@ -165,12 +185,19 @@
 
     <div class="content">
         <div class="ui form">
-
-            <input type="hidden" id="searchFlag">
-
+                <input type="hidden" id="travelToAdd">
+                <input type="hidden" id="travelToIdAdd">
             <div class="inline fields">
-                <input type="hidden" id="searchFlag">
                 <div class="two wide field"></div>
+                <div class="two wide field">
+                    <label>ประเภทการเบิก</label>
+                </div>
+                <div class="four wide field column">
+                    <select class="ui dropdown search selection" style="width: 100%;" id="pickedTypeAdd">
+                        <option value="">เลือก</option>
+                        <option *ngFor="let data of pickedTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
+                    </select>
+                </div>
                 <div class="two wide field">
                     <label>ปีงบประมาณ</label>
                 </div>
@@ -178,7 +205,7 @@
                     <div class="ui calendar" id="modalDate1" style="width: 100%;">
                         <div class="ui input left icon">
                             <i class="time icon"></i>
-                            <input type="text" name="date-raw" id="year2" autocomplete="off" [attr.readonly]="null" placeholder="ปปปป" [attr.required]="true">
+                            <input id="fiscalYearAdd" type="text" name="date-raw"  autocomplete="off" [attr.readonly]="null" placeholder="ปปปป" [attr.required]="true">
                         </div>
                     </div>
                 </div>
@@ -192,7 +219,7 @@
                     <div class="ui calendar" id="modalDate2" style="width: 100%;">
                         <div class="ui input left icon">
                             <i class="time icon"></i>
-                            <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                            <input type="text" id="departureDateAdd" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
                         </div>
                     </div>
                 </div>
@@ -203,7 +230,7 @@
                     <div class="ui calendar" id="modalDate3" style="width: 100%;">
                         <div class="ui input left icon">
                             <i class="time icon"></i>
-                            <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                            <input type="text" id="returnDateAdd" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
                         </div>
                     </div>
                 </div>
@@ -221,18 +248,18 @@
                     <label>สรรพสามิตภาค</label>
                 </div>
                 <div class="four wide field">
-                    <select class="ui dropdown search selection" style="width: 100%;" id="sector" (change)="sectorOnchange($event)">
+                    <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1Add" (change)="travelTo2AddDropdown($event)">
                         <option value="">เลือก</option>
-                        <option *ngFor="let data of sectorList" value="{{data.value}}">{{data.label}}</option>
+                        <option *ngFor="let data of travelTo1AddList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                     </select>
                 </div>
                 <div class="two wide field">
                     <label>สรรพสามิตพื้นที่</label>
                 </div>
                 <div class="four wide field">
-                    <select class="ui dropdown search selection" style="width: 100%;" id="area" (change)="areaOnChange($event)">
+                    <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2Add" (change)="travelTo3AddDropdown($event)">
                         <option value="">เลือก</option>
-                        <option *ngFor="let data of areaDropdown" value="{{data.value}}">{{data.label}}</option>
+                        <option *ngFor="let data of travelTo2AddList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                     </select>
                 </div>
             </div>
@@ -242,9 +269,9 @@
                     <label>สรพพสามิตสาขา</label>
                 </div>
                 <div class="four wide field">
-                    <select class="ui dropdown search selection" style="width: 100%;" id="branch">
+                    <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3Add"  (change)="setTravelToAdd($event)" >
                         <option value="">เลือก</option>
-                        <option *ngFor="let data of branchDropdown" value="{{data.value}}">{{data.label}}</option>
+                        <option *ngFor="let data of travelTo3AddList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                     </select>
                 </div>
             </div>
@@ -254,7 +281,7 @@
 
     <div class="actions">
         <div class="ui red deny button">ยกเลิก</div>
-        <div class="ui green button" (click)="saveHead()">ตกลง</div>
+        <div class="ui green button" (click)="add()">ตกลง</div>
     </div>
 </div>
 <!--End add Head modal -->

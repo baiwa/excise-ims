@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ctc.wstx.util.StringUtil;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
@@ -36,9 +37,6 @@ public class Int091Controller {
 	@ResponseBody
 	public DataTableAjax<Int091Vo> list(@RequestBody Int091FormVo formVo){
 		DataTableAjax<Int091Vo> list = null;
-//		if(StringUtils.isBlank(formVo.getSearchFlag())) {
-//			formVo.setSearchFlag("FALSE");
-//		}
 		log.info("formVo.getSearchFlag() {}",formVo.getSearchFlag());
 		try {
 			 list = int091Service.findAll(formVo);
@@ -49,11 +47,18 @@ public class Int091Controller {
 		
 		return list;
 	}
-	
-	@GetMapping("/documentTypeDropdown")
+	@PostMapping("/add")
 	@ResponseBody
-	public List<LabelValueBean> documentTypeDropdown(){
-		return int091Service.documentTypeDropdown();
+	public Message add(@RequestBody Int091FormVo formVo){
+		
+		try {
+			 int091Service.add(formVo);
+			 
+		} catch (Exception e) {
+			log.error("Error ! add ",e);
+			return ApplicationCache.getMessage("MSG_00006");
+		}
+		return ApplicationCache.getMessage("MSG_00005");
 	}
 
 	@PostMapping("/deleteList")
@@ -69,4 +74,6 @@ public class Int091Controller {
 
     }
 	
+	
+
 }

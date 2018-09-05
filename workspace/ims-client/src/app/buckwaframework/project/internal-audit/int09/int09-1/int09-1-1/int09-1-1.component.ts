@@ -78,8 +78,6 @@ export class Int0911Component implements OnInit, OnDestroy {
             return "นายนพรัช  โพนทอง";
           }
         }, {
-          "data": "createdDate","className": "ui center aligned"
-        }, {
           "data": "createdBy",
           "render": function (data, type, row, meta) {
             return "บันทึกข้อความ";

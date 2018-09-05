@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { TextDateTH,formatter} from "../../../../common/helper/datepicker";
+import { TextDateTH, formatter ,stringToDate} from "../../../../common/helper/datepicker";
 import { AjaxService, MessageBarService } from "../../../../common/services";
 import { TravelCostHeader } from "../../../../common/models";
-import { Router,ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { TravelCostDetail } from "app/buckwaframework/common/models/travelcostdetail";
 import { IaService } from 'app/buckwaframework/common/services/ia.service';
+
 
 declare var $: any;
 @Component({
@@ -15,101 +16,119 @@ declare var $: any;
 export class Int091Component implements OnInit {
 
   searchFlag: String;
+  pickedTypeList:  any;
+  statusList: any;
+
+  travelTo1List: any;
+  travelTo2List: any;
+  travelTo3List: any;
+
+  travelTo1AddList: any;
+  travelTo2AddList: any;
+  travelTo3AddList: any;
 
   constructor(
-    private message:MessageBarService,
-    private ajax : AjaxService,
+    private message: MessageBarService,
+    private ajax: AjaxService,
     private route: ActivatedRoute,
     private router: Router,
     private iaService: IaService,
     private msg: MessageBarService
-  ) {}
+  ) { }
   calenda = function () {
+    // endCalendar: $("#date2"),
+    // startCalendar: $("#date"),
     $("#date").calendar({
+      endCalendar: $("#date2"),
       maxDate: new Date(),
       type: "date",
       text: TextDateTH,
-      formatter: formatter()
+      formatter: formatter(),
+      onChange: this.changeDate
     });
     $("#date2").calendar({
+      startCalendar: $("#date"),
       maxDate: new Date(),
       type: "date",
       text: TextDateTH,
-      formatter: formatter()
+      formatter: formatter(),
+      onChange: this.changeDate2
     });
     $("#date3").calendar({
-      maxDate: new Date(),
       type: "year",
       text: TextDateTH,
       formatter: formatter("ป")
     });
     $("#date4").calendar({
-      maxDate: new Date(),
+      endCalendar: $("#date5"),
       type: "date",
       text: TextDateTH,
       formatter: formatter()
     });
     $("#date5").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    });
-    $("#date6").calendar({
-      maxDate: new Date(),
+      startCalendar: $("#date4"),
       type: "date",
       text: TextDateTH,
       formatter: formatter()
     });
 
     $("#modalDate1").calendar({
-      maxDate: new Date(),
       type: "year",
       text: TextDateTH,
       formatter: formatter("ป")
     });
     $("#modalDate2").calendar({
-      maxDate: new Date(),
+      endCalendar: $("#modalDate3"),
       type: "date",
       text: TextDateTH,
       formatter: formatter()
     });
     $("#modalDate3").calendar({
-      maxDate: new Date(),
+      startCalendar: $("#modalDate2"),
       type: "date",
       text: TextDateTH,
       formatter: formatter()
     });
   }
 
-  clickSearch = function(){
+  clickSearch = function () {
     $("#searchFlag").val("TRUE");
     $('#tableData').DataTable().ajax.reload();
   }
-  
-  clickClear = function(){
+
+  clickClear = function () {
     $("#searchFlag").val("FALSE");
+    $('input[type=text]').val("");
+    $('select').val("");
     $('#tableData').DataTable().ajax.reload();
   }
 
-  dataTable = function(){
-    $("#doctype").val() == 0 ? "":$("doctype").val();
+  dataTable = function () {
     var table = $('#tableData').DataTable({
-      "lengthChange":true,
+      "lengthChange": true,
       "serverSide": false,
       "searching": false,
       "ordering": false,
       "processing": true,
-      "scrollX": true,      
-      "ajax" : {
-        "url" : '/ims-webapp/api/ia/int091/list',
+      "scrollX": true,
+      "ajax": {
+        "url": '/ims-webapp/api/ia/int091/list',
         "contentType": "application/json",
-        "type" : "POST",
-        "data" : (d) => {
+        "type": "POST",
+        "data": (d) => {
           return JSON.stringify($.extend({}, d, {
-            "searchFlag" : $("#searchFlag").val()
+            "searchFlag": $("#searchFlag").val(),
+            "dateFrom": $("#dateFrom").val(),
+            "dateTo": $("#dateTo").val(),
+            "createdBy": $("#createdBy").val(),
+            "pickedType": $("#pickedType").val(),
+            "fiscalYear": $("#fiscalYear").val(),
+            "departureDate": $("#departureDate").val(),
+            "returnDate": $("#returnDate").val(),
+            "travelTo": $("#travelTo").val(),
+            "status": $("#status").val()
           }));
-        },  
+        },
       },
       "columns": [
         {
@@ -122,68 +141,204 @@ export class Int091Component implements OnInit {
           "data": "createdDate",
           "className": "ui center aligned"
         }, {
-          "data": "createdBy",
-          "render": function (data, type, row, meta) {
-            return "นายนพรัช  โพนทอง";
+          "data": "createdBy"
+        }, {
+          "data": "pickedType",
+          "className": "ui center aligned",
+          "render": function (data, type, row) {
+            var s = '';
+            if (data == 1162) {
+              s = 'ก่อนเดินทาง';
+            } else {
+              s = 'หลังเดินทาง';
+            }
+            return s;
           }
         }, {
           "data": "fiscalYear",
+          "className": "ui center aligned"
+        }, {
+          "data": "departureDate",
+          "className": "ui center aligned"
+        }, {
+          "data": "returnDate",
+          "className": "ui center aligned"
+        }, {
+          "data": "travelToDescription"
+        }, {
+          "data": "status",
           "className": "ui center aligned",
-          "render": function (data, type, row, meta) {
-            return row.fiscalYear.split("/")[2];
+          "render": function (data, type, row) {
+            var s = '';
+            if (data == 1167) {
+              s = 'ดำเนินการสำเร็จ';
+            } else {
+              s = 'กำลังดำเนินการ';
+            }
+            return s;
           }
         }, {
-          "data": "createdDate"
-        }, {
-          "data": "createdDate"
-        }, {
-          "data": "createdDate"
-        }, {
-          "data": "createdBy",
-          "render": function (data, type, row, meta) {
-            return "สำนักงานสรรพสามิตพื้นที่สาขาเมืองเชียงราย";
-          }
-        }, {
-          "data": "createdBy",
-          "className": "ui center aligned",
-          "render": function (data, type, row, meta) {
-            return "รออนุมัติประมาณการค่าใช้จ่าย";
-          }
-        },{
           "data": "id",
           "className": "ui center aligned",
-          "render" : function(data,type,row){
+          "render": function (data, type, row) {
             var btn = '';
-            btn +='<button class="mini ui primary button btn-edit">รายละเอียด</button>';
-            btn +='<button class="mini ui red button btn-edit">ยกเลิก</button>';
-              return btn;
+            btn += '<button class="mini ui primary button btn-edit">รายละเอียด</button>';
+            btn += '<button class="mini ui red button btn-edit">ยกเลิก</button>';
+            return btn;
           }
         }
       ]
     });
 
     //button edit>
-    table.on('click', 'tbody tr button.btn-edit', ()=> {
-			var closestRow = $(this).closest('tr');
-      var data = table.row(closestRow).data();   
+    table.on('click', 'tbody tr button.btn-edit', () => {
+      var closestRow = $(this).closest('tr');
+      var data = table.row(closestRow).data();
       this.router.navigate(['/int09/1/1']);
       console.log(data);
-     
+
     });
 
   }
-  modalAddHead (){
+
+    pickedTypeDropdown = () =>{
+  
+      const URL = "combobox/controller/getDropByTypeAndParentId";
+      this.ajax.post(URL, { type: "ACC_FEE", lovIdMaster: 1161 }, res => {
+        this.pickedTypeList = res.json();
+        console.log(this.pickedTypeList);
+      });
+    }
+
+    statusDropdown = () =>{
+  
+      const URL = "combobox/controller/getDropByTypeAndParentId";
+      this.ajax.post(URL, { type: "ACC_FEE", lovIdMaster: 1165 }, res => {
+        this.statusList = res.json();
+        console.log(this.statusList);
+      });
+    }
+    travelTo1Dropdown = () =>{
+  
+      const URL = "combobox/controller/getDropByTypeAndParentId";
+      this.ajax.post(URL, { type: "SECTOR_VALUE"}, res => {
+        this.travelTo1List = res.json();
+        console.log(this.travelTo1List);
+      });
+    }
+
+    travelTo2Dropdown = e =>{
+      var id = e.target.value;
+      if (id != "") {
+      const URL = "combobox/controller/getDropByTypeAndParentId";
+      this.ajax.post(URL, { type: "SECTOR_VALUE",lovIdMaster: id}, res => {
+        this.travelTo2List = res.json();
+        this.setTravelTo(e);
+        console.log(this.travelTo2List);
+      });
+    }
+    }
+
+    travelTo3Dropdown = e =>{
+      var id = e.target.value;
+      if (id != "") {
+      const URL = "combobox/controller/getDropByTypeAndParentId";
+      this.ajax.post(URL, { type: "SECTOR_VALUE",lovIdMaster: id}, res => {
+        this.travelTo3List = res.json();
+        this.setTravelTo(e);
+        console.log(this.travelTo3List);
+      });
+    }
+    }
+
+    travelTo1AddDropdown = () =>{
+  
+      const URL = "combobox/controller/getDropByTypeAndParentId";
+      this.ajax.post(URL, { type: "SECTOR_VALUE"}, res => {
+        this.travelTo1AddList = res.json();
+        // this.setTravelToAdd();
+        console.log(this.travelTo1AddList);
+      });
+    }
+
+    travelTo2AddDropdown = e =>{
+      var id = e.target.value;
+      if (id != "") {
+      const URL = "combobox/controller/getDropByTypeAndParentId";
+      this.ajax.post(URL, { type: "SECTOR_VALUE",lovIdMaster: id}, res => {
+        this.travelTo2AddList = res.json();
+        this.setTravelToAdd(e);
+        console.log(this.travelTo2AddList);
+      });
+    }
+    }
+
+    travelTo3AddDropdown = e =>{
+      var id = e.target.value;
+      if (id != "") {
+      const URL = "combobox/controller/getDropByTypeAndParentId";
+      this.ajax.post(URL, { type: "SECTOR_VALUE",lovIdMaster: id}, res => {
+        this.travelTo3AddList = res.json();
+        this.setTravelToAdd(e);
+        console.log(this.travelTo3AddList);
+      });
+    }
+    }
+
+    add (){
+      console.log("Add : True");
+      $('#modalAddHead').modal('hide');
+      
+      const URL = "ia/int091/add";
+      this.ajax.post(URL, { 
+        createdDate: "ACC_FEE", 
+        createdBy: $("#createdByAdd").val(),
+        pickedType: $("#pickedTypeAdd").val(),
+        fiscalYear: $("#fiscalYearAdd").val(),
+        departureDate: $("#departureDateAdd").val(),
+        returnDate: $("#returnDateAdd").val(),
+        travelTo: $("#travelToAdd").val() 
+      }, res => {
+        const msg = res.json();
+        
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+    }
+
+  modalAddHead() {
     $('#modalAddHead').modal('show');
     this.calenda();
   }
-  saveHead (){
-    console.log("Save Head : True");
-     $('#modalAddHead').modal('hide');
-   }
+
+
+  
+
+  setTravelTo = e => {
+    console.log("ID : ",e.target.value);
+      $('#travelTo').val(e.target.value);
+      $('#travelToId').val(e.target.value);
+  
+  }
+
+  setTravelToAdd = e => {
+    console.log("ID : ",e.target.value);
+    $('#travelToAdd').val(e.target.value);
+    $('#travelToIdAdd').val(e.target.value);
+  }
 
   ngOnInit() {
     this.dataTable();
     this.calenda();
+    this.pickedTypeDropdown();
+    this.statusDropdown();
+    this.travelTo1Dropdown();
+    this.travelTo1AddDropdown();
   }
 
 }

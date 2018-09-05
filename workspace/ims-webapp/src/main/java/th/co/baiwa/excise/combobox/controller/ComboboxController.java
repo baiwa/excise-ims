@@ -123,4 +123,6 @@ public class ComboboxController {
 		logger.info("findDropByTypeAndParentId Type : "+lov.getType() + "|| parentId : "+ lov.getLovIdMaster() );
 		return ApplicationCache.getListOfValueByTypeParentId(lov.getType(), lov.getLovIdMaster());
 	}
+	
+	
 }

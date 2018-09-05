@@ -176,5 +176,16 @@ public class DateConstant {
 		}
 		return date;
 	}
+	public static String convertDateToStrDD_MM_YYYY_HH_mm(Date date) {
+		String dateString = "";
+		try {
+			if (date != null) {
+				dateString = DateFormatUtils.format(date,DD_MM_YYYY_HH_mm,LOCAL_TH);
+			}
+		} catch (Exception e) {
+			logger.error("Error convertDateToStrDDMMYYYY : ", e);
+		}
+		return dateString;
+	}
 	
 }

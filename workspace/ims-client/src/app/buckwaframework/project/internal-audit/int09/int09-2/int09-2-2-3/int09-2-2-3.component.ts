@@ -150,7 +150,6 @@ export class Int09223Component implements OnInit {
        console.log(res.json());
        this.trainingRoomTypeDropdown = res.json();
     });
-
   }
 
 

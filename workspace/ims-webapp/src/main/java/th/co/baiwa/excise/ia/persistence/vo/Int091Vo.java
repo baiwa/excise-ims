@@ -5,19 +5,19 @@ import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 public class Int091Vo extends DataTableRequest {
 
 	private static final long serialVersionUID = -1085458524740446987L;
-	private Long id;
-	private String createdDate;
-	private String createdBy;
-	private String documentType;
-	private String thosePicked;
-	private String fiscalYear;
-	private String stateAgencyName;
-	private String updatedDate;
-	private String updatedBy;
-	private String isDeleted;
-	private String errorMsg;
-
-	private String year;
+    private Long id;
+    private String createdDate;
+    private String createdBy;
+    private String pickedType;
+    private String fiscalYear;
+    private String departureDate;
+    private String returnDate;
+    private String travelTo;
+    private String travelToDescription;
+    private String status;
+    private String isDeleted;
+    private String errorMsg;
+    
 	private String searchFlag;
 
 	public Long getId() {
@@ -44,20 +44,12 @@ public class Int091Vo extends DataTableRequest {
 		this.createdBy = createdBy;
 	}
 
-	public String getDocumentType() {
-		return documentType;
+	public String getPickedType() {
+		return pickedType;
 	}
 
-	public void setDocumentType(String documentType) {
-		this.documentType = documentType;
-	}
-
-	public String getThosePicked() {
-		return thosePicked;
-	}
-
-	public void setThosePicked(String thosePicked) {
-		this.thosePicked = thosePicked;
+	public void setPickedType(String pickedType) {
+		this.pickedType = pickedType;
 	}
 
 	public String getFiscalYear() {
@@ -68,28 +60,44 @@ public class Int091Vo extends DataTableRequest {
 		this.fiscalYear = fiscalYear;
 	}
 
-	public String getStateAgencyName() {
-		return stateAgencyName;
+	public String getDepartureDate() {
+		return departureDate;
 	}
 
-	public void setStateAgencyName(String stateAgencyName) {
-		this.stateAgencyName = stateAgencyName;
+	public void setDepartureDate(String departureDate) {
+		this.departureDate = departureDate;
 	}
 
-	public String getUpdatedDate() {
-		return updatedDate;
+	public String getReturnDate() {
+		return returnDate;
 	}
 
-	public void setUpdatedDate(String updatedDate) {
-		this.updatedDate = updatedDate;
+	public void setReturnDate(String returnDate) {
+		this.returnDate = returnDate;
 	}
 
-	public String getUpdatedBy() {
-		return updatedBy;
+	public String getTravelTo() {
+		return travelTo;
 	}
 
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
+	public void setTravelTo(String travelTo) {
+		this.travelTo = travelTo;
+	}
+
+	public String getTravelToDescription() {
+		return travelToDescription;
+	}
+
+	public void setTravelToDescription(String travelToDescription) {
+		this.travelToDescription = travelToDescription;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getIsDeleted() {
@@ -108,14 +116,6 @@ public class Int091Vo extends DataTableRequest {
 		this.errorMsg = errorMsg;
 	}
 
-	public String getYear() {
-		return year;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
-	}
-
 	public String getSearchFlag() {
 		return searchFlag;
 	}
@@ -128,4 +128,7 @@ public class Int091Vo extends DataTableRequest {
 		return serialVersionUID;
 	}
 
+	
+	
+	
 }
