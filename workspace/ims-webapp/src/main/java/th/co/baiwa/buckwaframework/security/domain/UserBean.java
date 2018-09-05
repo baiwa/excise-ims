@@ -11,7 +11,7 @@ public interface UserBean extends UserDetails {
 	
 	public String getUsername();
 	
-	public String officeCode();
+	public String getOfficeCode();
 	
 	public Collection<GrantedAuthority> getAuthorities();
 	

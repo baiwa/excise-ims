@@ -17,7 +17,7 @@ public class UserDetails extends User implements UserBean {
 	private String officeCode;
 	
 	// Constructor
-	public UserDetails(String username, String password, boolean enabled,boolean accountNonExpired,
+	public UserDetails(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 	}
@@ -38,19 +38,21 @@ public class UserDetails extends User implements UserBean {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-
+	
 	public String[] getExciseBaseControl() {
 		return exciseBaseControl;
 	}
-
+	
 	public void setExciseBaseControl(String[] exciseBaseControl) {
 		this.exciseBaseControl = exciseBaseControl;
 	}
-
-	@Override
-	public String officeCode() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public String getOfficeCode() {
+		return officeCode;
+	}
+	
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 	
 }
