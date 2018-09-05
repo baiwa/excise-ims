@@ -46,7 +46,7 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 			);
 			userDetails.setOfficeCode(response.getOffice());
 			
-			System.out.println("login success");
+			System.out.println("login success : " + response.getOffice());
 			
 			return userDetails;
 		} else {

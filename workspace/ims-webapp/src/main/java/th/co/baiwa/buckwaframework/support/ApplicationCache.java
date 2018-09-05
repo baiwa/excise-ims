@@ -1,6 +1,8 @@
 package th.co.baiwa.buckwaframework.support;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +82,14 @@ public class ApplicationCache {
 			if (lov.getLovIdMaster().equals(parentId)) {
 				lovListByTypeParentId.add(lov);
 			}
+		}
+		if (lovListByTypeParentId.size() > 0) {
+			Collections.sort(lovListByTypeParentId, new Comparator<Lov>() {
+				@Override
+				public int compare(final Lov object1, final Lov object2) {
+					return object1.getLovId().compareTo(object2.getLovId());
+				}
+			});
 		}
 		return lovListByTypeParentId;
 	}

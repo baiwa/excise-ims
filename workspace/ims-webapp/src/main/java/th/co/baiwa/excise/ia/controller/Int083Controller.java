@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.Int0801Vo;
@@ -106,6 +107,7 @@ public class Int083Controller {
 	@PostMapping("/createBudgetYear")
 	@ResponseBody
 	public Message createBuggetYear(@RequestBody RiskAssExcAreaHdr riskAssRiskWsHdr) {
+		System.out.println(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		logger.info("Add createBuggetYear" + riskAssRiskWsHdr.getBudgetYear());
 		Message message =  null;
 		if(BeanUtils.isNotEmpty(riskAssRiskWsHdr.getBudgetYear())){
@@ -224,15 +226,25 @@ public class Int083Controller {
 		return riskAssExcAreaService.updatePercent(int0803Vo.getRiskAssExcAreaHdrList());
 	}
 	
-	
-	public RiskAssExcAreaService getRiskAssExcAreaService() {
-		return riskAssExcAreaService;
+	@PostMapping("/findRiskAssExcOtherDtlByHeaderId")
+	@ResponseBody
+	public ResponseDataTable<RiskAssExcOtherDtl> findRiskAssExcOtherDtlByHeaderId(DataTableRequest dataTableRequest,RiskAssExcAreaHdr riskAssExcAreaHdr) {
+		logger.info("findRiskAssExcOtherDtlByHeaderId");
+		List<RiskAssExcOtherDtl> riskAssOtherDtlList = riskAssExcAreaService.findByRiskHrdId(riskAssExcAreaHdr.getRiskHrdId());
+		ResponseDataTable<RiskAssExcOtherDtl> responseDataTable = new ResponseDataTable<RiskAssExcOtherDtl>();
+		responseDataTable.setData(riskAssOtherDtlList);
+		responseDataTable.setRecordsTotal(riskAssOtherDtlList.size());
+		responseDataTable.setRecordsFiltered(riskAssOtherDtlList.size());
+		return responseDataTable;
 	}
-
-	public void setRiskAssExcAreaService(RiskAssExcAreaService riskAssExcAreaService) {
-		this.riskAssExcAreaService = riskAssExcAreaService;
-	}
-
 	
+	@PostMapping("/searchRiskAssRiskWsDtl")
+	@ResponseBody
+	public List<RiskAssExcAreaDtl> searchRiskAssRiskWsDtl(@RequestBody RiskAssExcAreaHdr riskAssRiskWsHdr) {
+		logger.info("dataTableRiskAssRiskWsDtl");
+		List<RiskAssExcAreaDtl> riskAssRiskWsHdrList = null;
+		riskAssRiskWsHdrList = riskAssExcAreaService.findByGroupRiskHrdId(riskAssRiskWsHdr.getRiskHrdId());
+		return riskAssRiskWsHdrList;
+	}
 
 }
