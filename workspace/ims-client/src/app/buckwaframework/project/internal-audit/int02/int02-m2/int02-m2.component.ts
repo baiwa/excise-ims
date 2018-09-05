@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 
 import { Questionnaire, _Questionnaire } from "./int02-m2.mock";
-import { AjaxService, AuthService } from "../../../../common/services";
-import { NgForm } from "@angular/forms";
+import { AjaxService } from "../../../../common/services";
 
 declare var $: any;
 
@@ -19,7 +18,6 @@ const URL = {
 })
 export class Int02M2Component implements OnInit {
 
-  @ViewChild("f") form: NgForm;
   questionnaire: Questionnaire[] = [];
   loading: boolean = true;
   constructor(private ajax: AjaxService) {
@@ -33,34 +31,33 @@ export class Int02M2Component implements OnInit {
       this.questionnaire = res.json();
       this.loading = false;
       setTimeout(() => {
-        $('#acc').accordion();
-        $('.ui.checkbox').checkbox();
+        // $('#acc').accordion();
+        // $('.ui.checkbox').checkbox();
       });
     });
 
   }
 
-  save(form: NgForm) {
-    if (!form.valid) {
-      let i = 0;
-      $.each(form.controls, (index, value) => {
-        if (!value.valid) {
-          if (i < 5) {
-            $("html, body").stop().animate({ scrollTop: 0 }, 500, 'swing');
-          } else {
-            $(`#${index}`).focus();
-          }
-          return;
+  save(form) {
+    form.preventDefault();
+    let promise = new Promise((resolve, reject) => {
+      let point = [];
+      let conclusion = [];
+      $.each(form.target, (index, value) => {
+        if (value.id.split("_")[0] == "point") {
+          point.push({id: value[1], value: value.value == "true" ? true : false});
+          console.log(index, value.value == "true" ? true : false);
         }
-        i++;
+        if (form.target.length-1 == index) {
+          resolve();
+        }
       });
-    } else {
-      console.log(form);
-    }
+    });
   }
-  validClass(name, form) {
-    const { controls, submitted } = form;
-    return submitted && !controls[name].valid ? 'error' : '';
+
+  onSubmit(e) {
+    e.preventDefault();
+    console.log(e);
   }
 
 }

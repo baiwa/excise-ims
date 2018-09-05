@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportDetail;
 import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
@@ -38,6 +40,9 @@ public class Int02m2Service {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public List<Int02m2Vo> findByCreteria() {
+		String code = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		List<Lov> lov = ApplicationCache.getListOfValueByValueType("SECTOR_LIST", code);
+		logger.info("{} {} {}",lov.get(0).getSubTypeDescription(), lov.get(0).getLovId(), code);
 		String user = UserLoginUtils.getCurrentUsername();
 		String sector = "ภาคที่ 1";
 		String area = user.equals("ryangek") ? "สำนักงานสรรพสามิตพื้นที่อยุธยา" : "สำนักงานสรรพสามิตพื้นที่ชัยนาท";

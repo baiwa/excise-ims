@@ -36,7 +36,7 @@ export class Int021Component implements OnInit {
 
   ngOnInit() {
 
-    this.ajax.post(URL.LOV_SECTOR, { type: "SECTOR_VALUE"}, res => { // SECTOR
+    this.ajax.post(URL.LOV_SECTOR, { type: "SECTOR_VALUE" }, res => { // SECTOR
       this.sectors = res.json();
     });
 
@@ -92,11 +92,13 @@ export class Int021Component implements OnInit {
           className: "center"
         },
         {
-          data: "qtnSector",
+          data : "qtnSector",
           className: "center"
         },
         {
-          data: "qtnArea",
+          render: (data, type, full, meta) => { // data : "qtnArea"
+            return full.qtnArea == "" ? "-" : full.qtnArea;
+          },
           className: "center"
         },
         {
@@ -108,7 +110,7 @@ export class Int021Component implements OnInit {
           className: "center"
         },
         {
-          render: (data, type, full, meta) => {
+          render: (data, type, full, meta) => { // data : "qtnFinished"
             let str = "";
             if (full.qtnFinished == "Y") {
               str = "";
@@ -124,14 +126,13 @@ export class Int021Component implements OnInit {
   }
 
   reDatatable = () => {
-
     this.datatable.destroy();
     this.initDatatable();
   }
 
   onSubmit = (form: NgForm) => {
     const { calendar_data, sector, area } = form.value;
-    if (calendar_data != "" && sector != "" && area != "") {
+    if (calendar_data != "" && sector != "") { //  && area != ""
       const data = {
         qtnName: `${sector} ${area}`,
         qtnSector: sector,
