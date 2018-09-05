@@ -11,32 +11,89 @@ declare var $: any;
 })
 export class Int05113Component implements OnInit {
 
+  formModal: FormModal = new FormModal();
   constructor() { }
 
   ngOnInit() {
-    $('#date-pay').calendar({
-      type: 'date',
-      formatter: formatter(),
-      text: TextDateTH
-    });
+    this.calenda();
 
-    $('#date-withdraw').calendar({
-      type: 'date',
-      formatter: formatter(),
-      text: TextDateTH
-    });
+  }
 
-    $('#date-check').calendar({
-      type: 'date',
-      formatter: formatter(),
-      text: TextDateTH
+  calenda = () => {
+    $("#dateF").calendar({
+      maxDate: new Date(),
+      endCalendar: $("#dateTo"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
     });
-
-    $('#date-send').calendar({
-      type: 'date',
-      formatter: formatter(),
-      text: TextDateTH
+    $("#dateT").calendar({
+      maxDate: new Date(),
+      startCalendar: $("#dateForm"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $("#dateOfPayForm").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    }, 'blur');
+    $("#dateWithdrawStampForm").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $("#dateDeliverStampForm").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $("#fivePartDateForm").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $("#stampCheckDateForm").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
     });
   }
 
+}
+class FormModal {
+  workSheetDetailId: string = null;
+  exciseDepartment: string = null;
+  exciseRegion: string = null;
+  exciseDistrict: string = null;
+  dateOfPay: string = null;
+  status: string = null;
+  departmentName: string = null;
+  bookNumberWithdrawStamp: string = null;
+  dateWithdrawStamp: string = null;
+  bookNumberDeliverStamp: string = null;
+  dateDeliverStamp: string = null;
+  fivePartNumber: string = null;
+  fivePartDate: string = null;
+  stampCheckDate: string = null;
+  stampChecker: string = null;
+  stampType: string = null;
+  stampBrand: string = null;
+  numberOfBook: string = null;
+  numberOfStamp: string = null;
+  valueOfStampPrinted: string = null;
+  sumOfValue: string = null;
+  serialNumber: string = null;
+  taxStamp: string = null;
+  stampCodeStart: string = null;
+  stampCodeEnd: string = null;
+  note: string = null;
+  createdDate: string = null;
+  fileName: string = null;
 }
