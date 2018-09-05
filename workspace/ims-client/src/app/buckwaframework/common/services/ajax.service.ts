@@ -104,4 +104,9 @@ export class AjaxService {
       .then(success)
       .catch(errorFn);
   }
+
+  download(url: string){
+    let full_url= AjaxService.CONTEXT_PATH +url;
+    window.open(full_url);
+  }
 }
