@@ -3,11 +3,10 @@
         <h2 class="ui header">เพิ่มข้อมูลแสตมป์</h2>
 
         <div class="ui top attached header">
-            <span>เพิ่มข้อมูลแสตมป์รายเดือน</span>
+            <span>เพิ่มข้อมูลแสตมป์</span>
         </div>
         <div class="ui attached segment">
-            <form class="ui form">
-                <input type="hidden" [(ngModel)]="formModal.workSheetDetailId" name="workSheetDetailId" id="workSheetDetailId">
+            <form class="ui form" (ngSubmit)="onAdd()">                
                 <!-- row 1 -->
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
@@ -241,7 +240,51 @@
                     </div>
                 </div>
                 <div class="one wide field "></div>
+                <!-- button -->
+                <br>
+                <div class="ui centered grid">
+                    <button class="ui mini green button" type="submit"><i class="add icon"></i> เพิ่ม</button>
+                </div><br>
             </form>
         </div>
     </div>
 </div>
+
+<!-- table -->
+<div class="ui segment">
+    <table id="dataTable" class="ui small celled table nowrap" style="width: 100%">
+      <thead>
+        <tr style="text-align: center;">        
+          <th rowspan="2">ลำดับ</th>
+          <th rowspan="2">วันที่ การรับ-จ่าย</th>
+          <th rowspan="2">สถานะ การรับ-จ่าย</th>
+          <th rowspan="2">หน่วยงาน/ผู้ประกอบการที่รับ-จ่ายแสตมป์</th>
+          <th colspan="2">หนังสือขอเบิกแสตมป์</th>
+          <th colspan="2">หนังสือส่งแสตมป์</th>
+          <th rowspan="2">เลขที่ใบ 5 ตอน</th>
+          <th rowspan="2">ลงวันวันที่</th>
+          <th rowspan="2">วันที่ตรวจนับ</th>
+          <th rowspan="2">ผู้ตรวจนับ</th>
+          <th rowspan="2">ชนิดแสตมป์/ขนาดบรรจุ</th>
+          <th rowspan="2">จำนวน (เล่ม)</th>
+          <th rowspan="2">จำนวน (ดวง)</th>
+          <th rowspan="2">มูลค่าที่พิมพ์ (บาทต่อดวง)</th>
+          <th rowspan="2">รวมค่าพิมพ์ (บาท)</th>
+          <th rowspan="2">เลขที่ประจำเล่มแสตมป์</th>
+          <th rowspan="2">หมายเหตุ</th>
+          <th rowspan="2">Action</th>
+  
+        </tr>
+        <tr>
+          <th>เลขที่หนังสือ</th>
+          <th>ลงวันที่</th>
+  
+          <th>เลขที่หนังสือ</th>
+          <th>ลงวันที่</th>
+        </tr>
+      </thead>
+    </table><br>
+    <div class="ui centered grid">
+      <button class="ui mini blue button" type="button" (click)="onSave()">บันทึก</button>
+    </div><br>
+  </div>
