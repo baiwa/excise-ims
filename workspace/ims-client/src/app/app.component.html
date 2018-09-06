@@ -108,7 +108,13 @@
             </div>
             <a class="item " [routerLink]="[ '/int01/8/1'] " *ngIf="authService.renderByPage('int01/8/1')" routerLinkActive="active " style="color: #000; ">ค้นหากระดาษทำการ</a>
             <a class="item " [routerLink]="[ '/int09/1'] " *ngIf="authService.renderByPage('int09/1')" routerLinkActive="active " style="color: #000; ">ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ</a>
- 
+            <div class="ui simple dropdown item " *ngIf="authService.renderByPage('int11')">
+                <i class="dropdown icon "></i> ทะเบียนติดตามงาน
+                <div class="menu ">
+                    <a class="item " [routerLink]="[ '/int11/1'] " *ngIf="authService.renderByPage('int11/1')" routerLinkActive="active ">ทะเบียนคุมการติดตามผลการตรวจสอบของโครงการ</a>
+                    <a class="item " [routerLink]="[ '/int11/2'] " *ngIf="authService.renderByPage('int11/2')" routerLinkActive="active ">ทะเบียนคุมการติดตามผลการตรวจสอบของหน่วยรับตรวจ</a>
+                </div>
+            </div>
         </div>
     </div>
 

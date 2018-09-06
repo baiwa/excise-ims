@@ -8,6 +8,10 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -81,13 +85,13 @@ public class IaFollowUpProjectService {
 	
 	public List<LabelValueBean> getStatusDropdown() {
 		List<LabelValueBean> dropdownList = new ArrayList<>();
-		dropdownList.add(new LabelValueBean(STATUS.TRACKING_FIRST_DESC, STATUS.TRACKING_FIRST_CODE));
-		dropdownList.add(new LabelValueBean(STATUS.RESULT_OPT_FIRST_DESC, STATUS.RESULT_OPT_FIRST_CODE));
-		dropdownList.add(new LabelValueBean(STATUS.REPORT_TRACKING_FIRST_DESC, STATUS.REPORT_TRACKING_FIRST_CODE));
-		dropdownList.add(new LabelValueBean(STATUS.TRACKING_SECOND_DESC, STATUS.TRACKING_SECOND_CODE));
-		dropdownList.add(new LabelValueBean(STATUS.RESULT_OPT_SECOND_DESC, STATUS.RESULT_OPT_SECOND_CODE));
-		dropdownList.add(new LabelValueBean(STATUS.REPORT_TRACKING_SECOND_DESC, STATUS.REPORT_TRACKING_SECOND_CODE));
-		dropdownList.add(new LabelValueBean(STATUS.COMPLETE_DESC, STATUS.COMPLETE_CODE));
+		dropdownList.add(new LabelValueBean(STATUS.TRACKING_FIRST_DESC, STATUS.TRACKING_FIRST_DESC));
+		dropdownList.add(new LabelValueBean(STATUS.RESULT_OPT_FIRST_DESC, STATUS.RESULT_OPT_FIRST_DESC));
+		dropdownList.add(new LabelValueBean(STATUS.REPORT_TRACKING_FIRST_DESC, STATUS.REPORT_TRACKING_FIRST_DESC));
+		dropdownList.add(new LabelValueBean(STATUS.TRACKING_SECOND_DESC, STATUS.TRACKING_SECOND_DESC));
+		dropdownList.add(new LabelValueBean(STATUS.RESULT_OPT_SECOND_DESC, STATUS.RESULT_OPT_SECOND_DESC));
+		dropdownList.add(new LabelValueBean(STATUS.REPORT_TRACKING_SECOND_DESC, STATUS.REPORT_TRACKING_SECOND_DESC));
+		dropdownList.add(new LabelValueBean(STATUS.COMPLETE_DESC, STATUS.COMPLETE_DESC));
 		return dropdownList;
 	}
 	
@@ -164,7 +168,7 @@ public class IaFollowUpProjectService {
 		
 		Workbook workbook = new XSSFWorkbook();
 
-//		this.createWorkSheetExcel(workbook);
+		this.createWorkSheetExcel(workbook);
 		
 		// Write the output to a file
 		FileOutputStream fileOut = new FileOutputStream(file);
@@ -176,156 +180,7 @@ public class IaFollowUpProjectService {
 		return new FileSystemResource(file);
 	}
 	
-	private void createWorkSheetExcel(Workbook workbook, String pageSheet, Integer tranId, String fileId) throws Exception {
-//		String TOPIC = String.format("CDRs รายการโอนหนี้ T%s (#OS%s-FID:%s)", titleSheet, tranId, fileId);
-//		String[] columns = this.HEADER_EXPORT_FILE;
-//		String dateReport = DateFormatUtils.format(new Date(), "dd/MM/yyyy hh:mm:ss");
-//		List<TransferringSummaryVo> summaryList = new ArrayList<>();
-//		
-//		// Style
-//		// Header
-//		Font fontHeader = workbook.createFont();
-//		fontHeader.setBold(true);
-//
-//		Font headerFont = workbook.createFont();
-//		headerFont.setBold(true);
-//		headerFont.setColor(IndexedColors.RED.getIndex());
-//		
-//		// Date Display
-//		CellStyle styleDate = workbook.createCellStyle();
-//		styleDate.setAlignment(HorizontalAlignment.RIGHT);
-//		styleDate.setFont(fontHeader);
-//
-//		// Topic Display
-//		CellStyle styleTopic = workbook.createCellStyle();
-//		styleTopic.setAlignment(HorizontalAlignment.CENTER);
-//		styleTopic.setFont(fontHeader);
-//
-//		XSSFColor colorBlack = new XSSFColor(new Color(0, 0, 0));
-//		// body header
-//		CellStyle headerStyle = workbook.createCellStyle();
-//		headerStyle.setFont(headerFont);
-//		headerStyle.setBottomBorderColor(colorBlack.getIndex());
-//		headerStyle.setLeftBorderColor(colorBlack.getIndex());
-//		headerStyle.setRightBorderColor(colorBlack.getIndex());
-//		headerStyle.setTopBorderColor(colorBlack.getIndex());
-//		headerStyle.setBorderBottom(BorderStyle.THIN);
-//		headerStyle.setBorderLeft(BorderStyle.THIN);
-//		headerStyle.setBorderRight(BorderStyle.THIN);
-//		headerStyle.setBorderTop(BorderStyle.THIN);
-//		
-//		// body border
-//		CellStyle bodyStyle = workbook.createCellStyle();
-//		bodyStyle.setBottomBorderColor(colorBlack.getIndex());
-//		bodyStyle.setLeftBorderColor(colorBlack.getIndex());
-//		bodyStyle.setRightBorderColor(colorBlack.getIndex());
-//		bodyStyle.setTopBorderColor(colorBlack.getIndex());
-//		bodyStyle.setBorderBottom(BorderStyle.THIN);
-//		bodyStyle.setBorderLeft(BorderStyle.THIN);
-//		bodyStyle.setBorderRight(BorderStyle.THIN);
-//		bodyStyle.setBorderTop(BorderStyle.THIN);
-//		
-//		// End Style
-//				
-//		CreationHelper createHelper = workbook.getCreationHelper();
-//		
-//		Sheet sheet = workbook.createSheet("ตรวจสอบรอบบิล T" + pageSheet);
-//
-//		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 11));
-//		sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 11));
-//		sheet.addMergedRegion(new CellRangeAddress(2, 2, 0, 11));
-//
-//		Row dateRow =  sheet.createRow(0);
-//		Cell dateCell = dateRow.createCell(0);
-//		dateCell.setCellValue(dateReport);
-//		dateCell.setCellStyle(styleDate);
-//				
-//		Row topicRow =  sheet.createRow(1);
-//		Cell topicCell = topicRow.createCell(0);
-//		topicCell.setCellValue(TOPIC);
-//		topicCell.setCellStyle(styleTopic);
-//		
-//		// Create a Row
-//		Row headerRow = sheet.createRow(3);
-//
-//		// Creating cells
-//		for (int i = 0; i < columns.length; i++) {
-//			Cell cell = headerRow.createCell(i);
-//			cell.setCellValue(columns[i]);
-//			cell.setCellStyle(headerStyle);
-//		}
-//
-//		// Create Cell Style for formatting Date
-//		CellStyle dateCellStyle = workbook.createCellStyle();
-//		dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd-MM-yyyy"));
-//
-//
-//		int rowNum = 4;
-//		if (!summaryList.isEmpty()) {
-//			for (TransferringSummaryVo data : summaryList) {
-////				Row row = sheet.createRow(rowNum++);
-////				
-////				Cell cell0 = row.createCell(0);
-////				cell0.setCellValue(StringUtils.isNotBlank(data.getBa()) ? data.getBa() : "");
-////				cell0.setCellStyle(bodyStyle);
-////				
-////				Cell cell1 = row.createCell(1);
-////				cell1.setCellValue(StringUtils.isNotBlank(data.getIdTypeDisplay()) ? data.getIdTypeDisplay() : "");
-////				cell1.setCellStyle(bodyStyle);
-////				
-////				Cell cell2 = row.createCell(2);
-////				cell2.setCellValue(StringUtils.isNotBlank(data.getAcc()) ? data.getAcc() : "");
-////				cell2.setCellStyle(bodyStyle);
-////				
-////				Cell cell3 = row.createCell(3);
-////				cell3.setCellValue(StringUtils.isNotBlank(data.getPointOrigin()) ? data.getPointOrigin() : "");
-////				cell3.setCellStyle(bodyStyle);
-////				
-////				Cell cell4 = row.createCell(4);
-////				cell4.setCellValue(this.toCommarFormat(data.getRecs()));
-////				cell4.setCellStyle(bodyStyle);
-////				
-////				Cell cell5 = row.createCell(5);
-////				cell5.setCellValue(this.toMoneyFormat(data.getCharge()));
-////				cell5.setCellStyle(bodyStyle);
-////				
-////				Cell cell6 = row.createCell(6);
-////				cell6.setCellValue(this.toCommarFormat(data.getSecs()) );
-////				cell6.setCellStyle(bodyStyle);
-////				
-////				Cell cell7 = row.createCell(7);
-////				cell7.setCellValue(StringUtils.isNotBlank(data.getMinTransdt()) ? data.getMinTransdt() : "");
-////				cell7.setCellStyle(bodyStyle);
-////				
-////				Cell cell8 = row.createCell(8);
-////				cell8.setCellValue(StringUtils.isNotBlank(data.getMaxTransdt()) ? data.getMaxTransdt() : "");
-////				cell8.setCellStyle(bodyStyle);
-////				
-////				Cell cell9 = row.createCell(9);
-////				cell9.setCellValue(StringUtils.isNotBlank(data.getBperiod()) ? data.getBperiod() : "");
-////				cell9.setCellStyle(bodyStyle);
-////				
-////				Cell cell10 = row.createCell(10);
-////				cell10.setCellValue(StringUtils.isNotBlank(data.getRemark()) ? data.getRemark() : "");
-////				cell10.setCellStyle(bodyStyle);
-////				
-////				String invoiceType = StringUtils.isNotBlank(data.getInvoiceType()) ? data.getInvoiceType() : "";
-////				if ("1".equals(invoiceType)) {
-////					invoiceType = "รวมบิล";
-////				} else if ("0".equals(invoiceType)) {
-////					invoiceType = "แยกบิล";
-////				}
-////				
-////				Cell cell11 = row.createCell(11);
-////				cell11.setCellValue(invoiceType);
-////				cell11.setCellStyle(bodyStyle);
-//			}
-//		}
-//
-//		// Resize all columns to fit the content size
-//		for (int i = 0; i < columns.length; i++) {
-//			sheet.autoSizeColumn(i);
-//		}
-		
+	private void createWorkSheetExcel(Workbook workbook) throws Exception {
+
 	}
 }

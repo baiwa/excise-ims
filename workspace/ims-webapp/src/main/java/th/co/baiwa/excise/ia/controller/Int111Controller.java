@@ -32,7 +32,7 @@ import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
 import th.co.baiwa.excise.ia.service.IaFollowUpProjectService;
 
 @Controller
-@RequestMapping("api/ia/int11")
+@RequestMapping("api/ia/int111")
 public class Int111Controller {
 
 	private Logger log = LoggerFactory.getLogger(Int111Controller.class);
@@ -42,7 +42,7 @@ public class Int111Controller {
 	
 	@PostMapping("/search")
 	@ResponseBody
-	public ResponseDataTable<Int111Vo> search(Int111FormVo formVo) {
+	public ResponseDataTable<Int111Vo> search(@RequestBody Int111FormVo formVo) {
 		return iaFollowUpProjectService.searchIaFollowUpProject(formVo);
 	}
 	

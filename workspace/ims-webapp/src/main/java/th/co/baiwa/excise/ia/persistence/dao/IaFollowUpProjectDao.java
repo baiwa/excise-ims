@@ -32,8 +32,8 @@ public class IaFollowUpProjectDao {
     	List<Object> param = new ArrayList<>();
     	
     	if (StringUtils.isNotBlank(formVo.getProjectName())) {
-    		sql.append(" AND PROJECT_NAME = ? ");
-    		param.add(formVo.getProjectName());
+    		sql.append(" AND PROJECT_NAME LIKE ? ");
+    		param.add("%" + formVo.getProjectName() + "%");
     	}
     	
     	if (StringUtils.isNotBlank(formVo.getStatus())) {

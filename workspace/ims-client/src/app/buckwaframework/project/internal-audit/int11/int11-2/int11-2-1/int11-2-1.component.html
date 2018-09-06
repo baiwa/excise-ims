@@ -1,0 +1,368 @@
+<div class="ui grid">
+
+  <div class="sixteen wide column">
+
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>เพิ่มรายการติดตามผลการตรวจสอบของโครงการ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div id="followUpDepartmentForm" class="ui form">
+        <input type="hidden" id="followUpDepartmentId" name="followUpDepartmentId">
+        <input type="hidden" id="version" name="version">
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>สรรพสามิต : </label>
+          </div>
+
+          <div class="one wide required field ">
+            <label>ภาค</label>
+          </div>
+
+          <div class="four wide field ">
+            <select class="ui search dropdown save-follow-department-dropdown" id="exciseDepartment" name="exciseDepartment" [(ngModel)]="exciseDepartment" (change)="changeDepartment($event)">
+              <option value="">กรุณาเลือก </option>
+              <option *ngFor="let department of departmentList; index as i;" value="{{department.value}}">{{department.label}}</option>
+
+            </select>
+          </div>
+
+          <div class="one wide required field ">
+            <label>พื้นที่</label>
+          </div>
+
+          <div class="four wide field ">
+            <select class="ui search dropdown save-follow-department-dropdown" id="exciseRegion" name="exciseRegion" [(ngModel)]="exciseRegion" (change)="changeRegion($event)">
+              <option value="">กรุณาเลือก </option>
+              <option *ngFor="let region of regionList; index as i;" value="{{region.value}}">{{region.label}}</option>
+
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="four wide field "></div>
+
+          <div class="one wide required field ">
+            <label>สาขา</label>
+          </div>
+
+          <div class="four wide field ">
+            <select class="ui search dropdown save-follow-department-dropdown" id="exciseDistrict" name="exciseDistrict" [(ngModel)]="exciseDistrict" >
+              <option value="">กรุณาเลือก </option>
+              <option *ngFor="let distr of distrList; index as i;" value="{{distr.value}}">{{distr.label}}</option>
+
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>รายงานผลอธิบดี : </label>
+          </div>
+
+          <div class="one wide required field">
+            <label>เลขหนังสือ</label>
+          </div>
+
+          <div class="four wide field ">
+            <input type="text" id="informRectorBnum" name="informRectorBnum">
+          </div>
+
+          <div class="one wide required field ">
+            <label>วันที่</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="informRectorDate" name="informRectorDate" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>แจ้งติดตามหน่วยรับตรวจครั้งที่ 1 : </label>
+          </div>
+
+          <div class="one wide field">
+            <label>เลขหนังสือ</label>
+          </div>
+
+          <div class="four wide field ">
+            <input type="text" id="followUp1Bnum" name="followUp1Bnum" (change)="changeStatus()">
+          </div>
+
+          <div class="one wide field ">
+            <label>วันที่</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="followUp1Date" name="followUp1Date" (blur)="autoShiftDateFollowFirst()" autocomplete="off" [attr.readonly]="null"
+                  placeholder="วว/ดด/ปปปป" [attr.required]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>วันครบกำหนดครั้งที่ 1 :</label>
+          </div>
+
+          <div class="one wide field">
+            <label>45 วัน</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="maturity145" name="maturity145" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true" disabled>
+              </div>
+            </div>
+          </div>
+
+          <div class="one wide field ">
+            <label>60 วัน</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="maturity160" name="maturity160" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true" disabled>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 1 : </label>
+          </div>
+
+          <div class="one wide field">
+            <label>เลขหนังสือ</label>
+          </div>
+
+          <div class="four wide field ">
+            <input type="text" id="performance1Bnum" name="performance1Bnum" (change)="changeStatus()">
+          </div>
+
+          <div class="one wide field ">
+            <label>วันที่</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="performance1Date" name="performance1Date" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>รายงานการติดตามครั้งที่ 1 : </label>
+          </div>
+
+          <div class="one wide field">
+            <label>เลขหนังสือ</label>
+          </div>
+
+          <div class="four wide field ">
+            <input type="text" id="trackResult1Bnum" name="trackResult1Bnum" (change)="changeStatus()">
+          </div>
+
+          <div class="one wide field ">
+            <label>วันที่</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="trackResult1Date" name="trackResult1Date" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>แจ้งติดตามหน่วยรับตรวจครั้งที่ 2 : </label>
+          </div>
+
+          <div class="one wide field">
+            <label>เลขหนังสือ</label>
+          </div>
+
+          <div class="four wide field ">
+            <input type="text" id="followUp2Bnum" name="followUp2Bnum" (change)="changeStatus()">
+          </div>
+
+          <div class="one wide field ">
+            <label>วันที่</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="followUp2Date" name="followUp2Date" (blur)="autoShiftDateFollowSecond()" autocomplete="off" [attr.readonly]="null"
+                  placeholder="วว/ดด/ปปปป" [attr.required]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>วันครบกำหนดครั้งที่ 2 : </label>
+          </div>
+
+          <div class="one wide field">
+            <label>60 วัน</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;" (change)="changeStatus()">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="maturity260" name="maturity260" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true" disabled>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 2 : </label>
+          </div>
+
+          <div class="one wide field">
+            <label>เลขหนังสือ</label>
+          </div>
+
+          <div class="four wide field ">
+            <input type="text" id="performance2Bnum" name="performance2Bnum" (change)="changeStatus()">
+          </div>
+
+          <div class="one wide field ">
+            <label>วันที่</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="performance2Date" name="performance2Date" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>รายงานการติดตามครั้งที่ 2 : </label>
+          </div>
+
+          <div class="one wide field">
+            <label>เลขหนังสือ</label>
+          </div>
+
+          <div class="four wide field ">
+            <input type="text" id="trackResult2Bnum" name="trackResult2Bnum" (change)="changeStatus()">
+          </div>
+
+          <div class="one wide field ">
+            <label>วันที่</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="trackResult2Date" name="trackResult2Date" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="four wide field "></div>
+
+          <div class="one wide field ">
+            <label>สถานะ</label>
+          </div>
+
+          <div class="four wide field ">
+            <input type="text" id="status" name="status" disabled>
+          </div>
+        </div>
+
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button" (click)="closeJob()" *ngIf="showCloseJob">
+              <i class="edit outline icon"></i>
+              ปิดงาน
+            </button>
+            <button class="ui mini primary button" (click)="saveData()">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <button class="ui mini button" (click)="clearData()">
+              <i class="refresh icon"></i>
+              ล้างข้อมูล
+            </button>
+            <button class="ui mini primary button" (click)="cancel()">
+              <i class="remove icon"></i>
+              ยกเลิก
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <br/>
+
+  </div>
+</div>
