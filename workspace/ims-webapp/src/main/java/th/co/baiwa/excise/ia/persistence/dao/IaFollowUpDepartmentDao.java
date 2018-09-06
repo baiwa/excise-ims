@@ -27,9 +27,38 @@ public class IaFollowUpDepartmentDao {
     private JdbcTemplate jdbcTemplate;
     
     private String SQL_SEARCH_CRITERIA = " SELECT * FROM IA_FOLLOW_UP_DEPARTMENT WHERE IS_DELETED = 'N' ";
+    private String SQL_EXPORT_DATA = " SELECT * FROM IA_FOLLOW_UP_DEPARTMENT WHERE IS_DELETED = 'N' ";
     
     public List<Int112Vo> searchCriteria(Int112FormVo formVo) {
     	StringBuilder sql = new StringBuilder(SQL_SEARCH_CRITERIA);
+    	List<Object> param = new ArrayList<>();
+    	
+    	if (StringUtils.isNotBlank(formVo.getExciseDepartment())) {
+    		sql.append(" AND EXCISE_DEPARTMENT = ? ");
+    		param.add(queryValue1SysLov(formVo.getExciseDepartment()));
+    	}
+    	
+    	if (StringUtils.isNotBlank(formVo.getExciseRegion())) {
+    		sql.append(" AND EXCISE_REGION = ? ");
+    		param.add(queryValue1SysLov(formVo.getExciseRegion()));
+    	}
+    	
+    	if (StringUtils.isNotBlank(formVo.getExciseDistrict())) {
+    		sql.append(" AND EXCISE_DISTRICT = ? ");
+    		param.add(queryDescSysLov(formVo.getExciseDistrict()));
+    	}
+    	
+    	if (StringUtils.isNotBlank(formVo.getStatus())) {
+    		sql.append(" AND STATUS = ? ");
+    		param.add(formVo.getStatus());
+    	}
+    	
+    	List<Int112Vo> list = jdbcTemplate.query(sql.toString(), param.toArray(), iaFollowUpDepartmentRowmapper);
+    	return list;
+    }
+    
+    public List<Int112Vo> queryExportData(Int112FormVo formVo) {
+    	StringBuilder sql = new StringBuilder(SQL_EXPORT_DATA);
     	List<Object> param = new ArrayList<>();
     	
     	if (StringUtils.isNotBlank(formVo.getExciseDepartment())) {

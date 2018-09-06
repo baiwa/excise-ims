@@ -8,10 +8,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -30,6 +26,7 @@ import th.co.baiwa.excise.ia.persistence.entity.IaFollowUpProject;
 import th.co.baiwa.excise.ia.persistence.repository.IaFollowUpProjectRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int111FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int111Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int112Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
 
 @Service
@@ -168,7 +165,9 @@ public class IaFollowUpProjectService {
 		
 		Workbook workbook = new XSSFWorkbook();
 
-		this.createWorkSheetExcel(workbook);
+		List<Int111Vo> exportDataList = iaFollowUpProjectDao.queryExportData(formVo);
+		
+//		this.createWorkSheetExcel(workbook);
 		
 		// Write the output to a file
 		FileOutputStream fileOut = new FileOutputStream(file);

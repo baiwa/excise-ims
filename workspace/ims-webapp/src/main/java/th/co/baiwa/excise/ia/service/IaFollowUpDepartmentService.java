@@ -184,6 +184,8 @@ public class IaFollowUpDepartmentService {
 
 //		this.createWorkSheetExcel(workbook);
 		
+		List<Int112Vo> exportDataList = iaFollowUpDepartmentDao.queryExportData(formVo);
+		
 		// Write the output to a file
 		FileOutputStream fileOut = new FileOutputStream(file);
 		workbook.write(fileOut);
