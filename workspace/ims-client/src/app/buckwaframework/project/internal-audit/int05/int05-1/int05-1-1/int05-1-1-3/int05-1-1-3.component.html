@@ -5,176 +5,243 @@
         <div class="ui top attached header">
             <span>เพิ่มข้อมูลแสตมป์รายเดือน</span>
         </div>
-
         <div class="ui attached segment">
-            <div class="ui form">
-                <div class="inline fields">
-                    <div class="three wide field">
-                        <label class="">ว.ด.ป. รับ - จ่าย </label>
+            <form class="ui form">
+                <input type="hidden" [(ngModel)]="formModal.workSheetDetailId" name="workSheetDetailId" id="workSheetDetailId">
+                <!-- row 1 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>วันที่รับ - จ่าย</label>
                     </div>
-                    <div class="three wide  field">
-                        <div class="ui calendar" id="date-pay">
-                            <div class="ui input left icon">
-                                <i class="calendar icon"></i>
-                                <input type="text" style="width:100%" placeholder="วัน/เดือน/ปี">
+                    <div class="four wide field ">
+                        <div class="ui input">
+                            <div class="ui calendar width100" id="dateOfPayForm">
+                                <div class="ui input left icon">
+                                    <i class="time icon"></i>
+                                    <input [(ngModel)]="formModal.dateOfPay" name="dateOfPay" id="dateOfPay" type="text" autofocus="false" [attr.readonly]="null"
+                                        placeholder="dd/MM/yyyy" [attr.required]="true">
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="two wide field">
-                        <label class="">หนังสือส่งแสตมป์<br>เลขที่หนังสือ</label>
+                    <div class="three wide field ">
+                        <label>สถานะการ รับ - จ่าย</label>
                     </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="">
+                    <div class="four wide field ">
+                        <select class="ui search dropdown" [(ngModel)]="formModal.status" name="status" id="status">
+                            <option value="">กรุณาเลือก</option>
+                            <option value="รับ">รับ </option>
+                            <option value="จ่าย">จ่าย </option>
+                        </select>
                     </div>
-                    <div class="two wide field">
-                        <label class="custom-label-w-15">จำนวน (เล่ม) </label>
-
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="1">
-                    </div>
+                    <div class="one wide field "></div>
                 </div>
-
-
-                <div class="inline fields">
-                    <div class="three wide field">
-                        <label class="">สถานะการรับ - จ่าย </label>
+                <!-- row 2 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>หน่วยงาน / ผู้ประกอบการ</label>
                     </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="จ่าย">
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.departmentName" id="departmentName" name="departmentName" type="text">
                     </div>
-
-                    <div class="two wide field">
-                        <label class="">หนังสือส่งแสตมป์
-              <br> ว.ด.ป. </label>
+                    <div class="eight wide field "></div>
+                </div>
+                <!-- row 3 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>หนังสือขอเบิกแสตมป์</label>
                     </div>
-                    <div class="three wide  field">
-                        <div class="ui calendar" id="date-send">
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.bookNumberWithdrawStamp" name="bookNumberWithdrawStamp" id="bookNumberWithdrawStamp" type="text">
+                    </div>
+                    <div class="three wide field ">
+                        <label>ลงวันที่ขอเบิกแสตมป์</label>
+                    </div>
+                    <div class="four wide field ">
+                        <div class="ui calendar width100" id="dateWithdrawStampForm">
                             <div class="ui input left icon">
-                                <i class="calendar icon"></i>
-                                <input type="text" style="width:100%" placeholder="วัน/เดือน/ปี">
+                                <i class="time icon"></i>
+                                <input [(ngModel)]="formModal.dateWithdrawStamp" name="dateWithdrawStamp" id="dateWithdrawStamp" type="text" autocomplete="off"
+                                    [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
                             </div>
                         </div>
                     </div>
-                    <div class="two wide field">
-                        <label class="custom-label-w-15">จำนวน(ดวง)</label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="10000" class="custom-readonly" disabled>
-                    </div>
+                    <div class="one wide field "></div>
                 </div>
-
-
-                <div class="inline fields">
-                    <div class="three wide field">
-                        <label class="">หน่วยงาน</label>
+                <!-- row 4 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>หนังสือส่งแสตมป์</label>
                     </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="สาขาแจ้งห่ม">
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.bookNumberDeliverStamp" name="bookNumberDeliverStamp" id="bookNumberDeliverStamp" type="text">
                     </div>
-
-                    <div class="two wide field">
-                        <label class="">ว.ด.ป. ตรวจนับ</label>
+                    <div class="three wide field ">
+                        <label>ลงวันที่ส่งแสตมป์</label>
                     </div>
-                    <div class="three wide  field">
-                        <div class="ui calendar" id="date-check">
+                    <div class="four wide field ">
+                        <div class="ui calendar width100" id="dateDeliverStampForm">
                             <div class="ui input left icon">
-                                <i class="calendar icon"></i>
-                                <input type="text" style="width:100%" placeholder="วัน/เดือน/ปี">
+                                <i class="time icon"></i>
+                                <input [(ngModel)]="formModal.dateDeliverStamp" name="dateDeliverStamp" id="dateDeliverStamp" type="text" autocomplete="off"
+                                    [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
                             </div>
                         </div>
                     </div>
-                    <div class="two wide field">
-                        <label class="custom-label-w-15">มูลค่าพิมพ์ (บาทต่อดวง)
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="3.75">
-                    </div>
+                    <div class="one wide field "></div>
                 </div>
-
-
-
-                <div class="inline fields">
-                    <div class="three wide field">
-                        <label class="">หนังสือขอเบิกแสตมป์	<br>เลขที่หนังสือ
-
-            </label>
+                <!-- row 5 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>เลขที่ใบ 5 ตอน</label>
                     </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="">
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.fivePartNumber" name="fivePartNumber" id="fivePartNumber" type="text">
                     </div>
-
-                    <div class="two wide field">
-                        <label class="">รหัสชนิดแสตมป์
-            </label>
+                    <div class="three wide field ">
+                        <label>ลงวันที่</label>
                     </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="3.11">
-                    </div>
-                    <div class="two wide field">
-                        <label class="custom-label-w-15">รวมค่าพิมพ์แสตมป์ (บาท)	
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="37500" class="custom-readonly" disabled>
-                    </div>
-                </div>
-
-
-
-                <div class="inline fields">
-                    <div class="three wide field">
-                        <label class="">หนังสือขอเบิกแสตมป์	<br>ว.ด.ป.
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <div class="ui calendar" id="date-withdraw">
+                    <div class="four wide field ">
+                        <div class="ui calendar width100" id="fivePartDateForm">
                             <div class="ui input left icon">
-                                <i class="calendar icon"></i>
-                                <input type="text" style="width:100%" placeholder="วัน/เดือน/ปี">
+                                <i class="time icon"></i>
+                                <input [(ngModel)]="formModal.fivePartDate" name="fivePartDate" id="fivePartDate" type="text" autocomplete="off" [attr.readonly]="null"
+                                    placeholder="dd/MM/yyyy" [attr.required]="true">
                             </div>
                         </div>
                     </div>
-
-                    <div class="two wide field">
-                        <label class="">ชนิดแสตมป์/ขนาดบรรจุ	
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร		
-            ">
-                    </div>
-                    <div class="two wide field">
-                        <label class="">เลขที่ประจำเล่มแสตมป์	
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="">
-                    </div>
-
+                    <div class="one wide field "></div>
                 </div>
-                <div class="inline fields">
-                    <div class="three wide field">
+                <!-- row 6 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>ผู้ตรวจนับ</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.stampChecker" name="stampChecker" id="stampChecker" type="text">
+                    </div>
+                    <div class="three wide field ">
+                        <label>วันที่ตรวจนับ</label>
+                    </div>
+                    <div class="four wide field ">
+                        <div class="ui calendar width100" id="stampCheckDateForm">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input [(ngModel)]="formModal.stampCheckDate" name="stampCheckDate" id="stampCheckDate" type="text" autofocus="false" [attr.readonly]="null"
+                                    placeholder="dd/MM/yyyy" [attr.required]="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="one wide field "></div>
+                </div>
+                <!-- row 7 -->
+                <div class="inline fields  ui grid ">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>ประเภทแสตมป์</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.stampType" name="stampType" id="stampType" type="text">
+                    </div>
+                    <div class="three wide field ">
+                        <label>ชนิดแสตมป์</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.stampBrand" name="stampBrand" id="stampBrand" type="text">
+                    </div>
+                    <div class="one wide field "></div>
+                </div>
+                <!-- row 8 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>จำนวน (เล่ม)</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.numberOfBook" name="numberOfBook" id="numberOfBook" type="text">
+                    </div>
+                    <div class="three wide field ">
+                        <label>จำนวน (ดวง)</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.numberOfStamp" name="numberOfStamp" id="numberOfStamp" type="text">
+                    </div>
+                    <div class="one wide field "></div>
+                </div>
+                <!-- row 9  -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>มูลค่าพิมพ์ (บาท/ดวง)</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.valueOfStampPrinted" name="valueOfStampPrinted" id="valueOfStampPrinted" type="text">
+                    </div>
+                    <div class="three wide field ">
+                        <label>เลขที่ประจำเล่ม</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.serialNumber" name="serialNumber" id="serialNumber" type="text">
+                    </div>
+                    <div class="one wide field "></div>
+                </div>
+                <!-- row 10 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>ค่าภาษี (บาท)</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.taxStamp" name="taxStamp" id="taxStamp" type="text">
+                    </div>
+                    <div class="eight wide field"></div>
+                </div>
+                <!-- row 11 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>รหัสแสตมป์(เริ่ม)</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.stampCodeStart" name="stampCodeStart" id="stampCodeStart" type="text">
+                    </div>
+                    <div class="three wide field ">
+                        <label>รหัสแสตมป์(เริ่ม)</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.stampCodeEnd" name="stampCodeEnd" id="stampCodeEnd" type="text">
+                    </div>
+                    <div class="one wide field "></div>
+                </div>
+                <!-- row 12 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>แนบไฟล์</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.fileName" name="fileName" id="fileName" type="file">
+                    </div>
+                    <div class="eight wide field "></div>
+                </div>
+                <!-- row 13 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
                         <label>หมายเหตุ</label>
                     </div>
-                    <div class="eight wide field">
-                        <textarea style="resize: none"></textarea>
+                    <div class="eleven wide field ">
+                        <textarea [(ngModel)]="formModal.note" name="note" id="note" rows="2"></textarea>
                     </div>
                 </div>
-
-
-                <br>
-
-                <div class="ui center aligned grid">
-                    <div class="sixteen wide column">
-                        <button class="ui mini primary button ">
-              บันทึก
-            </button>
-                        <button class="ui mini primary button">
-              ยกเลิก
-            </button>
-                    </div>
-                </div>
-            </div>
+                <div class="one wide field "></div>
+            </form>
+        </div>
+    </div>
+</div>

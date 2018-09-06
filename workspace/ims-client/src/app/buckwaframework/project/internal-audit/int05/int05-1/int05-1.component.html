@@ -4,7 +4,7 @@
 </div>
 
 <div class="ui attached segment">
-  <form class="ui form" (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <form class="ui form">
     <input type="hidden" id="searchFlag" name="searchFlag">
     <div class="inline fields  ui grid">
       <div class="one wide field "></div>
@@ -177,7 +177,7 @@
           <input [(ngModel)]="formModal.bookNumberWithdrawStamp" name="bookNumberWithdrawStamp" id="bookNumberWithdrawStamp" type="text">
         </div>
         <div class="three wide field ">
-          <label>ลงวันที่</label>
+          <label>ลงวันที่ขอเบิกแสตมป์</label>
         </div>
         <div class="four wide field ">
           <div class="ui calendar width100" id="dateWithdrawStampForm">
@@ -201,7 +201,7 @@
             placeholder="dd/mm/yyyy">
         </div>
         <div class="three wide field ">
-          <label>ลงวันที่</label>
+          <label>ลงวันที่ส่งแสตมป์</label>
         </div>
         <div class="four wide field ">
           <div class="ui calendar width100" id="dateDeliverStampForm">
@@ -241,6 +241,12 @@
       <div class="inline fields  ui grid">
         <div class="one wide field "></div>
         <div class="three wide field ">
+          <label>ผู้ตรวจนับ</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.stampChecker" name="stampChecker" id="stampChecker" type="text">
+        </div>
+        <div class="three wide field ">
           <label>วันที่ตรวจนับ</label>
         </div>
         <div class="four wide field ">
@@ -251,12 +257,6 @@
                 placeholder="dd/MM/yyyy" [attr.required]="true">
             </div>
           </div>
-        </div>
-        <div class="three wide field ">
-          <label>ผู้ตรวจนับ</label>
-        </div>
-        <div class="four wide field ">
-          <input [(ngModel)]="formModal.stampChecker" name="stampChecker" id="stampChecker" type="text">
         </div>
         <div class="one wide field "></div>
       </div>
