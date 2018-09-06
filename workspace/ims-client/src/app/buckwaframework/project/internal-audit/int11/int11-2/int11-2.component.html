@@ -16,7 +16,8 @@
           </div>
 
           <div class="four wide field ">
-            <select class="ui search dropdown follow-department-dropdown" id="exciseDepartment" name="exciseDepartment" [(ngModel)]="exciseDepartment" (change)="changeDepartment($event)">
+            <select class="ui search dropdown follow-department-dropdown" id="exciseDepartment" name="exciseDepartment" [(ngModel)]="exciseDepartment"
+              (change)="changeDepartment($event)">
               <option value="">กรุณาเลือก </option>
               <option *ngFor="let department of departmentList; index as i;" value="{{department.value}}">{{department.label}}</option>
 
@@ -28,7 +29,8 @@
           </div>
 
           <div class="four wide field ">
-            <select class="ui search dropdown follow-department-dropdown" id="exciseRegion" name="exciseRegion" [(ngModel)]="exciseRegion" (change)="changeRegion($event)">
+            <select class="ui search dropdown follow-department-dropdown" id="exciseRegion" name="exciseRegion" [(ngModel)]="exciseRegion"
+              (change)="changeRegion($event)">
               <option value="">กรุณาเลือก </option>
               <option *ngFor="let region of regionList; index as i;" value="{{region.value}}">{{region.label}}</option>
 
@@ -86,7 +88,12 @@
       <table id="dataTable" class="ui small celled table" style="width: 150%;">
         <thead>
           <tr>
-            <th rowspan="2"></th>
+            <th rowspan="2" style="text-align: center !important;">
+              <div class="ui checkbox check-all">
+                <input type="checkbox" (click)="clickCheckAll($event)">
+                <label></label>
+              </div>
+            </th>
             <th rowspan="2" style="text-align: center !important;">สำนักงานสรรพสามิต</th>
             <th colspan="2" style="text-align: center !important;">รายงานผลอธิบดี</th>
             <th colspan="2" style="text-align: center !important;">แจ้งติดตามหน่วยรับตรวจครั้งที่ 1</th>

@@ -54,7 +54,12 @@
       <table id="dataTable" class="ui small celled table" style="width: 150%;">
         <thead>
           <tr>
-            <th rowspan="2"></th>
+            <th rowspan="2" style="text-align: center !important;">
+              <div class="ui checkbox check-all">
+                <input type="checkbox" (click)="clickCheckAll($event)">
+                <label></label>
+              </div>
+            </th>
             <th rowspan="2" style="text-align: center !important;">โครงการ</th>
             <th colspan="2" style="text-align: center !important;">รายงานผลอธิบดี</th>
             <th colspan="2" style="text-align: center !important;">แจ้งติดตามหน่วยรับตรวจครั้งที่ 1</th>

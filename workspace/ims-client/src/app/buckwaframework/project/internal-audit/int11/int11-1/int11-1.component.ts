@@ -68,7 +68,7 @@ export class Int111Component implements OnInit {
           className: "center aglined",
           render: function (data) {
             return (
-              '<div class="ui checkbox tableDt"><input name="checkId" value="' +
+              '<div class="ui checkbox follow-proj-chkbox"><input name="checkId" value="' +
               data +
               '" type="checkbox"><label></label></div>'
             );
@@ -331,10 +331,16 @@ export class Int111Component implements OnInit {
 
   deleteData() {
     var deletes = [];
-    let checkboxes = $(".ui.checkbox.tableDt");
-    for (var i = 0; i <= checkboxes.length; i++) {
-      if (checkboxes.checkbox("is checked")[i]) {
-        deletes.push(checkboxes.find("[type=checkbox]")[i].value);
+    let checkboxes = $(".ui.checkbox.follow-proj-chkbox");
+    for (var i = 0; i < checkboxes.length; i++) {
+      if (checkboxes.length == 1) {
+        if (checkboxes.checkbox("is checked")) {
+          deletes.push(checkboxes.find("[type=checkbox]").val());
+        }
+      } else {
+        if (checkboxes.checkbox("is checked")[i]) {
+          deletes.push(checkboxes.find("[type=checkbox]")[i].value);
+        }
       }
     }
 
@@ -350,8 +356,9 @@ export class Int111Component implements OnInit {
         this.ajaxService.delete(
           URL, res => {
             this.messageBarService.successModal("ลบข้อมูลสำเร็จ");
-            this.$page.removeClass("loading");
             this.searchData();
+            $('.check-all').checkbox("uncheck");
+            this.$page.removeClass("loading");
           }, err => {
             let body: any = err.json();
             this.messageBarService.errorModal(body.error);
@@ -362,6 +369,14 @@ export class Int111Component implements OnInit {
     }, "คุณต้องการลบข้อมูลใช่หรือไม่ ? ");
   }
 
+  clickCheckAll = event =>  {
+    if (event.target.checked) {
+      $(".ui.checkbox.follow-proj-chkbox").checkbox("check");
+    } else {
+      $(".ui.checkbox.follow-proj-chkbox").checkbox("uncheck");
+    }
+  }
+  
   export() {
     var url = AjaxService.CONTEXT_PATH + "ia/int111/export?projectName=" + $('#projectName').val() +
       "&status=" + $('#status').val();
