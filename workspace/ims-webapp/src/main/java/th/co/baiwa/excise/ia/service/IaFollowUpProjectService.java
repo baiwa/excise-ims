@@ -26,7 +26,6 @@ import th.co.baiwa.excise.ia.persistence.entity.IaFollowUpProject;
 import th.co.baiwa.excise.ia.persistence.repository.IaFollowUpProjectRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int111FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int111Vo;
-import th.co.baiwa.excise.ia.persistence.vo.Int112Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
 
 @Service
