@@ -28,6 +28,7 @@ public class DateConstant {
 	private static Logger logger = LoggerFactory.getLogger(DateConstant.class);
 	
 	public static final Locale LOCAL_TH = new Locale("th", "TH");
+    public static final Locale LOCAL_EN = new Locale("en", "US");
 //	public static final String[] MONTH_SHOT_NAMES = { "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.","ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค." };
 //	public static final String[] MONTH_NAMES = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
 	public static final String YYYYMMDD = "yyyyMMdd";
@@ -187,5 +188,19 @@ public class DateConstant {
 		}
 		return dateString;
 	}
-	
+
+	public static String convertStrDDMMYYYYToStrYYYYMMDD(String ddmmyyyy){
+        String dateString = "";
+        try {
+            if (StringUtils.isNotBlank(ddmmyyyy)) {
+                Date date = DateUtils.parseDate(StringUtils.trim(ddmmyyyy),LOCAL_TH,DD_MM_YYYY);
+                dateString = DateFormatUtils.format(date,YYYYMMDD,LOCAL_EN);
+            }
+        }catch (Exception e){
+            logger.error("Error convertStrDDMMYYYYToStrYYYYMMDD : ", e);
+            e.printStackTrace();
+        }
+        return dateString;
+    }
+
 }

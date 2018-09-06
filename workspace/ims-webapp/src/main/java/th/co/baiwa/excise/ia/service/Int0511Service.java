@@ -24,6 +24,8 @@ public class Int0511Service {
 	private IaStamDetailRepository iaStamDetailRepository;
 
 	public DataTableAjax<Int0511Vo> findAll(Int0511FormVo formVo) {
+	    formVo.setDateForm(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateForm()));
+	    formVo.setDateTo(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateTo()));
 		List<Int0511Vo> list = checkStampAreaDao.findAll(formVo);
 		Long count = checkStampAreaDao.count(formVo);
 		DataTableAjax<Int0511Vo> dataTableAjax = new DataTableAjax<>();

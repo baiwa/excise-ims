@@ -6,7 +6,9 @@
             <span>เพิ่มข้อมูลแสตมป์</span>
         </div>
         <div class="ui attached segment">
-            <form class="ui form" (ngSubmit)="onAdd()">                
+            <form class="ui form" (ngSubmit)="onAdd()">      
+                <input type="hidden" id="edit">          
+                <input type="hidden" id="idEdit">    
                 <!-- row 1 -->
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
