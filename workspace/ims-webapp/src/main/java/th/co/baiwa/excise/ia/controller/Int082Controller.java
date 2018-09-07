@@ -1,30 +1,43 @@
 package th.co.baiwa.excise.ia.controller;
 
+
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.Int0802Vo;
 import th.co.baiwa.excise.domain.RiskFullDataInt0802Vo;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfOtherDtl;
-import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.service.RiskAssInfService;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
@@ -240,4 +253,16 @@ public class Int082Controller {
 		riskAssInfService.updateStatusRisk(riskAssInfHdr);
 
 	}
+	
+	
+	
+	@GetMapping("/exportOtherDtl")
+	@ResponseBody
+	public  void exportOtherDtl(@ModelAttribute RiskAssInfHdr riskAssInfHdr, HttpServletResponse response) throws Exception {
+		logger.info("id :" + riskAssInfHdr.getRiskAssInfHdrId());
+		riskAssInfService.exportOtherDtl(riskAssInfHdr, response);
+		 
+
+	}
+	
 }

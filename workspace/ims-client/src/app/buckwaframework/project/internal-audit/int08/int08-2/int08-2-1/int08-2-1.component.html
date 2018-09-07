@@ -109,7 +109,7 @@
             <div class="inline fields">
               <div class="two wide field "></div>
               <div class="two wide field ">
-                <label>งบประมาณที่ใช้ดำเนินงานโครงการ</label>
+                <label>{{riskAssInfHdr.riskAssInfHdrName}}</label>
               </div>
               <div class="one wide field ">
                 <label>
@@ -175,7 +175,7 @@
         <div class="inline fields"></div>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
-            <button class="ui mini primary button">
+            <button class="ui mini primary button" (click)="ExportWebService()">
               <i class="print icon"></i>
               Export
             </button>
@@ -220,7 +220,7 @@
               <div class="inline fields">
                 <div class="two wide field "></div>
                 <div class="two wide field ">
-                  <label>งบประมาณที่ใช้ดำเนินงานโครงการ</label>
+                  <label>{{riskAssInfHdr.riskAssInfHdrName}}</label>
                 </div>
                 <div class="one wide field ">
                   <label>
@@ -274,7 +274,7 @@
           <div class="inline fields"></div>
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
-              <button class="ui mini primary button">
+              <button class="ui mini primary button" (click)="ExportOtherDtl()">
                 <i class="print icon"></i>
                 Export
               </button>

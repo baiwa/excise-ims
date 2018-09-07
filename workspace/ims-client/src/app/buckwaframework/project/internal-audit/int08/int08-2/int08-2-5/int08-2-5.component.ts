@@ -90,9 +90,11 @@ export class Int0825Component implements OnInit {
           hrmlTr += "<td style='text-align: right !important' >" + rl + "</td>";
         });
         hrmlTr += "<td style='text-align: right !important'>" + element.sumRiskCost + "</td>";
-        hrmlTr += "<td></td>";
-        hrmlTr += "<td></td>";
+        hrmlTr += "<td id='valueRlAll' class='"+this.getStyeClassByColor(element.color)+"'>" + element.valueRl + "</td>";
+        hrmlTr += "<td id='convertValueAll' class='"+this.getStyeClassByColor(element.color)+"'>" + element.convertValue + "</td>";
         hrmlTr += "</tr>";
+        
+      
       });
 
       $("#tbody").html(hrmlTr);
@@ -100,6 +102,16 @@ export class Int0825Component implements OnInit {
       console.log(errRes);
     });
   }
+
+ getStyeClassByColor(color){
+  if(color == 'แดง' ){
+    return 'red';
+  } else if (color == 'เขียว') {
+    return 'green';
+  } else if (color == 'เหลือง') {
+    return 'yellow';
+  }
+ }
 
   modalConditionRL() {
     this.isConditionShow = true;
