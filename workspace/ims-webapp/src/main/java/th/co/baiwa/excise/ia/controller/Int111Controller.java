@@ -4,6 +4,8 @@ package th.co.baiwa.excise.ia.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.vo.Int111FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int111Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
@@ -106,5 +109,12 @@ public class Int111Controller {
         respHeaders.setContentDispositionFormData("attachment", fileName);
         
 		return new ResponseEntity<FileSystemResource>(file, respHeaders, HttpStatus.OK);
+	}
+	
+	@GetMapping("/exportByToffee")
+	@ResponseBody
+	public  void exportByToffee(@ModelAttribute RiskAssInfHdr riskAssInfHdr, HttpServletResponse response) throws Exception {
+		iaFollowUpProjectService.exportExcelByToffee(riskAssInfHdr, response);
+	 
 	}
 }
