@@ -12,7 +12,7 @@
                 <!-- row 1 -->
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
-                    <div class="three wide field ">
+                    <div class="three wide field required">
                         <label>วันที่รับ - จ่าย</label>
                     </div>
                     <div class="four wide field ">
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="three wide field ">
+                    <div class="three wide field required">
                         <label>สถานะการ รับ - จ่าย</label>
                     </div>
                     <div class="four wide field ">
@@ -41,7 +41,7 @@
                 <!-- row 2 -->
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
-                    <div class="three wide field ">
+                    <div class="three wide field required">
                         <label>หน่วยงาน / ผู้ประกอบการ</label>
                     </div>
                     <div class="four wide field ">
@@ -144,17 +144,23 @@
                 <!-- row 7 -->
                 <div class="inline fields  ui grid ">
                     <div class="one wide field "></div>
-                    <div class="three wide field ">
+                    <div class="three wide field required">
                         <label>ประเภทแสตมป์</label>
                     </div>
                     <div class="four wide field ">
-                        <input [(ngModel)]="formModal.stampType" name="stampType" id="stampType" type="text">
+                        <select class="ui search dropdown" [(ngModel)]="formModal.stampType" name="stampType" id="stampType" (change)="stampGenreList($event)">
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let item of stampType" value="{{item.stampTypeId}}">{{item.stampTypeName}} </option>
+                        </select>                        
                     </div>
-                    <div class="three wide field ">
+                    <div class="three wide field required">
                         <label>ชนิดแสตมป์</label>
                     </div>
                     <div class="four wide field ">
-                        <input [(ngModel)]="formModal.stampBrand" name="stampBrand" id="stampBrand" type="text">
+                        <select class="ui search dropdown" [(ngModel)]="formModal.stampBrand" name="stampBrand" id="stampBrand">
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let item of stampGenre" value="{{item.stampGenreId}}">{{item.stampGenreName}} </option>
+                        </select>
                     </div>
                     <div class="one wide field "></div>
                 </div>
@@ -170,7 +176,7 @@
                     <div class="three wide field ">
                         <label>จำนวน (ดวง)</label>
                     </div>
-                    <div class="four wide field ">
+                    <div class="four wide field required">
                         <input [(ngModel)]="formModal.numberOfStamp" name="numberOfStamp" id="numberOfStamp" type="text">
                     </div>
                     <div class="one wide field "></div>
@@ -178,7 +184,7 @@
                 <!-- row 9  -->
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
-                    <div class="three wide field ">
+                    <div class="three wide field required">
                         <label>มูลค่าพิมพ์ (บาท/ดวง)</label>
                     </div>
                     <div class="four wide field ">
@@ -224,12 +230,12 @@
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
                     <div class="three wide field ">
-                        <label>แนบไฟล์</label>
+                        <label>{{item}}แนบไฟล์</label>
                     </div>
                     <div class="four wide field ">
-                        <input [(ngModel)]="formModal.fileName" name="fileName" id="fileName" type="file">
+                        <input [(ngModel)]="formModal.fileName" name="fileName" id="fileName" type="file"  accept="*" (change)="onUpload($event)">                        
                     </div>
-                    <div class="eight wide field "></div>
+                    <div class="eight wide field "><button class="ui mini blue button" type="button">+</button></div>
                 </div>
                 <!-- row 13 -->
                 <div class="inline fields  ui grid">
@@ -238,7 +244,7 @@
                         <label>หมายเหตุ</label>
                     </div>
                     <div class="eleven wide field ">
-                        <textarea [(ngModel)]="formModal.note" name="note" id="note" rows="2"></textarea>
+                        <textarea [(ngModel)]="formModal.note" name="note" id="note" rows="4"></textarea>
                     </div>
                 </div>
                 <div class="one wide field "></div>

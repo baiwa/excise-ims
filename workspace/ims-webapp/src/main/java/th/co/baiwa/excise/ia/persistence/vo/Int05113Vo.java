@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
+import th.co.baiwa.excise.ta.persistence.entity.ExciseFile;
+
 import java.math.BigDecimal;
 
 public class Int05113Vo {
@@ -31,8 +33,17 @@ public class Int05113Vo {
 	private String note;
 	private String createdDate;
 	private String fileName;
+	private ExciseFile[] file;
 
-	public String getFileName() {
+    public ExciseFile[] getFile() {
+        return file;
+    }
+
+    public void setFile(ExciseFile[] file) {
+        this.file = file;
+    }
+
+    public String getFileName() {
 		return fileName;
 	}
 

@@ -2,12 +2,12 @@ package th.co.baiwa.excise.ia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import th.co.baiwa.excise.ia.persistence.entity.IaStamGenre;
+import th.co.baiwa.excise.ia.persistence.entity.IaStamType;
 import th.co.baiwa.excise.ia.persistence.vo.Int05113Vo;
 import th.co.baiwa.excise.ia.service.Int05113Service;
+import th.co.baiwa.excise.ta.persistence.entity.ExciseFile;
 
 import java.util.List;
 
@@ -24,4 +24,16 @@ public class Int05113Controller {
         int05113Service.save(formVos);
 		return formVos;
 	}
+
+	@GetMapping("/stamTypes")
+    @ResponseBody
+    public List<IaStamType> stamTypes(){
+	    return int05113Service.stamTypes();
+    }
+
+    @GetMapping("/stamGenre/{stamTypeId}")
+    @ResponseBody
+    public List<IaStamGenre> stamGenres(@PathVariable("stamTypeId")String stamTypeId){
+	    return int05113Service.stamGenres(stamTypeId);
+    }
 }

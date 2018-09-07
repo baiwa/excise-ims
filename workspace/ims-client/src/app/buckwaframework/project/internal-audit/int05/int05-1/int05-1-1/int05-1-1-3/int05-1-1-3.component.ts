@@ -1,3 +1,4 @@
+import { File } from './../../../../../../common/models/file';
 import { MessageBarService, AjaxService } from 'app/buckwaframework/common/services';
 import { TableReq } from './../../../../../../common/models/table';
 import { Component, OnInit } from '@angular/core';
@@ -15,22 +16,81 @@ export class Int05113Component implements OnInit {
 
   formModal: FormModal = new FormModal();
   data: FormModal[];
+  stampType : any;
+  stampGenre :any;
   table: any;
   randomNumber: number;
+  file :File[];
   constructor(
     private message: MessageBarService,
-    private ajax: AjaxService
+    private ajax: AjaxService,    
   ) {
     this.data = []
     this.randomNumber = 0;
+    this.stampType = null;
+    this.stampGenre = null;
+    this.file = new Array<File>();
   }
 
   ngOnInit() {
     this.calenda();
-    this.dataTable();
+    this.dataTable();    
+    this.stampTypeList();
+  }
+  ngAfterViewInit() {
+    this.callDropdown();
   }
 
+  checkBlank=(e)=>{
+    if(e == null || e=="") return true;
+  }
+  restoreDropdown(){
+    $("#stampType").dropdown('restore defaults');
+    $("#stampBrand").dropdown('restore defaults');
+    $("#status").dropdown('restore defaults');
+  }
+  callDropdown(){
+    $("#stampType").dropdown().css('width','100%');
+    $("#stampBrand").dropdown().css('width','100%');
+    $("#status").dropdown().css('width','100%');
+  }
+  stampTypeList=()=> {
+    let url = "ia/int05113/stamTypes";
+    this.ajax.get(url,res=>{
+      this.stampType = res.json();
+    })
+  }
+  stampGenreList=(e)=>{
+    if(!this.checkBlank(e.target.value)){
+      $("#stampBrand").dropdown('restore defaults');
+      console.log("id : "+e.target.value);
+      
+      let url = "ia/int05113/stamGenre/"+e.target.value;
+      this.ajax.get(url,res=>{
+        console.log(res.json());
+        this.stampGenre = res.json();
+      })
+    }   
+  }
+  onUpload=(event)=>{
 
+    if (event.target.files && event.target.files[0]) {
+      let reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        const { name, type } = event.target.files[0];
+        const f = {
+          name: name,
+          type: type,
+          value: e.target.result
+        };
+        
+        this.file.push(f);
+        console.log(this.file);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
   calenda = () => {
     $("#dateF").calendar({
       maxDate: new Date(),
@@ -79,8 +139,29 @@ export class Int05113Component implements OnInit {
   }
 
   onAdd = () => {
+    if(this.checkBlank($("#dateOfPay").val())){
+      this.message.alert("กรุณาระบุ วันที่รับ - จ่าย","แจ้งเตือน");
+      return false;
+    }
+    if(this.checkBlank($("#status").val())){
+      this.message.alert("กรุณาระบุ วันที่รับ - จ่าย","แจ้งเตือน");
+      return false;
+    }
+    if(this.checkBlank($("#departmentName").val())){
+      this.message.alert("กรุณาระบุ หน่วยงาน / ผู้ประกอบการ","แจ้งเตือน");
+      return false;
+    }
+    if(this.checkBlank($("#stampType").val())){
+      this.message.alert("กรุณาระบุ ประเภทแสตมป์","แจ้งเตือน");
+      return false;
+    }
+    if(this.checkBlank($("#stampBrand").val())){
+      this.message.alert("กรุณาระบุ ชนิดแสตมป์","แจ้งเตือน");
+      return false;
+    }
+
     if ($("#edit").val() == "edit" && $("#idEdit").val()!="") {
-      console.log(this.formModal);
+      
       const index = this.data.findIndex(obj => obj.idRandom == $("#idEdit").val());
       this.data[index] = this.formModal;
       $("#edit").val("");
@@ -88,6 +169,9 @@ export class Int05113Component implements OnInit {
     } else {
 
       this.formModal.idRandom = this.randomNumber++;
+      this.formModal.stampType = ($("#stampType option:selected").text()=="กรุณาเลือก" ? "":$("#stampType option:selected").text());
+      this.formModal.stampBrand = ($("#stampBrand option:selected").text()=="กรุณาเลือก" ? "":$("#stampBrand option:selected").text())
+      this.formModal.file = this.file;
       this.data.push(this.formModal);
     }
     this.table.clear().draw();
@@ -95,17 +179,22 @@ export class Int05113Component implements OnInit {
     this.table.columns.adjust().draw(); // Redraw the DataTable
     this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
     this.formModal = new FormModal();
+    this.restoreDropdown();
   }
 
   onSave = () => {
-    let url = 'ia/int05113/save';
-    this.ajax.post(url, JSON.stringify(this.data),
-      res => {
-        this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
-        this.data = [];
-      }, error => {
-        this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
-      });
+    this.message.comfirm((res) => {
+      if (res) {
+        let url = 'ia/int05113/save';    
+        this.ajax.post(url, JSON.stringify(this.data),
+          res => {
+            this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
+            this.data = [];
+          }, error => {
+            this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
+          });
+      }
+    }, "", "ยืนยันการทำรายการ");
   }
 
   dataTable = () => {
@@ -247,9 +336,6 @@ export class Int05113Component implements OnInit {
     });
   }
 
-
-
-
 }
 class FormModal {
   workSheetDetailId: string = null;
@@ -281,4 +367,5 @@ class FormModal {
   createdDate: string = null;
   fileName: string = null;
   idRandom: number = 0;
+  file : File[];
 }
