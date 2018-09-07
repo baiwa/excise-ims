@@ -190,11 +190,13 @@ export class Int0821Component implements OnInit {
 
           if (this.infRiskList.indexOf(data.riskAssInfHdrName) >= 0) {
             this.riskAssInfHdrId = data.riskAssInfHdrId;
-            console.log("รอ Export webService"+this.riskAssInfHdrId );
+            const URL = "ia/int082/exportInfWebService?riskAssInfHdrId=" + this.riskAssInfHdrId;
+            console.log("id", this.riskAssInfHdrId);
+            this.ajax.download(URL);
             
           } else {
             this.riskAssInfHdrId = data.riskAssInfHdrId;
-            const URL = "ia/int082/exportOtherDtl?riskAssInfHdrId=" + this.riskAssInfHdrId;
+            const URL = "ia/int082/exportInfOtherDtl?riskAssInfHdrId=" + this.riskAssInfHdrId;
             console.log("id", this.riskAssInfHdrId);
             this.ajax.download(URL);
           }
@@ -391,20 +393,20 @@ export class Int0821Component implements OnInit {
   clearData(){
     this.budgetYear = "";
     this.initDatatable();
+    this.openForm1 = false;
+    this.openForm2 = false;
   }
 
   ExportWebService() {
-    var URL = "ia/int082/exportWebService?riskAssInfHdrId=" + this.riskAssInfHdrId;
+    const URL = "ia/int082/exportInfWebService?riskAssInfHdrId=" + this.riskAssInfHdrId;
     console.log("id", this.riskAssInfHdrId);
-    // this.ajax.post(URL, { riskAssInfHdrId: this.riskAssInfHdrId  }, res => {
-      this.ajax.download(URL);
-    // });
- 
+    this.ajax.download(URL);
+
   }
 
 
   ExportOtherDtl() {
-    const URL = "ia/int082/exportOtherDtl?riskAssInfHdrId=" + this.riskAssInfHdrId;
+    const URL = "ia/int082/exportInfOtherDtl?riskAssInfHdrId=" + this.riskAssInfHdrId;
     console.log("id", this.riskAssInfHdrId);
     this.ajax.download(URL);
  
