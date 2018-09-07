@@ -6,11 +6,11 @@ import { Router, ActivatedRoute } from "@angular/router";
 declare var jQuery: any;
 declare var $: any;
 @Component({
-  selector: 'app-int08-3-7',
-  templateUrl: './int08-3-7.component.html',
-  styleUrls: ['./int08-3-7.component.css']
+  selector: 'app-int08-3-8',
+  templateUrl: './int08-3-8.component.html',
+  styleUrls: ['./int08-3-8.component.css']
 })
-export class Int0837Component implements OnInit {
+export class Int0838Component implements OnInit {
   riskHrdPaperName: any;
   budgetYear: any;
   datatable: any;
@@ -46,7 +46,7 @@ export class Int0837Component implements OnInit {
   }
 
   initDatatable(): void {
-    const URL = AjaxService.CONTEXT_PATH + "ia/int083/dataTableWebService3";
+    const URL = AjaxService.CONTEXT_PATH + "ia/int083/dataTableWebService4";
     console.log(URL);
     this.datatable = $("#dataTable").DataTable({
       lengthChange: false,
@@ -105,14 +105,14 @@ export class Int0837Component implements OnInit {
     }
 
     var url = "ia/condition/findConditionByParentId";
-    this.ajax.post(url, { parentId: this.id, riskType: 'MAIN', page: 'int08-3-7' }, res => {
+    this.ajax.post(url, { parentId: this.id, riskType: 'MAIN', page: 'int08-3-8' }, res => {
       var conditionList = res.json();
       console.log("conditionList", conditionList.length)
       if (conditionList.length == 0) {
         msgMessage = "กรุณากำหนดเงื่อนไข RL";
       }
       if (msgMessage == "") {
-        var url = "ia/int083/updateRiskAssExcPenDtl";
+        var url = "ia/int083/updateRiskAssExcNocDtl";
 
         this.ajax.post(url, this.riskAssRiskWsHdr, res => {
           console.log(res.json());

@@ -97,6 +97,7 @@ export class Int0832Component implements OnInit {
       columnDefs: [
         { targets: [0, 2, 3, 4, 5], className: "center aligned" },
         { targets: [1], className: "left aligned" }
+
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {
