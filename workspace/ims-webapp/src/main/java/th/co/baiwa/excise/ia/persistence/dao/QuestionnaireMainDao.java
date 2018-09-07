@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMain;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.utils.OracleUtils;
@@ -59,6 +60,31 @@ public class QuestionnaireMainDao {
 		String query = "";
 		if (BeanUtils.isNotEmpty(start)&&BeanUtils.isNotEmpty(length)&&length!=0) {
 			query = OracleUtils.limitForDataTable(sql.toString(), start, length);
+		} else {
+			query = sql.toString();
+		}
+		
+		List<QuestionnaireMain> mainList = jdbcTemplate.query(query, paramList.toArray(),
+				mapper);
+		return mainList;
+	}
+	
+	public List<QuestionnaireMain> findForInt02m31(DataTableRequest req) {
+		List<Object> paramList = new ArrayList<Object>();
+		String template = " SELECT H.* FROM IA_QUESTIONNAIRE_MAIN_DETAIL H LEFT JOIN IA_QUESTIONNAIRE_MINOR_DETAIL M ";
+		StringBuffer sql = new StringBuffer(template);
+		sql.append("ON M.MAIN_ID = H.IA_QTN_MAIN_DETAIL_ID WHERE 1=1 ");
+		
+		if (BeanUtils.isNotEmpty(req.getHeaderCode())) {
+			sql.append(" and H.HEADER_CODE = ? ");
+			paramList.add(req.getHeaderCode());
+
+		}
+		sql.append(" ORDER BY H.IA_QTN_MAIN_DETAIL_ID ASC ");
+		
+		String query = "";
+		if (BeanUtils.isNotEmpty(req.getStart())&&BeanUtils.isNotEmpty( req.getLength() ) && (req.getLength()!=0) ) {
+			query = OracleUtils.limitForDataTable(sql.toString(), req.getStart(), req.getLength());
 		} else {
 			query = sql.toString();
 		}

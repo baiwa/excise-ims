@@ -9,6 +9,7 @@ public class DataTableRequest {
 	private String startBackDate;
 	private String exciseProductType;
 	private String paging;
+	private String headerCode;
 	
 	
 	public String getExciseProductType() {
@@ -52,6 +53,12 @@ public class DataTableRequest {
 	}
 	public void setPaging(String paging) {
 		this.paging = paging;
+	}
+	public String getHeaderCode() {
+		return headerCode;
+	}
+	public void setHeaderCode(String headerCode) {
+		this.headerCode = headerCode;
 	}
 	
 	
