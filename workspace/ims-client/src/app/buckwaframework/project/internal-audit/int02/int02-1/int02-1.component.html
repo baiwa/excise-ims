@@ -18,7 +18,7 @@
                     <div class="ui input">
                         <select class="ui selection dropdown ai" name="sector" (change)="onSectorChange($event)" required ngModel>
                             <option value="">เลือกภาค</option>
-                            <option value="{{sector.value1}}" *ngFor="let sector of sectors">{{sector.value1}}</option>
+                            <option value="{{sector.lovId}}" *ngFor="let sector of sectors">{{sector.subTypeDescription}}</option>
                         </select>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                 <div class="ui input">
                   <select class="ui selection dropdown ai" name="area" ngModel>
                     <option value="">เลือกพื้นที่</option>
-                    <option value="{{area.subTypeDescription}}" *ngFor="let area of areas">{{area.subTypeDescription}}</option>
+                    <option value="{{area.lovId}}" *ngFor="let area of areas">{{area.subTypeDescription}}</option>
                   </select>
                 </div>
               </div>
@@ -83,8 +83,7 @@
             <thead>
               <tr style="text-align: center !important;">
                 <th>ลำดับ</th>
-                <th>สรรพสามิตภาค</th>
-                <th>สรรพสามิตพื้นที่</th>
+                <th>สรรพสามิตภาค/พื้นที่</th>
                 <th>ผู้สร้างแบบสอบทาน</th>
                 <th>ปีงบประมาณ</th>
                 <th style="width: 40px">#</th>

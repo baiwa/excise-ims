@@ -3,11 +3,18 @@ package th.co.baiwa.excise.ia.persistence.vo;
 import java.util.List;
 
 public class Int02m2Vo {
+	private Long id;
 	private String title;
 	private String content;
-	private Boolean conclusion;
+	private String conclusion;
 	private List<Int02m2VoDetail> detail;
-	
+
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -20,10 +27,10 @@ public class Int02m2Vo {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Boolean getConclusion() {
+	public String getConclusion() {
 		return conclusion;
 	}
-	public void setConclusion(Boolean conclusion) {
+	public void setConclusion(String conclusion) {
 		this.conclusion = conclusion;
 	}
 	public List<Int02m2VoDetail> getDetail() {

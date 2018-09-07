@@ -30,3 +30,21 @@ label {
 .loading {
     height: calc(100vh - 164px);
 }
+
+.icon.exclamation {
+    font-size: 4em;
+    font-stretch: inherit;
+    margin-top: 0.2em;
+}
+
+.nodata {
+    margin: 5% auto !important;
+}
+
+.nodata .header .content .sub.header::after {
+    content: "*";
+} 
+
+.full-height {
+    min-height: calc(100vh - 164px);
+}

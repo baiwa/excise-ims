@@ -22,6 +22,10 @@ export class TranslateService {
       .catch(this.handleError);
   }
 
+  pullMessage(): void {
+    this.getMessages().then(messages => (this.messages = messages));
+  }
+
   public use(lang: string): void {
     this.currentLang = lang;
   }

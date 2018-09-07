@@ -303,7 +303,9 @@ export class Int023Component implements OnInit {
       main.qtnMainDetail = this.mainDetail;
       main.qtnFor = "M";
       main.status = "NEW";
+      this.mainDetail = "";
       this.table.push(main);
+      this.req.save = this.table;
       for (let i = 0; i < this.minorDetail.length; i++) {
         detail = new Int023FormVo();
         detail.qtnReportDtlId = `DTL_${this.getRndInteger(10000, 99999)}`;
