@@ -397,7 +397,7 @@ export class Int0821Component implements OnInit {
     this.openForm2 = false;
   }
 
-  ExportWebService() {
+  ExportInfWebService() {
     const URL = "ia/int082/exportInfWebService?riskAssInfHdrId=" + this.riskAssInfHdrId;
     console.log("id", this.riskAssInfHdrId);
     this.ajax.download(URL);
@@ -405,7 +405,7 @@ export class Int0821Component implements OnInit {
   }
 
 
-  ExportOtherDtl() {
+  ExportInfOtherDtl() {
     const URL = "ia/int082/exportInfOtherDtl?riskAssInfHdrId=" + this.riskAssInfHdrId;
     console.log("id", this.riskAssInfHdrId);
     this.ajax.download(URL);

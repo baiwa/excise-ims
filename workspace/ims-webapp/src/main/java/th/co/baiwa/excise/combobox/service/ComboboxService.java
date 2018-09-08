@@ -11,8 +11,8 @@ import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireHeaderDao;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireHeader;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
-import th.co.baiwa.excise.ia.service.RiskAssRiskWsService;
 import th.co.baiwa.excise.ia.service.RiskAssInfService;
+import th.co.baiwa.excise.ia.service.RiskAssRiskWsService;
 @Service
 public class ComboboxService {
 

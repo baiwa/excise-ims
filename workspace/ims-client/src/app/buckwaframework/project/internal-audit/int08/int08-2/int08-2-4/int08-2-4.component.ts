@@ -350,7 +350,12 @@ export class Int0824Component implements OnInit {
     this.isConditionShow = false;
   }
 
-
+  ExportOtherDtl() {
+    const URL = "ia/int082/exportInfOtherDtl?riskAssInfHdrId=" + this.id;
+    console.log("id", this.id);
+    this.ajax.download(URL);
+ 
+  }
 
 }
 

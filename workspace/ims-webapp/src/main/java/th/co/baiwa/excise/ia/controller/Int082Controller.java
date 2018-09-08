@@ -267,4 +267,14 @@ public class Int082Controller {
 
 	}
 	
+	@GetMapping("/exportInfFull")
+	@ResponseBody
+	public  void exportInfFull(@ModelAttribute RiskAssInfHdr riskAssInfHdr, HttpServletResponse response) throws Exception {
+		logger.info("BudgetYear :" + riskAssInfHdr.getBudgetYear());
+		riskAssInfService.exportInfFull(riskAssInfHdr.getBudgetYear(), response);
+		 
+
+	}
+	
+	
 }

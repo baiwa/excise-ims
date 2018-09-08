@@ -148,6 +148,14 @@ export class Int0825Component implements OnInit {
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
   }
 
+  ExportInfFull() {
+    const URL = "ia/int082/exportInfFull?budgetYear=" +  this.budgetYear ;
+    console.log("budgetYear", this.budgetYear );
+    this.ajax.download(URL);
+ 
+  }
+
+
   savePercent() {
     var sumpercen = 0;
     this.riskAssInfHdrList.forEach(element => {
