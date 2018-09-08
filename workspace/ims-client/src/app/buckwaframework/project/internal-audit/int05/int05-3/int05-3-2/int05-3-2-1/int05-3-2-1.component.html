@@ -1,0 +1,90 @@
+<div class="ui grid">
+  <div class="sixteen wide column segments">
+
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>เพิ่มข้อมูลสินทรัพย์</span>
+    </div>
+
+    <div id="assetDtPage" class="ui attached segment">
+      <div id="assetDtForm" class="ui form">
+        <input type="hidden" id="indexValue" name="indexValue">
+        <div class="inline fields">
+          <div class="two wide field"></div>
+
+          <div class="two wide field">
+            <label>ประเภทสินทรัพย์</label>
+          </div>
+
+          <div class="four wide field">
+            <select class="ui search dropdown asset-dt-dropdown" id="assetType" name="assetType" [(ngModel)]="assetType">
+              <option value="">กรุณาเลือก </option>
+              <option *ngFor="let type of assetTypeList; index as i;" value="{{type.value}}">{{type.label}}</option>
+
+            </select>
+          </div>
+
+          <div class="two wide field">
+            <label>รหัสสินทรัพย์</label>
+          </div>
+
+          <div class="four wide field">
+            <input type="text" id="assetCode" name="assetCode">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="two wide field"></div>
+
+          <div class="two wide field">
+            <label>วันที่เอกสารได้รับสินทรัพย์</label>
+          </div>
+
+          <div class="four wide field">
+            <div class="ui calendar asset-dt-calendar" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="sheetDateForm" name="sheetDateForm" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true">
+              </div>
+            </div>
+          </div>
+
+          <div class="two wide field">
+            <label>ถึง</label>
+          </div>
+
+          <div class="four wide field">
+            <div class="ui calendar asset-dt-calendar" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="sheetDateTo" name="sheetDateTo" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button" (click)="saveData()">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <button class="ui mini button" (click)="clearData()">
+              <i class="refresh icon"></i>
+              ล้างข้อมูล
+            </button>
+            <button class="ui mini button" (click)="cancel()">
+              <i class="remove icon"></i>
+              ยกเลิก
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
