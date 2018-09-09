@@ -3,17 +3,20 @@
     <div class="header">
         รายละเอียดด้าน{{qtnHeaderName}}
     </div>
+
     <div class="ui form content">
-        <div class="ui center aligned grid">
-            <div class="row">
-                <div class="column">
-                    <label class="custom-label-w-20">รายการ</label>
-                </div>
+        <div class="inline fields">
+            <div class="four wide field">
+                &nbsp;
             </div>
-            <div class="row">
-                <div class="column">
-                    <input type="text" name="showEdit" id="showEdit" [(ngModel)]="showEdit">
-                </div>
+            <div class="one wide field">
+                <label class="custom-label-w-20">รายการ</label>
+            </div>
+            <div class="seven wide field">
+                <input type="text" name="showEdit" id="showEdit" [(ngModel)]="showEdit">
+            </div>
+            <div class="four wide field">
+                &nbsp;
             </div>
         </div>
     </div>
@@ -22,14 +25,14 @@
         <div class="ui center aligned grid" style="margin: 0px">
             <div class="eight wide field">
                 <button class="ui small green button" type="button" (click)="onUpdate()">
-                            <i class="save icon"></i> บันทึก
-                        </button>
+                                <i class="save icon"></i> บันทึก
+                            </button>
             </div>
 
             <div class="eight wide field">
                 <button class="ui small red button" type="button" id="closeList">
-                            <i class="close icon"></i> ยกเลิก
-                        </button>
+                                <i class="close icon"></i> ยกเลิก
+                            </button>
             </div>
         </div>
     </div>
@@ -69,11 +72,11 @@
                             &nbsp;
                         </div>
 
-                        <div class="one wide field">
-                            <label class="custom-label-w-10">ข้อย่อย[{{ i+1 }}]</label>
+                        <div class="two wide field">
+                            <label class="custom-label-w-20">ข้อย่อย[{{ i+1 }}]</label>
                         </div>
 
-                        <div class="nine wide field">
+                        <div class="eight wide field">
                             <input type="text" id="minorDetail{{i}}" name="minorDetail{{i}}" [(ngModel)]="minorDetail[i]">
                         </div>
 
@@ -91,13 +94,13 @@
                             &nbsp;
                         </div>
 
-                        <div class="one wide field">
+                        <div class="two wide field">
                             <a class="primary" (click)="onAddField()" style="cursor: pointer;">
-                                <i class="add icon"></i>
+                                <i class="add icon"></i> เพิ่มข้อย่อย
                             </a>
                         </div>
 
-                        <div class="nine wide field">
+                        <div class="eight wide field">
                             &nbsp;
                         </div>
 
@@ -114,7 +117,7 @@
                                 <i class=" backward icon "></i> กลับ
                             </button>
 
-                            <button class="ui small blue button " type="button" (click)="onSaveData()">
+                            <button class="ui small green button " type="button" (click)="onSaveData()">
                                 <i class="save icon "></i> บันทึก
                             </button>
                         </div>
@@ -164,7 +167,7 @@
                                             <div class="ui center aligned grid">
                                                 <div class="row">
                                                     <div class="column">
-                                                        <button class="ui tiny blue button" type="button" name="edit-{{i}}" id="edit-{{i}}" (click)="onEditData(t)">
+                                                        <button class="ui tiny orange button" type="button" name="edit-{{i}}" id="edit-{{i}}" (click)="onEditData(t)">
                                                             <i class="edit icon "></i> แก้ไข
                                                         </button>
                                                     </div>
@@ -182,12 +185,8 @@
             <div class="ui center aligned grid">
                 <div class="row">
                     <div class="column">
-                        <button class="ui small blue button" type="button" (click)="onDeleteData()">
-                            <i class="delete icon"></i> ลบ
-                        </button>
-
-                        <button class="ui small blue button " type="button" (click)="onEditData()">
-                            <i class="edit icon"></i> แก้ไข
+                        <button class="ui small red button" type="button" (click)="onDeleteData()">
+                            <i class="trash icon"></i> ลบ
                         </button>
                     </div>
                 </div>
