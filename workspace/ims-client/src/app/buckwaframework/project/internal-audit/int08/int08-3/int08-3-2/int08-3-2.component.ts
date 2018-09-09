@@ -25,12 +25,12 @@ export class Int0832Component implements OnInit {
     private ajax: AjaxService,
     private messageBarService: MessageBarService
   ) { }
-
+  1
   ngOnInit() {
     this.riskHdrName = "";
     this.budgetYear = "";
     this.wsRiskList = ["ปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ", "ปัจจัยเสี่ยงผลการจัดเก็บรายได้", "ปัจจัยเสี่ยงผลการปราบปรามด้านค่าปรับคดี", "ปัจจัยเสี่ยงผลการปราบปรามด้านจำนวนคดี", "ปัจจัยเสี่ยงการเงินและบัญชี", "ปัจจัยเสี่ยงระบบการควบคุมภายใน", "ปัจจัยเสี่ยงการส่งเงินเกิน 3 วัน", "ปัจจัยเสี่ยงแบบสอบทานระบบการควบคุมภายใน"];
-    this.pageList = ["/int08/3/3", "/int08/3/6", "/int08/3/7", "/int08/3/8", "/int08/3/9", "/int08/3/10", "/int08/3/11", "/int08/3/12"];
+    this.pageList = ["/int08/3/3", "/int08/3/6", "/int08/3/7", "/int08/3/8", "/int08/3/9", "/int08/3/9", "/int08/3/10", "/int08/3/11"];
     //this.initDatatable();
   }
   ngAfterViewInit() {

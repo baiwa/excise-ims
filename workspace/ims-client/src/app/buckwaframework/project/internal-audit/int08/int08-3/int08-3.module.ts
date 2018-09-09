@@ -25,7 +25,9 @@ const routes: Routes = [
   { path: '5', component: Int0835Component, canActivate: [AuthGuard] },
   { path: '6', component: Int0836Component, canActivate: [AuthGuard] },
   { path: '7', component: Int0837Component, canActivate: [AuthGuard] },
-  { path: '8', component: Int0838Component, canActivate: [AuthGuard] }
+  { path: '8', component: Int0838Component, canActivate: [AuthGuard] },
+
+  { path: '9', component: Int0839Component, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
