@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
-import th.co.baiwa.excise.ia.persistence.vo.Int111Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int112FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int112Vo;
 
@@ -28,6 +27,7 @@ public class IaFollowUpDepartmentDao {
     private JdbcTemplate jdbcTemplate;
     
     private String SQL_SEARCH_CRITERIA = " SELECT * FROM IA_FOLLOW_UP_DEPARTMENT WHERE IS_DELETED = 'N' ";
+    private String SQL_EXPORT_DATA = " SELECT * FROM IA_FOLLOW_UP_DEPARTMENT WHERE IS_DELETED = 'N' ";
     
     public List<Int112Vo> searchCriteria(Int112FormVo formVo) {
     	StringBuilder sql = new StringBuilder(SQL_SEARCH_CRITERIA);
@@ -35,17 +35,45 @@ public class IaFollowUpDepartmentDao {
     	
     	if (StringUtils.isNotBlank(formVo.getExciseDepartment())) {
     		sql.append(" AND EXCISE_DEPARTMENT = ? ");
-    		param.add(formVo.getExciseDepartment());
+    		param.add(queryValue1SysLov(formVo.getExciseDepartment()));
     	}
     	
     	if (StringUtils.isNotBlank(formVo.getExciseRegion())) {
     		sql.append(" AND EXCISE_REGION = ? ");
-    		param.add(formVo.getExciseRegion());
+    		param.add(queryValue1SysLov(formVo.getExciseRegion()));
     	}
     	
     	if (StringUtils.isNotBlank(formVo.getExciseDistrict())) {
     		sql.append(" AND EXCISE_DISTRICT = ? ");
-    		param.add(formVo.getExciseDistrict());
+    		param.add(queryDescSysLov(formVo.getExciseDistrict()));
+    	}
+    	
+    	if (StringUtils.isNotBlank(formVo.getStatus())) {
+    		sql.append(" AND STATUS = ? ");
+    		param.add(formVo.getStatus());
+    	}
+    	
+    	List<Int112Vo> list = jdbcTemplate.query(sql.toString(), param.toArray(), iaFollowUpDepartmentRowmapper);
+    	return list;
+    }
+    
+    public List<Int112Vo> queryExportData(Int112FormVo formVo) {
+    	StringBuilder sql = new StringBuilder(SQL_EXPORT_DATA);
+    	List<Object> param = new ArrayList<>();
+    	
+    	if (StringUtils.isNotBlank(formVo.getExciseDepartment())) {
+    		sql.append(" AND EXCISE_DEPARTMENT = ? ");
+    		param.add(queryValue1SysLov(formVo.getExciseDepartment()));
+    	}
+    	
+    	if (StringUtils.isNotBlank(formVo.getExciseRegion())) {
+    		sql.append(" AND EXCISE_REGION = ? ");
+    		param.add(queryValue1SysLov(formVo.getExciseRegion()));
+    	}
+    	
+    	if (StringUtils.isNotBlank(formVo.getExciseDistrict())) {
+    		sql.append(" AND EXCISE_DISTRICT = ? ");
+    		param.add(queryDescSysLov(formVo.getExciseDistrict()));
     	}
     	
     	if (StringUtils.isNotBlank(formVo.getStatus())) {
@@ -62,7 +90,7 @@ public class IaFollowUpDepartmentDao {
 		public Int112Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Int112Vo vo = new Int112Vo();
 			vo.setFollowUpDepartmentId(String.valueOf(rs.getLong("FOLLOW_UP_DEPARTMENT_ID")));
-			vo.setExciseDepartment(rs.getString("INFORM_RECTOR_BNUM"));
+			vo.setExciseDepartment(rs.getString("EXCISE_DEPARTMENT"));
 			vo.setExciseRegion(rs.getString("EXCISE_REGION"));
 			vo.setExciseDistrict(rs.getString("EXCISE_DISTRICT"));
 			vo.setInformRectorBnum(rs.getString("INFORM_RECTOR_BNUM"));
@@ -89,7 +117,7 @@ public class IaFollowUpDepartmentDao {
 	};
 	
 	public List<LabelValueBean> queryDeapertment() {
-		String SQL = "SELECT * FROM SYS_LOV WHERE TYPE='SECTOR_VALUE' AND LOV_ID_MASTER IS NULL ORDER_BY VALUE1 ASC";
+		String SQL = "SELECT * FROM SYS_LOV WHERE TYPE='SECTOR_VALUE' AND LOV_ID_MASTER IS NULL ORDER BY SUB_TYPE ASC";
 		return jdbcTemplate.query(SQL, departmentRowMapper);
 	}
 
@@ -102,13 +130,53 @@ public class IaFollowUpDepartmentDao {
 	
 	public List<LabelValueBean> queryRegion(String id) {
 		String SQL = "SELECT * FROM SYS_LOV WHERE LOV_ID_MASTER=? AND TYPE='SECTOR_VALUE' ";
-		return jdbcTemplate.query(SQL, new Object[] { id }, areaRowmapper);
+		return jdbcTemplate.query(SQL, new Object[] { id }, regionRowmapper);
 	}
 
-	private RowMapper<LabelValueBean> areaRowmapper = new RowMapper<LabelValueBean>() {
+	private RowMapper<LabelValueBean> regionRowmapper = new RowMapper<LabelValueBean>() {
+		@Override
+		public LabelValueBean mapRow(java.sql.ResultSet rs, int rowNum) throws SQLException {
+			return new LabelValueBean(rs.getString("VALUE1"), rs.getString("LOV_ID"));
+		}
+	};
+	
+	public List<LabelValueBean> queryDistrict(String id) {
+		String SQL = "SELECT * FROM SYS_LOV WHERE LOV_ID_MASTER=? AND TYPE='SECTOR_VALUE' ";
+		return jdbcTemplate.query(SQL, new Object[] { id }, districtRowmapper);
+	}
+
+	private RowMapper<LabelValueBean> districtRowmapper = new RowMapper<LabelValueBean>() {
 		@Override
 		public LabelValueBean mapRow(java.sql.ResultSet rs, int rowNum) throws SQLException {
 			return new LabelValueBean(rs.getString("SUB_TYPE_DESCRIPTION"), rs.getString("LOV_ID"));
 		}
 	};
+	
+	public String queryValue1SysLov(String id) {
+		String SQL = "SELECT VALUE1 FROM SYS_LOV WHERE LOV_ID=? AND TYPE='SECTOR_VALUE' ";
+		String value1 = "";
+		value1 = jdbcTemplate.queryForObject(SQL, new Object[] { id }, String.class);
+		return value1;
+	}
+	
+	public String queryLovIdSysLovByValue1(String value1) {
+		String SQL = "SELECT LOV_ID FROM SYS_LOV WHERE VALUE1=? AND TYPE='SECTOR_VALUE' ";
+		String lovId = "";
+		lovId = jdbcTemplate.queryForObject(SQL, new Object[] { value1 }, String.class);
+		return lovId;
+	}
+	
+	public String queryDescSysLov(String id) {
+		String SQL = "SELECT SUB_TYPE_DESCRIPTION FROM SYS_LOV WHERE LOV_ID=? AND TYPE='SECTOR_VALUE' ";
+		String desc = "";
+		desc = jdbcTemplate.queryForObject(SQL, new Object[] { id }, String.class);
+		return desc;
+	}
+	
+	public String queryLovIdSysLov(String subDesc) {
+		String SQL = "SELECT LOV_ID FROM SYS_LOV WHERE SUB_TYPE_DESCRIPTION=? AND TYPE='SECTOR_VALUE' ";
+		String lovId = "";
+		lovId = jdbcTemplate.queryForObject(SQL, new Object[] { subDesc }, String.class);
+		return lovId;
+	}
 }

@@ -1,20 +1,20 @@
 package th.co.baiwa.excise.ia.persistence.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511Vo;
 import th.co.baiwa.excise.utils.OracleUtils;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class CheckStampAreaDao {
@@ -22,13 +22,32 @@ public class CheckStampAreaDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private final String SQL = "SELECT * FROM IA_STAMP_DETAIL WHERE IS_DELETED='N' ORDER BY CREATED_DATE DESC";
+	private final String SQL = "SELECT * FROM IA_STAMP_DETAIL WHERE IS_DELETED='N' ";
 
 	public Long count(Int0511FormVo formVo) {
 
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
 
+        if(StringUtils.isNotBlank(formVo.getSector())){
+            sql.append(" AND EXCISE_DEPARTMENT=? ");
+            params.add(StringUtils.trim(formVo.getSector()));
+        }
+        if (StringUtils.isNotBlank(formVo.getArea())){
+            sql.append(" AND EXCISE_REGION=? ");
+            params.add(StringUtils.trim(formVo.getArea()));
+        }
+        if (StringUtils.isNotBlank(formVo.getBranch())){
+            sql.append(" AND EXCISE_DISTRICT=? ");
+            params.add(StringUtils.trim(formVo.getBranch()));
+        }
+        if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())){
+            sql.append(" AND TO_CHAR(DATE_OF_PAY,'YYYYMMDD') BETWEEN ? AND ?");
+            params.add(formVo.getDateForm());
+            params.add(formVo.getDateTo());
+        }
+
+		sql.append(" ORDER BY CREATED_DATE DESC ");
 		String countSql = OracleUtils.countForDatatable(sql);
 		Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
 		return count;
@@ -38,7 +57,24 @@ public class CheckStampAreaDao {
 
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
-		
+        if(StringUtils.isNotBlank(formVo.getSector())){
+            sql.append(" AND EXCISE_DEPARTMENT=? ");
+            params.add(StringUtils.trim(formVo.getSector()));
+        }
+        if (StringUtils.isNotBlank(formVo.getArea())){
+            sql.append(" AND EXCISE_REGION=? ");
+            params.add(StringUtils.trim(formVo.getArea()));
+        }
+        if (StringUtils.isNotBlank(formVo.getBranch())){
+            sql.append(" AND EXCISE_DISTRICT=? ");
+            params.add(StringUtils.trim(formVo.getBranch()));
+        }
+        if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())){
+            sql.append(" AND TO_CHAR(DATE_OF_PAY,'YYYYMMDD') BETWEEN ? AND ?");
+            params.add(formVo.getDateForm());
+            params.add(formVo.getDateTo());
+        }
+        sql.append(" ORDER BY CREATED_DATE DESC ");
 		List<Int0511Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), stamRowmapper);
 		return list;
 

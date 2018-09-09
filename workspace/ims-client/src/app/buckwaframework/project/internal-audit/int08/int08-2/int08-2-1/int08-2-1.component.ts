@@ -165,13 +165,14 @@ export class Int0821Component implements OnInit {
         {
           data: "riskAssInfHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button primary dtl"><i class="table icon"></i> รายละเอียด</button>'
+            return '<button type="button" class="ui mini button primary dtl" (click)="ExportOtherDtl()" ><i class="table icon"></i> รายละเอียด</button>'
               + '<button type="button" class="ui mini button primary export"><i class="print icon"></i> Export</button>';
           }
         }
       ],
       columnDefs: [
-        { targets: [0, 1, 2, 3, 4], className: "center aligned" }
+        { targets: [0, 3, 4], className: "center aligned" },
+        { targets: [1,2], className: "left aligned" }
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {
@@ -186,7 +187,20 @@ export class Int0821Component implements OnInit {
         })
 
         $("td > .export", row).bind("click", () => {
-         
+
+          if (this.infRiskList.indexOf(data.riskAssInfHdrName) >= 0) {
+            this.riskAssInfHdrId = data.riskAssInfHdrId;
+            const URL = "ia/int082/exportInfWebService?riskAssInfHdrId=" + this.riskAssInfHdrId;
+            console.log("id", this.riskAssInfHdrId);
+            this.ajax.download(URL);
+            
+          } else {
+            this.riskAssInfHdrId = data.riskAssInfHdrId;
+            const URL = "ia/int082/exportInfOtherDtl?riskAssInfHdrId=" + this.riskAssInfHdrId;
+            console.log("id", this.riskAssInfHdrId);
+            this.ajax.download(URL);
+          }
+
         });
 
       }
@@ -379,6 +393,24 @@ export class Int0821Component implements OnInit {
   clearData(){
     this.budgetYear = "";
     this.initDatatable();
+    this.openForm1 = false;
+    this.openForm2 = false;
   }
+
+  ExportInfWebService() {
+    const URL = "ia/int082/exportInfWebService?riskAssInfHdrId=" + this.riskAssInfHdrId;
+    console.log("id", this.riskAssInfHdrId);
+    this.ajax.download(URL);
+
+  }
+
+
+  ExportInfOtherDtl() {
+    const URL = "ia/int082/exportInfOtherDtl?riskAssInfHdrId=" + this.riskAssInfHdrId;
+    console.log("id", this.riskAssInfHdrId);
+    this.ajax.download(URL);
+ 
+  }
+
 
 }

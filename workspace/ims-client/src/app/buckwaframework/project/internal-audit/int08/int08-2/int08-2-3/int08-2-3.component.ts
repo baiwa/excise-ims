@@ -187,4 +187,10 @@ export class Int0823Component implements OnInit {
     this.isConditionShow = false;
   }
 
+  ExportWebService() {
+    const URL = "ia/int082/exportInfWebService?riskAssInfHdrId=" + this.id;
+    console.log("id", this.id);
+    this.ajax.download(URL);
+  }
+
 }

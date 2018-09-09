@@ -33,7 +33,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.translateService.use("th");
     this.user = this.authService.getUser();
-    console.log(this.user);
   }
 
   logout() {

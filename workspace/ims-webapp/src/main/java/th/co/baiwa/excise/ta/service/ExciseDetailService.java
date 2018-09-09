@@ -56,7 +56,7 @@ public class ExciseDetailService {
 	
 	public boolean saveExciseFileUpload(String exciseId, String analysNum, ExciseFile[] files) {
 		logger.info("ExciseDetailService.saveExciseFileUpload exciseId: {}, files: {}", exciseId, files);
-		ArrayList<ExciseFile> file = new ArrayList<ExciseFile>();
+		ArrayList<ExciseFile> file = new ArrayList<>();
 		for(ExciseFile fs: files) {
 			if (fs.getName() != null) {
 				file.add(fs);

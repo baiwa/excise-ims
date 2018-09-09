@@ -222,6 +222,7 @@ export class Int022Component implements OnInit {
           const { messageTh, messageType } = response.msg;
           if (messageType == "C") {
             this.message.successModal(messageTh);
+            this.router.navigate(['/int02/1']);
           } else {
             this.message.errorModal(messageTh);
           }

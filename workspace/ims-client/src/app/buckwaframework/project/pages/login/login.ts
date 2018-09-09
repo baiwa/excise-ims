@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 
 import { AuthService } from "../../../common/services/auth.service";
 import { User } from "../../../common/models/user";
-import { MessageBarService } from "../../../common/services/message-bar.service";
+import { MessageBarService, TranslateService } from "../../../common/services";
 
 @Component({
   selector: "page-login",
@@ -16,7 +16,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     public authService: AuthService,
-    private messageBarService: MessageBarService
+    private messageBarService: MessageBarService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit() { }
@@ -32,6 +33,7 @@ export class LoginPage implements OnInit {
       .login(user)
       .then(ok => {
         this.loading = false;
+        this.translateService.pullMessage();
       })
       .catch(error => {
         this.messageBarService.errorModal(

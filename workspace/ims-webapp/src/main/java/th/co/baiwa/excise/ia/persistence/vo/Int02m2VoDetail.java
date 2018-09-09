@@ -5,6 +5,21 @@ public class Int02m2VoDetail {
 	private Long headerId;
 	private Long detailId;
 	private String content;
+	private String type;
+	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getPoint() {
+		return point;
+	}
+	public void setPoint(String point) {
+		this.point = point;
+	}
+	private String point;
 	
 	public String getOrder() {
 		return order;

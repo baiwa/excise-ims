@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
-@Table(name="IA_FOLLOW_UP_PROJECT")
+@Table(name="IA_FOLLOW_UP_DEPARTMENT")
 public class IaFollowUpDepartment extends BaseEntity {
 
 	private static final long serialVersionUID = -1585480404109817175L;

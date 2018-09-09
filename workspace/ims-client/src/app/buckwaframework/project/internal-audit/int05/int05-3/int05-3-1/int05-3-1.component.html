@@ -1,74 +1,140 @@
-<div class="ui grid" style="margin: 2%">
+<div class="ui grid">
   <div class="sixteen wide column segments">
-    <div class="ui top centered attached header segment" style="background: #729ac4">
-      <span>เพิ่มข้อมูลสินทรัพย์</span>
+
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>ตรวจสอบสินทรัพย์แบบเพิ่มข้อมูล</span>
     </div>
 
-    <div class="ui attached segment">
-      <div class="ui grid">
-        <div class="ui one wide column">&nbsp;</div>
-        <div class="ui fourteen wide column">
-          <div class="ui form">
+    <div id="addAssetWorkPage" class="ui attached segment">
+      <div id="addAssetWorkForm" class="ui form">
+          <input type="hidden" id="indexValue" name="indexValue" >
+        <div class="inline fields">
+          <div class="two wide field"></div>
 
-            <div class="inline fields">
-              <div class="seven wide field">
-                <label class="custom-label-w-20">เลขที่สินทรัพย์</label>
-                <input type="text" />
-              </div>
-              <div class="two wide field">&nbsp;</div>
-              <div class="seven wide field">
-                <label class="custom-label-w-20">มูลค่าการได้มา</label>
-                <input type="text" />
-              </div>
-            </div>
+          <div class="two wide field">
+            <label>เลขที่สินทรัพย์</label>
+          </div>
 
-            <div class="inline fields">
-              <div class="seven wide field">
-                <label class="custom-label-w-20">เลขที่ย่อย</label>
-                <input type="text" />
-              </div>
-              <div class="two wide field">&nbsp;</div>
-              <div class="seven wide field">
-                <label class="custom-label-w-20">ค่าเสื่อมราคาสะสม</label>
-                <input type="text" />
-              </div>
-            </div>
+          <div class="four wide field">
+            <input type="text" id="assetNumber" name="assetNumber">
+          </div>
 
-            <div class="inline fields">
-              <div class="seven wide field">
-                <label class="custom-label-w-20">วันที่โอนเป็นทุน</label>
-                <input type="text" />
-              </div>
-              <div class="two wide field">&nbsp;</div>
-              <div class="seven wide field">
-                <label class="custom-label-w-20">มูลค่าตามบัญชี</label>
-                <input type="text" />
-              </div>
-            </div>
+          <div class="two wide field">
+            <label>มูลค่าการได้มา</label>
+          </div>
 
-            <div class="inline fields">
-              <div class="seven wide field">
-                <label class="custom-label-w-20">คำอธิบายสินทรัพย์</label>
-                <input type="text" />
-              </div>
-            </div>
-
+          <div class="four wide field">
+            <input type="text" id="acquisitionValue" name="acquisitionValue" >
           </div>
         </div>
-        <div class="ui one wide column">&nbsp;</div>
-      </div>
-    </div>
 
-    <div class="ui bottom centered attached segment">
+        <div class="inline fields">
+          <div class="two wide field"></div>
+
+          <div class="two wide field">
+            <label>เลขที่ย่อย</label>
+          </div>
+
+          <div class="four wide field">
+            <input type="text" id="assetSubNumber" name="assetSubNumber" >
+          </div>
+
+          <div class="two wide field">
+            <label>ค่าเสื่อมราคาสะสม</label>
+          </div>
+
+          <div class="four wide field">
+            <input type="text" id="accumulatedDepreciation" name="accumulatedDepreciation" >
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="two wide field"></div>
+
+          <div class="two wide field">
+            <label>วันที่โอนเป็นทุน</label>
+          </div>
+
+          <div class="four wide field">
+            <div class="ui calendar asset-work-calendar" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="fundTransferDate" name="fundTransferDate" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true">
+              </div>
+            </div>
+          </div>
+
+          <div class="two wide field">
+            <label>มูลค่าตามบัญชี</label>
+          </div>
+
+          <div class="four wide field">
+            <input type="text" id="bookValue" name="bookValue" >
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="two wide field"></div>
+
+          <div class="two wide field">
+            <label>คำอธิบายสินทรัพย์</label>
+          </div>
+
+          <div class="four wide field">
+            <input type="text" id="assetDescription" name="assetDescription" >
+          </div>
+        </div>
+
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button" (click)="addData()">
+              <i class="add icon"></i>
+              เพิ่มข้อมูล
+            </button>
+            <button class="ui mini button" (click)="clearData()">
+              <i class="refresh icon"></i>
+              ล้างข้อมูล
+            </button>
+            <!-- <button class="ui mini button" (click)="cancel()">
+              <i class="remove icon"></i>
+              ยกเลิก
+            </button> -->
+          </div>
+        </div>
+
+      </div>
+      <br>
+      <table id="dataTable" class="ui small celled table" style="width: 100%;">
+        <thead>
+          <tr>
+            <th style="text-align: center !important;">
+              <div class="ui checkbox check-all">
+                <input type="checkbox" (click)="clickCheckAll($event)">
+                <label></label>
+              </div>
+            </th>
+            <th style="text-align: center !important;">เลขที่สินทรัพย์</th>
+            <th style="text-align: center !important;">เลขที่ย่อย</th>
+            <th style="text-align: center !important;">วันที่โอนเป็นทุน</th>
+            <th style="text-align: center !important;">คำอธิบายของสินทรัพย์</th>
+            <th style="text-align: center !important;">มูลค่าการได้มา</th>
+            <th style="text-align: center !important;">ค่าเสื่อมราคาสะสม</th>
+            <th style="text-align: center !important;">มูลค่าตามบัญชี</th>
+            <th style="text-align: center !important;">จัดการ</th>
+          </tr>
+        </thead>
+      </table>
+      <br>
       <div class="ui center aligned grid">
-        <div class="eight wide column">
-          <button class="ui mini green button" (click)="callFn()">
-            <i class="save icon"></i>
-            เพิ่มข้อมูล
+        <div class="sixteen wide column">
+          <button class="ui mini primary button" (click)="deleteData()">
+            <i class="trash icon"></i>
+            ลบ
           </button>
-          <button class="ui mini red button" routerLink="/int05/3">
-            <i class="times icon"></i>
-            ยกเลิก
+          <button class="ui mini primary button" (click)="processCheckData()">
+            <i class="check circle icon"></i>
+            เลือกตรวจสอบข้อมูล
           </button>
         </div>
       </div>

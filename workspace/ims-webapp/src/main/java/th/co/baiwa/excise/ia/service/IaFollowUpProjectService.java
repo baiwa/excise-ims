@@ -1,14 +1,30 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +39,10 @@ import th.co.baiwa.excise.constant.IaConstant.IA_REGIS_TRACK_CONTROL.STATUS;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ia.persistence.dao.IaFollowUpProjectDao;
 import th.co.baiwa.excise.ia.persistence.entity.IaFollowUpProject;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfOtherDtl;
 import th.co.baiwa.excise.ia.persistence.repository.IaFollowUpProjectRepository;
+import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfOtherDtlRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int111FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int111Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
@@ -32,6 +51,9 @@ import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
 public class IaFollowUpProjectService {
 
 	private Logger log = LoggerFactory.getLogger(IaFollowUpProjectService.class);
+	
+	@Autowired
+	private RiskAssInfOtherDtlRepository riskAssInfOtherDtlRepository;
 	
 	@Autowired
 	private IaFollowUpProjectDao iaFollowUpProjectDao;
@@ -81,13 +103,13 @@ public class IaFollowUpProjectService {
 	
 	public List<LabelValueBean> getStatusDropdown() {
 		List<LabelValueBean> dropdownList = new ArrayList<>();
-		dropdownList.add(new LabelValueBean(STATUS.TRACKING_FIRST_DESC, STATUS.TRACKING_FIRST_CODE));
-		dropdownList.add(new LabelValueBean(STATUS.RESULT_OPT_FIRST_DESC, STATUS.RESULT_OPT_FIRST_CODE));
-		dropdownList.add(new LabelValueBean(STATUS.REPORT_TRACKING_FIRST_DESC, STATUS.REPORT_TRACKING_FIRST_CODE));
-		dropdownList.add(new LabelValueBean(STATUS.TRACKING_SECOND_DESC, STATUS.TRACKING_SECOND_CODE));
-		dropdownList.add(new LabelValueBean(STATUS.RESULT_OPT_SECOND_DESC, STATUS.RESULT_OPT_SECOND_CODE));
-		dropdownList.add(new LabelValueBean(STATUS.REPORT_TRACKING_SECOND_DESC, STATUS.REPORT_TRACKING_SECOND_CODE));
-		dropdownList.add(new LabelValueBean(STATUS.COMPLETE_DESC, STATUS.COMPLETE_CODE));
+		dropdownList.add(new LabelValueBean(STATUS.TRACKING_FIRST_DESC, STATUS.TRACKING_FIRST_DESC));
+		dropdownList.add(new LabelValueBean(STATUS.RESULT_OPT_FIRST_DESC, STATUS.RESULT_OPT_FIRST_DESC));
+		dropdownList.add(new LabelValueBean(STATUS.REPORT_TRACKING_FIRST_DESC, STATUS.REPORT_TRACKING_FIRST_DESC));
+		dropdownList.add(new LabelValueBean(STATUS.TRACKING_SECOND_DESC, STATUS.TRACKING_SECOND_DESC));
+		dropdownList.add(new LabelValueBean(STATUS.RESULT_OPT_SECOND_DESC, STATUS.RESULT_OPT_SECOND_DESC));
+		dropdownList.add(new LabelValueBean(STATUS.REPORT_TRACKING_SECOND_DESC, STATUS.REPORT_TRACKING_SECOND_DESC));
+		dropdownList.add(new LabelValueBean(STATUS.COMPLETE_DESC, STATUS.COMPLETE_DESC));
 		return dropdownList;
 	}
 	
@@ -164,6 +186,8 @@ public class IaFollowUpProjectService {
 		
 		Workbook workbook = new XSSFWorkbook();
 
+		List<Int111Vo> exportDataList = iaFollowUpProjectDao.queryExportData(formVo);
+		
 //		this.createWorkSheetExcel(workbook);
 		
 		// Write the output to a file
@@ -176,156 +200,198 @@ public class IaFollowUpProjectService {
 		return new FileSystemResource(file);
 	}
 	
-	private void createWorkSheetExcel(Workbook workbook, String pageSheet, Integer tranId, String fileId) throws Exception {
-//		String TOPIC = String.format("CDRs รายการโอนหนี้ T%s (#OS%s-FID:%s)", titleSheet, tranId, fileId);
-//		String[] columns = this.HEADER_EXPORT_FILE;
-//		String dateReport = DateFormatUtils.format(new Date(), "dd/MM/yyyy hh:mm:ss");
-//		List<TransferringSummaryVo> summaryList = new ArrayList<>();
-//		
-//		// Style
-//		// Header
-//		Font fontHeader = workbook.createFont();
-//		fontHeader.setBold(true);
-//
-//		Font headerFont = workbook.createFont();
-//		headerFont.setBold(true);
-//		headerFont.setColor(IndexedColors.RED.getIndex());
-//		
-//		// Date Display
-//		CellStyle styleDate = workbook.createCellStyle();
-//		styleDate.setAlignment(HorizontalAlignment.RIGHT);
-//		styleDate.setFont(fontHeader);
-//
-//		// Topic Display
-//		CellStyle styleTopic = workbook.createCellStyle();
-//		styleTopic.setAlignment(HorizontalAlignment.CENTER);
-//		styleTopic.setFont(fontHeader);
-//
-//		XSSFColor colorBlack = new XSSFColor(new Color(0, 0, 0));
-//		// body header
-//		CellStyle headerStyle = workbook.createCellStyle();
-//		headerStyle.setFont(headerFont);
-//		headerStyle.setBottomBorderColor(colorBlack.getIndex());
-//		headerStyle.setLeftBorderColor(colorBlack.getIndex());
-//		headerStyle.setRightBorderColor(colorBlack.getIndex());
-//		headerStyle.setTopBorderColor(colorBlack.getIndex());
-//		headerStyle.setBorderBottom(BorderStyle.THIN);
-//		headerStyle.setBorderLeft(BorderStyle.THIN);
-//		headerStyle.setBorderRight(BorderStyle.THIN);
-//		headerStyle.setBorderTop(BorderStyle.THIN);
-//		
-//		// body border
-//		CellStyle bodyStyle = workbook.createCellStyle();
-//		bodyStyle.setBottomBorderColor(colorBlack.getIndex());
-//		bodyStyle.setLeftBorderColor(colorBlack.getIndex());
-//		bodyStyle.setRightBorderColor(colorBlack.getIndex());
-//		bodyStyle.setTopBorderColor(colorBlack.getIndex());
-//		bodyStyle.setBorderBottom(BorderStyle.THIN);
-//		bodyStyle.setBorderLeft(BorderStyle.THIN);
-//		bodyStyle.setBorderRight(BorderStyle.THIN);
-//		bodyStyle.setBorderTop(BorderStyle.THIN);
-//		
-//		// End Style
-//				
-//		CreationHelper createHelper = workbook.getCreationHelper();
-//		
-//		Sheet sheet = workbook.createSheet("ตรวจสอบรอบบิล T" + pageSheet);
-//
-//		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 11));
-//		sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 11));
-//		sheet.addMergedRegion(new CellRangeAddress(2, 2, 0, 11));
-//
-//		Row dateRow =  sheet.createRow(0);
-//		Cell dateCell = dateRow.createCell(0);
-//		dateCell.setCellValue(dateReport);
-//		dateCell.setCellStyle(styleDate);
-//				
-//		Row topicRow =  sheet.createRow(1);
-//		Cell topicCell = topicRow.createCell(0);
-//		topicCell.setCellValue(TOPIC);
-//		topicCell.setCellStyle(styleTopic);
-//		
-//		// Create a Row
-//		Row headerRow = sheet.createRow(3);
-//
-//		// Creating cells
-//		for (int i = 0; i < columns.length; i++) {
-//			Cell cell = headerRow.createCell(i);
-//			cell.setCellValue(columns[i]);
-//			cell.setCellStyle(headerStyle);
-//		}
-//
-//		// Create Cell Style for formatting Date
-//		CellStyle dateCellStyle = workbook.createCellStyle();
-//		dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd-MM-yyyy"));
-//
-//
-//		int rowNum = 4;
-//		if (!summaryList.isEmpty()) {
-//			for (TransferringSummaryVo data : summaryList) {
-////				Row row = sheet.createRow(rowNum++);
-////				
-////				Cell cell0 = row.createCell(0);
-////				cell0.setCellValue(StringUtils.isNotBlank(data.getBa()) ? data.getBa() : "");
-////				cell0.setCellStyle(bodyStyle);
-////				
-////				Cell cell1 = row.createCell(1);
-////				cell1.setCellValue(StringUtils.isNotBlank(data.getIdTypeDisplay()) ? data.getIdTypeDisplay() : "");
-////				cell1.setCellStyle(bodyStyle);
-////				
-////				Cell cell2 = row.createCell(2);
-////				cell2.setCellValue(StringUtils.isNotBlank(data.getAcc()) ? data.getAcc() : "");
-////				cell2.setCellStyle(bodyStyle);
-////				
-////				Cell cell3 = row.createCell(3);
-////				cell3.setCellValue(StringUtils.isNotBlank(data.getPointOrigin()) ? data.getPointOrigin() : "");
-////				cell3.setCellStyle(bodyStyle);
-////				
-////				Cell cell4 = row.createCell(4);
-////				cell4.setCellValue(this.toCommarFormat(data.getRecs()));
-////				cell4.setCellStyle(bodyStyle);
-////				
-////				Cell cell5 = row.createCell(5);
-////				cell5.setCellValue(this.toMoneyFormat(data.getCharge()));
-////				cell5.setCellStyle(bodyStyle);
-////				
-////				Cell cell6 = row.createCell(6);
-////				cell6.setCellValue(this.toCommarFormat(data.getSecs()) );
-////				cell6.setCellStyle(bodyStyle);
-////				
-////				Cell cell7 = row.createCell(7);
-////				cell7.setCellValue(StringUtils.isNotBlank(data.getMinTransdt()) ? data.getMinTransdt() : "");
-////				cell7.setCellStyle(bodyStyle);
-////				
-////				Cell cell8 = row.createCell(8);
-////				cell8.setCellValue(StringUtils.isNotBlank(data.getMaxTransdt()) ? data.getMaxTransdt() : "");
-////				cell8.setCellStyle(bodyStyle);
-////				
-////				Cell cell9 = row.createCell(9);
-////				cell9.setCellValue(StringUtils.isNotBlank(data.getBperiod()) ? data.getBperiod() : "");
-////				cell9.setCellStyle(bodyStyle);
-////				
-////				Cell cell10 = row.createCell(10);
-////				cell10.setCellValue(StringUtils.isNotBlank(data.getRemark()) ? data.getRemark() : "");
-////				cell10.setCellStyle(bodyStyle);
-////				
-////				String invoiceType = StringUtils.isNotBlank(data.getInvoiceType()) ? data.getInvoiceType() : "";
-////				if ("1".equals(invoiceType)) {
-////					invoiceType = "รวมบิล";
-////				} else if ("0".equals(invoiceType)) {
-////					invoiceType = "แยกบิล";
-////				}
-////				
-////				Cell cell11 = row.createCell(11);
-////				cell11.setCellValue(invoiceType);
-////				cell11.setCellStyle(bodyStyle);
-//			}
-//		}
-//
-//		// Resize all columns to fit the content size
-//		for (int i = 0; i < columns.length; i++) {
-//			sheet.autoSizeColumn(i);
-//		}
+	private void createWorkSheetExcel(Workbook workbook) throws Exception {
+
+	}
+
+	public void exportExcelByToffee(RiskAssInfHdr riskAssInfHdr, HttpServletResponse response) throws IOException {
 		
+		/* create spreadsheet */
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		System.out.println("Creating excel");
+		
+		/* create CellStyle */
+		CellStyle thStyle = workbook.createCellStyle();
+		thStyle.setAlignment(HorizontalAlignment.CENTER);
+		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+		thStyle.setBorderBottom(BorderStyle.THIN);
+		thStyle.setBorderLeft(BorderStyle.THIN);
+		thStyle.setBorderRight(BorderStyle.THIN);
+		thStyle.setBorderTop(BorderStyle.THIN);
+		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		CellStyle cellCenter = workbook.createCellStyle();
+		cellCenter.setAlignment(HorizontalAlignment.CENTER);
+		cellCenter.setBorderBottom(BorderStyle.THIN);
+		cellCenter.setBorderLeft(BorderStyle.THIN);
+		cellCenter.setBorderRight(BorderStyle.THIN);
+		cellCenter.setBorderTop(BorderStyle.THIN);
+
+		CellStyle cellRight = workbook.createCellStyle();
+		cellRight.setAlignment(HorizontalAlignment.RIGHT);
+		cellRight.setBorderBottom(BorderStyle.THIN);
+		cellRight.setBorderLeft(BorderStyle.THIN);
+		cellRight.setBorderRight(BorderStyle.THIN);
+		cellRight.setBorderTop(BorderStyle.THIN);
+
+		CellStyle cellLeft = workbook.createCellStyle();
+		cellLeft.setAlignment(HorizontalAlignment.LEFT);
+		cellLeft.setBorderBottom(BorderStyle.THIN);
+		cellLeft.setBorderLeft(BorderStyle.THIN);
+		cellLeft.setBorderRight(BorderStyle.THIN);
+		cellLeft.setBorderTop(BorderStyle.THIN);
+
+		CellStyle bgRed = workbook.createCellStyle();
+		bgRed.setAlignment(HorizontalAlignment.CENTER);
+		bgRed.setBorderBottom(BorderStyle.THIN);
+		bgRed.setBorderLeft(BorderStyle.THIN);
+		bgRed.setBorderRight(BorderStyle.THIN);
+		bgRed.setBorderTop(BorderStyle.THIN);
+		bgRed.setFillForegroundColor(IndexedColors.RED.getIndex());
+		bgRed.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		CellStyle bgYellow = workbook.createCellStyle();
+		bgYellow.setAlignment(HorizontalAlignment.CENTER);
+		bgYellow.setBorderBottom(BorderStyle.THIN);
+		bgYellow.setBorderLeft(BorderStyle.THIN);
+		bgYellow.setBorderRight(BorderStyle.THIN);
+		bgYellow.setBorderTop(BorderStyle.THIN);
+		bgYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		bgYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		CellStyle bgGreen = workbook.createCellStyle();
+		bgGreen.setAlignment(HorizontalAlignment.CENTER);
+		bgGreen.setBorderBottom(BorderStyle.THIN);
+		bgGreen.setBorderLeft(BorderStyle.THIN);
+		bgGreen.setBorderRight(BorderStyle.THIN);
+		bgGreen.setBorderTop(BorderStyle.THIN);
+		bgGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+		bgGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		Font fontHeader = workbook.createFont();
+		fontHeader.setBold(true);
+
+		CellStyle topCenter = workbook.createCellStyle();
+		topCenter.setAlignment(HorizontalAlignment.CENTER);
+		topCenter.setFont(fontHeader);
+
+		CellStyle topRight = workbook.createCellStyle();
+		topRight.setAlignment(HorizontalAlignment.RIGHT);
+
+		CellStyle topLeft = workbook.createCellStyle();
+		topLeft.setAlignment(HorizontalAlignment.LEFT);
+
+		
+		/* create data spreadsheet */
+		
+		/* Header */
+		String[] tbTH1 = { "ลำดับ", "โครงการ", "รายงานผลอธิบดี", "", "แจ้งติดตามหน่วยรับตรวจครั้งที่ 1", "",
+				"วันครบกำหนดครั้งที่ 1", "", "หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 1", "",
+				"รายงานการติดตามครั้งที่ 1", "", "แจ้งติดตามหน่วยรับตรวจครั้งที่ 2", "", "วันครบกำหนดครั้งที่2",
+				"หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 2", "", "รายงานการติดตามครั้งที่ 2", "", "สถานะการติดตาม" };
+		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH1[cellNum]);
+			cell.setCellStyle(thStyle);
+		};
+
+		String[] tbTH2 = { "เลขหนังสือ", "วันที่", "เลขหนังสือ", "วันที่", "45 วัน", "60 วัน", "เลขหนังสือ", "วันที่",
+				"เลขหนังสือ", "วันที่", "เลขหนังสือ", "วันที่", "60 วัน", "เลขหนังสือ", "วันที่", "เลขหนังสือ",
+				"วันที่" };
+		row = sheet.createRow(1);
+		int cellNumtbTH2 = 2;
+		for (int i = 0; i < tbTH2.length; i++) {
+			cell = row.createCell(cellNumtbTH2);
+			cell.setCellValue(tbTH2[i]);
+			cell.setCellStyle(thStyle);
+			cellNumtbTH2++;
+		};
+		
+		cell = row.createCell(0);cell.setCellStyle(thStyle);
+		cell = row.createCell(1);cell.setCellStyle(thStyle);
+		cell = row.createCell(19);cell.setCellStyle(thStyle);
+		
+		
+		
+		/* set sheet */
+		// setColumnWidth
+		for (int i = 1; i <= 19; i++) {
+			if (i == 1) {
+				// วันครบกำหนดครั้งที่2
+				sheet.setColumnWidth(i, 76 * 255);
+			} else if (i == 19) {
+				// โครงการ => รายงานการติดตามครั้งที่ 2
+				sheet.setColumnWidth(i, 76 * 150);
+			} else if (i != 1 && i != 19)
+				// การติดตาม
+				sheet.setColumnWidth(i, 76 * 70);
+		}
+
+		// merge(firstRow, lastRow, firstCol, lastCol)
+		int firstCol = 2;
+		while (firstCol < 12) {
+			for (int lastCol = 3; lastCol <= 13; lastCol += 2) {
+				sheet.addMergedRegion(new CellRangeAddress(0, 0, firstCol, lastCol));
+				firstCol += 2;
+			}
+		}
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 16));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 18));
+		
+		sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+		sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
+		sheet.addMergedRegion(new CellRangeAddress(0, 1, 19,19));
+		/* End set sheet */
+		
+		
+		/* Detail */
+		List<RiskAssInfOtherDtl> resultList = riskAssInfOtherDtlRepository.findByRiskInfHrdId(161L);
+		rowNum = 2;
+		cellNum = 0;
+		int no = 1;
+		for (RiskAssInfOtherDtl detail : resultList) {
+			row = sheet.createRow(rowNum);
+			// No.
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			// testData
+			cell = row.createCell(cellNum);
+			cell.setCellValue(detail.getInfName());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+		
+		
+		
+		/*set	fileName*/		
+		String fileName ="testData";
+		System.out.println(fileName);
+		
+		/* write it as an excel attachment */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+		byte [] outArray = outByteStream.toByteArray();
+		response.setContentType("application/vnd.ms-excel");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename="+fileName+".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outArray);
+		outStream.flush();
+		outStream.close();
+		
+		System.out.println("Done");
 	}
 }

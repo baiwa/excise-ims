@@ -60,6 +60,9 @@ export class Int051Component implements OnInit {
 
   onClear = () => {
     console.log("Clear");
+    this.area=null;
+    this.sector=null;
+    this.branch=null;
     $(".ui.dropdown.ai").dropdown('restore defaults');
     $("#dateForm").val("");
     $("#dateTo").val("");
@@ -156,9 +159,9 @@ export class Int051Component implements OnInit {
         "type": "POST",
         "data": (d) => {
           return JSON.stringify($.extend({}, d, {
-            "sector": $("#sector option:selected").text(),
-            "area": $("#area option:selected").text(),
-            "branch": $("#branch option:selected").text(),
+            "sector": ($("#sector option:selected").text()=="กรุณาเลือก" ? "":$("#sector option:selected").text()),
+            "area": ($("#area option:selected").text()=="กรุณาเลือก" ? "":$("#area option:selected").text()),
+            "branch": ($("#branch option:selected").text()=="กรุณาเลือก" ? "":$("#branch option:selected").text()),
             "dateForm": $("#dateForm").val(),
             "dateTo": $("#dateTo").val(),
             "searchFlag": $("#searchFlag").val()

@@ -13,10 +13,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,10 +28,11 @@ import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ia.persistence.vo.Int112FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int112Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
 import th.co.baiwa.excise.ia.service.IaFollowUpDepartmentService;
 
 @Controller
-@RequestMapping("api/ia/int12")
+@RequestMapping("api/ia/int112")
 public class Int112Controller {
 
 	private Logger log = LoggerFactory.getLogger(Int112Controller.class);
@@ -38,7 +42,7 @@ public class Int112Controller {
 	
 	@PostMapping("/search")
 	@ResponseBody
-	public ResponseDataTable<Int112Vo> search(Int112FormVo formVo) {
+	public ResponseDataTable<Int112Vo> search(@RequestBody Int112FormVo formVo) {
 		return iaFollowUpDepartmentService.searchIaFollowUpDepartment(formVo);
 	}
 	
@@ -54,53 +58,59 @@ public class Int112Controller {
 		return new ResponseEntity<List<LabelValueBean>>(iaFollowUpDepartmentService.getRegionDropdown(id), HttpStatus.OK);
 	}
 	
+	@GetMapping("/district/{id}")
+	@ResponseBody
+	public ResponseEntity<?> districtDropdown(@PathVariable("id") String id) {
+		return new ResponseEntity<List<LabelValueBean>>(iaFollowUpDepartmentService.getDistrictDropdown(id), HttpStatus.OK);
+	}
+	
 	@GetMapping("/status")
 	@ResponseBody
 	public ResponseEntity<?> statusDropdown() {
 		return new ResponseEntity<List<LabelValueBean>>(iaFollowUpDepartmentService.getStatusDropdown(), HttpStatus.OK);
 	}
 
-//	@GetMapping("/get/followUpProject/{id}")
-//	@ResponseBody
-//	public ResponseEntity<?> getFollowUpproject(@PathVariable("id") Long id) {
-//		Int111Vo iaFollowUpProject = iaFollowUpProjectService.findById(id);
-//		return new ResponseEntity<Int111Vo>(iaFollowUpProject, HttpStatus.OK);
-//	}
-//	
-//	@PostMapping("/update")
-//	@ResponseBody
-//	public ResponseEntity<?> update(@RequestBody Int111FormVo vo) {
-//		iaFollowUpProjectService.saveOrUpdate(vo);
-//		return new ResponseEntity<Int111FormVo>(vo, HttpStatus.OK);
-//	}
-//	
-//	@PutMapping("/save")
-//	@ResponseBody
-//	public ResponseEntity<?> save(@RequestBody Int111FormVo vo) {
-//		iaFollowUpProjectService.saveOrUpdate(vo);
-//		return new ResponseEntity<Int111FormVo>(vo, HttpStatus.OK);
-//	}
-//	
-//	@DeleteMapping("/delete/{id}")
-//	@ResponseBody
-//	public ResponseEntity<?> delete(@PathVariable("id") List<Long> ids) {
-//		iaFollowUpProjectService.delete(ids);
-//		return new ResponseEntity<List<Long>>(ids, HttpStatus.OK);
-//	}
-//	
-//	@PostMapping("/closeJob")
-//	@ResponseBody
-//	public ResponseEntity<?> closeJob(@RequestBody Int111FormVo vo) {
-//		iaFollowUpProjectService.closeJob(vo);
-//		return new ResponseEntity<Int111FormVo>(vo, HttpStatus.OK);
-//	}
-//	
-//	@PostMapping("/shiftDate")
-//	@ResponseBody
-//	public ResponseEntity<?> shiftDate(@RequestBody Int11ShiftDateVo vo) {
-//		iaFollowUpProjectService.shiftDate(vo);
-//		return new ResponseEntity<Int11ShiftDateVo>(vo, HttpStatus.OK);
-//	}
+	@GetMapping("/get/followUpDepartment/{id}")
+	@ResponseBody
+	public ResponseEntity<?> getFollowUpproject(@PathVariable("id") Long id) {
+		Int112Vo iaFollowUpDepartment = iaFollowUpDepartmentService.findById(id);
+		return new ResponseEntity<Int112Vo>(iaFollowUpDepartment, HttpStatus.OK);
+	}
+	
+	@PostMapping("/update")
+	@ResponseBody
+	public ResponseEntity<?> update(@RequestBody Int112FormVo vo) {
+		iaFollowUpDepartmentService.saveOrUpdate(vo);
+		return new ResponseEntity<Int112FormVo>(vo, HttpStatus.OK);
+	}
+	
+	@PutMapping("/save")
+	@ResponseBody
+	public ResponseEntity<?> save(@RequestBody Int112FormVo vo) {
+		iaFollowUpDepartmentService.saveOrUpdate(vo);
+		return new ResponseEntity<Int112FormVo>(vo, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	@ResponseBody
+	public ResponseEntity<?> delete(@PathVariable("id") List<Long> ids) {
+		iaFollowUpDepartmentService.delete(ids);
+		return new ResponseEntity<List<Long>>(ids, HttpStatus.OK);
+	}
+	
+	@PostMapping("/closeJob")
+	@ResponseBody
+	public ResponseEntity<?> closeJob(@RequestBody Int112FormVo vo) {
+		iaFollowUpDepartmentService.closeJob(vo);
+		return new ResponseEntity<Int112FormVo>(vo, HttpStatus.OK);
+	}
+	
+	@PostMapping("/shiftDate")
+	@ResponseBody
+	public ResponseEntity<?> shiftDate(@RequestBody Int11ShiftDateVo vo) {
+		iaFollowUpDepartmentService.shiftDate(vo);
+		return new ResponseEntity<Int11ShiftDateVo>(vo, HttpStatus.OK);
+	}
 	
 	@GetMapping("/export")
 	public ResponseEntity<FileSystemResource> export(@ModelAttribute Int112FormVo formVo) throws Exception {

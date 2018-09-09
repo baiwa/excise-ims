@@ -1,7 +1,5 @@
 package th.co.baiwa.excise.ia.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +15,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.DataTableRequest;
-import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireHeader;
-import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMain;
-import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMinor;
 import th.co.baiwa.excise.ia.service.QuestionnaireHeaderService;
 import th.co.baiwa.excise.ia.service.QuestionnaireMainDetailService;
 
@@ -42,20 +37,6 @@ public class Int02m3Controller {
 		logger.info("Query qtnHeader");
 		return questionnaireHeaderService.findByCriteriaJpa();
 	}
-	
-	@PostMapping("/getQtnMainList")
-	@ResponseBody
-	public List<Object> qtnMain(@RequestBody QuestionnaireMain qtnMain) {
-		logger.info("Query qtnMain");
-		return questionnaireMainDetailService.findQtnMain(qtnMain.getHeaderCode());
-	}
-	
-//	@PostMapping("/getQtnMinorList")
-//	@ResponseBody
-//	public List<QuestionnaireMinor> qtnMinor(@RequestBody QuestionnaireMinor qtnMinor) {
-//		logger.info("Query qtnMinor");
-//		return questionnaireMainDetailService.findQtnMinor(qtnMinor.getHeaderCode());
-//	}
 	
 	@PostMapping("/saveQtnHeader")
 	@ResponseBody

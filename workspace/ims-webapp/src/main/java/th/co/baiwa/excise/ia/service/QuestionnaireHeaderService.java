@@ -15,7 +15,6 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireHeaderDao;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireHeader;
-import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireHeader;
 import th.co.baiwa.excise.ia.persistence.repository.QuestionnaireHeaderRepository;
 
 @Service
@@ -47,17 +46,7 @@ public class QuestionnaireHeaderService {
 		logger.info(questionnaireHeader.getQtnHeaderName());
 
 		Message msg;
-//		String user = UserLoginUtils.getCurrentUsername();
-
 		CommonMessage<QuestionnaireHeader> response = new CommonMessage<>();
-//		Date date = new Date();
-//
-//		qtnMaster.setQtnFinished("N");
-//		qtnMaster.setCreatedBy(user);
-//		qtnMaster.setCreatedDate(date);
-//		qtnMaster.setUpdatedBy(user);
-//		qtnMaster.setUpdatedDate(date);
-
 		QuestionnaireHeader data = questionnaireHeaderRepository.save(questionnaireHeader);
 
 		if (data != null) {

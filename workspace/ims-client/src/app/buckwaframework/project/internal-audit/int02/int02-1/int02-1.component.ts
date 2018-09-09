@@ -92,13 +92,7 @@ export class Int021Component implements OnInit {
           className: "center"
         },
         {
-          data : "qtnSector",
-          className: "center"
-        },
-        {
-          render: (data, type, full, meta) => { // data : "qtnArea"
-            return full.qtnArea == "" ? "-" : full.qtnArea;
-          },
+          data : "qtnName",
           className: "center"
         },
         {
@@ -133,10 +127,19 @@ export class Int021Component implements OnInit {
   onSubmit = (form: NgForm) => {
     const { calendar_data, sector, area } = form.value;
     if (calendar_data != "" && sector != "") { //  && area != ""
+      let name;
+      let qtnSector; 
+      if (area != "") {
+        name = this.areas.find(obj => obj.lovId == area).subTypeDescription;
+        qtnSector = area;
+      } else {
+        name = this.sectors.find(obj => obj.lovId == sector).subTypeDescription;
+        qtnSector = sector;
+      }
+      console.log(area, sector);
       const data = {
-        qtnName: `${sector} ${area}`,
-        qtnSector: sector,
-        qtnArea: area,
+        qtnName: name,
+        qtnSector: qtnSector,
         qtnYear: calendar_data
       };
       if (this.typeOfSubmit === 'S') {
@@ -156,7 +159,7 @@ export class Int021Component implements OnInit {
 
   onSectorChange(e) {
     e.preventDefault();
-    let id = this.sectors.find(obj => obj.value1 == e.target.value).lovId;
+    let id = e.target.value;
     if (id != "") {
       this.ajax.post(URL.LOV_SECTOR, { type: "SECTOR_VALUE", lovIdMaster: id }, res => {
         this.areas = res.json();

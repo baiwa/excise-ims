@@ -1,11 +1,8 @@
 package th.co.baiwa.excise.ia.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
@@ -14,6 +11,8 @@ import th.co.baiwa.excise.ia.persistence.entity.IaStampDetail;
 import th.co.baiwa.excise.ia.persistence.repository.IaStamDetailRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511Vo;
+
+import java.util.List;
 
 @Service
 public class Int0511Service {
@@ -25,6 +24,8 @@ public class Int0511Service {
 	private IaStamDetailRepository iaStamDetailRepository;
 
 	public DataTableAjax<Int0511Vo> findAll(Int0511FormVo formVo) {
+	    formVo.setDateForm(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateForm()));
+	    formVo.setDateTo(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateTo()));
 		List<Int0511Vo> list = checkStampAreaDao.findAll(formVo);
 		Long count = checkStampAreaDao.count(formVo);
 		DataTableAjax<Int0511Vo> dataTableAjax = new DataTableAjax<>();

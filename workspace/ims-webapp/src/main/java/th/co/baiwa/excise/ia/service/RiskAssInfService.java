@@ -1,8 +1,26 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,21 +34,20 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.Int0802Vo;
 import th.co.baiwa.excise.domain.RiskFullDataInt0802Vo;
-import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfOtherDtl;
-import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfHdrRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfDtlRepository;
+import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfHdrRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfOtherDtlRepository;
-
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 
 
 @Service
 public class RiskAssInfService {
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(RiskAssInfService.class);
 
 	private final RiskAssInfHdrRepository riskAssInfHdrRepository;
@@ -240,6 +257,11 @@ public class RiskAssInfService {
 	
 	
 public List<RiskFullDataInt0802Vo> searchFullRiskByBudgetYear(String budgetYear , List<String> riskAssInfHdrNameList) {
+	   
+	Long budgetYearL = Long.parseLong(budgetYear);
+		List<Condition> conditionList = conditionService.findConditionByParentId(budgetYearL,"ALL", "int08-2-5");
+	
+	
 		List<RiskFullDataInt0802Vo> riskFullDataVoList = new ArrayList<RiskFullDataInt0802Vo>();
 		RiskFullDataInt0802Vo riskFullDataVo = new RiskFullDataInt0802Vo();
 		List<Int0802Vo> infNameList = riskAssInfHdrRepository.findInfNameByBudgetYear(budgetYear);
@@ -269,6 +291,26 @@ public List<RiskFullDataInt0802Vo> searchFullRiskByBudgetYear(String budgetYear 
 			}
 			riskFullDataVo.setRl(rl);
 			riskFullDataVo.setSumRiskCost(sumRl+"");
+			
+			long value =Integer.parseInt(riskFullDataVo.getSumRiskCost());
+			for (Condition condition : conditionList) {
+				
+				if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
+					riskFullDataVo.setValueRl(condition.getValueRl());
+					riskFullDataVo.setColor(condition.getColor());
+					riskFullDataVo.setConvertValue(condition.getConvertValue());
+				} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+					riskFullDataVo.setValueRl(condition.getValueRl());
+					riskFullDataVo.setColor(condition.getColor());
+					riskFullDataVo.setConvertValue(condition.getConvertValue());
+				} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+					riskFullDataVo.setValueRl(condition.getValueRl());
+					riskFullDataVo.setColor(condition.getColor());
+					riskFullDataVo.setConvertValue(condition.getConvertValue());
+				}
+				
+			}
+			
 			riskFullDataVoList.add(riskFullDataVo);
 			index++;
 		}
@@ -286,6 +328,915 @@ public List<RiskFullDataInt0802Vo> searchFullRiskByBudgetYear(String budgetYear 
 			riskAssInfHdrList.add(riskAssInfHdrRepository.findOne(riskAssInfHdr.getRiskAssInfHdrId()));
 		}
 		return riskAssInfHdrList;
+	}
+
+
+	public void exportInfOtherDtl(RiskAssInfHdr riskAssInfHdr, HttpServletResponse response) throws IOException {
+	
+		/*create spreadsheet*/
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		DecimalFormat formatter = new DecimalFormat("#,##0");
+		System.out.println("Creating excel");
+	
+		
+		/*create CellStyle*/
+		CellStyle thStyle = workbook.createCellStyle();
+		thStyle.setAlignment(HorizontalAlignment.CENTER);
+		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+		thStyle.setBorderBottom(BorderStyle.THIN);
+		thStyle.setBorderLeft(BorderStyle.THIN);
+		thStyle.setBorderRight(BorderStyle.THIN);
+		thStyle.setBorderTop(BorderStyle.THIN);
+		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		CellStyle cellCenter = workbook.createCellStyle();
+		cellCenter.setAlignment(HorizontalAlignment.CENTER);
+		cellCenter.setBorderBottom(BorderStyle.THIN);
+		cellCenter.setBorderLeft(BorderStyle.THIN);
+		cellCenter.setBorderRight(BorderStyle.THIN);
+		cellCenter.setBorderTop(BorderStyle.THIN);
+		
+		CellStyle cellRight = workbook.createCellStyle();
+		cellRight.setAlignment(HorizontalAlignment.RIGHT);
+		cellRight.setBorderBottom(BorderStyle.THIN);
+		cellRight.setBorderLeft(BorderStyle.THIN);
+		cellRight.setBorderRight(BorderStyle.THIN);
+		cellRight.setBorderTop(BorderStyle.THIN);
+		
+		CellStyle cellLeft = workbook.createCellStyle();
+		cellLeft.setAlignment(HorizontalAlignment.LEFT);
+		cellLeft.setBorderBottom(BorderStyle.THIN);
+		cellLeft.setBorderLeft(BorderStyle.THIN);
+		cellLeft.setBorderRight(BorderStyle.THIN);
+		cellLeft.setBorderTop(BorderStyle.THIN);
+		
+		
+		CellStyle bgRed = workbook.createCellStyle();
+		bgRed.setAlignment(HorizontalAlignment.CENTER);
+		bgRed.setBorderBottom(BorderStyle.THIN);
+		bgRed.setBorderLeft(BorderStyle.THIN);
+		bgRed.setBorderRight(BorderStyle.THIN);
+		bgRed.setBorderTop(BorderStyle.THIN);
+		bgRed.setFillForegroundColor(IndexedColors.RED.getIndex());
+		bgRed.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		CellStyle bgYellow = workbook.createCellStyle();
+		bgYellow.setAlignment(HorizontalAlignment.CENTER);
+		bgYellow.setBorderBottom(BorderStyle.THIN);
+		bgYellow.setBorderLeft(BorderStyle.THIN);
+		bgYellow.setBorderRight(BorderStyle.THIN);
+		bgYellow.setBorderTop(BorderStyle.THIN);
+		bgYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		bgYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		CellStyle bgGreen = workbook.createCellStyle();
+		bgGreen.setAlignment(HorizontalAlignment.CENTER);
+		bgGreen.setBorderBottom(BorderStyle.THIN);
+		bgGreen.setBorderLeft(BorderStyle.THIN);
+		bgGreen.setBorderRight(BorderStyle.THIN);
+		bgGreen.setBorderTop(BorderStyle.THIN);
+		bgGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+		bgGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		Font fontHeader = workbook.createFont();
+		fontHeader.setBold(true);
+		
+		CellStyle topCenter = workbook.createCellStyle();
+		topCenter.setAlignment(HorizontalAlignment.CENTER);
+		topCenter.setFont(fontHeader);
+		
+		CellStyle topRight = workbook.createCellStyle();
+		topRight.setAlignment(HorizontalAlignment.RIGHT);
+		
+		CellStyle topLeft = workbook.createCellStyle();
+		topLeft.setAlignment(HorizontalAlignment.LEFT);
+		
+		/*create data spreadsheet*/	
+				
+				/*Title*/
+				RiskAssInfHdr InfHdr =  riskAssInfHdrRepository.findOne(riskAssInfHdr.getRiskAssInfHdrId());	
+				
+				row = sheet.createRow(0);
+				cell = row.createCell(cellNum);cell.setCellValue("กระดาษทำการประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต");cell.setCellStyle(topCenter);
+				row = sheet.createRow(1);
+				cell = row.createCell(cellNum);cell.setCellValue("ปีงบประมาณ  "+InfHdr.getBudgetYear());cell.setCellStyle(topCenter);
+				row = sheet.createRow(2);
+				cell = row.createCell(cellNum);cell.setCellValue("ปัจจัยเสี่ยง : "+InfHdr.getRiskAssInfHdrName());cell.setCellStyle(topLeft);
+				row = sheet.createRow(3);
+				cell = row.createCell(cellNum);cell.setCellValue("เงื่อนไขความเสี่ยง :  ");cell.setCellStyle(topLeft);
+				
+				List<Condition> conditionList = conditionService.findConditionByParentId(riskAssInfHdr.getRiskAssInfHdrId(), "OTHER", "int08-2-4");
+				rowNum = 4;
+				cellNum = 1;
+		
+				for (Condition con : conditionList) {
+					row = sheet.createRow(rowNum);
+					
+		
+					if("<>".equals(con.getCondition())) {
+						if(con.getValue2()==null) {
+							cell = row.createCell(1);cell.setCellValue("          "+InfHdr.getRiskAssInfHdrName()+"          ระหว่าง    "+con.getValue1()+"  ถึง        -   ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+						}else {
+							cell = row.createCell(1);cell.setCellValue("          "+InfHdr.getRiskAssInfHdrName()+"          ระหว่าง    "+con.getValue1()+"  ถึง   "+con.getValue2()+"  ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+						}
+						
+					}else if (">".equals(con.getCondition())) {
+						if(con.getValue2()==null) {
+							cell = row.createCell(1);cell.setCellValue("          "+InfHdr.getRiskAssInfHdrName()+"          มากกว่า  " +con.getValue1()+ "  ถึง        -   ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+						}else {
+							cell = row.createCell(1);cell.setCellValue("          "+InfHdr.getRiskAssInfHdrName()+"          มากกว่า  "+con.getValue1()+ "  ถึง   "+con.getValue2()+"  ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+						}
+						
+					}else if ("<".equals(con.getCondition())) {
+						if(con.getValue2()==null) {
+							cell = row.createCell(1);cell.setCellValue("          "+InfHdr.getRiskAssInfHdrName()+"          น้อยกว่า  "  +con.getValue1()+   "  ถึง        -   ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+						}else {
+							cell = row.createCell(1);cell.setCellValue("          "+InfHdr.getRiskAssInfHdrName()+"          น้อยกว่า  "  +con.getValue1()+  "  ถึง   "+con.getValue2()+"  ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+						}
+						
+					}
+					cellNum++;
+					
+					rowNum++;
+		
+				}
+		
+		
+				/* Header*/
+				rowNum =9;
+				row = sheet.createRow(rowNum);
+				String[] tbTH = {"ลำดับ","ระบบสารสนเทศฯ ของกรมสรรพสามิต","ค่าความเสี่ยง","ประเมินความเสี่ยง"};
+				for(cellNum =0 ;cellNum<tbTH.length;cellNum++) {
+					cell = row.createCell(cellNum);cell.setCellValue(tbTH[cellNum]);cell.setCellStyle(thStyle);
+				};
+				
+				cell = row.createCell(4);cell.setCellStyle(cellCenter);
+				
+				Row rowRisk = null;
+				Cell cellRisk = null;
+				int cellRiskNum = 3;
+				 rowRisk = sheet.createRow(10);
+				 cellRisk = rowRisk.createCell(cellRiskNum);cellRisk.setCellValue("RL");cellRisk.setCellStyle(thStyle);
+				 cellRiskNum++;
+				 cellRisk = rowRisk.createCell(cellRiskNum);cellRisk.setCellValue("แปลค่า");cellRisk.setCellStyle(thStyle);
+		
+				 for(cellNum =0 ;cellNum<tbTH.length-1;cellNum++) {
+						cell = rowRisk.createCell(cellNum);cell.setCellStyle(thStyle);
+				 };
+				/* EndHeader*/
+				 
+				 
+		/*set sheet */
+				 /*setColumnWidth*/
+				 sheet.setColumnWidth(1, 76 * 255);
+				 sheet.setColumnWidth(2, 76 * 100);
+				 // merge(firstRow, lastRow, firstCol, lastCol)
+				 sheet.addMergedRegion(new CellRangeAddress(9,9,3,4));
+				 //merge ลำดับ -> รวม
+				 for(int i=0;i<=2;i++) {
+				 sheet.addMergedRegion(new CellRangeAddress(9,10,i,i));
+				 }
+				//merge Title
+				 	sheet.addMergedRegion(new CellRangeAddress(0,0,0,4));
+					sheet.addMergedRegion(new CellRangeAddress(1,1,0,4));
+					sheet.addMergedRegion(new CellRangeAddress(4,4,1,4));
+					sheet.addMergedRegion(new CellRangeAddress(5,5,1,4));
+					sheet.addMergedRegion(new CellRangeAddress(6,6,1,4));
+		/*End set sheet */		 
+				 
+				 
+					/* Detail */
+					List<RiskAssInfOtherDtl> resultList = riskAssInfOtherDtlRepository.findByRiskInfHrdId(riskAssInfHdr.getRiskAssInfHdrId());
+					rowNum = 11;
+					cellNum = 0;
+					int no = 1;
+					for (RiskAssInfOtherDtl detail : resultList) {
+						row = sheet.createRow(rowNum);
+						// No.
+						cell = row.createCell(cellNum);
+						cell.setCellValue(no);
+						cell.setCellStyle(cellCenter);
+						cellNum++;
+						// 
+						cell = row.createCell(cellNum);
+						cell.setCellValue(detail.getInfName());
+						cell.setCellStyle(cellLeft);
+						cellNum++;
+						
+						cell = row.createCell(cellNum);
+						cell.setCellValue(formatter.format(detail.getRiskCost().longValue()));
+						cell.setCellStyle(cellRight);
+						cellNum++;
+						
+						cell = row.createCell(cellNum);
+						cell.setCellValue(detail.getRl());
+						if("แดง".equals(detail.getColor())) {
+							cell.setCellStyle(bgRed);
+						}else if("เหลือง".equals(detail.getColor())) {
+							cell.setCellStyle(bgYellow);
+						}else if("เขียว".equals(detail.getColor())) {
+							cell.setCellStyle(bgGreen);
+						}
+						cellNum++;
+						
+						cell = row.createCell(cellNum);
+						cell.setCellValue(detail.getValueTranslation());
+						if("แดง".equals(detail.getColor())) {
+							cell.setCellStyle(bgRed);
+						}else if("เหลือง".equals(detail.getColor())) {
+							cell.setCellStyle(bgYellow);
+						}else if("เขียว".equals(detail.getColor())) {
+							cell.setCellStyle(bgGreen);
+						}
+						cellNum++;
+
+						no++;
+						rowNum++;
+						cellNum = 0;
+					}
+
+					/* EndDetail */
+				 
+		/*End create data spreadsheet*/
+		/*set	fileName*/		
+					String fileName ="RiskAssInfOtherDtl_"+InfHdr.getBudgetYear();
+					System.out.println(fileName);
+		/* write it as an excel attachment */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+		byte [] outArray = outByteStream.toByteArray();
+		response.setContentType("application/vnd.ms-excel");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename="+fileName+".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outArray);
+		outStream.flush();
+		outStream.close();
+		
+		System.out.println("Done");
+		
+	}
+	
+	public void exportInfWebService(RiskAssInfHdr riskAssInfHdr, HttpServletResponse response) throws IOException {
+		
+		/*create spreadsheet*/
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		DecimalFormat formatter = new DecimalFormat("#,##0");
+		System.out.println("Creating excel");
+		
+		/*create CellStyle*/
+		CellStyle thStyle = workbook.createCellStyle();
+		thStyle.setAlignment(HorizontalAlignment.CENTER);
+		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+		thStyle.setBorderBottom(BorderStyle.THIN);
+		thStyle.setBorderLeft(BorderStyle.THIN);
+		thStyle.setBorderRight(BorderStyle.THIN);
+		thStyle.setBorderTop(BorderStyle.THIN);
+		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		CellStyle cellCenter = workbook.createCellStyle();
+		cellCenter.setAlignment(HorizontalAlignment.CENTER);
+		cellCenter.setBorderBottom(BorderStyle.THIN);
+		cellCenter.setBorderLeft(BorderStyle.THIN);
+		cellCenter.setBorderRight(BorderStyle.THIN);
+		cellCenter.setBorderTop(BorderStyle.THIN);
+		
+		CellStyle cellRight = workbook.createCellStyle();
+		cellRight.setAlignment(HorizontalAlignment.RIGHT);
+		cellRight.setBorderBottom(BorderStyle.THIN);
+		cellRight.setBorderLeft(BorderStyle.THIN);
+		cellRight.setBorderRight(BorderStyle.THIN);
+		cellRight.setBorderTop(BorderStyle.THIN);
+		
+		CellStyle cellLeft = workbook.createCellStyle();
+		cellLeft.setAlignment(HorizontalAlignment.LEFT);
+		cellLeft.setBorderBottom(BorderStyle.THIN);
+		cellLeft.setBorderLeft(BorderStyle.THIN);
+		cellLeft.setBorderRight(BorderStyle.THIN);
+		cellLeft.setBorderTop(BorderStyle.THIN);
+		
+		
+		CellStyle bgRed = workbook.createCellStyle();
+		bgRed.setAlignment(HorizontalAlignment.CENTER);
+		bgRed.setBorderBottom(BorderStyle.THIN);
+		bgRed.setBorderLeft(BorderStyle.THIN);
+		bgRed.setBorderRight(BorderStyle.THIN);
+		bgRed.setBorderTop(BorderStyle.THIN);
+		bgRed.setFillForegroundColor(IndexedColors.RED.getIndex());
+		bgRed.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		CellStyle bgYellow = workbook.createCellStyle();
+		bgYellow.setAlignment(HorizontalAlignment.CENTER);
+		bgYellow.setBorderBottom(BorderStyle.THIN);
+		bgYellow.setBorderLeft(BorderStyle.THIN);
+		bgYellow.setBorderRight(BorderStyle.THIN);
+		bgYellow.setBorderTop(BorderStyle.THIN);
+		bgYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		bgYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		CellStyle bgGreen = workbook.createCellStyle();
+		bgGreen.setAlignment(HorizontalAlignment.CENTER);
+		bgGreen.setBorderBottom(BorderStyle.THIN);
+		bgGreen.setBorderLeft(BorderStyle.THIN);
+		bgGreen.setBorderRight(BorderStyle.THIN);
+		bgGreen.setBorderTop(BorderStyle.THIN);
+		bgGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+		bgGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		Font fontHeader = workbook.createFont();
+		fontHeader.setBold(true);
+		
+		CellStyle topCenter = workbook.createCellStyle();
+		topCenter.setAlignment(HorizontalAlignment.CENTER);
+		topCenter.setFont(fontHeader);
+		
+		CellStyle topRight = workbook.createCellStyle();
+		topRight.setAlignment(HorizontalAlignment.RIGHT);
+		
+		CellStyle topLeft = workbook.createCellStyle();
+		topLeft.setAlignment(HorizontalAlignment.LEFT);
+		
+		/*create data spreadsheet*/	
+			/*Title*/
+			RiskAssInfHdr InfHdr =  riskAssInfHdrRepository.findOne(riskAssInfHdr.getRiskAssInfHdrId());	
+			
+			row = sheet.createRow(0);
+			cell = row.createCell(cellNum);cell.setCellValue("กระดาษทำการประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต");cell.setCellStyle(topCenter);
+			row = sheet.createRow(1);
+			cell = row.createCell(cellNum);cell.setCellValue("ปีงบประมาณ  "+InfHdr.getBudgetYear());cell.setCellStyle(topCenter);
+			row = sheet.createRow(2);
+			cell = row.createCell(cellNum);cell.setCellValue("ปัจจัยเสี่ยง : "+InfHdr.getRiskAssInfHdrName());cell.setCellStyle(topLeft);
+			row = sheet.createRow(3);
+			cell = row.createCell(cellNum);cell.setCellValue("เงื่อนไขความเสี่ยง :  ");cell.setCellStyle(topLeft);
+			
+			List<Condition> conditionList = conditionService.findConditionByParentId(riskAssInfHdr.getRiskAssInfHdrId(), "MAIN", "int08-2-3");
+			rowNum = 4;
+			cellNum = 1;
+	
+			for (Condition con : conditionList) {
+				row = sheet.createRow(rowNum);
+				
+	
+				if("<>".equals(con.getCondition())) {
+					if(con.getValue2()==null) {
+						cell = row.createCell(1);cell.setCellValue("          "+InfHdr.getRiskAssInfHdrName()+"          ระหว่าง    "+con.getValue1()+"  ถึง        -   ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+					}else {
+						cell = row.createCell(1);cell.setCellValue("          "+InfHdr.getRiskAssInfHdrName()+"          ระหว่าง    "+con.getValue1()+"  ถึง   "+con.getValue2()+"  ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+					}
+					
+				}else if (">".equals(con.getCondition())) {
+					if(con.getValue2()==null) {
+						cell = row.createCell(1);cell.setCellValue("          "+InfHdr.getRiskAssInfHdrName()+"          มากกว่า  " +con.getValue1()+ "  ถึง        -   ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+					}else {
+						cell = row.createCell(1);cell.setCellValue("          "+InfHdr.getRiskAssInfHdrName()+"          มากกว่า  "+con.getValue1()+ "  ถึง   "+con.getValue2()+"  ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+					}
+					
+				}else if ("<".equals(con.getCondition())) {
+					if(con.getValue2()==null) {
+						cell = row.createCell(1);cell.setCellValue("          "+InfHdr.getRiskAssInfHdrName()+"          น้อยกว่า  "  +con.getValue1()+   "  ถึง        -   ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+					}else {
+						cell = row.createCell(1);cell.setCellValue("          "+InfHdr.getRiskAssInfHdrName()+"          น้อยกว่า  "  +con.getValue1()+  "  ถึง   "+con.getValue2()+"  ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+					}
+					
+				}
+				cellNum++;
+				
+				rowNum++;
+	
+			}
+			
+			/* Header*/
+			rowNum =9;
+			row = sheet.createRow(rowNum);
+			String[] tbTH = {"ลำดับ","ระบบสารสนเทศฯ ของกรมสรรพสามิต","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.","รวม","ประเมินความเสี่ยง"};
+			for(cellNum =0 ;cellNum<tbTH.length;cellNum++) {
+				cell = row.createCell(cellNum);cell.setCellValue(tbTH[cellNum]);cell.setCellStyle(thStyle);
+			};
+			
+			cell = row.createCell(16);cell.setCellStyle(cellCenter);
+			
+			Row rowRisk = null;
+			Cell cellRisk = null;
+			int cellRiskNum = 15;
+			 rowRisk = sheet.createRow(10);
+			 cellRisk = rowRisk.createCell(cellRiskNum);cellRisk.setCellValue("RL");cellRisk.setCellStyle(thStyle);
+			 cellRiskNum++;
+			 cellRisk = rowRisk.createCell(cellRiskNum);cellRisk.setCellValue("แปลค่า");cellRisk.setCellStyle(thStyle);
+
+			 for(cellNum =0 ;cellNum<tbTH.length-1;cellNum++) {
+					cell = rowRisk.createCell(cellNum);cell.setCellStyle(thStyle);
+				};
+			 
+			 
+			/*set sheet */
+			sheet.setColumnWidth(1, 76 * 255);
+			// merge(firstCol, firstRow, lastCol, lastRow)
+			sheet.addMergedRegion(new CellRangeAddress(9,9,15,16));
+			//merge ลำดับ -> รวม
+			for(int i=0;i<=14;i++) {
+				sheet.addMergedRegion(new CellRangeAddress(9,10,i,i));
+			}
+			//merge Title
+			sheet.addMergedRegion(new CellRangeAddress(0,0,0,16));
+			sheet.addMergedRegion(new CellRangeAddress(1,1,0,16));
+			sheet.addMergedRegion(new CellRangeAddress(4,4,1,5));
+			sheet.addMergedRegion(new CellRangeAddress(5,5,1,5));
+			sheet.addMergedRegion(new CellRangeAddress(6,6,1,5));
+			
+			/* Detail */
+			List<RiskAssInfDtl> resultList = riskAssInfDtlRepository.findByGroupRiskInfHrdId(riskAssInfHdr.getRiskAssInfHdrId());
+			rowNum = 11;
+			cellNum = 0;
+			int no = 1;
+			for (RiskAssInfDtl detail : resultList) {
+				row = sheet.createRow(rowNum);
+				// No.
+				cell = row.createCell(cellNum);
+				cell.setCellValue(no);
+				cell.setCellStyle(cellCenter);
+				cellNum++;
+				// 
+				cell = row.createCell(cellNum);
+				cell.setCellValue(detail.getInfName());
+				cell.setCellStyle(cellLeft);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(formatter.format(detail.getJan().longValue()));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(formatter.format(detail.getFeb().longValue()));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(formatter.format(detail.getMar().longValue()));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(formatter.format(detail.getApril().longValue()));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(formatter.format(detail.getMay().longValue()));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(formatter.format(detail.getJun().longValue()));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(formatter.format(detail.getJul().longValue()));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(formatter.format(detail.getAug().longValue()));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(formatter.format(detail.getSep().longValue()));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(formatter.format(detail.getOct().longValue()));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(formatter.format(detail.getNov().longValue()));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(formatter.format(detail.getDec().longValue()));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(formatter.format(detail.getTotal().longValue()));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(detail.getRl());
+				if("แดง".equals(detail.getColor())) {
+					cell.setCellStyle(bgRed);
+				}else if("เหลือง".equals(detail.getColor())) {
+					cell.setCellStyle(bgYellow);
+				}else if("เขียว".equals(detail.getColor())) {
+					cell.setCellStyle(bgGreen);
+				}
+				cellNum++;
+
+				cell = row.createCell(cellNum);
+				cell.setCellValue(detail.getValueTranslation());
+				if("แดง".equals(detail.getColor())) {
+					cell.setCellStyle(bgRed);
+				}else if("เหลือง".equals(detail.getColor())) {
+					cell.setCellStyle(bgYellow);
+				}else if("เขียว".equals(detail.getColor())) {
+					cell.setCellStyle(bgGreen);
+				}
+				cellNum++;
+				
+				
+				
+				no++;
+				rowNum++;
+				cellNum = 0;
+			}
+			
+			/* EndDetail */
+			 
+			/*End create data spreadsheet*/
+			/*set	fileName*/		
+			String fileName ="RiskAssInfWebService_"+InfHdr.getBudgetYear();
+			System.out.println(fileName);
+			/* write it as an excel attachment */
+			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+			workbook.write(outByteStream);
+			byte [] outArray = outByteStream.toByteArray();
+			response.setContentType("application/vnd.ms-excel");
+			response.setContentLength(outArray.length);
+			response.setHeader("Expires:", "0"); // eliminates browser caching
+			response.setHeader("Content-Disposition", "attachment; filename="+fileName+".xlsx");
+			OutputStream outStream = response.getOutputStream();
+			outStream.write(outArray);
+			outStream.flush();
+			outStream.close();
+			
+			System.out.println("Done");
+			
+	}
+
+	public void exportInfFull(String budgetYear, HttpServletResponse response) throws IOException{
+		
+		// TODO Auto-generated method stub
+		
+		/*create spreadsheet*/
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		DecimalFormat formatter = new DecimalFormat("#,##0");
+		System.out.println("Creating excel");
+		
+		/*Set Style*/
+		CellStyle thStyle = workbook.createCellStyle();
+		thStyle.setAlignment(HorizontalAlignment.CENTER);
+		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+		thStyle.setBorderBottom(BorderStyle.THIN);
+		thStyle.setBorderLeft(BorderStyle.THIN);
+		thStyle.setBorderRight(BorderStyle.THIN);
+		thStyle.setBorderTop(BorderStyle.THIN);
+		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		thStyle.setWrapText(true);
+		
+		CellStyle cellCenter = workbook.createCellStyle();
+		cellCenter.setAlignment(HorizontalAlignment.CENTER);
+		cellCenter.setBorderBottom(BorderStyle.THIN);
+		cellCenter.setBorderLeft(BorderStyle.THIN);
+		cellCenter.setBorderRight(BorderStyle.THIN);
+		cellCenter.setBorderTop(BorderStyle.THIN);
+		
+		CellStyle cellRight = workbook.createCellStyle();
+		cellRight.setAlignment(HorizontalAlignment.RIGHT);
+		cellRight.setBorderBottom(BorderStyle.THIN);
+		cellRight.setBorderLeft(BorderStyle.THIN);
+		cellRight.setBorderRight(BorderStyle.THIN);
+		cellRight.setBorderTop(BorderStyle.THIN);
+		
+		CellStyle cellLeft = workbook.createCellStyle();
+		cellLeft.setAlignment(HorizontalAlignment.LEFT);
+		cellLeft.setBorderBottom(BorderStyle.THIN);
+		cellLeft.setBorderLeft(BorderStyle.THIN);
+		cellLeft.setBorderRight(BorderStyle.THIN);
+		cellLeft.setBorderTop(BorderStyle.THIN);
+		
+		CellStyle bgRed = workbook.createCellStyle();
+		bgRed.setAlignment(HorizontalAlignment.CENTER);
+		bgRed.setBorderBottom(BorderStyle.THIN);
+		bgRed.setBorderLeft(BorderStyle.THIN);
+		bgRed.setBorderRight(BorderStyle.THIN);
+		bgRed.setBorderTop(BorderStyle.THIN);
+		bgRed.setFillForegroundColor(IndexedColors.RED.getIndex());
+		bgRed.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		CellStyle bgYellow = workbook.createCellStyle();
+		bgYellow.setAlignment(HorizontalAlignment.CENTER);
+		bgYellow.setBorderBottom(BorderStyle.THIN);
+		bgYellow.setBorderLeft(BorderStyle.THIN);
+		bgYellow.setBorderRight(BorderStyle.THIN);
+		bgYellow.setBorderTop(BorderStyle.THIN);
+		bgYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		bgYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		CellStyle bgGreen = workbook.createCellStyle();
+		bgGreen.setAlignment(HorizontalAlignment.CENTER);
+		bgGreen.setBorderBottom(BorderStyle.THIN);
+		bgGreen.setBorderLeft(BorderStyle.THIN);
+		bgGreen.setBorderRight(BorderStyle.THIN);
+		bgGreen.setBorderTop(BorderStyle.THIN);
+		bgGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+		bgGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		Font fontHeader = workbook.createFont();
+		fontHeader.setBold(true);
+		
+		CellStyle topCenter = workbook.createCellStyle();
+		topCenter.setAlignment(HorizontalAlignment.CENTER);
+		topCenter.setFont(fontHeader);
+		
+		CellStyle topRight = workbook.createCellStyle();
+		topRight.setAlignment(HorizontalAlignment.RIGHT);
+		
+		CellStyle topLeft = workbook.createCellStyle();
+		topLeft.setAlignment(HorizontalAlignment.LEFT);
+		
+		
+		/*Title*/
+		row = sheet.createRow(0);
+		cell = row.createCell(cellNum);cell.setCellValue("กระดาษทำการประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต");cell.setCellStyle(topCenter);
+		row = sheet.createRow(1);
+		cell = row.createCell(cellNum);cell.setCellValue("ปีงบประมาณ  "+budgetYear);cell.setCellStyle(topCenter);
+		row = sheet.createRow(2);
+		cell = row.createCell(cellNum);cell.setCellValue("ปัจจัยเสี่ยง : ระบบสารสนเทศฯ ของกรมสรรพสามิต");cell.setCellStyle(topLeft);
+		row = sheet.createRow(3);
+		cell = row.createCell(cellNum);cell.setCellValue("เงื่อนไขความเสี่ยง :  ");cell.setCellStyle(topLeft);
+		
+		/*Condition*/
+		Long budgetYearL = Long.parseLong(budgetYear);
+		List<Condition> conditionList = conditionService.findConditionByParentId(budgetYearL,"ALL", "int08-2-5");
+	
+		for(Condition con : conditionList) {
+			System.out.println(con.getValueRl()+"/"+con.getConvertValue());
+		}
+		
+		rowNum = 4;
+		cellNum = 1;
+
+		for (Condition con : conditionList) {
+			row = sheet.createRow(rowNum);
+			
+			if("<>".equals(con.getCondition())) {
+				if(con.getValue2()==null) {
+					cell = row.createCell(1);cell.setCellValue("          ระบบสารสนเทศฯ ของกรมสรรพสามิต          ระหว่าง    "          +con.getValue1()+          "  ถึง        -   ระดับความเสี่ยง  "          +con.getConvertValue()+          "  คะแนนความเสี่ยง  "          +con.getValueRl());
+				}else {
+					cell = row.createCell(1);cell.setCellValue("          ระบบสารสนเทศฯ ของกรมสรรพสามิต          ระหว่าง    "          +con.getValue1()+          "  ถึง        "          +con.getValue2()+          "  ระดับความเสี่ยง  "          +con.getConvertValue()+          "  คะแนนความเสี่ยง  "          +con.getValueRl());
+				}
+				
+			}else if (">".equals(con.getCondition())) {
+				if(con.getValue2()==null) {
+					cell = row.createCell(1);cell.setCellValue("          ระบบสารสนเทศฯ ของกรมสรรพสามิต          มากกว่า  "          +con.getValue1()+          "  ถึง        -   ระดับความเสี่ยง  "          +con.getConvertValue()+          "  คะแนนความเสี่ยง  "          +con.getValueRl());
+				}else {
+					cell = row.createCell(1);cell.setCellValue("          ระบบสารสนเทศฯ ของกรมสรรพสามิต          มากกว่า  "          +con.getValue1()+          "  ถึง        "          +con.getValue2()+          "  ระดับความเสี่ยง  "          +con.getConvertValue()+          "  คะแนนความเสี่ยง  "          +con.getValueRl());
+				}
+				
+			}else if ("<".equals(con.getCondition())) {
+				if(con.getValue2()==null) {
+					cell = row.createCell(1);cell.setCellValue("          ระบบสารสนเทศฯ ของกรมสรรพสามิต          น้อยกว่า  "          +con.getValue1()+          "  ถึง        -   ระดับความเสี่ยง  "          +con.getConvertValue()+          "  คะแนนความเสี่ยง  "          +con.getValueRl());
+				}else {
+					cell = row.createCell(1);cell.setCellValue("          ระบบสารสนเทศฯ ของกรมสรรพสามิต          น้อยกว่า  "          +con.getValue1()+          "  ถึง        "          +con.getValue2()+          "  ระดับความเสี่ยง  "          +con.getConvertValue()+          "  คะแนนความเสี่ยง  "          +con.getValueRl());
+				}
+				
+			}
+			cellNum++;
+			
+			rowNum++;
+
+		}
+		
+		
+		/* Header*/
+		rowNum =9;
+		row = sheet.createRow(rowNum);
+			// set  DynamicTh
+			List<RiskAssInfHdr> resultList = riskAssInfHdrRepository.findByBudgetYear(budgetYear);
+			ArrayList<String> thList = new ArrayList<String>();
+			thList.add("ลำดับ");
+			thList.add("ระบบสารสนเทศฯ ของกรมสรรพสามิต");
+			
+			for (RiskAssInfHdr detail : resultList) {
+				thList.add(detail.getRiskAssInfHdrName());		
+			}
+			thList.add("รวม");
+			thList.add("ประเมินความเสี่ยง");
+			System.out.println("Size ใน ArrayList   ::  "+thList.size());
+			
+			for (cellNum = 0; cellNum < thList.size(); cellNum++) {
+				cell = row.createCell(cellNum);cell.setCellValue(thList.get(cellNum));
+				cell.setCellStyle(thStyle);
+			}
+		
+			//setCellStyle ประเมินความเสี่ยง
+			cell = row.createCell(thList.size());cell.setCellStyle(thStyle);
+			
+			//setCellStyle ลำดับ -> Data DynamicTh ->รวม
+			Row rowRisk = null;
+			rowRisk = sheet.createRow(10);
+			for(int i=0;i< thList.size()-1;i++) {
+				cell = rowRisk.createCell(i);cell.setCellStyle(thStyle);
+			}
+			 cell = rowRisk.createCell(thList.size()-1);cell.setCellValue("RL");cell.setCellStyle(thStyle);
+			 cell = rowRisk.createCell(thList.size());cell.setCellValue("แปลค่า");cell.setCellStyle(thStyle);
+		 /* End Header*/ 
+		 
+		 
+		/*Set Sheet	 */
+				/*set ColumnWidth DynamicTh*/
+				sheet.setColumnWidth(1, 76 * 255);
+				for (cellNum = 2; cellNum < thList.size()-2; cellNum++) {
+					sheet.setColumnWidth(cellNum, 76 * 150);
+				}
+				/*set ColumnWidth รวม*/
+				sheet.setColumnWidth(thList.size()-2, 76 * 90);
+				
+				//merge ลำดับ -> Data DynamicTh ->รวม
+				for(int i=0;i< thList.size()-1;i++) {
+					sheet.addMergedRegion(new CellRangeAddress(9,10,i,i));
+				}
+				/*set Merged ประเมินความเสี่ยง*/ /*merge(firstRow, lastRow, firstCol, lastCol)*/ 
+				sheet.addMergedRegion(new CellRangeAddress(9,9,thList.size()-1,thList.size()));
+				
+				//merge Title
+				sheet.addMergedRegion(new CellRangeAddress(0,0,0,4));
+				sheet.addMergedRegion(new CellRangeAddress(1,1,0,4));
+				sheet.addMergedRegion(new CellRangeAddress(4,4,1,4));
+				sheet.addMergedRegion(new CellRangeAddress(5,5,1,4));
+				sheet.addMergedRegion(new CellRangeAddress(6,6,1,4));
+		/*End Set Sheet	 */ 
+		 
+		/* Detail */
+		ArrayList<String> riskAssInfHdrNameList = new ArrayList<String>();
+		
+		for (RiskAssInfHdr infHdrName : resultList) {
+			riskAssInfHdrNameList.add(infHdrName.getRiskAssInfHdrName());		
+		}
+
+		List<RiskFullDataInt0802Vo> riskFullDataVoList = new ArrayList<RiskFullDataInt0802Vo>();
+		RiskFullDataInt0802Vo riskFullDataVo = new RiskFullDataInt0802Vo();
+		List<Int0802Vo> infNameList = riskAssInfHdrRepository.findInfNameByBudgetYear(budgetYear);
+		int index = 1;
+		for (Int0802Vo infName : infNameList) {
+			riskFullDataVo = new RiskFullDataInt0802Vo();
+			int sumRl = 0;
+			riskFullDataVo.setId(index+"");
+			riskFullDataVo.setInfName(infName.getInfName());
+			List<Int0802Vo> intList = riskAssInfHdrRepository.findData(budgetYear, infName.getInfName());
+			List<String> rl = new ArrayList<String>();
+			String rlDate = "";
+			for (String riskAssInfHdrName : riskAssInfHdrNameList) {
+				rlDate = "";
+				for (Int0802Vo value : intList) {
+					if(value.getInfName().equals(riskAssInfHdrName)) {
+						sumRl += Integer.parseInt(value.getRl());
+						rlDate = value.getRl();
+						break;
+					}
+				}
+				if(BeanUtils.isNotEmpty(rlDate)) {
+					rl.add(rlDate); 
+				}else {
+					rl.add("0");
+				}
+			}
+			riskFullDataVo.setRl(rl);
+			riskFullDataVo.setSumRiskCost(sumRl+"");
+			long value =Integer.parseInt(riskFullDataVo.getSumRiskCost());
+			for (Condition condition : conditionList) {
+				
+				if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
+					riskFullDataVo.setValueRl(condition.getValueRl());
+					riskFullDataVo.setColor(condition.getColor());
+					riskFullDataVo.setConvertValue(condition.getConvertValue());
+					
+				} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+					riskFullDataVo.setValueRl(condition.getValueRl());
+					riskFullDataVo.setColor(condition.getColor());
+					riskFullDataVo.setConvertValue(condition.getConvertValue());
+				} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+					riskFullDataVo.setValueRl(condition.getValueRl());
+					riskFullDataVo.setColor(condition.getColor());
+					riskFullDataVo.setConvertValue(condition.getConvertValue());
+				}
+				
+			}
+			
+			riskFullDataVoList.add(riskFullDataVo);
+			index++;
+		}
+		
+		rowNum = 11;
+		cellNum = 0;
+		int no = 1;
+		for (RiskFullDataInt0802Vo data : riskFullDataVoList) {
+		
+		row = sheet.createRow(rowNum);
+			// No.
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			// ระบบสารสนเทศฯ ของกรมสรรพสามิต
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getInfName());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			// RL Dynamic
+			for(int i=0;i<data.getRl().size();i++) {
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(data.getRl().get(i));
+				cell.setCellStyle(cellRight);
+				cellNum++;
+
+			}
+		
+			///////////////////////////////
+
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getSumRiskCost());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getValueRl());
+			if("แดง".equals(data.getColor())) {
+				cell.setCellStyle(bgRed);
+			}else if("เหลือง".equals(data.getColor())) {
+				cell.setCellStyle(bgYellow);
+			}else if("เขียว".equals(data.getColor())) {
+				cell.setCellStyle(bgGreen);
+			}
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getConvertValue());
+			if("แดง".equals(data.getColor())) {
+				cell.setCellStyle(bgRed);
+			}else if("เหลือง".equals(data.getColor())) {
+				cell.setCellStyle(bgYellow);
+			}else if("เขียว".equals(data.getColor())) {
+				cell.setCellStyle(bgGreen);
+			}
+			cellNum++;
+
+			
+			
+			
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+		/*End create data spreadsheet*/
+		
+		
+		/*set	fileName*/		
+		String fileName ="RiskAssInfFull_"+budgetYear;
+		System.out.println(fileName);
+		/* write it as an excel attachment */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+		byte [] outArray = outByteStream.toByteArray();
+		response.setContentType("application/vnd.ms-excel");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename="+fileName+".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outArray);
+		outStream.flush();
+		outStream.close();
+		
+		System.out.println("Done");
+		
+		
 	}
 	
 }

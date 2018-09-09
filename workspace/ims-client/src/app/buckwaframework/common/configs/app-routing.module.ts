@@ -289,6 +289,12 @@ const routes: Routes = [
     loadChildren:
       "../../project/management-control/reports/reports.module#ReportsModule",
     canActivate: [AuthGuard]
+  },
+
+  {
+    path: "int11",
+    loadChildren: "../../project/internal-audit/int11/int11.module#Int11Module",
+    canActivate: [AuthGuard]
   }
 ];
 

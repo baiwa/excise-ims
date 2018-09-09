@@ -58,11 +58,13 @@ export class Int02M3Component implements OnInit, OnDestroy {
         this.statusSave = "update";
         $(".ui.modal.show").modal("show");
       } else {
-        this.sideExternal = (<HTMLInputElement>(
-          document.getElementById(id)
-        )).value;
+        let sideSplit = (<HTMLInputElement>document.getElementById(id)).value;
+        this.sideExternal = sideSplit.split(",");
         this.router.navigate(["/int02/m3/1"], {
-          queryParams: { qtnHeaderCode: this.sideExternal }
+          queryParams: {
+            qtnHeaderCode: this.sideExternal[0],
+            qtnHeaderName: this.sideExternal[1]
+          }
         });
       }
     });
@@ -145,9 +147,9 @@ export class Int02M3Component implements OnInit, OnDestroy {
           render: function(data, type, full, meta) {
             return `<button class="ui mini blue button" type="button" id="detail-${
               full.qtnHeaderId
-            }" value="${
-              full.qtnHeaderCode
-            }"> <i class="search icon"></i> รายละเอียด</button>`;
+            }" value="${full.qtnHeaderCode +
+              "," +
+              full.qtnHeaderName}"> <i class="search icon"></i> รายละเอียด</button>`;
           }
         }
       ]

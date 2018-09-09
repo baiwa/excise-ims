@@ -84,7 +84,10 @@ export class Int0822Component implements OnInit , AfterViewInit{
       pageLength: 10,
       processing: true,
       serverSide: true,
-      paging: false,
+      scrollY:true,
+      scrollX: true,
+      scrollCollapse: true,
+      paging: true,
       ajax: {
         type: "POST",
         url: URL,
@@ -117,7 +120,8 @@ export class Int0822Component implements OnInit , AfterViewInit{
         }
       ],
       columnDefs: [
-        { targets: [1, 2, 3, 4, 5], className: "center aligned" }
+        { targets: [0,2,3, 4, 5,6], className: "center aligned" },
+        { targets: [1], className: "left aligned" }
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {

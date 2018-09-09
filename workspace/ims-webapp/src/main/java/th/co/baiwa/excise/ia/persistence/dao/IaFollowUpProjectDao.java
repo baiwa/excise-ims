@@ -27,13 +27,33 @@ public class IaFollowUpProjectDao {
     
     private String SQL_SEARCH_CRITERIA = " SELECT * FROM IA_FOLLOW_UP_PROJECT WHERE IS_DELETED = 'N' ";
     
+    private String SQL_EXPORT_DATA = " SELECT * FROM IA_FOLLOW_UP_PROJECT WHERE IS_DELETED = 'N' ";
+    
     public List<Int111Vo> searchCriteria(Int111FormVo formVo) {
     	StringBuilder sql = new StringBuilder(SQL_SEARCH_CRITERIA);
     	List<Object> param = new ArrayList<>();
     	
     	if (StringUtils.isNotBlank(formVo.getProjectName())) {
-    		sql.append(" AND PROJECT_NAME = ? ");
-    		param.add(formVo.getProjectName());
+    		sql.append(" AND PROJECT_NAME LIKE ? ");
+    		param.add("%" + formVo.getProjectName() + "%");
+    	}
+    	
+    	if (StringUtils.isNotBlank(formVo.getStatus())) {
+    		sql.append(" AND STATUS = ? ");
+    		param.add(formVo.getStatus());
+    	}
+    	
+    	List<Int111Vo> list = jdbcTemplate.query(sql.toString(), param.toArray(), iaFollowUpProjectRowmapper);
+    	return list;
+    }
+    
+    public List<Int111Vo> queryExportData(Int111FormVo formVo) {
+    	StringBuilder sql = new StringBuilder(SQL_EXPORT_DATA);
+    	List<Object> param = new ArrayList<>();
+    	
+    	if (StringUtils.isNotBlank(formVo.getProjectName())) {
+    		sql.append(" AND PROJECT_NAME LIKE ? ");
+    		param.add("%" + formVo.getProjectName() + "%");
     	}
     	
     	if (StringUtils.isNotBlank(formVo.getStatus())) {
