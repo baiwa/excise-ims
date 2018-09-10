@@ -27,6 +27,7 @@ export class Int0831Component implements OnInit {
   condition: any;
   riskHrdId: any;
   dataTableF2: any;
+  pageList: any;
   constructor(private router: Router,
     private ajax: AjaxService,
     private route: ActivatedRoute,
@@ -67,7 +68,8 @@ export class Int0831Component implements OnInit {
     });
     this.openForm1 = false;
     this.openForm2 = false;
-    this.wsRiskList = ["ปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ", "ปัจจัยเสี่ยงผลการจัดเก็บรายได้", "ปัจจัยเสี่ยงผลการปราบปราม", "ปัจจัยเสี่ยงผลการปราบปรามด้านค่าปรับคดี", "ปัจจัยเสี่ยงการเงินและบัญชี", "ปัจจัยเสี่ยงระบบการควบคุมภายใน", "ปัจจัยเสี่ยงการส่งเงินเกิน 3 วัน", "ปัจจัยเสี่ยงแบบสอบทานระบบการควบคุมภายใน"];
+    this.wsRiskList = ["ปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ", "ปัจจัยเสี่ยงผลการจัดเก็บรายได้", "ปัจจัยเสี่ยงผลการปราบปรามด้านค่าปรับคดี", "ปัจจัยเสี่ยงผลการปราบปรามด้านจำนวนคดี", "ปัจจัยเสี่ยงการเงินและบัญชี", "ปัจจัยเสี่ยงระบบการควบคุมภายใน", "ปัจจัยเสี่ยงการส่งเงินเกิน 3 วัน", "ปัจจัยเสี่ยงแบบสอบทานระบบการควบคุมภายใน"];
+    this.pageList = ["/int08/3/3", "/int08/3/6", "/int08/3/7", "/int08/3/8", "/int08/3/9", "/int08/3/9", "/int08/3/9", "/int08/3/9"];
     this.initDatatable();
   }
 
@@ -146,16 +148,7 @@ export class Int0831Component implements OnInit {
         data: { budgetYear: this.budgetYear }
       },
       columns: [
-        {
-          data: "riskHrdId",
-          render: function (data, type, full, meta) {
-            return (
-              '<div class="ui checkbox tableDt"><input name="checkRiskHrdId" value="' +
-              data +
-              '" type="checkbox"><label></label></div>'
-            );
-          }
-        },
+
         {
           render: function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
@@ -179,24 +172,18 @@ export class Int0831Component implements OnInit {
           className: "center"
         },
         { data: "createdBy" },
-        {
-          data: "active",
-          render: function (data, type, row, meta) {
 
-            return '<button type="button" class="ui mini button primary chk"><i class="power off icon"></i>' + (data == "Y" ? "เปิด" : "ปิด") + '</button>';
-          }
-        },
 
         {
           data: "riskHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button dtl"><i class="pencil icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button export"><i class="pencil icon"></i> Export</button>';
+            return '<button type="button" class="ui mini button primary dtl" ><i class="table icon"></i> รายละเอียด</button>'
+              + '<button type="button" class="ui mini button primary export"><i class="print icon"></i> Export</button>';
           }
         }
       ],
       columnDefs: [
-        { targets: [0, 1, 4, 5, 7, 8], className: "center aligned" }
+        { targets: [0, 3, 4, 5, 6], className: "center aligned" }
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {

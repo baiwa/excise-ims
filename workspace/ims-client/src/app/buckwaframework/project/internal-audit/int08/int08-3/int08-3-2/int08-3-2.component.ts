@@ -30,7 +30,7 @@ export class Int0832Component implements OnInit {
     this.riskHdrName = "";
     this.budgetYear = "";
     this.wsRiskList = ["ปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ", "ปัจจัยเสี่ยงผลการจัดเก็บรายได้", "ปัจจัยเสี่ยงผลการปราบปรามด้านค่าปรับคดี", "ปัจจัยเสี่ยงผลการปราบปรามด้านจำนวนคดี", "ปัจจัยเสี่ยงการเงินและบัญชี", "ปัจจัยเสี่ยงระบบการควบคุมภายใน", "ปัจจัยเสี่ยงการส่งเงินเกิน 3 วัน", "ปัจจัยเสี่ยงแบบสอบทานระบบการควบคุมภายใน"];
-    this.pageList = ["/int08/3/3", "/int08/3/6", "/int08/3/7", "/int08/3/8", "/int08/3/9", "/int08/3/9", "/int08/3/10", "/int08/3/11"];
+    this.pageList = ["/int08/3/3", "/int08/3/6", "/int08/3/7", "/int08/3/8", "/int08/3/9", "/int08/3/9", "/int08/3/9", "/int08/3/9"];
     //this.initDatatable();
   }
   ngAfterViewInit() {
@@ -97,7 +97,13 @@ export class Int0832Component implements OnInit {
           className: "center"
         },
         // { data: "createdDate" },
-        { data: "active" },
+        {
+          data: "active",
+          render: function (data, type, row, meta) {
+
+            return '<button type="button" class="ui mini button ' + (data == "Y" ? "green" : "orange") + ' chk"><i class="power off icon"></i>' + (data == "Y" ? "เปิด" : "ปิด") + '</button>';
+          }
+        },
         {
           data: "riskHdrId",
           render: function () {
@@ -146,6 +152,21 @@ export class Int0832Component implements OnInit {
 
 
           });
+        })
+        $("td > .chk", row).bind("click", () => {
+          console.log("chk");
+          console.log(row.riskHrdId);
+          console.log(data.riskHrdId);
+          console.log(index);
+
+          const URL = "ia/int083/updateStatusRisk";
+          var newActive = data.active == 'N' ? 'Y' : 'N';
+          this.ajax.post(URL, { riskHrdId: data.riskHrdId, active: newActive }, res => {
+            //console.log(res.json());
+            this.datatable.destroy();
+            this.initDatatable();
+          });
+
         })
           ;
       }

@@ -23,6 +23,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcNocDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOtherDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcPenDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcRecDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcAreaDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcAreaHdrRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcNocDtlRepository;
@@ -66,6 +67,7 @@ public class RiskAssExcAreaService {
 	
 	@Autowired
 	private RiskAssExcNocDtlRepository riskAssExcNocDtlRepository;
+	
 	
 	@Autowired
 	public RiskAssExcAreaService(RiskAssExcAreaHdrRepository riskAssRiskWsHdrRepository) {
@@ -137,6 +139,7 @@ public class RiskAssExcAreaService {
 				insertConfigData = new RiskAssExcAreaHdr();
 				insertConfigData.setRiskHdrName(lov2.getValue1());
 				insertConfigData.setBudgetYear(riskAssRiskWsHdr.getBudgetYear());
+				insertConfigData.setActive("Y");
 				riskAssExcAreaHdrRepository.save(insertConfigData);
 
 			}
@@ -439,6 +442,12 @@ public class RiskAssExcAreaService {
 		public List<RiskAssExcNocDtl> findRiskAssExcNocDtlByHrdId(Long riskHrdId){
 			logger.info("findRiskAssExcNocDtlByHrdId: " + riskHrdId);
 			return  riskAssExcNocDtlRepository.findByRiskHrdId(riskHrdId);
+		}
+		
+		public void updateStatusRisk(RiskAssExcAreaHdr riskAssExcAreaHdr) {
+			RiskAssExcAreaHdr risk = riskAssExcAreaHdrRepository.findOne(riskAssExcAreaHdr.getRiskHrdId());
+			risk.setActive(riskAssExcAreaHdr.getActive());
+			riskAssExcAreaHdrRepository.save(risk);
 		}
 
 }

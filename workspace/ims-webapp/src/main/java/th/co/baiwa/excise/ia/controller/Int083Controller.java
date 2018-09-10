@@ -46,7 +46,6 @@ public class Int083Controller {
 	private final String WS_SESSION_DATA_2 = "WS_SESSION_DATA_INT08-3-6";
 	private final String WS_SESSION_DATA_3 = "WS_SESSION_DATA_INT08-3-7";
 	private final String WS_SESSION_DATA_4 = "WS_SESSION_DATA_INT08-3-8";
-	private final String WS_SESSION_DATA_5 = "WS_SESSION_DATA_INT08-3-9";
 	
 	@Autowired
 	private RiskAssExcAreaService riskAssExcAreaService;
@@ -376,7 +375,12 @@ public class Int083Controller {
 		}
 		return message;
 	}
-	
+	@PostMapping("/updateStatusRisk")
+	@ResponseBody
+	public void updateStatusRisk(@RequestBody RiskAssExcAreaHdr risk) {
+		riskAssExcAreaService.updateStatusRisk(risk);
+
+	}
 	
 
 }
