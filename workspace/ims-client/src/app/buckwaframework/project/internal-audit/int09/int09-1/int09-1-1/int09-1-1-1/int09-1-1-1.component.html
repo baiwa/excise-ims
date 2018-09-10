@@ -79,7 +79,7 @@
   <div class="ui form center aligned grid">
       <button class="ui  grey button" type="button" (click)="clickBack()">กลับ</button>
       <button class="ui  red button" type="button" >ลบรายการที่เลือก</button>
-      <button class="ui  primary button" type="button" >บันทึก</button>
+      <button class="ui  primary button" type="button" (click)="save()">บันทึก</button>
   </div> 
 <br><br>
 
@@ -295,7 +295,7 @@
 
   <div class="actions">
     <div class="ui red deny button">ยกเลิก</div>
-    <div class="ui green button" (click)="saveData()">บันทึก</div>
+    <div class="ui green button" (click)="save()">บันทึก</div>
   </div>
 </div>
 <!--End add modal -->
@@ -311,7 +311,12 @@
     <div class="ui form">
 
       <input type="hidden" id="searchFlag">
-
+      <div class="inline fields">
+        <div class="three wide field"></div>
+        <div class="two wide field">
+            <label>เดินทางไป</label>
+        </div>
+    </div>
       <div class="inline fields">
         <div class="three wide field">
           <label>สรรพสามิตภาค</label>
@@ -342,15 +347,7 @@
             <option *ngFor="let data of branchDropdown" value="{{data.value}}">{{data.label}}</option>
           </select>
         </div>
-        <div class="three wide field">
-          <label>สรรพสามิตพื้นที่</label>
-        </div>
-        <div class="five wide field">
-          <select class="ui dropdown search selection" style="width: 100%;" id="area" (change)="areaOnChange($event)">
-            <option value="">เลือก</option>
-            <option *ngFor="let data of areaDropdown" value="{{data.value}}">{{data.label}}</option>
-          </select>
-        </div>
+
       </div>
       <div class="inline fields">
         <div class="three wide field">
