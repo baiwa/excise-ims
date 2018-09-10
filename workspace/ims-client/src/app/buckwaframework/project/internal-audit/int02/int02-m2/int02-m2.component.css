@@ -7,16 +7,6 @@ label {
     text-align: right;
 }
 
-.text-left {
-    text-align: left !important;
-}
-.text-center {
-    text-align: center !important;
-}
-.text-right {
-    text-align: right !important;
-}
-
 .head {
     background: whitesmoke;
 }
@@ -25,10 +15,6 @@ label {
 }
 .save-btn {
     margin-top: 1em;
-}
-
-.loading {
-    height: calc(100vh - 164px);
 }
 
 .icon.exclamation {

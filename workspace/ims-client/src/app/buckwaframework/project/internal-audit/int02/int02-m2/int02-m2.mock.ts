@@ -1,6 +1,7 @@
 export class Questionnaire {
     [x: string]: any;
     id?: number;
+    headerId?: any;
     title?: string = "";
     content?: string = "";
     detail?: Detail[];

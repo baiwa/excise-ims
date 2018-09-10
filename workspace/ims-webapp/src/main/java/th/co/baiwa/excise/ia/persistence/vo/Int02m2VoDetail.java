@@ -1,12 +1,19 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
 public class Int02m2VoDetail {
+	private Long id;
 	private String order;
 	private Long headerId;
 	private Long detailId;
 	private String content;
 	private String type;
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getType() {
 		return type;
 	}

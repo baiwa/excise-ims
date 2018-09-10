@@ -4,11 +4,18 @@ import java.util.List;
 
 public class Int02m2Vo {
 	private Long id;
+	private Long headerId;
 	private String title;
 	private String content;
 	private String conclusion;
 	private List<Int02m2VoDetail> detail;
 
+	public Long getHeaderId() {
+		return headerId;
+	}
+	public void setHeaderId(Long headerId) {
+		this.headerId = headerId;
+	}
 	public Long getId() {
 		return id;
 	}
