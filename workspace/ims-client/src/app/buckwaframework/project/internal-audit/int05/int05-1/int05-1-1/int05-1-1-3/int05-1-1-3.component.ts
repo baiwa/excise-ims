@@ -156,7 +156,7 @@ export class Int05113Component implements OnInit {
     let idButton="#delete"+e;
     $(id).remove();
     let index = this.listButton.findIndex(obj => obj == e);      
-      this.listButton.splice(index, 1);
+    this.listButton.splice(index, 1);
   }
 
   onAdd = () => {
@@ -188,6 +188,11 @@ export class Int05113Component implements OnInit {
       $("#edit").val("");
       $("#idEdit").val("");
     } else {
+      
+      for(let i=0;i<this.listButton;i++){
+        let getNameFile = $("input[name=fileNmae"+this.listButton[i]+"]").val();
+        this.onUpload(getNameFile);
+      }
       console.log(this.formModal);
       this.formModal.idRandom = this.randomNumber++;
       this.formModal.stampType = ($("#stampType option:selected").text()=="กรุณาเลือก" ? "":$("#stampType option:selected").text());
