@@ -107,6 +107,7 @@ export class Int0822Component implements OnInit, AfterViewInit {
             console.log("data :", row.createdDate)
             if (row.createdDate != null && row.createdDate != undefined && row.createdDate != '') {
               var dateTime = new Date(row.createdDate).toLocaleString("th-TH");
+              console.log(dateTime);
               return dateTime.split(' ')[0];
             } else {
               return row.createdDate;
@@ -126,7 +127,7 @@ export class Int0822Component implements OnInit, AfterViewInit {
           data: "riskAssInfHdrId",
           render: function () {
             return '<button type="button" class="ui mini button primary dtl"><i class="table icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button primary del"><i class="trash alternate icon"></i> ลบ</button>';
+              + '<button type="button" class="ui mini button del"><i class="trash alternate icon"></i> ลบ</button>';
           }
         }
       ],

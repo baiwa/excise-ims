@@ -177,7 +177,19 @@ export class Int0821Component implements OnInit {
         { data: "riskInfPaperName" },
         { data: "riskAssInfHdrName" },
         { data: "budgetYear" },
-        { data: "createdDate" },
+        {
+          render: function (data, type, row, meta) {
+            console.log("data :", row.createdDate)
+            if (row.createdDate != null && row.createdDate != undefined && row.createdDate != '') {
+              var dateTime = new Date(row.createdDate).toLocaleString("th-TH");
+              console.log(dateTime);
+              return dateTime.split(' ')[0];
+            } else {
+              return row.createdDate;
+            }
+          },
+          className: "center"
+        },
         { data: "createdBy" },
         {
           data: "riskAssInfHdrId",
