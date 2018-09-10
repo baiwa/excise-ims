@@ -130,9 +130,17 @@ export class Int02M31Component implements OnInit {
     }
     if (this.chkSelect.length) {
       for (let i = 0; i < this.chkSelect.length; i++) {
-        console.log(this.chkSelect[i].qtnMainDetail);
+        console.log(
+          this.chkSelect[i].qtnReportManId,
+          this.chkSelect[i].qtnReportDtlId,
+          this.chkSelect[i].qtnMainDetail,
+          i
+        );
       }
+      console.log(this.chkSelect.length);
       console.log("----------------------------------");
+    } else {
+      console.log("Empty!!!!!!!!!!!!!!!");
     }
   };
 
@@ -140,9 +148,9 @@ export class Int02M31Component implements OnInit {
     e.preventDefault();
     console.log("id: ", id);
     console.log("what: ", what);
-    console.log("e: ", e.target.value);
-    console.log("i: ", i);
-    console.log("table: ", table);
+    // console.log("e: ", e.target.value);
+    // console.log("i: ", i);
+    // console.log("table: ", table);
     this[`chk${i}`] = [];
     switch (what) {
       case "man":
@@ -158,13 +166,15 @@ export class Int02M31Component implements OnInit {
               this[`chk${i}`].push(obj);
               $(`#chk${i}-${index}`)[0].checked = true;
             } else {
-              const del = this[`chk${i}`].findIndex(
+              // const del = this[`chk${i}`].findIndex(
+              //   ob => ob.qtnReportManId == id
+              // );
+              const del = this.chkSelect.findIndex(
                 ob => ob.qtnReportManId == id
               );
-              console.log("hd: ", del);
               this.chkSelect.splice(del, 1);
 
-              del != -1 && this[`chk${i}`].splice(del, 1);
+              // del != -1 && this[`chk${i}`].splice(del, 1);
               $(`#chk${i}-${index}`)[0].checked = false;
             }
           }
@@ -178,39 +188,53 @@ export class Int02M31Component implements OnInit {
               this.chkSelect.push(obj);
 
               this[`chk${i}`].push(obj);
-              $(`#chk${i}-${index}`)[0].checked = true;
+              // $(`#chk${i}-${index}`)[0].checked = true;
             } else {
-              const del = this[`chk${i}`].findIndex(
+              // this[`chk${i}`].push(obj);
+              // console.log(this[`chk${i}`]);
+              // const del = this[`chk${i}`].findIndex(
+              //   ob => ob.qtnReportDtlId == id
+              // );
+              console.log(this.chkSelect);
+              const del = this.chkSelect.findIndex(
                 ob => ob.qtnReportDtlId == id
               );
               console.log("dtl: ", del);
               this.chkSelect.splice(del, 1);
 
-              del != -1 && this[`chk${i}`].splice(del, 1);
-              $(`#chk${i}-${index}`)[0].checked = false;
+              // del != -1 && this[`chk${i}`].splice(del, 1);
+              // $(`#chk${i}-${index}`)[0].checked = false;
             }
           }
         });
         break;
     }
-    this[`${table}`].length == this[`chk${i}`].length
-      ? $(`#chk${i}`).prop("checked", true)
-      : $(`#chk${i}`).prop("checked", false);
-    // this.chkSelect.push(this[`chk${i}`]);
+    // this[`${table}`].length == this[`chk${i}`].length
+    //   ? $(`#chk${i}`).prop("checked", true)
+    //   : $(`#chk${i}`).prop("checked", false);
+
     if (this.chkSelect.length) {
       for (let i = 0; i < this.chkSelect.length; i++) {
-        console.log(this.chkSelect[i].qtnMainDetail);
+        console.log(
+          this.chkSelect[i].qtnReportManId,
+          this.chkSelect[i].qtnReportDtlId,
+          this.chkSelect[i].qtnMainDetail,
+          i
+        );
       }
+      console.log(this.chkSelect.length);
       console.log("----------------------------------");
+    } else {
+      console.log("Empty!!!!!!!!!!!!!!!");
     }
   };
 
   onAddField = () => {
     var tt = this.numbers.length;
-    if (tt < 5) {
+    if (tt <= 100) {
       this.numbers.push("");
     } else {
-      alert("ERROR!!!");
+      this.msg.errorModal("สามารถเพิ่มสูงสุดได้ 100 หัวข้อ", "เกิดข้อผิดพลาด");
     }
   };
 
@@ -290,20 +314,11 @@ export class Int02M31Component implements OnInit {
         } else {
           idMi.push(parseInt(this.chkSelect[i].qtnReportDtlId));
         }
-        // console.log(this.chkSelect[i]);
-        // console.log(this.chkSelect[i].qtnMainDetail);
       }
-      // console.log(idM);
-      // console.log(idMi);
       this.ajax.delete(URL.DELETE_MAINDTL + idM.join(), res => {
-        // let data = res.json();
-        // this.msg.successModal(data.messageTh, "สำเร็จ");
-        // $(".ui.modal.show").modal("hide");
-
         this.ajax.delete(URL.DELETE_MINORDTL + idMi.join(), res => {
           let data = res.json();
           this.msg.successModal(data.messageTh, "สำเร็จ");
-          // $(".ui.modal.show").modal("hide");
         });
       });
     }

@@ -13,8 +13,19 @@ public class Int0802Vo {
 	private String riskAssInfHdrName;
 	private String rl;
 	private String budgetYear;
+	private String active;
 	private List<String> riskAssInfHdrNameList;
 	private List<RiskAssInfHdr> riskAssInfHdrList;
+
+	
+	
+	public String getActive() {
+		return active;
+	}
+
+	public void setActive(String active) {
+		this.active = active;
+	}
 
 	public List<RiskAssInfOtherDtl> getRiskAssInfOtherDtlList() {
 		return riskAssInfOtherDtlList;

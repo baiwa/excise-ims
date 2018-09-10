@@ -1,24 +1,16 @@
 package th.co.baiwa.excise.ia.controller;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ctc.wstx.util.StringUtil;
-
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int091FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int091Vo;
@@ -56,17 +48,17 @@ public class Int091Controller {
 			 
 		} catch (Exception e) {
 			log.error("Error ! add ",e);
-			return ApplicationCache.getMessage("MSG_00006");
+			return ApplicationCache.getMessage("MSG_00003");
 		}
-		return ApplicationCache.getMessage("MSG_00005");
+		return ApplicationCache.getMessage("MSG_00002");
 	}
 
-	@PostMapping("/deleteList")
+	@PostMapping("/delete")
     @ResponseBody
-    public Message delete(@RequestBody List<Long> ids){
-
+    public Message delete(@RequestBody Int091FormVo formVo){
+		log.info("id : {}",formVo.getId());
         try {
-        	int091Service.delete(ids);
+        	int091Service.delete(formVo.getId());
         } catch (Exception e) {
             return ApplicationCache.getMessage("MSG_00006");
         }

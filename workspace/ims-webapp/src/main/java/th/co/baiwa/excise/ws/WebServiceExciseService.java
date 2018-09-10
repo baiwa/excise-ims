@@ -21,6 +21,9 @@ import com.google.gson.Gson;
 import baiwa.co.th.ws.LoginLdap;
 import baiwa.co.th.ws.Response;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcNocDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcNocDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcPenDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcRecDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
@@ -519,6 +522,284 @@ public class WebServiceExciseService {
 		depName = "สสพ.ระยอง 1";
 		resultsIncome = 18.556;
 		budgetIncome = 11.769;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		return riskAssExcAreaDtlLi;
+	}
+	
+	
+	public List<RiskAssExcPenDtl> riskAssExcAreaDtlByWebService2(RiskAssExcPenDtl riskAssExcAreaDtl) {
+		logger.info("getRiskAssExcAreaDtlList WebService");
+		List<RiskAssExcPenDtl> riskAssExcAreaDtlLi = new ArrayList<RiskAssExcPenDtl>();
+		double resultsIncome = 0 , budgetIncome = 0 , diff = 0;
+		String depName = "";
+		
+		riskAssExcAreaDtl = new RiskAssExcPenDtl();
+		depName = "สสพ. พระนครศรีอยุธยา 2";
+		resultsIncome = 106095;
+		budgetIncome = 1516393;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcPenDtl();
+		depName = "สสพ. อ่างทอง";
+		resultsIncome = 718867.5;
+		budgetIncome = 6016497;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcPenDtl();
+		depName = "สสพ.จันทบุรี";
+		resultsIncome = 5831447.7;
+		budgetIncome = 27864350;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcPenDtl();
+		depName = "สสพ.ฉะเชิงเทรา";
+		resultsIncome = 1428854.64;
+		budgetIncome = 6328000;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcPenDtl();
+		depName = "สสพ.ชลบุรี 1";
+		resultsIncome = 4286609.17;
+		budgetIncome = 4200000;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcPenDtl();
+		depName = "สสพ.ชลบุรี 2";
+		resultsIncome = 4286609.17;
+		budgetIncome = 4200000;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcPenDtl();
+		depName = "สสพ.ตราด";
+		resultsIncome = 4286609.17;
+		budgetIncome = 4200000;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcPenDtl();
+		depName = "สสพ.นครนายก";
+		resultsIncome = 3379999.7;
+		budgetIncome = 1080000;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcPenDtl();
+		depName = "สสพ.ปราจีนบุรี";
+		resultsIncome = 2523877.4;
+		budgetIncome = 887000;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcPenDtl();
+		depName = "สสพ.ระยอง 1";
+		resultsIncome = 4112468;
+		budgetIncome = 1898746;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		return riskAssExcAreaDtlLi;
+	}
+	public List<RiskAssExcNocDtl> riskAssExcAreaDtlByWebService3(RiskAssExcNocDtl riskAssExcAreaDtl) {
+		logger.info("getRiskAssExcAreaDtlList WebService");
+		List<RiskAssExcNocDtl> riskAssExcAreaDtlLi = new ArrayList<RiskAssExcNocDtl>();
+		double resultsIncome = 0 , budgetIncome = 0 , diff = 0;
+		String depName = "";
+		
+		riskAssExcAreaDtl = new RiskAssExcNocDtl();
+		depName = "สสพ. พระนครศรีอยุธยา 2";
+		resultsIncome = 116;
+		budgetIncome = 177;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcNocDtl();
+		depName = "สสพ. อ่างทอง";
+		resultsIncome = 113;
+		budgetIncome = 144;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcNocDtl();
+		depName = "สสพ.จันทบุรี";
+		resultsIncome = 760;
+		budgetIncome = 1077;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcNocDtl();
+		depName = "สสพ.ฉะเชิงเทรา";
+		resultsIncome = 232;
+		budgetIncome = 270;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcNocDtl();
+		depName = "สสพ.ชลบุรี 1";
+		resultsIncome = 226;
+		budgetIncome = 217;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcNocDtl();
+		depName = "สสพ.ชลบุรี 2";
+		resultsIncome = 683;
+		budgetIncome = 675;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcNocDtl();
+		depName = "สสพ.ตราด";
+		resultsIncome = 441;
+		budgetIncome = 436;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcNocDtl();
+		depName = "สสพ.นครนายก";
+		resultsIncome = 169;
+		budgetIncome = 48;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcNocDtl();
+		depName = "สสพ.ปราจีนบุรี";
+		resultsIncome = 565;
+		budgetIncome = 288;
+		diff = resultsIncome - budgetIncome;
+		riskAssExcAreaDtl.setDepartmentName(depName);
+		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));
+		riskAssExcAreaDtl.setBudgetIncome(new BigDecimal(budgetIncome));
+		riskAssExcAreaDtl.setBudgetDiff(new BigDecimal(diff));
+		riskAssExcAreaDtl.setPercenDiff(new BigDecimal(diff*100/budgetIncome));
+		riskAssExcAreaDtlLi.add(riskAssExcAreaDtl);
+		
+		
+		riskAssExcAreaDtl = new RiskAssExcNocDtl();
+		depName = "สสพ.ระยอง 1";
+		resultsIncome = 558;
+		budgetIncome = 360;
 		diff = resultsIncome - budgetIncome;
 		riskAssExcAreaDtl.setDepartmentName(depName);
 		riskAssExcAreaDtl.setResultsIncome(new BigDecimal(resultsIncome));

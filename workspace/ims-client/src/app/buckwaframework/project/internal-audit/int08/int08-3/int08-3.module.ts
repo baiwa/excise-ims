@@ -14,6 +14,8 @@ import { Int0836Component } from './int08-3-6/int08-3-6.component';
 import { FormsModule } from '../../../../../../../node_modules/@angular/forms';
 import { ConditionModule } from '../../../../common/components';
 import { Int0837Component } from './int08-3-7/int08-3-7.component';
+import { Int0838Component } from './int08-3-8/int08-3-8.component';
+import { Int0839Component } from './int08-3-9/int08-3-9.component';
 const routes: Routes = [
   { path: '', component: Int083Component, canActivate: [AuthGuard] },
   { path: '1', component: Int0831Component, canActivate: [AuthGuard] },
@@ -21,7 +23,11 @@ const routes: Routes = [
   { path: '3', component: Int0833Component, canActivate: [AuthGuard] },
   { path: '4', component: Int0834Component, canActivate: [AuthGuard] },
   { path: '5', component: Int0835Component, canActivate: [AuthGuard] },
-  { path: '6', component: Int0836Component, canActivate: [AuthGuard] }
+  { path: '6', component: Int0836Component, canActivate: [AuthGuard] },
+  { path: '7', component: Int0837Component, canActivate: [AuthGuard] },
+  { path: '8', component: Int0838Component, canActivate: [AuthGuard] },
+
+  { path: '9', component: Int0839Component, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -39,7 +45,9 @@ const routes: Routes = [
     Int0834Component,
     Int0835Component,
     Int0836Component,
-    Int0837Component
+    Int0837Component,
+    Int0838Component,
+    Int0839Component
   ],
   exports: [RouterModule]
 })

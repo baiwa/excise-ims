@@ -14,4 +14,7 @@ public interface RiskAssInfHdrRepository extends CommonJpaCrudRepository<RiskAss
 	@Query("SELECT r FROM RiskAssInfHdr r WHERE r.isDeleted = '"+FLAG.N_FLAG+"' AND r.budgetYear =  ?1")
 	public List<RiskAssInfHdr> findByBudgetYear(String budgetYear);
 	
+	@Query("SELECT r FROM RiskAssInfHdr r WHERE r.isDeleted = '"+FLAG.N_FLAG+"' AND r.budgetYear =  ?1 AND r.active = ?2")
+	public List<RiskAssInfHdr> findByBudgetYearActive(String budgetYear , String active);
+	
 }

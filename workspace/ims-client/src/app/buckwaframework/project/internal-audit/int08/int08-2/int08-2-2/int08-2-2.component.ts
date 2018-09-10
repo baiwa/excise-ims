@@ -13,8 +13,8 @@ declare var $: any;
   templateUrl: './int08-2-2.component.html',
   styleUrls: ['./int08-2-2.component.css']
 })
-export class Int0822Component implements OnInit , AfterViewInit{
-  
+export class Int0822Component implements OnInit, AfterViewInit {
+
   riskAssInfHdrName: any;
   datatable: any;
   budgetYear: any;
@@ -22,36 +22,35 @@ export class Int0822Component implements OnInit , AfterViewInit{
   infRiskList: any[];
 
   active: any;
-  sw:boolean;
+  sw: boolean;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
-    private messageBarService: MessageBarService) 
-    { }
+    private messageBarService: MessageBarService) { }
 
   ngOnInit() {
-     this.riskAssInfHdrName = "";
-     this.budgetYear = "";
-     this.infRiskList = ["ปัจจัยเสี่ยงจำนวนครั้งการใช้งานไม่ได้ของระบบ"];
-     
+    this.riskAssInfHdrName = "";
+    this.budgetYear = "";
+    this.infRiskList = ["ปัจจัยเสี่ยงจำนวนครั้งการใช้งานไม่ได้ของระบบ"];
+
   }
   ngAfterViewInit() {
     this.budgetYear = this.route.snapshot.queryParams["budgetYear"];
     this.initDatatable();
   }
 
-  
+
 
 
   addRiskAssInfHdr() {
 
-    if( this.riskAssInfHdrName == null || this.riskAssInfHdrName == undefined || this.riskAssInfHdrName=="" ){
+    if (this.riskAssInfHdrName == null || this.riskAssInfHdrName == undefined || this.riskAssInfHdrName == "") {
       this.messageBarService.errorModal("กรุณากรอกปัจจัยเสี่ยง");
-    }else{
+    } else {
       this.riskAssInfHdrName.trim();
-      
+
       console.log(this.riskAssInfHdrName);
       const URL = "ia/int082/addRiskInfHdr";
 
@@ -73,7 +72,7 @@ export class Int0822Component implements OnInit , AfterViewInit{
 
 
   initDatatable(): void {
-    
+
     const URL = AjaxService.CONTEXT_PATH + "ia/int082/searchRiskInfHdr";
     // console.log(URL);
     // console.log(this.budgetYear);
@@ -84,11 +83,14 @@ export class Int0822Component implements OnInit , AfterViewInit{
       pageLength: 10,
       processing: true,
       serverSide: true,
-      paging: false,
+      scrollY: true,
+      scrollX: true,
+      scrollCollapse: true,
+      paging: true,
       ajax: {
         type: "POST",
         url: URL,
-        data: {budgetYear: this.budgetYear}
+        data: { budgetYear: this.budgetYear }
       },
       columns: [
 
@@ -100,24 +102,38 @@ export class Int0822Component implements OnInit , AfterViewInit{
         },
         { data: "riskAssInfHdrName" },
         { data: "budgetYear" },
-        { data: "createdDate" },
-        { data: "createdBy" },
-        { data: "active" ,
+        {
           render: function (data, type, row, meta) {
-            
-            return '<button type="button" class="ui mini button primary chk"><i class="power off icon"></i>'+(data == "Y" ? "เปิด" : "ปิด") +'</button>';
+            console.log("data :", row.createdDate)
+            if (row.createdDate != null && row.createdDate != undefined && row.createdDate != '') {
+              var dateTime = new Date(row.createdDate).toLocaleString("th-TH");
+              console.log(dateTime);
+              return dateTime.split(' ')[0];
+            } else {
+              return row.createdDate;
+            }
+          },
+          className: "center"
+        },
+        { data: "createdBy" },
+        {
+          data: "active",
+          render: function (data, type, row, meta) {
+
+            return '<button type="button" class="ui mini button ' + (data == "Y" ? "green" : "orange") + ' chk"><i class="power off icon"></i>' + (data == "Y" ? "เปิด" : "ปิด") + '</button>';
           }
         },
         {
           data: "riskAssInfHdrId",
           render: function () {
             return '<button type="button" class="ui mini button primary dtl"><i class="table icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button primary del"><i class="trash alternate icon"></i> ลบ</button>';
+              + '<button type="button" class="ui mini button del"><i class="trash alternate icon"></i> ลบ</button>';
           }
         }
       ],
       columnDefs: [
-        { targets: [1, 2, 3, 4, 5], className: "center aligned" }
+        { targets: [0, 2, 3, 4, 5, 6], className: "center aligned" },
+        { targets: [1], className: "left aligned" }
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {
@@ -139,15 +155,15 @@ export class Int0822Component implements OnInit , AfterViewInit{
           console.log(row);
           console.log(data);
           console.log(index);
-          
-           const URL = "ia/int082/updateStatusRisk";
-           var newActive = data.active == 'N' ? 'Y' : 'N';
-           this.ajax.post(URL, { riskAssInfHdrId: data.riskAssInfHdrId , active : newActive }, res => {
-             //console.log(res.json());
-             this.datatable.destroy();
-             this.initDatatable();
-           });
-        
+
+          const URL = "ia/int082/updateStatusRisk";
+          var newActive = data.active == 'N' ? 'Y' : 'N';
+          this.ajax.post(URL, { riskAssInfHdrId: data.riskAssInfHdrId, active: newActive }, res => {
+            //console.log(res.json());
+            this.datatable.destroy();
+            this.initDatatable();
+          });
+
         })
 
         $("td > .del", row).bind("click", () => {
@@ -192,7 +208,7 @@ export class Int0822Component implements OnInit , AfterViewInit{
         this.router.navigate(["/int08/2/1"], {
           queryParams: { budgetYear: this.budgetYear }
         }
-      );
+        );
       }
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
   }

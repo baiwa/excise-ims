@@ -183,7 +183,7 @@ export class Int091Component implements OnInit {
           "render": function (data, type, row) {
             var btn = '';
             btn += '<button class="mini ui primary button btn-edit">รายละเอียด</button>';
-            btn += '<button class="mini ui red button btn-edit">ยกเลิก</button>';
+            btn += '<button class="mini ui red button btn-delete">ยกเลิก</button>';
             return btn;
           }
         }
@@ -191,12 +191,36 @@ export class Int091Component implements OnInit {
     });
 
     //button edit>
-    table.on('click', 'tbody tr button.btn-edit', () => {
-      var closestRow = $(this).closest('tr');
+    table.on('click', 'tbody tr button.btn-edit', (e) => {
+      var closestRow = $(e.target).closest('tr');
       var data = table.row(closestRow).data();
-      this.router.navigate(['/int09/1/1']);
+      this.router.navigate(['/int09/1/1'], {
+        queryParams: {idProcess:data.id}
+      });
       console.log(data);
+    });
 
+    table.on('click', 'tbody tr button.btn-delete', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table.row(closestRow).data();
+     
+      const URL = "ia/int091/delete";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+     }
+    },"ยกเลิกรายการ");
+      
     });
 
   }
@@ -206,16 +230,13 @@ export class Int091Component implements OnInit {
       const URL = "combobox/controller/getDropByTypeAndParentId";
       this.ajax.post(URL, { type: "ACC_FEE", lovIdMaster: 1161 }, res => {
         this.pickedTypeList = res.json();
-        console.log(this.pickedTypeList);
       });
     }
 
     statusDropdown = () =>{
-  
       const URL = "combobox/controller/getDropByTypeAndParentId";
       this.ajax.post(URL, { type: "ACC_FEE", lovIdMaster: 1165 }, res => {
         this.statusList = res.json();
-        console.log(this.statusList);
       });
     }
     travelTo1Dropdown = () =>{
@@ -223,7 +244,6 @@ export class Int091Component implements OnInit {
       const URL = "combobox/controller/getDropByTypeAndParentId";
       this.ajax.post(URL, { type: "SECTOR_VALUE"}, res => {
         this.travelTo1List = res.json();
-        console.log(this.travelTo1List);
       });
     }
 
@@ -234,7 +254,6 @@ export class Int091Component implements OnInit {
       this.ajax.post(URL, { type: "SECTOR_VALUE",lovIdMaster: id}, res => {
         this.travelTo2List = res.json();
         this.setTravelTo(e);
-        console.log(this.travelTo2List);
       });
     }
     }
@@ -246,18 +265,14 @@ export class Int091Component implements OnInit {
       this.ajax.post(URL, { type: "SECTOR_VALUE",lovIdMaster: id}, res => {
         this.travelTo3List = res.json();
         this.setTravelTo(e);
-        console.log(this.travelTo3List);
       });
     }
     }
 
     travelTo1AddDropdown = () =>{
-  
       const URL = "combobox/controller/getDropByTypeAndParentId";
       this.ajax.post(URL, { type: "SECTOR_VALUE"}, res => {
         this.travelTo1AddList = res.json();
-        // this.setTravelToAdd();
-        console.log(this.travelTo1AddList);
       });
     }
 
@@ -268,7 +283,6 @@ export class Int091Component implements OnInit {
       this.ajax.post(URL, { type: "SECTOR_VALUE",lovIdMaster: id}, res => {
         this.travelTo2AddList = res.json();
         this.setTravelToAdd(e);
-        console.log(this.travelTo2AddList);
       });
     }
     }
@@ -280,15 +294,13 @@ export class Int091Component implements OnInit {
       this.ajax.post(URL, { type: "SECTOR_VALUE",lovIdMaster: id}, res => {
         this.travelTo3AddList = res.json();
         this.setTravelToAdd(e);
-        console.log(this.travelTo3AddList);
       });
     }
     }
 
     add (){
-      console.log("Add : True");
+
       $('#modalAddHead').modal('hide');
-      
       const URL = "ia/int091/add";
       this.ajax.post(URL, { 
         createdDate: "ACC_FEE", 
@@ -320,14 +332,12 @@ export class Int091Component implements OnInit {
   
 
   setTravelTo = e => {
-    console.log("ID : ",e.target.value);
       $('#travelTo').val(e.target.value);
       $('#travelToId').val(e.target.value);
   
   }
 
   setTravelToAdd = e => {
-    console.log("ID : ",e.target.value);
     $('#travelToAdd').val(e.target.value);
     $('#travelToIdAdd').val(e.target.value);
   }

@@ -6,6 +6,7 @@
             <span>เพิ่มข้อมูลแสตมป์</span>
         </div>
         <div class="ui attached segment">
+            <!-- form -->
             <form class="ui form" (ngSubmit)="onAdd()">      
                 <input type="hidden" id="edit">          
                 <input type="hidden" id="idEdit">    
@@ -227,16 +228,23 @@
                     <div class="one wide field "></div>
                 </div>
                 <!-- row 12 -->
-                <div class="inline fields  ui grid">
+                <div class="inline fields  ui grid" *ngFor="let item of listButton" id="{{item}}">                    
                     <div class="one wide field "></div>
                     <div class="three wide field ">
-                        <label>{{item}}แนบไฟล์</label>
+                        <label>แนบไฟล์</label>
                     </div>
                     <div class="four wide field ">
-                        <input [(ngModel)]="formModal.fileName" name="fileName" id="fileName" type="file"  accept="*" (change)="onUpload($event)">                        
+                        <input name="fileName{{item}}" id="fileName{{item}}" type="file"  accept="*">                        
                     </div>
-                    <div class="eight wide field "><button class="ui mini blue button" type="button">+</button></div>
+                    <div class="eight wide field " *ngIf="item === numberButton; then thenBlock; else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <button class="ui mini basic primary button" type="button" (click)="onAddButton(item);"><i class="add icon"></i>เพิ่มไฟล์</button>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                        <button class="ui mini basic red button" type="button" (click)="deleteButton(item);"><i class="add icon"></i>ลบ</button>                        
+                    </ng-template>      
                 </div>
+                <div id="add-button"></div>
                 <!-- row 13 -->
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>

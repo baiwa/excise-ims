@@ -91,6 +91,7 @@ public class RiskAssInfHdrRepositoryImpl implements RiskAssInfHdrRepositoryCusto
 		sql.append(" ON D.RISK_INF_HRD_ID = H.RISK_ASS_INF_HDR_ID ");
 		sql.append(" WHERE H.IS_DELETED = 'N' ");
 		sql.append(" AND H.BUDGET_YEAR = ? ");
+		sql.append(" AND H.ACTIVE = 'Y' ");
 		sql.append(" AND D.IS_DELETED = 'N' ");
 		sql.append(" UNION ");
 
@@ -99,6 +100,7 @@ public class RiskAssInfHdrRepositoryImpl implements RiskAssInfHdrRepositoryCusto
 		sql.append(" ON O.RISK_INF_HRD_ID = H.RISK_ASS_INF_HDR_ID ");
 		sql.append(" WHERE H.IS_DELETED = 'N' ");
 		sql.append(" AND H.BUDGET_YEAR = ? ");
+		sql.append(" AND H.ACTIVE = 'Y' ");
 		sql.append(" AND O.IS_DELETED = 'N') ");
 
 		params.add(budgetYear);
@@ -133,6 +135,7 @@ public class RiskAssInfHdrRepositoryImpl implements RiskAssInfHdrRepositoryCusto
 		sql.append(" ON D.RISK_INF_HRD_ID = H.RISK_ASS_INF_HDR_ID ");
 		sql.append(" WHERE H.IS_DELETED = 'N' ");
 		sql.append(" AND H.BUDGET_YEAR = ? ");
+		sql.append(" AND H.ACTIVE = 'Y' ");
 		sql.append(" AND D.IS_DELETED = 'N' ");
 		sql.append(" AND D.INF_NAME = ? ");
 		sql.append(" UNION ");
@@ -143,6 +146,7 @@ public class RiskAssInfHdrRepositoryImpl implements RiskAssInfHdrRepositoryCusto
 		sql.append(" ON O.RISK_INF_HRD_ID = H.RISK_ASS_INF_HDR_ID ");
 		sql.append(" WHERE H.IS_DELETED = 'N' ");
 		sql.append(" AND H.BUDGET_YEAR = ? ");
+		sql.append(" AND H.ACTIVE = 'Y' ");
 		sql.append(" AND O.IS_DELETED = 'N' ");
 		sql.append(" AND O.INF_NAME = ? ");
 		sql.append(" ) ");

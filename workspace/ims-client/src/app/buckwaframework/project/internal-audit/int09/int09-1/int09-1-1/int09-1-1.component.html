@@ -4,10 +4,10 @@
 
 <div class="ui attached  segment">
   <br>
-  <div class="inline fields" style="text-align: center !important;">ปะมาณการค่าใช้จ่ายในการเดินทางไปราชการ</div>
-  <div class="inline fields" style="text-align: center !important;">หน่วยงาน กลุ่มตรวจสอบภายใน</div>
-  <div class="inline fields" style="text-align: center !important;">เดินทางไปราชการที่ สำนักงานสรรพสามิตพื้นที่เลย</div>
-  <div class="inline fields" style="text-align: center !important;">ตั้งแต่วันที่ 17 มิถุนายน 2561 - 30 มิถุนายน 2561</div>
+  <div class="inline fields" style="text-align: center !important;">ประเภทการเบิก &nbsp; {{pickedType}}</div>
+  <div class="inline fields" style="text-align: center !important;">ปีงบประมาณ &nbsp; {{fiscalYear}}</div>
+  <div class="inline fields" style="text-align: center !important;">วันที่เดินทาง &nbsp; {{departureDate}} - {{returnDate}}</div>
+  <div class="inline fields" style="text-align: center !important;">เดินทางไป &nbsp; {{travelToDescription}}</div>
   <br>
   <div class="inline fields" style="text-align: right !important;">
     <button class="ui green button" type="button" (click)="modalAddDocument()">เพิ่มเอกสาร</button>
@@ -33,9 +33,9 @@
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
   <span>แนบเอกสารหลักฐาน</span>
 </div>
-
+<form id="upload-form" ngNativeValidate (submit)="onUpload($event)">
 <div class="ui attached  segment">
-  <div class="ui form center aligned" id="int09-1-1" ngNativeValidate>
+  <div class="ui form center aligned" ngNativeValidate>
     <br>
     <div class="inline fields">
       <div class="three wide field"></div>
@@ -43,14 +43,19 @@
         <label>ชื่อเอกสาร</label>
       </div>
       <div class="six wide field">
-        <input type="file" name="file" required>
+          <input class="inputfile" type="file" name="fileUpload" id="fileUpload"
+          accept=".pdf, image/*, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,.doc,.docx"
+          (change)="onChangeUpload($event)" required>
+        <!-- <input type="file" name="file" id="file" required> -->
       </div>
 
       <div class="two wide field">
-        <button class="ui green button" type="button" (click)="uploadFile()">อัพโหลด</button>
+        <button class="ui green button" type="submit">อัพโหลด</button>
       </div>
 
     </div>
+
+  
     <br>
     <table id="tableData2" class="ui small celled table nowrap" style="width: 100%">
       <thead>
@@ -60,7 +65,8 @@
           <th style="text-align: center !important;">วันที่สร้าง</th>
           <th style="text-align: center !important;">ผู้สร้าง</th>
           <th style="text-align: center !important;">ชื่อเอกสาร</th>
-          <th style="text-align: center !important;">ขนาด (MB)</th>
+          <th style="text-align: center !important;">ขนาด (KB)</th>
+          <th style="text-align: center !important;">สถานะการดำเนินการ</th>
           <th style="text-align: center !important;width:180px !important">จัดการ</th>
         </tr>
 
@@ -72,6 +78,7 @@
   </div> 
   <br><br>
 </div>
+</form>
 <!-- add modal -->
 <div class="ui large modal transition hidden" id='modalAddDocument'>
 
@@ -87,10 +94,9 @@
               <label>ประเภทเอกสาร</label>
             </div>
             <div class="six wide field">
-                <!-- (change)="onchangeDocumentType()" -->
                 <select class="ui dropdown search selection" id="documentType"  id="documentType" style = "width:100%">
                     <option value="">เลือก</option>
-                    <option *ngFor="let data of documentTypeList" value="{{data.value}}">{{data.label}}</option>
+                    <option *ngFor="let data of documentTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
                 </select>
             </div>
           </div>
