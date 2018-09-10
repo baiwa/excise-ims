@@ -4,6 +4,8 @@ import { TableReq } from './../../../../../../common/models/table';
 import { Component, OnInit } from '@angular/core';
 
 import { TextDateTH, formatter } from '../../../../../../common/helper/datepicker';
+import { Button } from 'selenium-webdriver';
+import { forEach } from '@angular/router/src/utils/collection';
 declare var jQuery: any;
 declare var $: any;
 
@@ -20,6 +22,8 @@ export class Int05113Component implements OnInit {
   stampGenre :any;
   table: any;
   randomNumber: number;
+  listButton : any;
+  numberButton : number;
   file :File[];
   constructor(
     private message: MessageBarService,
@@ -30,12 +34,15 @@ export class Int05113Component implements OnInit {
     this.stampType = null;
     this.stampGenre = null;
     this.file = new Array<File>();
+    this.listButton = [];
+    this.numberButton=1;
   }
 
   ngOnInit() {
     this.calenda();
     this.dataTable();    
     this.stampTypeList();
+    this.listButton.push(this.numberButton);
   }
   ngAfterViewInit() {
     this.callDropdown();
@@ -138,6 +145,20 @@ export class Int05113Component implements OnInit {
     });
   }
 
+  onAddButton=()=>{     
+    console.log("Add Button");
+    this.listButton.push(++this.numberButton);    
+    console.log(this.listButton);
+  }
+  deleteButton=(e)=>{
+    console.log("Delete Button : ",e);
+    let id="#"+e;
+    let idButton="#delete"+e;
+    $(id).remove();
+    let index = this.listButton.findIndex(obj => obj == e);      
+      this.listButton.splice(index, 1);
+  }
+
   onAdd = () => {
     if(this.checkBlank($("#dateOfPay").val())){
       this.message.alert("กรุณาระบุ วันที่รับ - จ่าย","แจ้งเตือน");
@@ -167,7 +188,7 @@ export class Int05113Component implements OnInit {
       $("#edit").val("");
       $("#idEdit").val("");
     } else {
-
+      console.log(this.formModal);
       this.formModal.idRandom = this.randomNumber++;
       this.formModal.stampType = ($("#stampType option:selected").text()=="กรุณาเลือก" ? "":$("#stampType option:selected").text());
       this.formModal.stampBrand = ($("#stampBrand option:selected").text()=="กรุณาเลือก" ? "":$("#stampBrand option:selected").text())
@@ -183,6 +204,12 @@ export class Int05113Component implements OnInit {
   }
 
   onSave = () => {
+    console.log(this.data.length);
+    if(this.data.length==0){
+      this.message.alert("ไม่มีข้อมูล","แจ้งเตือน");
+      return false;
+    }
+
     this.message.comfirm((res) => {
       if (res) {
         let url = 'ia/int05113/save';    
@@ -365,7 +392,7 @@ class FormModal {
   stampCodeEnd: string = null;
   note: string = null;
   createdDate: string = null;
-  fileName: string = null;
+  fileName: [any];
   idRandom: number = 0;
   file : File[];
 }
