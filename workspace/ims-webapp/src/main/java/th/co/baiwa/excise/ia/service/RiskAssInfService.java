@@ -109,6 +109,22 @@ public class RiskAssInfService {
 
 	}
 	
+	
+	
+	public ResponseDataTable<RiskAssInfHdr> findByInfHdrActiveCriteriaForDatatable(RiskAssInfHdr riskAssInfHdr, DataTableRequest dataTableRequest) {
+		
+		ResponseDataTable<RiskAssInfHdr> responseDataTable = new ResponseDataTable<RiskAssInfHdr>();
+		List<RiskAssInfHdr> riskAssInfHdrList = findByBudgetYearInfHdrActive(riskAssInfHdr.getBudgetYear(),riskAssInfHdr.getActive());
+
+		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
+		responseDataTable.setData(riskAssInfHdrList);
+		responseDataTable.setRecordsTotal((int) riskAssInfHdrList.size());
+		responseDataTable.setRecordsFiltered((int) riskAssInfHdrList.size());
+		return responseDataTable;
+
+	}
+	
+	
 	public Message deleteRiskAssInfHdrRepository(RiskAssInfHdr riskAssInfHdr) {
 		logger.info("id : "+riskAssInfHdr.getRiskAssInfHdrId());
 		riskAssInfHdrRepository.delete(riskAssInfHdr.getRiskAssInfHdrId());
@@ -136,6 +152,8 @@ public class RiskAssInfService {
 				insertConfigData = new RiskAssInfHdr();
 				insertConfigData.setRiskAssInfHdrName(lov2.getValue1());
 				insertConfigData.setBudgetYear(riskAssInfHdr.getBudgetYear());
+				insertConfigData.setActive(riskAssInfHdr.getActive());
+				
 				riskAssInfHdrRepository.save(insertConfigData);	
 			}
 			message = ApplicationCache.getMessage("MSG_00002");
@@ -254,71 +272,76 @@ public class RiskAssInfService {
 		}
 
 	}
-	
-	
-public List<RiskFullDataInt0802Vo> searchFullRiskByBudgetYear(String budgetYear , List<String> riskAssInfHdrNameList) {
-	   
-	Long budgetYearL = Long.parseLong(budgetYear);
-		List<Condition> conditionList = conditionService.findConditionByParentId(budgetYearL,"ALL", "int08-2-5");
-	
-	
-		List<RiskFullDataInt0802Vo> riskFullDataVoList = new ArrayList<RiskFullDataInt0802Vo>();
-		RiskFullDataInt0802Vo riskFullDataVo = new RiskFullDataInt0802Vo();
-		List<Int0802Vo> infNameList = riskAssInfHdrRepository.findInfNameByBudgetYear(budgetYear);
-		int index = 1;
-		for (Int0802Vo infName : infNameList) {
-			riskFullDataVo = new RiskFullDataInt0802Vo();
-			int sumRl = 0;
-			riskFullDataVo.setId(index+"");
-			riskFullDataVo.setInfName(infName.getInfName());
-			List<Int0802Vo> intList = riskAssInfHdrRepository.findData(budgetYear, infName.getInfName());
-			List<String> rl = new ArrayList<String>();
-			String rlDate = "";
-			for (String riskAssInfHdrName : riskAssInfHdrNameList) {
-				rlDate = "";
-				for (Int0802Vo value : intList) {
-					if(value.getInfName().equals(riskAssInfHdrName)) {
-						sumRl += Integer.parseInt(value.getRl());
-						rlDate = value.getRl();
-						break;
+
+	public List<RiskFullDataInt0802Vo> searchFullRiskByBudgetYear(String budgetYear,List<String> riskAssInfHdrNameList) {
+		   
+		Long budgetYearL = Long.parseLong(budgetYear);
+			List<Condition> conditionList = conditionService.findConditionByParentId(budgetYearL,"ALL", "int08-2-5");
+		
+		
+			List<RiskFullDataInt0802Vo> riskFullDataVoList = new ArrayList<RiskFullDataInt0802Vo>();
+			RiskFullDataInt0802Vo riskFullDataVo = new RiskFullDataInt0802Vo();
+			List<Int0802Vo> infNameList = riskAssInfHdrRepository.findInfNameByBudgetYear(budgetYear);
+			int index = 1;
+			for (Int0802Vo infName : infNameList) {
+				riskFullDataVo = new RiskFullDataInt0802Vo();
+				int sumRl = 0;
+				riskFullDataVo.setId(index+"");
+				riskFullDataVo.setInfName(infName.getInfName());
+				List<Int0802Vo> intList = riskAssInfHdrRepository.findData(budgetYear, infName.getInfName());
+				List<String> rl = new ArrayList<String>();
+				String rlDate = "";
+				for (String riskAssInfHdrName : riskAssInfHdrNameList) {
+					rlDate = "";
+					for (Int0802Vo value : intList) {
+						if(value.getInfName().equals(riskAssInfHdrName)) {
+							sumRl += Integer.parseInt(value.getRl());
+							rlDate = value.getRl();
+							break;
+						}
+					}
+					if(BeanUtils.isNotEmpty(rlDate)) {
+						rl.add(rlDate); 
+					}else {
+						rl.add("0");
 					}
 				}
-				if(BeanUtils.isNotEmpty(rlDate)) {
-					rl.add(rlDate); 
-				}else {
-					rl.add("0");
-				}
-			}
-			riskFullDataVo.setRl(rl);
-			riskFullDataVo.setSumRiskCost(sumRl+"");
-			
-			long value =Integer.parseInt(riskFullDataVo.getSumRiskCost());
-			for (Condition condition : conditionList) {
+				riskFullDataVo.setRl(rl);
+				riskFullDataVo.setSumRiskCost(sumRl+"");
 				
-				if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
-					riskFullDataVo.setValueRl(condition.getValueRl());
-					riskFullDataVo.setColor(condition.getColor());
-					riskFullDataVo.setConvertValue(condition.getConvertValue());
-				} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
-					riskFullDataVo.setValueRl(condition.getValueRl());
-					riskFullDataVo.setColor(condition.getColor());
-					riskFullDataVo.setConvertValue(condition.getConvertValue());
-				} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
-					riskFullDataVo.setValueRl(condition.getValueRl());
-					riskFullDataVo.setColor(condition.getColor());
-					riskFullDataVo.setConvertValue(condition.getConvertValue());
+				long value =Integer.parseInt(riskFullDataVo.getSumRiskCost());
+				for (Condition condition : conditionList) {
+					
+					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
+						riskFullDataVo.setValueRl(condition.getValueRl());
+						riskFullDataVo.setColor(condition.getColor());
+						riskFullDataVo.setConvertValue(condition.getConvertValue());
+					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+						riskFullDataVo.setValueRl(condition.getValueRl());
+						riskFullDataVo.setColor(condition.getColor());
+						riskFullDataVo.setConvertValue(condition.getConvertValue());
+					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+						riskFullDataVo.setValueRl(condition.getValueRl());
+						riskFullDataVo.setColor(condition.getColor());
+						riskFullDataVo.setConvertValue(condition.getConvertValue());
+					}
+					
 				}
 				
+				riskFullDataVoList.add(riskFullDataVo);
+				index++;
 			}
-			
-			riskFullDataVoList.add(riskFullDataVo);
-			index++;
+			return riskFullDataVoList;
 		}
-		return riskFullDataVoList;
-	}
+	
 	
 	public List<RiskAssInfHdr> findByBudgetYear(String year){
 		return riskAssInfHdrRepository.findByBudgetYear(year);
+	}
+	
+	
+	public List<RiskAssInfHdr> findByBudgetYearInfHdrActive(String year,String active ){	
+		return riskAssInfHdrRepository.findByBudgetYearActive(year,active); 
 	}
 	
 	public List<RiskAssInfHdr> updatePercent(List<RiskAssInfHdr> riskAssInfHdrs) {
@@ -891,7 +914,7 @@ public List<RiskFullDataInt0802Vo> searchFullRiskByBudgetYear(String budgetYear 
 			
 	}
 
-	public void exportInfFull(String budgetYear, HttpServletResponse response) throws IOException{
+	public void exportInfFull(String budgetYear,String active, HttpServletResponse response) throws IOException{
 		
 		// TODO Auto-generated method stub
 		
@@ -1035,8 +1058,9 @@ public List<RiskFullDataInt0802Vo> searchFullRiskByBudgetYear(String budgetYear 
 		/* Header*/
 		rowNum =9;
 		row = sheet.createRow(rowNum);
-			// set  DynamicTh
-			List<RiskAssInfHdr> resultList = riskAssInfHdrRepository.findByBudgetYear(budgetYear);
+			// set  DynamicTh   
+			/*List<RiskAssInfHdr> resultList = riskAssInfHdrRepository.findByBudgetYear(budgetYear);*/ 
+			List<RiskAssInfHdr> resultList = riskAssInfHdrRepository.findByBudgetYearActive(budgetYear, active);
 			ArrayList<String> thList = new ArrayList<String>();
 			thList.add("ลำดับ");
 			thList.add("ระบบสารสนเทศฯ ของกรมสรรพสามิต");

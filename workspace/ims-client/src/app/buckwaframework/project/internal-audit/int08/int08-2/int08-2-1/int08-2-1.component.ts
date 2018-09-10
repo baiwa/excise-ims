@@ -23,7 +23,7 @@ export class Int0821Component implements OnInit {
   riskAssInfHdrName: any;
   riskInfPaperName: any;
   budgetYear: any;
-
+  active: any;
 
   infRiskList: any[];
   datatable: any;
@@ -74,9 +74,11 @@ export class Int0821Component implements OnInit {
         this.changeYear(date.getFullYear() + 543);
       }
     });
+    this.active ="Y";
+
     this.columnList = [];
     this.percentList = [];
-
+  
     this.openForm1 = false;
     this.openForm2 = false;
     this.openForm3 = false;
@@ -115,7 +117,7 @@ export class Int0821Component implements OnInit {
     } else {
       const URL = "ia/int082/createBudgetYear";
 
-      this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
+      this.ajax.post(URL, { budgetYear: this.budgetYear,active:this.active }, res => {
         this.router.navigate(["/int08/2/2"], {
           queryParams: { budgetYear: this.budgetYear }
         });
@@ -143,7 +145,7 @@ export class Int0821Component implements OnInit {
     if (this.datatable != null || this.datatable != undefined) {
       this.datatable.destroy();
     }
-    const URL = AjaxService.CONTEXT_PATH + "ia/int082/searchRiskInfHdr";
+    const URL = AjaxService.CONTEXT_PATH + "ia/int082/searchRiskInfHdrActive";
     console.log(URL);
     console.log(this.budgetYear);
     this.datatable = $("#dataTable").DataTable({
@@ -157,7 +159,7 @@ export class Int0821Component implements OnInit {
       ajax: {
         type: "POST",
         url: URL,
-        data: { budgetYear: this.budgetYear }
+        data: { budgetYear: this.budgetYear,active:this.active }
       },
       columns: [
 
@@ -427,9 +429,9 @@ export class Int0821Component implements OnInit {
 
   queryColumnNameListAndSetColumn(budgetYear) {
     this.budgetYear = budgetYear;
-
-    var url = "ia/int082/findByBudgetYear";
-    this.ajax.post(url, { budgetYear: this.budgetYear }, res => {
+    this.active ="Y";
+    var url = "ia/int082/findByBudgetYearInfHdrActive";
+    this.ajax.post(url, { budgetYear: this.budgetYear , active: this.active}, res => {
       this.riskAssInfHdrList = res.json();
       console.log("=ช่องที่ 0",this.riskAssInfHdrList[0].budgetYear);
       this.budgetYearFull = this.riskAssInfHdrList[0].budgetYear;

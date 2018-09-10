@@ -180,9 +180,9 @@ export class Int0824Component implements OnInit {
           className: "center"
         },
         { data: "infName" },
-        { data: "riskCost", className: "right" },
-        { data: "rl", className: "center" },
-        { data: "valueTranslation", className: "center" },
+        { data: "riskCost" },
+        { data: "rl" },
+        { data: "valueTranslation"},
         {
           data: "riskAssInfHdrId",
           render: function () {
@@ -190,6 +190,12 @@ export class Int0824Component implements OnInit {
           }
         }
       ],
+      columnDefs: [
+        { targets: [0,3,4,5], className: "center aligned" },
+        { targets: [2], className: "right aligned" },
+        { targets: [1], className: "left aligned" }
+      ],
+
       createdRow: function (row, data, dataIndex) {
         console.log("row");
         console.log("data", data.color);
