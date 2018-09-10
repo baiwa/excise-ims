@@ -97,6 +97,7 @@ export class Int0839Component implements OnInit {
           riskData.rl = element.rl;
           riskData.valueTranslation = element.valueTranslation;
           riskData.isDeleted = 'N';
+          console.log(riskData);
           this.riskDataList.push(riskData);
 
         }
@@ -109,18 +110,14 @@ export class Int0839Component implements OnInit {
 
   onUpload = (event: any) => {
     event.preventDefault();
-
-
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
-
     let url = "ia/int083/excelINT083";
     this.ajax.upload(
       url,
       formBody,
       res => {
         //console.log(res.json());
-
         res.json().forEach(element => {
           element.isDeleted = 'N';
           element.riskOtherDtlId = null;

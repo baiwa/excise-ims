@@ -166,9 +166,27 @@ export class Int0831Component implements OnInit {
         { data: "riskHrdPaperName" },
         { data: "budgetYear" },
 
-        { data: "createdDate" },
+        {
+          render: function (data, type, row, meta) {
+            console.log("data :", row.createdDate)
+            if (row.createdDate != null && row.createdDate != undefined && row.createdDate != '') {
+              var dateTime = new Date(row.createdDate).toLocaleString("th-TH");
+              return dateTime.split(' ')[0];
+            } else {
+              return row.createdDate;
+            }
+          },
+          className: "center"
+        },
         { data: "createdBy" },
-        { data: "active" },
+        {
+          data: "active",
+          render: function (data, type, row, meta) {
+
+            return '<button type="button" class="ui mini button primary chk"><i class="power off icon"></i>' + (data == "Y" ? "เปิด" : "ปิด") + '</button>';
+          }
+        },
+
         {
           data: "riskHdrId",
           render: function () {
