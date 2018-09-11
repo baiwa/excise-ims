@@ -78,6 +78,18 @@ public class Int082Controller {
 
 	}
 	
+	@PostMapping("/searchRisk")
+	@ResponseBody
+	public ResponseDataTable<RiskAssInfHdr> searchRisk(DataTableRequest dataTableRequest ,RiskAssInfHdr riskAssInfHdr ) {
+		logger.info("searchRisk");
+		logger.info("InfHdrName : " + riskAssInfHdr.getRiskAssInfHdrName());
+		logger.info("BuggetYear : " + riskAssInfHdr.getBudgetYear());
+		logger.info("Active : " + riskAssInfHdr.getActive());
+		return riskAssInfService.searchRiskCriteriaForDatatable(riskAssInfHdr, dataTableRequest);
+	
+	}
+	
+	
 	
 	@PostMapping("/searchRiskInfHdr")
 	@ResponseBody

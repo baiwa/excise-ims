@@ -22,9 +22,9 @@
                 <label>ปัจจัยเสี่ยง</label>
               </div>
               <div class="four wide field ">
-                <select class="ui search dropdown">
-                  <option value="0">ปัจจัยเสี่ยงงบประมาณ </option>
-                  <option *ngFor="let risk of riskList; index as i;" value="{{risk.value}}">{{risk.description}}</option>
+                <select class="ui search dropdown ai" id="riskType" name="riskType" [(ngModel)]="riskType">
+                  <option value="0">ปัจจัยเสี่ยงงบประมาณทั้งหมด</option>
+                  <option *ngFor="let risk of riskList; index as i;" value="{{risk.value}}" >{{risk.description}}</option>
                 </select>
               </div>
             </div>
