@@ -21,7 +21,9 @@ public class Int05113Vo {
 	private String stampCheckDate;
 	private String stampChecker;
 	private String stampType;
+	private Long stampTypeId;
 	private String stampBrand;
+	private Long stampBrandId;
 	private BigDecimal numberOfBook;
 	private BigDecimal numberOfStamp;
 	private BigDecimal valueOfStampPrinted;
@@ -35,15 +37,31 @@ public class Int05113Vo {
 	private String fileName;
 	private ExciseFile[] file;
 
-    public ExciseFile[] getFile() {
-        return file;
-    }
+	public Long getStampTypeId() {
+		return stampTypeId;
+	}
 
-    public void setFile(ExciseFile[] file) {
-        this.file = file;
-    }
+	public void setStampTypeId(Long stampTypeId) {
+		this.stampTypeId = stampTypeId;
+	}
 
-    public String getFileName() {
+	public Long getStampBrandId() {
+		return stampBrandId;
+	}
+
+	public void setStampBrandId(Long stampBrandId) {
+		this.stampBrandId = stampBrandId;
+	}
+
+	public ExciseFile[] getFile() {
+		return file;
+	}
+
+	public void setFile(ExciseFile[] file) {
+		this.file = file;
+	}
+
+	public String getFileName() {
 		return fileName;
 	}
 

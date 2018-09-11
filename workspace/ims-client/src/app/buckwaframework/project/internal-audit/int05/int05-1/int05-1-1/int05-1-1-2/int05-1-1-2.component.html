@@ -1,280 +1,92 @@
-<div class="ui grid">
-    <div class="sixteen wide column">
-        <h2 class="ui header">แก้ไขแสตมป์รายปีงบประมาณ</h2>
+<!-- table -->
+    <div class="ui top attached header">
+        <span>สรุปแสตมป์รายปีงบประมาณ</span>
+    </div>
+    <div class="ui attached segment">
+        <table id="dataTable" class="ui small celled table nowrap" style="width: 100%">
+                <thead>
+                        <tr style="text-align: center;">
+                            <th rowspan="2">ลำดับ</th>
+                            <th rowspan="2">ชนิดแสตมป์</th>
+                            <th colspan="2">คงเหลือยกมาจากปีก่อน</th>
+                            <th colspan="2">ตุลาคม</th>
+                            <th colspan="2">พฤศจิกายน</th>
+                            <th colspan="2">ธันวาคม</th>
+                            <th colspan="2">มกราคม</th>
+                            <th colspan="2">กุมภาพันธ์</th>
+                            <th colspan="2">มีนาคม</th>
+                            <th colspan="2">เมษายน</th>
+                            <th colspan="2">พฤษภาคม</th>
+                            <th colspan="2">มิถุนายน</th>
+                            <th colspan="2">กรกฎาคม</th>
+                            <th colspan="2">สิงหาคม</th>
+                            <th colspan="2">กันยายน</th>
+                            <th colspan="4">รวมรับ-จ่ายปีนี้ (ต.ค. - ก.ย.)</th>
+                            <th colspan="4">รวมทั้งปีงบประมาณ</th>
+                            <th colspan="2">คงเหลือ ณ ปัจจุบัน </th>
+                            <th rowspan="2">หมายเหตุ</th>
+                            
+                        </tr>
+                        <tr>
+                            <th>จำนวนแสตมป์ (ดวง)</th>
+                            <th>ค่าพิมพ์แสตมป์(บาท)</th>
+                            
+                            <th>รับ (ดวง)</th>
+                            <th>จ่าย (ดวง)</th>
+                            
+                            <th>รับ (ดวง)</th>
+                            <th>จ่าย (ดวง)</th>
+                            
+                            <th>รับ (ดวง)</th>
+                            <th>จ่าย (ดวง)</th>
+                            
+                            <th>รับ (ดวง)</th>
+                            <th>จ่าย (ดวง)</th>
+                            
+                            <th>รับ (ดวง)</th>
+                            <th>จ่าย (ดวง)</th>
+                            
+                            <th>รับ (ดวง)</th>
+                            <th>จ่าย (ดวง)</th>
+                            
+                            <th>รับ (ดวง)</th>
+                            <th>จ่าย (ดวง)</th>
+                            
+                            <th>รับ (ดวง)</th>
+                            <th>จ่าย (ดวง)</th>
+                            
+                            <th>รับ (ดวง)</th>
+                            <th>จ่าย (ดวง)</th>
+                            
+                            <th>รับ (ดวง)</th>
+                            <th>จ่าย (ดวง)</th>
+                            
+                            <th>รับ (ดวง)</th>
+                            <th>จ่าย (ดวง)</th>
 
-        <div class="ui top attached header">
-            <span>ตรวจสอบแสตมป์รายปีงบประมาณ</span>
+                            <th>รับ (ดวง)</th>
+                            <th>จ่าย (ดวง)</th>
+                            
+                                                
+                            <th>รับ (ดวง)</th>
+                            <th>ค่าพิมพ์แสตมป์ (บาท)</th>
+                            <th>จ่าย (ดวง)</th>
+                            <th>ค่าพิมพ์แสตมป์ (บาท)</th>
+                            
+                            <th>รับ (ดวง)</th>
+                            <th>ค่าพิมพ์แสตมป์ (บาท)</th>
+                            <th>จ่าย (ดวง)</th>
+                            <th>ค่าพิมพ์แสตมป์ (บาท)</th>
+                            
+                            <th>จำนวนแสตมป์ (ดวง)</th>
+                            <th>ค่าพิมพ์แสตมป์ (บาท)</th>
+                        </tr>
+                    </thead>
+        </table>
+        <br>
+        <div class="ui centered grid">
+            <button class="ui mini gray button" type="button"  routerLink="/int05/1">กลับ</button>
+            <button class="ui mini blue button" type="button">Export</button>
         </div>
-
-        <div class="ui attached segment">
-            <div class="ui form">
-                <div class="inline fields">
-                    <div class="three wide field">
-                        <label class="">รหัส</label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="">
-                    </div>
-
-                    <div class="two wide field">
-                        <label class="">ตุลาคม รับ (ดวง) </label>
-
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="">
-                    </div>
-                    <div class="two wide field">
-                        <label class="custom-label-w-15">รวมรับ-จ่ายปีนี้
-              <br>(ต.ค. - ก.ย.) รับ (ดวง)
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="1">
-                    </div>
-                </div>
-
-
-                <div class="inline fields">
-                    <div class="three wide field">
-                    </div>
-                    <div class="three wide  field">
-                    </div>
-                    <div class="two wide field">
-                        <label class="">ตุลาคม จ่าย (ดวง)
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="">
-                    </div>
-                    <div class="two wide field">
-                        <label class="custom-label-w-15">ค่าพิมพ์แสตมป์ (บาท)
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="10000">
-                    </div>
-                </div>
-
-
-                <div class="inline fields">
-                    <div class="three wide field">
-                        <label> ชนิดแสตมป์/ขนาดบรรจุ
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="สาขาแจ้งห่ม">
-                    </div>
-
-                    <div class="two wide field">
-                    </div>
-                    <div class="three wide  field">
-                    </div>
-                    <div class="two wide field">
-                        <label class="custom-label-w-15">จ่าย (ดวง)
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="3.75">
-                    </div>
-                </div>
-
-
-
-                <div class="inline fields">
-                    <div class="three wide field">
-
-                    </div>
-                    <div class="three wide  field">
-                    </div>
-
-                    <div class="two wide field">
-                        <label class="">พฤศจิกายน รับ (ดวง)
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="3.11">
-                    </div>
-                    <div class="two wide field">
-                        <label class="custom-label-w-15">ค่าพิมพ์แสตมป์ (บาท)
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="37500">
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="four wide field">
-                        <label class=""> คงเหลือยกมาจากปีก่อน จำนวนแสตมป์ (ดวง)
-            </label>
-                    </div>
-                    <div class="two wide  field">
-                        <input type="text" placeholder="" value="">
-                    </div>
-
-                    <div class="two wide field">
-                        <label class="">พฤศจิกายน จ่าย (ดวง) </label>
-
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="">
-                    </div>
-                    <div class="two wide field">
-                    </div>
-                    <div class="three wide  field">
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="three wide field">
-                    </div>
-                    <div class="three wide  field">
-                    </div>
-
-                    <div class="two wide field">
-                    </div>
-                    <div class="three wide  field">
-                    </div>
-                    <div class="two wide field">
-                        <label class="custom-label-w-15">รวมทั้งปีงบประมาณ รับ (ดวง)
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="">
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="four wide field">
-                        <label class="">ค่าพิมพ์แสตมป์ (บาท)
-            </label>
-                    </div>
-                    <div class="two wide  field">
-                        <input type="text" placeholder="" value="">
-                    </div>
-
-                    <div class="two wide field">
-                        <label class="">ธันวาคม รับ (ดวง)
-            </label>
-
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="">
-                    </div>
-                    <div class="two wide field">
-                        <label class="custom-label-w-15">ค่าพิมพ์แสตมป์ (บาท)
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="">
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="three wide field">
-                    </div>
-                    <div class="three wide  field">
-                    </div>
-
-                    <div class="two wide field">
-                        <label class="">ธันวาคม จ่าย (ดวง) </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="30000">
-                    </div>
-                    <div class="two wide field">
-                        <label class="custom-label-w-15">จ่าย (ดวง)
-            </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="">
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="three wide field">
-                    </div>
-                    <div class="three wide  field">
-                    </div>
-
-                    <div class="two wide field">
-
-                    </div>
-                    <div class="three wide  field">
-
-                    </div>
-                    <div class="two wide field">
-                        <label class="">ค่าพิมพ์แสตมป์ (บาท) </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="">
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="three wide field">
-                    </div>
-                    <div class="three wide  field">
-                    </div>
-
-                    <div class="two wide field">
-                        <label class="">มกราคม รับ (ดวง) </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="">
-                    </div>
-                    <div class="two wide field">
-                    </div>
-                    <div class="three wide  field">
-                    </div>
-                </div>
-                <div class="inline fields">
-                    <div class="three wide field">
-                    </div>
-                    <div class="three wide  field">
-                    </div>
-
-                    <div class="two wide field">
-                        <label class="">มกราคม จ่าย (ดวง)  </label>
-
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="">
-                    </div>
-                    <div class="two wide field">
-                        <label class="custom-label-w-15">คงเหลือ ณ ปัจจุบัน จำนวนแสตมป์(ดวง)</label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="1">
-                    </div>
-                </div>
-                <div class="inline fields">
-                    <div class="three wide field">
-                        <label>หมายเหตุ</label>
-                    </div>
-                    <div class="eight wide field">
-                        <textarea style="resize: none;"></textarea>
-                    </div>
-                    <div class="two wide field">
-                        <label class="custom-label-w-15">ค่าพิมพ์แสตมป์ (บาท)</label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" placeholder="" value="1">
-                    </div>
-                </div>
-
-            </div>
-            <br>
-
-            <div class="ui center aligned grid">
-                <div class="sixteen wide column">
-                    <button class="ui mini primary button ">
-              บันทึก
-            </button>
-                    <button class="ui mini primary button">
-              ยกเลิก
-            </button>
-                </div>
-            </div>
-        </div>
+        <br>
     </div>

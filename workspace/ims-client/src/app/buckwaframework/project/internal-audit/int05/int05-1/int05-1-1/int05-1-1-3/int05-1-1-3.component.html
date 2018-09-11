@@ -278,7 +278,7 @@
           <th colspan="2">หนังสือขอเบิกแสตมป์</th>
           <th colspan="2">หนังสือส่งแสตมป์</th>
           <th rowspan="2">เลขที่ใบ 5 ตอน</th>
-          <th rowspan="2">ลงวันวันที่</th>
+          <th rowspan="2">วันที่ใบ 5 ตอน</th>
           <th rowspan="2">วันที่ตรวจนับ</th>
           <th rowspan="2">ผู้ตรวจนับ</th>
           <th rowspan="2">ชนิดแสตมป์/ขนาดบรรจุ</th>
@@ -288,8 +288,7 @@
           <th rowspan="2">รวมค่าพิมพ์ (บาท)</th>
           <th rowspan="2">เลขที่ประจำเล่มแสตมป์</th>
           <th rowspan="2">หมายเหตุ</th>
-          <th rowspan="2">Action</th>
-  
+          <th rowspan="2">Action</th>  
         </tr>
         <tr>
           <th>เลขที่หนังสือ</th>
@@ -301,6 +300,7 @@
       </thead>
     </table><br>
     <div class="ui centered grid">
-      <button class="ui mini blue button" type="button" (click)="onSave()">บันทึก</button>
+        <button class="ui mini gray button" type="button" routerLink="/int05/1"><i class="reply icon"></i>กลับ</button>
+        <button class="ui mini blue button" type="button" (click)="onSave()"><i class="save icon"></i>บันทึก</button>
     </div><br>
   </div>

@@ -77,6 +77,9 @@ public class IaStampDetail extends BaseEntity {
 	@Column(name = "STAMP_BRAND")
 	private String stampBrand;
 
+	@Column(name = "STAMP_BRAND_ID")
+	private Long stampBrandId;
+
 	@Column(name = "STAMP_CHECK_DATE")
 	private Date stampCheckDate;
 
@@ -91,6 +94,9 @@ public class IaStampDetail extends BaseEntity {
 
 	@Column(name = "STAMP_TYPE")
 	private String stampType;
+
+	@Column(name = "STAMP_TYPE_ID")
+	private Long stampTypeId;
 
 	@Column(name = "STATUS")
 	private String status;
@@ -243,6 +249,14 @@ public class IaStampDetail extends BaseEntity {
 		this.stampBrand = stampBrand;
 	}
 
+	public Long getStampBrandId() {
+		return stampBrandId;
+	}
+
+	public void setStampBrandId(Long stampBrandId) {
+		this.stampBrandId = stampBrandId;
+	}
+
 	public Date getStampCheckDate() {
 		return stampCheckDate;
 	}
@@ -281,6 +295,14 @@ public class IaStampDetail extends BaseEntity {
 
 	public void setStampType(String stampType) {
 		this.stampType = stampType;
+	}
+
+	public Long getStampTypeId() {
+		return stampTypeId;
+	}
+
+	public void setStampTypeId(Long stampTypeId) {
+		this.stampTypeId = stampTypeId;
 	}
 
 	public String getStatus() {

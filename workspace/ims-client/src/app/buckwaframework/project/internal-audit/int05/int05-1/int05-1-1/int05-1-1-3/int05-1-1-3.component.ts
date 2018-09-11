@@ -203,11 +203,16 @@ export class Int05113Component implements OnInit {
       }
       console.log(this.formModal);
       this.formModal.idRandom = this.randomNumber++;
+
+      this.formModal.stampTypeId = this.formModal.stampType;
       this.formModal.stampType = ($("#stampType option:selected").text()=="กรุณาเลือก" ? "":$("#stampType option:selected").text());
+      this.formModal.stampBrandId = this.formModal.stampBrand
       this.formModal.stampBrand = ($("#stampBrand option:selected").text()=="กรุณาเลือก" ? "":$("#stampBrand option:selected").text())
       this.formModal.file = this.file;
+      
       this.data.push(this.formModal);
     }
+    console.log(this.data);
     this.table.clear().draw();
     this.table.rows.add(this.data); // Add new data
     this.table.columns.adjust().draw(); // Redraw the DataTable
@@ -351,19 +356,27 @@ export class Int05113Component implements OnInit {
         this.formModal.numberOfStamp = data.numberOfStamp;
         this.formModal.serialNumber = data.serialNumber;
         this.formModal.stampBrand = data.stampBrand;
+        this.formModal.stampBrandId = data.stampBrandId;
         this.formModal.stampCheckDate = data.stampCheckDate;
         this.formModal.stampChecker = data.stampChecker;
         this.formModal.stampCodeEnd = data.stampCodeEnd;
         this.formModal.stampCodeStart = data.stampCodeStart;
         this.formModal.stampType = data.stampType;
+        this.formModal.stampTypeId = data.stampTypeId;        
         this.formModal.status = data.status;
         this.formModal.sumOfValue = data.sumOfValue;
         this.formModal.taxStamp = data.taxStamp;
         this.formModal.valueOfStampPrinted = data.valueOfStampPrinted;
         this.formModal.workSheetDetailId = data.workSheetDetailId;
         this.formModal.fileName = data.fileName;
+        $("#status").dropdown('set selected',this.formModal.status);
+        $("#stampType").dropdown('set selected',this.formModal.stampTypeId);
+        setTimeout(() => {
+          $("#stampBrand").dropdown('set selected',this.formModal.stampBrandId);
+        }, 50);       
         $("#edit").val("edit");
         $("#idEdit").val(data.idRandom);
+
       }, 50);
 
     });
@@ -373,9 +386,44 @@ export class Int05113Component implements OnInit {
       this.message.comfirm((res) => {
         if (res) {
           let index = this.data.findIndex(obj => obj.idRandom == data.idRandom);
-
+          
           this.data.splice(index, 1);
 
+          setTimeout(() => {
+            this.formModal.dateOfPay = "";
+            this.formModal.bookNumberDeliverStamp ="";
+            this.formModal.bookNumberWithdrawStamp = "";
+            this.formModal.createdDate = "";
+            this.formModal.dateDeliverStamp = "";
+            this.formModal.dateWithdrawStamp = "";
+            this.formModal.departmentName = "";
+            this.formModal.exciseDepartment = "";
+            this.formModal.exciseDistrict = "";
+            this.formModal.exciseRegion = "";
+            this.formModal.fivePartDate = "";
+            this.formModal.fivePartNumber = "";
+            this.formModal.note = "";
+            this.formModal.numberOfBook = "";
+            this.formModal.numberOfStamp = "";
+            this.formModal.serialNumber = "";
+            this.formModal.stampBrand = "";
+            this.formModal.stampBrandId = "";
+            this.formModal.stampCheckDate = "";
+            this.formModal.stampChecker = "";
+            this.formModal.stampCodeEnd = "";
+            this.formModal.stampCodeStart = "";
+            this.formModal.stampType = "";
+            this.formModal.stampTypeId = "";
+            this.formModal.status = "";
+            this.formModal.sumOfValue = "";
+            this.formModal.taxStamp = "";
+            this.formModal.valueOfStampPrinted = "";
+            this.formModal.workSheetDetailId = "";
+            $("#stampType").dropdown('restore defaults');
+            $("#stampBrand").dropdown('restore defaults');
+            $("#status").dropdown('restore defaults');
+          }, 40);
+          
           this.table.clear().draw();
           this.table.rows.add(this.data); // Add new data
           this.table.columns.adjust().draw(); // Redraw the DataTable
@@ -404,6 +452,8 @@ class FormModal {
   stampChecker: string = null;
   stampType: string = null;
   stampBrand: string = null;
+  stampTypeId: string = null;
+  stampBrandId:string = null;
   numberOfBook: string = null;
   numberOfStamp: string = null;
   valueOfStampPrinted: string = null;

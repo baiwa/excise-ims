@@ -26,20 +26,18 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 public class DateConstant {
 
 	private static Logger logger = LoggerFactory.getLogger(DateConstant.class);
-	
+
 	public static final Locale LOCAL_TH = new Locale("th", "TH");
-    public static final Locale LOCAL_EN = new Locale("en", "US");
+	public static final Locale LOCAL_EN = new Locale("en", "US");
 //	public static final String[] MONTH_SHOT_NAMES = { "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.","ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค." };
 //	public static final String[] MONTH_NAMES = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
 	public static final String YYYYMMDD = "yyyyMMdd";
 	public static final String MM_YYYY = "MM/yyyy";
-	
+
 	public final static String DD_MM_YYYY = "dd/MM/yyyy";
 	public final static String DD_MM_YYYY_HH_mm = "dd/MM/yyyy HH:mm";
 	public final static String YYYY = "yyyy";
-	
-	
-	
+
 	public static List<String> startBackDate(Date date, int backDate) {
 		List<String> monthList = new ArrayList<>();
 		Calendar calendar = Calendar.getInstance(LOCAL_TH);
@@ -52,17 +50,17 @@ public class DateConstant {
 		}
 		return monthList;
 	}
-	
-	public static List<String> sortMonthShotList(List<String> monthNameList){
+
+	public static List<String> sortMonthShotList(List<String> monthNameList) {
 		List<Integer> data = new ArrayList<Integer>();
 		Map<Integer, String> mapping = new HashMap<Integer, String>();
 		for (String month : monthNameList) {
 			String[] split = month.split(" ");
-			String monthNumber = (Arrays.asList(monthShotName()).indexOf(split[0])+1)+"";
-			if(monthNumber.length() == 1) {
-				monthNumber = "0"+monthNumber;
+			String monthNumber = (Arrays.asList(monthShotName()).indexOf(split[0]) + 1) + "";
+			if (monthNumber.length() == 1) {
+				monthNumber = "0" + monthNumber;
 			}
-			Integer dataSet = Integer.parseInt("25"+split[1]+monthNumber);
+			Integer dataSet = Integer.parseInt("25" + split[1] + monthNumber);
 			data.add(dataSet);
 			mapping.put(dataSet, month);
 		}
@@ -70,12 +68,11 @@ public class DateConstant {
 		Collections.sort(data);
 		for (Integer integer : data) {
 			monthListReturn.add(mapping.get(integer));
-			//System.out.println(mapping.get(integer));
+			// System.out.println(mapping.get(integer));
 		}
 		return monthListReturn;
 	}
-	
-	
+
 	public static String[] monthShotName() {
 		List<String> valueList = new ArrayList<String>();
 		List<Lov> lovList = ApplicationCache.getListOfValueByValueType("MONTH_SHOT_NAMES");
@@ -84,16 +81,16 @@ public class DateConstant {
 		}
 		return valueList.toArray(new String[0]);
 	}
+
 	public static String[] monthName() {
 		List<String> valueList = new ArrayList<String>();
 		List<Lov> lovList = ApplicationCache.getListOfValueByValueType("MONTH_NAMES");
 		for (Lov lov : lovList) {
 			valueList.add(lov.getValue1());
 		}
-		
+
 		return valueList.toArray(new String[0]);
 	}
-	
 
 	public static String checkYearThai(Date date) {
 		String pattern = "yyyy";
@@ -101,9 +98,9 @@ public class DateConstant {
 		return format.format(date).substring(2);
 
 	}
-	
+
 	public static Date StringtoDate(String txt, String pattern) {
-		
+
 		try {
 			return StringtoDate(txt, pattern, LOCAL_TH);
 		} catch (ParseException e) {
@@ -112,36 +109,33 @@ public class DateConstant {
 		}
 		return null;
 	}
-	
+
 	public static String DateToString(Date date, String pattern) {
 		return DateToString(date, pattern, LOCAL_TH);
 	}
 
-	
 	public static Date StringtoDate(String txt, String pattern, Locale locale) throws ParseException {
 		final SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
 		return dateFormat.parse(txt);
 	}
 
-	
-	
 	public static String DateToString(Date date, String pattern, Locale locale) {
 		SimpleDateFormat format = new SimpleDateFormat(pattern, locale);
 		return format.format(date);
 	}
-	
+
 	public static String convertDateToStrDDMMYYYY(Date date) {
 		String dateString = "";
 		try {
 			if (date != null) {
-				dateString = DateFormatUtils.format(date, DD_MM_YYYY,LOCAL_TH);
+				dateString = DateFormatUtils.format(date, DD_MM_YYYY, LOCAL_TH);
 			}
 		} catch (Exception e) {
 			logger.error("Error convertDateToStrDDMMYYYY : ", e);
 		}
 		return dateString;
 	}
-	
+
 	public static Date convertStrDDMMYYYYToDate(String ddMMyyyy) {
 		Date dateString = null;
 		try {
@@ -153,7 +147,7 @@ public class DateConstant {
 		}
 		return dateString;
 	}
-	
+
 	public static Date convertStrYYYYToDate(String yyyy) {
 		Date date = null;
 		try {
@@ -165,13 +159,12 @@ public class DateConstant {
 		}
 		return date;
 	}
-	
 
 	public static String convertDateToStrDDMMYYYYHHmm(Date date) {
 		String dateString = "";
 		try {
 			if (date != null) {
-				dateString = DateFormatUtils.format(date,DD_MM_YYYY_HH_mm,LOCAL_TH);
+				dateString = DateFormatUtils.format(date, DD_MM_YYYY_HH_mm, LOCAL_TH);
 			}
 		} catch (Exception e) {
 			logger.error("Error convertDateToStrDDMMYYYY : ", e);
@@ -179,18 +172,43 @@ public class DateConstant {
 		return dateString;
 	}
 
-	public static String convertStrDDMMYYYYToStrYYYYMMDD(String ddmmyyyy){
-        String dateString = "";
-        try {
-            if (StringUtils.isNotBlank(ddmmyyyy)) {
-                Date date = DateUtils.parseDate(StringUtils.trim(ddmmyyyy),LOCAL_TH,DD_MM_YYYY);
-                dateString = DateFormatUtils.format(date,YYYYMMDD,LOCAL_EN);
-            }
-        }catch (Exception e){
-            logger.error("Error convertStrDDMMYYYYToStrYYYYMMDD : ", e);
-            e.printStackTrace();
-        }
-        return dateString;
-    }
+	public static String convertStrDDMMYYYYToStrYYYYMMDD(String ddmmyyyy) {
+		String dateString = "";
+		try {
+			if (StringUtils.isNotBlank(ddmmyyyy)) {
+				Date date = DateUtils.parseDate(StringUtils.trim(ddmmyyyy), LOCAL_TH, DD_MM_YYYY);
+				dateString = DateFormatUtils.format(date, YYYYMMDD, LOCAL_EN);
+			}
+		} catch (Exception e) {
+			logger.error("Error convertStrDDMMYYYYToStrYYYYMMDD : ", e);
+			e.printStackTrace();
+		}
+		return dateString;
+	}
+
+	public static String convertDateToStr(Date date, String pattern) {
+		String dateString = "";
+		try {
+			if (date != null) {
+				dateString = DateFormatUtils.format(date, pattern, LOCAL_TH);
+			}
+		} catch (Exception e) {
+			logger.error("Error convertDateToStr : ", e);
+		}
+		return dateString;
+	}
+
+	public static Date convertStrToDate(String strDate, String patern) {
+		Date date = null;
+		try {
+			if (StringUtils.isNotBlank(strDate)) {
+				date = DateUtils.parseDate(StringUtils.trim(strDate), LOCAL_TH, patern);
+			}
+		} catch (Exception e) {
+			logger.error("Error convertStrToDate : ", e);
+			e.printStackTrace();
+		}
+		return date;
+	}
 
 }
