@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import baiwa.co.th.ws.Response;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.IaStamGenre;
 import th.co.baiwa.excise.ia.persistence.entity.IaStamType;
@@ -29,6 +31,7 @@ import th.co.baiwa.excise.ia.persistence.repository.IaStampFileRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int05113Vo;
 import th.co.baiwa.excise.ta.controller.ExciseDetailController;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseFile;
+import th.co.baiwa.excise.ws.WebServiceExciseService;
 
 @Service
 public class Int05113Service {
@@ -47,6 +50,9 @@ public class Int05113Service {
 	@Autowired
 	private IaStampFileRepository iaStampFileRepository;
 
+	@Autowired
+	 private WebServiceExciseService webServiceExciseService;
+	
     @Value("${app.datasource.path.upload}")
     private String pathed;
 
@@ -54,9 +60,14 @@ public class Int05113Service {
 	public void save(List<Int05113Vo> formVos) {
         for (Int05113Vo form:formVos) {           
         	
+        	/*upload file*/
         	uploadFile("FileUpload",form.getFile());
             IaStampDetail entity = new IaStampDetail();
-
+            
+            /*get sector*/
+            Response response = webServiceExciseService.webServiceLdap(UserLoginUtils.getCurrentUsername(), "password");
+            entity.setExciseRegion(response.getOffice());
+            
             /* set sector area and branch*/
             entity.setDateOfPay(DateConstant.convertStrDD_MM_YYYYToDate(form.getDateOfPay()));            
             entity.setStatus(form.getStatus());
@@ -136,15 +147,6 @@ public class Int05113Service {
     		
             try (OutputStream stream = new FileOutputStream(path)) {
     		    stream.write(data);
-//    		    ExciseFileUpload excise = new ExciseFileUpload();
-//        		excise.setExciseId(exciseId);
-//        		excise.setUploadPath(path);
-//        		excise.setCreatedBy(UserLoginUtils.getCurrentUsername());
-//        		excise.setUpdatedBy(UserLoginUtils.getCurrentUsername());
-//        		excise.setCreatedDate(in);
-//        		excise.setUpdatedDate(in);
-//        		exciseFileUploadDao.insertExciseFileUpload(excise); // insert to database
-//        		planWorksheetHeaderDao.updatePlanWorksheetHeaderFlag("E", analysNum, exciseId);
         		logger.info("Created file: " + path);
     		} catch (Exception e) {
     			e.printStackTrace();

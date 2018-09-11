@@ -25,6 +25,7 @@ export class Int05113Component implements OnInit {
   listButton : any;
   numberButton : number;
   file :File[];
+  loading : boolean;
   constructor(
     private message: MessageBarService,
     private ajax: AjaxService,    
@@ -36,6 +37,7 @@ export class Int05113Component implements OnInit {
     this.file = new Array<File>();
     this.listButton = [];
     this.numberButton=1;
+    this.loading = false;
   }
 
   ngOnInit() {
@@ -78,26 +80,7 @@ export class Int05113Component implements OnInit {
         this.stampGenre = res.json();
       })
     }   
-  }
-  onUpload=(event)=>{
-
-    if (event.target.files && event.target.files[0]) {
-      let reader = new FileReader();
-
-      reader.onload = (e: any) => {
-        const { name, type } = event.target.files[0];
-        const f = {
-          name: name,
-          type: type,
-          value: e.target.result
-        };
-        
-        this.file.push(f);
-        console.log(this.file);
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  }
+  }  
   calenda = () => {
     $("#dateF").calendar({
       maxDate: new Date(),
@@ -158,6 +141,31 @@ export class Int05113Component implements OnInit {
     let index = this.listButton.findIndex(obj => obj == e);      
     this.listButton.splice(index, 1);
   }
+  onAddFile=()=>{
+    this.listButton.forEach(element => {
+      var fileName = "#fileName"+element;
+      var file = $(fileName)[0].files[0];
+      this.onUpload(file);
+    });
+  }
+  onUpload=(event)=>{    
+    if (event) {
+      let reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        const { name, type } = event;
+        const f = {
+          name: name,
+          type: type,
+          value: e.target.result
+        };
+        
+        this.file.push(f);
+        console.log(this.file);
+      };
+      reader.readAsDataURL(event);
+    }
+  }
 
   onAdd = () => {
     if(this.checkBlank($("#dateOfPay").val())){
@@ -206,6 +214,8 @@ export class Int05113Component implements OnInit {
     this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
     this.formModal = new FormModal();
     this.restoreDropdown();
+    this.onAddFile();
+    this.listButton = [];
   }
 
   onSave = () => {
@@ -217,14 +227,21 @@ export class Int05113Component implements OnInit {
 
     this.message.comfirm((res) => {
       if (res) {
+        this.loading =true;
         let url = 'ia/int05113/save';    
         this.ajax.post(url, JSON.stringify(this.data),
           res => {
             this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
             this.data = [];
+            this.table.clear().draw();
+            this.table.rows.add(this.data); // Add new data
+            this.table.columns.adjust().draw(); // Redraw the DataTable
+            this.loading =false;
           }, error => {
             this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
+            this.loading =false;
           });
+         
       }
     }, "", "ยืนยันการทำรายการ");
   }
