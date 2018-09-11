@@ -25,9 +25,9 @@ public class QtnReportHeaderRepositoryImpl implements QtnReportHeaderRepositoryC
 	@Override
 	public List<QtnReportHeaderVo> findJoinFinal(Long masterId) {
 		List<Object> param = new ArrayList<Object>();
-		String SQL = " select rp.*, fn.QTN_CONCLUSION CONCLUSION, fn.QTN_FINAL_REP_HDR_ID HEADER_ID, fn.QTN_FINISHED FINISHED from IA_QTN_REPORT_HEADER rp left join IA_QTN_FINAL_REP_HEADER fn on rp.QTN_REPORT_HDR_ID = fn.QTN_REPORT_HDR_ID where 1=1 ";
+		String SQL = " select rp.*, fn.QTN_FINAL_REP_HDR_ID HEADER_ID from IA_QTN_REPORT_HEADER rp left join IA_QTN_FINAL_REP_HEADER fn on rp.QTN_REPORT_HDR_ID = fn.QTN_REPORT_HDR_ID where 1=1 ";
 		StringBuilder sql = new StringBuilder(SQL);
-		sql.append(" and rp.IS_DELETED = '" + FLAG.N_FLAG + "' ");
+		sql.append(" and rp.IS_DELETED = '" + FLAG.N_FLAG + "' and fn.QTN_FINISHED = '" + FLAG.Y_FLAG + "' ");
 		if (BeanUtils.isNotEmpty(masterId)) {
 			sql.append(" and rp.QTN_MASTER_ID = ? ");
 			logger.info("MasterID: {}", masterId);
@@ -35,7 +35,7 @@ public class QtnReportHeaderRepositoryImpl implements QtnReportHeaderRepositoryC
 		}
 		sql.append(" order by rp.QTN_REPORT_HDR_ID ASC ");
 		List<QtnReportHeaderVo> header = jdbcTemplate.query(sql.toString(),
-				param.toArray(), row);
+				param.toArray(), _row);
 		return header;
 	}
 	
@@ -76,6 +76,25 @@ public class QtnReportHeaderRepositoryImpl implements QtnReportHeaderRepositoryC
 			header.setConclusion(rs.getString("CONCLUSION"));
 			header.setHeaderId(rs.getLong("HEADER_ID"));
 			header.setQtnFinished(rs.getString("FINISHED"));
+			return header;
+		}
+		
+	};
+	
+	private RowMapper<QtnReportHeaderVo> _row = new RowMapper<QtnReportHeaderVo>() {
+
+		@Override
+		public QtnReportHeaderVo mapRow(ResultSet rs, int arg1) throws SQLException {
+			QtnReportHeaderVo header = new QtnReportHeaderVo();
+			header.setQtnReportHdrId(rs.getLong("QTN_REPORT_HDR_ID"));
+			header.setQtnReportHdrName(rs.getString("QTN_REPORT_HDR_NAME"));
+			header.setQtnMasterId(rs.getLong("QTN_MASTER_ID"));
+			header.setCreator(rs.getString("CREATOR"));
+			header.setCreatedBy(rs.getString("CREATED_BY"));
+			header.setUpdatedBy(rs.getString("UPDATED_BY"));
+			header.setCreatedDate(rs.getDate("CREATED_DATE"));
+			header.setUpdatedDate(rs.getDate("UPDATED_DATE"));
+			header.setHeaderId(rs.getLong("HEADER_ID"));
 			return header;
 		}
 		

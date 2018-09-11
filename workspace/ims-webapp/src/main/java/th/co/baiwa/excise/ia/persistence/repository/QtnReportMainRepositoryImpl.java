@@ -19,6 +19,22 @@ public class QtnReportMainRepositoryImpl implements QtnReportMainRepositoryCusto
 	private JdbcTemplate jdbcTemplate;
 	
 	@Override
+	public List<QtnReportMainVo> findJoinFinal(Long qtnReportHdrId) {
+		List<Object> param = new ArrayList<Object>();
+		String SQL = " select rp.*, fn.QTN_POINT POINT, fn.QTN_FINAL_REP_MAN_ID MAIN_ID from IA_QTN_REPORT_MAIN rp left join IA_QTN_FINAL_REP_MAIN fn on rp.QTN_REPORT_MAN_ID = fn.QTN_REPORT_MAN_ID where 1=1 ";
+		StringBuilder sql = new StringBuilder(SQL);
+		sql.append(" and rp.IS_DELETED = '" + FLAG.N_FLAG + "' ");
+		if (BeanUtils.isNotEmpty(qtnReportHdrId)) {
+			sql.append(" and rp.QTN_REPORT_HDR_ID = ? ");
+			param.add(qtnReportHdrId);
+		}
+		sql.append(" order by rp.QTN_REPORT_MAN_ID ASC ");
+		List<QtnReportMainVo> main = jdbcTemplate.query(sql.toString(),
+				param.toArray(), row);
+		return main;
+	}
+	
+	@Override
 	public List<QtnReportMainVo> findJoinFinal(Long qtnReportHdrId, String qtnCreator) {
 		List<Object> param = new ArrayList<Object>();
 		String SQL = " select rp.*, fn.QTN_POINT POINT, fn.QTN_FINAL_REP_MAN_ID MAIN_ID from IA_QTN_REPORT_MAIN rp left join IA_QTN_FINAL_REP_MAIN fn on rp.QTN_REPORT_MAN_ID = fn.QTN_REPORT_MAN_ID where 1=1 ";

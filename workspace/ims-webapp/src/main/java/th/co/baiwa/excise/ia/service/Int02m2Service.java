@@ -19,7 +19,9 @@ import th.co.baiwa.excise.ia.persistence.entity.QtnFinalRepMain;
 import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
 import th.co.baiwa.excise.ia.persistence.repository.QtnFinalRepDetailRepository;
 import th.co.baiwa.excise.ia.persistence.repository.QtnFinalRepHeaderRepository;
+import th.co.baiwa.excise.ia.persistence.repository.QtnFinalRepHeaderRepositoryImpl;
 import th.co.baiwa.excise.ia.persistence.repository.QtnFinalRepMainRepository;
+import th.co.baiwa.excise.ia.persistence.repository.QtnFinalRepMainRepositoryImpl;
 import th.co.baiwa.excise.ia.persistence.repository.QtnMasterRepository;
 import th.co.baiwa.excise.ia.persistence.repository.QtnMasterRepositoryImpl;
 import th.co.baiwa.excise.ia.persistence.repository.QtnReportDetailRepositoryImpl;
@@ -32,6 +34,7 @@ import th.co.baiwa.excise.ia.persistence.vo.Int02m4VoDetail;
 import th.co.baiwa.excise.ia.persistence.vo.QtnReportDetailVo;
 import th.co.baiwa.excise.ia.persistence.vo.QtnReportHeaderVo;
 import th.co.baiwa.excise.ia.persistence.vo.QtnReportMainVo;
+import th.co.baiwa.excise.ia.persistence.vo.QtnScore;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 
@@ -64,6 +67,9 @@ public class Int02m2Service {
 
 	@Autowired
 	private QtnFinalRepHeaderRepository qtnFinalRepHdrRepo; // Questionnaire Final Report Header
+
+	@Autowired
+	private QtnFinalRepHeaderRepositoryImpl qtnFinalRepHdrRepoImpl; // Questionnaire Final Report Header Implement
 
 	@Autowired
 	private QtnFinalRepMainRepository qtnFinalRepManRepo; // Questionnaire Final Report Main
@@ -264,18 +270,40 @@ public class Int02m2Service {
 	public List<Int02m4Vo> findResult(String year) {
 		logger.info("Year: {}", year);
 		List<Int02m4Vo> result = new ArrayList<>();
-		Int02m4Vo main = new Int02m4Vo(); 
-		List<Int02m4VoDetail> details = new ArrayList<>();
-		Int02m4VoDetail detail = new Int02m4VoDetail();
+		Int02m4Vo main = new Int02m4Vo();
 		List<QtnMaster> masters = qtnMasterRepo.findByYear(year);
-		for(QtnMaster m: masters) {
+		for (QtnMaster m : masters) {
 			logger.info("MASTER_ID: {} , NAME: {}", m.getQtnMasterId(), m.getQtnName());
 			main = new Int02m4Vo();
 			main.setTitle(m.getQtnName());
-			List<QtnReportHeaderVo> header = qtnHeaderRepoImpl.findJoinFinal(m.getQtnMasterId());
+			List<QtnReportHeaderVo> headers = qtnHeaderRepoImpl.findJoinFinal(m.getQtnMasterId());
+			List<Int02m4VoDetail> details = new ArrayList<>();
+			for (QtnReportHeaderVo h : headers) {
+				logger.info("HEADER_ID: {}", h.getQtnReportHdrId());
+				List<QtnScore> scores = qtnFinalRepHdrRepoImpl.calScore(h.getQtnReportHdrId());
+				List<QtnReportMainVo> man = qtnMainRepoImpl.findJoinFinal(h.getQtnReportHdrId());
+				int approve = 0;
+				int reject = 0;
+				if (man.size() > 0) {
+					if ("Y".equals(man.get(0).getPoint())) {
+						approve = 1;
+					}
+					if ("N".equals(man.get(0).getPoint())) {
+						reject = 1;
+					}
+				}
+				if (scores.size() > 0) {
+					Int02m4VoDetail detail = new Int02m4VoDetail();
+					detail.setTitle(scores.get(0).getTitle());
+					detail.setApprove(scores.get(0).getApprove() + approve);
+					detail.setReject(scores.get(0).getReject() + reject);
+					details.add(detail);
+				}
+			}
+			main.setDetail(details);
 			result.add(main);
 		}
 		return result;
 	}
-	
+
 }

@@ -29,10 +29,11 @@ export class Int02M42Component implements OnInit {
     $(".ui.accordion").accordion();
     this.ajax.post(URL.RESULT, this.year, res => {
       console.log(res.json());
-    });
-    this.ajax.post(URL.MOCK, {result: _Result}, res => {
       this.result = res.json();
     });
+    // this.ajax.post(URL.MOCK, {result: _Result}, res => {
+    //   this.result = res.json();
+    // });
   }
 
   calcTotal() {
