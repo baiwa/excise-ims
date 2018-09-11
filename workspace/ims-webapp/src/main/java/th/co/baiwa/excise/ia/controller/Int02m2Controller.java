@@ -34,12 +34,6 @@ public class Int02m2Controller {
 		return "API IA INT02M2";
 	}
 	
-	@PostMapping("/data_mock")
-	@ResponseBody
-	public List<Int02m2Vo> findMock(Int02m2Vo find) {
-		return int02m2Service.findMock(find);
-	}
-	
 	@PostMapping("/data")
 	@ResponseBody
 	public List<Int02m2Vo> findData(@RequestBody String year) {

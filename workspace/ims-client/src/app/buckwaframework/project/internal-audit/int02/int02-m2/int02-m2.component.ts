@@ -8,8 +8,7 @@ declare var $: any;
 const URL = {
   DATA: "ia/int02m2/data",
   SAVE: "ia/int02m2/save",
-  SAVED: "ia/int02m2/saved",
-  DATA_MOCK: "ia/int02m2/data_mock"
+  SAVED: "ia/int02m2/saved"
 };
 
 @Component({

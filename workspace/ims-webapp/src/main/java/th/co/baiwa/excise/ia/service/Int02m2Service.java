@@ -258,37 +258,4 @@ public class Int02m2Service {
 		return int02m2;
 	}
 
-	public List<Int02m2Vo> findMock(Int02m2Vo find) { // Mock
-		logger.info("findMock");
-		List<Int02m2Vo> result = new ArrayList<>();
-		List<Int02m2VoDetail> details;
-		Int02m2Vo main;
-		Int02m2VoDetail detail;
-		for (int i = 1; i <= 3; i++) {
-			int k = 1, h = 1;
-			main = new Int02m2Vo();
-			main.setTitle("การเงิน " + i);
-			main.setContent("-");
-			details = new ArrayList<>();
-			for (int j = 1; j < 100; j++) {
-				detail = new Int02m2VoDetail();
-				if (j == 1) {
-					detail.setHeaderId(Long.valueOf(j));
-					detail.setOrder("" + j);
-					detail.setContent("หลัก " + j);
-					k = 1;
-					h = 1;
-				} else {
-					detail.setDetailId(Long.valueOf(k));
-					detail.setOrder(h + "." + k);
-					detail.setContent("ย่อย " + h + "." + k++);
-				}
-				details.add(detail);
-			}
-			main.setDetail(details);
-			result.add(main);
-		}
-		return result;
-	}
-
 }
