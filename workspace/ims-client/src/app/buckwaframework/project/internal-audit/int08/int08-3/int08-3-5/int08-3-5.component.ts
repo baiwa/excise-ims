@@ -83,6 +83,9 @@ export class Int0835Component implements OnInit {
       });
 
       $("#tbody").html(hrmlTr);
+      $('#dataTable').DataTable({
+        scrollX: true
+      });
     }, errRes => {
       console.log(errRes);
     });

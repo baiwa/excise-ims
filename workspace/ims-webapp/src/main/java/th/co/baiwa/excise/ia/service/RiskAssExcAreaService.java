@@ -3,6 +3,7 @@ package th.co.baiwa.excise.ia.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.cxf.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,10 +92,10 @@ public class RiskAssExcAreaService {
 		return message;
 	}
 
-	public ResponseDataTable<RiskAssExcAreaHdr> findByCriteriaForDatatable(RiskAssExcAreaHdr riskAssRiskWsHdr, DataTableRequest dataTableRequest) {
+	public ResponseDataTable<RiskAssExcAreaHdr> findByCriteriaForDatatable(RiskAssExcAreaHdr riskAssExcAreaHdr, DataTableRequest dataTableRequest) {
 		logger.info("findByCriteriaForDatatable");
 		ResponseDataTable<RiskAssExcAreaHdr> responseDataTable = new ResponseDataTable<RiskAssExcAreaHdr>();
-		List<RiskAssExcAreaHdr> riskAssRiskWsHdrList = findByBudgetYear(riskAssRiskWsHdr.getBudgetYear());
+		List<RiskAssExcAreaHdr> riskAssRiskWsHdrList = findRiskAssExcAreaHdrByCriteria(riskAssExcAreaHdr);
 		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
 		responseDataTable.setData(riskAssRiskWsHdrList);
 		responseDataTable.setRecordsTotal(riskAssRiskWsHdrList.size());
@@ -103,10 +104,11 @@ public class RiskAssExcAreaService {
 
 	}
 
-	public List<RiskAssExcAreaHdr> findByBudgetYear(String year) {
-		logger.info("findByBudgetYear : "+ year);
-		return riskAssExcAreaHdrRepository.findByBudgetYear(year);
+	public List<RiskAssExcAreaHdr> findRiskAssExcAreaHdrByCriteria(RiskAssExcAreaHdr riskAssExcAreaHdr) {
+		logger.info("findRiskAssExcAreaHdrByCriteria");
+		return riskAssExcAreaHdrRepository.findRiskAssExcAreaHdrByCriteria(riskAssExcAreaHdr);
 	}
+	
 
 	public List<RiskAssExcAreaDtl> findRiskAssRiskDtlByWebService() {
 		logger.info("findRiskAssRiskDtlByWebService");

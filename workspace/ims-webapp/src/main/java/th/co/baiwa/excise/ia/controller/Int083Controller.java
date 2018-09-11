@@ -216,8 +216,8 @@ public class Int083Controller {
 	
 	@PostMapping("/findByBudgetYear")
 	@ResponseBody
-	public List<RiskAssExcAreaHdr> findByBudgetYear(@RequestBody RiskAssExcAreaHdr riskAssRiskWsHdr) {
-		return riskAssExcAreaService.findByBudgetYear(riskAssRiskWsHdr.getBudgetYear());
+	public List<RiskAssExcAreaHdr> findByBudgetYear(@RequestBody RiskAssExcAreaHdr riskAssExcAreaHdr) {
+		return riskAssExcAreaService.findRiskAssExcAreaHdrByCriteria(riskAssExcAreaHdr);
 	}
 	
 	@PostMapping("/searchFullRiskByBudgetYear")
@@ -378,6 +378,7 @@ public class Int083Controller {
 	@PostMapping("/updateStatusRisk")
 	@ResponseBody
 	public void updateStatusRisk(@RequestBody RiskAssExcAreaHdr risk) {
+		logger.info("updateStatusRisk");
 		riskAssExcAreaService.updateStatusRisk(risk);
 
 	}

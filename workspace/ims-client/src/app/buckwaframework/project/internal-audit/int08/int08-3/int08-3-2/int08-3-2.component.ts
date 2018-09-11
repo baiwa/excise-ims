@@ -107,7 +107,7 @@ export class Int0832Component implements OnInit {
         {
           data: "riskHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button dtl"><i class="pencil icon"></i> รายละเอียด</button>'
+            return '<button type="button" class="ui mini button primary dtl"><i class="pencil icon"></i> รายละเอียด</button>'
               + '<button type="button" class="ui mini button del"><i class="pencil icon"></i> ลบ</button>';
           }
         }

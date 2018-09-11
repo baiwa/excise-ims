@@ -85,6 +85,7 @@ public class RiskAssExcAreaHdrRepositoryImpl implements RiskAssExcAreaHdrReposit
 		sql.append(" ON D.RISK_HRD_ID = H.RISK_HRD_ID ");
 		sql.append(" WHERE H.IS_DELETED = 'N' ");
 		sql.append(" AND H.BUDGET_YEAR = ? ");
+		sql.append(" AND H.ACTIVE = 'Y' ");
 		sql.append(" AND D.IS_DELETED = 'N' ");
 		sql.append(" UNION ");
 		sql.append(" SELECT o.DEPARTMENT_NAME FROM IA_RISK_ASS_EXC_AREA_HRD H ");
@@ -92,6 +93,7 @@ public class RiskAssExcAreaHdrRepositoryImpl implements RiskAssExcAreaHdrReposit
 		sql.append(" ON O.RISK_HRD_ID = H.RISK_HRD_ID ");
 		sql.append(" WHERE H.IS_DELETED = 'N' ");
 		sql.append(" AND H.BUDGET_YEAR = ? ");
+		sql.append(" AND H.ACTIVE = 'Y' ");
 		sql.append(" AND O.IS_DELETED = 'N') ");
 		params.add(budgetYear);
 		params.add(budgetYear);
@@ -125,6 +127,7 @@ public class RiskAssExcAreaHdrRepositoryImpl implements RiskAssExcAreaHdrReposit
 		sql.append(" ON D.RISK_HRD_ID = H.RISK_HRD_ID ");
 		sql.append(" WHERE H.IS_DELETED = 'N' ");
 		sql.append(" AND H.BUDGET_YEAR = ? ");
+		sql.append(" AND H.ACTIVE = 'Y' ");
 		sql.append(" AND D.IS_DELETED = 'N' ");
 		sql.append(" AND D.DEPARTMENT_NAME = ? ");
 		sql.append(" UNION ");
@@ -134,6 +137,7 @@ public class RiskAssExcAreaHdrRepositoryImpl implements RiskAssExcAreaHdrReposit
 		sql.append(" ON O.RISK_HRD_ID = H.RISK_HRD_ID ");
 		sql.append(" WHERE H.IS_DELETED = 'N' ");
 		sql.append(" AND H.BUDGET_YEAR = ? ");
+		sql.append(" AND H.ACTIVE = 'Y' ");
 		sql.append(" AND O.IS_DELETED = 'N' ");
 		sql.append(" AND O.DEPARTMENT_NAME = ? ");
 		sql.append(" ) ");
@@ -168,5 +172,65 @@ public class RiskAssExcAreaHdrRepositoryImpl implements RiskAssExcAreaHdrReposit
 		params.add(id);
 		commonJdbcTemplate.executeUpdate(sql.toString(), params.toArray());
 	}
+	
+	
+	
+	@Override
+	public List<RiskAssExcAreaHdr> findRiskAssExcAreaHdrByCriteria(RiskAssExcAreaHdr riskAssExcAreaHdr) {
+		logger.info("findByCriteria");
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * FROM IA_RISK_ASS_EXC_AREA_HRD WHERE IS_DELETED = ? ");
+		params.add(FLAG.N_FLAG);
+		if(BeanUtils.isNotEmpty(riskAssExcAreaHdr.getRiskHrdId())) {
+			sql.append(" AND RISK_HRD_ID = ? ");
+			params.add(riskAssExcAreaHdr.getRiskHrdId());
+		}
+		if(BeanUtils.isNotEmpty(riskAssExcAreaHdr.getRiskHdrName())) {
+			sql.append(" AND RISK_HDR_NAME = ? ");
+			params.add(riskAssExcAreaHdr.getRiskHdrName());
+		}
+		if(BeanUtils.isNotEmpty(riskAssExcAreaHdr.getBudgetYear())) {
+			sql.append(" AND BUDGET_YEAR = ? ");
+			params.add(riskAssExcAreaHdr.getBudgetYear());
+		}
+		if(BeanUtils.isNotEmpty(riskAssExcAreaHdr.getActive())) {
+			sql.append(" AND ACTIVE = ? ");
+			params.add(riskAssExcAreaHdr.getActive());
+		}
+		if(BeanUtils.isNotEmpty(riskAssExcAreaHdr.getUserCheck())) {
+			sql.append(" AND USER_CHECK = ? ");
+			params.add(riskAssExcAreaHdr.getUserCheck());
+		}
+		if(BeanUtils.isNotEmpty(riskAssExcAreaHdr.getRiskHrdPaperName())) {
+			sql.append(" AND RISK_HDR_PAPER_NAME = ? ");
+			params.add(riskAssExcAreaHdr.getRiskHrdPaperName());
+		}
+		return commonJdbcTemplate.executeQuery(sql.toString(), params.toArray(), riskAssExcAreaHdrMapping);
+	}
+	
+	private RowMapper<RiskAssExcAreaHdr> riskAssExcAreaHdrMapping = new RowMapper<RiskAssExcAreaHdr>() {
+
+		@Override
+		public RiskAssExcAreaHdr mapRow(ResultSet rs, int arg1) throws SQLException {
+			RiskAssExcAreaHdr riskAssExcAreaHdr = new RiskAssExcAreaHdr();
+			riskAssExcAreaHdr.setRiskHrdId(rs.getLong("RISK_HRD_ID"));
+			riskAssExcAreaHdr.setRiskHdrName(rs.getString("RISK_HDR_NAME"));
+			riskAssExcAreaHdr.setActive(rs.getString("ACTIVE"));
+			riskAssExcAreaHdr.setRiskHrdPaperName(rs.getString("RISK_HDR_PAPER_NAME"));
+			riskAssExcAreaHdr.setBudgetYear(rs.getString("BUDGET_YEAR"));
+			riskAssExcAreaHdr.setUserCheck(rs.getString("USER_CHECK"));
+			riskAssExcAreaHdr.setPercent(rs.getBigDecimal("PERCENT"));
+			riskAssExcAreaHdr.setIsDeleted(rs.getString("IS_DELETED"));
+			riskAssExcAreaHdr.setVersion(rs.getInt("VERSION"));
+			riskAssExcAreaHdr.setCreatedBy(rs.getString("CREATED_BY"));
+			riskAssExcAreaHdr.setCreatedDate(rs.getDate("CREATED_DATE"));
+			riskAssExcAreaHdr.setUpdatedBy(rs.getString("UPDATED_BY"));
+			riskAssExcAreaHdr.setUpdatedDate(rs.getDate("UPDATED_DATE"));
+			return riskAssExcAreaHdr;
+
+		}
+
+	};
 
 }

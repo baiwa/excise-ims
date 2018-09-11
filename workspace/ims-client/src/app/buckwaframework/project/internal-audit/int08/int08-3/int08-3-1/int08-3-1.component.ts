@@ -20,14 +20,19 @@ export class Int0831Component implements OnInit {
   isSearch: any = false;
   riskYear: any;
   wsRiskList: any[];
-  openForm1: any;
-  openForm2: any;
+  selectRiskSearch: any;
   dataTableF1: any;
+  dataTable_int08_3_6: any;
+  dataTable_int08_3_7: any;
+  dataTable_int08_3_8: any;
+  dataTable_int08_3_9: any;
   riskAssRiskWsHdr: any;
   condition: any;
   riskHrdId: any;
   dataTableF2: any;
   pageList: any;
+  pageShowPageIndex: any;
+  dataTableList: RiskData[] = [];
   constructor(private router: Router,
     private ajax: AjaxService,
     private route: ActivatedRoute,
@@ -56,6 +61,9 @@ export class Int0831Component implements OnInit {
     this.budgetYear = this.route.snapshot.queryParams["budgetYear"];
     if (this.budgetYear == null || this.budgetYear == undefined) {
       this.budgetYear == 'xxxx';
+    } else {
+
+      this.changeYear(this.budgetYear);
     }
     $('#year').calendar({
       type: 'year',
@@ -66,10 +74,8 @@ export class Int0831Component implements OnInit {
         this.changeYear(date.getFullYear() + 543);
       }
     });
-    this.openForm1 = false;
-    this.openForm2 = false;
     this.wsRiskList = ["ปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ", "ปัจจัยเสี่ยงผลการจัดเก็บรายได้", "ปัจจัยเสี่ยงผลการปราบปรามด้านค่าปรับคดี", "ปัจจัยเสี่ยงผลการปราบปรามด้านจำนวนคดี", "ปัจจัยเสี่ยงการเงินและบัญชี", "ปัจจัยเสี่ยงระบบการควบคุมภายใน", "ปัจจัยเสี่ยงการส่งเงินเกิน 3 วัน", "ปัจจัยเสี่ยงแบบสอบทานระบบการควบคุมภายใน"];
-    this.pageList = ["/int08/3/3", "/int08/3/6", "/int08/3/7", "/int08/3/8", "/int08/3/9", "/int08/3/9", "/int08/3/9", "/int08/3/9"];
+    this.pageList = ["int08-3-3", "int08-3-6", "int08-3-7", "int08-3-8", "int08-3-9", "int08-3-9", "int08-3-9", "int08-3-9"];
     this.initDatatable();
   }
 
@@ -117,6 +123,7 @@ export class Int0831Component implements OnInit {
   }
 
   searchDataTable() {
+    console.log(this.selectRiskSearch);
     this.budgetYear = $('#budgetYear').val().trim();
     if (this.budgetYear != null && this.budgetYear != undefined && this.budgetYear != '') {
       this.isSearch = true;
@@ -145,7 +152,7 @@ export class Int0831Component implements OnInit {
       ajax: {
         type: "POST",
         url: URL,
-        data: { budgetYear: this.budgetYear }
+        data: { budgetYear: this.budgetYear, active: 'Y', riskHdrName: this.selectRiskSearch }
       },
       columns: [
 
@@ -187,10 +194,10 @@ export class Int0831Component implements OnInit {
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {
-
-          if (this.wsRiskList.indexOf(data.riskHdrName) >= 0) {
+          var pageIndex = this.wsRiskList.indexOf(data.riskHdrName);
+          if (pageIndex >= 0) {
             this.riskHrdId = data.riskHrdId;
-            this.renderForm1(data.riskHrdId);
+            this.renderForm1(data.riskHrdId, this.pageList[pageIndex]);
           } else {
             this.riskHrdId = data.riskHrdId;
             this.renderForm2(data.riskHrdId);
@@ -208,29 +215,70 @@ export class Int0831Component implements OnInit {
 
 
 
-  renderForm1(riskHrdId) {
-
+  renderForm1(riskHrdId, pageIndex) {
+    this.pageShowPageIndex = pageIndex;
+    console.log("pageShowPageIndex", this.pageShowPageIndex);
     console.log("riskHrdId", riskHrdId);
     const URLHRD = "ia/int083/findRiskById";
     this.ajax.post(URLHRD, { riskHrdId: riskHrdId }, res => {
       this.riskAssRiskWsHdr = res.json();
-      this.openForm1 = true;
-      this.openForm2 = false;
-      console.log("riskAssRiskWsHdr", this.riskAssRiskWsHdr);
       const URL = "ia/condition/findConditionByParentId";
-      this.ajax.post(URL, { parentId: riskHrdId, riskType: 'MAIN', page: 'int08-3-3' }, res => {
+      var riskType = 'OTHER';
+      var riskConditionPage = 'int08-3-4';
+      if (this.pageShowPageIndex == 'int08-3-3' || this.pageShowPageIndex == 'int08-3-6' || this.pageShowPageIndex == 'int08-3-7' || this.pageShowPageIndex == 'int08-3-8') {
+        riskType = 'MAIN';
+        riskConditionPage = this.pageShowPageIndex;
+      }
+      this.ajax.post(URL, { parentId: riskHrdId, riskType: riskType, page: riskConditionPage }, res => {
         this.condition = res.json();
         console.log("condition", this.condition);
 
+        if (this.pageShowPageIndex == 'int08-3-3') {
+          this.initDatatableINT08_3_3();
+        } else if (this.pageShowPageIndex == 'int08-3-6') {
+          this.initDatatableINT08_3_6();
+        } else if (this.pageShowPageIndex == 'int08-3-7') {
+          this.initDatatableINT08_3_7();
+        } else if (this.pageShowPageIndex == 'int08-3-8') {
+          this.initDatatableINT08_3_8();
+        } else if (this.pageShowPageIndex == 'int08-3-9') {
 
-        this.initDatatableF1();
+          let url = "ia/int083/findRiskOtherDtlByRiskHrdId";
+          this.ajax.post(url, { riskHrdId: this.riskHrdId }, res => {
+            // this.riskDataList
+            var jsonObjList = res.json();
+            console.log("jsonObjList", jsonObjList)
+            this.dataTableList = [];
+            for (let index = 0; index < jsonObjList.length; index++) {
+              var element = jsonObjList[index];
+              console.log(element);
+              var riskData = new RiskData();
+              riskData.riskOtherDtlId = element.riskOtherDtlId;
+              riskData.riskHrdId = element.riskHrdId;
+              riskData.departmentName = element.departmentName;
+
+              riskData.riskCost = element.riskCost;
+              riskData.rl = element.rl;
+              riskData.valueTranslation = element.valueTranslation;
+              riskData.isDeleted = 'N';
+              riskData.color = element.color;
+              console.log(riskData);
+              this.dataTableList.push(riskData);
+
+            }
+            this.initDatatableINT08_3_9();
+          }, errRes => {
+            //console.log("error", errRes);
+          });
+        }
+
       });
 
     });
 
   }
 
-  initDatatableF1(): void {
+  initDatatableINT08_3_3(): void {
     if (this.dataTableF1 != null) {
       this.dataTableF1.destroy();
     }
@@ -286,6 +334,248 @@ export class Int0831Component implements OnInit {
 
         { targets: [1], className: "left aligned" }
       ]
+
+    });
+  }
+
+
+  initDatatableINT08_3_6(): void {
+
+    if (this.dataTable_int08_3_6 != null) {
+      this.dataTable_int08_3_6.destroy();
+    }
+
+    const URL = AjaxService.CONTEXT_PATH + "ia/int083/dataTableWebService2";
+    console.log(URL);
+    this.dataTable_int08_3_6 = $("#dataTable_int08_3_6").DataTable({
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: true,
+      paging: false,
+      ajax: {
+        type: "POST",
+        url: URL,
+        data: { riskHrdId: this.riskHrdId }
+      },
+      columns: [
+
+        {
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "center"
+        },
+        { data: "departmentName" },
+        { data: "resultsIncome", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "budgetIncome", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "budgetDiff", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "percenDiff", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+
+        { data: "rl" },
+        { data: "valueTranslation" }
+
+      ], createdRow: function (row, data, dataIndex) {
+        console.log("row");
+        console.log("data", data.valueTranslation);
+        console.log("dataIndex", dataIndex);
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(6)').addClass('red');
+          $(row).find('td:eq(7)').addClass('red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(6)').addClass('green');
+          $(row).find('td:eq(7)').addClass('green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(6)').addClass('yellow');
+          $(row).find('td:eq(7)').addClass('yellow');
+        }
+
+      },
+      columnDefs: [
+        { targets: [0, 6, 7], className: "center aligned" },
+        { targets: [1], className: "left aligned" },
+        { targets: [2, 3, 4, 5], className: "right aligned" }
+
+      ]
+
+    });
+  }
+
+
+  initDatatableINT08_3_7(): void {
+
+    if (this.dataTable_int08_3_7 != null) {
+      this.dataTable_int08_3_7.destroy();
+    }
+
+    const URL = AjaxService.CONTEXT_PATH + "ia/int083/dataTableWebService3";
+    console.log(URL);
+    this.dataTable_int08_3_7 = $("#dataTable_int08_3_7").DataTable({
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: true,
+      paging: false,
+      ajax: {
+        type: "POST",
+        url: URL,
+        data: { riskHrdId: this.riskHrdId }
+      },
+      columns: [
+
+        {
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "center"
+        },
+        { data: "departmentName" },
+        { data: "resultsIncome", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "budgetIncome", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "budgetDiff", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "percenDiff", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+
+        { data: "rl" },
+        { data: "valueTranslation" }
+
+      ], createdRow: function (row, data, dataIndex) {
+        console.log("row");
+        console.log("data", data.valueTranslation);
+        console.log("dataIndex", dataIndex);
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(6)').addClass('red');
+          $(row).find('td:eq(7)').addClass('red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(6)').addClass('green');
+          $(row).find('td:eq(7)').addClass('green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(6)').addClass('yellow');
+          $(row).find('td:eq(7)').addClass('yellow');
+        }
+
+      },
+      columnDefs: [
+        { targets: [0, 6, 7], className: "center aligned" },
+        { targets: [1], className: "left aligned" },
+        { targets: [2, 3, 4, 5], className: "right aligned" }
+
+      ]
+
+    });
+  }
+
+
+  initDatatableINT08_3_8(): void {
+
+    if (this.dataTable_int08_3_8 != null) {
+      this.dataTable_int08_3_8.destroy();
+    }
+
+    const URL = AjaxService.CONTEXT_PATH + "ia/int083/dataTableWebService4";
+    console.log(URL);
+    this.dataTable_int08_3_8 = $("#dataTable_int08_3_8").DataTable({
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: true,
+      paging: false,
+      ajax: {
+        type: "POST",
+        url: URL,
+        data: { riskHrdId: this.riskHrdId }
+      },
+      columns: [
+
+        {
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "center"
+        },
+        { data: "departmentName" },
+        { data: "resultsIncome", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "budgetIncome", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "budgetDiff", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "percenDiff", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+
+        { data: "rl" },
+        { data: "valueTranslation" }
+
+      ], createdRow: function (row, data, dataIndex) {
+        console.log("row");
+        console.log("data", data.valueTranslation);
+        console.log("dataIndex", dataIndex);
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(6)').addClass('red');
+          $(row).find('td:eq(7)').addClass('red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(6)').addClass('green');
+          $(row).find('td:eq(7)').addClass('green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(6)').addClass('yellow');
+          $(row).find('td:eq(7)').addClass('yellow');
+        }
+
+      },
+      columnDefs: [
+        { targets: [0, 6, 7], className: "center aligned" },
+        { targets: [1], className: "left aligned" },
+        { targets: [2, 3, 4, 5], className: "right aligned" }
+
+      ]
+
+    });
+  }
+
+
+  initDatatableINT08_3_9(): void {
+    console.log("initDatatableINT08_3_9");
+    if (this.dataTable_int08_3_9 != null) {
+      this.dataTable_int08_3_9.destroy();
+    }
+    console.log(this.dataTableList);
+    this.dataTable_int08_3_9 = $("#dataTable_int08_3_9").DataTable({
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: false,
+      paging: false,
+      data: this.dataTableList,
+      columns: [
+        {
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "center"
+        },
+        { data: "departmentName" },
+        { data: "riskCost", className: "right" },
+        { data: "rl", className: "center" },
+        { data: "valueTranslation", className: "center" }
+
+      ], createdRow: function (row, data, dataIndex) {
+
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(3)').addClass('red');
+          $(row).find('td:eq(4)').addClass('red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(3)').addClass('green');
+          $(row).find('td:eq(4)').addClass('green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(3)').addClass('yellow');
+          $(row).find('td:eq(4)').addClass('yellow');
+        }
+
+      }
+
 
     });
   }
@@ -351,15 +641,14 @@ export class Int0831Component implements OnInit {
   }
 
   renderForm2(riskHrdId) {
+    this.pageShowPageIndex = 'int08-3-4';
     console.log("riskHrdId", riskHrdId);
     const URLHRD = "ia/int083/findRiskById";
     this.ajax.post(URLHRD, { riskHrdId: riskHrdId }, res => {
       this.riskAssRiskWsHdr = res.json();
-      this.openForm1 = false;
-      this.openForm2 = true;
       console.log("riskAssRiskWsHdr", this.riskAssRiskWsHdr);
       const URL = "ia/condition/findConditionByParentId";
-      this.ajax.post(URL, { parentId: riskHrdId, riskType: 'OTHER', page: 'int08-1-6' }, res => {
+      this.ajax.post(URL, { parentId: riskHrdId, riskType: 'OTHER', page: 'int08-3-4' }, res => {
         this.condition = res.json();
         console.log("condition", this.condition);
         this.initDatatableF2();
@@ -368,7 +657,7 @@ export class Int0831Component implements OnInit {
   }
 
   clearData() {
-    this.showData = false;
+    this.pageShowPageIndex = undefined;
   }
 
   changebudgetYear = event => {
@@ -391,3 +680,16 @@ export class Int0831Component implements OnInit {
     $("#modalInt0811").modal("hide");
   }
 }
+
+class RiskData {
+  departmentName: any = '';
+
+  riskHrdId: any = 0;
+  riskCost: any = '';
+  rl: any = '';
+  color: ''
+  valueTranslation: any = '';
+  riskOtherDtlId: any = 0;
+  isDeleted: any = '';
+}
+

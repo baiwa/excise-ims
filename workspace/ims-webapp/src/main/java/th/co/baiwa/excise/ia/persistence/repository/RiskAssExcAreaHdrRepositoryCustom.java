@@ -13,6 +13,7 @@ public interface RiskAssExcAreaHdrRepositoryCustom {
 	public List<Int0803Vo> findData(String budgetYear,  String depName);
 	
 	public void updatePercent(BigDecimal percent , Long id);
+	public List<RiskAssExcAreaHdr> findRiskAssExcAreaHdrByCriteria(RiskAssExcAreaHdr riskAssExcAreaHdr);
 	
 	
 }
