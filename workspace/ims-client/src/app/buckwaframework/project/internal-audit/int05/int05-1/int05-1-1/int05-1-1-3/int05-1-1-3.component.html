@@ -5,7 +5,7 @@
         <div class="ui top attached header">
             <span>เพิ่มข้อมูลแสตมป์</span>
         </div>
-        <div class="ui attached segment">
+        <div class="ui attached {{loading ? 'loading' : ''}} segment">
             <!-- form -->
             <form class="ui form" (ngSubmit)="onAdd()">      
                 <input type="hidden" id="edit">          
@@ -185,7 +185,7 @@
                 <!-- row 9  -->
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
-                    <div class="three wide field required">
+                    <div class="three wide field">
                         <label>มูลค่าพิมพ์ (บาท/ดวง)</label>
                     </div>
                     <div class="four wide field ">
@@ -267,7 +267,7 @@
 </div>
 
 <!-- table -->
-<div class="ui segment">
+<div class="ui {{loading ? 'loading' : ''}} segment">
     <table id="dataTable" class="ui small celled table nowrap" style="width: 100%">
       <thead>
         <tr style="text-align: center;">        

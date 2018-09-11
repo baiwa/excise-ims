@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -123,7 +124,27 @@ public class RiskAssInfService {
 		return responseDataTable;
 
 	}
-	
+/*	searchRisk*/
+ public ResponseDataTable<RiskAssInfHdr> searchRiskCriteriaForDatatable(RiskAssInfHdr riskAssInfHdr, DataTableRequest dataTableRequest) {
+		ResponseDataTable<RiskAssInfHdr> responseDataTable = new ResponseDataTable<RiskAssInfHdr>();
+		List<RiskAssInfHdr> riskAssInfHdrList = null;
+		if("0".equals(riskAssInfHdr.getRiskAssInfHdrName())||"".equals(riskAssInfHdr.getRiskAssInfHdrName())) {
+			riskAssInfHdrList = findByBudgetYearInfHdrActive(riskAssInfHdr.getBudgetYear(),riskAssInfHdr.getActive());
+		}else {
+			riskAssInfHdrList = findRiskByInfHdrActive(riskAssInfHdr.getRiskAssInfHdrName(),riskAssInfHdr.getBudgetYear(),riskAssInfHdr.getActive());
+		}
+		
+		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
+		responseDataTable.setData(riskAssInfHdrList);
+		responseDataTable.setRecordsTotal((int) riskAssInfHdrList.size());
+		responseDataTable.setRecordsFiltered((int) riskAssInfHdrList.size());
+		return responseDataTable;
+
+	}
+ /*	searchRisk*/	
+ public List<RiskAssInfHdr> findRiskByInfHdrActive(String InfHdrName,String year,String active ){	
+		return riskAssInfHdrRepository.findRiskByInfHdrActive(InfHdrName,year,active); 
+	}
 	
 	public Message deleteRiskAssInfHdrRepository(RiskAssInfHdr riskAssInfHdr) {
 		logger.info("id : "+riskAssInfHdr.getRiskAssInfHdrId());

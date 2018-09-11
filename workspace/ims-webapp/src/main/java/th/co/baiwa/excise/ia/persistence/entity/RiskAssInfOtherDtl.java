@@ -100,5 +100,6 @@ public class RiskAssInfOtherDtl extends BaseEntity {
 	public void setValueTranslation(String valueTranslation) {
 		this.valueTranslation = valueTranslation;
 	}
+	
 
 }
