@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int09111FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int09111Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int0911FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int0911Vo;
 import th.co.baiwa.excise.ia.service.Int09111Service;
 
 @Controller
@@ -26,6 +30,21 @@ public class Int09111Controller {
 	
 	@Autowired
 	private Int09111Service int09111Service;
+	
+	@PostMapping("/list")
+	@ResponseBody
+	public DataTableAjax<Int09111Vo> list(@RequestBody Int09111FormVo formVo){
+		DataTableAjax<Int09111Vo> list = null;
+		log.info("formVo.getSearchFlag() {}",formVo.getSearchFlag());
+		try {
+			 list = int09111Service.findAll(formVo);
+			 log.info("Data list {} row",list.getData().size());
+		} catch (Exception e) {
+			log.error("Error ! findAll",e);
+		}
+		
+		return list;
+	}
 	
 	@PostMapping("/save")
 	@ResponseBody

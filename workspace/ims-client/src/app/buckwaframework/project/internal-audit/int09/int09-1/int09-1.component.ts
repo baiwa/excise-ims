@@ -27,6 +27,8 @@ export class Int091Component implements OnInit {
   travelTo2AddList: any;
   travelTo3AddList: any;
 
+  travelToDescription: any;
+
   constructor(
     private message: MessageBarService,
     private ajax: AjaxService,
@@ -309,7 +311,8 @@ export class Int091Component implements OnInit {
         fiscalYear: $("#fiscalYearAdd").val(),
         departureDate: $("#departureDateAdd").val(),
         returnDate: $("#returnDateAdd").val(),
-        travelTo: $("#travelToAdd").val() 
+        travelTo: $("#travelToAdd").val(),
+        travelToDescription: this.travelToDescription
       }, res => {
         const msg = res.json();
         
@@ -340,6 +343,15 @@ export class Int091Component implements OnInit {
   setTravelToAdd = e => {
     $('#travelToAdd').val(e.target.value);
     $('#travelToIdAdd').val(e.target.value);
+
+    if ($("#travelTo3Add").val() != "") {
+      this.travelToDescription = $('#travelTo1Add option:selected').text()+" "+$('#travelTo2Add option:selected').text()+" "+$('#travelTo3Add option:selected').text();
+    } else if ($("#travelTo2Add").val() != "") {
+      this.travelToDescription = $('#travelTo1Add option:selected').text()+" "+$('#travelTo2Add option:selected').text();
+    } else if ($("#travelTo1Add").val() != "") {
+      this.travelToDescription = $('#travelTo1Add option:selected').text();
+    }
+    console.log("TravelToDescription : ",this.travelToDescription);
   }
 
   ngOnInit() {

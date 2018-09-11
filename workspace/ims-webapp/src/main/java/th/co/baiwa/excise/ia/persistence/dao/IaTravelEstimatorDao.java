@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.vo.Int09111FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int09111Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911T2Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911Vo;
@@ -41,6 +42,8 @@ public class IaTravelEstimatorDao {
 	
 	private final String SQL_TRAVEL_ESTIMATOR_EVIDENCE = "SELECT * FROM TRAVEL_ESTIMATOR_EVIDENCE WHERE IS_DELETED='N' AND ID_PROCESS = ?";
 	
+	private final String SQL_TRAVEL_ESTIMATOR_DTL = "SELECT * FROM TRAVEL_ESTIMATOR_DTL WHERE ID_PROCESS = ?";
+	
 	public Long count(Int091FormVo formVo) {
 		
 		StringBuilder sql = new StringBuilder(SQL_TRAVEL_ESTIMATOR_PROCESS);
@@ -50,12 +53,12 @@ public class IaTravelEstimatorDao {
 
 		if (StringUtils.isNotBlank(formVo.getDateFrom())) {
 			sql.append(" AND  TO_CHAR(CREATED_DATE, 'DD/MM/YYYY') >= TO_CHAR( ? ,'DD/MM/YYYY') ");
-			Date date = DateConstant.convertStrDD_MM_YYYYToDate(formVo.getDateFrom());
+			Date date = DateConstant.convertStrDDMMYYYYToDate(formVo.getDateFrom());
 			params.add(date);
 		}
 		if (StringUtils.isNotBlank(formVo.getDateTo())) {
 			sql.append(" AND  TO_CHAR(CREATED_DATE, 'DD/MM/YYYY') <= TO_CHAR( ? ,'DD/MM/YYYY') ");
-			Date date = DateConstant.convertStrDD_MM_YYYYToDate(formVo.getDateTo());
+			Date date = DateConstant.convertStrDDMMYYYYToDate(formVo.getDateTo());
 			params.add(date);
 		}
 		
@@ -73,12 +76,12 @@ public class IaTravelEstimatorDao {
 		}
 		if (StringUtils.isNotBlank(formVo.getDepartureDate())) {
 			sql.append(" AND  TO_CHAR(DEPARTURE_DATE, 'DD/MM/YYYY') <= TO_CHAR( ? ,'DD/MM/YYYY') ");
-			Date date = DateConstant.convertStrDD_MM_YYYYToDate(formVo.getDepartureDate());
+			Date date = DateConstant.convertStrDDMMYYYYToDate(formVo.getDepartureDate());
 			params.add(date);
 		}
 		if (StringUtils.isNotBlank(formVo.getReturnDate())) {
 			sql.append(" AND  TO_CHAR(RETURN_DATE, 'DD/MM/YYYY') <= TO_CHAR( ? ,'DD/MM/YYYY') ");
-			Date date = DateConstant.convertStrDD_MM_YYYYToDate(formVo.getReturnDate());
+			Date date = DateConstant.convertStrDDMMYYYYToDate(formVo.getReturnDate());
 			params.add(date);
 		}
 		if (StringUtils.isNotBlank(formVo.getTravelTo())) {
@@ -102,12 +105,12 @@ public class IaTravelEstimatorDao {
 
 		if (StringUtils.isNotBlank(formVo.getDateFrom())) {
 			sql.append(" AND  TO_CHAR(CREATED_DATE, 'DD/MM/YYYY') >= TO_CHAR( ? ,'DD/MM/YYYY') ");
-			Date date = DateConstant.convertStrDD_MM_YYYYToDate(formVo.getDateFrom());
+			Date date = DateConstant.convertStrDDMMYYYYToDate(formVo.getDateFrom());
 			params.add(date);
 		}
 		if (StringUtils.isNotBlank(formVo.getDateTo())) {
 			sql.append(" AND  TO_CHAR(CREATED_DATE, 'DD/MM/YYYY') <= TO_CHAR( ? ,'DD/MM/YYYY') ");
-			Date date = DateConstant.convertStrDD_MM_YYYYToDate(formVo.getDateTo());
+			Date date = DateConstant.convertStrDDMMYYYYToDate(formVo.getDateTo());
 			params.add(date);
 		}
 		
@@ -125,12 +128,12 @@ public class IaTravelEstimatorDao {
 		}
 		if (StringUtils.isNotBlank(formVo.getDepartureDate())) {
 			sql.append(" AND  TO_CHAR(DEPARTURE_DATE, 'DD/MM/YYYY') <= TO_CHAR( ? ,'DD/MM/YYYY') ");
-			Date date = DateConstant.convertStrDD_MM_YYYYToDate(formVo.getDepartureDate());
+			Date date = DateConstant.convertStrDDMMYYYYToDate(formVo.getDepartureDate());
 			params.add(date);
 		}
 		if (StringUtils.isNotBlank(formVo.getReturnDate())) {
 			sql.append(" AND  TO_CHAR(RETURN_DATE, 'DD/MM/YYYY') <= TO_CHAR( ? ,'DD/MM/YYYY') ");
-			Date date = DateConstant.convertStrDD_MM_YYYYToDate(formVo.getReturnDate());
+			Date date = DateConstant.convertStrDDMMYYYYToDate(formVo.getReturnDate());
 			params.add(date);
 		}
 		if (StringUtils.isNotBlank(formVo.getTravelTo())) {
@@ -154,7 +157,7 @@ public class IaTravelEstimatorDao {
 	    		Int091Vo vo = new Int091Vo();
 	    
 	    	    vo.setId(rs.getLong("ID"));
-	    	    vo.setCreatedDate(DateConstant.convertDateToStrDD_MM_YYYY_HH_mm(rs.getDate("CREATED_DATE")));
+	    	    vo.setCreatedDate(DateConstant.convertDateToStrDDMMYYYYHHmm(rs.getDate("CREATED_DATE")));
 	    	    vo.setCreatedBy(rs.getString("CREATED_BY"));
 	    	    vo.setPickedType(rs.getString("PICKED_TYPE"));
 	    	    vo.setFiscalYear(rs.getString("FISCAL_YEAR"));
@@ -176,8 +179,6 @@ public class IaTravelEstimatorDao {
 	    }
 	    public Long add091 (Int091FormVo vo) {
 	    	Long id = jdbcTemplate.queryForObject(" SELECT TRAVEL_ESTIMATOR_PROCESS_SEQ.NEXTVAL FROM dual ",long.class);
-	    	
-	    	vo.setTravelToDescription(getTravelToDescription(Integer.parseInt(vo.getTravelTo())));
 	    	
 	    	jdbcTemplate.update(" INSERT INTO TRAVEL_ESTIMATOR_PROCESS( " + 
 	    			"ID, " + 
@@ -216,14 +217,7 @@ public class IaTravelEstimatorDao {
 	    	return id;
 			    }
 
-	    public String getTravelToDescription(int id) {
-	    	String s = "";
-	     	log.info(" idLong : {}",id);
-	    	s = jdbcTemplate.queryForObject("SELECT SUB_TYPE_DESCRIPTION FROM SYS_LOV WHERE TYPE='SECTOR_VALUE' AND LOV_ID = ? ",new Object[] {id}, String.class);
-	    	log.info(" travelToDescription : ",s);
-	   
-	    	return s;
-	    }
+	    
 	    
 	    public Int0911FormVo gethead(Int0911FormVo formVo) {
 			StringBuilder sql = new StringBuilder(" SELECT * FROM TRAVEL_ESTIMATOR_PROCESS WHERE ID = ? ");
@@ -288,7 +282,7 @@ public class IaTravelEstimatorDao {
 		    		Int0911Vo vo = new Int0911Vo();
 		
 		    	    vo.setId(rs.getLong("ID"));
-		    	    vo.setCreatedDate(DateConstant.convertDateToStrDD_MM_YYYY_HH_mm(rs.getDate("CREATED_DATE")));
+		    	    vo.setCreatedDate(DateConstant.convertDateToStrDDMMYYYYHHmm(rs.getDate("CREATED_DATE")));
 		    	    vo.setCreatedBy(rs.getString("CREATED_BY"));
 		    	    vo.setDocumentType(rs.getString("DOCUMENT_TYPE"));
 		    	    vo.setSubject(rs.getString("SUBJECT"));
@@ -299,6 +293,53 @@ public class IaTravelEstimatorDao {
 		    		return vo;
 		    	}
 		    };
+		    public Long count09111(Int09111FormVo formVo) {
+				StringBuilder sql = new StringBuilder(SQL_TRAVEL_ESTIMATOR_DTL);
+				List<Object> params = new ArrayList<>();
+				
+				params.add(formVo.getIdProcess());
+					
+				String countSql = OracleUtils.countForDatatable(sql);
+		        Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+		        return count;
+		    }
+
+			public List<Int09111Vo> findAll09111(Int09111FormVo formVo) {
+				StringBuilder sql = new StringBuilder(SQL_TRAVEL_ESTIMATOR_DTL);
+				List<Object> params = new ArrayList<>();
+
+				params.add(formVo.getIdProcess());
+				sql.append(" ORDER BY ID desc ");
+				
+				log.info(" findAll09111 idProcess : {}",formVo.getIdProcess());
+				log.info(" findAll09111 sql : {}",sql.toString());
+				
+		        List<Int09111Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), travelEstimatorDtlRowmapper);
+		        return list;
+		    }
+			
+			 private RowMapper<Int09111Vo> travelEstimatorDtlRowmapper = new RowMapper<Int09111Vo>() {
+			    	@Override
+			    	public Int09111Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			    		Int09111Vo vo = new Int09111Vo();
+			    		
+			    	    vo.setId(rs.getLong("ID"));
+			    		vo.setIdProcess(rs.getLong("ID_PROCESS"));
+			    		vo.setName(rs.getString("NAME"));
+			    		vo.setPosition(rs.getString("POSITION"));
+			    		vo.setFeedDay(rs.getBigDecimal("FEED_DAY"));
+			    		vo.setFeedMoney(rs.getBigDecimal("FEED_MONEY"));
+			    		vo.setRoostDay(rs.getBigDecimal("ROOST_DAY"));
+			    		vo.setRoostMoney(rs.getBigDecimal("ROOST_MONEY"));
+			    		vo.setPassage(rs.getBigDecimal("PASSAGE"));
+			    		vo.setOtherExpenses(rs.getBigDecimal("OTHER_EXPENSES"));
+			    		vo.setTotalMoney(rs.getBigDecimal("TOTAL_MONEY"));
+			    		vo.setRemark(rs.getString("REMARK"));
+			    	    	
+			    		return vo;
+			    	}
+			    };
+			    
 		    
 		    public Long count0911T2(Int0911FormVo formVo) {
 				StringBuilder sql = new StringBuilder(SQL_TRAVEL_ESTIMATOR_EVIDENCE);
@@ -328,7 +369,7 @@ public class IaTravelEstimatorDao {
 			    		Int0911T2Vo vo = new Int0911T2Vo();
 			
 			    	    vo.setId(rs.getLong("ID"));
-			    	    vo.setCreatedDate(DateConstant.convertDateToStrDD_MM_YYYY_HH_mm(rs.getDate("CREATED_DATE")));
+			    	    vo.setCreatedDate(DateConstant.convertDateToStrDDMMYYYYHHmm(rs.getDate("CREATED_DATE")));
 			    	    vo.setCreatedBy(rs.getString("CREATED_BY"));
 			    	    vo.setDocumentName(rs.getString("DOCUMENT_NAME"));
 			    	    vo.setDocumantSize(rs.getString("DOCUMANT_SIZE"));

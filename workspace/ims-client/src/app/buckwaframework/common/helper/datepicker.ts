@@ -182,17 +182,16 @@ export var formatter = (what: string = "") => {
     default:
       return {
         header: function (date, mode, settings) {
-          //return a string to show on the header for the given 'date' and 'mode'
-          const year = date.getFullYear() + 543;
-          const month = TextDateTH.months[date.getMonth()];
-          return `${month} ${year}`;
+          let month = date.getMonth();
+          let _year = toDateLocale(date)[0].split("/")[2];
+          return TextDateTH.months[month] + " " + _year;
         },
         date: function (date, settings) {
           if (!date) return "";
           let day = date.getDate();
-          let month = date.getMonth() + 1;
-          let year = date.getFullYear() + 543;
-          return digit(day) + "/" + digit(month) + "/" + year;
+          let month = date.getMonth();
+          let _year = toDateLocale(date)[0].split("/")[2];
+          return digit(day) + "/" + digit(month) + "/" + _year.toString();
         }
       };
   }
