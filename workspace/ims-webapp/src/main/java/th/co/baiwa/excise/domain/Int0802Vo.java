@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.domain;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfOtherDtl;
@@ -16,9 +17,16 @@ public class Int0802Vo {
 	private String active;
 	private List<String> riskAssInfHdrNameList;
 	private List<RiskAssInfHdr> riskAssInfHdrList;
+	private BigDecimal percent;
 
-	
-	
+	public BigDecimal getPercent() {
+		return percent;
+	}
+
+	public void setPercent(BigDecimal percent) {
+		this.percent = percent;
+	}
+
 	public String getActive() {
 		return active;
 	}

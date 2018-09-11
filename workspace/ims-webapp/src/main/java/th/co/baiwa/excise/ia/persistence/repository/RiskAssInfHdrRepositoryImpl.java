@@ -125,11 +125,11 @@ public class RiskAssInfHdrRepositoryImpl implements RiskAssInfHdrRepositoryCusto
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append(" SELECT RISK_ASS_INF_HDR_NAME , INF_NAME,NVL(RL , 0) RL ,VALUE_TRANSLATION ");
+		sql.append(" SELECT RISK_ASS_INF_HDR_NAME , INF_NAME,PERCENT,NVL(RL , 0) RL ,VALUE_TRANSLATION ");
 		sql.append(" FROM ");
 		sql.append(" ( ");
 		
-		sql.append(" SELECT H.RISK_ASS_INF_HDR_NAME, D.INF_NAME , D.RL , D.VALUE_TRANSLATION ");
+		sql.append(" SELECT H.RISK_ASS_INF_HDR_NAME, D.INF_NAME ,H.PERCENT, D.RL , D.VALUE_TRANSLATION ");
 		sql.append(" FROM IA_RISK_ASS_INF_HDR H ");
 		sql.append(" left JOIN IA_RISK_ASS_INF_DTL D ");
 		sql.append(" ON D.RISK_INF_HRD_ID = H.RISK_ASS_INF_HDR_ID ");
@@ -140,7 +140,7 @@ public class RiskAssInfHdrRepositoryImpl implements RiskAssInfHdrRepositoryCusto
 		sql.append(" AND D.INF_NAME = ? ");
 		sql.append(" UNION ");
 		
-		sql.append(" SELECT H.RISK_ASS_INF_HDR_NAME ,o.INF_NAME, O.RL , O.VALUE_TRANSLATION  ");
+		sql.append(" SELECT H.RISK_ASS_INF_HDR_NAME ,o.INF_NAME,H.PERCENT, O.RL , O.VALUE_TRANSLATION  ");
 		sql.append(" FROM IA_RISK_ASS_INF_HDR H ");
 		sql.append(" left JOIN IA_RISK_ASS_INF_OTHER_DTL O ");
 		sql.append(" ON O.RISK_INF_HRD_ID = H.RISK_ASS_INF_HDR_ID ");
@@ -166,6 +166,7 @@ public class RiskAssInfHdrRepositoryImpl implements RiskAssInfHdrRepositoryCusto
 			int0802Vo.setInfName(rs.getString("INF_NAME"));
 			int0802Vo.setInfName(rs.getString("RISK_ASS_INF_HDR_NAME"));
 			int0802Vo.setRl(rs.getString("RL"));
+			int0802Vo.setPercent(rs.getBigDecimal("PERCENT"));
 			return int0802Vo;
 
 		}

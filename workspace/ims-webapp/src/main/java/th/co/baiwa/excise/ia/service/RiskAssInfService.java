@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
@@ -306,7 +307,8 @@ public class RiskAssInfService {
 			int index = 1;
 			for (Int0802Vo infName : infNameList) {
 				riskFullDataVo = new RiskFullDataInt0802Vo();
-				int sumRl = 0;
+				double sumRl = 0;
+				double tmp;
 				riskFullDataVo.setId(index+"");
 				riskFullDataVo.setInfName(infName.getInfName());
 				List<Int0802Vo> intList = riskAssInfHdrRepository.findData(budgetYear, infName.getInfName());
@@ -315,8 +317,10 @@ public class RiskAssInfService {
 				for (String riskAssInfHdrName : riskAssInfHdrNameList) {
 					rlDate = "";
 					for (Int0802Vo value : intList) {
+
 						if(value.getInfName().equals(riskAssInfHdrName)) {
-							sumRl += Integer.parseInt(value.getRl());
+							tmp = (value.getPercent().doubleValue()/100)*Double.parseDouble(value.getRl());
+							sumRl+= tmp;
 							rlDate = value.getRl();
 							break;
 						}
@@ -327,21 +331,23 @@ public class RiskAssInfService {
 						rl.add("0");
 					}
 				}
+
+				String total = String.valueOf(sumRl);
+
 				riskFullDataVo.setRl(rl);
-				riskFullDataVo.setSumRiskCost(sumRl+"");
+				riskFullDataVo.setSumRiskCost(total);
 				
-				long value =Integer.parseInt(riskFullDataVo.getSumRiskCost());
 				for (Condition condition : conditionList) {
 					
-					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
+					if ("<>".equals(condition.getCondition()) && sumRl >= condition.getValue1().longValue() && sumRl <= condition.getValue2().longValue()) {
 						riskFullDataVo.setValueRl(condition.getValueRl());
 						riskFullDataVo.setColor(condition.getColor());
 						riskFullDataVo.setConvertValue(condition.getConvertValue());
-					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+					} else if (">".equals(condition.getCondition()) && sumRl > condition.getValue1().longValue()) {
 						riskFullDataVo.setValueRl(condition.getValueRl());
 						riskFullDataVo.setColor(condition.getColor());
 						riskFullDataVo.setConvertValue(condition.getConvertValue());
-					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+					} else if ("<".equals(condition.getCondition()) && sumRl < condition.getValue1().longValue()) {
 						riskFullDataVo.setValueRl(condition.getValueRl());
 						riskFullDataVo.setColor(condition.getColor());
 						riskFullDataVo.setConvertValue(condition.getConvertValue());
@@ -1149,7 +1155,8 @@ public class RiskAssInfService {
 		int index = 1;
 		for (Int0802Vo infName : infNameList) {
 			riskFullDataVo = new RiskFullDataInt0802Vo();
-			int sumRl = 0;
+			double sumRl = 0;
+			double tmp;
 			riskFullDataVo.setId(index+"");
 			riskFullDataVo.setInfName(infName.getInfName());
 			List<Int0802Vo> intList = riskAssInfHdrRepository.findData(budgetYear, infName.getInfName());
@@ -1159,7 +1166,8 @@ public class RiskAssInfService {
 				rlDate = "";
 				for (Int0802Vo value : intList) {
 					if(value.getInfName().equals(riskAssInfHdrName)) {
-						sumRl += Integer.parseInt(value.getRl());
+						tmp = (value.getPercent().doubleValue()/100)*Double.parseDouble(value.getRl());
+						sumRl+= tmp;
 						rlDate = value.getRl();
 						break;
 					}
@@ -1170,21 +1178,21 @@ public class RiskAssInfService {
 					rl.add("0");
 				}
 			}
+			String total = String.valueOf(sumRl);
 			riskFullDataVo.setRl(rl);
-			riskFullDataVo.setSumRiskCost(sumRl+"");
-			long value =Integer.parseInt(riskFullDataVo.getSumRiskCost());
+			riskFullDataVo.setSumRiskCost(total);
 			for (Condition condition : conditionList) {
 				
-				if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
+				if ("<>".equals(condition.getCondition()) && sumRl >= condition.getValue1().longValue() && sumRl <= condition.getValue2().longValue()) {
 					riskFullDataVo.setValueRl(condition.getValueRl());
 					riskFullDataVo.setColor(condition.getColor());
 					riskFullDataVo.setConvertValue(condition.getConvertValue());
 					
-				} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+				} else if (">".equals(condition.getCondition()) && sumRl > condition.getValue1().longValue()) {
 					riskFullDataVo.setValueRl(condition.getValueRl());
 					riskFullDataVo.setColor(condition.getColor());
 					riskFullDataVo.setConvertValue(condition.getConvertValue());
-				} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+				} else if ("<".equals(condition.getCondition()) && sumRl < condition.getValue1().longValue()) {
 					riskFullDataVo.setValueRl(condition.getValueRl());
 					riskFullDataVo.setColor(condition.getColor());
 					riskFullDataVo.setConvertValue(condition.getConvertValue());
