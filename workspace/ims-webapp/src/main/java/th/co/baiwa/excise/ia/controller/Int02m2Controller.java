@@ -1,6 +1,5 @@
 package th.co.baiwa.excise.ia.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -16,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.excise.ia.persistence.vo.Int02m2FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int02m2Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int02m4FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int02m4Vo;
 import th.co.baiwa.excise.ia.service.Int02m2Service;
 
 @Controller
@@ -52,6 +53,18 @@ public class Int02m2Controller {
 	public Message saveFinished(@RequestBody Int02m2FormVo req) {
 		List<Int02m2Vo> data = req.getResult();
 		return int02m2Service.saveData(data, "saved");
+	}
+	
+	@PostMapping("/result")
+	@ResponseBody
+	public List<Int02m4Vo> findResult(@RequestBody String year) {
+		return int02m2Service.findResult(year);
+	}
+	
+	@PostMapping("/result/mock")
+	@ResponseBody
+	public List<Int02m4Vo> findMock(@RequestBody Int02m4FormVo vo) {
+		return vo.getResult();
 	}
 	
 }

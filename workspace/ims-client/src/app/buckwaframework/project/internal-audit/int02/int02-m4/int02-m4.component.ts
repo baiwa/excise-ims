@@ -12,6 +12,7 @@ export class Int02M4Component implements OnInit, OnDestroy {
   topics: any[][];
   province: any[];
 
+  year: string;
   step: any;
 
   constructor() {
@@ -47,6 +48,10 @@ export class Int02M4Component implements OnInit, OnDestroy {
 
   getStep(event) {
     this.step = event;
+  }
+
+  getYear(event) {
+    this.year = event;
   }
   
 }

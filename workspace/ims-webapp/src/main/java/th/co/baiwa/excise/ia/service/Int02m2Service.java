@@ -20,12 +20,15 @@ import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
 import th.co.baiwa.excise.ia.persistence.repository.QtnFinalRepDetailRepository;
 import th.co.baiwa.excise.ia.persistence.repository.QtnFinalRepHeaderRepository;
 import th.co.baiwa.excise.ia.persistence.repository.QtnFinalRepMainRepository;
+import th.co.baiwa.excise.ia.persistence.repository.QtnMasterRepository;
 import th.co.baiwa.excise.ia.persistence.repository.QtnMasterRepositoryImpl;
 import th.co.baiwa.excise.ia.persistence.repository.QtnReportDetailRepositoryImpl;
 import th.co.baiwa.excise.ia.persistence.repository.QtnReportHeaderRepositoryImpl;
 import th.co.baiwa.excise.ia.persistence.repository.QtnReportMainRepositoryImpl;
 import th.co.baiwa.excise.ia.persistence.vo.Int02m2Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int02m2VoDetail;
+import th.co.baiwa.excise.ia.persistence.vo.Int02m4Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int02m4VoDetail;
 import th.co.baiwa.excise.ia.persistence.vo.QtnReportDetailVo;
 import th.co.baiwa.excise.ia.persistence.vo.QtnReportHeaderVo;
 import th.co.baiwa.excise.ia.persistence.vo.QtnReportMainVo;
@@ -35,8 +38,8 @@ import th.co.baiwa.excise.ws.WebServiceExciseService;
 @Service
 public class Int02m2Service {
 
-//	@Autowired
-//	private QtnMasterRepository qtnMasterRepo; // Questionnaire Master
+	@Autowired
+	private QtnMasterRepository qtnMasterRepo; // Questionnaire Master
 
 	@Autowired
 	private QtnMasterRepositoryImpl qtnMasterRepoImpl; // Questionnaire Master Implement
@@ -258,4 +261,21 @@ public class Int02m2Service {
 		return int02m2;
 	}
 
+	public List<Int02m4Vo> findResult(String year) {
+		logger.info("Year: {}", year);
+		List<Int02m4Vo> result = new ArrayList<>();
+		Int02m4Vo main = new Int02m4Vo(); 
+		List<Int02m4VoDetail> details = new ArrayList<>();
+		Int02m4VoDetail detail = new Int02m4VoDetail();
+		List<QtnMaster> masters = qtnMasterRepo.findByYear(year);
+		for(QtnMaster m: masters) {
+			logger.info("MASTER_ID: {} , NAME: {}", m.getQtnMasterId(), m.getQtnName());
+			main = new Int02m4Vo();
+			main.setTitle(m.getQtnName());
+			List<QtnReportHeaderVo> header = qtnHeaderRepoImpl.findJoinFinal(m.getQtnMasterId());
+			result.add(main);
+		}
+		return result;
+	}
+	
 }

@@ -1,15 +1,18 @@
 export class Result {
     [x: string]: any;
-    title: string;
-    pass: number;
-    fail: number;
-    risk: string;
-    detail: Detail[];
+    title?: string;
+    pass?: number;
+    fail?: number;
+    risk?: string;
+    detail?: Detail[];
 }
 
 class Detail {
     [x: string]: any;
-
+    title?: string;
+    approve?: number;
+    reject?: number;
+    risk?: string;
 }
 
 export const _Result: Result[] = [
