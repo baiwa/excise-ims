@@ -1,0 +1,816 @@
+<div class="ui grid">
+    <div class="sixteen wide column">
+        <h2 class="ui header">เพิ่มข้อมูลจัดซื้อจัดจ้าง</h2>
+
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+            <span>รายละเอียดโครงการ</span>
+        </div>
+
+        <div class="ui attached segment">
+            <div class="ui form">
+                <div class="inline fields">
+                    <div class="two wide field">
+                        &nbsp;
+                    </div>
+
+                    <div class="two wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">ปีงบประมาณ</label>
+                    </div>
+
+                    <div class="three wide field ">
+                        <select class="ui search dropdown ai search" style="width: 100% !important">
+                                <option value=""></option>
+                                <option value="angular">Angular</option>
+                                <option value="css">CSS</option>
+                                <option value="design">Graphic Design</option>
+                                <option value="ember">Ember</option>
+                                <option value="html">HTML</option>
+                                <option value="ia">Information Architecture</option>
+                                <option value="javascript">Javascript</option>
+                                <option value="mech">Mechanical Engineering</option>
+                              </select>
+                    </div>
+
+                    <div class="two wide field">
+                        &nbsp;
+                    </div>
+
+                    <div class="two wide field">
+                        <label class="custom-label-w-20">ประเภทงบรายจ่าย</label>
+                    </div>
+
+                    <div class="three wide field">
+                        <select class="ui search dropdown ai search" style="width: 100% !important">
+                            <option value=""></option>
+                            <option value="angular">งบบุคลากร</option>
+                            <option value="css">งบดำเนินงาน (โครงการ)</option>
+                            <option value="design">งบดำเนินงาน (ขั้นต่ำ/ประจำ)</option>
+                            <option value="ember">งบลงทุน</option>
+                            <option value="html">งบอุดหนุน</option>
+                            <option value="ia">งบรายจ่ายอื่น</option>
+                        </select>
+                    </div>
+
+                    <div class="two wide field">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="two wide field">
+                        &nbsp;
+                    </div>
+
+                    <div class="two wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">ชื่อโครงการ</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+
+                    <div class="two wide field">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="inline fields" style="margin-top: 40px;">
+                    <div class="two wide field">
+                        &nbsp;
+                    </div>
+
+                    <div class="twelve wide field">
+                        <table id="table1" class="ui small celled table" style="width: 200%;">
+                            <thead>
+                                <tr style="text-align: center;">
+                                    <th rowspan="2">รายการจัดซื้อจัดจ้าง</th>
+                                    <th rowspan="2">จำนวน</th>
+                                    <th rowspan="2">หน่วยนับ</th>
+                                    <th rowspan="2">ราคาที่ตั้งไว้ต่อหน่วย</th>
+                                    <th rowspan="2">ราคากลางต่อหน่วย</th>
+                                    <th rowspan="2">ราคาซื้อ/จ้าง/เช่า ต่อหน่วย</th>
+                                    <th rowspan="2">รวมจำนวนเงิน ซื้อ/จ้าง/เช่า</th>
+                                    <th rowspan="2">จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ซื้อกระดาษถ่ายเอกสาร A4</td>
+                                    <td>1,000</td>
+                                    <td>กล่อง</td>
+                                    <td>550.00</td>
+                                    <td>550.00</td>
+                                    <td>550.00</td>
+                                    <td>550,000.00</td>
+                                    <td style="text-align: center;">
+                                        <a (click)="onDelField(i)" style="cursor: pointer;color:blue">
+                                            <i class="add icon"></i>
+                                        </a>
+
+                                        <a (click)="onDelField(i)" style="cursor: pointer;color: red">
+                                            <i class="delete icon"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="two wide field">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="inline fields" style="margin-top: 40px;">
+                    <div class="two wide field">
+                        &nbsp;
+                    </div>
+
+                    <div class="three wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">เลขที่โครงการในระบบ e-GP</label>
+                    </div>
+
+                    <div class="three wide field ">
+                        <input type="text">
+                    </div>
+
+                    <!-- <div class="two wide field">
+                        &nbsp;
+                    </div> -->
+
+                    <div class="three wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">เลขที่หนังสืออนุมัติเบิกจ่าย หรือ PO</label>
+                    </div>
+
+                    <div class="three wide field">
+                        <input type="text">
+                    </div>
+
+                    <div class="two wide field">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="four wide field">
+                        &nbsp;
+                    </div>
+
+                    <div class="two wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วิธีการจัดหา</label>
+                    </div>
+
+                    <div class="six wide field ">
+                        <select class="ui search dropdown ai search" name="choice" [(ngModel)]="choice" (change)="onChangeChoice()">
+                            <option value=""></option>                                
+                            <option value="วิธีตกลงราคา">วิธีตกลงราคา</option>
+                            <option value="วิธีสอบราคา">วิธีสอบราคา</option>
+                            <option value="วิธีประกวดราคา">วิธีประกวดราคา</option>
+                            <option value="วิธีพิเศษ">วิธีพิเศษ</option>
+                            <option value="วิธีกรณีพิเศษ">วิธีกรณีพิเศษ</option>
+                            <option value="วิธีประกวดราคาทางอิเลคทรอนิกส์">วิธีประกวดราคาทางอิเลคทรอนิกส์</option>
+                            <option value="การจ้างที่ปรึกษา">การจ้างที่ปรึกษา</option>                                    
+                            <option value="การจ้างออกแบบ">การจ้างออกแบบ</option>
+                        </select>
+                    </div>
+
+                    <div class="four wide field">
+                        &nbsp;
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- choice 1, 4, 5, 7, 8 -->
+<div class="ui segment" *ngIf=" choice === 'วิธีตกลงราคา' || choice === 'วิธีพิเศษ' || choice === 'วิธีกรณีพิเศษ' || choice === 'การจ้างที่ปรึกษา' || choice === 'การจ้างออกแบบ' ">
+    <div class="ui form center aligned grid" style="margin-left: 0px;">
+        <div class="fourteen wide column">
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">ผลสอบราคา</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="text">
+                </div>
+
+                <div class="two wide field">
+                    &nbsp;
+                </div>
+
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">ลักษณะงาน</label>
+                </div>
+
+                <div class="five wide field">
+                    <div class="ui checkbox">
+                        <input type="radio" name="chk">
+                        <label></label>
+                    </div>
+                    <label class="custom-label-w-20" style="text-align: left;">งานที่เสร็จภายในปี</label>
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">ประเภทการจัดหา</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="text">
+                </div>
+
+                <div class="two wide field">
+                    &nbsp;
+                </div>
+
+                <div class="two wide field">
+                    &nbsp;
+                </div>
+
+                <div class="five wide field">
+                    <div class="ui checkbox">
+                        <input type="radio" name="chk">
+                        <label></label>
+                    </div>
+                    <label class="custom-label-w-20" style="text-align: left;">งานต่อเนื่องที่ผูกพันปีงบประมาณถัดไป</label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="eight wide column">
+            <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+                <span>ขั้นตอนการบันทึกแผน</span>
+            </div>
+            <div class="ui attached segment">
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่อนุมัติให้จัดซื้อ/จ้าง/เช่า</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ลงนามในสัญญา/ใบสั่ง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ครบกำหนดส่งมอบงวดสุดท้าย</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่เบิกจ่ายงวดสุดท้าย</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="eight wide column">
+            <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+                <span>ขั้นตอนรายงานผล</span>
+            </div>
+            <div class="ui attached segment">
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่อนุมัติให้จัดซื้อ/จ้าง/เช่า</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ในสัญญา/ใบสั่ง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ส่งมอบงวดสุดท้ายจริง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่เบิกจ่ายงวดสุดท้ายจริง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="fourteen wide column">
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">เลขที่คู่สัญญา</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="text">
+                </div>
+
+                <div class="two wide field">
+                    &nbsp;
+                </div>
+
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">ชื่อคู่สัญญา</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">แนบไฟล์</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="file">
+                </div>
+
+                <div class="nine wide field">
+                    &nbsp;
+                </div>
+            </div>
+
+            <button class="ui tiny green button">
+                    <i class="save icon"></i> บันทึก
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- choice 2 -->
+<div class="ui segment" *ngIf=" choice === 'วิธีสอบราคา' ">
+    <div class="ui form center aligned grid" style="margin-left: 0px;">
+        <div class="fourteen wide column">
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">ผลสอบราคา</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="text">
+                </div>
+
+                <div class="two wide field">
+                    &nbsp;
+                </div>
+
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">ลักษณะงาน</label>
+                </div>
+
+                <div class="five wide field">
+                    <div class="ui checkbox">
+                        <input type="radio" name="chk">
+                        <label></label>
+                    </div>
+                    <label class="custom-label-w-20" style="text-align: left;">งานที่เสร็จภายในปี</label>
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">ประเภทการจัดหา</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="text">
+                </div>
+
+                <div class="two wide field">
+                    &nbsp;
+                </div>
+
+                <div class="two wide field">
+                    &nbsp;
+                </div>
+
+                <div class="five wide field">
+                    <div class="ui checkbox">
+                        <input type="radio" name="chk">
+                        <label></label>
+                    </div>
+                    <label class="custom-label-w-20" style="text-align: left;">งานต่อเนื่องที่ผูกพันปีงบประมาณถัดไป</label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="eight wide column">
+            <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+                <span>ขั้นตอนการบันทึกแผน</span>
+            </div>
+            <div class="ui attached segment">
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ลงนามในประกาศสอบราคา</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่อนุมัติให้จัดซื้อ/จ้าง/เช่า</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ลงนามในสัญญา/ใบสั่ง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ครบกำหนดส่งมอบงวดสุดท้าย</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่เบิกจ่ายงวดสุดท้าย</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="eight wide column">
+            <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+                <span>ขั้นตอนรายงานผล</span>
+            </div>
+            <div class="ui attached segment">
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ลงนามในประกาศสอบราคาจริง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่อนุมัติให้จัดซื้อ/จ้าง/เช่า</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ในสัญญา/ใบสั่ง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ส่งมอบงวดสุดท้ายจริง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่เบิกจ่ายงวดสุดท้ายจริง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="fourteen wide column">
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">เลขที่คู่สัญญา</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="text">
+                </div>
+
+                <div class="two wide field">
+                    &nbsp;
+                </div>
+
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">ชื่อคู่สัญญา</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">แนบไฟล์</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="file">
+                </div>
+
+                <div class="nine wide field">
+                    &nbsp;
+                </div>
+            </div>
+
+            <button class="ui tiny green button">
+                        <i class="save icon"></i> บันทึก
+                </button>
+        </div>
+    </div>
+</div>
+
+<!-- choice 3, 6 -->
+<div class="ui segment" *ngIf=" choice === 'วิธีประกวดราคา' || choice === 'วิธีประกวดราคาทางอิเลคทรอนิกส์' ">
+    <div class="ui form center aligned grid" style="margin-left: 0px;">
+        <div class="fourteen wide column">
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">ผลสอบราคา</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="text">
+                </div>
+
+                <div class="two wide field">
+                    &nbsp;
+                </div>
+
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">ลักษณะงาน</label>
+                </div>
+
+                <div class="five wide field">
+                    <div class="ui checkbox">
+                        <input type="radio" name="chk">
+                        <label></label>
+                    </div>
+                    <label class="custom-label-w-20" style="text-align: left;">งานที่เสร็จภายในปี</label>
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">ประเภทการจัดหา</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="text">
+                </div>
+
+                <div class="two wide field">
+                    &nbsp;
+                </div>
+
+                <div class="two wide field">
+                    &nbsp;
+                </div>
+
+                <div class="five wide field">
+                    <div class="ui checkbox">
+                        <input type="radio" name="chk">
+                        <label></label>
+                    </div>
+                    <label class="custom-label-w-20" style="text-align: left;">งานต่อเนื่องที่ผูกพันปีงบประมาณถัดไป</label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="eight wide column">
+            <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+                <span>ขั้นตอนการบันทึกแผน</span>
+            </div>
+            <div class="ui attached segment">
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ลงนามในประกาศประกวดราคา</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่อนุมัติให้จัดซื้อ/จ้าง/เช่า</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ลงนามในสัญญา/ใบสั่ง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ครบกำหนดส่งมอบงวดสุดท้าย</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่เบิกจ่ายงวดสุดท้าย</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="eight wide column">
+            <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+                <span>ขั้นตอนรายงานผล</span>
+            </div>
+            <div class="ui attached segment">
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ลงนามในประกาศประกวดราคาจริง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่อนุมัติให้จัดซื้อ/จ้าง/เช่า</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ในสัญญา/ใบสั่ง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ส่งมอบงวดสุดท้ายจริง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่เบิกจ่ายงวดสุดท้ายจริง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <input type="text">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="fourteen wide column">
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">เลขที่คู่สัญญา</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="text">
+                </div>
+
+                <div class="two wide field">
+                    &nbsp;
+                </div>
+
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">ชื่อคู่สัญญา</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="custom-label-w-20" style="text-align: right;">แนบไฟล์</label>
+                </div>
+
+                <div class="five wide field ">
+                    <input type="file">
+                </div>
+
+                <div class="nine wide field">
+                    &nbsp;
+                </div>
+            </div>
+
+            <button class="ui tiny green button">
+                <i class="save icon"></i> บันทึก
+            </button>
+        </div>
+    </div>
+</div>
