@@ -8,8 +8,15 @@ public class Int02m2Vo {
 	private String title;
 	private String content;
 	private String conclusion;
+	private String finished;
 	private List<Int02m2VoDetail> detail;
 
+	public String getFinished() {
+		return finished;
+	}
+	public void setFinished(String finished) {
+		this.finished = finished;
+	}
 	public Long getHeaderId() {
 		return headerId;
 	}

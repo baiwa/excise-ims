@@ -19,6 +19,7 @@ export class Int02M41Component implements OnInit, OnDestroy {
     ngOnInit() {
         $("#calendar").calendar({
             type: "year",
+            maxDate: new Date(),
             text: TextDateTH,
             formatter: formatter("year")
         });

@@ -25,7 +25,7 @@ public class QtnReportHeaderRepositoryImpl implements QtnReportHeaderRepositoryC
 	@Override
 	public List<QtnReportHeaderVo> findJoinFinal(Long masterId, String user) {
 		List<Object> param = new ArrayList<Object>();
-		String SQL = " select rp.*, fn.QTN_CONCLUSION CONCLUSION, fn.QTN_FINAL_REP_HDR_ID HEADER_ID from IA_QTN_REPORT_HEADER rp left join IA_QTN_FINAL_REP_HEADER fn on rp.QTN_REPORT_HDR_ID = fn.QTN_REPORT_HDR_ID where 1=1 ";
+		String SQL = " select rp.*, fn.QTN_CONCLUSION CONCLUSION, fn.QTN_FINAL_REP_HDR_ID HEADER_ID, fn.QTN_FINISHED FINISHED from IA_QTN_REPORT_HEADER rp left join IA_QTN_FINAL_REP_HEADER fn on rp.QTN_REPORT_HDR_ID = fn.QTN_REPORT_HDR_ID where 1=1 ";
 		StringBuilder sql = new StringBuilder(SQL);
 		sql.append(" and rp.IS_DELETED = '" + FLAG.N_FLAG + "' ");
 		if (BeanUtils.isNotEmpty(masterId)) {
@@ -58,6 +58,7 @@ public class QtnReportHeaderRepositoryImpl implements QtnReportHeaderRepositoryC
 			header.setUpdatedDate(rs.getDate("UPDATED_DATE"));
 			header.setConclusion(rs.getString("CONCLUSION"));
 			header.setHeaderId(rs.getLong("HEADER_ID"));
+			header.setQtnFinished(rs.getString("FINISHED"));
 			return header;
 		}
 		

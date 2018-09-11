@@ -177,6 +177,12 @@ export class Int022Component implements OnInit {
             this.loadTable(); // Datatable
             if (msg.messageType == "C") {
               this.message.successModal(msg.messageTh);
+              if (!this.route.snapshot.queryParams["id"]) {
+                this.router.navigate(
+                  [`/int02/2`],
+                  { queryParams: { id: this.qtnMasterId } }
+                );
+              }
             } else {
               this.message.errorModal(msg.messageTh);
             }

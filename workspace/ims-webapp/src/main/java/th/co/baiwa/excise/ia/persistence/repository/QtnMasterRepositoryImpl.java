@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
 import th.co.baiwa.excise.utils.OracleUtils;
 
@@ -27,6 +28,8 @@ public class QtnMasterRepositoryImpl implements QtnMasterRepositoryCustom {
 		List<Object> param = new ArrayList<Object>();
 		String SQL = " select M.* from sys_lov l inner join sys_lov v on l.lov_id = v.lov_id_master inner join IA_QTN_MASTER m on m.QTN_SECTOR = v.LOV_ID where l.type = 'SECTOR_VALUE' and v.type = 'SECTOR_VALUE' ";
 		StringBuilder sql = new StringBuilder(SQL);
+		sql.append("and 1 = 1 and l.IS_DELETED = ? ");
+		param.add(FLAG.N_FLAG);
 		if (!"00".equals(area)) {
 			sql.append("and v.SUB_TYPE = ? ");
 			param.add(area);

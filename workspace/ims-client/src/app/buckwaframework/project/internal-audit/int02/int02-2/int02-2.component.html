@@ -98,7 +98,7 @@
       </div>
     </div>
 
-    <div class="ui segment">
+    <div class="ui segment" *ngIf="qtnMasterId">
       <div class="ui grid">
         <div class="sixteen wide column">
           <condition class="ui form" [riskId]="qtnMasterId" [riskType]="'QTN_HEADER'" [page]="'int02-2'"></condition>

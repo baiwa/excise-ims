@@ -14,7 +14,7 @@ const URL = {
 
 @Component({
   selector: "app-int02-m2",
-  host: { '(window:keydown)': 'hotkeys($event)' },
+  // host: { '(window:keydown)': 'hotkeys($event)' },
   templateUrl: "./int02-m2.component.html",
   styleUrls: ["./int02-m2.component.css"]
 })
@@ -28,7 +28,7 @@ export class Int02M2Component implements OnInit {
     // TODO
   }
 
-  hotkeys(event) { // On KeyDown
+  /* hotkeys(event) { // On KeyDown
     if ((event.ctrlKey || event.metaKey) && event.which == 83) {
       event.preventDefault();
       $("#form").submit((event) => {
@@ -37,10 +37,15 @@ export class Int02M2Component implements OnInit {
     } else {
       return event;
     }
-  }
+  } */
 
   ngOnInit() {
     this.questionnaire = _Questionnaire;
+    // Pull Data
+    this.pull();
+  }
+
+  pull() {
     const data = "2561"; // { year: "2561" };
     this.ajax.post(URL.DATA, data, res => {
       this.questionnaire = res.json();
@@ -52,10 +57,12 @@ export class Int02M2Component implements OnInit {
     this.msg.comfirm(boo => {
       if (boo) {
         this.savings = true;
-        this.ajax.post(URL.SAVED, null, res => {
+        this.ajax.post(URL.SAVED, { result: this.questionnaire }, res => {
           let response = res.json();
           if (response.messageType === "C") {
             this.msg.successModal(response.messageTh, "สำเร็จ");
+            // Pull Data
+            this.pull();
           } else {
             this.msg.errorModal(response.messageTh, "ล้มเหลว");
           }
@@ -108,6 +115,8 @@ export class Int02M2Component implements OnInit {
               let response = res.json();
               if (response.messageType === "C") {
                 this.msg.successModal(response.messageTh, "สำเร็จ");
+                // Pull Data
+                this.pull();
               } else {
                 this.msg.errorModal(response.messageTh, "ล้มเหลว");
               }

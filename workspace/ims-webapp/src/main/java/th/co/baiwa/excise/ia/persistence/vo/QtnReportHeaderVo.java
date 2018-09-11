@@ -6,6 +6,15 @@ public class QtnReportHeaderVo extends QtnReportHeader {
 
 	private String conclusion;
 	private Long headerId;
+	private String qtnFinished;
+
+	public String getQtnFinished() {
+		return qtnFinished;
+	}
+
+	public void setQtnFinished(String qtnFinished) {
+		this.qtnFinished = qtnFinished;
+	}
 
 	public Long getHeaderId() {
 		return headerId;

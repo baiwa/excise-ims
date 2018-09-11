@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -75,22 +76,30 @@ public class Int02m2Service {
 	private static String TYPE_HDR = "header";
 	private static String TYPE_DTL = "detail";
 
-	public Message saveData(List<Int02m2Vo> data) {
+	public Message saveData(List<Int02m2Vo> data, String save) {
 		Message msg = ApplicationCache.getMessage("MSG_00003");
 		try {
 			QtnFinalRepHeader header;
 			String user = UserLoginUtils.getCurrentUsername();
+			String stat = "";
+			if ("save".equals(save)) {
+				stat = FLAG.N_FLAG;
+			} else {
+				stat = FLAG.Y_FLAG;
+			}
 			for (Int02m2Vo da : data) {
 				if (BeanUtils.isNotEmpty(da.getId()) && da.getId() != 0) {
 					// logger.info("HeaderId : {}", da.getId());
 					header = qtnFinalRepHdrRepo.findOne(da.getId());
 					header.setQtnCreator(user);
+					header.setQtnFinished(stat);
 					header.setQtnReportHdrId(da.getHeaderId());
 					header.setQtnConclusion(da.getConclusion());
 					header = qtnFinalRepHdrRepo.save(header);
 				} else {
 					header = new QtnFinalRepHeader();
 					header.setQtnCreator(user);
+					header.setQtnFinished(stat);
 					header.setQtnReportHdrId(da.getHeaderId());
 					header.setQtnConclusion(da.getConclusion());
 					header = qtnFinalRepHdrRepo.save(header);
@@ -164,7 +173,7 @@ public class Int02m2Service {
 		logger.info("{} {} {}", lov.get(0).getSubTypeDescription(), lov.get(0).getLovId(), code);
 		// String sector = lov.get(0).getSubTypeDescription();
 		// String.valueOf(lov.get(0).getLovId());
-		//String year = "2561";
+		// String year = "2561";
 		String sector = code.substring(0, 2);
 		String area = code.substring(2, 4);
 		String finished = "Y";
@@ -237,6 +246,7 @@ public class Int02m2Service {
 						vo.setTitle(h.getQtnReportHdrName());
 						vo.setContent(h.getQtnReportHdrName());
 						vo.setConclusion(h.getConclusion());
+						vo.setFinished(h.getQtnFinished());
 						vo.setDetail(int02m2Details);
 						int02m2.add(vo);
 					}

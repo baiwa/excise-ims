@@ -50,7 +50,14 @@ public class Int02m2Controller {
 	@ResponseBody
 	public Message saveMaster(@RequestBody Int02m2FormVo req) {
 		List<Int02m2Vo> data = req.getResult();
-		return int02m2Service.saveData(data);
+		return int02m2Service.saveData(data, "save");
+	}
+	
+	@PostMapping("/saved")
+	@ResponseBody
+	public Message saveFinished(@RequestBody Int02m2FormVo req) {
+		List<Int02m2Vo> data = req.getResult();
+		return int02m2Service.saveData(data, "saved");
 	}
 	
 }

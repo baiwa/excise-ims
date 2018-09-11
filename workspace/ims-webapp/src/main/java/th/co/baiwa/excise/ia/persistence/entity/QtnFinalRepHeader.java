@@ -30,6 +30,17 @@ public class QtnFinalRepHeader extends BaseEntity {
 	
 	@Column(name = "QTN_CONCLUSION")
 	private String qtnConclusion;
+	
+	@Column(name = "QTN_FINISHED")
+	private String qtnFinished;
+
+	public String getQtnFinished() {
+		return qtnFinished;
+	}
+
+	public void setQtnFinished(String qtnFinished) {
+		this.qtnFinished = qtnFinished;
+	}
 
 	public Long getQtnFinalRepHdrId() {
 		return qtnFinalRepHdrId;
