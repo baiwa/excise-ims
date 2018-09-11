@@ -22,8 +22,8 @@ public class QtnFinalRepDetail extends BaseEntity {
 	@Column(name = "QTN_FINAL_REP_DTL_ID")
 	private Long qtnFinalRepDtlId;
 	
-	@Column(name = "QTN_FINAL_REP_HDR_ID")
-	private Long qtnFinalRepHdrId;
+	@Column(name = "QTN_FINAL_REP_MAN_ID")
+	private Long qtnFinalRepManId;
 	
 	@Column(name = "QTN_REPORT_DTL_ID")
 	private Long qtnReportDtlId;
@@ -42,12 +42,12 @@ public class QtnFinalRepDetail extends BaseEntity {
 		this.qtnFinalRepDtlId = qtnFinalRepDtlId;
 	}
 
-	public Long getQtnFinalRepHdrId() {
-		return qtnFinalRepHdrId;
+	public Long getQtnFinalRepManId() {
+		return qtnFinalRepManId;
 	}
 
-	public void setQtnFinalRepHdrId(Long qtnFinalRepHdrId) {
-		this.qtnFinalRepHdrId = qtnFinalRepHdrId;
+	public void setQtnFinalRepManId(Long qtnFinalRepManId) {
+		this.qtnFinalRepManId = qtnFinalRepManId;
 	}
 
 	public Long getQtnReportDtlId() {
@@ -73,5 +73,5 @@ public class QtnFinalRepDetail extends BaseEntity {
 	public void setQtnCreator(String qtnCreator) {
 		this.qtnCreator = qtnCreator;
 	}
-	
+
 }

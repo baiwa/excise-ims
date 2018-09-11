@@ -64,7 +64,7 @@
   <div class="ui form center aligned grid">
       <button class="ui  grey button" type="button" (click)="clickBack()">กลับ</button>
       <button class="ui  red button" type="button" >ลบรายการที่เลือก</button>
-      <button class="ui  primary button" type="button" >บันทึก</button>
+      <button class="ui  primary button" type="button" (click)="save()">บันทึก</button>
   </div> 
 <br><br>
 </div>
@@ -280,7 +280,7 @@
 
   <div class="actions">
     <div class="ui red deny button">ยกเลิก</div>
-    <div class="ui green button" (click)="saveData()">บันทึก</div>
+    <div class="ui green button" (click)="save()">บันทึก</div>
   </div>
 </div>
 <!--End add modal -->

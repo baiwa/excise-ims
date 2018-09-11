@@ -67,7 +67,30 @@ public class Int082Controller {
 		}
 		return message;
 	}
+	
+	@PostMapping("/searchRiskInfHdrActive")
+	@ResponseBody
+	public ResponseDataTable<RiskAssInfHdr> searchRiskInfHdrActive(DataTableRequest dataTableRequest ,RiskAssInfHdr riskAssInfHdr ) {
+		logger.info("queryRiskInfHdrfindByBuggetYear");
+		logger.info("BuggetYear : " + riskAssInfHdr.getBudgetYear());
+		logger.info("BuggetYear : " + riskAssInfHdr.getActive());
+		return riskAssInfService.findByInfHdrActiveCriteriaForDatatable(riskAssInfHdr, dataTableRequest);
 
+	}
+	
+	@PostMapping("/searchRisk")
+	@ResponseBody
+	public ResponseDataTable<RiskAssInfHdr> searchRisk(DataTableRequest dataTableRequest ,RiskAssInfHdr riskAssInfHdr ) {
+		logger.info("searchRisk");
+		logger.info("InfHdrName : " + riskAssInfHdr.getRiskAssInfHdrName());
+		logger.info("BuggetYear : " + riskAssInfHdr.getBudgetYear());
+		logger.info("Active : " + riskAssInfHdr.getActive());
+		return riskAssInfService.searchRiskCriteriaForDatatable(riskAssInfHdr, dataTableRequest);
+	
+	}
+	
+	
+	
 	@PostMapping("/searchRiskInfHdr")
 	@ResponseBody
 	public ResponseDataTable<RiskAssInfHdr> searchRiskAssInfHdr(DataTableRequest dataTableRequest ,RiskAssInfHdr riskAssInfHdr ) {
@@ -107,6 +130,7 @@ public class Int082Controller {
 	@ResponseBody
 	public Message createBuggetYear(@RequestBody RiskAssInfHdr riskAssInfHdr) {
 		logger.info("Add createBuggetYear : " + riskAssInfHdr.getBudgetYear());
+		logger.info("Add Active : " + riskAssInfHdr.getActive());
 		Message message = null;
 		if (BeanUtils.isNotEmpty(riskAssInfHdr.getBudgetYear())) {
 			message = riskAssInfService.createBudgetYear(riskAssInfHdr);
@@ -209,11 +233,21 @@ public class Int082Controller {
 		return message;
 	}
 	
-	@PostMapping("/findByBudgetYear")
+/*	@PostMapping("/findByBudgetYear")
 	@ResponseBody
 	public List<RiskAssInfHdr> findByBudgetYear(@RequestBody RiskAssInfHdr riskAssInfHdr) {
 		return riskAssInfService.findByBudgetYear(riskAssInfHdr.getBudgetYear());
+	}*/
+	
+	
+	@PostMapping("/findByBudgetYearInfHdrActive")
+	@ResponseBody
+	public List<RiskAssInfHdr> findByBudgetYearInfHdrActive(@RequestBody RiskAssInfHdr riskAssInfHdr) {
+		logger.info("BudgetYear : "+riskAssInfHdr.getBudgetYear());
+		logger.info("Active : "+riskAssInfHdr.getActive());
+		return riskAssInfService.findByBudgetYearInfHdrActive(riskAssInfHdr.getBudgetYear(), riskAssInfHdr.getActive());
 	}
+	
 	
 	@PostMapping("/searchFullRiskByBudgetYear")
 	@ResponseBody
@@ -271,7 +305,8 @@ public class Int082Controller {
 	@ResponseBody
 	public  void exportInfFull(@ModelAttribute RiskAssInfHdr riskAssInfHdr, HttpServletResponse response) throws Exception {
 		logger.info("BudgetYear :" + riskAssInfHdr.getBudgetYear());
-		riskAssInfService.exportInfFull(riskAssInfHdr.getBudgetYear(), response);
+		String active ="Y";
+		riskAssInfService.exportInfFull(riskAssInfHdr.getBudgetYear(),active, response);
 		 
 
 	}

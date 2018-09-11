@@ -23,7 +23,7 @@ declare var $: any;
 })
 export class Int09111Component implements OnInit, AfterViewInit {
 
-
+  idProcess:any;
   constructor(
     private ajax: AjaxService,
     private router: Router,
@@ -185,15 +185,36 @@ export class Int09111Component implements OnInit, AfterViewInit {
     }
   }
   
+  save(){	
+
+    $('#modalAddHead').modal('hide');
+    const URL = "ia/int09111/save";
+    this.ajax.post(URL, { 
+      idProcess:this.idProcess
+    }, res => {
+      const msg = res.json();
+      
+    if (msg.messageType == "C") {
+      this.msg.successModal(msg.messageTh);
+      this.clickBack();
+    } else {
+      this.msg.errorModal(msg.messageTh);
+    }
+    });
+  }
+  
   clickBack(){
-    this.router.navigate(['/int09/1/1']);
+    this.router.navigate(['/int09/1/1'], {
+      queryParams: {idProcess:this.idProcess}
+    });
   }
 
 
   ngOnInit() {
+    this.idProcess = this.route.snapshot.queryParams["idProcess"];
+    console.log("idProcess : ",this.idProcess);
     this.dataTable();
     this.calenda();
-    // this.hideModal();
   }
   
 

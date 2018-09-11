@@ -49,13 +49,13 @@ public class QtnMasterService {
 		QtnMaster data = qtnMasterRepository.save(qtnMasterOne);
 		if (data != null) {
 			response.setData(data);
-			if (data.getQtnFinished().equals("Y"))
+			if ("Y".equals(data.getQtnFinished()))
 				msg = ApplicationCache.getMessage("MSG_00007");
 			else
 				msg = ApplicationCache.getMessage("MSG_00002");
 		} else {
 			response.setData(qtnMasterOne);
-			if (qtnMasterOne.getQtnFinished().equals("Y"))
+			if ("Y".equals(qtnMasterOne.getQtnFinished()))
 				msg = ApplicationCache.getMessage("MSG_00008");
 			else 
 				msg = ApplicationCache.getMessage("MSG_00003");

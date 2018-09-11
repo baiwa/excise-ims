@@ -98,7 +98,7 @@ public class QuestionnaireMainDetailService {
 		Message msg;
 		msg = ApplicationCache.getMessage("MSG_00003");
 		
-		if(vo.getFlag().equals("M")) {
+		if("M".equals(vo.getFlag())) {
 			QuestionnaireMain dataById = qtnMainDtlRepository.findOne(Long.parseLong(id));
 			dataById.setQtnMainDetail(vo.getQtnMainDetail());
 			qtnMainDtlRepository.save(dataById);

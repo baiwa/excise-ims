@@ -116,3 +116,15 @@ img.image-width-18 {
 .textarea {
     padding: 2px 0px 0px 2px;
 }
+
+/* Text Aligning  */
+.text-left {
+    text-align: left !important;
+}
+.text-center {
+    text-align: center !important;
+}
+.text-right {
+    text-align: right !important;
+}
+/* Text Aligning  */

@@ -23,7 +23,7 @@ export class Int0821Component implements OnInit {
   riskAssInfHdrName: any;
   riskInfPaperName: any;
   budgetYear: any;
-
+  active: any;
 
   infRiskList: any[];
   datatable: any;
@@ -46,6 +46,7 @@ export class Int0821Component implements OnInit {
   columnList: any[];
   percentList: any[];
 
+  riskType: any;
 
   showData: boolean = false;
   constructor(
@@ -61,6 +62,7 @@ export class Int0821Component implements OnInit {
     $(".ui.dropdown.ai").css("width", "100%");
 
     this.budgetYear = this.route.snapshot.queryParams["budgetYear"];
+    this.riskType = this.route.snapshot.queryParams["riskType"];
     if (this.budgetYear == null || this.budgetYear == undefined) {
       this.budgetYear == 'xxxx';
     }
@@ -74,6 +76,8 @@ export class Int0821Component implements OnInit {
         this.changeYear(date.getFullYear() + 543);
       }
     });
+    this.active = "Y";
+
     this.columnList = [];
     this.percentList = [];
 
@@ -115,9 +119,9 @@ export class Int0821Component implements OnInit {
     } else {
       const URL = "ia/int082/createBudgetYear";
 
-      this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
+      this.ajax.post(URL, { budgetYear: this.budgetYear, active: 'Y' }, res => {
         this.router.navigate(["/int08/2/2"], {
-          queryParams: { budgetYear: this.budgetYear }
+          queryParams: { budgetYear: this.budgetYear}
         });
       }, errRes => {
         var message = errRes.json();
@@ -128,8 +132,11 @@ export class Int0821Component implements OnInit {
   }
 
   searchDataTable() {
+    this.riskType = $('#riskType').val();
+    this.budgetYear = $('#budgetYear').val();
 
-    this.budgetYear = $('#budgetYear').val().trim();
+    console.log("riskType :" + this.riskType);
+
     if (this.budgetYear != null && this.budgetYear != undefined && this.budgetYear != '') {
       this.isSearch = true;
       this.initDatatable();
@@ -143,7 +150,8 @@ export class Int0821Component implements OnInit {
     if (this.datatable != null || this.datatable != undefined) {
       this.datatable.destroy();
     }
-    const URL = AjaxService.CONTEXT_PATH + "ia/int082/searchRiskInfHdr";
+    // const URL = AjaxService.CONTEXT_PATH + "ia/int082/searchRiskInfHdrActive";
+    const URL = AjaxService.CONTEXT_PATH + "ia/int082/searchRisk";
     console.log(URL);
     console.log(this.budgetYear);
     this.datatable = $("#dataTable").DataTable({
@@ -157,16 +165,10 @@ export class Int0821Component implements OnInit {
       ajax: {
         type: "POST",
         url: URL,
-        data: { budgetYear: this.budgetYear }
+        data: { riskAssInfHdrName: this.riskType, budgetYear: this.budgetYear, active: this.active }
       },
       columns: [
 
-        // {
-        //   render: function (data, type, row, meta) {
-        //     return `<input type="checkbox" >`;
-        //   },
-        //   className: "center"
-        // },
         {
           render: function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
@@ -182,7 +184,6 @@ export class Int0821Component implements OnInit {
             console.log("data :", row.createdDate)
             if (row.createdDate != null && row.createdDate != undefined && row.createdDate != '') {
               var dateTime = new Date(row.createdDate).toLocaleString("th-TH");
-              console.log(dateTime);
               return dateTime.split(' ')[0];
             } else {
               return row.createdDate;
@@ -427,11 +428,11 @@ export class Int0821Component implements OnInit {
 
   queryColumnNameListAndSetColumn(budgetYear) {
     this.budgetYear = budgetYear;
-
-    var url = "ia/int082/findByBudgetYear";
-    this.ajax.post(url, { budgetYear: this.budgetYear }, res => {
+    this.active = "Y";
+    var url = "ia/int082/findByBudgetYearInfHdrActive";
+    this.ajax.post(url, { budgetYear: this.budgetYear, active: this.active }, res => {
       this.riskAssInfHdrList = res.json();
-      console.log("=ช่องที่ 0",this.riskAssInfHdrList[0].budgetYear);
+      console.log("=ช่องที่ 0", this.riskAssInfHdrList[0].budgetYear);
       this.budgetYearFull = this.riskAssInfHdrList[0].budgetYear;
       var riskAssInfHdr = res.json();
       for (let i = 0; i < riskAssInfHdr.length; i++) {
@@ -536,10 +537,10 @@ export class Int0821Component implements OnInit {
 
 
   ExportInfFull() {
-    const URL = "ia/int082/exportInfFull?budgetYear=" +  this.budgetYearFull ;
-    console.log("budgetYear", this.budgetYearFull );
+    const URL = "ia/int082/exportInfFull?budgetYear=" + this.budgetYearFull;
+    console.log("budgetYear", this.budgetYearFull);
     this.ajax.download(URL);
- 
+
   }
 
 }

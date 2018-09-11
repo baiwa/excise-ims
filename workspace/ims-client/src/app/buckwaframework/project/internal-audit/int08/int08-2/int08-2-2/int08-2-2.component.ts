@@ -24,6 +24,7 @@ export class Int0822Component implements OnInit, AfterViewInit {
   active: any;
   sw: boolean;
 
+  riskType: any;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -38,6 +39,7 @@ export class Int0822Component implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     this.budgetYear = this.route.snapshot.queryParams["budgetYear"];
+
     this.initDatatable();
   }
 
@@ -204,9 +206,10 @@ export class Int0822Component implements OnInit, AfterViewInit {
   cancelFlow() {
     this.messageBarService.comfirm(foo => {
       // let msg = "";
+      this.riskType ="0";
       if (foo) {
         this.router.navigate(["/int08/2/1"], {
-          queryParams: { budgetYear: this.budgetYear }
+          queryParams: { budgetYear: this.budgetYear ,riskType: this.riskType }
         }
         );
       }

@@ -1,77 +1,122 @@
 import { Component, OnInit } from "@angular/core";
 
 import { Questionnaire, _Questionnaire } from "./int02-m2.mock";
-import { AjaxService } from "../../../../common/services";
+import { AjaxService, MessageBarService } from "../../../../common/services";
 
 declare var $: any;
 
 const URL = {
-    DATA: "ia/int02m2/data",
-    SAVE: "ia/int02m2/save",
-    DATA_MOCK: "ia/int02m2/data_mock"
+  DATA: "ia/int02m2/data",
+  SAVE: "ia/int02m2/save",
+  SAVED: "ia/int02m2/saved",
+  DATA_MOCK: "ia/int02m2/data_mock"
 };
 
 @Component({
-    selector: "app-int02-m2",
-    templateUrl: "./int02-m2.component.html",
-    styleUrls: ["./int02-m2.component.css"]
+  selector: "app-int02-m2",
+  host: { '(window:keydown)': 'hotkeys($event)' },
+  templateUrl: "./int02-m2.component.html",
+  styleUrls: ["./int02-m2.component.css"]
 })
 export class Int02M2Component implements OnInit {
 
   questionnaire: Questionnaire[] = [];
   loading: boolean = true;
-  constructor(private ajax: AjaxService) {
-      // TODO
+  saving: boolean = false;
+  savings: boolean = false;
+  constructor(private ajax: AjaxService, private msg: MessageBarService) {
+    // TODO
+  }
+
+  hotkeys(event) { // On KeyDown
+    if ((event.ctrlKey || event.metaKey) && event.which == 83) {
+      event.preventDefault();
+      $("#form").submit((event) => {
+        this.onSubmit(event);
+      }).submit();
+    } else {
+      return event;
+    }
   }
 
   ngOnInit() {
     this.questionnaire = _Questionnaire;
-    const data = {};
+    const data = "2561"; // { year: "2561" };
     this.ajax.post(URL.DATA, data, res => {
       this.questionnaire = res.json();
       this.loading = false;
-      setTimeout(() => {
-        // $('#acc').accordion();
-        $('.ui.checkbox').checkbox();
-      });
     });
+  }
+
+  send() {
+    this.msg.comfirm(boo => {
+      if (boo) {
+        this.savings = true;
+        this.ajax.post(URL.SAVED, null, res => {
+          let response = res.json();
+          if (response.messageType === "C") {
+            this.msg.successModal(response.messageTh, "สำเร็จ");
+          } else {
+            this.msg.errorModal(response.messageTh, "ล้มเหลว");
+          }
+          this.savings = false;
+        });
+      }
+    }, "ต้องการส่งผลแบบสอบทานจริงหรือไม่?");
   }
 
   onSubmit(form) {
     form.preventDefault();
-    let promise = new Promise((resolve, reject) => {
-      $.each(form.target, (index, val) => {
-        const { id, value, checked } = val; // extract construct
-        if (id.split("_")[0] == "point" && checked) {
-          this.questionnaire.forEach(obj => {
-            obj.detail.forEach(ob => {
-              if (ob.detailId == parseInt(id.split("_")[1])) {
-                ob.point = value;
-              }
-            })
-          });
-        }
-        if (id.split("_")[0] == "conclusion") {
-          this.questionnaire.forEach(obj => {
-            if (obj.detail.length > 0 && obj.detail[0].headerId == id.split("_")[1]) {
-              if (value.trim() != "") {
-                obj.conclusion = value.trim();
-              }
+    this.msg.comfirm(boo => {
+      if (boo) {
+        this.saving = true;
+        let promise = new Promise((resolve, reject) => {
+          $.each(form.target, (index, val) => {
+            const { id, value, checked } = val; // extract construct
+            if (id.split("_")[0] == "point" && checked) {
+              this.questionnaire.forEach(obj => {
+                obj.detail.forEach(ob => {
+                  if (id.split("_")[1] == "detail") {
+                    if (ob.detailId == parseInt(id.split("_")[2])) {
+                      ob.point = value;
+                    }
+                  }
+                  if (id.split("_")[1] == "header") {
+                    if (ob.headerId == parseInt(id.split("_")[2])) {
+                      ob.point = value;
+                    }
+                  }
+                })
+              });
+            }
+            if (id.split("_")[0] == "conclusion") {
+              this.questionnaire.forEach(obj => {
+                if (obj.detail.length > 0 && obj.detail[0].headerId == id.split("_")[1]) {
+                  if (value.trim() != "") {
+                    obj.conclusion = value.trim();
+                  }
+                }
+              });
+            }
+            if (form.target.length - 1 == index) {
+              resolve(true);
             }
           });
-        }
-        if (form.target.length - 1 == index) {
-          resolve(true);
-        }
-      });
-    }).then(boo => {
-      if (boo) {
-        this.ajax.post(URL.SAVE, { result: this.questionnaire }, res => {
-          
+        }).then(boo => {
+          if (boo) {
+            this.ajax.post(URL.SAVE, { result: this.questionnaire }, res => {
+              let response = res.json();
+              if (response.messageType === "C") {
+                this.msg.successModal(response.messageTh, "สำเร็จ");
+              } else {
+                this.msg.errorModal(response.messageTh, "ล้มเหลว");
+              }
+              this.saving = false;
+            });
+          }
         });
-        console.log(this.questionnaire);
       }
-    });
+    }, "ต้องการบันทึกข้อมูลจริงหรือไม่?");
   }
 
 }

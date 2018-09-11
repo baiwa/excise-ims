@@ -27,7 +27,7 @@ public class QtnMasterRepositoryImpl implements QtnMasterRepositoryCustom {
 		List<Object> param = new ArrayList<Object>();
 		String SQL = " select M.* from sys_lov l inner join sys_lov v on l.lov_id = v.lov_id_master inner join IA_QTN_MASTER m on m.QTN_SECTOR = v.LOV_ID where l.type = 'SECTOR_VALUE' and v.type = 'SECTOR_VALUE' ";
 		StringBuilder sql = new StringBuilder(SQL);
-		if (area.equals("00")) {
+		if (!"00".equals(area)) {
 			sql.append("and v.SUB_TYPE = ? ");
 			param.add(area);
 		} else {

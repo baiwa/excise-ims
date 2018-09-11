@@ -42,8 +42,8 @@ public class Int02m2Controller {
 	
 	@PostMapping("/data")
 	@ResponseBody
-	public List<Int02m2Vo> findData() {
-		return int02m2Service.findData();
+	public List<Int02m2Vo> findData(@RequestBody String year) {
+		return int02m2Service.findData(year);
 	}
 
 	@PostMapping("/save")

@@ -100,7 +100,10 @@ export class Int022Component implements OnInit {
       this.qtnMaster = this.iaService.getData();
     }
     // Combobox
-    this.ajax.post(URL.COMBOBOX, {}, res => {
+    const request = {
+      type: ""
+    };
+    this.ajax.post(URL.COMBOBOX, request, res => {
       this.departmentNameArr = res.json();
     });
   }

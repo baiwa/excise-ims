@@ -15,24 +15,27 @@ declare var $: any;
   styleUrls: ['./int08-2-5.component.css']
 })
 export class Int0825Component implements OnInit {
-  
+
   riskInfPaperName: any;
   budgetYear: any;
   userCheck: any;
-  
-  riskAssInfHdrList :any;
+
+  riskAssInfHdrList: any;
   columnList: any[];
   percentList: any[];
-  
+
   datatable: any;
   isConditionShow: any;
   ispercent: any;
+
+  active: any;
+
   constructor(
     private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
     private route: ActivatedRoute
-  ) { 
+  ) {
     this.isConditionShow = false;
     this.ispercent = false;
   }
@@ -42,20 +45,22 @@ export class Int0825Component implements OnInit {
     this.columnList = [];
     this.percentList = [];
     this.queryColumnNameListAndSetColumn();
+    this.active = "Y";
   }
   ngAfterViewInit() {
   }
 
   queryColumnNameListAndSetColumn() {
-    var url = "ia/int082/findByBudgetYear";
+    this.active = "Y";
+    var url = "ia/int082/findByBudgetYearInfHdrActive";
 
-    this.ajax.post(url, { budgetYear: this.budgetYear }, res => {
+    this.ajax.post(url, { budgetYear: this.budgetYear, active: this.active }, res => {
       this.riskAssInfHdrList = res.json();
 
-      var  riskAssInfHdr = res.json();
-      console.log( "data : ", riskAssInfHdr);
+      var riskAssInfHdr = res.json();
+      console.log("data : ", riskAssInfHdr);
 
-      for(let i = 0; i <riskAssInfHdr.length; i++){
+      for (let i = 0; i < riskAssInfHdr.length; i++) {
         const element = riskAssInfHdr[i];
         this.columnList.push(element.riskAssInfHdrName);
         this.percentList.push(0);
@@ -63,12 +68,12 @@ export class Int0825Component implements OnInit {
 
       var trHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> <th rowspan="2" style="text-align: center !important">ระบบสารสนเทศฯ ของกรมสรรพสามิต</th>';
       this.columnList.forEach(element => {
-         console.log(element);
-         trHTML += '<th rowspan="2" style="text-align: center !important; width:14%;">' + element + '</th>';
-       });
-         trHTML += '<th rowspan="2"  style="text-align: center !important;width:10%;">รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th style="text-align: center !important">แปลค่า</th></tr>';
-          $("#trColumn").html(trHTML);
-         this.initDatatable();
+        console.log(element);
+        trHTML += '<th rowspan="2" style="text-align: center !important; width:14%;">' + element + '</th>';
+      });
+      trHTML += '<th rowspan="2"  style="text-align: center !important;width:10%;">รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th style="text-align: center !important">แปลค่า</th></tr>';
+      $("#trColumn").html(trHTML);
+      this.initDatatable();
     }, errRes => {
       console.log(errRes);
     });
@@ -78,23 +83,23 @@ export class Int0825Component implements OnInit {
     var url = 'ia/int082/searchFullRiskByBudgetYear';
     var hrmlTr = '';
     this.ajax.post(url, { budgetYear: this.budgetYear, riskAssInfHdrNameList: this.columnList }, res => {
-      
+
       res.json().forEach(element => {
-        
+
         console.log(element);
         hrmlTr += "<tr style='text-align: center !important'>";
         hrmlTr += "<td >" + element.id + "</td>";
         hrmlTr += "<td style='text-align: left !important'>" + element.infName + "</td>";
-       
+
         element.rl.forEach(rl => {
           hrmlTr += "<td style='text-align: right !important' >" + rl + "</td>";
         });
         hrmlTr += "<td style='text-align: right !important'>" + element.sumRiskCost + "</td>";
-        hrmlTr += "<td id='valueRlAll' class='"+this.getStyeClassByColor(element.color)+"'>" + element.valueRl + "</td>";
-        hrmlTr += "<td id='convertValueAll' class='"+this.getStyeClassByColor(element.color)+"'>" + element.convertValue + "</td>";
+        hrmlTr += "<td id='valueRlAll' class='" + this.getStyeClassByColor(element.color) + "'>" + element.valueRl + "</td>";
+        hrmlTr += "<td id='convertValueAll' class='" + this.getStyeClassByColor(element.color) + "'>" + element.convertValue + "</td>";
         hrmlTr += "</tr>";
-        
-      
+
+
       });
 
       $("#tbody").html(hrmlTr);
@@ -103,15 +108,15 @@ export class Int0825Component implements OnInit {
     });
   }
 
- getStyeClassByColor(color){
-  if(color == 'แดง' ){
-    return 'red';
-  } else if (color == 'เขียว') {
-    return 'green';
-  } else if (color == 'เหลือง') {
-    return 'yellow';
+  getStyeClassByColor(color) {
+    if (color == 'แดง') {
+      return 'red';
+    } else if (color == 'เขียว') {
+      return 'green';
+    } else if (color == 'เหลือง') {
+      return 'yellow';
+    }
   }
- }
 
   modalConditionRL() {
     this.isConditionShow = true;
@@ -149,10 +154,9 @@ export class Int0825Component implements OnInit {
   }
 
   ExportInfFull() {
-    const URL = "ia/int082/exportInfFull?budgetYear=" +  this.budgetYear ;
-    console.log("budgetYear", this.budgetYear );
+    const URL = "ia/int082/exportInfFull?budgetYear=" + this.budgetYear;
+    console.log("budgetYear :" + this.budgetYear);
     this.ajax.download(URL);
- 
   }
 
 

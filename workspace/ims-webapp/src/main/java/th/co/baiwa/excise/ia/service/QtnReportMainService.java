@@ -68,7 +68,7 @@ public class QtnReportMainService {
 			QtnReportDetail d;
 			for (Int023FormVo v : vo.getSave()) {
 				logger.info("For : {}", v.getQtnFor());
-				if (v.getQtnFor().equals("M")) { // For IA_QTN_REPORT_MAIN
+				if ("M".equals(v.getQtnFor())) { // For IA_QTN_REPORT_MAIN
 					if (BeanUtils.isEmpty(v.getQtnReportManId())) {
 						m = new QtnReportMain();
 						m.setCreatedBy(user);
@@ -81,7 +81,7 @@ public class QtnReportMainService {
 					mainId = m.getQtnReportManId();
 					msg = ApplicationCache.getMessage("MSG_00002");
 				}
-				if (v.getQtnFor().equals("D")) { // For IA_QTN_REPORT_DETAIL
+				if ("D".equals(v.getQtnFor())) { // For IA_QTN_REPORT_DETAIL
 					if (BeanUtils.isEmpty(v.getQtnReportDtlId())) {
 						d = new QtnReportDetail();
 						d.setCreatedBy(user);
@@ -101,11 +101,11 @@ public class QtnReportMainService {
 			List<Long> lim = new ArrayList<>();
 			List<Long> lid = new ArrayList<>();
 			for (Int023FormVo v : vo.getDelete()) {
-				if (v.getQtnFor().equals("M")) { // For IA_QTN_REPORT_MAIN
+				if ("M".equals(v.getQtnFor())) { // For IA_QTN_REPORT_MAIN
 					lim.add(Long.parseLong(v.getQtnReportManId()));
 					has[0] = true;
 				}
-				if (v.getQtnFor().equals("D")) { // For IA_QTN_REPORT_DETAIL
+				if ("D".equals(v.getQtnFor())) { // For IA_QTN_REPORT_DETAIL
 					lid.add(Long.parseLong(v.getQtnReportDtlId()));
 					has[1] = true;
 				}
