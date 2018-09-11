@@ -56,16 +56,16 @@ public class Int0511Service {
 		//entity.setExciseDepartment(form.getExciseDepartment());
 		//entity.setExciseRegion(form.getExciseRegion());
 		//entity.setExciseDistrict(form.getExciseDistrict());
-		entity.setDateOfPay(DateConstant.convertStrDD_MM_YYYYToDate(form.getDateOfPay()));
+		entity.setDateOfPay(DateConstant.convertStrDDMMYYYYToDate(form.getDateOfPay()));
 		entity.setStatus(form.getStatus());
 		entity.setDepartmentName(form.getDepartmentName());
 		entity.setBookNumberWithdrawStamp(form.getBookNumberWithdrawStamp());
-		entity.setDateWithdrawStamp(DateConstant.convertStrDD_MM_YYYYToDate(form.getDateWithdrawStamp()));
+		entity.setDateWithdrawStamp(DateConstant.convertStrDDMMYYYYToDate(form.getDateWithdrawStamp()));
 		entity.setBookNumberDeliverStamp(form.getBookNumberDeliverStamp());
-		entity.setDateDeliverStamp(DateConstant.convertStrDD_MM_YYYYToDate(form.getDateDeliverStamp()));
+		entity.setDateDeliverStamp(DateConstant.convertStrDDMMYYYYToDate(form.getDateDeliverStamp()));
 		entity.setFivePartNumber(form.getFivePartNumber());
-		entity.setFivePartDate(DateConstant.convertStrDD_MM_YYYYToDate(form.getFivePartDate()));
-		entity.setStampCheckDate(DateConstant.convertStrDD_MM_YYYYToDate(form.getStampCheckDate()));
+		entity.setFivePartDate(DateConstant.convertStrDDMMYYYYToDate(form.getFivePartDate()));
+		entity.setStampCheckDate(DateConstant.convertStrDDMMYYYYToDate(form.getStampCheckDate()));
 		entity.setStampChecker(form.getStampChecker());
 		entity.setStampType(form.getStampType());
 		entity.setStampBrand(form.getStampBrand());
@@ -78,7 +78,7 @@ public class Int0511Service {
 		entity.setStampCodeStart(form.getStampCodeStart());
 		entity.setStampCodeEnd(form.getStampCodeEnd());
 		entity.setNote(form.getNote());
-		entity.setCreatedDate(DateConstant.convertStrDD_MM_YYYYToDate(form.getCreatedDate()));
+		entity.setCreatedDate(DateConstant.convertStrDDMMYYYYToDate(form.getCreatedDate()));
 		entity.setFileName(form.getFileName());
 		iaStamDetailRepository.save(entity);		
 	}

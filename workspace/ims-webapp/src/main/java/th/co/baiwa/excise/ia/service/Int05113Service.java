@@ -69,16 +69,16 @@ public class Int05113Service {
             entity.setExciseRegion(response.getOffice());
             
             /* set sector area and branch*/
-            entity.setDateOfPay(DateConstant.convertStrDD_MM_YYYYToDate(form.getDateOfPay()));            
+            entity.setDateOfPay(DateConstant.convertStrDDMMYYYYToDate(form.getDateOfPay()));            
             entity.setStatus(form.getStatus());
             entity.setDepartmentName(form.getDepartmentName());
             entity.setBookNumberWithdrawStamp(form.getBookNumberWithdrawStamp());
-            entity.setDateWithdrawStamp(DateConstant.convertStrDD_MM_YYYYToDate(form.getDateWithdrawStamp()));
+            entity.setDateWithdrawStamp(DateConstant.convertStrDDMMYYYYToDate(form.getDateWithdrawStamp()));
             entity.setBookNumberDeliverStamp(form.getBookNumberDeliverStamp());
-            entity.setDateDeliverStamp(DateConstant.convertStrDD_MM_YYYYToDate(form.getDateDeliverStamp()));
+            entity.setDateDeliverStamp(DateConstant.convertStrDDMMYYYYToDate(form.getDateDeliverStamp()));
             entity.setFivePartNumber(form.getFivePartNumber());
-            entity.setFivePartDate(DateConstant.convertStrDD_MM_YYYYToDate(form.getFivePartDate()));
-            entity.setStampCheckDate(DateConstant.convertStrDD_MM_YYYYToDate(form.getStampCheckDate()));
+            entity.setFivePartDate(DateConstant.convertStrDDMMYYYYToDate(form.getFivePartDate()));
+            entity.setStampCheckDate(DateConstant.convertStrDDMMYYYYToDate(form.getStampCheckDate()));
             entity.setStampChecker(form.getStampChecker());
             entity.setStampType(form.getStampType());
             entity.setStampBrand(form.getStampBrand());
@@ -91,7 +91,7 @@ public class Int05113Service {
             entity.setStampCodeStart(form.getStampCodeStart());
             entity.setStampCodeEnd(form.getStampCodeEnd());
             entity.setNote(form.getNote());
-            entity.setCreatedDate(DateConstant.convertStrDD_MM_YYYYToDate(form.getCreatedDate()));
+            entity.setCreatedDate(DateConstant.convertStrDDMMYYYYToDate(form.getCreatedDate()));
 
             IaStampDetail detailId = iaStamDetailRepository.save(entity);
             

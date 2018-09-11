@@ -108,7 +108,7 @@ public class IaProofOfPaymentDao {
 	    			"?, " + 
 	    			"?, " +
 	    			"?) ",new Object[] {id,vo.getCreatedBy(),vo.getStateAgencyName(),vo.getThosePicked(),
-	    					DateConstant.convertStrDD_MM_YYYYToDate(vo.getFiscalYear()),"N"});
+	    					DateConstant.convertStrDDMMYYYYToDate(vo.getFiscalYear()),"N"});
 	    	return id;
 			    }
 			   
