@@ -112,7 +112,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     }
     document.getElementById("trDrinamic").innerHTML =
 
-      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
+      '<th rowspan="2" style="text-align: center !important" >ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
@@ -139,12 +139,12 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       this.month / 2 +
       " เดือนหลัง </th> " +
       "</tr>" +
-      '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
+      '<tr><th style="text-align: center !important;border-left: 1px solid rgba(34,36,38,.1);">' +
       this.month / 2 +
-      " เดือนแรก</th>" +
+      " &nbsp; เดือนแรก</th>" +
       '<th style="text-align: center !important">' +
       this.month / 2 +
-      " เดือนหลัง </th>" +
+      " &nbsp; เดือนหลัง </th>" +
       '<th style="text-align: center !important">' +
       (currYear - 3) +
       "</th>" +
@@ -397,8 +397,8 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       searching: false,
       scrollX: true,
       select: true,
-      ordering: true,
-      pageLength: 5,
+      ordering: false,
+      pageLength: 10,
       processing: true,
       serverSide: true,
       paging: true,
