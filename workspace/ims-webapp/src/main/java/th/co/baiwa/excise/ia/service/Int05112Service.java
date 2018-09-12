@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,7 +106,7 @@ public class Int05112Service {
 				IaStampDetailSummary summary = iaStampDetailSummaryRepository.findByStampGenreIdAndYear(Long.valueOf(index), previousYear);
 				if (summary!=null) {					
 					result.setBranchLastYeatMoneyOfStamp(summary.getSumOfValue());
-					result.setBranchLastYeatNumberOfStamp(summary.getNumberOfStamp());					
+					result.setBranchLastYeatNumberOfStamp(summary.getNumberOfStamp().intValue());					
 				}
 								
 				/*receive & pay of year*/				 				 				
@@ -240,18 +241,18 @@ public class Int05112Service {
 			for (Int05112Vo item : list) {				
 				IaStampDetailSummary summary = iaStampDetailSummaryRepository.findByStampGenreIdAndYear(Long.valueOf(item.getColumnId()), item.getYear());
 				if (summary != null) {
-					summary.setNumberOfStamp(item.getBranchUpToDateNumberOfStamp());
+					summary.setNumberOfStamp(new BigDecimal(item.getBranchUpToDateNumberOfStamp()));
 					summary.setSumOfValue(item.getBranchUpToDateMoneyOfStamp());
-					summary.setStamGenreId(Long.valueOf(item.getColumnId()));
+					summary.setStampGenreId(new BigDecimal(item.getColumnId()));
 					summary.setYear(item.getYear());
 					
 					iaStampDetailSummaryRepository.save(summary);
 				}else {
 					/*create row */
 					IaStampDetailSummary vo = new IaStampDetailSummary();
-					vo.setNumberOfStamp(item.getBranchUpToDateNumberOfStamp());
+					vo.setNumberOfStamp(new BigDecimal(item.getBranchUpToDateNumberOfStamp()));
 					vo.setSumOfValue(item.getBranchUpToDateMoneyOfStamp());
-					vo.setStamGenreId(Long.valueOf(item.getColumnId()));
+					vo.setStampGenreId(new BigDecimal(item.getColumnId()));
 					vo.setYear(item.getYear());
 					
 					iaStampDetailSummaryRepository.save(vo);
