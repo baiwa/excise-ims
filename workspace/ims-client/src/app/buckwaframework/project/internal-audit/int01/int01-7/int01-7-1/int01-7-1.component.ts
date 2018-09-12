@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { TextDateTH, formatter } from "../../../../../common/helper";
 declare var $: any;
 @Component({
   selector: "app-int01-7-1",
@@ -14,6 +15,22 @@ export class Int0171Component implements OnInit {
   constructor() {}
 
   ngOnInit() {
+
+    $("#calendar1").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+
+    });
+
+    $("#calendar2").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     this.zoneList = [
