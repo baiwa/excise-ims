@@ -43,20 +43,23 @@ export class Int0511Component implements OnInit {
     $("#area").dropdown('restore defaults');
     const URL = "ia/int05111/area";
     let params = e.target.value;
-    this.ajax.post(URL, params, res => {
-      console.log("Id : ", res.json());
-      this.area = res.json();
-    });
+    if(params!=""){
+      this.ajax.post(URL, params, res => {
+        console.log("Id : ", res.json());
+        this.area = res.json();
+      });
+    }
   }
   areaOnchange = (e) => {
     $("#branch").dropdown('restore defaults');
     const URL = "ia/int05111/area";
     let params = e.target.value;
-    this.ajax.post(URL, params, res => {
-
-      console.log("Id : ", res.json());
-      this.branch = res.json();
-    });
+    if(params!=""){
+      this.ajax.post(URL, params, res => {
+        console.log("Id : ", res.json());
+        this.branch = res.json();
+      });
+    }
   }
 
   onClear = () => {

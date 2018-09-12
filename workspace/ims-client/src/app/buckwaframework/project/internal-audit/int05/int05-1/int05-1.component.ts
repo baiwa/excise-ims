@@ -41,29 +41,33 @@ export class Int051Component implements OnInit {
   }
   sectorOnchange = (e) => {
     $("#area").dropdown('restore defaults');
+    console.log(e);
     const URL = "ia/int0511/area";
     let params = e.target.value;
-    this.ajax.post(URL, params, res => {
-      console.log("Id : ", res.json());
-      this.area = res.json();
-    });
+    if(params!=""){
+      this.ajax.post(URL, params, res => {
+        console.log("Id : ", res.json());
+        this.area = res.json();
+      });
+    }
+    
   }
   areaOnchange = (e) => {
     $("#branch").dropdown('restore defaults');
-    const URL = "ia/int0511/area";
+    const URL = "ia/int0511/area";    
     let params = e.target.value;
-    this.ajax.post(URL, params, res => {
 
+    if(params!=""){
+    this.ajax.post(URL, params, res => {
       console.log("Id : ", res.json());
       this.branch = res.json();
     });
   }
+  }
 
   onClear = () => {
     console.log("Clear");
-    this.area=null;
-    this.sector=null;
-    this.branch=null;
+    
     $(".ui.dropdown.ai").dropdown('restore defaults');
     $("#dateForm").val("");
     $("#dateTo").val("");
