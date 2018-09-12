@@ -136,8 +136,12 @@ public class Int05112Service {
 		
 	}
 	
+	public boolean isMonthEqual(String monthId, String month) {		
+		return monthId.equals(month);
+	}
+		
 	public void checkMonth(Int05112Vo vo, String status,String month) {
-		if("01".equals(month)) {
+		if(isMonthEqual("01",month)) {
 			if (PAY.equals(status)) {
 				vo.setJanuaryPay(status);				
 				return;
@@ -146,7 +150,7 @@ public class Int05112Service {
 				return;
 			}			
 		}
-		if("02".equals(month)) {
+		if(isMonthEqual("02",month)) {
 			if (PAY.equals(status)) {
 				vo.setFebruaryPay(status);
 				return;
@@ -155,7 +159,7 @@ public class Int05112Service {
 				return;
 			}
 		}
-		if("03".equals(month)) {
+		if(isMonthEqual("03",month)) {
 			if (PAY.equals(status)) {
 				vo.setMarchPay(status);
 				return;
@@ -164,7 +168,7 @@ public class Int05112Service {
 				return;
 			}
 		}
-		if("04".equals(month)) {
+		if(isMonthEqual("04",month)) {
 			if (PAY.equals(status)) {
 				vo.setAprilPay(status);
 				return;
@@ -173,7 +177,7 @@ public class Int05112Service {
 				return;
 			}
 		}
-		if("05".equals(month)) {
+		if(isMonthEqual("05",month)) {
 			if (PAY.equals(status)) {
 				vo.setMayPay(status);
 				return;
@@ -182,7 +186,7 @@ public class Int05112Service {
 				return;
 			}
 		}
-		if("06".equals(month)) {
+		if(isMonthEqual("06",month)) {
 			if (PAY.equals(status)) {
 				vo.setJunePay(status);
 				return;
@@ -191,7 +195,7 @@ public class Int05112Service {
 				return;
 			}
 		}
-		if("07".equals(month)) {
+		if(isMonthEqual("07",month)) {
 			if (PAY.equals(status)) {
 				vo.setJulyPay(status);
 				return;
@@ -200,7 +204,7 @@ public class Int05112Service {
 				return;
 			}
 		}
-		if("08".equals(month)) {
+		if(isMonthEqual("08",month)) {
 			if (PAY.equals(status)) {
 				vo.setAugustPay(status);
 				return;
@@ -209,7 +213,7 @@ public class Int05112Service {
 				return;
 			}
 		}
-		if("09".equals(month)) {
+		if(isMonthEqual("09",month)) {
 			if (PAY.equals(status)) {
 				vo.setSeptemberPay(status);
 				return;
@@ -218,7 +222,7 @@ public class Int05112Service {
 				return;
 			}
 		}
-		if("10".equals(month)) {
+		if(isMonthEqual("10",month)) {
 			if (PAY.equals(status)) {
 				vo.setOctoberPay(status);
 				return;
@@ -227,7 +231,7 @@ public class Int05112Service {
 				return;
 			}
 		}
-		if("11".equals(month)) {
+		if(isMonthEqual("11",month)) {
 			if (PAY.equals(status)) {
 				vo.setNovemberPay(status);
 				return;
@@ -236,7 +240,7 @@ public class Int05112Service {
 				return;
 			}
 		}
-		if("12".equals(month)) {
+		if(isMonthEqual("12",month)) {
 			if (PAY.equals(status)) {
 				vo.setDecemberPay(status);
 				return;

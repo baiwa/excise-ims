@@ -382,13 +382,10 @@ export class Int05113Component implements OnInit {
         this.formModal.stampBrandId = data.stampBrandId;
         this.formModal.stampCheckDate = data.stampCheckDate;
         this.formModal.stampChecker = data.stampChecker;
-        this.formModal.stampCodeEnd = data.stampCodeEnd;
-        this.formModal.stampCodeStart = data.stampCodeStart;
         this.formModal.stampType = data.stampType;
         this.formModal.stampTypeId = data.stampTypeId;        
         this.formModal.status = data.status;
         this.formModal.sumOfValue = data.sumOfValue;
-        this.formModal.taxStamp = data.taxStamp;
         this.formModal.valueOfStampPrinted = data.valueOfStampPrinted;
         this.formModal.workSheetDetailId = data.workSheetDetailId;
         this.formModal.fileName = data.fileName;
@@ -432,13 +429,10 @@ export class Int05113Component implements OnInit {
             this.formModal.stampBrandId = "";
             this.formModal.stampCheckDate = "";
             this.formModal.stampChecker = "";
-            this.formModal.stampCodeEnd = "";
-            this.formModal.stampCodeStart = "";
             this.formModal.stampType = "";
             this.formModal.stampTypeId = "";
             this.formModal.status = "";
             this.formModal.sumOfValue = 0;
-            this.formModal.taxStamp = "";
             this.formModal.valueOfStampPrinted = 0;
             this.formModal.workSheetDetailId = "";
             $("#stampType").dropdown('restore defaults');
@@ -481,9 +475,6 @@ class FormModal {
   valueOfStampPrinted: number = null;
   sumOfValue: number = null;
   serialNumber: string = null;
-  taxStamp: string = null;
-  stampCodeStart: string = null;
-  stampCodeEnd: string = null;
   note: string = null;
   fileName: [any];
   idRandom: number = 0;

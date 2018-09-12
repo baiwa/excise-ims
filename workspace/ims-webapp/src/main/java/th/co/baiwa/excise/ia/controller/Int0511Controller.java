@@ -49,4 +49,10 @@ public class Int0511Controller {
 		int0511Service.delete(formVo);
 		return formVo;
 	}
+	
+	@PostMapping("/listFile")
+	@ResponseBody
+	public List<String> listFile(@RequestBody String id) {
+		return int0511Service.listFile(id);		
+	}
 }
