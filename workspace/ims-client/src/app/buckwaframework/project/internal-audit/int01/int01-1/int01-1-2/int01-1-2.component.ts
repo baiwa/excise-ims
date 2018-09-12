@@ -20,35 +20,6 @@ export class Int0112Component implements OnInit {
   ngOnInit() {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
-    this.codeList = [
-      { value: "1 : ภาษีสุรา ยาสูบ เครื่องดื่ม" },
-      { value: "2 : ภาษีอื่น(นอกจากสุรา ยาสูบ เครื่องดื่ม)" },
-      { value: "3 : รายได้อื่นนอกจากภาษี" }
-    ];
-
-    this.productList = [
-      { value: "เครื่องดื่ม" },
-      { value: "สุราแช่" },
-      { value: "สุราแช่ชุมชน" },
-      { value: "สุราแช่ชุมชน" },
-      { value: "สุรากลั่นชุมชน" },
-      { value: "ยาสูบ" }
-    ];
-
-    this.printMonthList = [
-      { value: "ตุลาคม" },
-      { value: "พฤศจิกายน" },
-      { value: "ธันวาคม" },
-      { value: "มกราคม" },
-      { value: "กุมภาพันธ์" },
-      { value: "มีนาคม" },
-      { value: "เมษายน" },
-      { value: "พฤษภาคม" },
-      { value: "มิถุนายน" },
-      { value: "กรกฎาคม" },
-      { value: "สิงหาคม" },
-      { value: "กันยายน" }
-    ];
   }
 
   onChange(newValue) {
@@ -56,14 +27,18 @@ export class Int0112Component implements OnInit {
   }
   ngAfterViewInit() {
     this.initDatatable();
-    $("#export .dropdown").dropdown({
-      transition: "drop"
-    });
-    $("#idint").hide();
-    $("#id").hide();
   }
 
-  initDatatable() {}
+  initDatatable() {
+    $("#table").DataTable({
+      scrollY: '500px',
+      scrollX: true,
+      ordering: false,
+      searching: false,
+      lengthChange: false,
+      paging: false
+    });
+  }
 
   popupEditData() {
     $("#modalEditData").modal("show");
@@ -86,4 +61,9 @@ export class Int0112Component implements OnInit {
   clearData() {
     this.showData = false;
   }
+
+  add(event) {
+    console.log(event);
+  }
+
 }

@@ -8,6 +8,13 @@ public class Int02m4Vo {
     private Integer fail;
     private String risk;
     private List<Int02m4VoDetail> detail;
+    private Integer score;
+	public Integer getScore() {
+		return score;
+	}
+	public void setScore(Integer score) {
+		this.score = score;
+	}
 	public String getTitle() {
 		return title;
 	}

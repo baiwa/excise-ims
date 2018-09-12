@@ -278,9 +278,14 @@ public class Int02m2Service {
 		for (QtnMaster m : masters) {
 			logger.info("MASTER_ID: {} , NAME: {}", m.getQtnMasterId(), m.getQtnName());
 			main = new Int02m4Vo();
+			main.setPass(0);
+			main.setFail(0);
 			main.setTitle(m.getQtnName());
 			List<QtnReportHeaderVo> headers = qtnHeaderRepoImpl.findJoinFinal(m.getQtnMasterId());
+			List<Condition> conditionLi = conditionService.findConditionByParentId(m.getQtnMasterId(), "QTN_MASTER",
+					"int02-2");
 			List<Int02m4VoDetail> details = new ArrayList<>();
+			int score_main = 0;
 			for (QtnReportHeaderVo h : headers) {
 				logger.info("HEADER_ID: {}", h.getQtnReportHdrId());
 				List<Condition> conditionList = conditionService.findConditionByParentId(h.getQtnReportHdrId(),
@@ -312,20 +317,43 @@ public class Int02m2Service {
 						int value = reject;
 						if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue()
 								&& value <= condition.getValue2().longValue()) {
+							main.setFail(main.getFail()+1);
+							score_main += Integer.parseInt(condition.getValueRl());
 							detail.setRisk(condition.getConvertValue());
 							details.add(detail);
 							break;
 						} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+							main.setFail(main.getFail()+1);
+							score_main += Integer.parseInt(condition.getValueRl());
 							detail.setRisk(condition.getConvertValue());
 							details.add(detail);
 							break;
 						} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+							main.setPass(main.getPass()+1);
+							score_main += Integer.parseInt(condition.getValueRl());
 							detail.setRisk(condition.getConvertValue());
 							details.add(detail);
 							break;
 						}
 					}
-				}	
+				}
+			}
+			if (BeanUtils.isNotEmpty(conditionLi)) {
+				logger.info("SCORE: {}", score_main);
+				for (Condition condition : conditionLi) {
+					int value = score_main;
+					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue()
+							&& value <= condition.getValue2().longValue()) {
+						main.setRisk(condition.getConvertValue());
+						break;
+					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+						main.setRisk(condition.getConvertValue());
+						break;
+					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+						main.setRisk(condition.getConvertValue());
+						break;
+					}
+				}
 			}
 			main.setDetail(details);
 			result.add(main);
