@@ -21,7 +21,7 @@ public class Int0511Vo {
 	private String stampType;
 	private String stampBrand;
 	private BigDecimal numberOfBook;
-	private BigDecimal numberOfStamp;
+	private Integer numberOfStamp;
 	private BigDecimal valueOfStampPrinted;
 	private BigDecimal sumOfValue;
 	private String serialNumber;
@@ -184,11 +184,11 @@ public class Int0511Vo {
 		this.numberOfBook = numberOfBook;
 	}
 
-	public BigDecimal getNumberOfStamp() {
+	public Integer getNumberOfStamp() {
 		return numberOfStamp;
 	}
 
-	public void setNumberOfStamp(BigDecimal numberOfStamp) {
+	public void setNumberOfStamp(Integer numberOfStamp) {
 		this.numberOfStamp = numberOfStamp;
 	}
 

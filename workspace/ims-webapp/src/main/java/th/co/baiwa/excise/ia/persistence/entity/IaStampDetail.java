@@ -69,7 +69,7 @@ public class IaStampDetail extends BaseEntity {
 	private BigDecimal numberOfBook;
 
 	@Column(name = "NUMBER_OF_STAMP")
-	private BigDecimal numberOfStamp;
+	private Integer numberOfStamp;
 
 	@Column(name = "SERIAL_NUMBER")
 	private String serialNumber;
@@ -225,11 +225,11 @@ public class IaStampDetail extends BaseEntity {
 		this.numberOfBook = numberOfBook;
 	}
 
-	public BigDecimal getNumberOfStamp() {
+	public Integer getNumberOfStamp() {
 		return numberOfStamp;
 	}
 
-	public void setNumberOfStamp(BigDecimal numberOfStamp) {
+	public void setNumberOfStamp(Integer numberOfStamp) {
 		this.numberOfStamp = numberOfStamp;
 	}
 

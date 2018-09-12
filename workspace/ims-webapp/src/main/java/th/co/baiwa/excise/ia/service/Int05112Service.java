@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.excise.ia.persistence.dao.IaStampDetailDao;
 import th.co.baiwa.excise.ia.persistence.entity.IaStamGenre;
 import th.co.baiwa.excise.ia.persistence.entity.IaStamType;
-import th.co.baiwa.excise.ia.persistence.entity.IaStampDetail;
-import th.co.baiwa.excise.ia.persistence.repository.IaStamDetailRepository;
 import th.co.baiwa.excise.ia.persistence.repository.IaStamGenreRepository;
 import th.co.baiwa.excise.ia.persistence.repository.IaStamTypeRepository;
+import th.co.baiwa.excise.ia.persistence.vo.Int05112DetailVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int05112Vo;
 
 @Service
@@ -25,9 +25,9 @@ public class Int05112Service {
 
 	@Autowired
 	private IaStamGenreRepository genreRepository;
-	
+		
 	@Autowired
-	private IaStamDetailRepository iaStamDetailRepository;
+	private IaStampDetailDao iaStampDetailDao;
 
 	private final String PAY="จ่าย";
 	public DataTableAjax<Int05112Vo> findAll(Int05112Vo req) {
@@ -75,10 +75,10 @@ public class Int05112Service {
 	
 	public void addColum(List<Int05112Vo> list) {		
 		
-		List<IaStampDetail> detailList = iaStamDetailRepository.findAll();
-				
+		List<Int05112DetailVo> detailList = iaStampDetailDao.findAll();
+	
 		if (!detailList.isEmpty()) {
-			for (IaStampDetail detail : detailList) {
+			for (Int05112DetailVo detail : detailList) {
 				int index = 0;
 				for (Int05112Vo vo : list) {
 					if (vo.getColumnId()!=null) {
@@ -87,22 +87,21 @@ public class Int05112Service {
 						}
 					}					
 					index++;					
-				}
-				
+				}				
 				/*set data*/
 				Int05112Vo result = list.get(index);
 				String payOfDate = DateConstant.convertDateToStr(detail.getDateOfPay(), "MM");
 				checkMonth(result, detail.getStatus(), payOfDate);							
 								
-				/*receive & pay of year*/
-				BigDecimal moneyOfYear = detail.getNumberOfStamp().multiply(detail.getValueOfStampPrinted());
+				/*receive & pay of year*/				 				 
+				BigDecimal moneyOfYear = new BigDecimal(detail.getNumberOfStamp()).multiply(detail.getValueOfStampPrinted());
 				if (PAY.equals(detail.getStatus())) {
-					result.setSummaryYearPay("");
+					result.setSummaryYearPay(result.getSummaryYearPay() + detail.getNumberOfStamp());
 					result.setSummaryYearMoneyPay(result.getSummaryYearMoneyPay().add(moneyOfYear));
 				}else {
-					result.setSummaryYearRecieve("");
+					result.setSummaryYearRecieve(result.getSummaryYearRecieve() + detail.getNumberOfStamp());
 					result.setSummaryYearMoneyRecieve(result.getSummaryYearMoneyRecieve().add(moneyOfYear));
-				}										
+				}								
 			}
 		}
 		
