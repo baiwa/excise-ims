@@ -98,7 +98,7 @@ public class CheckStampAreaDao {
 			vo.setStampChecker(rs.getString("STAMP_CHECKER"));
 			vo.setStampBrand(rs.getString("STAMP_BRAND"));
 			vo.setNumberOfBook(rs.getBigDecimal("NUMBER_OF_BOOK"));
-			vo.setNumberOfStamp(rs.getBigDecimal("NUMBER_OF_STAMP"));
+			vo.setNumberOfStamp(rs.getInt("NUMBER_OF_STAMP"));
 			vo.setValueOfStampPrinted(rs.getBigDecimal("VALUE_OF_STAMP_PRINTED"));
 			vo.setSumOfValue(rs.getBigDecimal("SUM_OF_VALUE"));
 			vo.setSerialNumber(rs.getString("SERIAL_NUMBER"));

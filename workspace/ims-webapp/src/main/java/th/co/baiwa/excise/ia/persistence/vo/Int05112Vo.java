@@ -13,8 +13,8 @@ public class Int05112Vo extends DataTableRequest {
 	private String order;
 	private String stampType;
 
-	private String branchLastYeatNumberOfStamp;
-	private String branchLastYeatMoneyOfStamp;
+	private Integer branchLastYeatNumberOfStamp = 0;
+	private BigDecimal branchLastYeatMoneyOfStamp = new BigDecimal(0);
 
 	private String octoberRecieve;
 	private String octoberPay;
@@ -52,18 +52,18 @@ public class Int05112Vo extends DataTableRequest {
 	private String septemberRecieve;
 	private String septemberPay;
 
-	private String summaryYearRecieve;
-	private String summaryYearPay;
-	private BigDecimal summaryYearMoneyRecieve;
-	private BigDecimal summaryYearMoneyPay;
+	private Integer summaryYearRecieve = 0;
+	private Integer summaryYearPay = 0;
+	private BigDecimal summaryYearMoneyRecieve = new BigDecimal(0);
+	private BigDecimal summaryYearMoneyPay = new BigDecimal(0);
 
-	private String summaryTotalRecieve;
-	private String summaryTotalPay;
-	private String summaryTotalMoneyRecieve;
-	private String summaryTotalMoneyPay;
+	private Integer summaryTotalRecieve = 0;
+	private Integer summaryTotalPay = 0;
+	private BigDecimal summaryTotalMoneyRecieve = new BigDecimal(0);
+	private BigDecimal summaryTotalMoneyPay = new BigDecimal(0);;
 
-	private String branchUpToDateNumberOfStamp;
-	private String branchUpToDateMoneyOfStamp;
+	private Integer branchUpToDateNumberOfStamp = 0;
+	private BigDecimal branchUpToDateMoneyOfStamp = new BigDecimal(0);
 
 	private String note;
 
@@ -85,19 +85,19 @@ public class Int05112Vo extends DataTableRequest {
 		this.stampType = stampType;
 	}
 
-	public String getBranchLastYeatNumberOfStamp() {
+	public Integer getBranchLastYeatNumberOfStamp() {
 		return branchLastYeatNumberOfStamp;
 	}
 
-	public void setBranchLastYeatNumberOfStamp(String branchLastYeatNumberOfStamp) {
+	public void setBranchLastYeatNumberOfStamp(Integer branchLastYeatNumberOfStamp) {
 		this.branchLastYeatNumberOfStamp = branchLastYeatNumberOfStamp;
 	}
 
-	public String getBranchLastYeatMoneyOfStamp() {
+	public BigDecimal getBranchLastYeatMoneyOfStamp() {
 		return branchLastYeatMoneyOfStamp;
 	}
 
-	public void setBranchLastYeatMoneyOfStamp(String branchLastYeatMoneyOfStamp) {
+	public void setBranchLastYeatMoneyOfStamp(BigDecimal branchLastYeatMoneyOfStamp) {
 		this.branchLastYeatMoneyOfStamp = branchLastYeatMoneyOfStamp;
 	}
 
@@ -293,19 +293,19 @@ public class Int05112Vo extends DataTableRequest {
 		this.septemberPay = septemberPay;
 	}
 
-	public String getSummaryYearRecieve() {
+	public Integer getSummaryYearRecieve() {
 		return summaryYearRecieve;
 	}
 
-	public void setSummaryYearRecieve(String summaryYearRecieve) {
+	public void setSummaryYearRecieve(Integer summaryYearRecieve) {
 		this.summaryYearRecieve = summaryYearRecieve;
 	}
 
-	public String getSummaryYearPay() {
+	public Integer getSummaryYearPay() {
 		return summaryYearPay;
 	}
 
-	public void setSummaryYearPay(String summaryYearPay) {
+	public void setSummaryYearPay(Integer summaryYearPay) {
 		this.summaryYearPay = summaryYearPay;
 	}
 
@@ -325,51 +325,51 @@ public class Int05112Vo extends DataTableRequest {
 		this.summaryYearMoneyPay = summaryYearMoneyPay;
 	}
 
-	public String getSummaryTotalRecieve() {
+	public Integer getSummaryTotalRecieve() {
 		return summaryTotalRecieve;
 	}
 
-	public void setSummaryTotalRecieve(String summaryTotalRecieve) {
+	public void setSummaryTotalRecieve(Integer summaryTotalRecieve) {
 		this.summaryTotalRecieve = summaryTotalRecieve;
 	}
 
-	public String getSummaryTotalPay() {
+	public Integer getSummaryTotalPay() {
 		return summaryTotalPay;
 	}
 
-	public void setSummaryTotalPay(String summaryTotalPay) {
+	public void setSummaryTotalPay(Integer summaryTotalPay) {
 		this.summaryTotalPay = summaryTotalPay;
 	}
 
-	public String getSummaryTotalMoneyRecieve() {
+	public BigDecimal getSummaryTotalMoneyRecieve() {
 		return summaryTotalMoneyRecieve;
 	}
 
-	public void setSummaryTotalMoneyRecieve(String summaryTotalMoneyRecieve) {
+	public void setSummaryTotalMoneyRecieve(BigDecimal summaryTotalMoneyRecieve) {
 		this.summaryTotalMoneyRecieve = summaryTotalMoneyRecieve;
 	}
 
-	public String getSummaryTotalMoneyPay() {
+	public BigDecimal getSummaryTotalMoneyPay() {
 		return summaryTotalMoneyPay;
 	}
 
-	public void setSummaryTotalMoneyPay(String summaryTotalMoneyPay) {
+	public void setSummaryTotalMoneyPay(BigDecimal summaryTotalMoneyPay) {
 		this.summaryTotalMoneyPay = summaryTotalMoneyPay;
 	}
 
-	public String getBranchUpToDateNumberOfStamp() {
+	public Integer getBranchUpToDateNumberOfStamp() {
 		return branchUpToDateNumberOfStamp;
 	}
 
-	public void setBranchUpToDateNumberOfStamp(String branchUpToDateNumberOfStamp) {
+	public void setBranchUpToDateNumberOfStamp(Integer branchUpToDateNumberOfStamp) {
 		this.branchUpToDateNumberOfStamp = branchUpToDateNumberOfStamp;
 	}
 
-	public String getBranchUpToDateMoneyOfStamp() {
+	public BigDecimal getBranchUpToDateMoneyOfStamp() {
 		return branchUpToDateMoneyOfStamp;
 	}
 
-	public void setBranchUpToDateMoneyOfStamp(String branchUpToDateMoneyOfStamp) {
+	public void setBranchUpToDateMoneyOfStamp(BigDecimal branchUpToDateMoneyOfStamp) {
 		this.branchUpToDateMoneyOfStamp = branchUpToDateMoneyOfStamp;
 	}
 
