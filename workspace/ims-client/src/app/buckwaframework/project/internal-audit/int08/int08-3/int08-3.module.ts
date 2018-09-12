@@ -16,6 +16,7 @@ import { ConditionModule } from '../../../../common/components';
 import { Int0837Component } from './int08-3-7/int08-3-7.component';
 import { Int0838Component } from './int08-3-8/int08-3-8.component';
 import { Int0839Component } from './int08-3-9/int08-3-9.component';
+import { Int08310Component } from './int08-3-10/int08-3-10.component';
 const routes: Routes = [
   { path: '', component: Int083Component, canActivate: [AuthGuard] },
   { path: '1', component: Int0831Component, canActivate: [AuthGuard] },
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: '7', component: Int0837Component, canActivate: [AuthGuard] },
   { path: '8', component: Int0838Component, canActivate: [AuthGuard] },
 
-  { path: '9', component: Int0839Component, canActivate: [AuthGuard] }
+  { path: '9', component: Int0839Component, canActivate: [AuthGuard] },
+  { path: '10', component: Int08310Component, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -47,7 +49,8 @@ const routes: Routes = [
     Int0836Component,
     Int0837Component,
     Int0838Component,
-    Int0839Component
+    Int0839Component,
+    Int08310Component
   ],
   exports: [RouterModule]
 })

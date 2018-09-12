@@ -14,6 +14,9 @@ public class Int0801Vo {
 	private List<String> riskHrdNameList;
 	private String departmentName;
 	private List<RiskAssRiskWsHdr> riskAssRiskWsHdrList;
+	private String color;
+	private String valueTranslation;
+	private String riskPoint;
 
 	public List<RiskAssOtherDtl> getRiskAssOtherDtlList() {
 		return riskAssOtherDtlList;
@@ -77,6 +80,30 @@ public class Int0801Vo {
 
 	public void setRiskAssRiskWsHdrList(List<RiskAssRiskWsHdr> riskAssRiskWsHdrList) {
 		this.riskAssRiskWsHdrList = riskAssRiskWsHdrList;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getValueTranslation() {
+		return valueTranslation;
+	}
+
+	public void setValueTranslation(String valueTranslation) {
+		this.valueTranslation = valueTranslation;
+	}
+
+	public String getRiskPoint() {
+		return riskPoint;
+	}
+
+	public void setRiskPoint(String riskPoint) {
+		this.riskPoint = riskPoint;
 	}
 
 	
