@@ -49,6 +49,97 @@ import th.co.baiwa.excise.ws.WebServiceExciseService;
 
 @Service
 public class RiskAssInfService {
+	// Set property Style Excel
+	private CellStyle thStyle;
+	private CellStyle cellCenter;
+	private CellStyle cellRight;
+	private CellStyle cellLeft;
+	private CellStyle bgRed;
+	private CellStyle bgYellow;
+	private CellStyle bgGreen;
+	private CellStyle topCenter;
+	private CellStyle topRight;
+	private CellStyle topLeft;
+	private Font fontHeader;
+	
+	private XSSFWorkbook setUpExcel() {
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		
+		thStyle = workbook.createCellStyle();
+		thStyle.setAlignment(HorizontalAlignment.CENTER);
+		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+		thStyle.setBorderBottom(BorderStyle.THIN);
+		thStyle.setBorderLeft(BorderStyle.THIN);
+		thStyle.setBorderRight(BorderStyle.THIN);
+		thStyle.setBorderTop(BorderStyle.THIN);
+		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		cellCenter = workbook.createCellStyle();
+		cellCenter.setAlignment(HorizontalAlignment.CENTER);
+		cellCenter.setBorderBottom(BorderStyle.THIN);
+		cellCenter.setBorderLeft(BorderStyle.THIN);
+		cellCenter.setBorderRight(BorderStyle.THIN);
+		cellCenter.setBorderTop(BorderStyle.THIN);
+
+		cellRight = workbook.createCellStyle();
+		cellRight.setAlignment(HorizontalAlignment.RIGHT);
+		cellRight.setBorderBottom(BorderStyle.THIN);
+		cellRight.setBorderLeft(BorderStyle.THIN);
+		cellRight.setBorderRight(BorderStyle.THIN);
+		cellRight.setBorderTop(BorderStyle.THIN);
+
+		cellLeft = workbook.createCellStyle();
+		cellLeft.setAlignment(HorizontalAlignment.LEFT);
+		cellLeft.setBorderBottom(BorderStyle.THIN);
+		cellLeft.setBorderLeft(BorderStyle.THIN);
+		cellLeft.setBorderRight(BorderStyle.THIN);
+		cellLeft.setBorderTop(BorderStyle.THIN);
+
+		bgRed = workbook.createCellStyle();
+		bgRed.setAlignment(HorizontalAlignment.CENTER);
+		bgRed.setBorderBottom(BorderStyle.THIN);
+		bgRed.setBorderLeft(BorderStyle.THIN);
+		bgRed.setBorderRight(BorderStyle.THIN);
+		bgRed.setBorderTop(BorderStyle.THIN);
+		bgRed.setFillForegroundColor(IndexedColors.RED.getIndex());
+		bgRed.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		bgYellow = workbook.createCellStyle();
+		bgYellow.setAlignment(HorizontalAlignment.CENTER);
+		bgYellow.setBorderBottom(BorderStyle.THIN);
+		bgYellow.setBorderLeft(BorderStyle.THIN);
+		bgYellow.setBorderRight(BorderStyle.THIN);
+		bgYellow.setBorderTop(BorderStyle.THIN);
+		bgYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		bgYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		bgGreen = workbook.createCellStyle();
+		bgGreen.setAlignment(HorizontalAlignment.CENTER);
+		bgGreen.setBorderBottom(BorderStyle.THIN);
+		bgGreen.setBorderLeft(BorderStyle.THIN);
+		bgGreen.setBorderRight(BorderStyle.THIN);
+		bgGreen.setBorderTop(BorderStyle.THIN);
+		bgGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+		bgGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		fontHeader = workbook.createFont();
+		fontHeader.setBold(true);
+
+		topCenter = workbook.createCellStyle();
+		topCenter.setAlignment(HorizontalAlignment.CENTER);
+		topCenter.setFont(fontHeader);
+
+		topRight = workbook.createCellStyle();
+		topRight.setAlignment(HorizontalAlignment.RIGHT);
+
+		topLeft = workbook.createCellStyle();
+		topLeft.setAlignment(HorizontalAlignment.LEFT);
+		return workbook;
+	}
+	
+	
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(RiskAssInfService.class);
 
@@ -384,7 +475,7 @@ public class RiskAssInfService {
 	public void exportInfOtherDtl(RiskAssInfHdr riskAssInfHdr, HttpServletResponse response) throws IOException {
 	
 		/*create spreadsheet*/
-		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFWorkbook workbook = setUpExcel();
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
 		int cellNum = 0;
@@ -392,81 +483,7 @@ public class RiskAssInfService {
 		Cell cell = row.createCell(cellNum);
 		DecimalFormat formatter = new DecimalFormat("#,##0");
 		System.out.println("Creating excel");
-	
-		
-		/*create CellStyle*/
-		CellStyle thStyle = workbook.createCellStyle();
-		thStyle.setAlignment(HorizontalAlignment.CENTER);
-		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-		thStyle.setBorderBottom(BorderStyle.THIN);
-		thStyle.setBorderLeft(BorderStyle.THIN);
-		thStyle.setBorderRight(BorderStyle.THIN);
-		thStyle.setBorderTop(BorderStyle.THIN);
-		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		
-		CellStyle cellCenter = workbook.createCellStyle();
-		cellCenter.setAlignment(HorizontalAlignment.CENTER);
-		cellCenter.setBorderBottom(BorderStyle.THIN);
-		cellCenter.setBorderLeft(BorderStyle.THIN);
-		cellCenter.setBorderRight(BorderStyle.THIN);
-		cellCenter.setBorderTop(BorderStyle.THIN);
-		
-		CellStyle cellRight = workbook.createCellStyle();
-		cellRight.setAlignment(HorizontalAlignment.RIGHT);
-		cellRight.setBorderBottom(BorderStyle.THIN);
-		cellRight.setBorderLeft(BorderStyle.THIN);
-		cellRight.setBorderRight(BorderStyle.THIN);
-		cellRight.setBorderTop(BorderStyle.THIN);
-		
-		CellStyle cellLeft = workbook.createCellStyle();
-		cellLeft.setAlignment(HorizontalAlignment.LEFT);
-		cellLeft.setBorderBottom(BorderStyle.THIN);
-		cellLeft.setBorderLeft(BorderStyle.THIN);
-		cellLeft.setBorderRight(BorderStyle.THIN);
-		cellLeft.setBorderTop(BorderStyle.THIN);
-		
-		
-		CellStyle bgRed = workbook.createCellStyle();
-		bgRed.setAlignment(HorizontalAlignment.CENTER);
-		bgRed.setBorderBottom(BorderStyle.THIN);
-		bgRed.setBorderLeft(BorderStyle.THIN);
-		bgRed.setBorderRight(BorderStyle.THIN);
-		bgRed.setBorderTop(BorderStyle.THIN);
-		bgRed.setFillForegroundColor(IndexedColors.RED.getIndex());
-		bgRed.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		
-		CellStyle bgYellow = workbook.createCellStyle();
-		bgYellow.setAlignment(HorizontalAlignment.CENTER);
-		bgYellow.setBorderBottom(BorderStyle.THIN);
-		bgYellow.setBorderLeft(BorderStyle.THIN);
-		bgYellow.setBorderRight(BorderStyle.THIN);
-		bgYellow.setBorderTop(BorderStyle.THIN);
-		bgYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
-		bgYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		
-		CellStyle bgGreen = workbook.createCellStyle();
-		bgGreen.setAlignment(HorizontalAlignment.CENTER);
-		bgGreen.setBorderBottom(BorderStyle.THIN);
-		bgGreen.setBorderLeft(BorderStyle.THIN);
-		bgGreen.setBorderRight(BorderStyle.THIN);
-		bgGreen.setBorderTop(BorderStyle.THIN);
-		bgGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		bgGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		
-		Font fontHeader = workbook.createFont();
-		fontHeader.setBold(true);
-		
-		CellStyle topCenter = workbook.createCellStyle();
-		topCenter.setAlignment(HorizontalAlignment.CENTER);
-		topCenter.setFont(fontHeader);
-		
-		CellStyle topRight = workbook.createCellStyle();
-		topRight.setAlignment(HorizontalAlignment.RIGHT);
-		
-		CellStyle topLeft = workbook.createCellStyle();
-		topLeft.setAlignment(HorizontalAlignment.LEFT);
-		
+			
 		/*create data spreadsheet*/	
 				
 				/*Title*/
@@ -637,7 +654,7 @@ public class RiskAssInfService {
 	public void exportInfWebService(RiskAssInfHdr riskAssInfHdr, HttpServletResponse response) throws IOException {
 		
 		/*create spreadsheet*/
-		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFWorkbook workbook = setUpExcel();
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
 		int cellNum = 0;
@@ -645,80 +662,7 @@ public class RiskAssInfService {
 		Cell cell = row.createCell(cellNum);
 		DecimalFormat formatter = new DecimalFormat("#,##0");
 		System.out.println("Creating excel");
-		
-		/*create CellStyle*/
-		CellStyle thStyle = workbook.createCellStyle();
-		thStyle.setAlignment(HorizontalAlignment.CENTER);
-		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-		thStyle.setBorderBottom(BorderStyle.THIN);
-		thStyle.setBorderLeft(BorderStyle.THIN);
-		thStyle.setBorderRight(BorderStyle.THIN);
-		thStyle.setBorderTop(BorderStyle.THIN);
-		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		
-		CellStyle cellCenter = workbook.createCellStyle();
-		cellCenter.setAlignment(HorizontalAlignment.CENTER);
-		cellCenter.setBorderBottom(BorderStyle.THIN);
-		cellCenter.setBorderLeft(BorderStyle.THIN);
-		cellCenter.setBorderRight(BorderStyle.THIN);
-		cellCenter.setBorderTop(BorderStyle.THIN);
-		
-		CellStyle cellRight = workbook.createCellStyle();
-		cellRight.setAlignment(HorizontalAlignment.RIGHT);
-		cellRight.setBorderBottom(BorderStyle.THIN);
-		cellRight.setBorderLeft(BorderStyle.THIN);
-		cellRight.setBorderRight(BorderStyle.THIN);
-		cellRight.setBorderTop(BorderStyle.THIN);
-		
-		CellStyle cellLeft = workbook.createCellStyle();
-		cellLeft.setAlignment(HorizontalAlignment.LEFT);
-		cellLeft.setBorderBottom(BorderStyle.THIN);
-		cellLeft.setBorderLeft(BorderStyle.THIN);
-		cellLeft.setBorderRight(BorderStyle.THIN);
-		cellLeft.setBorderTop(BorderStyle.THIN);
-		
-		
-		CellStyle bgRed = workbook.createCellStyle();
-		bgRed.setAlignment(HorizontalAlignment.CENTER);
-		bgRed.setBorderBottom(BorderStyle.THIN);
-		bgRed.setBorderLeft(BorderStyle.THIN);
-		bgRed.setBorderRight(BorderStyle.THIN);
-		bgRed.setBorderTop(BorderStyle.THIN);
-		bgRed.setFillForegroundColor(IndexedColors.RED.getIndex());
-		bgRed.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		
-		CellStyle bgYellow = workbook.createCellStyle();
-		bgYellow.setAlignment(HorizontalAlignment.CENTER);
-		bgYellow.setBorderBottom(BorderStyle.THIN);
-		bgYellow.setBorderLeft(BorderStyle.THIN);
-		bgYellow.setBorderRight(BorderStyle.THIN);
-		bgYellow.setBorderTop(BorderStyle.THIN);
-		bgYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
-		bgYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		
-		CellStyle bgGreen = workbook.createCellStyle();
-		bgGreen.setAlignment(HorizontalAlignment.CENTER);
-		bgGreen.setBorderBottom(BorderStyle.THIN);
-		bgGreen.setBorderLeft(BorderStyle.THIN);
-		bgGreen.setBorderRight(BorderStyle.THIN);
-		bgGreen.setBorderTop(BorderStyle.THIN);
-		bgGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		bgGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		
-		Font fontHeader = workbook.createFont();
-		fontHeader.setBold(true);
-		
-		CellStyle topCenter = workbook.createCellStyle();
-		topCenter.setAlignment(HorizontalAlignment.CENTER);
-		topCenter.setFont(fontHeader);
-		
-		CellStyle topRight = workbook.createCellStyle();
-		topRight.setAlignment(HorizontalAlignment.RIGHT);
-		
-		CellStyle topLeft = workbook.createCellStyle();
-		topLeft.setAlignment(HorizontalAlignment.LEFT);
-		
+				
 		/*create data spreadsheet*/	
 			/*Title*/
 			RiskAssInfHdr InfHdr =  riskAssInfHdrRepository.findOne(riskAssInfHdr.getRiskAssInfHdrId());	
@@ -946,7 +890,7 @@ public class RiskAssInfService {
 		// TODO Auto-generated method stub
 		
 		/*create spreadsheet*/
-		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFWorkbook workbook = setUpExcel();
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
 		int cellNum = 0;
@@ -955,80 +899,7 @@ public class RiskAssInfService {
 		DecimalFormat formatter = new DecimalFormat("#,##0");
 		System.out.println("Creating excel");
 		
-		/*Set Style*/
-		CellStyle thStyle = workbook.createCellStyle();
-		thStyle.setAlignment(HorizontalAlignment.CENTER);
-		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-		thStyle.setBorderBottom(BorderStyle.THIN);
-		thStyle.setBorderLeft(BorderStyle.THIN);
-		thStyle.setBorderRight(BorderStyle.THIN);
-		thStyle.setBorderTop(BorderStyle.THIN);
-		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		thStyle.setWrapText(true);
-		
-		CellStyle cellCenter = workbook.createCellStyle();
-		cellCenter.setAlignment(HorizontalAlignment.CENTER);
-		cellCenter.setBorderBottom(BorderStyle.THIN);
-		cellCenter.setBorderLeft(BorderStyle.THIN);
-		cellCenter.setBorderRight(BorderStyle.THIN);
-		cellCenter.setBorderTop(BorderStyle.THIN);
-		
-		CellStyle cellRight = workbook.createCellStyle();
-		cellRight.setAlignment(HorizontalAlignment.RIGHT);
-		cellRight.setBorderBottom(BorderStyle.THIN);
-		cellRight.setBorderLeft(BorderStyle.THIN);
-		cellRight.setBorderRight(BorderStyle.THIN);
-		cellRight.setBorderTop(BorderStyle.THIN);
-		
-		CellStyle cellLeft = workbook.createCellStyle();
-		cellLeft.setAlignment(HorizontalAlignment.LEFT);
-		cellLeft.setBorderBottom(BorderStyle.THIN);
-		cellLeft.setBorderLeft(BorderStyle.THIN);
-		cellLeft.setBorderRight(BorderStyle.THIN);
-		cellLeft.setBorderTop(BorderStyle.THIN);
-		
-		CellStyle bgRed = workbook.createCellStyle();
-		bgRed.setAlignment(HorizontalAlignment.CENTER);
-		bgRed.setBorderBottom(BorderStyle.THIN);
-		bgRed.setBorderLeft(BorderStyle.THIN);
-		bgRed.setBorderRight(BorderStyle.THIN);
-		bgRed.setBorderTop(BorderStyle.THIN);
-		bgRed.setFillForegroundColor(IndexedColors.RED.getIndex());
-		bgRed.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		
-		CellStyle bgYellow = workbook.createCellStyle();
-		bgYellow.setAlignment(HorizontalAlignment.CENTER);
-		bgYellow.setBorderBottom(BorderStyle.THIN);
-		bgYellow.setBorderLeft(BorderStyle.THIN);
-		bgYellow.setBorderRight(BorderStyle.THIN);
-		bgYellow.setBorderTop(BorderStyle.THIN);
-		bgYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
-		bgYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		
-		CellStyle bgGreen = workbook.createCellStyle();
-		bgGreen.setAlignment(HorizontalAlignment.CENTER);
-		bgGreen.setBorderBottom(BorderStyle.THIN);
-		bgGreen.setBorderLeft(BorderStyle.THIN);
-		bgGreen.setBorderRight(BorderStyle.THIN);
-		bgGreen.setBorderTop(BorderStyle.THIN);
-		bgGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		bgGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		
-		Font fontHeader = workbook.createFont();
-		fontHeader.setBold(true);
-		
-		CellStyle topCenter = workbook.createCellStyle();
-		topCenter.setAlignment(HorizontalAlignment.CENTER);
-		topCenter.setFont(fontHeader);
-		
-		CellStyle topRight = workbook.createCellStyle();
-		topRight.setAlignment(HorizontalAlignment.RIGHT);
-		
-		CellStyle topLeft = workbook.createCellStyle();
-		topLeft.setAlignment(HorizontalAlignment.LEFT);
-		
-		
+
 		/*Title*/
 		row = sheet.createRow(0);
 		cell = row.createCell(cellNum);cell.setCellValue("กระดาษทำการประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต");cell.setCellStyle(topCenter);
