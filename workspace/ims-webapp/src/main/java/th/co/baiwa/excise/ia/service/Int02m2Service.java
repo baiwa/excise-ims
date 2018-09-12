@@ -21,7 +21,6 @@ import th.co.baiwa.excise.ia.persistence.repository.QtnFinalRepDetailRepository;
 import th.co.baiwa.excise.ia.persistence.repository.QtnFinalRepHeaderRepository;
 import th.co.baiwa.excise.ia.persistence.repository.QtnFinalRepHeaderRepositoryImpl;
 import th.co.baiwa.excise.ia.persistence.repository.QtnFinalRepMainRepository;
-import th.co.baiwa.excise.ia.persistence.repository.QtnFinalRepMainRepositoryImpl;
 import th.co.baiwa.excise.ia.persistence.repository.QtnMasterRepository;
 import th.co.baiwa.excise.ia.persistence.repository.QtnMasterRepositoryImpl;
 import th.co.baiwa.excise.ia.persistence.repository.QtnReportDetailRepositoryImpl;
