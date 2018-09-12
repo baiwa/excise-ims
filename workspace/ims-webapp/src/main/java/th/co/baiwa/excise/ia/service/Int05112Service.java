@@ -1,6 +1,5 @@
 package th.co.baiwa.excise.ia.service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.constant.ExciseConstants.FORMAT_DATE;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.IaStampDetailDao;
 import th.co.baiwa.excise.ia.persistence.entity.IaStamGenre;
 import th.co.baiwa.excise.ia.persistence.entity.IaStamType;
+import th.co.baiwa.excise.ia.persistence.entity.IaStampDetailSummary;
 import th.co.baiwa.excise.ia.persistence.repository.IaStamGenreRepository;
 import th.co.baiwa.excise.ia.persistence.repository.IaStamTypeRepository;
+import th.co.baiwa.excise.ia.persistence.repository.IaStampDetailSummaryRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int05112DetailVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int05112Vo;
 
@@ -28,6 +30,9 @@ public class Int05112Service {
 		
 	@Autowired
 	private IaStampDetailDao iaStampDetailDao;
+	
+	@Autowired
+	private IaStampDetailSummaryRepository iaStampDetailSummaryRepository;
 
 	private final String PAY="จ่าย";
 	public DataTableAjax<Int05112Vo> findAll(Int05112Vo req) {
@@ -35,6 +40,7 @@ public class Int05112Service {
 		List<Int05112Vo> list = new ArrayList<>();
 		addHeader(list);
 		addColum(list);
+		saveSummary(list);
 		DataTableAjax<Int05112Vo> dataTableAjax = new DataTableAjax<>();
 		
 		dataTableAjax.setRecordsTotal(Long.valueOf(list.size()));
@@ -91,17 +97,25 @@ public class Int05112Service {
 				/*set data*/
 				Int05112Vo result = list.get(index);
 				String payOfDate = DateConstant.convertDateToStr(detail.getDateOfPay(), "MM");
-				checkMonth(result, detail.getStatus(), payOfDate);							
+				result.setYear(DateConstant.convertDateToStr(detail.getDateOfPay(), FORMAT_DATE.YYYY));
+				checkMonth(result, detail.getStatus(), payOfDate);		
+				
+				/*column 3 -4*/
+				String previousYear = DateConstant.convertStrToStrPreviousYear(result.getYear());
+				IaStampDetailSummary summary = iaStampDetailSummaryRepository.findByStampGenreIdAndYear(Long.valueOf(index), previousYear);
+				if (summary!=null) {					
+					result.setBranchLastYeatMoneyOfStamp(summary.getSumOfValue());
+					result.setBranchLastYeatNumberOfStamp(summary.getNumberOfStamp());					
+				}
 								
-				/*receive & pay of year*/				 				 
-				BigDecimal moneyOfYear = new BigDecimal(detail.getNumberOfStamp()).multiply(detail.getValueOfStampPrinted());
+				/*receive & pay of year*/				 				 				
 				if (PAY.equals(detail.getStatus())) {
 					result.setSummaryYearPay(result.getSummaryYearPay() + detail.getNumberOfStamp());
-					result.setSummaryYearMoneyPay(result.getSummaryYearMoneyPay().add(moneyOfYear));
+					result.setSummaryYearMoneyPay(result.getSummaryYearMoneyPay().add(detail.getSumOfValue()));
 				}else {
 					result.setSummaryYearRecieve(result.getSummaryYearRecieve() + detail.getNumberOfStamp());
-					result.setSummaryYearMoneyRecieve(result.getSummaryYearMoneyRecieve().add(moneyOfYear));
-				}								
+					result.setSummaryYearMoneyRecieve(result.getSummaryYearMoneyRecieve().add(detail.getSumOfValue()));
+				}												
 			}
 		}
 		
@@ -218,5 +232,33 @@ public class Int05112Service {
 		}
 	}
 	
-	
+	public void saveSummary(List<Int05112Vo> list) {
+		
+		/*save summary of year*/
+		if (!list.isEmpty()) {
+			
+			for (Int05112Vo item : list) {				
+				IaStampDetailSummary summary = iaStampDetailSummaryRepository.findByStampGenreIdAndYear(Long.valueOf(item.getColumnId()), item.getYear());
+				if (summary != null) {
+					summary.setNumberOfStamp(item.getBranchUpToDateNumberOfStamp());
+					summary.setSumOfValue(item.getBranchUpToDateMoneyOfStamp());
+					summary.setStamGenreId(Long.valueOf(item.getColumnId()));
+					summary.setYear(item.getYear());
+					
+					iaStampDetailSummaryRepository.save(summary);
+				}else {
+					/*create row */
+					IaStampDetailSummary vo = new IaStampDetailSummary();
+					vo.setNumberOfStamp(item.getBranchUpToDateNumberOfStamp());
+					vo.setSumOfValue(item.getBranchUpToDateMoneyOfStamp());
+					vo.setStamGenreId(Long.valueOf(item.getColumnId()));
+					vo.setYear(item.getYear());
+					
+					iaStampDetailSummaryRepository.save(vo);
+				}
+			}
+		}
+		
+		
+	}
 }

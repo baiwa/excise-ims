@@ -92,7 +92,8 @@ public class Int05113Service {
             entity.setStampCodeEnd(form.getStampCodeEnd());
             entity.setNote(form.getNote());
             entity.setCreatedDate(DateConstant.convertStrDDMMYYYYToDate(form.getCreatedDate()));
-
+            entity.setStampTypeId(form.getStampTypeId());
+            entity.setStampBrandId(form.getStampBrandId());
             IaStampDetail detailId = iaStamDetailRepository.save(entity);
             
             /*insert table file*/
@@ -120,38 +121,40 @@ public class Int05113Service {
     }
 
     public void uploadFile(String exciseId, ExciseFile[] files){
-
-        ArrayList<ExciseFile> file = new ArrayList<>();
-        for(ExciseFile fs: files) {
-            if (fs.getName() != null) {
-                file.add(fs);
+    	if (files !=null) {
+    		ArrayList<ExciseFile> file = new ArrayList<>();
+            for(ExciseFile fs: files) {
+                if (fs.getName() != null) {
+                    file.add(fs);
+                }
             }
-        }
-        File f = new File(pathed + exciseId); // initial file (folder)
-        if (!f.exists()) { // check folder exists
-            if (f.mkdirs()) {
-                logger.info("Directory is created!");
-            } else {
-                logger.error("Failed to create directory!");
+            File f = new File(pathed + exciseId); // initial file (folder)
+            if (!f.exists()) { // check folder exists
+                if (f.mkdirs()) {
+                    logger.info("Directory is created!");
+                } else {
+                    logger.error("Failed to create directory!");
+                }
             }
-        }
+            
+            for(ExciseFile fi: file) {
+        		Date in = new Date(); // current date
+            	String ext =  FilenameUtils.getExtension(fi.getType()); // get extension
+        		byte[] data = Base64.getDecoder().decode(fi.getValue().split(",")[1]); // get data from base64
+        		
+        		// set path
+        		String path = pathed + exciseId + "/" + fi.getName().toUpperCase() + '-';
+        		path += new SimpleDateFormat("dd-MM-yyyy").format(in) + "." + ext;
+        		
+                try (OutputStream stream = new FileOutputStream(path)) {
+        		    stream.write(data);
+            		logger.info("Created file: " + path);
+        		} catch (Exception e) {
+        			e.printStackTrace();
+        		}
+            }
+		}
         
-        for(ExciseFile fi: file) {
-    		Date in = new Date(); // current date
-        	String ext =  FilenameUtils.getExtension(fi.getType()); // get extension
-    		byte[] data = Base64.getDecoder().decode(fi.getValue().split(",")[1]); // get data from base64
-    		
-    		// set path
-    		String path = pathed + exciseId + "/" + fi.getName().toUpperCase() + '-';
-    		path += new SimpleDateFormat("dd-MM-yyyy").format(in) + "." + ext;
-    		
-            try (OutputStream stream = new FileOutputStream(path)) {
-    		    stream.write(data);
-        		logger.info("Created file: " + path);
-    		} catch (Exception e) {
-    			e.printStackTrace();
-    		}
-        }
     }
 
 }

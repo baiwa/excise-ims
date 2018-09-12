@@ -68,6 +68,15 @@ public class Int05112Vo extends DataTableRequest {
 	private String note;
 
 	private String columnId;
+	private String year;
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
 
 	public String getOrder() {
 		return order;

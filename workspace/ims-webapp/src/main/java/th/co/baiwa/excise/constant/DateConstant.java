@@ -235,6 +235,18 @@ public class DateConstant {
 		return date;
 	}
 	/*end super convert */
-
-
+	public static String convertStrToStrPreviousYear(String strDate) {
+		String dateString = "";		
+		try {
+			if (StringUtils.isNotBlank(strDate)) {
+				Date date = DateUtils.parseDate(StringUtils.trim(strDate), LOCAL_TH, YYYY);
+				Date previousYear = DateUtils.addYears(date, -1);
+				dateString = DateFormatUtils.format(previousYear, YYYY, LOCAL_TH);
+			}
+		} catch (Exception e) {
+			logger.error("Error convertStrToStrPreviousYear : ", e);
+			e.printStackTrace();
+		}
+		return dateString;
+	}
 }

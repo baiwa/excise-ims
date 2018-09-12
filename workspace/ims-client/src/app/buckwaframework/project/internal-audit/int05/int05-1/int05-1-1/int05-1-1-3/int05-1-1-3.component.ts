@@ -192,18 +192,34 @@ export class Int05113Component implements OnInit {
     if ($("#edit").val() == "edit" && $("#idEdit").val()!="") {
       
       const index = this.data.findIndex(obj => obj.idRandom == $("#idEdit").val());
+      this.formModal.sumOfValue = this.formModal.numberOfStamp*this.formModal.valueOfStampPrinted;
+      this.formModal.dateOfPay = $("#dateOfPay").val();
+      this.formModal.dateDeliverStamp = $("#dateDeliverStamp").val();
+      this.formModal.dateWithdrawStamp = $("#dateWithdrawStamp").val();
+      this.formModal.fivePartDate = $("#fivePartDate").val();
+      this.formModal.stampCheckDate = $("#stampCheckDate").val();
+      this.formModal.stampTypeId = this.formModal.stampType;
+      this.formModal.stampType = ($("#stampType option:selected").text()=="กรุณาเลือก" ? "":$("#stampType option:selected").text());
+      this.formModal.stampBrandId = this.formModal.stampBrand
+      this.formModal.stampBrand = ($("#stampBrand option:selected").text()=="กรุณาเลือก" ? "":$("#stampBrand option:selected").text())
+      this.formModal.file = this.file;
       this.data[index] = this.formModal;
       $("#edit").val("");
       $("#idEdit").val("");
     } else {
-      
+      console.log("Add : ",this.formModal.dateOfPay);
       for(let i=0;i<this.listButton;i++){
-        let getNameFile = $("input[name=fileNmae"+this.listButton[i]+"]").val();
+        let getNameFile = $("input[name=fileName"+this.listButton[i]+"]").val();
         this.onUpload(getNameFile);
       }
-      console.log(this.formModal);
       this.formModal.idRandom = this.randomNumber++;
-
+      // sum money
+      this.formModal.sumOfValue = this.formModal.numberOfStamp*this.formModal.valueOfStampPrinted;
+      this.formModal.dateOfPay = $("#dateOfPay").val();
+      this.formModal.dateDeliverStamp = $("#dateDeliverStamp").val();
+      this.formModal.dateWithdrawStamp = $("#dateWithdrawStamp").val();
+      this.formModal.fivePartDate = $("#fivePartDate").val();
+      this.formModal.stampCheckDate = $("#stampCheckDate").val();
       this.formModal.stampTypeId = this.formModal.stampType;
       this.formModal.stampType = ($("#stampType option:selected").text()=="กรุณาเลือก" ? "":$("#stampType option:selected").text());
       this.formModal.stampBrandId = this.formModal.stampBrand
@@ -218,9 +234,16 @@ export class Int05113Component implements OnInit {
     this.table.columns.adjust().draw(); // Redraw the DataTable
     this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
     this.formModal = new FormModal();
+    this.formModal.dateOfPay = "";
+    this.formModal.dateDeliverStamp = "";
+    this.formModal.dateWithdrawStamp = "";
+    this.formModal.fivePartDate = "";
+    this.formModal.stampCheckDate = "";
     this.restoreDropdown();
     this.onAddFile();
-    this.listButton = [];
+    this.numberButton=1;
+    this.listButton = [this.numberButton];
+    $("#fileName1").val("");
   }
 
   onSave = () => {
@@ -337,12 +360,12 @@ export class Int05113Component implements OnInit {
 
     this.table.on('click', 'tbody tr button.btn-edit', (e) => {
       var closestRow = $(e.target).closest('tr');
-      var data = this.table.row(closestRow).data();      
+      var data = this.table.row(closestRow).data(); 
+      console.log("data : ",data);
       setTimeout(() => {        
         this.formModal.dateOfPay = data.dateOfPay;
         this.formModal.bookNumberDeliverStamp = data.bookNumberDeliverStamp;
         this.formModal.bookNumberWithdrawStamp = data.bookNumberWithdrawStamp;
-        this.formModal.createdDate = data.createdDate;
         this.formModal.dateDeliverStamp = data.dateDeliverStamp;
         this.formModal.dateWithdrawStamp = data.dateWithdrawStamp;
         this.formModal.departmentName = data.departmentName;
@@ -393,7 +416,6 @@ export class Int05113Component implements OnInit {
             this.formModal.dateOfPay = "";
             this.formModal.bookNumberDeliverStamp ="";
             this.formModal.bookNumberWithdrawStamp = "";
-            this.formModal.createdDate = "";
             this.formModal.dateDeliverStamp = "";
             this.formModal.dateWithdrawStamp = "";
             this.formModal.departmentName = "";
@@ -404,7 +426,7 @@ export class Int05113Component implements OnInit {
             this.formModal.fivePartNumber = "";
             this.formModal.note = "";
             this.formModal.numberOfBook = "";
-            this.formModal.numberOfStamp = "";
+            this.formModal.numberOfStamp = 0;
             this.formModal.serialNumber = "";
             this.formModal.stampBrand = "";
             this.formModal.stampBrandId = "";
@@ -415,9 +437,9 @@ export class Int05113Component implements OnInit {
             this.formModal.stampType = "";
             this.formModal.stampTypeId = "";
             this.formModal.status = "";
-            this.formModal.sumOfValue = "";
+            this.formModal.sumOfValue = 0;
             this.formModal.taxStamp = "";
-            this.formModal.valueOfStampPrinted = "";
+            this.formModal.valueOfStampPrinted = 0;
             this.formModal.workSheetDetailId = "";
             $("#stampType").dropdown('restore defaults');
             $("#stampBrand").dropdown('restore defaults');
@@ -455,15 +477,14 @@ class FormModal {
   stampTypeId: string = null;
   stampBrandId:string = null;
   numberOfBook: string = null;
-  numberOfStamp: string = null;
-  valueOfStampPrinted: string = null;
-  sumOfValue: string = null;
+  numberOfStamp: number = null;
+  valueOfStampPrinted: number = null;
+  sumOfValue: number = null;
   serialNumber: string = null;
   taxStamp: string = null;
   stampCodeStart: string = null;
   stampCodeEnd: string = null;
   note: string = null;
-  createdDate: string = null;
   fileName: [any];
   idRandom: number = 0;
   file : File[];
