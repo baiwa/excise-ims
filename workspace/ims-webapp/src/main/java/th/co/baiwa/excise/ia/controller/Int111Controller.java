@@ -112,7 +112,7 @@ public class Int111Controller {
 	@ResponseBody
 	public  void exportFollowUpProject(@ModelAttribute Int111FormVo formVo, HttpServletResponse response) throws Exception {
 		log.info("projectName : "+formVo.getProjectName()+ ", status : " +formVo.getStatus());
-		iaFollowUpProjectService.exportExcelByToffee(formVo, response);
+		iaFollowUpProjectService.exportFollowUpProject(formVo, response);
 	 
 	}
 }

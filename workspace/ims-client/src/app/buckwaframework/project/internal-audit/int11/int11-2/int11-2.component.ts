@@ -25,6 +25,7 @@ export class Int112Component implements OnInit {
 
   constructor(
     private ajaxService: AjaxService,
+    private ajax: AjaxService,
     private router: Router,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService, ) { }
@@ -450,10 +451,16 @@ export class Int112Component implements OnInit {
     }
   }
 
-  export() {
-    var url = AjaxService.CONTEXT_PATH + "ia/int112/export?exciseDepartment=" + $('#exciseDepartment').val() +
-      "&exciseRegion=" + $('#exciseRegion').val() + "&exciseDistrict=" + $('#exciseDistrict').val() +
-      "&status=" + $('#status').val();
-    window.open(url);
+  // export() {
+  //   var url = AjaxService.CONTEXT_PATH + "ia/int112/export?exciseDepartment=" + $('#exciseDepartment').val() +
+  //     "&exciseRegion=" + $('#exciseRegion').val() + "&exciseDistrict=" + $('#exciseDistrict').val() +
+  //     "&status=" + $('#status').val();
+  //   window.open(url);
+  // }
+
+  exportFollowUpDepartment() {
+    const URL = "ia/int112/exportFollowUpDepartment?exciseDepartment=" + $('#exciseDepartment').val() +"&exciseRegion=" + $('#exciseRegion').val() + "&exciseDistrict=" + $('#exciseDistrict').val() +"&status=" + $('#status').val();
+    console.log("exciseDepartment :" + $('#exciseDepartment').val()+ " , exciseRegion :"+$('#exciseRegion').val()+" , exciseDistrict :"+$('#exciseDistrict').val()+" , status :"+$('#status').val() );
+    this.ajax.download(URL);
   }
 }

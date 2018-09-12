@@ -285,7 +285,7 @@ public class IaFollowUpProjectService {
 
 	}*/
 
-	public void exportExcelByToffee(Int111FormVo formVo, HttpServletResponse response) throws IOException {
+	public void exportFollowUpProject(Int111FormVo formVo, HttpServletResponse response) throws IOException {
 		
 		/* create spreadsheet */
 		XSSFWorkbook workbook = setUpExcel();
