@@ -189,9 +189,9 @@ export var formatter = (what: string = "") => {
         date: function (date, settings) {
           if (!date) return "";
           let day = date.getDate();
-          let month = date.getMonth();
+          let _month = toDateLocale(date)[0].split("/")[1];
           let _year = toDateLocale(date)[0].split("/")[2];
-          return digit(day) + "/" + digit(month) + "/" + _year.toString();
+          return digit(day) + "/" + digit(_month) + "/" + _year.toString();
         }
       };
   }

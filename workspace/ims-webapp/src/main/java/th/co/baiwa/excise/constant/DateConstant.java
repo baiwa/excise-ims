@@ -186,11 +186,23 @@ public class DateConstant {
 		return dateString;
 	}
 
+	/*super convert */
 	public static String convertDateToStr(Date date, String pattern) {
 		String dateString = "";
 		try {
 			if (date != null) {
 				dateString = DateFormatUtils.format(date, pattern, LOCAL_TH);
+			}
+		} catch (Exception e) {
+			logger.error("Error convertDateToStr : ", e);
+		}
+		return dateString;
+	}
+	public static String convertDateToStr(Date date, String pattern,Locale locale) {
+		String dateString = "";
+		try {
+			if (date != null) {
+				dateString = DateFormatUtils.format(date, pattern, locale);
 			}
 		} catch (Exception e) {
 			logger.error("Error convertDateToStr : ", e);
@@ -210,5 +222,19 @@ public class DateConstant {
 		}
 		return date;
 	}
+	public static Date convertStrToDate(String strDate, String patern, Locale locale) {
+		Date date = null;
+		try {
+			if (StringUtils.isNotBlank(strDate)) {
+				date = DateUtils.parseDate(StringUtils.trim(strDate), locale, patern);
+			}
+		} catch (Exception e) {
+			logger.error("Error convertStrToDate : ", e);
+			e.printStackTrace();
+		}
+		return date;
+	}
+	/*end super convert */
+
 
 }

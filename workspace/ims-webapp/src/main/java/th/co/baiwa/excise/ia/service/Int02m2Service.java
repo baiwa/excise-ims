@@ -13,6 +13,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.ia.persistence.entity.Condition;
 import th.co.baiwa.excise.ia.persistence.entity.QtnFinalRepDetail;
 import th.co.baiwa.excise.ia.persistence.entity.QtnFinalRepHeader;
 import th.co.baiwa.excise.ia.persistence.entity.QtnFinalRepMain;
@@ -75,6 +76,9 @@ public class Int02m2Service {
 
 	@Autowired
 	private QtnFinalRepDetailRepository qtnFinalRepDtlRepo; // Questionnaire Final Report Detail
+
+	@Autowired
+	private ConditionService conditionService;
 
 	@Autowired
 	private WebServiceExciseService webService;
@@ -279,25 +283,49 @@ public class Int02m2Service {
 			List<Int02m4VoDetail> details = new ArrayList<>();
 			for (QtnReportHeaderVo h : headers) {
 				logger.info("HEADER_ID: {}", h.getQtnReportHdrId());
+				List<Condition> conditionList = conditionService.findConditionByParentId(h.getQtnReportHdrId(),
+						"QTN_HEADER", "int02-3");
 				List<QtnScore> scores = qtnFinalRepHdrRepoImpl.calScore(h.getQtnReportHdrId());
 				List<QtnReportMainVo> man = qtnMainRepoImpl.findJoinFinal(h.getQtnReportHdrId());
-				int approve = 0;
-				int reject = 0;
-				if (man.size() > 0) {
-					if ("Y".equals(man.get(0).getPoint())) {
-						approve = 1;
-					}
-					if ("N".equals(man.get(0).getPoint())) {
-						reject = 1;
-					}
-				}
-				if (scores.size() > 0) {
+				if (BeanUtils.isNotEmpty(conditionList)) {
+					String title = "";
+					int approve = 0;
+					int reject = 0;
 					Int02m4VoDetail detail = new Int02m4VoDetail();
-					detail.setTitle(scores.get(0).getTitle());
-					detail.setApprove(scores.get(0).getApprove() + approve);
-					detail.setReject(scores.get(0).getReject() + reject);
-					details.add(detail);
-				}
+					if (man.size() > 0) {
+						if ("Y".equals(man.get(0).getPoint())) {
+							approve = 1;
+						}
+						if ("N".equals(man.get(0).getPoint())) {
+							reject = 1;
+						}
+					}
+					if (scores.size() > 0) {
+						title = scores.get(0).getTitle();
+						approve += scores.get(0).getApprove();
+						reject += scores.get(0).getReject();
+						detail.setTitle(title);
+						detail.setApprove(approve);
+						detail.setReject(reject);
+					}
+					for (Condition condition : conditionList) {
+						int value = reject;
+						if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue()
+								&& value <= condition.getValue2().longValue()) {
+							detail.setRisk(condition.getConvertValue());
+							details.add(detail);
+							break;
+						} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+							detail.setRisk(condition.getConvertValue());
+							details.add(detail);
+							break;
+						} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+							detail.setRisk(condition.getConvertValue());
+							details.add(detail);
+							break;
+						}
+					}
+				}	
 			}
 			main.setDetail(details);
 			result.add(main);
