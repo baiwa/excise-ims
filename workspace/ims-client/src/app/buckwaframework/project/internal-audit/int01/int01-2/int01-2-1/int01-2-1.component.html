@@ -1,51 +1,79 @@
 <div class="ui grid">
   <div class="sixteen wide column">
-    <h2 class="ui header">สร้างกระดาษทำการ ใบอนุญาต สุรา ยาสูบ ไพ่</h2>
+    <h2 class="ui header">ตรวจสอบใบอนุญาตสุรา ยาสูบ ไพ่</h2>
 
     <div class="ui top attached header">
-      <span>ข้อมูลกระดาษทำการ ใบอนุญาต สุรา ยาสูบ ไพ่</span>
+      <span> ตรวจสอบใบอนุญาตสุรา ยาสูบ ไพ่</span>
     </div>
 
     <div class="ui attached segment">
       <div class="ui form">
         <div class="inline fields">
-          <div class="seven wide required field">
-            <label class="custom-label-w-10">ประจำเดือน</label>
-            <div class="ui icon input">
-              <input type="text" placeholder="MM/YYYY" value="ตุลาคม 2560">
-              <i class="add to calendar icon"></i>
-            </div>
+          <div class="two wide field"></div>
+          <div class="two wide field">
+            <label>สรรพสามิตภาค</label>
           </div>
-          <div class="seven wide field required">
-            <label class="custom-label-w-10">หน่วยรับตรวจ</label>
-            <select class="ui dropdown ai" [ngModel]="selectedProduct" (ngModelChange)="onChange($event)">
-              <option *ngFor="let item of productList; index as i;" value="{{item.value}}">{{item.value}}</option>
+          <div class="four wide field">
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>
           </div>
-
+          <div class="two wide field">
+            <label>สรรพสามิตพื้นที่</label>
+          </div>
+          <div class="four wide field">
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            </select>
+          </div>
         </div>
-
         <div class="inline fields">
-          <div class="seven wide required field">
-            <label class="custom-label-w-10">วันที่ตรวจ</label>
-            <div class="ui icon input">
-              <input type="text" placeholder="DD/MM/YYYY" value="17 พฤษจิกายน 2560">
-              <i class="add to calendar icon"></i>
+          <div class="two wide field"></div>
+          <div class="two wide field">
+            <label>สรรพสามิตสาขา</label>
+          </div>
+          <div class="four wide field">
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            </select>
+          </div>
+          <div class="two wide field ">
+            <label>วันที่
+            </label>
+          </div>
+          <div class="two wide field">
+            <div class="ui calendar" id="calendar1" style="width:100%">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" name="endDate" id="endDate">
+              </div>
             </div>
           </div>
-          <div class="seven wide field required">
-            <label class="custom-label-w-10">ผู้ตรวจ</label>
-            <input type="text" value="นาย อัครเดช รักงาน">
+          <label>ถึง</label>
+          <div class="two wide field">
+            <div class="ui calendar" id="calendar2" style="width:100%">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" name="endDate" id="endDate">
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="ui center aligned grid">
+          <div class="eight wide column">
+            <button class="ui mini primary button width-100"  routerLink='/int01/2/2'>
+              <i class="search icon"></i>
+              ค้นหา
+            </button>
           </div>
         </div>
 
-        <div class="ui center aligned grid">
-          <div class="eight wide column">
-            <a class="ui mini primary button" routerLink='/int01/2/2'>
-              <i class="add icon"></i>สร้างกระดาษทำการ</a>
-          </div>
-        </div>
       </div>
+
     </div>
   </div>
 </div>
