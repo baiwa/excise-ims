@@ -29,8 +29,22 @@ export class Int0832Component implements OnInit {
   ngOnInit() {
     this.riskHdrName = "";
     this.budgetYear = "";
-    this.wsRiskList = ["ปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ", "ปัจจัยเสี่ยงผลการจัดเก็บรายได้", "ปัจจัยเสี่ยงผลการปราบปรามด้านค่าปรับคดี", "ปัจจัยเสี่ยงผลการปราบปรามด้านจำนวนคดี", "ปัจจัยเสี่ยงการเงินและบัญชี", "ปัจจัยเสี่ยงระบบการควบคุมภายใน", "ปัจจัยเสี่ยงการส่งเงินเกิน 3 วัน", "ปัจจัยเสี่ยงแบบสอบทานระบบการควบคุมภายใน"];
-    this.pageList = ["/int08/3/3", "/int08/3/6", "/int08/3/7", "/int08/3/8", "/int08/3/9", "/int08/3/9", "/int08/3/9", "/int08/3/9"];
+    this.wsRiskList = ["ปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ",
+      "ปัจจัยเสี่ยงผลการจัดเก็บรายได้",
+      "ปัจจัยเสี่ยงผลการปราบปรามด้านค่าปรับคดี",
+      "ปัจจัยเสี่ยงผลการปราบปรามด้านจำนวนคดี",
+      "ปัจจัยเสี่ยงการเงินและบัญชี",
+      "ปัจจัยเสี่ยงระบบการควบคุมภายใน",
+      "ปัจจัยเสี่ยงการส่งเงินเกิน 3 วัน",
+      "ปัจจัยเสี่ยงแบบสอบทานระบบการควบคุมภายใน"];
+    this.pageList = ["/int08/3/3",
+      "/int08/3/6",
+      "/int08/3/7",
+      "/int08/3/8",
+      "/int08/3/9",
+      "/int08/3/9",
+      "/int08/3/9",
+      "/int08/3/10"];
     //this.initDatatable();
   }
   ngAfterViewInit() {
@@ -122,7 +136,7 @@ export class Int0832Component implements OnInit {
           console.log("dtl");
           console.log(data.riskHdrName);
           console.log(this.wsRiskList.indexOf(data.riskHdrName));
-          var indexPage = this.wsRiskList.indexOf(data.riskHdrName);
+          var indexPage = this.wsRiskList.indexOf(data.riskHdrName.trim());
           if (indexPage >= 0) {
             this.router.navigate([this.pageList[indexPage]], {
               queryParams: { id: data.riskHrdId }

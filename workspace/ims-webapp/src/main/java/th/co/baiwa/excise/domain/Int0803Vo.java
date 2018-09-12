@@ -15,6 +15,9 @@ public class Int0803Vo {
 	private String budgetYear;
 	private List<String> riskHrdNameList;
 	private String departmentName;
+	private String color;
+	private String valueTranslation;
+	private Integer riskPoint;
 	private List<RiskAssExcAreaHdr> riskAssExcAreaHdrList;
 	private List<RiskAssExcRecDtl> riskAssExcRecDtlList;
 
@@ -91,5 +94,28 @@ public class Int0803Vo {
 		this.riskAssExcRecDtlList = riskAssExcRecDtlList;
 	}
 
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getValueTranslation() {
+		return valueTranslation;
+	}
+
+	public void setValueTranslation(String valueTranslation) {
+		this.valueTranslation = valueTranslation;
+	}
+
+	public Integer getRiskPoint() {
+		return riskPoint;
+	}
+
+	public void setRiskPoint(Integer riskPoint) {
+		this.riskPoint = riskPoint;
+	}
 
 }

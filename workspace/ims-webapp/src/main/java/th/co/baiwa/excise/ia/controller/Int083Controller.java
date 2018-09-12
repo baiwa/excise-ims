@@ -24,6 +24,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.Int0801Vo;
 import th.co.baiwa.excise.domain.Int0803Vo;
+import th.co.baiwa.excise.domain.QtnMasterVo;
 import th.co.baiwa.excise.domain.RiskFullDataVo;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaHdr;
@@ -375,6 +376,7 @@ public class Int083Controller {
 		}
 		return message;
 	}
+	
 	@PostMapping("/updateStatusRisk")
 	@ResponseBody
 	public void updateStatusRisk(@RequestBody RiskAssExcAreaHdr risk) {
@@ -382,6 +384,14 @@ public class Int083Controller {
 		riskAssExcAreaService.updateStatusRisk(risk);
 
 	}
+
+	@PostMapping("/findQtnData")
+	@ResponseBody
+	public List<QtnMasterVo> findQtnData(@RequestBody RiskAssExcAreaHdr riskAssExcAreaHdr) {
+		logger.info("findQtnData");
+		return riskAssExcAreaService.searchQtnForDateTable(riskAssExcAreaHdr);
+	}
+	
 	
 
 }

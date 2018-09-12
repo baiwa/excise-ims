@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.co.baiwa.excise.domain.QtnHdrConditionVo;
 import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
 import th.co.baiwa.excise.utils.OracleUtils;
 
@@ -57,6 +58,46 @@ public class QtnMasterRepositoryImpl implements QtnMasterRepositoryCustom {
 			master.setQtnSector(rs.getString("QTN_SECTOR"));
 			master.setQtnFinished(rs.getString("QTN_FINISHED"));
 			return master;
+		}
+		
+	};
+	
+	
+	@Override
+	public List<QtnHdrConditionVo> findRiskNameAndPoint(QtnMaster qtnMaster) {
+		List<Object> param = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT MAS.QTN_MASTER_ID , MAS.QTN_NAME ,HDR.QTN_REPORT_HDR_ID , COUNT(1) RISK_POINT FROM IA_QTN_MASTER MAS  ");
+		sql.append(" INNER JOIN IA_QTN_REPORT_HEADER HDR ");
+		sql.append(" ON HDR.QTN_MASTER_ID = MAS.QTN_MASTER_ID ");
+		sql.append(" INNER JOIN IA_QTN_FINAL_REP_HEADER FI_HRD ");
+		sql.append(" ON FI_HRD.QTN_REPORT_HDR_ID = HDR.QTN_REPORT_HDR_ID ");
+		sql.append(" INNER JOIN IA_QTN_FINAL_REP_MAIN MAIN ");
+		sql.append(" ON MAIN.QTN_FINAL_REP_HDR_ID = FI_HRD.QTN_FINAL_REP_HDR_ID ");
+		sql.append(" INNER JOIN IA_QTN_FINAL_REP_DETAIL DTL ");
+		sql.append(" ON DTL.QTN_FINAL_REP_MAN_ID = MAIN.QTN_FINAL_REP_MAN_ID ");
+		sql.append(" WHERE  MAS.IS_DELETED = 'N' ");
+		sql.append(" AND  HDR.IS_DELETED = 'N' ");
+		sql.append(" AND  FI_HRD.IS_DELETED = 'N' ");
+		sql.append(" AND  MAIN.IS_DELETED = 'N' ");
+		sql.append(" AND  DTL.IS_DELETED = 'N' ");
+		sql.append(" AND DTL.QTN_POINT = 'N' ");
+		sql.append(" AND MAS.QTN_YEAR = ? ");
+		sql.append(" GROUP BY MAS.QTN_MASTER_ID , MAS.QTN_NAME ,HDR.QTN_REPORT_HDR_ID ");
+		param.add(qtnMaster.getQtnYear());
+		return jdbcTemplate.query(sql.toString(),param.toArray(), riskMapping);
+	}
+	
+	private RowMapper<QtnHdrConditionVo> riskMapping = new RowMapper<QtnHdrConditionVo>() {
+
+		@Override
+		public QtnHdrConditionVo mapRow(ResultSet rs, int arg1) throws SQLException {
+			QtnHdrConditionVo int0803Vo = new QtnHdrConditionVo();
+			int0803Vo.setRiskPoint(rs.getInt("RISK_POINT"));
+			int0803Vo.setQtnName(rs.getString("QTN_NAME"));
+			int0803Vo.setQtnMasterId(rs.getLong("QTN_MASTER_ID"));
+			int0803Vo.setQtnHrdId(rs.getLong("QTN_REPORT_HDR_ID"));
+			return int0803Vo;
 		}
 		
 	};
