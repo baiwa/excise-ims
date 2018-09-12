@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,7 +82,6 @@ public class Int05112Service {
 	}
 	
 	public void addColum(List<Int05112Vo> list) {		
-		
 		List<Int05112DetailVo> detailList = iaStampDetailDao.findAll();
 	
 		if (!detailList.isEmpty()) {
@@ -99,16 +99,8 @@ public class Int05112Service {
 				Int05112Vo result = list.get(index);
 				String payOfDate = DateConstant.convertDateToStr(detail.getDateOfPay(), "MM");
 				result.setYear(DateConstant.convertDateToStr(detail.getDateOfPay(), FORMAT_DATE.YYYY));
-				checkMonth(result, detail.getStatus(), payOfDate);		
-				
-				/*column 3 -4*/
-				String previousYear = DateConstant.convertStrToStrPreviousYear(result.getYear());
-				IaStampDetailSummary summary = iaStampDetailSummaryRepository.findByStampGenreIdAndYear(Long.valueOf(index), previousYear);
-				if (summary!=null) {					
-					result.setBranchLastYeatMoneyOfStamp(summary.getSumOfValue());
-					result.setBranchLastYeatNumberOfStamp(summary.getNumberOfStamp().intValue());					
-				}
-								
+				checkMonth(result, detail.getStatus(), payOfDate);									
+												
 				/*receive & pay of year*/				 				 				
 				if (PAY.equals(detail.getStatus())) {
 					result.setSummaryYearPay(result.getSummaryYearPay() + detail.getNumberOfStamp());
@@ -118,6 +110,28 @@ public class Int05112Service {
 					result.setSummaryYearMoneyRecieve(result.getSummaryYearMoneyRecieve().add(detail.getSumOfValue()));
 				}												
 			}
+		}
+
+		/*summay of year*/
+		for (Int05112Vo result : list) {
+			
+			/*column 3 -4*/
+			String previousYear = DateConstant.convertStrToStrPreviousYear(result.getYear());
+			if (StringUtils.isNoneBlank(result.getColumnId()) && StringUtils.isNotBlank(previousYear)) {
+				IaStampDetailSummary summary = iaStampDetailSummaryRepository.findByStampGenreIdAndYear(Long.valueOf(result.getColumnId()), previousYear);
+				if (summary!=null) {										
+					result.setBranchLastYeatNumberOfStamp(summary.getNumberOfStamp().intValue());
+					result.setBranchLastYeatMoneyOfStamp(summary.getSumOfValue());
+				}
+			}			
+			
+			result.setSummaryTotalRecieve(result.getSummaryYearRecieve()+result.getBranchLastYeatNumberOfStamp());
+			result.setSummaryTotalMoneyRecieve(result.getSummaryYearMoneyRecieve().add(result.getBranchLastYeatMoneyOfStamp()));
+			result.setSummaryTotalPay(result.getSummaryYearPay());
+			result.setSummaryTotalMoneyPay(result.getSummaryYearMoneyPay());
+			
+			result.setBranchUpToDateNumberOfStamp(result.getSummaryTotalRecieve()-result.getSummaryTotalPay());
+			result.setBranchUpToDateMoneyOfStamp(result.getSummaryTotalMoneyRecieve().subtract(result.getSummaryTotalMoneyPay()));
 		}
 		
 	}
@@ -238,25 +252,27 @@ public class Int05112Service {
 		/*save summary of year*/
 		if (!list.isEmpty()) {
 			
-			for (Int05112Vo item : list) {				
-				IaStampDetailSummary summary = iaStampDetailSummaryRepository.findByStampGenreIdAndYear(Long.valueOf(item.getColumnId()), item.getYear());
-				if (summary != null) {
-					summary.setNumberOfStamp(new BigDecimal(item.getBranchUpToDateNumberOfStamp()));
-					summary.setSumOfValue(item.getBranchUpToDateMoneyOfStamp());
-					summary.setStampGenreId(new BigDecimal(item.getColumnId()));
-					summary.setYear(item.getYear());
-					
-					iaStampDetailSummaryRepository.save(summary);
-				}else {
-					/*create row */
-					IaStampDetailSummary vo = new IaStampDetailSummary();
-					vo.setNumberOfStamp(new BigDecimal(item.getBranchUpToDateNumberOfStamp()));
-					vo.setSumOfValue(item.getBranchUpToDateMoneyOfStamp());
-					vo.setStampGenreId(new BigDecimal(item.getColumnId()));
-					vo.setYear(item.getYear());
-					
-					iaStampDetailSummaryRepository.save(vo);
-				}
+			for (Int05112Vo item : list) {		
+				if (StringUtils.isNoneBlank(item.getColumnId()) && StringUtils.isNotBlank(item.getYear())) {
+					IaStampDetailSummary summary = iaStampDetailSummaryRepository.findByStampGenreIdAndYear(Long.valueOf(item.getColumnId()), item.getYear());
+					if (summary != null) {
+						summary.setNumberOfStamp(new BigDecimal(item.getBranchUpToDateNumberOfStamp()));
+						summary.setSumOfValue(item.getBranchUpToDateMoneyOfStamp());
+						summary.setStampGenreId(Long.valueOf(item.getColumnId()));
+						summary.setYear(item.getYear());
+						
+						iaStampDetailSummaryRepository.save(summary);
+					}else {
+						/*create row */
+						IaStampDetailSummary vo = new IaStampDetailSummary();
+						vo.setNumberOfStamp(new BigDecimal(item.getBranchUpToDateNumberOfStamp()));
+						vo.setSumOfValue(item.getBranchUpToDateMoneyOfStamp());
+						vo.setStampGenreId(Long.valueOf(item.getColumnId()));
+						vo.setYear(item.getYear());
+						
+						iaStampDetailSummaryRepository.save(vo);
+					}
+				}				
 			}
 		}
 		

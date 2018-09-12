@@ -109,8 +109,8 @@ export class Int05112Component implements OnInit {
         { "data": "summaryYearMoneyPay", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;},"className": "ui center aligned"}, 
 
         { "data": "summaryTotalRecieve", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;},"className": "ui center aligned"}, 
-        { "data": "summaryTotalPay", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;},"className": "ui center aligned"}, 
         { "data": "summaryTotalMoneyRecieve", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;},"className": "ui center aligned"}, 
+        { "data": "summaryTotalPay", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;},"className": "ui center aligned"}, 
         { "data": "summaryTotalMoneyPay","render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;}, "className": "ui center aligned"}, 
 
         { "data": "branchUpToDateNumberOfStamp", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;}, "className": "ui center aligned"}, 

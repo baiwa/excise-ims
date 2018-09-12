@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
-
 @Entity
 @Table(name = "IA_STAMP_DETAIL_SUMMAEY")
 public class IaStampDetailSummary extends BaseEntity {
@@ -32,9 +31,9 @@ public class IaStampDetailSummary extends BaseEntity {
 
 	@Column(name = "SUM_OF_VALUE")
 	private BigDecimal sumOfValue;
-	                
+
 	@Column(name = "STAMP_GENRE_ID")
-	private BigDecimal stampGenreId;
+	private Long stampGenreId;
 
 	public Long getId() {
 		return id;
@@ -68,13 +67,12 @@ public class IaStampDetailSummary extends BaseEntity {
 		this.sumOfValue = sumOfValue;
 	}
 
-	public BigDecimal getStampGenreId() {
+	public Long getStampGenreId() {
 		return stampGenreId;
 	}
 
-	public void setStampGenreId(BigDecimal stampGenreId) {
+	public void setStampGenreId(Long stampGenreId) {
 		this.stampGenreId = stampGenreId;
 	}
 
-	
 }
