@@ -70,9 +70,7 @@
               <i class="save icon"></i>
               บันทึก
             </button>
-            <button class="ui mini primary button" (click)="modalConditionRL()">
-              กำหนดเงื่อนไข RL
-            </button>
+
             <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
               Export
             </button>
@@ -85,17 +83,6 @@
       </div>
     </div>
   </div>
-  <div class="sixteen wide column" *ngIf="getConditionShow()">
-    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
-    </div>
 
-    <div class="ui attached segment">
-      <div class="ui form">
-        <condition [riskId]="id" [riskType]="'OTHER'" [page]="'int08-3-4'" (out)="closeConditionRL($event)"></condition>
-      </div>
-      <br/>
-    </div>
-  </div>
 
 </div>

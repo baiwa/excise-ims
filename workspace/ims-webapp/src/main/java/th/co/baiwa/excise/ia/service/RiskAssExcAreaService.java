@@ -268,6 +268,16 @@ public class RiskAssExcAreaService {
 
 	}
 
+	public void updateRiskAssQtnOtherDtl(List<RiskAssExcOtherDtl> riskAssExcOtherDtlList) {
+		logger.info("updateRiskAssQtnOtherDtl");
+		for (RiskAssExcOtherDtl riskAssExcOtherDtl : riskAssExcOtherDtlList) {
+			if (BeanUtils.isEmpty(riskAssExcOtherDtl.getRiskOtherDtlId())) {
+				riskAssExcOtherDtlRepository.save(riskAssExcOtherDtlList);
+			}
+		}
+
+	}
+
 	public List<RiskFullDataVo> searchFullRiskByBudgetYear(String budgetYear, List<String> depNameList) {
 		logger.info("searchFullRiskByBudgetYear : " + budgetYear);
 		List<Condition> conditionList = conditionService.findConditionByParentId(new Long(budgetYear), "ALL", "int08-3-5");
@@ -449,7 +459,7 @@ public class RiskAssExcAreaService {
 		riskAssExcAreaHdrRepository.save(risk);
 	}
 
-	public List<QtnMasterVo> searchQtnForDateTable(RiskAssExcAreaHdr riskAssExcAreaHdr) {
+	public List<QtnMasterVo> searchQtn(RiskAssExcAreaHdr riskAssExcAreaHdr) {
 		QtnMaster qtnMaster = new QtnMaster();
 		qtnMaster.setQtnYear(riskAssExcAreaHdr.getBudgetYear());
 		List<QtnMasterVo> qtnMasterVoList = qtnMasterService.calRiskPoint(riskAssExcAreaHdr.getBudgetYear());

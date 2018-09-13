@@ -20,7 +20,7 @@ public class Int0803Vo {
 	private Integer riskPoint;
 	private List<RiskAssExcAreaHdr> riskAssExcAreaHdrList;
 	private List<RiskAssExcRecDtl> riskAssExcRecDtlList;
-
+	private List<QtnMasterVo> qtnMasterVoList;
 
 	public String getProjectBase() {
 		return projectBase;
@@ -116,6 +116,14 @@ public class Int0803Vo {
 
 	public void setRiskPoint(Integer riskPoint) {
 		this.riskPoint = riskPoint;
+	}
+
+	public List<QtnMasterVo> getQtnMasterVoList() {
+		return qtnMasterVoList;
+	}
+
+	public void setQtnMasterVoList(List<QtnMasterVo> qtnMasterVoList) {
+		this.qtnMasterVoList = qtnMasterVoList;
 	}
 
 }

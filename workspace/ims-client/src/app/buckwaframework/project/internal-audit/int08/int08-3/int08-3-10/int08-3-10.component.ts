@@ -80,7 +80,7 @@ export class Int08310Component implements OnInit {
       this.riskHrdData.budgetYear = this.budgetYear;
       console.log(this.riskHrdData.budgetYear);
       url = "ia/int083/findQtnData";
-      this.ajax.post(url, { budgetYear: this.budgetYear }, res => {
+      this.ajax.post(url, { budgetYear: this.budgetYear, riskHrdId: this.id }, res => {
         // this.riskDataList
         var jsonObjList = res.json();
         for (let index = 0; index < jsonObjList.length; index++) {
@@ -88,12 +88,16 @@ export class Int08310Component implements OnInit {
           var riskData = new RiskData();
           riskData.riskOtherDtlId = element.riskOtherDtlId;
           riskData.riskHrdId = element.riskHrdId;
-          riskData.qtnName = element.qtnName;
-          riskData.riskPointMaster = element.riskPointMaster;
+          riskData.departmentName = element.departmentName;
+          riskData.riskCost = element.riskCost;
           riskData.rl = element.rl;
           riskData.valueTranslation = element.valueTranslation;
           riskData.isDeleted = 'N';
-          console.log(riskData);
+          riskData.color = element.color;
+          riskData.other = element.other;
+          if (riskData.riskHrdId != this.id) {
+            riskData.riskHrdId = this.id;
+          }
           this.riskDataList.push(riskData);
 
         }
@@ -156,8 +160,8 @@ export class Int08310Component implements OnInit {
           },
           className: "center"
         },
-        { data: "qtnName" },
-        { data: "riskPointMaster", className: "right" },
+        { data: "departmentName" },
+        { data: "riskCost", className: "right" },
         { data: "rl", className: "center" },
         { data: "valueTranslation", className: "center" }
 
@@ -170,7 +174,7 @@ export class Int08310Component implements OnInit {
             for (let i = 0; i < this.riskDataList.length; i++) {
               const element = this.riskDataList[i];
               if (element.riskOtherDtlId != null && element.riskOtherDtlId != undefined && element.riskOtherDtlId != '') {
-                if (element.riskOtherDtlId == this.dataTableList[index].riskOtherDtlId && element.qtnName == this.dataTableList[index].qtnName) {
+                if (element.riskOtherDtlId == this.dataTableList[index].riskOtherDtlId && element.departmentName == this.dataTableList[index].departmentName) {
                   this.riskDataList[i].isDeleted = 'Y';
                 }
 
@@ -179,7 +183,7 @@ export class Int08310Component implements OnInit {
           } else {
             for (let i = 0; i < this.riskDataList.length; i++) {
               const element = this.riskDataList[i];
-              if (element.qtnName == this.dataTableList[index].qtnName) {
+              if (element.departmentName == this.dataTableList[index].departmentName) {
                 this.riskDataList.splice(i, 1);
               }
             }
@@ -209,9 +213,9 @@ export class Int08310Component implements OnInit {
 
 
     let riskData = new RiskData();
-    riskData.qtnName = 'สพพ. ' + this.departmentName;
+    riskData.departmentName = 'สพพ. ' + this.departmentName;
 
-    riskData.riskPointMaster = this.riskCost;
+    riskData.riskCost = this.riskCost;
     riskData.isDeleted = 'N';
     riskData.riskHrdId = this.riskAssRiskWsHdr.riskHrdId;
 
@@ -233,10 +237,7 @@ export class Int08310Component implements OnInit {
         countProject++;
       }
     });
-    if (countProject == 0) {
-      this.messageBarService.errorModal("กรุณาเพิ่มความ โครงการตามยุทธศาสตร์ อย่างน้อยหนึ่งโครงการ");
-      return;
-    }
+
     this.riskAssRiskWsHdr.riskHrdPaperName = this.riskHrdPaperName;
     this.riskAssRiskWsHdr.userCheck = this.userCheck;
     this.riskAssRiskWsHdr.budgetYear = this.budgetYear;
@@ -253,7 +254,7 @@ export class Int08310Component implements OnInit {
 
     if (msgMessage == "") {
       var url = "ia/int083/saveRiskAssOther";
-      var urlDtl = "ia/int083/saveRiskAssDtlOther";
+      var urlDtl = "ia/int083/saveRiskAssQtnDtlOther";
       this.riskAssRiskWsHdr.riskType = 'OTHER';
       this.ajax.post(url, this.riskAssRiskWsHdr, res => {
         var message = res.json();
@@ -261,8 +262,7 @@ export class Int08310Component implements OnInit {
         if (message.messageType == 'E') {
           this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
         } else {
-
-
+          console.log(this.riskDataList);
           this.ajax.post(urlDtl, { riskAssExcOtherDtlList: this.riskDataList }, res => {
             var message = res.json();
             this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
@@ -357,14 +357,15 @@ export class Int08310Component implements OnInit {
 }
 
 class RiskData {
-  qtnName: any = '';
-
+  departmentName: any = '';
+  color: any = '';
   riskHrdId: any = 0;
-  riskPointMaster: any = '';
+  riskCost: any = '';
   rl: any = '';
   valueTranslation: any = '';
   riskOtherDtlId: any = 0;
   isDeleted: any = '';
+  other: any;
 }
 
 class RiskHrdData {

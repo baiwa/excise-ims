@@ -387,11 +387,45 @@ public class Int083Controller {
 
 	@PostMapping("/findQtnData")
 	@ResponseBody
-	public List<QtnMasterVo> findQtnData(@RequestBody RiskAssExcAreaHdr riskAssExcAreaHdr) {
+	public List<RiskAssExcOtherDtl> findQtnData(@RequestBody RiskAssExcAreaHdr riskAssExcAreaHdr) {
 		logger.info("findQtnData");
-		return riskAssExcAreaService.searchQtnForDateTable(riskAssExcAreaHdr);
+		List<RiskAssExcOtherDtl> riskList = riskAssExcAreaService.findByRiskHrdId(riskAssExcAreaHdr.getRiskHrdId());
+		if(BeanUtils.isEmpty(riskList)) {
+			logger.info("findQtnData New Data");
+			List<QtnMasterVo> qtnMasterList = riskAssExcAreaService.searchQtn(riskAssExcAreaHdr);
+			RiskAssExcOtherDtl risk = null;
+		if(BeanUtils.isNotEmpty(qtnMasterList)) {
+			for (QtnMasterVo qtnMasterVo : qtnMasterList) {
+				risk = new RiskAssExcOtherDtl();
+				risk.setColor(qtnMasterVo.getColor());
+				risk.setRiskCost(new BigDecimal(qtnMasterVo.getRiskPointMaster()));
+				risk.setRl(qtnMasterVo.getRl());
+				risk.setDepartmentName(qtnMasterVo.getQtnName());
+				risk.setValueTranslation(qtnMasterVo.getValueTranslation());
+				risk.setOther(new BigDecimal(qtnMasterVo.getQtnHdrConditionVoList().get(0).getQtnMasterId()));
+				riskList.add(risk);
+			}
+		}
+			
+		}
+		return riskList;
 	}
 	
+	@PostMapping("/saveRiskAssQtnDtlOther")
+	@ResponseBody
+	public Message saveRiskAssQtnDtlOther(@RequestBody Int0803Vo int0803Vo) {
+		Message message = null;
+		logger.info("saveRiskAssDtlOther");
+		try {
+			riskAssExcAreaService.updateRiskAssQtnOtherDtl(int0803Vo.getRiskAssExcOtherDtlList());
+			message = ApplicationCache.getMessage("MSG_00002");
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = ApplicationCache.getMessage("MSG_00003");
+		}
+		
+		return message;
+	}
 	
 
 }

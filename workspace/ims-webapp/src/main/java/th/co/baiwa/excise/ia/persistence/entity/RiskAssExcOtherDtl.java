@@ -48,6 +48,9 @@ public class RiskAssExcOtherDtl extends BaseEntity{
 	@Column(name="RISK_COST")
 	private BigDecimal riskCost;
 
+	@Column(name="OTHER")
+	private BigDecimal other;
+	
 
 
 	public Long getRiskOtherDtlId() {
@@ -105,6 +108,14 @@ public class RiskAssExcOtherDtl extends BaseEntity{
 
 	public void setDepartmentName(String departmentName) {
 		this.departmentName = departmentName;
+	}
+
+	public BigDecimal getOther() {
+		return other;
+	}
+
+	public void setOther(BigDecimal other) {
+		this.other = other;
 	}
 
 	
