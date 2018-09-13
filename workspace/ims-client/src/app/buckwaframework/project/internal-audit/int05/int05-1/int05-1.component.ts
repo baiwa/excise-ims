@@ -1,8 +1,8 @@
-import { MessageBarService } from 'app/buckwaframework/common/services';
-import { TextDateTH, formatter } from './../../../../common/helper/datepicker';
-import { Component, OnInit } from "@angular/core";
-import { AjaxService } from "../../../../common/services";
-import { calendarFormat } from 'moment';
+import {MessageBarService} from 'app/buckwaframework/common/services';
+import {formatter, TextDateTH} from './../../../../common/helper/datepicker';
+import {Component, OnInit} from '@angular/core';
+import {AjaxService} from '../../../../common/services';
+
 declare var $: any;
 @Component({
   selector: "int05-1",

@@ -1,12 +1,23 @@
-<!-- form search -->
+<div class="ui attached segment">
+  <div class="ui breadcrumb">
+    <a class="section">ตรวจสอบภายใน</a>
+    <div class="divider"> / </div>
+    <a class="section">ตรวจสอบพัสดุ</a>
+    <div class="divider"> / </div>
+    <a class="section">ตรวจสอบแสตมป์</a>
+    <div class="divider"> / </div>
+    <div class="active section">ตรวจสอบแสตมป์พื้นที่</div>
+  </div>
+</div>
+
 <div class="ui top attached header">
   <span>ค้นหาข้อมูลแสตมป์</span>
 </div>
-
+<!-- form search -->
 <div class="ui attached segment">
   <form class="ui form">
     <input type="hidden" id="searchFlag" name="searchFlag">
-    <div class="inline fields  ui grid">
+   <!-- <div class="inline fields  ui grid">
       <div class="one wide field "></div>
       <div class="three wide field ">
         <label>สำนักงานสรรพสามิตภาค</label>
@@ -27,22 +38,7 @@
         </select>
       </div>
       <div class="one wide field "></div>
-    </div>
-    <!-- <div class="inline fields  ui grid">
-      <div class="one wide field "></div>
-      <div class="three wide field ">
-        <label>สรรพสามิตพื้นที่สาขา</label>
-      </div>
-      <div class="four wide field ">
-        <select name="branch" id="branch" class="ui dropdown ai search">
-          <option value="">กรุณาเลือก</option>
-          <option *ngFor="let item of branch; index as i;" value="{{item.value}}">{{item.label}}</option>
-        </select>
-      </div>
-      <div class="three wide field "></div>
-      <div class="four wide field "></div>
-      <div class="one wide field "></div>
-    </div> -->
+    </div>-->
     <div class="inline fields  ui grid">
       <div class="one wide field "></div>
       <div class="three wide field ">
@@ -78,7 +74,8 @@
     </div><br>
   </form>
 </div>
-<!-- form search -->
+
+<!--table-->
 <div class="ui segment">
   <table id="dataTable" class="ui small celled table nowrap" style="width: 100%">
     <thead>
