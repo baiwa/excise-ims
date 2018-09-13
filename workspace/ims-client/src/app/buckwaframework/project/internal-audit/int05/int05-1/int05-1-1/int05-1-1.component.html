@@ -1,675 +1,560 @@
-<div class="ui grid">
-  <div class="sixteen wide column">
+<!-- form search -->
+<div class="ui top attached header">
+  <span>ค้นหาข้อมูลแสตมป์</span>
+</div>
 
-
-    <h2 class="ui header">ตรวจแสตมป์รายปีงบประมาณ
-    </h2>
-
-    <div class="ui tabular menu ">
-      <a class="item  " routerLink="/int05/1">
-        ตรวจแสตมป์รายเดือน
-
-      </a>
-      <a class="item active " routerLink="/int05/1/1">
-        ตรวจแสตมป์รายปีงบประมาณ
-      </a>
+<div class="ui attached segment">
+  <form class="ui form">
+    <input type="hidden" id="searchFlag" name="searchFlag">
+    <div class="inline fields  ui grid">
+      <div class="one wide field "></div>
+      <div class="three wide field ">
+        <label>สำนักงานสรรพสามิตภาค</label>
+      </div>
+      <div class="four wide field ">
+        <select name="sector" id="sector" class="ui dropdown ai search" (change)="sectorOnchange($event)">
+          <option value="">กรุณาเลือก</option>
+          <option *ngFor="let item of sector; index as i;" value="{{item.value}}">{{item.label}}</option>
+        </select>
+      </div>
+      <div class="three wide field ">
+        <label>สำนักงานสรรพสามิตพื้นที่</label>
+      </div>
+      <div class="four wide field ">
+        <select name="area" id="area" class="ui dropdown ai search" (change)="areaOnchange($event)">
+          <option value="">กรุณาเลือก</option>
+          <option *ngFor="let item of area" value="{{item.value}}">{{item.label}}</option>
+        </select>
+      </div>
+      <div class="one wide field "></div>
     </div>
-
-    <div class="ui attached segment">
-      <div class="ui right aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini primary button">
-            <i class="print icon"></i>
-            พิมพ์
-          </button>
-          <button class="ui mini primary button">
-            <i class="save icon"></i>
-            บันทึก
-          </button>
-          <div id="export" class="ui primary buttons">
-            <div class="ui mini button">ส่งออก</div>
-            <div class="ui floating dropdown icon button">
-              <i class="dropdown icon"></i>
-              <div class="menu">
-                <div class="item">
-                  <i class="file pdf outline icon"></i> PDF</div>
-                <div class="item">
-                  <i class="file excel outline icon"></i>Excel</div>
-              </div>
+    <div class="inline fields  ui grid">
+      <div class="one wide field "></div>
+      <div class="three wide field ">
+        <label>สรรพสามิตพื้นที่สาขา</label>
+      </div>
+      <div class="four wide field ">
+        <select name="branch" id="branch" class="ui dropdown ai search">
+          <option value="">กรุณาเลือก</option>
+          <option *ngFor="let item of branch; index as i;" value="{{item.value}}">{{item.label}}</option>
+        </select>
+      </div>
+      <div class="three wide field "></div>
+      <div class="four wide field "></div>
+      <div class="one wide field "></div>
+    </div>
+    <div class="inline fields  ui grid">
+      <div class="one wide field "></div>
+      <div class="three wide field ">
+        <label>วันที่เริ่มต้น</label>
+      </div>
+      <div class="four wide field ">
+        <div class="ui calendar width100" id="dateF">
+          <div class="ui input left icon">
+            <i class="time icon"></i>
+            <input name="dateForm" type="text" id="dateForm" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+          </div>
+        </div>
+      </div>
+      <div class="three wide field ">
+        <label>วันนี้สิ้นสุด</label>
+      </div>
+      <div class="four wide field ">
+        <div class="ui input">
+          <div class="ui calendar width100" id="dateT">
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input name="dateTo" type="text" id="dateTo" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
             </div>
           </div>
         </div>
       </div>
+      <div class="one wide field "></div>
+    </div><br>
+    <div class="ui stackable center aligned page grid">
+      <button class="ui mini primary button" type="button" (click)="onSearch()"><i class="search icon"></i> ค้นหา</button>
+      <button class="ui mini gray button " type="button" (click)="onClear()"><i class="delete icon"></i> ล้างข้อมูล</button>
+      <button class="ui mini primary button" routerLink="/int05/1/1/1"><i class="add icon"></i>เพิ่มข้อมูล</button>
+    </div><br>
+  </form>
+</div>
+<!-- form search -->
+<div class="ui segment">
+  <table id="dataTable" class="ui small celled table nowrap" style="width: 100%">
+    <thead>
+      <tr style="text-align: center;">
+        <th rowspan="2">ลำดับ</th>
+        <th rowspan="2">วันที่ การรับ-จ่าย</th>
+        <th rowspan="2">สถานะ การรับ-จ่าย</th>
+        <th rowspan="2">หน่วยงาน/ผู้ประกอบการที่รับ-จ่ายแสตมป์</th>
+        <th colspan="2">หนังสือขอเบิกแสตมป์</th>
+        <th colspan="2">หนังสือส่งแสตมป์</th>
+        <th rowspan="2">เลขที่ใบ 5 ตอน</th>
+        <th rowspan="2">ลงวันวันที่</th>
+        <th rowspan="2">วันที่ตรวจนับ</th>
+        <th rowspan="2">ผู้ตรวจนับ</th>
+        <th rowspan="2">ชนิดแสตมป์/ขนาดบรรจุ</th>
+        <th rowspan="2">จำนวน (เล่ม)</th>
+        <th rowspan="2">จำนวน (ดวง)</th>
+        <th rowspan="2">มูลค่าที่พิมพ์ (บาทต่อดวง)</th>
+        <th rowspan="2">รวมค่าพิมพ์ (บาท)</th>
+        <th rowspan="2">ค่าภาษี (บาท)</th>
+        <th colspan="2">รหัสแสตมป์</th>
+        <th rowspan="2">หมายเหตุ</th>
+        <th rowspan="2">Action</th>
 
+      </tr>
+      <tr>
+        <th>เลขที่หนังสือ</th>
+        <th>ลงวันที่</th>
 
-      <br>
-      <div class="ui grid center aligned">
-        <div class="sixteen wide column">
-          บันทึกการับ-จ่ายแสตมป์
-          <br>สำนักงานสรรพสามิตภาคที่ 5 พื้นที่ลำปาง
-          <br> งบประมาณปี 2560
+        <th>เลขที่หนังสือ</th>
+        <th>ลงวันที่</th>
+
+        <th>รหัสแสตมป์(เริ่ม)</th>
+        <th>รหัสแสตมป์(ถึง)</th>
+      </tr>
+    </thead>
+  </table>
+  <div class="ui centered grid">
+    <a class="ui mini primary button" routerLink="/int05/1/1/2">สรุปแสตป์รายปีงบประมาณ</a>
+    <button class="ui mini primary button"> Export</button>
+    <button class="ui mini primary button"> พิมพ์รายงานตัดปีแสตมป์</button>
+  </div><br>
+</div>
+
+<!-- modal edit-->
+<div class="ui modal" id="modal-edit">
+  <i class="close icon"></i>
+  <div class="header">
+    แก้ไขข้อมูลแสตมป์
+  </div>
+  <div class="content scrolling">
+    <!-- form -->
+    <form class="ui form">
+      <input type="hidden" [(ngModel)]="formModal.workSheetDetailId" name="workSheetDetailId" id="workSheetDetailId">
+      <!-- row 1 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>วันที่รับ - จ่าย</label>
+        </div>
+        <div class="four wide field ">
+          <div class="ui calendar width100" id="dateOfPayForm">
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input [(ngModel)]="formModal.dateOfPay" name="dateOfPay" id="dateOfPay" type="text" autofocus="false" [attr.readonly]="null"
+                placeholder="dd/MM/yyyy" [attr.required]="true">
+            </div>
+          </div>
+        </div>
+        <div class="three wide field ">
+          <label>สถานะการ รับ - จ่าย</label>
+        </div>
+        <div class="four wide field ">
+          <select class="ui search dropdown" [(ngModel)]="formModal.status" name="status" id="status">
+            <option value="">กรุณาเลือก</option>
+            <option value="รับ">รับ </option>
+            <option value="จ่าย">จ่าย </option>
+          </select>
+        </div>
+        <div class="one wide field "></div>
+      </div>
+      <!-- row 2 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>หน่วยงาน / ผู้ประกอบการ</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.departmentName" id="departmentName" name="departmentName" type="text" placeholder="dd/mm/yyyy">
+        </div>
+        <div class="eight wide field "></div>
+      </div>
+      <!-- row 3 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>หนังสือขอเบิกแสตมป์</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.bookNumberWithdrawStamp" name="bookNumberWithdrawStamp" id="bookNumberWithdrawStamp" type="text">
+        </div>
+        <div class="three wide field ">
+          <label>ลงวันที่ขอเบิกแสตมป์</label>
+        </div>
+        <div class="four wide field ">
+          <div class="ui calendar width100" id="dateWithdrawStampForm">
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input [(ngModel)]="formModal.dateWithdrawStamp" name="dateWithdrawStamp" id="dateWithdrawStamp" type="text" autocomplete="off"
+                [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+            </div>
+          </div>
+        </div>
+        <div class="one wide field "></div>
+      </div>
+      <!-- row 4 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>หนังสือส่งแสตมป์</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.bookNumberDeliverStamp" name="bookNumberDeliverStamp" id="bookNumberDeliverStamp" type="text"
+            placeholder="dd/mm/yyyy">
+        </div>
+        <div class="three wide field ">
+          <label>ลงวันที่ส่งแสตมป์</label>
+        </div>
+        <div class="four wide field ">
+          <div class="ui calendar width100" id="dateDeliverStampForm">
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input [(ngModel)]="formModal.dateDeliverStamp" name="dateDeliverStamp" id="dateDeliverStamp" type="text" autocomplete="off"
+                [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+            </div>
+          </div>
+        </div>
+        <div class="one wide field "></div>
+      </div>
+      <!-- row 5 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>เลขที่ใบ 5 ตอน</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.fivePartNumber" name="fivePartNumber" id="fivePartNumber" type="text">
+        </div>
+        <div class="three wide field ">
+          <label>ลงวันที่</label>
+        </div>
+        <div class="four wide field ">
+          <div class="ui calendar width100" id="fivePartDateForm">
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input [(ngModel)]="formModal.fivePartDate" name="fivePartDate" id="fivePartDate" type="text" autocomplete="off" [attr.readonly]="null"
+                placeholder="dd/MM/yyyy" [attr.required]="true">
+            </div>
+          </div>
+        </div>
+        <div class="one wide field "></div>
+      </div>
+      <!-- row 6 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>ผู้ตรวจนับ</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.stampChecker" name="stampChecker" id="stampChecker" type="text">
+        </div>
+        <div class="three wide field ">
+          <label>วันที่ตรวจนับ</label>
+        </div>
+        <div class="four wide field ">
+          <div class="ui calendar width100" id="stampCheckDateForm">
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input [(ngModel)]="formModal.stampCheckDate" name="stampCheckDate" id="stampCheckDate" type="text" autofocus="false" [attr.readonly]="null"
+                placeholder="dd/MM/yyyy" [attr.required]="true">
+            </div>
+          </div>
+        </div>
+        <div class="one wide field "></div>
+      </div>
+      <!-- row 7 -->
+      <div class="inline fields  ui grid ">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>ประเภทแสตมป์</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.stampType" name="stampType" id="stampType" type="text">
+        </div>
+        <div class="three wide field ">
+          <label>ชนิดแสตมป์</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.stampBrand" name="stampBrand" id="stampBrand" type="text">
+        </div>
+        <div class="one wide field "></div>
+      </div>
+      <!-- row 8 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>จำนวน (เล่ม)</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.numberOfBook" name="numberOfBook" id="numberOfBook" type="text">
+        </div>
+        <div class="three wide field ">
+          <label>จำนวน (ดวง)</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.numberOfStamp" name="numberOfStamp" id="numberOfStamp" type="text">
+        </div>
+        <div class="one wide field "></div>
+      </div>
+      <!-- row 9  -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>มูลค่าพิมพ์ (บาท/ดวง)</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.valueOfStampPrinted" name="valueOfStampPrinted" id="valueOfStampPrinted" type="text">
+        </div>
+        <div class="three wide field ">
+          <label>เลขที่ประจำเล่ม</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.serialNumber" name="serialNumber" id="serialNumber" type="text">
+        </div>
+        <div class="one wide field "></div>
+      </div>
+      <!-- row 10 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>ค่าภาษี (บาท)</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.taxStamp" name="taxStamp" id="taxStamp" type="text">
+        </div>
+        <div class="eight wide field"></div>
+      </div>
+      <!-- row 11 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>รหัสแสตมป์(เริ่ม)</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.stampCodeStart" name="stampCodeStart" id="stampCodeStart" type="text">
+        </div>
+        <div class="three wide field ">
+          <label>รหัสแสตมป์(เริ่ม)</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.stampCodeEnd" name="stampCodeEnd" id="stampCodeEnd" type="text">
+        </div>
+        <div class="one wide field "></div>
+      </div>
+      <!-- row 12 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>แนบไฟล์</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.fileName" name="fileName" id="fileName" type="file">
+        </div>
+        <div class="eight wide field "></div>
+      </div>
+      <!-- row 13 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>หมายเหตุ</label>
+        </div>
+        <div class="eleven wide field ">
+          <textarea [(ngModel)]="formModal.note" name="note" id="note" rows="2"></textarea>
         </div>
       </div>
-      <div style="overflow-x: scroll">
-        <table class="ui small celled table" style="width: 180%;">
-          <thead>
-            <tr style="text-align: center;">
-              <th rowspan="2">ลำดับที่</th>
-              <th rowspan="2">รหัส</th>
-              <th rowspan="2">ชนิดแสตมป์/ขนาดบรรจุ</th>
-              <th colspan="2">คงเหลือยกมาจากปีก่อน</th>
-              <th colspan="2">ตุลาคม</th>
-              <th colspan="2">พฤศจิกายน</th>
-              <th colspan="2">ธันวาคม</th>
-              <th colspan="2">มกราคม</th>
-              <th colspan="4">รวมรับ-จ่ายปีนี้ (ต.ค. - ก.ย.) </th>
-              <th colspan="4">รวมทั้งปีงบประมาณ </th>
-              <th colspan="2">คงเหลือ ณ ปัจจุบัน </th>
-              <th rowspan="2">หมายเหตุ</th>
-              <th rowspan="2">Action</th>
-            </tr>
-            <tr style="text-align: center;">
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">จำนวนแสตมป์
-                <br>(ดวง)
-              </th>
-              <th>ค่าพิมพ์แสตมป์
-                <br>(บาท)
-              </th>
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">รับ
-                <br>(ดวง)
-              </th>
-              <th>จ่าย
-                <br>(ดวง)
-              </th>
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">รับ
-                <br>(ดวง)
-              </th>
-              <th>จ่าย
-                <br>(ดวง)
-              </th>
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">รับ
-                <br>(ดวง)
-              </th>
-              <th>จ่าย
-                <br>(ดวง)
-              </th>
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">รับ
-                <br>(ดวง)
-              </th>
-              <th>จ่าย
-                <br>(ดวง)
-              </th>
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">รับ
-                <br>(ดวง)
-              </th>
-              <th>ค่าพิมพ์แสตมป์
-                <br>(บาท)
-              </th>
-              <th>จ่าย
-                <br>(ดวง)
-              </th>
-              <th>ค่าพิมพ์แสตมป์
-                <br>(บาท)
-              </th>
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">รับ
-                <br>(ดวง)
-              </th>
-              <th>ค่าพิมพ์แสตมป์
-                <br>(บาท)
-              </th>
-              <th>จ่าย
-                <br>(ดวง)
-              </th>
-              <th>ค่าพิมพ์แสตมป์
-                <br>(บาท)
-              </th>
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">จำนวนแสตมป์
-                <br>(ดวง)
-              </th>
-              <th>ค่าพิมพ์แสตมป์
-                <br>(บาท)
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>1.11</td>
-              <td>เบียร์</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>90000
-                <td>
-                  <td>30000
-                    <td>
-                      <td>30000
-                        <td>
-                          <td>30000
-                            <td>
-                              <td>&nbsp;
-                                <td>
-                                  <td>&nbsp;
-                                    <td>
-                                      <td>&nbsp;
-                                        <td>
-                                          <td>&nbsp;</td>
-                                          <td>&nbsp;</td>
-                                          <td>&nbsp;</td>
-                                          <td>&nbsp;</td>
-                                          <td>&nbsp;</td>
-                                          <td style="text-align: center;">
-                                            <a class="update" routerLink="/int05/1/1/2">
-                                              แก้ไข
-                                            </a>
-                                            <strong> / </strong>
-                                            <a class="delete" href="javascript:;">
-                                              ลบ
-                                            </a>
-                                          </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>2.11</td>
-              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>90000</td>
-              <td>&nbsp;</td>
-              <td>30000</td>
-              <td>30000</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>3.11</td>
-              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>90000</td>
-              <td>30000</td>
-              <td>&nbsp;</td>
-              <td>30000</td>
-              <td>&nbsp;</td>
-              <td>30000</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>2.12</td>
-              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.625 ลิตร ขึ้นไป</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>2.13</td>
-              <td>สุรากลั่นชุมชน 35 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>2.14</td>
-              <td>สุรากลั่นชุมชน 35 ดีกรี ขนาด 0.625 ลิตร ขึ้นไป</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>2.15</td>
-              <td>สุรากลั่นชุมชน 30 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>2.16</td>
-              <td>สุรากลั่นชุมชน 30 ดีกรี ขนาด 0.625 ลิตร ขึ้นไป</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>2.17</td>
-              <td>สุรากลั่นชุมชน 28 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>2.18</td>
-              <td>สุรากลั่นชุมชน 28 ดีกรี ขนาด 0.625 ลิตร ขึ้นไป</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>11</td>
-              <td>3.12</td>
-              <td>สุราผสม 40 ดีกรี ขนาด 0.625 ลิตร</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>12</td>
-              <td>3.13</td>
-              <td>สุราผสม 40 ดีกรี ขนาด 0.640 ลิตร</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>13</td>
-              <td>3.14</td>
-              <td>สุราผสม 30 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>14</td>
-              <td>3.15</td>
-              <td>สุราผสม 30 ดีกรี ขนาด 0.625 ลิตร</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>15</td>
-              <td>3.16</td>
-              <td>สุราผสม 30 ดีกรี ขนาด 0.640 ลิตร</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/1/1/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="one wide field "></div>
+    </form>
+    <!-- form -->
+    <div class="actions"><br>
+      <div class="ui center aligned grid">
+        <button class="ui blue button" type="button" (click)="modalEditSubmit()">บันทึก</button>
       </div>
     </div>
-
   </div>
 </div>
-<br>
-<div class="ui center aligned grid">
-  <div class="sixteen wide column">
-    <button class="ui mini primary button " routerLink="/int05/1">
-      <i class="arrow left icon"></i>
-      กลับ
-    </button>
+
+<!-- model detail -->
+<div class="ui modal" id="modal-detail">
+  <i class="close icon"></i>
+  <div class="header">
+    รายละเอียดข้อมูลแสตมป์
+  </div>
+  <div class="content scrolling">
+    <!-- form -->
+    <form class="ui form">
+      <!-- row 1 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="four wide field ">
+          <label>ชนิดแสตมป์/ขนาดบรรจุ : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.stampBrand}}
+        </div>
+        <div class="three wide field ">
+          <label>สถานะ : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.status}}
+        </div>
+      </div>
+      <!-- row 2 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="four wide field ">
+          <label>หน่วยงาน / ผู้ประกอบการ</label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.departmentName}}
+        </div>
+        <div class="three wide field ">
+          <label>วันที่รับ - จ่าย : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.dateOfPay}}
+        </div>
+      </div>
+      <!-- row 3 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="four wide field ">
+          <label>หนังสือขอเบิกแสตมป์ : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.bookNumberWithdrawStamp}}
+        </div>
+        <div class="three wide field ">
+          <label>ลงวันที่</label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.dateWithdrawStamp}}
+        </div>
+      </div>
+      <!-- row 4 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="four wide field ">
+          <label>หนังสือส่งแสตมป์ : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.bookNumberDeliverStamp}}
+        </div>
+        <div class="three wide field ">
+          <label>ลงวันที่</label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.dateDeliverStamp}}
+        </div>
+      </div>
+      <!-- row 5 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="four wide field ">
+          <label>เลขที่ใบ 5 ตอน : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.fivePartNumber}}
+        </div>
+        <div class="three wide field ">
+          <label>ลงวันที่ : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.fivePartDate}}
+        </div>
+      </div>
+      <!-- row 6 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="four wide field ">
+          <label>วันที่ตรวจนับ : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.stampCheckDate}}
+        </div>
+        <div class="three wide field ">
+          <label>ผู้ตรวจนับ : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.stampChecker}}
+        </div>
+      </div>
+      <!-- row 7 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="four wide field ">
+          <label>ประเภทแสตมป์ : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.stampType}}
+        </div>
+        <div class="three wide field ">
+          <label>ชนิดแสตมป์ : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.stampBrand}}
+        </div>
+      </div>
+      <!-- row 8 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="four wide field ">
+          <label>จำนวน (เล่ม) : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.numberOfBook}}
+        </div>
+        <div class="three wide field ">
+          <label>จำนวน (ดวง) : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.numberOfStamp}}
+        </div>
+      </div>
+      <!-- row 9  -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="four wide field ">
+          <label>มูลค่าพิมพ์ (บาท/ดวง): </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.valueOfStampPrinted}}
+        </div>
+        <div class="seven wide field"></div>
+      </div>
+      <!-- row 10 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="four wide field ">
+          <label>เลขที่ประจำเล่ม : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.serialNumber}}
+        </div>
+        <div class="seven wide field"></div>
+      </div>
+      <!-- row 11 -->
+      <div class="inline fields  ui grid" *ngFor="let item of listFileName">
+        <div class="one wide field "></div>
+        <div class="four wide field">
+          <label>แนบไฟล์ : </label>
+        </div>
+        <div class="seven wide field ">
+          {{item}}
+        </div>
+      </div>
+      <!-- row 12 -->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="four wide field ">
+          <label>หมายเหตุ</label>
+        </div>
+        <div class="eleven wide field ">
+          {{formModal.note}}
+        </div>
+      </div>
+    </form>
+    <!-- form -->
   </div>
 </div>

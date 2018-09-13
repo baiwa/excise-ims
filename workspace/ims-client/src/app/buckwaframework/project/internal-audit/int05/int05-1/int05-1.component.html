@@ -1,6 +1,6 @@
 <!-- form search -->
 <div class="ui top attached header">
-  <span>แบบสอบทานระบบการควบคุมภายใน</span>
+  <span>ค้นหาข้อมูลแสตมป์</span>
 </div>
 
 <div class="ui attached segment">
@@ -28,7 +28,7 @@
       </div>
       <div class="one wide field "></div>
     </div>
-    <div class="inline fields  ui grid">
+    <!-- <div class="inline fields  ui grid">
       <div class="one wide field "></div>
       <div class="three wide field ">
         <label>สรรพสามิตพื้นที่สาขา</label>
@@ -42,7 +42,7 @@
       <div class="three wide field "></div>
       <div class="four wide field "></div>
       <div class="one wide field "></div>
-    </div>
+    </div> -->
     <div class="inline fields  ui grid">
       <div class="one wide field "></div>
       <div class="three wide field ">
@@ -383,7 +383,7 @@
       <!-- row 1 -->
       <div class="inline fields  ui grid">
         <div class="one wide field "></div>
-        <div class="three wide field ">
+        <div class="four wide field ">
           <label>ชนิดแสตมป์/ขนาดบรรจุ : </label>
         </div>
         <div class="four wide field ">
@@ -395,12 +395,11 @@
         <div class="four wide field ">
           {{formModal.status}}
         </div>
-        <div class="one wide field "></div>
       </div>
       <!-- row 2 -->
       <div class="inline fields  ui grid">
         <div class="one wide field "></div>
-        <div class="three wide field ">
+        <div class="four wide field ">
           <label>หน่วยงาน / ผู้ประกอบการ</label>
         </div>
         <div class="four wide field ">
@@ -412,12 +411,11 @@
         <div class="four wide field ">
           {{formModal.dateOfPay}}
         </div>
-        <div class="one wide field "></div>
       </div>
       <!-- row 3 -->
       <div class="inline fields  ui grid">
         <div class="one wide field "></div>
-        <div class="three wide field ">
+        <div class="four wide field ">
           <label>หนังสือขอเบิกแสตมป์ : </label>
         </div>
         <div class="four wide field ">
@@ -429,12 +427,11 @@
         <div class="four wide field ">
           {{formModal.dateWithdrawStamp}}
         </div>
-        <div class="one wide field "></div>
       </div>
       <!-- row 4 -->
       <div class="inline fields  ui grid">
         <div class="one wide field "></div>
-        <div class="three wide field ">
+        <div class="four wide field ">
           <label>หนังสือส่งแสตมป์ : </label>
         </div>
         <div class="four wide field ">
@@ -446,12 +443,11 @@
         <div class="four wide field ">
           {{formModal.dateDeliverStamp}}
         </div>
-        <div class="one wide field "></div>
       </div>
       <!-- row 5 -->
       <div class="inline fields  ui grid">
         <div class="one wide field "></div>
-        <div class="three wide field ">
+        <div class="four wide field ">
           <label>เลขที่ใบ 5 ตอน : </label>
         </div>
         <div class="four wide field ">
@@ -463,12 +459,11 @@
         <div class="four wide field ">
           {{formModal.fivePartDate}}
         </div>
-        <div class="one wide field "></div>
       </div>
       <!-- row 6 -->
       <div class="inline fields  ui grid">
         <div class="one wide field "></div>
-        <div class="three wide field ">
+        <div class="four wide field ">
           <label>วันที่ตรวจนับ : </label>
         </div>
         <div class="four wide field ">
@@ -480,12 +475,11 @@
         <div class="four wide field ">
           {{formModal.stampChecker}}
         </div>
-        <div class="one wide field "></div>
       </div>
       <!-- row 7 -->
       <div class="inline fields  ui grid">
         <div class="one wide field "></div>
-        <div class="three wide field ">
+        <div class="four wide field ">
           <label>ประเภทแสตมป์ : </label>
         </div>
         <div class="four wide field ">
@@ -497,12 +491,11 @@
         <div class="four wide field ">
           {{formModal.stampBrand}}
         </div>
-        <div class="one wide field "></div>
       </div>
       <!-- row 8 -->
       <div class="inline fields  ui grid">
         <div class="one wide field "></div>
-        <div class="three wide field ">
+        <div class="four wide field ">
           <label>จำนวน (เล่ม) : </label>
         </div>
         <div class="four wide field ">
@@ -514,51 +507,48 @@
         <div class="four wide field ">
           {{formModal.numberOfStamp}}
         </div>
-        <div class="one wide field "></div>
       </div>
       <!-- row 9  -->
       <div class="inline fields  ui grid">
         <div class="one wide field "></div>
-        <div class="three wide field ">
+        <div class="four wide field ">
           <label>มูลค่าพิมพ์ (บาท/ดวง): </label>
         </div>
         <div class="four wide field ">
           {{formModal.valueOfStampPrinted}}
         </div>
-        <div class="eight wide field"></div>
+        <div class="seven wide field"></div>
       </div>
       <!-- row 10 -->
       <div class="inline fields  ui grid">
         <div class="one wide field "></div>
-        <div class="three wide field ">
+        <div class="four wide field ">
           <label>เลขที่ประจำเล่ม : </label>
         </div>
         <div class="four wide field ">
           {{formModal.serialNumber}}
         </div>
-        <div class="eight wide field"></div>
+        <div class="seven wide field"></div>
       </div>
       <!-- row 11 -->
-      <div class="inline fields  ui grid">
+      <div class="inline fields  ui grid" *ngFor="let item of listFileName">
         <div class="one wide field "></div>
-        <div class="three wide field">
+        <div class="four wide field">
           <label>แนบไฟล์ : </label>
         </div>
-        <div class="four wide field ">
-          {{formModal.fileName}}
+        <div class="seven wide field ">
+          {{item}}
         </div>
-        <div class="eight wide field "></div>
       </div>
       <!-- row 12 -->
       <div class="inline fields  ui grid">
         <div class="one wide field "></div>
-        <div class="three wide field ">
+        <div class="four wide field ">
           <label>หมายเหตุ</label>
         </div>
         <div class="eleven wide field ">
           {{formModal.note}}
         </div>
-        <div class="one wide field "></div>
       </div>
     </form>
     <!-- form -->

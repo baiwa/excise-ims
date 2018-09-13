@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.constant.ExciseConstants;
+import th.co.baiwa.excise.constant.ExciseConstants.FORMAT_DATE;
 import th.co.baiwa.excise.ia.persistence.vo.Int05112DetailVo;
 
 @Repository
@@ -44,12 +45,12 @@ public class IaStampDetailDao {
 	    		vo.setStatus(rs.getString("STATUS"));
 	    		vo.setDepartmentName(rs.getString("DEPARTMENT_NAME"));
 	    		vo.setBookNumberWithdraw_Stamp(rs.getString("BOOK_NUMBER_WITHDRAW_STAMP"));
-	    		vo.setDateWithdrawStamp(DateConstant.convertDateToStr(rs.getDate("DATE_WITHDRAW_STAMP"), "dd/MM/yyyy"));
+	    		vo.setDateWithdrawStamp(DateConstant.convertDateToStr(rs.getDate("DATE_WITHDRAW_STAMP"), FORMAT_DATE.DDMMYYYY));
 	    		vo.setBookNumberDeliverStamp(rs.getString("BOOK_NUMBER_DELIVER_STAMP"));
-	    		vo.setDateDeliverStamp(DateConstant.convertDateToStr(rs.getDate("DATE_DELIVER_STAMP"), "dd/MM/yyyy"));
+	    		vo.setDateDeliverStamp(DateConstant.convertDateToStr(rs.getDate("DATE_DELIVER_STAMP"), FORMAT_DATE.DDMMYYYY));
 	    		vo.setFivePartNumber(rs.getString("FIVE_PART_NUMBER"));
-	    		vo.setFivePartDate(DateConstant.convertDateToStr(rs.getDate("FIVE_PART_DATE"), "dd/MM/yyyy"));;
-	    		vo.setStampCheckDate(DateConstant.convertDateToStr(rs.getDate("STAMP_CHECK_DATE"), "dd/MM/yyyy"));
+	    		vo.setFivePartDate(DateConstant.convertDateToStr(rs.getDate("FIVE_PART_DATE"), FORMAT_DATE.DDMMYYYY));;
+	    		vo.setStampCheckDate(DateConstant.convertDateToStr(rs.getDate("STAMP_CHECK_DATE"), FORMAT_DATE.DDMMYYYY));
 	    		vo.setStampChecker(rs.getString("STAMP_CHECKER"));
 	    		vo.setStampType(rs.getString("STAMP_TYPE"));
 	    		vo.setStampBrand(rs.getString("STAMP_BRAND"));

@@ -1,11 +1,6 @@
 <div class="ui grid">
   <div class="sixteen wide column">
-    <h2 class="ui header">ตรวจสอบภายใน</h2>
-
-    <div class="ui top attached header">
-      <span>แบบสอบทานระบบการควบคุมภายใน ด้านการเงิน</span>
-    </div>
-
+    <h2 class="ui header">แบบสอบทานระบบการควบคุมภายใน</h2>
     <div class="ui segment">
       <div class="ui grid">
         <div class="sixteen wide column">
@@ -72,7 +67,8 @@
             <label>ข้อหลัก</label>
           </div>
           <div class="twelve wide field">
-            <input class="custom" type="text" id="mainDetail" name="mainDetail" [(ngModel)]="mainDetail" [attr.required]="true">
+            <input class="custom" type="text" id="mainDetail" name="mainDetail" [(ngModel)]="mainDetail"
+              [attr.required]="true">
           </div>
         </div>
         <div class="inline fields" *ngFor="let min of minorDetail; let i = index" [attr.data-index]="i">

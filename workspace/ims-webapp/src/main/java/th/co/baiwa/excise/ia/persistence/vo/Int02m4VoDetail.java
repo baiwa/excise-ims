@@ -5,6 +5,13 @@ public class Int02m4VoDetail {
     private Integer approve;
     private Integer reject;
     private String risk;
+    private Integer score;
+	public Integer getScore() {
+		return score;
+	}
+	public void setScore(Integer score) {
+		this.score = score;
+	}
 	public String getTitle() {
 		return title;
 	}

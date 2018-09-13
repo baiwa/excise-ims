@@ -37,7 +37,6 @@ export class Int0121Component implements OnInit {
       type: "date",
       text: TextDateTH,
       formatter: formatter()
-
     });
     
     $(".ui.dropdown").dropdown();

@@ -21,6 +21,7 @@ export class Int111Component implements OnInit {
 
   constructor(
     private ajaxService: AjaxService,
+    private ajax: AjaxService,
     private router: Router,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService, ) { }
@@ -49,8 +50,9 @@ export class Int111Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: false,
-      paging: false,
+      paging: true,
       scrollX: true,
+
       ajax: {
         type: "POST",
         url: URL,
@@ -377,10 +379,17 @@ export class Int111Component implements OnInit {
     }
   }
   
-  export() {
-    var url = AjaxService.CONTEXT_PATH + "ia/int111/export?projectName=" + $('#projectName').val() +
-      "&status=" + $('#status').val();
-    window.open(url);
+  // export() {
+  //   var url = AjaxService.CONTEXT_PATH + "ia/int111/export?projectName=" + $('#projectName').val() +
+  //     "&status=" + $('#status').val();
+  //   window.open(url);
+  // }
+
+
+  exportFollowUpProject() {
+    const URL = "ia/int111/exportFollowUpProject?projectName=" + $('#projectName').val() +"&status=" + $('#status').val();
+    console.log("projectName :" + $('#projectName').val()+ " , " +"status :"+$('#status').val());
+    this.ajax.download(URL);
   }
 
 }

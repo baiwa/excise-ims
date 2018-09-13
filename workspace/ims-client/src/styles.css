@@ -128,3 +128,12 @@ img.image-width-18 {
     text-align: right !important;
 }
 /* Text Aligning  */
+
+/* Element Style */
+.full-width {
+    width: 100% !important;
+}
+.half-width {
+    width: 50% !important;
+}
+/* Element Style */

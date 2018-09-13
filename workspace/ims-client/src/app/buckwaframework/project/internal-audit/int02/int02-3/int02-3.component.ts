@@ -88,8 +88,7 @@ export class Int023Component implements OnInit {
     // ID from url
     this.headerId = this.route.snapshot.queryParams["id"];
     this._initialTable();
-    this.initialTable();
-    
+    this.initialTable();  
   }
 
   canDeactivate(): Observable<boolean> | boolean {

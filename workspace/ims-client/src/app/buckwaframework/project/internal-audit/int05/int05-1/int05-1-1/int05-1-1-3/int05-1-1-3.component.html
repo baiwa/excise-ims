@@ -200,34 +200,6 @@
                     <div class="one wide field "></div>
                 </div>
                 <!-- row 10 -->
-                <div class="inline fields  ui grid">
-                    <div class="one wide field "></div>
-                    <div class="three wide field ">
-                        <label>ค่าภาษี (บาท)</label>
-                    </div>
-                    <div class="four wide field ">
-                        <input [(ngModel)]="formModal.taxStamp" name="taxStamp" id="taxStamp" type="text">
-                    </div>
-                    <div class="eight wide field"></div>
-                </div>
-                <!-- row 11 -->
-                <div class="inline fields  ui grid">
-                    <div class="one wide field "></div>
-                    <div class="three wide field ">
-                        <label>รหัสแสตมป์(เริ่ม)</label>
-                    </div>
-                    <div class="four wide field ">
-                        <input [(ngModel)]="formModal.stampCodeStart" name="stampCodeStart" id="stampCodeStart" type="text">
-                    </div>
-                    <div class="three wide field ">
-                        <label>รหัสแสตมป์(เริ่ม)</label>
-                    </div>
-                    <div class="four wide field ">
-                        <input [(ngModel)]="formModal.stampCodeEnd" name="stampCodeEnd" id="stampCodeEnd" type="text">
-                    </div>
-                    <div class="one wide field "></div>
-                </div>
-                <!-- row 12 -->
                 <div class="inline fields  ui grid" *ngFor="let item of listButton" id="{{item}}">                    
                     <div class="one wide field "></div>
                     <div class="three wide field ">
@@ -245,7 +217,7 @@
                     </ng-template>      
                 </div>
                 <div id="add-button"></div>
-                <!-- row 13 -->
+                <!-- row 11 -->
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
                     <div class="three wide field ">

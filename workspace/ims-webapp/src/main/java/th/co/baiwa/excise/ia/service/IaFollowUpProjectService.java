@@ -1,8 +1,6 @@
 package th.co.baiwa.excise.ia.service;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -23,13 +21,11 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
@@ -39,21 +35,106 @@ import th.co.baiwa.excise.constant.IaConstant.IA_REGIS_TRACK_CONTROL.STATUS;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ia.persistence.dao.IaFollowUpProjectDao;
 import th.co.baiwa.excise.ia.persistence.entity.IaFollowUpProject;
-import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
-import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfOtherDtl;
+
 import th.co.baiwa.excise.ia.persistence.repository.IaFollowUpProjectRepository;
-import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfOtherDtlRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int111FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int111Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
 
 @Service
 public class IaFollowUpProjectService {
+	// Set property Style Excel
+	private CellStyle thStyle;
+	private CellStyle cellCenter;
+	private CellStyle cellRight;
+	private CellStyle cellLeft;
+	private CellStyle bgRed;
+	private CellStyle bgYellow;
+	private CellStyle bgGreen;
+	private CellStyle topCenter;
+	private CellStyle topRight;
+	private CellStyle topLeft;
+	private Font fontHeader;
+	
+	private XSSFWorkbook setUpExcel() {
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		
+		thStyle = workbook.createCellStyle();
+		thStyle.setAlignment(HorizontalAlignment.CENTER);
+		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+		thStyle.setBorderBottom(BorderStyle.THIN);
+		thStyle.setBorderLeft(BorderStyle.THIN);
+		thStyle.setBorderRight(BorderStyle.THIN);
+		thStyle.setBorderTop(BorderStyle.THIN);
+		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
+		cellCenter = workbook.createCellStyle();
+		cellCenter.setAlignment(HorizontalAlignment.CENTER);
+		cellCenter.setBorderBottom(BorderStyle.THIN);
+		cellCenter.setBorderLeft(BorderStyle.THIN);
+		cellCenter.setBorderRight(BorderStyle.THIN);
+		cellCenter.setBorderTop(BorderStyle.THIN);
+
+		cellRight = workbook.createCellStyle();
+		cellRight.setAlignment(HorizontalAlignment.RIGHT);
+		cellRight.setBorderBottom(BorderStyle.THIN);
+		cellRight.setBorderLeft(BorderStyle.THIN);
+		cellRight.setBorderRight(BorderStyle.THIN);
+		cellRight.setBorderTop(BorderStyle.THIN);
+
+		cellLeft = workbook.createCellStyle();
+		cellLeft.setAlignment(HorizontalAlignment.LEFT);
+		cellLeft.setBorderBottom(BorderStyle.THIN);
+		cellLeft.setBorderLeft(BorderStyle.THIN);
+		cellLeft.setBorderRight(BorderStyle.THIN);
+		cellLeft.setBorderTop(BorderStyle.THIN);
+
+		bgRed = workbook.createCellStyle();
+		bgRed.setAlignment(HorizontalAlignment.CENTER);
+		bgRed.setBorderBottom(BorderStyle.THIN);
+		bgRed.setBorderLeft(BorderStyle.THIN);
+		bgRed.setBorderRight(BorderStyle.THIN);
+		bgRed.setBorderTop(BorderStyle.THIN);
+		bgRed.setFillForegroundColor(IndexedColors.RED.getIndex());
+		bgRed.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		bgYellow = workbook.createCellStyle();
+		bgYellow.setAlignment(HorizontalAlignment.CENTER);
+		bgYellow.setBorderBottom(BorderStyle.THIN);
+		bgYellow.setBorderLeft(BorderStyle.THIN);
+		bgYellow.setBorderRight(BorderStyle.THIN);
+		bgYellow.setBorderTop(BorderStyle.THIN);
+		bgYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		bgYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		bgGreen = workbook.createCellStyle();
+		bgGreen.setAlignment(HorizontalAlignment.CENTER);
+		bgGreen.setBorderBottom(BorderStyle.THIN);
+		bgGreen.setBorderLeft(BorderStyle.THIN);
+		bgGreen.setBorderRight(BorderStyle.THIN);
+		bgGreen.setBorderTop(BorderStyle.THIN);
+		bgGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+		bgGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		fontHeader = workbook.createFont();
+		fontHeader.setBold(true);
+
+		topCenter = workbook.createCellStyle();
+		topCenter.setAlignment(HorizontalAlignment.CENTER);
+		topCenter.setFont(fontHeader);
+
+		topRight = workbook.createCellStyle();
+		topRight.setAlignment(HorizontalAlignment.RIGHT);
+
+		topLeft = workbook.createCellStyle();
+		topLeft.setAlignment(HorizontalAlignment.LEFT);
+		return workbook;
+	}
+
+	
 	private Logger log = LoggerFactory.getLogger(IaFollowUpProjectService.class);
 	
-	@Autowired
-	private RiskAssInfOtherDtlRepository riskAssInfOtherDtlRepository;
 	
 	@Autowired
 	private IaFollowUpProjectDao iaFollowUpProjectDao;
@@ -181,7 +262,7 @@ public class IaFollowUpProjectService {
 		vo.setShift60Date(DateConstant.convertDateToStrDDMMYYYY(shift60Date));
 	}
 	
-	public FileSystemResource exportFile(Int111FormVo formVo) throws Exception {
+/*	public FileSystemResource exportFile(Int111FormVo formVo) throws Exception {
 		File file = File.createTempFile("temp", ".xlsx");
 		
 		Workbook workbook = new XSSFWorkbook();
@@ -198,16 +279,16 @@ public class IaFollowUpProjectService {
 		log.info("finish write file.");
 
 		return new FileSystemResource(file);
-	}
+	}*/
 	
-	private void createWorkSheetExcel(Workbook workbook) throws Exception {
+/*	private void createWorkSheetExcel(Workbook workbook) throws Exception {
 
-	}
+	}*/
 
-	public void exportExcelByToffee(RiskAssInfHdr riskAssInfHdr, HttpServletResponse response) throws IOException {
+	public void exportFollowUpProject(Int111FormVo formVo, HttpServletResponse response) throws IOException {
 		
 		/* create spreadsheet */
-		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFWorkbook workbook = setUpExcel();
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
 		int cellNum = 0;
@@ -215,78 +296,6 @@ public class IaFollowUpProjectService {
 		Cell cell = row.createCell(cellNum);
 		System.out.println("Creating excel");
 		
-		/* create CellStyle */
-		CellStyle thStyle = workbook.createCellStyle();
-		thStyle.setAlignment(HorizontalAlignment.CENTER);
-		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-		thStyle.setBorderBottom(BorderStyle.THIN);
-		thStyle.setBorderLeft(BorderStyle.THIN);
-		thStyle.setBorderRight(BorderStyle.THIN);
-		thStyle.setBorderTop(BorderStyle.THIN);
-		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-		CellStyle cellCenter = workbook.createCellStyle();
-		cellCenter.setAlignment(HorizontalAlignment.CENTER);
-		cellCenter.setBorderBottom(BorderStyle.THIN);
-		cellCenter.setBorderLeft(BorderStyle.THIN);
-		cellCenter.setBorderRight(BorderStyle.THIN);
-		cellCenter.setBorderTop(BorderStyle.THIN);
-
-		CellStyle cellRight = workbook.createCellStyle();
-		cellRight.setAlignment(HorizontalAlignment.RIGHT);
-		cellRight.setBorderBottom(BorderStyle.THIN);
-		cellRight.setBorderLeft(BorderStyle.THIN);
-		cellRight.setBorderRight(BorderStyle.THIN);
-		cellRight.setBorderTop(BorderStyle.THIN);
-
-		CellStyle cellLeft = workbook.createCellStyle();
-		cellLeft.setAlignment(HorizontalAlignment.LEFT);
-		cellLeft.setBorderBottom(BorderStyle.THIN);
-		cellLeft.setBorderLeft(BorderStyle.THIN);
-		cellLeft.setBorderRight(BorderStyle.THIN);
-		cellLeft.setBorderTop(BorderStyle.THIN);
-
-		CellStyle bgRed = workbook.createCellStyle();
-		bgRed.setAlignment(HorizontalAlignment.CENTER);
-		bgRed.setBorderBottom(BorderStyle.THIN);
-		bgRed.setBorderLeft(BorderStyle.THIN);
-		bgRed.setBorderRight(BorderStyle.THIN);
-		bgRed.setBorderTop(BorderStyle.THIN);
-		bgRed.setFillForegroundColor(IndexedColors.RED.getIndex());
-		bgRed.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-		CellStyle bgYellow = workbook.createCellStyle();
-		bgYellow.setAlignment(HorizontalAlignment.CENTER);
-		bgYellow.setBorderBottom(BorderStyle.THIN);
-		bgYellow.setBorderLeft(BorderStyle.THIN);
-		bgYellow.setBorderRight(BorderStyle.THIN);
-		bgYellow.setBorderTop(BorderStyle.THIN);
-		bgYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
-		bgYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-		CellStyle bgGreen = workbook.createCellStyle();
-		bgGreen.setAlignment(HorizontalAlignment.CENTER);
-		bgGreen.setBorderBottom(BorderStyle.THIN);
-		bgGreen.setBorderLeft(BorderStyle.THIN);
-		bgGreen.setBorderRight(BorderStyle.THIN);
-		bgGreen.setBorderTop(BorderStyle.THIN);
-		bgGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		bgGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-		Font fontHeader = workbook.createFont();
-		fontHeader.setBold(true);
-
-		CellStyle topCenter = workbook.createCellStyle();
-		topCenter.setAlignment(HorizontalAlignment.CENTER);
-		topCenter.setFont(fontHeader);
-
-		CellStyle topRight = workbook.createCellStyle();
-		topRight.setAlignment(HorizontalAlignment.RIGHT);
-
-		CellStyle topLeft = workbook.createCellStyle();
-		topLeft.setAlignment(HorizontalAlignment.LEFT);
-
 		
 		/* create data spreadsheet */
 		
@@ -316,9 +325,7 @@ public class IaFollowUpProjectService {
 		cell = row.createCell(0);cell.setCellStyle(thStyle);
 		cell = row.createCell(1);cell.setCellStyle(thStyle);
 		cell = row.createCell(19);cell.setCellStyle(thStyle);
-		
-		
-		
+
 		/* set sheet */
 		// setColumnWidth
 		for (int i = 1; i <= 19; i++) {
@@ -351,21 +358,192 @@ public class IaFollowUpProjectService {
 		
 		
 		/* Detail */
-		List<RiskAssInfOtherDtl> resultList = riskAssInfOtherDtlRepository.findByRiskInfHrdId(161L);
+		List<Int111Vo> exportDataList = null;
+		if( StringUtils.isNotBlank(formVo.getProjectName())||StringUtils.isNotBlank(formVo.getStatus())) {
+			exportDataList = iaFollowUpProjectDao.searchCriteria(formVo);
+		}else if(StringUtils.isBlank(formVo.getProjectName()) && StringUtils.isBlank(formVo.getStatus())) {
+			exportDataList = iaFollowUpProjectDao.queryExportData(formVo);
+		}
+		
 		rowNum = 2;
 		cellNum = 0;
 		int no = 1;
-		for (RiskAssInfOtherDtl detail : resultList) {
+		for (Int111Vo detail : exportDataList) {
 			row = sheet.createRow(rowNum);
 			// No.
 			cell = row.createCell(cellNum);
 			cell.setCellValue(no);
 			cell.setCellStyle(cellCenter);
 			cellNum++;
-			// testData
+			
 			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getInfName());
+			cell.setCellValue(detail.getProjectName());
 			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getInformRectorBnum())) {
+				cell.setCellValue(detail.getInformRectorBnum());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getInformRectorDate())) {
+				cell.setCellValue(detail.getInformRectorDate());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getFollowUp1Bnum())) {
+				cell.setCellValue(detail.getFollowUp1Bnum());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getFollowUp1Date())) {
+				cell.setCellValue(detail.getFollowUp1Date());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getMaturity145())) {
+				cell.setCellValue(detail.getMaturity145());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getMaturity160())) {
+				cell.setCellValue(detail.getMaturity160());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getPerformance1Bnum())) {
+				cell.setCellValue(detail.getPerformance1Bnum());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getPerformance1Date())) {
+				cell.setCellValue(detail.getPerformance1Date());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getTrackResult1Bnum())) {
+				cell.setCellValue(detail.getTrackResult1Bnum());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getTrackResult1Date())) {
+				cell.setCellValue(detail.getTrackResult1Date());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getFollowUp2Bnum())) {
+				cell.setCellValue(detail.getFollowUp2Bnum());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getFollowUp2Date())) {
+				cell.setCellValue(detail.getFollowUp2Date());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getMaturity260())) {
+				cell.setCellValue(detail.getMaturity260());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getPerformance2Bnum())) {
+				cell.setCellValue(detail.getPerformance2Bnum());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getPerformance2Date())) {
+				cell.setCellValue(detail.getPerformance2Date());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getTrackResult2Bnum())) {
+				cell.setCellValue(detail.getTrackResult2Bnum());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getTrackResult2Date())) {
+				cell.setCellValue(detail.getTrackResult2Date());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getStatus())) {
+				cell.setCellValue(detail.getStatus());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
 			cellNum++;
 			
 			no++;
@@ -374,9 +552,8 @@ public class IaFollowUpProjectService {
 		}
 		
 		
-		
 		/*set	fileName*/		
-		String fileName ="testData";
+		String fileName ="FollowUpProject";
 		System.out.println(fileName);
 		
 		/* write it as an excel attachment */

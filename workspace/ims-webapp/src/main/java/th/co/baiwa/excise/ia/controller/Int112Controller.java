@@ -1,16 +1,17 @@
 
 package th.co.baiwa.excise.ia.controller;
 
-import java.util.Date;
+
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.HttpHeaders;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,8 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
-import th.co.baiwa.excise.constant.DateConstant;
+
 import th.co.baiwa.excise.domain.LabelValueBean;
+
 import th.co.baiwa.excise.ia.persistence.vo.Int112FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int112Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
@@ -112,7 +114,7 @@ public class Int112Controller {
 		return new ResponseEntity<Int11ShiftDateVo>(vo, HttpStatus.OK);
 	}
 	
-	@GetMapping("/export")
+	/*@GetMapping("/export")
 	public ResponseEntity<FileSystemResource> export(@ModelAttribute Int112FormVo formVo) throws Exception {
 		String fileName = String.format("EXPORT_IA_FOLLOW_UP_DEPARTMENT_%s.xlsx", DateConstant.convertDateToStrDDMMYYYY(new Date()));
 
@@ -124,5 +126,12 @@ public class Int112Controller {
         respHeaders.setContentDispositionFormData("attachment", fileName);
         
 		return new ResponseEntity<FileSystemResource>(file, respHeaders, HttpStatus.OK);
+	}*/
+	
+	@GetMapping("/exportFollowUpDepartment")
+	@ResponseBody
+	public  void exportFollowUpDepartment(@ModelAttribute Int112FormVo formVo, HttpServletResponse response) throws Exception {
+		log.info("exciseDepartment : "+formVo.getExciseDepartment()+ ", exciseRegion : " +formVo.getExciseRegion()+ ", exciseDistrict : " +formVo.getExciseDistrict()+ ", status : " +formVo.getStatus());
+		iaFollowUpDepartmentService.exportFollowUpDepartment(formVo, response);
 	}
 }
