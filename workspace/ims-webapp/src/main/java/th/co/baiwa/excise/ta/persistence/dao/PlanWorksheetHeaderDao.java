@@ -491,7 +491,7 @@ public class PlanWorksheetHeaderDao {
 	}
 
 	public List<String> queryExciseIdFlagSFromHeader() {
-		String sql = "select DISTINCT H.EXCISE_ID from TA_PLAN_WORK_SHEET_HEADER H where H.ANALYS_NUMBER is not null and h.FLAG = 'S' ";
+		String sql = "select DISTINCT H.EXCISE_ID from TA_PLAN_WORK_SHEET_HEADER H where H.ANALYS_NUMBER is not null and h.FLAG = 'F' ";
 		List<String> exciseList = jdbcTemplate.query(sql, new RowMapper<String>() {
 			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
 				return rs.getString(1);
