@@ -1,18 +1,20 @@
+<app-breadcrumb [route]=breadcrump></app-breadcrumb>
 <div class="ui grid">
     <div class="sixteen wide column">
         <div class="ui top text-center attached header">
             <h3>ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต</h3>
         </div>
         <div class="ui bottom attached segment">
-            <form class="ui sixteen wide grid" (submit)="search($event)">
+            <form class="ui sixteen wide grid" (submit)="search(f)" #f="ngForm">
                 <div class="sixteen wide column">
                     <div class="ui form">
                         <div class="inline fields">
                             <div class="three wide field">
                                 <label class="text-right full-width">สรรพสามิตภาค</label>
                             </div>
-                            <div class="five wide field">
-                                <select class="ui dropdown search selection" id="travelTo1" (change)="travelTo2Dropdown($event)">
+                            <div class="five wide field {{ f.submitted && f.controls.travelTo1.invalid ? 'error' : '' }}">
+                                <select class="ui dropdown search selection" id="travelTo1" name="travelTo1" ngModel
+                                    required (change)="travelTo2Dropdown($event)">
                                     <option value="">เลือก</option>
                                     <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                                 </select>
@@ -21,7 +23,8 @@
                                 <label class="text-right full-width">สรรพสามิตพื้นที่</label>
                             </div>
                             <div class="five wide field">
-                                <select class="ui dropdown search selection" id="travelTo2" (change)="travelTo3Dropdown($event)">
+                                <select class="ui dropdown search selection" id="travelTo2" name="travelTo2" ngModel
+                                    (change)="travelTo3Dropdown($event)">
                                     <option value="">เลือก</option>
                                     <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                                 </select>
@@ -32,7 +35,7 @@
                                 <label class="text-right full-width">สรพพสามิตสาขา</label>
                             </div>
                             <div class="five wide field">
-                                <select class="ui dropdown search selection" id="travelTo3">
+                                <select class="ui dropdown search selection" id="travelTo3" name="travelTo3" ngModel>
                                     <option value="">เลือก</option>
                                     <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                                 </select>
@@ -40,22 +43,24 @@
                             <div class="two wide field ">
                                 <label class="text-right full-width">วันที่</label>
                             </div>
-                            <div class="two wide field">
+                            <div class="two wide field {{f.submitted && f.controls.startDate.invalid ? 'error' : ''}}">
                                 <div class="ui calendar full-width" id="calendar1">
                                     <div class="ui input left icon">
                                         <i class="calendar alternate icon"></i>
-                                        <input type="text" placeholder="วัน/เดือน/ปี" name="endDate" id="endDate">
+                                        <input type="text" placeholder="วัน/เดือน/ปี" name="startDate" id="startDate"
+                                            ngModel required>
                                     </div>
                                 </div>
                             </div>
                             <div class="one wide field">
                                 <label class="text-center full-width">ถึง</label>
                             </div>
-                            <div class="two wide field">
+                            <div class="two wide field {{f.submitted && f.controls.endDate.invalid ? 'error' : ''}}">
                                 <div class="ui calendar full-width" id="calendar2">
                                     <div class="ui input left icon">
                                         <i class="calendar alternate icon"></i>
-                                        <input type="text" placeholder="วัน/เดือน/ปี" name="endDate" id="endDate">
+                                        <input type="text" placeholder="วัน/เดือน/ปี" name="endDate" id="endDate"
+                                            ngModel required>
                                     </div>
                                 </div>
                             </div>

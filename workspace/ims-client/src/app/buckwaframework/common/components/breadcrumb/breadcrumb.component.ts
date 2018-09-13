@@ -1,11 +1,20 @@
-import { Component,Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
+  styles: [
+    `
+    .sixteen.wide.column.bread {
+      padding-top: 0;
+    }
+    `
+  ]
 })
 export class BreadcrumbComponent {
   constructor() {
   }
-  @Input() route:any=[1,2,3,4,5,6];
+  @Input() route: any = [
+    {  }
+  ];
 }

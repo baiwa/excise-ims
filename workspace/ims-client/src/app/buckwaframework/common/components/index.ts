@@ -4,3 +4,4 @@ export * from './dropdown/dropdown.module';
 export * from './message-bar/message-bar.module';
 export * from './modal/modal.module';
 export * from './pagination/pagination.module';
+export * from './breadcrumb/breadcrumb.module';

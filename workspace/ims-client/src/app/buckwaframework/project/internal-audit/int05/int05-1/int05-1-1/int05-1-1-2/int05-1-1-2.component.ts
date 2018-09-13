@@ -17,17 +17,17 @@ export class Int05112Component implements OnInit {
     private message: MessageBarService
   ) {
     this.data = []
-   }
+  }
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
   }
-  ngAfterViewInit() {    
+  ngAfterViewInit() {
     this.dataTable();
   }
 
-  spilt=(req)=>{    
-    return req.split( ".");
+  spilt = (req) => {
+    return req.split(".");
   }
 
   dataTable = () => {
@@ -37,8 +37,11 @@ export class Int05112Component implements OnInit {
       "searching": false,
       "ordering": false,
       "processing": true,
-      "scrollX": true,  
+      "scrollX": true,
       "scrollCollapse": true,
+      "fixedColumns": {
+        "leftColumns": 2
+      },
       "ajax": {
         "url": '/ims-webapp/api/ia/int05112/findAll',
         "contentType": "application/json",
@@ -49,77 +52,78 @@ export class Int05112Component implements OnInit {
         },
       },
       "drawCallback": () => {
-        $('.mark-th').closest('tr').addClass('active');        
-      },      
+        $('.mark-th').closest('tr').addClass('active');
+      },
       "columns": [
         {
           "data": "order",
           "render": function (data, type, row, meta) {
-            if(data.split(".").length==1){
-              $(row).addClass('active');               
-              return '<span class="mark-th">'+data+'</span>';
+            if (data.split(".").length == 1) {
+              $(row).addClass('active');
+              return '<span class="mark-th">' + data + '</span>';
             }
             return data;
           },
-          "className": "ui center aligned"}, 
-        { "data": "stampType"}, 
+          "className": "ui center aligned"
+        },
+        { "data": "stampType" },
 
-        { "data": "branchLastYeatNumberOfStamp", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;},"className": "ui center aligned"}, 
-        { "data": "branchLastYeatMoneyOfStamp", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;},"className": "ui center aligned"},
+        { "data": "branchLastYeatNumberOfStamp", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
+        { "data": "branchLastYeatMoneyOfStamp", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
 
-        { "data": "octoberRecieve", "className": "ui center aligned"}, 
-        { "data": "octoberPay", "className": "ui center aligned"}, 
+        { "data": "octoberRecieve", "className": "ui center aligned" },
+        { "data": "octoberPay", "className": "ui center aligned" },
 
-        { "data": "novemberRecieve", "className": "ui center aligned"}, 
-        { "data": "novemberPay", "className": "ui center aligned"}, 
+        { "data": "novemberRecieve", "className": "ui center aligned" },
+        { "data": "novemberPay", "className": "ui center aligned" },
 
-        { "data": "decemberRecieve", "className": "ui center aligned"}, 
-        { "data": "decemberPay", "className": "ui center aligned"},
+        { "data": "decemberRecieve", "className": "ui center aligned" },
+        { "data": "decemberPay", "className": "ui center aligned" },
 
-        { "data": "januaryRecieve", "className": "ui center aligned"}, 
-        { "data": "januaryPay", "className": "ui center aligned"},
+        { "data": "januaryRecieve", "className": "ui center aligned" },
+        { "data": "januaryPay", "className": "ui center aligned" },
 
-        { "data": "februaryRecieve", "className": "ui center aligned"}, 
-        { "data": "februaryPay", "className": "ui center aligned"}, 
+        { "data": "februaryRecieve", "className": "ui center aligned" },
+        { "data": "februaryPay", "className": "ui center aligned" },
 
-        { "data": "marchRecieve", "className": "ui center aligned"}, 
-        { "data": "marchPay", "className": "ui center aligned"}, 
+        { "data": "marchRecieve", "className": "ui center aligned" },
+        { "data": "marchPay", "className": "ui center aligned" },
 
-        { "data": "aprilRecieve", "className": "ui center aligned"}, 
-        { "data": "aprilPay", "className": "ui center aligned"}, 
+        { "data": "aprilRecieve", "className": "ui center aligned" },
+        { "data": "aprilPay", "className": "ui center aligned" },
 
-        { "data": "mayRecieve", "className": "ui center aligned"}, 
-        { "data": "mayPay", "className": "ui center aligned"}, 
+        { "data": "mayRecieve", "className": "ui center aligned" },
+        { "data": "mayPay", "className": "ui center aligned" },
 
-        { "data": "juneRecieve", "className": "ui center aligned"}, 
-        { "data": "junePay", "className": "ui center aligned"}, 
+        { "data": "juneRecieve", "className": "ui center aligned" },
+        { "data": "junePay", "className": "ui center aligned" },
 
-        { "data": "julyRecieve", "className": "ui center aligned"}, 
-        { "data": "julyPay", "className": "ui center aligned"}, 
+        { "data": "julyRecieve", "className": "ui center aligned" },
+        { "data": "julyPay", "className": "ui center aligned" },
 
-        { "data": "augustRecieve", "className": "ui center aligned"}, 
-        { "data": "augustPay", "className": "ui center aligned"}, 
+        { "data": "augustRecieve", "className": "ui center aligned" },
+        { "data": "augustPay", "className": "ui center aligned" },
 
-        { "data": "septemberRecieve", "className": "ui center aligned"}, 
-        { "data": "septemberPay", "className": "ui center aligned"}, 
+        { "data": "septemberRecieve", "className": "ui center aligned" },
+        { "data": "septemberPay", "className": "ui center aligned" },
 
-        { "data": "summaryYearRecieve", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;},"className": "ui center aligned"}, 
-        { "data": "summaryYearMoneyRecieve", "render": function (data, type, row, meta) {if(row.order.split(".").length==1) return ''; return data;}, "className": "ui center aligned"}, 
-        { "data": "summaryYearPay", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;}, "className": "ui center aligned"}, 
-        { "data": "summaryYearMoneyPay", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;},"className": "ui center aligned"}, 
+        { "data": "summaryYearRecieve", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
+        { "data": "summaryYearMoneyRecieve", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
+        { "data": "summaryYearPay", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
+        { "data": "summaryYearMoneyPay", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
 
-        { "data": "summaryTotalRecieve", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;},"className": "ui center aligned"}, 
-        { "data": "summaryTotalMoneyRecieve", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;},"className": "ui center aligned"}, 
-        { "data": "summaryTotalPay", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;},"className": "ui center aligned"}, 
-        { "data": "summaryTotalMoneyPay","render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;}, "className": "ui center aligned"}, 
+        { "data": "summaryTotalRecieve", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
+        { "data": "summaryTotalMoneyRecieve", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
+        { "data": "summaryTotalPay", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
+        { "data": "summaryTotalMoneyPay", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
 
-        { "data": "branchUpToDateNumberOfStamp", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;}, "className": "ui center aligned"}, 
-        { "data": "branchUpToDateMoneyOfStamp", "render": function (data, type, row, meta) { if(row.order.split(".").length==1) return ''; return data;},"className": "ui center aligned"}, 
+        { "data": "branchUpToDateNumberOfStamp", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
+        { "data": "branchUpToDateMoneyOfStamp", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
 
-        { "data": "note", "className": "ui center aligned"}, 
+        { "data": "note", "className": "ui center aligned" },
 
       ]
-    });    
+    });
   }
 }
 class FormModal {
@@ -152,5 +156,5 @@ class FormModal {
   createdDate: string = null;
   fileName: [any];
   idRandom: number = 0;
-  file : File[];
+  file: File[];
 }

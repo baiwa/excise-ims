@@ -4,6 +4,7 @@ import { TextDateTH, formatter } from '../../../../common/helper';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { toDateLocale } from '../../../../common/helper/datepicker';
+import { Int02Service } from '../int02.service';
 
 declare var $: any;
 
@@ -16,7 +17,7 @@ const URL = {
 @Component({
   selector: 'app-int02-1',
   templateUrl: './int02-1.component.html',
-  styleUrls: ['./int02-1.component.css']
+  styleUrls: ['./int02-1.component.css'],
 })
 export class Int021Component implements OnInit {
 
@@ -28,7 +29,7 @@ export class Int021Component implements OnInit {
   qtnYear: string;
   typeOfSubmit: string;
 
-  constructor(private ajax: AjaxService, private router: Router, private iaService: IaService) {
+  constructor(private ajax: AjaxService, private router: Router, private iaService: IaService, private int02: Int02Service) {
     this.typeOfSubmit = null;
     this.qtnName = null;
     this.qtnYear = null;
@@ -42,7 +43,17 @@ export class Int021Component implements OnInit {
 
     $(".ui.dropdown.ai").dropdown().css("width", "100%");
 
-    this.initDatatable();
+    this.datatable = $("#datatable").DataTable({
+      lengthChange: false,
+      scrollX: true,
+      searching: false,
+      select: true,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: false,
+      paging: true
+    });
 
     $("#calendar").calendar({
       maxDate: new Date(),
@@ -92,7 +103,7 @@ export class Int021Component implements OnInit {
           className: "center"
         },
         {
-          data : "qtnName",
+          data: "qtnName",
           className: "center"
         },
         {
@@ -128,7 +139,7 @@ export class Int021Component implements OnInit {
     const { calendar_data, sector, area } = form.value;
     if (calendar_data != "" && sector != "") { //  && area != ""
       let name;
-      let qtnSector; 
+      let qtnSector;
       if (area != "") {
         name = this.areas.find(obj => obj.lovId == area).subTypeDescription;
         qtnSector = area;
@@ -146,7 +157,7 @@ export class Int021Component implements OnInit {
         this.iaService.setData(data);
         this.router.navigate(['/int02/2']);
       } else {
-        console.log('Searching... !?');
+        this.reDatatable();
       }
     } else {
       console.log(form);

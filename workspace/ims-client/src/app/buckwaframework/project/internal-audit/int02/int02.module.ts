@@ -19,6 +19,7 @@ import { Int02M521Component } from "./int02-m5/int02-m5-2/int02-m5-2-1/int02-m5-
 import { CanDeactivateGuard } from "../../../common/services";
 import { Int02M31Component } from "./int02-m3/int02-m3-1/int02-m3-1.component";
 import { PaginationModule, ConditionModule } from "../../../common/components";
+import { Int02Service } from "./int02.service";
 
 const routes: Routes = [
   { path: "1", component: Int021Component },
@@ -72,6 +73,7 @@ const routes: Routes = [
     Int02M511Component,
     Int02M521Component
   ],
+  providers: [Int02Service],
   exports: [RouterModule]
 })
 export class Int02Module {}
