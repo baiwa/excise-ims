@@ -303,11 +303,11 @@ export class Int0911Component implements OnInit, OnDestroy {
 
     //send form data
     const form = $("#upload-form")[0];
-    let formBody = new FormData(form);
+    var formBody = new FormData(form);
       formBody.append("idProcess",this.idProcess);
     
 
-    let url = "ia/int0911/uploadFile";
+    const url = "ia/int0911/uploadFile";
     this.ajax.upload(
       url,
       formBody,
@@ -331,7 +331,7 @@ export class Int0911Component implements OnInit, OnDestroy {
   };
   onChangeUpload = (event: any) => {
     if (event.target.files && event.target.files.length > 0) {
-      let reader = new FileReader();
+      var reader = new FileReader();
 
       reader.onload = (e: any) => {
         const f = {

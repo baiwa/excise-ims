@@ -39,6 +39,15 @@ export class Int09111Component implements OnInit, AfterViewInit {
   totalPassage: Number=0;
   totalOtherExpenses: Number=0;
   totalTotalMoney: Number=0;
+   
+  typeList: any;
+  gradeList: any;
+  departureList: any;
+  trainingList: any;
+  allowanceList: any;
+  roostList: any;
+  trainingTypeList: any;
+  roomTypeList: any;
 
   constructor(
     private ajax: AjaxService,
@@ -73,13 +82,11 @@ export class Int09111Component implements OnInit, AfterViewInit {
           formatter: formatter()
         });
         $("#modalDate3").calendar({
-          endCalendar: $("#modalDate4"),
           type: "date",
           text: TextDateTH,
           formatter: formatter()
         });
         $("#modalDate4").calendar({
-          startCalendar: $("#modalDate3"),
           type: "date",
           text: TextDateTH,
           formatter: formatter()
@@ -189,6 +196,65 @@ export class Int09111Component implements OnInit, AfterViewInit {
     this.totalOtherExpenses+=data.otherExpenses;
     this.totalTotalMoney+=data.totalMoney;
   }
+
+  typeDropdown = () =>{
+  
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 306}, res => {
+      this.typeList = res.json();
+    });
+  }
+  
+  gradeDropdown = e =>{
+    var id = e.target.value;
+    console.log("id gradeDropdown : ",id);
+      if (id != "") {
+      const URL = "combobox/controller/getDropByTypeAndParentId";
+      this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: id}, res => {
+        this.gradeList = res.json();
+      });
+    }
+  }
+  departureDropdown = () =>{
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1178}, res => {
+      this.departureList = res.json();
+    });
+  }
+  
+  allowanceDropdown = () =>{
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1182}, res => {
+      this.allowanceList = res.json();
+    });
+  }
+
+  trainingDropdown = () =>{
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 336}, res => {
+      this.trainingList = res.json();
+    });
+  }
+
+  roostDropdown = () =>{
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1185}, res => {
+      this.roostList = res.json();
+    });
+  }
+  trainingTypeDropdown = () =>{
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1189}, res => {
+      this.trainingTypeList = res.json();
+    });
+  }
+  roomTypeDropdown = () =>{
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1190}, res => {
+      this.roomTypeList = res.json();
+    });
+  }
+
   modalAdd() {
     $('#modalAdd').modal('show');
     this.calenda();
@@ -197,6 +263,39 @@ export class Int09111Component implements OnInit, AfterViewInit {
   saveData() {
     console.log("Save Data : True");
     $('modalAdd').modal('hide');
+    const URL = "ia/int09111/save";
+    this.ajax.post(URL, { int09FormDtlVo:{
+      idProcess: this.idProcess,
+      name:$("#name").val(),
+      lastName:$("#lastName").val(),
+      position:$("#position").val(),
+      type:$("#type").val(),
+      grade:$("#grade").val(),
+      permissionDate:$("#permissionDate").val(),
+      writeDate:$("#writeDate").val(),
+      departure:$("#departure").val(),
+      departureDate:$("#departureDate").val(),
+      returnDate:$("#returnDate").val(),
+      allowance:$("#allowance").val(),
+      training:$("#training").val(),
+      roost:$("#roost").val(),
+      trainingType:$("#trainingType").val(),
+      roomType:$("#roomType").val(),
+      numberDate:$("#numberDate").val(),
+      passage:$("#passage").val(),
+      otherExpenses:$("#otherExpenses").val(),
+      remark:$("#remarkT").val()}
+    }, res => {
+      const msg = res.json();
+      
+    if (msg.messageType == "C") {
+      this.msg.successModal(msg.messageTh);
+    } else {
+      this.msg.errorModal(msg.messageTh);
+    }
+    $("#searchFlag").val("TRUE");
+    $('#tableData').DataTable().ajax.reload();
+    });
   }
 
   modalAddHead() {
@@ -210,8 +309,6 @@ export class Int09111Component implements OnInit, AfterViewInit {
 
     this.dateFromHead = DateH1[0] + " " + TextDateTH.months[parseInt(DateH1[1]) - 1] + " " + DateH1[2];
     this.dateToHead = DateH2[0] + " " + TextDateTH.months[parseInt(DateH2[1]) - 1] + " " + DateH2[2];
-
-    console.log("Save Head : True");
     $('#modalAddHead').modal('hide');
   }
 
@@ -263,7 +360,6 @@ export class Int09111Component implements OnInit, AfterViewInit {
 
   setTravelToHead = e => {
     this.travelToHead = e.target.value;
-
     if ($("#travelToHead3").val() != "") {
       this.travelToHeadString = $('#travelToHead1 option:selected').text() + " " + $('#travelToHead2 option:selected').text() + " " + $('#travelToHead3 option:selected').text();
     } else if ($("#travelToHead2").val() != "") {
@@ -280,7 +376,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
   save() {
 
     $('#modalAddHead').modal('hide');
-    const URL = "ia/int09111/save";
+    const URL = "ia/int09111/saveAll";
     this.ajax.post(URL, {
       idProcess: this.idProcess
     }, res => {
@@ -307,7 +403,15 @@ export class Int09111Component implements OnInit, AfterViewInit {
     console.log("idProcess : ", this.idProcess);
     this.dataTable();
     this.calenda();
+
     this.travelToHead1Dropdown();
+    this.typeDropdown();
+    this.departureDropdown();
+    this.allowanceDropdown();
+    this.trainingDropdown();
+    this.roostDropdown();
+    this.trainingTypeDropdown();
+    this.roomTypeDropdown();
 
   }
 

@@ -123,9 +123,9 @@
           <label>ประเภท</label>
         </div>
         <div class="three wide field">
-          <select class="ui dropdown" id="type" name="type">
+          <select class="ui dropdown" id="type" name="type" (change)="gradeDropdown($event)">
             <option value="">เลือก</option>
-            <option *ngFor="let data of typeDropdown" value="{{data.value}}">{{data.label}}</option>
+            <option *ngFor="let data of typeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
           </select>
         </div>
         <div class="two wide field right aligned">
@@ -134,7 +134,7 @@
         <div class="three wide field">
           <select class="ui dropdown" id="grade" name="grade">
             <option value="">เลือก</option>
-            <option *ngFor="let data of gradeDropdown" value="{{data.value}}">{{data.label}}</option>
+            <option *ngFor="let data of gradeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
           </select>
         </div>
       </div>
@@ -169,7 +169,7 @@
         <div class="three wide field ui right aligned">
           <select class="ui dropdown" id="departure">
             <option value="">เลือก</option>
-            <option *ngFor="let data of departureDropdown" value="{{data.value}}">{{data.label}}</option>
+            <option *ngFor="let data of departureList" value="{{data.lovId}}">{{data.typeDescription}}</option>
           </select>
         </div>
       </div>
@@ -204,7 +204,7 @@
         <div class="three wide field">
           <select class="ui dropdown" id="allowance">
             <option value="">เลือก</option>
-            <option *ngFor="let data of allowanceDropdown" value="{{data.value}}">{{data.label}}</option>
+            <option *ngFor="let data of allowanceList" value="{{data.lovId}}">{{data.typeDescription}}</option>
           </select>
         </div>
         <div class="two wide field ui right aligned">
@@ -213,7 +213,7 @@
         <div class="three wide field">
           <select class="ui dropdown" id="training">
             <option value="">เลือก</option>
-            <option *ngFor="let data of trainingDropdown" value="{{data.value}}">{{data.label}}</option>
+            <option *ngFor="let data of trainingList" value="{{data.lovId}}">{{data.typeDescription}}</option>
           </select>
         </div>
       </div>
@@ -224,7 +224,7 @@
         <div class="three wide field">
           <select class="ui dropdown" id="roost">
             <option value="">เลือก</option>
-            <option *ngFor="let data of roostDropdown" value="{{data.value}}">{{data.label}}</option>
+            <option *ngFor="let data of roostList" value="{{data.lovId}}">{{data.typeDescription}}</option>
           </select>
         </div>
         <div class="two wide field right aligned">
@@ -233,7 +233,7 @@
         <div class="three wide field">
           <select class="ui dropdown" id="trainingType" >
             <option value="">เลือก</option>
-            <option *ngFor="let data of trainingTypeDropdown" value="{{data.value}}">{{data.label}}</option>
+            <option *ngFor="let data of trainingTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
           </select>
         </div>
         <div class="two wide field right aligned">
@@ -242,7 +242,7 @@
         <div class="three wide field">
           <select class="ui dropdown" id="roomType" >
             <option value="">เลือก</option>
-            <option *ngFor="let data of roomTypeDropdown" value="{{data.value}}">{{data.label}}</option>
+            <option *ngFor="let data of roomTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
           </select>
         </div>
 
@@ -276,7 +276,7 @@
         </div>
         <div class="ten wide column">
           <div class="ui form " style="width: 100%">
-            <textarea id="remark"></textarea>
+            <textarea id="remarkT"></textarea>
           </div>
         </div>
         <div class="three wide field"></div>
@@ -287,7 +287,7 @@
 
   <div class="actions">
     <div class="ui red deny button">ยกเลิก</div>
-    <div class="ui green button" (click)="save()">บันทึก</div>
+    <div class="ui green button" (click)="saveData()">บันทึก</div>
   </div>
 </div>
 <!--End add modal -->

@@ -17,7 +17,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int09111FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int09111Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int09TableDtlVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911Vo;
 import th.co.baiwa.excise.ia.service.Int09111Service;
@@ -33,8 +33,8 @@ public class Int09111Controller {
 	
 	@PostMapping("/list")
 	@ResponseBody
-	public DataTableAjax<Int09111Vo> list(@RequestBody Int09111FormVo formVo){
-		DataTableAjax<Int09111Vo> list = null;
+	public DataTableAjax<Int09TableDtlVo> list(@RequestBody Int09111FormVo formVo){
+		DataTableAjax<Int09TableDtlVo> list = null;
 		log.info("formVo.getSearchFlag() {}",formVo.getSearchFlag());
 		try {
 			 list = int09111Service.findAll(formVo);
@@ -48,10 +48,24 @@ public class Int09111Controller {
 	
 	@PostMapping("/save")
 	@ResponseBody
-	public Message add(@RequestBody Int09111FormVo formVo){
+	public Message save(@RequestBody Int09111FormVo formVo){
 		
 		try {
-			int09111Service.add(formVo);
+			int09111Service.save(formVo);
+			 
+		} catch (Exception e) {
+			log.error("Error ! add ",e);
+			return ApplicationCache.getMessage("MSG_00003");
+		}
+		return ApplicationCache.getMessage("MSG_00002");
+	}
+	
+	@PostMapping("/saveAll")
+	@ResponseBody
+	public Message saveAll(@RequestBody Int09111FormVo formVo){
+		
+		try {
+			int09111Service.saveAll(formVo);
 			 
 		} catch (Exception e) {
 			log.error("Error ! add ",e);

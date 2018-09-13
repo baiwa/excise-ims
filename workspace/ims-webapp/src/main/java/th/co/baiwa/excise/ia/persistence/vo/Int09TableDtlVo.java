@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
-public class Int09111Vo extends DataTableRequest {
+public class Int09TableDtlVo extends DataTableRequest {
 
 	private Long id;
 	private Long idProcess;

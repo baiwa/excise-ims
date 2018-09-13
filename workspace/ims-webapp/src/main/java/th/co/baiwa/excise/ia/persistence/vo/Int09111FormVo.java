@@ -12,6 +12,8 @@ public class Int09111FormVo extends DataTableRequest {
 	private String subject;
 	private String searchFlag;
 
+	private Int09FormDtlVo int09FormDtlVo;
+
 	public Long getId() {
 		return id;
 	}
@@ -68,4 +70,13 @@ public class Int09111FormVo extends DataTableRequest {
 		this.searchFlag = searchFlag;
 	}
 
+	public Int09FormDtlVo getInt09FormDtlVo() {
+		return int09FormDtlVo;
+	}
+
+	public void setInt09FormDtlVo(Int09FormDtlVo int09FormDtlVo) {
+		this.int09FormDtlVo = int09FormDtlVo;
+	}
+
+	
 }

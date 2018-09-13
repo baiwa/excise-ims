@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.persistence.dao;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.vo.Int09111FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int09111Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int09TableDtlVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911T2Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911Vo;
@@ -304,7 +305,7 @@ public class IaTravelEstimatorDao {
 		        return count;
 		    }
 
-			public List<Int09111Vo> findAll09111(Int09111FormVo formVo) {
+			public List<Int09TableDtlVo> findAll09111(Int09111FormVo formVo) {
 				StringBuilder sql = new StringBuilder(SQL_TRAVEL_ESTIMATOR_DTL);
 				List<Object> params = new ArrayList<>();
 
@@ -314,14 +315,14 @@ public class IaTravelEstimatorDao {
 				log.info(" findAll09111 idProcess : {}",formVo.getIdProcess());
 				log.info(" findAll09111 sql : {}",sql.toString());
 				
-		        List<Int09111Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), travelEstimatorDtlRowmapper);
+		        List<Int09TableDtlVo> list = jdbcTemplate.query(sql.toString(), params.toArray(), travelEstimatorDtlRowmapper);
 		        return list;
 		    }
 			
-			 private RowMapper<Int09111Vo> travelEstimatorDtlRowmapper = new RowMapper<Int09111Vo>() {
+			 private RowMapper<Int09TableDtlVo> travelEstimatorDtlRowmapper = new RowMapper<Int09TableDtlVo>() {
 			    	@Override
-			    	public Int09111Vo mapRow(ResultSet rs, int arg1) throws SQLException {
-			    		Int09111Vo vo = new Int09111Vo();
+			    	public Int09TableDtlVo mapRow(ResultSet rs, int arg1) throws SQLException {
+			    		Int09TableDtlVo vo = new Int09TableDtlVo();
 			    		
 			    	    vo.setId(rs.getLong("ID"));
 			    		vo.setIdProcess(rs.getLong("ID_PROCESS"));
@@ -393,7 +394,7 @@ public class IaTravelEstimatorDao {
 
 
 		    public Long addDocument (Long idProcess,String createdBy,String documentType,String subject) {
-		    	Long id = jdbcTemplate.queryForObject(" SELECT TRAVEL_ESTIMATOR_DOCUMENT_SEQ.NEXTVAL FROM dual ",long.class);
+		    	Long id = jdbcTemplate.queryForObject(" SELECT TRAVEL_ESTIMATOR_DOCUMENT_SEQ.NEXTVAL FROM dual ",Long.class);
 	
 		    	jdbcTemplate.update(" INSERT INTO TRAVEL_ESTIMATOR_DOCUMENT( " + 
 		    			"ID, " + 
@@ -423,6 +424,51 @@ public class IaTravelEstimatorDao {
 		    					"1166",
 		    					"N",
 		    					"NO"});
+		    	return id;
+		}
+		    
+		    public Long saveDataDtl (Int09TableDtlVo vo) {
+		    	Long id = jdbcTemplate.queryForObject(" SELECT TRAVEL_ESTIMATOR_DTL_SEQ.NEXTVAL FROM dual ",Long.class);
+		    	vo.setTotalMoney(vo.getFeedMoney().add(vo.getRoostMoney()).add(vo.getPassage().add(vo.getOtherExpenses())));
+		    	jdbcTemplate.update(" INSERT INTO TRAVEL_ESTIMATOR_DTL( " + 
+		    			"ID, " + 
+		    			"ID_PROCESS, " + 
+		    			"NAME, " + 
+		    			"POSITION, " + 
+		    			"FEED_DAY, " + 
+		    			"FEED_MONEY, " + 
+		    			"ROOST_DAY, " + 
+		    			"ROOST_MONEY, " + 
+		    			"PASSAGE, " + 
+		    			"OTHER_EXPENSES, " + 
+		    			"TOTAL_MONEY, " + 
+		    			"REMARK "+ 
+		    			")VALUES( " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?) ",new Object[] {
+		    					id,
+		    					vo.getIdProcess(),
+		    					vo.getName(),
+		    					vo.getPosition(),
+		    					vo.getFeedDay(),
+		    					vo.getFeedMoney(),
+		    					vo.getRoostDay(),
+		    					vo.getRoostMoney(),
+		    					vo.getPassage(),
+		    					vo.getOtherExpenses(),
+		    					vo.getTotalMoney(),
+		    					vo.getRemark()});
+		    	
 		    	return id;
 		}
 		    
