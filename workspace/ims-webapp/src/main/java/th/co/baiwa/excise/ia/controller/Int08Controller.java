@@ -111,6 +111,7 @@ public class Int08Controller {
 	@ResponseBody
 	public Message createBuggetYear(@RequestBody RiskAssRiskWsHdr riskAssRiskWsHdr) {
 		logger.info("Add createBuggetYear" + riskAssRiskWsHdr.getBudgetYear());
+		logger.info("Add Active : " + riskAssRiskWsHdr.getActive());
 		Message message =  null;
 		if(BeanUtils.isNotEmpty(riskAssRiskWsHdr.getBudgetYear())){
 			message = riskAssRiskWsHdrService.createBuggetYear(riskAssRiskWsHdr);
@@ -263,6 +264,12 @@ public class Int08Controller {
 		return riskAssRiskWsHdrService;
 	}
 
-	
+	@PostMapping("/updateStatusRisk")
+	@ResponseBody
+	public void updateStatusRisk(@RequestBody RiskAssRiskWsHdr riskAssRiskWsHdr) {
+		logger.info("riskHrdId ::"+riskAssRiskWsHdr.getRiskHrdId()+",active  ::"+riskAssRiskWsHdr.getActive());
+		riskAssRiskWsHdrService.updateStatusRisk(riskAssRiskWsHdr);
+
+	}
 
 }

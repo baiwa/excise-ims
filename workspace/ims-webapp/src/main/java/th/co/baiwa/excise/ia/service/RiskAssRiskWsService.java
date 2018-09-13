@@ -17,6 +17,7 @@ import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.Int0801Vo;
 import th.co.baiwa.excise.domain.RiskFullDataVo;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
@@ -116,6 +117,7 @@ public class RiskAssRiskWsService {
 				insertConfigData = new RiskAssRiskWsHdr();
 				insertConfigData.setRiskHdrName(lov2.getValue1());
 				insertConfigData.setBudgetYear(riskAssRiskWsHdr.getBudgetYear());
+				insertConfigData.setActive(riskAssRiskWsHdr.getActive());
 				riskAssRiskWsHdrRepository.save(insertConfigData);
 
 			}
@@ -271,5 +273,12 @@ public class RiskAssRiskWsService {
 		}
 		return riskFullDataVoList;
 	}
+
+	public void updateStatusRisk(RiskAssRiskWsHdr riskAssRiskWsHdr) {
+		RiskAssRiskWsHdr riskWsHdr = riskAssRiskWsHdrRepository.findOne(riskAssRiskWsHdr.getRiskHrdId());
+		riskWsHdr.setActive(riskAssRiskWsHdr.getActive());
+		riskAssRiskWsHdrRepository.save(riskWsHdr);
+	}
+			
 
 }

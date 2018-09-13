@@ -28,6 +28,7 @@ export class Int0811Component implements OnInit {
   riskHrdId: any;
   dataTableF2: any;
 
+  active: any;
   buttonFullYear: any;
   
   constructor(private router: Router,
@@ -68,6 +69,9 @@ export class Int0811Component implements OnInit {
         this.changeYear(date.getFullYear() + 543);
       }
     });
+    this.active = "Y";
+
+
     this.openForm1 = false;
     this.openForm2 = false;
     this.wsRiskList = ["ปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ", "ปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ"];
@@ -107,9 +111,8 @@ export class Int0811Component implements OnInit {
       console.log(this.budgetYear);
       const URL = "ia/int08/createBudgetYear";
 
-      this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
-        // var message = res.json();
-        // this.messageBarService.successModal(message.messageTh, "สำเร็จ");
+      this.ajax.post(URL, { budgetYear: this.budgetYear ,active: 'Y'}, res => {
+
 
         this.router.navigate(["/int08/1/4"], {
           queryParams: { budgetYear: this.budgetYear }

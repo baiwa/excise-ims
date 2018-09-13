@@ -21,18 +21,17 @@
             </button>
           </div>
         </div>
-        <table id="dataTable" class="ui small celled table">
+        <table id="dataTable" class="ui small celled table nowrap" style="width: 100%">
           <thead>
             <tr>
 
-              <th>ที่</th>
-              <th>ปัจจัยเสี่ยง</th>
-
-              <th>ปีงบประมาณ</th>
-              <th>วันที่สร้าง</th>
-              <th>ผู้สร้าง</th>
-              <th>สถานะการใช้งาน</th>
-              <th></th>
+              <th style="text-align: center !important">ที่</th>
+              <th style="text-align: center !important">ปัจจัยเสี่ยง</th>
+              <th style="text-align: center !important">ปีงบประมาณ</th>
+              <th style="text-align: center !important">วันที่สร้าง</th>
+              <th style="text-align: center !important">ผู้สร้าง</th>
+              <th style="text-align: center !important">สถานะการใช้งาน</th>
+              <th style="text-align: center !important">Action</th>
             </tr>
           </thead>
         </table>
@@ -45,9 +44,10 @@
               บันทึก
             </button>
             <button class="ui mini primary button" (click)="configAllCondition()">
+              <i class="setting icon"></i>
               กำหนดเงื่อนไขปัจจัยเสี่ยงรวม
             </button>
-            <button class="ui mini primary button" (click)="cancelFlow()">
+            <button class="ui mini  button" (click)="cancelFlow()">
               ยกเลิก
             </button>
           </div>

@@ -67,14 +67,13 @@ export class Int0814Component implements OnInit, AfterViewInit {
       pageLength: 10,
       processing: true,
       serverSide: true,
-      paging: false,
+      paging: true,
       ajax: {
         type: "POST",
         url: URL,
         data: { budgetYear: this.budgetYear }
       },
       columns: [
-
         {
           render: function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
@@ -83,19 +82,37 @@ export class Int0814Component implements OnInit, AfterViewInit {
         },
         { data: "riskHdrName" },
         { data: "budgetYear" },
-        { data: "createdBy" },
-        { data: "createdDate" },
-        { data: "active" },
         {
-          data: "riskHdrId",
+          render: function (data, type, row, meta) {
+            console.log("data :", row.createdDate)
+            if (row.createdDate != null && row.createdDate != undefined && row.createdDate != '') {
+              var dateTime = new Date(row.createdDate).toLocaleString("th-TH");
+              console.log(dateTime);
+              return dateTime.split(' ')[0];
+            } else {
+              return row.createdDate;
+            }
+          },
+          className: "center"
+        },
+        { data: "createdBy" },
+        {
+          data: "active",
+          render: function (data, type, row, meta) {
+            return '<button type="button" class="ui mini button ' + (data == "Y" ? "green" : "orange") + ' chk"><i class="power off icon"></i>' + (data == "Y" ? "เปิด" : "ปิด") + '</button>';
+          }
+        },
+        {
+          data: "riskHrdId",
           render: function () {
-            return '<button type="button" class="ui mini button dtl"><i class="pencil icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button del"><i class="pencil icon"></i> ลบ</button>';
+            return '<button type="button" class="ui mini button primary dtl"><i class="table icon"></i> รายละเอียด</button>'
+              + '<button type="button" class="ui mini button del"><i class="trash alternate icon"></i> ลบ</button>';
           }
         }
       ],
       columnDefs: [
-        { targets: [1, 2, 3, 4, 5], className: "center aligned" }
+        { targets: [0, 2, 3, 4, 5, 6], className: "center aligned" },
+        { targets: [1], className: "left aligned" }
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {
@@ -112,7 +129,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
             });
           }
 
-        })
+        });
         $("td > .del", row).bind("click", () => {
           console.log("del");
           console.log(data.riskHrdId);
@@ -127,13 +144,25 @@ export class Int0814Component implements OnInit, AfterViewInit {
             this.initDatatable();
           }, errRes => {
             var message = errRes.json();
-
             this.messageBarService.errorModal(message.messageTh);
-
-
           });
-        })
-          ;
+        });
+
+        $("td > .chk", row).bind("click", () => {
+          console.log("chk");
+          console.log(row);
+          console.log(data);
+          console.log(index);
+
+          const URL = "ia/int08/updateStatusRisk";
+          var newActive = data.active == 'N' ? 'Y' : 'N';
+          this.ajax.post(URL, { riskHrdId: data.riskHrdId, active: newActive }, res => {
+            //console.log(res.json());
+            this.datatable.destroy();
+            this.initDatatable();
+          });
+        });
+
       }
     });
   }
