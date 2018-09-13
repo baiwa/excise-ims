@@ -27,6 +27,9 @@ export class Int0811Component implements OnInit {
   condition: any;
   riskHrdId: any;
   dataTableF2: any;
+
+  buttonFullYear: any;
+  
   constructor(private router: Router,
     private ajax: AjaxService,
     private route: ActivatedRoute,
@@ -69,6 +72,13 @@ export class Int0811Component implements OnInit {
     this.openForm2 = false;
     this.wsRiskList = ["ปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ", "ปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ"];
     this.initDatatable();
+
+    if (this.budgetYear != null && this.budgetYear != undefined && this.budgetYear != '') {
+      this.buttonFullYear = true;
+    } else {
+      this.buttonFullYear = false;
+    };
+
   }
 
 
@@ -119,6 +129,7 @@ export class Int0811Component implements OnInit {
     if (this.budgetYear != null && this.budgetYear != undefined && this.budgetYear != '') {
       this.isSearch = true;
       this.initDatatable();
+      this.buttonFullYear = true;
     } else {
       this.messageBarService.errorModal('กรุณาเลือก ปีงบประมาณ');
     }
@@ -139,23 +150,23 @@ export class Int0811Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: true,
-      paging: false,
+      paging: true,
       ajax: {
         type: "POST",
         url: URL,
         data: { budgetYear: this.budgetYear }
       },
       columns: [
-        {
-          data: "riskHrdId",
-          render: function (data, type, full, meta) {
-            return (
-              '<div class="ui checkbox tableDt"><input name="checkRiskHrdId" value="' +
-              data +
-              '" type="checkbox"><label></label></div>'
-            );
-          }
-        },
+        // {
+        //   data: "riskHrdId",
+        //   render: function (data, type, full, meta) {
+        //     return (
+        //       '<div class="ui checkbox tableDt"><input name="checkRiskHrdId" value="' +
+        //       data +
+        //       '" type="checkbox"><label></label></div>'
+        //     );
+        //   }
+        // },
         {
           render: function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
@@ -165,20 +176,30 @@ export class Int0811Component implements OnInit {
         { data: "riskHdrName" },
         { data: "riskHrdPaperName" },
         { data: "budgetYear" },
-
-        { data: "createdDate" },
+        {
+          render: function (data, type, row, meta) {
+            console.log("data :", row.createdDate)
+            if (row.createdDate != null && row.createdDate != undefined && row.createdDate != '') {
+              var dateTime = new Date(row.createdDate).toLocaleString("th-TH");
+              return dateTime.split(' ')[0];
+            } else {
+              return row.createdDate;
+            }
+          },
+          className: "center"
+        },
         { data: "createdBy" },
-        { data: "active" },
         {
           data: "riskHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button dtl"><i class="pencil icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button export"><i class="pencil icon"></i> Export</button>';
+            return '<button type="button" class="ui mini button  primary dtl"><i class="table icon"></i> รายละเอียด</button>'
+              + '<button type="button" class="ui mini button  primary export"><i class="print icon "></i> Export</button>';
           }
         }
       ],
       columnDefs: [
-        { targets: [0, 1, 4, 5, 7, 8], className: "center aligned" }
+        { targets: [0, 3, 4, 5, 6], className: "center aligned" },
+        { targets: [1, 2], className: "left aligned" }
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {
@@ -238,6 +259,9 @@ export class Int0811Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: false,
+      scrollY:true,
+      scrollX: true,
+      scrollCollapse: true,
       paging: true,
       ajax: {
         type: "POST",
@@ -266,20 +290,20 @@ export class Int0811Component implements OnInit {
         console.log("data", data.valueTranslation);
         console.log("dataIndex", dataIndex);
         if (data.color == 'แดง') {
-          $(row).find('td:eq(8)').addClass('red');
-          $(row).find('td:eq(7)').addClass('red');
+          $(row).find('td:eq(8)').addClass('bg-c-red');
+          $(row).find('td:eq(7)').addClass('bg-c-red');
         } else if (data.color == 'เขียว') {
-          $(row).find('td:eq(8)').addClass('green');
-          $(row).find('td:eq(7)').addClass('green');
+          $(row).find('td:eq(8)').addClass('bg-c-green');
+          $(row).find('td:eq(7)').addClass('bg-c-green');
         } else if (data.color == 'เหลือง') {
-          $(row).find('td:eq(8)').addClass('yellow');
-          $(row).find('td:eq(7)').addClass('yellow');
+          $(row).find('td:eq(8)').addClass('bg-c-yellow');
+          $(row).find('td:eq(7)').addClass('bg-c-yellow');
         }
 
       },
       columnDefs: [
-        { targets: [0, 2], className: "center aligned" },
-        { targets: [3, 4, 5, 6, 7], className: "right aligned" },
+        { targets: [0, 2,7], className: "center aligned" },
+        { targets: [3, 4, 5, 6], className: "right aligned" },
         { targets: [1], className: "left aligned" }
       ]
 
@@ -301,6 +325,9 @@ export class Int0811Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: false,
+      scrollY:true,
+      scrollX: true,
+      scrollCollapse: true,
       paging: true,
       ajax: {
         type: "POST",
@@ -326,14 +353,14 @@ export class Int0811Component implements OnInit {
         console.log("data", data.color);
         console.log("dataIndex", dataIndex);
         if (data.color == 'แดง') {
-          $(row).find('td:eq(4)').addClass('red');
-          $(row).find('td:eq(5)').addClass('red');
+          $(row).find('td:eq(4)').addClass('bg-c-red');
+          $(row).find('td:eq(5)').addClass('bg-c-red');
         } else if (data.color == 'เขียว') {
-          $(row).find('td:eq(4)').addClass('green');
-          $(row).find('td:eq(5)').addClass('green');
+          $(row).find('td:eq(4)').addClass('bg-c-green');
+          $(row).find('td:eq(5)').addClass('bg-c-green');
         } else if (data.color == 'เหลือง') {
-          $(row).find('td:eq(4)').addClass('yellow');
-          $(row).find('td:eq(5)').addClass('yellow');
+          $(row).find('td:eq(4)').addClass('bg-c-yellow');
+          $(row).find('td:eq(5)').addClass('bg-c-yellow');
         }
 
       },
@@ -363,27 +390,26 @@ export class Int0811Component implements OnInit {
     });
   }
 
-  clearData() {
-    this.showData = false;
+  clearDataForm1() {
+    this.openForm1 = false;
+  }
+
+  clearDataForm2() {
+    this.openForm2 = false;
   }
 
   changebudgetYear = event => {
-
     console.log(event)
-
   }
 
-  popupEditData() {
-    $("#select1").show();
-    $("#select2").show();
-    $("#select3").show();
-    $("#modalInt0811").modal("show");
+  clearData() {
+    this.budgetYear = "";
+    this.buttonFullYear = false;
+    this.initDatatable();
+    this.openForm1 = false;
+    this.openForm2 = false;
+    //this.openForm3 = false;
   }
 
-  closePopupEdit() {
-    $("#select1").hide();
-    $("#select2").hide();
-    $("#select3").hide();
-    $("#modalInt0811").modal("hide");
-  }
+
 }

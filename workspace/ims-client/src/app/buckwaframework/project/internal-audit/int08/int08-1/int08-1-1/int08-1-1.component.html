@@ -17,7 +17,7 @@
             <div class="ui calendar" style="width:100%" id="year">
               <div class="ui input left icon">
                 <i class="calendar icon"></i>
-                <input type="calendar" id="budgetYear" placeholder="ปี" maxlength="4" name="budgetYear" [(ngModel)]="budgetYear">
+                <input type="calendar" id="budgetYear" placeholder="ปี" maxlength="4" name="budgetYear" [(ngModel)]="budgetYear" readonly="" autocomplete="off" >
               </div>
             </div>
           </div>
@@ -25,7 +25,7 @@
             <label>ปัจจัยเสี่ยง</label>
           </div>
           <div class="four wide field ">
-            <select class="ui search dropdown">
+            <select class="ui search dropdown ai">
               <option value="0">ปัจจัยเสี่ยงงบประมาณ </option>
               <option *ngFor="let risk of riskList; index as i;" value="{{risk.value}}">{{risk.description}}</option>
 
@@ -38,7 +38,7 @@
       <div class="ui center aligned grid">
         <div class="sixteen wide column">
           <button class="ui mini primary button" (click)="searchDataTable()">
-            <i class="add icon"></i>
+            <i class="search icon"></i>
             ค้นหา
           </button>
           <button class="ui mini button" (click)="clearData()">
@@ -51,23 +51,34 @@
           </button>
         </div>
       </div>
-      <table id="dataTable" class="ui small celled table">
+      <table id="dataTable" class="ui small celled table nowrap" style="width: 100%;">
         <thead>
           <tr>
-            <th></th>
-            <th>ที่</th>
-            <th>ชื่อกระดาษทำการ</th>
-            <th>ปัจจัยเสี่ยง</th>
-            <th>ปีงบประมาณ</th>
-            <th>วันที่สร้าง</th>
-            <th>ผู้สร้าง</th>
-            <th>สถานะการใช้งาน</th>
-            <th>Action</th>
+            <!-- <th></th> -->
+            <th style="text-align: center !important">ที่</th>
+            <th style="text-align: center !important" class="four wide field ">ชื่อกระดาษทำการ</th>
+            <th style="text-align: center !important" class="four wide field ">ปัจจัยเสี่ยง</th>
+            <th style="text-align: center !important">ปีงบประมาณ</th>
+            <th style="text-align: center !important">วันที่สร้าง</th>
+            <th style="text-align: center !important">ผู้สร้าง</th>
+            <th style="text-align: center !important">Action</th>
           </tr>
         </thead>
       </table>
+      
+      <div class="ui five column centered grid" *ngIf="buttonFullYear">
+        <div class="column">
+          <button class="ui mini primary button" >
+            <i class="table icon"></i>
+            รายละเอียดปัจจัยเสี่ยงรวมประจำปี
+          </button>
+        </div>
+      </div>
+
+
     </div>
     <BR/>
+
     <div class="sixteen wide column" *ngIf="openForm1">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
@@ -97,8 +108,8 @@
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
-              <div class="two wide field ">
-                <label>งบประมาณที่ใช้ดำเนินงานโครงการ</label>
+              <div class="four wide field ">
+                <label>{{riskAssRiskWsHdr.riskHdrName}}</label>
               </div>
               <div class="one wide field ">
                 <label>
@@ -114,7 +125,7 @@
               <div class="one wide field ">
                 <label>{{con.value2 == null ? '-' : con.value2 }}</label>
               </div>
-              <div class="one wide field ">
+              <div class="two wide field ">
                 <label>ระดับความเสี่ยง</label>
               </div>
               <div class="one wide field ">
@@ -133,7 +144,7 @@
 
 
         <div class="inline fields">
-          <table id="dataTableF1" class="ui small celled table">
+          <table id="dataTableF1" class="ui small celled table nowrap" style="width: 100%;">
             <thead>
               <tr>
 
@@ -161,11 +172,11 @@
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
             <button class="ui mini primary button">
-              <i class=" add icon "></i>
+              <i class=" print icon "></i>
               Export
             </button>
-            <button class="ui mini button " (click)="clearData() ">
-
+            <button class="ui mini button " (click)="clearDataForm1() ">
+              <i class="arrow left icon"></i>
               กลับ
             </button>
 
@@ -205,8 +216,8 @@
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
-              <div class="two wide field ">
-                <label>งบประมาณที่ใช้ดำเนินงานโครงการ</label>
+              <div class="four wide field ">
+                <label>{{riskAssRiskWsHdr.riskHdrName}}</label>
               </div>
               <div class="one wide field ">
                 <label>
@@ -222,7 +233,7 @@
               <div class="one wide field ">
                 <label>{{con.value2 == null ? '-' : con.value2 }}</label>
               </div>
-              <div class="one wide field ">
+              <div class="two wide field ">
                 <label>ระดับความเสี่ยง</label>
               </div>
               <div class="one wide field ">
@@ -241,7 +252,7 @@
 
 
         <div class="inline fields">
-          <table id="dataTableF2" class="ui small celled table">
+          <table id="dataTableF2" class="ui small celled table nowrap" style="width: 100%;">
             <thead>
               <tr>
                 <th rowspan="2" style="text-align: center !important">ลำดับ</th>
@@ -263,11 +274,11 @@
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
             <button class="ui mini primary button">
-              <i class=" add icon "></i>
+              <i class=" print icon "></i>
               Export
             </button>
-            <button class="ui mini button " (click)="clearData() ">
-
+            <button class="ui mini button " (click)="clearDataForm2() ">
+              <i class="arrow left icon"></i>
               กลับ
             </button>
 
