@@ -6,6 +6,8 @@ import { Int051Component } from './int05-1.component';
 
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../../../common/services';
+import { BreadcrumbComponent } from 'app/buckwaframework/common/components/breadcrumb/breadcrumb.component';
+
 
 const routes: Routes = [
     { path: '', component: Int051Component, canActivate: [AuthGuard] },
@@ -19,7 +21,8 @@ const routes: Routes = [
     FormsModule  
   ],
   declarations: [
-    Int051Component
+    Int051Component,
+    BreadcrumbComponent
     
   ],
   exports: [RouterModule]

@@ -7,6 +7,7 @@ import { MessageBarComponent } from './message-bar/message-bar.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ModalComponent } from './modal/modal.component';
 import { AccordionComponent } from './accordion/accordion.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import { AccordionComponent } from './accordion/accordion.component';
         DropdownComponent,
         MessageBarComponent,
         ModalComponent,
-        PaginationComponent
+        PaginationComponent,
+        BreadcrumbComponent
     ],
     exports: [
         // Components
@@ -28,6 +30,7 @@ import { AccordionComponent } from './accordion/accordion.component';
         DropdownComponent,
         MessageBarComponent,
         ModalComponent,
+        BreadcrumbComponent,
         PaginationComponent,
         // Modules
         CommonModule,

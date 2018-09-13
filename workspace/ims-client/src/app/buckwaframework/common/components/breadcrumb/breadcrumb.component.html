@@ -1,0 +1,8 @@
+<div class="ui attached segment">
+  <div class="ui breadcrumb" *ngFor="let item of route;let i = index">
+    <a class="section" *ngIf="item.route != '#'" [routerLink]="item.route">{{item.label}}</a>    
+    <div class="divider" *ngIf="item.route != '#'"> /</div>
+    <div class="active section" *ngIf="item.route == '#'">{{item.label}}</div> 
+    <div class="divider" *ngIf="item.route == '#'"> /</div>
+  </div>
+</div>

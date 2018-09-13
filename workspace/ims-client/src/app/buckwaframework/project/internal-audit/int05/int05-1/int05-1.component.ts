@@ -17,13 +17,20 @@ export class Int051Component implements OnInit {
   $form: any;
   formModal: FormModal = new FormModal();
   listFileName : any;
+  breadcrump : any;
   constructor(
     private ajax: AjaxService,
     private message: MessageBarService) {
+      this.breadcrump = [
+        {label :"ตรวจสอบภายใน", route : "/home"},
+        {label :"ตรวจสอบพัสดุ", route :"#"},
+        {label :"ตรวจสอบพัสดุภาคพื้นที่",route : "#"}
+      ];
   }
 
 
   ngOnInit() {
+    console.log(this.breadcrump);
     this.$form = $("#formSearch");
     $(".ui.dropdown.ai").dropdown().css('width', '100%');
     this.sectorDropdown();
