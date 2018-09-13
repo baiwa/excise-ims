@@ -64,9 +64,6 @@ export class Int0511Component implements OnInit {
 
   onClear = () => {
     console.log("Clear");
-    this.area=null;
-    this.sector=null;
-    this.branch=null;
     $(".ui.dropdown.ai").dropdown('restore defaults');
     $("#dateForm").val("");
     $("#dateTo").val("");

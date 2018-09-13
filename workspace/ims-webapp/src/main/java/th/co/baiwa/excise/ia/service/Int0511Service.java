@@ -31,13 +31,16 @@ public class Int0511Service {
 	private IaStampFileRepository iaStampFileRepository;
 
 	public DataTableAjax<Int0511Vo> findAll(Int0511FormVo formVo) {
-	    formVo.setDateForm(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateForm()));
-	    formVo.setDateTo(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateTo()));
-		List<Int0511Vo> list = checkStampAreaDao.findAll(formVo);
-		Long count = checkStampAreaDao.count(formVo);
-		DataTableAjax<Int0511Vo> dataTableAjax = new DataTableAjax<>();
-
+	    
+		DataTableAjax<Int0511Vo> dataTableAjax = new DataTableAjax<>();		
+		
 		if ("TRUE".equalsIgnoreCase(formVo.getSearchFlag())) {
+			
+			formVo.setDateForm(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateForm()));
+		    formVo.setDateTo(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateTo()));
+			List<Int0511Vo> list = checkStampAreaDao.findAll(formVo);
+			Long count = checkStampAreaDao.count(formVo);
+			
 			dataTableAjax.setDraw(formVo.getDraw() + 1);
 			dataTableAjax.setRecordsTotal(count);
 			dataTableAjax.setRecordsFiltered(count);

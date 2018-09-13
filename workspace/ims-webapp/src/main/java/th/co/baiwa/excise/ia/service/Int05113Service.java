@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import baiwa.co.th.ws.Response;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.IaStamGenre;
@@ -53,20 +55,26 @@ public class Int05113Service {
 	@Autowired
 	 private WebServiceExciseService webServiceExciseService;
 	
+	@Autowired
+	private LovRepository lovRepository;
+	
     @Value("${app.datasource.path.upload}")
     private String pathed;
 
 	@Transactional
 	public void save(List<Int05113Vo> formVos) {
+		
+		
+		Response response = webServiceExciseService.webServiceLdap(UserLoginUtils.getCurrentUsername(), "password");
+		Lov region = lovRepository.findByTypeAndSubType("SECTOR_LIST", response.getOffice());
         for (Int05113Vo form:formVos) {           
         	
         	/*upload file*/
         	uploadFile("FileUpload",form.getFile());
             IaStampDetail entity = new IaStampDetail();
             
-            /*get sector*/
-            Response response = webServiceExciseService.webServiceLdap(UserLoginUtils.getCurrentUsername(), "password");
-            entity.setExciseRegion(response.getOffice());
+            /*get sector*/            
+            entity.setExciseRegion(region.getSubTypeDescription());
             
             /* set sector area and branch*/
             entity.setDateOfPay(DateConstant.convertStrDDMMYYYYToDate(form.getDateOfPay()));            

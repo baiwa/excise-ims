@@ -149,6 +149,7 @@ export class Int05113Component implements OnInit {
     });
   }
   onUpload=(event)=>{    
+    console.log(event);
     if (event) {
       let reader = new FileReader();
 
