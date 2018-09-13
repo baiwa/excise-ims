@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.hibernate.mapping.Array;
@@ -45,7 +46,7 @@ public class Int09111Service {
 		return dataTableAjax;
 	}
 
-	public void save(Int09111FormVo formVo) {
+	public void save(Int09111FormVo formVo) throws ParseException {
 		Int09TableDtlVo data = int09DataDtlService.getDataDtl(formVo.getInt09FormDtlVo());
 		int09DataDtlService.saveDataDtl(data);
 	}

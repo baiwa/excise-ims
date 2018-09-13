@@ -328,13 +328,13 @@ public class IaTravelEstimatorDao {
 			    		vo.setIdProcess(rs.getLong("ID_PROCESS"));
 			    		vo.setName(rs.getString("NAME"));
 			    		vo.setPosition(rs.getString("POSITION"));
-			    		vo.setFeedDay(rs.getBigDecimal("FEED_DAY"));
-			    		vo.setFeedMoney(rs.getBigDecimal("FEED_MONEY"));
-			    		vo.setRoostDay(rs.getBigDecimal("ROOST_DAY"));
-			    		vo.setRoostMoney(rs.getBigDecimal("ROOST_MONEY"));
-			    		vo.setPassage(rs.getBigDecimal("PASSAGE"));
-			    		vo.setOtherExpenses(rs.getBigDecimal("OTHER_EXPENSES"));
-			    		vo.setTotalMoney(rs.getBigDecimal("TOTAL_MONEY"));
+			    		vo.setFeedDay(rs.getLong("FEED_DAY"));
+			    		vo.setFeedMoney(rs.getLong("FEED_MONEY"));
+			    		vo.setRoostDay(rs.getLong("ROOST_DAY"));
+			    		vo.setRoostMoney(rs.getLong("ROOST_MONEY"));
+			    		vo.setPassage(rs.getLong("PASSAGE"));
+			    		vo.setOtherExpenses(rs.getLong("OTHER_EXPENSES"));
+			    		vo.setTotalMoney(rs.getLong("TOTAL_MONEY"));
 			    		vo.setRemark(rs.getString("REMARK"));
 			    	    	
 			    		return vo;
@@ -429,7 +429,8 @@ public class IaTravelEstimatorDao {
 		    
 		    public Long saveDataDtl (Int09TableDtlVo vo) {
 		    	Long id = jdbcTemplate.queryForObject(" SELECT TRAVEL_ESTIMATOR_DTL_SEQ.NEXTVAL FROM dual ",Long.class);
-		    	vo.setTotalMoney(vo.getFeedMoney().add(vo.getRoostMoney()).add(vo.getPassage().add(vo.getOtherExpenses())));
+//		    	vo.getFeedMoney(),vo.getRoostMoney(),vo.getPassage(),vo.getOtherExpenses(),
+//		    	vo.setTotalMoney();
 		    	jdbcTemplate.update(" INSERT INTO TRAVEL_ESTIMATOR_DTL( " + 
 		    			"ID, " + 
 		    			"ID_PROCESS, " + 

@@ -1,7 +1,5 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
-import java.math.BigDecimal;
-
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
 public class Int09FormDtlVo extends DataTableRequest {
@@ -24,8 +22,8 @@ public class Int09FormDtlVo extends DataTableRequest {
 	private String trainingType;
 	private String roomType;
 	private String numberDate;
-	private BigDecimal passage;
-	private BigDecimal otherExpenses;
+	private Long passage;
+	private Long otherExpenses;
 	private String remark;
 
 	public Long getId() {
@@ -172,19 +170,19 @@ public class Int09FormDtlVo extends DataTableRequest {
 		this.numberDate = numberDate;
 	}
 
-	public BigDecimal getPassage() {
+	public Long getPassage() {
 		return passage;
 	}
 
-	public void setPassage(BigDecimal passage) {
+	public void setPassage(Long passage) {
 		this.passage = passage;
 	}
 
-	public BigDecimal getOtherExpenses() {
+	public Long getOtherExpenses() {
 		return otherExpenses;
 	}
 
-	public void setOtherExpenses(BigDecimal otherExpenses) {
+	public void setOtherExpenses(Long otherExpenses) {
 		this.otherExpenses = otherExpenses;
 	}
 

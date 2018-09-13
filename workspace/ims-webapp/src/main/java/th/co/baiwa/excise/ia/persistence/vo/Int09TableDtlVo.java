@@ -1,7 +1,5 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
-import java.math.BigDecimal;
-
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
 public class Int09TableDtlVo extends DataTableRequest {
@@ -10,13 +8,13 @@ public class Int09TableDtlVo extends DataTableRequest {
 	private Long idProcess;
 	private String name;
 	private String position;
-	private BigDecimal feedDay;
-	private BigDecimal feedMoney;
-	private BigDecimal roostDay;
-	private BigDecimal roostMoney;
-	private BigDecimal passage;
-	private BigDecimal otherExpenses;
-	private BigDecimal totalMoney;
+	private Long feedDay;
+	private Long feedMoney;
+	private Long roostDay;
+	private Long roostMoney;
+	private Long passage;
+	private Long otherExpenses;
+	private Long totalMoney;
 	private String remark;
 
 	public Long getId() {
@@ -51,59 +49,59 @@ public class Int09TableDtlVo extends DataTableRequest {
 		this.position = position;
 	}
 
-	public BigDecimal getFeedDay() {
+	public Long getFeedDay() {
 		return feedDay;
 	}
 
-	public void setFeedDay(BigDecimal feedDay) {
+	public void setFeedDay(Long feedDay) {
 		this.feedDay = feedDay;
 	}
 
-	public BigDecimal getFeedMoney() {
+	public Long getFeedMoney() {
 		return feedMoney;
 	}
 
-	public void setFeedMoney(BigDecimal feedMoney) {
+	public void setFeedMoney(Long feedMoney) {
 		this.feedMoney = feedMoney;
 	}
 
-	public BigDecimal getRoostDay() {
+	public Long getRoostDay() {
 		return roostDay;
 	}
 
-	public void setRoostDay(BigDecimal roostDay) {
+	public void setRoostDay(Long roostDay) {
 		this.roostDay = roostDay;
 	}
 
-	public BigDecimal getRoostMoney() {
+	public Long getRoostMoney() {
 		return roostMoney;
 	}
 
-	public void setRoostMoney(BigDecimal roostMoney) {
+	public void setRoostMoney(Long roostMoney) {
 		this.roostMoney = roostMoney;
 	}
 
-	public BigDecimal getPassage() {
+	public Long getPassage() {
 		return passage;
 	}
 
-	public void setPassage(BigDecimal passage) {
+	public void setPassage(Long passage) {
 		this.passage = passage;
 	}
 
-	public BigDecimal getOtherExpenses() {
+	public Long getOtherExpenses() {
 		return otherExpenses;
 	}
 
-	public void setOtherExpenses(BigDecimal otherExpenses) {
+	public void setOtherExpenses(Long otherExpenses) {
 		this.otherExpenses = otherExpenses;
 	}
 
-	public BigDecimal getTotalMoney() {
+	public Long getTotalMoney() {
 		return totalMoney;
 	}
 
-	public void setTotalMoney(BigDecimal totalMoney) {
+	public void setTotalMoney(Long totalMoney) {
 		this.totalMoney = totalMoney;
 	}
 
