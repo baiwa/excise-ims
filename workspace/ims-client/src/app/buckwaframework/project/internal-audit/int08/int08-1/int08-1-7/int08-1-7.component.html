@@ -19,14 +19,14 @@
         </div>
       </div>
 
-
-      <table id="dataTable" class="ui small celled table">
-        <thead id="trColumn">
-        </thead>
-        <tbody id="tbody">
-        </tbody>
-      </table>
-
+      <div style="overflow-x: scroll; white-space:nowrap;">
+        <table id="dataTable" class="ui small celled table">
+          <thead id="trColumn">
+          </thead>
+          <tbody id="tbody">
+          </tbody>
+        </table>
+      </div>
       <BR/>
       <div class="inline fields latest-inline">
         <div class="sixteen wide field">
@@ -36,12 +36,14 @@
               บันทึก
             </button>
             <button class="ui mini primary button" (click)="modalConditionRL()">
+              <i class="setting icon"></i>
               กำหนดเงื่อนไข RL
             </button>
             <button class="ui mini primary button" (click)="modalpercent()">
               กำหนดค่า %
             </button>
             <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+              <i class="print icon"></i>
               Export
             </button>
             <button class="ui mini primary button" (click)="cancelFlow()">

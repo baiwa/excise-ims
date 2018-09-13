@@ -21,6 +21,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
   yearList: any[];
   wsRiskList: any[];
 
+  riskType: any;
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
@@ -181,9 +182,10 @@ export class Int0814Component implements OnInit, AfterViewInit {
   cancelFlow() {
     this.messageBarService.comfirm(foo => {
       // let msg = "";
+      this.riskType ="0";
       if (foo) {
         this.router.navigate(["/int08/1/1"], {
-          queryParams: { budgetYear: this.budgetYear }
+          queryParams: { budgetYear: this.budgetYear ,riskType: this.riskType}
         });
       }
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");

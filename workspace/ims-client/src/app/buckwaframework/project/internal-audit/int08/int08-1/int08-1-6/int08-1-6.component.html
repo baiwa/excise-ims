@@ -116,7 +116,7 @@
                     อัพโหลด
                   </button>
                   <button class="ui mini button" type="reset">
-                    <i class="trash outline icon"></i>
+                    <i class="trash alternate icon"></i>
                     ลบไฟล์
                   </button>
                 </div>
@@ -125,19 +125,19 @@
           </form>
         </div>
 
-        <table id="dataTable" class="ui small celled table">
+        <table id="dataTable" class="ui small celled table" style="width: 100%">
           <thead>
             <tr>
               <th rowspan="2" style="text-align: center !important">ลำดับ</th>
-              <th rowspan="2" style="text-align: center !important" class="four wide field ">โครงการตามยุทธศาสตร์</th>
-              <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
-              <th rowspan="2" style="text-align: center !important">ค่าความเสี่ยง</th>
+              <th rowspan="2" style="text-align: center !important" class="eight wide field ">โครงการตามยุทธศาสตร์</th>
+              <th rowspan="2" style="text-align: center !important" class="two wide field ">หน่วยงาน</th>
+              <th rowspan="2" style="text-align: center !important" class="two wide field ">ค่าความเสี่ยง</th>
               <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-              <th rowspan="2" style="text-align: center !important"></th>
+              <th rowspan="2" style="text-align: center !important">ลบ</th>
             </tr>
             <tr>
-              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-              <th style="text-align: center !important">แปลค่า</th>
+              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important"class="one wide field ">RL</th>
+              <th style="text-align: center !important" class="one wide field ">แปลค่า</th>
             </tr>
           </thead>
         </table>
@@ -150,12 +150,14 @@
               บันทึก
             </button>
             <button class="ui mini primary button" (click)="modalConditionRL()">
+              <i class="setting icon"></i>
               กำหนดเงื่อนไข RL
             </button>
             <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+              <i class="print icon"></i>
               Export
             </button>
-            <button class="ui mini primary button" (click)="cancelFlow()">
+            <button class="ui mini  button" (click)="cancelFlow()">
               ยกเลิก
             </button>
           </div>

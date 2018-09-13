@@ -238,6 +238,7 @@ public class RiskAssRiskWsService {
 	}
 
 	public List<RiskFullDataVo> searchFullRiskByBudgetYear(String budgetYear , List<String> riskHdrNameList) {
+		
 		List<RiskFullDataVo> riskFullDataVoList= new ArrayList<RiskFullDataVo>();
 		RiskFullDataVo riskFullDataVo = new RiskFullDataVo();
 		List<Int0801Vo> projectDepName = riskAssRiskWsHdrRepository.findProjectBaseByBudgetYear(budgetYear);
@@ -267,7 +268,8 @@ public class RiskAssRiskWsService {
 				}
 			}
 			riskFullDataVo.setRl(rl);
-			riskFullDataVo.setSumRiskCost(sumRl+"");
+			riskFullDataVo.setSumRiskCost(sumRl+"");	
+			
 			riskFullDataVoList.add(riskFullDataVo);
 			index++;
 		}

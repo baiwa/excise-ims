@@ -1,7 +1,7 @@
 <div class="ui grid">
   <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>กำหนดปัจจัยเสี่ยงประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
+      <span>รายละเอียดหัวกระดาษทำการ</span>
     </div>
     <div class="ui attached segment">
       <div class="ui form">
@@ -31,16 +31,15 @@
             <input type="text" placeholder="ผู้ตรวจ" class="custom" name="userCheck" id="userCheck" [(ngModel)]="userCheck">
           </div>
         </div>
-        <table id="dataTable" class="ui small celled table">
+
+        <table id="dataTable" class="ui small celled table " style="width: 100%;">
           <thead>
             <tr>
               <th rowspan="2" style="text-align: center !important">ลำดับ</th>
               <th rowspan="2" style="text-align: center !important" class="four wide field ">โครงการตามยุทธศาสตร์</th>
               <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
               <th colspan="4" style="text-align: center !important">งบประมาณที่ใช้ตามแผนยุทธศาสตร์</th>
-              <th rowspan="2" style="text-align: center !important">เงินงบประมาณที่
-                <br/>กรมอนุมัติ
-              </th>
+              <th rowspan="2" style="text-align: center !important">เงินงบประมาณที่<br>กรมอนุมัติ</th>
               <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
             </tr>
             <tr>
@@ -53,6 +52,7 @@
             </tr>
           </thead>
         </table>
+
         <div class="inline fields"></div>
         <div class="inline fields ">
           <div class="sixteen wide field ">
@@ -62,12 +62,14 @@
               บันทึก
             </button>
             <button class="ui mini primary button" (click)="modalConditionRL()">
+             <i class="setting icon"></i>
               กำหนดเงื่อนไข RL
             </button>
             <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+            <i class="print icon"></i>
               Export
             </button>
-            <button class="ui mini primary button" (click)="cancelFlow()">
+            <button class="ui mini  button" (click)="cancelFlow()">
               ยกเลิก
             </button>
           </div>

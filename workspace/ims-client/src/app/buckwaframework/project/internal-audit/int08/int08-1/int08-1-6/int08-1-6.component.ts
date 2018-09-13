@@ -74,10 +74,13 @@ export class Int0816Component implements OnInit {
       this.riskHrdPaperName = this.riskAssRiskWsHdr.riskHrdPaperName;
       this.budgetYear = this.riskAssRiskWsHdr.budgetYear;
       this.userCheck = this.riskAssRiskWsHdr.userCheck;
+
+
       this.riskHrdData.riskHrdId = this.riskAssRiskWsHdr.riskHrdId;
       this.riskHrdData.riskHrdPaperName = this.riskHrdPaperName;
       this.riskHrdData.userCheck = this.userCheck;
       this.riskHrdData.budgetYear = this.budgetYear;
+
       url = "ia/int08/findRiskOtherDtlByRiskHrdId";
       this.ajax.post(url, { riskHrdId: this.id }, res => {
         // this.riskDataList
@@ -90,6 +93,9 @@ export class Int0816Component implements OnInit {
           riskData.departmentName = element.departmentName;
           riskData.projectBase = element.projectBase;
           riskData.riskCost = element.riskCost;
+          riskData.rl=element.rl;
+          riskData.valueTranslation=element.valueTranslation;
+          riskData.color=element.color;
           riskData.isDeleted = 'N';
           this.riskDataList.push(riskData);
 
@@ -158,17 +164,38 @@ export class Int0816Component implements OnInit {
           className: "center"
         },
         { data: "projectBase" },
-        { data: "departmentName", className: "center" },
-        { data: "riskCost", className: "right" },
-        { data: "rl", className: "center" },
-        { data: "valueTranslation", className: "center" },
+        { data: "departmentName"},
+        { data: "riskCost"},
+        { data: "rl" },
+        { data: "valueTranslation" },
         {
           data: "riskHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button del"><i class="pencil icon"></i> ลบ </button>';
+            return '<button type="button" class="ui mini button del"><i class="trash alternate icon"></i> ลบ </button>';
           }
         }
       ],
+      columnDefs: [
+        { targets: [0,2,4,5,6], className: "center aligned" },
+        { targets: [3], className: "right aligned" },
+        { targets: [1], className: "left aligned" }
+      ],
+      createdRow: function (row, data, dataIndex) {
+        console.log("row");
+        console.log("data", data.color);
+        console.log("dataIndex", dataIndex);
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(4)').addClass('bg-c-red');
+          $(row).find('td:eq(5)').addClass('bg-c-red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(4)').addClass('bg-c-green');
+          $(row).find('td:eq(5)').addClass('bg-c-green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(4)').addClass('bg-c-yellow');
+          $(row).find('td:eq(5)').addClass('bg-c-yellow');
+        }
+
+      },
       rowCallback: (row, data, index) => {
 
         $("td > .del", row).bind("click", () => {
@@ -335,6 +362,7 @@ class RiskData {
   riskCost: any = '';
   rl: any = '';
   valueTranslation: any = '';
+  color: any = '';
   riskOtherDtlId: any = 0;
   isDeleted: any = '';
 }
@@ -355,11 +383,3 @@ class File {
   value: any;
 }
 
-class Data {
-  companyName: any = "";
-  startDate: any = "";
-  endDate: any = "";
-  analysNumber: any = "";
-  startDateSplit: any = "";
-  endDateSplit: any = "";
-}
