@@ -13,8 +13,8 @@
                     </div>
                     <div class="six wide field">
                         <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
-                        <select class="ui dropdown ai" style="width: 100% !important" name="analysNumbers" id="analysNumbers" [(ngModel)]="analysNumber"
-                            (change)="selectAnalysNumbers()" *ngIf="analysNumberArr !== ''">
+                        <select class="ui dropdown ai" style="width: 100% !important" name="analysNumbers" id="analysNumbers"
+                            [(ngModel)]="analysNumber" (change)="selectAnalysNumbers()" *ngIf="analysNumberArr !== ''">
                             <option value="">ทั้งหมด</option>
                             <option *ngFor="let list of analysNumberArr">{{list}}</option>
                         </select>
@@ -51,7 +51,8 @@
                     <div class="fourteen wide field"></div>
                     <div class="two wide field">
                         <input type="hidden" id="exciseId" value="EX" />
-                        <button type="button" id="exciseBtn" style="margin-left: auto" class="ui mini primary button right floated" (click)="linkToDetail()">
+                        <button type="button" id="exciseBtn" style="margin-left: auto" class="ui mini primary button right floated"
+                            (click)="linkToDetail()">
                             <i class="add icon"></i>
                             เพิ่มข้อมูล
                         </button>
@@ -72,7 +73,8 @@
                         <div class="inline fields">
                             <div class="sixteen wide field">
                                 <label style="width: 5em;">ภาค</label>
-                                <select class="ui dropdown ai" style="width: 100% !important" name="sector" id="sector" (change)="changeSector()">
+                                <select class="ui dropdown ai" style="width: 100% !important" name="sector" id="sector"
+                                    (change)="changeSector()">
                                     <option value="">ทั้งหมด</option>
                                     <option *ngFor="let list of sectorArr">{{list.value1}}</option>
                                 </select>
@@ -85,7 +87,8 @@
                         <div class="inline fields">
                             <div class="sixteen wide field">
                                 <label style="width: 5em;">พิกัด</label>
-                                <select class="ui dropdown ai" style="width: 100% !important" name="coordinates" id="coordinates" (change)="changeCoordinates()">
+                                <select class="ui dropdown ai" style="width: 100% !important" name="coordinates" id="coordinates"
+                                    (change)="changeCoordinates()">
                                     <option value="">ทั้งหมด</option>
                                     <option *ngFor="let list of coordinatesArr">{{list.value1}}</option>
                                 </select>
@@ -103,14 +106,16 @@
                         </div>
                         <div class="item">
                             <div class="menu">
-                                <a class="item hover {{(flag == 'N' || flag == '') && 'active'}}" (click)="FlagN()">- รายที่ไม่อยู่ในเงื่อนไข</a>
-                                <a class="item hover {{flag == 'NOT N' && 'active'}}" (click)="FlagNotN()">- รายที่อยู่ในเงื่อนไข</a>
+                                <a class="item hover {{(flag == 'N' || flag == '') && 'active'}}" (click)="FlagN()">-
+                                    รายที่ไม่อยู่ในเงื่อนไข</a>
+                                <a class="item hover {{flag == 'NOT N' && 'active'}}" (click)="FlagNotN()">-
+                                    รายที่อยู่ในเงื่อนไข</a>
                             </div>
                         </div>
                         <div class="item">
                             <div class="menu">
                                 <a class="item" (click)="sendLineUserValues()" routerLink="/add-external-data/send-line-user">-
-                                    กดส่งรายให้ภาคพื้นที่</a>
+                                    ส่งรายให้ภาคพื้นที่/ส่วนกลาง</a>
                             </div>
                         </div>
                     </div>

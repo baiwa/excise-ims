@@ -263,11 +263,14 @@ public class PlanWorksheetHeaderDao {
 			valueList.add(vo.getSector());
 		}
 
-		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag())) {
+		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag()) && !"NOT N S".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
-		} else {
+		} else if("NOT N".equals(vo.getFlag())){
 			sql.append(" AND H.FLAG != 'N' ");
+		} else if("NOT N S".equals(vo.getFlag())) {
+			sql.append(" AND H.FLAG != 'N' ");
+			sql.append(" AND H.FLAG != 'S' ");
 		}
 
 		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2()) && BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
@@ -329,11 +332,14 @@ public class PlanWorksheetHeaderDao {
 			sql.append(" AND H.PRODUCT_TYPE = ? ");
 			valueList.add(vo.getProductType());
 		}
-		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag())) {
+		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag()) && !"NOT N S".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
-		} else {
+		} else if("NOT N".equals(vo.getFlag())){
 			sql.append(" AND H.FLAG != 'N' ");
+		} else if("NOT N S".equals(vo.getFlag())) {
+			sql.append(" AND H.FLAG != 'N' ");
+			sql.append(" AND H.FLAG != 's' ");
 		}
 		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2()) && BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
 			String[] monthFrom = vo.getNum1().split(",");

@@ -165,7 +165,7 @@ export class SendLineUserComponent implements OnInit {
         url: URL,
         data: {
           paging: false,
-          flag: "N",
+          flag: "NOT N S",
           productType: this.coordinates == undefined ? "" : this.coordinates,
           analysNumber: this.analysNumber,
           sector: this.sector
@@ -257,6 +257,7 @@ export class SendLineUserComponent implements OnInit {
             this.messageBarService.successModal(data.messageTh, "สำเร็จ");
             this.sendLineUser.destroy().draw();
             this.initDatatable();
+
           } else {
             this.messageBarService.errorModal(data.messageTh, "เกิดข้อผิดพลาด");
           }

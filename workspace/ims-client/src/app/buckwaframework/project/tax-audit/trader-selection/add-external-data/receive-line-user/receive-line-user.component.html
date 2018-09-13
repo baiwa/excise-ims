@@ -1,0 +1,87 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">เลือกรายเพื่อนตรวจสอบ</h2>
+
+    <div class="ui top attached header">
+      <span>เพิ่มข้อมูลภายนอก</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+
+          <div class="six wide field">
+            <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
+            <input value="{{analysNumber}}" readonly="" class="custom-readonly">
+          </div>
+        </div>
+
+
+
+
+
+      </div>
+    </div>
+
+    <div class="ui segment">
+      <div class="ui grid">
+        <div class="two wide column"></div>
+        <div class="seven wide column">
+          <div class="ui form">
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <label style="width: 5em;">ภาค</label>
+                <select class="ui dropdown ai" name="sector" id="sector" (change)="changeSector()">
+                  <option value="">ทั้งหมด</option>
+                  <option *ngFor="let list of sectorArr">{{list.value1}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="seven wide column">
+          <div class="ui form">
+            <div class="inline fields">
+              <div class="sixteen wide field">
+                <label style="width: 5em;">พิกัด</label>
+                <select class="ui dropdown ai" name="coordinates" id="coordinates" (change)="changeCoordinates()">
+                  <option value="">ทั้งหมด</option>
+                  <option *ngFor="let list of coordinatesArr">{{list.value1}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form ngNativeValidate (submit)="onSend($event)">
+        <div class="ui grid">
+          <div class="sixteen wide column">
+            <div style="overflow-x: scroll;overflow-y: hidden;padding-bottom: 14px;">
+              <table id="sendLineUser" class="ui small celled table aligned hover" style="width: 5000px;">
+                <thead id="trDrinamic">
+
+
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button type="submit" class="ui mini primary button">
+              <i class="save icon"></i>
+              ส่งข้อมูลให้กลับให้ สมฐ.
+            </button>
+            <button type="button" class="ui mini button" routerLink="/add-external-data">
+              <i class="refresh icon"></i>
+              ล้างข้อมูล
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
