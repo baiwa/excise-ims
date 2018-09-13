@@ -85,9 +85,6 @@ export class Int0822Component implements OnInit, AfterViewInit {
       pageLength: 10,
       processing: true,
       serverSide: true,
-      scrollY: true,
-      scrollX: true,
-      scrollCollapse: true,
       paging: true,
       ajax: {
         type: "POST",

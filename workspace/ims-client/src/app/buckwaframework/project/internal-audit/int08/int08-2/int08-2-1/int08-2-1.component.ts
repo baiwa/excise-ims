@@ -272,9 +272,7 @@ export class Int0821Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: false,
-      scrollY: true,
       scrollX: true,
-      scrollCollapse: true,
       paging: true,
       ajax: {
         type: "POST",
@@ -312,14 +310,14 @@ export class Int0821Component implements OnInit {
         console.log("data", data.valueTranslation);
         console.log("dataIndex", dataIndex);
         if (data.color == 'แดง') {
-          $(row).find('td:eq(15)').addClass('red');
-          $(row).find('td:eq(16)').addClass('red');
+          $(row).find('td:eq(15)').addClass('bg-c-red');
+          $(row).find('td:eq(16)').addClass('bg-c-red');
         } else if (data.color == 'เขียว') {
-          $(row).find('td:eq(15)').addClass('green');
-          $(row).find('td:eq(16)').addClass('green');
+          $(row).find('td:eq(15)').addClass('bg-c-green');
+          $(row).find('td:eq(16)').addClass('bg-c-green');
         } else if (data.color == 'เหลือง') {
-          $(row).find('td:eq(15)').addClass('yellow');
-          $(row).find('td:eq(16)').addClass('yellow');
+          $(row).find('td:eq(15)').addClass('bg-c-yellow');
+          $(row).find('td:eq(16)').addClass('bg-c-yellow');
         }
 
       },
@@ -364,7 +362,7 @@ export class Int0821Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: false,
-      scrollY: true,
+      scrollY:true,
       scrollX: true,
       scrollCollapse: true,
       paging: true,
@@ -383,8 +381,8 @@ export class Int0821Component implements OnInit {
         },
 
         { data: "infName" },
-        { data: "riskCost", className: "right" },
-        { data: "rl", className: "center" },
+        { data: "riskCost"},
+        { data: "rl" },
         { data: "valueTranslation", className: "center" },
 
 
@@ -394,20 +392,20 @@ export class Int0821Component implements OnInit {
         console.log("data", data.color);
         console.log("dataIndex", dataIndex);
         if (data.color == 'แดง') {
-          $(row).find('td:eq(3)').addClass('red');
-          $(row).find('td:eq(4)').addClass('red');
+          $(row).find('td:eq(3)').addClass('bg-c-red');
+          $(row).find('td:eq(4)').addClass('bg-c-red');
         } else if (data.color == 'เขียว') {
-          $(row).find('td:eq(3)').addClass('green');
-          $(row).find('td:eq(4)').addClass('green');
+          $(row).find('td:eq(3)').addClass('bg-c-green');
+          $(row).find('td:eq(4)').addClass('bg-c-green');
         } else if (data.color == 'เหลือง') {
-          $(row).find('td:eq(3)').addClass('yellow');
-          $(row).find('td:eq(4)').addClass('yellow');
+          $(row).find('td:eq(3)').addClass('bg-c-yellow');
+          $(row).find('td:eq(4)').addClass('bg-c-yellow');
         }
 
       },
       columnDefs: [
-        { targets: [0, 4], className: "center aligned" },
-        { targets: [2, 3], className: "right aligned" },
+        { targets: [0,3,4], className: "center aligned" },
+        { targets: [2], className: "right aligned" },
         { targets: [1], className: "left aligned" }
       ]
 
@@ -492,11 +490,11 @@ export class Int0821Component implements OnInit {
 
   getStyeClassByColor(color) {
     if (color == 'แดง') {
-      return 'red';
+      return 'bg-c-red';
     } else if (color == 'เขียว') {
-      return 'green';
+      return 'bg-c-green';
     } else if (color == 'เหลือง') {
-      return 'yellow';
+      return 'bg-c-yellow';
     }
   }
 

@@ -102,14 +102,14 @@ export class Int0823Component implements OnInit {
         console.log("data", data.valueTranslation);
         console.log("dataIndex", dataIndex);
         if (data.color == 'แดง') {
-          $(row).find('td:eq(15)').addClass('red');
-          $(row).find('td:eq(16)').addClass('red');
+          $(row).find('td:eq(15)').addClass('bg-c-red');
+          $(row).find('td:eq(16)').addClass('bg-c-red');
         } else if (data.color == 'เขียว') {
-          $(row).find('td:eq(15)').addClass('green');
-          $(row).find('td:eq(16)').addClass('green');
+          $(row).find('td:eq(15)').addClass('bg-c-green');
+          $(row).find('td:eq(16)').addClass('bg-c-green');
         } else if (data.color == 'เหลือง') {
-          $(row).find('td:eq(15)').addClass('yellow');
-          $(row).find('td:eq(16)').addClass('yellow');
+          $(row).find('td:eq(15)').addClass('bg-c-yellow');
+          $(row).find('td:eq(16)').addClass('bg-c-yellow');
         }
 
       },

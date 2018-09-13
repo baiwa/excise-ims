@@ -110,11 +110,11 @@ export class Int0825Component implements OnInit {
 
   getStyeClassByColor(color) {
     if (color == 'แดง') {
-      return 'red';
+      return 'bg-c-red';
     } else if (color == 'เขียว') {
-      return 'green';
+      return 'bg-c-green';
     } else if (color == 'เหลือง') {
-      return 'yellow';
+      return 'bg-c-yellow';
     }
   }
 

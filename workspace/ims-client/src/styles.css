@@ -137,3 +137,17 @@ img.image-width-18 {
     width: 50% !important;
 }
 /* Element Style */
+
+/* bg-condition */
+.bg-c-red {
+    background-color:#ef1410e3 !important;
+}
+
+.bg-c-yellow {
+    background-color:#f5f114 !important;
+}
+
+.bg-c-green {
+    background-color:#25ba21f5 !important;
+}
+/* !bg-condition */
