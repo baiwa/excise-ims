@@ -280,5 +280,32 @@ public class RiskAssRiskWsService {
 		riskAssRiskWsHdrRepository.save(riskWsHdr);
 	}
 			
+	
+	
+/*	searchRisk*/
+	 public ResponseDataTable<RiskAssRiskWsHdr> searchRiskCriteriaForDatatable(RiskAssRiskWsHdr riskAssRiskWsHdr, DataTableRequest dataTableRequest) {
+			ResponseDataTable<RiskAssRiskWsHdr> responseDataTable = new ResponseDataTable<RiskAssRiskWsHdr>();
+			List<RiskAssRiskWsHdr> riskAssInfHdrList = null;
+			if("0".equals(riskAssRiskWsHdr.getRiskHdrName())||"".equals(riskAssRiskWsHdr.getRiskHdrName())) {
+				riskAssInfHdrList = findByBudgetYearWsHdrActive(riskAssRiskWsHdr.getBudgetYear(),riskAssRiskWsHdr.getActive());
+			}else {
+				riskAssInfHdrList = findRiskByWsHdrActive(riskAssRiskWsHdr.getRiskHdrName(),riskAssRiskWsHdr.getBudgetYear(),riskAssRiskWsHdr.getActive());
+			}
+			
+			responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
+			responseDataTable.setData(riskAssInfHdrList);
+			responseDataTable.setRecordsTotal((int) riskAssInfHdrList.size());
+			responseDataTable.setRecordsFiltered((int) riskAssInfHdrList.size());
+			return responseDataTable;
 
+		}
+	 
+	public List<RiskAssRiskWsHdr> findByBudgetYearWsHdrActive(String year,String active ){	
+			return riskAssRiskWsHdrRepository.findByBudgetYearActive(year,active); 
+		}
+	
+	 public List<RiskAssRiskWsHdr> findRiskByWsHdrActive(String riskHdrName,String year,String active ){	
+			return riskAssRiskWsHdrRepository.findRiskByWsHdrActive(riskHdrName,year,active); 
+		}
+	
 }

@@ -29,34 +29,22 @@ export class Int0811Component implements OnInit {
   dataTableF2: any;
 
   active: any;
+  riskType: any;
   buttonFullYear: any;
   
   constructor(private router: Router,
     private ajax: AjaxService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
-    private _location: Location) {
-    this.data = [
-      "ประเมินความเสี่ยงโครงการ - งบประมาณ",
-      "ประเมินความเสี่ยงโครงการ - ประสิทธิภาพ",
-      "ประเมินความเสี่ยงโครงการ - รวม",
-      "ประเมินความเสี่ยงสารสนเทศ - จำนวนครั้งใช้งานไม่ได้",
-      "ประเมินความเสี่ยงสารสนเทศ - ร้อยละความเห็น",
-      "ประเมินความเสี่ยงภาคพื้นที่ - ความถี่การตรวจ",
-      "ประเมินความเสี่ยงภาคพื้นที่ - ผลการจัดเก็บรายได้",
-      "ประเมินความเสี่ยงภาคพื้นที่ - ผลการปราบปราม (ค่าปรับ)",
-      "ประเมินความเสี่ยงภาคพื้นที่ - ผลการปราบปราม (คดี)",
-      "ประเมินความเสี่ยงภาคพื้นที่ - ผลการปราบปราม (รวม)",
-      "ประเมินความเสี่ยงภาคพื้นที่ - การเงินและบัญชี",
-      "ประเมินความเสี่ยงภาคพื้นที่ - ควบคุมภายใน",
-      "ประเมินความเสี่ยงภาคพื้นที่ - รวม"
-    ];
-  }
+    ) {}
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
+
     this.budgetYear = this.route.snapshot.queryParams["budgetYear"];
+    this.riskType = this.route.snapshot.queryParams["riskType"];
+
     if (this.budgetYear == null || this.budgetYear == undefined) {
       this.budgetYear == 'xxxx';
     }
@@ -128,7 +116,10 @@ export class Int0811Component implements OnInit {
   }
 
   searchDataTable() {
+    this.riskType = $('#riskType').val();
     this.budgetYear = $('#budgetYear').val().trim();
+    console.log("riskType :" + this.riskType);
+
     if (this.budgetYear != null && this.budgetYear != undefined && this.budgetYear != '') {
       this.isSearch = true;
       this.initDatatable();
@@ -140,11 +131,11 @@ export class Int0811Component implements OnInit {
 
 
   initDatatable(): void {
-    console.log(55);
     if (this.datatable != null) {
       this.datatable.destroy();
     }
-    const URL = AjaxService.CONTEXT_PATH + "ia/int08/searchRiskAssRiskWsHdr";
+    // const URL = AjaxService.CONTEXT_PATH + "ia/int08/searchRiskAssRiskWsHdr";
+    const URL = AjaxService.CONTEXT_PATH + "ia/int08/searchRisk";
     console.log(URL);
     this.datatable = $("#dataTable").DataTable({
       lengthChange: false,
@@ -157,19 +148,10 @@ export class Int0811Component implements OnInit {
       ajax: {
         type: "POST",
         url: URL,
-        data: { budgetYear: this.budgetYear }
+        data: { riskHdrName: this.riskType,budgetYear: this.budgetYear, active: this.active }
       },
       columns: [
-        // {
-        //   data: "riskHrdId",
-        //   render: function (data, type, full, meta) {
-        //     return (
-        //       '<div class="ui checkbox tableDt"><input name="checkRiskHrdId" value="' +
-        //       data +
-        //       '" type="checkbox"><label></label></div>'
-        //     );
-        //   }
-        // },
+
         {
           render: function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;

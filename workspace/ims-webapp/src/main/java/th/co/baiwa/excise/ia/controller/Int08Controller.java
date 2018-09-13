@@ -24,6 +24,7 @@ import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.Int0801Vo;
 import th.co.baiwa.excise.domain.RiskFullDataVo;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
@@ -270,6 +271,17 @@ public class Int08Controller {
 		logger.info("riskHrdId ::"+riskAssRiskWsHdr.getRiskHrdId()+",active  ::"+riskAssRiskWsHdr.getActive());
 		riskAssRiskWsHdrService.updateStatusRisk(riskAssRiskWsHdr);
 
+	}
+	
+	@PostMapping("/searchRisk")
+	@ResponseBody
+	public ResponseDataTable<RiskAssRiskWsHdr> searchRisk(DataTableRequest dataTableRequest ,RiskAssRiskWsHdr riskAssRiskWsHdr) {
+		logger.info("searchRisk");
+		logger.info("WsHdrName : " + riskAssRiskWsHdr.getRiskHdrName());
+		logger.info("BuggetYear : " + riskAssRiskWsHdr.getBudgetYear());
+		logger.info("Active : " + riskAssRiskWsHdr.getActive());
+		return riskAssRiskWsHdrService.searchRiskCriteriaForDatatable(riskAssRiskWsHdr, dataTableRequest);
+	
 	}
 
 }

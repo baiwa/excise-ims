@@ -15,4 +15,10 @@ public interface RiskAssRiskWsHdrRepository extends CommonJpaCrudRepository<Risk
 	@Query("SELECT r FROM RiskAssRiskWsHdr r WHERE r.isDeleted = '"+FLAG.N_FLAG+"' AND r.budgetYear =  ?1")
 	public List<RiskAssRiskWsHdr> findByBudgetYear(String budgetYear);
 	
+	@Query("SELECT r FROM RiskAssRiskWsHdr r WHERE r.isDeleted = '"+FLAG.N_FLAG+"' AND r.budgetYear =  ?1 AND r.active = ?2")
+	public List<RiskAssRiskWsHdr> findByBudgetYearActive(String budgetYear , String active);
+	
+	@Query("SELECT r FROM RiskAssRiskWsHdr r WHERE r.isDeleted = '"+FLAG.N_FLAG+"' AND r.riskHdrName =  ?1 AND r.budgetYear =  ?2 AND r.active = ?3")
+	public List<RiskAssRiskWsHdr> findRiskByWsHdrActive(String riskHdrName,String budgetYear , String active);
+	
 }
