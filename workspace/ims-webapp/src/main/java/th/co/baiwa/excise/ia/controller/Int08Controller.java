@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +26,6 @@ import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.Int0801Vo;
 import th.co.baiwa.excise.domain.RiskFullDataVo;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
-import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
@@ -284,4 +285,12 @@ public class Int08Controller {
 	
 	}
 
+	@GetMapping("/exportWsOtherDtl")
+	@ResponseBody
+	public  void exportInfOtherDtl(@ModelAttribute RiskAssOtherDtl riskAssOtherDtl, HttpServletResponse response) throws Exception {
+		logger.info("id :" + riskAssOtherDtl.getRiskHrdId());
+		riskAssRiskWsHdrService.exportWsOtherDtl(riskAssOtherDtl, response);
+
+	}
+	
 }

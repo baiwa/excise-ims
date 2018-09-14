@@ -154,7 +154,7 @@ export class Int0816Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: false,
-      paging: false,
+      paging: true,
       data: this.dataTableList,
       columns: [
         {
@@ -351,6 +351,13 @@ export class Int0816Component implements OnInit {
 
   closeConditionRL(e) {
     this.isConditionShow = false;
+  }
+
+  ExportOtherDtl() {
+    const URL = "ia/int08/exportWsOtherDtl?riskHrdId=" + this.id;
+    console.log("id", this.id);
+    this.ajax.download(URL);
+ 
   }
 
 }
