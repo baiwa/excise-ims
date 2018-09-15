@@ -18,6 +18,7 @@ export class ConditionComponent implements OnInit {
   @Input() riskType: any;
   @Input() page: any;
   @Output() out: EventEmitter<number> = new EventEmitter<number>();
+  @Output() has: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private messageBarService: MessageBarService,
     private ajax: AjaxService,
@@ -29,6 +30,11 @@ export class ConditionComponent implements OnInit {
     var url = "ia/condition/findConditionByParentId";
     this.ajax.post(url, { parentId: this.riskId, riskType: this.riskType, page: this.page }, res => {
       var data = res.json();
+      if (data.length > 0) {
+        this.has.emit(true);
+      } else {
+        this.has.emit(false);
+      }
       data.forEach(element => {
         this.datas.push(element);
       });
@@ -91,6 +97,7 @@ export class ConditionComponent implements OnInit {
       });
       this.ajax.post(url, { condition: data }, res => {
         this.messageBarService.successModal("ดำเนินการเพิ่มเงือนใขสำเร็จ");
+        this.has.emit(true);
         this.out.emit(this.riskId);
       });
     }

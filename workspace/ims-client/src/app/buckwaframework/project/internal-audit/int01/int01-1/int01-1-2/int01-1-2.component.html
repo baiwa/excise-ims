@@ -1,23 +1,24 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
     <div class="sixteen wide column">
 
         <div class="ui top attached text-center header">
-            <h3>เพิ่มเลขแบบพิมพ์</h3>
+            <h4>เพิ่มเลขแบบพิมพ์</h4>
         </div>
 
         <div class="ui bottom attached segment">
             <div class="ui centered grid">
                 <div class="fourteen wide column">
-                    <form class="ui form" (submit)="add($event)">
+                    <form class="ui form" (submit)="add(f)" #f="ngForm">
                         <div class="inline fields">
                             <div class="two wide field">
                                 <label class="full-width text-right">
                                     เลขที่ใบอนุญาต
                                 </label>
                             </div>
-                            <div class="three wide field">
+                            <div class="three wide field {{f.submitted && f.controls.permit_no.invalid ? 'error' : ''}}">
                                 <div class="ui input">
-                                    <input type="text" name="permit_no" class="full-width">
+                                    <input type="text" name="permit_no" class="full-width" ngModel required>
                                 </div>
                             </div>
                             <div class="two wide field">
@@ -25,9 +26,9 @@
                                     เลขที่แบบพิมพ์
                                 </label>
                             </div>
-                            <div class="three wide field">
+                            <div class="three wide field {{f.submitted && f.controls.print_no.invalid ? 'error' : ''}}">
                                 <div class="ui input">
-                                    <input type="text" name="print_no" class="full-width">
+                                    <input type="text" name="print_no" class="full-width" ngModel required>
                                 </div>
                             </div>
                             <div class="two wide field">
@@ -35,13 +36,13 @@
                                     จำนวนเงิน
                                 </label>
                             </div>
-                            <div class="three wide field">
+                            <div class="three wide field {{f.submitted && f.controls.amount.invalid ? 'error' : ''}}">
                                 <div class="ui input">
-                                    <input type="text" name="amount" class="full-width">
+                                    <input type="text" name="amount" class="full-width" ngModel required>
                                 </div>
                             </div>
                             <div class="one wide field">
-                                <button class="ui primary button" type="submit">
+                                <button class="ui mini primary button" type="submit">
                                     เพิ่ม
                                 </button>
                             </div>
@@ -51,9 +52,6 @@
             </div>
         </div>
 
-    </div>
-
-    <div class="sixteen wide column">
         <div class="ui top attached segment">
             <div class="ui right aligned grid">
                 <div class="sixteen wide column">
@@ -937,18 +935,13 @@
                         </tfoot>
                     </table>
                 </div>
-            </div>
-        </div>
-        <div class="ui bottom attached segment">
-            <div class="ui form">
-                <div class="ui center aligned grid">
-                    <div class="eight wide column">
-                        <a class="ui mini button widtd-100" routerLink='/int01/1/1'>
-                            <i class="arrow left icon"></i>กลับ
-                        </a>
-                    </div>
+                <div class="sixteen wide center aligned column">
+                    <a class="ui mini button widtd-100" routerLink='/int01/1/1'>
+                        <i class="arrow left icon"></i>กลับ
+                    </a>
                 </div>
             </div>
         </div>
+
     </div>
 </div>

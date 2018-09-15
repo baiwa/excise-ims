@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { DialogService, IaService, MessageBarService, AjaxService, AuthService } from "../../../../common/services";
 import { Headers } from "@angular/http";
 import { toFormData } from "../../../../common/helper";
-import { BaseModel, ManageReq, TableReq } from "../../../../common/models";
+import { BaseModel, ManageReq, TableReq, BreadCrumb } from "../../../../common/models";
 
 declare var $: any;
 
@@ -26,6 +26,9 @@ const URL = {
   styleUrls: ["./int02-2.component.css"]
 })
 export class Int022Component implements OnInit {
+  RISK_TYPE: string = "QTN_MASTER";
+  PAGE: string = "int02-2";
+
   departmentNameArr: any = "";
   departmentNameNew: any = "";
   departmentName: any;
@@ -40,7 +43,12 @@ export class Int022Component implements OnInit {
   id: any;
   private saving: boolean = false;
   private unsave: boolean = false;
+  private rl: boolean = false;
   private finished: boolean = false;
+  breadcrumb: BreadCrumb[];
+  toggleRL: boolean = false;
+  rlLen: number = 0;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -50,6 +58,13 @@ export class Int022Component implements OnInit {
     private iaService: IaService,
     private auth: AuthService
   ) {
+
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "แบบสอบทานระบบการควบคุมภายใน", route: "#" },
+      { label: "สร้างแบบสอบทานระบบการควบคุมภายใน", route: "int01/1" },
+      { label: "เพิ่มด้านแบบสอบทาน", route: "#" },
+    ];
 
     for (let i = 0; i < 3; i++) {
       this.datas.push(new Condition());
@@ -94,6 +109,16 @@ export class Int022Component implements OnInit {
       this.ajax.get(`${URL.FIND_MASTER}/${this.qtnMasterId}`, res => {
         this.finished = true; // can click saved() `send questionaire`
         this.qtnMaster = res.json();
+        var url = "ia/condition/findConditionByParentId";
+        this.ajax.post(url, { parentId: this.qtnMasterId, riskType: this.RISK_TYPE, page: this.PAGE }, res => {
+          var data = res.json();
+          if (data != undefined && data.length > 0) {
+            this.rlLen = data.length;
+            this.rl = true;
+          } else {
+            this.rl = false;
+          }
+        });
       });
     } else {
       this.unsave = true;
@@ -312,6 +337,28 @@ export class Int022Component implements OnInit {
 
   notNullDepartment(): boolean {
     return !this.isNotNull(this.departmentName) && !this.isNotNull(this.departmentNameNew);
+  }
+
+  setRL(e) {
+    if (e == 0) {
+      this.toggleRL = true;
+    } else {
+      this.toggleRL = false;
+    }
+  }
+
+  chkRL(e) {
+    this.rl = e;
+    var url = "ia/condition/findConditionByParentId";
+    this.ajax.post(url, { parentId: this.qtnMasterId, riskType: this.RISK_TYPE, page: this.PAGE }, res => {
+      var data = res.json();
+      if (data != undefined && data.length > 0) {
+        this.rlLen = data.length;
+        this.rl = true;
+      } else {
+        this.rl = false;
+      }
+    });
   }
 
   pageChange(e) {

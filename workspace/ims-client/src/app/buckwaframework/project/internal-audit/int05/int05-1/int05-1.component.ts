@@ -2,7 +2,7 @@ import { MessageBarService } from 'app/buckwaframework/common/services';
 import { formatter, TextDateTH } from './../../../../common/helper/datepicker';
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../../../../common/services';
-import { BreadCrump } from '../../../../common/models';
+import { BreadCrumb } from '../../../../common/models';
 
 declare var $: any;
 @Component({
@@ -18,11 +18,11 @@ export class Int051Component implements OnInit {
   $form: any;
   formModal: FormModal = new FormModal();
   listFileName: any;
-  breadcrump: BreadCrump[];
+  breadcrumb: BreadCrumb[];
   constructor(
     private ajax: AjaxService,
     private message: MessageBarService) {
-    this.breadcrump = [
+    this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "/home" },
       { label: "ตรวจสอบพัสดุ", route: "#" },
       { label: "ตรวจสอบพัสดุภาคพื้นที่", route: "#" }
@@ -31,7 +31,6 @@ export class Int051Component implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.breadcrump);
     this.$form = $("#formSearch");
     $(".ui.dropdown.ai").dropdown().css('width', '100%');
     this.sectorDropdown();

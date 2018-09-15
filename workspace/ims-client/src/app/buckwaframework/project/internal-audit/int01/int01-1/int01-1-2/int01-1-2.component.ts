@@ -1,4 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { BreadCrumb } from "../../../../../common/models";
+import { NgForm } from "@angular/forms";
 
 declare var $: any;
 
@@ -12,10 +14,20 @@ export class Int0112Component implements OnInit {
   private productList: any[];
   private printMonthList: any[];
   private showData: boolean = false;
-
   private selectedProduct: string = "เครื่องดื่ม";
 
-  constructor() {}
+  breadcrumb: BreadCrumb[];
+
+  @ViewChild('f') form: NgForm;
+
+  constructor() {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบพัสดุ", route: "#" },
+      { label: "ตรวจสอบพัสดุภาคพื้นที่", route: "int01/1/1" },
+      { label: "เพิ่มเลขแบบพิมพ์", route: "#" }
+    ];
+  }
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
@@ -62,8 +74,10 @@ export class Int0112Component implements OnInit {
     this.showData = false;
   }
 
-  add(event) {
-    console.log(event);
+  add(form: NgForm) {
+    if (form.valid) {
+      const { amount, permit_no, print_no } = form.controls;
+    }
   }
 
 }

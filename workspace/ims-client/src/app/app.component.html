@@ -249,7 +249,7 @@
         ระบบบริหารและควบคุม
         <i class="dropdown icon "></i>
         <div class="menu ">
-            <a class="item " [routerLink]="[ '/mgcontrol'] " routerLinkActive="active ">dashboard</a>
+            <a class="item " [routerLink]="[ '/mgcontrol'] " routerLinkActive="active ">ข้อมูลทางสารสนเทศ</a>
             <a class="item " [routerLink]="[ '/mgReportResult'] " routerLinkActive="active ">รายงานผลการออกตรวจ</a>
             <div class="ui dropdown item " routerLinkActive="active ">
                 <i class="dropdown icon "></i> รายงานผลการตรวจ
@@ -265,19 +265,19 @@
         </div>
     </div>
     <div class="ui simple dropdown item " *ngIf="authService.renderByPage('admin')" style=" color:White ">
-        Administrator
+        ผู้ดูแลระบบ
         <i class="dropdown icon "></i>
         <div class="menu ">
-            <a class="item " [routerLink]="[ '/message'] " routerLinkActive="active ">Message</a>
-            <a class="item " [routerLink]="[ '/parameterGroup'] " routerLinkActive="active ">Parameter</a>
-            <a class="item " [routerLink]="[ '/userManagement'] " routerLinkActive="active ">UserManamgement</a>
+            <a class="item " [routerLink]="[ '/message'] " routerLinkActive="active ">ข้อความ</a>
+            <a class="item " [routerLink]="[ '/parameterGroup'] " routerLinkActive="active ">ข้อความระบบ</a>
+            <a class="item " [routerLink]="[ '/userManagement'] " routerLinkActive="active ">จัดการผู้ใช้</a>
         </div>
     </div>
 
     <div class="right menu ">
         <a class="item " *ngIf="!authService.getLogin() " style="color:white; " [routerLink]="[ '/login'] ">เข้าสู่ระบบ</a>
         <div class="item " *ngIf="authService.getLogin() " style=" color:White ">{{authService.getUser().username}}</div>
-        <a class="item " *ngIf="authService.getLogin() " (click)="logout() " style=" color:White ">Logout</a>
+        <a class="item " *ngIf="authService.getLogin() " (click)="logout() " style=" color:White ">ออกจากระบบ</a>
     </div>
 </div>
 <div class="ui tiny test modal transition hidden baiwa-alert" style="height: 0;">
@@ -324,7 +324,7 @@
 </div>
 
 <div class="ui main {{loading ? 'blurring' : ''}} container-fluid ">
-    <div class="ui active inverted dimmer " style="margin-top: 5em; " *ngIf="loading ">
+    <div class="ui active inverted dimmer " *ngIf="loading ">
         <div class="ui text loader ">กำลังโหลด...</div>
     </div>
     <message-bar></message-bar>

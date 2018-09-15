@@ -4,7 +4,7 @@ import { TextDateTH, formatter } from "../../../../../common/helper";
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { toDateLocale, digit } from "../../../../../common/helper/datepicker";
-import { BreadCrump } from "../../../../../common/models";
+import { BreadCrumb } from "../../../../../common/models";
 declare var $: any;
 
 const URL = {
@@ -27,10 +27,10 @@ export class Int0111Component implements OnInit {
   travelTo1List: any;
   travelTo2List: any;
   travelTo3List: any;
-  breadcrump: BreadCrump[];
+  breadcrumb: BreadCrumb[];
 
   constructor(private ajax: AjaxService, private router: Router) {
-    this.breadcrump = [
+    this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบพัสดุ", route: "#" },
       { label: "ตรวจสอบพัสดุภาคพื้นที่", route: "#" }

@@ -6,7 +6,7 @@ import { Int051Component } from './int05-1.component';
 
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../../../common/services';
-import { BreadcrumbComponent } from 'app/buckwaframework/common/components/breadcrumb/breadcrumb.component';
+import { BreadcrumbModule } from '../../../../common/components';
 
 
 const routes: Routes = [
@@ -17,13 +17,12 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    CommonModule,  
-    FormsModule  
+    CommonModule,
+    FormsModule,
+    BreadcrumbModule
   ],
   declarations: [
-    Int051Component,
-    BreadcrumbComponent
-    
+    Int051Component
   ],
   exports: [RouterModule]
 })

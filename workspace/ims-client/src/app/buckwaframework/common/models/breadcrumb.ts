@@ -1,4 +1,4 @@
-export class BreadCrump {
+export class BreadCrumb {
     label: string;
     route: string;
 }

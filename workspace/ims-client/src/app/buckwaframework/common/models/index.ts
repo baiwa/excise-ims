@@ -14,7 +14,7 @@ import { Contract } from "./contract";
 import { BaseModel } from "./base";
 import { ManageReq } from "./request";
 import { TableReq } from "./table";
-import { BreadCrump } from "./breadcrump";
+import { BreadCrumb } from "./breadcrumb";
 
 export {
   AlertMessage,
@@ -33,5 +33,5 @@ export {
   BaseModel,
   ManageReq,
   TableReq,
-  BreadCrump
+  BreadCrumb
 };

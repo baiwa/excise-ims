@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { MessageBarService } from "../../../../common/services/message-bar.service";
 
 import { AjaxService } from "../../../../common/services/ajax.service";
-import { BaseModel, ManageReq } from '../../../../common/models';
+import { BaseModel, ManageReq, BreadCrumb } from '../../../../common/models';
 import { toFormData } from '../../../../common/helper';
 import { Headers } from '@angular/http';
 import { DialogService } from '../../../../common/services';
 import { Observable } from '../../../../../../../node_modules/rxjs';
+import { Location } from '@angular/common';
+import { NgForm } from '@angular/forms';
 declare var $: any;
 
 const URL = {
@@ -24,6 +26,7 @@ const URL = {
   styleUrls: ["./int02-3.component.css"]
 })
 export class Int023Component implements OnInit {
+  @ViewChild("m") mform: NgForm;
 
   // Service Details
   minorDetail: string[] = [""];
@@ -49,6 +52,11 @@ export class Int023Component implements OnInit {
   // Table
   dt1: any;
   dt2: any;
+  // BreadCrumb
+  breadcrumb: BreadCrumb[];
+  // 
+  toggleRL: boolean = false;
+  rl: boolean = false;
 
   constructor(
     private ajax: AjaxService,
@@ -56,8 +64,18 @@ export class Int023Component implements OnInit {
     private route: ActivatedRoute,
     private msg: MessageBarService,
     private dialog: DialogService,
-    private message: MessageBarService
+    private message: MessageBarService,
+    private _location: Location
   ) {
+
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "แบบสอบทานระบบการควบคุมภายใน", route: "#" },
+      { label: "สร้างแบบสอบทานระบบการควบคุมภายใน", route: "int01/1" },
+      { label: "เพิ่ม/แก้ไข ด้านแบบสอบทาน", route: "#" },
+      { label: "เพิ่ม/แก้ไข รายละเอียดแบบสอบทาน", route: "#" },
+    ];
+
     for (let i = 0; i < 3; i++) {
       this.cond.push(new Condition());
     }
@@ -88,7 +106,7 @@ export class Int023Component implements OnInit {
     // ID from url
     this.headerId = this.route.snapshot.queryParams["id"];
     this._initialTable();
-    this.initialTable();  
+    this.initialTable();
   }
 
   canDeactivate(): Observable<boolean> | boolean {
@@ -148,7 +166,7 @@ export class Int023Component implements OnInit {
         if (this.table.findIndex(obj => obj.qtnReportHdrId == data.qtnReportHdrId && obj.qtnReportManId == data.qtnReportManId) == -1) {
           this.table.push(qtn);
         }
-        data.detail.forEach((obj,index) => {
+        data.detail.forEach((obj, index) => {
           let qtn = new Int023FormVo();
           qtn.qtnReportManId = data.qtnReportManId;
           qtn.qtnReportDtlId = obj.qtnReportDtlId;
@@ -341,6 +359,7 @@ export class Int023Component implements OnInit {
       } else {
         this.chk1[j].qtnFor = "D";
       }
+      $(`#chk1-${j}`).prop('checked', false);
       this.chk1[j].status = "NEW";
       this.table.push(this.chk1[j]);
       if (j == this.chk1.length - 1) {
@@ -357,6 +376,61 @@ export class Int023Component implements OnInit {
     }
   }
 
+  edit(id: any, str: string): void {
+    this.mform.controls.msgType.setValue(str);
+    switch (str) {
+      case 'dtl':
+        // TODO
+        $("#int02-3").modal('show');
+        this.table.forEach(each => {
+          if (each.qtnReportDtlId == id) {
+            this.mform.controls.msg.setValue(each.qtnMainDetail);
+            this.mform.controls.msgId.setValue(each.qtnReportDtlId);
+          }
+        });
+        break;
+      case 'man':
+        // TODO
+        $("#int02-3").modal('show');
+        this.table.forEach(each => {
+          if (each.qtnReportManId == id) {
+            this.mform.controls.msg.setValue(each.qtnMainDetail);
+            this.mform.controls.msgId.setValue(each.qtnReportManId);
+          }
+        });
+        break;
+    }
+  }
+
+  saveMsg(m: NgForm) {
+    if (m.submitted && m.valid) {
+      const { msgType, msgId, msg } = m.controls;
+      switch (msgType.value) {
+        case 'dtl':
+          this.table.forEach(each => {
+            if (each.qtnReportDtlId == msgId.value) {
+              each.qtnMainDetail = msg.value;
+            }
+          });
+          $('#int02-3').modal('hide');
+          break;
+        case 'man':
+          this.table.forEach(each => {
+            if (each.qtnReportManId == msgId.value) {
+              each.qtnMainDetail = msg.value;
+            }
+          });
+          $('#int02-3').modal('hide');
+          break;
+      }
+    }
+  }
+
+  exit(): void {
+    $('#int02-3').modal('hide');
+    this.mform.reset('submitted');
+  }
+
   addCond() {
     this.cond.length < 5 && this.cond.push(new Condition());
   }
@@ -367,6 +441,22 @@ export class Int023Component implements OnInit {
 
   getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  setRL(e) {
+    if (e == 0) {
+      this.toggleRL = true;
+    } else {
+      this.toggleRL = false;
+    }
+  }
+
+  chkRL(e) {
+    this.rl = e;
+  }
+
+  onCancel() {
+    this._location.back();
   }
 
 }

@@ -11,5 +11,6 @@ const URL = {
 
 @Injectable()
 export class Int02Service {
+    int023: any;
     constructor(private ajax: AjaxService, private ia: IaService) { }
 }

@@ -1,11 +1,9 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div id="int02-2" class="ui grid">
   <div class="sixteen wide column">
-
-    <h2 class="ui header">ตรวจสอบภายใน</h2>
     <div class="ui top attached header">
       <span>แบบสอบทานระบบการควบคุมภายใน</span>
     </div>
-
     <div class="ui bottom attached segment">
       <form class="ui form" (submit)="onAdd($event)" ngNativeValidate>
         <div class="inline three fields">
@@ -19,8 +17,8 @@
           </div>
           <div class="field">
             <label>ด้านที่ตรวจ (ใหม่)</label>
-            <input type="text" style="width: 100%" placeholder="หน่วยรับตรวจ" name="departmentNameNew" id="departmentNameNew" (keyup)="setDepartmentName('new')"
-              [(ngModel)]="departmentNameNew">
+            <input type="text" style="width: 100%" placeholder="หน่วยรับตรวจ" name="departmentNameNew" id="departmentNameNew"
+              (keyup)="setDepartmentName('new')" [(ngModel)]="departmentNameNew">
           </div>
           <div class="field">
             <label></label>
@@ -29,17 +27,10 @@
                 <i class="add icon"></i>
                 เพิ่ม
               </button>
-              <button type="button" style="margin-left: auto;" class="ui mini {{ chk.length == 0 && 'disabled' }} red button" (click)="onDelete()">
-                <i class="delete icon"></i>
-                ลบ
-              </button>
             </div>
           </div>
         </div>
       </form>
-    </div>
-
-    <div class="ui segment dimmable">
       <div class="ui grid">
         <div class="sixteen wide column">
           <table id="datatable" class="ui celled table">
@@ -95,34 +86,39 @@
             </tfoot>
           </table>
         </div>
-      </div>
-    </div>
-
-    <div class="ui segment" *ngIf="qtnMasterId">
-      <div class="ui grid">
-        <div class="sixteen wide column">
-          <condition class="ui form" [riskId]="qtnMasterId" [riskType]="'QTN_MASTER'" [page]="'int02-2'"></condition>
+        <div class="sixteen wide center aligned column">
+          <button class="ui primary {{ saving && 'loading' }} mini button {{!unsave && 'disabled'}} " type="button"
+            (click)="onSave()">
+            บันทึก
+          </button>
+          <button type="button" style="margin-left: auto;" class="ui mini {{ chk.length == 0 && 'disabled' }} red button"
+            (click)="onDelete()">
+            <i class="delete icon"></i>
+            ลบ
+          </button>
+          <button type="button" (click)="setRL(0)" class="ui mini primary button {{rl && rlLen > 0 ? 'disabled' : ''}}">
+            <i class="setting icon"></i>
+            กำหนดเงื่อนไข RL
+          </button>
+          <button type="button" style="margin-left: auto" (click)="onSaved()" class="ui mini green button {{(!finished && !rl && rlLen == 0)|| unsave || datatable == undefined || datatable.length == 0 ? 'disabled' : ''}} ">
+            <i class="save icon"></i>
+            ส่งแบบสอบทาน
+          </button>
+          <button type="button" (click)="onCancel()" style="margin-left: auto" class="ui mini button">
+            ยกเลิก
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="ui grid">
-      <div class="sixteen wide column">
-        <div class="ui centered grid inline fields" style="padding: 1em 0">
-          <div class="ui mini buttons">
-            <button type="button" (click)="onCancel()" style="margin-left: auto" class="ui mini grey button center floated">
-              <i class="angle left icon"></i>
-              กลับ
-            </button>
-            <button class="ui primary {{ saving && 'loading' }} mini button {{!unsave && 'disabled'}} " type="button" (click)="onSave()">บันทึก</button>
-            <button type="button" style="margin-left: auto" (click)="onSaved()" class="ui mini green button center floated {{(!finished && !unsave) ? 'disabled' : ''}} ">
-              <i class="save icon"></i>
-              ส่งแบบสอบทาน
-            </button>
-          </div>
-        </div>
-      </div>
+  <div class="sixteen wide column" *ngIf="toggleRL">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
     </div>
-
+    <div class="ui attached segment">
+      <condition class="ui form" (has)="chkRL($event)" (out)="setRL($event)" [riskId]="qtnMasterId" [riskType]="RISK_TYPE"
+        [page]="PAGE"></condition>
+    </div>
   </div>
 </div>

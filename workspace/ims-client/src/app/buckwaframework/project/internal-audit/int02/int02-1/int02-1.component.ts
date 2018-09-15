@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { toDateLocale } from '../../../../common/helper/datepicker';
 import { Int02Service } from '../int02.service';
+import { BreadCrumb } from '../../../../common/models';
 
 declare var $: any;
 
@@ -28,11 +29,16 @@ export class Int021Component implements OnInit {
   qtnName: string;
   qtnYear: string;
   typeOfSubmit: string;
-
+  breadcrumb: BreadCrumb[];
   constructor(private ajax: AjaxService, private router: Router, private iaService: IaService, private int02: Int02Service) {
     this.typeOfSubmit = null;
     this.qtnName = null;
     this.qtnYear = null;
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "แบบสอบทานระบบการควบคุมภายใน", route: "#" },
+      { label: "สร้างแบบแสอบทานระบบการควบคุมภายใน", route: "#" }
+    ];
   }
 
   ngOnInit() {

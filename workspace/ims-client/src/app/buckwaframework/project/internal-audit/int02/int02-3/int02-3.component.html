@@ -1,6 +1,6 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
   <div class="sixteen wide column">
-    <h2 class="ui header">แบบสอบทานระบบการควบคุมภายใน</h2>
     <div class="ui segment">
       <div class="ui grid">
         <div class="sixteen wide column">
@@ -49,6 +49,12 @@
               </table>
             </div>
           </div>
+        </div>
+        <div class="sixteen wide center aligned column">
+          <button type="button" (click)="onAdd2SaveList()" class="ui mini primary button">
+            <i class="save icon"></i>
+            เพิ่ม
+          </button>
         </div>
       </div>
     </div>
@@ -99,7 +105,7 @@
             <div class="ui center aligned grid btn">
               <button type="submit" class="ui mini primary button">
                 <i class="save icon"></i>
-                เพิ่มข้อหลัก
+                เพิ่ม
               </button>
             </div>
           </div>
@@ -111,25 +117,6 @@
       <div class="ui centered grid">
         <div class="sixteen wide column">
           <label>รายละเอียดแบบสอบทาน (ใหม่)</label>
-          <!-- <table id="datatable2" class="ui small celled table aligned hover">
-            <thead>
-              <tr>
-                <th style="text-align: left !important ;width: 5%">
-                  <input type="checkbox" name="chk2" id="chk2" (click)="chkAll($event,'table', 2)">
-                </th>
-                <th style="text-align: center !important ;width: 95%">รายการ</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let t of table; let i = index">
-                <td>
-                  <input type="checkbox" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="t.qtnReportHdrId" (change)="chck(t.qtnReportManId, 'man', $event, 2, 'table')">
-                  <input type="checkbox" style="margin-left: 2em" id="chk2-{{i}}" name="chk2-{{i}}" *ngIf="!t.qtnReportHdrId" (change)="chck(t.qtnReportDtlId, 'dtl', $event, 2, 'table')">
-                </td>
-                <td>{{t.qtnMainDetail}}</td>
-              </tr>
-            </tbody>
-          </table> -->
           <div class="dataTables_scroll">
             <div class="dataTables_scrollHead" style="overflow: hidden; position: relative; border: 0px; width: 100%;">
               <div class="dataTables_scrollHeadInner" style="box-sizing: content-box; width: 100%; padding-right: 0px;">
@@ -142,7 +129,8 @@
                           <label></label>
                         </div>
                       </th>
-                      <th style="text-align: center !important ;width: 92%">รายการ</th>
+                      <th style="text-align: center !important ;width: 92%;" colspan="2">รายการ</th>
+                      <th style="text-align: center !important ;width: 48px; display: none">&nbsp;</th>
                     </tr>
                   </thead>
                 </table>
@@ -153,7 +141,8 @@
                 <thead>
                   <tr>
                     <th style="text-align: left !important ;width: 8%;display: none"></th>
-                    <th style="text-align: left !important ;width: 92%;display: none"></th>
+                    <th style="text-align: left !important ;width: 92%;display: none" colspan="2"></th>
+                    <th style="text-align: center !important ;width: 48px;display: none">&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -169,6 +158,14 @@
                       </div>
                     </td>
                     <td style="width: 92%;">{{t.qtnMainDetail}}</td>
+                    <td style="width: 48px">
+                      <button class="ui mini icon button" type="button" *ngIf="t.qtnReportHdrId" (click)="edit(t.qtnReportManId, 'man')">
+                        <i class="edit icon"></i>
+                      </button>
+                      <button class="ui mini icon button" type="button" *ngIf="!t.qtnReportHdrId" (click)="edit(t.qtnReportDtlId, 'dtl')">
+                        <i class="edit icon"></i>
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -176,8 +173,19 @@
           </div>
         </div>
         <div class="sixteen wide center aligned column">
+          <button type="button" (click)="onSave()" class="ui mini primary {{ !unsave() ? 'disabled' : '' }} button">
+            <i class="save icon"></i>
+            บันทึก
+          </button>
+          <button type="button" (click)="setRL(0)" class="ui mini primary button {{rl ? 'disabled' : ''}}">
+            <i class="setting icon"></i>
+            กำหนดเงื่อนไข RL
+          </button>
           <button type="button" (click)="delete()" class="ui red {{ chk2.length==0 ? 'disabled' : ''}} mini button">
             <i class="trash icon"></i> ลบ
+          </button>
+          <button type="button" (click)="onCancel()" class="ui mini button">
+            ยกเลิก
           </button>
         </div>
       </div>
@@ -185,18 +193,50 @@
 
   </div>
 </div>
-<div class="ui segment">
-  <div class="ui grid">
-    <div class="sixteen wide column">
-      <condition class="ui form" [riskId]="headerId" [riskType]="'QTN_HEADER'" [page]="'int02-3'"></condition>
-    </div>
+<div class="sixteen wide column" *ngIf="toggleRL">
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
+  </div>
+  <div class="ui attached segment">
+    <condition class="ui form" (has)="chkRL($event)" (out)="setRL($event)" [riskId]="headerId" [riskType]="'QTN_HEADER'"
+      [page]="'int02-3'"></condition>
   </div>
 </div>
-<div class="ui center aligned grid">
-  <div class="sixteen wide column">
-    <button type="button" (click)="onSave()" class="ui mini primary {{ !unsave() ? 'disabled' : '' }} button">
-      <i class="save icon"></i>
-      บันทึก
-    </button>
+<ui-modal [id]="'int02-3'" [size]="'small'" [type]="'custom'">
+  <div class="header">แก้ไขข้อมูล</div>
+  <div class="content">
+    <form class="ui form" (submit)="saveMsg(m)" #m="ngForm">
+      <div class="inline fields">
+        <div class="two wide field">
+          <label class="full-width text-right">
+            ข้อความ
+          </label>
+        </div>
+        <div class="twelve wide field {{ m.submitted && m.controls.msg.invalid ? 'error' : '' }}">
+          <div class="ui input">
+            <input type="text" name="msg" ngModel required>
+            <input type="hidden" name="msgId" ngModel>
+            <input type="hidden" name="msgType" ngModel>
+          </div>
+        </div>
+        <div class="two wide field text-left">
+          <button class="ui mini green icon button" type="submit">
+            <i class="check icon"></i>
+          </button>
+          <button class="ui mini red icon button" type="button" (click)="exit()">
+            <i class="times icon"></i>
+          </button>
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="two wide field">&nbsp;</div>
+        <div class="twelve wide field">
+          <div class="ui negative message full-width" *ngIf="m.submitted && m.controls.msg.invalid">
+            <p>ไม่สามารถแก้ไขได้หากไม่มีข้อมูล</p>
+          </div>
+        </div>
+        <div class="two wide field">&nbsp;</div>
+      </div>
+    </form>
   </div>
-</div>
+</ui-modal>
