@@ -20,6 +20,8 @@ export class Int0832Component implements OnInit {
   yearList: any[];
   wsRiskList: any[];
   pageList: any[];
+  isConditionShow: any = false;
+
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
@@ -43,7 +45,7 @@ export class Int0832Component implements OnInit {
       "/int08/3/8",
       "/int08/3/9",
       "/int08/3/9",
-      "/int08/3/9",
+      "/int08/3/11",
       "/int08/3/10"];
     //this.initDatatable();
   }
@@ -213,6 +215,14 @@ export class Int0832Component implements OnInit {
     this.router.navigate(["/int08/3/5"], {
       queryParams: { budgetYear: this.budgetYear }
     });
+  }
+
+  openConditioinRL() {
+    this.isConditionShow = true;
+  }
+
+  closeConditionRL(e) {
+    this.isConditionShow = false;
   }
 
 

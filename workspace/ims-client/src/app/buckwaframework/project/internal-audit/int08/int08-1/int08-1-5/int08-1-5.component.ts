@@ -56,9 +56,7 @@ export class Int0815Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: true,
-      scrollY:true,
-      scrollX: true,
-      scrollCollapse: true,
+     
       paging: true,
       ajax: {
         type: "POST",

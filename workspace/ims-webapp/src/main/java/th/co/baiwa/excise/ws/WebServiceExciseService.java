@@ -22,7 +22,7 @@ import baiwa.co.th.ws.LoginLdap;
 import baiwa.co.th.ws.Response;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcNocDtl;
-import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcNocDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOv3dDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcPenDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcRecDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
@@ -63,7 +63,6 @@ public class WebServiceExciseService {
 	}
 	
 	private String restfulService(String endPoint, Object object ) {
-
 		RequestServiceExcise requestRestful = new RequestServiceExcise();
 		requestRestful.setSystemid(systemId);
 		requestRestful.setUsername(username);
@@ -810,6 +809,62 @@ public class WebServiceExciseService {
 		
 		
 		return riskAssExcAreaDtlLi;
+	}
+	
+	
+	public List<RiskAssExcOv3dDtl>  riskAssExcOv3dDtlWS(){
+		List<RiskAssExcOv3dDtl> list = new ArrayList<RiskAssExcOv3dDtl>();
+		RiskAssExcOv3dDtl riskAssExcOv3dDtl = new RiskAssExcOv3dDtl();
+		riskAssExcOv3dDtl.setDepartmentName("สสพ. พระนครศรีอยุธยา 2");
+		riskAssExcOv3dDtl.setRiskCost(new BigDecimal(22));
+		list.add(riskAssExcOv3dDtl);
+		
+		riskAssExcOv3dDtl = new RiskAssExcOv3dDtl();
+		riskAssExcOv3dDtl.setDepartmentName("สสพ. อ่างทอง");
+		riskAssExcOv3dDtl.setRiskCost(new BigDecimal(18));
+		list.add(riskAssExcOv3dDtl);
+		
+		riskAssExcOv3dDtl = new RiskAssExcOv3dDtl();
+		riskAssExcOv3dDtl.setDepartmentName("สสพ.จันทบุรี");
+		riskAssExcOv3dDtl.setRiskCost(new BigDecimal(17));
+		list.add(riskAssExcOv3dDtl);
+		
+		riskAssExcOv3dDtl = new RiskAssExcOv3dDtl();
+		riskAssExcOv3dDtl.setDepartmentName("สสพ.ฉะเชิงเทรา");
+		riskAssExcOv3dDtl.setRiskCost(new BigDecimal(12));
+		list.add(riskAssExcOv3dDtl);
+		
+		riskAssExcOv3dDtl = new RiskAssExcOv3dDtl();
+		riskAssExcOv3dDtl.setDepartmentName("สสพ.ชลบุรี 1");
+		riskAssExcOv3dDtl.setRiskCost(new BigDecimal(8));
+		list.add(riskAssExcOv3dDtl);
+		
+		riskAssExcOv3dDtl = new RiskAssExcOv3dDtl();
+		riskAssExcOv3dDtl.setDepartmentName("สสพ.ชลบุรี 2");
+		riskAssExcOv3dDtl.setRiskCost(new BigDecimal(8));
+		list.add(riskAssExcOv3dDtl);
+		
+		riskAssExcOv3dDtl = new RiskAssExcOv3dDtl();
+		riskAssExcOv3dDtl.setDepartmentName("สสพ.ตราด");
+		riskAssExcOv3dDtl.setRiskCost(new BigDecimal(6));
+		list.add(riskAssExcOv3dDtl);
+		
+		riskAssExcOv3dDtl = new RiskAssExcOv3dDtl();
+		riskAssExcOv3dDtl.setDepartmentName("สสพ.นครนายก");
+		riskAssExcOv3dDtl.setRiskCost(new BigDecimal(3));
+		list.add(riskAssExcOv3dDtl);
+		
+		riskAssExcOv3dDtl = new RiskAssExcOv3dDtl();
+		riskAssExcOv3dDtl.setDepartmentName("สสพ.ปราจีนบุรี");
+		riskAssExcOv3dDtl.setRiskCost(new BigDecimal(2));
+		list.add(riskAssExcOv3dDtl);
+		
+		riskAssExcOv3dDtl = new RiskAssExcOv3dDtl();
+		riskAssExcOv3dDtl.setDepartmentName("สสพ.ระยอง 1");
+		riskAssExcOv3dDtl.setRiskCost(new BigDecimal(0));
+		list.add(riskAssExcOv3dDtl);
+		
+		return list;
 	}
 
 }

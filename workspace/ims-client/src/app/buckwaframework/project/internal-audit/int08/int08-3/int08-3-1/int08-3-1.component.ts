@@ -27,6 +27,10 @@ export class Int0831Component implements OnInit {
   dataTable_int08_3_8: any;
   dataTable_int08_3_9: any;
   dataTable_int08_3_10: any;
+  dataTable_int08_3_11: any;
+  dataTable_int08_3_12: any;
+
+  dataTable_int08_3_13: any;
   riskAssRiskWsHdr: any;
   condition: any;
   riskHrdId: any;
@@ -34,6 +38,9 @@ export class Int0831Component implements OnInit {
   pageList: any;
   pageShowPageIndex: any;
   dataTableList: RiskData[] = [];
+  buttonFullYear: any;
+  riskAssRiskWsHdrList: any[] = [];
+  columnList: any[] = [];
   constructor(private router: Router,
     private ajax: AjaxService,
     private route: ActivatedRoute,
@@ -65,6 +72,7 @@ export class Int0831Component implements OnInit {
     } else {
       this.initDatatable();
       this.changeYear(this.budgetYear);
+      this.buttonFullYear = true;
     }
     $('#year').calendar({
       type: 'year',
@@ -76,7 +84,7 @@ export class Int0831Component implements OnInit {
       }
     });
     this.wsRiskList = ["ปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ", "ปัจจัยเสี่ยงผลการจัดเก็บรายได้", "ปัจจัยเสี่ยงผลการปราบปรามด้านค่าปรับคดี", "ปัจจัยเสี่ยงผลการปราบปรามด้านจำนวนคดี", "ปัจจัยเสี่ยงการเงินและบัญชี", "ปัจจัยเสี่ยงระบบการควบคุมภายใน", "ปัจจัยเสี่ยงการส่งเงินเกิน 3 วัน", "ปัจจัยเสี่ยงแบบสอบทานระบบการควบคุมภายใน"];
-    this.pageList = ["int08-3-3", "int08-3-6", "int08-3-7", "int08-3-8", "int08-3-9", "int08-3-9", "int08-3-9", "int08-3-10"];
+    this.pageList = ["int08-3-3", "int08-3-6", "int08-3-7", "int08-3-8", "int08-3-9", "int08-3-9", "int08-3-11", "int08-3-10"];
 
   }
 
@@ -107,8 +115,6 @@ export class Int0831Component implements OnInit {
       const URL = "ia/int083/createBudgetYear";
 
       this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
-        // var message = res.json();
-        // this.messageBarService.successModal(message.messageTh, "สำเร็จ");
 
         this.router.navigate(["/int08/3/2"], {
           queryParams: { budgetYear: this.budgetYear }
@@ -124,11 +130,12 @@ export class Int0831Component implements OnInit {
   }
 
   searchDataTable() {
-    //console.log(this.selectRiskSearch);
+
     this.budgetYear = $('#budgetYear').val().trim();
     if (this.budgetYear != null && this.budgetYear != undefined && this.budgetYear != '') {
       this.isSearch = true;
       this.initDatatable();
+      this.buttonFullYear = true;
     } else {
       this.messageBarService.errorModal('กรุณาเลือก ปีงบประมาณ');
     }
@@ -136,12 +143,10 @@ export class Int0831Component implements OnInit {
 
 
   initDatatable(): void {
-    //console.log(55);
     if (this.datatable != null) {
       this.datatable.destroy();
     }
     const URL = AjaxService.CONTEXT_PATH + "ia/int083/searchRiskAssExcAreaHdr";
-    //console.log(URL);
     this.datatable = $("#dataTable").DataTable({
       lengthChange: false,
       searching: false,
@@ -170,6 +175,7 @@ export class Int0831Component implements OnInit {
         {
           render: function (data, type, row, meta) {
             //console.log("data :", row.createdDate)
+
             if (row.createdDate != null && row.createdDate != undefined && row.createdDate != '') {
               var dateTime = new Date(row.createdDate).toLocaleString("th-TH");
               return dateTime.split(' ')[0];
@@ -185,6 +191,7 @@ export class Int0831Component implements OnInit {
         {
           data: "riskHdrId",
           render: function () {
+
             return '<button type="button" class="ui mini button primary dtl" ><i class="table icon"></i> รายละเอียด</button>'
               + '<button type="button" class="ui mini button primary export"><i class="print icon"></i> Export</button>';
           }
@@ -202,6 +209,7 @@ export class Int0831Component implements OnInit {
           } else {
             this.riskHrdId = data.riskHrdId;
             this.renderForm2(data.riskHrdId);
+
           }
 
 
@@ -224,7 +232,7 @@ export class Int0831Component implements OnInit {
       const URL = "ia/condition/findConditionByParentId";
       var riskType = 'OTHER';
       var riskConditionPage = 'int08-3-4';
-      if (this.pageShowPageIndex == 'int08-3-3' || this.pageShowPageIndex == 'int08-3-6' || this.pageShowPageIndex == 'int08-3-7' || this.pageShowPageIndex == 'int08-3-8') {
+      if (this.pageShowPageIndex == 'int08-3-3' || this.pageShowPageIndex == 'int08-3-6' || this.pageShowPageIndex == 'int08-3-7' || this.pageShowPageIndex == 'int08-3-8' || this.pageShowPageIndex == 'int08-3-11') {
         riskType = 'MAIN';
         riskConditionPage = this.pageShowPageIndex;
       } else if (this.pageShowPageIndex == 'int08-3-10') {
@@ -295,7 +303,6 @@ export class Int0831Component implements OnInit {
               this.dataTableList.push(riskData);
 
             }
-            //console.log(jsonObjList[0].other);
             this.ajax.post(URL, { parentId: jsonObjList[0].other, riskType: riskType, page: riskConditionPage }, conditionRes => {
               this.condition = conditionRes.json();
               //console.log(this.condition)
@@ -305,12 +312,100 @@ export class Int0831Component implements OnInit {
           }, errRes => {
             //console.log("error", errRes);
           });
+        } else if (this.pageShowPageIndex == 'int08-3-11') {
+          let url = "ia/int083/findRiskOver3Day";
+          this.ajax.post(url, { riskHrdId: this.riskHrdId }, res => {
+            // this.riskDataList
+            var jsonObjList = res.json();
+            //console.log("jsonObjList", jsonObjList)
+            this.dataTableList = [];
+            for (let index = 0; index < jsonObjList.length; index++) {
+              var element = jsonObjList[index];
+              //console.log(element);
+              var riskData = new RiskData();
+              riskData.riskOtherDtlId = element.riskOtherDtlId;
+              riskData.riskHrdId = element.riskHrdId;
+              riskData.departmentName = element.departmentName;
+
+              riskData.riskCost = element.riskCost;
+              riskData.rl = element.rl;
+              riskData.valueTranslation = element.valueTranslation;
+              riskData.isDeleted = 'N';
+              riskData.color = element.color;
+              //console.log(riskData);
+              this.dataTableList.push(riskData);
+
+            }
+            this.initDatatableINT08_3_11();
+          }, errRes => {
+            //console.log("error", errRes);
+          });
         }
 
       });
 
     });
 
+  }
+
+  queryColumnNameListAndSetColumn() {
+    this.pageShowPageIndex = 'int08-3-12';
+
+    const URL = "ia/condition/findConditionByParentId";
+    var url = "ia/int083/findByBudgetYear";
+    this.ajax.post(URL, { parentId: this.budgetYear, riskType: 'ALL', page: 'int08-3-5' }, res => {
+      this.condition = res.json();
+
+    });
+    this.ajax.post(url, { budgetYear: this.budgetYear }, res => {
+
+      var riskAssRiskWsHdr = res.json();
+      this.riskAssRiskWsHdrList = res.json();
+      this.columnList = [];
+      for (let i = 0; i < riskAssRiskWsHdr.length; i++) {
+        const element = riskAssRiskWsHdr[i];
+        this.columnList.push(element.riskHdrName);
+        //this.percentList.push(0);
+      }
+
+      var trHTML = '<tr><th rowspan="2">ลำดับ</th><th rowspan="2">หน่วยงาน</th>';
+      this.columnList.forEach(element => {
+
+        trHTML += '<th rowspan="2">' + element + '</th>';
+      });
+      trHTML += '<th rowspan="2"  >รวม</th><th colspan="2">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th>แปลค่า</th></tr>';
+      $("#trColumn").html(trHTML);
+      this.initDatatableINT08_3_12();
+    }, errRes => {
+
+    });
+  }
+
+  queryTableInt080313() {
+    this.pageShowPageIndex = 'int08-3-13';
+
+    const URL = "ia/condition/findConditionByParentId";
+    var url = "ia/int083/findByBudgetYear";
+    this.ajax.post(URL, { parentId: this.budgetYear, riskType: 'ALL', page: 'int08-3-5' }, res => {
+      this.condition = res.json();
+
+    });
+    this.ajax.post(url, { budgetYear: this.budgetYear }, res => {
+
+      var riskAssRiskWsHdr = res.json();
+      this.riskAssRiskWsHdrList = res.json();
+      this.columnList = [];
+      for (let i = 0; i < riskAssRiskWsHdr.length; i++) {
+        const element = riskAssRiskWsHdr[i];
+        this.columnList.push(element.riskHdrName);
+        //this.percentList.push(0);
+      }
+
+
+      this.initDatatableINT08_3_13();
+    }, errRes => {
+
+    });
   }
 
   initDatatableINT08_3_3(): void {
@@ -492,6 +587,16 @@ export class Int0831Component implements OnInit {
           $(row).find('td:eq(7)').addClass('yellow');
         }
 
+        if (data.budgetDiff < 0) {
+          $(row).find('td:eq(4)').addClass('textRed');
+        }
+
+
+        if (data.percenDiff < 0) {
+          $(row).find('td:eq(5)').addClass('textRed');
+        }
+
+
       },
       columnDefs: [
         { targets: [0, 6, 7], className: "center aligned" },
@@ -543,9 +648,7 @@ export class Int0831Component implements OnInit {
         { data: "valueTranslation" }
 
       ], createdRow: function (row, data, dataIndex) {
-        //console.log("row");
-        //console.log("data", data.valueTranslation);
-        //console.log("dataIndex", dataIndex);
+
         if (data.color == 'แดง') {
           $(row).find('td:eq(6)').addClass('red');
           $(row).find('td:eq(7)').addClass('red');
@@ -555,6 +658,15 @@ export class Int0831Component implements OnInit {
         } else if (data.color == 'เหลือง') {
           $(row).find('td:eq(6)').addClass('yellow');
           $(row).find('td:eq(7)').addClass('yellow');
+        }
+
+        if (data.budgetDiff < 0) {
+          $(row).find('td:eq(4)').addClass('textRed');
+        }
+
+
+        if (data.percenDiff < 0) {
+          $(row).find('td:eq(5)').addClass('textRed');
         }
 
       },
@@ -661,6 +773,159 @@ export class Int0831Component implements OnInit {
 
     });
   }
+
+  initDatatableINT08_3_11(): void {
+    //console.log("initDatatableINT08_3_9");
+    if (this.dataTable_int08_3_11 != null) {
+      this.dataTable_int08_3_11.destroy();
+    }
+    //console.log(this.dataTableList);
+    this.dataTable_int08_3_11 = $("#dataTable_int08_3_11").DataTable({
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: false,
+      paging: false,
+      data: this.dataTableList,
+      columns: [
+        {
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "center"
+        },
+        { data: "departmentName" },
+        { data: "riskCost", className: "right" },
+        { data: "rl", className: "center" },
+        { data: "valueTranslation", className: "center" }
+
+      ], createdRow: function (row, data, dataIndex) {
+
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(3)').addClass('red');
+          $(row).find('td:eq(4)').addClass('red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(3)').addClass('green');
+          $(row).find('td:eq(4)').addClass('green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(3)').addClass('yellow');
+          $(row).find('td:eq(4)').addClass('yellow');
+        }
+
+      }
+
+
+    });
+  }
+
+  initDatatableINT08_3_12(): void {
+    if (this.dataTable_int08_3_12 != null) {
+      this.dataTable_int08_3_12.destroy();
+    }
+    var url = 'ia/int083/searchFullRiskByBudgetYear';
+
+    var hrmlTr = '';
+    this.ajax.post(url, { budgetYear: this.budgetYear, riskHrdNameList: this.columnList }, res => {
+
+      res.json().forEach(element => {
+        console.log(element);
+        hrmlTr += "<tr>";
+        hrmlTr += "<td>" + element.id + "</td>";
+        hrmlTr += "<td>" + element.departmentName + "</td>";
+        element.rl.forEach(rl => {
+          hrmlTr += "<td>" + rl + "</td>";
+        });
+        hrmlTr += "<td>" + element.sumRiskCost + "</td>";
+        hrmlTr += "<td id='valueRlAll' class='" + this.getStyeClassByColor(element.color) + "'>" + element.rlAll + "</td>";
+        hrmlTr += "<td id='convertValueAll' class='" + this.getStyeClassByColor(element.color) + "'>" + element.valueTranslation + "</td>";
+        hrmlTr += "</tr>";
+      });
+
+      $("#tbody").html(hrmlTr);
+      this.dataTable_int08_3_12 = $('#dataTable_int08_3_12').DataTable({
+        scrollX: true
+      });
+    }, errRes => {
+      console.log(errRes);
+    });
+
+  }
+
+  initDatatableINT08_3_13() {
+
+
+    if (this.dataTable_int08_3_13 != null) {
+      this.dataTable_int08_3_13.destroy();
+    }
+
+    const URL = AjaxService.CONTEXT_PATH + "ia/int083/int080313DataTable";
+    //console.log(URL);
+    this.dataTable_int08_3_13 = $("#dataTable_int08_3_13").DataTable({
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: true,
+      paging: false,
+      ajax: {
+        type: "POST",
+        url: URL,
+        data: { budgetYear: this.budgetYear }
+      },
+      columns: [
+
+        {
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "center"
+        },
+        { data: "departmentName" },
+        { data: "rl1" },
+        { data: "valueTranslation1" },
+        { data: "rl2" },
+        { data: "valueTranslation2" },
+        { data: "avgRl" },
+        { data: "rl" },
+        { data: "valueTranslation" }
+
+      ], createdRow: function (row, data, dataIndex) {
+
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(8)').addClass('red');
+          $(row).find('td:eq(7)').addClass('red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(8)').addClass('green');
+          $(row).find('td:eq(7)').addClass('green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(8)').addClass('yellow');
+          $(row).find('td:eq(7)').addClass('yellow');
+        }
+
+
+      },
+      columnDefs: [
+        { targets: [0, 6, 7], className: "center aligned" },
+        { targets: [1], className: "left aligned" },
+        { targets: [2, 3, 4, 5], className: "right aligned" }
+
+      ]
+
+    });
+  }
+  getStyeClassByColor(color) {
+    if (color == 'แดง') {
+      return 'bg-c-red';
+    } else if (color == 'เขียว') {
+      return 'bg-c-green';
+    } else if (color == 'เหลือง') {
+      return 'bg-c-yellow';
+    }
+  }
+
 
   initDatatableF2(): void {
     if (this.dataTableF2 != null) {

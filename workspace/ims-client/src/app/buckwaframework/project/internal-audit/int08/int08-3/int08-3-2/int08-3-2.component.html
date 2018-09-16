@@ -11,7 +11,8 @@
             <label>ปัจจัยเสี่ยง</label>
           </div>
           <div class="four wide field ">
-            <input type="text" placeholder="ปัจจัยเสี่ยง" class="custom" name="riskHdrName" id="riskHdrName" [(ngModel)]="riskHdrName">
+            <input type="text" placeholder="ปัจจัยเสี่ยง" class="custom" name="riskHdrName" id="riskHdrName"
+              [(ngModel)]="riskHdrName">
           </div>
 
           <div class="four wide field ">
@@ -39,13 +40,16 @@
         <div class="inline fields"></div>
         <div class="inline fields ">
           <div class="sixteen wide field ">
-            <div class="six wide field "></div>
+            <div class="five wide field "></div>
             <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
               <i class="save icon"></i>
               บันทึก
             </button>
             <button class="ui mini primary button" (click)="configAllCondition()">
               กำหนดเงื่อนไขปัจจัยเสี่ยงรวม
+            </button>
+            <button class="ui mini primary button" (click)="openConditioinRL()">
+              กำหนดเงื่อนไขปัจจัยเสี่ยงผลการปราบปราม
             </button>
             <button class="ui mini primary button" (click)="cancelFlow()">
               ยกเลิก
@@ -54,6 +58,19 @@
 
         </div>
       </div>
+    </div>
+  </div>
+  <div class="sixteen wide column" *ngIf="isConditionShow">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <condition [riskId]="budgetYear" [riskType]="'MAIN'" [page]="'int08-3-13'" (out)="closeConditionRL($event)"></condition>
+      </div>
+      <br />
+
     </div>
   </div>
 </div>

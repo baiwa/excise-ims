@@ -30,6 +30,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcNocDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOtherDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOv3dDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcPenDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcRecDtl;
 import th.co.baiwa.excise.ia.service.RiskAssExcAreaService;
@@ -425,6 +426,48 @@ public class Int083Controller {
 		}
 		
 		return message;
+	}
+	
+	@PostMapping("/findRiskOver3Day")
+	@ResponseBody
+	public List<RiskAssExcOv3dDtl> findRiskOver3Day(@RequestBody RiskAssExcOv3dDtl riskAssExcOv3dDtl) {
+		List<RiskAssExcOv3dDtl> list = null;
+		logger.info("saveRiskAssDtlOther");
+		try {
+			list = riskAssExcAreaService.findRiskAssExcOv3dDtlByHRDId(riskAssExcOv3dDtl.getRiskHrdId());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	@PostMapping("/saveRiskAssExcOv3dDtl")
+	@ResponseBody
+	public Message saveRiskAssExcOv3dDtl(@RequestBody Int0803Vo int0803Vo) {
+		Message message = null;
+		logger.info("saveRiskAssDtlOther");
+		try {
+			riskAssExcAreaService.updateRiskAssExcOv3dDtl(int0803Vo.getRiskAssExcOv3dDtlList());
+			message = ApplicationCache.getMessage("MSG_00002");
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = ApplicationCache.getMessage("MSG_00003");
+		}
+		return message;
+	}
+	
+	@PostMapping("/int080313DataTable")
+	@ResponseBody
+	public ResponseDataTable<Int0803Vo> int080313DataTable(DataTableRequest dataTableRequest,RiskAssExcAreaHdr riskAssExcAreaHdr) {
+		logger.info("int080313DataTable : " + riskAssExcAreaHdr.getBudgetYear());
+		List<Int0803Vo> int0803VoList = riskAssExcAreaService.findRiskInt080313(riskAssExcAreaHdr.getBudgetYear());
+		ResponseDataTable<Int0803Vo> responseDataTable = new ResponseDataTable<Int0803Vo>();
+		responseDataTable.setData(int0803VoList);
+		responseDataTable.setRecordsTotal(int0803VoList.size());
+		responseDataTable.setRecordsFiltered(int0803VoList.size());
+		return responseDataTable;
 	}
 	
 

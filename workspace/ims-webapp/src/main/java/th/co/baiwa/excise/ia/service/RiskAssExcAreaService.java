@@ -23,12 +23,14 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcAreaHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcNocDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOtherDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOv3dDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcPenDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcRecDtl;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcAreaDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcAreaHdrRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcNocDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcOtherDtlRepository;
+import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcOv3dDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcPenDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssExcRecDtlRepository;
 import th.co.baiwa.excise.utils.BeanUtils;
@@ -40,6 +42,7 @@ public class RiskAssExcAreaService {
 	private final RiskAssExcAreaHdrRepository riskAssExcAreaHdrRepository;
 	private final String BUDGET_YEAR = "BUDGET_YEAR";
 	private final String RISK_CONFIG = "RISK_CONFIG";
+	private final String MAPPING_TABLE = "RISK_TABLE_CONFIG";
 	private final String INT08_3 = "INT08-3";
 
 	@Autowired
@@ -71,6 +74,9 @@ public class RiskAssExcAreaService {
 
 	@Autowired
 	private QtnMasterService qtnMasterService;
+	
+	@Autowired
+	private RiskAssExcOv3dDtlRepository riskAssExcOv3dDtlRepository;
 
 	@Autowired
 	public RiskAssExcAreaService(RiskAssExcAreaHdrRepository riskAssRiskWsHdrRepository) {
@@ -454,16 +460,159 @@ public class RiskAssExcAreaService {
 	}
 
 	public void updateStatusRisk(RiskAssExcAreaHdr riskAssExcAreaHdr) {
+		logger.info("updateStatusRisk BudgetYear : "+riskAssExcAreaHdr.getRiskHrdId());
 		RiskAssExcAreaHdr risk = riskAssExcAreaHdrRepository.findOne(riskAssExcAreaHdr.getRiskHrdId());
 		risk.setActive(riskAssExcAreaHdr.getActive());
 		riskAssExcAreaHdrRepository.save(risk);
 	}
 
 	public List<QtnMasterVo> searchQtn(RiskAssExcAreaHdr riskAssExcAreaHdr) {
+		logger.info("searchQtn BudgetYear : "+riskAssExcAreaHdr.getBudgetYear());
 		QtnMaster qtnMaster = new QtnMaster();
 		qtnMaster.setQtnYear(riskAssExcAreaHdr.getBudgetYear());
 		List<QtnMasterVo> qtnMasterVoList = qtnMasterService.calRiskPoint(riskAssExcAreaHdr.getBudgetYear());
 		return qtnMasterVoList;
 	}
+	
+	
+	public List<RiskAssExcOv3dDtl> findRiskAssExcOv3dDtlByHRDId(Long riskHrdId){
+		logger.info("findRiskAssExcOv3dDtlByHRDId : "+riskHrdId);
+		List<RiskAssExcOv3dDtl> list = riskAssExcOv3dDtlRepository.findByRiskHrdId(riskHrdId);
+		if(BeanUtils.isEmpty(list)) {
+			list = webServiceExciseService.riskAssExcOv3dDtlWS();
+		}
+		return list;
+	}
+	
+	
+	public void updateRiskAssExcOv3dDtl(List<RiskAssExcOv3dDtl> riskAssExcOv3dDtlList) {
+		logger.info("updateRiskAssOtherDtl");
+		List<Condition> conditionList = conditionService.findConditionByParentId(riskAssExcOv3dDtlList.get(0).getRiskHrdId(), "MAIN", "int08-3-11");
+		if (BeanUtils.isNotEmpty(conditionList)) {
+			for (RiskAssExcOv3dDtl riskAssExcOv3dDtl : riskAssExcOv3dDtlList) {
+				for (Condition condition : conditionList) {
+					long value = riskAssExcOv3dDtl.getRiskCost().longValue();
+					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
+						riskAssExcOv3dDtl.setRl(condition.getValueRl());
+						riskAssExcOv3dDtl.setColor(condition.getColor());
+						riskAssExcOv3dDtl.setValueTranslation(condition.getConvertValue());
+					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+						riskAssExcOv3dDtl.setRl(condition.getValueRl());
+						riskAssExcOv3dDtl.setColor(condition.getColor());
+						riskAssExcOv3dDtl.setValueTranslation(condition.getConvertValue());
+					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+						riskAssExcOv3dDtl.setRl(condition.getValueRl());
+						riskAssExcOv3dDtl.setColor(condition.getColor());
+						riskAssExcOv3dDtl.setValueTranslation(condition.getConvertValue());
+					}
+				}
+
+			}
+
+		}
+		RiskAssExcOv3dDtl databaseData;
+		for (RiskAssExcOv3dDtl riskAssExcOv3dDtl : riskAssExcOv3dDtlList) {
+			if (riskAssExcOv3dDtl.getIsDeleted().equals("N")) {
+				try {
+					databaseData = riskAssExcOv3dDtlRepository.findOne(riskAssExcOv3dDtl.getRiskOtherDtlId());
+					if (databaseData != null && databaseData.getRiskOtherDtlId() != null) {
+						databaseData.setDepartmentName(riskAssExcOv3dDtl.getDepartmentName());
+						databaseData.setRiskCost(riskAssExcOv3dDtl.getRiskCost());
+						databaseData.setRl(riskAssExcOv3dDtl.getRl());
+						databaseData.setValueTranslation(riskAssExcOv3dDtl.getValueTranslation());
+						riskAssExcOv3dDtlRepository.save(databaseData);
+					} else {
+						riskAssExcOv3dDtlRepository.save(riskAssExcOv3dDtl);
+					}
+				} catch (Exception e) {
+					riskAssExcOv3dDtlRepository.save(riskAssExcOv3dDtl);
+				}
+
+			} else if (riskAssExcOv3dDtl.getIsDeleted().equals("Y")) {
+				databaseData = riskAssExcOv3dDtlRepository.findOne(riskAssExcOv3dDtl.getRiskOtherDtlId());
+				riskAssExcOv3dDtlRepository.delete(databaseData);
+			}
+		}
+
+	}
+	
+	public List<Int0803Vo> findRiskInt080313(String budgetYear){
+		logger.info("findRiskAssExcOv3dDtlByHRDId : "+budgetYear);
+		RiskAssExcAreaHdr riskAssExcAreaHdr = new RiskAssExcAreaHdr();
+		riskAssExcAreaHdr.setBudgetYear(budgetYear);
+		List<Lov> mappingList = ApplicationCache.getListOfValueByValueType(MAPPING_TABLE);
+		List<RiskAssExcPenDtl> penSet = null;
+		List<RiskAssExcNocDtl> nocSet = null;
+		List<RiskAssExcAreaHdr> riskHrdList = riskAssExcAreaHdrRepository.findRiskAssExcAreaHdrByCriteria(riskAssExcAreaHdr);
+		for (Lov mapping : mappingList) {
+			for (RiskAssExcAreaHdr risk : riskHrdList) {
+				if(mapping.getValue1().equals(risk.getRiskHdrName())) {
+					if("IA_RISK_ASS_EXC_PEN_DTL".equals(mapping.getValue2())) {
+						penSet = riskAssExcPenDtlRepository.findByRiskHrdId(risk.getRiskHrdId());
+						
+						break;
+					}else if("IA_RISK_ASS_EXC_NOC_DTL".equals(mapping.getValue2())){
+						nocSet = riskAssExcNocDtlRepository.findByRiskHrdId(risk.getRiskHrdId());
+						break;
+					}
+				}
+			}
+		}
+		List<Int0803Vo> list = new ArrayList<Int0803Vo>();
+		Int0803Vo int0803Vo = null;
+		if(BeanUtils.isNotEmpty(penSet) && BeanUtils.isNotEmpty(nocSet)) {
+			for (RiskAssExcPenDtl pen : penSet) {
+				int0803Vo = new Int0803Vo();
+				int0803Vo.setDepartmentName(pen.getDepartmentName());
+				int0803Vo.setRl1(pen.getRl());
+				int0803Vo.setValueTranslation1(pen.getValueTranslation());
+				list.add(int0803Vo);
+			}
+			for (RiskAssExcNocDtl noc : nocSet) {
+				boolean isEqual = false;
+				for (Int0803Vo fulldata : list) {
+					if(noc.getDepartmentName().equals(fulldata.getDepartmentName())) {
+						fulldata.setRl2(noc.getRl());
+						fulldata.setValueTranslation2(noc.getValueTranslation());
+						isEqual = true;
+						break;
+					}
+				}
+				if(!isEqual) {
+					Int0803Vo val = new Int0803Vo();
+					val.setDepartmentName(noc.getDepartmentName());
+					val.setRl2(noc.getRl());
+					val.setValueTranslation2(noc.getValueTranslation());
+					list.add(val);
+				}
+				
+			}
+			List<Condition> conditionList = conditionService.findConditionByParentId(Long.parseLong(budgetYear), "MAIN", "int08-3-13");
+			for (Int0803Vo data : list) {
+				double value = (Double.parseDouble(data.getRl1())+Double.parseDouble(data.getRl2()))/2;
+				data.setAvgRl(value);
+				for (Condition condition : conditionList) {
+					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
+						data.setRl(condition.getValueRl());
+						data.setColor(condition.getColor());
+						data.setValueTranslation(condition.getConvertValue());
+					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+						data.setRl(condition.getValueRl());
+						data.setColor(condition.getColor());
+						data.setValueTranslation(condition.getConvertValue());
+					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+						data.setRl(condition.getValueRl());
+						data.setColor(condition.getColor());
+						data.setValueTranslation(condition.getConvertValue());
+					}
+				}
+			}
+		}
+		return list;
+	}
+	
+	
+	
+	
 
 }

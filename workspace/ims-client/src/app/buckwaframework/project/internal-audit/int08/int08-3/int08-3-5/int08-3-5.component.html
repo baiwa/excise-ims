@@ -12,8 +12,8 @@
             <label>ปีงบประมาณ</label>
           </div>
           <div class="ten wide field ">
-            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear" disabled="disabled"
-              readonly>
+            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear"
+              disabled="disabled" readonly>
           </div>
 
         </div>
@@ -27,14 +27,11 @@
         </tbody>
       </table>
 
-      <BR/>
+      <BR />
       <div class="inline fields latest-inline">
         <div class="sixteen wide field">
           <div class="ui center aligned grid btn">
-            <button class="ui mini primary button" (click)="saveRiskAssRiskWsDtl()">
-              <i class="save icon"></i>
-              บันทึก
-            </button>
+
             <button class="ui mini primary button" (click)="modalConditionRL()">
               กำหนดเงื่อนไข RL
             </button>
@@ -51,9 +48,9 @@
 
         </div>
       </div>
-      <BR/>
+      <BR />
     </div>
-    <BR/>
+    <BR />
     <div class="sixteen wide column" *ngIf="getConditionShow()">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
@@ -63,11 +60,11 @@
         <div class="ui form">
           <condition [riskId]="budgetYear" [riskType]="'ALL'" [page]="'int08-3-5'" (out)="closeConditionRL($event)"></condition>
         </div>
-        <br/>
+        <br />
 
       </div>
     </div>
-    <BR/>
+    <BR />
     <div class="sixteen wide column" *ngIf="getpercent()">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กำหนดค่าน้ำหนัก (%) สำนักงานสรรพสามิตภาคพื้นที่</span>
@@ -85,7 +82,7 @@
             </div>
           </div>
         </div>
-        <br/>
+        <br />
         <div class="inline fields latest-inline">
           <div class="sixteen wide field">
             <div class="ui center aligned grid btn">
@@ -100,7 +97,7 @@
 
           </div>
         </div>
-        <BR/>
+        <BR />
       </div>
     </div>
   </div>
