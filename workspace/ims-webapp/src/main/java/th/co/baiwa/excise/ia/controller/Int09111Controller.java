@@ -1,9 +1,5 @@
 package th.co.baiwa.excise.ia.controller;
 
-import java.io.IOException;
-
-import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +11,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.ia.persistence.vo.Int09111FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int09TableDtlVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int09111And3FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int0911Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int09TableDtlVo;
 import th.co.baiwa.excise.ia.service.Int09111Service;
 
 @Controller
@@ -33,7 +29,7 @@ public class Int09111Controller {
 	
 	@PostMapping("/list")
 	@ResponseBody
-	public DataTableAjax<Int09TableDtlVo> list(@RequestBody Int09111FormVo formVo){
+	public DataTableAjax<Int09TableDtlVo> list(@RequestBody Int09111And3FormVo formVo){
 		DataTableAjax<Int09TableDtlVo> list = null;
 		log.info("formVo.getSearchFlag() {}",formVo.getSearchFlag());
 		try {
@@ -46,23 +42,39 @@ public class Int09111Controller {
 		return list;
 	}
 	
+	@PostMapping("/delete")
+    @ResponseBody
+    public Message delete(@RequestBody Int09111And3FormVo formVo){
+		log.info("id : {}",formVo.getId());
+        try {
+        	int09111Service.delete(formVo.getId());
+        } catch (Exception e) {
+            return ApplicationCache.getMessage("MSG_00006");
+        }
+        return ApplicationCache.getMessage("MSG_00005");
+
+    }
+	
 	@PostMapping("/save")
 	@ResponseBody
-	public Message save(@RequestBody Int09111FormVo formVo){
-		
+	public CommonMessage<Long> save(@RequestBody Int09111And3FormVo formVo){
+		Long id = 0L;
+		CommonMessage<Long> message = new CommonMessage<Long>();
 		try {
-			int09111Service.save(formVo);
-			 
+			id = int09111Service.save(formVo);	
+			message.setData(id);
 		} catch (Exception e) {
 			log.error("Error ! add ",e);
-			return ApplicationCache.getMessage("MSG_00003");
+			message.setMsg(ApplicationCache.getMessage("MSG_00003"));
+			return message;
 		}
-		return ApplicationCache.getMessage("MSG_00002");
+		message.setMsg(ApplicationCache.getMessage("MSG_00002"));
+		return message;
 	}
 	
 	@PostMapping("/saveAll")
 	@ResponseBody
-	public Message saveAll(@RequestBody Int09111FormVo formVo){
+	public Message saveAll(@RequestBody Int09111And3FormVo formVo){
 		
 		try {
 			int09111Service.saveAll(formVo);
@@ -73,7 +85,5 @@ public class Int09111Controller {
 		}
 		return ApplicationCache.getMessage("MSG_00002");
 	}
-
-	
 
 }

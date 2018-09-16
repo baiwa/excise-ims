@@ -6,6 +6,7 @@ public class Int09FormDtlVo extends DataTableRequest {
 
 	private Long id;
 	private Long idProcess;
+	private Long idDtl;
 	private String name;
 	private String lastName;
 	private String position;
@@ -40,6 +41,14 @@ public class Int09FormDtlVo extends DataTableRequest {
 
 	public void setIdProcess(Long idProcess) {
 		this.idProcess = idProcess;
+	}
+
+	public Long getIdDtl() {
+		return idDtl;
+	}
+
+	public void setIdDtl(Long idDtl) {
+		this.idDtl = idDtl;
 	}
 
 	public String getName() {

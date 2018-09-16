@@ -2,7 +2,7 @@ package th.co.baiwa.excise.ia.persistence.vo;
 
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
-public class Int09111FormVo extends DataTableRequest {
+public class Int09111And3FormVo extends DataTableRequest {
 
 	private Long id;
 	private Long idProcess;
@@ -12,6 +12,7 @@ public class Int09111FormVo extends DataTableRequest {
 	private String subject;
 	private String searchFlag;
 
+	private String documentTypeCode;
 	private Int09FormDtlVo int09FormDtlVo;
 
 	public Long getId() {
@@ -70,6 +71,14 @@ public class Int09111FormVo extends DataTableRequest {
 		this.searchFlag = searchFlag;
 	}
 
+	public String getDocumentTypeCode() {
+		return documentTypeCode;
+	}
+
+	public void setDocumentTypeCode(String documentTypeCode) {
+		this.documentTypeCode = documentTypeCode;
+	}
+
 	public Int09FormDtlVo getInt09FormDtlVo() {
 		return int09FormDtlVo;
 	}
@@ -78,5 +87,4 @@ public class Int09111FormVo extends DataTableRequest {
 		this.int09FormDtlVo = int09FormDtlVo;
 	}
 
-	
 }

@@ -110,9 +110,9 @@ public class Int0911Controller {
 			 
 		} catch (Exception e) {
 			log.error("Error ! upload ",e);
-			  return ApplicationCache.getMessage("MSG_00006");
+			  return ApplicationCache.getMessage("MSG_00003");
         }
-        return ApplicationCache.getMessage("MSG_00005");
+        return ApplicationCache.getMessage("MSG_00002");
 
 	}
 }

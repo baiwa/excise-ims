@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.IaTravelEstimatorDao;
-import th.co.baiwa.excise.ia.persistence.vo.Int09111FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int09111And3FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int09TableDtlVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911Vo;
@@ -27,11 +27,12 @@ public class Int09111Service {
 	@Autowired
 	private Int09DataDtlService int09DataDtlService;
 
-	public DataTableAjax<Int09TableDtlVo> findAll(Int09111FormVo formVo) {
+	public DataTableAjax<Int09TableDtlVo> findAll(Int09111And3FormVo formVo) {
 
 		// query data
-		List<Int09TableDtlVo> list = iaTravelEstimatorDao.findAll09111(formVo);
-		Long count = iaTravelEstimatorDao.count09111(formVo);
+		formVo.setDocumentTypeCode("111");//DocumentType 111 = หน้าปะมาณการค่าใช้จ่ายในการเดินทางไปราชการ
+		List<Int09TableDtlVo> list = iaTravelEstimatorDao.findAllTableDtl(formVo);
+		Long count = iaTravelEstimatorDao.countTableDtl(formVo);
 
 		// set data table
 		DataTableAjax<Int09TableDtlVo> dataTableAjax = new DataTableAjax<>();
@@ -45,13 +46,18 @@ public class Int09111Service {
 
 		return dataTableAjax;
 	}
-
-	public void save(Int09111FormVo formVo) throws ParseException {
+	public void delete(Long id) {	
+		iaTravelEstimatorDao.deleteTableDtl(id);
+	}
+	public Long save(Int09111And3FormVo formVo) throws ParseException {
 		Int09TableDtlVo data = int09DataDtlService.getDataDtl(formVo.getInt09FormDtlVo());
-		int09DataDtlService.saveDataDtl(data);
+		data.setDocumentType("111");//DocumentType 111 = หน้าปะมาณการค่าใช้จ่ายในการเดินทางไปราชการ
+		Long id = int09DataDtlService.saveDataDtlAndDataFormDtl(formVo.getInt09FormDtlVo(),data);
+		return id ;
+		
 	}
 	
-	public void saveAll(Int09111FormVo formVo) {
+	public void saveAll(Int09111And3FormVo formVo) {
 		formVo.setCreatedBy(UserLoginUtils.getCurrentUsername());
 		formVo.setDocumentType("ประมาณการค่าใช้จ่าย");
 		formVo.setSubject("ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ");

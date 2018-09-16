@@ -25,6 +25,10 @@ export class Int09111Component implements OnInit, AfterViewInit {
 
   idProcess: any;
 
+  btnModal: any;
+  ifallowance: any='';
+  ifroost: any='';
+
   travelToHead1List: any;
   travelToHead2List: any;
   travelToHead3List: any;
@@ -107,7 +111,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
     });
   }
 
-  dataTable = function () {
+  dataTable = () =>{
     var table = $('#tableData').DataTable({
       "lengthChange": true,
       "serverSide": false,
@@ -128,12 +132,6 @@ export class Int09111Component implements OnInit, AfterViewInit {
       },
       "columns": [
         {
-          "data": "id",
-          "render": function (data, type, row, meta) {
-            return '<input type="checkbox">';
-          },
-          "className": "ui center aligned"
-        }, {
           "data": "id",
           "className": "ui center aligned",
           "render": function (data, type, row, meta) {
@@ -172,6 +170,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
           "render": function (data, type, row) {
             var btn = '';
             btn += '<button class="mini ui primary button btn-edit">แก้ไข</button>';
+            btn +='<button class="mini ui red button btn-delete">ลบ</button>';
             return btn;
           }
         }
@@ -180,22 +179,53 @@ export class Int09111Component implements OnInit, AfterViewInit {
     });
 
     //button edit>
-    table.on('click', 'tbody tr button.btn-edit', () => {
-      var closestRow = $(this).closest('tr');
+    table.on('click', 'tbody tr button.btn-edit',(e)=> {
+      var closestRow = $(e.target).closest('tr');
       var data = table.row(closestRow).data();
-      this.modalAdd();
-      console.log(data);
-
+      this.modalEdit(data);
+    });
+    table.on('click', 'tbody tr button.btn-delete', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table.row(closestRow).data();
+     
+      const URL = "ia/int09111/delete";
+      this.msg.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.msg.successModal(msg.messageTh);
+      } else {
+        this.msg.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      this.setSum0();
+      $('#tableData').DataTable().ajax.reload();
+      });
+     }
+    },"ลบรายการ");
+      
     });
   }
 
   sum = ( row, data ) => {
+    console.log("data : ",data);
     this.totalFeedMoney+=data.feedMoney;
     this.totalRoostMoney+=data.roostMoney;
     this.totalPassage+=data.passage;
     this.totalOtherExpenses+=data.otherExpenses;
     this.totalTotalMoney+=data.totalMoney;
   }
+
+  setSum0 = () =>{
+    this.totalFeedMoney=0;
+    this.totalRoostMoney=0;
+    this.totalPassage=0;
+    this.totalOtherExpenses=0;
+    this.totalTotalMoney=0;
+  }
+
 
   typeDropdown = () =>{
   
@@ -228,6 +258,10 @@ export class Int09111Component implements OnInit, AfterViewInit {
       this.allowanceList = res.json();
     });
   }
+  ngIfallowance=e=>{
+  this.ifallowance=e.target.value;
+  
+  }
 
   trainingDropdown = () =>{
     const URL = "combobox/controller/getDropByTypeAndParentId";
@@ -242,6 +276,11 @@ export class Int09111Component implements OnInit, AfterViewInit {
       this.roostList = res.json();
     });
   }
+  ngIfroost=e=>{
+    this.ifroost=e.target.value;
+    
+    }
+
   trainingTypeDropdown = () =>{
     const URL = "combobox/controller/getDropByTypeAndParentId";
     this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1189}, res => {
@@ -256,6 +295,33 @@ export class Int09111Component implements OnInit, AfterViewInit {
   }
 
   modalAdd() {
+    this.btnModal = 'S';
+    $('#modalAdd').modal('show');
+    this.calenda();
+  }
+  modalEdit=(data)=> {
+    this.btnModal = 'E';
+    console.log("data edit : ",data.int09FormDtlVo);
+    $("#name").val(data.int09FormDtlVo.name);
+    $("#lastName").val(data.int09FormDtlVo.lastName);
+    $("#position").val(data.int09FormDtlVo.position);
+    $("#type").val(data.int09FormDtlVo.type);
+    $("#grade").val(data.int09FormDtlVo.grade);
+    $("#permissionDate").val(data.int09FormDtlVo.permissionDate);
+    $("#writeDate").val(data.int09FormDtlVo.writeDate);
+    $("#departure").val(data.int09FormDtlVo.departure);
+    $("#departureDate").val(data.int09FormDtlVo.departureDate);
+    $("#returnDate").val(data.int09FormDtlVo.returnDate);
+    $("#allowance").val(data.int09FormDtlVo.allowance);
+    $("#training").val(data.int09FormDtlVo.training);
+    $("#roost").val(data.int09FormDtlVo.roost);
+    $("#trainingType").val(data.int09FormDtlVo.trainingType);
+    $("#roomType").val(data.int09FormDtlVo.roomType);
+    $("#numberDate").val(data.int09FormDtlVo.numberDate);
+    $("#passage").val(data.int09FormDtlVo.passage);
+    $("#otherExpenses").val(data.int09FormDtlVo.otherExpenses);
+    $("#remarkT").val(data.int09FormDtlVo.remark);
+
     $('#modalAdd').modal('show');
     this.calenda();
   }
@@ -285,15 +351,17 @@ export class Int09111Component implements OnInit, AfterViewInit {
       passage:$("#passage").val(),
       otherExpenses:$("#otherExpenses").val(),
       remark:$("#remarkT").val()}
-    }, res => {
-      const msg = res.json();
+    },res => {
+      const commonMessage = res.json();
       
-    if (msg.messageType == "C") {
-      this.msg.successModal(msg.messageTh);
+    if (commonMessage.msg.messageType == "C") {
+      this.msg.successModal(commonMessage.msg.messageTh);
+      console.log("commonMessage.data : ",commonMessage.data);
     } else {
-      this.msg.errorModal(msg.messageTh);
+      this.msg.errorModal(commonMessage.msg.messageTh);
     }
     $("#searchFlag").val("TRUE");
+    this.setSum0();
     $('#tableData').DataTable().ajax.reload();
     });
   }
@@ -313,19 +381,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
   }
 
 
-  clickCheckAll = event => {
-    if (event.target.checked) {
-      var node = $('#tableData').DataTable().rows().nodes();
-      $.each(node, function (index, value) {
-        $(this).find('input').prop('checked', true);
-      });
-    } else {
-      var node = $('#tableData').DataTable().rows().nodes();
-      $.each(node, function (index, value) {
-        $(this).find('input').prop('checked', false);
-      });
-    }
-  }
+
 
   travelToHead1Dropdown = () => {
     const URL = "combobox/controller/getDropByTypeAndParentId";
@@ -399,6 +455,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
+    // $('.ui.dropdown').dropdown();
     this.idProcess = this.route.snapshot.queryParams["idProcess"];
     console.log("idProcess : ", this.idProcess);
     this.dataTable();

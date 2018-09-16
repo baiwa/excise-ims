@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
-import th.co.baiwa.excise.ia.persistence.vo.Int09111FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int09111And3FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int09TableDtlVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911T2Vo;
@@ -27,6 +27,7 @@ import th.co.baiwa.excise.ia.persistence.vo.Int0911Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int091FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int091Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int09222FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int09FormDtlVo;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
@@ -43,7 +44,11 @@ public class IaTravelEstimatorDao {
 	
 	private final String SQL_TRAVEL_ESTIMATOR_EVIDENCE = "SELECT * FROM TRAVEL_ESTIMATOR_EVIDENCE WHERE IS_DELETED='N' AND ID_PROCESS = ?";
 	
-	private final String SQL_TRAVEL_ESTIMATOR_DTL = "SELECT * FROM TRAVEL_ESTIMATOR_DTL WHERE ID_PROCESS = ?";
+	private final String SQL_TRAVEL_ESTIMATOR_DTL = "SELECT a.*,b.*,b.ID AS B_ID, b.NAME AS B_NAME,"
+													+ " b.POSITION AS B_POSITION, b.PASSAGE AS B_PASSAGE, "
+													+ " b.OTHER_EXPENSES AS B_OTHER_EXPENSES ,b.REMARK AS B_REMARK "
+													+ " FROM TRAVEL_ESTIMATOR_DTL a inner join TRAVEL_ESTIMATOR_FORM_DTL b on a.id=b.id_dtl "
+													+ " WHERE a.ID_PROCESS = ? AND a.DOCUMENT_TYPE = ?  AND IS_DELETED='N' ";
 	
 	public Long count(Int091FormVo formVo) {
 		
@@ -294,26 +299,29 @@ public class IaTravelEstimatorDao {
 		    		return vo;
 		    	}
 		    };
-		    public Long count09111(Int09111FormVo formVo) {
+		    public Long countTableDtl(Int09111And3FormVo formVo) {
 				StringBuilder sql = new StringBuilder(SQL_TRAVEL_ESTIMATOR_DTL);
 				List<Object> params = new ArrayList<>();
 				
 				params.add(formVo.getIdProcess());
+				params.add(formVo.getDocumentTypeCode());
 					
 				String countSql = OracleUtils.countForDatatable(sql);
 		        Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
 		        return count;
 		    }
 
-			public List<Int09TableDtlVo> findAll09111(Int09111FormVo formVo) {
+			public List<Int09TableDtlVo> findAllTableDtl(Int09111And3FormVo formVo) {
 				StringBuilder sql = new StringBuilder(SQL_TRAVEL_ESTIMATOR_DTL);
 				List<Object> params = new ArrayList<>();
 
 				params.add(formVo.getIdProcess());
-				sql.append(" ORDER BY ID desc ");
+				params.add(formVo.getDocumentTypeCode());
 				
-				log.info(" findAll09111 idProcess : {}",formVo.getIdProcess());
-				log.info(" findAll09111 sql : {}",sql.toString());
+				sql.append(" ORDER BY a.ID desc ");
+				
+				log.info(" findAllTableDtl idProcess : {}",formVo.getIdProcess());
+				log.info(" findAllTableDtl sql : {}",sql.toString());
 				
 		        List<Int09TableDtlVo> list = jdbcTemplate.query(sql.toString(), params.toArray(), travelEstimatorDtlRowmapper);
 		        return list;
@@ -326,6 +334,7 @@ public class IaTravelEstimatorDao {
 			    		
 			    	    vo.setId(rs.getLong("ID"));
 			    		vo.setIdProcess(rs.getLong("ID_PROCESS"));
+			    		vo.setDocumentType(rs.getString("DOCUMENT_TYPE"));
 			    		vo.setName(rs.getString("NAME"));
 			    		vo.setPosition(rs.getString("POSITION"));
 			    		vo.setFeedDay(rs.getLong("FEED_DAY"));
@@ -336,6 +345,32 @@ public class IaTravelEstimatorDao {
 			    		vo.setOtherExpenses(rs.getLong("OTHER_EXPENSES"));
 			    		vo.setTotalMoney(rs.getLong("TOTAL_MONEY"));
 			    		vo.setRemark(rs.getString("REMARK"));
+			    		
+			    		Int09FormDtlVo formVo = new Int09FormDtlVo();
+			    		
+			    		formVo.setId(rs.getLong("B_ID"));
+			    		formVo.setIdDtl(rs.getLong("ID_DTL"));
+			    		formVo.setName(rs.getString("B_NAME"));
+			    		formVo.setLastName(rs.getString("LAST_NAME"));
+			    		formVo.setPosition(rs.getString("B_POSITION"));
+			    		formVo.setType(rs.getString("TYPE"));
+			    		formVo.setGrade(rs.getString("GRADE"));
+			    		formVo.setPermissionDate(rs.getString("PERMISSION_DATE"));
+			    		formVo.setWriteDate(rs.getString("WRITE_DATE"));
+			    		formVo.setDeparture(rs.getString("DEPARTURE"));
+			    		formVo.setDepartureDate(rs.getString("DEPARTURE_DATE"));
+			    		formVo.setReturnDate(rs.getString("RETURN_DATE"));
+			    		formVo.setAllowance(rs.getString("ALLOWANCE"));
+			    		formVo.setTraining(rs.getString("TRAINING"));
+			    		formVo.setRoost(rs.getString("ROOST"));
+			    		formVo.setTrainingType(rs.getString("TRAINING_TYPE"));
+			    		formVo.setRoomType(rs.getString("ROOM_TYPE"));
+			    		formVo.setNumberDate(rs.getString("NUMBER_DATE"));
+			    		formVo.setPassage(rs.getLong("B_PASSAGE"));
+			    		formVo.setOtherExpenses(rs.getLong("B_OTHER_EXPENSES"));
+			    		formVo.setRemark(rs.getString("B_REMARK"));
+			    		
+			    		vo.setInt09FormDtlVo(formVo);
 			    	    	
 			    		return vo;
 			    	}
@@ -391,6 +426,11 @@ public class IaTravelEstimatorDao {
 		    	log.info(" idLong : {}",id);
 		    	jdbcTemplate.update(" UPDATE TRAVEL_ESTIMATOR_EVIDENCE SET IS_DELETED = 'Y' WHERE ID = ? ",new Object[] {id});
 		    }
+		    
+		    public void deleteTableDtl(Long id) {
+		    	log.info(" idLong : {}",id);
+		    	jdbcTemplate.update(" UPDATE TRAVEL_ESTIMATOR_DTL SET IS_DELETED = 'Y' WHERE ID = ? ",new Object[] {id});
+		    }
 
 
 		    public Long addDocument (Long idProcess,String createdBy,String documentType,String subject) {
@@ -429,11 +469,11 @@ public class IaTravelEstimatorDao {
 		    
 		    public Long saveDataDtl (Int09TableDtlVo vo) {
 		    	Long id = jdbcTemplate.queryForObject(" SELECT TRAVEL_ESTIMATOR_DTL_SEQ.NEXTVAL FROM dual ",Long.class);
-//		    	vo.getFeedMoney(),vo.getRoostMoney(),vo.getPassage(),vo.getOtherExpenses(),
-//		    	vo.setTotalMoney();
+
 		    	jdbcTemplate.update(" INSERT INTO TRAVEL_ESTIMATOR_DTL( " + 
 		    			"ID, " + 
 		    			"ID_PROCESS, " + 
+		    			"DOCUMENT_TYPE, " + 
 		    			"NAME, " + 
 		    			"POSITION, " + 
 		    			"FEED_DAY, " + 
@@ -443,8 +483,11 @@ public class IaTravelEstimatorDao {
 		    			"PASSAGE, " + 
 		    			"OTHER_EXPENSES, " + 
 		    			"TOTAL_MONEY, " + 
-		    			"REMARK "+ 
+		    			"REMARK, "+ 
+		    			"IS_DELETED "+ 
 		    			")VALUES( " + 
+		    			"?, " + 
+		    			"?, " + 
 		    			"?, " + 
 		    			"?, " + 
 		    			"?, " + 
@@ -459,6 +502,7 @@ public class IaTravelEstimatorDao {
 		    			"?) ",new Object[] {
 		    					id,
 		    					vo.getIdProcess(),
+		    					vo.getDocumentType(),
 		    					vo.getName(),
 		    					vo.getPosition(),
 		    					vo.getFeedDay(),
@@ -468,7 +512,80 @@ public class IaTravelEstimatorDao {
 		    					vo.getPassage(),
 		    					vo.getOtherExpenses(),
 		    					vo.getTotalMoney(),
-		    					vo.getRemark()});
+		    					vo.getRemark(),
+		    					"N"});
+		    	
+		    	return id;
+		}
+		    public Long saveDataFormDtl (Long idDtl,Int09FormDtlVo formDtlVo) {
+		    	Long id = jdbcTemplate.queryForObject(" SELECT TRAVEL_ESTIMATOR_FORM_DTL_SEQ.NEXTVAL FROM dual ",Long.class);
+
+		    	jdbcTemplate.update(" INSERT INTO TRAVEL_ESTIMATOR_FORM_DTL( " + 
+		    			"ID, " +
+				    	"ID_DTL, " +
+				    	"NAME,  " +
+				    	"LAST_NAME,  " +
+				    	"POSITION,  " +
+				    	"TYPE,  " +
+				    	"GRADE,  " +
+				    	"PERMISSION_DATE,  " +
+				    	"WRITE_DATE,  " +
+				    	"DEPARTURE,  " +
+				    	"DEPARTURE_DATE,  " +
+				    	"RETURN_DATE,  " +
+				    	"ALLOWANCE,  " +
+				    	"TRAINING,  " +
+				    	"ROOST,  " +
+				    	"TRAINING_TYPE,  " +
+				    	"ROOM_TYPE,  " +
+				    	"NUMBER_DATE,  " +
+				    	"PASSAGE,  " +
+				    	"OTHER_EXPENSES,  " +
+				    	"REMARK " +
+		    			")VALUES( " + 
+		    			"?, " +
+				    	"?, " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+				    	"?,  " +
+		    			"?) ",new Object[] {
+		    					id,
+		    					idDtl, 
+		    					formDtlVo.getName(),  
+		    					formDtlVo.getLastName(),  
+		    					formDtlVo.getPosition(),  
+		    					formDtlVo.getType(),  
+		    					formDtlVo.getGrade(),  
+		    					formDtlVo.getPermissionDate(),  
+		    					formDtlVo.getWriteDate(),  
+		    					formDtlVo.getDeparture(),  
+		    					formDtlVo.getDepartureDate(),  
+		    					formDtlVo.getReturnDate(),  
+		    					formDtlVo.getAllowance(),  
+		    					formDtlVo.getTraining(),  
+		    					formDtlVo.getRoost(),  
+		    					formDtlVo.getTrainingType(),  
+		    					formDtlVo.getRoomType(),  
+		    					formDtlVo.getNumberDate(),  
+		    					formDtlVo.getPassage(),  
+		    					formDtlVo.getOtherExpenses(),  
+		    					formDtlVo.getRemark() 
+		    					});
 		    	
 		    	return id;
 		}
