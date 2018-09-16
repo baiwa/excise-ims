@@ -26,6 +26,8 @@ const URL = {
   styleUrls: ["./int02-3.component.css"]
 })
 export class Int023Component implements OnInit {
+  RISK_TYPE: string = "QTN_MAIN";
+  PAGE: string = "int02-3";
   @ViewChild("m") mform: NgForm;
 
   // Service Details
@@ -57,6 +59,7 @@ export class Int023Component implements OnInit {
   // 
   toggleRL: boolean = false;
   rl: boolean = false;
+  rlLen: number = 0;
 
   constructor(
     private ajax: AjaxService,
@@ -107,6 +110,16 @@ export class Int023Component implements OnInit {
     this.headerId = this.route.snapshot.queryParams["id"];
     this._initialTable();
     this.initialTable();
+    var url = "ia/condition/findConditionByParentId";
+    this.ajax.post(url, { parentId: this.headerId, riskType: this.RISK_TYPE, page: this.PAGE }, res => {
+      var data = res.json();
+      if (data != undefined && data.length > 0) {
+        this.rlLen = data.length;
+        this.rl = true;
+      } else {
+        this.rl = false;
+      }
+    });
   }
 
   canDeactivate(): Observable<boolean> | boolean {
@@ -182,32 +195,52 @@ export class Int023Component implements OnInit {
 
   chck = (id, what, e, i, table) => {
     e.preventDefault();
+    console.log("Checked: ", what);
     switch (what) {
       case 'man':
         this[`chk${i}`] = this[`chk${i}`].filter(obj => obj.qtnReportManId != id);
-        this[`${table}`].map((obj, index) => {
+        this[`${table}`].forEach((obj, index) => {
           if (obj.qtnReportManId == id) {
             if (e.target.checked) {
               this[`chk${i}`].push(obj);
-              $(`#chk${i}-${index}`)[0].checked = true;
+              $(`#chk${i}-${index}`).prop('checked', true);
             } else {
               const del = this[`chk${i}`].findIndex(ob => ob.qtnReportManId == id);
               del != -1 && this[`chk${i}`].splice(del, 1);
-              $(`#chk${i}-${index}`)[0].checked = false;
+              $(`#chk${i}-${index}`).prop('checked', false);
             }
           }
         })
         break;
       case 'dtl':
-        this[`${table}`].map((obj, index) => {
+        this[`${table}`].forEach((obj, index) => {
           if (obj.qtnReportDtlId == id) {
             if (e.target.checked) {
+
+              let o = this[`chk${i}`].filter(a => a.qtnReportManId == obj.qtnReportManId && a.qtnReportDtlId == null);
+              if (o.length == 0 && i != 2) {
+                let ind = this[`${table}`].findIndex(a => a.qtnReportManId == obj.qtnReportManId);
+                this[`chk${i}`].push(this[`${table}`][ind]);
+                $(`#chk${i}-${ind}`).prop('checked', true);
+              }
+
               this[`chk${i}`].push(obj);
-              $(`#chk${i}-${index}`)[0].checked = true;
+              $(`#chk${i}-${index}`).prop('checked', true);
+
             } else {
+
               const del = this[`chk${i}`].findIndex(ob => ob.qtnReportDtlId == id);
               del != -1 && this[`chk${i}`].splice(del, 1);
-              $(`#chk${i}-${index}`)[0].checked = false;
+              $(`#chk${i}-${index}`).prop('checked', false);
+              let o = this[`chk${i}`].filter(b => b.qtnReportManId == obj.qtnReportManId);
+              if (o.length == 1 && i != 2) {
+                const del = this[`chk${i}`].findIndex(ob => ob.qtnReportManId == obj.qtnReportManId);
+                if (del != -1) {
+                  this[`chk${i}`].splice(del, 1);
+                  $(`#chk${i}-${del}`).prop('checked', false);
+                }
+              }
+
             }
           }
         })
@@ -222,7 +255,7 @@ export class Int023Component implements OnInit {
       if (this[`${table}`].length > 0) {
         this[`${table}`].map((obj, index) => {
           if ($(`#chk${i}-${index}`)[0]) {
-            $(`#chk${i}-${index}`)[0].checked = true;
+            $(`#chk${i}-${index}`).prop('checked', true);
           }
         });
       }
@@ -231,7 +264,7 @@ export class Int023Component implements OnInit {
       if (this[`${table}`].length > 0) {
         this[`${table}`].map((obj, index) => {
           if ($(`#chk${i}-${index}`)[0]) {
-            $(`#chk${i}-${index}`)[0].checked = false;
+            $(`#chk${i}-${index}`).prop('checked', false);
           }
         });
       }
@@ -341,7 +374,7 @@ export class Int023Component implements OnInit {
             }
             this.req.save = this.table;
           });
-          this.onAdd2SaveList();
+          // this.onAdd2SaveList();
         }
       }
     } else {
@@ -352,18 +385,21 @@ export class Int023Component implements OnInit {
   onAdd2SaveList = () => {
     this.mainDetail = "";
     this.minorDetail = [""];
+    let mainId = "";
     for (let j = 0; j < this.chk1.length; j++) {
       if (this.chk1[j].qtnReportHdrId) {
+        mainId = `MAN_${this.getRndInteger(10000, 99999)}`;
         this.chk1[j].qtnFor = "M";
         this.chk1[j].qtnReportHdrId = this.headerId.toString();
+        this.chk1[j].qtnReportManId = mainId;
       } else {
         this.chk1[j].qtnFor = "D";
+        this.chk1[j].qtnReportManId = mainId;
       }
-      $(`#chk1-${j}`).prop('checked', false);
       this.chk1[j].status = "NEW";
       this.table.push(this.chk1[j]);
+      $(`#chk1-${j}`).prop('checked', false);
       if (j == this.chk1.length - 1) {
-        this.chk1 = [];
         this.table.forEach(obj => {
           if (!obj.qtnReportHdrId) {
             obj.qtnFor = "D";
@@ -393,7 +429,7 @@ export class Int023Component implements OnInit {
         // TODO
         $("#int02-3").modal('show');
         this.table.forEach(each => {
-          if (each.qtnReportManId == id) {
+          if (each.qtnReportManId == id && each.qtnReportDtlId == null) {
             this.mform.controls.msg.setValue(each.qtnMainDetail);
             this.mform.controls.msgId.setValue(each.qtnReportManId);
           }
@@ -416,7 +452,7 @@ export class Int023Component implements OnInit {
           break;
         case 'man':
           this.table.forEach(each => {
-            if (each.qtnReportManId == msgId.value) {
+            if (each.qtnReportManId == msgId.value && each.qtnReportDtlId == null) {
               each.qtnMainDetail = msg.value;
             }
           });
@@ -428,7 +464,6 @@ export class Int023Component implements OnInit {
 
   exit(): void {
     $('#int02-3').modal('hide');
-    this.mform.reset('submitted');
   }
 
   addCond() {
@@ -452,7 +487,16 @@ export class Int023Component implements OnInit {
   }
 
   chkRL(e) {
-    this.rl = e;
+    var url = "ia/condition/findConditionByParentId";
+    this.ajax.post(url, { parentId: this.headerId, riskType: this.RISK_TYPE, page: this.PAGE }, res => {
+      var data = res.json();
+      if (data != undefined && data.length > 0) {
+        this.rlLen = data.length;
+        this.rl = true;
+      } else {
+        this.rl = false;
+      }
+    });
   }
 
   onCancel() {

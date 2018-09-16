@@ -177,7 +177,7 @@
             <i class="save icon"></i>
             บันทึก
           </button>
-          <button type="button" (click)="setRL(0)" class="ui mini primary button {{rl ? 'disabled' : ''}}">
+          <button type="button" (click)="setRL(0)" class="ui mini primary button {{rl && rlLen > 0 ? 'disabled' : ''}}">
             <i class="setting icon"></i>
             กำหนดเงื่อนไข RL
           </button>
@@ -198,8 +198,8 @@
     <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
   </div>
   <div class="ui attached segment">
-    <condition class="ui form" (has)="chkRL($event)" (out)="setRL($event)" [riskId]="headerId" [riskType]="'QTN_HEADER'"
-      [page]="'int02-3'"></condition>
+    <condition class="ui form" (has)="chkRL($event)" (out)="setRL($event)" [riskId]="headerId" [riskType]="RISK_TYPE"
+      [page]="PAGE"></condition>
   </div>
 </div>
 <ui-modal [id]="'int02-3'" [size]="'small'" [type]="'custom'">
@@ -214,7 +214,7 @@
         </div>
         <div class="twelve wide field {{ m.submitted && m.controls.msg.invalid ? 'error' : '' }}">
           <div class="ui input">
-            <input type="text" name="msg" ngModel required>
+            <textarea name="msg" rows="2" ngModel required></textarea>
             <input type="hidden" name="msgId" ngModel>
             <input type="hidden" name="msgType" ngModel>
           </div>
