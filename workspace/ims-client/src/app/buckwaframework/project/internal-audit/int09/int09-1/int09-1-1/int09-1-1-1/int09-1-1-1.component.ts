@@ -300,7 +300,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
     this.calenda();
   }
   modalEdit=(data)=> {
-    this.btnModal = 'E';
+    
     console.log("data edit : ",data.int09FormDtlVo);
     $("#name").val(data.int09FormDtlVo.name);
     $("#lastName").val(data.int09FormDtlVo.lastName);
@@ -322,6 +322,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
     $("#otherExpenses").val(data.int09FormDtlVo.otherExpenses);
     $("#remarkT").val(data.int09FormDtlVo.remark);
 
+    this.btnModal = 'E';
     $('#modalAdd').modal('show');
     this.calenda();
   }
