@@ -177,7 +177,8 @@
             <i class="save icon"></i>
             บันทึก
           </button>
-          <button type="button" (click)="setRL(0)" class="ui mini primary button {{rl && rlLen > 0 ? 'disabled' : ''}}">
+          <button type="button" (click)="setRL(0)" class="ui mini primary button">
+            <!-- {{rl && rlLen > 0 ? 'disabled' : ''}} -->
             <i class="setting icon"></i>
             กำหนดเงื่อนไข RL
           </button>
@@ -192,14 +193,14 @@
     </div>
 
   </div>
-</div>
-<div class="sixteen wide column" *ngIf="toggleRL">
-  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-    <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
-  </div>
-  <div class="ui attached segment">
-    <condition class="ui form" (has)="chkRL($event)" (out)="setRL($event)" [riskId]="headerId" [riskType]="RISK_TYPE"
-      [page]="PAGE"></condition>
+  <div class="sixteen wide column" *ngIf="toggleRL">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
+    </div>
+    <div class="ui attached segment">
+      <condition class="ui form" (has)="chkRL($event)" (out)="setRL($event)" [riskId]="headerId" [riskType]="RISK_TYPE"
+        [page]="PAGE"></condition>
+    </div>
   </div>
 </div>
 <ui-modal [id]="'int02-3'" [size]="'small'" [type]="'custom'">

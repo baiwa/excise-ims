@@ -5,7 +5,7 @@
             <h3>ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต</h3>
         </div>
         <div class="ui bottom attached segment">
-            <form class="ui sixteen wide grid" (submit)="search(f)" #f="ngForm">
+            <form class="ui sixteen wide grid" (submit)="onSubmit(f)" #f="ngForm">
                 <div class="sixteen wide column">
                     <div class="ui form">
                         <div class="inline fields">
@@ -14,9 +14,9 @@
                             </div>
                             <div class="five wide field {{ f.submitted && f.controls.travelTo1.invalid ? 'error' : '' }}">
                                 <select class="ui dropdown search selection" id="travelTo1" name="travelTo1" ngModel
-                                    required (change)="travelTo2Dropdown($event)">
+                                    (change)="dropdown($event, 'comboBox2')">
                                     <option value="">เลือก</option>
-                                    <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                                    <option *ngFor="let data of comboBox1 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                                 </select>
                             </div>
                             <div class="two wide field">
@@ -24,9 +24,9 @@
                             </div>
                             <div class="five wide field">
                                 <select class="ui dropdown search selection" id="travelTo2" name="travelTo2" ngModel
-                                    (change)="travelTo3Dropdown($event)">
+                                    (change)="dropdown($event, 'comboBox3')">
                                     <option value="">เลือก</option>
-                                    <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                                    <option *ngFor="let data of comboBox2 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                                 </select>
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                             <div class="five wide field">
                                 <select class="ui dropdown search selection" id="travelTo3" name="travelTo3" ngModel>
                                     <option value="">เลือก</option>
-                                    <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                                    <option *ngFor="let data of comboBox3 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                                 </select>
                             </div>
                             <div class="two wide field ">
@@ -48,7 +48,7 @@
                                     <div class="ui input left icon">
                                         <i class="calendar alternate icon"></i>
                                         <input type="text" placeholder="วัน/เดือน/ปี" name="startDate" id="startDate"
-                                            ngModel required>
+                                            ngModel>
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                                     <div class="ui input left icon">
                                         <i class="calendar alternate icon"></i>
                                         <input type="text" placeholder="วัน/เดือน/ปี" name="endDate" id="endDate"
-                                            ngModel required>
+                                            ngModel>
                                     </div>
                                 </div>
                             </div>

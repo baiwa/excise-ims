@@ -10,6 +10,7 @@ import { DialogService } from '../../../../common/services';
 import { Observable } from '../../../../../../../node_modules/rxjs';
 import { Location } from '@angular/common';
 import { NgForm } from '@angular/forms';
+
 declare var $: any;
 
 const URL = {
@@ -74,7 +75,7 @@ export class Int023Component implements OnInit {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "แบบสอบทานระบบการควบคุมภายใน", route: "#" },
-      { label: "สร้างแบบสอบทานระบบการควบคุมภายใน", route: "int01/1" },
+      { label: "สร้างแบบสอบทานระบบการควบคุมภายใน", route: "int02/1" },
       { label: "เพิ่ม/แก้ไข ด้านแบบสอบทาน", route: "#" },
       { label: "เพิ่ม/แก้ไข รายละเอียดแบบสอบทาน", route: "#" },
     ];

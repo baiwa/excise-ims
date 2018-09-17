@@ -15,6 +15,7 @@ import { BaseModel } from "./base";
 import { ManageReq } from "./request";
 import { TableReq } from "./table";
 import { BreadCrumb } from "./breadcrumb";
+import { ComboBox } from "./combobox";
 
 export {
   AlertMessage,
@@ -33,5 +34,6 @@ export {
   BaseModel,
   ManageReq,
   TableReq,
-  BreadCrumb
+  BreadCrumb,
+  ComboBox
 };
