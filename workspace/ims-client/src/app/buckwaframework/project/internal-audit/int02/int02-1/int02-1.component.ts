@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AjaxService, IaService } from '../../../../common/services';
-import { TextDateTH, formatter } from '../../../../common/helper';
+import { formatter, TextDateTH, toDateLocale } from 'helpers/index';
+import { AjaxService, IaService } from 'services/index';
+import { BreadCrumb } from 'models/index';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { toDateLocale } from '../../../../common/helper/datepicker';
 import { Int02Service } from '../int02.service';
-import { BreadCrumb } from '../../../../common/models';
 
 declare var $: any;
 

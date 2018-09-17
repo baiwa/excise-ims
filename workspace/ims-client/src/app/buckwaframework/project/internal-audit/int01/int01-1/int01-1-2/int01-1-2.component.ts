@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { BreadCrumb } from "../../../../../common/models";
+import { BreadCrumb } from "models/index";
 import { NgForm } from "@angular/forms";
 
 declare var $: any;

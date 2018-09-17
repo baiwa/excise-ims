@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
-import { AjaxService } from "../../../../../common/services";
+import { AjaxService } from "services/index";
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
-import { BreadCrumb, ComboBox } from "../../../../../common/models";
+import { BreadCrumb, ComboBox } from "models/index";
 import { Int0111Service } from "./int01-1-1.service";
 import { Observable } from "rxjs";
 declare var $: any;
@@ -31,14 +31,12 @@ export class Int0111Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // Dropdowns
-    $(".ui.dropdown").dropdown();
-    $(".ui.dropdown.search").css("width", "100%");
     // Start End Calendars
     this.self.calendar("calendar1", "calendar2", this.form);
   }
 
   ngAfterViewInit() {
+    // Dropdowns
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.search").css("width", "100%");
   }
@@ -47,7 +45,7 @@ export class Int0111Component implements OnInit, AfterViewInit {
     console.log(form);
     // const { travelTo1, startDate, endDate } = form.controls;
     // if (form.valid || (travelTo1.valid && startDate.valid && endDate.valid)) {
-      this.router.navigate(['int01/1/2']);
+      // this.router.navigate(['int01/1/2']);
     // }
   }
 

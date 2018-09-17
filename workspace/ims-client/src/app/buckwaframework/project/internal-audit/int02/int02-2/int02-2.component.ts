@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs";
-import { DialogService, IaService, MessageBarService, AjaxService, AuthService } from "../../../../common/services";
+import { DialogService, IaService, MessageBarService, AjaxService, AuthService } from "services/index";
 import { Headers } from "@angular/http";
-import { toFormData } from "../../../../common/helper";
-import { BaseModel, ManageReq, TableReq, BreadCrumb } from "../../../../common/models";
+import { toFormData } from "helpers/index";
+import { BaseModel, ManageReq, TableReq, BreadCrumb } from "models/index";
 
 declare var $: any;
 

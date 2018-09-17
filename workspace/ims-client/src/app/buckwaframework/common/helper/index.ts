@@ -1,4 +1,4 @@
-import { TextDateTH, formatter, digit, ThaiFormatter } from "./datepicker";
+import { TextDateTH, formatter, digit, ThaiFormatter, toDateLocale } from "./datepicker";
 import { numberWithCommas, thaiNumber } from "./number";
 import { Prices } from "./travel";
 import { ThaiNumberToText, ArabicNumberToText, CheckNumber, ThaiNumber } from "./thaibath";
@@ -12,6 +12,7 @@ export {
   formatter,
   digit,
   ThaiFormatter,
+  toDateLocale,
   // Number
   numberWithCommas,
   thaiNumber,

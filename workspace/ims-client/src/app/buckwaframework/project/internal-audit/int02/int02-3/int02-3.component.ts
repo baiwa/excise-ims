@@ -1,15 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
-import { MessageBarService } from "../../../../common/services/message-bar.service";
-
-import { AjaxService } from "../../../../common/services/ajax.service";
-import { BaseModel, ManageReq, BreadCrumb } from '../../../../common/models';
-import { toFormData } from '../../../../common/helper';
-import { Headers } from '@angular/http';
-import { DialogService } from '../../../../common/services';
-import { Observable } from '../../../../../../../node_modules/rxjs';
 import { Location } from '@angular/common';
 import { NgForm } from '@angular/forms';
+import { Headers } from '@angular/http';
+import { Observable } from 'rxjs';
+
+import { toFormData } from 'helpers/index';
+import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
+import { AjaxService, DialogService, MessageBarService } from 'services/index';
 
 declare var $: any;
 
