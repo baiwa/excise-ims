@@ -1,536 +1,79 @@
+<app-breadcrumb [route]="breadcrumb" ></app-breadcrumb>
+
+
 <div class="ui grid">
   <div class="sixteen wide column">
-    <div class="ui large ordered steps" style="width: 280px;">
-      <div class="step">
-        <div class="content">
-          <div class="title">ตรวจสอบ</div>
-          <div class="description">ดุลบัญชียอดยกไป</div>
-        </div>
-      </div>
-      <div class="step" style="width: 260px;">
-        <div class="content">
-          <div class="title">ตรวจสอบ</div>
-          <div class="description">ข้อมูลบัญชี</div>
-        </div>
-      </div>
-      <div class="  step">
-        <div class="content">
-          <div class="title">ตรวจสอบ</div>
-          <div class="description">งบทดลองกระทบยอด 4 บัญชีแยกประเภท
-          </div>
-        </div>
-      </div>
-      <div class="active step">
-        <div class="content">
-          <div class="title">ตรวจสอบ</div>
-          <div class="description">รายงานเคลื่อนไหวเงินฝากคลัง
-          </div>
-        </div>
-      </div>
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>อัพโหลดไฟล์ตรวจสอบการนำส่งเงินบัญชีเจ้าหนี้ อปท.</span>
     </div>
-
-
-    <h2 class="ui header">ตรวจสอบการนำส่งบัญชีเจ้าหนี้ อปท</h2>
-
-    <div class="ui top attached header">
-      <span>ตรวจสอบการนำส่งบัญชีเจ้าหนี้ อปท</span>
-    </div>
-
 
     <div class="ui attached segment">
-      <div class="ui right aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini primary button">
-            <i class="print icon"></i>
-            พิมพ์
-          </button>
-          <button class="ui mini primary button">
-            <i class="save icon"></i>
-            บันทึก
-          </button>
-          <div id="export" class="ui primary buttons">
-            <div class="ui mini button">ส่งออก</div>
-            <div class="ui floating dropdown icon button">
-              <i class="dropdown icon"></i>
-              <div class="menu">
-                <div class="item">
-                  <i class="file pdf outline icon"></i> PDF</div>
-                <div class="item">
-                  <i class="file excel outline icon"></i>Excel</div>
-              </div>
-            </div>
+      <form id="upload-form" class="ui form" (submit)="onUpload($event)" ngNativeValidate>
+        <div class="inline fields">
+          <div class="four wide field"></div>
+          <div class="two wide field"></div>
+          <div class="five wide field">
+            <input id="fileExel" type="file" name="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="onChangeUpload($event)" required>
+          </div>
+          <div class="two wide field"></div>
+          <div class="three wide field"></div>
+        </div>
+
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button" type="submit">
+              <i class="upload icon"></i>
+              อัพโหลด
+            </button>
+            <button class="ui mini button" type="reset">
+              <i class="refresh icon"></i>
+              ล้างข้อมูล
+            </button>
           </div>
         </div>
-      </div>
-      <br>
-      <div style="overflow-x: scroll">
-        <table class="ui small celled table" style="width: 130%">
-          <thead>
-            <tr style="text-align: center;">
-              <th rowspan="2">วันที่ลงรายการ</th>
-              <th rowspan="2">เลขที่เอกสาร</th>
-              <th rowspan="2">ประเภทเอกสาร</th>
-              <th rowspan="2">เอกสารอ้างอิง</th>
-              <th rowspan="2">ผู้ทำแทน</th>
-              <th rowspan="2">การกำหนด</th>
-              <th rowspan="2">หน่วยเบิกจ่าย</th>
-              <th colspan="2">ผ่านรายการ</th>
-              <th rowspan="2">ยอดยกไป</th>
 
-            </tr>
-            <tr style="text-align: center;">
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">เดบิต</th>
-              <th>เครดิต</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td style="text-align: center;">05.10.2016</td>
-              <td>8800001069</td>
-              <td style="text-align: center;"> IX</td>
-              <td style="text-align: center;">6169011200014780</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600190</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 48.50 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">05.10.2016</td>
-              <td>8800001073</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6169011200014780</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600190</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 58.20 </td>
-              <td style="text-align: center;"> - </td>
-              <td> 106.70 </td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">07.10.2016</td>
-              <td>8800002111</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6165218900013600</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600190</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 97.00 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">07.10.2016</td>
-              <td>8800002115</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6185058400020030</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 97.00 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">07.10.2016</td>
-              <td>8800002119</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6185058400020030</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 19.40 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">07.10.2016</td>
-              <td>8800002123</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6185058400020030</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 19.40 </td>
-              <td style="text-align: center;"> - </td>
-              <td> 339.50 </td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">17.10.2016</td>
-              <td>8800004798</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6182085100015400</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 19.40 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">17.10.2016</td>
-              <td>8800004805</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6182085100015400</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 19.40 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">17.10.2016</td>
-              <td>8800004809</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6182085100015400</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 38.80 </td>
-              <td style="text-align: center;"> - </td>
-              <td> 417.10 </td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">04.11.2016</td>
-              <td>8800010598</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6169011200014680</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600190</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 19.40 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">04.11.2016</td>
-              <td>8800010603</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6169011200014680</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600190</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 38.80 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">09.11.2016</td>
-              <td>8800012175</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6165218900013000</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600190</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 19.40 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">09.11.2016</td>
-              <td>8800012180</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6165218900013000</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600190</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 38.80 </td>
-              <td style="text-align: center;"> - </td>
-              <td> 116.40 </td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">16.11.2016</td>
-              <td>200001374</td>
-              <td style="text-align: center;"> J0</td>
-              <td>3600001400</td>
-              <td style="text-align: left;">306</td>
-              <td>300600189</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> - </td>
-              <td style="text-align: center;"> 400.10 </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">02.12.2016</td>
-              <td>8800022820</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6160806400002870</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600190</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 2,376.50 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">02.12.2016</td>
-              <td>8800022825</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6160806400002870</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600190</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 659.60 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">02.12.2016</td>
-              <td>8800022830</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6177184500015920</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600192</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 77.60 </td>
-              <td style="text-align: center;"> - </td>
-              <td>3,113.70</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">07.12.2016</td>
-              <td>8800023476</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6181604800007440</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 465.60 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">07.12.2016</td>
-              <td>8800023478</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6181604800007440</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 116.40 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">07.12.2016</td>
-              <td>8800023483</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6181604800007440</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 155.20 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">07.12.2016</td>
-              <td>8800023488</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6181604800007440</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 853.60 </td>
-              <td style="text-align: center;"> - </td>
-              <td>4,704.50</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">14.12.2016</td>
-              <td>8800026413</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6182085100009160</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 368.60 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">14.12.2016</td>
-              <td>8800026418</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6182085100009160</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 407.40 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">14.12.2016</td>
-              <td>8800026423</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6182085100009160</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 523.80 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">14.12.2016</td>
-              <td>8800026428</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6182085100009160</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 135.80 </td>
-              <td style="text-align: center;"> - </td>
-              <td>6,140.10</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">15.12.2016</td>
-              <td>200009408</td>
-              <td style="text-align: center;"> J0</td>
-              <td>3600010197</td>
-              <td style="text-align: left;">306</td>
-              <td>300600189</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> - </td>
-              <td style="text-align: center;"> 116.40 </td>
-              <td>13,467.48</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">12.01.2017</td>
-              <td>8800038453</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6165218900012010</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600190</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 77.60 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">13.01.2017</td>
-              <td>8800039038</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6177184500008490</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600192</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 291.00 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">13.01.2017</td>
-              <td>8800039040</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6177184500008490</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600192</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 291.00 </td>
-              <td style="text-align: center;"> - </td>
-              <td>659.60</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">17.01.2017</td>
-              <td>8800040216</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6181604800010610</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 155.20 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">17.01.2017</td>
-              <td>8800040221</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6181604800010610</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 582.00 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">17.01.2017</td>
-              <td>8800040226</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6181604800010610</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 213.40 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">17.01.2017</td>
-              <td>8800040231</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6181604800010610</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600191</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 116.40 </td>
-              <td style="text-align: center;"> - </td>
-              <td>1,726.60</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">18.01.2017</td>
-              <td>8800041038</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6165218900016070</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600190</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 329.80 </td>
-              <td style="text-align: center;"> - </td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">18.01.2017</td>
-              <td>8800041043</td>
-              <td style="text-align: center;"> IX</td>
-              <td>6165218900016070</td>
-              <td style="text-align: left;">XXXX</td>
-              <td>300600190</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> 77.60 </td>
-              <td style="text-align: center;"> - </td>
-              <td>2,134.00</td>
-            </tr>
-
-            <tr>
-              <td style="text-align: center;">19.01.2017</td>
-              <td>200012526</td>
-              <td style="text-align: center;"> J0</td>
-              <td>3600014270</td>
-              <td style="text-align: left;">306</td>
-              <td>300600189</td>
-              <td>300600189</td>
-              <td style="text-align: center;"> - </td>
-              <td style="text-align: center;"> 6,140.10 </td>
-              <td>14,253.18</td>
-            </tr>
-          </tbody>
-
-        </table>
-
-      </div>
-    </div>
-    <br>
-    <div class="ui center aligned grid">
-      <div class="sixteen wide column">
-        <button class="ui mini primary button " routerLink="/int07/5/4">
-          <i class="arrow left icon"></i>
-          กลับ
-        </button>
-      </div>
+      </form>
     </div>
   </div>
+
+  <div class="sixteen wide column">
+      <div class="ui top attached header">
+          <span>* แสดงตัวอย่างไฟล์ที่อัพโหลด  และแก้ไขได้</span>
+      </div>
+      <div class="ui attached segment">
+        <div class="ui form"></div>
+
+        <table id="dataTable"  class="ui small celled table" style="width: 100%;">
+          <thead>
+            <tr>
+              <th  rowspan="2" style="text-align: center !important">วันที่ลงรายการ</th>
+              <th  rowspan="2" style="text-align: center !important" >เลขที่เอกสาร</th>
+              <th  rowspan="2" style="text-align: center !important" >ประเภทเอกสาร</th>
+              <th  rowspan="2" style="text-align: center !important" >เอกสารอ้างอิง</th>
+              <th  rowspan="2" style="text-align: center !important" >ผู้ทำแทน</th>
+              <th  rowspan="2" style="text-align: center !important" >การกำหนด</th>
+              <th  rowspan="2" style="text-align: center !important" >หน่วยเบิกจ่าย</th>
+              <th  colspan="2" style="text-align: center !important">ผ่านรายการ</th>
+              <th  rowspan="2" style="text-align: center !important" >ยกยอดไป</th>
+              <th  rowspan="2" style="text-align: center !important">แก้ไข</th>
+            </tr>
+            <tr>
+              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">เดบิต</th>
+              <th style="text-align: center !important">เครดิต</th>
+            </tr>
+          </thead>
+        </table>
+
+        <div class="ui six column centered grid" >
+            <div class="column">
+              <button class="ui mini primary button"    (click)="checkData()" >
+                <i class="check circle icon"></i>
+                เลือกตรวจสอบข้อมูล
+              </button>
+            </div>
+        </div>
+      </div>
+  </div>
+            
+
+</div>
