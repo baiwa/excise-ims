@@ -4,6 +4,7 @@ import { Prices } from "./travel";
 import { ThaiNumberToText, ArabicNumberToText, CheckNumber, ThaiNumber } from "./thaibath";
 import { DecimalFormat } from "./decimalformat";
 import { toFormData } from "./formdata";
+import { Utils } from "./utils";
 
 export {
   // DatePicker
@@ -24,5 +25,7 @@ export {
   // DecimalFormat
   DecimalFormat,
   // FormData
-  toFormData
+  toFormData,
+  // Utils
+  Utils
 };
