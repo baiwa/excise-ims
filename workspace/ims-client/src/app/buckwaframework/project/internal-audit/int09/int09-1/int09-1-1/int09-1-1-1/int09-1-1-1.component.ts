@@ -302,6 +302,8 @@ export class Int09111Component implements OnInit, AfterViewInit {
   modalEdit=(data)=> {
     
     console.log("data edit : ",data.int09FormDtlVo);
+    $("#id").val(data.int09FormDtlVo.id);
+    $("#idDtl").val(data.id);
     $("#name").val(data.int09FormDtlVo.name);
     $("#lastName").val(data.int09FormDtlVo.lastName);
     $("#position").val(data.int09FormDtlVo.position);
@@ -328,10 +330,50 @@ export class Int09111Component implements OnInit, AfterViewInit {
   }
 
   saveData() {
-    console.log("Save Data : True");
+    console.log("Save");
     $('modalAdd').modal('hide');
     const URL = "ia/int09111/save";
     this.ajax.post(URL, { int09FormDtlVo:{
+      idProcess: this.idProcess,
+      name:$("#name").val(),
+      lastName:$("#lastName").val(),
+      position:$("#position").val(),
+      type:$("#type").val(),
+      grade:$("#grade").val(),
+      permissionDate:$("#permissionDate").val(),
+      writeDate:$("#writeDate").val(),
+      departure:$("#departure").val(),
+      departureDate:$("#departureDate").val(),
+      returnDate:$("#returnDate").val(),
+      allowance:$("#allowance").val(),
+      training:$("#training").val(),
+      roost:$("#roost").val(),
+      trainingType:$("#trainingType").val(),
+      roomType:$("#roomType").val(),
+      numberDate:$("#numberDate").val(),
+      passage:$("#passage").val(),
+      otherExpenses:$("#otherExpenses").val(),
+      remark:$("#remarkT").val()}
+    },res => {
+      const commonMessage = res.json();
+      
+    if (commonMessage.msg.messageType == "C") {
+      this.msg.successModal(commonMessage.msg.messageTh);
+      console.log("commonMessage.data : ",commonMessage.data);
+    } else {
+      this.msg.errorModal(commonMessage.msg.messageTh);
+    }
+    $("#searchFlag").val("TRUE");
+    this.setSum0();
+    $('#tableData').DataTable().ajax.reload();
+    });
+  }
+  editData() {
+    console.log("Edit");
+    $('modalAdd').modal('hide');
+    const URL = "ia/int09111/edit";
+    this.ajax.post(URL, { id:$("#idDtl").val(),int09FormDtlVo:{
+      id:$("#id").val(),
       idProcess: this.idProcess,
       name:$("#name").val(),
       lastName:$("#lastName").val(),
@@ -456,7 +498,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    // $('.ui.dropdown').dropdown();
+    $('.ui.dropdown').dropdown();
     this.idProcess = this.route.snapshot.queryParams["idProcess"];
     console.log("idProcess : ", this.idProcess);
     this.dataTable();

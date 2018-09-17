@@ -78,6 +78,12 @@ public class Int0911Service {
 	public void deleteT2(Long id) {
 		iaTravelEstimatorDao.delete0911T2(id);	
 	}
+	public void approve(Int0911FormVo formVo) {	
+		iaTravelEstimatorDao.approve0911(formVo.getId(),formVo.getApprove());
+	}
+	public void approveT2(Int0911FormVo formVo) {	
+		iaTravelEstimatorDao.approve0911T2(formVo.getId(),formVo.getApprove());
+	}
 	public void upload(Int0911FormVo formVo) throws IOException {
 		formVo.setCreatedBy(UserLoginUtils.getCurrentUsername());
 		formVo.setDocumentName(formVo.getFileUpload().getOriginalFilename());

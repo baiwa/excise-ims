@@ -71,6 +71,15 @@ public class Int09DataDtlService {
 		return id;
 	}
 	
+	public void editDataDtlAndDataFormDtl(Int09FormDtlVo formDtlVo,Int09TableDtlVo vo) {
+		
+		log.info("editDataDtl ID : {}",vo.getId());
+		iaTravelEstimatorDao.editDataDtl(vo);
+		
+		log.info("editDataFormDtl ID : {}",formDtlVo.getId());
+		iaTravelEstimatorDao.editDataFormDtl(formDtlVo);
+	}
+	
 	public Long getFeedMoney(Int09FormDtlVo formDtlVo) {
 		long feedMoney = 0;
 		if("1183".equals(formDtlVo.getAllowance())) {

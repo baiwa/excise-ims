@@ -1,6 +1,5 @@
 package th.co.baiwa.excise.ia.persistence.dao;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -9,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jfree.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +15,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.vo.Int09111And3FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int09TableDtlVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911T2Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int091FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int091Vo;
-import th.co.baiwa.excise.ia.persistence.vo.Int09222FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int09FormDtlVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int09TableDtlVo;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
@@ -318,7 +314,7 @@ public class IaTravelEstimatorDao {
 				params.add(formVo.getIdProcess());
 				params.add(formVo.getDocumentTypeCode());
 				
-				sql.append(" ORDER BY a.ID desc ");
+				sql.append(" ORDER BY a.ID asc ");
 				
 				log.info(" findAllTableDtl idProcess : {}",formVo.getIdProcess());
 				log.info(" findAllTableDtl sql : {}",sql.toString());
@@ -418,20 +414,47 @@ public class IaTravelEstimatorDao {
 			    };
 		    
 		    public void delete0911(Long id) {
-		    	log.info(" idLong : {}",id);
+		    	log.info(" delete ID_PROCESS : {}",id);
 		    	jdbcTemplate.update(" UPDATE TRAVEL_ESTIMATOR_DOCUMENT SET IS_DELETED = 'Y' WHERE ID = ? ",new Object[] {id});
 		    }
   
 		    public void delete0911T2(Long id) {
-		    	log.info(" idLong : {}",id);
+		    	log.info(" delete ID_PROCESS : {}",id);
 		    	jdbcTemplate.update(" UPDATE TRAVEL_ESTIMATOR_EVIDENCE SET IS_DELETED = 'Y' WHERE ID = ? ",new Object[] {id});
+		    }
+		    public void approve0911(Long id,String status) {
+		    	log.info(" delete ID_PROCESS : {}",id);
+		    	jdbcTemplate.update(" UPDATE TRAVEL_ESTIMATOR_DOCUMENT SET STATUS = ? WHERE ID = ? ",new Object[] {status,id});
+		    }
+		    public void approve0911T2(Long id,String status) {
+		    	log.info(" delete ID_PROCESS : {}",id);
+		    	jdbcTemplate.update(" UPDATE TRAVEL_ESTIMATOR_EVIDENCE SET STATUS = ? WHERE ID = ? ",new Object[] {status,id});
 		    }
 		    
 		    public void deleteTableDtl(Long id) {
-		    	log.info(" idLong : {}",id);
+		    	log.info(" delete ID_PROCESS : {}",id);
 		    	jdbcTemplate.update(" UPDATE TRAVEL_ESTIMATOR_DTL SET IS_DELETED = 'Y' WHERE ID = ? ",new Object[] {id});
 		    }
-
+		    
+		    public void deleteTravelEstimatorDtl(Long id,String documentType) {
+		    	log.info(" delete ID_PROCESS : {}",id);
+	
+		    	 List<Long> listId = jdbcTemplate.query(" SELECT * FROM TRAVEL_ESTIMATOR_DTL t WHERE t.ID_PROCESS = ? AND t.DOCUMENT_TYPE= ? ",new Object[] {id,documentType},deleteTravelEstimatorDtlRowmapper);
+		    	 for (Long idDtl : listId) {
+		    		 jdbcTemplate.update(" DELETE FROM TRAVEL_ESTIMATOR_FORM_DTL t WHERE t.ID_DTL = ? ",new Object[] {idDtl});
+				}
+		    	 
+		    	 jdbcTemplate.update(" DELETE FROM TRAVEL_ESTIMATOR_DTL t WHERE t.ID_PROCESS = ? AND t.DOCUMENT_TYPE= ? ",new Object[] {id,documentType});
+			 }
+				
+			 private RowMapper<Long> deleteTravelEstimatorDtlRowmapper = new RowMapper<Long>() {
+		    	@Override
+		    	public Long mapRow(ResultSet rs, int arg1) throws SQLException {
+		    		Long idDtl = rs.getLong("ID");
+	
+		    		return idDtl;
+		    	}
+			  };
 
 		    public Long addDocument (Long idProcess,String createdBy,String documentType,String subject) {
 		    	Long id = jdbcTemplate.queryForObject(" SELECT TRAVEL_ESTIMATOR_DOCUMENT_SEQ.NEXTVAL FROM dual ",Long.class);
@@ -461,7 +484,7 @@ public class IaTravelEstimatorDao {
 		    					createdBy,
 		    					documentType,
 		    					subject,
-		    					"1166",
+		    					"1194",
 		    					"N",
 		    					"NO"});
 		    	return id;
@@ -517,6 +540,32 @@ public class IaTravelEstimatorDao {
 		    	
 		    	return id;
 		}
+		public void editDataDtl (Int09TableDtlVo vo) {
+
+	    	jdbcTemplate.update(" UPDATE TRAVEL_ESTIMATOR_DTL SET " + 
+	    			"NAME=?, " + 
+	    			"POSITION=?, " + 
+	    			"FEED_DAY=?, " + 
+	    			"FEED_MONEY=?, " + 
+	    			"ROOST_DAY=?, " + 
+	    			"ROOST_MONEY=?, " + 
+	    			"PASSAGE=?, " + 
+	    			"OTHER_EXPENSES=?, " + 
+	    			"TOTAL_MONEY=?, " + 
+	    			"REMARK=? WHERE ID = ?",new Object[] {
+	    					vo.getName(),
+	    					vo.getPosition(),
+	    					vo.getFeedDay(),
+	    					vo.getFeedMoney(),
+	    					vo.getRoostDay(),
+	    					vo.getRoostMoney(),
+	    					vo.getPassage(),
+	    					vo.getOtherExpenses(),
+	    					vo.getTotalMoney(),
+	    					vo.getRemark(),
+	    					vo.getId()});
+	    	
+	}
 		    public Long saveDataFormDtl (Long idDtl,Int09FormDtlVo formDtlVo) {
 		    	Long id = jdbcTemplate.queryForObject(" SELECT TRAVEL_ESTIMATOR_FORM_DTL_SEQ.NEXTVAL FROM dual ",Long.class);
 
@@ -589,6 +638,53 @@ public class IaTravelEstimatorDao {
 		    	
 		    	return id;
 		}
+		    public void editDataFormDtl (Int09FormDtlVo formDtlVo) {
+
+		    	jdbcTemplate.update(" UPDATE TRAVEL_ESTIMATOR_FORM_DTL SET " + 
+				    	"NAME=?,  " +
+				    	"LAST_NAME=?,  " +
+				    	"POSITION=?,  " +
+				    	"TYPE=?,  " +
+				    	"GRADE=?,  " +
+				    	"PERMISSION_DATE=?,  " +
+				    	"WRITE_DATE=?,  " +
+				    	"DEPARTURE=?,  " +
+				    	"DEPARTURE_DATE=?,  " +
+				    	"RETURN_DATE=?,  " +
+				    	"ALLOWANCE=?,  " +
+				    	"TRAINING=?,  " +
+				    	"ROOST=?,  " +
+				    	"TRAINING_TYPE=?,  " +
+				    	"ROOM_TYPE=?,  " +
+				    	"NUMBER_DATE=?,  " +
+				    	"PASSAGE=?,  " +
+				    	"OTHER_EXPENSES=?,  " +
+				    	"REMARK=? WHERE ID=?  ",new Object[] {
+		    					
+		    					formDtlVo.getName(),  
+		    					formDtlVo.getLastName(),  
+		    					formDtlVo.getPosition(),  
+		    					formDtlVo.getType(),  
+		    					formDtlVo.getGrade(),  
+		    					formDtlVo.getPermissionDate(),  
+		    					formDtlVo.getWriteDate(),  
+		    					formDtlVo.getDeparture(),  
+		    					formDtlVo.getDepartureDate(),  
+		    					formDtlVo.getReturnDate(),  
+		    					formDtlVo.getAllowance(),  
+		    					formDtlVo.getTraining(),  
+		    					formDtlVo.getRoost(),  
+		    					formDtlVo.getTrainingType(),  
+		    					formDtlVo.getRoomType(),  
+		    					formDtlVo.getNumberDate(),  
+		    					formDtlVo.getPassage(),  
+		    					formDtlVo.getOtherExpenses(),  
+		    					formDtlVo.getRemark(),
+		    					formDtlVo.getId()
+		    					});
+		    	
+		}
+		    
 		    
 		    
 		    

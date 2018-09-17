@@ -75,6 +75,7 @@
       <div class="ui form center aligned">
   
         <input type="hidden" id="id">
+        <input type="hidden" id="idDtl">
         <input type="hidden" id="idProcess">
   
   
@@ -268,7 +269,7 @@
   
     <div class="actions">
       <div class="ui red deny button">ยกเลิก</div>
-      <div class="ui primary button" *ngIf=" btnModal=='E' " (click)="EditData()">ดำเนินการแก้ไข</div>
+      <div class="ui primary button" *ngIf=" btnModal=='E' " (click)="editData()">ดำเนินการแก้ไข</div>
       <div class="ui green button"  *ngIf=" btnModal=='S' " (click)="saveData()">บันทึก</div>
     </div>
   </div>
@@ -316,11 +317,11 @@
           <label>ลงวันที่</label>
         </div>
         <div class="five wide field">
-          <div class="ui calendar" id="date" style="width: 100%;">
-            <div class="ui input left icon">
-              <i class="time icon"></i>
-              <input type="text" id="fiscalYearIn" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
-            </div>
+            <div class="ui calendar" id="modalDate1" style="width: 100%;">
+              <div class="ui input left icon">
+                  <i class="time icon"></i>
+                  <input type="text" id="dateHead" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+              </div>
           </div>
         </div>
       </div>

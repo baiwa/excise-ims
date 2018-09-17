@@ -99,10 +99,13 @@ export class Int0911Component implements OnInit, OnDestroy {
           "className": "ui center aligned",
           "render": function (data, type, row) {
             var s = '';
-            if (data == 1167) {
-              s = 'ดำเนินการสำเร็จ';
-            } else {
-              s = 'กำลังดำเนินการ';
+
+            if (data == 1196) {
+              s = 'ไม่อนุมัติ';
+            } else if (data == 1195) {
+              s = 'อนุมัติ';
+            }else {
+              s = 'รออนุมัติ';
             }
             return s;
           }
@@ -113,6 +116,8 @@ export class Int0911Component implements OnInit, OnDestroy {
             var btn = '';
             btn +='<button class="mini ui primary button btn-download">ดาวน์โหลด</button>';
             btn +='<button class="mini ui red button btn-delete">ลบ</button>';
+            btn +='<button class="mini ui green button btn-approve">อนุมัติ</button>';
+            btn +='<button class="mini ui red button btn-unapproved">ไม่อนุมัติ</button>';
               return btn;
           }
         }
@@ -150,6 +155,47 @@ export class Int0911Component implements OnInit, OnDestroy {
      }
     },"ลบรายการ");
       
+    });
+
+    table.on('click', 'tbody tr button.btn-approve', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table.row(closestRow).data();
+      const URL = "ia/int0911/approve";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id,approve:"1195"}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+     }
+    },"อนุมัติ");
+    });
+    table.on('click', 'tbody tr button.btn-unapproved', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table.row(closestRow).data();
+      const URL = "ia/int0911/approve";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id,approve:"1196"}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+     }
+    },"ไม่อนุมัติ");
     });
   }
 
@@ -194,10 +240,12 @@ export class Int0911Component implements OnInit, OnDestroy {
           "className": "ui center aligned",
           "render": function (data, type, row) {
             var s = '';
-            if (data == 1167) {
-              s = 'ดำเนินการสำเร็จ';
-            } else {
-              s = 'กำลังดำเนินการ';
+            if (data == 1196) {
+              s = 'ไม่อนุมัติ';
+            } else if (data == 1195) {
+              s = 'อนุมัติ';
+            }else {
+              s = 'รออนุมัติ';
             }
             return s;
           }
@@ -208,6 +256,8 @@ export class Int0911Component implements OnInit, OnDestroy {
             var btn = '';
             btn +='<button class="mini ui primary button btn-download">ดาวน์โหลด</button>';
             btn +='<button class="mini ui red button btn-delete">ลบ</button>';
+            btn +='<button class="mini ui green button btn-approve">อนุมัติ</button>';
+            btn +='<button class="mini ui red button btn-unapproved">ไม่อนุมัติ</button>';
               return btn;
           }
         }
@@ -246,7 +296,46 @@ export class Int0911Component implements OnInit, OnDestroy {
     },"ลบรายการ");
       
     });
-    
+    table2.on('click', 'tbody tr button.btn-approve', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table2.row(closestRow).data();
+      const URL = "ia/int0911/approveT2";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id,approve:"1195"}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData2').DataTable().ajax.reload();
+      });
+     }
+    },"อนุมัติ");
+    });
+    table2.on('click', 'tbody tr button.btn-unapproved', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table2.row(closestRow).data();
+      const URL = "ia/int0911/approveT2";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id,approve:"1196"}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData2').DataTable().ajax.reload();
+      });
+     }
+    },"ไม่อนุมัติ");
+    });
     
   
   }

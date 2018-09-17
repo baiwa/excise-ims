@@ -88,6 +88,31 @@ public class Int0911Controller {
 
     }
 	
+	@PostMapping("/approve")
+    @ResponseBody
+    public Message approve(@RequestBody Int0911FormVo formVo){
+		log.info("id : {}",formVo.getId());
+        try {
+        	int0911Service.approve(formVo);
+        } catch (Exception e) {
+            return ApplicationCache.getMessage("MSG_00003");
+        }
+        return ApplicationCache.getMessage("MSG_00002");
+
+    }
+	@PostMapping("/approveT2")
+    @ResponseBody
+    public Message approveT2(@RequestBody Int0911FormVo formVo){
+		log.info("id : {}",formVo.getId());
+        try {
+        	int0911Service.approveT2(formVo);
+        } catch (Exception e) {
+            return ApplicationCache.getMessage("MSG_00003");
+        }
+        return ApplicationCache.getMessage("MSG_00002");
+
+    }
+	
 	@PostMapping("/gethead")
 	@ResponseBody
 	public Int0911FormVo gethead(@RequestBody Int0911FormVo formVo){

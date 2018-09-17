@@ -15,6 +15,7 @@ public class Int0911FormVo extends DataTableRequest {
 	private String status;
 	private String isDeleted;
 	private String errorMsg;
+	private String approve;
 
 	private String pickedType;
 	private String fiscalYear;
@@ -101,6 +102,14 @@ public class Int0911FormVo extends DataTableRequest {
 
 	public void setErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
+	}
+
+	public String getApprove() {
+		return approve;
+	}
+
+	public void setApprove(String approve) {
+		this.approve = approve;
 	}
 
 	public String getPickedType() {

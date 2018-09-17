@@ -2,8 +2,8 @@ package th.co.baiwa.excise.ia.persistence.vo;
 
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
-public class Int09111And3FormVo extends DataTableRequest {
 
+public class Int09111And3FormVo extends DataTableRequest {
 	private Long id;
 	private Long idProcess;
 	private String createdDate;

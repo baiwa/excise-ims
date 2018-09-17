@@ -53,12 +53,23 @@ public class Int09113Service {
 		
 	}
 	
+	public void edit(Int09111And3FormVo formVo) throws ParseException {
+		Int09TableDtlVo data = int09DataDtlService.getDataDtl(formVo.getInt09FormDtlVo());
+		data.setId(formVo.getId());
+		data.setDocumentType("113");//DocumentType 113 = หน้าหลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ
+		int09DataDtlService.editDataDtlAndDataFormDtl(formVo.getInt09FormDtlVo(),data);
+		
+	}
+	
 	public void saveAll(Int09111And3FormVo formVo) {
 		formVo.setCreatedBy(UserLoginUtils.getCurrentUsername());
 		formVo.setDocumentType("หลักฐานการจ่ายเงิน");				
 		formVo.setSubject("หลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ");
-		iaTravelEstimatorDao.addDocument(formVo.getIdProcess(), formVo.getCreatedBy(), formVo.getDocumentType(),
-				formVo.getSubject());
+		// เพิ่มเอกสาร
+		iaTravelEstimatorDao.addDocument(formVo.getIdProcess(), formVo.getCreatedBy(), formVo.getDocumentType(),formVo.getSubject());
+		// ล้างข้อมูล
+		iaTravelEstimatorDao.deleteTravelEstimatorDtl(formVo.getIdProcess(),"113");
+		
 	}
 	
 }

@@ -72,6 +72,23 @@ public class Int09111Controller {
 		return message;
 	}
 	
+	@PostMapping("/edit")
+	@ResponseBody
+	public CommonMessage<Int09111And3FormVo> edit(@RequestBody Int09111And3FormVo formVo){
+
+		CommonMessage<Int09111And3FormVo> message = new CommonMessage<Int09111And3FormVo>();
+		try {
+			int09111Service.edit(formVo);	
+			message.setData(formVo);
+		} catch (Exception e) {
+			log.error("Error ! edit ",e);
+			message.setMsg(ApplicationCache.getMessage("MSG_00003"));
+			return message;
+		}
+		message.setMsg(ApplicationCache.getMessage("MSG_00002"));
+		return message;
+	}
+	
 	@PostMapping("/saveAll")
 	@ResponseBody
 	public Message saveAll(@RequestBody Int09111And3FormVo formVo){
