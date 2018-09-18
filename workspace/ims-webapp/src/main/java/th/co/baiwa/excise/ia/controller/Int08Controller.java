@@ -27,6 +27,7 @@ import th.co.baiwa.excise.domain.Int0801Vo;
 import th.co.baiwa.excise.domain.RiskFullDataVo;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssPerDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
 import th.co.baiwa.excise.ia.service.ConditionService;
@@ -293,4 +294,29 @@ public class Int08Controller {
 
 	}
 	
+	
+	@PostMapping("/queryRiskAssPerDtlByHrdId")
+	@ResponseBody
+	public List<RiskAssPerDtl> queryRiskAssPerDtlByHrdId(@RequestBody RiskAssRiskWsHdr riskAssRiskWsHdr) {
+		logger.info("queryRiskAssPerDtlByHrdId id :" + riskAssRiskWsHdr.getRiskHrdId());
+		return riskAssRiskWsHdrService.findRiskAssPerDtlByRiskHrdId(riskAssRiskWsHdr.getRiskHrdId());
+	
+	}
+	
+	
+	@PostMapping("/saveRiskAssPerDtl")
+	@ResponseBody
+	public Message saveRiskAssPerDtl(@RequestBody Int0801Vo int0801Vo) {
+		Message message = null;
+		logger.info("saveRiskAssDtlOther");
+		try {
+			riskAssRiskWsHdrService.updateRiskAssPerDtl(int0801Vo.getRiskAssPerDtlList());
+			message = ApplicationCache.getMessage("MSG_00002");
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = ApplicationCache.getMessage("MSG_00003");
+		}
+		
+		return message;
+	}
 }

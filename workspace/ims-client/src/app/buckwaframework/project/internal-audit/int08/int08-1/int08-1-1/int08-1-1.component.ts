@@ -20,23 +20,26 @@ export class Int0811Component implements OnInit {
   isSearch: any = false;
   riskYear: any;
   wsRiskList: any[];
-  openForm1: any;
-  openForm2: any;
+  showForm: any;
   dataTableF1: any;
   riskAssRiskWsHdr: any;
   condition: any;
   riskHrdId: any;
   dataTableF2: any;
-
+  dataTableF3: any;
   active: any;
   riskType: any;
   buttonFullYear: any;
-  
+  pageMapping: any[] = [];
+  riskDataList: RiskData[];
+  riskAssRiskWsHdrList: any;
+  columnList: any[];
+  percentList: any[];
   constructor(private router: Router,
     private ajax: AjaxService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
-    ) {}
+  ) { }
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
@@ -60,9 +63,9 @@ export class Int0811Component implements OnInit {
     this.active = "Y";
 
 
-    this.openForm1 = false;
-    this.openForm2 = false;
+    this.showForm = '0';
     this.wsRiskList = ["ปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ", "ปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ"];
+    this.pageMapping = ["/int08/1/5", "/int08/1/8"];
     this.initDatatable();
 
     if (this.budgetYear != null && this.budgetYear != undefined && this.budgetYear != '') {
@@ -99,7 +102,7 @@ export class Int0811Component implements OnInit {
       console.log(this.budgetYear);
       const URL = "ia/int08/createBudgetYear";
 
-      this.ajax.post(URL, { budgetYear: this.budgetYear ,active: 'Y'}, res => {
+      this.ajax.post(URL, { budgetYear: this.budgetYear, active: 'Y' }, res => {
 
 
         this.router.navigate(["/int08/1/4"], {
@@ -148,7 +151,7 @@ export class Int0811Component implements OnInit {
       ajax: {
         type: "POST",
         url: URL,
-        data: { riskHdrName: this.riskType,budgetYear: this.budgetYear, active: this.active }
+        data: { riskHdrName: this.riskType, budgetYear: this.budgetYear, active: this.active }
       },
       columns: [
 
@@ -188,10 +191,15 @@ export class Int0811Component implements OnInit {
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {
-
-          if (this.wsRiskList.indexOf(data.riskHdrName) >= 0) {
+          var indexPage = this.wsRiskList.indexOf(data.riskHdrName);
+          if (indexPage >= 0) {
             this.riskHrdId = data.riskHrdId;
-            this.renderForm1(data.riskHrdId);
+            if ("/int08/1/5" == this.pageMapping[indexPage]) {
+              this.renderForm1(data.riskHrdId);
+            } else {
+              this.renderForm3(data.riskHrdId);
+            }
+
           } else {
             this.riskHrdId = data.riskHrdId;
             this.renderForm2(data.riskHrdId);
@@ -207,7 +215,26 @@ export class Int0811Component implements OnInit {
     });
   }
 
+  renderForm3(riskHrdId) {
 
+    console.log("riskHrdId", riskHrdId);
+    const URLHRD = "ia/int08/findRiskById";
+    this.ajax.post(URLHRD, { riskHrdId: riskHrdId }, res => {
+      this.riskAssRiskWsHdr = res.json();
+      this.showForm = 3;
+      console.log("riskAssRiskWsHdr", this.riskAssRiskWsHdr);
+      const URL = "ia/condition/findConditionByParentId";
+      this.ajax.post(URL, { parentId: riskHrdId, riskType: 'MAIN', page: 'int08-1-8' }, res => {
+        this.condition = res.json();
+        console.log("condition", this.condition);
+
+
+        this.initDatatableF3();
+      });
+
+    });
+
+  }
 
   renderForm1(riskHrdId) {
 
@@ -215,8 +242,7 @@ export class Int0811Component implements OnInit {
     const URLHRD = "ia/int08/findRiskById";
     this.ajax.post(URLHRD, { riskHrdId: riskHrdId }, res => {
       this.riskAssRiskWsHdr = res.json();
-      this.openForm1 = true;
-      this.openForm2 = false;
+      this.showForm = 1;
       console.log("riskAssRiskWsHdr", this.riskAssRiskWsHdr);
       const URL = "ia/condition/findConditionByParentId";
       this.ajax.post(URL, { parentId: riskHrdId, riskType: 'MAIN', page: 'int08-1-5' }, res => {
@@ -244,7 +270,7 @@ export class Int0811Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: false,
-      scrollY:true,
+      scrollY: true,
       scrollX: true,
       scrollCollapse: true,
       paging: true,
@@ -287,12 +313,88 @@ export class Int0811Component implements OnInit {
 
       },
       columnDefs: [
-        { targets: [0, 2,7], className: "center aligned" },
+        { targets: [0, 2, 7], className: "center aligned" },
         { targets: [3, 4, 5, 6], className: "right aligned" },
         { targets: [1], className: "left aligned" }
       ]
 
     });
+  }
+  initDatatableF3(): void {
+    if (this.dataTableF3 != null) {
+      this.dataTableF3.destroy();
+    }
+    let url = "ia/int08/queryRiskAssPerDtlByHrdId";
+    this.ajax.post(url, { riskHrdId: this.riskHrdId }, res => {
+      // this.riskDataList
+      var jsonObjList = res.json();
+      this.riskDataList = [];
+      for (let index = 0; index < jsonObjList.length; index++) {
+        var element = jsonObjList[index];
+        var riskData = new RiskData();
+        riskData.riskOtherDtlId = element.riskOtherDtlId;
+        riskData.riskHrdId = this.riskHrdId;
+        riskData.departmentName = element.departmentName;
+        riskData.projectBase = element.projectBase;
+        riskData.riskCost = element.riskCost;
+        riskData.rl = element.rl;
+        riskData.valueTranslation = element.valueTranslation;
+        riskData.color = element.color;
+        riskData.isDeleted = 'N';
+        this.riskDataList.push(riskData);
+
+      }
+
+      this.dataTableF3 = $("#dataTableF3").DataTable({
+        lengthChange: false,
+        searching: false,
+        ordering: false,
+        pageLength: 10,
+        processing: true,
+        serverSide: false,
+        paging: true,
+        data: this.riskDataList,
+        columns: [
+          {
+            render: function (data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+            },
+            className: "center"
+          },
+          { data: "projectBase" },
+          { data: "departmentName" },
+          { data: "riskCost" },
+          { data: "rl" },
+          { data: "valueTranslation" }
+        ],
+        columnDefs: [
+          { targets: [0, 2, 4, 5], className: "center aligned" },
+          { targets: [3], className: "right aligned" },
+          { targets: [1], className: "left aligned" }
+        ],
+        createdRow: function (row, data, dataIndex) {
+          console.log("row");
+          console.log("data", data.color);
+          console.log("dataIndex", dataIndex);
+          if (data.color == 'แดง') {
+            $(row).find('td:eq(4)').addClass('bg-c-red');
+            $(row).find('td:eq(5)').addClass('bg-c-red');
+          } else if (data.color == 'เขียว') {
+            $(row).find('td:eq(4)').addClass('bg-c-green');
+            $(row).find('td:eq(5)').addClass('bg-c-green');
+          } else if (data.color == 'เหลือง') {
+            $(row).find('td:eq(4)').addClass('bg-c-yellow');
+            $(row).find('td:eq(5)').addClass('bg-c-yellow');
+          }
+
+        }
+
+      });
+    }, errRes => {
+
+    });
+    // const URL = AjaxService.CONTEXT_PATH + "ia/int08/findRiskAssOtherDtlByHeaderId";
+
   }
 
 
@@ -310,7 +412,7 @@ export class Int0811Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: false,
-      scrollY:true,
+      scrollY: true,
       scrollX: true,
       scrollCollapse: true,
       paging: true,
@@ -363,8 +465,7 @@ export class Int0811Component implements OnInit {
     const URLHRD = "ia/int08/findRiskById";
     this.ajax.post(URLHRD, { riskHrdId: riskHrdId }, res => {
       this.riskAssRiskWsHdr = res.json();
-      this.openForm1 = false;
-      this.openForm2 = true;
+      this.showForm = 2;
       console.log("riskAssRiskWsHdr", this.riskAssRiskWsHdr);
       const URL = "ia/condition/findConditionByParentId";
       this.ajax.post(URL, { parentId: riskHrdId, riskType: 'OTHER', page: 'int08-1-6' }, res => {
@@ -375,12 +476,92 @@ export class Int0811Component implements OnInit {
     });
   }
 
+  renderForm4() {
+    console.log("budgetYear", this.budgetYear);
+    this.showForm = 4;
+    const URL = "ia/condition/findConditionByParentId";
+    this.ajax.post(URL, { parentId: this.budgetYear, riskType: 'ALL', page: 'int08-1-7' }, res => {
+      this.condition = res.json();
+      console.log("condition", this.condition);
+      this.queryColumnNameListAndSetColumn();
+    });
+
+  }
+
+  initDatatable4(): void {
+    var url = 'ia/int08/searchFullRiskByBudgetYear';
+    var hrmlTr = '';
+    this.ajax.post(url, { budgetYear: this.budgetYear, riskHrdNameList: this.columnList }, res => {
+
+      res.json().forEach(element => {
+        console.log(element);
+        hrmlTr += "<tr style='text-align: center !important'>";
+        hrmlTr += "<td>" + element.id + "</td>";
+        hrmlTr += "<td style='text-align: left !important'>" + element.projectBase + "</td>";
+        hrmlTr += "<td style='text-align: center !important'>" + element.departmentName + "</td>";
+        element.rl.forEach(rl => {
+          hrmlTr += "<td style='text-align: right !important' >" + rl + "</td>";
+        });
+        hrmlTr += "<td style='text-align: right !important'>" + element.sumRiskCost + "</td>";
+        hrmlTr += "<td style='text-align: center !important'  class='" + this.getStyeClassByColor(element.color) + "'>" + element.rlAll + "</td>";
+        hrmlTr += "<td style='text-align: center !important'  class='" + this.getStyeClassByColor(element.color) + "'>" + element.valueTranslation + "</td>";
+        hrmlTr += "</tr>";
+      });
+
+      $("#tbody").html(hrmlTr);
+    }, errRes => {
+      console.log(errRes);
+    });
+  }
+
+  queryColumnNameListAndSetColumn() {
+    var url = "ia/int08/findByBudgetYear";
+
+    this.ajax.post(url, { budgetYear: this.budgetYear }, res => {
+      console.log(riskAssRiskWsHdr);
+      var riskAssRiskWsHdr = res.json();
+      this.riskAssRiskWsHdrList = res.json();
+      this.columnList = [];
+      this.percentList = [];
+      for (let i = 0; i < riskAssRiskWsHdr.length; i++) {
+        const element = riskAssRiskWsHdr[i];
+        this.columnList.push(element.riskHdrName);
+        this.percentList.push(0);
+      }
+
+      var trHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> <th rowspan="2" style="text-align: center !important">โครงการตามยุทธศาสตร์</th><th rowspan="2" style="text-align: center !important">หน่วยงาน</th>';
+      this.columnList.forEach(element => {
+        console.log(element);
+        trHTML += '<th rowspan="2" style="text-align: center !important;">' + element + '</th>';
+      });
+      trHTML += '<th rowspan="2" style="text-align: center !important;" >รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th style="text-align: center !important">แปลค่า</th></tr>';
+      $("#trColumn").html(trHTML);
+      this.initDatatable4();
+    }, errRes => {
+      console.log(errRes);
+    });
+  }
+
+  getStyeClassByColor(color) {
+    if (color == 'แดง') {
+      return 'bg-c-red';
+    } else if (color == 'เขียว') {
+      return 'bg-c-green';
+    } else if (color == 'เหลือง') {
+      return 'bg-c-yellow';
+    }
+  }
+
   clearDataForm1() {
-    this.openForm1 = false;
+    this.showForm = 0;
   }
 
   clearDataForm2() {
-    this.openForm2 = false;
+    this.showForm = 0;
+  }
+
+  clearDataForm3() {
+    this.showForm = 0;
   }
 
   changebudgetYear = event => {
@@ -391,10 +572,20 @@ export class Int0811Component implements OnInit {
     this.budgetYear = "";
     this.buttonFullYear = false;
     this.initDatatable();
-    this.openForm1 = false;
-    this.openForm2 = false;
-    //this.openForm3 = false;
+    this.showForm = 0;
   }
 
 
 }
+class RiskData {
+  projectBase: any = '';
+  riskHrdId: any = 0;
+  departmentName: any = '';
+  riskCost: any = '';
+  rl: any = '';
+  valueTranslation: any = '';
+  color: any = '';
+  riskOtherDtlId: any = 0;
+  isDeleted: any = '';
+}
+

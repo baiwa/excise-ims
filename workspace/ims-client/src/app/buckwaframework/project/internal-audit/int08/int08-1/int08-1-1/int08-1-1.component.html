@@ -17,7 +17,8 @@
             <div class="ui calendar" style="width:100%" id="year">
               <div class="ui input left icon">
                 <i class="calendar icon"></i>
-                <input type="calendar" id="budgetYear" placeholder="ปี" maxlength="4" name="budgetYear" [(ngModel)]="budgetYear" readonly="" autocomplete="off" >
+                <input type="calendar" id="budgetYear" placeholder="ปี" maxlength="4" name="budgetYear" [(ngModel)]="budgetYear"
+                  readonly="" autocomplete="off">
               </div>
             </div>
           </div>
@@ -65,10 +66,10 @@
           </tr>
         </thead>
       </table>
-      
+
       <div class="ui five column centered grid" *ngIf="buttonFullYear">
         <div class="column">
-          <button class="ui mini primary button" >
+          <button class="ui mini primary button" (click)="renderForm4()">
             <i class="table icon"></i>
             รายละเอียดปัจจัยเสี่ยงรวมประจำปี
           </button>
@@ -77,9 +78,9 @@
 
 
     </div>
-    <BR/>
+    <BR />
 
-    <div class="sixteen wide column" *ngIf="openForm1">
+    <div class="sixteen wide column" *ngIf="showForm==1">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
       </div>
@@ -187,7 +188,7 @@
 
 
 
-    <div class="sixteen wide column" *ngIf="openForm2">
+    <div class="sixteen wide column" *ngIf="showForm==2">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
       </div>
@@ -287,6 +288,196 @@
       </div>
     </div>
 
+    <div class="sixteen wide column" *ngIf="showForm==3">
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>กระดาษทำการประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
+      </div>
+      <div class="ui attached segment">
+        <div class="ui form">
+
+          <div class="ui center aligned grid">
+            <div class="sixteen wide column">
+              <label>ปีงบประมาณ {{riskAssRiskWsHdr.budgetYear}}</label>
+            </div>
+          </div>
+
+
+          <div class="inline fields">
+            <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr.riskHdrName}}</label>
+          </div>
+          <div class="inline fields">
+            <label>เงื่อนไขความเสี่ยง :</label>
+          </div>
+        </div>
+
+
+
+        <div *ngFor="let con of condition; let i=index">
+
+          <div class="ui form">
+            <div class="inline fields">
+              <div class="two wide field "></div>
+              <div class="four wide field ">
+                <label> ประสิทธิภาพในการดำเนินงานโครงการ</label>
+              </div>
+              <div class="one wide field ">
+                <label>
+                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                </label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.value1}}</label>
+              </div>
+              <div class="one wide field ">
+                <label>ถึง</label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.value2 == null ? '-' : con.value2 }}</label>
+              </div>
+              <div class="two wide field ">
+                <label>ระดับความเสี่ยง</label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.convertValue}}</label>
+              </div>
+              <div class="two wide field ">
+                <label>คะแนนความเสี่ยง</label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.valueRl}}</label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="inline fields">
+          <table id="dataTableF3" class="ui small celled table nowrap" style="width: 100%;">
+            <thead>
+              <tr>
+                <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+                <th rowspan="2" style="text-align: center !important">โครงการตามยุทธศาสตร์</th>
+                <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
+                <th rowspan="2" style="text-align: center !important">สถานะ</th>
+                <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
+              </tr>
+              <tr>
+                <th style="text-align: center !important ;border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
+                <th style="text-align: center !important">แปลค่า</th>
+              </tr>
+
+
+            </thead>
+          </table>
+
+        </div>
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button">
+              <i class=" print icon "></i>
+              Export
+            </button>
+            <button class="ui mini button " (click)="clearDataForm3() ">
+              <i class="arrow left icon"></i>
+              กลับ
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="sixteen wide column" *ngIf="showForm==4">
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>กระดาษทำการประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
+      </div>
+      <div class="ui attached segment">
+        <div class="ui form">
+
+          <div class="ui center aligned grid">
+            <div class="sixteen wide column">
+              <label>ปีงบประมาณ {{budgetYear}}</label>
+            </div>
+          </div>
+
+
+          <div class="inline fields">
+            <label>ปัจจัยเสี่ยง : โครงการยุทธศาสตร์ของกรมสรรพสามิต</label>
+          </div>
+          <div class="inline fields">
+            <label>เงื่อนไขความเสี่ยง :</label>
+          </div>
+        </div>
+
+
+
+        <div *ngFor="let con of condition; let i=index">
+
+          <div class="ui form">
+            <div class="inline fields">
+              <div class="two wide field "></div>
+              <div class="four wide field ">
+                <label> โครงการยุทธศาสตร์ของกรมสรรพสามิต</label>
+              </div>
+              <div class="one wide field ">
+                <label>
+                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                </label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.value1}}</label>
+              </div>
+              <div class="one wide field ">
+                <label>ถึง</label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.value2 == null ? '-' : con.value2 }}</label>
+              </div>
+              <div class="two wide field ">
+                <label>ระดับความเสี่ยง</label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.convertValue}}</label>
+              </div>
+              <div class="two wide field ">
+                <label>คะแนนความเสี่ยง</label>
+              </div>
+              <div class="one wide field ">
+                <label>{{con.valueRl}}</label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="inline fields">
+          <table id="dataTableF3" class="ui small celled table nowrap" style="width: 100%;">
+            <thead id="trColumn">
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+          </table>
+
+        </div>
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button">
+              <i class=" print icon "></i>
+              Export
+            </button>
+            <button class="ui mini button " (click)="clearDataForm3() ">
+              <i class="arrow left icon"></i>
+              กลับ
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 

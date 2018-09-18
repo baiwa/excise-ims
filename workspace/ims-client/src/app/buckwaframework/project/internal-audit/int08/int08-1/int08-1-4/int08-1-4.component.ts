@@ -1,9 +1,7 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
-import { Location } from "@angular/common";
+import { Component, OnInit, AfterViewInit } from "@angular/core"
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { Alert } from "../../../../../../../../node_modules/@types/selenium-webdriver";
 
 declare var jQuery: any;
 declare var $: any;
@@ -20,7 +18,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
   budgetYear: any;
   yearList: any[];
   wsRiskList: any[];
-
+  pageMapping: any[];
   riskType: any;
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -32,7 +30,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
     this.riskHdrName = "";
     this.budgetYear = "";
     this.wsRiskList = ["ปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ", "ปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ"];
-    //this.initDatatable();
+    this.pageMapping = ["/int08/1/5", "/int08/1/8"];
   }
   ngAfterViewInit() {
     this.budgetYear = this.route.snapshot.queryParams["budgetYear"];
@@ -100,6 +98,7 @@ export class Int0814Component implements OnInit, AfterViewInit {
         {
           data: "active",
           render: function (data, type, row, meta) {
+            console.log("Active : ", data);
             return '<button type="button" class="ui mini button ' + (data == "Y" ? "green" : "orange") + ' chk"><i class="power off icon"></i>' + (data == "Y" ? "เปิด" : "ปิด") + '</button>';
           }
         },
@@ -120,8 +119,9 @@ export class Int0814Component implements OnInit, AfterViewInit {
           console.log("dtl");
           console.log(data.riskHdrName);
           console.log(this.wsRiskList.indexOf(data.riskHdrName));
-          if (this.wsRiskList.indexOf(data.riskHdrName) >= 0) {
-            this.router.navigate(["/int08/1/5"], {
+          var indexPortal = this.wsRiskList.indexOf(data.riskHdrName);
+          if (indexPortal >= 0) {
+            this.router.navigate([this.pageMapping[indexPortal]], {
               queryParams: { id: data.riskHrdId }
             });
           } else {
@@ -182,10 +182,10 @@ export class Int0814Component implements OnInit, AfterViewInit {
   cancelFlow() {
     this.messageBarService.comfirm(foo => {
       // let msg = "";
-      this.riskType ="0";
+      this.riskType = "0";
       if (foo) {
         this.router.navigate(["/int08/1/1"], {
-          queryParams: { budgetYear: this.budgetYear ,riskType: this.riskType}
+          queryParams: { budgetYear: this.budgetYear, riskType: this.riskType }
         });
       }
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");

@@ -77,8 +77,8 @@ export class Int0817Component implements OnInit {
           hrmlTr += "<td style='text-align: right !important' >" + rl + "</td>";
         });
         hrmlTr += "<td style='text-align: right !important'>" + element.sumRiskCost + "</td>";
-        hrmlTr += "<td style='text-align: center !important'></td>";
-        hrmlTr += "<td style='text-align: center !important'></td>";
+        hrmlTr += "<td style='text-align: center !important'  class='" + this.getStyeClassByColor(element.color) + "'>" + element.rlAll + "</td>";
+        hrmlTr += "<td style='text-align: center !important'  class='" + this.getStyeClassByColor(element.color) + "'>" + element.valueTranslation + "</td>";
         hrmlTr += "</tr>";
       });
 
@@ -87,6 +87,17 @@ export class Int0817Component implements OnInit {
       console.log(errRes);
     });
   }
+
+  getStyeClassByColor(color) {
+    if (color == 'แดง') {
+      return 'bg-c-red';
+    } else if (color == 'เขียว') {
+      return 'bg-c-green';
+    } else if (color == 'เหลือง') {
+      return 'bg-c-yellow';
+    }
+  }
+
 
   modalConditionRL() {
     this.isConditionShow = true;

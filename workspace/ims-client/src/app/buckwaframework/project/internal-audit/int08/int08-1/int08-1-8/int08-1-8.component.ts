@@ -3,15 +3,17 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
+import { Utils } from "../../../../../common/helper";
+
 
 declare var jQuery: any;
 declare var $: any;
 @Component({
-  selector: 'app-int08-1-6',
-  templateUrl: './int08-1-6.component.html',
-  styleUrls: ['./int08-1-6.component.css']
+  selector: 'app-int08-1-8',
+  templateUrl: './int08-1-8.component.html',
+  styleUrls: ['./int08-1-8.component.css']
 })
-export class Int0816Component implements OnInit {
+export class Int0818Component implements OnInit {
   riskAssRiskWsHdr: any;
   id: any;
   riskHrdPaperName: any;
@@ -43,6 +45,7 @@ export class Int0816Component implements OnInit {
     $('.menu .item').tab()
     this.riskHrdData = new RiskHrdData();
     this.id = this.route.snapshot.queryParams["id"];
+    console.log(this.id);
     this.findRiskById();
 
     this.isConditionShow = false;
@@ -78,7 +81,7 @@ export class Int0816Component implements OnInit {
       this.riskHrdData.userCheck = this.userCheck;
       this.riskHrdData.budgetYear = this.budgetYear;
 
-      url = "ia/int08/findRiskOtherDtlByRiskHrdId";
+      url = "ia/int08/queryRiskAssPerDtlByHrdId";
       this.ajax.post(url, { riskHrdId: this.id }, res => {
         // this.riskDataList
         var jsonObjList = res.json();
@@ -86,7 +89,7 @@ export class Int0816Component implements OnInit {
           var element = jsonObjList[index];
           var riskData = new RiskData();
           riskData.riskOtherDtlId = element.riskOtherDtlId;
-          riskData.riskHrdId = element.riskHrdId;
+          riskData.riskHrdId = this.id;
           riskData.departmentName = element.departmentName;
           riskData.projectBase = element.projectBase;
           riskData.riskCost = element.riskCost;
@@ -197,7 +200,7 @@ export class Int0816Component implements OnInit {
 
         $("td > .del", row).bind("click", () => {
           console.log(index);
-          if (this.dataTableList[index].riskOtherDtlId != null && this.dataTableList[index].riskOtherDtlId != undefined && this.dataTableList[index].riskOtherDtlId != '') {
+          if (Utils.isNotNull(this.dataTableList[index].riskOtherDtlId)) {
             for (let i = 0; i < this.riskDataList.length; i++) {
               const element = this.riskDataList[i];
               if (element.riskOtherDtlId != null && element.riskOtherDtlId != undefined && element.riskOtherDtlId != '') {
@@ -224,15 +227,15 @@ export class Int0816Component implements OnInit {
 
   addObjRiskDtl() {
     var msgMessage = '';
-    if (this.projectBase == null || this.projectBase == undefined || this.projectBase == '') {
+    if (Utils.isNull(this.projectBase)) {
       this.messageBarService.errorModal("กรุณากรอก \"ชื่อโครงการ\" ");
       return;
     }
-    if (this.departmentName == null || this.departmentName == undefined || this.departmentName == '') {
+    if (Utils.isNull(this.departmentName)) {
       this.messageBarService.errorModal("กรุณากรอก \"ชื่อหน่วยงาน\" ");
       return;
     }
-    if (this.riskCost == null || this.riskCost == undefined || this.riskCost == '') {
+    if (Utils.isNull(this.riskCost)) {
       this.messageBarService.errorModal("กรุณากรอก \"ค่าความเสี่ยง\" ");
       return;
     }
@@ -270,18 +273,18 @@ export class Int0816Component implements OnInit {
     //console.log(this.riskHrdData)
 
 
-    if (this.userCheck == null || this.userCheck == undefined || this.userCheck == "") {
+    if (Utils.isNull(this.userCheck)) {
       msgMessage = "กรุณากรอก \"ผู้ตรวจ\" ";
     }
 
-    if (this.riskHrdPaperName == null || this.riskHrdPaperName == undefined || this.riskHrdPaperName == "") {
+    if (Utils.isNull(this.riskHrdPaperName)) {
       msgMessage = "กรุณากรอก \"ชื่อกระดาษทำการ\" ";
     }
 
     if (msgMessage == "") {
       var url = "ia/int08/saveRiskAssOther";
-      var urlDtl = "ia/int08/saveRiskAssDtlOther";
-      this.riskAssRiskWsHdr.riskType = 'OTHER';
+      var urlDtl = "ia/int08/saveRiskAssPerDtl";
+      this.riskAssRiskWsHdr.riskType = 'MIAN';
       this.ajax.post(url, this.riskAssRiskWsHdr, res => {
         var message = res.json();
         //console.log(message.messageType);
@@ -290,7 +293,7 @@ export class Int0816Component implements OnInit {
         } else {
 
 
-          this.ajax.post(urlDtl, { riskAssOtherDtlList: this.riskDataList }, res => {
+          this.ajax.post(urlDtl, { riskAssPerDtlList: this.riskDataList }, res => {
             var message = res.json();
             console.log(message);
           }, errRes => {

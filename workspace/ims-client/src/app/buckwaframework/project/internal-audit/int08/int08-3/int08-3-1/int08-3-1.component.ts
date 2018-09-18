@@ -223,6 +223,7 @@ export class Int0831Component implements OnInit {
   }
 
   renderForm1(riskHrdId, pageIndex) {
+    this.condition = [];
     this.pageShowPageIndex = pageIndex;
     //console.log("pageShowPageIndex", this.pageShowPageIndex);
     //console.log("riskHrdId", riskHrdId);
@@ -349,6 +350,7 @@ export class Int0831Component implements OnInit {
   }
 
   queryColumnNameListAndSetColumn() {
+    this.condition = [];
     this.pageShowPageIndex = 'int08-3-12';
 
     const URL = "ia/condition/findConditionByParentId";
@@ -382,11 +384,12 @@ export class Int0831Component implements OnInit {
   }
 
   queryTableInt080313() {
+    this.condition = [];
     this.pageShowPageIndex = 'int08-3-13';
 
     const URL = "ia/condition/findConditionByParentId";
     var url = "ia/int083/findByBudgetYear";
-    this.ajax.post(URL, { parentId: this.budgetYear, riskType: 'ALL', page: 'int08-3-5' }, res => {
+    this.ajax.post(URL, { parentId: this.budgetYear, riskType: 'MAIN', page: 'int08-3-13' }, res => {
       this.condition = res.json();
 
     });
@@ -928,6 +931,7 @@ export class Int0831Component implements OnInit {
 
 
   initDatatableF2(): void {
+
     if (this.dataTableF2 != null) {
       this.dataTableF2.destroy();
     }
@@ -986,6 +990,7 @@ export class Int0831Component implements OnInit {
   }
 
   renderForm2(riskHrdId) {
+    this.condition = [];
     this.pageShowPageIndex = 'int08-3-4';
     //console.log("riskHrdId", riskHrdId);
     const URLHRD = "ia/int083/findRiskById";

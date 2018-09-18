@@ -26,6 +26,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOv3dDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcPenDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcRecDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssPerDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ws.entity.api.RequestServiceExcise;
 import th.co.baiwa.excise.ws.entity.api.ResponseServiceExcise;
@@ -864,6 +865,73 @@ public class WebServiceExciseService {
 		riskAssExcOv3dDtl.setRiskCost(new BigDecimal(0));
 		list.add(riskAssExcOv3dDtl);
 		
+		return list;
+	}
+	
+	public List<RiskAssPerDtl>  riskAssPerDtllWS(){
+		List<RiskAssPerDtl> list = new ArrayList<RiskAssPerDtl>();
+		RiskAssPerDtl riskAssPerDtl = new RiskAssPerDtl();
+		riskAssPerDtl.setProjectBase("โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ กรมสรรพสามิต (Network and Security System)");
+		riskAssPerDtl.setDepartmentName("ศทส.");
+		riskAssPerDtl.setRiskCost(new BigDecimal(720));
+		list.add(riskAssPerDtl);
+		
+		riskAssPerDtl = new RiskAssPerDtl();
+		riskAssPerDtl.setProjectBase("โครงการจัดหาเครื่องไมโครคอมพิวเตอร์ เครื่องคอมพิวเตอร์แบบพกพา และอุปกรณ์เพื่อทดแทนเครื่องเดิมและเพิ่มเติมเพื่อใช้ในการปฏิบัติงาน");
+		riskAssPerDtl.setDepartmentName("ศทส.");
+		riskAssPerDtl.setRiskCost(new BigDecimal(622));
+		list.add(riskAssPerDtl);
+		
+		riskAssPerDtl = new RiskAssPerDtl();
+		riskAssPerDtl.setProjectBase("โครงการติดตั้งมาตรวัดและคอมพิวเตอร์สื่อสารทางไกลมาใช้ในการบริหารจัดเก็บภาษีเครื่องดื่ม");
+		riskAssPerDtl.setDepartmentName("สมฐ.1");
+		riskAssPerDtl.setRiskCost(new BigDecimal(622));
+		list.add(riskAssPerDtl);
+		
+		riskAssPerDtl = new RiskAssPerDtl();
+		riskAssPerDtl.setProjectBase("โครงการจัดหาระบบบริหารจัดการทรัพยากร ICT");
+		riskAssPerDtl.setDepartmentName("ศทส.");
+		riskAssPerDtl.setRiskCost(new BigDecimal(511));
+		list.add(riskAssPerDtl);
+		
+		riskAssPerDtl = new RiskAssPerDtl();
+		riskAssPerDtl.setProjectBase("โครงการสำรวจราคาขายปลีกและจัดทำฐานข้อมูลราคาขายปลีกสำหรับสินค้าสุรา ยาสูบ และเครื่องดื่ม");
+		riskAssPerDtl.setDepartmentName("สผษ.");
+		riskAssPerDtl.setRiskCost(new BigDecimal(430));
+		list.add(riskAssPerDtl);
+		
+		
+		riskAssPerDtl = new RiskAssPerDtl();
+		riskAssPerDtl.setProjectBase("โครงการจัดซื้อพร้อมติดตั้งจำนวนผู้ใช้งาน(Concurrent User License) เพิ่มเติมระบบการจัดการข้อมูลของห้องปฏิบัติการทางวิทยาศาสตร์ (Laboratory Information Management System: LIMS)");
+		riskAssPerDtl.setDepartmentName("กวข.");
+		riskAssPerDtl.setRiskCost(new BigDecimal(222));
+		list.add(riskAssPerDtl);
+		
+		riskAssPerDtl = new RiskAssPerDtl();
+		riskAssPerDtl.setProjectBase("ติดตั้งสื่อประชาสัมพันธ์ข้อมูลข่าวสาร กรมสรรพสามิต ระยะที่ 2");
+		riskAssPerDtl.setDepartmentName("ศทส.");
+		riskAssPerDtl.setRiskCost(new BigDecimal(212));
+		list.add(riskAssPerDtl);
+		
+		riskAssPerDtl = new RiskAssPerDtl();
+		riskAssPerDtl.setProjectBase("โครงการ Excise Innovation Award ครั้งที่ 7");
+		riskAssPerDtl.setDepartmentName("สบค.");
+		riskAssPerDtl.setRiskCost(new BigDecimal(98));
+		list.add(riskAssPerDtl);
+		
+		riskAssPerDtl = new RiskAssPerDtl();
+		riskAssPerDtl.setProjectBase("โครงการสร้างความรู้ความเข้าใจแก่ประชาชนอย่างมีประสิทธิภาพ");
+		riskAssPerDtl.setDepartmentName("สลก.");
+		riskAssPerDtl.setRiskCost(new BigDecimal(77));
+		list.add(riskAssPerDtl);
+		
+		riskAssPerDtl = new RiskAssPerDtl();
+		riskAssPerDtl.setProjectBase("โครงการสัมมนาหลักสูตรวิธีปฏิบัติราชการทางปกครองและการติดตามเงินคืนกรณีโครงการรถยนต์คันแรก");
+		riskAssPerDtl.setDepartmentName("สกม.");
+		riskAssPerDtl.setRiskCost(new BigDecimal(54));
+		list.add(riskAssPerDtl);
+		
+	
 		return list;
 	}
 

@@ -36,9 +36,11 @@ import th.co.baiwa.excise.domain.Int0801Vo;
 import th.co.baiwa.excise.domain.RiskFullDataVo;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssPerDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssOtherDtlRepository;
+import th.co.baiwa.excise.ia.persistence.repository.RiskAssPerDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssRiskWsDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssRiskWsHdrRepository;
 import th.co.baiwa.excise.utils.BeanUtils;
@@ -47,97 +49,94 @@ import th.co.baiwa.excise.ws.WebServiceExciseService;
 @Service
 public class RiskAssRiskWsService {
 	// Set property Style Excel
-		private CellStyle thStyle;
-		private CellStyle cellCenter;
-		private CellStyle cellRight;
-		private CellStyle cellLeft;
-		private CellStyle bgRed;
-		private CellStyle bgYellow;
-		private CellStyle bgGreen;
-		private CellStyle topCenter;
-		private CellStyle topRight;
-		private CellStyle topLeft;
-		private Font fontHeader;
-		
-		private XSSFWorkbook setUpExcel() {
-			XSSFWorkbook workbook = new XSSFWorkbook();
-			
-			thStyle = workbook.createCellStyle();
-			thStyle.setAlignment(HorizontalAlignment.CENTER);
-			thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-			thStyle.setBorderBottom(BorderStyle.THIN);
-			thStyle.setBorderLeft(BorderStyle.THIN);
-			thStyle.setBorderRight(BorderStyle.THIN);
-			thStyle.setBorderTop(BorderStyle.THIN);
-			thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-			thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	private CellStyle thStyle;
+	private CellStyle cellCenter;
+	private CellStyle cellRight;
+	private CellStyle cellLeft;
+	private CellStyle bgRed;
+	private CellStyle bgYellow;
+	private CellStyle bgGreen;
+	private CellStyle topCenter;
+	private CellStyle topRight;
+	private CellStyle topLeft;
+	private Font fontHeader;
 
-			cellCenter = workbook.createCellStyle();
-			cellCenter.setAlignment(HorizontalAlignment.CENTER);
-			cellCenter.setBorderBottom(BorderStyle.THIN);
-			cellCenter.setBorderLeft(BorderStyle.THIN);
-			cellCenter.setBorderRight(BorderStyle.THIN);
-			cellCenter.setBorderTop(BorderStyle.THIN);
+	private XSSFWorkbook setUpExcel() {
+		XSSFWorkbook workbook = new XSSFWorkbook();
 
-			cellRight = workbook.createCellStyle();
-			cellRight.setAlignment(HorizontalAlignment.RIGHT);
-			cellRight.setBorderBottom(BorderStyle.THIN);
-			cellRight.setBorderLeft(BorderStyle.THIN);
-			cellRight.setBorderRight(BorderStyle.THIN);
-			cellRight.setBorderTop(BorderStyle.THIN);
+		thStyle = workbook.createCellStyle();
+		thStyle.setAlignment(HorizontalAlignment.CENTER);
+		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+		thStyle.setBorderBottom(BorderStyle.THIN);
+		thStyle.setBorderLeft(BorderStyle.THIN);
+		thStyle.setBorderRight(BorderStyle.THIN);
+		thStyle.setBorderTop(BorderStyle.THIN);
+		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-			cellLeft = workbook.createCellStyle();
-			cellLeft.setAlignment(HorizontalAlignment.LEFT);
-			cellLeft.setBorderBottom(BorderStyle.THIN);
-			cellLeft.setBorderLeft(BorderStyle.THIN);
-			cellLeft.setBorderRight(BorderStyle.THIN);
-			cellLeft.setBorderTop(BorderStyle.THIN);
+		cellCenter = workbook.createCellStyle();
+		cellCenter.setAlignment(HorizontalAlignment.CENTER);
+		cellCenter.setBorderBottom(BorderStyle.THIN);
+		cellCenter.setBorderLeft(BorderStyle.THIN);
+		cellCenter.setBorderRight(BorderStyle.THIN);
+		cellCenter.setBorderTop(BorderStyle.THIN);
 
-			bgRed = workbook.createCellStyle();
-			bgRed.setAlignment(HorizontalAlignment.CENTER);
-			bgRed.setBorderBottom(BorderStyle.THIN);
-			bgRed.setBorderLeft(BorderStyle.THIN);
-			bgRed.setBorderRight(BorderStyle.THIN);
-			bgRed.setBorderTop(BorderStyle.THIN);
-			bgRed.setFillForegroundColor(IndexedColors.RED.getIndex());
-			bgRed.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		cellRight = workbook.createCellStyle();
+		cellRight.setAlignment(HorizontalAlignment.RIGHT);
+		cellRight.setBorderBottom(BorderStyle.THIN);
+		cellRight.setBorderLeft(BorderStyle.THIN);
+		cellRight.setBorderRight(BorderStyle.THIN);
+		cellRight.setBorderTop(BorderStyle.THIN);
 
-			bgYellow = workbook.createCellStyle();
-			bgYellow.setAlignment(HorizontalAlignment.CENTER);
-			bgYellow.setBorderBottom(BorderStyle.THIN);
-			bgYellow.setBorderLeft(BorderStyle.THIN);
-			bgYellow.setBorderRight(BorderStyle.THIN);
-			bgYellow.setBorderTop(BorderStyle.THIN);
-			bgYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
-			bgYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		cellLeft = workbook.createCellStyle();
+		cellLeft.setAlignment(HorizontalAlignment.LEFT);
+		cellLeft.setBorderBottom(BorderStyle.THIN);
+		cellLeft.setBorderLeft(BorderStyle.THIN);
+		cellLeft.setBorderRight(BorderStyle.THIN);
+		cellLeft.setBorderTop(BorderStyle.THIN);
 
-			bgGreen = workbook.createCellStyle();
-			bgGreen.setAlignment(HorizontalAlignment.CENTER);
-			bgGreen.setBorderBottom(BorderStyle.THIN);
-			bgGreen.setBorderLeft(BorderStyle.THIN);
-			bgGreen.setBorderRight(BorderStyle.THIN);
-			bgGreen.setBorderTop(BorderStyle.THIN);
-			bgGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-			bgGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		bgRed = workbook.createCellStyle();
+		bgRed.setAlignment(HorizontalAlignment.CENTER);
+		bgRed.setBorderBottom(BorderStyle.THIN);
+		bgRed.setBorderLeft(BorderStyle.THIN);
+		bgRed.setBorderRight(BorderStyle.THIN);
+		bgRed.setBorderTop(BorderStyle.THIN);
+		bgRed.setFillForegroundColor(IndexedColors.RED.getIndex());
+		bgRed.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-			fontHeader = workbook.createFont();
-			fontHeader.setBold(true);
+		bgYellow = workbook.createCellStyle();
+		bgYellow.setAlignment(HorizontalAlignment.CENTER);
+		bgYellow.setBorderBottom(BorderStyle.THIN);
+		bgYellow.setBorderLeft(BorderStyle.THIN);
+		bgYellow.setBorderRight(BorderStyle.THIN);
+		bgYellow.setBorderTop(BorderStyle.THIN);
+		bgYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		bgYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-			topCenter = workbook.createCellStyle();
-			topCenter.setAlignment(HorizontalAlignment.CENTER);
-			topCenter.setFont(fontHeader);
+		bgGreen = workbook.createCellStyle();
+		bgGreen.setAlignment(HorizontalAlignment.CENTER);
+		bgGreen.setBorderBottom(BorderStyle.THIN);
+		bgGreen.setBorderLeft(BorderStyle.THIN);
+		bgGreen.setBorderRight(BorderStyle.THIN);
+		bgGreen.setBorderTop(BorderStyle.THIN);
+		bgGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+		bgGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-			topRight = workbook.createCellStyle();
-			topRight.setAlignment(HorizontalAlignment.RIGHT);
+		fontHeader = workbook.createFont();
+		fontHeader.setBold(true);
 
-			topLeft = workbook.createCellStyle();
-			topLeft.setAlignment(HorizontalAlignment.LEFT);
-			return workbook;
-		}
-		
-	
-	
-	
+		topCenter = workbook.createCellStyle();
+		topCenter.setAlignment(HorizontalAlignment.CENTER);
+		topCenter.setFont(fontHeader);
+
+		topRight = workbook.createCellStyle();
+		topRight.setAlignment(HorizontalAlignment.RIGHT);
+
+		topLeft = workbook.createCellStyle();
+		topLeft.setAlignment(HorizontalAlignment.LEFT);
+		return workbook;
+	}
+
 	private static final Logger logger = LoggerFactory.getLogger(RiskAssRiskWsService.class);
 	private final RiskAssRiskWsHdrRepository riskAssRiskWsHdrRepository;
 	private final String BUDGET_YEAR = "BUDGET_YEAR";
@@ -155,6 +154,9 @@ public class RiskAssRiskWsService {
 
 	@Autowired
 	private RiskAssOtherDtlRepository riskAssOtherDtlRepository;
+	
+	@Autowired
+	private RiskAssPerDtlRepository riskAssPerDtlRepository;
 
 	@Autowired
 	private ConditionService conditionService;
@@ -226,7 +228,7 @@ public class RiskAssRiskWsService {
 				insertConfigData = new RiskAssRiskWsHdr();
 				insertConfigData.setRiskHdrName(lov2.getValue1());
 				insertConfigData.setBudgetYear(riskAssRiskWsHdr.getBudgetYear());
-				insertConfigData.setActive(riskAssRiskWsHdr.getActive());
+				insertConfigData.setActive("Y");
 				riskAssRiskWsHdrRepository.save(insertConfigData);
 
 			}
@@ -271,7 +273,7 @@ public class RiskAssRiskWsService {
 	public RiskAssRiskWsHdr findById(Long id) {
 		return riskAssRiskWsHdrRepository.findOne(id);
 	}
-	
+
 	public List<RiskAssRiskWsHdr> updatePercent(List<RiskAssRiskWsHdr> riskAssRiskWsHdrs) {
 		List<RiskAssRiskWsHdr> RiskAssRiskWsHdrList = new ArrayList<RiskAssRiskWsHdr>();
 		for (RiskAssRiskWsHdr riskAssRiskWsHdr : riskAssRiskWsHdrs) {
@@ -293,7 +295,7 @@ public class RiskAssRiskWsService {
 		return riskAssOtherDtlRepository.findByRiskHrdId(riskHrdId);
 	}
 	
-	
+
 	public void updateRiskAssOtherDtl(List<RiskAssOtherDtl> riskAssOtherDtlList) {
 		List<Condition> conditionList = conditionService.findConditionByParentId(riskAssOtherDtlList.get(0).getRiskHrdId(), "OTHER", "int08-1-6");
 		if (BeanUtils.isNotEmpty(conditionList)) {
@@ -337,7 +339,7 @@ public class RiskAssRiskWsService {
 				} catch (Exception e) {
 					riskAssOtherDtlRepository.save(riskAssOtherDtl);
 				}
-				
+
 			} else if (riskAssOtherDtl.getIsDeleted().equals("Y")) {
 				databaseData = riskAssOtherDtlRepository.findOne(riskAssOtherDtl.getRiskOtherDtlId());
 				riskAssOtherDtlRepository.delete(databaseData);
@@ -346,42 +348,63 @@ public class RiskAssRiskWsService {
 
 	}
 
-	public List<RiskFullDataVo> searchFullRiskByBudgetYear(String budgetYear , List<String> riskHdrNameList) {
-		
-		List<RiskFullDataVo> riskFullDataVoList= new ArrayList<RiskFullDataVo>();
+	public List<RiskFullDataVo> searchFullRiskByBudgetYear(String budgetYear, List<String> riskHdrNameList) {
+		List<Condition> conditionList = conditionService.findConditionByParentId(Long.parseLong(budgetYear), "ALL", "int08-1-7");
+		List<RiskFullDataVo> riskFullDataVoList = new ArrayList<RiskFullDataVo>();
 		RiskFullDataVo riskFullDataVo = new RiskFullDataVo();
 		List<Int0801Vo> projectDepName = riskAssRiskWsHdrRepository.findProjectBaseByBudgetYear(budgetYear);
 		int index = 1;
 		for (Int0801Vo projectBase : projectDepName) {
 			riskFullDataVo = new RiskFullDataVo();
 			int sumRl = 0;
-			riskFullDataVo.setId(index+"");
+			riskFullDataVo.setId(index + "");
 			riskFullDataVo.setProjectBase(projectBase.getProjectBase());
 			riskFullDataVo.setDepartmentName(projectBase.getDepartmentName());
-			List<Int0801Vo> intList = riskAssRiskWsHdrRepository.findData(budgetYear, projectBase.getProjectBase() , projectBase.getDepartmentName());
+			List<Int0801Vo> intList = riskAssRiskWsHdrRepository.findData(budgetYear, projectBase.getProjectBase(), projectBase.getDepartmentName());
 			List<String> rl = new ArrayList<String>();
 			String rlDate = "";
 			for (String riskHdrName : riskHdrNameList) {
 				rlDate = "";
 				for (Int0801Vo value : intList) {
-					if(value.getProjectBase().equals(riskHdrName)) {
+					if (value.getProjectBase().equals(riskHdrName)) {
 						sumRl += Integer.parseInt(value.getRl());
 						rlDate = value.getRl();
 						break;
 					}
 				}
-				if(BeanUtils.isNotEmpty(rlDate)) {
-					rl.add(rlDate); 
-				}else {
+				if (BeanUtils.isNotEmpty(rlDate)) {
+					rl.add(rlDate);
+				} else {
 					rl.add("0");
 				}
 			}
 			riskFullDataVo.setRl(rl);
-			riskFullDataVo.setSumRiskCost(sumRl+"");	
-			
+			riskFullDataVo.setSumRiskCost(sumRl + "");
+
+			for (Condition condition : conditionList) {
+				long value = sumRl;
+				if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
+					riskFullDataVo.setRlAll(condition.getValueRl());
+					riskFullDataVo.setColor(condition.getColor());
+					riskFullDataVo.setValueTranslation(condition.getConvertValue());
+				} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+					riskFullDataVo.setRlAll(condition.getValueRl());
+					riskFullDataVo.setColor(condition.getColor());
+					riskFullDataVo.setValueTranslation(condition.getConvertValue());
+				} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+					riskFullDataVo.setRlAll(condition.getValueRl());
+					riskFullDataVo.setColor(condition.getColor());
+					riskFullDataVo.setValueTranslation(condition.getConvertValue());
+				}
+		
+	}
 			riskFullDataVoList.add(riskFullDataVo);
 			index++;
 		}
+		
+		
+	
+			
 		return riskFullDataVoList;
 	}
 
@@ -390,38 +413,36 @@ public class RiskAssRiskWsService {
 		riskWsHdr.setActive(riskAssRiskWsHdr.getActive());
 		riskAssRiskWsHdrRepository.save(riskWsHdr);
 	}
-			
-	
-	
-/*	searchRisk*/
-	 public ResponseDataTable<RiskAssRiskWsHdr> searchRiskCriteriaForDatatable(RiskAssRiskWsHdr riskAssRiskWsHdr, DataTableRequest dataTableRequest) {
-			ResponseDataTable<RiskAssRiskWsHdr> responseDataTable = new ResponseDataTable<RiskAssRiskWsHdr>();
-			List<RiskAssRiskWsHdr> riskAssInfHdrList = null;
-			if("0".equals(riskAssRiskWsHdr.getRiskHdrName())||"".equals(riskAssRiskWsHdr.getRiskHdrName())) {
-				riskAssInfHdrList = findByBudgetYearWsHdrActive(riskAssRiskWsHdr.getBudgetYear(),riskAssRiskWsHdr.getActive());
-			}else {
-				riskAssInfHdrList = findRiskByWsHdrActive(riskAssRiskWsHdr.getRiskHdrName(),riskAssRiskWsHdr.getBudgetYear(),riskAssRiskWsHdr.getActive());
-			}
-			
-			responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
-			responseDataTable.setData(riskAssInfHdrList);
-			responseDataTable.setRecordsTotal((int) riskAssInfHdrList.size());
-			responseDataTable.setRecordsFiltered((int) riskAssInfHdrList.size());
-			return responseDataTable;
 
+	/* searchRisk */
+	public ResponseDataTable<RiskAssRiskWsHdr> searchRiskCriteriaForDatatable(RiskAssRiskWsHdr riskAssRiskWsHdr, DataTableRequest dataTableRequest) {
+		ResponseDataTable<RiskAssRiskWsHdr> responseDataTable = new ResponseDataTable<RiskAssRiskWsHdr>();
+		List<RiskAssRiskWsHdr> riskAssInfHdrList = null;
+		if ("0".equals(riskAssRiskWsHdr.getRiskHdrName()) || "".equals(riskAssRiskWsHdr.getRiskHdrName())) {
+			riskAssInfHdrList = findByBudgetYearWsHdrActive(riskAssRiskWsHdr.getBudgetYear(), riskAssRiskWsHdr.getActive());
+		} else {
+			riskAssInfHdrList = findRiskByWsHdrActive(riskAssRiskWsHdr.getRiskHdrName(), riskAssRiskWsHdr.getBudgetYear(), riskAssRiskWsHdr.getActive());
 		}
-	 
-	public List<RiskAssRiskWsHdr> findByBudgetYearWsHdrActive(String year,String active ){	
-			return riskAssRiskWsHdrRepository.findByBudgetYearActive(year,active); 
-		}
-	
-	 public List<RiskAssRiskWsHdr> findRiskByWsHdrActive(String riskHdrName,String year,String active ){	
-			return riskAssRiskWsHdrRepository.findRiskByWsHdrActive(riskHdrName,year,active); 
-		}
+
+		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
+		responseDataTable.setData(riskAssInfHdrList);
+		responseDataTable.setRecordsTotal((int) riskAssInfHdrList.size());
+		responseDataTable.setRecordsFiltered((int) riskAssInfHdrList.size());
+		return responseDataTable;
+
+	}
+
+	public List<RiskAssRiskWsHdr> findByBudgetYearWsHdrActive(String year, String active) {
+		return riskAssRiskWsHdrRepository.findByBudgetYearActive(year, active);
+	}
+
+	public List<RiskAssRiskWsHdr> findRiskByWsHdrActive(String riskHdrName, String year, String active) {
+		return riskAssRiskWsHdrRepository.findRiskByWsHdrActive(riskHdrName, year, active);
+	}
 
 	public void exportWsOtherDtl(RiskAssOtherDtl riskAssOtherDtl, HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub
-		/*create spreadsheet*/
+		/* create spreadsheet */
 		XSSFWorkbook workbook = setUpExcel();
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
@@ -430,173 +451,257 @@ public class RiskAssRiskWsService {
 		Cell cell = row.createCell(cellNum);
 		DecimalFormat formatter = new DecimalFormat("#,##0");
 		System.out.println("Creating excel");
-		
-		/*create data spreadsheet*/	
-		/*Title*/	
+
+		/* create data spreadsheet */
+		/* Title */
 		RiskAssRiskWsHdr WsHdr = riskAssRiskWsHdrRepository.findOne(riskAssOtherDtl.getRiskHrdId());
 		row = sheet.createRow(0);
-		cell = row.createCell(cellNum);cell.setCellValue("กระดาษทำการประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต");cell.setCellStyle(topCenter);
+		cell = row.createCell(cellNum);
+		cell.setCellValue("กระดาษทำการประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต");
+		cell.setCellStyle(topCenter);
 		row = sheet.createRow(1);
-		cell = row.createCell(cellNum);cell.setCellValue("ปีงบประมาณ  "+WsHdr.getBudgetYear());cell.setCellStyle(topCenter);
+		cell = row.createCell(cellNum);
+		cell.setCellValue("ปีงบประมาณ  " + WsHdr.getBudgetYear());
+		cell.setCellStyle(topCenter);
 		row = sheet.createRow(2);
-		cell = row.createCell(cellNum);cell.setCellValue("ปัจจัยเสี่ยง : "+WsHdr.getRiskHdrName());cell.setCellStyle(topLeft);
+		cell = row.createCell(cellNum);
+		cell.setCellValue("ปัจจัยเสี่ยง : " + WsHdr.getRiskHdrName());
+		cell.setCellStyle(topLeft);
 		row = sheet.createRow(3);
-		cell = row.createCell(cellNum);cell.setCellValue("เงื่อนไขความเสี่ยง :  ");cell.setCellStyle(topLeft);
-		
+		cell = row.createCell(cellNum);
+		cell.setCellValue("เงื่อนไขความเสี่ยง :  ");
+		cell.setCellStyle(topLeft);
+
 		List<Condition> conditionList = conditionService.findConditionByParentId(riskAssOtherDtl.getRiskHrdId(), "OTHER", "int08-1-6");
 		rowNum = 4;
 		cellNum = 1;
-		
+
 		for (Condition con : conditionList) {
 			row = sheet.createRow(rowNum);
-			
 
-			if("<>".equals(con.getCondition())) {
-				if(con.getValue2()==null) {
-					cell = row.createCell(1);cell.setCellValue("          "+WsHdr.getRiskHdrName()+"          ระหว่าง    "+con.getValue1()+"  ถึง        -   ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
-				}else {
-					cell = row.createCell(1);cell.setCellValue("          "+WsHdr.getRiskHdrName()+"          ระหว่าง    "+con.getValue1()+"  ถึง   "+con.getValue2()+"  ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+			if ("<>".equals(con.getCondition())) {
+				if (con.getValue2() == null) {
+					cell = row.createCell(1);
+					cell.setCellValue("          " + WsHdr.getRiskHdrName() + "          ระหว่าง    " + con.getValue1() + "  ถึง        -   ระดับความเสี่ยง  " + con.getConvertValue() + "  คะแนนความเสี่ยง  " + con.getValueRl());
+				} else {
+					cell = row.createCell(1);
+					cell.setCellValue("          " + WsHdr.getRiskHdrName() + "          ระหว่าง    " + con.getValue1() + "  ถึง   " + con.getValue2() + "  ระดับความเสี่ยง  " + con.getConvertValue() + "  คะแนนความเสี่ยง  " + con.getValueRl());
 				}
-				
-			}else if (">".equals(con.getCondition())) {
-				if(con.getValue2()==null) {
-					cell = row.createCell(1);cell.setCellValue("          "+WsHdr.getRiskHdrName()+"          มากกว่า  " +con.getValue1()+ "  ถึง        -   ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
-				}else {
-					cell = row.createCell(1);cell.setCellValue("          "+WsHdr.getRiskHdrName()+"          มากกว่า  "+con.getValue1()+ "  ถึง   "+con.getValue2()+"  ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+
+			} else if (">".equals(con.getCondition())) {
+				if (con.getValue2() == null) {
+					cell = row.createCell(1);
+					cell.setCellValue("          " + WsHdr.getRiskHdrName() + "          มากกว่า  " + con.getValue1() + "  ถึง        -   ระดับความเสี่ยง  " + con.getConvertValue() + "  คะแนนความเสี่ยง  " + con.getValueRl());
+				} else {
+					cell = row.createCell(1);
+					cell.setCellValue("          " + WsHdr.getRiskHdrName() + "          มากกว่า  " + con.getValue1() + "  ถึง   " + con.getValue2() + "  ระดับความเสี่ยง  " + con.getConvertValue() + "  คะแนนความเสี่ยง  " + con.getValueRl());
 				}
-				
-			}else if ("<".equals(con.getCondition())) {
-				if(con.getValue2()==null) {
-					cell = row.createCell(1);cell.setCellValue("          "+WsHdr.getRiskHdrName()+"          น้อยกว่า  "  +con.getValue1()+   "  ถึง        -   ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
-				}else {
-					cell = row.createCell(1);cell.setCellValue("          "+WsHdr.getRiskHdrName()+"          น้อยกว่า  "  +con.getValue1()+  "  ถึง   "+con.getValue2()+"  ระดับความเสี่ยง  "+con.getConvertValue()+"  คะแนนความเสี่ยง  "+con.getValueRl());
+
+			} else if ("<".equals(con.getCondition())) {
+				if (con.getValue2() == null) {
+					cell = row.createCell(1);
+					cell.setCellValue("          " + WsHdr.getRiskHdrName() + "          น้อยกว่า  " + con.getValue1() + "  ถึง        -   ระดับความเสี่ยง  " + con.getConvertValue() + "  คะแนนความเสี่ยง  " + con.getValueRl());
+				} else {
+					cell = row.createCell(1);
+					cell.setCellValue("          " + WsHdr.getRiskHdrName() + "          น้อยกว่า  " + con.getValue1() + "  ถึง   " + con.getValue2() + "  ระดับความเสี่ยง  " + con.getConvertValue() + "  คะแนนความเสี่ยง  " + con.getValueRl());
 				}
-				
+
 			}
 			cellNum++;
-			
+
 			rowNum++;
 
 		}
-		/* Header*/
-		rowNum =9;
+		/* Header */
+		rowNum = 9;
 		row = sheet.createRow(rowNum);
-		String[] tbTH = {"ลำดับ","โครงการตามยุทธศาสตร์","หน่วยงาน","ค่าความเสี่ยง","ประเมินความเสี่ยง"};
-		for(cellNum =0 ;cellNum<tbTH.length;cellNum++) {
-			cell = row.createCell(cellNum);cell.setCellValue(tbTH[cellNum]);cell.setCellStyle(thStyle);
-		};
-		
-		cell = row.createCell(5);cell.setCellStyle(cellCenter);
-		
+		String[] tbTH = { "ลำดับ", "โครงการตามยุทธศาสตร์", "หน่วยงาน", "ค่าความเสี่ยง", "ประเมินความเสี่ยง" };
+		for (cellNum = 0; cellNum < tbTH.length; cellNum++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH[cellNum]);
+			cell.setCellStyle(thStyle);
+		}
+		;
+
+		cell = row.createCell(5);
+		cell.setCellStyle(cellCenter);
+
 		Row rowRisk = null;
 		Cell cellRisk = null;
 		int cellRiskNum = 4;
-		 rowRisk = sheet.createRow(10);
-		 cellRisk = rowRisk.createCell(cellRiskNum);cellRisk.setCellValue("RL");cellRisk.setCellStyle(thStyle);
-		 cellRiskNum++;
-		 cellRisk = rowRisk.createCell(cellRiskNum);cellRisk.setCellValue("แปลค่า");cellRisk.setCellStyle(thStyle);
+		rowRisk = sheet.createRow(10);
+		cellRisk = rowRisk.createCell(cellRiskNum);
+		cellRisk.setCellValue("RL");
+		cellRisk.setCellStyle(thStyle);
+		cellRiskNum++;
+		cellRisk = rowRisk.createCell(cellRiskNum);
+		cellRisk.setCellValue("แปลค่า");
+		cellRisk.setCellStyle(thStyle);
 
-		 for(cellNum =0 ;cellNum<tbTH.length-1;cellNum++) {
-				cell = rowRisk.createCell(cellNum);cell.setCellStyle(thStyle);
-		 };
-		/* EndHeader*/
-		 
-		/*set sheet */
-		 /*setColumnWidth*/
-		 sheet.setColumnWidth(1, 76 * 255);
-		 sheet.setColumnWidth(2, 76 * 100);
-		 sheet.setColumnWidth(3, 76 * 100);
-		 // merge(firstRow, lastRow, firstCol, lastCol)
-		 sheet.addMergedRegion(new CellRangeAddress(9,9,4,5));
-		 //merge ลำดับ -> รวม
-		 for(int i=0;i<=3;i++) {
-		 sheet.addMergedRegion(new CellRangeAddress(9,10,i,i));
-		 }
-		//merge Title
-		 	sheet.addMergedRegion(new CellRangeAddress(0,0,0,5));
-			sheet.addMergedRegion(new CellRangeAddress(1,1,0,5));
-			sheet.addMergedRegion(new CellRangeAddress(4,4,1,5));
-			sheet.addMergedRegion(new CellRangeAddress(5,5,1,5));
-			sheet.addMergedRegion(new CellRangeAddress(6,6,1,5));
-		/*End set sheet */			
-			
-			/* Detail */
-			List<RiskAssOtherDtl> resultList = riskAssOtherDtlRepository.findByRiskHrdId(riskAssOtherDtl.getRiskHrdId());
-			rowNum = 11;
-			cellNum = 0;
-			int no = 1;
-			for (RiskAssOtherDtl detail : resultList) {
-				row = sheet.createRow(rowNum);
-				// No.
-				cell = row.createCell(cellNum);
-				cell.setCellValue(no);
-				cell.setCellStyle(cellCenter);
-				cellNum++;
-				// 
-				cell = row.createCell(cellNum);
-				cell.setCellValue(detail.getProjectBase());
-				cell.setCellStyle(cellLeft);
-				cellNum++;
-				
-				cell = row.createCell(cellNum);
-				cell.setCellValue(detail.getDepartmentName());
-				cell.setCellStyle(cellCenter);
-				cellNum++;
-				
-				cell = row.createCell(cellNum);
-				cell.setCellValue(formatter.format(detail.getRiskCost().longValue()));
-				cell.setCellStyle(cellRight);
-				cellNum++;
-				
-				cell = row.createCell(cellNum);
-				cell.setCellValue(detail.getRl());
-				if("แดง".equals(detail.getColor())) {
-					cell.setCellStyle(bgRed);
-				}else if("เหลือง".equals(detail.getColor())) {
-					cell.setCellStyle(bgYellow);
-				}else if("เขียว".equals(detail.getColor())) {
-					cell.setCellStyle(bgGreen);
-				}
-				cellNum++;
-				
-				cell = row.createCell(cellNum);
-				cell.setCellValue(detail.getValueTranslation());
-				if("แดง".equals(detail.getColor())) {
-					cell.setCellStyle(bgRed);
-				}else if("เหลือง".equals(detail.getColor())) {
-					cell.setCellStyle(bgYellow);
-				}else if("เขียว".equals(detail.getColor())) {
-					cell.setCellStyle(bgGreen);
-				}
-				cellNum++;
+		for (cellNum = 0; cellNum < tbTH.length - 1; cellNum++) {
+			cell = rowRisk.createCell(cellNum);
+			cell.setCellStyle(thStyle);
+		}
+		;
+		/* EndHeader */
 
-				no++;
-				rowNum++;
-				cellNum = 0;
+		/* set sheet */
+		/* setColumnWidth */
+		sheet.setColumnWidth(1, 76 * 255);
+		sheet.setColumnWidth(2, 76 * 100);
+		sheet.setColumnWidth(3, 76 * 100);
+		// merge(firstRow, lastRow, firstCol, lastCol)
+		sheet.addMergedRegion(new CellRangeAddress(9, 9, 4, 5));
+		// merge ลำดับ -> รวม
+		for (int i = 0; i <= 3; i++) {
+			sheet.addMergedRegion(new CellRangeAddress(9, 10, i, i));
+		}
+		// merge Title
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 5));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 5));
+		sheet.addMergedRegion(new CellRangeAddress(4, 4, 1, 5));
+		sheet.addMergedRegion(new CellRangeAddress(5, 5, 1, 5));
+		sheet.addMergedRegion(new CellRangeAddress(6, 6, 1, 5));
+		/* End set sheet */
+
+		/* Detail */
+		List<RiskAssOtherDtl> resultList = riskAssOtherDtlRepository.findByRiskHrdId(riskAssOtherDtl.getRiskHrdId());
+		rowNum = 11;
+		cellNum = 0;
+		int no = 1;
+		for (RiskAssOtherDtl detail : resultList) {
+			row = sheet.createRow(rowNum);
+			// No.
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			//
+			cell = row.createCell(cellNum);
+			cell.setCellValue(detail.getProjectBase());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(detail.getDepartmentName());
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(formatter.format(detail.getRiskCost().longValue()));
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(detail.getRl());
+			if ("แดง".equals(detail.getColor())) {
+				cell.setCellStyle(bgRed);
+			} else if ("เหลือง".equals(detail.getColor())) {
+				cell.setCellStyle(bgYellow);
+			} else if ("เขียว".equals(detail.getColor())) {
+				cell.setCellStyle(bgGreen);
 			}
+			cellNum++;
 
-			/* EndDetail */
-		 
-/*End create data spreadsheet*/
-				
-		/*set	fileName*/		
-		String fileName ="WsOtherDtl_"+WsHdr.getBudgetYear();
+			cell = row.createCell(cellNum);
+			cell.setCellValue(detail.getValueTranslation());
+			if ("แดง".equals(detail.getColor())) {
+				cell.setCellStyle(bgRed);
+			} else if ("เหลือง".equals(detail.getColor())) {
+				cell.setCellStyle(bgYellow);
+			} else if ("เขียว".equals(detail.getColor())) {
+				cell.setCellStyle(bgGreen);
+			}
+			cellNum++;
+
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		/* EndDetail */
+
+		/* End create data spreadsheet */
+
+		/* set fileName */
+		String fileName = "WsOtherDtl_" + WsHdr.getBudgetYear();
 		System.out.println(fileName);
 		/* write it as an excel attachment */
 		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 		workbook.write(outByteStream);
-		byte [] outArray = outByteStream.toByteArray();
+		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/vnd.ms-excel");
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
-		response.setHeader("Content-Disposition", "attachment; filename="+fileName+".xlsx");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		OutputStream outStream = response.getOutputStream();
 		outStream.write(outArray);
 		outStream.flush();
 		outStream.close();
-		
+
 		System.out.println("Done");
-		
+
 	}
 	
+	public List<RiskAssPerDtl> findRiskAssPerDtlByRiskHrdId(Long riskHrdId) {
+		logger.info("findRiskAssPerDtlByRiskHrdId id : " + riskHrdId);
+		List<RiskAssPerDtl> list = riskAssPerDtlRepository.findByRiskHrdId(riskHrdId);
+		if(BeanUtils.isEmpty(list)) {
+			list = webServiceExciseService.riskAssPerDtllWS();
+		}
+		return list;
+	}
+	
+	public void updateRiskAssPerDtl(List<RiskAssPerDtl> riskAssPerDtlList) {
+		List<Condition> conditionList = conditionService.findConditionByParentId(riskAssPerDtlList.get(0).getRiskHrdId(), "MAIN", "int08-1-8");
+		if (BeanUtils.isNotEmpty(conditionList)) {
+			for (RiskAssPerDtl riskPer : riskAssPerDtlList) {
+				for (Condition condition : conditionList) {
+					long value = riskPer.getRiskCost().longValue();
+					if ("<>".equals(condition.getCondition()) && value >= condition.getValue1().longValue() && value <= condition.getValue2().longValue()) {
+						riskPer.setRl(condition.getValueRl());
+						riskPer.setColor(condition.getColor());
+						riskPer.setValueTranslation(condition.getConvertValue());
+					} else if (">".equals(condition.getCondition()) && value > condition.getValue1().longValue()) {
+						riskPer.setRl(condition.getValueRl());
+						riskPer.setColor(condition.getColor());
+						riskPer.setValueTranslation(condition.getConvertValue());
+					} else if ("<".equals(condition.getCondition()) && value < condition.getValue1().longValue()) {
+						riskPer.setRl(condition.getValueRl());
+						riskPer.setColor(condition.getColor());
+						riskPer.setValueTranslation(condition.getConvertValue());
+					}
+				}
+
+			}
+
+		}
+		RiskAssPerDtl databaseData;
+		for (RiskAssPerDtl riskAssPerDtl : riskAssPerDtlList) {
+			if (riskAssPerDtl.getIsDeleted().equals("N")) {
+				try {
+					databaseData = riskAssPerDtlRepository.findOne(riskAssPerDtl.getRiskOtherDtlId());
+					if (databaseData != null && databaseData.getRiskOtherDtlId() != null) {
+						databaseData.setProjectBase(riskAssPerDtl.getProjectBase());
+						databaseData.setDepartmentName(riskAssPerDtl.getDepartmentName());
+						databaseData.setRiskCost(riskAssPerDtl.getRiskCost());
+						databaseData.setRl(riskAssPerDtl.getRl());
+						databaseData.setValueTranslation(riskAssPerDtl.getValueTranslation());
+						databaseData.setColor(riskAssPerDtl.getColor());
+						riskAssPerDtlRepository.save(databaseData);
+					} else {
+						riskAssPerDtlRepository.save(riskAssPerDtl);
+					}
+				} catch (Exception e) {
+					riskAssPerDtlRepository.save(riskAssPerDtl);
+				}
+
+			} else if (riskAssPerDtl.getIsDeleted().equals("Y")) {
+				databaseData = riskAssPerDtlRepository.findOne(riskAssPerDtl.getRiskOtherDtlId());
+				riskAssPerDtlRepository.delete(databaseData);
+			}
+		}
+
+	}
+
 }

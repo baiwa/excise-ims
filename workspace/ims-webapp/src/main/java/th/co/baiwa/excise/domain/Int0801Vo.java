@@ -3,6 +3,7 @@ package th.co.baiwa.excise.domain;
 import java.util.List;
 
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssPerDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
 
 public class Int0801Vo {
@@ -14,6 +15,7 @@ public class Int0801Vo {
 	private List<String> riskHrdNameList;
 	private String departmentName;
 	private List<RiskAssRiskWsHdr> riskAssRiskWsHdrList;
+	private List<RiskAssPerDtl> riskAssPerDtlList;
 	private String color;
 	private String valueTranslation;
 	private String riskPoint;
@@ -104,6 +106,14 @@ public class Int0801Vo {
 
 	public void setRiskPoint(String riskPoint) {
 		this.riskPoint = riskPoint;
+	}
+
+	public List<RiskAssPerDtl> getRiskAssPerDtlList() {
+		return riskAssPerDtlList;
+	}
+
+	public void setRiskAssPerDtlList(List<RiskAssPerDtl> riskAssPerDtlList) {
+		this.riskAssPerDtlList = riskAssPerDtlList;
 	}
 
 	
