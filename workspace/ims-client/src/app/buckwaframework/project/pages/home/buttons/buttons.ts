@@ -9,10 +9,10 @@ declare var $:any;
 })
 export class Buttons {
 
-    private color: boolean = false;
-    private state: boolean = false;
-    private size: boolean = false;
-    private align: boolean = false;
+    color: boolean = false;
+    state: boolean = false;
+    size: boolean = false;
+    align: boolean = false;
 
     constructor() {
         // TODO
@@ -37,6 +37,6 @@ export class Buttons {
         await $temp.val(`<div class="ui grid">\r\n\t<div class="sixteen wide ${classes} aligned column">\r\n\t\t<button class="ui button" type="button">${classes}</button>\r\n\t</div>\r\n</div>`).select();
         await document.execCommand("copy");
         await $temp.remove();
-        setTimeout(() => { this.align = false }, 2000);
+        setTimeout(() => { this.align = false }, 800);
     }
 }

@@ -1,0 +1,42 @@
+<div class="ui grid">
+    <div class="row">
+        <div class="eight wide column">
+            <div class="ui segments">
+                <div class="ui top attached header">
+                    Header<button type="button" id="seg-n" class="ui mini right floated button example" (click)="copySegment($event, '')">copy</button>
+                </div>
+                <div class="ui example bottom segment">
+                    <p>Content</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="eight wide column">
+            <div class="ui segments">
+                <div class="ui top attached header">
+                    Header [Normal Loading]<button type="button" id="seg-loader-n" class="ui mini right floated button example" (click)="copySegment($event, 'loading')">copy</button>
+                </div>
+                <div class="ui example bottom segment">
+                    <div class="ui active dimmer" *ngIf="true">
+                        <div class="ui small text loader">Loading</div>
+                    </div>
+                    <p>Content</p>
+                </div>
+            </div>
+        </div>
+        <div class="eight wide column">
+            <div class="ui segments">
+                <div class="ui top attached header">
+                    Header [Inverted Loading]<button type="button" id="seg-loader-i" class="ui mini right floated button example" (click)="copySegment($event, 'loading-inverted')">copy</button>
+                </div>
+                <div class="ui example bottom segment">
+                    <div class="ui inverted active dimmer" *ngIf="true">
+                        <div class="ui small text loader">Loading</div>
+                    </div>
+                    <p>Content</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

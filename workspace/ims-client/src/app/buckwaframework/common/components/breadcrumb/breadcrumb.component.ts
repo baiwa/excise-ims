@@ -1,10 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { BreadCrumb } from '../../models';
+
+declare var $: any;
 
 @Component({
   selector: 'app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
   styles: [
     `
+    .example-btn {
+      margin-top: -4px !important;
+      margin-right: -4px !important;
+    }
+    .example {
+      padding-top: 14px !important;
+    }
     .sixteen.wide.column.bread {
       padding-top: 0;
     }
@@ -16,9 +26,22 @@ import { Component, Input, OnInit } from '@angular/core';
   ]
 })
 export class BreadcrumbComponent {
+
+  @Input() class: string;
+  @Input() route: BreadCrumb[] = [];
+
   constructor() {
+    // TODO
   }
-  @Input() route: any = [
-    {  }
-  ];
+
+  async copyBreadcrumb(e: any) {
+    e.target.innerHTML = await "copied";
+    let $temp = await $("<textarea id='copyToClipboard'></textarea>");
+    await $("body").append($temp);
+    await $temp.val(`import { BreadCrumb } from 'models/index';\r\nbreadcrumb: BreadCrumb[] = [\r\n\t{ label: 'Page', route: '#' }\r\n]\r\n<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>`).select();
+    await document.execCommand("copy");
+    await $temp.remove();
+    setTimeout(() => e.target.innerHTML = "copy", 1000);
+  }
+
 }

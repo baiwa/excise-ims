@@ -1,5 +1,5 @@
 <div class="ui grid">
-  <div class="sixteen wide column bread">
+  <div class="sixteen wide column {{ class }} bread">
     <div class="ui segment shadow">
 
       <div class="ui breadcrumb">
@@ -21,6 +21,8 @@
         <i class="right chevron icon divider" *ngIf="item.route == '#' && i != route.length-1"></i>
 
       </div>
+
+      <button *ngIf="class === 'example'" type="button" class="ui mini right floated button example-btn" (click)="copyBreadcrumb($event)">copy</button>
     </div>
   </div>
 </div>
