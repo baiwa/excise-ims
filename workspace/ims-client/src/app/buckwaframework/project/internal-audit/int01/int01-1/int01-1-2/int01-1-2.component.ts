@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { BreadCrumb } from "models/index";
 import { NgForm } from "@angular/forms";
+import { Int011Service } from "../int01-1.services";
 
 declare var $: any;
 
@@ -20,13 +21,16 @@ export class Int0112Component implements OnInit {
 
   @ViewChild('f') form: NgForm;
 
-  constructor() {
+  data: any = null;
+
+  constructor(private main: Int011Service) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบพัสดุ", route: "#" },
       { label: "ตรวจสอบพัสดุภาคพื้นที่", route: "int01/1/1" },
       { label: "เพิ่มเลขแบบพิมพ์", route: "#" }
     ];
+    this.data = this.main.getData();
   }
 
   ngOnInit() {

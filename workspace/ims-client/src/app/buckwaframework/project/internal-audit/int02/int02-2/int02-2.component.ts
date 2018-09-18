@@ -1,10 +1,12 @@
-import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Observable } from "rxjs";
-import { DialogService, IaService, MessageBarService, AjaxService, AuthService } from "services/index";
+import { Component, OnInit } from "@angular/core";
 import { Headers } from "@angular/http";
-import { toFormData } from "helpers/index";
+import { Observable } from "rxjs";
+
+import { DialogService, IaService, MessageBarService, AjaxService, AuthService } from "services/index";
 import { BaseModel, ManageReq, TableReq, BreadCrumb } from "models/index";
+import { toFormData } from "helpers/index";
+import { async } from "q";
 
 declare var $: any;
 
@@ -99,9 +101,9 @@ export class Int022Component implements OnInit {
     return true;
   }
 
-  init() {
+  async init() {
     // QtnMasterId
-    this.qtnMasterId = this.route.snapshot.queryParams["id"] || "";
+    this.qtnMasterId = await this.route.snapshot.queryParams["id"] || "";
     // Datatable
     this.loadTable();
     // QtnMaster Initial
@@ -270,10 +272,10 @@ export class Int022Component implements OnInit {
   }
 
   loadTable(): void {
-    this.ajax.post(`${URL.DATATABLE}/${this.qtnMasterId}`, toFormData(this.table), res => {
-      let len: number = parseInt(res.json().recordsTotal) / 5;
-      this.table.recordsTotal = Math.ceil(len);
-      this.datatable = res.json().data;
+    this.ajax.post(`${URL.DATATABLE}/${this.qtnMasterId}`, toFormData(this.table),async res => {
+      let len: number = await parseInt(res.json().recordsTotal) / 5;
+      this.table.recordsTotal = await Math.ceil(len);
+      this.datatable = await res.json().data;
     }, null, new Headers());
   }
 

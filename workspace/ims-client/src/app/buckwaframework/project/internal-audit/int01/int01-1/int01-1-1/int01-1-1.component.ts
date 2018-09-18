@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
-import { AjaxService } from "services/index";
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
-import { BreadCrumb, ComboBox } from "models/index";
-import { Int0111Service } from "./int01-1-1.service";
 import { Observable } from "rxjs";
+
+import { BreadCrumb, ComboBox } from "models/index";
+import { AjaxService } from "services/index";
+import { Int011Service } from "../int01-1.services";
+import { Int0111Service } from "./int01-1-1.service";
+
 declare var $: any;
 
 @Component({
@@ -21,7 +24,12 @@ export class Int0111Component implements OnInit, AfterViewInit {
   comboBox3: Observable<ComboBox>;
   breadcrumb: BreadCrumb[] = [];
 
-  constructor(private ajax: AjaxService, private router: Router, private self: Int0111Service) {
+  constructor(
+    private ajax: AjaxService,
+    private router: Router,
+    private main: Int011Service,
+    private self: Int0111Service,
+  ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบพัสดุ", route: "#" },
@@ -41,8 +49,17 @@ export class Int0111Component implements OnInit, AfterViewInit {
     $(".ui.dropdown.search").css("width", "100%");
   }
 
-  onSubmit(form: NgForm) {
-    console.log(form);
+  async onSubmit(form: NgForm) {
+    const { travelTo1, travelTo2, travelTo3, startDate, endDate } = await form.controls;
+    const data = await {
+      travelTo1: travelTo1,
+      travelTo2: travelTo2,
+      travelTo3: travelTo3,
+      startDate: startDate,
+      endDate: endDate,
+    };
+    await this.main.setData(data);
+    this.router.navigate(['int01/1/2']);
     // const { travelTo1, startDate, endDate } = form.controls;
     // if (form.valid || (travelTo1.valid && startDate.valid && endDate.valid)) {
       // this.router.navigate(['int01/1/2']);

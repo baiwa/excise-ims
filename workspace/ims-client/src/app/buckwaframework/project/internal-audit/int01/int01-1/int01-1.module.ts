@@ -8,6 +8,7 @@ import { Int0111Component } from './int01-1-1/int01-1-1.component';
 import { Int0112Component } from './int01-1-2/int01-1-2.component';
 import { Int0113Component } from './int01-1-3/int01-1-3.component';
 import { BreadcrumbModule } from '../../../../common/components';
+import { Int011Service } from './int01-1.services';
 // Modules
 // import { DataTablesModule } from 'angular-datatables';
 
@@ -31,6 +32,7 @@ const routes: Routes = [
         Int0112Component,
         Int0113Component
     ],
+    providers: [Int011Service],
     exports: [RouterModule]
 })
 export class Int011Module { }

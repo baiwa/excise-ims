@@ -28,7 +28,6 @@ import {
 
 // components
 import { AppComponent } from "./app.component";
-import { HomePage } from "./buckwaframework/project/pages/home/home";
 import { LoginPage } from "./buckwaframework/project/pages/login/login";
 
 
@@ -36,7 +35,6 @@ import { LoginPage } from "./buckwaframework/project/pages/login/login";
   declarations: [
     AppComponent,
     TranslatePipe,
-    HomePage,
     LoginPage
   ],
   imports: [

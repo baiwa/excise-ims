@@ -1,0 +1,64 @@
+<h3>
+    Colors
+    <div class="ui label" *ngIf="color">
+        <i class="check icon"></i> copied
+    </div>
+</h3>
+<button type="button" class="ui example button" (click)="copyButton($event, 'color')">ui button</button>
+<button type="button" class="ui example primary button" (click)="copyButton($event, 'color')">ui primary button</button>
+<button type="button" class="ui example red button" (click)="copyButton($event, 'color')">ui red button</button>
+<button type="button" class="ui example orange button" (click)="copyButton($event, 'color')">ui orange button</button>
+<button type="button" class="ui example yellow button" (click)="copyButton($event, 'color')">ui yellow button</button>
+<button type="button" class="ui example olive button" (click)="copyButton($event, 'color')">ui olive button</button>
+<button type="button" class="ui example green button" (click)="copyButton($event, 'color')">ui green button</button>
+<button type="button" class="ui example teal button" (click)="copyButton($event, 'color')">ui teal button</button>
+<button type="button" class="ui example blue button" (click)="copyButton($event, 'color')">ui blue button</button>
+<button type="button" class="ui example violet button" (click)="copyButton($event, 'color')">ui violet button</button>
+<button type="button" class="ui example purple button" (click)="copyButton($event, 'color')">ui purple button</button>
+<button type="button" class="ui example pink button" (click)="copyButton($event, 'color')">ui pink button</button>
+<button type="button" class="ui example brown button" (click)="copyButton($event, 'color')">ui brown button</button>
+<button type="button" class="ui example grey button" (click)="copyButton($event, 'color')">ui grey button</button>
+<button type="button" class="ui example black button" (click)="copyButton($event, 'color')">ui black button</button>
+<hr>
+<h3>
+    State
+    <div class="ui label" *ngIf="state">
+        <i class="check icon"></i> copied
+    </div>
+</h3>
+<button type="button" class="ui example active button" (click)="copyButton($event, 'state')">ui active button</button>
+<button type="button" class="ui example disabled button" (click)="copyButton($event, 'state')">ui disabled button</button>
+<button type="button" class="ui example loading button" (click)="copyButton($event, 'state')">ui loading button</button>
+<hr>
+<h3>
+    Size
+    <div class="ui label" *ngIf="size">
+        <i class="check icon"></i> copied
+    </div>
+</h3>
+<button type="button" class="ui example mini button" (click)="copyButton($event, 'size')">ui mini button</button>
+<button type="button" class="ui example tiny button" (click)="copyButton($event, 'size')">ui tiny button</button>
+<button type="button" class="ui example small button" (click)="copyButton($event, 'size')">ui small button</button>
+<button type="button" class="ui example medium button" (click)="copyButton($event, 'size')">ui medium button</button>
+<button type="button" class="ui example large button" (click)="copyButton($event, 'size')">ui large button</button>
+<button type="button" class="ui example big button" (click)="copyButton($event, 'size')">ui big button</button>
+<button type="button" class="ui example huge button" (click)="copyButton($event, 'size')">ui huge button</button>
+<button type="button" class="ui example massive button" (click)="copyButton($event, 'size')">ui massive button</button>
+<hr>
+<h3>
+    Aligned
+    <div class="ui label" *ngIf="align">
+        <i class="check icon"></i> copied
+    </div>
+</h3>
+<div class="ui grid">
+    <div class="sixteen wide left aligned column">
+        <button type="button" class="ui button" (click)="copyAligned($event)">left</button>
+    </div>
+    <div class="sixteen wide center aligned column">
+        <button type="button" class="ui button" (click)="copyAligned($event)">center</button>
+    </div>
+    <div class="sixteen wide right aligned column">
+        <button type="button" class="ui button" (click)="copyAligned($event)">right</button>
+    </div>
+</div>

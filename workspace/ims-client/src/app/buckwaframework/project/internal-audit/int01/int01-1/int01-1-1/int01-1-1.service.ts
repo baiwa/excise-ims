@@ -30,7 +30,7 @@ export class Int0111Service {
         );
     }
 
-    pullComboBox(type: string, combo: string, id?: number): Observable<ComboBox> {
+    pullComboBox = (type: string, combo: string, id?: number): Observable<ComboBox> => {
         return new Observable<ComboBox>(obs => {
             this.dropdown(type, combo, id).then(
                 () => obs.next(this[combo])
@@ -38,17 +38,17 @@ export class Int0111Service {
         });
     }
 
-    calendar(fromId: string, toId: string, form: NgForm): void {
+    calendar = (fromId: string, toId: string, form: NgForm): void => {
         $(`#${fromId}`).calendar({
             endCalendar: $(`#${toId}`),
             maxDate: new Date(),
             type: "date",
             text: TextDateTH,
             formatter: formatter(),
-            onChange: (date) => {
+            onChange: async (date) => {
                 let day = date.getDate();
-                let _month = toDateLocale(date)[0].split("/")[1];
-                let _year = toDateLocale(date)[0].split("/")[2];
+                let _month = await toDateLocale(date)[0].split("/")[1];
+                let _year = await toDateLocale(date)[0].split("/")[2];
                 form.controls.startDate.setValue(digit(day) + "/" + digit(_month) + "/" + _year.toString());
             }
         });
@@ -58,10 +58,10 @@ export class Int0111Service {
             type: "date",
             text: TextDateTH,
             formatter: formatter(),
-            onChange: (date) => {
+            onChange: async (date) => {
                 let day = date.getDate();
-                let _month = toDateLocale(date)[0].split("/")[1];
-                let _year = toDateLocale(date)[0].split("/")[2];
+                let _month = await toDateLocale(date)[0].split("/")[1];
+                let _year = await toDateLocale(date)[0].split("/")[2];
                 form.controls.endDate.setValue(digit(day) + "/" + digit(_month) + "/" + _year.toString());
             }
         });
