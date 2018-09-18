@@ -1,12 +1,9 @@
 import { File } from './../../../../../../common/models/file';
 import { MessageBarService, AjaxService } from 'app/buckwaframework/common/services';
-import { TableReq } from './../../../../../../common/models/table';
 import { Component, OnInit } from '@angular/core';
 
 import { TextDateTH, formatter } from '../../../../../../common/helper/datepicker';
-import { Button } from 'selenium-webdriver';
-import { forEach } from '@angular/router/src/utils/collection';
-declare var jQuery: any;
+import { BreadCrumb } from 'models/breadcrumb';
 declare var $: any;
 
 @Component({
@@ -26,6 +23,7 @@ export class Int05113Component implements OnInit {
   numberButton : number;
   file :File[];
   loading : boolean;
+  breadcrumb : BreadCrumb[];
   constructor(
     private message: MessageBarService,
     private ajax: AjaxService,    
@@ -38,6 +36,12 @@ export class Int05113Component implements OnInit {
     this.listButton = [];
     this.numberButton=1;
     this.loading = false;
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบพัสดุ", route: "#" },
+      { label: "ตรวจสอบพัสดุภาคพื้นที่", route: "int05/1" },
+      { label: "เพิ่มข้อมูลแสตมป์", route: "#" },
+    ];
   }
 
   ngOnInit() {

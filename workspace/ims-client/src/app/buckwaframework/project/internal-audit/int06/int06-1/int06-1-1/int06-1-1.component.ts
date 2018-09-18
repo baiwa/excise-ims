@@ -50,7 +50,7 @@ export class Int0611Component implements OnInit {
     await this.int0611Service.onChangeUpload(file);
     setTimeout(() => {
       this.loading = false;
-    }, 1000);
+    }, 500);
   }
 
   dataTable(){

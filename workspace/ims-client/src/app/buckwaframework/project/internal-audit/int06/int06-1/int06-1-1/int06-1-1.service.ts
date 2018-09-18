@@ -95,6 +95,15 @@ export class Int0611Service {
     this.table.clear().draw();
     this.table.rows.add(this.data); // Add new data
     this.table.columns.adjust().draw(); // Redraw the DataTable    
+
+    // on click edit
+    this.table.on('click', 'tbody tr button.btn-edit', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = this.table.row(closestRow).data(); 
+      console.log("data : ",data);
+      $('#edit-modal').modal('show');
+
+    });
   }
 }
 

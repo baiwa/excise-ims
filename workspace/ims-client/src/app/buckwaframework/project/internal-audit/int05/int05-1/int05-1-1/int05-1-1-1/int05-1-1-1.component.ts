@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { File } from './../../../../../../common/models/file';
 import { TextDateTH, formatter } from '../../../../../../common/helper/datepicker';
 import { MessageBarService, AjaxService } from 'app/buckwaframework/common/services';
+import { BreadCrumb } from 'models/breadcrumb';
 declare var jQuery: any;
 declare var $: any;
 
@@ -22,10 +23,17 @@ export class Int05111Component implements OnInit {
   numberButton : number;
   file :File[];
   loading : boolean;
+  breadcrumb: BreadCrumb[]
   constructor(
     private message: MessageBarService,
     private ajax: AjaxService,    
   ) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบพัสดุ", route: "#" },
+      { label: "ตรวจสอบพัสดุพื้นที่สาขา", route: "int05/1/1" },
+      { label: "เพิ่มข้อมูลแสตมป์", route: "#" },
+    ];
     this.data = []
     this.randomNumber = 0;
     this.stampType = null;

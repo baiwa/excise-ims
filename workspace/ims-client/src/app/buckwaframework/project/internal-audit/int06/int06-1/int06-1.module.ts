@@ -6,7 +6,6 @@ import { Int061Component } from './int06-1.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../../../common/services';
 import { Int0611Component } from './int06-1-1/int06-1-1.component';
-import { BreadcrumbComponent } from '../../../../common/components/breadcrumb/breadcrumb.component';
 import { FormsModule } from '@angular/forms';
 import { BreadcrumbModule } from '../../../../common/components';
 

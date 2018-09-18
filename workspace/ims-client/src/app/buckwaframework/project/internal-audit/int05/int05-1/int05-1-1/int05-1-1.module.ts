@@ -9,6 +9,7 @@ import { AuthGuard } from '../../../../../common/services';
 import { Int05111Component } from './int05-1-1-1/int05-1-1-1.component';
 import { Int05112Component } from './int05-1-1-2/int05-1-1-2.component';
 import { Int05113Component } from './int05-1-1-3/int05-1-1-3.component';
+import { BreadcrumbModule } from '../../../../../common/components';
 
 const routes: Routes = [
     { path: '',component: Int0511Component,canActivate: [AuthGuard] },
@@ -21,7 +22,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    FormsModule
+    FormsModule,
+    BreadcrumbModule    
   ],
   declarations: [
     Int0511Component,

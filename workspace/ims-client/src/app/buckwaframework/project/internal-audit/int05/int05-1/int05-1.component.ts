@@ -21,9 +21,9 @@ export class Int051Component implements OnInit {
   breadcrumb: BreadCrumb[];
   constructor(
     private ajax: AjaxService,
-    private message: MessageBarService) {
+    private message: MessageBarService) {      
     this.breadcrumb = [
-      { label: "ตรวจสอบภายใน", route: "/home" },
+      { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบพัสดุ", route: "#" },
       { label: "ตรวจสอบพัสดุภาคพื้นที่", route: "#" }
     ];
@@ -84,8 +84,6 @@ export class Int051Component implements OnInit {
   onSearch = () => {
     $("#searchFlag").val("TRUE");
     $("#dataTable").DataTable().ajax.reload();
-
-
   }
 
   calenda = () => {

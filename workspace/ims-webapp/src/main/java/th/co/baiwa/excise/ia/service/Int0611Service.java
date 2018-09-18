@@ -25,6 +25,7 @@ import th.co.baiwa.excise.ia.persistence.vo.Int0611FormVo;
 @Service
 public class Int0611Service {
 
+	
 	public DataTableAjax<Int0611ExcelVo> readFileExcel(Int0611FormVo formVo) throws IOException, EncryptedDocumentException, InvalidFormatException {
 
 		List<Int0611ExcelVo> excelVo = new ArrayList<>();
@@ -32,30 +33,44 @@ public class Int0611Service {
 		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(byt));
 		Sheet sheet = workbook.getSheetAt(0);
 		int totalRows = sheet.getPhysicalNumberOfRows();
-
+		
 		Map<String, Integer> map = new HashMap<String, Integer>();
-				
+		
 		/* rows */
+		int countHeader = 0;
 		for (int r = 0; r < totalRows; r++) {
 
 			Row row = sheet.getRow(r);
 			if (row != null) {
 				short minColIx = row.getFirstCellNum();
 				short maxColIx = row.getLastCellNum();
+				
+				if (minColIx == 6) {
+					countHeader = 0;
+				} 
+				
+				countHeader++;
+				boolean header = false;
 
-				/* column */
-				List<String> culumns = new ArrayList<String>();
-				for (short colIx = minColIx; colIx < maxColIx; colIx++) {
+				header = (minColIx == 6 || minColIx == 0 || countHeader < 6 ?  true :  false);	
+				
+				if (!header) {
+					
+					/* column */
+					List<String> culumns = new ArrayList<String>();
+					for (short colIx = minColIx; colIx < maxColIx; colIx++) {
 
-					Cell cell = row.getCell(colIx);
-					if (cell != null) {
-						map.put(getStringValue(cell), cell.getColumnIndex());
-						culumns.add(getStringValue(cell));
-					}else {
-						culumns.add("");
+						Cell cell = row.getCell(colIx);
+						if (cell != null) {
+							map.put(getStringValue(cell), cell.getColumnIndex());
+							culumns.add(getStringValue(cell));
+						}else {
+							culumns.add("");
+						}
 					}
-				}
-				addData(excelVo,culumns);
+					
+					addData(excelVo,culumns,r);	
+				}				
 			}
 		}
 		
@@ -88,10 +103,11 @@ public class Int0611Service {
 		}
 	}
 	
-	public void addData(List<Int0611ExcelVo> excelVo, List<String> data) {
+	public void addData(List<Int0611ExcelVo> excelVo, List<String> data,int rowId) {
 		
 		Int0611ExcelVo vo = new Int0611ExcelVo();
-		try {			
+		try {		
+			vo.setColumId(rowId);
 			vo.setColum0(StringUtils.trim(data.get(0)));
 			vo.setColum1(StringUtils.trim(data.get(1)));
 			vo.setColum2(StringUtils.trim(data.get(2)));

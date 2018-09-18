@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AjaxService, MessageBarService } from 'app/buckwaframework/common/services';
 import { TextDateTH } from 'app/buckwaframework/common/helper';
 import { formatter } from 'app/buckwaframework/common/helper/datepicker';
+import { BreadCrumb } from 'models/breadcrumb';
 declare var $: any;
 @Component({
   selector: 'app-int05-1-1',
@@ -16,12 +17,17 @@ export class Int0511Component implements OnInit {
   showData: boolean = true;
   $form: any;
   listFileName : any;
+  breadcrumb : BreadCrumb[]
   formModal: FormModal = new FormModal();
   constructor(
     private ajax: AjaxService,
     private message: MessageBarService) {
+      this.breadcrumb = [
+        { label: "ตรวจสอบภายใน", route: "#" },
+        { label: "ตรวจสอบพัสดุ", route: "#" },
+        { label: "ตรวจสอบพัสดุพื้นที่สาขา", route: "#" },
+      ];
   }
-
 
   ngOnInit() {
     this.$form = $("#formSearch");

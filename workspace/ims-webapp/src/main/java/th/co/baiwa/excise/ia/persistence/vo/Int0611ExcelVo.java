@@ -2,12 +2,10 @@ package th.co.baiwa.excise.ia.persistence.vo;
 
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
-public class Int0611ExcelVo extends DataTableRequest {
-
-	/**
-	 * 
-	 */
+public class Int0611ExcelVo extends DataTableRequest{
+	
 	private static final long serialVersionUID = 7559617967768829329L;
+	private Integer columId;
 	private String colum0;
 	private String colum1;
 	private String colum2;
@@ -20,6 +18,14 @@ public class Int0611ExcelVo extends DataTableRequest {
 	private String colum9;
 	private String colum10;
 	private String colum11;
+
+	public Integer getColumId() {
+		return columId;
+	}
+
+	public void setColumId(Integer columId) {
+		this.columId = columId;
+	}
 
 	public String getColum0() {
 		return colum0;

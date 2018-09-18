@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageBarService } from 'app/buckwaframework/common/services';
-
-declare var jQuery: any;
+import { BreadCrumb } from 'models/breadcrumb';
 declare var $: any;
 
 @Component({
@@ -13,9 +12,16 @@ export class Int05112Component implements OnInit {
 
   table: any;
   data: FormModal[];
+  breadcrumb: BreadCrumb[];
   constructor(
     private message: MessageBarService
   ) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบพัสดุ", route: "#" },
+      { label: "ตรวจสอบพัสดุภาคพื้นที่", route: "int05/1" },
+      { label: "สรุปแสตมป์รายปีงบประมาณ", route: "#" },
+    ];
     this.data = []
   }
 

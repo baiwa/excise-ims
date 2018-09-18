@@ -35,7 +35,7 @@
         </div>
         <!-- form upload -->
         <div class="ui attached center segment {{tableLoading ? 'loading' : ''}} ">
-            <table id="dataTable" class="ui small celled table nowrap" style="width: 100%">
+            <table id="dataTable" class="ui small celled table nowrap" style="width: 100%">                
                 <thead>
                     <tr style="text-align: center;">        
                       <th rowspan="2">ลำดับ</th>
@@ -57,4 +57,60 @@
     </div>
 </div>
 <!-- table -->
-<!-- {{loading ? 'loading' : ''}} -->
+
+<!-- edie Model -->
+<div class="ui modal" id="edit-modal">
+    <i class="close icon"></i>
+    <div class="header">
+        <i class="edit outline icon"></i>แก้ไข
+    </div>
+    <div class="content">
+      <div class="description">
+        <form class="ui form">
+                <input type="hidden"  name="workSheetDetailId" id="workSheetDetailId">
+                <!-- row 1 -->
+                <div class="inline fields  ui grid">
+                  <div class="one wide field "></div>
+                  <div class="three wide field ">
+                    <label>วันที่รับ - จ่าย</label>
+                  </div>
+                  <div class="four wide field ">
+                    <div class="ui calendar width100" id="dateOfPayForm">
+                      <div class="ui input left icon">
+                        <i class="time icon"></i>
+                        <input name="dateOfPay" id="dateOfPay" type="text" autofocus="false" [attr.readonly]="null"
+                          placeholder="dd/MM/yyyy" [attr.required]="true">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="three wide field ">
+                    <label>สถานะการ รับ - จ่าย</label>
+                  </div>
+                  <div class="four wide field ">
+                    <select class="ui search dropdown"  name="status" id="status">
+                      <option value="">กรุณาเลือก</option>
+                      <option value="รับ">รับ </option>
+                      <option value="จ่าย">จ่าย </option>
+                    </select>
+                  </div>
+                  <div class="one wide field "></div>
+                </div>
+                <!-- row 2 -->
+                <div class="inline fields  ui grid">
+                  <div class="one wide field "></div>
+                  <div class="three wide field ">
+                    <label>หน่วยงาน / ผู้ประกอบการ</label>
+                  </div>
+                  <div class="four wide field ">
+                    <input id="departmentName" name="departmentName" type="text" placeholder="dd/mm/yyyy">
+                  </div>
+                  <div class="eight wide field "></div>
+                </div>                           
+              </form>>
+      </div>
+    </div>
+    <div class="actions">
+        <div class="ui primary button">บันทึก</div>
+        <div class="ui gray deny button">ยกเลิก</div> 
+    </div>
+  </div>
