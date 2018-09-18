@@ -92,7 +92,7 @@ export class Int08311Component implements OnInit {
           riskData.riskOtherDtlId = element.riskOtherDtlId;
           riskData.riskHrdId = this.id;
           riskData.departmentName = element.departmentName;
-
+          riskData.color = element.color;
           riskData.riskCost = element.riskCost;
           riskData.rl = element.rl;
           riskData.valueTranslation = element.valueTranslation;
@@ -194,7 +194,23 @@ export class Int08311Component implements OnInit {
           }
           this.initDatatable();
         });
+      }, createdRow: function (row, data, dataIndex) {
+        console.log("row");
+        console.log("data", data);
+        console.log("dataIndex", dataIndex);
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(3)').addClass('bg-c-red');
+          $(row).find('td:eq(4)').addClass('bg-c-red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(3)').addClass('bg-c-green');
+          $(row).find('td:eq(4)').addClass('bg-c-green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(3)').addClass('bg-c-yellow');
+          $(row).find('td:eq(4)').addClass('bg-c-yellow');
+        }
+
       }
+
 
     });
   }
@@ -365,7 +381,7 @@ export class Int08311Component implements OnInit {
 
 class RiskData {
   departmentName: any = '';
-
+  color: any = '';
   riskHrdId: any = 0;
   riskCost: any = '';
   rl: any = '';

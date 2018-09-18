@@ -29,8 +29,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssPerDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ws.entity.api.RequestServiceExcise;
-import th.co.baiwa.excise.ws.entity.api.ResponseServiceExcise;
-import th.co.baiwa.excise.ws.entity.reques.IncFri8020;
+import th.co.baiwa.excise.ws.entity.response.incfri8020.IncFri8020;
 
 @Service
 public class WebServiceExciseService {
@@ -82,7 +81,7 @@ public class WebServiceExciseService {
 		return response.getBody();
 	}
 
-	public ResponseServiceExcise IncFri8020(String officeCode, String yearMonthFrom, String yearMonthTo, String dateType, String pageNo, String dataPerPage) {
+	public IncFri8020 IncFri8020(String officeCode, String yearMonthFrom, String yearMonthTo, String dateType, String pageNo, String dataPerPage) {
 		logger.info("restful API : IncFri8020");
 		IncFri8020 incFri8020 = new IncFri8020();
 		incFri8020.setOfficeCode(officeCode);
@@ -93,7 +92,7 @@ public class WebServiceExciseService {
 		incFri8020.setDataPerPage(dataPerPage);
 		String responseData = restfulService(endpointIncFri8020, incFri8020);
 		Gson gson = new Gson();
-		ResponseServiceExcise responseServiceExcise = gson.fromJson(responseData, ResponseServiceExcise.class);
+		IncFri8020 responseServiceExcise = gson.fromJson(responseData, IncFri8020.class);
 		return responseServiceExcise;
 	}
 	

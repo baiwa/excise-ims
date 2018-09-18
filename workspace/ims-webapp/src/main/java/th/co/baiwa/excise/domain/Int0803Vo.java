@@ -7,7 +7,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOtherDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOv3dDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcRecDtl;
 
-public class Int0803Vo {
+public class Int0803Vo{
 
 	private List<RiskAssExcOtherDtl> riskAssExcOtherDtlList;
 	private String projectBase;

@@ -81,7 +81,23 @@ export class Int0833Component implements OnInit {
       columnDefs: [
         { targets: [0, 2, 3, 4, 5, 6], className: "center aligned" },
         { targets: [1], className: "left aligned" }
-      ]
+      ], createdRow: function (row, data, dataIndex) {
+        console.log("row");
+        console.log("data", data.color);
+        console.log("dataIndex", dataIndex);
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(5)').addClass('bg-c-red');
+          $(row).find('td:eq(6)').addClass('bg-c-red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(5)').addClass('bg-c-green');
+          $(row).find('td:eq(6)').addClass('bg-c-green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(5)').addClass('bg-c-yellow');
+          $(row).find('td:eq(6)').addClass('bg-c-yellow');
+        }
+
+      }
+
 
     });
   }

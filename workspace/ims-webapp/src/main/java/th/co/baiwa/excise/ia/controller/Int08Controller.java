@@ -48,7 +48,7 @@ public class Int08Controller {
 	private RiskAssRiskWsService riskAssRiskWsHdrService;
 	
 	@Autowired
-	UploadFileExciseService uploadFileExciseService;
+	private UploadFileExciseService uploadFileExciseService;
 	
 	@Autowired
 	private ConditionService conditionService;
@@ -290,8 +290,7 @@ public class Int08Controller {
 	@ResponseBody
 	public  void exportInfOtherDtl(@ModelAttribute RiskAssOtherDtl riskAssOtherDtl, HttpServletResponse response) throws Exception {
 		logger.info("id :" + riskAssOtherDtl.getRiskHrdId());
-		riskAssRiskWsHdrService.exportWsOtherDtl(riskAssOtherDtl, response);
-
+//		riskAssRiskWsHdrService.exportWsOtherDtl(riskAssOtherDtl, response);
 	}
 	
 	

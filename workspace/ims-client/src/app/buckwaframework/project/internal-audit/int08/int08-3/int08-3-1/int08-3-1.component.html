@@ -190,7 +190,7 @@
 
 
 
-    <div class="sixteen wide column" *ngIf="openForm2">
+    <div class="sixteen wide column" *ngIf="pageShowPageIndex == 'int08-3-4'">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
       </div>
@@ -199,13 +199,13 @@
 
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
-              <label>ปีงบประมาณ {{riskAssRiskWsHdr.budgetYear}}</label>
+              <label>ปีงบประมาณ {{riskAssRiskWsHdr != null ? riskAssRiskWsHdr.budgetYear : ''}}</label>
             </div>
           </div>
 
 
           <div class="inline fields">
-            <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr.riskHdrName}}</label>
+            <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr != null ? riskAssRiskWsHdr.riskHdrName : ''}}</label>
           </div>
           <div class="inline fields">
             <label>เงื่อนไขความเสี่ยง :</label>
@@ -259,7 +259,6 @@
             <thead>
               <tr>
                 <th rowspan="2" style="text-align: center !important">ลำดับ</th>
-                <th rowspan="2" style="text-align: center !important">โครงการตามยุทธศาสตร์</th>
                 <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
                 <th rowspan="2" style="text-align: center !important">ค่าความเสี่ยง</th>
                 <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>

@@ -56,7 +56,7 @@ export class Int0811Component implements OnInit {
       text: TextDateTH,
       formatter: formatter('ป'),
       onChange: (date) => {
-        console.log(date.getFullYear())
+        //console.log(date.getFullYear())
         this.changeYear(date.getFullYear() + 543);
       }
     });
@@ -84,12 +84,12 @@ export class Int0811Component implements OnInit {
 
   changeYear(year) {
     this.budgetYear = year;
-    console.log(this.budgetYear);
+    //console.log(this.budgetYear);
     const URL = "combobox/controller/findByBudgetYear";
     this.ajax.post(URL, { budgetYear: this.budgetYear }, res => {
 
       this.riskList = res.json();
-      console.log(this.riskList);
+      //console.log(this.riskList);
 
 
     });
@@ -99,7 +99,7 @@ export class Int0811Component implements OnInit {
   createBudgetYear() {
     this.budgetYear = $('#budgetYear').val().trim();
     if (this.budgetYear != null && this.budgetYear != undefined && this.budgetYear != '') {
-      console.log(this.budgetYear);
+      //console.log(this.budgetYear);
       const URL = "ia/int08/createBudgetYear";
 
       this.ajax.post(URL, { budgetYear: this.budgetYear, active: 'Y' }, res => {
@@ -121,7 +121,7 @@ export class Int0811Component implements OnInit {
   searchDataTable() {
     this.riskType = $('#riskType').val();
     this.budgetYear = $('#budgetYear').val().trim();
-    console.log("riskType :" + this.riskType);
+    //console.log("riskType :" + this.riskType);
 
     if (this.budgetYear != null && this.budgetYear != undefined && this.budgetYear != '') {
       this.isSearch = true;
@@ -139,7 +139,7 @@ export class Int0811Component implements OnInit {
     }
     // const URL = AjaxService.CONTEXT_PATH + "ia/int08/searchRiskAssRiskWsHdr";
     const URL = AjaxService.CONTEXT_PATH + "ia/int08/searchRisk";
-    console.log(URL);
+    //console.log(URL);
     this.datatable = $("#dataTable").DataTable({
       lengthChange: false,
       searching: false,
@@ -166,7 +166,7 @@ export class Int0811Component implements OnInit {
         { data: "budgetYear" },
         {
           render: function (data, type, row, meta) {
-            console.log("data :", row.createdDate)
+            //console.log("data :", row.createdDate)
             if (row.createdDate != null && row.createdDate != undefined && row.createdDate != '') {
               var dateTime = new Date(row.createdDate).toLocaleString("th-TH");
               return dateTime.split(' ')[0];
@@ -217,16 +217,16 @@ export class Int0811Component implements OnInit {
 
   renderForm3(riskHrdId) {
 
-    console.log("riskHrdId", riskHrdId);
+    //console.log("riskHrdId", riskHrdId);
     const URLHRD = "ia/int08/findRiskById";
     this.ajax.post(URLHRD, { riskHrdId: riskHrdId }, res => {
       this.riskAssRiskWsHdr = res.json();
       this.showForm = 3;
-      console.log("riskAssRiskWsHdr", this.riskAssRiskWsHdr);
+      //console.log("riskAssRiskWsHdr", this.riskAssRiskWsHdr);
       const URL = "ia/condition/findConditionByParentId";
       this.ajax.post(URL, { parentId: riskHrdId, riskType: 'MAIN', page: 'int08-1-8' }, res => {
         this.condition = res.json();
-        console.log("condition", this.condition);
+        //console.log("condition", this.condition);
 
 
         this.initDatatableF3();
@@ -238,16 +238,16 @@ export class Int0811Component implements OnInit {
 
   renderForm1(riskHrdId) {
 
-    console.log("riskHrdId", riskHrdId);
+    //console.log("riskHrdId", riskHrdId);
     const URLHRD = "ia/int08/findRiskById";
     this.ajax.post(URLHRD, { riskHrdId: riskHrdId }, res => {
       this.riskAssRiskWsHdr = res.json();
       this.showForm = 1;
-      console.log("riskAssRiskWsHdr", this.riskAssRiskWsHdr);
+      //console.log("riskAssRiskWsHdr", this.riskAssRiskWsHdr);
       const URL = "ia/condition/findConditionByParentId";
       this.ajax.post(URL, { parentId: riskHrdId, riskType: 'MAIN', page: 'int08-1-5' }, res => {
         this.condition = res.json();
-        console.log("condition", this.condition);
+        //console.log("condition", this.condition);
 
 
         this.initDatatableF1();
@@ -262,7 +262,7 @@ export class Int0811Component implements OnInit {
       this.dataTableF1.destroy();
     }
     const URL = AjaxService.CONTEXT_PATH + "ia/int08/dataTableWebService1";
-    console.log(URL);
+    //console.log(URL);
     this.dataTableF1 = $("#dataTableF1").DataTable({
       lengthChange: false,
       searching: false,
@@ -297,9 +297,9 @@ export class Int0811Component implements OnInit {
         { data: "valueTranslation" }
 
       ], createdRow: function (row, data, dataIndex) {
-        console.log("row");
-        console.log("data", data.valueTranslation);
-        console.log("dataIndex", dataIndex);
+        //console.log("row");
+        //console.log("data", data.valueTranslation);
+        //console.log("dataIndex", dataIndex);
         if (data.color == 'แดง') {
           $(row).find('td:eq(8)').addClass('bg-c-red');
           $(row).find('td:eq(7)').addClass('bg-c-red');
@@ -373,9 +373,9 @@ export class Int0811Component implements OnInit {
           { targets: [1], className: "left aligned" }
         ],
         createdRow: function (row, data, dataIndex) {
-          console.log("row");
-          console.log("data", data.color);
-          console.log("dataIndex", dataIndex);
+          //console.log("row");
+          //console.log("data", data.color);
+          //console.log("dataIndex", dataIndex);
           if (data.color == 'แดง') {
             $(row).find('td:eq(4)').addClass('bg-c-red');
             $(row).find('td:eq(5)').addClass('bg-c-red');
@@ -404,7 +404,7 @@ export class Int0811Component implements OnInit {
       this.dataTableF2.destroy();
     }
     const URL = AjaxService.CONTEXT_PATH + "ia/int08/findRiskAssOtherDtlByHeaderId";
-    console.log(URL);
+    //console.log(URL);
     this.dataTableF2 = $("#dataTableF2").DataTable({
       lengthChange: false,
       searching: false,
@@ -436,9 +436,9 @@ export class Int0811Component implements OnInit {
         { data: "valueTranslation" }
 
       ], createdRow: function (row, data, dataIndex) {
-        console.log("row");
-        console.log("data", data.color);
-        console.log("dataIndex", dataIndex);
+        //console.log("row");
+        console.log("data", data);
+        //console.log("dataIndex", dataIndex);
         if (data.color == 'แดง') {
           $(row).find('td:eq(4)').addClass('bg-c-red');
           $(row).find('td:eq(5)').addClass('bg-c-red');
@@ -461,28 +461,28 @@ export class Int0811Component implements OnInit {
   }
 
   renderForm2(riskHrdId) {
-    console.log("riskHrdId", riskHrdId);
+    //console.log("riskHrdId", riskHrdId);
     const URLHRD = "ia/int08/findRiskById";
     this.ajax.post(URLHRD, { riskHrdId: riskHrdId }, res => {
       this.riskAssRiskWsHdr = res.json();
       this.showForm = 2;
-      console.log("riskAssRiskWsHdr", this.riskAssRiskWsHdr);
+      //console.log("riskAssRiskWsHdr", this.riskAssRiskWsHdr);
       const URL = "ia/condition/findConditionByParentId";
       this.ajax.post(URL, { parentId: riskHrdId, riskType: 'OTHER', page: 'int08-1-6' }, res => {
         this.condition = res.json();
-        console.log("condition", this.condition);
+        //console.log("condition", this.condition);
         this.initDatatableF2();
       });
     });
   }
 
   renderForm4() {
-    console.log("budgetYear", this.budgetYear);
+    //console.log("budgetYear", this.budgetYear);
     this.showForm = 4;
     const URL = "ia/condition/findConditionByParentId";
     this.ajax.post(URL, { parentId: this.budgetYear, riskType: 'ALL', page: 'int08-1-7' }, res => {
       this.condition = res.json();
-      console.log("condition", this.condition);
+      //console.log("condition", this.condition);
       this.queryColumnNameListAndSetColumn();
     });
 
@@ -494,7 +494,7 @@ export class Int0811Component implements OnInit {
     this.ajax.post(url, { budgetYear: this.budgetYear, riskHrdNameList: this.columnList }, res => {
 
       res.json().forEach(element => {
-        console.log(element);
+        //console.log(element);
         hrmlTr += "<tr style='text-align: center !important'>";
         hrmlTr += "<td>" + element.id + "</td>";
         hrmlTr += "<td style='text-align: left !important'>" + element.projectBase + "</td>";
@@ -510,7 +510,7 @@ export class Int0811Component implements OnInit {
 
       $("#tbody").html(hrmlTr);
     }, errRes => {
-      console.log(errRes);
+      //console.log(errRes);
     });
   }
 
@@ -518,7 +518,7 @@ export class Int0811Component implements OnInit {
     var url = "ia/int08/findByBudgetYear";
 
     this.ajax.post(url, { budgetYear: this.budgetYear }, res => {
-      console.log(riskAssRiskWsHdr);
+      //console.log(riskAssRiskWsHdr);
       var riskAssRiskWsHdr = res.json();
       this.riskAssRiskWsHdrList = res.json();
       this.columnList = [];
@@ -531,14 +531,14 @@ export class Int0811Component implements OnInit {
 
       var trHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> <th rowspan="2" style="text-align: center !important">โครงการตามยุทธศาสตร์</th><th rowspan="2" style="text-align: center !important">หน่วยงาน</th>';
       this.columnList.forEach(element => {
-        console.log(element);
+        //console.log(element);
         trHTML += '<th rowspan="2" style="text-align: center !important;">' + element + '</th>';
       });
       trHTML += '<th rowspan="2" style="text-align: center !important;" >รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th style="text-align: center !important">แปลค่า</th></tr>';
       $("#trColumn").html(trHTML);
       this.initDatatable4();
     }, errRes => {
-      console.log(errRes);
+      //console.log(errRes);
     });
   }
 
@@ -565,7 +565,7 @@ export class Int0811Component implements OnInit {
   }
 
   changebudgetYear = event => {
-    console.log(event)
+    //console.log(event)
   }
 
   clearData() {

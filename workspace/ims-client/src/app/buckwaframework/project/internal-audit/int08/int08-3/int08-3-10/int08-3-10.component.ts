@@ -190,7 +190,23 @@ export class Int08310Component implements OnInit {
           }
           this.initDatatable();
         });
+      }, createdRow: function (row, data, dataIndex) {
+        console.log("row");
+        console.log("data", data.color);
+        console.log("dataIndex", dataIndex);
+        if (data.color == 'แดง') {
+          $(row).find('td:eq(3)').addClass('bg-c-red');
+          $(row).find('td:eq(4)').addClass('bg-c-red');
+        } else if (data.color == 'เขียว') {
+          $(row).find('td:eq(3)').addClass('bg-c-green');
+          $(row).find('td:eq(4)').addClass('bg-c-green');
+        } else if (data.color == 'เหลือง') {
+          $(row).find('td:eq(3)').addClass('bg-c-yellow');
+          $(row).find('td:eq(4)').addClass('bg-c-yellow');
+        }
+
       }
+
 
     });
   }

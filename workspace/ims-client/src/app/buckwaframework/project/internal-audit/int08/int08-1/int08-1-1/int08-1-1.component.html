@@ -297,13 +297,13 @@
 
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
-              <label>ปีงบประมาณ {{riskAssRiskWsHdr.budgetYear}}</label>
+              <label>ปีงบประมาณ {{riskAssRiskWsHdr != null ?riskAssRiskWsHdr.budgetYear : ''}}</label>
             </div>
           </div>
 
 
           <div class="inline fields">
-            <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr.riskHdrName}}</label>
+            <label>ปัจจัยเสี่ยง :{{riskAssRiskWsHdr != null ?riskAssRiskWsHdr.riskHdrName : ''}} </label>
           </div>
           <div class="inline fields">
             <label>เงื่อนไขความเสี่ยง :</label>

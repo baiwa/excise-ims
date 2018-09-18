@@ -958,32 +958,31 @@ export class Int0831Component implements OnInit {
           },
           className: "center"
         },
-        { data: "projectBase" },
         { data: "departmentName" },
         { data: "riskCost" },
         { data: "rl" },
         { data: "valueTranslation" }
 
       ], createdRow: function (row, data, dataIndex) {
-        //console.log("row");
-        //console.log("data", data.color);
-        //console.log("dataIndex", dataIndex);
+        console.log("row");
+        console.log("data", data.color);
+        console.log("dataIndex", dataIndex);
         if (data.color == 'แดง') {
-          $(row).find('td:eq(4)').addClass('red');
-          $(row).find('td:eq(5)').addClass('red');
+          $(row).find('td:eq(3)').addClass('bg-c-red');
+          $(row).find('td:eq(4)').addClass('bg-c-red');
         } else if (data.color == 'เขียว') {
-          $(row).find('td:eq(4)').addClass('green');
-          $(row).find('td:eq(5)').addClass('green');
+          $(row).find('td:eq(3)').addClass('bg-c-green');
+          $(row).find('td:eq(4)').addClass('bg-c-green');
         } else if (data.color == 'เหลือง') {
-          $(row).find('td:eq(4)').addClass('yellow');
-          $(row).find('td:eq(5)').addClass('yellow');
+          $(row).find('td:eq(3)').addClass('bg-c-yellow');
+          $(row).find('td:eq(4)').addClass('bg-c-yellow');
         }
 
-      },
+      }
+      ,
       columnDefs: [
-        { targets: [0, 2, 4, 5], className: "center aligned" },
-        { targets: [3], className: "right aligned" },
-        { targets: [1], className: "left aligned" }
+        { targets: [0, 3, 4], className: "center aligned" },
+        { targets: [2], className: "left aligned" }
       ]
 
     });

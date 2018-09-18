@@ -10,6 +10,7 @@ public class ResponseServiceExcise {
 	@SerializedName("ResponseMessage")
 	@Expose
 	private String responseMessage;
+	
 	@SerializedName("ResponseData")
 	@Expose
 	private Object responseData;
