@@ -1,7 +1,7 @@
 <app-breadcrumb [route]="breadcrumb" ></app-breadcrumb>
 
 
-<div class="ui grid">
+<div class="ui grid" *ngIf="view1">
   <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>อัพโหลดไฟล์ตรวจสอบการนำส่งเงินบัญชีเจ้าหนี้ อปท.</span>
@@ -25,7 +25,7 @@
               <i class="upload icon"></i>
               อัพโหลด
             </button>
-            <button class="ui mini button" type="reset">
+            <button class="ui mini button" type="reset" (click)="clearData()" >
               <i class="refresh icon"></i>
               ล้างข้อมูล
             </button>
@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <div class="sixteen wide column">
+  <div class="sixteen wide column" >
       <div class="ui top attached header">
           <span>* แสดงตัวอย่างไฟล์ที่อัพโหลด  และแก้ไขได้</span>
       </div>
@@ -73,7 +73,159 @@
             </div>
         </div>
       </div>
-  </div>
-            
 
+      <div class="ui modal" id="editData" >
+        <div class="header">แก้ไขข้อมูล</div>
+        <div class="content">
+          
+            <div class="ui form grid">
+              <div class="three column row fields">
+                <div class="column">
+                    <label>วันที่ลงรายการ</label>
+                    <input type="text" name="datePosted" [(ngModel)]="dataEdit.datePosted">
+                </div>
+                <div class="column">
+                    <label>เลขที่เอกสาร</label>
+                    <input type="text" name="docNumber" [(ngModel)]="dataEdit.docNumber">
+                </div>
+                <div class="column">
+                    <label>ประเภทเอกสาร</label>
+                    <input type="text" name="docType" [(ngModel)]="dataEdit.docType">
+                </div>
+              </div>
+              <div class="three column row fields">
+                  <div class="column">
+                      <label>เอกสารอ้างอิง</label>
+                      <input type="text" name="docRefer" [(ngModel)]="dataEdit.docRefer">
+                  </div>
+                  <div class="column">
+                      <label>ผู้ทำแทน</label>
+                      <input type="text" name="actor" [(ngModel)]="dataEdit.actor">
+                  </div>
+                  <div class="column">
+                      <label>การกำหนด</label>
+                      <input type="text" name="determination" [(ngModel)]="dataEdit.determination">
+                  </div>
+                </div>
+                <div class="three column row fields">
+                    <div class="column">
+                        <label>หน่วยเบิกจ่าย</label>
+                        <input type="text" name="payUnit" [(ngModel)]="dataEdit.payUnit">
+                    </div>
+                    <div class="column">
+                        <label>เดบิต</label>
+                        <input type="text" name="debit" [(ngModel)]="dataEdit.debit">
+                    </div>
+                    <div class="column">
+                        <label>เครดิต</label>
+                        <input type="text" name="credit" [(ngModel)]="dataEdit.credit">
+                    </div>
+                </div>
+                <div class="three column row fields">
+                    <div class="column">
+                        <label>ยกยอดไป</label>
+                        <input type="text" name="liftUp" [(ngModel)]="dataEdit.liftUp">
+                    </div>
+           
+                </div>
+            </div>
+          
+        </div>
+        <div class="actions">
+            <div class="ui  deny button">
+              ยกเลิก
+            </div>
+              <div class="ui positive right labeled icon button" (click)="editData()" >
+                  ยืนยันการแก้ไข
+                  <i class="checkmark icon"></i>
+              </div>
+        </div>
+      </div>
+
+  </div>
+     
+  
 </div>
+
+<!-- หน้าตรวจสอบข้อมูล -->
+<div class="ui grid"  *ngIf="view2">
+
+    <div class="sixteen wide column">
+        <div class="ui top attached header">
+            <span>* ตรวจสอบข้อมูล ประเภทเอกสาร  J0</span>
+        </div>
+        <div class="ui attached segment">
+          <div class="ui form"></div>
+  
+          <table id="dataTable"  class="ui small celled table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th  rowspan="2" style="text-align: center !important">วันที่ลงรายการ</th>
+                <th  rowspan="2" style="text-align: center !important" >เลขที่เอกสาร</th>
+                <th  rowspan="2" style="text-align: center !important" >ประเภทเอกสาร</th>
+                <th  rowspan="2" style="text-align: center !important" >เอกสารอ้างอิง</th>
+                <th  rowspan="2" style="text-align: center !important" >ผู้ทำแทน</th>
+                <th  rowspan="2" style="text-align: center !important" >การกำหนด</th>
+                <th  rowspan="2" style="text-align: center !important" >หน่วยเบิกจ่าย</th>
+                <th  colspan="2" style="text-align: center !important">ผ่านรายการ</th>
+                <th  rowspan="2" style="text-align: center !important" >ยกยอดไป</th>
+                <th  rowspan="2" style="text-align: center !important">แก้ไข</th>
+              </tr>
+              <tr>
+                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">เดบิต</th>
+                <th style="text-align: center !important">เครดิต</th>
+              </tr>
+            </thead>
+          </table>
+  
+        </div>
+    </div>
+       
+    
+    <div class="sixteen wide column">
+      <div class="ui top attached header">
+          <span>* ตรวจสอบข้อมูล ประเภทเอกสาร  IX</span>
+      </div>
+      <div class="ui attached segment">
+        <div class="ui form"></div>
+  
+        <table id="dataTable"  class="ui small celled table" style="width: 100%;">
+          <thead>
+            <tr>
+              <th  rowspan="2" style="text-align: center !important">วันที่ลงรายการ</th>
+              <th  rowspan="2" style="text-align: center !important" >เลขที่เอกสาร</th>
+              <th  rowspan="2" style="text-align: center !important" >ประเภทเอกสาร</th>
+              <th  rowspan="2" style="text-align: center !important" >เอกสารอ้างอิง</th>
+              <th  rowspan="2" style="text-align: center !important" >ผู้ทำแทน</th>
+              <th  rowspan="2" style="text-align: center !important" >การกำหนด</th>
+              <th  rowspan="2" style="text-align: center !important" >หน่วยเบิกจ่าย</th>
+              <th  colspan="2" style="text-align: center !important">ผ่านรายการ</th>
+              <th  rowspan="2" style="text-align: center !important" >ยกยอดไป</th>
+              <th  rowspan="2" style="text-align: center !important">แก้ไข</th>
+            </tr>
+            <tr>
+              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">เดบิต</th>
+              <th style="text-align: center !important">เครดิต</th>
+            </tr>
+          </thead>
+        </table>
+  
+        <div class="ui six column centered grid" >
+          <div class="column">
+            <button class="ui mini button"    (click)="backPage()" >
+              <i class="arrow left icon"></i>
+              กลับ
+            </button>
+            <button class="ui mini primary button"  >
+              <i class="print icon"></i>
+              ส่งออก
+            </button>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  
+  
+  
+  </div>
