@@ -159,6 +159,18 @@ public class DateConstant {
 		}
 		return date;
 	}
+	
+	public static Date  convertStringDDMMYYYYHHmmToDate(String DDMMYYYYHHmm) {
+		Date date = null;
+		try {
+			if (DDMMYYYYHHmm != null) {
+				date = DateUtils.parseDate(DDMMYYYYHHmm, LOCAL_TH, DD_MM_YYYY_HH_mm);
+			}
+		} catch (Exception e) {
+			logger.error("Error convertDateToStrDDMMYYYY : ", e);
+		}
+		return date;
+	}
 
 	public static String convertDateToStrDDMMYYYYHHmm(Date date) {
 		String dateString = "";

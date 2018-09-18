@@ -1,0 +1,4 @@
+.ui.calendar,
+input[type=calendar] {
+    width: 100% !important;
+}

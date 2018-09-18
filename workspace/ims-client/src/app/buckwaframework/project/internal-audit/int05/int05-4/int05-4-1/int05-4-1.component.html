@@ -17,37 +17,26 @@
                         <label class="custom-label-w-20" style="text-align: right;">ปีงบประมาณ</label>
                     </div>
 
-                    <div class="three wide field ">
-                        <select class="ui search dropdown ai search" style="width: 100% !important">
-                                <option value=""></option>
-                                <option value="angular">Angular</option>
-                                <option value="css">CSS</option>
-                                <option value="design">Graphic Design</option>
-                                <option value="ember">Ember</option>
-                                <option value="html">HTML</option>
-                                <option value="ia">Information Architecture</option>
-                                <option value="javascript">Javascript</option>
-                                <option value="mech">Mechanical Engineering</option>
-                              </select>
+                    <div class="four wide field ">
+                        <div class="ui calendar" id="calendar">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="calendar" readonly="" id="calendar_data" name="calendar_data" autocomplete="off" required ngModel>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="two wide field">
+                    <!-- <div class="two wide field">
                         &nbsp;
-                    </div>
+                    </div> -->
 
                     <div class="two wide field">
-                        <label class="custom-label-w-20">ประเภทงบรายจ่าย</label>
+                        <label class="custom-label-w-20" style="text-align: right;">ประเภทงบรายจ่าย</label>
                     </div>
 
-                    <div class="three wide field">
-                        <select class="ui search dropdown ai search" style="width: 100% !important">
-                            <option value=""></option>
-                            <option value="angular">งบบุคลากร</option>
-                            <option value="css">งบดำเนินงาน (โครงการ)</option>
-                            <option value="design">งบดำเนินงาน (ขั้นต่ำ/ประจำ)</option>
-                            <option value="ember">งบลงทุน</option>
-                            <option value="html">งบอุดหนุน</option>
-                            <option value="ia">งบรายจ่ายอื่น</option>
+                    <div class="four wide field">
+                        <select class="ui search dropdown ai search" name="budgetType" [(ngModel)]="budgetType" style="width: 100% !important">
+                            <option *ngFor="let item of budgetTypeList" value="{{item}}">{{item}}</option>
                         </select>
                     </div>
 
@@ -66,7 +55,7 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <input type="text" name="projectName" [(ngModel)]="projectName">
                     </div>
 
                     <div class="two wide field">
@@ -75,12 +64,8 @@
                 </div>
 
                 <div class="inline fields" style="margin-top: 40px;">
-                    <div class="two wide field">
-                        &nbsp;
-                    </div>
-
-                    <div class="twelve wide field">
-                        <table id="table1" class="ui small celled table" style="width: 200%;">
+                    <div class="sixteen wide field" style="padding-right: 0px;">
+                        <table id="table1" class="ui small celled table" style="width: 100%;">
                             <thead>
                                 <tr style="text-align: center;">
                                     <th rowspan="2">รายการจัดซื้อจัดจ้าง</th>
@@ -94,8 +79,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>ซื้อกระดาษถ่ายเอกสาร A4</td>
+                                <tr *ngFor="let min of numbers; let i = index" [attr.data-index]="i">
+                                    <td><input type="text" name="procurementList{{i}}" id="procurementList{{i}}"></td>
+                                    <td><input type="number" name="amount{{i}}" id="amount{{i}}" value="0"></td>
+                                    <td><input type="text" name="unit{{i}}" id="unit{{i}}"></td>
+                                    <td><input type="number" name="presetPrice{{i}}" id="presetPrice{{i}}" value="0"></td>
+                                    <td><input type="number" name="appraisalPrice{{i}}" id="appraisalPrice{{i}}" value="0"></td>
+                                    <td><input type="number" name="unitPrice{{i}}" id="unitPrice{{i}}" value="0"></td>
+                                    <td><input type="number" name="price{{i}}" id="price{{i}}" value="0"></td>
+                                    <td style="text-align: center;">
+                                        <a *ngIf="numbers.length > 1" (click)="onDelField(i)" style="cursor: pointer;color: red">
+                                            <i class="minus icon"></i>
+                                        </a>
+                                    </td>
+                                    <!-- <td>ซื้อกระดาษถ่ายเอกสาร A4</td>
                                     <td>1,000</td>
                                     <td>กล่อง</td>
                                     <td>550.00</td>
@@ -110,14 +107,25 @@
                                         <a (click)="onDelField(i)" style="cursor: pointer;color: red">
                                             <i class="delete icon"></i>
                                         </a>
+                                    </td> -->
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align: center;">
+                                        <a (click)="onAddField(i)" style="cursor: pointer;color:blue">
+                                            <i class="add icon"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-
-                    <div class="two wide field">
-                        &nbsp;
                     </div>
                 </div>
 
@@ -131,19 +139,15 @@
                     </div>
 
                     <div class="three wide field ">
-                        <input type="text">
+                        <input type="text" name="projectCodeEgp" [(ngModel)]="projectCodeEgp">
                     </div>
-
-                    <!-- <div class="two wide field">
-                        &nbsp;
-                    </div> -->
 
                     <div class="three wide field">
                         <label class="custom-label-w-20" style="text-align: right;">เลขที่หนังสืออนุมัติเบิกจ่าย หรือ PO</label>
                     </div>
 
                     <div class="three wide field">
-                        <input type="text">
+                        <input type="text" name="poNumber" [(ngModel)]="poNumber">
                     </div>
 
                     <div class="two wide field">
@@ -161,7 +165,7 @@
                     </div>
 
                     <div class="six wide field ">
-                        <select class="ui search dropdown ai search" name="choice" [(ngModel)]="choice" (change)="onChangeChoice()">
+                        <select class="ui search dropdown ai search" name="supplyChoice" [(ngModel)]="supplyChoice" (change)="onChangeChoice()">
                             <option value=""></option>                                
                             <option value="วิธีตกลงราคา">วิธีตกลงราคา</option>
                             <option value="วิธีสอบราคา">วิธีสอบราคา</option>
@@ -184,8 +188,8 @@
     </div>
 </div>
 
-<!-- choice 1, 4, 5, 7, 8 -->
-<div class="ui segment" *ngIf=" choice === 'วิธีตกลงราคา' || choice === 'วิธีพิเศษ' || choice === 'วิธีกรณีพิเศษ' || choice === 'การจ้างที่ปรึกษา' || choice === 'การจ้างออกแบบ' ">
+<!-- supplyChoice 1, 4, 5, 7, 8 -->
+<div class="ui segment" *ngIf=" supplyChoice === 'วิธีตกลงราคา' || supplyChoice === 'วิธีพิเศษ' || supplyChoice === 'วิธีกรณีพิเศษ' || supplyChoice === 'การจ้างที่ปรึกษา' || supplyChoice === 'การจ้างออกแบบ' ">
     <div class="ui form center aligned grid" style="margin-left: 0px;">
         <div class="fourteen wide column">
             <div class="inline fields">
@@ -194,7 +198,7 @@
                 </div>
 
                 <div class="five wide field ">
-                    <input type="text">
+                    <input type="number" name="tenderResults" [(ngModel)]="tenderResults">
                 </div>
 
                 <div class="two wide field">
@@ -207,7 +211,7 @@
 
                 <div class="five wide field">
                     <div class="ui checkbox">
-                        <input type="radio" name="chk">
+                        <input type="radio" name="jobDescription" id="jobDescription" value="งานที่เสร็จภายในปี">
                         <label></label>
                     </div>
                     <label class="custom-label-w-20" style="text-align: left;">งานที่เสร็จภายในปี</label>
@@ -220,20 +224,16 @@
                 </div>
 
                 <div class="five wide field ">
-                    <input type="text">
+                    <input type="text" name="supplyType" [(ngModel)]="supplyType">
                 </div>
 
-                <div class="two wide field">
-                    &nbsp;
-                </div>
-
-                <div class="two wide field">
+                <div class="four wide field">
                     &nbsp;
                 </div>
 
                 <div class="five wide field">
                     <div class="ui checkbox">
-                        <input type="radio" name="chk">
+                        <input type="radio" name="jobDescription" id="jobDescription" value="งานต่อเนื่องที่ผูกพันปีงบประมาณถัดไป">
                         <label></label>
                     </div>
                     <label class="custom-label-w-20" style="text-align: left;">งานต่อเนื่องที่ผูกพันปีงบประมาณถัดไป</label>
@@ -253,7 +253,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDatePlan">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" name="approveDatePlanData" id="approveDatePlanData" autocomplete="off">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -263,7 +268,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="contractDatePlan">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" name="contractDatePlanData" id="contractDatePlanData" autocomplete="off">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -273,7 +283,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="expireDatePlan">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="expireDatePlanData" id="expireDatePlanData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -283,7 +298,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="disbursementFinalPlan">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="disbursementFinalPlanData" id="disbursementFinalPlanData">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -300,7 +320,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="approveDateReportData" id="approveDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -310,7 +335,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="contractDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="contractDateReportData" id="contractDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -320,7 +350,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="expireDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="expireDateReportData" id="expireDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -330,7 +365,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="disbursementFinalReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="disbursementFinalReportData" id="disbursementFinalReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -344,7 +384,7 @@
                 </div>
 
                 <div class="five wide field ">
-                    <input type="text">
+                    <input type="text" name="contractPartiesNum" id="contractPartiesNum">
                 </div>
 
                 <div class="two wide field">
@@ -356,33 +396,36 @@
                 </div>
 
                 <div class="five wide field ">
-                    <input type="text">
+                    <input type="text" name="contractPartiesName" id="contractPartiesName">
                 </div>
             </div>
 
-            <div class="inline fields">
-                <div class="two wide field">
-                    <label class="custom-label-w-20" style="text-align: right;">แนบไฟล์</label>
+            <form id="upload-form" ngNativeValidate (submit)="onSaveForm1($event)">
+                <div class="inline fields">
+                    <div class="two wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">แนบไฟล์</label>
+                    </div>
+
+                    <div class="five wide field ">
+                        <input type="file" name="file" id="file" (change)="onChangeUpload($event)" required>
+                    </div>
+
+                    <div class="nine wide field">
+                        &nbsp;
+                    </div>
                 </div>
 
-                <div class="five wide field ">
-                    <input type="file">
-                </div>
-
-                <div class="nine wide field">
-                    &nbsp;
-                </div>
-            </div>
-
-            <button class="ui tiny green button">
+                <button class="ui tiny green button" type="submit">
                     <i class="save icon"></i> บันทึก
             </button>
+            </form>
         </div>
     </div>
+
 </div>
 
-<!-- choice 2 -->
-<div class="ui segment" *ngIf=" choice === 'วิธีสอบราคา' ">
+<!-- supplyChoice 2 -->
+<div class="ui segment" *ngIf=" supplyChoice === 'วิธีสอบราคา' ">
     <div class="ui form center aligned grid" style="margin-left: 0px;">
         <div class="fourteen wide column">
             <div class="inline fields">
@@ -391,7 +434,7 @@
                 </div>
 
                 <div class="five wide field ">
-                    <input type="text">
+                    <input type="text" name="tenderResults" [(ngModel)]="tenderResults">
                 </div>
 
                 <div class="two wide field">
@@ -404,7 +447,7 @@
 
                 <div class="five wide field">
                     <div class="ui checkbox">
-                        <input type="radio" name="chk">
+                        <input type="radio" name="jobDescription" id="jobDescription" value="งานที่เสร็จภายในปี">
                         <label></label>
                     </div>
                     <label class="custom-label-w-20" style="text-align: left;">งานที่เสร็จภายในปี</label>
@@ -417,20 +460,16 @@
                 </div>
 
                 <div class="five wide field ">
-                    <input type="text">
+                    <input type="text" name="supplyType" [(ngModel)]="supplyType">
                 </div>
 
-                <div class="two wide field">
-                    &nbsp;
-                </div>
-
-                <div class="two wide field">
+                <div class="four wide field">
                     &nbsp;
                 </div>
 
                 <div class="five wide field">
                     <div class="ui checkbox">
-                        <input type="radio" name="chk">
+                        <input type="radio" name="jobDescription" id="jobDescription" value="งานต่อเนื่องที่ผูกพันปีงบประมาณถัดไป">
                         <label></label>
                     </div>
                     <label class="custom-label-w-20" style="text-align: left;">งานต่อเนื่องที่ผูกพันปีงบประมาณถัดไป</label>
@@ -450,7 +489,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="signedDatePlan">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="signedDatePlanData" id="signedDatePlanData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -460,7 +504,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDatePlan">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="approveDatePlanData" id="approveDatePlanData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -470,7 +519,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="contractDatePlan">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="contractDatePlanData" id="contractDatePlanData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -480,7 +534,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="expireDatePlan">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="expireDatePlanData" id="expireDatePlanData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -490,7 +549,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="disbursementFinalPlan">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="disbursementFinalPlanData" id="disbursementFinalPlanData">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -507,7 +571,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="signedDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="signedDateReportData" id="signedDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -517,7 +586,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="approveDateReportData" id="approveDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -527,7 +601,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="contractDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="contractDateReportData" id="contractDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -537,7 +616,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="expireDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="expireDateReportData" id="expireDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -547,7 +631,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="disbursementFinalReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="disbursementFinalReportData" id="disbursementFinalReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -591,15 +680,15 @@
                 </div>
             </div>
 
-            <button class="ui tiny green button">
+            <button class="ui tiny green button" (click)="onSaveForm2()">
                         <i class="save icon"></i> บันทึก
                 </button>
         </div>
     </div>
 </div>
 
-<!-- choice 3, 6 -->
-<div class="ui segment" *ngIf=" choice === 'วิธีประกวดราคา' || choice === 'วิธีประกวดราคาทางอิเลคทรอนิกส์' ">
+<!-- supplyChoice 3, 6 -->
+<div class="ui segment" *ngIf=" supplyChoice === 'วิธีประกวดราคา' || supplyChoice === 'วิธีประกวดราคาทางอิเลคทรอนิกส์' ">
     <div class="ui form center aligned grid" style="margin-left: 0px;">
         <div class="fourteen wide column">
             <div class="inline fields">
@@ -608,7 +697,7 @@
                 </div>
 
                 <div class="five wide field ">
-                    <input type="text">
+                    <input type="text" name="tenderResults" [(ngModel)]="tenderResults">
                 </div>
 
                 <div class="two wide field">
@@ -621,7 +710,7 @@
 
                 <div class="five wide field">
                     <div class="ui checkbox">
-                        <input type="radio" name="chk">
+                        <input type="radio" name="jobDescription" value="งานที่เสร็จภายในปี">
                         <label></label>
                     </div>
                     <label class="custom-label-w-20" style="text-align: left;">งานที่เสร็จภายในปี</label>
@@ -634,20 +723,16 @@
                 </div>
 
                 <div class="five wide field ">
-                    <input type="text">
+                    <input type="text" name="supplyType" [(ngModel)]="supplyType">
                 </div>
 
-                <div class="two wide field">
-                    &nbsp;
-                </div>
-
-                <div class="two wide field">
+                <div class="four wide field">
                     &nbsp;
                 </div>
 
                 <div class="five wide field">
                     <div class="ui checkbox">
-                        <input type="radio" name="chk">
+                        <input type="radio" name="jobDescription" value="งานต่อเนื่องที่ผูกพันปีงบประมาณถัดไป">
                         <label></label>
                     </div>
                     <label class="custom-label-w-20" style="text-align: left;">งานต่อเนื่องที่ผูกพันปีงบประมาณถัดไป</label>
@@ -667,7 +752,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="approveDateReportData" id="approveDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -677,7 +767,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="approveDateReportData" id="approveDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -687,7 +782,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="approveDateReportData" id="approveDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -697,7 +797,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="approveDateReportData" id="approveDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -707,7 +812,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="approveDateReportData" id="approveDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -724,7 +834,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="approveDateReportData" id="approveDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -734,7 +849,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="approveDateReportData" id="approveDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -744,7 +864,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="approveDateReportData" id="approveDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -754,7 +879,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="approveDateReportData" id="approveDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -764,7 +894,12 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text">
+                        <div class="ui calendar" id="approveDateReport">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="approveDateReportData" id="approveDateReportData">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -808,7 +943,7 @@
                 </div>
             </div>
 
-            <button class="ui tiny green button">
+            <button class="ui tiny green button" (click)="onSaveForm3()">
                 <i class="save icon"></i> บันทึก
             </button>
         </div>
