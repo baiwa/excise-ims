@@ -295,31 +295,45 @@ export class Int09113Component implements OnInit, AfterViewInit {
   modalEdit=(data)=> {
     
     console.log("data edit : ",data.int09FormDtlVo);
-    $("#id").val(data.int09FormDtlVo.id);
-    $("#idDtl").val(data.id);
-    $("#name").val(data.int09FormDtlVo.name);
-    $("#lastName").val(data.int09FormDtlVo.lastName);
-    $("#position").val(data.int09FormDtlVo.position);
-    $("#type").val(data.int09FormDtlVo.type);
-    $("#grade").val(data.int09FormDtlVo.grade);
-    $("#permissionDate").val(data.int09FormDtlVo.permissionDate);
-    $("#writeDate").val(data.int09FormDtlVo.writeDate);
-    $("#departure").val(data.int09FormDtlVo.departure);
-    $("#departureDate").val(data.int09FormDtlVo.departureDate);
-    $("#returnDate").val(data.int09FormDtlVo.returnDate);
-    $("#allowance").val(data.int09FormDtlVo.allowance);
-    $("#training").val(data.int09FormDtlVo.training);
-    $("#roost").val(data.int09FormDtlVo.roost);
-    $("#trainingType").val(data.int09FormDtlVo.trainingType);
-    $("#roomType").val(data.int09FormDtlVo.roomType);
-    $("#numberDate").val(data.int09FormDtlVo.numberDate);
-    $("#passage").val(data.int09FormDtlVo.passage);
-    $("#otherExpenses").val(data.int09FormDtlVo.otherExpenses);
-    $("#remarkT").val(data.int09FormDtlVo.remark);
-    
+   
+
     this.btnModal = 'E';
-    $('#modalAdd').modal('show');
-    this.calenda();
+    $('#modalAdd').modal({
+      onShow: ()=>{
+         this.calenda();
+         $("#id").val(data.int09FormDtlVo.id);
+         $("#idDtl").val(data.id);
+         $("#name").val(data.int09FormDtlVo.name);
+         $("#lastName").val(data.int09FormDtlVo.lastName);
+         $("#position").val(data.int09FormDtlVo.position);
+       
+         $("#type").dropdown('set selected',data.int09FormDtlVo.type);
+         setTimeout(() => {
+          console.log("data.int09FormDtlVo.grade : ",data.int09FormDtlVo.grade);
+          $("#grade").dropdown('set selected',data.int09FormDtlVo.grade);
+         }, 500);
+      
+
+         $("#permissionDate").val(data.int09FormDtlVo.permissionDate);
+         $("#writeDate").val(data.int09FormDtlVo.writeDate);
+
+         $("#departure").dropdown('set selected',data.int09FormDtlVo.departure);
+
+         $("#departureDate").val(data.int09FormDtlVo.departureDate);
+         $("#returnDate").val(data.int09FormDtlVo.returnDate);
+
+         $("#allowance").dropdown('set selected',data.int09FormDtlVo.allowance);
+         $("#training").dropdown('set selected',data.int09FormDtlVo.training);
+         $("#roost").dropdown('set selected',data.int09FormDtlVo.roost);
+         $("#trainingType").dropdown('set selected',data.int09FormDtlVo.trainingType);
+         $("#roomType").dropdown('set selected',data.int09FormDtlVo.roomType);
+         
+         $("#numberDate").val(data.int09FormDtlVo.numberDate);
+         $("#passage").val(data.int09FormDtlVo.passage);
+         $("#otherExpenses").val(data.int09FormDtlVo.otherExpenses);
+         $("#remarkT").val(data.int09FormDtlVo.remark);
+      }
+    }).modal('show');
   }
 
   saveData() {
