@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+You can add global styles to this file, and also import other style files
 
 body {
     background-color: #eceff4;
@@ -151,3 +151,9 @@ img.image-width-18 {
     background-color:#25ba21f5 !important;
 }
 /* !bg-condition */
+
+/* fixed table bordered left TH */
+.ui.celled.table tr td, .ui.celled.table tr th {
+    border-left: 1px solid rgba(34,36,38,.1) !important;
+}
+/* fixed table bordered left TH */

@@ -8,6 +8,10 @@ import { Component, Input, OnInit } from '@angular/core';
     .sixteen.wide.column.bread {
       padding-top: 0;
     }
+    .shadow {
+      background-color: #fff;
+      box-shadow: 2px 5px 9px rgba(0, 0, 0, 0.1);
+    }
     `
   ]
 })

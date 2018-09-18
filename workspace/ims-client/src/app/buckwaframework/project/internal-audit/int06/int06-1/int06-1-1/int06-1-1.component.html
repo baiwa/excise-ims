@@ -1,153 +1,60 @@
+<app-breadcrumb [route]=breadcrumb></app-breadcrumb>
+
+<div class="ui grid" >
+    <div class="sixteen wide column">
+        <div class="ui top attached header">
+            <span>อัพโหลดไฟล์ตรวจสอบค่าใช้จ่าย</span>
+        </div>
+        <!-- form upload -->
+        <div class="ui attached center {{loading ? 'loading' : ''}} segment">
+            <form class="ui form" id="upload-form"(submit)="onSubmit($event)" ngNativeValidate>
+                <input type="hidden" id="searchFlag" name="searchFlag">
+                <div class="inline fields ui centered grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label class="text-right full-width">รายงานงบทดลอง</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input class="inputfile" type="file" name="fileName" id="fileName" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="onChangeUpload($event)" required>                    
+                    </div>
+                    <div class="one wide field "></div>
+                </div><br>
+                <div class="ui stackable center aligned page grid">
+                    <button class="ui mini primary button" type="submit"> อัปโหลด</button>
+                </div><br>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--table-->
 <div class="ui grid">
     <div class="sixteen wide column">
-  
-      <div class="ui top attached header">
-        <span>ตรวจสอบแสตมป์รายเดือน</span>
-      </div>
-  
-      <div class="ui attached segment">
-        <div class="ui form">
-          <div class="inline fields">
-            <div class="three wide field">
-              <label class="">รหัสบัญชี
-                </label>
-            </div>
-            <div class="three wide  field">
-              <input type="text" placeholder="" value="">
-            </div>
-  
-            <div class="two wide field">
-              <label class="">รหัสบัญชี
-              </label>
-            </div>
-            <div class="three wide  field">
-              <input type="text" placeholder="" class="custom-readonly" disabled>	
-             
-            </div>
-            <div class="two wide field">
-              <label class="custom-label-w-15">ค่าภาษี (บาท)
-              </label>
-            </div>
-            <div class="three wide  field">
-              <input type="text" placeholder="" value="">
-            </div>
-          </div>
-  
-  
-          <div class="inline fields">
-            <div class="three wide field">
-              <label class="">สถานะการรับ - จ่าย </label>
-            </div>
-            <div class="three wide  field">
-              <input type="text" placeholder="" value="จ่าย">
-            </div>
-  
-            <div class="two wide field">
-              <label class="">จำนวน
-                <br>(เล่ม)</label>
-            </div>
-            <div class="three wide  field">
-              <input type="text" placeholder="" value="">
-            </div>
-            <div class="two wide field">
-              <label class="custom-label-w-15">รหัสแสตมป์(เริ่ม)	
-                </label>
-            </div>
-            <div class="three wide  field">
-              <input type="text" placeholder="" value="10000" >
-            </div>
-          </div>
-  
-  
-          <div class="inline fields">
-            <div class="three wide field">
-              <label class="">รหัสผู้ประกอบการ	
-                </label>
-            </div>
-            <div class="three wide  field">
-              <input type="text" placeholder="" value="สาขาแจ้งห่ม">
-            </div>
-  
-            <div class="two wide field">
-              <label class="">จำนวน (ดวง)
-                </label>
-            </div>
-            <div class="three wide  field">
-                <input type="text" placeholder="" value="10000" class="custom-readonly" disabled>
-            </div>
-            <div class="two wide field">             
-                <label class="custom-label-w-15">รหัสแสตมป์(ถึง) </label>	
-            </div>
-            <div class="three wide  field">
-              <input type="text" placeholder="" value="3.75">
-            </div>
-          </div>
-  
-  
-  
-          <div class="inline fields">
-            <div class="three wide field">
-              <label class="">หน่วยงาน/ผู้ประกอบการ	
-              </label>
-            </div>
-            <div class="three wide  field">
-              <input type="text" placeholder="" value="นาย ข">	         
-            </div>
-  
-            <div class="two wide field">
-              <label class="">มูลค่าพิมพ์ (บาทต่อดวง)
-              </label>
-            </div>
-            <div class="three wide  field">
-              <input type="text" placeholder="" value="">
-            </div>
-            <div class="two wide field">
-              <label class="custom-label-w-15">คงเหลือจริง
-              </label>
-            </div>
-            <div class="three wide  field">
-              <input type="text" placeholder="" value="37500" >
-            </div>
-          </div>
-  
-  
-  
-          <div class="inline fields">
-            <div class="three wide field">
-              <label class="">รหัสชนิดแสตมป์
-              </label>
-            </div>
-            <div class="three wide  field">
-              <input type="text" placeholder="" value="">
-            </div>
-  
-            <div class="two wide field">
-              <label class="">รวมค่าพิมพ์แสตมป์ (บาท)	
-              </label>
-            </div>
-            <div class="three wide  field">
-              <input type="text" placeholder="" value="37500" class="custom-readonly" disabled>
-            </div>
-          </div>
-          <div class="inline fields">
-            <div class="three wide field">
-              <label>หมายเหตุ</label>
-            </div>
-            <div class="three wide field">
-              <textarea style="width: 220px;height: 100px;"></textarea>
-            </div>
-          </div>
-  
+        <div class="ui top attached header">
+            <span>ข้อมูลการอัปโหลด</span>
         </div>
-        <br>
-        <div class="ui center aligned grid">
-          <div class="sixteen wide column">
-            <button class="ui mini primary button ">
-              บันทึก
-            </button>
-            <button class="ui mini primary button">
-              ยกเลิก
-            </button>
-          </div>
+        <!-- form upload -->
+        <div class="ui attached center segment {{tableLoading ? 'loading' : ''}} ">
+            <table id="dataTable" class="ui small celled table nowrap" style="width: 100%">
+                <thead>
+                    <tr style="text-align: center;">        
+                      <th rowspan="2">ลำดับ</th>
+                      <th colspan="2">บัญชีแยกประเภท</th>
+                      <th rowspan="2">ยอดยกมา</th>
+                      <th rowspan="2">เดบิต</th>
+                      <th rowspan="2">เครดิต</th>
+                      <th rowspan="2">ยอดยกไป</th>         
+                      <th rowspan="2">Action</th>  
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <th></th>
+              
+                    </tr>
+                  </thead>
+            </table>   
         </div>
-      </div>
+    </div>
+</div>
+<!-- table -->
+<!-- {{loading ? 'loading' : ''}} -->
