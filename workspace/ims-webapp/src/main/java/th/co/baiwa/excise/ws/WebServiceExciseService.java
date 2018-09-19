@@ -30,6 +30,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssPerDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ws.entity.api.RequestServiceExcise;
 import th.co.baiwa.excise.ws.entity.response.incfri8020.IncFri8020;
+import th.co.baiwa.excise.ws.entity.response.licfri6020.LicFri6020;
 
 @Service
 public class WebServiceExciseService {
@@ -50,6 +51,9 @@ public class WebServiceExciseService {
 
 	@Value("${ws.excise.endpointIncFri8020}")
 	private String endpointIncFri8020;
+	
+	@Value("${ws.excise.endpointLicFri6020}")
+	private String endpointLicFri6020;
 	
 	
 	@Autowired
@@ -95,7 +99,19 @@ public class WebServiceExciseService {
 		IncFri8020 responseServiceExcise = gson.fromJson(responseData, IncFri8020.class);
 		return responseServiceExcise;
 	}
-	
+	public LicFri6020 licFri6020(String nid,String newregId, String pageNo, String dataPerPage) {
+		logger.info("restful API : LicFri6020");
+		LicFri6020 licFri6020 = new LicFri6020();
+		licFri6020.setNid(nid);
+		licFri6020.setNewregId(newregId);
+		licFri6020.setPageNo(pageNo);
+		licFri6020.setDataPerPage(dataPerPage);
+		String responseData = restfulService(endpointLicFri6020, licFri6020);
+		Gson gson = new Gson();
+		LicFri6020 responseServiceExcise = gson.fromJson(responseData, LicFri6020.class);
+		return responseServiceExcise;
+	}
+		
 	
 	public List<RiskAssRiskWsDtl> getRiskAssRiskWsDtlList(RiskAssRiskWsDtl riskAssRiskWsDtl) {
 		List<RiskAssRiskWsDtl> riskAssRiskWsDtlList = new ArrayList<RiskAssRiskWsDtl>();

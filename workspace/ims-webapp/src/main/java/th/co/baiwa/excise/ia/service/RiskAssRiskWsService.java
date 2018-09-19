@@ -344,11 +344,27 @@ public class RiskAssRiskWsService {
 
 	public ByteArrayOutputStream  exportWsOtherDtl(RiskExcelVo riskExcelVo) throws IOException {
 		RiskAssRiskWsHdr risk = riskAssRiskWsHdrRepository.findOne(riskExcelVo.getRiskHrdId());
+		List<RiskAssOtherDtl> list = riskAssOtherDtlRepository.findByRiskHrdId(riskExcelVo.getRiskHrdId());
+		List<List<String>> detailList = new ArrayList<List<String>>();
+		for (int i = 0 ; i < list.size() ; i++) {
+			RiskAssOtherDtl riskAssOtherDtl = list.get(i);
+			List<String> detail = new ArrayList<String>();
+			detail.add(i+1+"");
+			detail.add(riskAssOtherDtl.getProjectBase());
+			detail.add(riskAssOtherDtl.getDepartmentName());
+			detail.add(riskAssOtherDtl.getRiskCost()+"");
+			detailList.add(detail);
+		}
+		List<String> columnName = new  ArrayList<String>();
+		columnName.add("ลำดับ");
+		columnName.add("โครงการตามยุทธศาสตร์");
+		columnName.add("หน่วยงาน");
+		columnName.add("ค่าความเสี่ยง");
 		List<Condition> conditionList = conditionService.findConditionByParentId(riskExcelVo.getConditionParentId(), riskExcelVo.getConditionType(), riskExcelVo.getConditionPage());
 		
 		
-//		riskExcelService.exportWsOtherDtl(risk.getBudgetYear(), risk.getRiskHdrName(), riskExcelVo.getRiskHeaderName(), conditionList, columnList, detailList);
-		return null;
+		
+		return riskExcelService.exportWsOtherDtl(risk.getBudgetYear(), risk.getRiskHdrName(), riskExcelVo.getRiskHeaderName(), conditionList, columnName, detailList);
 	}
 //	public void exportWsOtherDtl(RiskAssOtherDtl riskAssOtherDtl, HttpServletResponse response) throws IOException {
 //		// TODO Auto-generated method stub
