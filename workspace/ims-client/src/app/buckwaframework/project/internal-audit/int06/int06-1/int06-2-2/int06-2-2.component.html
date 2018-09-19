@@ -1,0 +1,199 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <div class="ui top attached header">
+      <span>เพิ่มข้อมูลค่าใช้จ่าย</span>
+    </div>
+    <!-- form save -->
+    <div class="ui attached segment">
+      <form class="ui form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <!-- row 1 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field required">
+            <label class="text-right full-width">รหัสบัญชี</label>
+          </div>
+          <div class="four wide field {{f.submitted && accountCode.invalid ? 'error' : ''}}">
+            <input type="text" name="accountCode" ngModel [(ngModel)]="model.accountCode" #accountCode="ngModel"
+              required />
+          </div>
+          <div class="two wide field required ">
+            <label class="text-right full-width">ชื่อบัญชี</label>
+          </div>
+          <div class="four wide field  {{f.submitted && accountName.invalid ? 'error' : ''}}">
+            <input type="text" name="accountName" ngModel [(ngModel)]="model.accountName" #accountName="ngModel"
+              required />
+          </div>
+          <div class="two wide field "></div>
+        </div><br><br>
+        <!-- label -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field"></div>
+          <div class="four wide field {{f.submitted && accountCode.invalid ? 'error' : ''}}">
+            <label><u>กิจกรรม (รับโอนจากกรมฯ)</u></label>
+          </div>
+          <div class="two wide field "></div>
+          <div class="four wide field  {{f.submitted && accountName.invalid ? 'error' : ''}}">
+            <label><u>การเบิกจ่ายจริงแยกตามกิจกรรมตามทะเบียนคุม</u></label>
+          </div>
+          <div class="two wide field "></div>
+        </div>
+        <!-- row 2 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field">
+            <label class="text-right full-width">การบริหาร</label>
+          </div>
+          <div class="four wide field {{f.submitted && serviceReceive.invalid && suppressReceive.invalid  && budgetReceive.invalid ? 'error' : ''}}">
+            <input type="number" name="serviceReceive" ngModel [(ngModel)]="model.serviceReceive" #serviceReceive="ngModel"
+              (change)="changeReceive()" required />
+          </div>
+          <div class="two wide field ">
+            <label class="text-right full-width">การบริหาร</label>
+          </div>
+          <div class="four wide field  {{f.submitted && serviceWithdrawe.invalid && suppressWithdrawe.invalid  && budgetWithdrawe.invalid ? 'error' : ''}}">
+            <input type="number" name="serviceWithdrawe" ngModel [(ngModel)]="model.serviceWithdrawe" #serviceWithdrawe="ngModel"
+              (change)="changeReceive()" required />
+          </div>
+          <div class="two wide field "></div>
+        </div>
+        <!-- row 3 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field">
+            <label class="text-right full-width">ปราบปราม</label>
+          </div>
+          <div class="four wide field {{f.submitted && suppressReceive.invalid && serviceReceive.invalid  && budgetReceive.invalid ? 'error' : ''}}">
+            <input type="number" name="suppressReceive" ngModel [(ngModel)]="model.suppressReceive" #suppressReceive="ngModel"
+              (change)="changeSuppress()" required />
+          </div>
+          <div class="two wide field ">
+            <label class="text-right full-width">ปราบปราม</label>
+          </div>
+          <div class="four wide field  {{f.submitted && serviceWithdrawe.invalid && suppressWithdrawe.invalid  && BudgetWithdrawe.invalid ? 'error' : ''}}">
+            <input type="number" name="suppressWithdrawe" ngModel [(ngModel)]="model.suppressWithdrawe"
+              #suppressWithdrawe="ngModel" (change)="changeSuppress()" required />
+          </div>
+          <div class="two wide field "></div>
+        </div>
+        <!-- row 4 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field">
+            <label class="text-right full-width">เงินนอกงปม.</label>
+          </div>
+          <div class="four wide field {{f.submitted && BudgetReceive.invalid && suppressReceive.invalid  && serviceReceive.invalid ? 'error' : ''}}">
+            <input type="number" name="budgetReceive" ngModel [(ngModel)]="model.budgetReceive" #BudgetReceive="ngModel"
+              (change)="changeBudget()" required />
+          </div>
+          <div class="two wide field ">
+            <label class="text-right full-width">เงินนอกงปม.</label>
+          </div>
+          <div class="four wide field  {{f.submitted && serviceWithdrawe.invalid && suppressWithdrawe.invalid  && budgetWithdrawe.invalid ? 'error' : ''}}">
+            <input type="number" name="budgetWithdrawe" ngModel [(ngModel)]="model.budgetWithdrawe" #BudgetWithdrawe="ngModel"
+              (change)="changeBudget()" required />
+          </div>
+          <div class="two wide field "></div>
+        </div>
+        <!-- row 5 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field">
+            <label class="text-right full-width">รวมรับ</label>
+          </div>
+          <div class="four wide field">
+            <div class="ui fluid icon input">
+              <input type="text" name="sumReceive" ngModel [(ngModel)]="model.sumReceive" #sumReceive="ngModel"
+                disabled />
+              <i class="money bill alternate icon"></i>
+            </div>
+          </div>
+          <div class="two wide field ">
+            <label class="text-right full-width"><b>รวมเบิก</b></label>
+          </div>
+          <div class="four wide field ">
+            <div class="ui fluid icon input">
+              <input type="text" name="sumWithdrawe" ngModel [(ngModel)]="model.sumWithdrawe" #sumWithdrawe="ngModel"
+                value="" disabled />
+              <i class="money bill alternate icon"></i>
+            </div>
+          </div>
+          <div class="two wide field "></div>
+        </div><br><br>
+        <!-- balance -->
+        <div class="inline fields ui centered grid ">
+          <div class="four wide field "></div>
+          <div class="twelve wide field">
+            <label><u>คงเหลือ</u></label>
+          </div>
+        </div>
+        <!-- row 6 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field">
+            <label class="text-right full-width">การบริหาร </label>
+          </div>
+          <div class="four wide field">
+            <div class="ui fluid icon input">
+              <input type="text" name="serviceBalance" ngModel [(ngModel)]="model.serviceBalance" #sumReceive="ngModel"
+                disabled />
+              <i class="money bill alternate icon"></i>
+            </div>
+          </div>
+          <div class="eight wide field "></div>
+        </div>
+        <!-- row 7 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field">
+            <label class="text-right full-width">ปราบปราม </label>
+          </div>
+          <div class="four wide field">
+            <div class="ui fluid icon input">
+              <input type="text" name="suppressBalance" ngModel [(ngModel)]="model.suppressBalance" value="{{model.suppressReceive - model.suppressWithdrawe}}"
+                #sumReceive="ngModel" disabled />
+              <i class="money bill alternate icon"></i>
+            </div>
+          </div>
+          <div class="eight wide field "></div>
+        </div>
+        <!-- row 8 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field">
+            <label class="text-right full-width">เงินนอกงปม.</label>
+          </div>
+          <div class="four wide field">
+            <div class="ui fluid icon input">
+              <input type="text" name="budgetBalance" ngModel [(ngModel)]="model.budgetBalance" #sumReceive="ngModel"
+                disabled />
+              <i class="money bill alternate icon"></i>
+            </div>
+          </div>
+          <div class="eight wide field "></div>
+        </div>
+        <!-- row 9 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field">
+            <label class="text-right full-width">คงเหลือรวม</label>
+          </div>
+          <div class="four wide field">
+            <div class="ui fluid icon input">
+              <input type="text" name="sumBalance" ngModel [(ngModel)]="model.sumBalance" #sumReceive="ngModel"
+                disabled />
+              <i class="money bill alternate icon"></i>
+            </div>
+          </div>
+          <div class="eight wide field "></div>
+        </div><br><br>
+        <div class="ui stackable center aligned page grid">
+          <button class="ui mini primary button" type="submit"> บันทึก</button>
+          <button class="ui mini gray button" type="button" routerLink="/int06/1/2-1">ยกเลิก</button>
+        </div><br>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 
-import { Int061Component } from './int06-1.component';
-
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../../../common/services';
 import { Int0611Component } from './int06-1-1/int06-1-1.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BreadcrumbModule } from '../../../../common/components';
+import { Int0621Component } from './int06-2-1/int06-2-1.component';
+import { Int0622Component } from './int06-2-2/int06-2-2.component';
 
 const routes: Routes = [
-  { path: '', component: Int061Component, canActivate: [AuthGuard] },
-  { path: '1', component: Int0611Component, canActivate: [AuthGuard] }
+  { path: '1', component: Int0611Component, canActivate: [AuthGuard] },
+  { path: '2-1', component: Int0621Component, canActivate: [AuthGuard] },
+  { path: '2-2', component: Int0622Component, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
@@ -19,11 +20,13 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     BreadcrumbModule    
   ],
   declarations: [
-    Int061Component,
-    Int0611Component,    
+    Int0611Component,
+    Int0621Component,
+    Int0622Component,    
   ],
   exports: [RouterModule]
 })
