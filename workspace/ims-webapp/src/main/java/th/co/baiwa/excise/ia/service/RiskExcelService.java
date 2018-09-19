@@ -2,7 +2,6 @@ package th.co.baiwa.excise.ia.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -144,23 +143,32 @@ public class RiskExcelService {
 
 		for (Condition con : conditionList) {
 			row = sheet.createRow(rowNum);
-
-			cell = row.createCell(1);
+			
 			cell.setCellValue("\t\t" + riskName + "\tระหว่าง    " + con.getValue1() + "\tถึง\t"+ (BeanUtils.isEmpty(con.getValue2()) ? "-":con.getValue2())  +"\tระดับความเสี่ยง\t" + con.getConvertValue() + "\tคะแนนความเสี่ยง\t" + con.getValueRl());
+			row.createCell(1).setCellValue(riskName);
+			row.createCell(2).setCellValue("<>".equals(con.getCondition()) ? "ระหว่าง" : ">".equals(con.getCondition()) ? "มากกว่า" : "น้อยกว่า");
+			row.createCell(3).setCellValue(con.getValue1()+"");
+			row.createCell(4).setCellValue("ถึง");
+			row.createCell(5).setCellValue(BeanUtils.isEmpty(con.getValue2()) ? "-" : con.getValue2()+"");
+			row.createCell(6).setCellValue("ระดับความเสี่ยง");
+			row.createCell(7).setCellValue(con.getConvertValue());
+			row.createCell(8).setCellValue("คะแนนความเสี่ยง");
+			row.createCell(9).setCellValue(con.getValueRl());
+			
 			cellNum++;
 			rowNum++;
 		}
 		rowNum += 3;
 		row = sheet.createRow(rowNum);
-		String[] tbTH = (String[]) conditionList.toArray();
-		for (cellNum = 0; cellNum < tbTH.length; cellNum++) {
+		
+		for (cellNum = 0; cellNum < columnList.size(); cellNum++) {
 			cell = row.createCell(cellNum);
-			cell.setCellValue(tbTH[cellNum]);
+			cell.setCellValue(columnList.get(cellNum));
 			cell.setCellStyle(thStyle);
 		}
 		
 
-		cell = row.createCell(tbTH.length);
+		cell = row.createCell(columnList.size());
 		cell.setCellStyle(cellCenter);
 
 		Row rowRisk = null;
@@ -175,7 +183,7 @@ public class RiskExcelService {
 		cellRisk.setCellValue("แปลค่า");
 		cellRisk.setCellStyle(thStyle);
 
-		for (cellNum = 0; cellNum < tbTH.length - 1; cellNum++) {
+		for (cellNum = 0; cellNum < columnList.size() - 1; cellNum++) {
 			cell = rowRisk.createCell(cellNum);
 			cell.setCellStyle(thStyle);
 		}

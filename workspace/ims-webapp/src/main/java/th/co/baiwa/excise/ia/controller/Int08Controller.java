@@ -1,6 +1,8 @@
 
 package th.co.baiwa.excise.ia.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssOtherDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssPerDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
+import th.co.baiwa.excise.ia.persistence.vo.RiskExcelVo;
 import th.co.baiwa.excise.ia.service.ConditionService;
 import th.co.baiwa.excise.ia.service.RiskAssRiskWsService;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
@@ -290,7 +293,24 @@ public class Int08Controller {
 	@ResponseBody
 	public  void exportInfOtherDtl(@ModelAttribute RiskAssOtherDtl riskAssOtherDtl, HttpServletResponse response) throws Exception {
 		logger.info("id :" + riskAssOtherDtl.getRiskHrdId());
-//		riskAssRiskWsHdrService.exportWsOtherDtl(riskAssOtherDtl, response);
+		RiskExcelVo riskExcelVo = new RiskExcelVo();
+		riskExcelVo.setConditionPage("int08-1-6");
+		riskExcelVo.setConditionType("OTHER");
+		riskExcelVo.setConditionParentId(riskAssOtherDtl.getRiskHrdId());
+		riskExcelVo.setRiskHeaderName("กระดาษทำการประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต");
+		riskExcelVo.setRiskHrdId(riskAssOtherDtl.getRiskHrdId());
+		ByteArrayOutputStream outByteStream = riskAssRiskWsHdrService.exportWsOtherDtl(riskExcelVo);
+		byte[] outArray = outByteStream.toByteArray();
+		response.setContentType("application/vnd.ms-excel");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename=hello.xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outArray);
+		outStream.flush();
+		outStream.close();
+		
+		System.out.println("Done");
 	}
 	
 	
