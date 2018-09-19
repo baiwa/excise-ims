@@ -30,8 +30,12 @@ export class Int0111Service {
         );
     }
 
-    pullComboBox = (type: string, combo: string, id?: number): Observable<ComboBox> => {
-        return new Observable<ComboBox>(obs => {
+    findById = (id: number, combo: string) => {
+        return this[combo].find( obj => obj.lovId == id);
+    }
+
+    pullComboBox = (type: string, combo: string, id?: number): Observable<ComboBox[]> => {
+        return new Observable<ComboBox[]>(obs => {
             this.dropdown(type, combo, id).then(
                 () => obs.next(this[combo])
             );

@@ -26,7 +26,7 @@ export class Buttons {
         await $temp.val(`<button class="${classes}" type="button">${classes}</button>`).select();
         await document.execCommand("copy");
         await $temp.remove();
-        setTimeout(() => { this[what] = false }, 2000);
+        setTimeout(() => { this[what] = false }, 800);
     }
 
     async copyAligned(e :any) {

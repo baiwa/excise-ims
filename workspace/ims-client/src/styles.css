@@ -13,10 +13,6 @@ body {
     padding-top: 0 !important;
 }
 
-.ui.dimmer {
-    display: block !important;
-}
-
 input.custom-readonly,
 select.custom-readonly {
     background-color: #ccc !important;

@@ -181,13 +181,12 @@ export var formatter = (what: string = "") => {
 
     default:
       return {
-        header: function (date, mode, settings) {
+        header: (date, mode, settings) => {
           let month = date.getMonth();
           let _year = toDateLocale(date)[0].split("/")[2];
           return TextDateTH.months[month] + " " + _year;
         },
-        date: function (date, settings) {
-          if (!date) return "";
+        date: (date, settings) => {
           let day = date.getDate();
           let _month = toDateLocale(date)[0].split("/")[1];
           let _year = toDateLocale(date)[0].split("/")[2];
@@ -198,8 +197,12 @@ export var formatter = (what: string = "") => {
 };
 
 export var toDateLocale = (date) => {
-  const _date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-  return _date.toLocaleString('th-TH', { timeZone: 'UTC' }).split(" ");
+  if (date.getFullYear() > (new Date().getFullYear() + 500)) {
+    return [`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`]
+  } else {
+    const _date = new Date(date.getFullYear(), date.getMonth(), date.getDate()); // Date.UTC()
+    return _date.toLocaleString('th-TH', { timeZone: 'UTC' }).split(" ");
+  }
 }
 
 export var ThaiFormatter = date => {

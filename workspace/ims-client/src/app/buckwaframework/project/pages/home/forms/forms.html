@@ -1,0 +1,89 @@
+<div class="ui grid">
+    <div class="row">
+
+        <div class="eight wide column">
+            <div class="ui top attached header">
+                Inline Fields <button class="ui mini right floated example button" id="form1" type="button" (click)="copyForm($event, 'inline-input')">copy</button>
+            </div>
+            <div class="ui bottom attached segment">
+                <form class="ui form">
+                    <div class="inline fields">
+
+                        <!-- Label and Input -->
+                        <div class="two wide field">
+                            <label class="text-right full-width"> Username</label>
+                        </div>
+                        <div class="five wide field">
+                            <div class="ui input">
+                                <input type="text" name="username">
+                            </div>
+                        </div>
+                        <!-- Label and Input -->
+
+                        <!-- Label and Input -->
+                        <div class="two wide field">
+                            <label class="text-right full-width"> Password</label>
+                        </div>
+                        <div class="five wide field">
+                            <div class="ui input">
+                                <input type="password" name="password">
+                            </div>
+                        </div>
+                        <!-- Label and Input -->
+
+                        <div class="two wide field">
+                            <button class="ui button" type="submit">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="eight wide column">
+            <div class="ui top attached header">
+                Inline Dropdown <button class="ui mini right floated example button" id="form2" type="button" (click)="copyForm($event, 'inline-dropdown')">copy</button>
+            </div>
+            <div class="ui bottom attached segment">
+                <form class="ui form">
+                    <div class="inline fields">
+
+                        <!-- Label and Input -->
+                        <div class="three wide field">
+                            <label class="text-right full-width"> Country</label>
+                        </div>
+                        <div class="five wide field">
+                            <div class="ui input">
+                                <select class="ui search dropdown selection">
+                                    <option value="">Select Country</option>
+                                    <option value="TH">Thailand</option>
+                                    <option value="LA">Laos</option>
+                                    <option value="CA">Cambodia</option>
+                                    <option value="VI">Vietnam</option>
+                                    <option value="MA">Malaysia</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Label and Input -->
+
+                        <!-- Label and Input -->
+                        <div class="three wide field">
+                            <label class="text-right full-width"> Gender</label>
+                        </div>
+                        <div class="five wide field">
+                            <div class="ui input">
+                                <select class="ui dropdown selection">
+                                    <option value="">Select Gender</option>
+                                    <option value="MA">Man</option>
+                                    <option value="WO">Woman</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Label and Input -->
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

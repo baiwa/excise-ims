@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from "@angular/core";
+import { Component, Input, OnDestroy, AfterViewInit } from "@angular/core";
 
 declare var $: any;
 @Component({
@@ -6,7 +6,7 @@ declare var $: any;
     templateUrl: './modal.component.html',
     styleUrls: ['./modal.component.css']
 })
-export class ModalComponent implements OnDestroy{
+export class ModalComponent implements AfterViewInit, OnDestroy{
 
     @Input() success: boolean; // change button in modal type: alert
     @Input() type: string; // custom confirm alert
@@ -16,6 +16,11 @@ export class ModalComponent implements OnDestroy{
 
     constructor() {
         // TODO
+    }
+
+    ngAfterViewInit(): void {
+        $(`#${this.id}`).modal({ autofocus: false });
+        console.log("Run this");
     }
 
     ngOnDestroy(): void {

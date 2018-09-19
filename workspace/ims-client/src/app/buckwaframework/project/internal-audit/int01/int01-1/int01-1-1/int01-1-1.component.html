@@ -48,7 +48,7 @@
                                     <div class="ui input left icon">
                                         <i class="calendar alternate icon"></i>
                                         <input type="text" placeholder="วัน/เดือน/ปี" name="startDate" id="startDate"
-                                            ngModel>
+                                            ngModel required>
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                                     <div class="ui input left icon">
                                         <i class="calendar alternate icon"></i>
                                         <input type="text" placeholder="วัน/เดือน/ปี" name="endDate" id="endDate"
-                                            ngModel>
+                                            ngModel required>
                                     </div>
                                 </div>
                             </div>
@@ -77,3 +77,28 @@
         </div>
     </div>
 </div>
+<ui-modal [id]="'int01-1-1'" [size]="'small'" [type]="'custom'">
+    <div class="header">แก้ไขข้อมูล</div>
+    <div class="content">
+        <form class="ui form" #m="ngForm">
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="full-width text-right">
+                        วันที่
+                    </label>
+                </div>
+                <div class="six wide field">
+                    <div class="ui input">
+                        <div class="ui calendar full-width" id="calendar">
+                            <div class="ui input left icon">
+                                <i class="calendar alternate icon"></i>
+                                <input type="text" placeholder="วัน/เดือน/ปี" name="date" id="date1" ngModel
+                                    required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</ui-modal>

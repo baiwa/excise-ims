@@ -31,6 +31,7 @@ export class Int0112Component implements OnInit {
       { label: "เพิ่มเลขแบบพิมพ์", route: "#" }
     ];
     this.data = this.main.getData();
+    console.log(this.data);
   }
 
   ngOnInit() {

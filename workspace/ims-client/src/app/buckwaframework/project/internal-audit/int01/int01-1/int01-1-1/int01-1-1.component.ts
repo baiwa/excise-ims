@@ -7,6 +7,7 @@ import { BreadCrumb, ComboBox } from "models/index";
 import { AjaxService } from "services/index";
 import { Int011Service } from "../int01-1.services";
 import { Int0111Service } from "./int01-1-1.service";
+import { TextDateTH, formatter, digit } from "helpers/datepicker";
 
 declare var $: any;
 
@@ -19,9 +20,9 @@ declare var $: any;
 export class Int0111Component implements OnInit, AfterViewInit {
   @ViewChild("f") form: NgForm; // #f
 
-  comboBox1: Observable<ComboBox>;
-  comboBox2: Observable<ComboBox>;
-  comboBox3: Observable<ComboBox>;
+  comboBox1: Observable<ComboBox[]>;
+  comboBox2: Observable<ComboBox[]>;
+  comboBox3: Observable<ComboBox[]>;
   breadcrumb: BreadCrumb[] = [];
 
   constructor(
@@ -50,19 +51,38 @@ export class Int0111Component implements OnInit, AfterViewInit {
   }
 
   async onSubmit(form: NgForm) {
+    let travelTo_1, travelTo_2, travelTo_3;
     const { travelTo1, travelTo2, travelTo3, startDate, endDate } = await form.controls;
-    const data = await {
-      travelTo1: travelTo1,
-      travelTo2: travelTo2,
-      travelTo3: travelTo3,
-      startDate: startDate,
-      endDate: endDate,
-    };
-    await this.main.setData(data);
-    this.router.navigate(['int01/1/2']);
+    if (form.valid || (startDate.valid && endDate.valid)) {
+      if (this.comboBox1) {
+        travelTo_1 = await this.self.findById(travelTo1.value, 'comboBox1');
+      }
+      if (this.comboBox2) {
+        travelTo_2 = await this.self.findById(travelTo2.value, 'comboBox2');
+      }
+      if (this.comboBox3) {
+        travelTo_3 = await this.self.findById(travelTo3.value, 'comboBox3');
+      }
+      const data = await {
+        travelTo1: travelTo_1 ? travelTo_1.subType : "00",
+        travelTo2: travelTo_2 ? travelTo_2.subType : "00",
+        travelTo3: travelTo_3 ? travelTo_3.subType : "00",
+        startDate: startDate.value || null,
+        endDate: endDate.value || null,
+      };
+      await this.main.setData(data);
+      await this.router.navigate(['int01/1/2']);
+    } else {
+      await $("#int01-1-1").modal('show');
+      $("#calendar").calendar({
+        type: "date",
+        text: TextDateTH,
+        formatter: formatter()
+      })
+    }
     // const { travelTo1, startDate, endDate } = form.controls;
     // if (form.valid || (travelTo1.valid && startDate.valid && endDate.valid)) {
-      // this.router.navigate(['int01/1/2']);
+    // this.router.navigate(['int01/1/2']);
     // }
   }
 

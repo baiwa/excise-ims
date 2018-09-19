@@ -6,6 +6,7 @@ import { NgModule } from "@angular/core";
 import { HomePage } from "./home";
 import { Buttons } from "./buttons/buttons";
 import { Segments } from "./segments/segments";
+import { Forms } from "./forms/forms";
 import { BreadCrump } from "projects/pages/home/breadcrump/breadcrump";
 import { BreadcrumbModule } from "components/breadcrumb/breadcrumb.module";
 
@@ -24,6 +25,7 @@ const routes: Routes = [
       HomePage,
       Buttons,
       Segments,
+      Forms,
       BreadCrump
   ],
   exports: [RouterModule]
