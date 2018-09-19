@@ -32,8 +32,7 @@ public class Int0611Service {
 		byte[] byt = formVo.getFileName().getBytes();
 		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(byt));
 		Sheet sheet = workbook.getSheetAt(0);
-		int totalRows = sheet.getPhysicalNumberOfRows();
-		
+		int totalRows = sheet.getLastRowNum();
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		
 		/* rows */
@@ -52,7 +51,7 @@ public class Int0611Service {
 				countHeader++;
 				boolean header = false;
 
-				header = (minColIx == 6 || minColIx == 0 || countHeader < 6 ?  true :  false);	
+				header = (minColIx == 6 || minColIx == 0 || minColIx == 2 || countHeader < 6 ?  true :  false);	
 				
 				if (!header) {
 					

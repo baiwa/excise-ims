@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { TextDateTH, formatter } from '../../../../../../common/helper/datepicker';
 import { BreadCrumb } from 'models/breadcrumb';
+import { async } from 'q';
 declare var $: any;
 
 @Component({
@@ -363,11 +364,11 @@ export class Int05113Component implements OnInit {
     this.table.rows.add(this.data); // Add new data
     this.table.columns.adjust().draw(); // Redraw the DataTable\
 
-    this.table.on('click', 'tbody tr button.btn-edit', (e) => {
+    this.table.on('click', 'tbody tr button.btn-edit',(e) => {
       var closestRow = $(e.target).closest('tr');
       var data = this.table.row(closestRow).data(); 
       console.log("data : ",data);
-      setTimeout(() => {        
+      setTimeout(async () => {        
         this.formModal.dateOfPay = data.dateOfPay;
         this.formModal.bookNumberDeliverStamp = data.bookNumberDeliverStamp;
         this.formModal.bookNumberWithdrawStamp = data.bookNumberWithdrawStamp;
@@ -394,11 +395,10 @@ export class Int05113Component implements OnInit {
         this.formModal.valueOfStampPrinted = data.valueOfStampPrinted;
         this.formModal.workSheetDetailId = data.workSheetDetailId;
         this.formModal.fileName = data.fileName;
-        $("#status").dropdown('set selected',this.formModal.status);
-        $("#stampType").dropdown('set selected',this.formModal.stampTypeId);
-        setTimeout(() => {
-          $("#stampBrand").dropdown('set selected',this.formModal.stampBrandId);
-        }, 50);       
+        await $("#status").dropdown('set selected',this.formModal.status);
+        await $("#stampType").dropdown('set selected',this.formModal.stampTypeId);
+        await $("#stampBrand").dropdown('set selected',this.formModal.stampBrandId);
+             
         $("#edit").val("edit");
         $("#idEdit").val(data.idRandom);
 

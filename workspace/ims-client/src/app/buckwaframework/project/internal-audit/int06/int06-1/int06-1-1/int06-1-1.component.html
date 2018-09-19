@@ -1,13 +1,13 @@
-<app-breadcrumb [route]=breadcrumb></app-breadcrumb>
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 
-<div class="ui grid" >
+<div class="ui grid">
     <div class="sixteen wide column">
         <div class="ui top attached header">
             <span>อัพโหลดไฟล์ตรวจสอบค่าใช้จ่าย</span>
         </div>
         <!-- form upload -->
         <div class="ui attached center {{loading ? 'loading' : ''}} segment">
-            <form class="ui form" id="upload-form"(submit)="onSubmit($event)" ngNativeValidate>
+            <form class="ui form" id="upload-form" (submit)="onSubmit($event)" ngNativeValidate>
                 <input type="hidden" id="searchFlag" name="searchFlag">
                 <div class="inline fields ui centered grid">
                     <div class="one wide field "></div>
@@ -15,7 +15,8 @@
                         <label class="text-right full-width">รายงานงบทดลอง</label>
                     </div>
                     <div class="four wide field ">
-                        <input class="inputfile" type="file" name="fileName" id="fileName" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="onChangeUpload($event)" required>                    
+                        <input class="inputfile" type="file" name="fileName" id="fileName" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                            (change)="onChangeUpload($event)" required>
                     </div>
                     <div class="one wide field "></div>
                 </div><br>
@@ -35,24 +36,24 @@
         </div>
         <!-- form upload -->
         <div class="ui attached center segment {{tableLoading ? 'loading' : ''}} ">
-            <table id="dataTable" class="ui small celled table nowrap" style="width: 100%">                
+            <table id="dataTable" class="ui small celled table nowrap" style="width: 100%">
                 <thead>
-                    <tr style="text-align: center;">        
-                      <th rowspan="2">ลำดับ</th>
-                      <th colspan="2">บัญชีแยกประเภท</th>
-                      <th rowspan="2">ยอดยกมา</th>
-                      <th rowspan="2">เดบิต</th>
-                      <th rowspan="2">เครดิต</th>
-                      <th rowspan="2">ยอดยกไป</th>         
-                      <th rowspan="2">Action</th>  
+                    <tr style="text-align: center;">
+                        <th rowspan="2">ลำดับ</th>
+                        <th colspan="2">บัญชีแยกประเภท</th>
+                        <th rowspan="2">ยอดยกมา</th>
+                        <th rowspan="2">เดบิต</th>
+                        <th rowspan="2">เครดิต</th>
+                        <th rowspan="2">ยอดยกไป</th>
+                        <th rowspan="2">Action</th>
                     </tr>
                     <tr>
-                      <th></th>
-                      <th></th>
-              
+                        <th>เลขที่บัญชีแยกประเภท</th>
+                        <th>ชื่อบัญชีแยกประเภท</th>
+
                     </tr>
-                  </thead>
-            </table>   
+                </thead>
+            </table>
         </div>
     </div>
 </div>
@@ -65,52 +66,65 @@
         <i class="edit outline icon"></i>แก้ไข
     </div>
     <div class="content">
-      <div class="description">
-        <form class="ui form">
-                <input type="hidden"  name="workSheetDetailId" id="workSheetDetailId">
+        <div class="description">
+            <form class="ui form">
+                <input type="hidden" name="columId" id="columId">
                 <!-- row 1 -->
                 <div class="inline fields  ui grid">
-                  <div class="one wide field "></div>
-                  <div class="three wide field ">
-                    <label>วันที่รับ - จ่าย</label>
-                  </div>
-                  <div class="four wide field ">
-                    <div class="ui calendar width100" id="dateOfPayForm">
-                      <div class="ui input left icon">
-                        <i class="time icon"></i>
-                        <input name="dateOfPay" id="dateOfPay" type="text" autofocus="false" [attr.readonly]="null"
-                          placeholder="dd/MM/yyyy" [attr.required]="true">
-                      </div>
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label class="text-right full-width">เลขที่บัญชีแยกประเภท</label>
                     </div>
-                  </div>
-                  <div class="three wide field ">
-                    <label>สถานะการ รับ - จ่าย</label>
-                  </div>
-                  <div class="four wide field ">
-                    <select class="ui search dropdown"  name="status" id="status">
-                      <option value="">กรุณาเลือก</option>
-                      <option value="รับ">รับ </option>
-                      <option value="จ่าย">จ่าย </option>
-                    </select>
-                  </div>
-                  <div class="one wide field "></div>
+                    <div class="four wide field ">
+                        <input type="text" name="accountNumber" id="accountNumber">
+                    </div>
+                    <div class="three wide field ">
+                        <label class="text-right full-width">ชื่อบัญชีแยกประเภท</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input type="text" name="accountName" id="accountName">
+                    </div>
+                    <div class="one wide field "></div>
                 </div>
                 <!-- row 2 -->
                 <div class="inline fields  ui grid">
-                  <div class="one wide field "></div>
-                  <div class="three wide field ">
-                    <label>หน่วยงาน / ผู้ประกอบการ</label>
-                  </div>
-                  <div class="four wide field ">
-                    <input id="departmentName" name="departmentName" type="text" placeholder="dd/mm/yyyy">
-                  </div>
-                  <div class="eight wide field "></div>
-                </div>                           
-              </form>>
-      </div>
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label class="text-right full-width">ยอดยกมา</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input type="number" name="monryComes" id="monryComes">
+                    </div>
+                    <div class="three wide field ">
+                        <label class="text-right full-width">ยอดยกไป</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input type="number" name="moneyGoes" id="moneyGoes">
+                    </div>
+                    <div class="one wide field "></div>
+                </div>
+                <!-- row 3 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label class="text-right full-width">เดบิต</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input type="number" name="debit" id="debit">
+                    </div>
+                    <div class="three wide field ">
+                        <label class="text-right full-width">เครดิต</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input type="number" name="credit" id="credit">
+                    </div>
+                    <div class="one wide field "></div>
+                </div>
+            </form>
+        </div>
     </div>
     <div class="actions">
-        <div class="ui primary button">บันทึก</div>
-        <div class="ui gray deny button">ยกเลิก</div> 
+        <div class="ui primary button" (click)="edit()">บันทึก</div>
+        <div class="ui gray deny button">ยกเลิก</div>
     </div>
-  </div>
+</div>

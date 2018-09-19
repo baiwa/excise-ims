@@ -18,6 +18,7 @@ export class Int0511Component implements OnInit {
   $form: any;
   listFileName : any;
   breadcrumb : BreadCrumb[]
+  loading : boolean = false;
   formModal: FormModal = new FormModal();
   constructor(
     private ajax: AjaxService,
@@ -302,6 +303,7 @@ export class Int0511Component implements OnInit {
     table.on('click', 'tbody tr button.btn-edit', (e) => {
       var closestRow = $(e.target).closest('tr');
       var data = table.row(closestRow).data();
+      this.loading = true;
       $('#modal-edit').modal({
          autofocus: false,
          onShow : ()=>{
@@ -337,6 +339,9 @@ export class Int0511Component implements OnInit {
               this.formModal.workSheetDetailId = data.workSheetDetailId;
               this.formModal.fileName = data.fileName;
               $("#status").dropdown('set selected');                           
+         },
+         onHidden:()=>{
+          this.loading = false;
          }
         }).modal('show');            
     });

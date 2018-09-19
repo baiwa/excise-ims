@@ -3,6 +3,7 @@ import { formatter, TextDateTH } from './../../../../common/helper/datepicker';
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../../../../common/services';
 import { BreadCrumb } from '../../../../common/models';
+import { async } from '@angular/core/testing';
 
 declare var $: any;
 @Component({
@@ -19,6 +20,7 @@ export class Int051Component implements OnInit {
   formModal: FormModal = new FormModal();
   listFileName: any;
   breadcrumb: BreadCrumb[];
+  loading : boolean = false;
   constructor(
     private ajax: AjaxService,
     private message: MessageBarService) {      
@@ -141,18 +143,15 @@ export class Int051Component implements OnInit {
         let data = {
           "data": this.formModal
         };
-        this.ajax.post(URL, JSON.stringify(data),
-          res => {
+         this.ajax.post(URL, JSON.stringify(data),
+         res => {
             this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
             $("#dataTable").DataTable().ajax.reload();
           }, error => {
             this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
           });
       }
-    }, "ยืนยันการทำรายการ");
-
-
-
+    }, "ยืนยันการทำรายการ");    
   }
 
   table = () => {
@@ -296,11 +295,11 @@ export class Int051Component implements OnInit {
     });
     table.on('click', 'tbody tr button.btn-edit', (e) => {
       var closestRow = $(e.target).closest('tr');
-      var data = table.row(closestRow).data();
+      var data = table.row(closestRow).data();    
+      this.loading = true;
       $('#modal-edit').modal({
-        autofocus: false,
-        onShow: () => {
-
+         onShow: () => {
+          this.calenda();
           console.log("FormModal : ", data);
           this.formModal.dateOfPay = data.dateOfPay;
           this.formModal.bookNumberDeliverStamp = data.bookNumberDeliverStamp;
@@ -330,9 +329,13 @@ export class Int051Component implements OnInit {
           this.formModal.valueOfStampPrinted = data.valueOfStampPrinted;
           this.formModal.workSheetDetailId = data.workSheetDetailId;
           this.formModal.fileName = data.fileName;
-          $("#status").dropdown('set selected');
-          this.calenda();
+          $("#status").dropdown('set selected');          
+        },
+        autofocus: false,
+        onHidden:()=>{
+            this.loading = false;
         }
+        
       }).modal('show');
 
     });

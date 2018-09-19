@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
-import { NgForm } from '@angular/forms';
 import { Int0611Service } from './int06-1-1.service';
 import { BreadCrumb } from '../../../../../common/models';
 
@@ -14,19 +12,19 @@ declare var $: any;
 })
 export class Int0611Component implements OnInit {
 
-  breadcrumb: BreadCrumb[];
+  breadcrumb: BreadCrumb[] = [
+    { label: "ตรวจสอบภายใน", route: "#" },
+    { label: "ตรวจสอบเบิกจ่าย", route: "#" },
+    { label: "ตรวจสอบค่าใช้จ่าย", route: "#" },
+  ];
   loading: boolean;
   tableLoading : boolean;
+  
   constructor(
     private int0611Service : Int0611Service
   ) {
-    this.breadcrumb = [
-      { label: "ตรวจสอบภายใน", route: "#" },
-      { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-      { label: "ตรวจสอบค่าใช้จ่าย", route: "#" },
-    ];
     this.loading = false;
-    this.tableLoading = false;
+    this.tableLoading = false;   
   }
 
 
@@ -56,4 +54,10 @@ export class Int0611Component implements OnInit {
   dataTable(){
     this.int0611Service.dataTable();
   }
+
+  edit=()=>{    
+    this.int0611Service.edit();
+  }
 }
+
+
