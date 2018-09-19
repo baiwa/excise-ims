@@ -29,6 +29,7 @@ import {
 // components
 import { AppComponent } from "./app.component";
 import { LoginPage } from "./buckwaframework/project/pages/login/login";
+import { ModalModule } from "components/index";
 
 
 @NgModule({
@@ -42,7 +43,10 @@ import { LoginPage } from "./buckwaframework/project/pages/login/login";
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpModule
+    HttpModule,
+
+    // Components
+    ModalModule
   ],
   providers: [
     AuthGuard,

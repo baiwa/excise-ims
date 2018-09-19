@@ -7,7 +7,6 @@ import { BreadCrumb, ComboBox } from "models/index";
 import { AjaxService } from "services/index";
 import { Int011Service } from "../int01-1.services";
 import { Int0111Service } from "./int01-1-1.service";
-import { TextDateTH, formatter, digit } from "helpers/datepicker";
 
 declare var $: any;
 
@@ -72,18 +71,7 @@ export class Int0111Component implements OnInit, AfterViewInit {
       };
       await this.main.setData(data);
       await this.router.navigate(['int01/1/2']);
-    } else {
-      await $("#int01-1-1").modal('show');
-      $("#calendar").calendar({
-        type: "date",
-        text: TextDateTH,
-        formatter: formatter()
-      })
     }
-    // const { travelTo1, startDate, endDate } = form.controls;
-    // if (form.valid || (travelTo1.valid && startDate.valid && endDate.valid)) {
-    // this.router.navigate(['int01/1/2']);
-    // }
   }
 
   dropdown(e, combo: string) {

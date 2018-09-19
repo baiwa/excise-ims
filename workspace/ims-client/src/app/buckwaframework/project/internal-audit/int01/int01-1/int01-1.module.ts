@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Int0111Component } from './int01-1-1/int01-1-1.component';
 import { Int0112Component } from './int01-1-2/int01-1-2.component';
 import { Int0113Component } from './int01-1-3/int01-1-3.component';
-import { BreadcrumbModule, ModalModule } from 'components/index';
+import { BreadcrumbModule } from 'components/index';
 import { Int011Service } from './int01-1.services';
 // Modules
 // import { DataTablesModule } from 'angular-datatables';
@@ -24,9 +24,7 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        BreadcrumbModule,
-        ModalModule
-        // DataTablesModule
+        BreadcrumbModule
     ],
     declarations: [
         Int0111Component,

@@ -200,7 +200,7 @@ export var toDateLocale = (date) => {
   if (date.getFullYear() > (new Date().getFullYear() + 500)) {
     return [`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`]
   } else {
-    const _date = new Date(date.getFullYear(), date.getMonth(), date.getDate()); // Date.UTC()
+    const _date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())); // Date.UTC()
     return _date.toLocaleString('th-TH', { timeZone: 'UTC' }).split(" ");
   }
 }

@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "IA_STAMP_TYPE")
+@Table(name = "IA_TAX_RECEIPT")
 public class IaTaxReceipt extends BaseEntity {
 
 	private static final long serialVersionUID = -1413517835451948526L;
@@ -15,8 +15,8 @@ public class IaTaxReceipt extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_TAX_RECEIPT_GEN")
 	@SequenceGenerator(name = "IA_TAX_RECEIPT_GEN", sequenceName = "IA_TAX_RECEIPT_SEQ", allocationSize = 1)
 
-	@Column(name = "TAX_RECIPT_ID")
-	private Long taxReciptId;
+	@Column(name = "TAX_RECEIPT_ID")
+	private Long taxReceiptId;
 
 	@Column(name = "RECEIPT_DATE")
 	private String receiptDate;
@@ -60,12 +60,12 @@ public class IaTaxReceipt extends BaseEntity {
 	@Column(name = "CUSTOM_AMOUNT")
 	private BigDecimal customAmount;
 
-	public Long getTaxReciptId() {
-		return taxReciptId;
+	public Long getTaxReceiptId() {
+		return taxReceiptId;
 	}
 
-	public void setTaxReciptId(Long taxReciptId) {
-		this.taxReciptId = taxReciptId;
+	public void setTaxReceiptId(Long taxReceiptId) {
+		this.taxReceiptId = taxReceiptId;
 	}
 
 	public String getReceiptDate() {

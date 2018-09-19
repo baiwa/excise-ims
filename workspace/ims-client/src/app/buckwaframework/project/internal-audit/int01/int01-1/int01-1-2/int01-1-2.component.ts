@@ -1,52 +1,49 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { BreadCrumb } from "models/index";
+import { BreadCrumb, TaxReceipt } from "models/index";
 import { NgForm } from "@angular/forms";
+
 import { Int011Service } from "../int01-1.services";
+import { Int0112Service } from "./int01-1-2.service";
+import { AjaxService } from "services/ajax.service";
 
 declare var $: any;
 
 @Component({
   selector: "app-int01-1-2",
   templateUrl: "./int01-1-2.component.html",
-  styleUrls: ["./int01-1-2.component.css"]
+  styleUrls: ["./int01-1-2.component.css"],
+  providers: [Int0112Service]
 })
 export class Int0112Component implements OnInit {
-  private codeList: any[];
-  private productList: any[];
-  private printMonthList: any[];
-  private showData: boolean = false;
-  private selectedProduct: string = "เครื่องดื่ม";
-
-  breadcrumb: BreadCrumb[];
-
   @ViewChild('f') form: NgForm;
-
-  data: any = null;
-
-  constructor(private main: Int011Service) {
+  taxReceipt: TaxReceipt[];
+  breadcrumb: BreadCrumb[];
+  loading: boolean = true;
+  constructor(
+    private main: Int011Service,
+    private self: Int0112Service,
+    private ajax: AjaxService) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบพัสดุ", route: "#" },
       { label: "ตรวจสอบพัสดุภาคพื้นที่", route: "int01/1/1" },
       { label: "เพิ่มเลขแบบพิมพ์", route: "#" }
     ];
-    this.data = this.main.getData();
-    console.log(this.data);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
+    await this.self.taxReceiptObs().subscribe(async res => {
+      this.taxReceipt = await res;
+      setTimeout(() => {
+        this.initDatatable();
+        this.loading = false;
+      }, 1000);
+    });
   }
 
-  onChange(newValue) {
-    this.selectedProduct = newValue; // don't forget to update the model here
-  }
-  ngAfterViewInit() {
-    this.initDatatable();
-  }
-
-  initDatatable() {
+  initDatatable() { // Initial Datatable
     $("#table").DataTable({
       scrollY: '500px',
       scrollX: true,
@@ -55,28 +52,6 @@ export class Int0112Component implements OnInit {
       lengthChange: false,
       paging: false
     });
-  }
-
-  popupEditData() {
-    $("#modalEditData").modal("show");
-    $("#modalInt062").modal("show");
-    $("#idint").show();
-    $("#id").show();
-    $("#selectTrading").show();
-  }
-
-  closePopupEdit() {
-    $("#selectTrading").show();
-    $("#modalEditData").modal("hide");
-    $("#modalInt062").modal("hide");
-  }
-
-  uploadData() {
-    this.showData = true;
-  }
-
-  clearData() {
-    this.showData = false;
   }
 
   add(form: NgForm) {

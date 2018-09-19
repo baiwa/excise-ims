@@ -291,7 +291,7 @@
         <div class="ui approve button ">OK</div>
     </div>
 </div>
-<div id="alert" class="ui mini modal transition hidden" style="height: 0;">
+<ui-modal [id]="'alert'" [size]="'mini'" [type]="'custom'">
     <div class="ui header" id="alert-header">
         เกิดข้อผิดพลาด
     </div>
@@ -303,9 +303,8 @@
             <i class="remove icon"></i> ปิด
         </div>
     </div>
-</div>
-
-<div id="confirm" class="ui mini modal transition hidden" style="height: 0;">
+</ui-modal>
+<ui-modal [id]="'confirm'" [size]="'mini'" [type]="'custom'">
     <div class="ui header">
         การยืนยัน
     </div>
@@ -321,7 +320,7 @@
             <i class="checkmark icon"></i>
         </div>
     </div>
-</div>
+</ui-modal>
 
 <div class="ui main {{loading ? 'blurring' : ''}} container-fluid ">
     <div class="ui active inverted dimmer " *ngIf="loading ">

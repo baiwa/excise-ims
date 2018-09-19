@@ -6,63 +6,65 @@ import com.google.gson.annotations.SerializedName;
 
 public class IncFri8020 {
 
-    @SerializedName("ResponseCode")
-    @Expose
-    private String responseCode;
-    @SerializedName("ResponseMessage")
-    @Expose
-    private String responseMessage;
-    @SerializedName("ResponseData")
-    @Expose
-    private ResponseData responseData;
+	@SerializedName("ResponseCode")
+	@Expose
+	private String responseCode;
+	
+	@SerializedName("ResponseMessage")
+	@Expose
+	private String responseMessage;
+	
+	@SerializedName("ResponseData")
+	@Expose
+	private ResponseData responseData;
 
-    
-    @SerializedName("OfficeCode")
+	@SerializedName("OfficeCode")
 	@Expose
 	private String officeCode;
-	
+
 	@SerializedName("YearMonthFrom")
 	@Expose
 	private String yearMonthFrom;
-	
+
 	@SerializedName("YearMonthTo")
 	@Expose
 	private String yearMonthTo;
-	
+
 	@SerializedName("DateType")
 	@Expose
 	private String dateType;
-	
+
 	@SerializedName("PageNo")
 	@Expose
 	private String pageNo;
-	
+
 	@SerializedName("DataPerPage")
 	@Expose
 	private String dataPerPage;
-    public String getResponseCode() {
-        return responseCode;
-    }
 
-    public void setResponseCode(String responseCode) {
-        this.responseCode = responseCode;
-    }
+	public String getResponseCode() {
+		return responseCode;
+	}
 
-    public String getResponseMessage() {
-        return responseMessage;
-    }
+	public void setResponseCode(String responseCode) {
+		this.responseCode = responseCode;
+	}
 
-    public void setResponseMessage(String responseMessage) {
-        this.responseMessage = responseMessage;
-    }
+	public String getResponseMessage() {
+		return responseMessage;
+	}
 
-    public ResponseData getResponseData() {
-        return responseData;
-    }
+	public void setResponseMessage(String responseMessage) {
+		this.responseMessage = responseMessage;
+	}
 
-    public void setResponseData(ResponseData responseData) {
-        this.responseData = responseData;
-    }
+	public ResponseData getResponseData() {
+		return responseData;
+	}
+
+	public void setResponseData(ResponseData responseData) {
+		this.responseData = responseData;
+	}
 
 	public String getOfficeCode() {
 		return officeCode;

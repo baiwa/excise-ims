@@ -16,6 +16,7 @@ import { ManageReq } from "./request";
 import { TableReq } from "./table";
 import { BreadCrumb } from "./breadcrumb";
 import { ComboBox } from "./combobox";
+import { TaxReceipt } from "models/taxReceipt";
 
 export {
   AlertMessage,
@@ -35,5 +36,6 @@ export {
   ManageReq,
   TableReq,
   BreadCrumb,
-  ComboBox
+  ComboBox,
+  TaxReceipt
 };
