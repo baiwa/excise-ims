@@ -64,6 +64,7 @@ export class Int0622Component implements OnInit {
     this.loading = true;
     this.int0622Service.save(this.model);
     this.model = new FormSave();
+    this.loading = false;
   }
 
 }
