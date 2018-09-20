@@ -29,6 +29,9 @@ export class Int0622Component implements OnInit {
 
     this.model.serviceBalance = this.model.serviceReceive - this.model.serviceWithdrawe;
     this.model.sumBalance = this.model.serviceBalance + this.model.suppressBalance + this.model.budgetBalance;
+
+    this.model.moneyBudget = this.model.serviceBalance + this.model.suppressBalance
+    this.model.moneyOut =  this.model.budgetBalance;
   }
 
   changeSuppress(){
@@ -37,6 +40,9 @@ export class Int0622Component implements OnInit {
 
     this.model.suppressBalance = this.model.suppressReceive - this.model.suppressWithdrawe;
     this.model.sumBalance = this.model.serviceBalance + this.model.suppressBalance + this.model.budgetBalance;
+
+    this.model.moneyBudget = this.model.serviceBalance + this.model.suppressBalance
+    this.model.moneyOut =  this.model.budgetBalance;
   }
 
   changeBudget(){
@@ -45,6 +51,9 @@ export class Int0622Component implements OnInit {
 
     this.model.budgetBalance = this.model.budgetReceive - this.model.budgetWithdrawe;
     this.model.sumBalance = this.model.serviceBalance + this.model.suppressBalance + this.model.budgetBalance;
+
+    this.model.moneyBudget = this.model.serviceBalance + this.model.suppressBalance
+    this.model.moneyOut =  this.model.budgetBalance;
   }
 
   onSubmit(){
@@ -54,7 +63,7 @@ export class Int0622Component implements OnInit {
 }
 
 class Model{
-  accountCode : string = "";
+  accountId : string = "";
   accountName : string = "";
   
   serviceReceive : number = 0;
@@ -71,4 +80,7 @@ class Model{
   suppressBalance : number = 0;
   budgetBalance : number = 0;
   sumBalance : number = 0;
+
+  moneyBudget : number = 0;
+  moneyOut : number = 0
 }

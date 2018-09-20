@@ -14,9 +14,8 @@
           <div class="three wide field required">
             <label class="text-right full-width">รหัสบัญชี</label>
           </div>
-          <div class="four wide field {{f.submitted && accountCode.invalid ? 'error' : ''}}">
-            <input type="text" name="accountCode" ngModel [(ngModel)]="model.accountCode" #accountCode="ngModel"
-              required />
+          <div class="four wide field {{f.submitted && accountId.invalid ? 'error' : ''}}">
+            <input type="text" name="accountId" ngModel [(ngModel)]="model.accountId" #accountId="ngModel" required />
           </div>
           <div class="two wide field required ">
             <label class="text-right full-width">ชื่อบัญชี</label>
@@ -104,30 +103,29 @@
             <label class="text-right full-width">รวมรับ</label>
           </div>
           <div class="four wide field">
-            <div class="ui fluid icon input">
-              <input type="text" name="sumReceive" ngModel [(ngModel)]="model.sumReceive" #sumReceive="ngModel"
-                disabled />
-              <i class="money bill alternate icon"></i>
-            </div>
+            <input type="text" name="sumReceive" ngModel [(ngModel)]="model.sumReceive" #sumReceive="ngModel" disabled />
           </div>
           <div class="two wide field ">
             <label class="text-right full-width"><b>รวมเบิก</b></label>
           </div>
           <div class="four wide field ">
-            <div class="ui fluid icon input">
-              <input type="text" name="sumWithdrawe" ngModel [(ngModel)]="model.sumWithdrawe" #sumWithdrawe="ngModel"
-                value="" disabled />
-              <i class="money bill alternate icon"></i>
-            </div>
+            <input type="text" name="sumWithdrawe" ngModel [(ngModel)]="model.sumWithdrawe" #sumWithdrawe="ngModel"
+              value="" disabled />
           </div>
           <div class="two wide field "></div>
         </div><br><br>
         <!-- balance -->
         <div class="inline fields ui centered grid ">
-          <div class="four wide field "></div>
-          <div class="twelve wide field">
+          <div class="one wide field "></div>
+          <div class="three wide field"></div>
+          <div class="four wide field {{f.submitted && accountCode.invalid ? 'error' : ''}}">
             <label><u>คงเหลือ</u></label>
           </div>
+          <div class="two wide field "></div>
+          <div class="four wide field  {{f.submitted && accountName.invalid ? 'error' : ''}}">
+            <label><u>เหลือสุทธิ</u></label>
+          </div>
+          <div class="two wide field "></div>
         </div>
         <!-- row 6 -->
         <div class="inline fields ui centered grid ">
@@ -136,13 +134,17 @@
             <label class="text-right full-width">การบริหาร </label>
           </div>
           <div class="four wide field">
-            <div class="ui fluid icon input">
-              <input type="text" name="serviceBalance" ngModel [(ngModel)]="model.serviceBalance" #sumReceive="ngModel"
-                disabled />
-              <i class="money bill alternate icon"></i>
-            </div>
+            <input type="text" name="serviceBalance" ngModel [(ngModel)]="model.serviceBalance" #sumReceive="ngModel"
+              disabled />
           </div>
-          <div class="eight wide field "></div>
+          <div class="two wide field ">
+            <label class="text-right full-width"><b>เงินงบ</b></label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" name="moneyBudget" ngModel [(ngModel)]="model.moneyBudget" #moneyBudget="ngModel"
+              disabled />
+          </div>
+          <div class="two wide field "></div>
         </div>
         <!-- row 7 -->
         <div class="inline fields ui centered grid ">
@@ -151,13 +153,17 @@
             <label class="text-right full-width">ปราบปราม </label>
           </div>
           <div class="four wide field">
-            <div class="ui fluid icon input">
-              <input type="text" name="suppressBalance" ngModel [(ngModel)]="model.suppressBalance" value="{{model.suppressReceive - model.suppressWithdrawe}}"
-                #sumReceive="ngModel" disabled />
-              <i class="money bill alternate icon"></i>
-            </div>
+            <input type="text" name="suppressBalance" ngModel [(ngModel)]="model.suppressBalance" value="{{model.suppressReceive - model.suppressWithdrawe}}"
+            #sumReceive="ngModel" disabled />
           </div>
-          <div class="eight wide field "></div>
+          <div class="two wide field ">
+            <label class="text-right full-width"><b>เงินนอก</b></label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" name="moneyOut" ngModel [(ngModel)]="model.moneyOut" #moneyOut="ngModel" value=""
+                disabled />
+          </div>
+          <div class="two wide field "></div>
         </div>
         <!-- row 8 -->
         <div class="inline fields ui centered grid ">
@@ -166,11 +172,8 @@
             <label class="text-right full-width">เงินนอกงปม.</label>
           </div>
           <div class="four wide field">
-            <div class="ui fluid icon input">
-              <input type="text" name="budgetBalance" ngModel [(ngModel)]="model.budgetBalance" #sumReceive="ngModel"
-                disabled />
-              <i class="money bill alternate icon"></i>
-            </div>
+            <input type="text" name="budgetBalance" ngModel [(ngModel)]="model.budgetBalance" #sumReceive="ngModel"
+            disabled />
           </div>
           <div class="eight wide field "></div>
         </div>
@@ -181,11 +184,8 @@
             <label class="text-right full-width">คงเหลือรวม</label>
           </div>
           <div class="four wide field">
-            <div class="ui fluid icon input">
-              <input type="text" name="sumBalance" ngModel [(ngModel)]="model.sumBalance" #sumReceive="ngModel"
-                disabled />
-              <i class="money bill alternate icon"></i>
-            </div>
+            <input type="text" name="sumBalance" ngModel [(ngModel)]="model.sumBalance" #sumReceive="ngModel"
+            disabled />
           </div>
           <div class="eight wide field "></div>
         </div><br><br>
