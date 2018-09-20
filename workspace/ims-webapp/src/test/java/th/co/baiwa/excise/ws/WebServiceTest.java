@@ -9,10 +9,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.google.gson.Gson;
 
 import baiwa.co.th.ws.Response;
+import th.co.baiwa.excise.ws.entity.response.licfri6010.LicFri6010;
+import th.co.baiwa.excise.ws.entity.response.licfri6010.LicenseList6010;
+import th.co.baiwa.excise.ws.entity.response.licfri6010.ResponseData6010;
 //import th.co.baiwa.excise.ws.entity.response.incfri8020.ResponseData;
 import th.co.baiwa.excise.ws.entity.response.licfri6020.LicFri6020;
-import th.co.baiwa.excise.ws.entity.response.licfri6020.LicenseList;
-import th.co.baiwa.excise.ws.entity.response.licfri6020.ResponseData;
+import th.co.baiwa.excise.ws.entity.response.licfri6020.LicenseList6020;
+import th.co.baiwa.excise.ws.entity.response.licfri6020.ResponseData6020;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -32,19 +35,19 @@ public class WebServiceTest {
 //		}
 //	}
 	@Test
-	public void LicFri6020() {
-		LicFri6020 re = webServiceExciseService.licFri6020("0105555155742", "", "1", "1000");
-		ResponseData xxx = re.getResponseData();
-		for (LicenseList incFri8020Income : xxx.getLicenseList()) {
-			System.out.println(incFri8020Income.getLicName());
+	public void LicFri6010() {
+		LicFri6010 re = webServiceExciseService.licFri6010("100300","201801","201802", "1", "1000");
+		ResponseData6010 xxx = re.getResponseData();
+		for (LicenseList6010 incFri6010Income : xxx.getLicenseList()) {
+			System.out.println("LicName : "+incFri6010Income.getLicName());
 		}
 	}
 	//@Test
-	public void webServiceLdap() {
-		Response response = webServiceExciseService.webServiceLdap("kek1", "password");
-		Gson gson = new Gson();
-		System.out.println(gson.toJson(response));
-	}
+//	public void webServiceLdap() {
+//		Response response = webServiceExciseService.webServiceLdap("kek1", "password");
+//		Gson gson = new Gson();
+//		System.out.println(gson.toJson(response));
+//	}
 
 	
 	

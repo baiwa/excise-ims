@@ -26,7 +26,7 @@ public class LicFri6020 {
     private String responseMessage;
     @SerializedName("ResponseData")
     @Expose
-    private ResponseData responseData;
+    private ResponseData6020 responseData;
 
     public String getResponseCode() {
         return responseCode;
@@ -44,11 +44,11 @@ public class LicFri6020 {
         this.responseMessage = responseMessage;
     }
 
-    public ResponseData getResponseData() {
+    public ResponseData6020 getResponseData() {
         return responseData;
     }
 
-    public void setResponseData(ResponseData responseData) {
+    public void setResponseData(ResponseData6020 responseData) {
         this.responseData = responseData;
     }
 

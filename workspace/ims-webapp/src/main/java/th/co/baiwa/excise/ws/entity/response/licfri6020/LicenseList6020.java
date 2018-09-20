@@ -4,7 +4,7 @@ package th.co.baiwa.excise.ws.entity.response.licfri6020;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LicenseList {
+public class LicenseList6020 {
 
     @SerializedName("Offcode")
     @Expose

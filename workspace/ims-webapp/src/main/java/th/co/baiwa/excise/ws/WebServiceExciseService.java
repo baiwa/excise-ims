@@ -30,6 +30,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssPerDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ws.entity.api.RequestServiceExcise;
 import th.co.baiwa.excise.ws.entity.response.incfri8020.IncFri8020;
+import th.co.baiwa.excise.ws.entity.response.licfri6010.LicFri6010;
 import th.co.baiwa.excise.ws.entity.response.licfri6020.LicFri6020;
 
 @Service
@@ -51,6 +52,9 @@ public class WebServiceExciseService {
 
 	@Value("${ws.excise.endpointIncFri8020}")
 	private String endpointIncFri8020;
+	
+	@Value("${ws.excise.endpointLicFri6010}")
+	private String endpointLicFri6010;
 	
 	@Value("${ws.excise.endpointLicFri6020}")
 	private String endpointLicFri6020;
@@ -99,6 +103,22 @@ public class WebServiceExciseService {
 		IncFri8020 responseServiceExcise = gson.fromJson(responseData, IncFri8020.class);
 		return responseServiceExcise;
 	}
+	
+	public LicFri6010 licFri6010(String offcode,String yearMonthFrom,String yearMonthTo, String pageNo, String dataPerPage) {
+		logger.info("restful API : LicFri6010");
+		LicFri6010 licFri6010 = new LicFri6010();
+	
+		licFri6010.setOffcode(offcode);
+		licFri6010.setYearMonthFrom(yearMonthFrom);
+		licFri6010.setYearMonthTo(yearMonthTo);
+		licFri6010.setPageNo(pageNo);
+		licFri6010.setDataPerPage(dataPerPage);
+		String responseData = restfulService(endpointLicFri6010, licFri6010);
+		Gson gson = new Gson();
+		LicFri6010 responseServiceExcise = gson.fromJson(responseData, LicFri6010.class);
+		return responseServiceExcise;
+	}
+	
 	public LicFri6020 licFri6020(String nid,String newregId, String pageNo, String dataPerPage) {
 		logger.info("restful API : LicFri6020");
 		LicFri6020 licFri6020 = new LicFri6020();
