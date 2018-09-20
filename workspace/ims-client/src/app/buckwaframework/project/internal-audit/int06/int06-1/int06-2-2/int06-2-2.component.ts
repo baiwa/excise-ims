@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BreadCrumb } from 'models/breadcrumb';
-import { AjaxService } from 'services/ajax.service';
-import { MessageBarService } from 'services/message-bar.service';
+import { Int0622Service } from 'projects/internal-audit/int06/int06-1/int06-2-2/int06-2-2.service';
 
 @Component({
   selector: 'app-int06-2-2',
   templateUrl: './int06-2-2.component.html',
-  styleUrls: ['./int06-2-2.component.css']
+  styleUrls: ['./int06-2-2.component.css'],
+  providers: [Int0622Service]
 })
 export class Int0622Component implements OnInit {
 
@@ -16,13 +16,12 @@ export class Int0622Component implements OnInit {
     { label: "ตรวจสอบค่าใช้จ่าย", route: "int06/1/2-1" },
     { label: "เพิ่มข้อมูลค่าใช้จ่าย", route: "#" },
   ];
-  model: Model;
-
+  model: FormSave;
+  loading: boolean = false;
   constructor(
-    private ajax : AjaxService,
-    private message : MessageBarService,
+    private int0622Service: Int0622Service
   ) {
-    this.model = new Model();
+    this.model = new FormSave();
   }
 
   ngOnInit() {
@@ -30,9 +29,9 @@ export class Int0622Component implements OnInit {
 
   changeReceive() {
     this.model.sumReceive = this.model.serviceReceive + this.model.suppressReceive + this.model.budgetReceive;
-    this.model.sumWithdrawe = this.model.serviceWithdrawe + this.model.suppressWithdrawe + this.model.budgetWithdrawe;
+    this.model.sumWithdraw = this.model.serviceWithdraw + this.model.suppressWithdraw + this.model.budgetWithdraw;
 
-    this.model.serviceBalance = this.model.serviceReceive - this.model.serviceWithdrawe;
+    this.model.serviceBalance = this.model.serviceReceive - this.model.serviceWithdraw;
     this.model.sumBalance = this.model.serviceBalance + this.model.suppressBalance + this.model.budgetBalance;
 
     this.model.moneyBudget = this.model.serviceBalance + this.model.suppressBalance
@@ -41,9 +40,9 @@ export class Int0622Component implements OnInit {
 
   changeSuppress() {
     this.model.sumReceive = this.model.serviceReceive + this.model.suppressReceive + this.model.budgetReceive;
-    this.model.sumWithdrawe = this.model.serviceWithdrawe + this.model.suppressWithdrawe + this.model.budgetWithdrawe;
+    this.model.sumWithdraw = this.model.serviceWithdraw + this.model.suppressWithdraw + this.model.budgetWithdraw;
 
-    this.model.suppressBalance = this.model.suppressReceive - this.model.suppressWithdrawe;
+    this.model.suppressBalance = this.model.suppressReceive - this.model.suppressWithdraw;
     this.model.sumBalance = this.model.serviceBalance + this.model.suppressBalance + this.model.budgetBalance;
 
     this.model.moneyBudget = this.model.serviceBalance + this.model.suppressBalance
@@ -52,9 +51,9 @@ export class Int0622Component implements OnInit {
 
   changeBudget() {
     this.model.sumReceive = this.model.serviceReceive + this.model.suppressReceive + this.model.budgetReceive;
-    this.model.sumWithdrawe = this.model.serviceWithdrawe + this.model.suppressWithdrawe + this.model.budgetWithdrawe;
+    this.model.sumWithdraw = this.model.serviceWithdraw + this.model.suppressWithdraw + this.model.budgetWithdraw;
 
-    this.model.budgetBalance = this.model.budgetReceive - this.model.budgetWithdrawe;
+    this.model.budgetBalance = this.model.budgetReceive - this.model.budgetWithdraw;
     this.model.sumBalance = this.model.serviceBalance + this.model.suppressBalance + this.model.budgetBalance;
 
     this.model.moneyBudget = this.model.serviceBalance + this.model.suppressBalance
@@ -62,22 +61,13 @@ export class Int0622Component implements OnInit {
   }
 
   onSubmit() {
-    this.message.comfirm((res)=>{
-      if(res){
-        let url = 'ia/int06122/save';
-        this.ajax.post(url,JSON.stringify(this.model),res=>{
-          this.message.successModal(res.json());
-          this.model = new Model();
-        },error =>{
-          this.message.error(res.json());
-        })
-      }
-    },'บันทึกรายการ');   
+    this.loading = true;
+    this.int0622Service.save(this.model);
+    this.model = new FormSave();
   }
 
 }
-
-class Model {
+class FormSave {
   accountId: string = "";
   accountName: string = "";
 
@@ -86,10 +76,10 @@ class Model {
   budgetReceive: number = 0;
   sumReceive: number = 0;
 
-  serviceWithdrawe: number = 0;
-  suppressWithdrawe: number = 0;
-  budgetWithdrawe: number = 0;
-  sumWithdrawe: number = 0;
+  serviceWithdraw: number = 0;
+  suppressWithdraw: number = 0;
+  budgetWithdraw: number = 0;
+  sumWithdraw: number = 0;
 
   serviceBalance: number = 0;
   suppressBalance: number = 0;
@@ -101,8 +91,8 @@ class Model {
 
   averageCost: number = 0;
   averageGive: string = "";
-  averrageFrom: string = "";
-  averrateComeCost: number = 0;
+  averageFrom: string = "";
+  averageComeCost: number = 0;
 
-  note : string = "";
+  note: string = "";
 }

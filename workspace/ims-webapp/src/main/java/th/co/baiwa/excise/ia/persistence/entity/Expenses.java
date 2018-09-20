@@ -22,26 +22,26 @@ public class Expenses extends BaseEntity {
     private String accountName;
     @Column(name = "SERVICE_RECEIVE")
     private BigDecimal serviceReceive;
-    @Column(name = "SERVICE_WITHDRAWE")
-    private BigDecimal serviceWithdrawe;
+    @Column(name = "SERVICE_WITHDRAW")
+    private BigDecimal serviceWithdraw;
     @Column(name = "SERVICE_BALANCE")
     private BigDecimal serviceBalance;
     @Column(name = "SUPPRESS_RECEIVE")
     private BigDecimal suppressReceive;
-    @Column(name = "SUPPRESS_WITHDRAWE")
-    private BigDecimal suppressWithdrawe;
+    @Column(name = "SUPPRESS_WITHDRAW")
+    private BigDecimal suppressWithdraw;
     @Column(name = "SUPPRESS_BALANCE")
     private BigDecimal suppressBalance;
     @Column(name = "BUDGET_RECEIVE")
     private BigDecimal budgetReceive;
-    @Column(name = "BUDGET_WITHDRAWE")
-    private BigDecimal budgetWithdrawe;
+    @Column(name = "BUDGET_WITHDRAW")
+    private BigDecimal budgetWithdraw;
     @Column(name = "BUDGET_BALANCE")
     private BigDecimal budgetBalance;
     @Column(name = "SUM_RECEIVE")
     private BigDecimal sumReceive;
-    @Column(name = "SUM_WITHDRAWE")
-    private BigDecimal sumWithdrawe;
+    @Column(name = "SUM_WITHDRAW")
+    private BigDecimal sumWithdraw;
     @Column(name = "SUM_BALANCE")
     private BigDecimal sumBalance;
     @Column(name = "MONEY_BUDGET")
@@ -52,10 +52,10 @@ public class Expenses extends BaseEntity {
     private BigDecimal averageCost;
     @Column(name = "AVERAGE_GIVE")
     private String averageGive;
-    @Column(name = "AVERRAGE_FROM")
-    private String averrageFrom;
-    @Column(name = "AVERRATE_COME_COST")
-    private BigDecimal averrateComeCost;
+    @Column(name = "AVERAGE_FROM")
+    private String averageFrom;
+    @Column(name = "AVERAGE_COME_COST")
+    private BigDecimal averageComeCost;
     @Column(name = "NOTE")
     private String note;
 
@@ -91,12 +91,12 @@ public class Expenses extends BaseEntity {
         this.serviceReceive = serviceReceive;
     }
 
-    public BigDecimal getServiceWithdrawe() {
-        return serviceWithdrawe;
+    public BigDecimal getServiceWithdraw() {
+        return serviceWithdraw;
     }
 
-    public void setServiceWithdrawe(BigDecimal serviceWithdrawe) {
-        this.serviceWithdrawe = serviceWithdrawe;
+    public void setServiceWithdraw(BigDecimal serviceWithdraw) {
+        this.serviceWithdraw = serviceWithdraw;
     }
 
     public BigDecimal getServiceBalance() {
@@ -115,12 +115,12 @@ public class Expenses extends BaseEntity {
         this.suppressReceive = suppressReceive;
     }
 
-    public BigDecimal getSuppressWithdrawe() {
-        return suppressWithdrawe;
+    public BigDecimal getSuppressWithdraw() {
+        return suppressWithdraw;
     }
 
-    public void setSuppressWithdrawe(BigDecimal suppressWithdrawe) {
-        this.suppressWithdrawe = suppressWithdrawe;
+    public void setSuppressWithdraw(BigDecimal suppressWithdraw) {
+        this.suppressWithdraw = suppressWithdraw;
     }
 
     public BigDecimal getSuppressBalance() {
@@ -139,12 +139,12 @@ public class Expenses extends BaseEntity {
         this.budgetReceive = budgetReceive;
     }
 
-    public BigDecimal getBudgetWithdrawe() {
-        return budgetWithdrawe;
+    public BigDecimal getBudgetWithdraw() {
+        return budgetWithdraw;
     }
 
-    public void setBudgetWithdrawe(BigDecimal budgetWithdrawe) {
-        this.budgetWithdrawe = budgetWithdrawe;
+    public void setBudgetWithdraw(BigDecimal budgetWithdraw) {
+        this.budgetWithdraw = budgetWithdraw;
     }
 
     public BigDecimal getBudgetBalance() {
@@ -163,12 +163,12 @@ public class Expenses extends BaseEntity {
         this.sumReceive = sumReceive;
     }
 
-    public BigDecimal getSumWithdrawe() {
-        return sumWithdrawe;
+    public BigDecimal getSumWithdraw() {
+        return sumWithdraw;
     }
 
-    public void setSumWithdrawe(BigDecimal sumWithdrawe) {
-        this.sumWithdrawe = sumWithdrawe;
+    public void setSumWithdraw(BigDecimal sumWithdraw) {
+        this.sumWithdraw = sumWithdraw;
     }
 
     public BigDecimal getSumBalance() {
@@ -211,20 +211,20 @@ public class Expenses extends BaseEntity {
         this.averageGive = averageGive;
     }
 
-    public String getAverrageFrom() {
-        return averrageFrom;
+    public String getAverageFrom() {
+        return averageFrom;
     }
 
-    public void setAverrageFrom(String averrageFrom) {
-        this.averrageFrom = averrageFrom;
+    public void setAverageFrom(String averageFrom) {
+        this.averageFrom = averageFrom;
     }
 
-    public BigDecimal getAverrateComeCost() {
-        return averrateComeCost;
+    public BigDecimal getAverageComeCost() {
+        return averageComeCost;
     }
 
-    public void setAverrateComeCost(BigDecimal averrateComeCost) {
-        this.averrateComeCost = averrateComeCost;
+    public void setAverageComeCost(BigDecimal averageComeCost) {
+        this.averageComeCost = averageComeCost;
     }
 
     public String getNote() {
