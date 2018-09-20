@@ -23,7 +23,7 @@ import th.co.baiwa.excise.ia.persistence.vo.Int0611ExcelVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0611FormVo;
 
 @Service
-public class Int0611Service {
+public class Int06111Service {
 
 	
 	public DataTableAjax<Int0611ExcelVo> readFileExcel(Int0611FormVo formVo) throws IOException, EncryptedDocumentException, InvalidFormatException {

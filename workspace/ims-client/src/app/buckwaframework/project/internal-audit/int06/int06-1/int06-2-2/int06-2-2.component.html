@@ -30,11 +30,11 @@
         <div class="inline fields ui centered grid ">
           <div class="one wide field "></div>
           <div class="three wide field"></div>
-          <div class="four wide field {{f.submitted && accountCode.invalid ? 'error' : ''}}">
+          <div class="four wide field required">
             <label><u>กิจกรรม (รับโอนจากกรมฯ)</u></label>
           </div>
           <div class="two wide field "></div>
-          <div class="four wide field  {{f.submitted && accountName.invalid ? 'error' : ''}}">
+          <div class="four wide field  required">
             <label><u>การเบิกจ่ายจริงแยกตามกิจกรรมตามทะเบียนคุม</u></label>
           </div>
           <div class="two wide field "></div>
@@ -118,11 +118,11 @@
         <div class="inline fields ui centered grid ">
           <div class="one wide field "></div>
           <div class="three wide field"></div>
-          <div class="four wide field {{f.submitted && accountCode.invalid ? 'error' : ''}}">
+          <div class="four wide field">
             <label><u>คงเหลือ</u></label>
           </div>
           <div class="two wide field "></div>
-          <div class="four wide field  {{f.submitted && accountName.invalid ? 'error' : ''}}">
+          <div class="four wide field">
             <label><u>เหลือสุทธิ</u></label>
           </div>
           <div class="two wide field "></div>
@@ -189,6 +189,71 @@
           </div>
           <div class="eight wide field "></div>
         </div><br><br>
+        <!-- label -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field"></div>
+          <div class="four wide field">
+            <label><u>ถัวจ่าย</u></label>
+          </div>
+          <div class="two wide field"></div>
+          <div class="four wide field">            
+          </div>
+          <div class="two wide field "></div>
+        </div>
+        <!-- row 10 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field required">
+            <label class="text-right full-width">ถัวเป็นเงิน</label>
+          </div>
+          <div class="four wide field {{f.submitted && averageCost.invalid ? 'error' : ''}}">
+            <input type="number" name="averageCost" ngModel [(ngModel)]="model.averageCost" #averageCost="ngModel" required />
+          </div>
+          <div class="two wide field required "></div>
+          <div class="four wide field  {{f.submitted && accountName.invalid ? 'error' : ''}}"></div>
+          <div class="two wide field "></div>
+        </div>
+        <!-- row 11 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field required">
+            <label class="text-right full-width">ถัวเป็นให้</label>
+          </div>
+          <div class="four wide field {{f.submitted && averageGive.invalid ? 'error' : ''}}">
+            <input type="text" name="averageGive" ngModel [(ngModel)]="model.averageGive" #averageGive="ngModel" required />
+          </div>
+          <div class="two wide field required "></div>
+          <div class="four wide field  {{f.submitted && accountName.invalid ? 'error' : ''}}"></div>
+          <div class="two wide field "></div>
+        </div>
+        <!-- row 12 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field required">
+            <label class="text-right full-width">ถัวมาเงิน</label>
+          </div>
+          <div class="four wide field {{f.submitted && averrageFrom.invalid ? 'error' : ''}}">
+            <input type="text" name="averrageFrom" ngModel [(ngModel)]="model.averrageFrom" #averrageFrom="ngModel" required />
+          </div>
+          <div class="two wide field required "></div>
+          <div class="four wide field  {{f.submitted && accountName.invalid ? 'error' : ''}}"></div>
+          <div class="two wide field "></div>
+        </div>
+        <!-- row 13 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field required">
+            <label class="text-right full-width">ถัวมาจาก</label>
+          </div>
+          <div class="four wide field {{f.submitted && averrateComeCost.invalid ? 'error' : ''}}">
+            <input type="number" name="averrateComeCost" ngModel [(ngModel)]="model.averrateComeCost" #averrateComeCost="ngModel" required />
+          </div>
+          <div class="two wide field required "></div>
+          <div class="four wide field  {{f.submitted && accountName.invalid ? 'error' : ''}}"></div>
+          <div class="two wide field "></div>
+        </div>
+        <br><br>
         <div class="ui stackable center aligned page grid">
           <button class="ui mini primary button" type="submit"> บันทึก</button>
           <button class="ui mini gray button" type="button" routerLink="/int06/1/2-1">ยกเลิก</button>

@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreadCrumb } from 'models/breadcrumb';
+import { AjaxService } from 'services/ajax.service';
+import { MessageBarService } from 'services/message-bar.service';
 
 @Component({
   selector: 'app-int06-2-2',
@@ -16,7 +18,10 @@ export class Int0622Component implements OnInit {
   ];
   model: Model;
 
-  constructor() {
+  constructor(
+    private ajax : AjaxService,
+    private message : MessageBarService,
+  ) {
     this.model = new Model();
   }
 
@@ -57,7 +62,17 @@ export class Int0622Component implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.model);
+    this.message.comfirm((res)=>{
+      if(res){
+        let url = 'ia/int06122/save';
+        this.ajax.post(url,JSON.stringify(this.model),res=>{
+          this.message.successModal(res.json());
+          this.model = new Model();
+        },error =>{
+          this.message.error(res.json());
+        })
+      }
+    },'บันทึกรายการ');   
   }
 
 }

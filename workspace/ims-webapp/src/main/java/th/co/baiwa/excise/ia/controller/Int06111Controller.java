@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int0611ExcelVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0611FormVo;
-import th.co.baiwa.excise.ia.service.Int0611Service;
+import th.co.baiwa.excise.ia.service.Int06111Service;
 
 @Controller
 @RequestMapping("api/ia/int0611")
-public class Int0611Controller {
+public class Int06111Controller {
 
 	@Autowired
-	private Int0611Service int0611Service;
+	private Int06111Service int0611Service;
 
 	@PostMapping("/upload")
 	@ResponseBody
