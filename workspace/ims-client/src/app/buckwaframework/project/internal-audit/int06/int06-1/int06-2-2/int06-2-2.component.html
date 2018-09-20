@@ -103,14 +103,15 @@
             <label class="text-right full-width">รวมรับ</label>
           </div>
           <div class="four wide field">
-            <input type="text" name="sumReceive" ngModel [(ngModel)]="model.sumReceive" #sumReceive="ngModel" disabled />
+            <input type="text" name="sumReceive" ngModel [(ngModel)]="model.sumReceive" #sumReceive="ngModel" disabled
+              class="custom-readonly" />
           </div>
           <div class="two wide field ">
             <label class="text-right full-width"><b>รวมเบิก</b></label>
           </div>
           <div class="four wide field ">
             <input type="text" name="sumWithdrawe" ngModel [(ngModel)]="model.sumWithdrawe" #sumWithdrawe="ngModel"
-              value="" disabled />
+              class="custom-readonly" value="" disabled />
           </div>
           <div class="two wide field "></div>
         </div><br><br>
@@ -135,13 +136,13 @@
           </div>
           <div class="four wide field">
             <input type="text" name="serviceBalance" ngModel [(ngModel)]="model.serviceBalance" #sumReceive="ngModel"
-              disabled />
+              class="custom-readonly" disabled />
           </div>
           <div class="two wide field ">
             <label class="text-right full-width"><b>เงินงบ</b></label>
           </div>
           <div class="four wide field ">
-            <input type="text" name="moneyBudget" ngModel [(ngModel)]="model.moneyBudget" #moneyBudget="ngModel"
+            <input type="text" name="moneyBudget" ngModel [(ngModel)]="model.moneyBudget" #moneyBudget="ngModel" class="custom-readonly"
               disabled />
           </div>
           <div class="two wide field "></div>
@@ -154,14 +155,14 @@
           </div>
           <div class="four wide field">
             <input type="text" name="suppressBalance" ngModel [(ngModel)]="model.suppressBalance" value="{{model.suppressReceive - model.suppressWithdrawe}}"
-            #sumReceive="ngModel" disabled />
+              class="custom-readonly" #sumReceive="ngModel" disabled />
           </div>
           <div class="two wide field ">
             <label class="text-right full-width"><b>เงินนอก</b></label>
           </div>
           <div class="four wide field ">
-            <input type="text" name="moneyOut" ngModel [(ngModel)]="model.moneyOut" #moneyOut="ngModel" value=""
-                disabled />
+            <input type="text" name="moneyOut" ngModel [(ngModel)]="model.moneyOut" #moneyOut="ngModel" class="custom-readonly"
+              disabled />
           </div>
           <div class="two wide field "></div>
         </div>
@@ -173,7 +174,7 @@
           </div>
           <div class="four wide field">
             <input type="text" name="budgetBalance" ngModel [(ngModel)]="model.budgetBalance" #sumReceive="ngModel"
-            disabled />
+              class="custom-readonly" disabled />
           </div>
           <div class="eight wide field "></div>
         </div>
@@ -184,8 +185,8 @@
             <label class="text-right full-width">คงเหลือรวม</label>
           </div>
           <div class="four wide field">
-            <input type="text" name="sumBalance" ngModel [(ngModel)]="model.sumBalance" #sumReceive="ngModel"
-            disabled />
+            <input type="text" name="sumBalance" ngModel [(ngModel)]="model.sumBalance" #sumReceive="ngModel" class="custom-readonly"
+              disabled />
           </div>
           <div class="eight wide field "></div>
         </div><br><br>
@@ -197,7 +198,7 @@
             <label><u>ถัวจ่าย</u></label>
           </div>
           <div class="two wide field"></div>
-          <div class="four wide field">            
+          <div class="four wide field">
           </div>
           <div class="two wide field "></div>
         </div>
@@ -208,7 +209,8 @@
             <label class="text-right full-width">ถัวเป็นเงิน</label>
           </div>
           <div class="four wide field {{f.submitted && averageCost.invalid ? 'error' : ''}}">
-            <input type="number" name="averageCost" ngModel [(ngModel)]="model.averageCost" #averageCost="ngModel" required />
+            <input type="number" name="averageCost" ngModel [(ngModel)]="model.averageCost" #averageCost="ngModel"
+              required />
           </div>
           <div class="two wide field required "></div>
           <div class="four wide field  {{f.submitted && accountName.invalid ? 'error' : ''}}"></div>
@@ -221,7 +223,8 @@
             <label class="text-right full-width">ถัวเป็นให้</label>
           </div>
           <div class="four wide field {{f.submitted && averageGive.invalid ? 'error' : ''}}">
-            <input type="text" name="averageGive" ngModel [(ngModel)]="model.averageGive" #averageGive="ngModel" required />
+            <input type="text" name="averageGive" ngModel [(ngModel)]="model.averageGive" #averageGive="ngModel"
+              required />
           </div>
           <div class="two wide field required "></div>
           <div class="four wide field  {{f.submitted && accountName.invalid ? 'error' : ''}}"></div>
@@ -234,7 +237,8 @@
             <label class="text-right full-width">ถัวมาเงิน</label>
           </div>
           <div class="four wide field {{f.submitted && averrageFrom.invalid ? 'error' : ''}}">
-            <input type="text" name="averrageFrom" ngModel [(ngModel)]="model.averrageFrom" #averrageFrom="ngModel" required />
+            <input type="text" name="averrageFrom" ngModel [(ngModel)]="model.averrageFrom" #averrageFrom="ngModel"
+              required />
           </div>
           <div class="two wide field required "></div>
           <div class="four wide field  {{f.submitted && accountName.invalid ? 'error' : ''}}"></div>
@@ -247,10 +251,22 @@
             <label class="text-right full-width">ถัวมาจาก</label>
           </div>
           <div class="four wide field {{f.submitted && averrateComeCost.invalid ? 'error' : ''}}">
-            <input type="number" name="averrateComeCost" ngModel [(ngModel)]="model.averrateComeCost" #averrateComeCost="ngModel" required />
+            <input type="number" name="averrateComeCost" ngModel [(ngModel)]="model.averrateComeCost" #averrateComeCost="ngModel"
+              required />
           </div>
           <div class="two wide field required "></div>
           <div class="four wide field  {{f.submitted && accountName.invalid ? 'error' : ''}}"></div>
+          <div class="two wide field "></div>
+        </div>
+        <!-- row 14 -->
+        <div class="inline fields ui centered grid ">
+          <div class="one wide field "></div>
+          <div class="three wide field required">
+            <label class="text-right full-width">ถัวมาจาก</label>
+          </div>
+          <div class="ten wide field">
+            <input type="text" name="note" ngModel [(ngModel)]="model.note" #note="ngModel" required />
+          </div>
           <div class="two wide field "></div>
         </div>
         <br><br>

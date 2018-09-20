@@ -103,4 +103,6 @@ class Model {
   averageGive: string = "";
   averrageFrom: string = "";
   averrateComeCost: number = 0;
+
+  note : string = "";
 }

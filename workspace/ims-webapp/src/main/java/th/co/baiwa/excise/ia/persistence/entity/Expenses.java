@@ -56,6 +56,8 @@ public class Expenses extends BaseEntity {
     private String averrageFrom;
     @Column(name = "AVERRATE_COME_COST")
     private BigDecimal averrateComeCost;
+    @Column(name = "NOTE")
+    private String note;
 
     public Long getId() {
         return id;
@@ -223,5 +225,13 @@ public class Expenses extends BaseEntity {
 
     public void setAverrateComeCost(BigDecimal averrateComeCost) {
         this.averrateComeCost = averrateComeCost;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
