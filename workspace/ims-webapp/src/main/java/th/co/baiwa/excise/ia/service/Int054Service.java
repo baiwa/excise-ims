@@ -30,6 +30,7 @@ public class Int054Service {
 	private IaProcurementListRepository iaPcmListRepository;
 	
 	public ResponseDataTable<Int0541Vo> oderByfilter(IaProcurement pcm) {
+		logger.info("oderByfilter {}", pcm);
 		ResponseDataTable<Int0541Vo> data = new ResponseDataTable<>();
 		List<IaProcurement> filterPcm = new ArrayList<IaProcurement>();
 		int count = (int) iaPcmRepository.count();
@@ -71,14 +72,14 @@ public class Int054Service {
 	
 	@Transactional
 	public Message deletePcm(String idList) {
+		logger.info("deletePcm {}", idList);
 		try {
 			String[] str = idList.split(",");
 			List<Long> id = new ArrayList<Long>();
 			List<IaProcurementList> listObjId = new ArrayList<IaProcurementList>();
 			for (String value : str) {
+				id = new ArrayList<Long>();
 				id.add(Long.valueOf(value));
-//				iaPcmListRepository.deletePcmList(Long.valueOf(value));
-				
 				iaPcmRepository.delete(id);
 				listObjId = iaPcmListRepository.findByIdFilter(Long.valueOf(value));
 				for (IaProcurementList obj : listObjId) {
@@ -86,9 +87,6 @@ public class Int054Service {
 					iaPcmListRepository.save(obj);
 				}
 			}
-//			iaPcmRepository.delete(id);
-//			iaPcmListRepository.deletePcmList(id);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ApplicationCache.getMessage("MSG_00006");

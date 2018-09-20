@@ -228,7 +228,6 @@ export class Int054Component implements OnInit, AfterViewInit {
         listId.push(parseInt(data.procurementId));
       }
     });
-    console.log(listId);
     this.msg.comfirm(res => {
       if (res) {
         this.ajax.delete(URL.DELETE + listId.join(), res => {
