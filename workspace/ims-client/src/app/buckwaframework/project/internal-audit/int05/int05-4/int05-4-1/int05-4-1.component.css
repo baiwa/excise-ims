@@ -2,3 +2,7 @@
 input[type=calendar] {
     width: 100% !important;
 }
+
+.full-p {
+    padding-right: 0px !important;
+}

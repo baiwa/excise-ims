@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter } from "../../../../../common/helper";
-import { toDateLocale } from "../../../../../common/helper/datepicker";
 import { MessageBarService, AjaxService } from "../../../../../common/services";
 import { File } from "./../../../../../common/models/file";
 
@@ -171,7 +170,7 @@ export class Int0541Component implements OnInit {
     }, 500);
   };
 
-  loadCalendar = () => {};
+  // loadCalendar = () => {};
 
   onAddField = () => {
     this.numbers.push("");
@@ -187,40 +186,6 @@ export class Int0541Component implements OnInit {
 
   onSaveForm1 = e => {
     e.preventDefault();
-    // let pcm = new IaProcurementVo();
-    // let pcmList = new IaPcmListVo();
-
-    // //map value
-    // pcm.budgetYear = this.budgetYear;
-    // pcm.budgetType = this.budgetType;
-    // pcm.projectName = this.projectName;
-    // pcm.projectCodeEgp = this.projectCodeEgp;
-    // pcm.poNumber = this.poNumber;
-    // pcm.supplyChoice = this.supplyChoice;
-    // pcm.tenderResults = this.tenderResults;
-    // pcm.jobDescription = e.target["jobDescription"].value;
-    // pcm.supplyType = this.supplyType;
-    // pcm.approveDatePlan = this.approveDatePlan;
-    // pcm.contractDatePlan = this.contractDatePlan;
-    // pcm.expireDatePlan = this.expireDatePlan;
-    // pcm.disbursementFinalPlan = this.disbursementFinalPlan;
-    // pcm.approveDateReport = this.approveDateReport;
-    // pcm.contractDateReport = this.contractDateReport;
-    // pcm.expireDateReport = this.expireDateReport;
-    // pcm.disbursementFinalReport = this.disbursementFinalReport;
-    // pcm.contractPartiesNum = e.target["contractPartiesNum"].value;
-    // pcm.contractPartiesName = e.target["contractPartiesName"].value;
-    // // let file = file;
-
-    // console.log(pcm);
-    // let form1 = [];
-    // form1.push(pcm);
-    // console.log(form1);
-
-    // this.ajax.post(URL.SAVE_Procurement, JSON.stringify(form1), res => {
-    //   let data = res.json();
-    //   console.log(data);
-    // });
 
     //send form data
     const form = $("#upload-form")[0];
@@ -282,52 +247,351 @@ export class Int0541Component implements OnInit {
       (<HTMLInputElement>document.getElementById("contractPartiesName")).value
     );
 
-    this.ajax.upload(URL.UPLOAD_Procurement, formBody, res => {
-      let data = res.json();
-      console.log(data.data.procurementId);
-      let procurementId = data.data.procurementId;
-
-      let procurementList = [];
-      for (let i = 0; i < this.numbers.length; i++) {
-        procurementList.push({
-          procurementId: procurementId,
-          procurementList: (<HTMLInputElement>(
-            document.getElementById("procurementList" + i)
-          )).value,
-          amount: parseInt(
-            (<HTMLInputElement>document.getElementById("amount" + i)).value
-          ),
-          unit: (<HTMLInputElement>document.getElementById("unit" + i)).value,
-          presetPrice: parseInt(
-            (<HTMLInputElement>document.getElementById("presetPrice" + i)).value
-          ),
-          appraisalPrice: parseInt(
-            (<HTMLInputElement>document.getElementById("appraisalPrice" + i))
-              .value
-          ),
-          unitPrice: parseInt(
-            (<HTMLInputElement>document.getElementById("unitPrice" + i)).value
-          ),
-          price: parseInt(
-            (<HTMLInputElement>document.getElementById("price" + i)).value
-          )
-        });
+    let chkFlg = "";
+    for (let i = 0; i < this.numbers.length; i++) {
+      if (
+        (<HTMLInputElement>document.getElementById("procurementList" + i))
+          .value != "" &&
+        (<HTMLInputElement>document.getElementById("unit" + i)).value != "" &&
+        (<HTMLInputElement>document.getElementById("amount" + i)).value != "" &&
+        (<HTMLInputElement>document.getElementById("presetPrice" + i)).value !=
+          "" &&
+        (<HTMLInputElement>document.getElementById("appraisalPrice" + i))
+          .value != "" &&
+        (<HTMLInputElement>document.getElementById("unitPrice" + i)).value !=
+          "" &&
+        (<HTMLInputElement>document.getElementById("price" + i)).value
+      ) {
+        chkFlg = "S";
+      } else {
+        chkFlg = "F";
+        console.log(chkFlg);
       }
-      console.log(procurementList);
+    }
+    if (chkFlg === "F") {
+      this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ", "เกิดข้อผิดพลาด");
+    } else {
+      this.ajax.upload(URL.UPLOAD_Procurement, formBody, res => {
+        let data = res.json();
+        console.log(data.data.procurementId);
+        let procurementId = data.data.procurementId;
+        let procurementList = [];
 
-      this.ajax.post(URL.SAVE_PcmList, procurementList, res => {
-        // let data = res.json();
-        // console.log(data.data.procurementId);
+        for (let i = 0; i < this.numbers.length; i++) {
+          procurementList.push({
+            procurementId: procurementId,
+            procurementList: (<HTMLInputElement>(
+              document.getElementById("procurementList" + i)
+            )).value,
+            amount: parseInt(
+              (<HTMLInputElement>document.getElementById("amount" + i)).value
+            ),
+            unit: (<HTMLInputElement>document.getElementById("unit" + i)).value,
+            presetPrice: parseInt(
+              (<HTMLInputElement>document.getElementById("presetPrice" + i))
+                .value
+            ),
+            appraisalPrice: parseInt(
+              (<HTMLInputElement>document.getElementById("appraisalPrice" + i))
+                .value
+            ),
+            unitPrice: parseInt(
+              (<HTMLInputElement>document.getElementById("unitPrice" + i)).value
+            ),
+            price: parseInt(
+              (<HTMLInputElement>document.getElementById("price" + i)).value
+            )
+          });
+        }
+        console.log(procurementList);
+        this.ajax.post(URL.SAVE_PcmList, procurementList, res => {
+          const msg = res.json();
+          if (msg.messageType == "C") {
+            this.msg.successModal(msg.messageTh);
+          } else {
+            this.msg.errorModal(msg.messageTh);
+          }
+        });
       });
-    });
+    }
   };
 
-  onSaveForm2 = () => {
-    alert("asdasd");
+  onSaveForm2 = e => {
+    e.preventDefault();
+
+    //send form data
+    const form = $("#upload-form")[0];
+    let formBody = new FormData(form);
+    formBody.append("budgetYear", this.budgetYear);
+    formBody.append("budgetType", this.budgetType);
+    formBody.append("projectName", this.projectName);
+    formBody.append("projectCodeEgp", this.projectCodeEgp);
+    formBody.append("poNumber", this.poNumber);
+    formBody.append("supplyChoice", this.supplyChoice);
+    formBody.append("tenderResults", this.tenderResults);
+    let jobDescription = $("input[name='jobDescription']:checked").val();
+    formBody.append(
+      "jobDescription",
+      jobDescription == undefined ? null : jobDescription
+    );
+    formBody.append("supplyType", this.supplyType);
+    formBody.append(
+      "approveDatePlan",
+      (<HTMLInputElement>document.getElementById("approveDatePlanData")).value
+    );
+    formBody.append(
+      "contractDatePlan",
+      (<HTMLInputElement>document.getElementById("contractDatePlanData")).value
+    );
+    formBody.append(
+      "expireDatePlan",
+      (<HTMLInputElement>document.getElementById("expireDatePlanData")).value
+    );
+    formBody.append(
+      "disbursementFinalPlan",
+      (<HTMLInputElement>document.getElementById("disbursementFinalPlanData"))
+        .value
+    );
+    formBody.append(
+      "approveDateReport",
+      (<HTMLInputElement>document.getElementById("approveDateReportData")).value
+    );
+    formBody.append(
+      "contractDateReport",
+      (<HTMLInputElement>document.getElementById("contractDateReportData"))
+        .value
+    );
+    formBody.append(
+      "expireDateReport",
+      (<HTMLInputElement>document.getElementById("expireDateReportData")).value
+    );
+    formBody.append(
+      "disbursementFinalReport",
+      (<HTMLInputElement>document.getElementById("disbursementFinalReportData"))
+        .value
+    );
+    formBody.append(
+      "signedDatePlan",
+      (<HTMLInputElement>document.getElementById("signedDatePlanData")).value
+    );
+    formBody.append(
+      "signedDateReport",
+      (<HTMLInputElement>document.getElementById("signedDateReportData")).value
+    );
+    formBody.append(
+      "contractPartiesNum",
+      (<HTMLInputElement>document.getElementById("contractPartiesNum")).value
+    );
+    formBody.append(
+      "contractPartiesName",
+      (<HTMLInputElement>document.getElementById("contractPartiesName")).value
+    );
+
+    let chkFlg = "";
+    for (let i = 0; i < this.numbers.length; i++) {
+      if (
+        (<HTMLInputElement>document.getElementById("procurementList" + i))
+          .value != "" &&
+        (<HTMLInputElement>document.getElementById("unit" + i)).value != "" &&
+        (<HTMLInputElement>document.getElementById("amount" + i)).value != "" &&
+        (<HTMLInputElement>document.getElementById("presetPrice" + i)).value !=
+          "" &&
+        (<HTMLInputElement>document.getElementById("appraisalPrice" + i))
+          .value != "" &&
+        (<HTMLInputElement>document.getElementById("unitPrice" + i)).value !=
+          "" &&
+        (<HTMLInputElement>document.getElementById("price" + i)).value
+      ) {
+        chkFlg = "S";
+      } else {
+        chkFlg = "F";
+      }
+    }
+    if (chkFlg === "F") {
+      this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ", "เกิดข้อผิดพลาด");
+    } else {
+      this.ajax.upload(URL.UPLOAD_Procurement, formBody, res => {
+        let data = res.json();
+        console.log(data.data.procurementId);
+        let procurementId = data.data.procurementId;
+        let procurementList = [];
+
+        for (let i = 0; i < this.numbers.length; i++) {
+          procurementList.push({
+            procurementId: procurementId,
+            procurementList: (<HTMLInputElement>(
+              document.getElementById("procurementList" + i)
+            )).value,
+            amount: parseInt(
+              (<HTMLInputElement>document.getElementById("amount" + i)).value
+            ),
+            unit: (<HTMLInputElement>document.getElementById("unit" + i)).value,
+            presetPrice: parseInt(
+              (<HTMLInputElement>document.getElementById("presetPrice" + i))
+                .value
+            ),
+            appraisalPrice: parseInt(
+              (<HTMLInputElement>document.getElementById("appraisalPrice" + i))
+                .value
+            ),
+            unitPrice: parseInt(
+              (<HTMLInputElement>document.getElementById("unitPrice" + i)).value
+            ),
+            price: parseInt(
+              (<HTMLInputElement>document.getElementById("price" + i)).value
+            )
+          });
+        }
+        console.log(procurementList);
+        this.ajax.post(URL.SAVE_PcmList, procurementList, res => {
+          const msg = res.json();
+          if (msg.messageType == "C") {
+            this.msg.successModal(msg.messageTh);
+          } else {
+            this.msg.errorModal(msg.messageTh);
+          }
+        });
+      });
+    }
   };
 
-  onSaveForm3 = () => {
-    alert("333333");
+  onSaveForm3 = e => {
+    e.preventDefault();
+
+    //send form data
+    const form = $("#upload-form")[0];
+    let formBody = new FormData(form);
+    formBody.append("budgetYear", this.budgetYear);
+    formBody.append("budgetType", this.budgetType);
+    formBody.append("projectName", this.projectName);
+    formBody.append("projectCodeEgp", this.projectCodeEgp);
+    formBody.append("poNumber", this.poNumber);
+    formBody.append("supplyChoice", this.supplyChoice);
+    formBody.append("tenderResults", this.tenderResults);
+    let jobDescription = $("input[name='jobDescription']:checked").val();
+    formBody.append(
+      "jobDescription",
+      jobDescription == undefined ? null : jobDescription
+    );
+    formBody.append("supplyType", this.supplyType);
+    formBody.append(
+      "approveDatePlan",
+      (<HTMLInputElement>document.getElementById("approveDatePlanData")).value
+    );
+    formBody.append(
+      "contractDatePlan",
+      (<HTMLInputElement>document.getElementById("contractDatePlanData")).value
+    );
+    formBody.append(
+      "expireDatePlan",
+      (<HTMLInputElement>document.getElementById("expireDatePlanData")).value
+    );
+    formBody.append(
+      "disbursementFinalPlan",
+      (<HTMLInputElement>document.getElementById("disbursementFinalPlanData"))
+        .value
+    );
+    formBody.append(
+      "approveDateReport",
+      (<HTMLInputElement>document.getElementById("approveDateReportData")).value
+    );
+    formBody.append(
+      "contractDateReport",
+      (<HTMLInputElement>document.getElementById("contractDateReportData"))
+        .value
+    );
+    formBody.append(
+      "expireDateReport",
+      (<HTMLInputElement>document.getElementById("expireDateReportData")).value
+    );
+    formBody.append(
+      "disbursementFinalReport",
+      (<HTMLInputElement>document.getElementById("disbursementFinalReportData"))
+        .value
+    );
+    formBody.append(
+      "signedDatePlan",
+      (<HTMLInputElement>document.getElementById("signedDatePlanData")).value
+    );
+    formBody.append(
+      "signedDateReport",
+      (<HTMLInputElement>document.getElementById("signedDateReportData")).value
+    );
+    formBody.append(
+      "contractPartiesNum",
+      (<HTMLInputElement>document.getElementById("contractPartiesNum")).value
+    );
+    formBody.append(
+      "contractPartiesName",
+      (<HTMLInputElement>document.getElementById("contractPartiesName")).value
+    );
+
+    let chkFlg = "";
+    for (let i = 0; i < this.numbers.length; i++) {
+      if (
+        (<HTMLInputElement>document.getElementById("procurementList" + i))
+          .value != "" &&
+        (<HTMLInputElement>document.getElementById("unit" + i)).value != "" &&
+        (<HTMLInputElement>document.getElementById("amount" + i)).value != "" &&
+        (<HTMLInputElement>document.getElementById("presetPrice" + i)).value !=
+          "" &&
+        (<HTMLInputElement>document.getElementById("appraisalPrice" + i))
+          .value != "" &&
+        (<HTMLInputElement>document.getElementById("unitPrice" + i)).value !=
+          "" &&
+        (<HTMLInputElement>document.getElementById("price" + i)).value
+      ) {
+        chkFlg = "S";
+      } else {
+        chkFlg = "F";
+      }
+    }
+    if (chkFlg === "F") {
+      this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ", "เกิดข้อผิดพลาด");
+    } else {
+      this.ajax.upload(URL.UPLOAD_Procurement, formBody, res => {
+        let data = res.json();
+        console.log(data.data.procurementId);
+        let procurementId = data.data.procurementId;
+        let procurementList = [];
+
+        for (let i = 0; i < this.numbers.length; i++) {
+          procurementList.push({
+            procurementId: procurementId,
+            procurementList: (<HTMLInputElement>(
+              document.getElementById("procurementList" + i)
+            )).value,
+            amount: parseInt(
+              (<HTMLInputElement>document.getElementById("amount" + i)).value
+            ),
+            unit: (<HTMLInputElement>document.getElementById("unit" + i)).value,
+            presetPrice: parseInt(
+              (<HTMLInputElement>document.getElementById("presetPrice" + i))
+                .value
+            ),
+            appraisalPrice: parseInt(
+              (<HTMLInputElement>document.getElementById("appraisalPrice" + i))
+                .value
+            ),
+            unitPrice: parseInt(
+              (<HTMLInputElement>document.getElementById("unitPrice" + i)).value
+            ),
+            price: parseInt(
+              (<HTMLInputElement>document.getElementById("price" + i)).value
+            )
+          });
+        }
+        console.log(procurementList);
+        this.ajax.post(URL.SAVE_PcmList, procurementList, res => {
+          const msg = res.json();
+          if (msg.messageType == "C") {
+            this.msg.successModal(msg.messageTh);
+          } else {
+            this.msg.errorModal(msg.messageTh);
+          }
+        });
+      });
+    }
   };
 
   onChangeUpload = (event: any) => {
@@ -341,51 +605,8 @@ export class Int0541Component implements OnInit {
           value: e.target.result
         };
         this.file = [f];
-        console.log(this.file);
       };
       reader.readAsDataURL(event.target.files[0]);
     }
   };
-}
-
-class IaProcurementVo {
-  [x: string]: any;
-  procurementId: number = null;
-  approveDatePlan: any = null;
-  approveDateReport: any = null;
-  budgetType: string = "";
-  budgetYear: number = null;
-  contractDatePlan: any = null;
-  contractDateReport: any = null;
-  contractPartiesName: string = "";
-  contractPartiesNum: string = "";
-  disbursementFinalPlan: any = null;
-  disbursementFinalReport: any;
-  exciseDepartment: string = "";
-  exciseDistrict: string = "";
-  exciseRegion: string = "";
-  expireDatePlan: any = null;
-  expireDateReport: any = null;
-  jobDescription: string = "";
-  poNumber: string = "";
-  projectCodeEgp: string = "";
-  projectName: string = "";
-  signedDateReport: any = null;
-  signedDatePlan: any = null;
-  supplyChoice: string = "";
-  supplyType: string = "";
-  tenderResults: any = null;
-  file: File[];
-}
-
-class IaPcmListVo {
-  [x: string]: any;
-  amount: number = null;
-  appraisalPrice: number = null;
-  presetPrice: number = null;
-  price: number = null;
-  procurementId: number = null;
-  procurementList: string = "";
-  unit: string = "";
-  unitPrice: number = null;
 }

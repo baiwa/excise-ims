@@ -43,6 +43,9 @@ public class Int0541Vo {
 	private String updatedDate;
 	private long procurementIdMinor;
 	
+	private String nameFile;
+	private String typeFile;
+	
 	public MultipartFile getFile() {
 		return file;
 	}
@@ -264,6 +267,18 @@ public class Int0541Vo {
 	}
 	public void setProcurementIdMinor(long procurementIdMinor) {
 		this.procurementIdMinor = procurementIdMinor;
+	}
+	public String getNameFile() {
+		return nameFile;
+	}
+	public void setNameFile(String nameFile) {
+		this.nameFile = nameFile;
+	}
+	public String getTypeFile() {
+		return typeFile;
+	}
+	public void setTypeFile(String typeFile) {
+		this.typeFile = typeFile;
 	}
 
 }

@@ -3,7 +3,6 @@ package th.co.baiwa.excise.ia.persistence.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
@@ -15,11 +14,5 @@ public interface IaProcurementListRepository extends CommonJpaCrudRepository<IaP
 			nativeQuery = true
 	)
 	public List<IaProcurementList> findByIdFilter(long procurementId);
-	
-	@Query(
-			value = "DELETE * FROM IA_PROCUREMENT_LIST PL WHERE PL.PROCUREMENT_ID = ? AND PL.IS_DELETED='"+FLAG.N_FLAG+"' ",
-			nativeQuery = true
-	)
-	public void deletePcmList(Long id);
 
 }
