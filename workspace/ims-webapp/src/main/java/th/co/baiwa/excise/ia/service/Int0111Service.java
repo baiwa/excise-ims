@@ -34,7 +34,8 @@ public class Int0111Service {
 		IaTaxReceipt ta;
 		for (IncomeList list : data.getIncomeList()) {
 			ta = new IaTaxReceipt();
-			ta.setReceiptDate(list.getDepositDate());
+			ta.setReceiptDate(list.getReceiptDate());
+			ta.setDepositDate(list.getDepositDate());
 			ta.setSendDate(list.getSendDate());
 			ta.setIncomeName(list.getIncomeName());
 			ta.setReceiptNo(list.getReceiptNo());

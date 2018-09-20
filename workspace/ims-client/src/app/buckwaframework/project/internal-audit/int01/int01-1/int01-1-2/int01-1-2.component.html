@@ -113,14 +113,14 @@
                                 <td>{{ data.taxReceiptId }}</td>
                                 <td>{{ data.receiptNo ? data.receiptNo.split("/")[0] : '-' }}</td>
                                 <td>{{ data.receiptNo ? data.receiptNo.split("/")[1] : '-' }}</td>
-                                <td class="text-right">{{ data.netTaxAmount }}</td>
-                                <td class="text-right">{{ data.netLocAmount }}</td>
-                                <td class="text-right">{{ data.locOthAmount }}</td>
-                                <td class="text-right">{{ data.locExpAmount }}</td>
+                                <td class="text-right">{{ round(data.netTaxAmount || 0.0) }}</td>
+                                <td class="text-right">{{ round(data.netLocAmount || 0.0) }}</td>
+                                <td class="text-right">{{ round(data.locOthAmount || 0.0) }}</td>
+                                <td class="text-right">{{ round(data.locExpAmount || 0.0) }}</td>
                                 <td class="text-right"> 5,375.70 </td>
-                                <td class="text-right">{{ data.customAmount }}</td>
-                                <td class="text-right">{{ data.stampAmount }}</td>
-                                <td class="text-right">{{ data.sendAmount }}</td>
+                                <td class="text-right">{{ round(data.customAmount || 0.0) }}</td>
+                                <td class="text-right">{{ round(data.stampAmount || 0.0) }}</td>
+                                <td class="text-right">{{ round(data.sendAmount || 0.0) }}</td>
                                 <td style="text-align: center;">
                                     <a class="update" href="javascript:;" (click)="popupEditData()">
                                         แก้ไข
@@ -138,14 +138,14 @@
                                 <th rowspan="2">&nbsp;</th>
                                 <th rowspan="2">&nbsp;</th>
                                 <th colspan="2">รวม</th>
-                                <th rowspan="2">43,369.75</th>
-                                <th rowspan="2">4,238.30</th>
-                                <th rowspan="2">3,919.40</th>
-                                <th rowspan="2">206.23</th>
-                                <th rowspan="2">47,493.64</th>
-                                <th rowspan="2">309.32</th>
-                                <th rowspan="2">78.62</th>
-                                <th rowspan="2">40,851.18</th>
+                                <th rowspan="2">{{ round(totalReceipt.netTaxAmount || 0.0) }}</th>
+                                <th rowspan="2">{{ round(totalReceipt.netLocAmount || 0.0) }}</th>
+                                <th rowspan="2">{{ round(totalReceipt.locOthAmount || 0.0) }}</th>
+                                <th rowspan="2">{{ round(totalReceipt.locExpAmount || 0.0) }}</th>
+                                <th rowspan="2">{{ round(totalReceipt.netLocAmount || 0.0) }}</th>
+                                <th rowspan="2">{{ round(totalReceipt.customAmount || 0.0) }}</th>
+                                <th rowspan="2">{{ round(totalReceipt.stampAmount || 0.0) }}</th>
+                                <th rowspan="2">{{ round(totalReceipt.sendAmount || 0.0) }}</th>
                                 <th rowspan="2">&nbsp;</th>
                             </tr>
                             <tr style="display: none;">
