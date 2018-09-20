@@ -297,11 +297,17 @@ export class Int09111Component implements OnInit, AfterViewInit {
 
   modalAdd() {
     this.btnModal = 'S';
-    $('#modalAdd').modal('show');
-    this.calenda();
+    $('#modalAdd').modal({
+      onShow: ()=>{
+        this.calenda();
+        $('input[type=text]').val("");
+        $('input[type=number]').val("");
+        $('#remarkT').val("");
+      }
+    }).modal('show');
+    
   }
   modalEdit=(data)=> {
-    
     console.log("data edit : ",data.int09FormDtlVo);
    
 
@@ -324,7 +330,6 @@ export class Int09111Component implements OnInit, AfterViewInit {
 
          $("#permissionDate").val(data.int09FormDtlVo.permissionDate);
          $("#writeDate").val(data.int09FormDtlVo.writeDate);
-
          $("#departure").dropdown('set selected',data.int09FormDtlVo.departure);
 
          $("#departureDate").val(data.int09FormDtlVo.departureDate);
@@ -514,7 +519,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    $('.ui.dropdown').dropdown();
+    // $('.ui.dropdown').dropdown();
     this.idProcess = this.route.snapshot.queryParams["idProcess"];
     console.log("idProcess : ", this.idProcess);
     this.dataTable();

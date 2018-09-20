@@ -52,7 +52,7 @@
         <div class="inline fields">
             <div class="four wide field"></div>
             <div class="two wide field ">
-                <label class="custom-label-w-35">วันที่
+                <label class="custom-label-w-30">วันที่
                 </label>
               </div>
               <div class="three wide field">
@@ -90,37 +90,20 @@
     </div>
 
     <div class="ui segment">
-      <div style="overflow-x: scroll; white-space:nowrap;">
-        <table id="table1" class="ui small celled table">
-          <thead>
-            <tr style="text-align: center;">
-              <th>ผู้ประกอบการ</th>
-              <th colspan="2">ตุลาคม</th>
-              <th colspan="2">พฤศจิกายน</th>
-              <th colspan="2">ธันวาคม</th>
-              <th colspan="2">มกราคม</th>
-              <th colspan="2">กุมพาพันธ์</th>
-              <th colspan="2">มีนาคม</th>
-
-            </tr>
-            <tr style="text-align: center;">
-              <th></th>
-              <th>วันที่ชำระ</th>
-              <th>ยอดภาษี</th>
-              <th>วันที่ชำระ</th>
-              <th>ยอดภาษี</th>
-              <th>วันที่ชำระ</th>
-              <th>ยอดภาษี</th>
-              <th>วันที่ชำระ</th>
-              <th>ยอดภาษี</th>
-              <th>วันที่ชำระ</th>
-              <th>ยอดภาษี</th>
-              <th>วันที่ชำระ</th>
-              <th>ยอดภาษี</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
+        <table id="table" class="ui small celled table nowrap" style="width: 100%">
+            <thead>
+        
+              <tr>
+                <th rowspan="2" style="text-align: center !important;">ผู้ประกอบการ</th>
+                <th rowspan="1" colspan="2" style="text-align: center !important;">มกราคม</th>
+              </tr>
+              <tr>			
+                <th style="text-align: center !important;">วันที่ชำระ</th>
+                <th style="text-align: center !important;">ยอดภาษี</th>
+              </tr>
+        
+            </thead>
+          </table>
     </div>
 
     <div class="ui segment" *ngIf="showData">

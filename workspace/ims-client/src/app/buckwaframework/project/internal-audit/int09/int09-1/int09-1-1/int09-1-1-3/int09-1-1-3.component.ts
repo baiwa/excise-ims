@@ -289,8 +289,14 @@ export class Int09113Component implements OnInit, AfterViewInit {
 
   modalAdd() {
     this.btnModal = 'S';
-    $('#modalAdd').modal('show');
-    this.calenda();
+    $('#modalAdd').modal({
+      onShow: ()=>{
+        this.calenda();
+        $('input[type=text]').val("");
+        $('input[type=number]').val("");
+        $('#remarkT').val("");
+      }
+    }).modal('show');
   }
   modalEdit=(data)=> {
     
@@ -505,7 +511,7 @@ export class Int09113Component implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    $('.ui.dropdown').dropdown();
+    // $('.ui.dropdown').dropdown();
     this.idProcess = this.route.snapshot.queryParams["idProcess"];
     console.log("idProcess : ", this.idProcess);
     this.dataTable();
