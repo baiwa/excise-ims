@@ -40,6 +40,32 @@ public class Int076Controller {
 
 				for (int i = 0; i < stringArr.length; i++) {
 					if (i == 0) {
+						if (stringArr[i].indexOf(".01.") != -1) {
+							row.setColor("mC01");
+						}else if(stringArr[i].indexOf(".02.") != -1) {
+							row.setColor("mC02");
+						}else if(stringArr[i].indexOf(".03.") != -1) {
+							row.setColor("mC03");
+						}else if(stringArr[i].indexOf(".04.") != -1) {
+							row.setColor("mC04");
+						}else if(stringArr[i].indexOf(".05.") != -1) {
+							row.setColor("mC05");
+						}else if(stringArr[i].indexOf(".06.") != -1) {
+							row.setColor("mC06");
+						}else if(stringArr[i].indexOf(".07.") != -1) {
+							row.setColor("mC07");
+						}else if(stringArr[i].indexOf(".08.") != -1) {
+							row.setColor("mC08");
+						}else if(stringArr[i].indexOf(".09.") != -1) {
+							row.setColor("mC09");
+						}else if(stringArr[i].indexOf(".10.") != -1) {
+							row.setColor("mC10");
+						}else if(stringArr[i].indexOf(".11.") != -1) {
+							row.setColor("mC11");
+						}else if(stringArr[i].indexOf(".12.") != -1) {
+							row.setColor("mC12");
+						}
+						
 						row.setDatePosted(stringArr[i]);
 					} else if (i == 1) {
 						row.setDocNumber(stringArr[i]);

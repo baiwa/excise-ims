@@ -1,8 +1,8 @@
 <app-breadcrumb [route]="breadcrumb" ></app-breadcrumb>
 
 
-<div class="ui grid" *ngIf="view1">
-  <div class="sixteen wide column">
+<div class="ui grid">
+  <div class="sixteen wide column" *ngIf="view1;">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>อัพโหลดไฟล์ตรวจสอบการนำส่งเงินบัญชีเจ้าหนี้ อปท.</span>
     </div>
@@ -35,14 +35,13 @@
       </form>
     </div>
   </div>
-
-  <div class="sixteen wide column" >
+  <!-- table upload -->
+  
+  <div class="sixteen wide column" *ngIf="view1;">
       <div class="ui top attached header">
           <span>* แสดงตัวอย่างไฟล์ที่อัพโหลด  และแก้ไขได้</span>
       </div>
       <div class="ui attached segment">
-        <div class="ui form"></div>
-
         <table id="dataTable"  class="ui small celled table" style="width: 100%;">
           <thead>
             <tr>
@@ -73,7 +72,7 @@
             </div>
         </div>
       </div>
-
+      <!-- modal Edit -->
       <div class="ui modal" id="editData" >
         <div class="header">แก้ไขข้อมูล</div>
         <div class="content">
@@ -142,90 +141,94 @@
         </div>
       </div>
 
+      <!-- modal del -->
+      <div class="ui mini modal" id="delData" >
+        <div class="header">ลบข้อมูล</div>
+        <div class="content"> 
+            <label>คุณต้องการลบข้อมูลหรือไม่ ?</label>
+        </div>
+        <div class="actions">
+            <div class="ui  deny button">
+              ยกเลิก
+            </div>
+            <div class="ui positive right labeled icon button" (click)="delData()" >
+                ตกลง
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+      </div>
+
   </div>
      
-  
+  <!-- table Ix -->
+  <div class="sixteen wide column" >
+    <div class="ui top attached header">
+        <span>* ตรวจสอบข้อมูล ประเภทเอกสาร  IX</span>
+    </div>
+    <div class="ui attached segment">
+      <table id="datatableIx"  class="ui small celled table" style="width: 100%;">
+        <thead>
+          <tr>
+            <th  rowspan="2" style="text-align: center !important">วันที่ลงรายการ</th>
+            <th  rowspan="2" style="text-align: center !important" >เลขที่เอกสาร</th>
+            <th  rowspan="2" style="text-align: center !important" >ประเภทเอกสาร</th>
+            <th  rowspan="2" style="text-align: center !important" >เอกสารอ้างอิง</th>
+            <th  rowspan="2" style="text-align: center !important" >ผู้ทำแทน</th>
+            <th  rowspan="2" style="text-align: center !important" >การกำหนด</th>
+            <th  rowspan="2" style="text-align: center !important" >หน่วยเบิกจ่าย</th>
+            <th  colspan="2" style="text-align: center !important">ผ่านรายการ</th>
+            <th  rowspan="2" style="text-align: center !important" >ยกยอดไป</th>
+          </tr>
+          <tr>
+            <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">เดบิต</th>
+            <th style="text-align: center !important">เครดิต</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+
+  <!-- table J0 -->
+  <div class="sixteen wide column" >
+    <div class="ui top attached header">
+        <span>* ตรวจสอบข้อมูล ประเภทเอกสาร  J0</span>
+    </div>
+    <div class="ui attached segment">
+      <table id="datatableJ0"  class="ui small celled table" style="width: 100%;">
+        <thead>
+          <tr>
+            <th  rowspan="2" style="text-align: center !important">วันที่ลงรายการ</th>
+            <th  rowspan="2" style="text-align: center !important" >เลขที่เอกสาร</th>
+            <th  rowspan="2" style="text-align: center !important" >ประเภทเอกสาร</th>
+            <th  rowspan="2" style="text-align: center !important" >เอกสารอ้างอิง</th>
+            <th  rowspan="2" style="text-align: center !important" >ผู้ทำแทน</th>
+            <th  rowspan="2" style="text-align: center !important" >การกำหนด</th>
+            <th  rowspan="2" style="text-align: center !important" >หน่วยเบิกจ่าย</th>
+            <th  colspan="2" style="text-align: center !important">ผ่านรายการ</th>
+            <th  rowspan="2" style="text-align: center !important" >ยกยอดไป</th>
+          </tr>
+          <tr>
+            <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">เดบิต</th>
+            <th style="text-align: center !important">เครดิต</th>
+          </tr>
+        </thead>
+      </table>
+
+      <div class="ui six column centered grid" *ngIf="viewButton;">
+        <div class="column">
+          <button class="ui mini button"    (click)="backPage()" >
+            <i class="arrow left icon"></i>
+            กลับ
+          </button>
+          <button class="ui mini primary button"  >
+            <i class="print icon"></i>
+            ส่งออก
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
-<!-- หน้าตรวจสอบข้อมูล -->
-<div class="ui grid"  *ngIf="view2">
-
-    <div class="sixteen wide column">
-        <div class="ui top attached header">
-            <span>* ตรวจสอบข้อมูล ประเภทเอกสาร  J0</span>
-        </div>
-        <div class="ui attached segment">
-          <div class="ui form"></div>
-  
-          <table id="dataTable"  class="ui small celled table" style="width: 100%;">
-            <thead>
-              <tr>
-                <th  rowspan="2" style="text-align: center !important">วันที่ลงรายการ</th>
-                <th  rowspan="2" style="text-align: center !important" >เลขที่เอกสาร</th>
-                <th  rowspan="2" style="text-align: center !important" >ประเภทเอกสาร</th>
-                <th  rowspan="2" style="text-align: center !important" >เอกสารอ้างอิง</th>
-                <th  rowspan="2" style="text-align: center !important" >ผู้ทำแทน</th>
-                <th  rowspan="2" style="text-align: center !important" >การกำหนด</th>
-                <th  rowspan="2" style="text-align: center !important" >หน่วยเบิกจ่าย</th>
-                <th  colspan="2" style="text-align: center !important">ผ่านรายการ</th>
-                <th  rowspan="2" style="text-align: center !important" >ยกยอดไป</th>
-                <th  rowspan="2" style="text-align: center !important">แก้ไข</th>
-              </tr>
-              <tr>
-                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">เดบิต</th>
-                <th style="text-align: center !important">เครดิต</th>
-              </tr>
-            </thead>
-          </table>
-  
-        </div>
-    </div>
-       
-    
-    <div class="sixteen wide column">
-      <div class="ui top attached header">
-          <span>* ตรวจสอบข้อมูล ประเภทเอกสาร  IX</span>
-      </div>
-      <div class="ui attached segment">
-        <div class="ui form"></div>
-  
-        <table id="dataTable"  class="ui small celled table" style="width: 100%;">
-          <thead>
-            <tr>
-              <th  rowspan="2" style="text-align: center !important">วันที่ลงรายการ</th>
-              <th  rowspan="2" style="text-align: center !important" >เลขที่เอกสาร</th>
-              <th  rowspan="2" style="text-align: center !important" >ประเภทเอกสาร</th>
-              <th  rowspan="2" style="text-align: center !important" >เอกสารอ้างอิง</th>
-              <th  rowspan="2" style="text-align: center !important" >ผู้ทำแทน</th>
-              <th  rowspan="2" style="text-align: center !important" >การกำหนด</th>
-              <th  rowspan="2" style="text-align: center !important" >หน่วยเบิกจ่าย</th>
-              <th  colspan="2" style="text-align: center !important">ผ่านรายการ</th>
-              <th  rowspan="2" style="text-align: center !important" >ยกยอดไป</th>
-              <th  rowspan="2" style="text-align: center !important">แก้ไข</th>
-            </tr>
-            <tr>
-              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">เดบิต</th>
-              <th style="text-align: center !important">เครดิต</th>
-            </tr>
-          </thead>
-        </table>
-  
-        <div class="ui six column centered grid" >
-          <div class="column">
-            <button class="ui mini button"    (click)="backPage()" >
-              <i class="arrow left icon"></i>
-              กลับ
-            </button>
-            <button class="ui mini primary button"  >
-              <i class="print icon"></i>
-              ส่งออก
-            </button>
-          </div>
-        </div>
-  
-      </div>
-    </div>
-  
-  
-  
-  </div>

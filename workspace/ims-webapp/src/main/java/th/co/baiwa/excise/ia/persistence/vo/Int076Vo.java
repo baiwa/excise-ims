@@ -12,6 +12,8 @@ public class Int076Vo {
 	private String debit;
 	private String credit;
 	private String liftUp;
+	private String color;
+	
 	public Long getId() {
 		return id;
 	}
@@ -77,6 +79,12 @@ public class Int076Vo {
 	}
 	public void setLiftUp(String liftUp) {
 		this.liftUp = liftUp;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
 	}
 	
 	

@@ -148,6 +148,58 @@ img.image-width-18 {
 }
 /* !bg-condition */
 
+/* bg-mon */
+.bg-m-01 {
+    background-color:#9f3a3899 !important;
+}
+
+.bg-m-02 {
+    background-color:#e0b4b4 !important;
+}
+
+.bg-m-03 {
+    background-color:#e03997b8 !important;
+}
+
+.bg-m-04 {
+    background-color:#a333c8b8 !important;
+}
+
+.bg-m-05 {
+    background-color:#2185d0b0!important;
+}
+
+.bg-m-06 {
+    background-color:#21ba45de !important;
+}
+
+.bg-m-07 {
+    background-color:#fbbd08c2 !important;
+}
+
+.bg-m-08 {
+    background-color:#f2711c !important;
+}
+
+.bg-m-09 {
+    background-color:#a5673ff0 !important;
+}
+
+.bg-m-10 {
+    background-color:#d4d4d5 !important;
+}
+
+.bg-m-11 {
+    background-color:#281ef1b0 !important;
+}
+
+.bg-m-12 {
+    background-color:#767676 !important;
+}
+/* !bg-mon */
+
+
+
 /* fixed table bordered left TH */
 .ui.celled.table tr td, .ui.celled.table tr th {
     border-left: 1px solid rgba(34,36,38,.1) !important;
