@@ -27,6 +27,19 @@ export class Int076Component implements OnInit, AfterViewInit {
   dataIxList: Data[] = [];
   dataJ0List: Data[] = [];
 
+  //tmp
+  tmp1: any[] = [];
+  tmp2: any[] = [];
+  tmp3: any[] = [];
+  tmp4: any[] = [];
+  tmp5: any[] = [];
+  tmp6: any[] = [];
+  tmp7: any[] = [];
+  tmp8: any[] = [];
+  tmp9: any[] = [];
+  tmp10: any[] = [];
+  tmp11: any[] = [];
+  tmp12: any[] = [];
 
   view1: any;
   view2: any;
@@ -114,7 +127,7 @@ export class Int076Component implements OnInit, AfterViewInit {
       lengthChange: false,
       searching: false,
       ordering: false,
-      pageLength: 10,
+      pageLength: 100,
       processing: true,
       serverSide: false,
       paging: true,
@@ -144,7 +157,7 @@ export class Int076Component implements OnInit, AfterViewInit {
       ],
 
       createdRow: function (row, data, dataIndex) {
- 
+
       },
       rowCallback: (row, data, index) => {
 
@@ -179,7 +192,7 @@ export class Int076Component implements OnInit, AfterViewInit {
       lengthChange: false,
       searching: false,
       ordering: false,
-      pageLength: 10,
+      pageLength: 100,
       processing: true,
       serverSide: false,
       paging: true,
@@ -202,61 +215,85 @@ export class Int076Component implements OnInit, AfterViewInit {
       ],
 
       createdRow: function (row, data, dataIndex) {
-        console.log("row");
-        console.log("data", data.color);
-        console.log("dataIndex", dataIndex);
-        if (data.color == 'mC01') {
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-01');
+        // console.log("row");
+        // console.log("data", data.color);
+        // console.log("dataIndex", dataIndex);
+        if (data.color == '1') {
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-01');
           }
-        }else if(data.color == 'mC02'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-02');
+        } else if (data.color == '2') {
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-02');
           }
-        }else if(data.color == 'mC03'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-03');
+        } else if (data.color == '3') {
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-03');
           }
-        }else if(data.color == 'mC04'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-04');
+        } else if (data.color == '4') {
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-04');
           }
-        }else if(data.color == 'mC05'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-05');
+        } else if (data.color == '5') {
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-05');
           }
-        }else if(data.color == 'mC06'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-06');
+        } else if (data.color == '6') {
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-06');
           }
-        }else if(data.color == 'mC07'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-07');
+        } else if (data.color == '7') {
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-07');
           }
-        }else if(data.color == 'mC08'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-08');
+        } else if (data.color == '8') {
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-08');
           }
-        }else if(data.color == 'mC09'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-09');
+        } else if (data.color == '9') {
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-09');
           }
-        }else if(data.color == 'mC10'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-10');
+        } else if (data.color == '10') {
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-10');
           }
-        }else if(data.color == 'mC11'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-11');
+        } else if (data.color == '11') {
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-11');
           }
-        }else if(data.color == 'mC12'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-12');
+        } else if (data.color == '12') {
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-12');
           }
         }
       },
       rowCallback: (row, data, index) => {
-
+        if (data.color == '1') {
+          this.tmp1.push(data.liftUp);
+        } else if (data.color == '2') {
+          this.tmp2.push(data.liftUp);
+        } else if (data.color == '3') {
+          this.tmp3.push(data.liftUp);
+        } else if (data.color == '4') {
+          this.tmp4.push(data.liftUp);
+        } else if (data.color == '5') {
+          this.tmp5.push(data.liftUp);
+        } else if (data.color == '6') {
+          this.tmp6.push(data.liftUp);
+        } else if (data.color == '7') {
+          this.tmp7.push(data.liftUp);
+        } else if (data.color == '8') {
+          this.tmp8.push(data.liftUp);
+        } else if (data.color == '9') {
+          this.tmp9.push(data.liftUp);
+        } else if (data.color == '10') {
+          this.tmp10.push(data.liftUp);
+        } else if (data.color == '11') {
+          this.tmp11.push(data.liftUp);
+        } else if (data.color == '12') {
+          this.tmp12.push(data.liftUp);
+        }
       }
 
     });
@@ -271,7 +308,7 @@ export class Int076Component implements OnInit, AfterViewInit {
       lengthChange: false,
       searching: false,
       ordering: false,
-      pageLength: 10,
+      pageLength: 100,
       processing: true,
       serverSide: false,
       paging: true,
@@ -294,65 +331,273 @@ export class Int076Component implements OnInit, AfterViewInit {
       ],
 
       createdRow: function (row, data, dataIndex) {
-        console.log("row");
-        console.log("data", data.color);
-        console.log("dataIndex", dataIndex);
-        if (data.color == 'mC01') {
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-01');
-          }
-        }else if(data.color == 'mC02'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-02');
-          }
-        }else if(data.color == 'mC03'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-03');
-          }
-        }else if(data.color == 'mC04'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-04');
-          }
-        }else if(data.color == 'mC05'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-05');
-          }
-        }else if(data.color == 'mC06'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-06');
-          }
-        }else if(data.color == 'mC07'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-07');
-          }
-        }else if(data.color == 'mC08'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-08');
-          }
-        }else if(data.color == 'mC09'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-09');
-          }
-        }else if(data.color == 'mC10'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-10');
-          }
-        }else if(data.color == 'mC11'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-11');
-          }
-        }else if(data.color == 'mC12'){
-          for(let i=0;i<=9;i++){
-            $(row).find('td:eq('+i+')').addClass('bg-m-12');
-          }
-        }
+        // console.log("row");
+        // console.log("data", data.credit);
+        // console.log("data", data.color);
+        // console.log("dataIndex", dataIndex);
+        // if (data.color == '1') {
+        //   for (let i = 0; i <= 9; i++) {
+        //     $(row).find('td:eq(' + i + ')').addClass('bg-m-01');
+        //   }
+        // } else if (data.color == '2') {
+        //   for (let i = 0; i <= 9; i++) {
+        //     $(row).find('td:eq(' + i + ')').addClass('bg-m-02');
+        //   }
+        // } else if (data.color == '3') {
+        //   for (let i = 0; i <= 9; i++) {
+        //     $(row).find('td:eq(' + i + ')').addClass('bg-m-03');
+        //   }
+        // } else if (data.color == '4') {
+        //   for (let i = 0; i <= 9; i++) {
+        //     $(row).find('td:eq(' + i + ')').addClass('bg-m-04');
+        //   }
+        // } else if (data.color == '5') {
+        //   for (let i = 0; i <= 9; i++) {
+        //     $(row).find('td:eq(' + i + ')').addClass('bg-m-05');
+        //   }
+        // } else if (data.color == '6') {
+        //   for (let i = 0; i <= 9; i++) {
+        //     $(row).find('td:eq(' + i + ')').addClass('bg-m-06');
+        //   }
+        // } else if (data.color == '7') {
+        //   for (let i = 0; i <= 9; i++) {
+        //     $(row).find('td:eq(' + i + ')').addClass('bg-m-07');
+        //   }
+        // } else if (data.color == '8') {
+        //   for (let i = 0; i <= 9; i++) {
+        //     $(row).find('td:eq(' + i + ')').addClass('bg-m-08');
+        //   }
+        // } else if (data.color == '9') {
+        //   for (let i = 0; i <= 9; i++) {
+        //     $(row).find('td:eq(' + i + ')').addClass('bg-m-09');
+        //   }
+        // } else if (data.color == '10') {
+        //   for (let i = 0; i <= 9; i++) {
+        //     $(row).find('td:eq(' + i + ')').addClass('bg-m-10');
+        //   }
+        // } else if (data.color == '11') {
+        //   for (let i = 0; i <= 9; i++) {
+        //     $(row).find('td:eq(' + i + ')').addClass('bg-m-11');
+        //   }
+        // } else if (data.color == '12') {
+        //   for (let i = 0; i <= 9; i++) {
+        //     $(row).find('td:eq(' + i + ')').addClass('bg-m-12');
+        //   }
+        // }
+
       },
       rowCallback: (row, data, index) => {
+        if (data.color == '1') {
+          console.log(this.tmp12[this.tmp12.length - 1]);
+          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
+            }
+          }else if (data.credit != this.tmp12[this.tmp12.length - 1] )  {
+            $(row).find('td:eq(8)').addClass('bg-m-red');
+            $(row).find('td:eq(9)').addClass('bg-m-01');
+            for (let i = 0; i <= 7; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-01');
+            }
+          }else{
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-01');
+            }
+          }
+        } else if (data.color == '2') {
+          console.log(this.tmp1[this.tmp1.length - 1]);
+          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
+            }
+          }else if (data.credit != this.tmp1[this.tmp1.length - 1] )  {
+            $(row).find('td:eq(8)').addClass('bg-m-red');
+            $(row).find('td:eq(9)').addClass('bg-m-02');
+            for (let i = 0; i <= 7; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-02');
+            }
+          }else{
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-02');
+            }
+          }
+        } else if (data.color == '3') {
+          console.log(this.tmp2[this.tmp2.length - 1]);
+          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
+            }
+          }else if (data.credit != this.tmp2[this.tmp2.length - 1] )  {
+            $(row).find('td:eq(8)').addClass('bg-m-red');
+            $(row).find('td:eq(9)').addClass('bg-m-03');
+            for (let i = 0; i <= 7; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-03');
+            }
+          }else{
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-03');
+            }
+          }
+        } else if (data.color == '4') {
+          console.log(this.tmp3[this.tmp3.length - 1]);
+          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
+            }
+          }else if (data.credit != this.tmp3[this.tmp3.length - 1] )  {
+            $(row).find('td:eq(8)').addClass('bg-m-red');
+            $(row).find('td:eq(9)').addClass('bg-m-04');
+            for (let i = 0; i <= 7; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-04');
+            }
+          }else{
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-04');
+            }
+          }
+        } else if (data.color == '5') {
+          console.log(this.tmp4[this.tmp4.length - 1]);
+          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
+            }
+          }else if (data.credit != this.tmp4[this.tmp4.length - 1] )  {
+            $(row).find('td:eq(8)').addClass('bg-m-red');
+            $(row).find('td:eq(9)').addClass('bg-m-05');
+            for (let i = 0; i <= 7; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-05');
+            }
+          }else{
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-05');
+            }
+          }
+        } else if (data.color == '6') {
+          console.log(this.tmp5[this.tmp5.length - 1]);
+          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
+            }
+          }else if (data.credit != this.tmp5[this.tmp5.length - 1] )  {
+            $(row).find('td:eq(8)').addClass('bg-m-red');
+            $(row).find('td:eq(9)').addClass('bg-m-06');
+            for (let i = 0; i <= 7; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-06');
+            }
+          }else{
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-06');
+            }
+          }
+        } else if (data.color == '7') {
+          console.log(this.tmp6[this.tmp6.length - 1]);
+          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
+            }
+          }else if (data.credit != this.tmp6[this.tmp6.length - 1] )  {
+            $(row).find('td:eq(8)').addClass('bg-m-red');
+            $(row).find('td:eq(9)').addClass('bg-m-07');
+            for (let i = 0; i <= 7; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-07');
+            }
+          }else{
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-07');
+            }
+          }
+        } else if (data.color == '8') {
+          console.log(this.tmp7[this.tmp7.length - 1]);
+          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
+            }
+          }else if (data.credit != this.tmp7[this.tmp7.length - 1] )  {
+            $(row).find('td:eq(8)').addClass('bg-m-red');
+            $(row).find('td:eq(9)').addClass('bg-m-08');
+            for (let i = 0; i <= 7; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-08');
+            }
+          }else{
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-08');
+            }
+          }
+        } else if (data.color == '9') {
+          console.log(this.tmp8[this.tmp8.length - 1]);
+          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
+            }
+          }else if (data.credit != this.tmp8[this.tmp8.length - 1] )  {
+            $(row).find('td:eq(8)').addClass('bg-m-red');
+            $(row).find('td:eq(9)').addClass('bg-m-09');
+            for (let i = 0; i <= 7; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-09');
+            }
+          }else{
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-09');
+            }
+          }
+        } else if (data.color == '10') {
+          console.log(this.tmp9[this.tmp9.length - 1]);
+          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
+            }
+          }else if (data.credit != this.tmp9[this.tmp9.length - 1] )  {
+            $(row).find('td:eq(8)').addClass('bg-m-red');
+            $(row).find('td:eq(9)').addClass('bg-m-10');
+            for (let i = 0; i <= 7; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-10');
+            }
+          }else{
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-10');
+            }
+          }
+        } else if (data.color == '11') {
+          console.log(this.tmp10[this.tmp10.length - 1]);
+          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
+            }
+          }else if (data.credit != this.tmp10[this.tmp10.length - 1] )  {
+            $(row).find('td:eq(8)').addClass('bg-m-red');
+            $(row).find('td:eq(9)').addClass('bg-m-11');
+            for (let i = 0; i <= 7; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-11');
+            }
+          }else{
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-11');
+            }
+          }
+        } else if (data.color == '12') {
+          console.log(this.tmp11[this.tmp11.length - 1]);
+          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
+            }
+          }else if (data.credit != this.tmp11[this.tmp11.length - 1] )  {
+            $(row).find('td:eq(8)').addClass('bg-m-red');
+            $(row).find('td:eq(9)').addClass('bg-m-12');
+            for (let i = 0; i <= 7; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-12');
+            }
+          }else{
+            for (let i = 0; i <= 9; i++) {
+              $(row).find('td:eq(' + i + ')').addClass('bg-m-12');
+            }
+          }
+        }
 
       }
 
     });
   }
+
 
   editData() {
     this.dataList.forEach(element => {
@@ -439,6 +684,7 @@ class Data {
   debit: any = '';
   credit: any = '';
   liftUp: any = '';
+  color: any = '';
 
 }
 

@@ -41,29 +41,29 @@ public class Int076Controller {
 				for (int i = 0; i < stringArr.length; i++) {
 					if (i == 0) {
 						if (stringArr[i].indexOf(".01.") != -1) {
-							row.setColor("mC01");
+							row.setColor("1");
 						}else if(stringArr[i].indexOf(".02.") != -1) {
-							row.setColor("mC02");
+							row.setColor("2");
 						}else if(stringArr[i].indexOf(".03.") != -1) {
-							row.setColor("mC03");
+							row.setColor("3");
 						}else if(stringArr[i].indexOf(".04.") != -1) {
-							row.setColor("mC04");
+							row.setColor("4");
 						}else if(stringArr[i].indexOf(".05.") != -1) {
-							row.setColor("mC05");
+							row.setColor("5");
 						}else if(stringArr[i].indexOf(".06.") != -1) {
-							row.setColor("mC06");
+							row.setColor("6");
 						}else if(stringArr[i].indexOf(".07.") != -1) {
-							row.setColor("mC07");
+							row.setColor("7");
 						}else if(stringArr[i].indexOf(".08.") != -1) {
-							row.setColor("mC08");
+							row.setColor("8");
 						}else if(stringArr[i].indexOf(".09.") != -1) {
-							row.setColor("mC09");
+							row.setColor("9");
 						}else if(stringArr[i].indexOf(".10.") != -1) {
-							row.setColor("mC10");
+							row.setColor("10");
 						}else if(stringArr[i].indexOf(".11.") != -1) {
-							row.setColor("mC11");
+							row.setColor("11");
 						}else if(stringArr[i].indexOf(".12.") != -1) {
-							row.setColor("mC12");
+							row.setColor("12");
 						}
 						
 						row.setDatePosted(stringArr[i]);
