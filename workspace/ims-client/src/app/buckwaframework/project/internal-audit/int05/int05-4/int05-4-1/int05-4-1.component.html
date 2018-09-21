@@ -1,6 +1,6 @@
 <div class="ui grid">
     <div class="sixteen wide column">
-        <h2 class="ui header">เพิ่มข้อมูลจัดซื้อจัดจ้าง</h2>
+        <h2 class="ui header">{{head}}ข้อมูลจัดซื้อจัดจ้าง</h2>
 
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>รายละเอียดโครงการ</span>
@@ -21,7 +21,7 @@
                         <div class="ui calendar" id="calendar">
                             <div class="ui input left icon">
                                 <i class="time icon"></i>
-                                <input type="calendar" autocomplete="off" id="calendar_data" name="calendar_data" autocomplete="off" required ngModel>
+                                <input type="calendar" autocomplete="off" id="calendar_data" name="calendar_data" autocomplete="off" ngModel>
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="four wide field">
-                        <select class="ui search dropdown ai search" name="budgetType" [(ngModel)]="budgetType" style="width: 100% !important">
+                        <select class="ui search dropdown ai search" name="budgetType" id="budgetType" [(ngModel)]="budgetType" style="width: 100% !important">
                             <option *ngFor="let item of budgetTypeList" value="{{item}}">{{item}}</option>
                         </select>
                     </div>
@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="ten wide field ">
-                        <input type="text" name="projectName" [(ngModel)]="projectName">
+                        <input type="text" name="projectName" id="projectName" [(ngModel)]="projectName">
                     </div>
 
                     <div class="two wide field">
@@ -81,16 +81,39 @@
                             <tbody>
                                 <tr *ngFor="let min of numbers; let i = index">
                                     <td>
-                                        <div class="field full-p error">
-                                            <div class="ui input full-width"><input type="text" name="procurementList{{i}}" id="procurementList{{i}}"></div>
+                                        <div class="field full-padding {{flagValidate1_[i] == false? 'error': ''}}">
+                                            <input type="text" name="procurementList{{i}}" id="procurementList{{i}}">
                                         </div>
                                     </td>
-                                    <td><input type="number" name="amount{{i}}" id="amount{{i}}" [attr.min]="0" value="0"></td>
-                                    <td><input type="text" name="unit{{i}}" id="unit{{i}}"></td>
-                                    <td><input type="number" name="presetPrice{{i}}" id="presetPrice{{i}}" [attr.min]="0" value="0"></td>
-                                    <td><input type="number" name="appraisalPrice{{i}}" id="appraisalPrice{{i}}" [attr.min]="0" value="0"></td>
-                                    <td><input type="number" name="unitPrice{{i}}" id="unitPrice{{i}}" [attr.min]="0" value="0"></td>
-                                    <td><input type="number" name="price{{i}}" id="price{{i}}" [attr.min]="0" value="0"></td>
+                                    <td>
+                                        <div class="field full-padding {{flagValidate2_[i] == false? 'error': ''}}">
+                                            <input type="number" name="amount{{i}}" id="amount{{i}}" [attr.min]="0" value="0">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="field full-padding {{flagValidate3_[i] == false? 'error': ''}}">
+                                            <input type="text" name="unit{{i}}" id="unit{{i}}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="field full-padding {{flagValidate4_[i] == false? 'error': ''}}">
+                                            <input type="number" name="presetPrice{{i}}" id="presetPrice{{i}}" [attr.min]="0" value="0">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="field full-padding {{flagValidate5_[i] == false? 'error': ''}}">
+                                            <input type="number" name="appraisalPrice{{i}}" id="appraisalPrice{{i}}" [attr.min]="0" value="0">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="field full-padding {{flagValidate6_[i] == false? 'error': ''}}">
+                                            <input type="number" name="unitPrice{{i}}" id="unitPrice{{i}}" [attr.min]="0" value="0">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="field full-padding {{flagValidate7_[i] == false? 'error': ''}}"><input type="number" name="price{{i}}" id="price{{i}}" [attr.min]="0" value="0">
+                                        </div>
+                                    </td>
                                     <td style="text-align: center;">
                                         <a *ngIf="numbers.length > 1" (click)="onDelField(i)" style="cursor: pointer;color: red">
                                             <i class="minus icon"></i>
@@ -127,7 +150,7 @@
                     </div>
 
                     <div class="three wide field ">
-                        <input type="text" name="projectCodeEgp" [(ngModel)]="projectCodeEgp">
+                        <input type="text" name="projectCodeEgp" id="projectCodeEgp" [(ngModel)]="projectCodeEgp">
                     </div>
 
                     <div class="three wide field">
@@ -135,7 +158,7 @@
                     </div>
 
                     <div class="three wide field">
-                        <input type="text" name="poNumber" [(ngModel)]="poNumber">
+                        <input type="text" name="poNumber" id="poNumber" [(ngModel)]="poNumber">
                     </div>
 
                     <div class="two wide field">
@@ -145,6 +168,12 @@
 
                 <div class="inline fields">
                     <div class="four wide field">
+                        <!-- <select name="myselect" id="myselect">
+                                    <option value="1">Apple</option>
+                                    <option value="2">Pear</option>
+                                    <option value="3">Peach</option>
+                                    <option value="4">Orange</option>
+                        </select> -->
                         &nbsp;
                     </div>
 
@@ -153,16 +182,9 @@
                     </div>
 
                     <div class="six wide field ">
-                        <select class="ui search dropdown ai search" name="supplyChoice" [(ngModel)]="supplyChoice" (change)="onChangeChoice()">
-                            <option value=""></option>                                
-                            <option value="วิธีตกลงราคา">วิธีตกลงราคา</option>
-                            <option value="วิธีสอบราคา">วิธีสอบราคา</option>
-                            <option value="วิธีประกวดราคา">วิธีประกวดราคา</option>
-                            <option value="วิธีพิเศษ">วิธีพิเศษ</option>
-                            <option value="วิธีกรณีพิเศษ">วิธีกรณีพิเศษ</option>
-                            <option value="วิธีประกวดราคาทางอิเลคทรอนิกส์">วิธีประกวดราคาทางอิเลคทรอนิกส์</option>
-                            <option value="การจ้างที่ปรึกษา">การจ้างที่ปรึกษา</option>                                    
-                            <option value="การจ้างออกแบบ">การจ้างออกแบบ</option>
+                        <select class="ui search dropdown ai search" name="supplyChoice" id="supplyChoice" [(ngModel)]="supplyChoice" (change)="onChangeChoice()">
+                            <!-- <option value=""></option>   -->
+                            <option *ngFor="let item of supplyChoiceList" value="{{item}}">{{item}}</option>                                
                         </select>
                     </div>
 
@@ -395,7 +417,7 @@
                     </div>
 
                     <div class="five wide field ">
-                        <input type="file" name="file" id="file" (change)="onChangeUpload($event)" required>
+                        <input type="file" name="file" id="file" (change)="onChangeUpload($event)">
                     </div>
 
                     <div class="nine wide field">
@@ -661,7 +683,7 @@
                     </div>
 
                     <div class="five wide field ">
-                        <input type="file" name="file" id="file" (change)="onChangeUpload($event)" required>
+                        <input type="file" name="file" id="file" (change)="onChangeUpload($event)">
                     </div>
 
                     <div class="nine wide field">
@@ -926,7 +948,7 @@
                     </div>
 
                     <div class="five wide field ">
-                        <input type="file" name="file" id="file" (change)="onChangeUpload($event)" required>
+                        <input type="file" name="file" id="file" (change)="onChangeUpload($event)">
                     </div>
 
                     <div class="nine wide field">

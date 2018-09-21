@@ -8,89 +8,91 @@
         </div>
 
         <div class="ui attached segment">
-            <div class="ui form">
-                <div class="inline fields">
-                    <div class="four wide field ">
-                        &nbsp;
-                    </div>
+            <form>
+                <div class="ui form">
+                    <div class="inline fields">
+                        <div class="four wide field ">
+                            &nbsp;
+                        </div>
 
-                    <div class="two wide field ">
-                        <label class="custom-label-w-20">ปีงบประมาณ</label>
-                    </div>
+                        <div class="two wide field ">
+                            <label class="custom-label-w-20">ปีงบประมาณ</label>
+                        </div>
 
-                    <div class="five wide field">
-                        <div class="ui calendar" id="budgetYear">
-                            <div class="ui input left icon">
-                                <i class="time icon"></i>
-                                <input type="text" readonly="" name="budgetYearData" id="budgetYearData">
+                        <div class="five wide field">
+                            <div class="ui calendar" id="budgetYear">
+                                <div class="ui input left icon">
+                                    <i class="time icon"></i>
+                                    <input type="text" readonly="" name="budgetYearData" id="budgetYearData">
+                                </div>
                             </div>
+                        </div>
+
+                        <div class="five wide field ">
+                            &nbsp;
                         </div>
                     </div>
 
-                    <div class="five wide field ">
-                        &nbsp;
-                    </div>
-                </div>
+                    <div class="inline fields">
+                        <div class="four wide field ">
+                            &nbsp;
+                        </div>
 
-                <div class="inline fields">
-                    <div class="four wide field ">
-                        &nbsp;
-                    </div>
+                        <div class="two wide field ">
+                            <label class="custom-label-w-20">วิธีการจัดซื้อจัดจ้าง</label>
+                        </div>
 
-                    <div class="two wide field ">
-                        <label class="custom-label-w-20">วิธีการจัดซื้อจัดจ้าง</label>
-                    </div>
-
-                    <div class="five wide field">
-                        <select class="ui search dropdown ai search" name="supplyChoice" [(ngModel)]="supplyChoice">
+                        <div class="five wide field">
+                            <select class="ui search dropdown ai search" name="supplyChoice" id="supplyChoice" [(ngModel)]="supplyChoice">
                             <option value=""></option>
                             <option *ngFor="let item of supplyChoiceList" value="{{item}}">{{item}}</option>
                         </select>
+                        </div>
+
+                        <div class="five wide field ">
+                            &nbsp;
+                        </div>
                     </div>
 
-                    <div class="five wide field ">
-                        &nbsp;
-                    </div>
-                </div>
+                    <div class="inline fields">
+                        <div class="four wide field ">
+                            &nbsp;
+                        </div>
 
-                <div class="inline fields">
-                    <div class="four wide field ">
-                        &nbsp;
-                    </div>
+                        <div class="two wide field ">
+                            <label class="custom-label-w-20">ประเภทงบรายจ่าย</label>
+                        </div>
 
-                    <div class="two wide field ">
-                        <label class="custom-label-w-20">ประเภทงบรายจ่าย</label>
-                    </div>
-
-                    <div class="five wide field">
-                        <select class="ui search dropdown ai search" name="budgetType" [(ngModel)]="budgetType">
+                        <div class="five wide field">
+                            <select class="ui search dropdown ai search" name="budgetType" id="budgetType" [(ngModel)]="budgetType">
                             <option value=""></option>
                             <option *ngFor="let item of budgetTypeList" value="{{item}}">{{item}}</option>
                           </select>
+                        </div>
+
+                        <div class="five wide field ">
+                            &nbsp;
+                        </div>
                     </div>
 
-                    <div class="five wide field ">
-                        &nbsp;
-                    </div>
-                </div>
 
-
-                <div class="ui center aligned grid">
-                    <div class="sixteen wide column">
-                        <button class="ui small primary button" (click)="uploadFile()">
+                    <div class="ui center aligned grid">
+                        <div class="sixteen wide column">
+                            <button class="ui small primary button" (click)="uploadFile()">
                           <i class="search icon"></i> ค้นหา
                         </button>
 
-                        <button class="ui small button" (click)="clearFile()">
+                            <button class="ui small button" type="reset" (click)="clearFile()">
                           <i class="close icon"></i> ล้างข้อมูล
                         </button>
 
-                        <button class="ui small green button" (click)="addData()">
+                            <button class="ui small green button" (click)="addData()">
                           <i class="add icon"></i> เพิ่มข้อมูล
                         </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
 
             <div class="ui segment" id="showData">
                 <table id="dataTable" class="ui small celled table" style="width: 100%;">

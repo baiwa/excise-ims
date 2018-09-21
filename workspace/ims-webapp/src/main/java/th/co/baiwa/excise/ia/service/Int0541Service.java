@@ -2,9 +2,11 @@ package th.co.baiwa.excise.ia.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.assertj.core.internal.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,14 +98,17 @@ public class Int0541Service {
 			
 			IaProcurementUlFile upload = new IaProcurementUlFile();
 			if (data != null) {
-				upload.setUpdatedBy(user);
-				upload.setProcurementId(data.getProcurementId());
-				upload.setNameFile(vo.getFile().getOriginalFilename());
-				upload.setUpdatedDate(date);
-				long size = vo.getFile().getSize();
-				upload.setSizeFile(size/1000);
-				UlFileRepository.save(upload);
-				int0541UploadService.saveFileUpload(upload, vo);
+				if(vo.getFile().getSize() > 0) {
+					upload.setUpdatedBy(user);
+					upload.setProcurementId(data.getProcurementId());
+					upload.setNameFile(vo.getFile().getOriginalFilename());
+					upload.setUpdatedDate(date);
+					long size = vo.getFile().getSize();
+					upload.setSizeFile(size/1000);
+					UlFileRepository.save(upload);
+					int0541UploadService.saveFileUpload(upload, vo);
+				}
+				
 				msg = ApplicationCache.getMessage("MSG_00002");
 			} else {
 				msg = ApplicationCache.getMessage("MSG_00003");
@@ -137,5 +142,63 @@ public class Int0541Service {
 				iaPcmListRepository.save(pcmList);
 			}
 		}
+	}
+
+	public List<Int0541Vo> findByid(IaProcurement pcm) {
+//		Message msg;
+//		CommonMessage<Int0541Vo> response = new CommonMessage<>();
+		List<Int0541Vo> dataList = new ArrayList<Int0541Vo>();
+		Int0541Vo data;
+		
+		if(BeanUtils.isNotEmpty(pcm.getProcurementId())) {
+			IaProcurement dataPcm = iaPcmRepository.findOne(pcm.getProcurementId());
+			data = new Int0541Vo();
+			data.setProcurementId(dataPcm.getProcurementId());
+			data.setExciseDepartment(dataPcm.getExciseDepartment());
+			data.setExciseRegion(dataPcm.getExciseRegion());
+			data.setExciseDistrict(dataPcm.getExciseDistrict());
+			data.setBudgetYear(dataPcm.getBudgetYear());
+			data.setBudgetType(dataPcm.getBudgetType());
+			data.setProjectName(dataPcm.getProjectName());
+			data.setProjectCodeEgp(dataPcm.getProjectCodeEgp());
+			data.setPoNumber(dataPcm.getPoNumber());
+			data.setSupplyChoice(dataPcm.getSupplyChoice());
+			data.setTenderResults((dataPcm.getTenderResults()).longValue());
+			data.setJobDescription(dataPcm.getJobDescription());
+			data.setSupplyType(dataPcm.getSupplyType());
+			data.setApproveDatePlan(DateConstant.convertDateToStrDDMMYYYYHHmm(dataPcm.getApproveDatePlan()));
+			data.setContractDatePlan(DateConstant.convertDateToStrDDMMYYYYHHmm(dataPcm.getContractDatePlan()));
+			data.setExpireDatePlan(DateConstant.convertDateToStrDDMMYYYYHHmm(dataPcm.getExpireDatePlan()));
+			data.setDisbursementFinalPlan(DateConstant.convertDateToStrDDMMYYYYHHmm(dataPcm.getDisbursementFinalPlan()));
+			data.setApproveDateReport(DateConstant.convertDateToStrDDMMYYYYHHmm(dataPcm.getApproveDateReport()));
+			data.setContractDateReport(DateConstant.convertDateToStrDDMMYYYYHHmm(dataPcm.getContractDateReport()));
+			data.setExpireDateReport(DateConstant.convertDateToStrDDMMYYYYHHmm(dataPcm.getExpireDateReport()));
+			data.setDisbursementFinalReport(DateConstant.convertDateToStrDDMMYYYYHHmm(dataPcm.getDisbursementFinalReport()));
+			data.setSignedDatePlan(DateConstant.convertDateToStrDDMMYYYYHHmm(dataPcm.getSignedDatePlan()));
+			data.setSignedDateReport(DateConstant.convertDateToStrDDMMYYYYHHmm(dataPcm.getSignedDateReport()));
+			data.setContractPartiesNum(data.getContractPartiesNum());
+			data.setContractPartiesName(data.getContractPartiesName());
+			
+			dataList.add(data);
+			
+			List<IaProcurementList> dataPcmList = iaPcmListRepository.findByIdFilter(pcm.getProcurementId());
+			for (IaProcurementList b : dataPcmList) {
+				data = new Int0541Vo();
+				data.setProcurementId((b.getProcurementId()).longValue());
+				data.setProcurementList(b.getProcurementList());
+				data.setAmount(b.getAmount());
+				data.setUnit(b.getUnit());
+				data.setPresetPrice(b.getPresetPrice());
+				data.setAppraisalPrice(b.getAppraisalPrice());
+				data.setUnitPrice(b.getUnitPrice());
+				data.setPrice(b.getPrice());
+				
+				dataList.add(data);
+			}
+		}
+		
+//		response.setMsg(msg);
+//		response.setData(data);
+		return dataList;
 	}
 }

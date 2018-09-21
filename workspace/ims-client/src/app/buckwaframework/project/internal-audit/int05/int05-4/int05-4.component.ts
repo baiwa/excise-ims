@@ -23,6 +23,7 @@ export class Int054Component implements OnInit, AfterViewInit {
   supplyChoiceList: string[];
   manageDataExternal: any;
   dataTable: any;
+  idSelect: any;
 
   constructor(
     private ajax: AjaxService,
@@ -53,7 +54,6 @@ export class Int054Component implements OnInit, AfterViewInit {
   ngOnInit() {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
-    // $("#selectTrading").hide();
     $("#budgetYear")
       .calendar({
         maxDate: new Date(),
@@ -77,32 +77,44 @@ export class Int054Component implements OnInit, AfterViewInit {
   uploadFile = () => {
     $("#showData").show();
     this.DATATABLE();
-  };
 
-  clearFile = () => {
-    $("#showData").hide();
-    this.dataTable.clear().draw();
-  };
+    // Edit or Read detail
+    $("#dataTable tbody").on("click", "button", e => {
+      const { id } = e.currentTarget;
+      let idSplit = id.split("-");
+      this.idSelect = idSplit[1];
+      this.dataTable.row($(e).parents("tr")).data();
 
-  addData = () => {
-    // $("#modalInt054").modal("show");
-    // $("#selectTrading").show();
-    this.router.navigate(["/int05/4-1"], {
-      queryParams: {
-        // qtnHeaderCode: this.sideExternal[0],
-        // qtnHeaderName: this.sideExternal[1]
+      if ("edit" == id.split("-")[0]) {
+        this.router.navigate(["/int05/4-1"], {
+          queryParams: {
+            procurementId: this.idSelect,
+            status: "UPDATE",
+            head: "แก้ไข"
+          }
+        });
       }
     });
   };
 
-  editData() {
-    $("#modalInt054").modal("show");
-    // $("#selectTrading").show();
-  }
+  clearFile = () => {
+    $("#showData").hide();
+    $("#budgetYear").calendar("refresh");
+    $("#supplyChoice").dropdown("restore defaults");
+    $("#budgetType").dropdown("restore defaults");
+    if (this.dataTable != null || this.dataTable != undefined) {
+      this.dataTable.clear().draw();
+    }
+  };
 
-  closeModal() {
-    $("#modalInt054").modal("hide");
-  }
+  addData = () => {
+    this.router.navigate(["/int05/4-1"], {
+      queryParams: {
+        status: "SAVE",
+        head: "เพิ่ม"
+      }
+    });
+  };
 
   DATATABLE(): void {
     if (this.dataTable != null && this.dataTable != undefined) {
@@ -173,20 +185,14 @@ export class Int054Component implements OnInit, AfterViewInit {
         {
           className: "center",
           render: function(data, type, full, meta) {
-            return `<button class="ui mini blue button" type="button" id="detail-${
-              full.qtnHeaderId
-            }" value="${full.qtnHeaderCode +
-              "," +
-              full.qtnHeaderName}"> <i class="search icon"></i> รายละเอียด</button>`;
+            return `<button class="ui mini blue button" type="button" <i class="search icon"></i> รายละเอียด</button>`;
           }
         },
         {
           className: "center",
           render: function(data, type, full, meta) {
             return `<button class="ui mini orange button" type="button" id="edit-${
-              full.qtnHeaderId
-            }" value="${
-              full.qtnHeaderName
+              full.procurementId
             }"> <i class="edit icon"></i> แก้ไข</button>`;
           }
         }

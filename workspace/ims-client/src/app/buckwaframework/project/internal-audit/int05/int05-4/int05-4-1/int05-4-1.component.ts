@@ -2,10 +2,12 @@ import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter } from "../../../../../common/helper";
 import { MessageBarService, AjaxService } from "../../../../../common/services";
 import { File } from "./../../../../../common/models/file";
+import { Router, ActivatedRoute } from "@angular/router";
 
 const URL = {
   SAVE_PcmList: "/ia/int0541/savePcmList",
-  UPLOAD_Procurement: "/ia/int0541/upload"
+  UPLOAD_Procurement: "/ia/int0541/upload",
+  UPDATE_FIND_BY_ID: "/ia/int0541/findByid"
 };
 
 declare var $: any;
@@ -21,24 +23,29 @@ export class Int0541Component implements OnInit {
   budgetTypeList: any = [];
   budgetYear: any = null;
   projectName: string = "";
-  approveDatePlan: any = null;
-  contractDatePlan: any = null;
-  expireDatePlan: any = null;
-  disbursementFinalPlan: any = null;
-  approveDateReport: any = null;
-  contractDateReport: any = null;
-  expireDateReport: any = null;
-  disbursementFinalReport: any = null;
   projectCodeEgp: string = "";
   poNumber: any = null;
   tenderResults: any = 0;
   supplyType: any = null;
-  signedDatePlan: any = null;
-  signedDateReport: any = null;
   file: File[];
   procurementList: any;
+  flagValidate1_: any = null;
+  flagValidate2_: any = null;
+  flagValidate3_: any = null;
+  flagValidate4_: any = null;
+  flagValidate5_: any = null;
+  flagValidate6_: any = null;
+  flagValidate7_: any = null;
+  flag: any = "";
+  head: any = "";
+  supplyChoiceList: string[];
 
-  constructor(private ajax: AjaxService, private msg: MessageBarService) {
+  constructor(
+    private ajax: AjaxService,
+    private msg: MessageBarService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.budgetTypeList = [
       "งบบุคลากร",
       "งบดำเนินงาน (โครงการ)",
@@ -47,9 +54,69 @@ export class Int0541Component implements OnInit {
       "งบอุดหนุน",
       "งบรายจ่ายอื่น"
     ];
+
+    this.supplyChoiceList = [
+      "วิธีตกลงราคา",
+      "วิธีสอบราคา",
+      "วิธีประกวดราคา",
+      "วิธีพิเศษ",
+      "วิธีกรณีพิเศษ",
+      "วิธีประกวดราคาทางอิเลคทรอนิกส์",
+      "การจ้างที่ปรึกษา",
+      "การจ้างออกแบบ"
+    ];
+    this.flagValidate1_ = [];
+    this.flagValidate2_ = [];
+    this.flagValidate3_ = [];
+    this.flagValidate4_ = [];
+    this.flagValidate5_ = [];
+    this.flagValidate6_ = [];
+    this.flagValidate7_ = [];
   }
 
   ngOnInit() {
+    //get params no link "/int05/4"
+    this.flag = this.route.snapshot.queryParams["status"];
+    this.head = this.route.snapshot.queryParams["head"];
+    console.log(this.flag);
+    if (
+      this.route.snapshot.queryParams["procurementId"] != null ||
+      this.route.snapshot.queryParams["procurementId"] != undefined
+    ) {
+      //get params no link "/int05/4"
+      let procurementId = this.route.snapshot.queryParams["procurementId"];
+      this.flag = this.route.snapshot.queryParams["status"];
+      this.head = this.route.snapshot.queryParams["head"];
+      console.log(this.flag);
+
+      this.ajax.post(
+        URL.UPDATE_FIND_BY_ID,
+        { procurementId: procurementId },
+        res => {
+          // $("#myselect option[value=2]").attr("selected", "selected");
+          const data = res.json();
+          console.log(data);
+          $("#calendar_data").val(data[0].budgetYear);
+          $("#budgetType").val(data[0].budgetType);
+          $("#projectName").val(data[0].projectName);
+          $("#projectCodeEgp").val(data[0].projectCodeEgp);
+          $("#poNumber").val(data[0].poNumber);
+          // $("[name=supplyChoice] option")
+          //   .filter(function() {
+          //     return $(this).text() == "วิธีพิเศษ";
+          //   })
+          //   .prop("selected", true);
+          // $("#supplyChoice").dropdown(data[0].supplyChoice);
+          // $("#supplyChoice option[value='2']").attr("selected", "true");
+          // $("#supplyChoice option:selected").text() == "วิธีพิเศษ";
+          // console.log($("#supplyChoice").val());
+
+          // (<HTMLInputElement>document.getElementById("supplyChoice")).value =
+          //   data[0].supplyChoice;
+        }
+      );
+    }
+
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
 
@@ -66,111 +133,78 @@ export class Int0541Component implements OnInit {
   }
 
   onChangeChoice = () => {
-    // this.loadCalendar();
     setTimeout(() => {
       $("#approveDatePlan").calendar({
         maxDate: new Date(),
         type: "date",
         text: TextDateTH,
-        formatter: formatter("วดปเวลา"),
-        onChange: (date, text, mode) => {
-          this.approveDatePlan = text;
-        }
+        formatter: formatter("วดปเวลา")
       });
 
       $("#contractDatePlan").calendar({
         maxDate: new Date(),
         type: "date",
         text: TextDateTH,
-        formatter: formatter("วดปเวลา"),
-        onChange: (date, text, mode) => {
-          this.contractDatePlan = text;
-        }
+        formatter: formatter("วดปเวลา")
       });
 
       $("#expireDatePlan").calendar({
         maxDate: new Date(),
         type: "date",
         text: TextDateTH,
-        formatter: formatter("วดปเวลา"),
-        onChange: (date, text, mode) => {
-          this.expireDatePlan = text;
-        }
+        formatter: formatter("วดปเวลา")
       });
 
       $("#disbursementFinalPlan").calendar({
         maxDate: new Date(),
         type: "date",
         text: TextDateTH,
-        formatter: formatter("วดปเวลา"),
-        onChange: (date, text, mode) => {
-          this.disbursementFinalPlan = text;
-        }
+        formatter: formatter("วดปเวลา")
       });
 
       $("#approveDateReport").calendar({
         maxDate: new Date(),
         type: "date",
         text: TextDateTH,
-        formatter: formatter("วดปเวลา"),
-        onChange: (date, text, mode) => {
-          this.approveDateReport = text;
-        }
+        formatter: formatter("วดปเวลา")
       });
 
       $("#contractDateReport").calendar({
         maxDate: new Date(),
         type: "date",
         text: TextDateTH,
-        formatter: formatter("วดปเวลา"),
-        onChange: (date, text, mode) => {
-          this.contractDateReport = text;
-        }
+        formatter: formatter("วดปเวลา")
       });
 
       $("#expireDateReport").calendar({
         maxDate: new Date(),
         type: "date",
         text: TextDateTH,
-        formatter: formatter("วดปเวลา"),
-        onChange: (date, text, mode) => {
-          this.expireDateReport = text;
-        }
+        formatter: formatter("วดปเวลา")
       });
 
       $("#disbursementFinalReport").calendar({
         maxDate: new Date(),
         type: "date",
         text: TextDateTH,
-        formatter: formatter("วดปเวลา"),
-        onChange: (date, text, mode) => {
-          this.disbursementFinalReport = text;
-        }
+        formatter: formatter("วดปเวลา")
       });
 
       $("#signedDatePlan").calendar({
         maxDate: new Date(),
         type: "date",
         text: TextDateTH,
-        formatter: formatter("วดปเวลา"),
-        onChange: (date, text, mode) => {
-          this.signedDatePlan = text;
-        }
+        formatter: formatter("วดปเวลา")
       });
 
       $("#signedDateReport").calendar({
         maxDate: new Date(),
         type: "date",
         text: TextDateTH,
-        formatter: formatter("วดปเวลา"),
-        onChange: (date, text, mode) => {
-          this.signedDateReport = text;
-        }
+        formatter: formatter("วดปเวลา")
       });
     }, 500);
   };
-
-  // loadCalendar = () => {};
 
   onAddField = () => {
     this.numbers.push("");
@@ -247,8 +281,66 @@ export class Int0541Component implements OnInit {
       (<HTMLInputElement>document.getElementById("contractPartiesName")).value
     );
 
+    //check flag save
     let chkFlg = "";
     for (let i = 0; i < this.numbers.length; i++) {
+      if (
+        (<HTMLInputElement>document.getElementById("procurementList" + i))
+          .value != ""
+      ) {
+        this.flagValidate1_[i] = true;
+      } else {
+        this.flagValidate1_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("amount" + i)).value != ""
+      ) {
+        this.flagValidate2_[i] = true;
+      } else {
+        this.flagValidate2_[i] = false;
+      }
+
+      if ((<HTMLInputElement>document.getElementById("unit" + i)).value != "") {
+        this.flagValidate3_[i] = true;
+      } else {
+        this.flagValidate3_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("presetPrice" + i)).value !=
+        ""
+      ) {
+        this.flagValidate4_[i] = true;
+      } else {
+        this.flagValidate4_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("appraisalPrice" + i))
+          .value != ""
+      ) {
+        this.flagValidate5_[i] = true;
+      } else {
+        this.flagValidate5_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("unitPrice" + i)).value != ""
+      ) {
+        this.flagValidate6_[i] = true;
+      } else {
+        this.flagValidate6_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("price" + i)).value != ""
+      ) {
+        this.flagValidate7_[i] = true;
+      } else {
+        this.flagValidate7_[i] = false;
+      }
+
       if (
         (<HTMLInputElement>document.getElementById("procurementList" + i))
           .value != "" &&
@@ -265,11 +357,12 @@ export class Int0541Component implements OnInit {
         chkFlg = "S";
       } else {
         chkFlg = "F";
-        console.log(chkFlg);
       }
     }
+
+    //check flag save
     if (chkFlg === "F") {
-      this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ", "เกิดข้อผิดพลาด");
+      this.msg.errorModal("กรุณากรอกข้อมูลให้ครบในช่องสีแดง", "เกิดข้อผิดพลาด");
     } else {
       this.ajax.upload(URL.UPLOAD_Procurement, formBody, res => {
         let data = res.json();
@@ -308,6 +401,7 @@ export class Int0541Component implements OnInit {
           const msg = res.json();
           if (msg.messageType == "C") {
             this.msg.successModal(msg.messageTh);
+            this.router.navigate(["/int05/4"]);
           } else {
             this.msg.errorModal(msg.messageTh);
           }
@@ -391,6 +485,63 @@ export class Int0541Component implements OnInit {
     for (let i = 0; i < this.numbers.length; i++) {
       if (
         (<HTMLInputElement>document.getElementById("procurementList" + i))
+          .value != ""
+      ) {
+        this.flagValidate1_[i] = true;
+      } else {
+        this.flagValidate1_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("amount" + i)).value != ""
+      ) {
+        this.flagValidate2_[i] = true;
+      } else {
+        this.flagValidate2_[i] = false;
+      }
+
+      if ((<HTMLInputElement>document.getElementById("unit" + i)).value != "") {
+        this.flagValidate3_[i] = true;
+      } else {
+        this.flagValidate3_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("presetPrice" + i)).value !=
+        ""
+      ) {
+        this.flagValidate4_[i] = true;
+      } else {
+        this.flagValidate4_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("appraisalPrice" + i))
+          .value != ""
+      ) {
+        this.flagValidate5_[i] = true;
+      } else {
+        this.flagValidate5_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("unitPrice" + i)).value != ""
+      ) {
+        this.flagValidate6_[i] = true;
+      } else {
+        this.flagValidate6_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("price" + i)).value != ""
+      ) {
+        this.flagValidate7_[i] = true;
+      } else {
+        this.flagValidate7_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("procurementList" + i))
           .value != "" &&
         (<HTMLInputElement>document.getElementById("unit" + i)).value != "" &&
         (<HTMLInputElement>document.getElementById("amount" + i)).value != "" &&
@@ -447,6 +598,7 @@ export class Int0541Component implements OnInit {
           const msg = res.json();
           if (msg.messageType == "C") {
             this.msg.successModal(msg.messageTh);
+            this.router.navigate(["/int05/4"]);
           } else {
             this.msg.errorModal(msg.messageTh);
           }
@@ -530,6 +682,63 @@ export class Int0541Component implements OnInit {
     for (let i = 0; i < this.numbers.length; i++) {
       if (
         (<HTMLInputElement>document.getElementById("procurementList" + i))
+          .value != ""
+      ) {
+        this.flagValidate1_[i] = true;
+      } else {
+        this.flagValidate1_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("amount" + i)).value != ""
+      ) {
+        this.flagValidate2_[i] = true;
+      } else {
+        this.flagValidate2_[i] = false;
+      }
+
+      if ((<HTMLInputElement>document.getElementById("unit" + i)).value != "") {
+        this.flagValidate3_[i] = true;
+      } else {
+        this.flagValidate3_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("presetPrice" + i)).value !=
+        ""
+      ) {
+        this.flagValidate4_[i] = true;
+      } else {
+        this.flagValidate4_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("appraisalPrice" + i))
+          .value != ""
+      ) {
+        this.flagValidate5_[i] = true;
+      } else {
+        this.flagValidate5_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("unitPrice" + i)).value != ""
+      ) {
+        this.flagValidate6_[i] = true;
+      } else {
+        this.flagValidate6_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("price" + i)).value != ""
+      ) {
+        this.flagValidate7_[i] = true;
+      } else {
+        this.flagValidate7_[i] = false;
+      }
+
+      if (
+        (<HTMLInputElement>document.getElementById("procurementList" + i))
           .value != "" &&
         (<HTMLInputElement>document.getElementById("unit" + i)).value != "" &&
         (<HTMLInputElement>document.getElementById("amount" + i)).value != "" &&
@@ -586,6 +795,7 @@ export class Int0541Component implements OnInit {
           const msg = res.json();
           if (msg.messageType == "C") {
             this.msg.successModal(msg.messageTh);
+            this.router.navigate(["/int05/4"]);
           } else {
             this.msg.errorModal(msg.messageTh);
           }

@@ -47,5 +47,12 @@ public class Int0541Controller {
 		}
 		return ApplicationCache.getMessage("MSG_00002");
 	}
+	
+	@PostMapping("/findByid")
+	@ResponseBody
+	public List<Int0541Vo> findByid(@RequestBody IaProcurement pcm){
+		logger.info("findByid {}",pcm.getProcurementId());
+		return int0541Service.findByid(pcm);
+	}
 
 }
