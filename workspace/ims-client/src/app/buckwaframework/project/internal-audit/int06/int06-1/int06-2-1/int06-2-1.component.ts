@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadCrumb } from 'models/breadcrumb';
 import { Int0621Service } from 'projects/internal-audit/int06/int06-1/int06-2-1/int06-2-1.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { IaService } from 'services/ia.service';
 
 @Component({
     selector: 'app-int06-2-1',
@@ -18,16 +20,25 @@ export class Int0621Component implements OnInit {
 
     model : FormSearch;
     data: Data;
+    
     constructor(
-        private int0621Service: Int0621Service
+        private int0621Service: Int0621Service, 
+        private router : Router,
+        private route : ActivatedRoute,
+        private iaService: IaService
     ) {
         this.model = new FormSearch();
         this.data = new Data();
+        
+        
     }
 
-    ngOnInit() {
+    ngOnInit() {        
+        this.iaService.setData(null);
+        this.int0621Service.setSearchFlag(this.route.snapshot.queryParams["searchFlag"]  || "" || undefined);
         this.dataTable();
     }
+
 
     search() {
         this.model.searchFlag="TRUE";
@@ -38,7 +49,7 @@ export class Int0621Component implements OnInit {
         this.int0621Service.search(this.model);
     }
 
-    dataTable=()=> {
+    dataTable=()=> {        
         this.int0621Service.dataTable();
     }
 
@@ -77,4 +88,5 @@ class Data {
     createdDate: string = "";
     updatedDate: string = "";
     note: string = "";
+    editStatus: string = "";
 }

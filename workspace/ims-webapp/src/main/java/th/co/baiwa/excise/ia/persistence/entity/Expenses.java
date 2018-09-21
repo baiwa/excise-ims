@@ -53,9 +53,9 @@ public class Expenses extends BaseEntity {
     @Column(name = "AVERAGE_GIVE")
     private String averageGive;
     @Column(name = "AVERAGE_FROM")
-    private String averageFrom;
+    private BigDecimal averageFrom;
     @Column(name = "AVERAGE_COME_COST")
-    private BigDecimal averageComeCost;
+    private String averageComeCost;
     @Column(name = "NOTE")
     private String note;
 
@@ -211,19 +211,19 @@ public class Expenses extends BaseEntity {
         this.averageGive = averageGive;
     }
 
-    public String getAverageFrom() {
+    public BigDecimal getAverageFrom() {
         return averageFrom;
     }
 
-    public void setAverageFrom(String averageFrom) {
+    public void setAverageFrom(BigDecimal averageFrom) {
         this.averageFrom = averageFrom;
     }
 
-    public BigDecimal getAverageComeCost() {
+    public String getAverageComeCost() {
         return averageComeCost;
     }
 
-    public void setAverageComeCost(BigDecimal averageComeCost) {
+    public void setAverageComeCost(String averageComeCost) {
         this.averageComeCost = averageComeCost;
     }
 

@@ -3,11 +3,13 @@
 <div class="ui grid">
   <div class="sixteen wide column">
     <div class="ui top attached header">
-      <span>เพิ่มข้อมูลค่าใช้จ่าย</span>
+      <span *ngIf="model.editStatus != 'edit'">เพิ่มข้อมูลค่าใช้จ่าย</span>
+      <span *ngIf="model.editStatus == 'edit'">แก้ไขข้อมูลค่าใช้จ่าย</span>
     </div>
     <!-- form save -->
     <div class="ui attached segment {{loading ? 'loading' : ''}}">
       <form class="ui form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <input type="hidden" [(ngModel)]="model.editStatus" name="editStatus">
         <!-- row 1 -->
         <div class="inline fields ui centered grid ">
           <div class="one wide field "></div>
@@ -205,10 +207,10 @@
         <!-- row 10 -->
         <div class="inline fields ui centered grid ">
           <div class="one wide field "></div>
-          <div class="three wide field required">
+          <div class="three wide field">
             <label class="text-right full-width">ถัวเป็นเงิน</label>
           </div>
-          <div class="four wide field {{f.submitted && averageCost.invalid ? 'error' : ''}}">
+          <div class="four wide field">
             <input type="number" name="averageCost" ngModel [(ngModel)]="model.averageCost" #averageCost="ngModel"
               required />
           </div>
@@ -218,12 +220,11 @@
         <!-- row 11 -->
         <div class="inline fields ui centered grid ">
           <div class="one wide field "></div>
-          <div class="three wide field required">
+          <div class="three wide field ">
             <label class="text-right full-width">ถัวเป็นให้</label>
           </div>
-          <div class="four wide field {{f.submitted && averageGive.invalid ? 'error' : ''}}">
-            <input type="text" name="averageGive" ngModel [(ngModel)]="model.averageGive" #averageGive="ngModel"
-              required />
+          <div class="four wide field">
+            <input type="text" name="averageGive" ngModel [(ngModel)]="model.averageGive" #averageGive="ngModel" />
           </div>
           <div class="two wide field required "></div>
           <div class="four wide field"></div>
@@ -232,26 +233,24 @@
         <!-- row 12 -->
         <div class="inline fields ui centered grid ">
           <div class="one wide field "></div>
-          <div class="three wide field required">
+          <div class="three wide field ">
             <label class="text-right full-width">ถัวมาเงิน</label>
           </div>
-          <div class="four wide field {{f.submitted && averageFrom.invalid ? 'error' : ''}}">
-            <input type="text" name="averageFrom" ngModel [(ngModel)]="model.averageFrom" #averageFrom="ngModel"
-              required />
+          <div class="four wide field">
+            <input type="number" name="averageFrom" ngModel [(ngModel)]="model.averageFrom" #averageFrom="ngModel" />
           </div>
-          <div class="two wide field required "></div>
+          <div class="two wide field  "></div>
           <div class="four wide field"></div>
           <div class="two wide field "></div>
         </div>
         <!-- row 13 -->
         <div class="inline fields ui centered grid ">
           <div class="one wide field "></div>
-          <div class="three wide field required">
+          <div class="three wide field">
             <label class="text-right full-width">ถัวมาจาก</label>
           </div>
-          <div class="four wide field {{f.submitted && averageComeCost.invalid ? 'error' : ''}}">
-            <input type="number" name="averageComeCost" ngModel [(ngModel)]="model.averageComeCost" #averageComeCost="ngModel"
-              required />
+          <div class="four wide field ">
+            <input type="text" name="averageComeCost" ngModel [(ngModel)]="model.averageComeCost" #averageComeCost="ngModel" />
           </div>
           <div class="two wide field required "></div>
           <div class="four wide field"></div>
@@ -260,7 +259,7 @@
         <!-- row 14 -->
         <div class="inline fields ui centered grid ">
           <div class="one wide field "></div>
-          <div class="three wide field required">
+          <div class="three wide field ">
             <label class="text-right full-width">หมายเหตุ</label>
           </div>
           <div class="ten wide field">
@@ -270,7 +269,7 @@
         </div>
         <br><br>
         <div class="ui stackable center aligned page grid">
-          <button class="ui mini primary button" type="submit"> บันทึก</button>
+          <button class="ui mini primary button" type="submit">บันทึก</button>
           <button class="ui mini gray button" type="button" routerLink="/int06/1/2-1">ยกเลิก</button>
         </div><br>
       </form>

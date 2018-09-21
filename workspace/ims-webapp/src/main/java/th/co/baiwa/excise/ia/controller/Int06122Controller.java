@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.excise.ia.persistence.entity.Expenses;
+import th.co.baiwa.excise.ia.persistence.vo.Int06121Vo;
 import th.co.baiwa.excise.ia.service.Int06122Service;
 
 @Controller
@@ -21,5 +22,11 @@ public class Int06122Controller {
     public String save(@RequestBody Expenses expenses){
 	    return int06122Service.save(expenses);
     }
+
+	@PostMapping("/edit")
+	@ResponseBody
+	public String edit(@RequestBody Int06121Vo expenses){
+		return int06122Service.edit(expenses);
+	}
 
 }

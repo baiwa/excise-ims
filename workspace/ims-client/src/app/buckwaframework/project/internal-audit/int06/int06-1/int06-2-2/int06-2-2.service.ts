@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { AjaxService } from "services/ajax.service";
 import { MessageBarService } from "services/message-bar.service";
+import { Router } from "@angular/router";
+import { async } from "q";
 
 @Injectable()
 export class Int0622Service {
@@ -8,22 +10,38 @@ export class Int0622Service {
 
   constructor(
     private ajax: AjaxService,
-    private message: MessageBarService
+    private message: MessageBarService,
+    private router: Router
   ) {
     this.model = new FormSave();
   }
 
   save(model: FormSave) {
+    // this.message.comfirm((res) => {
+    //   if (res) {
+    //     let url = 'ia/int06122/save';
+    //     this.ajax.post(url, JSON.stringify(model), res => {
+    //       this.message.successModal(res.json());
+    //     }, error => {
+    //       this.message.error(error.json());
+    //     }).then()
+    //   }
+    // }, 'บันทึกรายการ');
+  }
+  edit(model: FormSave) {
     this.message.comfirm((res) => {
       if (res) {
-        let url = 'ia/int06122/save';
-        this.ajax.post(url, JSON.stringify(model), res => {
+        let url = 'ia/int06122/edit';
+        this.ajax.post(url, model, res => {
           this.message.successModal(res.json());
+          this.router.navigate(["/int06/1/2-1"], {
+            queryParams: { searchFlag: "TRUE" }
+          });
         }, error => {
-          this.message.error(res.json());
+          this.message.error(error.json());
         })
       }
-    }, 'บันทึกรายการ');
+    }, 'บันทึกการแก้ไขรายการ');
   }
 }
 
@@ -51,8 +69,9 @@ class FormSave {
 
   averageCost: number = 0;
   averageGive: string = "";
-  averageFrom: string = "";
-  averageComeCost: number = 0;
+  averageFrom: number = 0;
+  averageComeCost: string = "";
 
   note: string = "";
+  editStatus: string = "";
 }
