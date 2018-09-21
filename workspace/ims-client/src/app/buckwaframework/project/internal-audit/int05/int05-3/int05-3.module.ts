@@ -14,7 +14,9 @@ const routes: Routes = [
   { path: '', component: Int053Component, canActivate: [AuthGuard] },
   { path: '1', component: Int0531Component, canActivate: [AuthGuard] },
   { path: '2', component: Int0532Component, canActivate: [AuthGuard] },
-  { path: '2/1', component: Int05321Component, canActivate: [AuthGuard] }
+  { path: '2/1', component: Int05321Component, canActivate: [AuthGuard] },
+  { path: '3', loadChildren: "./int05-3-3/int05-3-3.module#Int0533Module" }
+
 ];
 
 @NgModule({

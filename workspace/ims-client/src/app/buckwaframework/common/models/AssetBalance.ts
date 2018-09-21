@@ -1,0 +1,31 @@
+export class AssetBalance {
+    assetBalanceId: any;
+    accumulatedDepreciation: any;
+    acquisition: any;
+    annualDepreciation: any;
+    assetAmount: any;
+    assetCode: any;
+    assetDescription: any;
+    assetFeature: any;
+    assetModel: any;
+    assetNote: any;
+    assetType: any;
+    dateOfManufacture: any;
+    depreciationRate: any;
+    documentDate: any;
+    documentNo: any;
+    exciseDepartment: any;
+    exciseDistrict: any;
+    exciseRegion: any;
+    governmentSector: any;
+    institute: any;
+    lifetimeAsset: any;
+    netValue: any;
+    picAddress: any;
+    totlePriceAsset: any;
+    typeCost: any;
+    unitPriceAsset: any;
+    vendorsAddress: any;
+    vendorsName: any;
+    vendorsPhone: any;
+}

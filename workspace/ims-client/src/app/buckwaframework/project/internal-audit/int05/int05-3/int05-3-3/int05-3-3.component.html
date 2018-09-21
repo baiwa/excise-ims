@@ -1,0 +1,72 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>ค้นหาข้อมูลสินทรัพย์</span>
+    </div>
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="two wide field "></div>
+          <div class="two wide field ">
+            <label>ประเภทสินทรัพย์</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="ประเภทสินทรัพย์" class="custom" name="assetType" id="assetType" [(ngModel)]="assetBalance.assetType">
+          </div>
+          <div class="two wide field ">
+            <label>รหัสสินทรัพย์</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="รหัสสินทรัพย์" class="custom" name="assetCode" id="assetCode" [(ngModel)]="assetBalance.assetCode">
+          </div>
+        </div>
+        <div class="inline fields">
+          <div class="two wide field "></div>
+          <div class="two wide field ">
+            <label>วันที่เอกสารได้รับสินทรัพย์</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="วันที่เอกสารได้รับสินทรัพย์จาก" class="custom" name="startDate" id="startDate"
+              [(ngModel)]="startDate">
+          </div>
+          <div class="two wide field ">
+            <label>ถึง</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="ถึงวันที่เอกสารได้รับสินทรัพย์" class="custom" name="endDate" id="endDate"
+              [(ngModel)]="endDate">
+          </div>
+        </div>
+        <div class="inline fields">
+          <div class="sixteen wide field ">
+            <div class="seven wide field "></div>
+            <button class="ui mini primary button" (click)="searchAssetBalance()">
+              ค้นหา
+            </button>
+            <button class="ui mini primary button" (click)="cleanSearchPanel()">
+              ล้างข้อมูล
+            </button>
+            <button class="ui mini primary button" (click)="createAssetBalance()">
+              เพิ่มข้อมูล
+            </button>
+          </div>
+        </div>
+      </div>
+      <table id="dataTable" class="ui small celled table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>รหัสสินทรัพย์</th>
+            <th>ประเภทสินทรัพย์</th>
+            <th>คำอธิบายสินทรัพย์</th>
+            <th>จำนวนสินทรัพย์</th>
+            <th>อัตราค่าเสื่อมราคาสินทรัพย์</th>
+            <th>ค่าเสื่อมราคาสะสม</th>
+            <th>จัดการ</th>
+          </tr>
+        </thead>
+      </table>
+      <div class="inline fields"></div>
+    </div>
+  </div>
+</div>

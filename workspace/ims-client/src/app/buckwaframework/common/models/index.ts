@@ -16,7 +16,9 @@ import { ManageReq } from "./request";
 import { TableReq } from "./table";
 import { BreadCrumb } from "./breadcrumb";
 import { ComboBox } from "./combobox";
-import { TaxReceipt } from "models/taxReceipt";
+import { TaxReceipt } from "./taxReceipt";
+import { AssetBalance } from "./AssetBalance";
+import { AssetMaintenance } from "./AssetMaintenance";
 
 export {
   AlertMessage,
@@ -37,5 +39,7 @@ export {
   TableReq,
   BreadCrumb,
   ComboBox,
-  TaxReceipt
+  TaxReceipt,
+  AssetBalance,
+  AssetMaintenance
 };
