@@ -1,4 +1,4 @@
-package th.co.baiwa.excise.ia.persistence.entity;
+package th.co.baiwa.excise.ia.persistence.entity.qtn;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

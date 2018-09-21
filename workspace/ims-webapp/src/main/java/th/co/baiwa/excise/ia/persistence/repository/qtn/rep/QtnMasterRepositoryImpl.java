@@ -1,4 +1,4 @@
-package th.co.baiwa.excise.ia.persistence.repository;
+package th.co.baiwa.excise.ia.persistence.repository.qtn.rep;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.excise.domain.QtnHdrConditionVo;
-import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
+import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnMaster;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 public class QtnMasterRepositoryImpl implements QtnMasterRepositoryCustom {

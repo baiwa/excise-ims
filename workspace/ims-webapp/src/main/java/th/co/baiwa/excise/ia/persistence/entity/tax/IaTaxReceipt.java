@@ -1,10 +1,16 @@
-package th.co.baiwa.excise.ia.persistence.entity;
-
-import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
+package th.co.baiwa.excise.ia.persistence.entity.tax;
 
 import java.math.BigDecimal;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_TAX_RECEIPT")
@@ -59,6 +65,12 @@ public class IaTaxReceipt extends BaseEntity {
 
 	@Column(name = "CUSTOM_AMOUNT")
 	private BigDecimal customAmount;
+
+	@Column(name = "OFFICE_CODE")
+	private String officeCode;
+	
+	@Column(name = "DATE_TYPE")
+	private String dateType;
 
 	public Long getTaxReceiptId() {
 		return taxReceiptId;
@@ -180,4 +192,20 @@ public class IaTaxReceipt extends BaseEntity {
 		this.customAmount = customAmount;
 	}
 
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
+
+	public String getDateType() {
+		return dateType;
+	}
+
+	public void setDateType(String dateType) {
+		this.dateType = dateType;
+	}
+	
 }

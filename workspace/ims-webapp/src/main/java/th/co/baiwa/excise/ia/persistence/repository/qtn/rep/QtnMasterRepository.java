@@ -1,4 +1,4 @@
-package th.co.baiwa.excise.ia.persistence.repository;
+package th.co.baiwa.excise.ia.persistence.repository.qtn.rep;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
-import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
+import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnMaster;
 
 public interface QtnMasterRepository extends CommonJpaCrudRepository<QtnMaster, Long>, QtnMasterRepositoryCustom {
 	

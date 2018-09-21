@@ -6,7 +6,6 @@ import { Observable } from "rxjs";
 import { DialogService, IaService, MessageBarService, AjaxService, AuthService } from "services/index";
 import { BaseModel, ManageReq, TableReq, BreadCrumb } from "models/index";
 import { toFormData } from "helpers/index";
-import { async } from "q";
 
 declare var $: any;
 
@@ -124,7 +123,12 @@ export class Int022Component implements OnInit {
       });
     } else {
       this.unsave = true;
-      this.qtnMaster = this.iaService.getData();
+      const data = {
+        qtnName: "สสส",
+        qtnSector: "01",
+        qtnYear: "2561"
+      };
+      this.qtnMaster = data;
     }
     // Combobox
     const request = {

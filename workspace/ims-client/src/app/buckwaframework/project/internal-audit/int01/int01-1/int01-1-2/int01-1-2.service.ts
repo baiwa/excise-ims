@@ -18,13 +18,13 @@ export class Int0112Service {
     }
 
     async taxReceiptFiltered() {
-        const { travelTo1, travelTo2, travelTo3, startDate, endDate } = await this.main.getData();
-        const _start = await startDate.split("/");
-        const _end = await endDate.split("/");
-        const data = await {
+        const { travelTo1, travelTo2, travelTo3, startDate, endDate } = this.main.getData();
+        const _start = startDate.split("/");
+        const _end = endDate.split("/");
+        const data = {
             "OfficeCode": travelTo1 + travelTo2 + travelTo3,
-            "YearMonthFrom": `${parseInt(_start[2]) - 543}${_start[1]}`,
-            "YearMonthTo": `${parseInt(_end[2]) - 543}${_end[1]}`,
+            "YearMonthFrom": `${parseInt(_start[2]) - 543}${_start[1]}${_start[0]}`,
+            "YearMonthTo": `${parseInt(_end[2]) - 543}${_end[1]}${_end[0]}`,
             "DateType": "Income",
             "PageNo": "0",
             "DataPerPage": "0"

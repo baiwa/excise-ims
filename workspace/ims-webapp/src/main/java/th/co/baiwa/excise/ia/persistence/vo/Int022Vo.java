@@ -1,6 +1,6 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
-import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
+import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportHeader;
 
 public class Int022Vo extends QtnReportHeader {
 	

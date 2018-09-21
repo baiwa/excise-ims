@@ -1,6 +1,6 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
-import th.co.baiwa.excise.ia.persistence.entity.QtnReportDetail;
+import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportDetail;
 
 public class QtnReportDetailVo extends QtnReportDetail {
 	

@@ -20,8 +20,8 @@ import th.co.baiwa.excise.domain.CommonManageReq;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.ia.controller.Int08Controller;
 import th.co.baiwa.excise.ia.persistence.dao.QtnReportHeaderDao;
-import th.co.baiwa.excise.ia.persistence.entity.QtnReportHeader;
-import th.co.baiwa.excise.ia.persistence.repository.QtnReportHeaderRepository;
+import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportHeader;
+import th.co.baiwa.excise.ia.persistence.repository.qtn.rep.QtnReportHeaderRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int022Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
 

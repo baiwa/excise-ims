@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.excise.ia.persistence.entity.IaTaxReceipt;
+import th.co.baiwa.excise.ia.persistence.entity.tax.IaTaxReceipt;
 import th.co.baiwa.excise.ia.service.Int0111Service;
 import th.co.baiwa.excise.ws.entity.response.incfri8020.IncFri8020;
 

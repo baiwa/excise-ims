@@ -106,7 +106,7 @@
                                     <input type="checkbox" name="example">
                                 </td>
                                 <td>{{ i + 1}}</td>
-                                <td>{{ data.recieveDate }}</td>
+                                <td>{{ data.receiptDate }}</td>
                                 <td>{{ data.depositDate }}</td>
                                 <td>{{ data.incomeName }}</td>
                                 <td>{{ data.taxReceiptId }}</td>
@@ -122,7 +122,7 @@
                                 <td class="text-right">{{ round(data.stampAmount || 0.0) }}</td>
                                 <td class="text-right">{{ round(data.sendAmount || 0.0) }}</td>
                                 <td style="text-align: center;">
-                                    <a class="update" href="javascript:;" (click)="popupEditData()">
+                                    <a class="update" href="javascript:;" (click)="edit(data.taxReceiptId)">
                                         แก้ไข
                                     </a>
                                 </td>
@@ -165,3 +165,13 @@
 
     </div>
 </div>
+
+<ui-modal [id]="'edit'" [size]="'small'" [type]="'custom'">
+    <div class="header">แก้ไขข้อมูล</div>
+    <div class="content">
+        {{ _taxReceipt.taxReceiptId }}<br>
+        {{ _taxReceipt.receiptDate }}<br>
+        {{ _taxReceipt.incomeName }}<br>
+        {{ _taxReceipt.receiptNo }}<br>
+    </div>
+</ui-modal>

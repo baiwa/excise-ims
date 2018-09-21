@@ -27,10 +27,8 @@ export class Int021Component implements OnInit {
   areas: any[] = [];
   qtnName: string;
   qtnYear: string;
-  typeOfSubmit: string;
   breadcrumb: BreadCrumb[];
   constructor(private ajax: AjaxService, private router: Router, private iaService: IaService, private int02: Int02Service) {
-    this.typeOfSubmit = null;
     this.qtnName = null;
     this.qtnYear = null;
     this.breadcrumb = [
@@ -142,31 +140,7 @@ export class Int021Component implements OnInit {
 
   onSubmit = (form: NgForm) => {
     const { calendar_data, sector, area } = form.value;
-    if (calendar_data != "" && sector != "") { //  && area != ""
-      let name;
-      let qtnSector;
-      if (area != "") {
-        name = this.areas.find(obj => obj.lovId == area).subTypeDescription;
-        qtnSector = area;
-      } else {
-        name = this.sectors.find(obj => obj.lovId == sector).subTypeDescription;
-        qtnSector = sector;
-      }
-      console.log(area, sector);
-      const data = {
-        qtnName: name,
-        qtnSector: qtnSector,
-        qtnYear: calendar_data
-      };
-      if (this.typeOfSubmit === 'S') {
-        this.iaService.setData(data);
-        this.router.navigate(['/int02/2']);
-      } else {
-        this.reDatatable();
-      }
-    } else {
-      console.log(form);
-    }
+    this.reDatatable();
   }
 
   checkValid(name, f: NgForm) {
@@ -177,10 +151,17 @@ export class Int021Component implements OnInit {
     e.preventDefault();
     let id = e.target.value;
     if (id != "") {
-      this.ajax.post(URL.LOV_SECTOR, { type: "SECTOR_VALUE", lovIdMaster: id }, res => {
+      this.ajax.post(URL.LOV_SECTOR, { type: "SECTOR_VALUE", lovIdMaster: id }, async res => {
+        await $("#area").dropdown('restore defaults');
         this.areas = res.json();
       });
     }
+  }
+
+  clear() {
+    $("#sector").dropdown('restore defaults');
+    $("#area").dropdown('restore defaults');
+    $("#calendar").calendar('refresh');
   }
 
 }

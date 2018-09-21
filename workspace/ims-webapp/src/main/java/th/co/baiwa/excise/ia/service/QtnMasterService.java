@@ -12,19 +12,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.ctc.wstx.util.StringUtil;
-
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.QtnHdrConditionVo;
 import th.co.baiwa.excise.domain.QtnMasterVo;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
-import th.co.baiwa.excise.ia.persistence.entity.QtnMaster;
-import th.co.baiwa.excise.ia.persistence.repository.QtnMasterRepository;
+import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnMaster;
+import th.co.baiwa.excise.ia.persistence.repository.qtn.rep.QtnMasterRepository;
 import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.excise.ws.WebServiceExciseService;
 
 @Service
 public class QtnMasterService {
@@ -37,6 +39,9 @@ public class QtnMasterService {
 	@Autowired
 	private ConditionService conditionService;
 
+	@Autowired
+	private WebServiceExciseService webService;
+	
 	public ResponseDataTable<QtnMaster> findAllQtnMaster() {
 		ResponseDataTable<QtnMaster> data = new ResponseDataTable<>();
 		int count = (int) qtnMasterRepository.count();
@@ -82,11 +87,20 @@ public class QtnMasterService {
 		logger.info(qtnMaster.getQtnName());
 
 		Message msg;
-		String user = UserLoginUtils.getCurrentUsername();
 
 		CommonMessage<QtnMaster> response = new CommonMessage<>();
+		String code = UserLoginUtils.getCurrentUserBean().getOfficeCode(); // 010100
+		String user = UserLoginUtils.getCurrentUserBean().getUsername();
+		if (BeanUtils.isEmpty(code)) { // Pull UserBean from WebServiceLDAP
+			code = webService.webServiceLdap(user, "password").getOffice();
+		}
 		Date date = new Date();
-
+		String sector = code.substring(0, 2);
+		String year = DateConstant.convertDateToStr(date, "yyyy", ExciseConstants.LOCALE.TH);
+		List<Lov> lov = ApplicationCache.getListOfValueByValueType("SECTOR_LIST", code);
+		qtnMaster.setQtnName(lov.get(0).getSubTypeDescription());
+		qtnMaster.setQtnYear(year);
+		qtnMaster.setQtnSector(sector);
 		qtnMaster.setQtnFinished("N");
 		qtnMaster.setCreatedBy(user);
 		qtnMaster.setCreatedDate(date);

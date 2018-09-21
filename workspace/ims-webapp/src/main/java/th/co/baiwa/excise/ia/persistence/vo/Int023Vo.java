@@ -3,7 +3,7 @@ package th.co.baiwa.excise.ia.persistence.vo;
 import java.util.List;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
-import th.co.baiwa.excise.ia.persistence.entity.QtnReportDetail;
+import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportDetail;
 
 public class Int023Vo<T> extends BaseEntity {
 	

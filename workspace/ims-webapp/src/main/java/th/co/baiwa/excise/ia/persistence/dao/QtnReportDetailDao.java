@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import th.co.baiwa.excise.ia.persistence.entity.QtnReportDetail;
+import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportDetail;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.utils.OracleUtils;
 

@@ -1,4 +1,4 @@
-package th.co.baiwa.excise.ia.persistence.repository;
+package th.co.baiwa.excise.ia.persistence.repository.qtn.fin;
 
 import java.util.List;
 

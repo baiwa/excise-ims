@@ -18,6 +18,7 @@ declare var $: any;
 export class Int0112Component implements OnInit {
   @ViewChild('f') form: NgForm;
   taxReceipt: TaxReceipt[];
+  _taxReceipt: TaxReceipt = new TaxReceipt();
   totalReceipt: TaxReceipt = new TaxReceipt();
   breadcrumb: BreadCrumb[];
   loading: boolean = true;
@@ -58,7 +59,8 @@ export class Int0112Component implements OnInit {
 
   initDatatable() { // Initial Datatable
     $("#table").DataTable({
-      scrollY: '500px',
+      scrollY: "360px",
+      scrollCollapse: true,
       scrollX: true,
       ordering: false,
       searching: false,
@@ -71,6 +73,11 @@ export class Int0112Component implements OnInit {
     if (form.valid) {
       const { amount, permit_no, print_no } = form.controls;
     }
+  }
+
+  edit(id: string) {
+    this._taxReceipt = this.taxReceipt.find( obj => obj.taxReceiptId == id);
+    $("#edit").modal('show');
   }
 
   df(what) {

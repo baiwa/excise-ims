@@ -1,4 +1,4 @@
-package th.co.baiwa.excise.ia.persistence.repository;
+package th.co.baiwa.excise.ia.persistence.repository.qtn.rep;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +27,7 @@ public class QtnReportHeaderRepositoryImpl implements QtnReportHeaderRepositoryC
 		List<Object> param = new ArrayList<Object>();
 		String SQL = " select rp.*, fn.QTN_FINAL_REP_HDR_ID HEADER_ID from IA_QTN_REPORT_HEADER rp left join IA_QTN_FINAL_REP_HEADER fn on rp.QTN_REPORT_HDR_ID = fn.QTN_REPORT_HDR_ID where 1=1 ";
 		StringBuilder sql = new StringBuilder(SQL);
-		sql.append(" and rp.IS_DELETED = '" + FLAG.N_FLAG + "' and fn.QTN_FINISHED = '" + FLAG.Y_FLAG + "' ");
+		sql.append(" and rp.IS_DELETED = '" + FLAG.N_FLAG + "' ");
 		if (BeanUtils.isNotEmpty(masterId)) {
 			sql.append(" and rp.QTN_MASTER_ID = ? ");
 			logger.info("MasterID: {}", masterId);

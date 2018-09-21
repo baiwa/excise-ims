@@ -16,7 +16,7 @@
               </div>
               <div class="five wide field {{ checkValid('sector', f) ? 'error' : ''  }} ">
                 <div class="ui input">
-                  <select class="ui selection dropdown ai" name="sector" (change)="onSectorChange($event)" required
+                  <select class="ui selection dropdown ai" id="sector" name="sector" (change)="onSectorChange($event)"
                     ngModel>
                     <option value="">เลือกภาค</option>
                     <option value="{{sector.lovId}}" *ngFor="let sector of sectors">{{sector.subTypeDescription}}</option>
@@ -28,7 +28,7 @@
               </div>
               <div class="five wide field">
                 <div class="ui input">
-                  <select class="ui selection dropdown ai" name="area" ngModel>
+                  <select class="ui selection dropdown ai" id="area" name="area" ngModel>
                     <option value="">เลือกพื้นที่</option>
                     <option value="{{area.lovId}}" *ngFor="let area of areas">{{area.subTypeDescription}}</option>
                   </select>
@@ -44,7 +44,7 @@
                   <div class="ui calendar" id="calendar">
                     <div class="ui input {{ checkValid('calendar_data', f) ? 'error' : ''  }} ">
                       <input type="calendar" readonly="" placeholder="ปี" id="calendar_data" name="calendar_data"
-                        autocomplete="off" required ngModel>
+                        autocomplete="off" ngModel>
                     </div>
                   </div>
                 </div>
@@ -52,15 +52,15 @@
             </div>
           </div>
           <div class="column fourteen wide center aligned">
-            <button type="submit" (click)="typeOfSubmit = 'F'" class="ui mini primary button">
+            <button type="submit" class="ui mini primary button">
               <i class="search icon"></i>
               ค้นหา
             </button>
-            <button type="reset" class="ui mini button">
+            <button type="reset" (click)="clear()" class="ui mini button">
               <i class="refresh icon"></i>
               ล้างข้อมูล
             </button>
-            <button type="submit" (click)="typeOfSubmit = 'S'" class="ui mini primary button">
+            <button type="button" [routerLink]="'/int02/2'" class="ui mini primary button">
               <i class="add icon"></i>
               สร้าง
             </button>
