@@ -1,18 +1,10 @@
 package th.co.baiwa.excise.ia.service;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.assertj.core.internal.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
@@ -26,6 +18,12 @@ import th.co.baiwa.excise.ia.persistence.repository.IaProcurementRepository;
 import th.co.baiwa.excise.ia.persistence.repository.IaProcurementUlFileRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int0541Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class Int0541Service {
