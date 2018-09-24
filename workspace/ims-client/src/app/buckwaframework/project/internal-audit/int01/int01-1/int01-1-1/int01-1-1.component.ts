@@ -32,8 +32,8 @@ export class Int0111Component implements OnInit, AfterViewInit {
   ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
-      { label: "ตรวจสอบพัสดุ", route: "#" },
-      { label: "ตรวจสอบพัสดุภาคพื้นที่", route: "#" }
+      { label: "ตรวจสอบรายได้", route: "#" },
+      { label: "ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต", route: "#" }
     ];
     this.comboBox1 = this.self.pullComboBox('SECTOR_VALUE', 'comboBox1');
   }
@@ -77,6 +77,10 @@ export class Int0111Component implements OnInit, AfterViewInit {
   dropdown(e, combo: string) {
     e.preventDefault();
     this[combo] = this.self.pullComboBox('SECTOR_VALUE', combo, e.target.value);
+  }
+
+  reset() {
+    this.self.reset("calendar1", "calendar2");
   }
 
 }

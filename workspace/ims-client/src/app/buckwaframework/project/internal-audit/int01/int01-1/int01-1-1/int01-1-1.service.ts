@@ -71,4 +71,10 @@ export class Int0111Service {
         });
     }
 
+    reset(a, b): void {
+        $(".ui.dropdown.search").dropdown("restore defaults");
+        $(`#${a}`).calendar('refresh');
+        $(`#${b}`).calendar('refresh');
+    }
+
 }

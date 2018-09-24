@@ -1,4 +1,6 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
+<!-- content -->
 <div class="ui grid">
     <div class="sixteen wide column">
 
@@ -6,10 +8,11 @@
             <h4>เพิ่มเลขแบบพิมพ์</h4>
         </div>
 
+        <!-- form add print no -->
         <div class="ui bottom attached segment">
             <div class="ui centered grid">
                 <div class="fourteen wide column">
-                    <form class="ui form" (submit)="add(f)" #f="ngForm">
+                    <form class="ui form" (submit)="addPrint($event)" #f="ngForm">
                         <div class="inline fields">
                             <div class="two wide field">
                                 <label class="full-width text-right">
@@ -43,7 +46,7 @@
                             </div>
                             <div class="one wide field">
                                 <button class="ui mini primary button" type="submit">
-                                    เพิ่ม
+                                    เพิ่ม / แก้ไข
                                 </button>
                             </div>
                         </div>
@@ -51,28 +54,14 @@
                 </div>
             </div>
         </div>
+        <!-- form add print no -->
 
-        <div class="ui {{ loading ? 'loading' : '' }} top attached segment">
-            <div class="ui right aligned grid">
-                <div class="sixteen wide column">
-                    <a class="ui mini primary button widtd-100" routerLink='/int01/1/3'>
-                        <i class="checkmark icon"></i>ตรวจสอบงบสรุปยอดภาษี
-                    </a>
-                    <a class="ui mini primary button widtd-100">
-                        <i class="save icon"></i>บันทึก
-                    </a>
-                    <button class="ui mini primary button widtd-100">
-                        <i class="print icon"></i>พิมพ์
-                    </button>
-                </div>
-            </div>
-
+        <div class="ui {{ (loading | async) ? 'loading' : '' }} top attached segment">
             <div class="ui grid">
                 <div class="sixteen wide column">
                     <table id="table" class="ui celled nowrap striped table" style="width: 100%;">
                         <thead>
                             <tr class="center aligned">
-                                <th rowspan="2">#</th>
                                 <th rowspan="2">ลำดับที่</th>
                                 <th rowspan="2">วันที่รับเงิน</th>
                                 <th rowspan="2">วันที่นำฝากบัญชี</th>
@@ -81,6 +70,7 @@
                                 <th rowspan="2">เลขแบบพิมพ์</th>
                                 <th colspan="2">เลขใบเสร็จ </th>
                                 <th rowspan="2">จำนวนเงิน</th>
+                                <th rowspan="2">จำนวนเงิน(กรอก)</th>
                                 <th rowspan="2">นำส่งมหาดไทย
                                     <br />10% / 98.5%</th>
                                 <th rowspan="2">มหาดไทย
@@ -93,39 +83,41 @@
                                 <th rowspan="2">ค่าพิมพ์แสตมป์
                                     <br />1%</th>
                                 <th rowspan="2">นำส่ง</th>
-                                <th rowspan="2">Action</th>
+                                <!-- <th rowspan="2">Action</th> -->
                             </tr>
-                            <tr style="display: none;">
-                                <th>A</th>
-                                <th>B</th>
+                            <tr class="center aligned">
+                                <th>ชนิด</th>
+                                <th>ลำดับ</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="text-center" *ngFor="let data of taxReceipt; let i=index">
-                                <td>
-                                    <input type="checkbox" name="example">
-                                </td>
+                            <tr class="text-center {{ data.status == 'diff' ? 'red' : '' }}" *ngFor="let data of taxReceipt | async; let i=index">
                                 <td>{{ i + 1}}</td>
-                                <td>{{ data.receiptDate }}</td>
-                                <td>{{ data.depositDate }}</td>
-                                <td>{{ data.incomeName }}</td>
-                                <td>{{ data.taxReceiptId }}</td>
-                                <td>{{ data.taxReceiptId }}</td>
-                                <td>{{ data.receiptNo ? data.receiptNo.split("/")[0] : '-' }}</td>
-                                <td>{{ data.receiptNo ? data.receiptNo.split("/")[1] : '-' }}</td>
+                                <td>{{ data.receiptDate ? dateFormat(data.receiptDate) : '-' }}</td>
+                                <td>{{ data.depositDate ? dateFormat(data.depositDate) : '-' }}</td>
+                                <td>{{ data.incomeName ? data.incomeName : '-' }}</td>
+                                <td>{{ data.taxReceiptId ? data.taxReceiptId : '-' }}</td>
+                                <td>{{ data.taxPrintNo && data.taxPrintNo != null ? data.taxPrintNo : '-' }}</td>
+                                <td class="can-click" data-tooltip="คัดลอก" data-position="left center" (click)="selectValue(data.receiptNo)">{{ data.receiptNo ? data.receiptNo.split("/")[0] : '-' }}</td>
+                                <td class="can-click" data-tooltip="คัดลอก" data-position="right center" (click)="selectValue(data.receiptNo)">{{ data.receiptNo ? data.receiptNo.split("/")[1] : '-' }}</td>
                                 <td class="text-right">{{ round(data.netTaxAmount || 0.0) }}</td>
+                                <td class="text-right">{{ round(data.checkedAmount || 0.0) }}</td>
                                 <td class="text-right">{{ round(data.netLocAmount || 0.0) }}</td>
                                 <td class="text-right">{{ round(data.locOthAmount || 0.0) }}</td>
                                 <td class="text-right">{{ round(data.locExpAmount || 0.0) }}</td>
-                                <td class="text-right"> 5,375.70 </td>
+                                <td class="text-right">{{ round(data.sumAmount || 0.0) }}</td>
                                 <td class="text-right">{{ round(data.customAmount || 0.0) }}</td>
                                 <td class="text-right">{{ round(data.stampAmount || 0.0) }}</td>
                                 <td class="text-right">{{ round(data.sendAmount || 0.0) }}</td>
-                                <td style="text-align: center;">
-                                    <a class="update" href="javascript:;" (click)="edit(data.taxReceiptId)">
-                                        แก้ไข
-                                    </a>
-                                </td>
+                                <!-- <td style="text-align: center;">
+                                    <button class="ui mini icon button" *ngIf="data.taxPrintNo" type="button" (click)="edit(i)">
+                                        <i class="ui edit icon"></i>
+                                    </button>
+                                    <button class="ui mini icon button" *ngIf="data.taxPrintNo" type="button" (click)="del(i)">
+                                        <i class="ui trash icon"></i>
+                                    </button>
+                                    <p *ngIf="!data.taxPrintNo">-</p>
+                                </td> -->
                             </tr>
                         </tbody>
                         <tfoot>
@@ -136,9 +128,9 @@
                                 <th rowspan="2">&nbsp;</th>
                                 <th rowspan="2">&nbsp;</th>
                                 <th rowspan="2">&nbsp;</th>
-                                <th rowspan="2">&nbsp;</th>
                                 <th colspan="2">รวม</th>
                                 <th rowspan="2">{{ round(totalReceipt.netTaxAmount || 0.0) }}</th>
+                                <th rowspan="2">{{ round(totalReceipt.checkedAmount || 0.0) }}</th>
                                 <th rowspan="2">{{ round(totalReceipt.netLocAmount || 0.0) }}</th>
                                 <th rowspan="2">{{ round(totalReceipt.locOthAmount || 0.0) }}</th>
                                 <th rowspan="2">{{ round(totalReceipt.locExpAmount || 0.0) }}</th>
@@ -146,7 +138,7 @@
                                 <th rowspan="2">{{ round(totalReceipt.customAmount || 0.0) }}</th>
                                 <th rowspan="2">{{ round(totalReceipt.stampAmount || 0.0) }}</th>
                                 <th rowspan="2">{{ round(totalReceipt.sendAmount || 0.0) }}</th>
-                                <th rowspan="2">&nbsp;</th>
+                                <!-- <th rowspan="2">&nbsp;</th> -->
                             </tr>
                             <tr style="display: none;">
                                 <th>A</th>
@@ -157,7 +149,16 @@
                 </div>
                 <div class="sixteen wide center aligned column">
                     <a class="ui mini button widtd-100" routerLink='/int01/1/1'>
-                        <i class="arrow left icon"></i>กลับ
+                        <i class="times left icon"></i>ยกเลิก
+                    </a>
+                    <button class="ui mini primary button widtd-100" (click)="saveAll()">
+                        <i class="save icon"></i>บันทึก
+                    </button>
+                    <button class="ui mini primary button widtd-100">
+                        <i class="print icon"></i>ส่งออก <!-- export -->
+                    </button>
+                    <a class="ui mini primary button widtd-100" routerLink='/int01/1/3'>
+                        <i class="file alternate outline icon"></i>ตรวจสอบงบสรุปยอดภาษี
                     </a>
                 </div>
             </div>
@@ -165,13 +166,51 @@
 
     </div>
 </div>
+<!-- content -->
 
-<ui-modal [id]="'edit'" [size]="'small'" [type]="'custom'">
+<!-- modal -->
+<ui-modal [id]="'edit'" [size]="'large'" [type]="'custom'">
     <div class="header">แก้ไขข้อมูล</div>
     <div class="content">
-        {{ _taxReceipt.taxReceiptId }}<br>
-        {{ _taxReceipt.receiptDate }}<br>
-        {{ _taxReceipt.incomeName }}<br>
-        {{ _taxReceipt.receiptNo }}<br>
+        <form class="ui form" (submit)="updatePrint($event)" #fe="ngForm">
+            <div class="inline fields">
+                <div class="two wide field">
+                    <label class="full-width text-right">
+                        เลขที่ใบอนุญาต
+                    </label>
+                </div>
+                <div class="three wide field {{fe.submitted && fe.controls.permit_no.invalid ? 'error' : ''}}">
+                    <div class="ui input">
+                        <input type="text" name="permit_no" class="full-width" ngModel required>
+                    </div>
+                </div>
+                <div class="two wide field">
+                    <label class="full-width text-right">
+                        เลขที่แบบพิมพ์
+                    </label>
+                </div>
+                <div class="three wide field {{fe.submitted && fe.controls.print_no.invalid ? 'error' : ''}}">
+                    <div class="ui input">
+                        <input type="text" name="print_no" class="full-width" ngModel required>
+                    </div>
+                </div>
+                <div class="two wide field">
+                    <label class="full-width text-right">
+                        จำนวนเงิน
+                    </label>
+                </div>
+                <div class="three wide field {{fe.submitted && fe.controls.amount.invalid ? 'error' : ''}}">
+                    <div class="ui input">
+                        <input type="text" name="amount" class="full-width" ngModel required>
+                    </div>
+                </div>
+                <div class="one wide field">
+                    <button class="ui mini primary button" type="submit">
+                        แก้ไข
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 </ui-modal>
+<!-- modal -->

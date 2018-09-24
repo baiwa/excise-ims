@@ -1,6 +1,7 @@
 export class TaxReceipt {
     [x: string]: any;
     // String
+    taxPrintNo: string = "-";
     taxReceiptId: string = "-";
     receiptDate: string = "-";
     depositDate: string = "-";
@@ -8,6 +9,7 @@ export class TaxReceipt {
     incomeName: string = "-";
     receiptNo: string = "-";
     // Number
+    checkedAmount: number = 0.0;
     netTaxAmount: number = 0.0;
     netLocAmount: number = 0.0;
     locOthAmount: number = 0.0;

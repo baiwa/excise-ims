@@ -1,21 +1,20 @@
 package th.co.baiwa.excise.ia.persistence.repository.tax.receipt;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.tax.IaTaxReceipt;
 import th.co.baiwa.excise.ia.persistence.entity.tax.IaTaxReceiptVo;
 import th.co.baiwa.excise.utils.BeanUtils;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class IaTaxReceiptRepositoryImpl implements IaTaxReceiptRepositoryCustom {
 
@@ -63,8 +62,8 @@ public class IaTaxReceiptRepositoryImpl implements IaTaxReceiptRepositoryCustom 
 		sql.append(" AND l.RECEIPT_DATE LIKE ? ");
 		param.add(officeCode);
 		param.add(dateType);
-		param.add(dateFrom + '%');
-		List<Integer> result = template.query(sql.toString(), param.toArray(), count);
+		param.add(thaiDate(dateFrom).substring(0,6) + '%');
+		List<String> result = template.query(sql.toString(), param.toArray(), count);
 		return result.size();
 	}
 
@@ -78,17 +77,16 @@ public class IaTaxReceiptRepositoryImpl implements IaTaxReceiptRepositoryCustom 
 		sql.append(" AND l.RECEIPT_DATE LIKE ? ");
 		param.add(officeCode);
 		param.add(dateType);
-		param.add(dateTo + '%');
-		List<Integer> result = template.query(sql.toString(), param.toArray(), count);
+		param.add(thaiDate(dateTo).substring(0,6) + '%');
+		List<String> result = template.query(sql.toString(), param.toArray(), count);
 		return result.size();
 	}
 
-	private RowMapper<Integer> count = new RowMapper<Integer>() {
+	private RowMapper<String> count = new RowMapper<String>() {
 
 		@Override
-		public Integer mapRow(ResultSet rs, int arg1) throws SQLException {
-			logger.info("COUNT {}", rs.getInt("COUNT"));
-			return rs.getInt("COUNT");
+		public String mapRow(ResultSet rs, int arg1) throws SQLException {
+			return rs.getString("CODE");
 		}
 
 	};
@@ -121,6 +119,8 @@ public class IaTaxReceiptRepositoryImpl implements IaTaxReceiptRepositoryCustom 
 			tax.setVersion(rs.getInt("VERSION"));
 			tax.setOfficeCode(rs.getString("OFFICE_CODE"));
 			tax.setDateType(rs.getString("DATE_TYPE"));
+			tax.setCheckedAmount(rs.getBigDecimal("CHECKED_AMOUNT"));
+			tax.setTaxPrintNo(rs.getString("TAX_PRINT_NO"));
 			return tax;
 		}
 
@@ -129,7 +129,6 @@ public class IaTaxReceiptRepositoryImpl implements IaTaxReceiptRepositoryCustom 
 	private String thaiDate(String date) {
 		Date _date = DateConstant.convertStrToDate(date, "yyyyMMdd", DateConstant.LOCAL_EN);
 		String result = DateConstant.convertDateToStr(_date, "yyyyMMdd", DateConstant.LOCAL_TH);
-		logger.info(result);
 		return result;
 	}
 

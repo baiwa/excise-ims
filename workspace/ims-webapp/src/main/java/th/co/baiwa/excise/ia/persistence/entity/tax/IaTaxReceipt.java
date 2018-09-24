@@ -71,6 +71,12 @@ public class IaTaxReceipt extends BaseEntity {
 	
 	@Column(name = "DATE_TYPE")
 	private String dateType;
+	
+	@Column(name = "CHECKED_AMOUNT")
+	private BigDecimal checkedAmount;
+	
+	@Column(name = "TAX_PRINT_NO")
+	private String taxPrintNo;
 
 	public Long getTaxReceiptId() {
 		return taxReceiptId;
@@ -206,6 +212,22 @@ public class IaTaxReceipt extends BaseEntity {
 
 	public void setDateType(String dateType) {
 		this.dateType = dateType;
+	}
+
+	public BigDecimal getCheckedAmount() {
+		return checkedAmount;
+	}
+
+	public void setCheckedAmount(BigDecimal checkedAmount) {
+		this.checkedAmount = checkedAmount;
+	}
+
+	public String getTaxPrintNo() {
+		return taxPrintNo;
+	}
+
+	public void setTaxPrintNo(String taxPrintNo) {
+		this.taxPrintNo = taxPrintNo;
 	}
 	
 }

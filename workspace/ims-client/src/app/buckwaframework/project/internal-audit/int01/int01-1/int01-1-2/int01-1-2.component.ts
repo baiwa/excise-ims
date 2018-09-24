@@ -6,6 +6,8 @@ import { Int011Service } from "../int01-1.services";
 import { Int0112Service } from "./int01-1-2.service";
 import { AjaxService } from "services/ajax.service";
 import { DecimalFormat } from "helpers/index";
+import { Observable } from "rxjs";
+import { MessageBarService } from "services/message-bar.service";
 
 declare var $: any;
 
@@ -17,19 +19,27 @@ declare var $: any;
 })
 export class Int0112Component implements OnInit {
   @ViewChild('f') form: NgForm;
-  taxReceipt: TaxReceipt[];
-  _taxReceipt: TaxReceipt = new TaxReceipt();
-  totalReceipt: TaxReceipt = new TaxReceipt();
-  breadcrumb: BreadCrumb[];
-  loading: boolean = true;
+  @ViewChild('fe') formEdit: NgForm;
+
+  taxReceipt: Observable<TaxReceipt[]>; // For Table
+  _taxReceipt: TaxReceipt; // For Edit
+  totalReceipt: TaxReceipt; // For Footer Total
+
+  breadcrumb: BreadCrumb[]; // Breadcrump navs
+  loading: Observable<boolean>; // On Loading
+
   constructor(
+    private msg: MessageBarService,
     private main: Int011Service,
     private self: Int0112Service,
     private ajax: AjaxService) {
+    // TODO
+    this._taxReceipt = new TaxReceipt();
+    this.totalReceipt = new TaxReceipt();
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
-      { label: "ตรวจสอบพัสดุ", route: "#" },
-      { label: "ตรวจสอบพัสดุภาคพื้นที่", route: "int01/1/1" },
+      { label: "ตรวจสอบรายได้", route: "#" },
+      { label: "ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต", route: "int01/1/1" },
       { label: "เพิ่มเลขแบบพิมพ์", route: "#" }
     ];
   }
@@ -37,56 +47,62 @@ export class Int0112Component implements OnInit {
   async ngOnInit() {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
-    await this.self.taxReceiptObs().subscribe(async res => {
-      this.taxReceipt = await res;
-      await this.taxReceipt.forEach(obj => {
-        this.totalReceipt.netTaxAmount = obj.netTaxAmount + this.totalReceipt.netTaxAmount;
-        this.totalReceipt.netLocAmount = obj.netLocAmount + this.totalReceipt.netLocAmount;
-        this.totalReceipt.locOthAmount = obj.locOthAmount + this.totalReceipt.locOthAmount;
-        this.totalReceipt.locExpAmount = obj.locExpAmount + this.totalReceipt.locExpAmount;
-        this.totalReceipt.olderFundAmount = obj.olderFundAmount + this.totalReceipt.olderFundAmount;
-        this.totalReceipt.tpbsFundAmount = obj.tpbsFundAmount + this.totalReceipt.tpbsFundAmount;
-        this.totalReceipt.sendAmount = obj.sendAmount + this.totalReceipt.sendAmount;
-        this.totalReceipt.stampAmount = obj.stampAmount + this.totalReceipt.stampAmount;
-        this.totalReceipt.customAmount = obj.customAmount + this.totalReceipt.customAmount;
-      });
-      setTimeout(() => {
-        this.initDatatable();
-        this.loading = false;
-      }, 1000);
-    });
+    this.loading = this.self.onLoad(); // On Load Service
+    this.taxReceipt = this.self.taxReceiptObs(); // Table Service
+    this.totalReceipt = this.self.totalReceiptCal();
   }
 
-  initDatatable() { // Initial Datatable
-    $("#table").DataTable({
-      scrollY: "360px",
-      scrollCollapse: true,
-      scrollX: true,
-      ordering: false,
-      searching: false,
-      lengthChange: false,
-      paging: false
-    });
-  }
-
-  add(form: NgForm) {
-    if (form.valid) {
-      const { amount, permit_no, print_no } = form.controls;
+  addPrint(e: any) {
+    e.preventDefault();
+    if (this.form.valid) {
+      this.self.setPrint(this.form);
     }
   }
 
-  edit(id: string) {
-    this._taxReceipt = this.taxReceipt.find( obj => obj.taxReceiptId == id);
+  updatePrint(e: any) {
+    e.preventDefault();
+    if (this.formEdit.valid) {
+      this.self.setPrint(this.formEdit, () => {
+        $("#edit").modal('hide');
+      });
+    }
+  }
+
+  selectValue(no: string): void {
+    this.form.controls.permit_no.setValue(no);
+  }
+
+  edit(index: number): void {
+    this._taxReceipt = this.self.get(index);
+    const { taxPrintNo, receiptNo, checkedAmount } = this._taxReceipt;
+    this.formEdit.controls.amount.setValue(checkedAmount);
+    this.formEdit.controls.permit_no.setValue(receiptNo);
+    this.formEdit.controls.print_no.setValue(taxPrintNo);
     $("#edit").modal('show');
   }
 
-  df(what) {
+  del(index: number): void {
+    this.self.delete(index);
+  }
+
+  df(what): string {
     const df = new DecimalFormat("###,###.00");
     return df.format(what);
   }
 
-  round(num) {
-    return this.df(num.toFixed(2));
+  round(num: number): string {
+    return this.df(parseFloat(num.toString()).toFixed(2));
+  }
+
+  saveAll() {
+    this.self.save();
+  }
+
+  dateFormat(date: string): string {
+    let year = date.substring(0, 4);
+    let month = date.substring(4, 6);
+    let day = date.substring(6);
+    return (date && date != null) ? `${day}/${month}/${year}` : "-";
   }
 
 }

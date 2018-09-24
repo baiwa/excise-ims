@@ -2,7 +2,6 @@ package th.co.baiwa.excise.ia.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,7 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.ia.persistence.entity.tax.IaTaxReceipt;
+import th.co.baiwa.excise.ia.persistence.entity.tax.IaTaxReceiptReq;
 import th.co.baiwa.excise.ia.persistence.entity.tax.IaTaxReceiptVo;
 import th.co.baiwa.excise.ia.persistence.repository.tax.receipt.IaTaxReceiptRepository;
 import th.co.baiwa.excise.ia.persistence.repository.tax.receipt.IaTaxReceiptRepositoryImpl;
@@ -42,21 +44,19 @@ public class Int0111Service {
 		String dateType = req.getDateType();
 		logger.info("{} {} {} {} {} {}", officeCode, dateFrom, dateTo, dateType, req.getPageNo(), req.getDataPerPage());
 
-		List<IaTaxReceipt> taxs = new ArrayList<>();
+		List<IaTaxReceipt> taxs = new ArrayList<IaTaxReceipt>();
 		IaTaxReceiptVo tax = new IaTaxReceiptVo();
 		tax.setOfficeCode(officeCode);
 		tax.setDateFrom(dateFrom);
 		tax.setDateTo(dateTo);
 		tax.setDateType(dateType);
 		taxs = iaTaxReceiptImpl.findByIaTaxReceipt(tax);
-		logger.info("dateFrom:{} ,dateTo:{}", iaTaxReceiptImpl.coundByDateFrom(officeCode, dateType, dateFrom), iaTaxReceiptImpl.coundByDateTo(officeCode, dateType, dateTo));
-		if (iaTaxReceiptImpl.coundByDateFrom(officeCode, dateType, dateFrom) > 0
-				&& iaTaxReceiptImpl.coundByDateTo(officeCode, dateType, dateTo) > 0 && taxs.size() > 0) {
+		int countFrom = iaTaxReceiptImpl.coundByDateFrom(officeCode, dateType, dateFrom);
+        int countTo = iaTaxReceiptImpl.coundByDateTo(officeCode, dateType, dateTo);
+		logger.info("dateFrom:{} ,dateTo:{}", countFrom, countTo);
+		if (countFrom > 0 && countTo > 0 && taxs.size() > 0) {
 			return taxs;
 		} else {
-			if (taxs.size() == 0) {
-				taxs = new ArrayList<>();
-			}
 			IncFri8020 response = ws.IncFri8020(officeCode, dateFrom.substring(0, 6), dateTo.substring(0, 6), dateType,
 					req.getPageNo(), req.getDataPerPage());
 			ResponseData data = response.getResponseData();
@@ -88,33 +88,45 @@ public class Int0111Service {
 					ta.setStampAmount(BigDecimal.valueOf(Double.parseDouble(list.getStampAmount())));
 				if (BeanUtils.isNotEmpty(list.getCustomAmount()))
 					ta.setCustomAmount(BigDecimal.valueOf(Double.parseDouble(list.getCustomAmount())));
-				boolean has = false;
+				boolean exist = false;
 				for(IaTaxReceipt li: taxs) {
 					String noA = BeanUtils.isEmpty(list.getReceiptNo()) ? null : list.getReceiptNo();
-					String noB = BeanUtils.isEmpty(li.getReceiptNo()) ? null : li.getReceiptNo(); 
+					String noB = BeanUtils.isEmpty(li.getReceiptNo()) ? null : li.getReceiptNo();
 					String daA = BeanUtils.isEmpty(list.getReceiptDate()) ? null : list.getReceiptDate();
 					String daB = BeanUtils.isEmpty(li.getReceiptDate()) ? null : li.getReceiptDate();
 					if (daA.equals(daB)) {
 						if (BeanUtils.isEmpty(noA) && BeanUtils.isEmpty(noB)) {
-							has = true;
+							exist = true;
 							logger.info("Check: wsNo[{}] dbNo[{}] wsDa[{}] dbDa[{}]", noA, noB, daA, daB);
 						} else if (BeanUtils.isNotEmpty(noA) && noA.equals(noB)) {
-							has = true;
+							exist = true;
 							logger.info("Check: wsNo[{}] dbNo[{}] wsDa[{}] dbDa[{}]", noA, noB, daA, daB);
 						} else if (BeanUtils.isNotEmpty(noB) && noB.equals(noA)) {
-							has = true;
+							exist = true;
 							logger.info("Check: wsNo[{}] dbNo[{}] wsDa[{}] dbDa[{}]", noA, noB, daA, daB);
 						}
 					}
 				}
-				if (!has) {
+				if (!exist) {
 					taxs.add(ta);
 				}
 			}
-			// iaTaxReceipt.save(taxs);
+			iaTaxReceipt.save(taxs);
 			taxs = iaTaxReceiptImpl.findByIaTaxReceipt(tax);
 			return taxs;
 		}
 	}
 
+	public CommonMessage<List<IaTaxReceipt>> save(IaTaxReceiptReq req) {
+		CommonMessage<List<IaTaxReceipt>> com = new CommonMessage<List<IaTaxReceipt>>();
+		try {
+			com.setData((List<IaTaxReceipt>) iaTaxReceipt.save(req.getData()));
+			com.setMsg(ApplicationCache.getMessage("MSG_00002"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			com.setData(req.getData());
+			com.setMsg(ApplicationCache.getMessage("MSG_00003"));
+		}
+		return com;
+	}
 }

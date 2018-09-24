@@ -12,3 +12,21 @@
 #table1>tfoot {
     background-color: rgb(245, 245, 245) !important;
 }
+
+.green {
+    background: #1ee02d !important;
+    color: white !important;
+}
+
+.red {
+    background: #ff2300 !important;
+    color: white !important;
+}
+
+.can-click {
+    cursor: pointer;
+}
+/* .can-click:hover {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+} */
