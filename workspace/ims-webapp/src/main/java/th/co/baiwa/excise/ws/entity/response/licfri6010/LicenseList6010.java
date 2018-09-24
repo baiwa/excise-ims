@@ -75,7 +75,7 @@ public class LicenseList6010 {
         return licCode;
     }
 
-    public void setLicCode(String licCode) {
+    public void setLicCode(String licCode) {	
         this.licCode = licCode;
     }
 

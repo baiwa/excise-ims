@@ -1,5 +1,6 @@
 
 import * as moment from "moment";
+import { forEach } from "@angular/router/src/utils/collection";
 
 export var TextDateTH = {
   days: ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"],
@@ -35,6 +36,16 @@ export var TextDateTH = {
   now: "เดี๋ยวนี้",
   am: "ก่อนบ่าย",
   pm: "หลังบ่าย"
+};
+export var monthsToNumber = StringMonths => {
+  var index = 0;
+  for(let i = 0;i<12;i++){
+     if(TextDateTH.months[i]==StringMonths){
+      index=i+1;
+     }
+  }
+ 
+  return (index < 10 ? "0" : "") + index;
 };
 
 export var digit = number => {

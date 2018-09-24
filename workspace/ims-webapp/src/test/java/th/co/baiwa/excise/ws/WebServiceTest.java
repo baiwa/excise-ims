@@ -36,10 +36,10 @@ public class WebServiceTest {
 //	}
 	@Test
 	public void LicFri6010() {
-		LicFri6010 re = webServiceExciseService.licFri6010("100300","201801","201802", "1", "1000");
-		ResponseData6010 xxx = re.getResponseData();
-		for (LicenseList6010 incFri6010Income : xxx.getLicenseList()) {
-			System.out.println("LicName : "+incFri6010Income.getLicName());
+		LicFri6020 re = webServiceExciseService.licFri6020("0105555155742","", "1", "1000");
+		ResponseData6020 xxx = re.getResponseData();
+		for (LicenseList6020 income : xxx.getLicenseList()) {
+			System.out.println("LicName : "+income.getLicName());
 		}
 	}
 	//@Test

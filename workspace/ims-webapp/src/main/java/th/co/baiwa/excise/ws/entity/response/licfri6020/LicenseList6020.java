@@ -1,6 +1,8 @@
 
 package th.co.baiwa.excise.ws.entity.response.licfri6020;
 
+import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -108,6 +110,8 @@ public class LicenseList6020 {
     @SerializedName("FacEmail")
     @Expose
     private String facEmail;
+    
+    private List<String> year;
 
     public String getOffcode() {
         return offcode;
@@ -380,5 +384,17 @@ public class LicenseList6020 {
     public void setFacEmail(String facEmail) {
         this.facEmail = facEmail;
     }
+
+	public List<String> getYear() {
+		return year;
+	}
+
+	public void setYear(List<String> year) {
+		this.year = year;
+	}
+
+	
+    
+    
 
 }

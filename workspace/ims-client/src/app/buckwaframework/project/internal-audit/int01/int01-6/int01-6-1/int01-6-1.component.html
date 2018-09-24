@@ -1,117 +1,113 @@
 <div class="ui grid">
     <div class="sixteen wide column">
-        <h2 class="ui header">ตรวจสอบสถิติการต่ออายุใบอนุญาต</h2>
 
         <div class="ui top attached header">
-            <span>สถิติการต่ออายุใบอนุญาต</span>
+            <span><h3>ตรวจสอบสถิติการต่ออายุใบอนุญาต</h3></span>
         </div>
 
         <div class="ui attached segment">
             <div class="ui form">
+                <input type="hidden" id="searchFlag">
                 <div class="inline fields">
-                    <div class="four wide field"></div>
-                    <div class="eight wide field">
-                        <label class="custom-label-w-25">สำนักงานสรรพสามิตภาค</label>
-                        <select name="selectZone" id="selectZone" class="ui dropdown ai">
-                            <option *ngFor="let item of zoneList; index as i;" value="{{i+1}}">{{item.value}}</option>
+                    <div class="three wide field"></div>
+                    <div class="two wide field">
+                        <label>สำนักงานสรรพสามิตภาค</label>
+                    </div>
+                    <div class="seven wide field">
+                        <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)">
+                            <option value="">เลือก</option>
+                            <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="inline fields">
+                    <div class="three wide field"></div>
+                    <div class="two wide field">
+                        <label>สำนักงานสรรพสามิตพื้นที่</label>
+                    </div>
+                    <div class="seven wide field">
+                        <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)">
+                            <option value="">เลือก</option>
+                            <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="inline fields">
+                    <div class="three wide field"></div>
+                    <div class="two wide field">
+                        <label>สำนักงานสรพพสามิตสาขา</label>
+                    </div>
+                    <div class="seven wide field">
+                        <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3" (change)="setTravelTo($event)">
+                            <option value="">เลือก</option>
+                            <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="inline fields">
-                    <div class="four wide field"></div>
-                    <div class="eight wide field">
-                        <label class="custom-label-w-25">สำนักงานสรรพสามิตพื้นที่</label>
-                        <select name="selectArea" id="selectArea" class="ui dropdown ai">
-                            <option *ngFor="let item of areaList; index as i;" value="{{i+1}}">{{item.value}}</option>
-                        </select>
+                    <div class="three wide field"></div>
+                    <div class="two wide required field">
+                        <label>ระยะเวลาที่ตรวจสอบ</label>
                     </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="four wide field"></div>
-                    <div class="eight wide field">
-                        <label class="custom-label-w-25">สำนักงานสรรพสามิตพื้นที่สาขา</label>
-                        <select name="selectSubArea" id="selectSubArea" class="ui dropdown ai">
-                            <option *ngFor="let item of subAreaList; index as i;" value="{{i+1}}">{{item.value}}</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="four wide field"></div>
-                    <div class="eight wide field">
-                        <label class="custom-label-w-25">สินค้าและบริการ</label>
-                        <select name="selectSubArea" id="selectSubArea" class="ui dropdown ai">
-                            <option *ngFor="let item of subAreaList; index as i;"></option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="four wide field"></div>
-                    <div class="two wide field ">
-                        <label class="custom-label-w-35">วันที่
-                        </label>
-                    </div>
-                    <div class="three wide field">
-                        <div class="ui calendar" id="calendar1" style="width:100%">
-                            <div class="ui input left icon">
-                                <i class="time icon"></i>
-                                <input type="text" name="endDate" id="endDate">
-                            </div>
+                    <div class="three wide field ui calendar" id="date1">
+                        <div class="ui input left icon">
+                            <i class="time icon"></i>
+                            <input type="calendar" readonly="" id="dateIn1" [attr.required]="true" autocomplete="off">
                         </div>
                     </div>
-                    <label>ถึง</label>
-                    <div class="three wide field">
-                        <div class="ui calendar" id="calendar2" style="width:100%">
-                            <div class="ui input left icon">
-                                <i class="time icon"></i>
-                                <input type="text" name="endDate" id="endDate">
-                            </div>
+
+                    <div class="one wide field">
+                        <label>ถึง</label>
+                    </div>
+                    <div class="three wide field ui calendar" id="date2">
+                        <div class="ui input left icon">
+                            <i class="time icon"></i>
+                            <input type="calendar" readonly="" id="dateIn2" [attr.required]="true" autocomplete="off">
                         </div>
                     </div>
                 </div>
             </div>
-
+            <br>
             <div class="ui center aligned grid">
                 <div class="eight wide column">
-                    <button class="ui mini primary button width-100" (click)="searchData()">
-                        <i class="search icon"></i>
-                        ค้นหา
-                    </button>
-                    <button class="ui mini button width-100" (click)="clearData()">
-                        <i class="refresh icon"></i>
-                        ล้างข้อมูล
-                    </button>
+                    <button class="ui primary button" (click)="createTrAndDataTable()">ค้นหา</button>
+                    <button class="ui button " (click)="clickClear()">ล้างข้อมูล</button>
                 </div>
             </div>
+            <br>
         </div>
-        <br>
 
-        <div class="ui segment">
-            <div style="overflow-x: scroll;">
-                <table id="table1" class="ui small celled table">
+        <div class="ui {{ loading? 'loading' : '' }} segment">
+
+            <div style="overflow-x: auto;white-space: nowrap;">
+                <table id="table" class="ui small celled table nowrap " style="width: 100%">
                     <thead>
-                        <tr style="text-align: center;">
-                            <th>ผู้ประกอบการ</th>
-                            <th>ประเภทใบอนุญาต</th>
-                            <th>กันยายน</th>
-                            <th>ตุลาคม </th>
-                            <th>พฤศจิกายน </th>
-                            <th>ธันวาคม </th>
-                            <th>มกราคม </th>
-                            <th>กุมภาพันธ์ </th>
-                            <th>มีนาคม </th>
-                            <th>เมษายน </th>
-                            <th>พฤษภาคม </th>
-                            <th>มิถุนายน </th>
-                            <th>กรกฎาคม</th>
-
+                        <tr>
+                            <th rowspan="2" style="text-align: center !important;">ผู้ประกอบการ</th>
+                            <th rowspan="2" style="text-align: center !important;">ประเภทใบอนุญาต</th>
+                            <th rowspan="1" colspan="2" style="text-align: center !important;" *ngFor="let data of trHtml1">{{data}}</th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center !important;" *ngFor="let data of trHtml2">{{data}}</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <tr class="text-center" *ngFor="let data of dataT">
+                            <td style="text-align: center !important;">{{data.CusFullName}}</td>
+                            <td style="text-align: center !important;">{{data.LicName}}</td>
+                            <td style="text-align: center !important;" *ngFor="let data2 of trHtml2; let i=index" class="{{data.year[i]==''?'bg-row-highlight':''}}">{{data.year[i]}}</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
+            <br>
+            <div class="ui center aligned grid">
+                <div class="sixteen wide column">
+                    <button type="button" class="ui button orange">ส่งออก</button>
+                </div>
+            </div>
+            <br>
         </div>
 
     </div>

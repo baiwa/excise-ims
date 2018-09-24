@@ -1,5 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter } from "../../../../../common/helper";
+import { AjaxService, MessageBarService } from "../../../../../common/services";
+import { Router, ActivatedRoute } from "@angular/router";
+import { TravelService } from "../../../../../common/services/travel.service";
+import { forEach } from "@angular/router/src/utils/collection";
+import { monthsToNumber } from "helpers/datepicker";
 declare var $: any;
 @Component({
   selector: "app-int01-7-1",
@@ -7,123 +12,146 @@ declare var $: any;
   styleUrls: ["./int01-7-1.component.css"]
 })
 export class Int0171Component implements OnInit {
-  zoneList: any[];
-  areaList: any[];
-  subAreaList: any[];
-  companyList: any[];
 
-  constructor() {}
+  travelTo1List: any;
+  travelTo2List: any;
+  travelTo3List: any;
+
+  offcode: any;
+  yearMonthFrom: any;
+  yearMonthTo: any;
+  pageNo: any;
+  dataPerPage: any;
+  searchFlag: any = "FALSE";
+
+  constructor(
+    private ajax: AjaxService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private msg: MessageBarService,
+    private travelService: TravelService
+  ) { }
 
   ngOnInit() {
-
-    $("#calendar1").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-
-    });
-
-    $("#calendar2").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    });
-    
-    $(".ui.dropdown").dropdown();
-    $(".ui.dropdown.ai").css("width", "100%");
-    this.zoneList = [
-      { value: "สำนักงานสรรพสามิตภาคที่ 1" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 2" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 3" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 4" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 5" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 6" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 7" }
-    ];
-
-    this.areaList = [
-      { value: "สำนักงานสรรพสามิตพื้นที่สมุทรสาคร" },
-      { value: "สำนักงานสรรพสามิตพื้นที่สมุทรสงคราม" },
-      { value: "สำนักงานสรรพสามิตพื้นที่สมุทรปราการ" }
-    ];
-
-    this.subAreaList = [
-      { value: "สาขาเมือง 1" },
-      { value: "สาขาเมือง 2" },
-      { value: "สาขาเมือง 3" },
-      { value: "สาขาเมือง 4" }
-    ];
-
-    this.companyList = [
-      { value: "ทั้งหมด" },
-      { value: "บ. ฮอนด้า มอเตอร์ ประเทศไทย" },
-      { value: "บ. โตโยต้า มอเตอร์ ประเทศไทย" },
-      { value: "บ. นิสสัน มอเตอร์ ประเทศไทย" }
-    ];
+    this.calenda();
+    this.travelTo1Dropdown();
+    this.dataTable();
   }
 
   ngAfterViewInit() {
-    this.initDatatable();
   }
 
-  initDatatable() {
-    let tableMock = [
-      {
-        "1": "ยส.ป1.ปลูกเอง",
-        "2": "สภ. 08-17",
-        "3": "239821",
-        "4": "1490",
-        "5": "4"
-      },
-      {
-        "1": "ไพ่ ป1.",
-        "2": "สภ. 04-23",
-        "3": "239822",
-        "4": "1491",
-        "5": "2"
-      },
-      {
-        "1": "ยส.ผลิต ยาเส้นปรุง",
-        "2": "สภ. 04-06",
-        "3": "239823",
-        "4": "1492",
-        "5": "2"
-      }
-    ];
 
-    $("#table1").DataTable({
-      lengthChange: false,
-      searching: false,
-      ordering: false,
-      pageLength: 10,
-      processing: true,
-      serverSide: false,
-      paging: false,
-      info: false,
-      pagingType: "full_numbers",
-      data: tableMock,
-      columns: [
-        {
-          data: "1"
-        },
-        {
-          data: "2"
-        },
-        {
-          data: "3",
-          className: "right"
-        },
-        {
-          data: "4",
-          className: "right"
-        },
-        {
-          data: "5",
-          className: "right"
-        }
-      ]
+  initDatatable() {
+
+  }
+  calenda = () => {
+    $("#date1").calendar({
+      endCalendar: $("#date2"),
+      type: "month",
+      text: TextDateTH,
+      formatter: formatter('ดป')
+
     });
+    $("#date2").calendar({
+      startCalendar: $("#date1"),
+      type: "month",
+      text: TextDateTH,
+      formatter: formatter('ดป')
+
+    });
+  }
+chicksearch=()=>{
+  let yearFrom = parseInt($("#dateIn1").val().split(" ")[1])-543;
+  let yearTo =   parseInt($("#dateIn2").val().split(" ")[1])-543;
+
+  this.offcode = "100300";
+  this.yearMonthFrom = String(yearFrom)+monthsToNumber($("#dateIn1").val().split(" ")[0]);
+  this.yearMonthTo =   String(yearTo)+monthsToNumber($("#dateIn2").val().split(" ")[0]);
+  this.pageNo = '1';
+  this.dataPerPage = '1000';
+  this.searchFlag = "TRUE";
+    $('#table').DataTable().ajax.reload();
+ 
+}
+
+clickClear = function () {
+  this.searchFlag = "FALSE";
+  $('input[type=text]').val("");
+  $('select').val("");
+  $('input[type=calendar]').val("");
+  $('#table').DataTable().ajax.reload();
+}
+  
+
+ dataTable = () =>{
+  var table = $('#table').DataTable({
+    "lengthChange": true,
+    "serverSide": false,
+    "searching": false,
+    "ordering": false,
+    "processing": true,
+    "scrollX": true,
+    "ajax": {
+      "url": '/ims-webapp/api/ia/int0171/list',
+      "contentType": "application/json",
+      "type": "POST",
+      "data": (d) => {
+        return JSON.stringify($.extend({}, d, {
+          searchFlag:this.searchFlag,
+          offcode: this.offcode,
+          yearMonthFrom: this.yearMonthFrom, 
+          yearMonthTo: this.yearMonthTo,
+          pageNo: this.pageNo,
+          dataPerPage: this.dataPerPage
+        }));
+      },
+    },
+    "columns": [
+     {
+        "data": "CusFullName"
+      }, {
+        "data": "LicName"
+      }, {
+        "data": "LicCode"
+      }, {
+        "data": "LicType"
+      }, {
+        "data": "PrintCount"
+      }
+    ]
+  });
+}
+
+  travelTo1Dropdown = () => {
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: "SECTOR_VALUE" }, res => {
+      this.travelTo1List = res.json();
+    });
+  }
+
+  travelTo2Dropdown = e => {
+    var id = e.target.value;
+    if (id != "") {
+      const URL = "combobox/controller/getDropByTypeAndParentId";
+      this.ajax.post(URL, { type: "SECTOR_VALUE", lovIdMaster: id }, res => {
+        this.travelTo2List = res.json();
+        this.setTravelTo(e);
+      });
+    }
+  }
+
+  travelTo3Dropdown = e => {
+    var id = e.target.value;
+    if (id != "") {
+      const URL = "combobox/controller/getDropByTypeAndParentId";
+      this.ajax.post(URL, { type: "SECTOR_VALUE", lovIdMaster: id }, res => {
+        this.travelTo3List = res.json();
+        this.setTravelTo(e);
+      });
+    }
+  }
+  setTravelTo = e => {
+    console.log(" e.target.value : ", e.target.value);
   }
 }

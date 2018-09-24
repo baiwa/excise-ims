@@ -1,5 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter } from "../../../../../common/helper";
+import { AjaxService, MessageBarService } from "../../../../../common/services";
+import { Router, ActivatedRoute } from "@angular/router";
+import { TravelService } from "../../../../../common/services/travel.service";
+import { forEach } from "@angular/router/src/utils/collection";
 declare var $: any;
 @Component({
   selector: "app-int01-6-1",
@@ -7,258 +11,150 @@ declare var $: any;
   styleUrls: ["./int01-6-1.component.css"]
 })
 export class Int0161Component implements OnInit {
-  zoneList: any[];
-  areaList: any[];
-  subAreaList: any[];
-  companyList: any[];
 
-  showData: boolean = false;
+  dataT: any[]= [];
+  loading: boolean = false;
 
-  constructor() {}
+  stringColumns: any;
+
+  travelTo1List: any;
+  travelTo2List: any;
+  travelTo3List: any;
+
+  trHtml1: any[] = [];
+  trHtml2: any[] = [];
+
+  yearForm: any=0;
+  yearTo: any=0;
+
+  nid: any;
+  newregId: any;
+  pageNo: any;
+  dataPerPage: any;
+
+  constructor(
+    private ajax: AjaxService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private msg: MessageBarService,
+    private travelService: TravelService
+  ) { }
 
   ngOnInit() {
-
-          
-    $("#calendar1").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-
-    });
-
-    $("#calendar2").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-
-    });
-    $(".ui.dropdown").dropdown();
-    $(".ui.dropdown.ai").css("width", "100%");
-    this.zoneList = [
-      { value: "สำนักงานสรรพสามิตภาคที่ 1" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 2" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 3" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 4" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 5" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 6" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 7" }
-    ];
-
-    this.areaList = [
-      { value: "สำนักงานสรรพสามิตพื้นที่สมุทรสาคร" },
-      { value: "สำนักงานสรรพสามิตพื้นที่สมุทรสงคราม" },
-      { value: "สำนักงานสรรพสามิตพื้นที่สมุทรปราการ" }
-    ];
-
-    this.subAreaList = [
-      { value: "สาขาเมือง 1" },
-      { value: "สาขาเมือง 2" },
-      { value: "สาขาเมือง 3" },
-      { value: "สาขาเมือง 4" }
-    ];
-
-    this.companyList = [
-      { value: "ทั้งหมด" },
-      { value: "บ. ฮอนด้า มอเตอร์ ประเทศไทย" },
-      { value: "บ. โตโยต้า มอเตอร์ ประเทศไทย" },
-      { value: "บ. นิสสัน มอเตอร์ ประเทศไทย" }
-    ];
+    this.calenda();
+    this.travelTo1Dropdown();
   }
 
   ngAfterViewInit() {
-    this.initDatatable();
   }
 
+
   initDatatable() {
-    let tableMock = [
-      {
-        "1": "A",
-        "2": "สร.ป2.VAT",
-        "3": "05/09/1960",
-        "4": "05/09/1960",
-        "5": "05/02/1960",
-        "6": "05/03/1960",
-        "7": "",
-        "8": "",
-        "9": "",
-        "10": "05/09/1960",
-        "11": "05/09/1960",
-        "12": "",
-        "13": "05/09/1960"
-      },
-      {
-        "1": "A",
-        "2": "ยส.ป2.ผลิตภัณฑ์",
-        "3": "05/09/1960",
-        "4": "",
-        "5": "",
-        "6": "05/09/1960",
-        "7": "05/09/1960",
-        "8": "",
-        "9": "05/09/1960",
-        "10": "05/09/1960",
-        "11": "",
-        "12": "",
-        "13": "05/09/1960"
-      },
-      {
-        "1": "A",
-        "2": "ไพ่ ป2. VAT",
-        "3": "700",
-        "4": "05/09/1960",
-        "5": "",
-        "6": "",
-        "7": "05/09/1960",
-        "8": "05/09/1960",
-        "9": "05/09/1960",
-        "10": "05/09/1960",
-        "11": "",
-        "12": "",
-        "13": "05/09/1960"
-      },
-      {
-        "1": "B",
-        "2": "สร.ป2.VAT",
-        "3": "05/09/1960",
-        "4": "",
-        "5": "",
-        "6": "",
-        "7": "05/09/1960",
-        "8": "05/09/1960",
-        "9": "",
-        "10": "05/09/1960",
-        "11": "",
-        "12": "05/09/1960",
-        "13": ""
-      },
-      {
-        "1": "B",
-        "2": "ยส.ป2.ผลิตภัณฑ์",
-        "3": "",
-        "4": "05/09/1960",
-        "5": "05/09/1960",
-        "6": "",
-        "7": "05/09/1960",
-        "8": "05/09/1960",
-        "9": "05/09/1960",
-        "10": "",
-        "11": "05/09/1960",
-        "12": "",
-        "13": "05/09/1960"
-      },
-      {
-        "1": "B",
-        "2": "ไพ่ ป2. VAT",
-        "3": "05/09/1960",
-        "4": "",
-        "5": "05/09/1960",
-        "6": "",
-        "7": "",
-        "8": "",
-        "9": "05/09/1960",
-        "10": "05/09/1960",
-        "11": "05/09/1960",
-        "12": "05/09/1960",
-        "13": "05/09/1960"
-      }
-    ];
 
-    let tableId = "#table1";
+  }
+  calenda = () => {
+    $("#date1").calendar({
+      endCalendar: $("#date2"),
+      type: "year",
+      text: TextDateTH,
+      formatter: formatter('ป')
 
-    let backgroundRowColor = (data, type, row, meta) => {
-      if (!data) {
-        let table = $(tableId).DataTable();
-        let cell = table.cell(meta.row, meta.col).node();
-        $(cell).addClass("bg-row-highlight");
-      }
-      return data;
-    };
+    });
+    $("#date2").calendar({
+      startCalendar: $("#date1"),
+      type: "year",
+      text: TextDateTH,
+      formatter: formatter('ป')
 
-    $("#table1").DataTable({
-      lengthChange: false,
-      searching: false,
-      ordering: false,
-      pageLength: 10,
-      processing: true,
-      serverSide: false,
-      paging: false,
-      info: false,
-      pagingType: "full_numbers",
-      data: tableMock,
-      columns: [
-        {
-          data: "1"
-        },
-        {
-          data: "2",
-          render: backgroundRowColor
-        },
-        {
-          data: "3",
-          render: backgroundRowColor,
-          className: "center"
-        },
-        {
-          data: "4",
-          render: backgroundRowColor,
-          className: "center"
-        },
-        {
-          data: "5",
-          render: backgroundRowColor,
-          className: "center"
-        },
-        {
-          data: "6",
-          render: backgroundRowColor,
-          className: "center"
-        },
-        {
-          data: "7",
-          render: backgroundRowColor,
-          className: "center"
-        },
-        {
-          data: "8",
-          render: backgroundRowColor,
-          className: "center"
-        },
-        {
-          data: "9",
-          render: backgroundRowColor,
-          className: "center"
-        },
-        {
-          data: "10",
-          render: backgroundRowColor,
-          className: "center"
-        },
-        {
-          data: "11",
-          render: backgroundRowColor,
-          className: "center"
-        },
-        {
-          data: "12",
-          render: backgroundRowColor,
-          className: "center"
-        },
-        {
-          data: "13",
-          render: backgroundRowColor,
-          className: "center"
-        }
-      ]
     });
   }
 
-  searchData(): void {
-    this.showData = true;
+  clickClear = function () {
+    $("#searchFlag").val("FALSE");
+    $('input[type=text]').val("");
+    $('select').val("");
+    $('input[type=calendar]').val("");
   }
 
-  clearData(): void {
-    this.showData = false;
+ getdata = () =>{
+  this.loading = true;
+  this.nid="0105555155742";
+	this.newregId="";
+	this.pageNo="0";
+  this.dataPerPage="1000";
+  this.dataT= [];
+  const URL = "ia/int0161/list";
+      this.ajax.post(URL, { 
+        nid: this.nid, 
+        newregId: this.newregId,
+        pageNo: this.pageNo,
+        dataPerPage: this.dataPerPage,
+        yearForm:this.yearForm,
+        yearTo:this.yearTo
+      }, async res => {
+        const licenseList6020List = await res.json();
+
+        setTimeout(() => {
+          this.loading = false;
+        },200);
+        
+      licenseList6020List.forEach(element => {
+        this.dataT.push(element);
+      });
+      console.log("dataT : ",this.dataT);
+      });
+ }
+  createTrAndDataTable = async () => {
+
+    this.yearForm = await parseInt($("#dateIn1").val());
+    this.yearTo = await parseInt($("#dateIn2").val());
+    var yearNo = await this.yearTo - this.yearForm;
+
+    this.getdata();
+    this.trHtml1 = [];
+    this.trHtml2 = [];
+
+    console.log("yearForm :", this.yearForm);
+    console.log("yearTo :", this.yearTo);
+
+    for (let i = this.yearForm; i <= this.yearTo; i++) {
+       this.trHtml1.push(i);
+       this.trHtml2.push("วันที่มีผลบังคับใช้");
+       this.trHtml2.push("วันที่หมดอายุ");
+    }
+    
+ 
+  }
+
+  travelTo1Dropdown = () => {
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: "SECTOR_VALUE" }, res => {
+      this.travelTo1List = res.json();
+    });
+  }
+
+  travelTo2Dropdown = e => {
+    var id = e.target.value;
+    if (id != "") {
+      const URL = "combobox/controller/getDropByTypeAndParentId";
+      this.ajax.post(URL, { type: "SECTOR_VALUE", lovIdMaster: id }, res => {
+        this.travelTo2List = res.json();
+        this.setTravelTo(e);
+      });
+    }
+  }
+
+  travelTo3Dropdown = e => {
+    var id = e.target.value;
+    if (id != "") {
+      const URL = "combobox/controller/getDropByTypeAndParentId";
+      this.ajax.post(URL, { type: "SECTOR_VALUE", lovIdMaster: id }, res => {
+        this.travelTo3List = res.json();
+        this.setTravelTo(e);
+      });
+    }
+  }
+  setTravelTo = e => {
+    console.log(" e.target.value : ", e.target.value);
   }
 }
