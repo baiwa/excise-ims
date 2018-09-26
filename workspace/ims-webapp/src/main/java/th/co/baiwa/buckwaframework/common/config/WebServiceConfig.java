@@ -7,58 +7,94 @@ import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import baiwa.co.th.ws.LoginLdap;
 import th.co.baiwa.exampleproject.ws.consumer.currentdate.operation.CurrentDate;
+import th.go.excise.dexsrvint.wsdl.ldapgateway.ldpagauthenandgetuserrole.LDPAGAuthenAndGetUserRolePortType;
 
 @Configuration
 public class WebServiceConfig {
+
 	public class ClientConfig {
-	
-	@Bean(name = "currentDateProxy")
-	public CurrentDate currentDateProxy() {
-		JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
-		jaxWsProxyFactoryBean.setServiceClass(CurrentDate.class);
-		jaxWsProxyFactoryBean.setAddress("http://150.95.24.42:8080/SystemCurrentDate/services/CurrentDate");
+
+		@Value("${wsdl.endpoint.ws.lpap}")
+		private String exciseLdap;
 		
-		CurrentDate currentDateProxy = (CurrentDate) jaxWsProxyFactoryBean.create();
 		
-		Client client = ClientProxy.getClient(currentDateProxy);
-		HTTPConduit http = (HTTPConduit) client.getConduit();
-		HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
-		httpClientPolicy.setConnectionTimeout(36000);
-		httpClientPolicy.setReceiveTimeout(36000);
-		httpClientPolicy.setAllowChunking(false);
-		http.setClient(httpClientPolicy);
+		@Value("${wsdl.endpoint.ws.current.date}")
+		private String currentDate;
 		
-		client.getInInterceptors().add(new LoggingInInterceptor());
-		client.getOutInterceptors().add(new LoggingOutInterceptor());
-		
-		return currentDateProxy;
+		@Value("${wsdl.endpoint.ws.lpap.dev}")
+		private String ldapDev;
+
+		@Bean(name = "currentDateProxy")
+		public CurrentDate currentDateProxy() {
+			JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
+			jaxWsProxyFactoryBean.setServiceClass(CurrentDate.class);
+			jaxWsProxyFactoryBean.setAddress(currentDate);
+
+			CurrentDate currentDateProxy = (CurrentDate) jaxWsProxyFactoryBean.create();
+
+			Client client = ClientProxy.getClient(currentDateProxy);
+			HTTPConduit http = (HTTPConduit) client.getConduit();
+			HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
+			httpClientPolicy.setConnectionTimeout(36000);
+			httpClientPolicy.setReceiveTimeout(36000);
+			httpClientPolicy.setAllowChunking(false);
+			http.setClient(httpClientPolicy);
+
+			client.getInInterceptors().add(new LoggingInInterceptor());
+			client.getOutInterceptors().add(new LoggingOutInterceptor());
+
+			return currentDateProxy;
+		}
+
+		@Bean(name = "loginLdapProxy")
+		public LoginLdap loginLdapProxy() {
+			JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
+			jaxWsProxyFactoryBean.setServiceClass(LoginLdap.class);
+			jaxWsProxyFactoryBean.setAddress(ldapDev);
+
+			LoginLdap loginLdapProxy = (LoginLdap) jaxWsProxyFactoryBean.create();
+
+			Client client = ClientProxy.getClient(loginLdapProxy);
+			HTTPConduit http = (HTTPConduit) client.getConduit();
+			HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
+			httpClientPolicy.setConnectionTimeout(36000);
+			httpClientPolicy.setReceiveTimeout(36000);
+			httpClientPolicy.setAllowChunking(false);
+			http.setClient(httpClientPolicy);
+
+			client.getInInterceptors().add(new LoggingInInterceptor());
+			client.getOutInterceptors().add(new LoggingOutInterceptor());
+
+			return loginLdapProxy;
+		}
+
+		@Bean(name = "ldapgAuthenAndGetUserRolePortTypeProxy")
+		public LDPAGAuthenAndGetUserRolePortType ldapgAuthenAndGetUserRolePortTypeProxy() {
+			JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
+			jaxWsProxyFactoryBean.setServiceClass(LDPAGAuthenAndGetUserRolePortType.class);
+			jaxWsProxyFactoryBean.setAddress(exciseLdap);
+
+			LDPAGAuthenAndGetUserRolePortType ldapgAuthenAndGetUserRolePortTypeProxy = (LDPAGAuthenAndGetUserRolePortType) jaxWsProxyFactoryBean.create();
+
+			Client client = ClientProxy.getClient(ldapgAuthenAndGetUserRolePortTypeProxy);
+			HTTPConduit http = (HTTPConduit) client.getConduit();
+			HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
+			httpClientPolicy.setConnectionTimeout(36000);
+			httpClientPolicy.setReceiveTimeout(36000);
+			httpClientPolicy.setAllowChunking(false);
+			http.setClient(httpClientPolicy);
+
+			client.getInInterceptors().add(new LoggingInInterceptor());
+			client.getOutInterceptors().add(new LoggingOutInterceptor());
+
+			return ldapgAuthenAndGetUserRolePortTypeProxy;
+		}
+
 	}
-	
-	@Bean(name = "loginLdapProxy")
-	public LoginLdap loginLdapProxy() {
-		JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
-		jaxWsProxyFactoryBean.setServiceClass(LoginLdap.class);
-		jaxWsProxyFactoryBean.setAddress("http://150.95.24.42:8080/LdapUserLogin/services/LoginLdap");
-		
-		LoginLdap loginLdapProxy = (LoginLdap) jaxWsProxyFactoryBean.create();
-		
-		Client client = ClientProxy.getClient(loginLdapProxy);
-		HTTPConduit http = (HTTPConduit) client.getConduit();
-		HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
-		httpClientPolicy.setConnectionTimeout(36000);
-		httpClientPolicy.setReceiveTimeout(36000);
-		httpClientPolicy.setAllowChunking(false);
-		http.setClient(httpClientPolicy);
-		
-		client.getInInterceptors().add(new LoggingInInterceptor());
-		client.getOutInterceptors().add(new LoggingOutInterceptor());
-		
-		return loginLdapProxy;
-	}
-	
-}}
+}

@@ -89,7 +89,7 @@ public class QtnMasterService {
 		Message msg;
 
 		CommonMessage<QtnMaster> response = new CommonMessage<>();
-		String code = UserLoginUtils.getCurrentUserBean().getOfficeCode(); // 010100
+		String code = UserLoginUtils.getCurrentUserBean().getOfficeId(); // 010100
 		String user = UserLoginUtils.getCurrentUserBean().getUsername();
 		if (BeanUtils.isEmpty(code)) { // Pull UserBean from WebServiceLDAP
 			code = webService.webServiceLdap(user, "password").getOffice();

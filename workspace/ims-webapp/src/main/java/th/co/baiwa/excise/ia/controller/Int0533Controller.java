@@ -39,7 +39,7 @@ public class Int0533Controller {
 	public Message addAssetBalance(@RequestBody Int0533Vo int0533Vo) {
 		Message message = null;
 		logger.info("addAssetBalance" + int0533Vo.getAssetBalance().getAssetType());
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeId();
 
 		AssetBalance assetBalance = int0533Vo.getAssetBalance();
 		assetBalance.setExciseDepartment(officeCode.substring(0, 2));

@@ -10,7 +10,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -337,7 +336,7 @@ public class PlanWorksheetHeaderService {
 	}
 	public Integer approveByExciseList(RequestFilterMapping vo) {
 		int count = 0;
-		String office = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String office = UserLoginUtils.getCurrentUserBean().getOfficeId();
 		boolean isCentral = "00".equals(office.substring(0, 2));
 		for (String exice : vo.getExiceList()) {
 			PlanWorksheetHeader planWorksheetHeader = new PlanWorksheetHeader();

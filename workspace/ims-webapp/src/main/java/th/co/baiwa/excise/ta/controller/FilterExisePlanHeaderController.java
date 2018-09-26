@@ -105,7 +105,7 @@ public class FilterExisePlanHeaderController {
 	@PostMapping("/getOfficeCodeByUserLogin")
 	@ResponseBody
 	public String getOfficeCodeByUserLogin(@ModelAttribute PlanWorksheetHeaderDetail vo) {
-		logger.info("getOfficeCodeByUserLogin : " + UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		return UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		logger.info("getOfficeCodeByUserLogin : " + UserLoginUtils.getCurrentUserBean().getOfficeId());
+		return UserLoginUtils.getCurrentUserBean().getOfficeId();
 	}
 }

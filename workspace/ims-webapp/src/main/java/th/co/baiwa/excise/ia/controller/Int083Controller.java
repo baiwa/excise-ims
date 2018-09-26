@@ -115,7 +115,7 @@ public class Int083Controller {
 	@PostMapping("/createBudgetYear")
 	@ResponseBody
 	public Message createBuggetYear(@RequestBody RiskAssExcAreaHdr riskAssRiskWsHdr) {
-		System.out.println(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		System.out.println(UserLoginUtils.getCurrentUserBean().getOfficeId());
 		logger.info("Add createBuggetYear" + riskAssRiskWsHdr.getBudgetYear());
 		Message message =  null;
 		if(BeanUtils.isNotEmpty(riskAssRiskWsHdr.getBudgetYear())){
