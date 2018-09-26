@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter } from "helpers/datepicker";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var $: any;
 @Component({
@@ -8,7 +9,14 @@ declare var $: any;
   styleUrls: ["./int06-7-1.component.css"]
 })
 export class Int0671Component implements OnInit {
-  constructor() {}
+  breadcrumb: BreadCrumb[] = [];
+  constructor() {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบเบิกจ่าย", route: "#" },
+      { label: "ตรวจการเบิกค่าสาธารณูปโภค", route: "#" }
+    ];
+  }
 
   ngOnInit() {
     $("#start")
