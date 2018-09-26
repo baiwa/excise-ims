@@ -86,6 +86,8 @@ export class AuthService {
     var countInpage = 0;
     if (this.authenPages != null && this.authenPages != undefined && this.authenPages.length > 0) {
       var pageList = pages.split(',');
+      //console.log(pageList);
+      //console.log(this.authenPages);
       pageList.forEach(element => {
         if (this.authenPages.indexOf(element) >= 0) {
           countInpage++;

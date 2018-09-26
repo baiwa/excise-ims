@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.ExciseAuthen;
-import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.ExciseAuthenRepository;
-import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.UserRepository;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.UserManagement;
 import th.co.baiwa.buckwaframework.preferences.service.UserManagementService;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;

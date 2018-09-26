@@ -18,6 +18,8 @@ public class RequestFilterMapping extends DataTableRequest{
 	private String exciseId;
 	private List<String> exiceList;
 	private String sector;
+	private String central;
+	private String viewStatus;
 	
 	public String getAnalysNumber() {
 		return analysNumber;
@@ -90,6 +92,18 @@ public class RequestFilterMapping extends DataTableRequest{
 	}
 	public void setSector(String sector) {
 		this.sector = sector;
+	}
+	public String getViewStatus() {
+		return viewStatus;
+	}
+	public void setViewStatus(String viewStatus) {
+		this.viewStatus = viewStatus;
+	}
+	public String getCentral() {
+		return central;
+	}
+	public void setCentral(String central) {
+		this.central = central;
 	}
 	
 }

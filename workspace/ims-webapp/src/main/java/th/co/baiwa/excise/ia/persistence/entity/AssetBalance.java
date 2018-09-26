@@ -24,11 +24,15 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name="IA_ASSET_BALANCE")
 public class AssetBalance extends BaseEntity {
 	
-	private static final long serialVersionUID = -3315490565128876137L;
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -353958810945669226L;
 
 	@Id
-	@SequenceGenerator(name="IA_ASSET_BALANCE_ASSETBALANCEID_GENERATOR", sequenceName="IA_ASSET_BALANCE_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_ASSET_BALANCE_ASSETBALANCEID_GENERATOR")
+	@SequenceGenerator(name="IA_ASSET_BALANCE_GEN", sequenceName="IA_ASSET_BALANCE_SEQ" , allocationSize = 1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_ASSET_BALANCE_GEN")
 	@Column(name="ASSET_BALANCE_ID")
 	private Long assetBalanceId;
 

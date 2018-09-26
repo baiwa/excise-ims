@@ -40,7 +40,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     private ex: ExciseService
   ) { }
 
-  ngOnDestroy() {}
+  ngOnDestroy() { }
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
@@ -167,7 +167,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
 
     //on click condition modal
     $("#conditonModal").click(function () {
-      $("#modal-condition").modal("show");  
+      $("#modal-condition").modal("show");
     });
 
     this.listMenu = this.checkProductType(this.listMenu);

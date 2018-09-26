@@ -8,7 +8,9 @@
         <div class="inline fields">
           <div class="two wide field "></div>
           <div class="two wide field ">
-            <label class="text-right full-width">ส่วนราชการ</label>
+            <label class="text-right full-width">
+              <b style="color: red">*</b>ส่วนราชการ
+            </label>
 
           </div>
           <div class="four wide field ">
@@ -16,7 +18,7 @@
               [(ngModel)]="assetBalance.governmentSector">
           </div>
           <div class="two wide field ">
-            <label class="text-right full-width">หน่วยงาน</label>
+            <label class="text-right full-width"><b style="color: red">*</b>หน่วยงาน</label>
           </div>
           <div class="four wide field ">
             <input type="text" placeholder="หน่วยงาน" class="custom" name="institute" id="institute" [(ngModel)]="assetBalance.institute">
@@ -29,7 +31,21 @@
             <label class="text-right full-width">ประเภทสินทรัพย์</label>
           </div>
           <div class="four wide field ">
-            <input type="text" placeholder="ประเภทสินทรัพย์" class="custom" name="assetType" id="assetType" [(ngModel)]="assetBalance.assetType">
+            <!-- <input type="text" class="custom" name="assetType" id="assetType" [(ngModel)]="assetBalance.assetType"> -->
+            <select class="ui search dropdown ai" aria-placeholder="ประเภทสินทรัพย์" id="assetType" name="assetType"
+              [(ngModel)]="assetBalance.assetType">
+              <option value="0"></option>
+              <option value="ที่ดิน">ที่ดิน</option>
+              <option value="อาคาร/สิ่งก่อสร้าง">อาคาร/สิ่งก่อสร้าง</option>
+              <option value="ครุภัณฑ์สำนักงาน เกิน 5,000 บาท">ครุภัณฑ์สำนักงาน เกิน 5,000 บาท</option>
+              <option value="ครุภัณฑ์คอมพิวเตอร์ เกิน 5,000 บาท">ครุภัณฑ์คอมพิวเตอร์ เกิน 5,000 บาท</option>
+              <option value="อื่น ๆ เกิน 5,000 บาท">อื่น ๆ เกิน 5,000 บาท</option>
+              <option value="ครุภัณฑ์สำนักงาน ไม่เกิน 5,000 บาท">ครุภัณฑ์สำนักงาน ไม่เกิน 5,000 บาท</option>
+              <option value="ครุภัณฑ์คอมพิวเตอร์ ไม่เกิน 5,000 บาท">ครุภัณฑ์คอมพิวเตอร์ ไม่เกิน 5,000 บาท</option>
+              <option value="อื่น ๆ ไม่เกิน 5,000 บาท">อื่น ๆ ไม่เกิน 5,000 บาท</option>
+
+            </select>
+
           </div>
           <div class="two wide field ">
             <label class="text-right full-width">รหัสสินทรัพย์</label>
@@ -167,8 +183,14 @@
             <label class="text-right full-width">วันที่เอกสารได้รับสินทรัพย์</label>
           </div>
           <div class="four wide field ">
-            <input type="text" placeholder="วันที่เอกสารได้รับสินทรัพย์" class="custom" name="documentDate" id="documentDate"
-              [(ngModel)]="assetBalance.documentDate">
+
+            <div class="ui calendar" style="width:100%" id="documentDate">
+              <div class="ui input left icon">
+                <i class="calendar icon"></i>
+                <input type="calendar" placeholder="วันที่เอกสารได้รับสินทรัพย์" name="documentDate" [(ngModel)]="assetBalance.documentDate"
+                  autocomplete="off">
+              </div>
+            </div>
           </div>
           <div class="two wide field ">
             <label class="text-right full-width">เลขที่เอกสารสินทรัพย์</label>
@@ -197,7 +219,7 @@
             <label class="text-right full-width">จำนวนสินทรัพย์</label>
           </div>
           <div class="two wide field ">
-            <input type="text" placeholder="จำนวนสินทรัพย์" class="custom" name="assetAmount" id="assetAmount"
+            <input type="number" placeholder="จำนวนสินทรัพย์" class="custom" name="assetAmount" id="assetAmount"
               [(ngModel)]="assetBalance.assetAmount">
           </div>
           <div class="two wide field ">
@@ -212,7 +234,7 @@
           </div>
           <div class="two wide field ">
             <input type="number" placeholder="มูลค่ารวมสินทรัพย์" class="custom" name="totlePriceAsset" id="totlePriceAsset"
-              readonly [(ngModel)]="assetBalance.totlePriceAsset">
+              value="{{assetBalance.unitPriceAsset * assetBalance.assetAmount }}" readonly [(ngModel)]="assetBalance.totlePriceAsset">
           </div>
         </div>
 
@@ -222,26 +244,33 @@
             <label class="text-right full-width">อายุการใช้งานสินทรัพย์</label>
           </div>
           <div class="one wide field ">
-            <input type="text" placeholder="วัน" class="custom" name="day" id="day" [(ngModel)]="day">
+            <input type="number" placeholder="วัน" class="custom" name="day" id="day" [(ngModel)]="day">
           </div>
           <div class="one wide field ">
-            <input type="text" placeholder="เดือน" class="custom" name="day" id="day" [(ngModel)]="day">
+            <input type="number" placeholder="เดือน" class="custom" name="month" id="month" [(ngModel)]="month">
           </div>
           <div class="one wide field ">
-            <input type="text" placeholder="ปี" class="custom" name="day" id="day" [(ngModel)]="day">
+            <input type="number" placeholder="ปี" class="custom" name="year" id="year" [(ngModel)]="year">
           </div>
           <div class="one wide field ">
             <label class="text-right full-width">วันที่ผลิต/ใช้งาน</label>
           </div>
           <div class="two wide field ">
-            <input type="text" placeholder="วันที่ผลิต/ใช้งาน" class="custom" name="dateOfManufacture" id="dateOfManufacture"
-              [(ngModel)]="assetBalance.dateOfManufacture">
+
+
+            <div class="ui calendar" style="width:100%" id="dateOfManufacture">
+              <div class="ui input left icon">
+                <i class="calendar icon"></i>
+                <input type="calendar" placeholder="วันที่ผลิต/ใช้งาน" name="dateOfManufacture" [(ngModel)]="assetBalance.dateOfManufacture"
+                  autocomplete="off">
+              </div>
+            </div>
           </div>
           <div class="two wide field ">
             <label class="text-right full-width">อัตราค่าเสื่อมราคาสินทรัพย์</label>
           </div>
           <div class="two wide field ">
-            <input type="text" placeholder="เลขที่เอกสารสินทรัพย์" class="custom" name="depreciationRate" id="depreciationRate"
+            <input type="number" placeholder="เลขที่เอกสารสินทรัพย์" class="custom" name="depreciationRate" id="depreciationRate"
               readonly [(ngModel)]="assetBalance.depreciationRate">
           </div>
         </div>
@@ -289,21 +318,28 @@
           </div>
           <div class="two wide field ">
             <input type="number" placeholder="ครั้งที่ซ่อมบำรุงรักษา" class="custom" name="annualDepreciation" id="annualDepreciation"
-              readonly [(ngModel)]="assetMaintenance.maintenanceAmount">
+              [(ngModel)]="assetMaintenance.maintenanceAmount">
           </div>
           <div class="two wide field ">
             <label class="text-right full-width">วันที่ซ่อมบำรุงรักษา</label>
           </div>
           <div class="two wide field ">
-            <input type="text" placeholder="วันที่ซ่อมบำรุงรักษา" class="custom" name="accumulatedDepreciation" id="accumulatedDepreciation"
-              readonly [(ngModel)]="assetMaintenance.maintenanceDate">
+
+            <div class="ui calendar" style="width:100%" id="maintenanceDate">
+              <div class="ui input left icon">
+                <i class="calendar icon"></i>
+                <input type="calendar" placeholder="วันที่ซ่อมบำรุงรักษา" name="maintenanceDate" [(ngModel)]="assetBalance.maintenanceDate"
+                  autocomplete="off">
+              </div>
+            </div>
           </div>
+
           <div class="two wide field ">
             <label class="text-right full-width">จำนวนเงินค่าซ่อมบำรุงรักษา</label>
           </div>
           <div class="two wide field ">
             <input type="number" placeholder="จำนวนเงินค่าซ่อมบำรุงรักษา" class="custom" name="netValue" id="netValue"
-              readonly [(ngModel)]="assetMaintenance.maintenancePrice">
+              [(ngModel)]="assetMaintenance.maintenancePrice">
           </div>
         </div>
 
@@ -324,7 +360,8 @@
             <label class="text-right full-width">หมายเหตุ</label>
           </div>
           <div class="ten wide field ">
-            <textarea type="text" placeholder="หมายเหตุ" class="custom" name="assetNote" id="assetNote" [(ngModel)]="assetBalance.assetNote"></textarea>
+            <textarea type="text" placeholder="หมายเหตุ" class="custom" name="maintenanceNote" id="maintenanceNote"
+              [(ngModel)]="assetMaintenance.maintenanceNote"></textarea>
           </div>
 
         </div>
@@ -333,6 +370,8 @@
         <div class="inline field ui grid">
           <div class="sixteen wide center aligned column">
             <button class="ui button primary" type="button" (click)="addAction()">บันทึก</button>
+
+            <button class="ui button primary" type="button" (click)="cancel()">ยกเลิก</button>
           </div>
         </div>
       </div>

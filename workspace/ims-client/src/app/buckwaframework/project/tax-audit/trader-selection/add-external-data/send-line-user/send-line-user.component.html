@@ -1,3 +1,21 @@
+<div class="ui modal confirm">
+    <i class="close icon" style="margin-top: -50px"></i>
+    <div class="header">
+        เลือกปลายทาง
+    </div>
+
+    <div class="actions">
+        <div class="ui button primary" (click)="onSend('C')">ส่งให้ส่วนกลาง</div>
+        <div class="ui button primary" (click)="onSend('S')">ส่งให้ภาคพื่นที่</div>
+
+    </div>
+
+    <div class="ui grid">
+        <div class="sixteen wide center aligned column">
+            <button class="ui button" type="button">center</button>
+        </div>
+    </div>
+</div>
 <div class="ui grid">
     <div class="sixteen wide column">
         <h2 class="ui header">เพิ่มข้อมูลภายนอก</h2>
@@ -46,7 +64,8 @@
                     <div class="fourteen wide field"></div>
                     <div class="two wide field">
                         <input type="hidden" id="exciseId" value="EX" />
-                        <button type="button" id="exciseBtn" style="margin-left: auto" class="ui mini primary button right floated" (click)="linkToDetail()">
+                        <button type="button" id="exciseBtn" style="margin-left: auto" class="ui mini primary button right floated"
+                            (click)="linkToDetail()">
                             <i class="add icon"></i>
                             เพิ่มข้อมูล
                         </button>
@@ -86,7 +105,7 @@
                     </div>
                 </div>
             </div>
-            <form ngNativeValidate (submit)="onSend($event)">
+            <form ngNativeValidate (submit)="openModel()">
                 <div class="ui grid">
                     <div class="sixteen wide column">
                         <div style="overflow-x: scroll;overflow-y: hidden;padding-bottom: 14px;">

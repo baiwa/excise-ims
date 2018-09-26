@@ -11,7 +11,17 @@ public interface UserBean extends UserDetails {
 	
 	public String getUsername();
 	
-	public String getOfficeCode();
+	public String getUserThaiId();
+	public String getUserThaiName();
+	public String getUserThaiSurname();
+	public String getUserEngName();
+	public String getUserEngSurname();
+	public String getTitle();
+	public String getEmail();
+	public String getCnName();
+	public String getTelephoneNo();
+	public String getOfficeId();
+	public String getAccessAttr();
 	
 	public Collection<GrantedAuthority> getAuthorities();
 	
