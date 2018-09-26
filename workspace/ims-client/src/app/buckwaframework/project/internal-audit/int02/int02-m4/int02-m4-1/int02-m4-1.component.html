@@ -1,3 +1,4 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid" style="margin: 2%">
     <div class="sixteen wide column segments">
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
@@ -32,7 +33,10 @@
                     <div class="ui form">
                         <div class="inline fields">
                             <div class="sixteen aligned center wide field">
-                                <button class="fluid ui primary mini button" (click)="search()" type="button">ค้นหา</button>
+                                <button class="fluid ui primary mini button" (click)="search()" type="button">
+                                <i class="search icon"></i>
+                                    ค้นหา
+                                </button>
                             </div>
                         </div>
                     </div>

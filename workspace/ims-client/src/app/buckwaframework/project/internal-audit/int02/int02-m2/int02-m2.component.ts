@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-
+import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from "@angular/router";
 import { Questionnaire, _Questionnaire } from "./int02-m2.mock";
 import { AjaxService, MessageBarService } from "../../../../common/services";
-
+import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 declare var $: any;
 
 const URL = {
@@ -23,8 +24,23 @@ export class Int02M2Component implements OnInit {
   loading: boolean = true;
   saving: boolean = false;
   savings: boolean = false;
-  constructor(private ajax: AjaxService, private msg: MessageBarService) {
+
+  // BreadCrumb
+  breadcrumb: BreadCrumb[];
+
+  constructor(
+    private ajax: AjaxService, 
+    private msg: MessageBarService
+  ) {
     // TODO
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "แบบสอบทานระบบการควบคุมภายใน", route: "#" },
+      { label: "สร้างแบบสอบทานระบบการควบคุมภายใน", route: "#" },
+      { label: "เพิ่ม/แก้ไข ด้านแบบสอบทาน", route: "#" },
+      { label: "เพิ่ม/แก้ไข รายละเอียดแบบสอบทาน", route: "#" },
+    ];
+
   }
 
   /* hotkeys(event) { // On KeyDown

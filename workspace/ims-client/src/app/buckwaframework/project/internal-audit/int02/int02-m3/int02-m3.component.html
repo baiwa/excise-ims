@@ -1,3 +1,4 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui modal show transition hidden" style="height: calc(6em + 15px);">
     <i class="close icon"></i>
     <div class="header">
@@ -44,7 +45,6 @@
                     <span>จัดการข้อมูลแบบสอบทานระบบการควบคุมภายใน</span>
                 </div>
 
-
                 <div class="centered fifteen wide column ">
                     <div class="inline fields">
                         <div class="eight wide field" style="text-align: right">
@@ -53,7 +53,7 @@
                                 เพิ่ม
                             </button>
                             <button class="ui small red button" type="button" (click)="deleteData()">
-                                <i class="trash icon"></i>
+                                <i class="trash alternate icon"></i>
                                 ลบ
                             </button>
                         </div>
@@ -65,7 +65,7 @@
                                 <th rowspan="2"><input id="checkAll" type="checkbox" (click)="clickCheckAll($event)" /></th>
                                 <th rowspan="2" style="text-align: center !important">ที่</th>
                                 <th rowspan="2" style="text-align: center !important">ด้านแบบสอบทานระบบการควบคุมภายใน</th>
-                                <th rowspan="1" colspan="2" style="text-align: center !important">#</th>
+                                <th rowspan="1" colspan="2" style="text-align: center !important">จัดการ</th>
                             </tr>
                             <tr style="display:none">
                                 <td>ลบ</td>

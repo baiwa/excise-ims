@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
-
+import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
+var jQuery: any;
 declare var jQuery: any;
 declare var $: any;
 
@@ -21,12 +22,20 @@ export class Int02M51Component implements OnInit, OnDestroy {
     subSectionName: any;
     endDate: any;
 
+// BreadCrumb
+breadcrumb: BreadCrumb[];
+
     constructor(
         private router: Router,
         private route: ActivatedRoute, 
         private ajax: AjaxService, 
         private messageBarService: MessageBarService
     ) {
+        this.breadcrumb = [
+            { label: "ตรวจสอบภายใน", route: "#" },
+            { label: "แบบสอบทานระบบการควบคุมภายใน", route: "#" },
+            { label: "รายงานการประเมินผลและการปรับปรุงการควบคุมภายใน (แบบ ปย.2)", route: "#" },
+          ];
     }
 
     ngOnDestroy(): void {

@@ -3,7 +3,7 @@ import { Location } from "@angular/common";
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-
+import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
 declare var $: any;
 @Component({
@@ -35,11 +35,20 @@ export class Int0811Component implements OnInit {
   riskAssRiskWsHdrList: any;
   columnList: any[];
   percentList: any[];
-  constructor(private router: Router,
+  // BreadCrumb
+breadcrumb: BreadCrumb[];
+  constructor(
+    private router: Router,
     private ajax: AjaxService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
-  ) { }
+  ) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง", route: "#" },
+      { label: "ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต", route: "#" },
+    ];
+   }
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();

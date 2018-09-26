@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { TextDateTH, formatter } from "../../../../../common/helper";
-
+import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 declare var $: any;
 
 @Component({
@@ -14,7 +14,16 @@ export class Int02M41Component implements OnInit, OnDestroy {
     @Output() year = new EventEmitter<string>();
     _year: string = "";
 
-    constructor() { }
+// BreadCrumb
+breadcrumb: BreadCrumb[];
+
+    constructor() {
+        this.breadcrumb = [
+            { label: "ตรวจสอบภายใน", route: "#" },
+            { label: "แบบสอบทานระบบการควบคุมภายใน", route: "#" },
+            { label: "สรุปผลแบบสอบทานระบบการควบคุมภายใน", route: "#" },
+          ];
+     }
 
     ngOnDestroy() { }
 

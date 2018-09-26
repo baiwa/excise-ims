@@ -180,7 +180,7 @@
           <button type="button" (click)="setRL(0)" class="ui mini primary button">
             <!-- {{rl && rlLen > 0 ? 'disabled' : ''}} -->
             <i class="setting icon"></i>
-            กำหนดเงื่อนไข RL
+            กำหนดเงื่อนไขความเสี่ยง
           </button>
           <button type="button" (click)="delete()" class="ui red {{ chk2.length==0 ? 'disabled' : ''}} mini button">
             <i class="trash icon"></i> ลบ
@@ -195,7 +195,7 @@
   </div>
   <div class="sixteen wide column" *ngIf="toggleRL">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
+      <span>กำหนดเงื่อนไขความเสี่ยงประเมินระบบการควบคุมภายใน</span>
     </div>
     <div class="ui attached segment">
       <condition class="ui form" (has)="chkRL($event)" (out)="setRL($event)" [riskId]="headerId" [riskType]="RISK_TYPE"

@@ -113,12 +113,9 @@
                 <div class="ui center aligned grid">
                     <div class="row">
                         <div class="column">
-                            <button class="ui small blue button" type="button" routerLink="/int02/m3">
-                                <i class=" backward icon "></i> กลับ
-                            </button>
-
-                            <button class="ui small green button " type="button" (click)="onSaveData()">
-                                <i class="save icon "></i> บันทึก
+                           
+                            <button class="ui small blue button " type="button" (click)="onSaveData()">
+                                <i class="add icon "></i> เพิ่ม
                             </button>
                         </div>
                     </div>
@@ -186,7 +183,10 @@
                 <div class="row">
                     <div class="column">
                         <button class="ui small red button" type="button" (click)="onDeleteData()">
-                            <i class="trash icon"></i> ลบ
+                            <i class="trash alternate icon"></i> ลบ
+                        </button>
+                        <button class="ui small button" type="button" routerLink="/int02/m3">
+                            <i class=" remove icon "></i> ยกเลิก
                         </button>
                     </div>
                 </div>

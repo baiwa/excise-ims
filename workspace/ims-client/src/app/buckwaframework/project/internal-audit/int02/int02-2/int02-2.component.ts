@@ -63,8 +63,8 @@ export class Int022Component implements OnInit {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "แบบสอบทานระบบการควบคุมภายใน", route: "#" },
-      { label: "สร้างแบบสอบทานระบบการควบคุมภายใน", route: "int01/1" },
-      { label: "เพิ่มด้านแบบสอบทาน", route: "#" },
+      { label: "สร้างแบบสอบทานระบบการควบคุมภายใน", route: "#" },
+      { label: "เพิ่ม/แก้ไข ด้านแบบสอบทาน", route: "#" },
     ];
 
     for (let i = 0; i < 3; i++) {

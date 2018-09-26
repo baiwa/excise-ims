@@ -1,3 +1,4 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid" style="margin: 2%">
     <div class="sixteen wide column segments">
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
@@ -33,7 +34,7 @@
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                           <input type="text" id="subSectionName" name="subSectionName" [attr.required]="true"   autocomplete="off">
+                                            <input type="text" id="subSectionName" name="subSectionName" [attr.required]="true" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="six wide centered field">
@@ -54,7 +55,10 @@
                         <div class="ui form">
                             <div class="inline fields">
                                 <div class="sixteen aligned center wide field">
-                                    <button class="ui blue button" (click)="search()"  type="button">ค้นหา</button>
+                                    <button class="ui blue button" (click)="search()" type="button">
+                                        <i class="search icon"></i>
+                                        ค้นหา
+                                    </button>
                                     <button class="ui green button" (click)="create()" type="button">ตรวจสอบ</button>
                                 </div>
                             </div>
