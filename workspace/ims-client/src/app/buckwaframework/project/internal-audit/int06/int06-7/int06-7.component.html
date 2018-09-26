@@ -1,3 +1,118 @@
-<p>
-  int06-7 works!
-</p>
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
+<div class="ui grid">
+    <div class="sixteen wide column">
+        <!-- <h2 class="ui header">รายงานผลการจัดซื้อจัดจ้าง</h2> -->
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+            <span>ค้นหาข้อมูลการเบิกค่าสาธารณูปโภค</span>
+        </div>
+
+        <div class="ui attached segment">
+            <div class="ui form">
+                <div class="inline fields">
+                    <div class="one wide field">
+                        &nbsp;
+                    </div>
+
+                    <div class="six wide field ">
+                        <label class="custom-label-w-20">สำนักงานสรรพสามิตภาค</label>
+                        <select class="ui search dropdown ai search" style="width: 100% !important" name="combo1" id="combo1" (change)="dropdown($event, 'comboBox2')">
+                        <option value="">เลือก</option>
+                        <option *ngFor="let data of comboBox1 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                      </select>
+                    </div>
+
+                    <div class="two wide field">
+                        &nbsp;
+                    </div>
+
+                    <div class="six wide field">
+                        <label class="custom-label-w-20">สำนักงานสรรพสามิตพื้นที่</label>
+                        <select class="ui search dropdown ai search" style="width: 100% !important" name="combo2" id="combo2" (change)="dropdown($event, 'comboBox3')">
+                        <option value="">เลือก</option>
+                        <option *ngFor="let data of comboBox2 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                      </select>
+                    </div>
+
+                    <div class="one wide field">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="one wide field">
+                        &nbsp;
+                    </div>
+
+                    <div class="six wide field ">
+                        <label class="custom-label-w-20">สำนักงานสรรพสามิตพื้นที่สาขา</label>
+                        <select class="ui search dropdown ai search" style="width: 100% !important" name="combo3" id="combo3">
+                            <option value="">เลือก</option>
+                            <option *ngFor="let data of comboBox3 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                      </select>
+                    </div>
+
+                    <div class="two wide field">
+                        &nbsp;
+                    </div>
+
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="margin-right: 0px;">ปีงบประมาณ</label>
+                        <div class="ui calendar" id="budgetYear">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" readonly="" name="budgetYearData" id="budgetYearData">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="one wide field">
+                        &nbsp;
+                    </div>
+                </div>
+
+
+                <div class="ui center aligned grid" style="margin-top: 20px;">
+                    <div class="sixteen wide column">
+                        <button class="ui small green button" (click)="uploadFile()">
+                          <i class="search icon"></i> ค้นหา
+                        </button>
+
+                        <button class="ui small button" (click)="clearFile()">
+                          <i class="close icon"></i> ล้างข้อมูล
+                        </button>
+
+                        <button class="ui small primary button" (click)="setTime()">
+                            <i class="fa-clock-o icon"></i> กำหนดเวลาเปิด/ปิด
+                          </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui segment" id="showData">
+                <table id="dataTable" class="ui small celled table" style="width: 100%;">
+                    <thead>
+                        <tr style="text-align: center">
+                            <th>ลำดับ</th>
+                            <th>ประเภทค่าสาธารณูปโภค</th>
+                            <th>ใบแจ้งหนี้เดือน</th>
+                            <th>เลขที่ใบแจ้งหนี้</th>
+                            <th>วันที่ในใบแจ้งหนี้</th>
+                            <th>เลขที่ ขบ.</th>
+                            <th>วดป. ที่เบิก</th>
+                            <th>จำนวนเงิน</th>
+                        </tr>
+                    </thead>
+                </table>
+
+                <div class="ui center aligned grid" style="margin-top: 20px;">
+                    <div class="sixteen wide column">
+                        <button class="ui mini orange button" (click)="export()">
+                          <i class="fa-file icon"></i> export
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
