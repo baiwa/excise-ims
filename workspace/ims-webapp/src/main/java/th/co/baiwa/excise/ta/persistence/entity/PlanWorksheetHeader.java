@@ -9,6 +9,9 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Repository
 public class PlanWorksheetHeader extends BaseEntity {
 
+
+	private static final long serialVersionUID = 7832947784716465201L;
+	
 	private BigDecimal worksheetHeaderId;
 	private String workSheetNumber;
 	private String analysNumber;
@@ -28,6 +31,9 @@ public class PlanWorksheetHeader extends BaseEntity {
 	private BigDecimal lastMonth;
 	private String monthDate;
 	private BigDecimal fullMonth;
+	private String viewStatus;
+	private String central;
+	private String sector;
 
 	public BigDecimal getWorksheetHeaderId() {
 		return worksheetHeaderId;
@@ -179,6 +185,30 @@ public class PlanWorksheetHeader extends BaseEntity {
 
 	public void setFullMonth(BigDecimal fullMonth) {
 		this.fullMonth = fullMonth;
+	}
+
+	public String getViewStatus() {
+		return viewStatus;
+	}
+
+	public void setViewStatus(String viewStatus) {
+		this.viewStatus = viewStatus;
+	}
+
+	public String getCentral() {
+		return central;
+	}
+
+	public void setCentral(String central) {
+		this.central = central;
+	}
+
+	public String getSector() {
+		return sector;
+	}
+
+	public void setSector(String sector) {
+		this.sector = sector;
 	}
 
 }

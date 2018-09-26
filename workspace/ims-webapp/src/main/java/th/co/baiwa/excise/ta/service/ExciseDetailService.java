@@ -92,7 +92,7 @@ public class ExciseDetailService {
         		excise.setCreatedDate(in);
         		excise.setUpdatedDate(in);
         		exciseFileUploadDao.insertExciseFileUpload(excise); // insert to database
-        		planWorksheetHeaderDao.updatePlanWorksheetHeaderFlag("E", analysNum, exciseId);
+        		planWorksheetHeaderDao.updatePlanWorksheetHeaderFlag("E", analysNum, exciseId, "" ,"" ,"");
         		logger.info("Created file: " + path);
         		// System.out.println("Created file: " + path);
     		} catch (Exception e) {

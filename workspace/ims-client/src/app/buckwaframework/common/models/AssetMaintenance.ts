@@ -1,5 +1,4 @@
 export class AssetMaintenance {
-
     maintenanceId: any;
     assetBalanceId: any;
     maintenanceAmount: any;

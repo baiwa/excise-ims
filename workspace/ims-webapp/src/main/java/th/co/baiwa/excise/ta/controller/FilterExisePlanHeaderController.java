@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
@@ -63,7 +64,19 @@ public class FilterExisePlanHeaderController {
 	public Message planWorkSheetHeader(@RequestBody RequestFilterMapping vo) {
 		logger.debug("analysNumber : " + vo.getFlag());
 		int count = planWorksheetHeaderService.updatePlanWorksheetHeaderByExciseList(vo);
-		System.out.println(vo.getAnalysNumber());
+		Message msg = null;
+		if (count == 0) {
+			msg = ApplicationCache.getMessage("MSG_00003");
+		} else {
+			msg = ApplicationCache.getMessage("MSG_00002");
+		}
+		return msg;
+	}
+	@PostMapping("/approveExciseId")
+	@ResponseBody
+	public Message approveExciseId(@RequestBody RequestFilterMapping vo) {
+		logger.debug("approveExciseId : " + vo.getFlag());
+		int count = planWorksheetHeaderService.approveByExciseList(vo);
 		Message msg = null;
 		if (count == 0) {
 			msg = ApplicationCache.getMessage("MSG_00003");
@@ -88,4 +101,11 @@ public class FilterExisePlanHeaderController {
 		return planWorksheetHeaderService.queryExciseIdFlagSDataList(vo.getExciseId());
 	}
 
+	
+	@PostMapping("/getOfficeCodeByUserLogin")
+	@ResponseBody
+	public String getOfficeCodeByUserLogin(@ModelAttribute PlanWorksheetHeaderDetail vo) {
+		logger.info("getOfficeCodeByUserLogin : " + UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		return UserLoginUtils.getCurrentUserBean().getOfficeCode();
+	}
 }

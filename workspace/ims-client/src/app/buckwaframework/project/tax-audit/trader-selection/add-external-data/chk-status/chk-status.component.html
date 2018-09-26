@@ -1,0 +1,44 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">สถานะการตรวจสอบภาษี</h2>
+
+    <div class="ui top attached header">
+      <span>เพิ่มข้อมูลภายนอก</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="six wide field">
+            <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
+            <input value="{{analysNumber}}" readonly="" class="custom-readonly">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui segment">
+
+      <form ngNativeValidate (submit)="onSend($event)">
+        <div class="ui grid">
+          <div class="sixteen wide column">
+            <div style="overflow-x: scroll;overflow-y: hidden;padding-bottom: 14px;">
+              <table id="sendLineUser" class="ui small celled table aligned hover" style="width: 5000px;">
+                <thead>
+                  <tr>
+                    <th style="text-align: center">ภาค</th>
+                    <th style="text-align: center">ส่วนกลาง</th>
+                    <th style="text-align: center">ภาคพื่นที่</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

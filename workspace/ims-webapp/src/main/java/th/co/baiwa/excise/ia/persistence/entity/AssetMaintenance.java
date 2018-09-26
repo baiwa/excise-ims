@@ -27,8 +27,8 @@ public class AssetMaintenance extends BaseEntity {
 	private static final long serialVersionUID = 8820047649848992045L;
 
 	@Id
-	@SequenceGenerator(name="IA_ASSET_MAINTENANCE_MAINTENANCEID_GENERATOR", sequenceName="IA_ASSET_MAINTENANCE_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_ASSET_MAINTENANCE_MAINTENANCEID_GENERATOR")
+	@SequenceGenerator(name="IA_ASSET_MAINTENANCE_GEN", sequenceName="IA_ASSET_MAINTENANCE_SEQ" , allocationSize = 1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_ASSET_MAINTENANCE_GEN")
 	@Column(name="MAINTENANCE_ID")
 	private Long maintenanceId;
 

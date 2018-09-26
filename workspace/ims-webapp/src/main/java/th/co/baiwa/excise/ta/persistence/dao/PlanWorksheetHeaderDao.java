@@ -54,6 +54,10 @@ public class PlanWorksheetHeaderDao {
 			sql.append(" and ANALYS_NUMBER = ? ");
 			valueList.add(criteria.getAnalysNumber());
 		}
+		if (StringUtils.isNotBlank(criteria.getExciseId())) {
+			sql.append(" and EXCISE_ID = ? ");
+			valueList.add(criteria.getExciseId());
+		}
 		if (StringUtils.isNotBlank(criteria.getMonthDate())) {
 			sql.append(" and MONTH_DATE = ? ");
 			valueList.add(criteria.getMonthDate());
@@ -81,9 +85,27 @@ public class PlanWorksheetHeaderDao {
 		jdbcTemplate.batchUpdate(sql.toString(), objArrayOfList);
 	}
 
-	public int updatePlanWorksheetHeaderFlag(String flag, String analysNum, String exciseId) {
-		String sql = " UPDATE TA_PLAN_WORK_SHEET_HEADER SET FLAG = ? WHERE ANALYS_NUMBER = ? AND EXCISE_ID = ? ";
-		return jdbcTemplate.update(sql, new Object[] { flag, analysNum, exciseId });
+	public int updatePlanWorksheetHeaderFlag(String flag, String analysNum, String exciseId, String viewStatus ,String sector , String central) {
+
+		List<Object> objList = new ArrayList<Object>();
+		String sql = " UPDATE TA_PLAN_WORK_SHEET_HEADER " + "SET FLAG = ? ";
+		objList.add(flag);
+		if (BeanUtils.isNotEmpty(viewStatus)) {
+			sql += " , VIEW_STATUS = ? ";
+			objList.add(viewStatus);
+		}
+		if (BeanUtils.isNotEmpty(sector)) {
+			sql += " , sector = ? ";
+			objList.add(sector);
+		}
+		if (BeanUtils.isNotEmpty(central)) {
+			sql += " , central = ? ";
+			objList.add(central);
+		}
+		sql += "WHERE ANALYS_NUMBER = ? AND EXCISE_ID = ? ";
+		objList.add(analysNum);
+		objList.add(exciseId);
+		return jdbcTemplate.update(sql, objList.toArray());
 	}
 
 	private Object[] planWorksheetHeaderToArrayObject(PlanWorksheetHeader value) {
@@ -134,6 +156,7 @@ public class PlanWorksheetHeaderDao {
 			header.setTotalMonth(rs.getBigDecimal("TOTAL_MONTH"));
 			header.setDecideType(rs.getString("DECIDE_TYPE"));
 			header.setFlag(rs.getString("FLAG"));
+			header.setViewStatus(rs.getString("VIEW_STATUS"));
 			header.setFirstMonth(rs.getBigDecimal("FIRST_MONTH"));
 			header.setLastMonth(rs.getBigDecimal("LAST_MONTH"));
 			header.setCreatedBy(rs.getString("CREATED_BY"));
@@ -142,6 +165,8 @@ public class PlanWorksheetHeaderDao {
 			header.setUpdatedDate(rs.getDate("UPDATED_DATE"));
 			header.setFullMonth(rs.getBigDecimal("FULL_MONTH"));
 			header.setMonthDate(rs.getString("MONTH_DATE"));
+			header.setCentral(rs.getString("CENTRAL"));
+			header.setSector(rs.getString("SECTOR"));
 			return header;
 		}
 	};
@@ -190,6 +215,10 @@ public class PlanWorksheetHeaderDao {
 			sql.append(" AND H.EXCISE_OWNER_AREA_1 = ? ");
 			valueList.add(vo.getSector());
 		}
+		if (BeanUtils.isNotEmpty(vo.getViewStatus())) {
+			sql.append(" AND H.VIEW_STATUS = ? ");
+			valueList.add(vo.getViewStatus());
+		}
 
 		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
@@ -205,10 +234,10 @@ public class PlanWorksheetHeaderDao {
 			if (BeanUtils.isEmpty(vo.getIndexFilter()) || "N".equals(vo.getIndexFilter())) {
 				for (int i = 0; i < monthFrom.length; i++) {
 					if (i == 0) {
-						if("N".equals(vo.getIndexFilter())) {
+						if ("N".equals(vo.getIndexFilter())) {
 							sql.append(" AND not( ");
-						}else {
-						sql.append(" AND ( ");
+						} else {
+							sql.append(" AND ( ");
 						}
 					}
 					if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i]) || !"0.00".equals(percentTo[i])) {
@@ -262,13 +291,17 @@ public class PlanWorksheetHeaderDao {
 			sql.append(" AND H.EXCISE_OWNER_AREA_1 = ? ");
 			valueList.add(vo.getSector());
 		}
+		if (BeanUtils.isNotEmpty(vo.getViewStatus())) {
+			sql.append(" AND H.VIEW_STATUS = ? ");
+			valueList.add(vo.getViewStatus());
+		}
 
 		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag()) && !"NOT N S".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
-		} else if("NOT N".equals(vo.getFlag())){
+		} else if ("NOT N".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG != 'N' ");
-		} else if("NOT N S".equals(vo.getFlag())) {
+		} else if ("NOT N S".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG != 'N' ");
 			sql.append(" AND H.FLAG != 'S' ");
 		}
@@ -278,12 +311,12 @@ public class PlanWorksheetHeaderDao {
 			String[] monthTo = vo.getNum2().split(",");
 			String[] percentFrom = vo.getPercent1().split(",");
 			String[] percentTo = vo.getPercent2().split(",");
-			if (BeanUtils.isEmpty(vo.getIndexFilter())|| "N".equals(vo.getIndexFilter())) {
+			if (BeanUtils.isEmpty(vo.getIndexFilter()) || "N".equals(vo.getIndexFilter())) {
 				for (int i = 0; i < monthFrom.length; i++) {
-					if("N".equals(vo.getIndexFilter())) {
+					if ("N".equals(vo.getIndexFilter())) {
 						sql.append(" AND not( ");
-					}else {
-					sql.append(" AND ( ");
+					} else {
+						sql.append(" AND ( ");
 					}
 					if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i]) || !"0.00".equals(percentTo[i])) {
 						if (i == 0) {
@@ -332,12 +365,17 @@ public class PlanWorksheetHeaderDao {
 			sql.append(" AND H.PRODUCT_TYPE = ? ");
 			valueList.add(vo.getProductType());
 		}
+		
+		if (BeanUtils.isNotEmpty(vo.getViewStatus())) {
+			sql.append(" AND H.VIEW_STATUS = ? ");
+			valueList.add(vo.getViewStatus());
+		}
 		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag()) && !"NOT N S".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
-		} else if("NOT N".equals(vo.getFlag())){
+		} else if ("NOT N".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG != 'N' ");
-		} else if("NOT N S".equals(vo.getFlag())) {
+		} else if ("NOT N S".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG != 'N' ");
 			sql.append(" AND H.FLAG != 's' ");
 		}
@@ -349,10 +387,10 @@ public class PlanWorksheetHeaderDao {
 			if (BeanUtils.isEmpty(vo.getIndexFilter()) || "N".equals(vo.getIndexFilter())) {
 				for (int i = 0; i < monthFrom.length; i++) {
 					if (i == 0) {
-						if("N".equals(vo.getIndexFilter())) {
+						if ("N".equals(vo.getIndexFilter())) {
 							sql.append(" AND not( ");
-						}else {
-						sql.append(" AND ( ");
+						} else {
+							sql.append(" AND ( ");
 						}
 					}
 					if (!"0".equals(monthFrom[i]) || !"0".equals(monthTo[i]) || !"0.00".equals(percentFrom[i]) || !"0.00".equals(percentTo[i])) {

@@ -41,6 +41,7 @@ export class SendLineUserComponent implements OnInit {
   }
 
   ngOnInit() {
+
     console.log("ngOnInit");
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
@@ -166,6 +167,7 @@ export class SendLineUserComponent implements OnInit {
         data: {
           paging: false,
           flag: "NOT N S",
+          //viewStatus : 
           productType: this.coordinates == undefined ? "" : this.coordinates,
           analysNumber: this.analysNumber,
           sector: this.sector
@@ -182,7 +184,12 @@ export class SendLineUserComponent implements OnInit {
           },
           className: "center"
         },
-        { data: "worksheetHeaderId", className: "center" },
+        {
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "center"
+        },
         { data: "exciseId", className: "center" },
         { data: "companyName" },
         { data: "companyName" },
@@ -231,10 +238,9 @@ export class SendLineUserComponent implements OnInit {
     });
   }
 
-  onSend = e => {
-    // Prevent actual form submission
-    e.preventDefault();
+  onSend(viewStatus) {
 
+    $(".ui.modal.confirm").modal("hide");
     var data = this.sendLineUser.rows().data();
     for (let i = 0; i < data.length; i++) {
       if ((<HTMLInputElement>document.getElementById(`chk${i}`)).checked) {
@@ -249,7 +255,8 @@ export class SendLineUserComponent implements OnInit {
         {
           analysNumber: this.analysNumber,
           exiceList: this.exciseId,
-          flag: "S"
+          flag: "S",
+          viewStatus: viewStatus
         },
         res => {
           var data = res.json();
@@ -284,4 +291,10 @@ export class SendLineUserComponent implements OnInit {
     this.sendLineUser.destroy();
     this.initDatatable();
   };
+
+  openModel() {
+    //$(".ui.modal.condition").modal("hide");
+    $(".ui.modal.confirm").modal("show");
+  }
+
 }

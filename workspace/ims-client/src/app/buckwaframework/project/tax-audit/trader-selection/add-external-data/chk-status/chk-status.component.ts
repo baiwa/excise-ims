@@ -7,11 +7,11 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 declare var jQuery: any;
 declare var $: any;
 @Component({
-  selector: 'app-receive-line-user',
-  templateUrl: './receive-line-user.component.html',
-  styleUrls: ['./receive-line-user.component.css']
+  selector: 'app-chk-status',
+  templateUrl: './chk-status.component.html',
+  styleUrls: ['./chk-status.component.css']
 })
-export class ReceiveLineUserComponent implements OnInit {
+export class ChkStatusComponent implements OnInit {
   sendLineUser: any;
   listItem: any[];
   before: any;
@@ -262,36 +262,21 @@ export class ReceiveLineUserComponent implements OnInit {
     // Prevent actual form submission
     e.preventDefault();
 
-    var flag = 'S';
-    var viewStatus = '';
-    if (this.role == 'C') {
-      viewStatus = 'S';
-    } else {
-
-      viewStatus = 'C';
-    }
     var data = this.sendLineUser.rows().data();
     for (let i = 0; i < data.length; i++) {
       if ((<HTMLInputElement>document.getElementById(`chk${i}`)).checked) {
-        if (data[i].central == 'Y' && data[i].sector == 'Y') {
-
-          flag = 'F';
-        }
         this.exciseId.push(data[i].exciseId);
-
       }
     } //end for loops
 
     if (this.exciseId.length != 0) {
-      const URL = "filter/exise/approveExciseId";
+      const URL = "filter/exise/listFullDataNoPaging";
       this.ajax.post(
         URL,
         {
           analysNumber: this.analysNumber,
           exiceList: this.exciseId,
-          flag: flag,
-
-          viewStatus: viewStatus
+          flag: "F"
         },
         res => {
           var data = res.json();

@@ -11,7 +11,19 @@
             <label>ประเภทสินทรัพย์</label>
           </div>
           <div class="four wide field ">
-            <input type="text" placeholder="ประเภทสินทรัพย์" class="custom" name="assetType" id="assetType" [(ngModel)]="assetBalance.assetType">
+            <select class="ui search dropdown ai" aria-placeholder="ประเภทสินทรัพย์" id="assetType" name="assetType"
+              [(ngModel)]="assetBalance.assetType">
+              <option value="0"></option>
+              <option value="ที่ดิน">ที่ดิน</option>
+              <option value="อาคาร/สิ่งก่อสร้าง">อาคาร/สิ่งก่อสร้าง</option>
+              <option value="ครุภัณฑ์สำนักงาน เกิน 5,000 บาท">ครุภัณฑ์สำนักงาน เกิน 5,000 บาท</option>
+              <option value="ครุภัณฑ์คอมพิวเตอร์ เกิน 5,000 บาท">ครุภัณฑ์คอมพิวเตอร์ เกิน 5,000 บาท</option>
+              <option value="อื่น ๆ เกิน 5,000 บาท">อื่น ๆ เกิน 5,000 บาท</option>
+              <option value="ครุภัณฑ์สำนักงาน ไม่เกิน 5,000 บาท">ครุภัณฑ์สำนักงาน ไม่เกิน 5,000 บาท</option>
+              <option value="ครุภัณฑ์คอมพิวเตอร์ ไม่เกิน 5,000 บาท">ครุภัณฑ์คอมพิวเตอร์ ไม่เกิน 5,000 บาท</option>
+              <option value="อื่น ๆ ไม่เกิน 5,000 บาท">อื่น ๆ ไม่เกิน 5,000 บาท</option>
+
+            </select>
           </div>
           <div class="two wide field ">
             <label>รหัสสินทรัพย์</label>
@@ -52,21 +64,31 @@
           </div>
         </div>
       </div>
-      <table id="dataTable" class="ui small celled table">
+      <table id="dataTable" class="ui small celled table nowrap" style="width: 100%">
         <thead>
           <tr>
-            <th></th>
-            <th>รหัสสินทรัพย์</th>
-            <th>ประเภทสินทรัพย์</th>
-            <th>คำอธิบายสินทรัพย์</th>
-            <th>จำนวนสินทรัพย์</th>
-            <th>อัตราค่าเสื่อมราคาสินทรัพย์</th>
-            <th>ค่าเสื่อมราคาสะสม</th>
-            <th>จัดการ</th>
+            <th style="text-align: center !important"></th>
+            <th style="text-align: center !important">รหัสสินทรัพย์</th>
+            <th style="text-align: center !important">ประเภทสินทรัพย์</th>
+            <th style="text-align: center !important">คำอธิบายสินทรัพย์</th>
+            <th style="text-align: center !important">จำนวนสินทรัพย์</th>
+            <th style="text-align: center !important">อัตราค่าเสื่อมราคาสินทรัพย์</th>
+            <th style="text-align: center !important">ค่าเสื่อมราคาสะสม</th>
+            <th style="text-align: center !important">จัดการ</th>
           </tr>
         </thead>
+        <tbody></tbody>
       </table>
       <div class="inline fields"></div>
+      <div class="inline fields">
+        <div class="sixteen wide field ">
+          <div class="seven wide field "></div>
+          <button class="ui mini primary button" (click)="delete()">
+            ลบ
+          </button>
+
+        </div>
+      </div>
     </div>
   </div>
 </div>

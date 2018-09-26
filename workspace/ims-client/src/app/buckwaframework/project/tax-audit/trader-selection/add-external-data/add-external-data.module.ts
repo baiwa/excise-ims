@@ -9,6 +9,7 @@ import { AddDataComponent } from './add-data/add-data.component';
 import { SendLineUserComponent } from './send-line-user/send-line-user.component';
 import { ReceivePlanWsComponent } from './receive-plan-ws/receive-plan-ws.component';
 import { ReceiveLineUserComponent } from './receive-line-user/receive-line-user.component';
+import { ChkStatusComponent } from './chk-status/chk-status.component';
 
 const routes: Routes = [
     { path: '', component: AddExternalDataComponent, canActivate: [AuthGuard] },
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: 'send-line-user', component: SendLineUserComponent, canActivate: [AuthGuard] },
     { path: 'receive-plan-ws', component: ReceivePlanWsComponent, canActivate: [AuthGuard] },
     { path: 'receive-line-user', component: ReceiveLineUserComponent, canActivate: [AuthGuard] },
+    { path: 'chk-status', component: ChkStatusComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -29,7 +31,8 @@ const routes: Routes = [
         AddDataComponent,
         SendLineUserComponent,
         ReceivePlanWsComponent,
-        ReceiveLineUserComponent
+        ReceiveLineUserComponent,
+        ChkStatusComponent
     ],
     exports: [RouterModule]
 })
