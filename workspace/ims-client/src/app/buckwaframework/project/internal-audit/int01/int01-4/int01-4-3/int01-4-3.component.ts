@@ -131,9 +131,9 @@ export class Int0143Component implements OnInit {
           "data": "12",
           "render": function (data, type, row) {
             if (parseFloat(data) == 0) {
-              return `<span class="ui green horizontal label right aligned" style="float: right;">${data}</span>`;
+              return `<span class="ui  horizontal label right aligned" style="float: right;">${data}</span>`;
             } else {
-              return `<span class="ui red horizontal label right aligned" style="float: right;">${data}</span>`;
+              return `<span class="ui  horizontal label right aligned" style="float: right;">${data}</span>`;
             }
 
           }

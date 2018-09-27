@@ -14,7 +14,7 @@ export class Int0144Component implements OnInit {
   constructor(private messageBarService: MessageBarService) {}
 
   ngOnInit() {
-    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown").hide().dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     this.listData = [
       ["4102020103", "รายได้ภาษีสุรา", "203010", "ภาษีสุรา"],

@@ -8,6 +8,7 @@ declare var $: any;
 })
 export class Int0122Component implements OnInit {
   private showData: boolean = false;
+
   constructor() {}
 
   ngOnInit() {
@@ -16,6 +17,7 @@ export class Int0122Component implements OnInit {
     $("#idint").hide();
     $("#id").hide();
   }
+
 
   popupEditData() {
     $("#modalEditData").modal("show");

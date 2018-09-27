@@ -1,32 +1,13 @@
 <div class="ui grid">
   <div class="sixteen wide column">
-    <div class="ui large steps">
-      <div class="step">
-        <i class="upload icon"></i>
-        <div class="content">
-          <div class="title">นำเข้างบทดลอง&nbsp;&nbsp;&nbsp;</div>
-        </div>
-      </div>
-      <div class="step">
-        <i class="list layout icon"></i>
-        <div class="content">
-          <div class="title">เลือกงบสรุปยอดเงินค่าภาษี</div>
-        </div>
-      </div>
-      <div class="active step">
-        <i class="table icon"></i>
-        <div class="content">
-          <div class="title">แสดงผลการตรวจสอบ</div>
-        </div>
-      </div>
-    </div>
+
 
     <h2 class="ui header">แสดงผลการตรวจสอบ</h2>
 
     <div class="ui attached segment">
       <table id="table1" class="ui small celled table">
         <thead>
-          <tr>
+          <tr style="text-align: center">
             <th colspan="5">งบทดลอง</th>
             <th colspan="7">งบสรุปยอดเงินภาษี</th>
           </tr>
@@ -54,8 +35,11 @@
       <div class="ui center aligned grid">
         <div class="six wide column">
           <button class="ui mini button" routerLink="/int01/4/2">
-            <i class="arrow left icon"></i>
+            <i class="arrow circle left icon"></i>
             ย้อนกลับ
+          </button>
+          <button class="ui mini primary button" routerLink="/int01/4/4">
+            <i class="print icon"></i>   Export
           </button>
           <button class="ui mini primary button" routerLink="/int01/4/4">
             ตั้งค่าจับคู่รหัสภาษี
