@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
@@ -66,14 +64,12 @@ public class AssetBalance extends BaseEntity {
 	@Column(name="ASSET_TYPE")
 	private String assetType;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="DATE_OF_MANUFACTURE")
 	private Date dateOfManufacture;
 
 	@Column(name="DEPRECIATION_RATE")
 	private BigDecimal depreciationRate;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="DOCUMENT_DATE")
 	private Date documentDate;
 
@@ -204,13 +200,7 @@ public class AssetBalance extends BaseEntity {
 		this.assetType = assetType;
 	}
 
-	public Date getDateOfManufacture() {
-		return dateOfManufacture;
-	}
-
-	public void setDateOfManufacture(Date dateOfManufacture) {
-		this.dateOfManufacture = dateOfManufacture;
-	}
+	
 
 	public BigDecimal getDepreciationRate() {
 		return depreciationRate;
@@ -220,14 +210,7 @@ public class AssetBalance extends BaseEntity {
 		this.depreciationRate = depreciationRate;
 	}
 
-	public Date getDocumentDate() {
-		return documentDate;
-	}
-
-	public void setDocumentDate(Date documentDate) {
-		this.documentDate = documentDate;
-	}
-
+	
 	public String getDocumentNo() {
 		return documentNo;
 	}
@@ -354,6 +337,22 @@ public class AssetBalance extends BaseEntity {
 
 	public void setAssetBalanceId(Long assetBalanceId) {
 		this.assetBalanceId = assetBalanceId;
+	}
+
+	public Date getDateOfManufacture() {
+		return dateOfManufacture;
+	}
+
+	public void setDateOfManufacture(Date dateOfManufacture) {
+		this.dateOfManufacture = dateOfManufacture;
+	}
+
+	public Date getDocumentDate() {
+		return documentDate;
+	}
+
+	public void setDocumentDate(Date documentDate) {
+		this.documentDate = documentDate;
 	}
 
 }

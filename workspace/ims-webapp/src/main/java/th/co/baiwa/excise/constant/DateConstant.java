@@ -2,6 +2,11 @@ package th.co.baiwa.excise.constant;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -29,8 +34,11 @@ public class DateConstant {
 
 	public static final Locale LOCAL_TH = new Locale("th", "TH");
 	public static final Locale LOCAL_EN = new Locale("en", "US");
-//	public static final String[] MONTH_SHOT_NAMES = { "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.","ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค." };
-//	public static final String[] MONTH_NAMES = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
+	// public static final String[] MONTH_SHOT_NAMES = { "ม.ค.", "ก.พ.", "มี.ค.",
+	// "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.","ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค." };
+	// public static final String[] MONTH_NAMES = { "มกราคม", "กุมภาพันธ์",
+	// "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน",
+	// "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
 	public static final String YYYYMMDD = "yyyyMMdd";
 	public static final String MM_YYYY = "MM/yyyy";
 
@@ -159,8 +167,8 @@ public class DateConstant {
 		}
 		return date;
 	}
-	
-	public static Date  convertStringDDMMYYYYHHmmToDate(String DDMMYYYYHHmm) {
+
+	public static Date convertStringDDMMYYYYHHmmToDate(String DDMMYYYYHHmm) {
 		Date date = null;
 		try {
 			if (DDMMYYYYHHmm != null) {
@@ -198,7 +206,7 @@ public class DateConstant {
 		return dateString;
 	}
 
-	/*super convert */
+	/* super convert */
 	public static String convertDateToStr(Date date, String pattern) {
 		String dateString = "";
 		try {
@@ -210,7 +218,8 @@ public class DateConstant {
 		}
 		return dateString;
 	}
-	public static String convertDateToStr(Date date, String pattern,Locale locale) {
+
+	public static String convertDateToStr(Date date, String pattern, Locale locale) {
 		String dateString = "";
 		try {
 			if (date != null) {
@@ -234,6 +243,7 @@ public class DateConstant {
 		}
 		return date;
 	}
+
 	public static Date convertStrToDate(String strDate, String patern, Locale locale) {
 		Date date = null;
 		try {
@@ -246,9 +256,10 @@ public class DateConstant {
 		}
 		return date;
 	}
-	/*end super convert */
+
+	/* end super convert */
 	public static String convertStrToStrPreviousYear(String strDate) {
-		String dateString = "";		
+		String dateString = "";
 		try {
 			if (StringUtils.isNotBlank(strDate)) {
 				Date date = DateUtils.parseDate(StringUtils.trim(strDate), LOCAL_TH, YYYY);
@@ -260,5 +271,12 @@ public class DateConstant {
 			e.printStackTrace();
 		}
 		return dateString;
+	}
+
+	public static LocalDate dateToLocalDadte(Date date) {
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		Instant instant = date.toInstant();
+		LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+		return localDate;
 	}
 }
