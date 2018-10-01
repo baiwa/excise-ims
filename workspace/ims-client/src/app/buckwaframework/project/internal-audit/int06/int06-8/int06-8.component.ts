@@ -7,6 +7,7 @@ import { MessageBarService } from "../../../../common/services";
 import { NgForm } from "@angular/forms";
 import { Int068Service } from "./int06-8.service";
 import { Observable } from "rxjs";
+import { forEach } from "@angular/router/src/utils/collection";
 
 declare var $: any;
 @Component({
@@ -24,6 +25,9 @@ export class Int068Component implements OnInit, AfterViewInit {
   breadcrumb: BreadCrumb[] = [];
   publicUtilityTypeList: string[];
   formPU: PU;
+  data: Observable<any>;
+  statusTime: any = null;
+  // loading: boolean = true;
 
   constructor(private int068Service: Int068Service) {
     this.breadcrumb = [
@@ -40,6 +44,12 @@ export class Int068Component implements OnInit, AfterViewInit {
       "ค่าไปรษณีย์โทรเลข",
       "ค่าบริการสื่อสารและโทรคมนาคม"
     ];
+
+    this.data = this.int068Service.checkRangeTime();
+    this.data.subscribe(res => {
+      this.statusTime = res;
+      console.log(this.statusTime);
+    });
   }
 
   ngAfterViewInit() {
@@ -128,9 +138,9 @@ export class Int068Component implements OnInit, AfterViewInit {
 
   checkStatus() {}
 
-  // confirmSend = () => {
-  //   this.int068Service.checkConfirm();
-  // };
+  confirmSend() {
+    this.int068Service.checkConfirm();
+  }
 }
 
 class PU {

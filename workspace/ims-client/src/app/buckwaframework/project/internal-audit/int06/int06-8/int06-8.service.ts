@@ -2,10 +2,12 @@ import { Injectable } from "@angular/core";
 import { AjaxService } from "services/ajax.service";
 import { Router } from "@angular/router";
 import { MessageBarService } from "../../../../common/services";
+import { Observable } from "rxjs";
 
 const URL = {
   SAVE_AB: "/ia/int068/saveAB",
-  SAVE_PU: "/ia/int068/savePU"
+  SAVE_PU: "/ia/int068/savePU",
+  QUERY_TIME: "/ia/int068/checkRangeTime"
 };
 
 declare var $: any;
@@ -19,7 +21,8 @@ export class Int068Service {
   checkEdit: boolean = false;
   index: any;
   editID: any;
-
+  isConfirm: any = false;
+  dataList: any;
   constructor(
     private ajax: AjaxService,
     private router: Router,
@@ -27,6 +30,16 @@ export class Int068Service {
   ) {
     // TODO
   }
+
+  checkRangeTime = (): Observable<any> => {
+    return new Observable<any>(obs => {
+      this.ajax
+        .post(URL.QUERY_TIME, {}, res => {
+          this.dataList = res.json();
+        })
+        .then(() => obs.next(this.dataList));
+    });
+  };
 
   saveAlloclatedBudget = (allocatedBudget: number) => {
     const DATA = { allocatedBudget: allocatedBudget };
@@ -46,16 +59,12 @@ export class Int068Service {
     if (getPU.chkFlag === "ADD" && this.checkEdit == false) {
       $("#showForm2").show();
       getPU.allocatedBudgetId = this.getIdAB;
-
       this.showDataTable.push(getPU);
-      console.log(this.showDataTable);
 
       this.DATATABLE();
     } else if (getPU.chkFlag === "SAVE" && this.checkEdit == false) {
-      console.log(this.showDataTable);
       this.ajax.post(URL.SAVE_PU, this.showDataTable, res => {
         const data = res.json();
-        console.log(data);
         if (data.msg.messageType === "C") {
           this.msg.successModal(data.msg.messageTh);
         } else {
@@ -64,9 +73,9 @@ export class Int068Service {
       });
     } else {
       getPU.allocatedBudgetId = this.editID;
-      console.log(this.showDataTable);
       this.showDataTable.splice(this.index, 1, getPU);
       this.DATATABLE();
+      this.checkEdit = false;
     }
   }
 
@@ -74,7 +83,7 @@ export class Int068Service {
     if (this.dataTable != null && this.dataTable != undefined) {
       this.dataTable.destroy();
     }
-
+    let isConfirm = this.isConfirm;
     this.dataTable = $("#dataTable").DataTable({
       lengthChange: false,
       searching: false,
@@ -124,15 +133,14 @@ export class Int068Service {
         {
           className: "center",
           render: function(data, type, full, meta) {
-            return `<button class="ui mini blue button ED" type="button" id="edit-${
+            return `<button class="ui ${
+              isConfirm == true ? "disabled" : ""
+            } mini blue button ED" type="button" id="edit-${
               meta.row
-            }"> <i class="search icon"></i> แก้ไข</button>`;
-          }
-        },
-        {
-          className: "center",
-          render: function(data, type, full, meta) {
-            return `<button class="ui mini orange button DL" type="button" id="delete-${
+            }"> <i class="search icon"></i> แก้ไข</button>
+            <button class="ui ${
+              isConfirm == true ? "disabled" : ""
+            } mini orange button DL" type="button" id="delete-${
               meta.row
             }"> <i class="edit icon"></i> ลบ</button>`;
           }
@@ -140,8 +148,6 @@ export class Int068Service {
       ],
       rowCallback: (row, data, index) => {
         $("td > .ED", row).bind("click", () => {
-          console.log(index);
-          console.log(this.showDataTable[index]);
           let edit = this.showDataTable[index];
           $("#publicUtilityType").val(edit.publicUtilityType);
           $("#monthInVoice").val(edit.monthInvoice);
@@ -153,7 +159,6 @@ export class Int068Service {
 
           this.checkEdit = true;
           this.index = index;
-          console.log(data);
           this.editID = data.allocatedBudgetId;
         });
         $("td > .DL", row).bind("click", () => {
@@ -162,6 +167,10 @@ export class Int068Service {
         });
       }
     });
+  }
+  checkConfirm() {
+    this.isConfirm = true;
+    this.DATATABLE();
   }
 
   // checkConfirm = () => {

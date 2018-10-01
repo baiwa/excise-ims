@@ -2,6 +2,8 @@ package th.co.baiwa.excise.ia.persistence.vo;
 
 public class Int068FormVo {
 	
+	private long publicUtilityId;
+	
 	private long allocatedBudgetId;
 
 	private Long amount;
@@ -23,6 +25,17 @@ public class Int068FormVo {
 	private String withdrawalDate;
 
 	private String withdrawalNumber;
+	
+	private String budgetYear;
+	
+
+	public long getPublicUtilityId() {
+		return publicUtilityId;
+	}
+
+	public void setPublicUtilityId(long publicUtilityId) {
+		this.publicUtilityId = publicUtilityId;
+	}
 
 	public long getAllocatedBudgetId() {
 		return allocatedBudgetId;
@@ -111,4 +124,13 @@ public class Int068FormVo {
 	public void setWithdrawalNumber(String withdrawalNumber) {
 		this.withdrawalNumber = withdrawalNumber;
 	}
+
+	public String getBudgetYear() {
+		return budgetYear;
+	}
+
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
+	}
+
 }

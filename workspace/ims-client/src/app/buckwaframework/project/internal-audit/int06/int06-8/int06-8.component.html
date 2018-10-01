@@ -1,37 +1,57 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
-<form class="ui grid" (submit)="onSave(f)" #f="ngForm">
-    <div class="sixteen wide column">
-        <div class="ui attached segment">
-            <div class="ui form">
 
-                <div class="inline fields">
-                    <div class="three wide field">
-                        &nbsp;
-                    </div>
-
-                    <div class="four wide field" style="text-align: right">
-                        <label class="custom-label-w-20">เงินที่ได้รับจัดสรรเป็นค่าสาธารณูปโภค (ทั้งปี)</label>
-                    </div>
-
-                    <div class="four wide field {{ f.submitted && f.controls.allocatedBudget.invalid ? 'error' : '' }}">
-                        <input type="number" autocomplete="off" name="allocatedBudget" id="allocatedBudget" ngModel required>
-                    </div>
-
-                    <div class="two wide field">
-                        <button class="ui mini green button">
-                            <i class="save icon"></i> บันทึก
-                        </button>
-                    </div>
-
-                    <div class="three wide field">
-                        &nbsp;
+<!-- <app-breadcrumb [route]="breadcrumb"></app-breadcrumb> -->
+<div class="ui centered grid" *ngIf="this.statusTime && this.statusTime.length == 0">
+    <div class="centered row full-height">
+        <div class="eight wide column nodata">
+            <h2 class="ui header">
+                <div class="auto">
+                    <i class="exclamation triangle icon"></i>
+                    <div class="content">
+                        ขณะนี้ไม่สามารถบันทึกข้อมูลการเบิกค่าสาธารณูปโภคได้<br> เนื่องจากระบบได้ปิดการบันทึกข้อมูลการเบิกค่าสาธารณูปโภคแล้ว
+                        <div class="sub header">กรุณาเข้ามาใหม่อีกครั้ง</div>
                     </div>
                 </div>
-
-            </div>
+            </h2>
         </div>
     </div>
-</form>
+</div>
+
+<ng-container *ngIf="this.statusTime && this.statusTime.length > 0">
+    <form class="ui grid" (submit)="onSave(f)" #f="ngForm">
+        <div class="sixteen wide column">
+            <div class="ui attached segment">
+                <div class="ui form">
+
+                    <div class="inline fields">
+                        <div class="three wide field">
+                            &nbsp;
+                        </div>
+
+                        <div class="four wide field" style="text-align: right">
+                            <label class="custom-label-w-20">เงินที่ได้รับจัดสรรเป็นค่าสาธารณูปโภค (ทั้งปี)</label>
+                        </div>
+
+                        <div class="four wide field {{ f.submitted && f.controls.allocatedBudget.invalid ? 'error' : '' }}">
+                            <input type="number" autocomplete="off" name="allocatedBudget" id="allocatedBudget" ngModel required>
+                        </div>
+
+                        <div class="two wide field">
+                            <button class="ui mini green button">
+                            <i class="save icon"></i> บันทึก
+                        </button>
+                        </div>
+
+                        <div class="three wide field">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-container>
 
 <form class="ui grid" id="showForm1" (submit)="onAdd(f2)" #f2="ngForm">
     <div class="sixteen wide column">
@@ -150,7 +170,7 @@
 
                 <div class="ui center aligned grid" style="margin-top: 20px;">
                     <div class="sixteen wide column">
-                        <button class="ui tiny green button">
+                        <button class="ui tiny green button" type="submit">
                           <i class="add icon"></i> เพิ่ม
                         </button>
                     </div>
@@ -166,37 +186,21 @@
     <table id="dataTable" class="ui small celled table" style="width: 100%;">
         <thead>
             <tr style="text-align: center">
-                <th rowspan="2">ลำดับ</th>
-                <th rowspan="2">ประเภทค่าสาธารณูปโภค</th>
-                <th rowspan="2">ใบแจ้งหนี้เดือน</th>
-                <th rowspan="2">เลขที่ใบแจ้งหนี้</th>
-                <th rowspan="2">วันที่ในใบแจ้งหนี้</th>
-                <th rowspan="2">เลขที่ ขบ.</th>
-                <th rowspan="2">วดป. ที่เบิก</th>
-                <th rowspan="2">จำนวนเงิน</th>
-                <th rowspan="1" colspan="2">จัดการ</th>
+                <th>ลำดับ</th>
+                <th>ประเภทค่าสาธารณูปโภค</th>
+                <th>ใบแจ้งหนี้เดือน</th>
+                <th>เลขที่ใบแจ้งหนี้</th>
+                <th>วันที่ในใบแจ้งหนี้</th>
+                <th>เลขที่ ขบ.</th>
+                <th>วดป. ที่เบิก</th>
+                <th>จำนวนเงิน</th>
+                <th>จัดการ</th>
             </tr>
-            <tr style="display:none">
+            <!-- <tr style="display:none">
                 <td>แก้ไข</td>
                 <td>ลบ</td>
-            </tr>
+            </tr> -->
         </thead>
-        <!-- <tbody *ngFor="let data of showDataTable; let i=index">
-            <tr>
-                <td>{{i+1}}</td>
-                <td>{{data.publicUtilityType}}</td>
-                <td>{{data.publicUtilityType}}</td>
-                <td>{{data.publicUtilityType}}</td>
-                <td>{{data.publicUtilityType}}</td>
-                <td>{{data.publicUtilityType}}</td>
-                <td>{{data.publicUtilityType}}</td>
-                <td>{{data.publicUtilityType}}</td>
-                <td>{{data.publicUtilityType}}</td>
-                <td>{{data.publicUtilityType}}</td>
-                <td>{{data.publicUtilityType}}</td>
-            </tr>
-        </tbody> -->
-
     </table>
 
     <div class="ui center aligned grid" style="margin-top: 20px;">
@@ -206,7 +210,7 @@
             </button>
 
             <button class="ui mini primary button" (click)="confirmSend()">
-                <i class="check icon"></i> ยืนยันการส่ง
+                <i class="paper plane icon"></i> ยืนยันการส่ง
               </button>
         </div>
     </div>

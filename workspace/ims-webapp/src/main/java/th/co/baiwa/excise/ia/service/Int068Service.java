@@ -1,9 +1,11 @@
 package th.co.baiwa.excise.ia.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,44 +18,49 @@ import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.ia.persistence.entity.AllocatedBudget;
 import th.co.baiwa.excise.ia.persistence.entity.PublicUtility;
+import th.co.baiwa.excise.ia.persistence.entity.TimeSet;
 import th.co.baiwa.excise.ia.persistence.repository.AllocatedBudgetRepository;
 import th.co.baiwa.excise.ia.persistence.repository.PublicUtilityRepository;
+import th.co.baiwa.excise.ia.persistence.repository.TimeSetRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int068FormVo;
 import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class Int068Service {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	@Autowired
 	private AllocatedBudgetRepository allocatedBudgetRepository;
-	
+
 	@Autowired
 	private PublicUtilityRepository publicUtilityRepository;
-	
+
+	@Autowired
+	private TimeSetRepository timeSetRepository;
+
 	public CommonMessage<AllocatedBudget> saveAB(AllocatedBudget ab) {
 		Message msg;
 		CommonMessage<AllocatedBudget> response = new CommonMessage<>();
 		String user = UserLoginUtils.getCurrentUsername();
 		Date date = new Date();
 		AllocatedBudget data = new AllocatedBudget();
-		
-		if(BeanUtils.isNotEmpty(ab.getAllocatedBudget())) {
+
+		if (BeanUtils.isNotEmpty(ab.getAllocatedBudget())) {
 			ab.setUpdatedBy(user);
 			ab.setUpdatedDate(date);
 			data = allocatedBudgetRepository.save(ab);
 		}
-		
+
 		if (data != null) {
 			msg = ApplicationCache.getMessage("MSG_00002");
 		} else {
 			msg = ApplicationCache.getMessage("MSG_00003");
 		}
-			
+
 		response.setMsg(msg);
 		response.setData(data);
-		
-	return response;
+
+		return response;
 	}
 
 	public CommonMessage<PublicUtility> savePU(List<Int068FormVo> listVo) {
@@ -63,8 +70,8 @@ public class Int068Service {
 		Date date = new Date();
 		PublicUtility data = new PublicUtility();
 		PublicUtility pu;
-		
-		if(listVo.size() != 0) {
+
+		if (listVo.size() != 0) {
 			for (Int068FormVo obj : listVo) {
 				pu = new PublicUtility();
 				pu.setAllocatedBudgetId(new BigDecimal(obj.getAllocatedBudgetId()));
@@ -77,34 +84,56 @@ public class Int068Service {
 				pu.setAmount(new BigDecimal(obj.getAmount()));
 				pu.setUpdatedBy(user);
 				pu.setUpdatedDate(date);
-				pu.setExciseDepartment("สาขาอยุธยา 1");
-				pu.setExciseDistrict("สำนักงานสรรพสามิตภาคที่ 1");
-				pu.setExciseRegion("สาขาอยุธยา 1");
-				
+				pu.setExciseDepartment("สำนักงานสรรพสามิตภาคที่ 1");
+				pu.setExciseDistrict("สาขาอยุธยา 1");
+				pu.setExciseRegion("สำนักงานสรรพสามิตพื้นที่อยุธยา");
+
 				data = publicUtilityRepository.save(pu);
 			}
 		}
-		
-//		Int068FormVo resData = new Int068FormVo();
+
 		if (data != null) {
-//			resData.setAllocatedBudgetId((data.getAllocatedBudgetId()).longValue());
-//			resData.setPublicUtilityType(data.getPublicUtilityType());
-//			resData.setMonthInvoice(data.getMonthInvoice());
-//			resData.setInvoiceNumber(data.getInvoiceNumber());
-//			resData.setInvoiceDate(DateConstant.convertDateToStrDDMMYYYY(data.getInvoiceDate()));
-//			resData.setWithdrawalNumber(data.getWithdrawalNumber());
-//			resData.setWithdrawalDate(DateConstant.convertDateToStrDDMMYYYY(data.getWithdrawalDate()));
-//			resData.setAmount(data.getAmount().longValue());
-			
 			msg = ApplicationCache.getMessage("MSG_00002");
 		} else {
 			msg = ApplicationCache.getMessage("MSG_00003");
 		}
-			
+
 		response.setMsg(msg);
 		response.setData(data);
+
+		return response;
+	}
+
+	public List<TimeSet> checkTime() {
+		Date date = new Date();
+		// check count status = '1'(open)
+		int numOpen = timeSetRepository.countStatus();
+		if (numOpen == 1) {
+			// check condition range time on present
+			List<TimeSet> active = timeSetRepository.findStatusOpen();
+			Date checkStart = active.get(0).getStartDateTime();
+			Date checkEnd = active.get(0).getEndDateTime();
+
+			if (checkStart.before(date) && checkEnd.after(date)) {
+				// stay to range(open || status = '1')
+			} else {
+				// not stay to range(close || status = '0')
+				TimeSet setData = new TimeSet();
+				for (TimeSet t : active) {
+					setData.setTimeSetId(t.getTimeSetId());
+					// setData.setStartDateTime(t.getStartDateTime());
+					// setData.setEndDateTime(t.getEndDateTime());
+					setData.setStatus("0");
+					setData.setUpdatedDate(date);
+					timeSetRepository.save(setData);
+				}
+			}
+		}
 		
-	return response;
+//		return data in range(status '1')
+		List<TimeSet> dataAcive = new ArrayList<TimeSet>();
+		dataAcive = timeSetRepository.findStatusOpen();
+		return dataAcive;
 	}
 
 }
