@@ -1,3 +1,231 @@
-<p>
-  int05-3-3-2 works!
-</p>
+<div class="ui grid">
+  <div class="sixteen wide column segments">
+
+    <div class="ui segments">
+
+      <div class="ui bottom segment">
+        <form class="ui form" (submit)="func($event)">
+          <div class="inline fields"></div>
+          <div class="inline fields">
+            <div class="two wide field"></div>
+            <div class="two wide field"></div>
+            <div class="ten wide field"></div>
+            <div class="two wide field">
+              <label class="text-left full-width">ส่วนราชการ</label>
+            </div>
+            <div class="four wide field">
+              <label class="text-left full-width">{{assetBalance.governmentSector}}</label>
+            </div>
+          </div>
+
+          <div class="inline fields">
+            <div class="two wide field"></div>
+            <div class="two wide field"></div>
+            <div class="ten wide field"></div>
+            <div class="two wide field">
+              <label class="text-left full-width">หน่วยงาน</label>
+            </div>
+            <div class="four wide field">
+              <label class="text-left full-width">{{assetBalance.institute}}</label>
+            </div>
+          </div>
+
+
+          <div class="inline fields">
+            <div class="one wide field"></div>
+            <div class="one wide field">
+              <label class="text-left full-width">ประเภท</label>
+            </div>
+            <div class="two wide field">
+              <label class="text-left full-width">{{assetBalance.assetType}}</label>
+            </div>
+            <div class="one wide field">
+              <label class="text-left full-width">รหัส</label>
+            </div>
+            <div class="two wide field">
+              <label class="text-left full-width">{{assetBalance.assetCode}}</label>
+            </div>
+            <div class="two wide field">
+              <label class="text-left full-width">ลักษณะ/คุณสมบัติ</label>
+            </div>
+            <div class="two wide field">
+              <label class="text-left full-width">{{assetBalance.assetFeature}}</label>
+            </div>
+            <div class="two wide field">
+              <label class="text-left full-width">รุ่น/แบบ</label>
+            </div>
+            <div class="three wide field">
+              <label class="text-left full-width">{{assetBalance.assetModel}}</label>
+            </div>
+          </div>
+          <div class="inline fields">
+            <div class="one wide field"></div>
+            <div class="five wide field">
+              <label class="text-left full-width">สถานที่ตั้ง/หน่วยงานที่รับผิดชอบ</label>
+            </div>
+            <div class="two wide field">
+              <label class="text-left full-width">{{assetBalance.picAddress}}</label>
+            </div>
+            <div class="five wide field">
+              <label class="text-left full-width">ชื่อผู้ขาย/ผู้รับจ้าง/ผู้บริจาค</label>
+            </div>
+            <div class="three wide field">
+              <label class="text-left full-width">{{assetBalance.vendorsName}}</label>
+            </div>
+          </div>
+          <div class="inline fields">
+            <div class="one wide field"></div>
+            <div class="one wide field">
+              <label class="text-left full-width">ที่อยู่</label>
+            </div>
+            <div class="five wide field">
+              <label class="text-left full-width">{{assetBalance.vendorsAddress}}</label>
+            </div>
+            <div class="one wide field">
+              <label class="text-left full-width">โทรศัพท์</label>
+            </div>
+            <div class="six wide field">
+              <label class="text-left full-width">{{assetBalance.vendorsPhone}}</label>
+            </div>
+
+          </div>
+
+          <div class="inline fields">
+            <div class="one wide field"></div>
+            <div class="one wide field">
+              <label class="text-left full-width">ประเภทเงิน</label>
+            </div>
+            <div class="ten wide field ">
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="typeCost" value="เงินงบประมาณ" [(ngModel)]="assetBalance.typeCost">
+                  <label>เงินงบประมาณ</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="typeCost" value="เงินนอกงบประมาณ" [(ngModel)]="assetBalance.typeCost">
+                  <label>เงินนอกงบประมาณ</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="typeCost" value="เงินบริจาค/เงินช่วยเหลือ" [(ngModel)]="assetBalance.typeCost">
+                  <label>เงินบริจาค/เงินช่วยเหลือ</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="typeCost" value="อื่นๆ" [(ngModel)]="assetBalance.typeCost">
+                  <label>อื่นๆ</label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="inline fields">
+            <div class="one wide field"></div>
+            <div class="one wide field">
+              <label class="text-left full-width">วิธีการได้มา</label>
+            </div>
+            <div class="ten wide field ">
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="acquisition" value="ตกลงราคา" [(ngModel)]="assetBalance.acquisition">
+                  <label>ตกลงราคา</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="acquisition" value="สอบราคา" [(ngModel)]="assetBalance.acquisition">
+                  <label>สอบราคา</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="acquisition" value="ประกวดราคา" [(ngModel)]="assetBalance.acquisition">
+                  <label>ประกวดราคา</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="acquisition" value="วิธีพิเศษ" [(ngModel)]="assetBalance.acquisition">
+                  <label>วิธีพิเศษ</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="acquisition" value="รับบริจาค" [(ngModel)]="assetBalance.acquisition">
+                  <label>รับบริจาค</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </form>
+
+        <table class="ui small celled table" style="width: 100%;">
+          <thead>
+            <tr style="text-align: center !important;">
+              <th>วัน เดือน ปี</th>
+              <th>ที่เอกสาร</th>
+              <th>รายการ</th>
+              <th>จำนวน หน่วย</th>
+              <th>ราคาต่อหน่วย/ชุด/กลุ่ม</th>
+              <th>มูลค่ารวม</th>
+              <th>อายุ ใช้งาน</th>
+              <th>อัตราค่าเสื่อมราคา</th>
+              <th>ค่าเสื่อมราคาประจาปี</th>
+              <th>ค่าเสื่อมราคาสะสม</th>
+              <th>มูลค่าสุทธิ</th>
+              <th>หมายเหตุ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{assetBalance.documentDate}}</td>
+              <td>{{assetBalance.documentNo}}</td>
+              <td>{{assetBalance.assetDescription}}</td>
+              <td>{{assetBalance.assetAmount}}</td>
+              <td>{{assetBalance.unitPriceAsset}}</td>
+              <td>{{assetBalance.totlePriceAsset}}</td>
+              <td>{{assetBalance.lifetimeAsset}}</td>
+              <td>{{assetBalance.depreciationRate}}</td>
+              <td>{{assetBalance.annualDepreciation}}</td>
+              <td>{{assetBalance.accumulatedDepreciation}}</td>
+              <td>{{assetBalance.netValue}}</td>
+              <td>{{assetBalance.assetNote}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <div class="ui segments">
+          <div class="ui top attached header">ประวัติการซ่อมบำรุงรักษาสินทรัพย์</div>
+          <div class="ui bottom segment">
+            <table id="dataTable" class="ui small celled table" style="width: 100%;">
+              <thead>
+                <tr style="text-align: center !important;">
+                  <th>ครั้งที่</th>
+                  <th>วัน เดือน ปี</th>
+                  <th>รายการ</th>
+                  <th>จำนวนเงิน</th>
+                  <th>หมายเหตุ</th>
+                </tr>
+              </thead>
+
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+</div>

@@ -121,7 +121,7 @@ export class Int0533Component implements OnInit {
         })
         $("td > .dtl", row).bind("click", () => {
           this.router.navigate(['int05/3/3/2'], {
-
+            queryParams: { act: 'addDetail', id: data.assetBalanceId }
           });
         })
         $("td > .edit", row).bind("click", () => {

@@ -22,8 +22,11 @@ public class AssetMaintenanceService {
 		return assetMaintenanceRepository.findOne(id);
 	}
 	
-	public List<AssetMaintenance> findAllAssetMaintenanceById(Long id) {
+	public List<AssetMaintenance> findAllAssetMaintenanceById() {
 		return assetMaintenanceRepository.findAll();
+	}
+	public List<AssetMaintenance> findByAssetBalanceId(Long id) {
+		return assetMaintenanceRepository.findByAssetBalanceId(id);
 	}
 	public void delete(List<AssetMaintenance> assetMaintenances) {
 		assetMaintenanceRepository.delete(assetMaintenances);

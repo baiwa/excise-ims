@@ -52,7 +52,7 @@ public class AssetBalanceService {
 	public List<AssetBalance> deleteAssetBalance(List<Long> AssetBalanceIdList) {
 		List<AssetMaintenance> assetMaintenanceList;
 		for (Long asset : AssetBalanceIdList) {
-			assetMaintenanceList = assetMaintenanceService.findAllAssetMaintenanceById(asset);
+			assetMaintenanceList = assetMaintenanceService.findByAssetBalanceId(asset);
 			assetMaintenanceService.delete(assetMaintenanceList);
 		}
 		assetBalanceRepository.delete(AssetBalanceIdList);

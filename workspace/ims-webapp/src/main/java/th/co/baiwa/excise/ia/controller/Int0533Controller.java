@@ -139,4 +139,16 @@ public class Int0533Controller {
 		return assetMaintenanceService.getCountByAssetBalanceId(int0533Vo.getAssetBalanceId());
 	}
 
+	@PostMapping("/dataTableAssetMaintenance")
+	@ResponseBody
+	public ResponseDataTable<AssetMaintenance> dataTableAssetMaintenance(DataTableRequest dataTableRequest, AssetMaintenance assetMaintenance) {
+		logger.info("dataTableAssetMaintenance");
+		ResponseDataTable<AssetMaintenance> responseDataTable = new ResponseDataTable<AssetMaintenance>();
+		List<AssetMaintenance> assetList = assetMaintenanceService.findByAssetBalanceId(assetMaintenance.getAssetBalanceId());
+		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
+		responseDataTable.setData(assetList);
+		responseDataTable.setRecordsTotal(assetList.size());
+		responseDataTable.setRecordsFiltered(assetList.size());
+		return responseDataTable;
+	}
 }
