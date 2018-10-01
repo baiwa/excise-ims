@@ -13,7 +13,7 @@ import { FormsModule } from '../../../../../../../node_modules/@angular/forms';
 import { Int0815Component } from './int08-1-5/int08-1-5.component';
 import { Int0816Component } from './int08-1-6/int08-1-6.component';
 import { Int0817Component } from './int08-1-7/int08-1-7.component';
-import { ConditionModule } from '../../../../common/components';
+import { ConditionModule, BreadcrumbModule } from '../../../../common/components';
 import { Int0818Component } from './int08-1-8/int08-1-8.component';
 
 const routes: Routes = [
@@ -33,7 +33,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
-    ConditionModule
+    ConditionModule, 
+    BreadcrumbModule
   ],
   declarations: [
     Int081Component,

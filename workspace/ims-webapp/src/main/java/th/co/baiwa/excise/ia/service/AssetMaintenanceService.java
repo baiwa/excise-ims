@@ -14,15 +14,24 @@ public class AssetMaintenanceService {
 	@Autowired
 	private AssetMaintenanceRepository assetMaintenanceRepository;
 
-	public AssetMaintenance saveAssetMaintenance(AssetMaintenance assetBalance) {
-		return assetMaintenanceRepository.save(assetBalance);
+	public AssetMaintenance saveAssetMaintenance(AssetMaintenance assetMaintenance) {
+		return assetMaintenanceRepository.save(assetMaintenance);
 	}
 	
 	public AssetMaintenance findAssetMaintenanceById(Long id) {
 		return assetMaintenanceRepository.findOne(id);
 	}
 	
-	public List<AssetMaintenance> findAllAssetMaintenanceById(Long id) {
+	public List<AssetMaintenance> findAllAssetMaintenanceById() {
 		return assetMaintenanceRepository.findAll();
+	}
+	public List<AssetMaintenance> findByAssetBalanceId(Long id) {
+		return assetMaintenanceRepository.findByAssetBalanceId(id);
+	}
+	public void delete(List<AssetMaintenance> assetMaintenances) {
+		assetMaintenanceRepository.delete(assetMaintenances);
+	}
+	public int getCountByAssetBalanceId(Long assetBalanceId) {
+		return assetMaintenanceRepository.getCountByAssetBalanceId(assetBalanceId);
 	}
 }

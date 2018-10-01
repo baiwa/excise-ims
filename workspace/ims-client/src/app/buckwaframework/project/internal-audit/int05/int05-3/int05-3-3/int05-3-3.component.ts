@@ -22,6 +22,8 @@ export class Int0533Component implements OnInit {
   endDate: any;
   deleteList: any[] = [];
   datatable: any;
+  id: any;
+  act: any;
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
@@ -32,6 +34,7 @@ export class Int0533Component implements OnInit {
   }
 
   ngOnInit() {
+
     this.initDatatable();
   }
 
@@ -57,7 +60,7 @@ export class Int0533Component implements OnInit {
       ajax: {
         type: "POST",
         url: URL,
-        data: { assetType: this.assetBalance.assetType }
+        data: { assetType: this.assetBalance.assetType == '0' ? '' : this.assetBalance.assetType }
       },
       columns: [
 
@@ -82,18 +85,18 @@ export class Int0533Component implements OnInit {
           data: "assetBalanceId",
           render: function (data, type, row, meta) {
 
-            return '<button type="button" class="ui mini button  detail">รายละเอียด</button><button type="button" class="ui mini button  edit">แก้ไข</button><button type="button" class="ui mini button  add">เพิ่มประวัติ</button>';
+            return '<button type="button" class="ui mini button  dtl">รายละเอียด</button>' +
+              '<button type="button" class="ui mini button  edit">แก้ไข</button>' +
+              '<button type="button" class="ui mini button  addHis">เพิ่มประวัติ</button>';
           }
         }
 
       ],
       columnDefs: [
-        { targets: [0, 1, 2, 3, 4, 5, 6, 7], className: "center aligned" },
+        { targets: [0, 1, 4, 5, 6, 7], className: "center aligned" },
 
       ], rowCallback: (row, data, index) => {
         $("td > .tableDt", row).bind("change", () => {
-
-
           let isDelete = false;
           for (let index = 0; index < this.deleteList.length; index++) {
             const element = this.deleteList[index];
@@ -108,28 +111,48 @@ export class Int0533Component implements OnInit {
               } else {
                 this.deleteList.splice(index);
               }
-
-
             }
           }
-
           if (!isDelete) {
             this.deleteList.push(data.assetBalanceId);
           }
           console.log(this.deleteList);
 
         })
-        $("td > .del", row).bind("click", () => {
-
+        $("td > .dtl", row).bind("click", () => {
+          this.router.navigate(['int05/3/3/2'], {
+            queryParams: { act: 'addDetail', id: data.assetBalanceId }
+          });
         })
-        $("td > .chk", row).bind("click", () => {
-
-
+        $("td > .edit", row).bind("click", () => {
+          console.log(data);
+          this.router.navigate(['int05/3/3/1'], {
+            queryParams: { act: 'edit', id: data.assetBalanceId }
+          });
         })
-          ;
+        $("td > .addHis", row).bind("click", () => {
+          console.log(data);
+          this.router.navigate(['int05/3/3/1'], {
+            queryParams: { act: 'addDetail', id: data.assetBalanceId }
+          });
+        });
       }
 
 
+    });
+  }
+
+  deleteAssetBalance() {
+    var url = "ia/int0533/deleteAssetBalanceList";
+    this.ajax.post(url, { assetBalanceIdList: this.deleteList }, res => {
+      var message = res.json();
+
+      if (message.messageType == 'E') {
+        this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
+      } else {
+        this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
+        this.initDatatable();
+      }
     });
   }
 

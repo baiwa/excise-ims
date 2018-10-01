@@ -174,6 +174,13 @@ public class IaFollowUpProjectService {
 		iaFollowUpProject.setPerformance2Date(DateConstant.convertStrDDMMYYYYToDate(vo.getPerformance2Date()));
 		iaFollowUpProject.setTrackResult2Bnum(vo.getTrackResult2Bnum());
 		iaFollowUpProject.setTrackResult2Date(DateConstant.convertStrDDMMYYYYToDate(vo.getTrackResult2Date()));
+		iaFollowUpProject.setFollowUp3Bnum(vo.getFollowUp3Bnum());
+		iaFollowUpProject.setFollowUp3Date(DateConstant.convertStrDDMMYYYYToDate(vo.getFollowUp3Date()));
+		iaFollowUpProject.setMaturity360(DateConstant.convertStrDDMMYYYYToDate(vo.getMaturity360()));
+		iaFollowUpProject.setPerformance3Bnum(vo.getPerformance3Bnum());
+		iaFollowUpProject.setPerformance3Date(DateConstant.convertStrDDMMYYYYToDate(vo.getPerformance3Date()));
+		iaFollowUpProject.setTrackResult3Bnum(vo.getTrackResult3Bnum());
+		iaFollowUpProject.setTrackResult3Date(DateConstant.convertStrDDMMYYYYToDate(vo.getTrackResult3Date()));
 		
 		iaFollowUpProject.setStatus(vo.getStatus());
 		if (StringUtils.isNotBlank(vo.getVersion())) {
@@ -221,6 +228,13 @@ public class IaFollowUpProjectService {
 		vo.setPerformance2Date(DateConstant.convertDateToStrDDMMYYYY(iaFollowUpProject.getPerformance2Date()));
 		vo.setTrackResult2Bnum(iaFollowUpProject.getTrackResult2Bnum());
 		vo.setTrackResult2Date(DateConstant.convertDateToStrDDMMYYYY(iaFollowUpProject.getTrackResult2Date()));
+		vo.setFollowUp3Bnum(iaFollowUpProject.getFollowUp3Bnum());
+		vo.setFollowUp3Date(DateConstant.convertDateToStrDDMMYYYY(iaFollowUpProject.getFollowUp3Date()));
+		vo.setMaturity360(DateConstant.convertDateToStrDDMMYYYY(iaFollowUpProject.getMaturity360()));
+		vo.setPerformance3Bnum(iaFollowUpProject.getPerformance3Bnum());
+		vo.setPerformance3Date(DateConstant.convertDateToStrDDMMYYYY(iaFollowUpProject.getPerformance3Date()));
+		vo.setTrackResult3Bnum(iaFollowUpProject.getTrackResult3Bnum());
+		vo.setTrackResult3Date(DateConstant.convertDateToStrDDMMYYYY(iaFollowUpProject.getTrackResult3Date()));
 		vo.setStatus(iaFollowUpProject.getStatus());
 		vo.setVersion(iaFollowUpProject.getVersion().toString());
 	
@@ -303,7 +317,8 @@ public class IaFollowUpProjectService {
 		String[] tbTH1 = { "ลำดับ", "โครงการ", "รายงานผลอธิบดี", "", "แจ้งติดตามหน่วยรับตรวจครั้งที่ 1", "",
 				"วันครบกำหนดครั้งที่ 1", "", "หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 1", "",
 				"รายงานการติดตามครั้งที่ 1", "", "แจ้งติดตามหน่วยรับตรวจครั้งที่ 2", "", "วันครบกำหนดครั้งที่2",
-				"หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 2", "", "รายงานการติดตามครั้งที่ 2", "", "สถานะการติดตาม" };
+				"หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 2", "", "รายงานการติดตามครั้งที่ 2", "", "แจ้งติดตามหน่วยรับตรวจครั้งที่ 3", "", "วันครบกำหนดครั้งที่3",
+				"หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 3", "", "รายงานการติดตามครั้งที่ 3", "", "สถานะการติดตาม" };
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
@@ -312,6 +327,7 @@ public class IaFollowUpProjectService {
 
 		String[] tbTH2 = { "เลขหนังสือ", "วันที่", "เลขหนังสือ", "วันที่", "45 วัน", "60 วัน", "เลขหนังสือ", "วันที่",
 				"เลขหนังสือ", "วันที่", "เลขหนังสือ", "วันที่", "60 วัน", "เลขหนังสือ", "วันที่", "เลขหนังสือ",
+				"วันที่", "เลขหนังสือ", "วันที่", "60 วัน", "เลขหนังสือ", "วันที่", "เลขหนังสือ",
 				"วันที่" };
 		row = sheet.createRow(1);
 		int cellNumtbTH2 = 2;
@@ -531,6 +547,70 @@ public class IaFollowUpProjectService {
 			cell = row.createCell(cellNum);
 			if(StringUtils.isNotBlank(detail.getTrackResult2Date())) {
 				cell.setCellValue(detail.getTrackResult2Date());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getFollowUp3Bnum())) {
+				cell.setCellValue(detail.getFollowUp3Bnum());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getFollowUp3Date())) {
+				cell.setCellValue(detail.getFollowUp3Date());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getMaturity360())) {
+				cell.setCellValue(detail.getMaturity360());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getPerformance3Bnum())) {
+				cell.setCellValue(detail.getPerformance3Bnum());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getPerformance3Date())) {
+				cell.setCellValue(detail.getPerformance3Date());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getTrackResult3Bnum())) {
+				cell.setCellValue(detail.getTrackResult3Bnum());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getTrackResult3Date())) {
+				cell.setCellValue(detail.getTrackResult3Date());
 			}else {
 				cell.setCellValue("-");
 			}

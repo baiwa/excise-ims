@@ -25,6 +25,13 @@ public class Int111Vo implements Serializable {
 	private String performance2Date;
 	private String trackResult2Bnum;
 	private String trackResult2Date;
+	private String followUp3Bnum;
+	private String followUp3Date;
+	private String maturity360;
+	private String performance3Bnum;
+	private String performance3Date;
+	private String trackResult3Bnum;
+	private String trackResult3Date;
 	private String status;
 	private String version;
 	private String informRectorDateDisplay;
@@ -37,6 +44,10 @@ public class Int111Vo implements Serializable {
 	private String maturity260Display;
 	private String performance2DateDisplay;
 	private String trackResult2DateDisplay;
+	private String followUp3DateDisplay;
+	private String maturity360Display;
+	private String performance3DateDisplay;
+	private String trackResult3DateDisplay;
 	public String getFollowUpProjectId() {
 		return followUpProjectId;
 	}
@@ -151,6 +162,48 @@ public class Int111Vo implements Serializable {
 	public void setTrackResult2Date(String trackResult2Date) {
 		this.trackResult2Date = trackResult2Date;
 	}
+	public String getFollowUp3Bnum() {
+		return followUp3Bnum;
+	}
+	public void setFollowUp3Bnum(String followUp3Bnum) {
+		this.followUp3Bnum = followUp3Bnum;
+	}
+	public String getFollowUp3Date() {
+		return followUp3Date;
+	}
+	public void setFollowUp3Date(String followUp3Date) {
+		this.followUp3Date = followUp3Date;
+	}
+	public String getMaturity360() {
+		return maturity360;
+	}
+	public void setMaturity360(String maturity360) {
+		this.maturity360 = maturity360;
+	}
+	public String getPerformance3Bnum() {
+		return performance3Bnum;
+	}
+	public void setPerformance3Bnum(String performance3Bnum) {
+		this.performance3Bnum = performance3Bnum;
+	}
+	public String getPerformance3Date() {
+		return performance3Date;
+	}
+	public void setPerformance3Date(String performance3Date) {
+		this.performance3Date = performance3Date;
+	}
+	public String getTrackResult3Bnum() {
+		return trackResult3Bnum;
+	}
+	public void setTrackResult3Bnum(String trackResult3Bnum) {
+		this.trackResult3Bnum = trackResult3Bnum;
+	}
+	public String getTrackResult3Date() {
+		return trackResult3Date;
+	}
+	public void setTrackResult3Date(String trackResult3Date) {
+		this.trackResult3Date = trackResult3Date;
+	}
 	public String getStatus() {
 		return status;
 	}
@@ -222,6 +275,30 @@ public class Int111Vo implements Serializable {
 	}
 	public void setTrackResult2DateDisplay(String trackResult2DateDisplay) {
 		this.trackResult2DateDisplay = trackResult2DateDisplay;
+	}
+	public String getFollowUp3DateDisplay() {
+		return followUp3DateDisplay;
+	}
+	public void setFollowUp3DateDisplay(String followUp3DateDisplay) {
+		this.followUp3DateDisplay = followUp3DateDisplay;
+	}
+	public String getMaturity360Display() {
+		return maturity360Display;
+	}
+	public void setMaturity360Display(String maturity360Display) {
+		this.maturity360Display = maturity360Display;
+	}
+	public String getPerformance3DateDisplay() {
+		return performance3DateDisplay;
+	}
+	public void setPerformance3DateDisplay(String performance3DateDisplay) {
+		this.performance3DateDisplay = performance3DateDisplay;
+	}
+	public String getTrackResult3DateDisplay() {
+		return trackResult3DateDisplay;
+	}
+	public void setTrackResult3DateDisplay(String trackResult3DateDisplay) {
+		this.trackResult3DateDisplay = trackResult3DateDisplay;
 	}
 	
 }

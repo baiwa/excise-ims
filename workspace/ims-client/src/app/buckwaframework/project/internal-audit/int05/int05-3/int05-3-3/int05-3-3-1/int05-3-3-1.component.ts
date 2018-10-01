@@ -1,10 +1,12 @@
-import { AssetBalance, AssetMaintenance } from '../../../../../../common/models';
+import { AssetBalance, AssetMaintenance, ComboBox } from '../../../../../../common/models';
 import { Component, OnInit } from "@angular/core";
 import { AjaxService } from "../../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Utils, TextDateTH, formatter } from '../../../../../../common/helper';
-
+const URL = {
+  DROPDOWN: "combobox/controller/getDropByTypeAndParentId"
+};
 declare var $: any;
 @Component({
   selector: 'int05-3-3-1',
@@ -14,9 +16,13 @@ declare var $: any;
 export class Int05331Component implements OnInit {
   assetBalance: AssetBalance;
   assetMaintenance: AssetMaintenance;
-  day: any;
-  month: any;
-  year: any;
+  day: any = 0;
+  month: any = 0;
+  year: any = 0;
+
+  id: any;
+  act: any;
+  ddtAssetType: any[] = [];
   constructor(private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
@@ -25,7 +31,10 @@ export class Int05331Component implements OnInit {
     this.assetBalance = new AssetBalance();
     this.assetMaintenance = new AssetMaintenance();
 
+
   }
+
+
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
@@ -35,9 +44,9 @@ export class Int05331Component implements OnInit {
       type: 'date',
       text: TextDateTH,
       formatter: formatter('วดป'),
-      onChange: (date) => {
-
-
+      onChange: (date, text) => {
+        console.log(date);
+        this.assetBalance.documentDate = this.dataYear(date);
       }
     });
 
@@ -45,28 +54,77 @@ export class Int05331Component implements OnInit {
       type: 'date',
       text: TextDateTH,
       formatter: formatter('วดป'),
-      onChange: (date) => {
-
-
+      onChange: (date, text) => {
+        console.log(date);
+        this.assetBalance.dateOfManufacture = this.dataYear(date);
       }
-    });
 
+    });
 
     $('#maintenanceDate').calendar({
       type: 'date',
       text: TextDateTH,
       formatter: formatter('วดป'),
-      onChange: (date) => {
-
-
+      onChange: (date, text) => {
+        console.log(date);
+        this.assetMaintenance.maintenanceDate = date;
       }
+
     });
+
+
+
+
+    this.ajax.post(URL.DROPDOWN, { type: "ASSET_TYPE" }, res => {
+      this.ddtAssetType = res.json();
+      console.log(this.ddtAssetType);
+    });
+
+
+
+    this.id = this.route.snapshot.queryParams["id"];
+    this.act = this.route.snapshot.queryParams["act"];
+    if (this.act == undefined) {
+      this.act = '';
+    }
+    if (this.id == undefined) {
+      this.id = '';
+    }
+
+    if (this.act == 'addDetail') {
+      $('#assetBalance').hide();
+      this.ajax.post("ia/int0533/getCountAssetMaintenance", { assetBalanceId: this.id }, res => {
+        console.log(res.json());
+        this.assetMaintenance.maintenanceAmount = res.json() + 1;
+      });
+    } else {
+      $('#assetMaintenance').hide();
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.act == 'edit') {
+      this.ajax.post("ia/int0533/findAssetBalance", { assetBalanceId: this.id }, res => {
+        let value = res.json();
+        this.assetBalance = value.assetBalance;
+        this.year = value.year;
+        this.month = value.month;
+        this.day = value.day;
+        console.log(this.assetBalance.documentDate);
+        let docDate = this.assetBalance.documentDate;
+        $('#documentDateField').val(this.dataPattle(new Date(this.assetBalance.documentDate)));
+        let manrFac = this.assetBalance.dateOfManufacture;
+        $('#dateOfManufactureField').val(this.dataPattle(new Date(this.assetBalance.dateOfManufacture)));
+      });
+
+
+    }
+
   }
 
 
   addAction() {
-    console.log(this.assetBalance);
-    console.log(this.assetMaintenance);
+
     if (Utils.isNull(this.assetBalance.governmentSector)) {
       this.messageBarService.errorModal("กรุณากรอก \"ส่วนราชการ\"", 'แจ้งเตือน');
       return;
@@ -75,10 +133,47 @@ export class Int05331Component implements OnInit {
       this.messageBarService.errorModal("กรุณากรอก \"หน่วยงาน\"", 'แจ้งเตือน');
       return;
     }
+
+    if (Utils.isNull(this.assetBalance.dateOfManufacture)) {
+      this.messageBarService.errorModal("กรุณากรอก \"วันที่ผลิต/ใช้งาน\"", 'แจ้งเตือน');
+      return;
+    }
+
+    this.day = Utils.isNull(this.day) ? 0 : this.day;
+    this.month = Utils.isNull(this.month) ? 0 : this.month;
+    this.year = Utils.isNull(this.year) ? 0 : this.year;
+    this.assetBalance.totlePriceAsset = this.assetBalance.unitPriceAsset * this.assetBalance.assetAmount;
     var url = "ia/int0533/addAssetBalance";
-    this.ajax.post(url, { assetBalance: this.assetBalance, assetMaintenance: this.assetMaintenance }, res => {
+    this.ajax.post(url, { assetBalance: this.assetBalance, day: this.day, month: this.month, year: this.year }, res => {
       var message = res.json();
-      console.log(message.messageType);
+
+      if (message.messageType == 'E') {
+        this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
+      } else {
+        this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
+        this.router.navigate(["/int05/3/3"], {
+
+        });
+      }
+
+    });
+  }
+
+  addAssetMaintenanceAction() {
+
+    this.assetMaintenance.assetBalanceId = this.id;
+    if (Utils.isNull(this.assetMaintenance.maintenanceDate)) {
+      this.messageBarService.errorModal("กรุณากรอก \"วันที่ซ่อมบำรุงรักษา\"", 'แจ้งเตือน');
+      return;
+    }
+    if (Utils.isNull(this.assetMaintenance.maintenancePrice)) {
+      this.messageBarService.errorModal("กรุณากรอก \"จำนวนเงินค่าซ่อมบำรุงรักษา\"", 'แจ้งเตือน');
+      return;
+    }
+    var url = "ia/int0533/addAssetMaintenance";
+    this.ajax.post(url, { assetMaintenance: this.assetMaintenance }, res => {
+      var message = res.json();
+
       if (message.messageType == 'E') {
         this.messageBarService.errorModal(message.messageTh, 'แจ้งเตือน');
       } else {
@@ -95,6 +190,32 @@ export class Int05331Component implements OnInit {
     this.router.navigate(['int05/3/3'], {
 
     });
+  }
+
+
+  dataPattle(date) {
+    console.log("dataPattle", date);
+    let _year;
+    if (date.getFullYear() > (new Date().getFullYear() + 500)) {
+      _year = [`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`][0].split("/")[2];
+    } else {
+      const _date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())); // Date.UTC()
+      _year = _date.toLocaleString('th-TH', { timeZone: 'UTC' }).split(" ")[0].split("/")[2];
+    }
+    if (!date) return "";
+    let day = date.getDate();
+    let month = date.getMonth();
+
+    return (day < 10 ? "0" : "") + day + " " + TextDateTH.months[month] + " " + _year.toString();
+  }
+
+  dataYear(date) {
+    //console.log("dataYear", date);
+    const _date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    var spDate = _date.toLocaleString('th-TH', { timeZone: 'UTC' }).split(" ")[0].split("/");
+
+
+    return spDate[2] + '-' + spDate[1] + '-' + spDate[0] + 'T00:00:00';
   }
 
 
