@@ -14,8 +14,8 @@ public class AssetMaintenanceService {
 	@Autowired
 	private AssetMaintenanceRepository assetMaintenanceRepository;
 
-	public AssetMaintenance saveAssetMaintenance(AssetMaintenance assetBalance) {
-		return assetMaintenanceRepository.save(assetBalance);
+	public AssetMaintenance saveAssetMaintenance(AssetMaintenance assetMaintenance) {
+		return assetMaintenanceRepository.save(assetMaintenance);
 	}
 	
 	public AssetMaintenance findAssetMaintenanceById(Long id) {
@@ -24,5 +24,11 @@ public class AssetMaintenanceService {
 	
 	public List<AssetMaintenance> findAllAssetMaintenanceById(Long id) {
 		return assetMaintenanceRepository.findAll();
+	}
+	public void delete(List<AssetMaintenance> assetMaintenances) {
+		assetMaintenanceRepository.delete(assetMaintenances);
+	}
+	public int getCountByAssetBalanceId(Long assetBalanceId) {
+		return assetMaintenanceRepository.getCountByAssetBalanceId(assetBalanceId);
 	}
 }

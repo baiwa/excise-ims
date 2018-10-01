@@ -28,4 +28,5 @@ export class AssetBalance {
     vendorsAddress: string;
     vendorsName: string;
     vendorsPhone: string;
+
 }

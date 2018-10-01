@@ -8,7 +8,7 @@
         <div class="inline fields">
           <div class="two wide field "></div>
           <div class="two wide field ">
-            <label>ประเภทสินทรัพย์</label>
+            <label class="text-right full-width">ประเภทสินทรัพย์</label>
           </div>
           <div class="four wide field ">
             <select class="ui search dropdown ai" aria-placeholder="ประเภทสินทรัพย์" id="assetType" name="assetType"
@@ -26,7 +26,7 @@
             </select>
           </div>
           <div class="two wide field ">
-            <label>รหัสสินทรัพย์</label>
+            <label class="text-right full-width">รหัสสินทรัพย์</label>
           </div>
           <div class="four wide field ">
             <input type="text" placeholder="รหัสสินทรัพย์" class="custom" name="assetCode" id="assetCode" [(ngModel)]="assetBalance.assetCode">
@@ -35,14 +35,14 @@
         <div class="inline fields">
           <div class="two wide field "></div>
           <div class="two wide field ">
-            <label>วันที่เอกสารได้รับสินทรัพย์</label>
+            <label class="text-right full-width">วันที่เอกสารได้รับสินทรัพย์</label>
           </div>
           <div class="four wide field ">
             <input type="text" placeholder="วันที่เอกสารได้รับสินทรัพย์จาก" class="custom" name="startDate" id="startDate"
               [(ngModel)]="startDate">
           </div>
           <div class="two wide field ">
-            <label>ถึง</label>
+            <label class="text-right full-width">ถึง</label>
           </div>
           <div class="four wide field ">
             <input type="text" placeholder="ถึงวันที่เอกสารได้รับสินทรัพย์" class="custom" name="endDate" id="endDate"
@@ -81,13 +81,15 @@
       </table>
       <div class="inline fields"></div>
       <div class="inline fields">
-        <div class="sixteen wide field ">
-          <div class="seven wide field "></div>
-          <button class="ui mini primary button" (click)="delete()">
-            ลบ
-          </button>
 
+        <div class="ui grid">
+          <div class="sixteen wide center aligned column">
+            <button class="ui mini primary button" (click)="deleteAssetBalance()">
+              ลบ
+            </button>
+          </div>
         </div>
+
       </div>
     </div>
   </div>

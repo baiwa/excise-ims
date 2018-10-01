@@ -12,4 +12,10 @@ import th.co.baiwa.excise.ia.persistence.entity.AssetMaintenance;
 public interface AssetMaintenanceRepository extends CommonJpaCrudRepository<AssetMaintenance, Long> ,AssetMaintenanceRepositoryCustom {
 	@Query("select e from AssetMaintenance e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.assetBalanceId = ?1")
 	public List<AssetBalance> findByAssetBalanceId(Long assetBalanceId);
+	
+	
+	@Query("select count(1) from AssetMaintenance e where  e.assetBalanceId = ?1")
+	public int getCountByAssetBalanceId(Long assetBalanceId);
+	
+	
 }
