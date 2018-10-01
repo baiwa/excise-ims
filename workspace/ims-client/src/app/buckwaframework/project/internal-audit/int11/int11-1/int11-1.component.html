@@ -1,3 +1,5 @@
+<!-- <app-breadcrumb [route]="breadcrumb"></app-breadcrumb> -->
+
 <div class="ui grid">
 
   <div class="sixteen wide column">
@@ -12,18 +14,20 @@
           <div class="two wide field "></div>
 
           <div class="two wide field ">
-            <label>โครงการ</label>
+            <!-- <label>โครงการ</label> -->
           </div>
 
           <div class="four wide field ">
+              <label>โครงการ</label>
             <input type="text" id="projectName" name="projectName" [(ngModel)]="projectName">
           </div>
 
-          <div class="two wide field ">
+          <!-- <div class="two wide field ">
             <label>สถานะ</label>
-          </div>
+          </div> -->
 
           <div class="four wide field ">
+              <label>สถานะ</label>
             <select class="ui search dropdown follow-project-dropdown" id="status" name="status" [(ngModel)]="status">
               <option value="">กรุณาเลือก </option>
               <option *ngFor="let status of statusList; index as i;" value="{{status.value}}">{{status.label}}</option>
@@ -97,12 +101,12 @@
       <br/>
       <div class="ui center aligned grid">
         <div class="sixteen wide column">
-          <button class="ui mini primary button" (click)="exportFollowUpProject()">
+          <button class="ui mini yellow button" (click)="exportFollowUpProject()">
             <i class="print icon"></i>
-            Export
+            ส่งออก
           </button>
-          <button class="ui mini primary button" (click)="deleteData()">
-            <i class="trash icon"></i>
+          <button class="ui mini red button" (click)="deleteData()">
+            <i class="trash alternate icon"></i>
             ลบ
           </button>
         </div>

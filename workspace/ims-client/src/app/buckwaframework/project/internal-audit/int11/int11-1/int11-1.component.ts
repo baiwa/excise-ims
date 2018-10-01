@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { MessageBarService } from '../../../../common/services/message-bar.service';
-
+import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 declare var $: any;
 @Component({
   selector: 'int11-1',
@@ -19,12 +19,22 @@ export class Int111Component implements OnInit {
   $form: any;
   $page: any;
 
+  // BreadCrumb
+// breadcrumb: BreadCrumb[];
+
   constructor(
     private ajaxService: AjaxService,
     private ajax: AjaxService,
     private router: Router,
     private route: ActivatedRoute,
-    private messageBarService: MessageBarService, ) { }
+    private messageBarService: MessageBarService, 
+  ) { 
+    // this.breadcrumb = [
+    //   { label: "ตรวจสอบภายใน", route: "#" },
+    //   { label: "ทะเบียนติดตามงาน", route: "#" },
+    //   { label: "ค้นหาการติดตามผลการตรวจสอบของโครงการ", route: "#" },
+    // ];
+  }
 
   ngOnInit() {
     this.$form = $('#followUpProjectForm');
@@ -289,7 +299,7 @@ export class Int111Component implements OnInit {
           render: function (data) {
             var html = '';
             if (data != 'เสร็จสิ้น') {
-              html += '<button type="button" class="ui mini primary button edit-button"><i class="edit icon"></i>แก้ไข</button>';
+              html += '<button type="button" class="ui mini yellow button edit-button"><i class="edit icon"></i>แก้ไข</button>';
             }
             return html;
           }
