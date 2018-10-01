@@ -58,10 +58,10 @@
 
                     <div class="six wide field">
                         <label class="custom-label-w-20" style="margin-right: 0px;">ปีงบประมาณ</label>
-                        <div class="ui calendar" id="budgetYear">
+                        <div class="ui calendar" id="budgetYearCal">
                             <div class="ui input left icon">
                                 <i class="time icon"></i>
-                                <input type="text" readonly="" name="budgetYearData" id="budgetYearData">
+                                <input type="text" readonly="" name="budgetYear" id="budgetYear">
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
 
                 <div class="ui center aligned grid" style="margin-top: 20px;">
                     <div class="sixteen wide column">
-                        <button class="ui small green button" (click)="uploadFile()">
+                        <button class="ui small green button" (click)="onFilter()">
                           <i class="search icon"></i> ค้นหา
                         </button>
 
@@ -89,30 +89,31 @@
                 </div>
             </div>
 
-            <div class="ui segment" id="showData">
-                <table id="dataTable" class="ui small celled table" style="width: 100%;">
-                    <thead>
-                        <tr style="text-align: center">
-                            <th>ลำดับ</th>
-                            <th>ประเภทค่าสาธารณูปโภค</th>
-                            <th>ใบแจ้งหนี้เดือน</th>
-                            <th>เลขที่ใบแจ้งหนี้</th>
-                            <th>วันที่ในใบแจ้งหนี้</th>
-                            <th>เลขที่ ขบ.</th>
-                            <th>วดป. ที่เบิก</th>
-                            <th>จำนวนเงิน</th>
-                        </tr>
-                    </thead>
-                </table>
+        </div>
+    </div>
+</div>
 
-                <div class="ui center aligned grid" style="margin-top: 20px;">
-                    <div class="sixteen wide column">
-                        <button class="ui mini orange button" (click)="export()">
-                          <i class="fa-file icon"></i> export
-                        </button>
-                    </div>
-                </div>
-            </div>
+<div class="ui segment" id="showData">
+    <table id="dataTable" class="ui small celled table" style="width: 100%;">
+        <thead>
+            <tr style="text-align: center">
+                <th>ลำดับ</th>
+                <th>ประเภทค่าสาธารณูปโภค</th>
+                <th>ใบแจ้งหนี้เดือน</th>
+                <th>เลขที่ใบแจ้งหนี้</th>
+                <th>วันที่ในใบแจ้งหนี้</th>
+                <th>เลขที่ ขบ.</th>
+                <th>วดป. ที่เบิก</th>
+                <th>จำนวนเงิน</th>
+            </tr>
+        </thead>
+    </table>
+
+    <div class="ui center aligned grid" style="margin-top: 20px;">
+        <div class="sixteen wide column">
+            <button class="ui mini orange button" (click)="export()">
+              <i class="fa-file icon"></i> export
+            </button>
         </div>
     </div>
 </div>

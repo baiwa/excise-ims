@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit, ViewChild } from "@angular/core";
 import { AjaxService } from "services/ajax.service";
 import { Router } from "@angular/router";
 import { MessageBarService } from "../../../../common/services";
@@ -18,6 +18,7 @@ export class Int067Component implements OnInit, AfterViewInit {
   breadcrumb: BreadCrumb[] = [];
   comboBox1: Observable<ComboBox[]>;
   comboBox: void;
+  budgetYear: any = null;
 
   constructor(
     private int067Service: Int067Service,
@@ -34,7 +35,12 @@ export class Int067Component implements OnInit, AfterViewInit {
       "SECTOR_VALUE",
       "comboBox1"
     );
-    // this.comboBox = this.int067Service.pullComboBox();
+    console.log(
+      (this.comboBox1 = this.int067Service.pullComboBox(
+        "SECTOR_VALUE",
+        "comboBox1"
+      ))
+    );
   }
 
   ngAfterViewInit() {
@@ -42,25 +48,42 @@ export class Int067Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // this.int067Service.pullComboBox("SECTOR_VALUE", "comboBox1").subscribe();
-
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
-    $("#budgetYear")
+    $("#budgetYearCal")
       .calendar({
         maxDate: new Date(),
         type: "year",
         text: TextDateTH,
-        formatter: formatter("year")
-        // onChange: (date, text, mode) => {
-        //   this.budgetYear = text;
-        // }
+        formatter: formatter("year"),
+        onChange: (date, text, mode) => {
+          this.budgetYear = text - 543;
+        }
       })
       .css("width", "100%");
   }
 
-  uploadFile = () => {
+  onFilter = () => {
     $("#showData").show();
+    let combo1 = $("#combo1 option:selected").text();
+    let combo2 = $("#combo2 option:selected").text();
+    let combo3 = $("#combo3 option:selected").text();
+
+    if (combo1 === "เลือก") {
+      combo1 = "";
+    }
+    if (combo2 === "เลือก") {
+      combo2 = "";
+    }
+    if (combo3 === "เลือก") {
+      combo3 = "";
+    }
+
+    console.log(combo1);
+    console.log(combo2);
+    console.log(combo3);
+    console.log(this.budgetYear);
+    this.int067Service.findByFilter(combo1, combo2, combo3, this.budgetYear);
   };
 
   clearFile = () => {
