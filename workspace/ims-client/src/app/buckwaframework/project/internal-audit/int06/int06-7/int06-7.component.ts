@@ -35,12 +35,6 @@ export class Int067Component implements OnInit, AfterViewInit {
       "SECTOR_VALUE",
       "comboBox1"
     );
-    console.log(
-      (this.comboBox1 = this.int067Service.pullComboBox(
-        "SECTOR_VALUE",
-        "comboBox1"
-      ))
-    );
   }
 
   ngAfterViewInit() {
@@ -78,19 +72,18 @@ export class Int067Component implements OnInit, AfterViewInit {
     if (combo3 === "เลือก") {
       combo3 = "";
     }
-
-    console.log(combo1);
-    console.log(combo2);
-    console.log(combo3);
-    console.log(this.budgetYear);
     this.int067Service.findByFilter(combo1, combo2, combo3, this.budgetYear);
   };
 
   clearFile = () => {
     $("#showData").hide();
-    $("#budgetYear").calendar("refresh");
-    $("#supplyChoice").dropdown("restore defaults");
-    $("#budgetType").dropdown("restore defaults");
+    setTimeout(
+      () => $("#budgetYear").calendar("clear"),
+      $("#combo1").dropdown("restore defaults"),
+      $("#combo2").dropdown("restore defaults"),
+      $("#combo3").dropdown("restore defaults"),
+      200
+    );
   };
 
   setTime = () => {
@@ -98,7 +91,6 @@ export class Int067Component implements OnInit, AfterViewInit {
   };
 
   dropdown(e, combo: string) {
-    console.log(e.target.value);
     e.preventDefault();
     this[combo] = this.int067Service.pullComboBox(
       "SECTOR_VALUE",

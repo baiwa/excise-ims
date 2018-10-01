@@ -25,34 +25,10 @@ public class Int0671Service {
 
 	@Autowired
 	private TimeSetRepository timeSetRepository;
-	
+
 	public CommonMessage<List<Int0671FormVo>> queryInit() {
 		CommonMessage<List<Int0671FormVo>> response = new CommonMessage<>();
 		Date date = new Date();
-
-
-		// check count status = '1'(open)
-		int numOpen = timeSetRepository.countStatus();
-		if (numOpen == 1) {
-				// check condition range time on present
-				List<TimeSet> active = timeSetRepository.findStatusOpen();
-				Date checkStart = active.get(0).getStartDateTime();
-				Date checkEnd = active.get(0).getEndDateTime();
-				if (checkStart.before(date) && checkEnd.after(date)) {
-					// stay to range(open || status = '1')
-				} else {
-					// not stay to range(close || status = '0')
-					TimeSet setData = new TimeSet();
-					for (TimeSet t : active) {
-						setData.setTimeSetId(t.getTimeSetId());
-						// setData.setStartDateTime(t.getStartDateTime());
-						// setData.setEndDateTime(t.getEndDateTime());
-						setData.setStatus("0");
-						setData.setUpdatedDate(date);
-						timeSetRepository.save(setData);
-					}
-				}
-		}
 
 		// return response data
 		List<TimeSet> dataAll = new ArrayList<TimeSet>();
@@ -71,63 +47,39 @@ public class Int0671Service {
 			result.add(t);
 		}
 
-//		response.setMsg(msg);
 		response.setData(result);
 		return response;
 	}
 
 	public CommonMessage<List<Int0671FormVo>> saveTime(Int0671FormVo form) {
 		logger.info("stratTime : {}, endTime : {}", form.getStartDateTime(), form.getEndDateTime());
-		Message msg;
+		Message msg = null;
 		CommonMessage<List<Int0671FormVo>> response = new CommonMessage<>();
 		String user = UserLoginUtils.getCurrentUsername();
 		Date date = new Date();
 		TimeSet d;
-		TimeSet data = new TimeSet();
 
 		// check count status = '1'(open)
-		int numOpen = timeSetRepository.countStatus();
-		if (numOpen == 0) {
-			if (BeanUtils.isNotEmpty(form.getStartDateTime()) && BeanUtils.isNotEmpty(form.getEndDateTime())) {
-				d = new TimeSet();
-				Date start = DateConstant.convertStringDDMMYYYYHHmmToDate(form.getStartDateTime());
-				Date end = DateConstant.convertStringDDMMYYYYHHmmToDate(form.getEndDateTime());
 
+		if (BeanUtils.isNotEmpty(form.getStartDateTime()) && BeanUtils.isNotEmpty(form.getEndDateTime())) {
+
+			Date start = DateConstant.convertStringDDMMYYYYHHmmToDate(form.getStartDateTime());
+			Date end = DateConstant.convertStringDDMMYYYYHHmmToDate(form.getEndDateTime());
+			int numOpen = timeSetRepository.countOverlap(start, end);
+			if (numOpen == 0) {
+				d = new TimeSet();
 				d.setStartDateTime(start);
 				d.setEndDateTime(end);
-				d.setUpdatedBy(user);
-				d.setUpdatedDate(date);
-				if (start.before(date) && end.after(date)) {
-					d.setStatus("1");
-				} else {
-					d.setStatus("0");
-				}
-				data = timeSetRepository.save(d);
+				timeSetRepository.save(d);
+				msg = ApplicationCache.getMessage("MSG_00002");
+			} else {
+				msg = ApplicationCache.getMessage("MSG_00003");
 			}
 
 		} else {
-			data = null;
-			// check condition range time on present
-			List<TimeSet> active = timeSetRepository.findStatusOpen();
-			Date checkStart = active.get(0).getStartDateTime();
-			Date checkEnd = active.get(0).getEndDateTime();
-			if (checkStart.before(date) && checkEnd.after(date)) {
-				// stay to range(open || status = '1')
-			} else {
-				// not stay to range(close || status = '0')
-				TimeSet setData = new TimeSet();
-				for (TimeSet t : active) {
-					setData.setTimeSetId(t.getTimeSetId());
-					// setData.setStartDateTime(t.getStartDateTime());
-					// setData.setEndDateTime(t.getEndDateTime());
-					setData.setStatus("0");
-					setData.setUpdatedDate(date);
-					timeSetRepository.save(setData);
-				}
-			}
+			msg = ApplicationCache.getMessage("MSG_00003");
 		}
 
-		// return response data
 		List<TimeSet> dataAll = new ArrayList<TimeSet>();
 		List<Int0671FormVo> result = new ArrayList<Int0671FormVo>();
 		Int0671FormVo t;
@@ -145,13 +97,6 @@ public class Int0671Service {
 		}
 
 		// return message
-		if (data != null) {
-			msg = ApplicationCache.getMessage("MSG_00002");
-		} else if (data == null && numOpen == 1) {
-			msg = ApplicationCache.getMessage("MSG_00004");
-		} else {
-			msg = ApplicationCache.getMessage("MSG_00003");
-		}
 
 		response.setMsg(msg);
 		response.setData(result);
@@ -164,25 +109,24 @@ public class Int0671Service {
 		String user = UserLoginUtils.getCurrentUsername();
 		Date date = new Date();
 		TimeSet findData = new TimeSet();
-		TimeSet data = new TimeSet();
-		data = null;
 
 		if (BeanUtils.isNotEmpty(vo)) {
 			// covert string to date
 			Date start = DateConstant.convertStringDDMMYYYYHHmmToDate(vo.getStartDateTime());
 			Date end = DateConstant.convertStringDDMMYYYYHHmmToDate(vo.getEndDateTime());
 
-			findData = timeSetRepository.findOne(vo.getTimeSetId());
-			findData.setStartDateTime(start);
-			findData.setEndDateTime(end);
-			findData.setUpdatedBy(user);
-			findData.setUpdatedDate(date);
-			if (start.before(date) && end.after(date)) {
-				findData.setStatus("1");
-			} else {
-				findData.setStatus("0");
+			int numOpen = timeSetRepository.countOverlapNotCurrentID(start, end, vo.getTimeSetId());
+			if (numOpen == 0) {
+				findData = timeSetRepository.findOne(vo.getTimeSetId());
+				findData.setStartDateTime(start);
+				findData.setEndDateTime(end);
+				findData.setUpdatedBy(user);
+				findData.setUpdatedDate(date);
+				timeSetRepository.save(findData);
+				msg = ApplicationCache.getMessage("MSG_00002");
+			}else {
+				msg = ApplicationCache.getMessage("MSG_00003");
 			}
-			data = timeSetRepository.save(findData);
 		}
 
 		// return response data
@@ -202,23 +146,17 @@ public class Int0671Service {
 			result.add(t);
 		}
 
-		// return message
-		if (data != null) {
-			msg = ApplicationCache.getMessage("MSG_00002");
-		} else {
-			msg = ApplicationCache.getMessage("MSG_00003");
-		}
-
 		response.setMsg(msg);
 		response.setData(result);
 		return response;
 	}
 
-	public CommonMessage<List<Int0671FormVo>> deleteTime(Int0671FormVo vo) {		
-		Message msg  = ApplicationCache.getMessage("MSG_00006");;
+	public CommonMessage<List<Int0671FormVo>> deleteTime(Int0671FormVo vo) {
+		Message msg = ApplicationCache.getMessage("MSG_00006");
+		;
 		CommonMessage<List<Int0671FormVo>> response = new CommonMessage<>();
-		
-		if(BeanUtils.isNotEmpty(vo.getTimeSetId())) {
+
+		if (BeanUtils.isNotEmpty(vo.getTimeSetId())) {
 			timeSetRepository.delete(vo.getTimeSetId());
 			msg = ApplicationCache.getMessage("MSG_00005");
 		}

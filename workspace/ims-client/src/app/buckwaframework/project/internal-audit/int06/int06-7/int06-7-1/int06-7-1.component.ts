@@ -20,6 +20,8 @@ export class Int0671Component implements OnInit, AfterViewInit {
   dataList: Observable<any>;
   statusManage: any = "SAVE";
   timeSetId: any = "";
+  dat: any;
+  dataEdit: any;
 
   constructor(private int0671Service: Int0671Service) {
     this.breadcrumb = [
@@ -27,6 +29,7 @@ export class Int0671Component implements OnInit, AfterViewInit {
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
       { label: "ตรวจการเบิกค่าสาธารณูปโภค", route: "#" }
     ];
+    // this.int0671Service.dataInit(this.getData);
     this.dataList = this.int0671Service.dataInit();
   }
 
@@ -35,6 +38,11 @@ export class Int0671Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    //set data on edit
+    this.dataList.subscribe(value => {
+      this.dataEdit = value;
+    });
+
     $("#start")
       .calendar({
         minDate: new Date(),
@@ -60,16 +68,18 @@ export class Int0671Component implements OnInit, AfterViewInit {
       .css("width", "100%");
   }
 
+  // getData = args => {
+  //   this.dat = args.data;
+  // };
+
   onSave = () => {
-    var compareDate = moment("15/02/2013", "DD/MM/YYYY");
-    var startDate = moment("12/01/2013", "DD/MM/YYYY");
-    var endDate = moment("15/01/2013", "DD/MM/YYYY");
-    compareDate.isBetween(startDate, endDate);
-    console.log(compareDate.isBetween(startDate, endDate));
+    //set data on edit
+    this.dataList.subscribe(value => {
+      this.dataEdit = value;
+    });
     if (this.startDateTime != "" && this.endDateTime != "") {
       if (this.statusManage === "SAVE") {
         // let t = new Date();
-        // console.log(t);
         this.dataList = this.int0671Service.saveTime(
           this.startDateTime,
           this.endDateTime
@@ -98,12 +108,14 @@ export class Int0671Component implements OnInit, AfterViewInit {
     console.log(id + "/" + text);
     this.statusManage = text;
     this.timeSetId = id;
-    this.int0671Service.setValueUpdate(id);
+
+    let ob = this.dataEdit.filter(obj => obj.timeSetId == id);
+    $("#startDateTime").val(ob[0].startDateTime);
+    $("#endDateTime").val(ob[0].endDateTime);
   };
 
   onDelete = (id, text) => {
     console.log(id + "/" + text);
-    // this.statusManage = text;
     this.timeSetId = id;
     this.dataList = this.int0671Service.deleteTime(id);
   };
