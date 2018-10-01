@@ -12,6 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
@@ -68,6 +69,9 @@ public class PublicUtility extends BaseEntity {
 
 	@Column(name="WITHDRAWAL_NUMBER")
 	private String withdrawalNumber;
+	
+	@Transient
+	private String budgetYear;
 
 	public PublicUtility() {
 	}
@@ -166,6 +170,18 @@ public class PublicUtility extends BaseEntity {
 
 	public void setWithdrawalNumber(String withdrawalNumber) {
 		this.withdrawalNumber = withdrawalNumber;
+	}
+
+	public String getBudgetYear() {
+		return budgetYear;
+	}
+
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }
