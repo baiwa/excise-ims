@@ -13,12 +13,12 @@
                         &nbsp;
                     </div>
 
-                    <div class="six wide field ">
+                    <div class="six wide field {{ startDateTime === null ? 'error' : '' }}">
                         <label class="custom-label-w-20" style="text-align: right">วันเวลาที่เปิดระบบ</label>
                         <div class="ui calendar" id="start">
                             <div class="ui input left icon">
                                 <i class="time icon"></i>
-                                <input type="text" readonly="" name="startDate" id="startDate">
+                                <input type="text" name="startDateTime" id="startDateTime" ngModel required>
                             </div>
                         </div>
                     </div>
@@ -27,12 +27,12 @@
                         &nbsp;
                     </div>
 
-                    <div class="six wide field">
+                    <div class="six wide field {{ endDateTime ===  null ? 'error' : '' }}">
                         <label class="custom-label-w-20" style="text-align: right">วันเวลาที่ปิดระบบ</label>
                         <div class="ui calendar" id="end">
                             <div class="ui input left icon">
                                 <i class="time icon"></i>
-                                <input type="text" readonly="" name="endDate" id="endDate">
+                                <input type="text" name="endDateTime" id="endDateTime" ngModel required>
                             </div>
                         </div>
                     </div>
@@ -51,21 +51,40 @@
                 </div>
             </div>
 
-            <div class="ui segment" id="showData">
-                <table id="dataTable" class="ui small celled table" style="width: 100%;">
-                    <thead>
-                        <tr style="text-align: center">
-                            <th>ลำดับ</th>
-                            <th>วันที่ทำรายการ</th>
-                            <th>ผู้ทำรายการ</th>
-                            <th>วันเวลาที่เปิดระบบ</th>
-                            <th>วันเวลาที่ปิดระบบ</th>
-                            <th>สถานะ</th>
-                            <th>จัดการ</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
         </div>
     </div>
+</div>
+
+<div class="ui segment">
+    <table id="table" class="ui small celled table" style="width: 100%;">
+        <thead>
+            <tr style="text-align: center">
+                <th>ลำดับ</th>
+                <th>วันที่ทำรายการ</th>
+                <th>ผู้ทำรายการ</th>
+                <th>วันเวลาที่เปิดระบบ</th>
+                <th>วันเวลาที่ปิดระบบ</th>
+                <th>สถานะ</th>
+                <th>จัดการ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of dataList | async; let i=index">
+                <td class="text-center">{{i+1}}</td>
+                <td class="text-center">{{data.createdDate}}</td>
+                <td class="text-center">{{data.createdBy}}</td>
+                <td class="text-center">{{data.startDateTime}}</td>
+                <td class="text-center">{{data.endDateTime}}</td>
+                <td class="text-center">{{data.status === '1'? 'เปิด': 'ปิด'}}</td>
+                <td class="text-center">
+                    <button class="ui mini orange button" *ngIf="data.status === '1'" (click)="onEdit(data.timeSetId,'EDIT')" style="width: 50%;">
+                        <i class="edit icon"></i> แก้ไข
+                    </button>
+                    <button class="ui mini red button" *ngIf="data.status === '0'" (click)="onDelete(data.timeSetId,'DELETE')" style="width: 50%;">
+                        <i class="trash icon"></i> ลบ
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
