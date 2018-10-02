@@ -52,17 +52,6 @@
 
 
     <div class="ui segment" *ngIf="showData">
-    
-      <div class="ui grid center aligned">
-        <div class="sixteen wide column">
-          กระดาษทำการสรุปรายการขอเบิก
-          <br>สำนักงานสรรพสามิตภาคที่ 5 พื้นที่ลำปาง
-          <br> ปีงบประมาณ 2555 ระหว่างเดือนตุลาคม 2554 - กันยายน พ.ศ. 2555
-        </div>
-      </div>
-      <br>
-
-
       <div class="ui attached segment">
         <div style="overflow-x: scroll;">
           <table id="tableData" class="ui small celled table" style="width: 150%">
@@ -256,7 +245,7 @@
               
               </tr>
               <tr class="bg-row-blue-highlight" style="text-align: right;">
-                <td colspan="8" style="text-align: left;">รวมเดืือน</td>
+                <td colspan="8" style="text-align: left;">รวมเดือน</td>
                 <td>22,678.00</td>
                 <td>0</td>
                 <td>0</td>
@@ -443,8 +432,8 @@
         <br>
         <div class="ui center aligned grid">
             <div class="sixteen wide column"> 
-                <button class="ui mini primary button">
-                    <i class="save icon"></i>
+                <button class="ui mini primary button"  routerLink='/int06/2/1' >
+                    <i class="save icon"></i> 
                     เปรียบเทียบ TR
                   </button>
               <button class="ui mini primary button">

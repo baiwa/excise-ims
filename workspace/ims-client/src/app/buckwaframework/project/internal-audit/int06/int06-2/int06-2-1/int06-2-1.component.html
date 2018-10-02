@@ -1,9 +1,78 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>ตรวจสอบสรุปรายการขอเบิก </span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">รหัสงบประมาณ</label>
+            <input type="text" />
+          </div>
+          <div class="six wide field ">         
+            <select class="ui dropdown ai">
+              <option value="0">กรุณาเลือก</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">รหัสงบประมาณ</label>
+            <input type="text" />
+          </div>
+          <div class="six wide field ">          
+            <select class="ui dropdown ai">
+              <option value="0">กรุณาเลือก</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">รหัสงบประมาณ</label>
+            <input type="text" />
+          </div>
+          <div class="six wide field ">         
+            <select class="ui dropdown ai">
+              <option value="0">กรุณาเลือก</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui center aligned grid">
+        <div class="four wide column">
+          <button class="ui mini primary button" (click)="showData()">
+            <i class="upload icon"></i>
+            เปรียบเทียบ
+          </button>
 
 
-      <table  class="ui small celled table">
+          <button class="ui mini button" (click)="hideData()">
+              <i class="sync icon"></i>
+            ล้างข้อมูล
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ui segment" id="Int0621">
+  <div class="ui center aligned grid">
+    <div class="sixteen wide column">
+      <label> ตารางแสดงผลการเปรียบเทียบสรุปรายการขอเบิกกับงบทดลอง</label>
+    </div>
+  </div>
+  <br>
+    <div>
+      <table id="tableData" class="ui small celled table" style="width: 100%">
         <thead>
           <tr style="text-align: center;">
-            <th>รหัสงบประมาน</th>
+            <th>รหัสงบประมาณ</th>
             <th>ชื่องบประมาณ</th>
             <th>ผลรวมตามรหัสงบประมาณ</th>
             <th>TR-งบทดลอง</th>
@@ -14,44 +83,57 @@
         <tbody>
           <tr>
             <td>3006</td>
-            <td>เงินนอกงบ</td>
-            <td>229,384.89</td>
+            <td>เงินนอกงบประมาณ</td>
+            <td> 229,384.89 </td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
+
           </tr>
           <tr>
             <td>90909080170973</td>
-            <td>เงิินงบกลาง</td>
-            <td>26,028.25</td>
+            <td>เงินงบประมาณกลาง</td>
+            <td> 26,028.25 </td>
             <td>TR รับงบกลาง</td>
-            <td>26,028.25</td>
+            <td> 26,028.25 </td>
             <td>0</td>
+
           </tr>
           <tr>
             <td>300613001000000</td>
+
+
             <td>เงินงบประมาณ</td>
-            <td>86,673.34</td>
+            <td> 86,673.34 </td>
             <td>TR รับงบบุคลากร</td>
-            <td>65,442</td>
-            <td>&nbsp;</td>
+            <td> 65,442.00 </td>
+            <td>-</td>
+
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>TR รับงบดำเนินงาน</td>
-            <td>34,278</td>
-            <td class="bg-row-orange-highlight">-13046.66</td>
+            <td> 34,278.00 </td>
+            <td>- 13,046.66 </td>
+          
           </tr>
         </tbody>
       </table>
-      <div class="ui center aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini primary button " routerLink="/int06/2">
-            <i class="arrow left icon"></i>
-            กลับ
-          </button>
-        </div>
+    </div>
+    <br>
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button" routerLink='/int06/2'>
+          <i class="arrow circle left icon"></i>
+      กลับ
+        </button>
+        <button class="ui mini primary button">
+          <i class="print icon"></i>
+          ส่งออก
+        </button>
       </div>
-   
+    </div>
+
+</div>
