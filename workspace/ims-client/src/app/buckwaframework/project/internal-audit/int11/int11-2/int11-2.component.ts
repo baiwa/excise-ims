@@ -280,7 +280,94 @@ export class Int112Component implements OnInit {
           }
         },
         {
+          data: "followUp3Bnum",
+          className: "center aglined",
+          render: function (data) {
+            var v = '-';
+            if (data) {
+              v = data;
+            }
+            return v;
+          }
+        },
+        {
+          data: "followUp3Date",
+          className: "center aglined",
+          render: function (data) {
+            var v = '-';
+            if (data) {
+              v = data;
+            }
+            return v;
+          }
+        },
+        {
+          data: "maturity360",
+          className: "center aglined",
+          render: function (data) {
+            var v = '-';
+            if (data) {
+              v = data;
+            }
+            return v;
+          }
+        },
+        {
+          data: "performance3Bnum",
+          className: "center aglined",
+          render: function (data) {
+            var v = '-';
+            if (data) {
+              v = data;
+            }
+            return v;
+          }
+        },
+        {
+          data: "performance3Date",
+          className: "center aglined",
+          render: function (data) {
+            var v = '-';
+            if (data) {
+              v = data;
+            }
+            return v;
+          }
+        },
+        {
+          data: "trackResult3Bnum",
+          className: "center aglined",
+          render: function (data) {
+            var v = '-';
+            if (data) {
+              v = data;
+            }
+            return v;
+          }
+        },
+        {
+          data: "trackResult3Date",
+          className: "center aglined",
+          render: function (data) {
+            var v = '-';
+            if (data) {
+              v = data;
+            }
+            return v;
+          }
+        },
+        {
           data: "status",
+          render: function (data) {
+            var v = '-';
+            if (data) {
+              v = data;
+            }
+            return v;
+          }
+        },
+        {
+          data: "note",
           render: function (data) {
             var v = '-';
             if (data) {
@@ -295,7 +382,7 @@ export class Int112Component implements OnInit {
           render: function (data) {
             var html = '';
             if (data != 'เสร็จสิ้น') {
-              html += '<button type="button" class="ui mini primary button edit-button"><i class="edit icon"></i>แก้ไข</button>';
+              html += '<button type="button" class="ui mini yellow button edit-button"><i class="edit icon"></i>แก้ไข</button>';
             }
             return html;
           }

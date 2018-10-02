@@ -51,12 +51,18 @@ export class Int1121Component implements OnInit {
     $('#followUp2Bnum').prop('disabled', 'disabled');
     $('#performance2Bnum').prop('disabled', 'disabled');
     $('#trackResult2Bnum').prop('disabled', 'disabled');
+    $('#followUp3Bnum').prop('disabled', 'disabled');
+    $('#performance3Bnum').prop('disabled', 'disabled');
+    $('#trackResult3Bnum').prop('disabled', 'disabled');
 
     $('#performance1Date').prop('disabled', 'disabled');
     $('#trackResult1Date').prop('disabled', 'disabled');
     $('#followUp2Date').prop('disabled', 'disabled');
     $('#performance2Date').prop('disabled', 'disabled');
     $('#trackResult2Date').prop('disabled', 'disabled');
+    $('#followUp3Date').prop('disabled', 'disabled');
+    $('#performance3Date').prop('disabled', 'disabled');
+    $('#trackResult3Date').prop('disabled', 'disabled');
 
     this.initDropdown();
   }
@@ -291,6 +297,27 @@ export class Int1121Component implements OnInit {
     );
   }
 
+  autoShiftDateFollowThird() {
+    if (!$('#followUp3Date').val()) return;
+
+    this.$form.addClass("loading");
+    const URL = `ia/int111/shiftDate`;
+    this.ajaxService.post(
+      URL,
+      JSON.stringify({
+        "date": $('#followUp3Date').val()
+      }), res => {
+        var resJson = res.json();
+        $('#maturity360').val(resJson.shift60Date);
+        this.$form.removeClass("loading");
+      }, err => {
+        let body: any = err.json();
+        this.messageBarService.errorModal(body.error);
+        this.$form.removeClass("loading");
+      }
+    );
+  }
+
   closeJob() {
     this.messageBarService.comfirm(ok => {
       if (ok) {
@@ -326,12 +353,18 @@ export class Int1121Component implements OnInit {
       $('#followUp2Bnum').prop('disabled', 'disabled');
       $('#performance2Bnum').prop('disabled', 'disabled');
       $('#trackResult2Bnum').prop('disabled', 'disabled');
+      $('#followUp3Bnum').prop('disabled', 'disabled');
+      $('#performance3Bnum').prop('disabled', 'disabled');
+      $('#trackResult3Bnum').prop('disabled', 'disabled');
 
       $('#performance1Date').prop('disabled', 'disabled');
       $('#trackResult1Date').prop('disabled', 'disabled');
       $('#followUp2Date').prop('disabled', 'disabled');
       $('#performance2Date').prop('disabled', 'disabled');
       $('#trackResult2Date').prop('disabled', 'disabled');
+      $('#followUp3Date').prop('disabled', 'disabled');
+      $('#performance3Date').prop('disabled', 'disabled');
+      $('#trackResult3Date').prop('disabled', 'disabled');
     }
 
     if ($('#performance1Bnum').val()) {
@@ -344,11 +377,17 @@ export class Int1121Component implements OnInit {
       $('#followUp2Bnum').prop('disabled', 'disabled');
       $('#performance2Bnum').prop('disabled', 'disabled');
       $('#trackResult2Bnum').prop('disabled', 'disabled');
+      $('#followUp3Bnum').prop('disabled', 'disabled');
+      $('#performance3Bnum').prop('disabled', 'disabled');
+      $('#trackResult3Bnum').prop('disabled', 'disabled');
 
       $('#trackResult1Date').prop('disabled', 'disabled');
       $('#followUp2Date').prop('disabled', 'disabled');
       $('#performance2Date').prop('disabled', 'disabled');
       $('#trackResult2Date').prop('disabled', 'disabled');
+      $('#followUp3Date').prop('disabled', 'disabled');
+      $('#performance3Date').prop('disabled', 'disabled');
+      $('#trackResult3Date').prop('disabled', 'disabled');
     }
 
     if ($('#trackResult1Bnum').val()) {
@@ -360,10 +399,16 @@ export class Int1121Component implements OnInit {
       $('#followUp2Bnum').prop('disabled', 'disabled');
       $('#performance2Bnum').prop('disabled', 'disabled');
       $('#trackResult2Bnum').prop('disabled', 'disabled');
+      $('#followUp3Bnum').prop('disabled', 'disabled');
+      $('#performance3Bnum').prop('disabled', 'disabled');
+      $('#trackResult3Bnum').prop('disabled', 'disabled');
 
       $('#followUp2Date').prop('disabled', 'disabled');
       $('#performance2Date').prop('disabled', 'disabled');
       $('#trackResult2Date').prop('disabled', 'disabled');
+      $('#followUp3Date').prop('disabled', 'disabled');
+      $('#performance3Date').prop('disabled', 'disabled');
+      $('#trackResult3Date').prop('disabled', 'disabled');
     }
 
     if ($('#followUp2Bnum').val()) {
@@ -374,9 +419,15 @@ export class Int1121Component implements OnInit {
     } else {
       $('#performance2Bnum').prop('disabled', 'disabled');
       $('#trackResult2Bnum').prop('disabled', 'disabled');
+      $('#followUp3Bnum').prop('disabled', 'disabled');
+      $('#performance3Bnum').prop('disabled', 'disabled');
+      $('#trackResult3Bnum').prop('disabled', 'disabled');
 
       $('#performance2Date').prop('disabled', 'disabled');
       $('#trackResult2Date').prop('disabled', 'disabled');
+      $('#followUp3Date').prop('disabled', 'disabled');
+      $('#performance3Date').prop('disabled', 'disabled');
+      $('#trackResult3Date').prop('disabled', 'disabled');
     }
 
     if ($('#performance2Bnum').val()) {
@@ -386,11 +437,56 @@ export class Int1121Component implements OnInit {
       $('#trackResult2Date').prop('disabled', '');
     } else {
       $('#trackResult2Bnum').prop('disabled', 'disabled');
+      $('#followUp3Bnum').prop('disabled', 'disabled');
+      $('#performance3Bnum').prop('disabled', 'disabled');
+      $('#trackResult3Bnum').prop('disabled', 'disabled');
+
       $('#trackResult2Date').prop('disabled', 'disabled');
+      $('#followUp3Date').prop('disabled', 'disabled');
+      $('#performance3Date').prop('disabled', 'disabled');
+      $('#trackResult3Date').prop('disabled', 'disabled');
     }
 
     if ($('#trackResult2Bnum').val()) {
       $('#status').val('รายงานการติดตามครั้งที่ 2');
+
+      $('#followUp3Bnum').prop('disabled', '');
+      $('#followUp3Date').prop('disabled', '');
+    }else {
+      $('#followUp3Bnum').prop('disabled', 'disabled');
+      $('#performance3Bnum').prop('disabled', 'disabled');
+      $('#trackResult3Bnum').prop('disabled', 'disabled');
+
+      $('#followUp3Date').prop('disabled', 'disabled');
+      $('#performance3Date').prop('disabled', 'disabled');
+      $('#trackResult3Date').prop('disabled', 'disabled');
+    }
+
+    if ($('#followUp3Bnum').val()) {
+      $('#status').val('แจ้งติดตามครั้งที่ 3');
+
+      $('#performance3Bnum').prop('disabled', '');
+      $('#performance3Date').prop('disabled', '');
+    } else {
+      $('#performance3Bnum').prop('disabled', 'disabled');
+      $('#trackResult3Bnum').prop('disabled', 'disabled');
+
+      $('#performance3Date').prop('disabled', 'disabled');
+      $('#trackResult3Date').prop('disabled', 'disabled');
+    }
+
+    if ($('#performance3Bnum').val()) {
+      $('#status').val('แจ้งผลการดำเนินงานครั้งที่ 3');
+
+      $('#trackResult3Bnum').prop('disabled', '');
+      $('#trackResult3Date').prop('disabled', '');
+    } else {
+      $('#trackResult3Bnum').prop('disabled', 'disabled');
+      $('#trackResult3Date').prop('disabled', 'disabled');
+    }
+    
+    if ($('#trackResult3Bnum').val()) {
+      $('#status').val('รายงานการติดตามครั้งที่ 3');
     }
 
   }

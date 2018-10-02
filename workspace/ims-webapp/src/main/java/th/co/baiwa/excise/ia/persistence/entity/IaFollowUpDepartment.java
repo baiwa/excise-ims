@@ -96,6 +96,31 @@ public class IaFollowUpDepartment extends BaseEntity {
 	@Column(name="TRACK_RESULT2_DATE")
 	private Date trackResult2Date;
 	
+	@Column(name="FOLLOW_UP3_BNUM")
+	private String followUp3Bnum;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="FOLLOW_UP3_DATE")
+	private Date followUp3Date;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="MATURITY3_60")
+	private Date maturity360;
+	
+	@Column(name="PERFORMANCE3_BNUM")
+	private String performance3Bnum;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="PERFORMANCE3_DATE")
+	private Date performance3Date;
+	
+	@Column(name="TRACK_RESULT3_BNUM")
+	private String trackResult3Bnum;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="TRACK_RESULT3_DATE")
+	private Date trackResult3Date;
+	
 	@Column(name="STATUS")
 	private String status;
 
@@ -265,6 +290,62 @@ public class IaFollowUpDepartment extends BaseEntity {
 
 	public void setTrackResult2Date(Date trackResult2Date) {
 		this.trackResult2Date = trackResult2Date;
+	}
+	
+	public String getFollowUp3Bnum() {
+		return followUp3Bnum;
+	}
+
+	public void setFollowUp3Bnum(String followUp3Bnum) {
+		this.followUp3Bnum = followUp3Bnum;
+	}
+
+	public Date getFollowUp3Date() {
+		return followUp3Date;
+	}
+
+	public void setFollowUp3Date(Date followUp3Date) {
+		this.followUp3Date = followUp3Date;
+	}
+
+	public Date getMaturity360() {
+		return maturity360;
+	}
+
+	public void setMaturity360(Date maturity360) {
+		this.maturity360 = maturity360;
+	}
+
+	public String getPerformance3Bnum() {
+		return performance3Bnum;
+	}
+
+	public void setPerformance3Bnum(String performance3Bnum) {
+		this.performance3Bnum = performance3Bnum;
+	}
+
+	public Date getPerformance3Date() {
+		return performance3Date;
+	}
+
+	public void setPerformance3Date(Date performance3Date) {
+		this.performance3Date = performance3Date;
+	}
+
+	public String getTrackResult3Bnum() {
+		return trackResult3Bnum;
+	}
+
+	public void setTrackResult3Bnum(String trackResult3Bnum) {
+		this.trackResult3Bnum = trackResult3Bnum;
+	}
+
+	public Date getTrackResult3Date() {
+		return trackResult3Date;
+	}
+
+	public void setTrackResult3Date(Date trackResult3Date) {
+		this.trackResult3Date = trackResult3Date;
 	}
 
 	public String getStatus() {

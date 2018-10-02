@@ -3,7 +3,7 @@
   <div class="sixteen wide column">
 
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>เพิ่มรายการติดตามผลการตรวจสอบของโครงการ</span>
+      <span>เพิ่มรายการติดตามผลการตรวจสอบของหน่วยรับตรวจ</span>
     </div>
 
     <div class="ui attached segment">
@@ -321,6 +321,119 @@
               <div class="ui input left icon">
                 <i class="time icon"></i>
                 <input type="text" id="trackResult2Date" name="trackResult2Date" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>แจ้งติดตามหน่วยรับตรวจครั้งที่ 3 : </label>
+          </div>
+
+          <div class="one wide field">
+            <label>เลขหนังสือ</label>
+          </div>
+
+          <div class="four wide field ">
+            <input type="text" id="followUp3Bnum" name="followUp3Bnum" (change)="changeStatus()">
+          </div>
+
+          <div class="one wide field ">
+            <label>วันที่</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="followUp3Date" name="followUp3Date" (blur)="autoShiftDateFollowThird()" autocomplete="off" [attr.readonly]="null"
+                  placeholder="วว/ดด/ปปปป" [attr.required]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>วันครบกำหนดครั้งที่ 3 : </label>
+          </div>
+
+          <div class="one wide field">
+            <label>60 วัน</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;" (change)="changeStatus()">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="maturity360" name="maturity360" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true" disabled>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 3 : </label>
+          </div>
+
+          <div class="one wide field">
+            <label>เลขหนังสือ</label>
+          </div>
+
+          <div class="four wide field ">
+            <input type="text" id="performance3Bnum" name="performance3Bnum" (change)="changeStatus()">
+          </div>
+
+          <div class="one wide field ">
+            <label>วันที่</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="performance3Date" name="performance3Date" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                  [attr.required]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="one wide field "></div>
+
+          <div class="three wide field ">
+            <label>รายงานการติดตามครั้งที่ 3 : </label>
+          </div>
+
+          <div class="one wide field">
+            <label>เลขหนังสือ</label>
+          </div>
+
+          <div class="four wide field ">
+            <input type="text" id="trackResult3Bnum" name="trackResult3Bnum" (change)="changeStatus()">
+          </div>
+
+          <div class="one wide field ">
+            <label>วันที่</label>
+          </div>
+
+          <div class="four wide field ">
+            <div class="ui calendar calendar-picker" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" id="trackResult3Date" name="trackResult3Date" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
                   [attr.required]="true">
               </div>
             </div>
