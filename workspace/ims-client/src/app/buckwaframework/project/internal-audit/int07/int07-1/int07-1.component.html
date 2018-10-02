@@ -1,108 +1,614 @@
 <div class="ui grid">
   <div class="sixteen wide column">
-    <h2 class="ui header">นำเข้าเอกสาร</h2>
 
-    <div class="ui top attached header">
-      <span>อัพโหลดกระดาษทำการหมวดค่าใช้จ่าย</span>
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>อัพโหลดไฟล์ตรวจสอบข้อมูลบัญชี </span>
     </div>
 
     <div class="ui attached segment">
       <div class="ui form">
         <div class="inline fields">
-          <div class="eight wide field">
-            <label style="width: 43em; margin-left: 3px;">งบทดลอง</label>
+          <div class="five wide field"></div>
+          <div class="one wide field">
+            <label>เลือกไฟล์</label>
+          </div>
+          <div class="four wide field">
             <input type="file" />
           </div>
-        </div>
-
-        <div class="inline fields">
-          <div class="eight wide field">
-            <label style="width: 43em; margin-left: 3px;">รายงานเคลื่อนไหวเงินฝากกระทรงการคลัง</label>
-            <input type="file" />
-          </div>
-        </div>
-
-        <div class="inline fields">
-          <div class="two wide field">
-            <label>บัญชีแยกประเภท</label>
-          </div>
-          <div class="six wide field">
-            <label class="custom-label-w-15">บัญชีเจ้าหนี้ อปท.</label>
-            <input type="file" />
-          </div>
-        </div>
-
-        <div class="inline fields">
-          <div class="two wide field"></div>
-          <div class="six wide field">
-            <label class="custom-label-w-15">บัญชีเงินประกันอื่น</label>
-            <input type="file" />
-          </div>
-        </div>
-
-      </div>
-
-      <div class="ui grid">
-        <div class="four wide column"></div>
-        <div class="eight wide column">
-          <button class="ui mini primary button" (click)="popupAddData()" style="margin-left: -10px;">
-            <i class="add icon"></i>
-            เพิ่ม
-          </button>
         </div>
       </div>
-
+      <br>
       <div class="ui center aligned grid">
         <div class="eight wide column">
-          <button class="ui mini primary button">
+          <button class="ui mini primary button" (click)="showData()">
             <i class="upload icon"></i>
             อัพโหลด
           </button>
-          <button class="ui mini button">
-            <i class="refresh icon"></i>
+          <button class="ui mini button" (click)="hideData()">
+            <i class="trash alternate icon"></i>
             ล้างข้อมูล
           </button>
         </div>
       </div>
-            
     </div>
   </div>
 </div>
+<br>
+<div class="ui attached segment" id="Int072">
+  <table class="ui  small celled table">
+    <thead>
+      <tr style="text-align: center;">
+        <th>เลขที่บัญชีแยกประเภท</th>
+        <th>ชื่อบัญชีแยกประเภท</th>
+        <th>ยอดยกมา</th>
+        <th>เดบิต</th>
+        <th>เครดิต</th>
+        <th>ยอดยกไป</th>
+        <th>แก้ไข</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1101010101</td>
+        <td>เงินสดในมือ</td>
+        <td>0</td>
+        <td>224,965.42</td>
+        <td>-224,965.42</td>
+        <td>0</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>1101010104</td>
+        <td>เงินทดรองราชการ</td>
+        <td>5,000.00</td>
+        <td>0</td>
+        <td>0</td>
+        <td>5,000.00</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>1101030199</td>
+        <td>เงินฝากไม่มีรายตัว</td>
+        <td>0</td>
+        <td>394,171.95</td>
+        <td>-394,171.95</td>
+        <td>345</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>1205010101</td>
+        <td>อาคารพักอาศัย</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>1205010102</td>
+        <td>พักอาคารพักอาศัย</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>2111020199</td>
+        <td>เงินรับฝากอื่น</td>
+        <td>-79,779.72</td>
+        <td>827,038.17</td>
+        <td>-830,354.76</td>
+        <td>-83,096.31</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>2112010199</td>
+        <td>เงินประกันอื่น</td>
+        <td>-5,000.00</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-5,000.00</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>2116010104</td>
+        <td>เบิกเกินฯรอนำส่ง</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>2202010101</td>
+        <td>งทร.รับฯ-ดำเนินงาน</td>
+        <td>-5,000.00</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-5,000.00</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>2213010101</td>
+        <td>ร/ดรอรับรู้</td>
+        <td>-78,776.74</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-78,776.74</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>3101010101</td>
+        <td>ร/ดสูงต่ำคชจ.สุทธิ</td>
+        <td>459,711.76</td>
+        <td>0</td>
+        <td>0</td>
+        <td>459,711.76</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>3102010101</td>
+        <td>ร/ดสูงต่ำคชจ.สะสม</td>
+        <td>-8,231,397.24</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-8,231,397.24</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>3102010102</td>
+        <td>ผลสะสมแก้ไขผิดพลาด</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>3102010102</td>
+        <td>ผลสะสมแก้ไขผิดพลาด</td>
+        <td>0</td>
+        <td>64,737.80</td>
+        <td>-64,737.80</td>
+        <td>394</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>3105010101</td>
+        <td>ทุนของหน่วยงาน</td>
+        <td>-450,584.45</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-450,584.45</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>4102020101</td>
+        <td>ร/ด-ภาษีนำเข้า</td>
+        <td>-14,280.00</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-14,280.00</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>4102020103</td>
+        <td>รายได้ภาษีสุรา</td>
+        <td>-51,469,007.90</td>
+        <td>0</td>
+        <td>-4,843,060.60</td>
+        <td>-56,312,068.50</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>4102020105</td>
+        <td>ร/ดภาษีNon-alcoholic</td>
+        <td>-96,789.88</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-96,789.88</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>4102020106</td>
+        <td>รายได้ภาษียาสูบ</td>
+        <td>-6,266,080.00</td>
+        <td>0</td>
+        <td>-781,100.00</td>
+        <td>-7,047,180.00</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>4308010118</td>
+        <td>รด.ระหว่างกันในกรม</td>
+        <td>-1,970,773.94</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-1,970,773.94</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>5101010108</td>
+        <td>ค่าล่วงเวลา</td>
+        <td>74,620.00</td>
+        <td>8,000.00</td>
+        <td>0</td>
+        <td>82,620.00</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>5101010113</td>
+        <td>ค่าจ้าง</td>
+        <td>997,000.00</td>
+        <td>96,364.52</td>
+        <td>0</td>
+        <td>1,093,364.52</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>5101010116</td>
+        <td>เงินค่าครองชีพ</td>
+        <td>77,850.00</td>
+        <td>7,075.32</td>
+        <td>0</td>
+        <td>84,925.32</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>5203010136</td>
+        <td>จำหน่ายที่อยู่ราชฯ</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>5203010139</td>
+        <td>จำหน่ายปลูกสร้างราชฯ</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>5209010112</td>
+        <td>T/Eเบิกเกินส่งคืน</td>
+        <td>1,300.00</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1,300.00</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>5210010102</td>
+        <td>T/E-โอนเงินให้สรก.</td>
+        <td>1,746,442.66</td>
+        <td>166,541.59</td>
+        <td>0</td>
+        <td>1,912,984.25</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>5210010103</td>
+        <td>T/E-โอนร/ดผ/ดให้บก.</td>
+        <td>62,006,091.77</td>
+        <td>5,833,123.39</td>
+        <td>0</td>
+        <td>67,839,215.16</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>5210010105</td>
+        <td>T/E-ปรับเงินฝากคลัง</td>
+        <td>3,255,654.70</td>
+        <td>147,645.54</td>
+        <td>0</td>
+        <td>3,403,300.24</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>5210010112</td>
+        <td>T/Eรายได้รอนำส่งคลัง</td>
+        <td>-4.82</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-4.82</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>5210010118</td>
+        <td>TE-ภายในกรม</td>
+        <td>129,598.16</td>
+        <td>0</td>
+        <td>0</td>
+        <td>129,598.16</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>6201010101</td>
+        <td>พัก เงินฝากคลัง</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>6307010101</td>
+        <td>Convสำนักงาน</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>6307010102</td>
+        <td>ConvAcc-Depre สำนักง</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+      <tr>
+        <td>ผลรวม</td>
+        <td>&nbsp;</td>
+        <td>0</td>
+        <td>15,999,140.59</td>
+        <td>-15,999,140.59</td>
+        <td>0</td>
+        <td>
+          <button class="ui mini primary button" (click)="popupEditData()">
+            <i class="edit icon"></i>แก้ไข</button>
+          <button class="ui mini  button">
+            <i class="trash alternate icon"></i>ลบ</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="ui center aligned grid">
+    <div class="eight wide column">
+      <button class="ui mini primary button width-100">
+        <i class="save  icon"></i>
+        บันทึก
+      </button>
+      <button class="ui mini primary button width-100" [routerLink]="[ '/int07/2'] ">
+        <i class="clipboard check icon"></i>
+        ตรวจสอบ
+      </button>
+    </div>
+  </div>
 
+</div>
 
 <div id="modalInt071" class="ui modal small hidden transition">
   <i class="close icon"></i>
   <div class="header">
-    บัญชีแยกประเภท
+      อัพโหลดไฟล์ตรวจสอบข้อมูลบัญชี
   </div>
 
   <div class="content">
     <div class="ui form">
+
       <div class="inline fields">
         <div class="eight wide field">
-          <label class="custom-label-w-15">ชื่อบัญชี</label>
+          <label class="custom-label-w-15">เลขที่บัญชีแยกประเภท</label>
+          <input type="text" value="" />
+        </div>
+        <div class="eight wide field">
+          <label class="custom-label-w-15">ชื่อบัญชีแยกประเภท</label>
           <input type="text" value="" />
         </div>
       </div>
-    </div>
 
-    <div class="ui grid">
-      <div class="three wide column"></div>
-      <div class="eight wide column">
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-15">ยอดยกมา</label>
+          <input type="text" value="" />
+        </div>
+        <div class="eight wide field">
+          <label class="custom-label-w-15">เดบิต</label>
+          <input type="text" value="" />
+        </div>
+      </div>
 
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label class="custom-label-w-15">เครดิต</label>
+          <input type="text" value="" />
+        </div>
+        <div class="eight wide field">
+          <label class="custom-label-w-15">ยอดยกไป</label>
+          <input type="text" value="" />
+        </div>
+      </div>
+      <br>
+      <div class="actions">
+        <div class="ui center aligned grid">
+          <div class="six wide column">
+            <button class="ui mini primary button"  (click)="closePopupEdit()">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <button class="ui mini button" (click)="closePopupEdit()">
+              <i class="close icon"></i>
+              ยกเลิก
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="actions">
-    <div class="ui center aligned grid">
-      <div class="six wide column">
-        <button class="ui mini primary button">
-          <i class="save icon"></i>
-          บันทึก
-        </button>
-
-      </div>
-    </div>
-  </div>
-</div>

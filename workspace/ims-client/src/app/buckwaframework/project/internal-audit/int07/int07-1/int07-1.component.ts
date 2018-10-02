@@ -11,13 +11,20 @@ export class Int071Component implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.hideData();
   }
-
-  popupAddData() {
+  hideData() {
+    $('#Int072').hide();
+  }
+  showData() {
+    $('#Int072').show();
+  }
+  popupEditData() {
     $('#modalInt071').modal('show');
   }
 
-  closePopupAdd() {
+  closePopupEdit() {
     $('#modalInt071').modal('hide');
   }
+
 }

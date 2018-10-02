@@ -1,0 +1,184 @@
+<div class="ui grid">
+    <div class="sixteen wide column">
+  
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>อัพโหลดไฟล์งบทดลอง </span>
+      </div>
+  
+      <div class="ui attached segment">
+        <div class="ui form">
+          <div class="inline fields">
+            <div class="five wide field"></div>
+            <div class="one wide field">
+              <label>เลือกไฟล์</label>
+            </div>
+            <div class="four wide field">
+              <input type="file" />
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="ui center aligned grid">
+          <div class="eight wide column">
+            <button class="ui mini primary button" (click)="showData()">
+              <i class="upload icon"></i>
+              อัพโหลด
+            </button>
+            <button class="ui mini button" (click)="hideData()">
+              <i class="trash alternate icon"></i>
+              ล้างข้อมูล
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="ui attached segment" id="Int072">
+    <table class="ui  small celled table">
+      <thead>
+        <tr style="text-align: center;">
+          <th rowspan="2">วันที่ลงรายการ</th>
+          <th rowspan="2">เลขที่เอกสาร</th>
+          <th rowspan="2">ประเภทเอกสาร</th>
+          <th rowspan="2">เอกสารอ้างอิง</th>
+          <th rowspan="2">ผู้ทำแทน</th>
+          <th rowspan="2">การกำหนด</th>
+          <th rowspan="2">หน่วยเบิกจ่าย</th>
+          <th colspan="2">ผ่านรายการ</th>
+          <th rowspan="2">ยอดยกไป</th>
+          
+        </tr>
+        <tr style="text-align: center">
+          <th>เดบิต</th>
+          <th>เครดิต</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>12.10.2016</td>             
+              <td>1500001413</td>            
+              <td> RI</td>
+              <td>300600014</td>
+              <td>306</td>             
+              <td>300600195</td>             
+              <td>300600195</td>
+              <td>677,160.00</td>
+              <td>0</td>             
+              <td>2,402,958.16</td>
+          </tr>
+          <tr>
+              <td>19.10.2016</td>            
+              <td>1500003302</td>              
+              <td> RI</td>
+              <td>300600014</td>
+              <td>306</td>             
+              <td>300600195</td>          
+              <td>300600195</td>
+              <td>225,100.00</td>
+              <td>0</td>          
+              <td>2,628,058.16</td>
+          </tr>
+          <tr>
+              <td>20.10.2016</td>             
+              <td>200000740</td>             
+              <td> J0</td>
+              <td>9000010444</td>
+              <td>306</td>             
+              <td>300600195</td>            
+              <td>300600195</td>
+              <td>0</td>
+              <td>138,800.00</td>             
+              <td>2,489,258.16</td>
+          </tr>
+          <tr>
+              <td>02.11.2016</td>            
+              <td>200000628</td>             
+              <td> J0</td>
+              <td>3600000030</td>
+              <td>306</td>              
+              <td>300600195</td>             
+              <td>300600195</td>
+              <td>0</td>
+              <td>99,700.00</td>            
+              <td>&nbsp;</td>  
+          </tr>
+          <tr>
+              <td>&nbsp;</td>             
+              <td>200000629</td>             
+              <td> J0</td>
+              <td>3600000030</td>
+              <td>306</td>           
+              <td>300600195</td>             
+              <td>300600195</td>
+              <td>0</td>
+              <td>7,785.00</td> 
+              <td>&nbsp;</td>            
+          </tr>
+          <tr>
+              <td>&nbsp;</td>            
+              <td>200000630</td>             
+              <td> J0</td>
+              <td>3600000030</td>
+              <td>306</td>             
+              <td>300600195</td>          
+              <td>300600195</td>
+              <td>0</td>
+              <td>5,374.00</td>
+              <td>&nbsp;</td>              
+          </tr>
+          <tr>
+              <td>&nbsp;</td>            
+              <td>200003550</td>             
+              <td> J0</td>
+              <td>9000027109</td>
+              <td>306</td>             
+              <td>300600195</td>            
+              <td>300600195</td>
+              <td>0</td>
+              <td>138,800.00</td>
+              <td>&nbsp;</td>           
+          </tr>
+          <tr>
+              <td>&nbsp;</td>             
+              <td>1500003308</td>            
+              <td> RI</td>
+              <td>300600014</td>
+              <td>306</td>             
+              <td>300600195</td>             
+              <td>300600195</td>
+              <td>43,200.00</td>
+              <td>0</td>             
+              <td>2,280,799.16</td>
+          </tr>
+          <tr>
+              <td>18.11.2016</td>             
+              <td>200000486</td>             
+              <td> J0</td>
+              <td>3600000770</td>
+              <td>306</td>             
+              <td>300600195</td>            
+              <td>300600195</td>
+              <td>0</td>
+              <td>99,700.00</td>
+              <td>&nbsp;</td> 
+             
+          </tr>
+       
+
+
+      </tbody>
+    </table>
+    <div class="ui center aligned grid">
+      <div class="eight wide column">
+        <button class="ui mini primary button width-100" [routerLink]="[ '/int07/7/2'] ">
+          <i class="save  icon" ></i>
+          บันทึก
+        </button>
+    
+      </div>
+    </div>
+  
+  </div>
+  
+  

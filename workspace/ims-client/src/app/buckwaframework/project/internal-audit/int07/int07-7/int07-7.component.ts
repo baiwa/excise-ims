@@ -20,4 +20,12 @@ export class Int077Component implements OnInit {
       });
       
   }
+
+  popupEditData() {
+    $('#modalInt0771').modal('show');
+  }
+
+  closePopupEdit() {
+    $('#modalInt0771').modal('hide');
+  }
 }

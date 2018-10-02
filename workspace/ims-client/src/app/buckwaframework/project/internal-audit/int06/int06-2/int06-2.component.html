@@ -1,15 +1,13 @@
 <div class="ui grid">
-  <div class="sixteen wide column">
-
-    <h2 class="ui header">อัพโหลดรายงานสรุปรายการขอเบิก</h2>
-
-    <div class="ui top attached header">
-      <span>อัพโหลดรายงานสรุปรายการขอเบิก</span>
-    </div>
-
+  <div class="sixteen wide column">  
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>ตรวจสอบสรุปรายการขอเบิก </span>
+      </div>  
+    
     <div class="ui attached segment">
       <div class="ui form">
         <div class="inline fields">
+          <div class="three wide field"></div>
           <div class="eight wide field ">
             <label class="custom-label-w-25">รายงานสรุปรายการขอเบิก</label>
             <input type="file" />
@@ -17,6 +15,7 @@
         </div>
 
         <div class="inline fields">
+            <div class="three wide field"></div>
           <div class="eight wide field ">
             <label class="custom-label-w-25">งบทดลอง</label>
             <input type="file" />
@@ -24,6 +23,7 @@
         </div>
 
         <div class="inline fields">
+            <div class="three wide field"></div>
           <div class="eight wide field ">
             <label class="custom-label-w-25">รูปแบบการจัดเรียงข้อมูล</label>
             <select class="ui dropdown ai">
@@ -52,30 +52,7 @@
 
 
     <div class="ui segment" *ngIf="showData">
-      <div class="ui right aligned grid">
-        <div class="sixteen wide column">
-          <div class="ui mini primary button" routerLink="/int06/2/1">
-            <i class="exchange icon"></i>เปรียบเทียบ TR </div>
-
-          <button class="ui mini primary button">
-            <i class="save icon"></i>
-            บันทึก
-          </button>
-          <div id="export" class="ui primary buttons">
-            <div class="ui mini button">ส่งออก</div>
-            <div class="ui floating dropdown icon button">
-              <i class="dropdown icon"></i>
-              <div class="menu">
-                <div class="item">
-                  <i class="file pdf outline icon"></i> PDF</div>
-                <div class="item">
-                  <i class="file excel outline icon"></i>Excel</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br>
+    
       <div class="ui grid center aligned">
         <div class="sixteen wide column">
           กระดาษทำการสรุปรายการขอเบิก
@@ -103,8 +80,7 @@
                 <th>ภาษีหักณที่จ่าย</th>
                 <th>ค่าปรับ</th>
                 <th>ค่าธรรมเนียม</th>
-                <th>จำนวนเงินสุทธิ</th>
-                <th>Action</th>
+                <th>จำนวนเงินสุทธิ</th>              
               </tr>
             </thead>
             <tbody>
@@ -122,15 +98,7 @@
                 <td>0</td>
                 <td>-12</td>
                 <td>95,586.13</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr>
                 <td>28.12.2015</td>
@@ -146,15 +114,7 @@
                 <td>0</td>
                 <td>-12</td>
                 <td>31,435.47</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr>
                 <td>28.12.2015</td>
@@ -170,15 +130,7 @@
                 <td>0</td>
                 <td>-12</td>
                 <td>49,507.83</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr class="bg-row-blue-highlight" style="text-align: right;">
                 <td colspan="8" style="text-align: left;">รวมเดือน</td>
@@ -187,15 +139,7 @@
                 <td>0</td>
                 <td>-36</td>
                 <td>176,529.43</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr>
                 <td>12.01.2016</td>
@@ -211,15 +155,7 @@
                 <td>0</td>
                 <td>-12</td>
                 <td>2,002.00</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr>
                 <td>12.01.2016</td>
@@ -235,15 +171,7 @@
                 <td>-768</td>
                 <td>-12</td>
                 <td>18,537.76</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr>
                 <td>21.01.2016</td>
@@ -259,15 +187,7 @@
                 <td>0</td>
                 <td>-12</td>
                 <td>29,331.92</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr class="bg-row-blue-highlight" style="text-align: right;">
                 <td colspan="8" style="text-align: left;">รวมเดือน</td>
@@ -276,15 +196,7 @@
                 <td>-768</td>
                 <td>-36</td>
                 <td>49,871.68</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+              
               </tr>
               <tr class="bg-row-purple-highlight" style="text-align: right;">
                 <td colspan="8" style="text-align: left;">รวมทั้งรหัสงบประมาณ</td>
@@ -293,15 +205,7 @@
                 <td>-768</td>
                 <td>-72</td>
                 <td>226,401.11</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+              
               </tr>
               <tr>
                 <td>24.05.2016</td>
@@ -317,15 +221,7 @@
                 <td>0</td>
                 <td>0</td>
                 <td>180</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr>
                 <td>23.05.2016</td>
@@ -341,15 +237,7 @@
                 <td>0</td>
                 <td>0</td>
                 <td>20,255.00</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr>
                 <td>21.05.2016</td>
@@ -365,15 +253,7 @@
                 <td>0</td>
                 <td>0</td>
                 <td>2,243.00</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+              
               </tr>
               <tr class="bg-row-blue-highlight" style="text-align: right;">
                 <td colspan="8" style="text-align: left;">รวมเดืือน</td>
@@ -382,15 +262,7 @@
                 <td>0</td>
                 <td>0</td>
                 <td>22,678.00</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+                
               </tr>
               <tr>
                 <td>16.06.2016</td>
@@ -406,15 +278,7 @@
                 <td>0</td>
                 <td>0</td>
                 <td>1,880.25</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr>
                 <td>16.0.2016</td>
@@ -430,15 +294,7 @@
                 <td>0</td>
                 <td>0</td>
                 <td>1,470.00</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr class="bg-row-blue-highlight" style="text-align: right;">
                 <td colspan="8" style="text-align: left;">รวมเดือน</td>
@@ -447,15 +303,7 @@
                 <td>0</td>
                 <td>0</td>
                 <td>3,350.25</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr class="bg-row-purple-highlight" style="text-align: right;">
                 <td colspan="8" style="text-align: left;">รวมทั้งรหัสงบประมาณ</td>
@@ -464,15 +312,7 @@
                 <td>0</td>
                 <td>0</td>
                 <td>26,028.25</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+              
               </tr>
               <tr>
                 <td>06.11.2015</td>
@@ -488,15 +328,7 @@
                 <td>0</td>
                 <td>-12</td>
                 <td>1,428.22</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr>
                 <td>19.11.2015</td>
@@ -512,15 +344,7 @@
                 <td>0</td>
                 <td>-12</td>
                 <td>24,959.65</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr>
                 <td>19.11.2015</td>
@@ -536,15 +360,7 @@
                 <td>0</td>
                 <td>-12</td>
                 <td>2,025.28</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+              
               </tr>
               <tr class="bg-row-blue-highlight" style="text-align: right;">
                 <td colspan="8" style="text-align: left;">รวมเดือน</td>
@@ -553,15 +369,7 @@
                 <td>0</td>
                 <td>-36</td>
                 <td>28,413.15</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr>
                 <td>08.12.2015</td>
@@ -577,15 +385,7 @@
                 <td>0</td>
                 <td>-12</td>
                 <td>1,701.69</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+              
               </tr>
               <tr>
                 <td>11.12.2015</td>
@@ -601,15 +401,7 @@
                 <td>0</td>
                 <td>-12</td>
                 <td>1,674.32</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+              
               </tr>
               <tr>
                 <td>11.12.2015</td>
@@ -625,15 +417,7 @@
                 <td>0</td>
                 <td>-12</td>
                 <td>54,559.29</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
               <tr class="bg-row-blue-highlight" style="text-align: right;">
                 <td colspan="8" style="text-align: left;">รวมเดือน</td>
@@ -642,15 +426,7 @@
                 <td>0</td>
                 <td>-36</td>
                 <td>57,935.30</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+              
               </tr>
               <tr class="bg-row-purple-highlight" style="text-align: right;">
                 <td colspan="8" style="text-align: left;">รวมทั้งรหัสงบประมาณ</td>
@@ -659,123 +435,25 @@
                 <td>0</td>
                 <td>-72</td>
                 <td>86,348.45</td>
-                <td style="text-align: center;">
-                  <a class="update" href="javascript:;" (click)="popupEditData()">
-                    แก้ไข
-                  </a>
-                  <strong> / </strong>
-                  <a class="delete" href="javascript:;">
-                    ลบ
-                  </a>
-                </td>
+               
               </tr>
             </tbody>
           </table>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div id="modalInt062" class="ui modal hidden transition">
-  <i class="close icon"></i>
-  <div class="header">
-    ตรวจสอบสรุปรายการขอเบิก
-  </div>
-  <br>
-
-  <div class="content">
-    <div class="ui form">
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-15">วันบันทึก </label>
-          <input type="text" value="" />
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-15">รหัสงบประมาณ</label>
-          <input type="text" value="" />
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-15">วันผ่านรายการ</label>
-          <input type="text" value="" />
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-15">จำนวนเงินขอเบิก</label>
-          <input type="text" value="" />
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-15">ประเภท</label>
-          <input type="text" value="" />
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-15">ภาษีหักณที่จ่าย</label>
-          <input type="text" value="" />
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-15">เลขเอกสาร</label>
-          <input type="text" value="" />
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-15">ค่าปรับ</label>
-          <input type="text" value="" />
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-15">ผู้ขาย</label>
-          <input type="text" value="" />
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-15">ค่าธรรมเนียม</label>
-          <input type="text" value="" />
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-15">บัญชีธนาคารที่รับเงิน</label>
-          <input type="text" value="" />
-        </div>
-        <div class="eight wide field">
-          <label class="custom-label-w-15">จำนวนเงินสุทธิ</label>
-          <input type="text" value="" />
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <div class="eight wide field">
-          <label class="custom-label-w-15">การอ้างอิง</label>
-          <input type="text" value="" />
-        </div>
-        <div class="eight wide field">
-        </div>
-      </div>
-
-      <div class="actions">
+        <br>
         <div class="ui center aligned grid">
-          <div class="six wide column">
-            <button class="ui mini primary button ">
-              <i class="save icon"></i>
-              บันทึก
-            </button>
-            <button class="ui mini button " (click)="closePopupEdit()">
-              <i class="close icon"></i>
-              ยกเลิก
-            </button>
+            <div class="sixteen wide column"> 
+                <button class="ui mini primary button">
+                    <i class="save icon"></i>
+                    เปรียบเทียบ TR
+                  </button>
+              <button class="ui mini primary button">
+                <i class="save icon"></i>
+                ส่งออก
+              </button>            
+            </div>
           </div>
-        </div>
       </div>
     </div>
-    <br>
   </div>
 </div>

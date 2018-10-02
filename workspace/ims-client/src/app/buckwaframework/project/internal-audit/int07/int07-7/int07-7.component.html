@@ -1,453 +1,611 @@
 <div class="ui grid">
-  <div class="sixteen wide column">
-    <div class="ui large ordered steps" style="width: 280px;">
-      <div class="step">
-        <div class="content">
-          <div class="title">ตรวจสอบ</div>
-          <div class="description">ดุลบัญชียอดยกไป</div>
-        </div>
+    <div class="sixteen wide column">
+  
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>อัพโหลดไฟล์รายงานเคลื่อนไหวเงินฝากคลัง </span>
       </div>
-      <div class="step" style="width: 260px;">
-        <div class="content">
-          <div class="title">ตรวจสอบ</div>
-          <div class="description">ข้อมูลบัญชี</div>
-        </div>
-      </div>
-      <div class="  step">
-        <div class="content">
-          <div class="title">ตรวจสอบ</div>
-          <div class="description">งบทดลองกระทบยอด 4 บัญชีแยกประเภท
-          </div>
-        </div>
-      </div>
-      <div class="active step">
-        <div class="content">
-          <div class="title">ตรวจสอบ</div>
-          <div class="description">รายงานเคลื่อนไหวเงินฝากคลัง
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <h2 class="ui header">รายงานเคลื่อนไหวเงินฝากคลัง</h2>
-
-    <div class="ui top attached header">
-      <span>รายงานเคลื่อนไหวเงินฝากคลัง</span>
-    </div>
-
-
-    <div class="ui attached segment">
-      <div class="ui right aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini primary button">
-            <i class="print icon"></i>
-            พิมพ์
-          </button>
-          <button class="ui mini primary button">
-            <i class="save icon"></i>
-            บันทึก
-          </button>
-          <div id="export" class="ui primary buttons">
-            <div class="ui mini button">ส่งออก</div>
-            <div class="ui floating dropdown icon button">
-              <i class="dropdown icon"></i>
-              <div class="menu">
-                <div class="item">
-                  <i class="file pdf outline icon"></i> PDF</div>
-                <div class="item">
-                  <i class="file excel outline icon"></i>Excel</div>
-              </div>
+  
+      <div class="ui attached segment">
+        <div class="ui form">
+          <div class="inline fields">
+            <div class="five wide field"></div>
+            <div class="one wide field">
+              <label>เลือกไฟล์</label>
+            </div>
+            <div class="four wide field">
+              <input type="file" />
             </div>
           </div>
         </div>
-      </div>
-      <br>
-      <div style="overflow-x: scroll">
-        <table class="ui small celled table" style="width: 130%">
-          <thead>
-            <tr style="text-align: center;">
-              <th rowspan="2">วันที่ลงรายการ</th>
-              <th rowspan="2">เลขที่เอกสาร</th>
-              <th rowspan="2">ประเภทเอกสาร</th>
-              <th rowspan="2">เอกสารอ้างอิง</th>
-              <th rowspan="2">ผู้ทำแทน</th>
-              <th rowspan="2">การกำหนด</th>
-              <th rowspan="2">หน่วยเบิกจ่าย</th>
-              <th colspan="2">ผ่านรายการ</th>
-              <th rowspan="2">ยอดยกไป</th>
-
-            </tr>
-            <tr style="text-align: center;">
-              <th style="border-left: 1px solid rgba(34,36,38,.1);">เดบิต</th>
-              <th>เครดิต</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            <tr>
-              <td style="text-align: left;" colspan="9">
-                <b>บัญชีเงินฝาก : 10512 เงินฝากค่าใช้จ่ายเก็บภาษีท้องถิ่น กรมสรรพสามิต</b>
-              </td>
-              <td>
-                <b>1965704.18</b>
-              </td>
-            </tr>
-
-
-            <tr>
-              <td style="text-align: center;">08.10.2015</td>
-              <td>1500000507</td>
-              <td> RI</td>
-              <td>300600014</td>
-              <td>306</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>643680.00</td>
-              <td>0.00</td>
-              <td>887415.81</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">26.10.2015</td>
-              <td>200000542</td>
-              <td> J0</td>
-              <td>3600000741</td>
-              <td>306</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>0.00</td>
-              <td>90600.00</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">26.10.2015</td>
-              <td>200003801</td>
-              <td> J0</td>
-              <td>3600002002</td>
-              <td>306</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>0.00</td>
-              <td>11570.00</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;"> 26.10.2015</td>
-              <td>200003802</td>
-              <td> J0</td>
-              <td>3600002003</td>
-              <td>306</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>0.00</td>
-              <td>5108.00</td>
-              <td>780137.81</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">27.10.2015</td>
-              <td>1500002405</td>
-              <td> RI</td>
-              <td>300600014</td>
-              <td>306</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>547812.00</td>
-              <td>0.00</td>
-              <td>1327949.81</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">09.11.2015</td>
-              <td>1500005902</td>
-              <td> RI</td>
-              <td>300600014</td>
-              <td>306</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>86400.00</td>
-              <td>0.00</td>
-              <td>1414349.81</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">12.11.2015</td>
-              <td>200000588</td>
-              <td> J0</td>
-              <td>3600000795</td>
-              <td>306</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>0.00</td>
-              <td>420.00</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">12.11.2015</td>
-              <td>200001236</td>
-              <td> J0</td>
-              <td>3400001402</td>
-              <td>306</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>0.00</td>
-              <td>7276.00</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">12.11.2015</td>
-              <td>200005328</td>
-              <td> J0</td>
-              <td>3300000016</td>
-              <td>306</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>0.00</td>
-              <td>3500.00</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">12.11.2015</td>
-              <td>200005329</td>
-              <td> J0</td>
-              <td>3600007170</td>
-              <td>306</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>0.00</td>
-              <td>33600.00</td>
-              <td>1369553.81</td>
-            </tr>
-            <tr>
-              <td style="text-align: left;" class="bg-row-orange-highlight" colspan="7">***** รวมบัญชีเงินฝาก : 10512 เงินฝากค่าใช้จ่ายเก็บภาษีท้องถิ่น กรมสรรพสามิต </td>
-              <td class="bg-row-orange-highlight">1277892.00</td>
-              <td class="bg-row-orange-highlight">152074.00</td>
-              <td class="bg-row-orange-highlight">1369553.81</td>
-            </tr>
-            <tr>
-              <td style="text-align: left;" colspan="9">
-                <b>บัญชีเงินฝาก : 10778 ภาษีบำรุงองค์กรปกครองส่วนท้องถิ่นเพื่อรอจัดสรร</b>
-              </td>
-              <td>
-                <b>1720218.37</b>
-              </td>
-            </tr>
-
-
-
-
-            <tr>
-              <td style="text-align: center;">01.10.2015
-              </td>
-              <td>8800000335
-              </td>
-              <td> IX</td>
-              <td>2187250100010370
-              </td>
-              <td>XXXX</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>407.40</td>
-              <td>0.00</td>
-              <td>1720683.97</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">02.10.2015</td>
-              <td>8800000337</td>
-              <td> IX</td>
-              <td>2188010300015840</td>
-              <td>XXXX</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>407.40</td>
-              <td>0.00</td>
-              <td>1720683.97</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">05.10.2015</td>
-              <td>8800000342</td>
-              <td> IX</td>
-              <td>2188010300013960</td>
-              <td>XXXX</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>252.20</td>
-              <td>0.00</td>
-              <td>1720936.17</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">06.10.2015</td>
-              <td>8800001363</td>
-              <td> IX</td>
-              <td>2180090700002770</td>
-              <td>XXXX</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>19.40</td>
-              <td>0.00</td>
-              <td>1720955.57</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">07.10.2015</td>
-              <td>8800001365</td>
-              <td> IX</td>
-              <td>2188086600009140</td>
-              <td>XXXX</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>135.80</td>
-              <td>0.00</td>
-              <td>1721091.37</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">08.10.2015</td>
-              <td>8800001749</td>
-              <td> IX</td>
-              <td>2187250100008290</td>
-              <td>XXXX</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>620.80</td>
-              <td>0.00</td>
-              <td>1721712.17</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">09.10.2015</td>
-              <td>8800002126</td>
-              <td> IX</td>
-              <td>2188086600007660</td>
-              <td>XXXX</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>252.20</td>
-              <td>0.00</td>
-              <td>1721964.37</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">12.10.2015</td>
-              <td>8800002916</td>
-              <td> IX</td>
-              <td>2188045100006770</td>
-              <td>XXXX</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>174.60</td>
-              <td>0.00</td>
-              <td>1722138.97</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">13.10.2015</td>
-              <td>8800002374</td>
-              <td> IX</td>
-              <td>2188045100008450</td>
-              <td>XXXX</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>174.60</td>
-              <td>0.00</td>
-              <td>1722313.57</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">14.10.2015</td>
-              <td>8800003719</td>
-              <td> IX</td>
-              <td>2188045100010430</td>
-              <td>XXXX</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>19.40</td>
-              <td>0.00</td>
-              <td>1722332.97</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;">15.10.2015</td>
-              <td>8800004147</td>
-              <td> IX</td>
-              <td>2187250100007790</td>
-              <td>XXXX</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>310.40</td>
-              <td>0.00</td>
-              <td>1722643.37</td>
-            </tr>
-            <tr>
-              <td style="text-align: left;" class="bg-row-orange-highlight" colspan="7">
-                ***** รวมบัญชีเงินฝาก : 10778 ภาษีบำรุงองค์กรปกครองส่วนท้องถิ่นเพื่อรอจัดสรร
-              </td>
-              <td class="bg-row-orange-highlight">2425.00</td>
-              <td class="bg-row-orange-highlight">0.00</td>
-              <td class="bg-row-orange-highlight">1722643.37</td>
-            </tr>
-            <tr>
-              <td style="text-align: left;" colspan="9">
-                <b>บัญชีเงินฝาก : 10910 เงินฝากค่าใช้จ่ายเก็บภาษีท้องถิ่น กรมสรรพสามิต</b>
-              </td>
-              <td>
-                <b>1965704.18</b>
-              </td>
-            </tr>
-            <tr>
-              <td>27.05.2016</td>
-              <td>200022477</td>
-              <td> J0</td>
-              <td>3400006925</td>
-              <td>306</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>0.00</td>
-              <td>1750.00</td>
-              <td>&nbsp;</td>
-            </tr>
-
-
-            <tr>
-              <td>08.08.2016</td>
-              <td>8800114654</td>
-              <td> IX</td>
-              <td>2188086600013910</td>
-              <td>XXXX</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>1750.00</td>
-              <td>0.00</td>
-              <td>1750.00</td>
-            </tr>
-            <tr>
-              <td>10.08.2016</td>
-              <td>8800114659</td>
-              <td> IX</td>
-              <td>2187250100012750</td>
-              <td>XXXX</td>
-              <td>300600053</td>
-              <td>300600053</td>
-              <td>5000.00</td>
-              <td>0.00</td>
-              <td>6750.00</td>
-            </tr>
-            <tr>
-              <td style="text-align: left;" class="bg-row-orange-highlight" colspan="7">***** รวมบัญชีเงินฝาก : 10910 เงินฝากของกรมสรรพสามิต
-
-              </td>
-              <td class="bg-row-orange-highlight">6750.00 </td>
-              <td class="bg-row-orange-highlight">1750.00</td>
-              <td class="bg-row-orange-highlight">6750.00</td>
-
-            </tr>
-            <tr>
-              <td style="text-align: left;" class="bg-row-orange-highlight" colspan="7">***** รวมเจ้าของเงินฝาก : 0300600053
-
-              </td>
-              <td class="bg-row-orange-highlight">1287067.00 </td>
-              <td class="bg-row-orange-highlight">153824.00</td>
-              <td class="bg-row-orange-highlight">3098947.18 </td>
-
-            </tr>
-          </tbody>
-
-        </table>
+        <br>
         <div class="ui center aligned grid">
-          <div class="sixteen wide column">
-            <button class="ui mini primary button " routerLink="/int07/5/1">
-              <i class="arrow left icon"></i>
-              กลับ
+          <div class="eight wide column">
+            <button class="ui mini primary button" (click)="showData()">
+              <i class="upload icon"></i>
+              อัพโหลด
             </button>
+            <button class="ui mini button" (click)="hideData()">
+              <i class="trash alternate icon"></i>
+              ล้างข้อมูล
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="ui attached segment" id="Int072">
+    <table class="ui  small celled table">
+      <thead>
+        <tr style="text-align: center;">
+          <th>เลขที่บัญชีแยกประเภท</th>
+          <th>ชื่อบัญชีแยกประเภท</th>
+          <th>ยอดยกมา</th>
+          <th>เดบิต</th>
+          <th>เครดิต</th>
+          <th>ยอดยกไป</th>
+          <th>แก้ไข</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1101010101</td>
+          <td>เงินสดในมือ</td>
+          <td>0</td>
+          <td>224,965.42</td>
+          <td>-224,965.42</td>
+          <td>0</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>1101010104</td>
+          <td>เงินทดรองราชการ</td>
+          <td>5,000.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td>5,000.00</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>1101030199</td>
+          <td>เงินฝากไม่มีรายตัว</td>
+          <td>0</td>
+          <td>394,171.95</td>
+          <td>-394,171.95</td>
+          <td>345</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>1205010101</td>
+          <td>อาคารพักอาศัย</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>1205010102</td>
+          <td>พักอาคารพักอาศัย</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2111020199</td>
+          <td>เงินรับฝากอื่น</td>
+          <td>-79,779.72</td>
+          <td>827,038.17</td>
+          <td>-830,354.76</td>
+          <td>-83,096.31</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2112010199</td>
+          <td>เงินประกันอื่น</td>
+          <td>-5,000.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-5,000.00</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2116010104</td>
+          <td>เบิกเกินฯรอนำส่ง</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2202010101</td>
+          <td>งทร.รับฯ-ดำเนินงาน</td>
+          <td>-5,000.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-5,000.00</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2213010101</td>
+          <td>ร/ดรอรับรู้</td>
+          <td>-78,776.74</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-78,776.74</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3101010101</td>
+          <td>ร/ดสูงต่ำคชจ.สุทธิ</td>
+          <td>459,711.76</td>
+          <td>0</td>
+          <td>0</td>
+          <td>459,711.76</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3102010101</td>
+          <td>ร/ดสูงต่ำคชจ.สะสม</td>
+          <td>-8,231,397.24</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-8,231,397.24</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3102010102</td>
+          <td>ผลสะสมแก้ไขผิดพลาด</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3102010102</td>
+          <td>ผลสะสมแก้ไขผิดพลาด</td>
+          <td>0</td>
+          <td>64,737.80</td>
+          <td>-64,737.80</td>
+          <td>394</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3105010101</td>
+          <td>ทุนของหน่วยงาน</td>
+          <td>-450,584.45</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-450,584.45</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>4102020101</td>
+          <td>ร/ด-ภาษีนำเข้า</td>
+          <td>-14,280.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-14,280.00</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>4102020103</td>
+          <td>รายได้ภาษีสุรา</td>
+          <td>-51,469,007.90</td>
+          <td>0</td>
+          <td>-4,843,060.60</td>
+          <td>-56,312,068.50</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>4102020105</td>
+          <td>ร/ดภาษีNon-alcoholic</td>
+          <td>-96,789.88</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-96,789.88</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>4102020106</td>
+          <td>รายได้ภาษียาสูบ</td>
+          <td>-6,266,080.00</td>
+          <td>0</td>
+          <td>-781,100.00</td>
+          <td>-7,047,180.00</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>4308010118</td>
+          <td>รด.ระหว่างกันในกรม</td>
+          <td>-1,970,773.94</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-1,970,773.94</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5101010108</td>
+          <td>ค่าล่วงเวลา</td>
+          <td>74,620.00</td>
+          <td>8,000.00</td>
+          <td>0</td>
+          <td>82,620.00</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5101010113</td>
+          <td>ค่าจ้าง</td>
+          <td>997,000.00</td>
+          <td>96,364.52</td>
+          <td>0</td>
+          <td>1,093,364.52</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5101010116</td>
+          <td>เงินค่าครองชีพ</td>
+          <td>77,850.00</td>
+          <td>7,075.32</td>
+          <td>0</td>
+          <td>84,925.32</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5203010136</td>
+          <td>จำหน่ายที่อยู่ราชฯ</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5203010139</td>
+          <td>จำหน่ายปลูกสร้างราชฯ</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5209010112</td>
+          <td>T/Eเบิกเกินส่งคืน</td>
+          <td>1,300.00</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1,300.00</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5210010102</td>
+          <td>T/E-โอนเงินให้สรก.</td>
+          <td>1,746,442.66</td>
+          <td>166,541.59</td>
+          <td>0</td>
+          <td>1,912,984.25</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5210010103</td>
+          <td>T/E-โอนร/ดผ/ดให้บก.</td>
+          <td>62,006,091.77</td>
+          <td>5,833,123.39</td>
+          <td>0</td>
+          <td>67,839,215.16</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5210010105</td>
+          <td>T/E-ปรับเงินฝากคลัง</td>
+          <td>3,255,654.70</td>
+          <td>147,645.54</td>
+          <td>0</td>
+          <td>3,403,300.24</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5210010112</td>
+          <td>T/Eรายได้รอนำส่งคลัง</td>
+          <td>-4.82</td>
+          <td>0</td>
+          <td>0</td>
+          <td>-4.82</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5210010118</td>
+          <td>TE-ภายในกรม</td>
+          <td>129,598.16</td>
+          <td>0</td>
+          <td>0</td>
+          <td>129,598.16</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>6201010101</td>
+          <td>พัก เงินฝากคลัง</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>6307010101</td>
+          <td>Convสำนักงาน</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>6307010102</td>
+          <td>ConvAcc-Depre สำนักง</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+        <tr>
+          <td>ผลรวม</td>
+          <td>&nbsp;</td>
+          <td>0</td>
+          <td>15,999,140.59</td>
+          <td>-15,999,140.59</td>
+          <td>0</td>
+          <td>
+            <button class="ui mini primary button" (click)="popupEditData()">
+              <i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini  button">
+              <i class="trash alternate icon"></i>ลบ</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ui center aligned grid">
+      <div class="eight wide column">
+        <button class="ui mini primary button width-100"[routerLink]="[ '/int07/7/1'] ">
+          <i class="save  icon" ></i>
+          บันทึก
+        </button>
+    
+      </div>
+    </div>
+  
+  </div>
+  
+  <div id="modalInt0771" class="ui modal small hidden transition">
+    <i class="close icon"></i>
+    <div class="header">
+        อัพโหลดไฟล์งบทดลอง
+    </div>
+  
+    <div class="content">
+      <div class="ui form">
+  
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-15">เลขที่บัญชีแยกประเภท</label>
+            <input type="text" value="" />
+          </div>
+          <div class="eight wide field">
+            <label class="custom-label-w-15">ชื่อบัญชีแยกประเภท</label>
+            <input type="text" value="" />
+          </div>
+        </div>
+  
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-15">ยอดยกมา</label>
+            <input type="text" value="" />
+          </div>
+          <div class="eight wide field">
+            <label class="custom-label-w-15">เดบิต</label>
+            <input type="text" value="" />
+          </div>
+        </div>
+  
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-15">เครดิต</label>
+            <input type="text" value="" />
+          </div>
+          <div class="eight wide field">
+            <label class="custom-label-w-15">ยอดยกไป</label>
+            <input type="text" value="" />
+          </div>
+        </div>
+        <br>
+        <div class="actions">
+          <div class="ui center aligned grid">
+            <div class="six wide column">
+              <button class="ui mini primary button"  (click)="closePopupEdit()">
+                <i class="save icon"></i>
+                บันทึก
+              </button>
+              <button class="ui mini button" (click)="closePopupEdit()">
+                <i class="close icon"></i>
+                ยกเลิก
+              </button>
+            </div>
           </div>
         </div>
       </div>

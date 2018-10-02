@@ -1,16 +1,17 @@
-import { Component, OnInit } from "@angular/core";
-import { AjaxService } from "services/ajax.service";
-import { TextDateTH, formatter } from "helpers/datepicker";
+import { Component, OnInit } from '@angular/core';
+import { AjaxService } from 'services/ajax.service';
+import { TextDateTH, formatter } from 'helpers/datepicker';
 declare var $: any;
 const URL = {
-  DROPDOWN: "combobox/controller/getDropByTypeAndParentId"
+  DROPDOWN : "combobox/controller/getDropByTypeAndParentId"
 };
 @Component({
-  selector: "app-int01-8-1",
-  templateUrl: "./int01-8-1.component.html",
-  styleUrls: ["./int01-8-1.component.css"]
+  selector: 'app-int01-9-1',
+  templateUrl: './int01-9-1.component.html',
+  styleUrls: ['./int01-9-1.component.css']
 })
-export class Int0181Component implements OnInit {
+
+export class Int0191Component implements OnInit {
   private selectedProduct: string = "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก ";
   private productList: any[];
 
@@ -21,8 +22,8 @@ export class Int0181Component implements OnInit {
   constructor(private ajax: AjaxService) { }
 
   ngOnInit() {
-    this.hideData();
 
+    
     $("#calendar1").calendar({
       maxDate: new Date(),
       type: "date",
@@ -37,8 +38,7 @@ export class Int0181Component implements OnInit {
       text: TextDateTH,
       formatter: formatter()
     });
-
-
+    
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.search").css("width", "100%");
     this.productList = [
@@ -74,12 +74,6 @@ export class Int0181Component implements OnInit {
         this.travelTo3List = res.json();
       });
     }
-  }
-  hideData() {
-    $('#Int0181').hide();
-  }
-  showData() {
-    $('#Int0181').show();
   }
 
 }
