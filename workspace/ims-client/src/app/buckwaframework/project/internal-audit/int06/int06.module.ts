@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 
 import { Routes, RouterModule } from "@angular/router";
 
+
 const routes: Routes = [
   { path: "1", loadChildren: "./int06-1/int06-1.module#Int061Module" },
   { path: "2", loadChildren: "./int06-2/int06-2.module#Int062Module" },
@@ -11,11 +12,14 @@ const routes: Routes = [
   { path: "5", loadChildren: "./int06-5/int06-5.module#Int065Module" },
   { path: "6", loadChildren: "./int06-6/int06-6.module#Int066Module" },
   { path: "7", loadChildren: "./int06-7/int06-7.module#Int067Module" },
-  { path: "8", loadChildren: "./int06-8/int06-8.module#Int068Module" }
+  { path: "8", loadChildren: "./int06-8/int06-8.module#Int068Module" },
+  { path: "9", loadChildren: "./int06-9/int06-9.module#Int069Module" },
+  
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes), CommonModule],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  declarations: []
 })
 export class Int06Module {}

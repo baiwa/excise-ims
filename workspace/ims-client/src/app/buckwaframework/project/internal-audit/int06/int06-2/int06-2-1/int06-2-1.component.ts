@@ -8,11 +8,12 @@ declare var $: any;
 })
 export class Int0621Component implements OnInit {
 
-  private showData: boolean = false;
+
 
   constructor() { }
 
   ngOnInit() {
+  this.hideData();
   }
 
   ngAfterViewInit() {
@@ -21,12 +22,10 @@ export class Int0621Component implements OnInit {
     $('#multi-select3').dropdown();
   }
 
-  compareData() {
-    this.showData = true;
+  hideData() {
+    $('#Int0621').hide();
   }
-
-  clearData() {
-    this.showData = false;
+  showData() {
+    $('#Int0621').show();
   }
-
 }
