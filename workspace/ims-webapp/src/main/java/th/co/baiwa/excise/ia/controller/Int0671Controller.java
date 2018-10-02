@@ -37,14 +37,6 @@ public class Int0671Controller {
 	@ResponseBody
 	public CommonMessage<List<Int0671FormVo>> update(@RequestBody Int0671FormVo vo) {
 		logger.info("updateTime id: {}", vo.getTimeSetId());
-//		Message msg = null;
-//		try {
-//			int0671Service.updateTime(vo);
-//			msg = ApplicationCache.getMessage("MSG_00002");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			msg = ApplicationCache.getMessage("MSG_00003");
-//		}
 		return int0671Service.updateTime(vo);
 	}
 
@@ -52,15 +44,6 @@ public class Int0671Controller {
 	@ResponseBody
 	public CommonMessage<List<Int0671FormVo>> delete(@RequestBody Int0671FormVo vo) {
 		logger.info("deleteTime id: {}", vo.getTimeSetId());
-//		Message msg = null;
-//		try {
-//			int0671Service.deleteTime(vo);
-//			msg = ApplicationCache.getMessage("MSG_00005");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			msg = ApplicationCache.getMessage("MSG_00006");
-//		}
-//		return msg;
 		return int0671Service.deleteTime(vo);
 	}
 	

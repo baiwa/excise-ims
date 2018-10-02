@@ -1,6 +1,5 @@
 package th.co.baiwa.excise.ia.persistence.entity;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -21,15 +20,12 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Entity
 @Table(name="IA_TIME_SET")
 public class TimeSet extends BaseEntity  {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 518669613166230545L;
+ 
+	private static final long serialVersionUID = -4651177721199886078L;
 
 	@Id
-	@SequenceGenerator(name="IA_TIME_SET_GEN", sequenceName="IA_TIME_SET_SEQ", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_TIME_SET_GEN")
+	@SequenceGenerator(name="IA_TIME_SET_GEN", sequenceName="IA_TIME_SET_SEQ", allocationSize = 1)
 	@Column(name="TIME_SET_ID")
 	private long timeSetId;
 
@@ -39,6 +35,7 @@ public class TimeSet extends BaseEntity  {
 	@Column(name="START_DATE_TIME")
 	private Date startDateTime;
 
+	
 	private String status;
 
 	public TimeSet() {
@@ -76,9 +73,6 @@ public class TimeSet extends BaseEntity  {
 		this.status = status;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+	
 
 }

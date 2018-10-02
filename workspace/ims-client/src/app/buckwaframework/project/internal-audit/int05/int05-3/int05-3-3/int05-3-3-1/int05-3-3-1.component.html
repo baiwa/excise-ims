@@ -1,10 +1,11 @@
 <div class="ui grid">
-  <div class="sixteen wide column">
+  <div class="sixteen wide column" id="assetBalance">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>เพิ่มข้อมูลสินทรัพย์</span>
+      <span>{{act == '' ? 'เพิ่มข้อมูลสินทรัพย์' : 'แก้ไขข้อมูลสินทรัพย์'}}</span>
     </div>
     <div class="ui attached segment">
       <div class="ui form">
+
         <div class="inline fields">
           <div class="two wide field "></div>
           <div class="two wide field ">
@@ -35,14 +36,9 @@
             <select class="ui search dropdown ai" aria-placeholder="ประเภทสินทรัพย์" id="assetType" name="assetType"
               [(ngModel)]="assetBalance.assetType">
               <option value="0"></option>
-              <option value="ที่ดิน">ที่ดิน</option>
-              <option value="อาคาร/สิ่งก่อสร้าง">อาคาร/สิ่งก่อสร้าง</option>
-              <option value="ครุภัณฑ์สำนักงาน เกิน 5,000 บาท">ครุภัณฑ์สำนักงาน เกิน 5,000 บาท</option>
-              <option value="ครุภัณฑ์คอมพิวเตอร์ เกิน 5,000 บาท">ครุภัณฑ์คอมพิวเตอร์ เกิน 5,000 บาท</option>
-              <option value="อื่น ๆ เกิน 5,000 บาท">อื่น ๆ เกิน 5,000 บาท</option>
-              <option value="ครุภัณฑ์สำนักงาน ไม่เกิน 5,000 บาท">ครุภัณฑ์สำนักงาน ไม่เกิน 5,000 บาท</option>
-              <option value="ครุภัณฑ์คอมพิวเตอร์ ไม่เกิน 5,000 บาท">ครุภัณฑ์คอมพิวเตอร์ ไม่เกิน 5,000 บาท</option>
-              <option value="อื่น ๆ ไม่เกิน 5,000 บาท">อื่น ๆ ไม่เกิน 5,000 บาท</option>
+              <option *ngFor="let assetType of ddtAssetType; let i=index" selected="{{assetType.value1 == assetBalance.assetType}}"
+                value="{{assetType.value1}}">{{assetType.value1}}</option>
+
 
             </select>
 
@@ -180,14 +176,14 @@
         <div class="inline fields">
           <div class="two wide field "></div>
           <div class="two wide field ">
-            <label class="text-right full-width">วันที่เอกสารได้รับสินทรัพย์</label>
+            <label class="text-right full-width"> <b style="color: red">*</b> วันที่เอกสารได้รับสินทรัพย์</label>
           </div>
           <div class="four wide field ">
 
             <div class="ui calendar" style="width:100%" id="documentDate">
               <div class="ui input left icon">
                 <i class="calendar icon"></i>
-                <input type="calendar" placeholder="วันที่เอกสารได้รับสินทรัพย์" name="documentDate" [(ngModel)]="assetBalance.documentDate"
+                <input type="calendar" placeholder="วันที่เอกสารได้รับสินทรัพย์" id="documentDateField" name="documentDate"
                   autocomplete="off">
               </div>
             </div>
@@ -253,7 +249,7 @@
             <input type="number" placeholder="ปี" class="custom" name="year" id="year" [(ngModel)]="year">
           </div>
           <div class="one wide field ">
-            <label class="text-right full-width">วันที่ผลิต/ใช้งาน</label>
+            <label class="text-right full-width"> <b style="color: red">*</b> วันที่ผลิต/ใช้งาน</label>
           </div>
           <div class="two wide field ">
 
@@ -261,7 +257,7 @@
             <div class="ui calendar" style="width:100%" id="dateOfManufacture">
               <div class="ui input left icon">
                 <i class="calendar icon"></i>
-                <input type="calendar" placeholder="วันที่ผลิต/ใช้งาน" name="dateOfManufacture" [(ngModel)]="assetBalance.dateOfManufacture"
+                <input type="calendar" placeholder="วันที่ผลิต/ใช้งาน" id="dateOfManufactureField" name="dateOfManufacture"
                   autocomplete="off">
               </div>
             </div>
@@ -271,7 +267,7 @@
           </div>
           <div class="two wide field ">
             <input type="number" placeholder="เลขที่เอกสารสินทรัพย์" class="custom" name="depreciationRate" id="depreciationRate"
-              readonly [(ngModel)]="assetBalance.depreciationRate">
+              [(ngModel)]="assetBalance.depreciationRate">
           </div>
         </div>
 
@@ -310,6 +306,25 @@
           </div>
 
         </div>
+        <div class="inline fields"></div>
+        <div class="inline field ui grid">
+          <div class="sixteen wide center aligned column">
+            <button class="ui button primary" type="button" (click)="addAction()">บันทึก</button>
+
+            <button class="ui button primary" type="button" (click)="cancel()">ยกเลิก</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="inline fields"></div>
+  <div class="sixteen wide column" id="assetMaintenance">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>ประวัติการซ่อมบารุงรักษาทรัพย์สิน</span>
+    </div>
+    <div class="ui attached segment">
+      <div class="ui form">
 
         <div class="inline fields">
           <div class="two wide field "></div>
@@ -318,24 +333,24 @@
           </div>
           <div class="two wide field ">
             <input type="number" placeholder="ครั้งที่ซ่อมบำรุงรักษา" class="custom" name="annualDepreciation" id="annualDepreciation"
-              [(ngModel)]="assetMaintenance.maintenanceAmount">
+              disabled=true [(ngModel)]="assetMaintenance.maintenanceAmount">
           </div>
           <div class="two wide field ">
-            <label class="text-right full-width">วันที่ซ่อมบำรุงรักษา</label>
+            <label class="text-right full-width"> <b style="color: red">*</b> วันที่ซ่อมบำรุงรักษา</label>
           </div>
           <div class="two wide field ">
 
             <div class="ui calendar" style="width:100%" id="maintenanceDate">
               <div class="ui input left icon">
                 <i class="calendar icon"></i>
-                <input type="calendar" placeholder="วันที่ซ่อมบำรุงรักษา" name="maintenanceDate" [(ngModel)]="assetBalance.maintenanceDate"
-                  autocomplete="off">
+                <input type="calendar" placeholder="วันที่ซ่อมบำรุงรักษา" name="maintenanceDate" autocomplete="off">
               </div>
             </div>
+
           </div>
 
           <div class="two wide field ">
-            <label class="text-right full-width">จำนวนเงินค่าซ่อมบำรุงรักษา</label>
+            <label class="text-right full-width"><b style="color: red">*</b> จำนวนเงินค่าซ่อมบำรุงรักษา</label>
           </div>
           <div class="two wide field ">
             <input type="number" placeholder="จำนวนเงินค่าซ่อมบำรุงรักษา" class="custom" name="netValue" id="netValue"
@@ -365,18 +380,17 @@
           </div>
 
         </div>
-
         <div class="inline fields"></div>
         <div class="inline field ui grid">
           <div class="sixteen wide center aligned column">
-            <button class="ui button primary" type="button" (click)="addAction()">บันทึก</button>
+            <button class="ui button primary" type="button" (click)="addAssetMaintenanceAction()">บันทึก</button>
 
             <button class="ui button primary" type="button" (click)="cancel()">ยกเลิก</button>
           </div>
         </div>
       </div>
 
-      <div class="inline fields"></div>
+
     </div>
   </div>
 </div>

@@ -18,25 +18,34 @@ declare var $: any;
 export class Int0671Service {
   dataList: any;
   table: any;
-  data: any;
 
   constructor(private ajax: AjaxService, private msg: MessageBarService) {
     // TODO
   }
 
+  // dataInit = (callback: Function) => {
+  //   console.log("callback");
+
+  //   this.ajax.post(URL.DATAINIT, {}, async res => {
+  //     let init = await res.json();
+  //     console.log("init : ", init);
+  //     callback(init);
+  //     this.dataList = await res.json().data;
+  //   });
+  // };
   dataInit = (): Observable<any> => {
     return new Observable<any>(obs => {
       this.ajax
         .post(URL.DATAINIT, {}, async res => {
           let init = await res.json();
-          console.log(init);
+          console.log("init : ", init);
           this.dataList = await res.json().data;
         })
         .then(() => obs.next(this.dataList));
       // setTimeout(() => {
       //   this.initDatatable();
       // }, 1000);
-    });
+    }).share();
   };
 
   saveTime = (startDateTime: string, endDateTime: string): Observable<any> => {
@@ -44,7 +53,6 @@ export class Int0671Service {
     return new Observable<any>(obs => {
       this.ajax
         .post(URL.SAVE_TIME, DATA, async res => {
-          this.data = await res.json();
           this.dataList = await res.json().data;
           if ((await res.json().msg.messageType) === "E") {
             await this.msg.errorModal(res.json().msg.messageTh);
@@ -104,13 +112,6 @@ export class Int0671Service {
         .then(() => obs.next(this.dataList));
     });
   }
-
-  setValueUpdate = (id: string) => {
-    let t = this.data.data;
-    let ob = t.filter(obj => obj.timeSetId == id);
-    $("#startDateTime").val(ob[0].startDateTime);
-    $("#endDateTime").val(ob[0].endDateTime);
-  };
 
   async initDatatable() {
     // Initial Datatable

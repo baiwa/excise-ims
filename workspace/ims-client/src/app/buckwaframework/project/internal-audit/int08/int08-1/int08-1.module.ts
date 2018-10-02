@@ -33,7 +33,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
-    ConditionModule, BreadcrumbModule
+    ConditionModule, 
+    BreadcrumbModule
   ],
   declarations: [
     Int081Component,
