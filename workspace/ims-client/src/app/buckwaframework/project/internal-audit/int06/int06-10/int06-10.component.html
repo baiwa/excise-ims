@@ -1,0 +1,390 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>ค้นหารายการขอเบิก </span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">รายการโอนเงิน</label>
+            <input type="text" />
+          </div>
+          <div class="two wide field ">
+            <label class="custom-label-w-22">ประเภทงบประมาณ</label>
+            </div>
+            <div class="five wide field ">
+            <input type="text" />
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">กิจกรรม</label>
+            <input type="text" />
+          </div>
+          <div class="one wide field ta">
+            <label class="ta custom-label-w-25 ">วันที่</label>
+          </div>
+          <div class="one wide field"></div>
+          <div class="two wide field">
+            <div class="ui calendar" id="calendar1" style="width:100%">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text">
+              </div>
+            </div>
+          </div>
+          <div class="one wide field">
+            <label class="custom-label-w-25">ถึง</label>
+          </div>
+          <div class="two wide field">
+            <div class="ui calendar" id="calendar2" style="width:100%">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="ui center aligned grid">
+        <div class="six wide column">
+          <button class="ui mini primary button" (click)="showdata()">
+            <i class="search icon"></i>
+            ค้นหา
+          </button>
+          <button class="ui   mini button" (click)="hidedata()">
+            <i class="trash outline icon"></i>
+            ล้างข้อมูล
+          </button>
+          <button class="ui primary  mini button"  [routerLink]="[ '/int06/10/2'] ">
+            <i class="file icon"></i>
+         รายการใบเบิก
+          </button>
+          <button class="ui primary mini button" [routerLink]="[ '/int06/10/1'] ">
+            <i class="add icon"></i>
+            เพิ่มข้อมูล
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <div class="ui segment" id="int0610">
+        <div style="overflow-x: scroll;">
+          <table id="tableData" class="ui small celled table" style="width: 180%">
+            <thead>
+              <tr style="text-align: center;">
+                <th rowspan="2">ลำดับที่</th>
+                <th rowspan="2">เลขที่เอกสารอ้างอิง</th>
+                <th rowspan="2">วันที่ขอเบิก</th>
+                <th rowspan="2">รหัส</th>
+                <th rowspan="2">กิจกรรม</th>
+                <th rowspan="2">งบ</th>
+                <th rowspan="2">หมวด</th>
+                <th rowspan="2">หมวดย่อย</th>
+                <th rowspan="2">รายการ</th>
+                <th rowspan="2">จำนวนเงินขอเบิก</th>
+                <th rowspan="2">ภาษีหัก ณ ที่จ่าย</th>
+                <th rowspan="2">หักประกันสังคม</th>
+                <th rowspan="2">อื่นๆ</th>
+                <th rowspan="2">จำนวนเงินขอรับ</th>
+                <th rowspan="2">เลขที่เอกสารขอเบิก</th>
+                <th rowspan="2">เลขที่เอกสารขอจ่าย</th>
+                <th rowspan="2">วิธีการจ่าย</th>
+                <th rowspan="2">เลขที่อ้างอิงการจ่าย</th>
+                <th rowspan="2">วันที่สั่งจ่าย</th>
+                <th rowspan="2">จำนวนเงินที่จ่าย</th>
+                <th rowspan="2">ผู้รับเงิน</th>
+                <th rowspan="2">หมายเหตุ</th>
+                <th rowspan="2" colspan="2">จัดการ</th>
+              </tr>
+         
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>P610000000001</td>
+                <td>19/10/2560</td>
+                <td>227</td>
+                <td>จัดเก็บภาษี</td>
+                <td>ดำเนินงาน</td>
+                <td>ค่าใช้สอย</td>
+                <td>ค่าจ้างเหมาบริการ</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>-</td>
+                <td>3600004601</td>
+                <td>4700002302</td>
+                <td>เช็ค</td>
+                <td>10287725</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>นายสุรวิทย์ ใจมั่น</td>
+                <td>&nbsp;</td>             
+                <td>แก้ไข</td>
+                <td>ลบ</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>P610000000001</td>
+                <td>19/10/2560</td>
+                <td>227</td>
+                <td>จัดเก็บภาษี</td>
+                <td>ดำเนินงาน</td>
+                <td>ค่าใช้สอย</td>
+                <td>ค่าจ้างเหมาบริการ</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>-</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>KTB-Corporate</td>
+                <td>10287726</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>นางสุชาดา ยิ่งเจริญ</td>
+                <td>&nbsp;</td>               
+                <td>แก้ไข</td>
+                <td>ลบ</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>P610000000001</td>
+                <td>19/10/2560</td>
+                <td>227</td>
+                <td>จัดเก็บภาษี</td>
+                <td>ดำเนินงาน</td>
+                <td>ค่าใช้สอย</td>
+                <td>ค่าจ้างเหมาบริการ</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>-</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>10287727</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>นายบุญมี ทองก้อน</td>
+                <td>&nbsp;</td>              
+                <td>แก้ไข</td>
+                <td>ลบ</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>P610000000001</td>
+                <td>19/10/2560</td>
+                <td>227</td>
+                <td>จัดเก็บภาษี</td>
+                <td>ดำเนินงาน</td>
+                <td>ค่าใช้สอย</td>
+                <td>ค่าจ้างเหมาบริการ</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>-</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>นายเทพพิทักษ์ ปกปักรักษา</td>
+                <td>&nbsp;</td>               
+                <td>แก้ไข</td>
+                <td>ลบ</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>P610000000001</td>
+                <td>19/10/2560</td>
+                <td>227</td>
+                <td>จัดเก็บภาษี</td>
+                <td>ดำเนินงาน</td>
+                <td>ค่าใช้สอย</td>
+                <td>ค่าจ้างเหมาบริการ</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>-</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>นางสาวเมธิณี แสนโสภา</td>
+                <td>&nbsp;</td>               
+                <td>แก้ไข</td>
+                <td>ลบ</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>P610000000002</td>
+                <td>24/10/2560</td>
+                <td>211</td>
+                <td>จัดเก็บภาษี</td>
+                <td>ดำเนินงาน</td>
+                <td>ค่าตอบแทน</td>
+                <td>ค่าเช่าบ้าน</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>-</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>               
+                <td>แก้ไข</td>
+                <td>ลบ</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>P610000000002</td>
+                <td>24/10/2560</td>
+                <td>211</td>
+                <td>จัดเก็บภาษี</td>
+                <td>ดำเนินงาน</td>
+                <td>ค่าตอบแทน</td>
+                <td>ค่าเช่าบ้าน</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>-</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>             
+                <td>แก้ไข</td>
+                <td>ลบ</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>P610000000003</td>
+                <td>30/10/2560</td>
+                <td>113</td>
+                <td>จัดเก็บภาษี</td>
+                <td>บุคลากร</td>
+                <td>เงินเดือนและค่าจ้างประจำ</td>
+                <td>ค่าจ้างประจำ</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>-</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>             
+                <td>แก้ไข</td>
+                <td>ลบ</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>P610000000003</td>
+                <td>30/10/2560</td>
+                <td>113</td>
+                <td>จัดเก็บภาษี</td>
+                <td>บุคลากร</td>
+                <td>เงินเดือนและค่าจ้างประจำ</td>
+                <td>ค่าจ้างประจำ</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>-</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>               
+                <td>แก้ไข</td>
+                <td>ลบ</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>P610000000003</td>
+                <td>30/10/2560</td>
+                <td>113</td>
+                <td>จัดเก็บภาษี</td>
+                <td>บุคลากร</td>
+                <td>เงินเดือนและค่าจ้างประจำ</td>
+                <td>ค่าจ้างประจำ</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>-</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>               
+                <td>แก้ไข</td>
+                <td>ลบ</td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <br>
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+
+            <button class="ui mini primary button">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <button class="ui mini  button" (click)="hidedata()">
+              <i class="close icon"></i>
+              ยกเลิก
+            </button>
+          </div>
+        </div>
+
+      </div>

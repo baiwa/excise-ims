@@ -23,11 +23,5 @@ export class Int072Component implements OnInit {
       
   }
 
-  popupEditData() {
-    $('#modalInt072').modal('show');
-  }
 
-  closePopupEdit() {
-    $('#modalInt072').modal('hide');
-  }
 }
