@@ -1,0 +1,31 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>สร้างเอกสารขอเบิก</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="four wide field"></div>
+          <div class="two wide field">
+            <label>แบบขอเบิก</label>
+          </div>
+          <div class="four wide field">
+            <select id="productList" name="productList" class="ui search dropdown" (change)="onSelectactionStatus($event)">
+              <option *ngFor="let productList of productList; let i = index" value="{{i}}">
+                {{productList}}
+              </option>
+            </select>
+          </div>
+          <button class="ui mini primary button width-100"  [routerLink]="[ '/int06/11/1'] ">
+            <i class="add icon"></i>
+            สร้าง
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

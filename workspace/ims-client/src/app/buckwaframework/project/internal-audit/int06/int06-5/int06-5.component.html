@@ -88,15 +88,17 @@
     <table id="tableData" class="ui small celled table" style="width: 100%">
       <thead>
         <tr style="text-align: center;">
-          <th rowspan="2">ลำดับที่</th>
-          <th rowspan="2">รายการเบิก</th>
-          <th rowspan="2">ผู้ขอเบิก</th>
-          <th rowspan="2">จำนวนเงินขอเบิก</th>
-          <th rowspan="2" colspan="3">จัดการ</th>
+        <th>ลำดับที่</th>
+        <th>วันที่สั่งจ่าย</th>
+        <th>เช็คเล่มที่</th>
+        <th>จำนวนเงินสั่งจ่ายในเช็ค</th>
+        <th>ประเภทงบประมาณ</th>
+        <th>ผู้รับเงิน</th>
+        <th>จัดการ</th>
         </tr>
       </thead>
       <tbody>
-        
+        											
       </tbody>
     </table>
   </div>
@@ -105,8 +107,8 @@
     <div class="sixteen wide column">
 
       <button class="ui mini primary button">
-        <i class="save icon"></i>
-        บันทึก
+        <i class="print icon"></i>
+        ส่งออก
       </button>
       <button class="ui mini  button" (click)="hidedata()">
         <i class="close icon"></i>

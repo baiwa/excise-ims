@@ -12,7 +12,8 @@ import { Int0692Component } from './int06-9-2/int06-9-2.component';
 const routes: Routes = [
     { path: '', component: Int069Component, canActivate: [AuthGuard] },
     { path: '1', component: Int0691Component, canActivate: [AuthGuard] },
-    { path: '2', component: Int0692Component, canActivate: [AuthGuard] }
+    { path: '2', component: Int0692Component, canActivate: [AuthGuard] },
+    
    
 ];
 

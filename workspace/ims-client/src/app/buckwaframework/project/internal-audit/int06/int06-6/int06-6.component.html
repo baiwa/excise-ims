@@ -1,73 +1,121 @@
 <div class="ui grid">
   <div class="sixteen wide column">
-    <div class="ui large ordered steps" style="width: 280px;">
-      <div class="active step">
-        <div class="content">
-          <div class="title">ข้อมูล</div>
-          <div class="description"> เลขอ้างอิง (ฎีกา)</div>
-        </div>
-      </div>
-      <div class=" step">
-        <div class="content">
-          <div class="title">ข้อมูล</div>
-          <div class="description">เจ้าหน้าที่</div>
-        </div>
-      </div>
-      <div class=" step">
-        <div class="content">
-          <div class="title">ปฏิทินการเบิก</div>
-          <div class="description">ค่าตอบแทนบุคคลหรือคณะกรรมการ
-          </div>
-        </div>
-      </div>
-      <div class=" step">
-        <div class="content">
-          <div class="title">กระดาษทำการตรวจสอบ</div>
-          <div class="description">การเบิกค่าตอบแทนบุคคลหรือคณะกรรมการ
-          </div>
-        </div>
-      </div>
-      <div class=" step">
-        <div class="content">
-          <div class="title"> เปรียบเทียบ</div>
-          <div class="description">สรุปรายการขอเบิก
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="ui top attached header">
-      <span>ข้อมูลอ้างอิง(ฎีกา)</span>
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>ค้นหารายการคุม KTB-Corporate </span>
     </div>
 
     <div class="ui attached segment">
       <div class="ui form">
-
         <div class="inline fields">
-          <div class="one wide field"></div>
-          <div class="six wide field ">
-            <label class="custom-label-w-15">เลขอ้างอิง (ฎีกา)</label>
-            <input type="text" value="P590000022">
+          <div class="two wide field"></div>
+          <div class="two wide field">
+            <label>สรรพสามิตภาค</label>
           </div>
-          <div class="one wide field"></div>
-          <div class="six wide field ">
-            <label class="custom-label-w-15">จำนวนเจ้าหน้าที่</label>
-            <input type="text" value="5">
+          <div class="four wide field">
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            </select>
+          </div>
+          <div class="two wide field">
+            <label>สรรพสามิตพื้นที่</label>
+          </div>
+          <div class="four wide field">
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            </select>
           </div>
         </div>
-      </div>
+        <div class="inline fields">
+          <div class="two wide field"></div>
+          <div class="two wide field">
+            <label>สรรพสามิตสาขา</label>
+          </div>
+          <div class="four wide field">
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            </select>
+          </div>
+          <div class="two wide field ">
+            <label>วันที่
+            </label>
+          </div>
+          <div class="two wide field">
+            <div class="ui calendar" id="calendar1" style="width:100%">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" name="endDate" id="endDate">
+              </div>
+            </div>
+          </div>
+          <label>ถึง</label>
+          <div class="two wide field">
+            <div class="ui calendar" id="calendar2" style="width:100%">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" name="endDate" id="endDate">
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="ui center aligned grid">
+          <div class="eight wide column">
+            <button class="ui mini primary button width-100"  (click)="showdata()">
+              <i class="search icon"></i>
+              ค้นหา
+            </button>
+            <button class="ui mini  button width-100"  (click)="hidedata()">
+              <i class="trash outline icon"></i>
+              ล้างข้อมูล
+            </button>
+            <button class="ui mini green button width-100"  routerLink='/int06/6/1'>
+              <i class="add icon"></i>
+              เพิ่มข้อมูล
+            </button>
+          </div>
+        </div>
 
-      <br>
-      <div class="ui center aligned grid">
-        <div class="eight wide column">
-          <button class="ui mini primary button width-100" routerLink="/int06/6/1">
-            <i class="arrow right icon"></i>
-            ถัดไป
-          </button>
-        </div>
       </div>
 
     </div>
   </div>
 </div>
+<div class="ui segment" id="hideData">
+  <div style="overflow-x: scroll;">
+    <table id="tableData" class="ui small celled table" style="width: 100%">
+      <thead>
+        <tr style="text-align: center;">
+        <th>ลำดับที่</th>
+        <th>ผู้รับเงิน</th>
+        <th>เลขที่บัญชี</th>
+        <th>ประเภทค่าใช้จ่าย</th>
+        <th>จำนวนเงิน</th>
+        <th>วันที่โอน</th>
+        <th>จัดการ</th>
+        </tr>
+      </thead>
+      <tbody>
+        																		
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <div class="ui center aligned grid">
+    <div class="sixteen wide column">
+
+      <button class="ui mini primary button">
+        <i class="print icon"></i>
+        ส่งออก
+      </button>
+      <button class="ui mini  button" (click)="hidedata()">
+        <i class="close icon"></i>
+        ยกเลิก
+      </button>
+    </div>
+  </div>
+
+</div>
+
