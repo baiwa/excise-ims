@@ -15,11 +15,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
-import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.excise.constant.IaConstant;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int06112ExcelVo;
@@ -27,9 +24,6 @@ import th.co.baiwa.excise.ia.persistence.vo.Int06112FormVo;
 
 @Service
 public class Int06112Service {
-
-	@Autowired
-	private LovRepository lovRepository;
 	
 	public DataTableAjax<Int06112ExcelVo> readFileExcel(Int06112FormVo formVo) throws IOException, EncryptedDocumentException, InvalidFormatException {
 
@@ -105,8 +99,4 @@ public class Int06112Service {
 			return "";
 		}
 	}
-	
-//	public List<Lov> sector(){
-//		return lovRepository.typ
-//	}
 }

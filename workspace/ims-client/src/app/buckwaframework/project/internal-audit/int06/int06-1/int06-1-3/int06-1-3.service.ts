@@ -17,7 +17,7 @@ export class Int0613Service {
     ) { }
 
     sector = () => {
-        let url = "combobox/controller/getSector";
+        let url = "combobox/controller/sector";
         this.ajax.post(url,null,res=>{
             console.log(res.json());
         });
@@ -28,8 +28,9 @@ export class Int0613Service {
     }
 
     search = () => {
-        $("#dataTable").DataTable().ajax.reload();
         this.form.searchFlag = "TRUE";
+        $("#dataTable").DataTable().ajax.reload();
+        
     }
 
     dataTable = () => {
