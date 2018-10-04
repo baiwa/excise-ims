@@ -1,37 +1,39 @@
 <div class="ui grid">
-  <div class="sixteen wide column">    
+  <div class="sixteen wide column">
 
     <h2 class="ui header">อัพโหลดงบทดลอง</h2>
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>อัพโหลดงบทดลอง </span>
-    </div>  
-
-    <div class="ui attached segment">
-      <div class="ui form">
-        <div class="inline fields">
-            <div class="four wide field "></div>
-          <div class="two wide field ">
-           <label>ไฟล์งบทดลอง</label>
-          </div>
-          <div class="five wide field">
-            <input type="file" name="" id="">
-          </div>
-        </div>
-      </div>
-
-      <div class="ui center aligned grid">
-        <div class="four wide column">
-          <button class="ui mini primary button" routerLink='/int01/4/2'>
-            <i class="upload icon"></i>
-            อัพโหลด
-          </button>
-          <button class="ui mini button">
-            <i class="trash outline icon"></i>
-            ลบไฟล์
-          </button>
-        </div>
-      </div>
+      <span>อัพโหลดงบทดลอง </span>
     </div>
+    <form id="upload-form" ngNativeValidate (submit)="onUpload($event)">
+      <div class="ui attached segment">
+        <div class="ui form">
+          <div class="inline fields">
+            <div class="four wide field "></div>
+            <div class="two wide field ">
+              <label class="text-right full-width">ไฟล์งบทดลอง</label>
+            </div>
+            <div class="five wide field">
+              <input class="inputfile" type="file" name="fileExel" id="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                (change)="onChangeUpload($event)" required>
 
+            </div>
+          </div>
+        </div>
+
+        <div class="ui center aligned grid">
+          <div class="four wide column">
+            <button class="ui mini primary button">
+              <i class="upload icon"></i>
+              อัพโหลด
+            </button>
+            <button class="ui mini button">
+              <i class="trash outline icon"></i>
+              ลบไฟล์
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

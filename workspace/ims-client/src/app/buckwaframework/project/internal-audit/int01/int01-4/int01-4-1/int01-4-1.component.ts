@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { AjaxService } from "../../../../../common/services/ajax.service";
+import { MessageBarService } from "../../../../../common/services/message-bar.service";
+import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 
+declare var $: any;
 @Component({
   selector: 'app-int01-4-1',
   templateUrl: './int01-4-1.component.html',
@@ -9,29 +14,91 @@ export class Int0141Component implements OnInit {
 
   private selectZone: any[];
   private selectArea: any[];
+  private SECTOR_VALUE: string = 'SECTOR_VALUE';
+  sector: any[] = [];
+  area: any[] = [];
 
-  constructor() { }
+  fileExel: File[];
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private ajax: AjaxService,
+    private messageBarService: MessageBarService
+  ) {
+
+    this.fileExel = new Array<File>(); // initial file array
+  }
 
   ngOnInit() {
-    this.selectZone = [
-      { 'value': 'สำนักงานสรรพสามิตภาคที่ 1' },
-      { 'value': 'สำนักงานสรรพสามิตภาคที่ 2' },
-      { 'value': 'สำนักงานสรรพสามิตภาคที่ 3' },
-      { 'value': 'สำนักงานสรรพสามิตภาคที่ 4' },
-      { 'value': 'สำนักงานสรรพสามิตภาคที่ 5' },
-      { 'value': 'สำนักงานสรรพสามิตภาคที่ 6' },
-      { 'value': 'สำนักงานสรรพสามิตภาคที่ 7' }
-    ];
 
-    this.selectArea = [
-      { 'value': 'สำนักงานสรรพสามิตพื้นที่สมุทรสาคร' },
-      { 'value': 'สำนักงานสรรพสามิตพื้นที่สมุทรสงคราม' },
-      { 'value': 'สำนักงานสรรพสามิตพื้นที่สมุทรปราการ' }
-    ];
   }
 
   ngAfterViewInit() {
     //$("#selectZone").dropdown();
     //$("#selectArea").dropdown();
   }
+
+  sectorCombobox = (lovIdMaster) => {
+
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: this.SECTOR_VALUE, lovIdMaster: lovIdMaster }, res => {
+      this.sector = res.json();
+      console.log(this.sector);
+    });
+
+  }
+
+  areaCombobox = (lovIdMaster) => {
+
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: this.SECTOR_VALUE, lovIdMaster: lovIdMaster }, res => {
+      this.area = res.json();
+      //console.log(this.sector);
+    });
+
+  }
+
+
+  onUpload = (event: any) => {
+    event.preventDefault();
+
+
+    const form = $("#upload-form")[0];
+    let formBody = new FormData(form);
+
+    let url = "ia/int014/uploadFileExcel";
+    this.ajax.upload(
+      url,
+      formBody,
+      res => {
+        //console.log(res.json());
+
+
+
+      }
+    );
+  };
+
+  onChangeUpload = (event: any) => {
+    if (event.target.files && event.target.files.length > 0) {
+      let reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        const f = {
+          name: event.target.files[0].name,
+          type: event.target.files[0].type,
+          value: e.target.result
+        };
+        this.fileExel = [f];
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  };
+
+}
+class File {
+  [x: string]: any;
+  name: string;
+  type: string;
+  value: any;
 }

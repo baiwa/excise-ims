@@ -182,7 +182,7 @@ public class Int082Controller {
 		List<RiskAssInfOtherDtl> excelData = new ArrayList<RiskAssInfOtherDtl>();
 		if (mainForm.getFileExel() != null) {
 			RiskAssInfOtherDtl row = new RiskAssInfOtherDtl();
-			List<String[]> ListfileEx = uploadFileExciseService.readFileExcel(mainForm);
+			List<String[]> ListfileEx = uploadFileExciseService.readFileExcel(mainForm.getFileExel());
 			for (int j = 1; j < ListfileEx.size(); j++) {
 				String[] stringArr = ListfileEx.get(j);
 

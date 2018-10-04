@@ -17,8 +17,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.ta.service.ExciseDetailService;
 
 @Service
@@ -26,10 +26,10 @@ public class UploadFileExciseService {
 	
 	private Logger logger = LoggerFactory.getLogger(ExciseDetailService.class);
 	
-	public List<String[]> readFileExcel(Ope041Vo multipartFile)
+	public List<String[]> readFileExcel(MultipartFile fileExel)
 			throws IOException, EncryptedDocumentException, InvalidFormatException {
 		logger.info("UploadFileExciseService.readFileExcel");
-		byte[] byt =  multipartFile.getFileExel().getBytes();
+		byte[] byt =  fileExel.getBytes();
 		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(byt));
 		Sheet sheet = workbook.getSheetAt(0);
 		int totalRows = sheet.getPhysicalNumberOfRows();

@@ -48,7 +48,7 @@ public class Ope041Controller {
 		if(vo.getFileExel() != null) {
 			List<Ope041Vo> fuList = new ArrayList<>();
 			Ope041Vo fu = new Ope041Vo();
-			List<String[]> ListfileEx = uploadFileExciseService.readFileExcel(vo);
+			List<String[]> ListfileEx = uploadFileExciseService.readFileExcel(vo.getFileExel());
 				for (String[] stringArr : ListfileEx) {
 					fu = new Ope041Vo();
 					for(int i = 0 ; i < stringArr.length ; i++) {

@@ -202,7 +202,11 @@ img.image-width-18 {
 }
 /* !bg-mon */
 
-
+.ui.small.celled.table thead tr th{
+   
+    background-color: #87CEFA
+    
+}
 
 /* fixed table bordered left TH */
 .ui.celled.table tr td, .ui.celled.table tr th {
