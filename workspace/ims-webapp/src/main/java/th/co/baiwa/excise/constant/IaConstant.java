@@ -90,5 +90,13 @@ public class IaConstant {
         	public static final String COMPLETE_DESC = "เสร็จสิ้น";
     	}
     }
+public static class IA_FILE_EXCEL {
+    	
+    	public static class REVIEW_COST_DATA {
+        	public static final String ACCOUNT_TEXT = "เลขที่บัญชี G/L";
+        	public static final String BALANCE = "*";
+        	
+    	}
+    }
 }
 

@@ -12,7 +12,7 @@
                 <div class="inline fields ui centered grid">
                     <div class="one wide field "></div>
                     <div class="three wide field required">
-                        <label class="text-right full-width">รายงานงบทดลอง</label>
+                        <label class="text-right full-width">บัญชีแยกประเภท</label>
                     </div>
                     <div class="six wide field ">
                         <input class="inputfile" type="file" name="fileName" id="fileName" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -20,10 +20,10 @@
                     </div>
                     <div class="three wide field "></div>
                 </div><br>
-                <div class="ui stackable center aligned page grid">
+                <div class="ui stackable center aligned page grid">                
                     <button class="ui mini yellow button" type="submit"><i class="upload icon"></i> อัปโหลด</button>
                     <button class="ui mini gray button" type="button" (click)="claer()"><i class="sync icon"></i> ล้างข้อมูล</button>
-                    <button class="ui mini primary button" routerLink="/int06/1/1-2" type="button" [disabled]="show">ถัดไป</button>
+                    <button class="ui mini primary button" type="button" routerLink="/int06/1/1-3" [disabled]="show">ถัดไป</button>
                 </div><br>
             </form>
         </div>
@@ -35,29 +35,22 @@
     <div class="sixteen wide column">
         <div class="ui top attached header">
             <span>ข้อมูลการอัปโหลด</span>
-        </div>
+        </div> 
         <!-- form upload -->
-        <div class="ui attached center segment {{tableLoading ? 'loading' : ''}} ">
+         <div class="ui attached center segment {{tableLoading ? 'loading' : ''}} ">
             <table id="dataTable" class="ui small celled table nowrap" style="width: 100%">
                 <thead>
                     <tr style="text-align: center;">
-                        <th rowspan="2">ลำดับ</th>
-                        <th colspan="2">บัญชีแยกประเภท</th>
-                        <th rowspan="2">ยอดยกมา</th>
-                        <th rowspan="2">เดบิต</th>
-                        <th rowspan="2">เครดิต</th>
-                        <th rowspan="2">ยอดยกไป</th>
-                    </tr>
-                    <tr>
-                        <th>เลขที่บัญชีแยกประเภท</th>
-                        <th>ชื่อบัญชีแยกประเภท</th>
-
+                        <th>ลำดับ</th>
+                        <th>เลขที่บัญชี</th>
+                        <th>บัญชี</th>
+                        <th style="text-align:center !important">จำนวนเงินในสกุลในปท.</th>
                     </tr>
                 </thead>
             </table>
         </div>
     </div>
-</div>
+</div> 
 <!-- table -->
 
 <!-- edie Model -->

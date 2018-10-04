@@ -8,9 +8,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BreadcrumbModule } from '../../../../common/components';
 import { Int0621Component } from './int06-2-1/int06-2-1.component';
 import { Int0622Component } from './int06-2-2/int06-2-2.component';
+import { Int0612Component } from './int06-1-2/int06-1-2.component';
+import { Int0613Component } from './int06-1-3/int06-1-3.component';
 
 const routes: Routes = [
   { path: '1', component: Int0611Component, canActivate: [AuthGuard] },
+  { path: '1-2', component: Int0612Component, canActivate: [AuthGuard] },
+  { path: '1-3', component: Int0613Component, canActivate: [AuthGuard] },
   { path: '2-1', component: Int0621Component, canActivate: [AuthGuard] },
   { path: '2-2', component: Int0622Component, canActivate: [AuthGuard] },
 ];
@@ -26,7 +30,9 @@ const routes: Routes = [
   declarations: [
     Int0611Component,
     Int0621Component,
-    Int0622Component,    
+    Int0622Component,
+    Int0612Component,
+    Int0613Component,    
   ],
   exports: [RouterModule]
 })
