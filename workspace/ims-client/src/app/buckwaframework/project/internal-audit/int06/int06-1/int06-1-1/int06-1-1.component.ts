@@ -19,6 +19,7 @@ export class Int0611Component implements OnInit {
   ];
   loading: boolean;
   tableLoading : boolean;
+  show : boolean = true;
   
   constructor(
     private int0611Service : Int0611Service
@@ -34,29 +35,33 @@ export class Int0611Component implements OnInit {
     this.dataTable();
   }
 
-  async onSubmit(f: any) {   
+  async onSubmit(f: any) { 
+    
     this.tableLoading = await true; 
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
     this.int0611Service.onSubmit(formBody).then(()=>{
       this.tableLoading = false; 
+      this.show = false;  
     });
   }
 
-  async onChangeUpload(file:any){    
+  async onChangeUpload(file:any){  
     this.loading = await true;
     await this.int0611Service.onChangeUpload(file);
     setTimeout(() => {
       this.loading = false;
-    }, 500);
+    }, 300);
   }
 
   dataTable(){
     this.int0611Service.dataTable();
   }
 
-  edit=()=>{    
-    this.int0611Service.edit();
+
+  claer=()=>{
+    this.show = true;
+    this.int0611Service.claer();
   }
 }
 
