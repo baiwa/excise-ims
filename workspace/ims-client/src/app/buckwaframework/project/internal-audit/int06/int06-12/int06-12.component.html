@@ -91,11 +91,20 @@
       <div class="sixteen wide column">
         <h4> บัญชีการตรวจตัดปี รายรับ - รายจ่าย ประจำปีงบประมาณ
           <br> ตรวจเสร็จ เมื่อวันที่ พ.ศ. 0000 ลงนาม ตำแหน่ง นักจัดการงานทั่วไปชำนาญการ ผู้ตรวจ
-          <br>นาย
+          <br>( นาย.... )
         </h4>
-      </div>
-
+      </div>  
+      
     </div>
+    <div class="ui right aligned grid">
+        <div class="sixteen wide column">
+          <button class="ui mini yellow button"  (click)="popupEditData()">
+              <i class="edit icon"></i>
+            แก้ไข
+          </button>        
+        </div>
+      </div>
+ 
     <table id="tableData" class="ui small celled table" style="width: 100%">
       <thead>
         <tr style="text-align: center;">
@@ -112,24 +121,56 @@
         </tr>
       </thead>
       <tbody>
-        <tr style="background: indianred">
-          <td>งบบุคลากร</td>
-          <td>330,000.00</td>
-          <td>-</td>
-          <td>-</td>
-          <td>330,000.00</td>
-          <td>&nbsp;</td>
-          <td>แก้ไข</td>
-        </tr>
+  
+ 
 
       </tbody>
     </table>
   </div>
 
+  <div class="ui bottom attached tab segment " data-tab="tab2">
+      <br>
+      <div class="ui grid center aligned">
+        <div class="sixteen wide column">
+          <h4>บัญชีการตรวจตัดปี รายรับ - รายจ่าย ประจำปีงบประมาณ												
+            <br> ตรวจเสร็จ เมื่อวันที่ พ.ศ. 0000 ลงนาม ตำแหน่ง นักจัดการงานทั่วไปชำนาญการ ผู้ตรวจ
+            <br>( นาย.... )
+          </h4>
+        </div>
+  
+      </div>
+      <div class="ui right aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini yellow button" (click)="popupEditData2()">
+                <i class="edit icon"></i>
+              แก้ไข
+            </button>        
+          </div>
+        </div>
+      <table id="tableData" class="ui small celled table" style="width: 100%">
+        <thead>
+          <tr style="text-align: center;">
+            <th rowspan="2">หมวด/รายการ</th>
+            <th colspan="4">กิจกรรมค่าใช้จ่ายบุคลากรฯ </th>
+            <th rowspan="2">หมายเหตุ</th>
+            <th rowspan="2"> จัดการ</th>
+          </tr>
+          <tr>
+            <th style="text-align: center;">ได้รับเงินจัดสรร</th>
+            <th>เบิกจ่ายปีนี้</th>
+            <th>โอนกลับ</th>
+            <th>เงินจัดสรรคงเหลือ</th>
+          </tr>
+        </thead>
+        <tbody>
+       
+        </tbody>
+      </table>
+    </div>
+
 
   <div class="ui center aligned grid">
     <div class="sixteen wide column">
-
       <button class="ui mini primary button">
         <i class="print icon"></i>
         ส่งออก
@@ -144,3 +185,122 @@
   
 
 </div>
+
+<div id="modal1" class="ui modal small hidden transition">
+    <i class="close icon"></i>
+    <div class="header">
+        แก้ไขข้อมูลหัวรายงานบัญชีการตรวจตัดปี รายรับ - รายจ่าย  (เงินงบประมาณ)
+    </div>
+  
+    <div class="content">
+      <div class="ui form">
+  
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-15">แผนก</label>
+            <input type="text" value="" />
+          </div>
+          <div class="eight wide field">
+            <label class="custom-label-w-15">ปีงบประมาณ</label>
+            <select class="ui dropdown">
+                <option value="">กรุณาเลือก</option>
+                <option value="1">2561</option>              
+              </select>
+          </div>
+        </div>
+  
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-15">ปีงบประมาณ</label>
+            <input type="text" value="" />
+          </div>
+          <div class="eight wide field">
+            <label class="custom-label-w-15">ลงนาม</label>
+            <input type="text" value="" />
+          </div>
+        </div>
+  
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-15">ตำแหน่ง</label>
+            <input type="text" value="" />
+          </div>         
+        </div>
+        <br>
+        <div class="actions">
+          <div class="ui center aligned grid">
+            <div class="six wide column">
+              <button class="ui mini primary button"  (click)="closePopupEdit()">
+                <i class="save icon"></i>
+                บันทึก
+              </button>
+              <button class="ui mini button" (click)="closePopupEdit()">
+                <i class="close icon"></i>
+                ยกเลิก
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="modal2" class="ui modal small hidden transition">
+          <i class="close icon"></i>
+          <div class="header">
+              แก้ไขข้อมูลหัวรายงานบัญชีการตรวจตัดปี รายรับ - รายจ่าย  (เงินนอกงบประมาณ)
+          </div>
+        
+          <div class="content">
+            <div class="ui form">
+        
+              <div class="inline fields">
+                <div class="eight wide field">
+                  <label class="custom-label-w-15">แผนก</label>
+                  <input type="text" value="" />
+                </div>
+                <div class="eight wide field">
+                  <label class="custom-label-w-15">ปีงบประมาณ</label>
+                  <select class="ui dropdown">
+                      <option value="">กรุณาเลือก</option>
+                      <option value="1">2561</option>              
+                    </select>
+                </div>
+              </div>
+        
+              <div class="inline fields">
+                <div class="eight wide field">
+                  <label class="custom-label-w-15">ปีงบประมาณ</label>
+                  <input type="text" value="" />
+                </div>
+                <div class="eight wide field">
+                  <label class="custom-label-w-15">ลงนาม</label>
+                  <input type="text" value="" />
+                </div>
+              </div>
+        
+              <div class="inline fields">
+                <div class="eight wide field">
+                  <label class="custom-label-w-15">ตำแหน่ง</label>
+                  <input type="text" value="" />
+                </div>         
+              </div>
+              <br>
+              <div class="actions">
+                <div class="ui center aligned grid">
+                  <div class="six wide column">
+                    <button class="ui mini primary button"  (click)="popupEditData2()">
+                      <i class="save icon"></i>
+                      บันทึก
+                    </button>
+                    <button class="ui mini button" (click)="popupEditData2()">
+                      <i class="close icon"></i>
+                      ยกเลิก
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+      
+      
+

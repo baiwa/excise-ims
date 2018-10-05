@@ -88,4 +88,30 @@ export class Int0612Component implements OnInit {
   showdata() {
     $('#hideData').show();
   }
+
+  popupEditData() {
+    $('#modal1').modal('show');
+
+
+  }
+
+  closePopupEdit() {
+    $('#modal1').modal('hide');
+   
+  }
+  
+  popupEditData2() {
+    $('#modal1').modal('show');
+
+
+  }
+
+  closePopupEdit2() {
+    $('#modal1').modal('hide');
+   
+  }
+
+
+
 }
+
