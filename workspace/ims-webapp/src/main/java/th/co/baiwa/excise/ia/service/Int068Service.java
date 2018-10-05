@@ -105,32 +105,6 @@ public class Int068Service {
 	}
 
 	public List<TimeSet> checkTime() {
-		Date date = new Date();
-		// check count status = '1'(open)
-		int numOpen = timeSetRepository.countStatus();
-		if (numOpen == 1) {
-			// check condition range time on present
-			List<TimeSet> active = timeSetRepository.findStatusOpen();
-			Date checkStart = active.get(0).getStartDateTime();
-			Date checkEnd = active.get(0).getEndDateTime();
-
-			if (checkStart.before(date) && checkEnd.after(date)) {
-				// stay to range(open || status = '1')
-			} else {
-				// not stay to range(close || status = '0')
-				TimeSet setData = new TimeSet();
-				for (TimeSet t : active) {
-					setData.setTimeSetId(t.getTimeSetId());
-					// setData.setStartDateTime(t.getStartDateTime());
-					// setData.setEndDateTime(t.getEndDateTime());
-					setData.setStatus("0");
-					setData.setUpdatedDate(date);
-					timeSetRepository.save(setData);
-				}
-			}
-		}
-		
-//		return data in range(status '1')
 		List<TimeSet> dataAcive = new ArrayList<TimeSet>();
 		dataAcive = timeSetRepository.findStatusOpen();
 		return dataAcive;
