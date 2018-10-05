@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Int0613Service } from 'projects/internal-audit/int06/int06-1/int06-1-3/int06-1-3.service';
 import { From } from 'projects/internal-audit/int06/int06-1/int06-1-3/form.model';
-
+declare var $: any;
 @Component({
   selector: 'app-int06-1-3',
   templateUrl: './int06-1-3.component.html',
@@ -11,24 +11,26 @@ import { From } from 'projects/internal-audit/int06/int06-1/int06-1-3/form.model
 export class Int0613Component implements OnInit {
 
   form: From = new From();
-  sectorList : any;
-  araeList : any;
+  sectorList: any;
+  araeList: any;
   constructor(
     private int0613Servicen: Int0613Service
   ) { }
 
   ngOnInit() {
+    this.callDropdown();
   }
 
   ngAfterViewInit() {
     this.dataTable();
+    this.getSector();
   }
 
-  getSector=()=>{
-    this.int0613Servicen.sector();
+  getSector = () => {
+    this.sectorList = this.int0613Servicen.sector();
   }
 
-  getArea=()=>{
+  getArea = () => {
 
   }
   search = () => {
@@ -37,6 +39,10 @@ export class Int0613Component implements OnInit {
 
   dataTable = () => {
     this.int0613Servicen.dataTable();
+  }
+
+  callDropdown = () => {
+    $(".ui.dropdown").dropdown();
   }
 }
 

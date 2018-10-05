@@ -15,7 +15,7 @@ export class Int0621Component implements OnInit {
     breadcrumb: BreadCrumb[] = [
         { label: "ตรวจสอบภายใน", route: "#" },
         { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-        { label: "ตรวจสอบค่าใช้จ่าย", route: "#" },
+        { label: "บันทึกข้อมูลค่าใช้จ่าย", route: "#" },
     ];
 
     model : FormSearch;

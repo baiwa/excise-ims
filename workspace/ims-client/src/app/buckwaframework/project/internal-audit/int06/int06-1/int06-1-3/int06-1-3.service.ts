@@ -11,26 +11,29 @@ export class Int0613Service {
 
     table: any;
     form: From = new From();
+    sectorList: any;
+    araeList: any;
     constructor(
-        private ajax : AjaxService
+        private ajax: AjaxService
 
     ) { }
 
     sector = () => {
-        let url = "combobox/controller/sector";
-        this.ajax.post(url,null,res=>{
-            console.log(res.json());
+        let url = "ia/int0613/sector";
+        this.ajax.get(url, res => {
+            this.sectorList = res.json();
         });
+        return this.sectorList;
     }
 
     area = () => {
-        let url = "combobox/controller/getSector";
+        let url = "combobox/controller/sector";
     }
 
     search = () => {
         this.form.searchFlag = "TRUE";
         $("#dataTable").DataTable().ajax.reload();
-        
+
     }
 
     dataTable = () => {
