@@ -1,6 +1,5 @@
 package th.co.baiwa.excise.ia.controller;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.excise.domain.Int014Vo;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOtherDtl;
+import th.co.baiwa.excise.ia.persistence.vo.Int0611FormVo;
+import th.co.baiwa.excise.ia.service.Int06111Service;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
 
 @Controller
@@ -24,30 +25,22 @@ public class Int014Controller {
 	@Autowired
 	private UploadFileExciseService uploadFileExciseService;
 	
+	@Autowired
+	private Int06111Service int0611Service;
+	
 	@PostMapping("uploadFileExcel")
 	@ResponseBody
-	public List<RiskAssExcOtherDtl> uploadFileExcel(@ModelAttribute Int014Vo int014Vo) throws Exception {
+	public List<String[]> uploadFileExcel(@ModelAttribute Int014Vo int014Vo) throws Exception {
 		logger.info("uploadFileExcel");
+		List<String[]> listfileEx = null;
 		List<RiskAssExcOtherDtl> excelData = new ArrayList<RiskAssExcOtherDtl>();
 		if (int014Vo.getFileExel() != null) {
 			RiskAssExcOtherDtl row = new RiskAssExcOtherDtl();
-			List<String[]> ListfileEx = uploadFileExciseService.readFileExcel(int014Vo.getFileExel());
-			for (int j = 1; j < ListfileEx.size(); j++) {
-				String[] stringArr = ListfileEx.get(j);
-
-				row = new RiskAssExcOtherDtl();
-				for (int i = 0; i < stringArr.length; i++) {
-					if (i == 0) {
-						row.setRiskOtherDtlId(new Long(i + 1));
-					} else if (i == 1) {
-						row.setDepartmentName(stringArr[i]);
-					} else if (i == 2) {
-						row.setRiskCost(new BigDecimal(stringArr[i]));
-					}
-				}
-				excelData.add(row);
-			}
+			Int0611FormVo int06112FormVo = new Int0611FormVo();
+			int06112FormVo.setFileName(int014Vo.getFileExel());
+			listfileEx = uploadFileExciseService.readFileExcelEx(int014Vo.getFileExel());
+			
 		}
-		return excelData;
+		return listfileEx;
 	}
 }

@@ -22,7 +22,8 @@
             <label>ปีงบประมาณ</label>
           </div>
           <div class="four wide field ">
-            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear" disabled="disabled">
+            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear"
+              disabled="disabled">
           </div>
           <div class="two wide field ">
             <label>ผู้ตรวจ</label>
@@ -32,7 +33,7 @@
           </div>
         </div>
 
-        <table id="dataTable" class="ui celled table ">
+        <table id="dataTable" class="ui celled table striped selectable ">
           <thead>
             <tr>
               <th rowspan="2" style="text-align: center !important">ลำดับ</th>
@@ -83,7 +84,7 @@
       <div class="ui form">
         <condition [riskId]="id" [riskType]="'MAIN'" [page]="'int08-3-8'" (out)="closeConditionRL($event)"></condition>
       </div>
-      <br/>
+      <br />
 
     </div>
   </div>

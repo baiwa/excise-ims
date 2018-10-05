@@ -14,17 +14,21 @@
             <label>สรรพสามิตภาค</label>
           </div>
           <div class="four wide field">
-            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)">
-              <option value="">เลือก</option>
+            <!-- <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)"
+              [(ngModel)]="code1">
+              <option value="00">เลือก</option>
               <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            </select> -->
+            <select ng-model="code1" ng-options="x for x in names">
             </select>
           </div>
           <div class="two wide field">
             <label>สรรพสามิตพื้นที่</label>
           </div>
           <div class="four wide field">
-            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)">
-              <option value="">เลือก</option>
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)"
+              [(ngModel)]="code2">
+              <option value="00">เลือก</option>
               <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>
           </div>
@@ -35,8 +39,8 @@
             <label>สรรพสามิตสาขา</label>
           </div>
           <div class="four wide field">
-            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3">
-              <option value="">เลือก</option>
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3" [(ngModel)]="code3">
+              <option value="00">เลือก</option>
               <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>
           </div>
@@ -48,7 +52,7 @@
             <div class="ui calendar" id="calendar1" style="width:100%">
               <div class="ui input left icon">
                 <i class="time icon"></i>
-                <input type="text" name="endDate" id="endDate">
+                <input type="text" name="startDate" id="startDate">
               </div>
             </div>
           </div>
@@ -65,7 +69,7 @@
         <br>
         <div class="ui center aligned grid">
           <div class="eight wide column">
-            <button class="ui mini primary button width-100"  routerLink='/int01/2/2'>
+            <button class="ui mini primary button width-100" (click)="searchWs()">
               <i class="search icon"></i>
               ค้นหา
             </button>

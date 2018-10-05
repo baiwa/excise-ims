@@ -13,12 +13,10 @@
                     </div>
                     <div class="ten wide field">
                         <select style="width: 100%" id="products" name="products" class="ui search dropdown" (change)="onSelectProducts($event)">
-                                            <option
-                                              *ngFor="let product of products; let i = index"
-                                              value="{{i}}">
-                                              {{product}}
-                                            </option>
-                                          </select>
+                            <option *ngFor="let product of products; let i = index" value="{{i}}">
+                                {{product}}
+                            </option>
+                        </select>
                     </div>
                 </div>
 
@@ -28,12 +26,10 @@
                     </div>
                     <div class="ten wide field">
                         <select style="width: 100%" id="zones" name="zones" class="ui search dropdown" (change)="onSelectZones($event)">
-                                                <option
-                                                  *ngFor="let zone of zones; let i = index"
-                                                  value="{{i}}">
-                                                  {{zone}}
-                                                </option>
-                                              </select>
+                            <option *ngFor="let zone of zones; let i = index" value="{{i}}">
+                                {{zone}}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -45,7 +41,7 @@
                     <div class="ui form">
                         <div style="background: #1e83db;color: white;padding-top: 10px;">
                             <span>รายงานผลการออกตรวจ</span>
-                            <table class="ui celled table" style="text-align: center; border-radius: 0px;">
+                            <table class="ui celled table striped selectable" style="text-align: center; border-radius: 0px;">
                                 <thead>
                                     <tr>
                                         <th>ลำดับที่</th>

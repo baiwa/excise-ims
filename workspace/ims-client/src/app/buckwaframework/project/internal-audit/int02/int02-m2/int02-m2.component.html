@@ -21,7 +21,7 @@
                     <h4 class="text-center">{{ qtn.title }}</h4>
                 </div>
                 <div class="ui middle attached segment" id="content{{i}}">
-                    <table class="ui celled table">
+                    <table class="ui celled table striped selectable">
                         <thead class="text-center">
                             <tr>
                                 <th rowspan="2" style="width: 5%">ที่</th>
@@ -94,7 +94,8 @@
                         <div class="field">
                             <label class="text-left">สรุปผลการสอบทาน</label>
                             <div class="ui input">
-                                <textarea [disabled]="questionnaire[i].finished == 'Y'" name="conclusion_{{questionnaire[i].detail[0].headerId}}" [(ngModel)]="questionnaire[i].conclusion" id="conclusion_{{questionnaire[i].detail[0].headerId}}"
+                                <textarea [disabled]="questionnaire[i].finished == 'Y'" name="conclusion_{{questionnaire[i].detail[0].headerId}}"
+                                    [(ngModel)]="questionnaire[i].conclusion" id="conclusion_{{questionnaire[i].detail[0].headerId}}"
                                     rows="4"></textarea>
                             </div>
                         </div>
@@ -104,7 +105,8 @@
             <div class="ui grid" *ngIf="questionnaire[0].finished == null || questionnaire[0].finished == 'N'">
                 <div class="save-btn center aligned column">
                     <button class="ui mini primary button {{saving ? 'loading' : ''}}" type="submit">บันทึก</button>
-                    <button class="ui mini primary button {{questionnaire[0].finished == null || !questionnaire[0].finished == 'N' ? 'disabled' : ''}}" (click)="send()" type="button">ส่งผลการประเมินแบบสอบทาน</button>
+                    <button class="ui mini primary button {{questionnaire[0].finished == null || !questionnaire[0].finished == 'N' ? 'disabled' : ''}}"
+                        (click)="send()" type="button">ส่งผลการประเมินแบบสอบทาน</button>
                 </div>
             </div>
         </form>

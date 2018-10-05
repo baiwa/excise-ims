@@ -25,14 +25,14 @@
         <div class="ui center aligned grid" style="margin: 0px">
             <div class="eight wide field">
                 <button class="ui small green button" type="button" (click)="onUpdate()">
-                                <i class="save icon"></i> บันทึก
-                            </button>
+                    <i class="save icon"></i> บันทึก
+                </button>
             </div>
 
             <div class="eight wide field">
                 <button class="ui small red button" type="button" id="closeList">
-                                <i class="close icon"></i> ยกเลิก
-                            </button>
+                    <i class="close icon"></i> ยกเลิก
+                </button>
             </div>
         </div>
     </div>
@@ -57,7 +57,8 @@
                         </div>
 
                         <div class="eleven wide field" style="width:100%">
-                            <input class="custom" type="text" id="mainDetail" name="mainDetail" [(ngModel)]="mainDetail" [attr.required]="true">
+                            <input class="custom" type="text" id="mainDetail" name="mainDetail" [(ngModel)]="mainDetail"
+                                [attr.required]="true">
                         </div>
 
                         <div class="two wide field">
@@ -113,7 +114,7 @@
                 <div class="ui center aligned grid">
                     <div class="row">
                         <div class="column">
-                           
+
                             <button class="ui small blue button " type="button" (click)="onSaveData()">
                                 <i class="add icon "></i> เพิ่ม
                             </button>
@@ -131,7 +132,8 @@
                     <div class="dataTables_scroll">
                         <div class="dataTables_scrollHead" style="overflow: hidden; position: relative; border: 0px; width: 100%;">
                             <div class="dataTables_scrollHeadInner" style="box-sizing: content-box; width: 100%; padding-right: 0px;">
-                                <table class="ui small celled table aligned hover dataTable no-footer" role="grid" style="margin-left: 0px; width: 100%;">
+                                <table class="ui small celled table aligned hover dataTable no-footer striped selectable" role="grid"
+                                    style="margin-left: 0px; width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="text-align: left !important ;width: 5%">
@@ -145,7 +147,8 @@
                             </div>
                         </div>
                         <div class="dataTables_scrollBody" style="position: relative; overflow: auto; max-height: 360px; width: 100%;">
-                            <table class="ui small celled table aligned hover dataTable no-footer" id="datatable" role="grid" style="width: 100%;">
+                            <table class="ui small celled table aligned hover dataTable no-footer striped selectable" id="datatable"
+                                role="grid" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th style="text-align: left !important ;width: 5%;display: none"></th>
@@ -156,15 +159,18 @@
                                 <tbody>
                                     <tr *ngFor="let t of table; let i = index">
                                         <td style="width: 5%;">
-                                            <input type="checkbox" id="chk1-{{i}}" name="chk1-{{i}}" *ngIf="t.qtnReportHdrId" (change)="chck(t.qtnReportManId, 'man', $event, 1, 'table')">
-                                            <input type="checkbox" style="margin-left: 2em" id="chk1-{{i}}" name="chk1-{{i}}" *ngIf="!t.qtnReportHdrId" (change)="chck(t.qtnReportDtlId, 'dtl', $event, 1, 'table')">
+                                            <input type="checkbox" id="chk1-{{i}}" name="chk1-{{i}}" *ngIf="t.qtnReportHdrId"
+                                                (change)="chck(t.qtnReportManId, 'man', $event, 1, 'table')">
+                                            <input type="checkbox" style="margin-left: 2em" id="chk1-{{i}}" name="chk1-{{i}}"
+                                                *ngIf="!t.qtnReportHdrId" (change)="chck(t.qtnReportDtlId, 'dtl', $event, 1, 'table')">
                                         </td>
                                         <td style="width: 80.8%;">{{t.qtnMainDetail}}</td>
                                         <td style="width: 15%;">
                                             <div class="ui center aligned grid">
                                                 <div class="row">
                                                     <div class="column">
-                                                        <button class="ui tiny orange button" type="button" name="edit-{{i}}" id="edit-{{i}}" (click)="onEditData(t)">
+                                                        <button class="ui tiny orange button" type="button" name="edit-{{i}}"
+                                                            id="edit-{{i}}" (click)="onEditData(t)">
                                                             <i class="edit icon "></i> แก้ไข
                                                         </button>
                                                     </div>
