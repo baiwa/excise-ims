@@ -1,7 +1,7 @@
 <div class="ui grid">
   <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>รายงานตัดปีเงินงบประมาณ - เงินนอกงบประมาณ												 </span>
+      <span>รายงานตัดปีเงินงบประมาณ - เงินนอกงบประมาณ </span>
     </div>
 
     <div class="ui attached segment">
@@ -63,15 +63,15 @@
         <br>
         <div class="ui center aligned grid">
           <div class="eight wide column">
-            <button class="ui mini primary button width-100"  (click)="showdata()">
+            <button class="ui mini primary button width-100" (click)="showdata()">
               <i class="search icon"></i>
               ค้นหา
             </button>
-            <button class="ui mini  button width-100"  (click)="hidedata()">
+            <button class="ui mini  button width-100" (click)="hidedata()">
               <i class="trash outline icon"></i>
               ล้างข้อมูล
             </button>
-          
+
           </div>
         </div>
 
@@ -81,82 +81,52 @@
   </div>
 </div>
 <div class="ui segment" id="hideData">
-    <div class="ui top attached tabular menu">
-        <a class="item active" data-tab="tab1">เงินงบประมาณ</a>
-        <a class="item" data-tab="second">เงินนอกงบประมาณ</a>        
-      </div>
-      <div class="ui bottom attached tab segment active" data-tab="tab2">
-        <br>
-        <div class="ui grid center aligned">
-          <div class="sixteen wide column">
-          <h4>  กระดาษทำการตรวจสอบสำนักงานสรรพสามิตพื้นที่..................
-            <br> บัญชีเงินฝากคลัง (1101020501)
-            <br> ณ วันที่ 30 กันยายน 2560
-          </div>
-        </h4>
-        </div>
-        <table id="tableData" class="ui small celled table" style="width: 100%">
-            <thead>
-              <tr style="text-align: center;">
-              <th rowspan="2">หมวด/รายการ</th>
-              <th colspan="4">กิจกรรมค่าใช้จ่ายบุคลากรฯ						</th>
-              <th rowspan="2">หมายเหตุ</th>
-              <th rowspan="2"> จัดการ</th>       
-              </tr>
-            <tr>
-              <th  style="text-align: center;">ได้รับเงินจัดสรร</th>
-              <th>เบิกจ่ายปีนี้</th>
-              <th>โอนกลับ</th>
-              <th>เงินจัดสรรคงเหลือ</th>
-            </tr>
-            </thead>
-            <tbody>
-              <tr style="background: indianred">
-                <td>งบบุคลากร</td>
-                <td>330,000.00</td>
-                <td>-</td>
-                <td>-</td>
-                <td>330,000.00</td>
-                <td>&nbsp;</td>
-                <td>แก้ไข</td>
-              </tr>
-                                    
-            </tbody>
-          </table>
-        </div>
-        <table id="tableData" class="ui small celled table" style="width: 100%">
-            <thead>
-              <tr style="text-align: center;">
-              <th rowspan="2">หมวด/รายการ</th>
-              <th colspan="4">กิจกรรมค่าใช้จ่ายบุคลากรฯ						</th>
-              <th rowspan="2">หมายเหตุ</th>
-              <th rowspan="2"> จัดการ</th>       
-              </tr>
-            <tr>
-              <th  style="text-align: center;">ได้รับเงินจัดสรร</th>
-              <th>เบิกจ่ายปีนี้</th>
-              <th>โอนกลับ</th>
-              <th>เงินจัดสรรคงเหลือ</th>
-            </tr>
-            </thead>
-            <tbody>
-              <tr style="background: indianred">
-                <td>งบบุคลากร</td>
-                <td>330,000.00</td>
-                <td>-</td>
-                <td>-</td>
-                <td>330,000.00</td>
-                <td>&nbsp;</td>
-                <td>แก้ไข</td>
-              </tr>
-                                    
-            </tbody>
-          </table>
-        </div>
-  <div>
-   
+  <div class="ui top attached tabular menu">
+    <a class="item active" data-tab="tab1">เงินงบประมาณ</a>
+    <a class="item" data-tab="tab2">เงินนอกงบประมาณ</a>
   </div>
-  <br>
+  <div class="ui bottom attached tab segment active" data-tab="tab1">
+    <br>
+    <div class="ui grid center aligned">
+      <div class="sixteen wide column">
+        <h4> บัญชีการตรวจตัดปี รายรับ - รายจ่าย ประจำปีงบประมาณ
+          <br> ตรวจเสร็จ เมื่อวันที่ พ.ศ. 0000 ลงนาม ตำแหน่ง นักจัดการงานทั่วไปชำนาญการ ผู้ตรวจ
+          <br>นาย
+        </h4>
+      </div>
+
+    </div>
+    <table id="tableData" class="ui small celled table" style="width: 100%">
+      <thead>
+        <tr style="text-align: center;">
+          <th rowspan="2">หมวด/รายการ</th>
+          <th colspan="4">กิจกรรมค่าใช้จ่ายบุคลากรฯ </th>
+          <th rowspan="2">หมายเหตุ</th>
+          <th rowspan="2"> จัดการ</th>
+        </tr>
+        <tr>
+          <th style="text-align: center;">ได้รับเงินจัดสรร</th>
+          <th>เบิกจ่ายปีนี้</th>
+          <th>โอนกลับ</th>
+          <th>เงินจัดสรรคงเหลือ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: indianred">
+          <td>งบบุคลากร</td>
+          <td>330,000.00</td>
+          <td>-</td>
+          <td>-</td>
+          <td>330,000.00</td>
+          <td>&nbsp;</td>
+          <td>แก้ไข</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+
   <div class="ui center aligned grid">
     <div class="sixteen wide column">
 
@@ -171,5 +141,6 @@
     </div>
   </div>
 
-</div>
+  
 
+</div>

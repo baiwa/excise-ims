@@ -23,11 +23,13 @@ export class Int0612Component implements OnInit {
   constructor(private ajax: AjaxService) { }
 
   ngOnInit() {
+    $('.menu .item')
+    .tab()
+    ;
+    
     this.hidedata();
 
-    $('.menu .item')
-      .tab()
-      ;
+   
     $("#calendar1").calendar({
       maxDate: new Date(),
       type: "date",

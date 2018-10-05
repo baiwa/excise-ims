@@ -12,13 +12,13 @@
             <label>แบบขอเบิก</label>
           </div>
           <div class="four wide field">
-            <select id="productList" name="productList" class="ui search dropdown" (change)="onSelectactionStatus($event)">
-              <option *ngFor="let productList of productList; let i = index" value="{{i}}">
-                {{productList}}
+            <select id="productList" name="productList" class="ui search dropdown" (change)="onSelectactionStatus($event)" [(ngModel)]="product">
+              <option *ngFor="let product of productList; let i = index" value="{{i}}">
+                {{product}}
               </option>
             </select>
           </div>
-          <button class="ui mini primary button width-100"  [routerLink]="[ '/int06/11/1'] ">
+          <button class="ui mini primary button width-100" (click)="changepage()">
             <i class="add icon"></i>
             สร้าง
           </button>
