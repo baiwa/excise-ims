@@ -17,7 +17,7 @@
           <div class="four wide field ">
             <select class="ui dropdown" [(ngModel)]="form.sector" name="sector" id="sector">
               <option value="">เลือก</option>
-              <option value="1">Male</option>
+              <option *ngFor="let item of sectorList" value="{{item.lovId}}">{{item.typeDescription}}</option>
             </select>
           </div>
           <div class="two wide field ">

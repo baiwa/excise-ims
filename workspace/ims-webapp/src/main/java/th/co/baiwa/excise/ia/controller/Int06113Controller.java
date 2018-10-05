@@ -21,6 +21,9 @@ public class Int06113Controller {
 	@GetMapping("/sector")
 	@ResponseBody
 	public List<Lov> sector(){
-		return int06113Service.sector();
+
+        List<Lov> sector = int06113Service.sector();
+        return sector;
 	}
+		
 }

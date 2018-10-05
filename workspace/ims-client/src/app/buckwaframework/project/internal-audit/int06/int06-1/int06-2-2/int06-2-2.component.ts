@@ -27,7 +27,7 @@ export class Int0622Component implements OnInit {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-      { label: "ตรวจสอบค่าใช้จ่าย", route: "int06/1/2-1" },
+      { label: "บันทึกข้อมูลค่าใช้จ่าย", route: "int06/1/2-1" },
       { label: "เพิ่มข้อมูลค่าใช้จ่าย", route: "#" },
     ];
   }
