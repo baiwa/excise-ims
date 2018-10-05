@@ -31,7 +31,7 @@ public class Int076Controller {
 		List<Int076Vo> excelData = new ArrayList<Int076Vo>();
 		if (mainForm.getFileExel() != null) {
 			Int076Vo row = new Int076Vo();
-			List<String[]> ListfileEx = uploadFileExciseService.readFileExcel(mainForm);
+			List<String[]> ListfileEx = uploadFileExciseService.readFileExcel(mainForm.getFileExel());
 			for (int j = 1; j < ListfileEx.size(); j++) {
 				String[] stringArr = ListfileEx.get(j);
 

@@ -120,8 +120,9 @@ public class ComboboxController {
 	@PostMapping("/getDropByTypeAndParentId")
 	@ResponseBody
 	public List<Lov> findDropByTypeAndParentId(@RequestBody Lov lov) {
-		logger.info("findDropByTypeAndParentId Type : "+lov.getType() + "|| parentId : "+ lov.getLovIdMaster() );
-		return ApplicationCache.getListOfValueByTypeParentId(lov.getType(), lov.getLovIdMaster());
+		logger.info("findDropByTypeAndParentId Type : {}|| parentId : {}" ,lov.getType() , lov.getLovIdMaster()  );
+		List<Lov> list = ApplicationCache.getListOfValueByTypeParentId(lov.getType(), lov.getLovIdMaster());
+		return list;
 	}
 	
 	

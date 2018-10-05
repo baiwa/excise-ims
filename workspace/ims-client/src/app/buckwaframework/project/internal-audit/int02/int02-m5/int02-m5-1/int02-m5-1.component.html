@@ -12,33 +12,45 @@
                             <div class="ui form">
                                 <div class="inline aligned center fields">
                                     <div class="six wide centered field">
-                                        <label>สรรพสามิตภาค: </label>
+                                        <label class="text-right full-width">สรรพสามิตภาค: </label>
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                            <input type="text">
+                                            <select class="ui search dropdown ai" aria-placeholder="สรรพสามิตภาค" id="sector"
+                                                (change)="changeSector()" name="sector" [(ngModel)]="sectorSelectted">
+                                                <option value="0"></option>
+                                                <option *ngFor="let dat of sector; let i=index" value="{{dat.lovId}}">{{dat.subTypeDescription}}</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="six wide centered field">
-                                        <label>สรรพสามิตพื้นที่: </label>
+                                        <label class="text-right full-width">สรรพสามิตพื้นที่: </label>
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                            <input type="text">
+                                            <select class="ui search dropdown ai" aria-placeholder="สรรพสามิตภาค" id="area"
+                                                name="area" [(ngModel)]="areaSelectted">
+                                                <option value="0"></option>
+                                                <option *ngFor="let dat of area; let i=index" value="{{dat.lovId}}">{{dat.subTypeDescription}}</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="inline aligned center fields">
                                     <div class="six wide centered field">
-                                        <label>สรรพสามิตพื้นที่สาขา: </label>
+                                        <label class="text-right full-width">สรรพสามิตพื้นที่สาขา: </label>
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                            <input type="text" id="subSectionName" name="subSectionName" [attr.required]="true" autocomplete="off">
+                                            <select class="ui search dropdown ai" aria-placeholder="สรรพสามิตภาค" id="local"
+                                                name="local" [(ngModel)]="localSelectted">
+                                                <option value="0"></option>
+                                                <option *ngFor="let dat of local; let i=index" value="{{dat.lovId}}">{{dat.subTypeDescription}}</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="six wide centered field">
-                                        <label>ปีงบประมาณ: </label>
+                                        <label class="text-right full-width">ปีงบประมาณ: </label>
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
