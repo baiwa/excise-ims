@@ -1,0 +1,175 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>รายงานตัดปีเงินงบประมาณ - เงินนอกงบประมาณ												 </span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="two wide field"></div>
+          <div class="two wide field">
+            <label>สรรพสามิตภาค</label>
+          </div>
+          <div class="four wide field">
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            </select>
+          </div>
+          <div class="two wide field">
+            <label>สรรพสามิตพื้นที่</label>
+          </div>
+          <div class="four wide field">
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="inline fields">
+          <div class="two wide field"></div>
+          <div class="two wide field">
+            <label>สรรพสามิตสาขา</label>
+          </div>
+          <div class="four wide field">
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            </select>
+          </div>
+          <div class="two wide field ">
+            <label>วันที่
+            </label>
+          </div>
+          <div class="two wide field">
+            <div class="ui calendar" id="calendar1" style="width:100%">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" name="endDate" id="endDate">
+              </div>
+            </div>
+          </div>
+          <label>ถึง</label>
+          <div class="two wide field">
+            <div class="ui calendar" id="calendar2" style="width:100%">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" name="endDate" id="endDate">
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="ui center aligned grid">
+          <div class="eight wide column">
+            <button class="ui mini primary button width-100"  (click)="showdata()">
+              <i class="search icon"></i>
+              ค้นหา
+            </button>
+            <button class="ui mini  button width-100"  (click)="hidedata()">
+              <i class="trash outline icon"></i>
+              ล้างข้อมูล
+            </button>
+          
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="ui segment" id="hideData">
+    <div class="ui top attached tabular menu">
+        <a class="item active" data-tab="tab1">เงินงบประมาณ</a>
+        <a class="item" data-tab="second">เงินนอกงบประมาณ</a>        
+      </div>
+      <div class="ui bottom attached tab segment active" data-tab="tab2">
+        <br>
+        <div class="ui grid center aligned">
+          <div class="sixteen wide column">
+          <h4>  กระดาษทำการตรวจสอบสำนักงานสรรพสามิตพื้นที่..................
+            <br> บัญชีเงินฝากคลัง (1101020501)
+            <br> ณ วันที่ 30 กันยายน 2560
+          </div>
+        </h4>
+        </div>
+        <table id="tableData" class="ui small celled table" style="width: 100%">
+            <thead>
+              <tr style="text-align: center;">
+              <th rowspan="2">หมวด/รายการ</th>
+              <th colspan="4">กิจกรรมค่าใช้จ่ายบุคลากรฯ						</th>
+              <th rowspan="2">หมายเหตุ</th>
+              <th rowspan="2"> จัดการ</th>       
+              </tr>
+            <tr>
+              <th  style="text-align: center;">ได้รับเงินจัดสรร</th>
+              <th>เบิกจ่ายปีนี้</th>
+              <th>โอนกลับ</th>
+              <th>เงินจัดสรรคงเหลือ</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr style="background: indianred">
+                <td>งบบุคลากร</td>
+                <td>330,000.00</td>
+                <td>-</td>
+                <td>-</td>
+                <td>330,000.00</td>
+                <td>&nbsp;</td>
+                <td>แก้ไข</td>
+              </tr>
+                                    
+            </tbody>
+          </table>
+        </div>
+        <table id="tableData" class="ui small celled table" style="width: 100%">
+            <thead>
+              <tr style="text-align: center;">
+              <th rowspan="2">หมวด/รายการ</th>
+              <th colspan="4">กิจกรรมค่าใช้จ่ายบุคลากรฯ						</th>
+              <th rowspan="2">หมายเหตุ</th>
+              <th rowspan="2"> จัดการ</th>       
+              </tr>
+            <tr>
+              <th  style="text-align: center;">ได้รับเงินจัดสรร</th>
+              <th>เบิกจ่ายปีนี้</th>
+              <th>โอนกลับ</th>
+              <th>เงินจัดสรรคงเหลือ</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr style="background: indianred">
+                <td>งบบุคลากร</td>
+                <td>330,000.00</td>
+                <td>-</td>
+                <td>-</td>
+                <td>330,000.00</td>
+                <td>&nbsp;</td>
+                <td>แก้ไข</td>
+              </tr>
+                                    
+            </tbody>
+          </table>
+        </div>
+  <div>
+   
+  </div>
+  <br>
+  <div class="ui center aligned grid">
+    <div class="sixteen wide column">
+
+      <button class="ui mini primary button">
+        <i class="print icon"></i>
+        ส่งออก
+      </button>
+      <button class="ui mini  button" (click)="hidedata()">
+        <i class="close icon"></i>
+        ยกเลิก
+      </button>
+    </div>
+  </div>
+
+</div>
+

@@ -2,8 +2,8 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 import { Routes, RouterModule } from "@angular/router";
-import { Int0610Component } from './int06-10/int06-10.component';
-import { Int0611Component } from './int06-11/int06-11.component';
+import { Int0612Component } from './int06-12/int06-12.component';
+
 
 
 const routes: Routes = [
@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: "9", loadChildren: "./int06-9/int06-9.module#Int069Module" },
   { path: "10", loadChildren: "./int06-10/int06-10.module#Int0610Module" },
   { path: "11", loadChildren: "./int06-11/int06-11.module#Int0611Module" },
+  { path: "12", loadChildren: "./int06-12/int06-12.module#Int0612Module" },
 
 ];
 
