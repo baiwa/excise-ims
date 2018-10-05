@@ -98,4 +98,6 @@ export class Int067Component implements OnInit, AfterViewInit {
       e.target.value
     );
   }
+
+  
 }

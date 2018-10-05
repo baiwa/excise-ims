@@ -1,6 +1,6 @@
 <div class="ui segment">
   <div style="overflow-x: scroll;">
-    <table id="tableData" class="ui small celled table" style="width: 100%">
+    <table id="tableData" class="ui small celled table striped" style="width: 100%">
       <thead>
         <tr style="text-align: center;">
           <th rowspan="2">ลำดับที่</th>
@@ -221,7 +221,7 @@
         <i class="save icon"></i>
         บันทึก
       </button>
-      <button class="ui mini  button" (click)="hidedata()">
+      <button class="ui mini  button"  [routerLink]="[ '/int06/10'] ">
         <i class="close icon"></i>
         ยกเลิก
       </button>

@@ -382,9 +382,9 @@ breadcrumb: BreadCrumb[];
           { targets: [1], className: "left aligned" }
         ],
         createdRow: function (row, data, dataIndex) {
-          //console.log("row");
-          //console.log("data", data.color);
-          //console.log("dataIndex", dataIndex);
+          console.log("row");
+          console.log("data", data.color);
+          console.log("dataIndex", dataIndex);
           if (data.color == 'แดง') {
             $(row).find('td:eq(4)').addClass('bg-c-red');
             $(row).find('td:eq(5)').addClass('bg-c-red');
@@ -395,7 +395,7 @@ breadcrumb: BreadCrumb[];
             $(row).find('td:eq(4)').addClass('bg-c-yellow');
             $(row).find('td:eq(5)').addClass('bg-c-yellow');
           }
-
+ 
         }
 
       });

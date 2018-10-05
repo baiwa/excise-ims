@@ -10,8 +10,23 @@ export class Int071Component implements OnInit {
 
   constructor() { }
 
+
   ngOnInit() {
     this.hideData();
+
+    $('#Int072').DataTable({
+      createdRow: function (row, data, dataIndex) {
+       console.log("row" , row);
+       console.log("data" , data);
+       console.log("dataIndex" , dataIndex);
+          //$(row).addClass('bg-c-red');
+        
+       
+
+      }         
+
+    });
+
   }
   hideData() {
     $('#Int072').hide();
@@ -26,5 +41,7 @@ export class Int071Component implements OnInit {
   closePopupEdit() {
     $('#modalInt071').modal('hide');
   }
+
+
 
 }
