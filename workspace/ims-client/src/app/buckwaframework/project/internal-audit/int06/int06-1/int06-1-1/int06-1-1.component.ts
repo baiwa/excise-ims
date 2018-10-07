@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Int0611Service } from './int06-1-1.service';
 import { BreadCrumb } from '../../../../../common/models';
+import { Int061Service } from 'projects/internal-audit/int06/int06-1/int06-1.service';
 
 declare var $: any;
 
@@ -8,7 +9,7 @@ declare var $: any;
   selector: 'app-int06-1-1',
   templateUrl: './int06-1-1.component.html',
   styleUrls: ['./int06-1-1.component.css'],
-  providers: [Int0611Service]
+  providers: [Int0611Service,Int061Service]
 })
 export class Int0611Component implements OnInit {
 

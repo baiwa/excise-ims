@@ -18,22 +18,33 @@ export class Int0613Service {
 
     ) { }
 
-    sector = () => {
+    sector = (sectorCb: Function) => {
         let url = "ia/int0613/sector";
         this.ajax.get(url, res => {
-            this.sectorList = res.json();
+            sectorCb(res.json());
         });
-        return this.sectorList;
     }
 
-    area = () => {
-        let url = "combobox/controller/sector";
+    area = (idMaster, areaCb: Function) => {
+        let url = "ia/int0613/area";
+        this.ajax.post(url, idMaster, res => {
+            areaCb(res.json());
+        });
     }
 
+    year = (yearCb: Function) => {
+        let url = "ia/int0613/year";
+        this.ajax.get(url, res => {
+            yearCb(res.json());
+        });
+    }
     search = () => {
         this.form.searchFlag = "TRUE";
         $("#dataTable").DataTable().ajax.reload();
 
+    }
+    clear = () => {
+        this.form.searchFlag = "FALSE";
     }
 
     dataTable = () => {
@@ -47,13 +58,14 @@ export class Int0613Service {
                 "leftColumns": 3
             },
             "ajax": {
-                "url": '/ims-webapp/api/ia/int06121/findAll',
+                "url": '/ims-webapp/api/ia/int0613/findAll',
                 "contentType": "application/json",
                 "type": "POST",
                 "data": (d) => {
                     return JSON.stringify($.extend({}, d, {
-                        // "accountId": this.model.accountId,
-                        // "accountName": this.model.accountName,
+                        "sector": $("#sector").val(), 
+                        "area" : $("#area").val(),
+                        "year": $("#year").val(),
                         "searchFlag": this.form.searchFlag
                     }));
                 },
@@ -95,6 +107,18 @@ export class Int0613Service {
                     "data": "sumWithdraw",
                     "className": "ui center aligned"
                 }, {
+                    "data": "experimentalBudget",
+                    "className": "ui center aligned"
+                }, {
+                    "data": "differenceExperimentalBudget",
+                    "className": "ui center aligned"
+                }, {
+                    "data": "ledger",
+                    "className": "ui center aligned"
+                }, {
+                    "data": "differenceledger",
+                    "className": "ui center aligned"
+                }, {
                     "data": "serviceBalance",
                     "className": "ui center aligned"
                 }, {
@@ -126,15 +150,6 @@ export class Int0613Service {
                     "className": "ui center aligned"
                 }, {
                     "data": "note",
-                    "className": "ui center aligned"
-                }, {
-                    "data": "note",
-                    "render": function (data, type, row) {
-                        var btn = '';
-                        btn += '<button class="ui mini yellow button btn-edit">แก้ไข</button>';
-                        btn += '<button class="ui mini red button btn-delete">ลบ</button>';
-                        return btn;
-                    },
                     "className": "ui center aligned"
                 }
             ]

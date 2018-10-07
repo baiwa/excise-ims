@@ -58,6 +58,14 @@ public class Expenses extends BaseEntity {
     private String averageComeCost;
     @Column(name = "NOTE")
     private String note;
+    @Column(name = "OFFICE_CODE")
+    private String officeCode;
+    @Column(name = "SECTOR")
+    private String sector;
+    @Column(name = "AREA")
+    private String area;
+    @Column(name = "BRANCH")
+    private String branch;
 
     public Long getId() {
         return id;
@@ -233,5 +241,37 @@ public class Expenses extends BaseEntity {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
+    }
+
+    public String getSector() {
+        return sector;
+    }
+
+    public void setSector(String sector) {
+        this.sector = sector;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
     }
 }

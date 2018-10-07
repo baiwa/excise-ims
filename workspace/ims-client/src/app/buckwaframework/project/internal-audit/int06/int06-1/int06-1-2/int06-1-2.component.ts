@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Int0612Service } from 'projects/internal-audit/int06/int06-1/int06-1-2/int06-1-2.service';
 import { BreadCrumb } from 'models/breadcrumb';
+import { Int061Service } from 'projects/internal-audit/int06/int06-1/int06-1.service';
 declare var $: any;
 @Component({
   selector: 'app-int06-1-2',
   templateUrl: './int06-1-2.component.html',
   styleUrls: ['./int06-1-2.component.css'],
-  providers: [Int0612Service]
+  providers: [Int0612Service,Int061Service]
 })
 export class Int0612Component implements OnInit {
 

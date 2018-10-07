@@ -1,5 +1,24 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
-
+<div class="ui ordered steps full-width">
+  <div class="completed step">
+    <div class="content">
+      <div class="title">งบทดลอง</div>
+      <div class="description">อัปโหลดสำเร็จ</div>
+    </div>
+  </div>
+  <div class="completed step">
+    <div class="content">
+      <div class="title">บัญชีแยกประเภท</div>
+      <div class="description">อัปโหลดสำเร็จ</div>
+    </div>
+  </div>
+  <div class="active step">
+    <div class="content">
+      <div class="title">ตรวจสอบค่าใช้จ่าย</div>
+      <div class="description">กำลังดำเนินการ</div>
+    </div>
+  </div>
+</div>
 <div class="ui grid">
   <div class="sixteen wide column">
     <div class="ui top attached header">
@@ -9,24 +28,39 @@
     <div class="ui attached segment">
       <form class="ui form">
         <input type="hidden" id="searchFlag" name="searchFlag">
-        <div class="inline fields  ui grid">
-          <div class="one wide field "></div>
+        <div class="inline fields centered ui grid">
           <div class="three wide field ">
             <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
           </div>
           <div class="four wide field ">
-            <select class="ui dropdown" [(ngModel)]="form.sector" name="sector" id="sector">
+            <select class="ui dropdown full-width" [(ngModel)]="form.sector" name="sector" id="sector" (change)="changeSector($event)">
               <option value="">เลือก</option>
-              <option *ngFor="let item of sectorList" value="{{item.lovId}}">{{item.typeDescription}}</option>
+              <option *ngFor="let item of sectorList" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
             </select>
           </div>
-          <div class="two wide field ">
+          <div class="three wide field ">
             <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
           </div>
           <div class="four wide field ">
-            <input type="text">
+            <select class="ui dropdown full-width" [(ngModel)]="form.arae" name="arae" id="arae">
+              <option value="">เลือก</option>
+              <option *ngFor="let item of araeList" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+            </select>
           </div>
-          <div class="two wide field "></div>
+        </div>
+        <div class="inline fields centered ui grid">
+          <div class="three wide field ">
+            <label class="text-right full-width">ปีงบประมาณ</label>
+          </div>
+          <div class="four wide field ">
+            <select class="ui dropdown full-width" [(ngModel)]="form.year" name="year" id="year">
+              <option value="">เลือก</option>
+              <option *ngFor="let item of yearList" value="{{item.value}}">{{item.label}}</option>
+            </select>
+          </div>
+          <div class="seven wide field ">
+            
+          </div>
         </div><br><br>
         <div class="ui stackable center aligned page grid">
           <button class="ui mini blue button" type="button" (click)="search()"><i class="search icon"></i>ค้นหา</button>
@@ -48,12 +82,15 @@
             <th rowspan="2">รวมรับ</th>
             <th colspan="3">การเบิกจ่ายจริงแยกตามกิจกรรมตามทะเบียนคุม</th>
             <th rowspan="2">รวมรับ</th>
+            <th rowspan="2">งบทดลอง</th>
+            <th rowspan="2">ผลต่างงบทดลอง</th>
+            <th rowspan="2">บัญชีแยกประเภท</th>
+            <th rowspan="2">ผลต่างบัญชีแยกประเภท</th>
             <th colspan="3">คงเหลือ</th>
             <th rowspan="2">คงเหลือรวม</th>
             <th colspan="4">ถัวจ่าย</th>
             <th colspan="2">เหลือสุทธิ</th>
             <th rowspan="2">หมายเหตุ</th>
-            <th rowspan="2"></th>
           </tr>
           <tr>
             <th>การบริหาร</th>
