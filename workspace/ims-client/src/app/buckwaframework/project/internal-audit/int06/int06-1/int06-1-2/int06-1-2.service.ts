@@ -25,8 +25,12 @@ export class Int0612Service {
     let params = await form;
     await console.log("Params : ", params);
     return await this.ajax.upload(url, params, success => {
-      this.data = success.json();
+      this.data = success.json();      
       int061Service.setDataLedger(this.data.data);
+      if(this.data.data.length == 0){
+        this.message.errorModal('ไม่สามารถอัปโหลดไฟล์');
+      }
+
     }, error => {
       console.log("Fail!");
       this.message.errorModal("อัปโหลดไฟล์ไม่สำเร็จ");

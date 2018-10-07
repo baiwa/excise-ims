@@ -44,7 +44,12 @@ export class Int0611Component implements OnInit {
     let formBody = new FormData(form);
     this.int0611Service.onSubmit(formBody,this.int061Service).then(()=>{
       this.tableLoading = false; 
-      this.show = false;  
+      if(this.int061Service.getDataBudget() == 0){
+        this.show = true; 
+      }else{
+        this.show = false;
+      }
+      
     });
   }
 

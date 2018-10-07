@@ -27,6 +27,9 @@ export class Int0611Service {
     return await this.ajax.upload(url, params, success => {
       this.data = success.json();
       int061Service.setDataBudget(this.data.data);
+      if(this.data.data.length == 0){
+        this.message.errorModal('ไม่สามารถอัปโหลดไฟล์');
+      }
     }, error => {
       console.log("Fail!");
     }).then(data => {
@@ -83,19 +86,19 @@ export class Int0611Service {
           "data": "colum0"
         }, {
           "data": "colum2",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         }, {
           "data": "colum4",
-          "className": "ui center aligned"
+          "className": "ui right aligned"
         }, {
           "data": "colum7",
-          "className": "ui center aligned"
+          "className": "ui right aligned"
         }, {
           "data": "colum8",
-          "className": "ui center aligned"
+          "className": "ui right aligned"
         }, {
           "data": "colum9",
-          "className": "ui center aligned"
+          "className": "ui right aligned"
         }
       ]
     });    

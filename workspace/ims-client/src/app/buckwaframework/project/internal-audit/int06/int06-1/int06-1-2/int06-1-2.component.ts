@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Int0612Service } from 'projects/internal-audit/int06/int06-1/int06-1-2/int06-1-2.service';
 import { BreadCrumb } from 'models/breadcrumb';
 import { Int061Service } from 'projects/internal-audit/int06/int06-1/int06-1.service';
@@ -10,13 +10,13 @@ declare var $: any;
   styleUrls: ['./int06-1-2.component.css'],
   providers: [Int0612Service]
 })
-export class Int0612Component implements OnInit {
+export class Int0612Component implements OnInit, AfterViewInit {
 
   //value init
   breadcrumb: BreadCrumb[] = [
     { label: "ตรวจสอบภายใน", route: "#" },
     { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-    { label: "ตรวจสอบค่าใช้จ่าย", route: "#" },
+    { label: "ตรวจสอบค่าใช้จ่าย", route: "/int06/1/1" },
   ];
   show: boolean = true;
   loading: boolean = false;
@@ -24,16 +24,20 @@ export class Int0612Component implements OnInit {
   constructor(
     private int0612Service: Int0612Service,
     private int061Service: Int061Service,
-    private router: Router
-  ) { }
+    private router: Router,
+    private cdRef: ChangeDetectorRef
+  ) {
 
-  ngOnInit() {
-    if(this.int061Service.getDataBudget() == null){
+    if (this.int061Service.getDataBudget() == null) {
       this.router.navigate(['/int06/1/1']);
     }
   }
+
+  ngOnInit() {
+  }
   ngAfterViewInit() {
     this.dataTable();
+    this.cdRef.detectChanges();
   }
 
   async onChangeUpload(file: any) {
@@ -49,9 +53,15 @@ export class Int0612Component implements OnInit {
     this.tableLoading = await true;
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
-    this.int0612Service.onSubmit(formBody,this.int061Service).then(() => {
+    this.int0612Service.onSubmit(formBody, this.int061Service).then(() => {
       this.tableLoading = false;
-      this.show = false;
+
+      if (this.int061Service.getDataLedger() == 0) {
+        this.show = true;
+      } else {
+        this.show = false;
+      }
+
     });
   }
 

@@ -21,18 +21,19 @@ export class Int0613Component implements OnInit {
   breadcrumb: BreadCrumb[] = [
     { label: "ตรวจสอบภายใน", route: "#" },
     { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-    { label: "ตรวจสอบค่าใช้จ่าย", route: "#" },
+    { label: "ตรวจสอบค่าใช้จ่าย", route: "/int06/1/1" },
   ];
   constructor(
     private int0613Servicen: Int0613Service,
     private int061Service : Int061Service,
     private router : Router
-  ) { }
-
-  ngOnInit() {
+  ) { 
     if(this.int061Service.getDataLedger() == null){
       this.router.navigate(['/int06/1/1-2']);
     }
+  }
+
+  ngOnInit() {    
     this.callDropdown();
   }
 
