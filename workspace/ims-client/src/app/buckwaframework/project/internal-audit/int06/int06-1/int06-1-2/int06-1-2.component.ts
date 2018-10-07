@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Int0612Service } from 'projects/internal-audit/int06/int06-1/int06-1-2/int06-1-2.service';
 import { BreadCrumb } from 'models/breadcrumb';
 import { Int061Service } from 'projects/internal-audit/int06/int06-1/int06-1.service';
+import { Router } from '@angular/router';
 declare var $: any;
 @Component({
   selector: 'app-int06-1-2',
   templateUrl: './int06-1-2.component.html',
   styleUrls: ['./int06-1-2.component.css'],
-  providers: [Int0612Service,Int061Service]
+  providers: [Int0612Service]
 })
 export class Int0612Component implements OnInit {
 
@@ -21,11 +22,15 @@ export class Int0612Component implements OnInit {
   loading: boolean = false;
   tableLoading: boolean = false;
   constructor(
-    private int0612Service: Int0612Service
+    private int0612Service: Int0612Service,
+    private int061Service: Int061Service,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    
+    if(this.int061Service.getDataBudget() == null){
+      this.router.navigate(['/int06/1/1']);
+    }
   }
   ngAfterViewInit() {
     this.dataTable();
@@ -44,7 +49,7 @@ export class Int0612Component implements OnInit {
     this.tableLoading = await true;
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
-    this.int0612Service.onSubmit(formBody).then(() => {
+    this.int0612Service.onSubmit(formBody,this.int061Service).then(() => {
       this.tableLoading = false;
       this.show = false;
     });
@@ -56,6 +61,6 @@ export class Int0612Component implements OnInit {
 
   claer = () => {
     this.show = true;
-    this.int0612Service.claer();
+    this.int0612Service.claer(this.int061Service);
   }
 }

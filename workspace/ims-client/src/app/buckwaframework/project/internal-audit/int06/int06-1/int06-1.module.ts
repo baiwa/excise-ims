@@ -10,6 +10,7 @@ import { Int0621Component } from './int06-2-1/int06-2-1.component';
 import { Int0622Component } from './int06-2-2/int06-2-2.component';
 import { Int0612Component } from './int06-1-2/int06-1-2.component';
 import { Int0613Component } from './int06-1-3/int06-1-3.component';
+import { Int061Service } from 'projects/internal-audit/int06/int06-1/int06-1.service';
 
 const routes: Routes = [
   { path: '1', component: Int0611Component, canActivate: [AuthGuard] },
@@ -25,7 +26,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    BreadcrumbModule    
+    BreadcrumbModule        
   ],
   declarations: [
     Int0611Component,
@@ -33,6 +34,9 @@ const routes: Routes = [
     Int0622Component,
     Int0612Component,
     Int0613Component,    
+  ],
+  providers:[
+    Int061Service
   ],
   exports: [RouterModule]
 })

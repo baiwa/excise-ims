@@ -3,6 +3,7 @@ import { AjaxService } from "services/ajax.service";
 import { MessageBarService } from "services/message-bar.service";
 import { IaService } from "services/ia.service";
 import { Router } from "@angular/router";
+import { Utils } from "helpers/utils";
 declare var $: any;
 @Injectable()
 export class Int0621Service {
@@ -60,67 +61,116 @@ export class Int0621Service {
           },
           "className": "ui center aligned"
         }, {
-          "data": "accountId"
-        }, {
-          "data": "accountName",
+          "data": "accountId",
           "className": "ui center aligned",
         }, {
+          "data": "accountName",
+          "className": "ui left aligned",
+        }, {
           "data": "serviceReceive",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "suppressReceive",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "budgetReceive",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "sumReceive",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "serviceWithdraw",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "suppressWithdraw",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "budgetWithdraw",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "sumWithdraw",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "serviceBalance",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "suppressBalance",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "budgetBalance",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "sumBalance",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "averageCost",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "averageGive",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "averageFrom",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "averageComeCost",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "moneyBudget",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "moneyOut",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": (data, row) => {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "note",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "note",
           "render": function (data, type, row) {

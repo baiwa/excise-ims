@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { Form } from "@angular/forms";
 import { From } from "projects/internal-audit/int06/int06-1/int06-1-3/form.model";
 import { AjaxService } from "services/ajax.service";
+import { Int061Service } from "projects/internal-audit/int06/int06-1/int06-1.service";
+import { Utils } from "helpers/utils";
 
 declare var $: any;
 
@@ -38,8 +40,12 @@ export class Int0613Service {
             yearCb(res.json());
         });
     }
-    search = () => {
+    search = (int061Service: Int061Service) => {
         this.form.searchFlag = "TRUE";
+        this.form.dataBudget = int061Service.getDataBudget();
+        this.form.dataLedger = int061Service.getDataLedger();
+
+        console.log("Data Service : ",this.form);
         $("#dataTable").DataTable().ajax.reload();
 
     }
@@ -63,96 +69,181 @@ export class Int0613Service {
                 "type": "POST",
                 "data": (d) => {
                     return JSON.stringify($.extend({}, d, {
-                        "sector": $("#sector").val(), 
-                        "area" : $("#area").val(),
+                        "sector": $("#sector").val(),
+                        "area": $("#area").val(),
                         "year": $("#year").val(),
-                        "searchFlag": this.form.searchFlag
+                        "searchFlag": this.form.searchFlag,
+                        "dataBudget": this.form.dataBudget,
+                        "dataLedger": this.form.dataLedger,
                     }));
                 },
             },
+            "drawCallback": () => {
+                $('.mark-tr').closest('tr').addClass('negative');
+              },
             "columns": [
                 {
                     "data": "accountId",
                     "render": function (data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
+                        var order = meta.row + meta.settings._iDisplayStart + 1;
+                        if (row.differenceExperimentalBudget != row.differenceledger) {                           
+                            return '<span class="mark-tr">' +order+ '</span>';
+                          }
+                        return order;
                     },
                     "className": "ui center aligned"
                 }, {
-                    "data": "accountId"
+                    "data": "accountId",
+                    "className": "ui center aligned"
                 }, {
                     "data": "accountName",
-                    "className": "ui center aligned",
+                    "className": "ui left aligned",
                 }, {
                     "data": "serviceReceive",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "suppressReceive",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "budgetReceive",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "sumReceive",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "serviceWithdraw",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "suppressWithdraw",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "budgetWithdraw",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "sumWithdraw",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "experimentalBudget",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "differenceExperimentalBudget",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "ledger",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "differenceledger",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "serviceBalance",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "suppressBalance",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "budgetBalance",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "sumBalance",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "averageCost",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "averageGive",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned"
                 }, {
                     "data": "averageFrom",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "averageComeCost",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
                 }, {
                     "data": "moneyBudget",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
                     "data": "moneyOut",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render":(data,row)=>{
+                        return Utils.moneyFormat(data);
+                    }
                 }, {
-                    "data": "note",
-                    "className": "ui center aligned"
+                    "data": "note",    
+                    "className": "ui center aligned", 
+                    "render":(data,row)=>{
+                        var btn = '';
+                        btn += '<button class="ui mini blue button btn-detail"><i class="eye icon"></i>หมายเหตุ</button>';
+                        return btn;
+                    }               
                 }
             ]
         });
+        this.table.on('click', 'tbody tr button.btn-detail', (e) => {
+            var closestRow = $(e.target).closest('tr');
+            var data = this.table.row(closestRow).data();             
+            console.log(data.note);
+            $("#detail").modal({
+                "onShow" : () =>{
+                    $("#des").html(data.note);
+                }
+            }).modal('show');
+          });
     }
 }

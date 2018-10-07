@@ -1,7 +1,12 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.excise.constant.DateConstant;
@@ -9,11 +14,10 @@ import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.ExpensesDao;
+import th.co.baiwa.excise.ia.persistence.vo.Int06112ExcelVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int06113FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int06113Vo;
-
-import java.util.Date;
-import java.util.List;
+import th.co.baiwa.excise.ia.persistence.vo.Int0611ExcelVo;
 
 @Service
 public class Int06113Service {
@@ -33,8 +37,39 @@ public class Int06113Service {
             String yyyy = DateConstant.convertDateToStr(date, ExciseConstants.FORMAT_DATE.YYYY, ExciseConstants.LOCALE.EN);
             formVo.setYear(yyyy);
 
-            List<Int06113Vo> datas = expensesDao.findAllCheckCost(formVo);
             Long count = expensesDao.countCheckCost(formVo);
+            List<Int06113Vo> datas = expensesDao.findAllCheckCost(formVo);
+            
+           /*add data from excel*/
+            if (!datas.isEmpty()) {
+            	/*loop budget*/
+				for (Int06113Vo data : datas) {
+					List<Int0611ExcelVo> budgets = formVo.getDataBudget();
+					for (Int0611ExcelVo budget : budgets) {
+						if (data.getAccountId().equals(budget.getColum0())) {
+							data.setExperimentalBudget(budget.getColum9());
+							BigDecimal sumWithdraw = new BigDecimal(data.getSumWithdraw());
+							BigDecimal experimentalBudget = new BigDecimal(data.getExperimentalBudget());
+							BigDecimal result = sumWithdraw.subtract(experimentalBudget);
+							data.setDifferenceExperimentalBudget(result.toString());							
+						}
+					}
+				}
+				/*loop ledger*/
+				for (Int06113Vo data : datas) {
+					List<Int06112ExcelVo> ledgers = formVo.getDataLedger();
+					for (Int06112ExcelVo ledger : ledgers) {
+						if (data.getAccountId().equals(ledger.getAccountId())) {
+							data.setLedger(ledger.getAmount().toString());
+							BigDecimal sumWithdraw = new BigDecimal(data.getSumWithdraw());
+							BigDecimal amountLedger = new BigDecimal(data.getLedger());
+							BigDecimal result = sumWithdraw.subtract(amountLedger);
+							data.setDifferenceledger(result.toString());
+						}
+					}
+				}
+			}
+            
 
             dataTableAjax.setDraw(formVo.getDraw()+1);
             dataTableAjax.setRecordsFiltered(count);

@@ -3,6 +3,8 @@ package th.co.baiwa.excise.ia.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.MessageConstant;
 import th.co.baiwa.excise.ia.persistence.entity.Expenses;
 import th.co.baiwa.excise.ia.persistence.repository.ExpensesRepository;
@@ -19,6 +21,9 @@ public class Int06122Service {
     public String save(Expenses expenses) {
         String msg = "";
         try {
+        	String offictId = UserLoginUtils.getCurrentUserBean().getOfficeId();
+        	office(offictId);
+        	
             expensesRepository.save(expenses);
             msg = MessageConstant.MSG.STATUS.SAVE.SUCCESS;
         } catch (Exception e) {
@@ -63,6 +68,10 @@ public class Int06122Service {
             msg = MessageConstant.MSG.STATUS.SAVE.FAIL;
         }
         return msg;
+    }
+    
+    public void office(String officeId) {
+    	
     }
 }
 

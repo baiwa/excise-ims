@@ -9,7 +9,7 @@ declare var $: any;
   selector: 'app-int06-1-1',
   templateUrl: './int06-1-1.component.html',
   styleUrls: ['./int06-1-1.component.css'],
-  providers: [Int0611Service,Int061Service]
+  providers: [Int0611Service]
 })
 export class Int0611Component implements OnInit {
 
@@ -23,7 +23,8 @@ export class Int0611Component implements OnInit {
   show : boolean = true;
   
   constructor(
-    private int0611Service : Int0611Service
+    private int0611Service : Int0611Service,
+    private int061Service : Int061Service
   ) {
     this.loading = false;
     this.tableLoading = false;   
@@ -41,7 +42,7 @@ export class Int0611Component implements OnInit {
     this.tableLoading = await true; 
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
-    this.int0611Service.onSubmit(formBody).then(()=>{
+    this.int0611Service.onSubmit(formBody,this.int061Service).then(()=>{
       this.tableLoading = false; 
       this.show = false;  
     });
@@ -62,7 +63,7 @@ export class Int0611Component implements OnInit {
 
   claer=()=>{
     this.show = true;
-    this.int0611Service.claer();
+    this.int0611Service.claer(this.int061Service);
   }
 }
 

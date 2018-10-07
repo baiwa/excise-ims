@@ -3,12 +3,13 @@ import { Int0613Service } from 'projects/internal-audit/int06/int06-1/int06-1-3/
 import { From } from 'projects/internal-audit/int06/int06-1/int06-1-3/form.model';
 import { BreadCrumb } from 'models/breadcrumb';
 import { Int061Service } from 'projects/internal-audit/int06/int06-1/int06-1.service';
+import { Router } from '@angular/router';
 declare var $: any;
 @Component({
   selector: 'app-int06-1-3',
   templateUrl: './int06-1-3.component.html',
   styleUrls: ['./int06-1-3.component.css'],
-  providers: [Int0613Service,Int061Service]
+  providers: [Int0613Service]
 })
 export class Int0613Component implements OnInit {
 
@@ -23,10 +24,15 @@ export class Int0613Component implements OnInit {
     { label: "ตรวจสอบค่าใช้จ่าย", route: "#" },
   ];
   constructor(
-    private int0613Servicen: Int0613Service
+    private int0613Servicen: Int0613Service,
+    private int061Service : Int061Service,
+    private router : Router
   ) { }
 
   ngOnInit() {
+    if(this.int061Service.getDataLedger() == null){
+      this.router.navigate(['/int06/1/1-2']);
+    }
     this.callDropdown();
   }
 
@@ -52,7 +58,7 @@ export class Int0613Component implements OnInit {
     this.int0613Servicen.year(this.callBackYear);
   }
   search = () => {
-    this.int0613Servicen.search();
+    this.int0613Servicen.search(this.int061Service);
   }
 
   clear = async() => {   

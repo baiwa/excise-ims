@@ -96,6 +96,17 @@ export class Int0622Component implements OnInit {
     this.model.moneyOut = this.model.budgetBalance;
   }
 
+  changeAverageCost = (e) => {
+    if (e.target.value == "") {
+      this.model.averageCost = 0;
+    }
+  }
+  changeAverageFrom = (e) => {
+    if (e.target.value == "") {
+      this.model.averageFrom = 0;
+    }
+  }
+
   onSubmit() {
     this.checkNullModel();
 

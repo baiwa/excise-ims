@@ -211,7 +211,7 @@
             <label class="text-right full-width">ถัวเป็นเงิน</label>
           </div>
           <div class="four wide field">
-            <input type="number" name="averageCost" ngModel [(ngModel)]="model.averageCost" #averageCost="ngModel"
+            <input type="number" name="averageCost" ngModel [(ngModel)]="model.averageCost" #averageCost="ngModel" (change)="changeAverageCost($event)"
               required />
           </div>
           <div class="two wide field required "></div>
@@ -237,7 +237,7 @@
             <label class="text-right full-width">ถัวมาเงิน</label>
           </div>
           <div class="four wide field">
-            <input type="number" name="averageFrom" ngModel [(ngModel)]="model.averageFrom" #averageFrom="ngModel" />
+            <input type="number" name="averageFrom" ngModel [(ngModel)]="model.averageFrom" #averageFrom="ngModel" (change)="changeAverageFrom($event)"/>
           </div>
           <div class="two wide field  "></div>
           <div class="four wide field"></div>

@@ -104,11 +104,11 @@ public class ExpensesDao {
         List<Object> params = new ArrayList<>();
 
         if (StringUtils.isNotBlank(formVo.getSector())){
-            sql.append(" AND SECTOR = ?");
+            sql.append(" AND SECTOR_ID = ?");
             params.add(StringUtils.trim(formVo.getSector()));
         }
         if (StringUtils.isNotBlank(formVo.getArea())){
-            sql.append(" AND AREA = ? ");
+            sql.append(" AND AREA_ID = ? ");
             params.add(StringUtils.trim(formVo.getArea()));
         }
         if (StringUtils.isNotBlank(formVo.getYear())){
@@ -126,11 +126,11 @@ public class ExpensesDao {
         List<Object> params = new ArrayList<>();
 
         if (StringUtils.isNotBlank(formVo.getSector())){
-            sql.append(" AND SECTOR = ?");
+            sql.append(" AND SECTOR_ID = ?");
             params.add(StringUtils.trim(formVo.getSector()));
         }
         if (StringUtils.isNotBlank(formVo.getArea())){
-            sql.append(" AND AREA = ? ");
+            sql.append(" AND AREA_ID = ? ");
             params.add(StringUtils.trim(formVo.getArea()));
         }
         if (StringUtils.isNotBlank(formVo.getYear())){

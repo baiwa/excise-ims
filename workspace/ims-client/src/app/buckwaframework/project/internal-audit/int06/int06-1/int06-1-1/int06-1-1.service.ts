@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AjaxService, MessageBarService } from '../../../../../common/services';
 import { File } from '../../../../../common/models';
+import { Int061Service } from 'projects/internal-audit/int06/int06-1/int06-1.service';
 
 declare var $: any;
 
@@ -19,12 +20,13 @@ export class Int0611Service {
     this.formEditModal = new FormEditModal();
   }
 
-  async onSubmit(form: any) {   
+  async onSubmit(form: any,int061Service : Int061Service) {   
     let url = await "ia/int0611/upload";
     let params = await form;
     await console.log("Params : ", params);
     return await this.ajax.upload(url, params, success => {
       this.data = success.json();
+      int061Service.setDataBudget(this.data.data);
     }, error => {
       console.log("Fail!");
     }).then(data => {
@@ -52,9 +54,9 @@ export class Int0611Service {
   };
 
 
-  claer=()=>{
+  claer=(int061Service : Int061Service)=>{
     $("#fileName").val("");
-    
+    int061Service.setDataBudget(null);
     this.table.clear().draw();
     // this.table.rows.add(this.data.data); // Add new data
     this.table.columns.adjust().draw(); // Redraw the DataTable    
