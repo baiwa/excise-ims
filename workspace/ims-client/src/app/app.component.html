@@ -3,8 +3,7 @@
     <a href="#" class="header item" style=" color:White " *ngIf="authService.getLogin()">
         {{ 'APP_NAME' | translate }}
     </a>
-    <a href="#" class="ui header center aligned item grid" style="color:White;width: calc(100% - 500px);font-size: 20px;"
-        *ngIf="!authService.getLogin()">
+    <a href="#" class="ui header center aligned item grid" style="color:White;width: calc(100% - 500px);font-size: 20px;" *ngIf="!authService.getLogin()">
         ระบบบริหารจัดการ&nbsp;&nbsp;การตรวจปฏิบัติการแบบบูรณาการ
     </a>
     <div class="ui simple dropdown item" *ngIf="authService.renderByPage('InternalAudit')" style="color:White; ">
@@ -31,40 +30,36 @@
             <div class="ui simple dropdown item " *ngIf="authService.renderByPage('int08')">
                 <i class="dropdown icon "></i> การประเมินความเสี่ยง
                 <div class="menu " style="margin:20px; ">
-                    <a class="item " [routerLink]="[ '/int08/1/1'] " *ngIf="authService.renderByPage('int08/1/1')"
-                        routerLinkActive="active ">ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</a>
-                    <a class="item " [routerLink]="[ '/int08/2/1'] " *ngIf="authService.renderByPage('int08/2/1')"
-                        routerLinkActive="active ">ประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต
+                    <a class="item " [routerLink]="[ '/int08/1/1'] " *ngIf="authService.renderByPage('int08/1/1')" routerLinkActive="active ">ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</a>
+                    <a class="item " [routerLink]="[ '/int08/2/1'] " *ngIf="authService.renderByPage('int08/2/1')" routerLinkActive="active ">ประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต
                     </a>
-                    <a class="item " [routerLink]="[ '/int08/3/1'] " *ngIf="authService.renderByPage('int08/1/1')"
-                        routerLinkActive="active ">ประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่</a>
+                    <a class="item " [routerLink]="[ '/int08/3/1'] " *ngIf="authService.renderByPage('int08/1/1')" routerLinkActive="active ">ประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่</a>
 
                 </div>
             </div>
-            <a class="item " [routerLink]="[ '/int09/1'] " *ngIf="authService.renderByPage('int09/1')" routerLinkActive="active "
-                style="color: #000; ">ประมาณการค่าใช้จ่ายในการเดินทางไป</a>
+            <a class="item " [routerLink]="[ '/int09/1'] " *ngIf="authService.renderByPage('int09/1')" routerLinkActive="active " style="color: #000; ">ประมาณการค่าใช้จ่ายในการเดินทางไป</a>
             <div class="ui dropdown item " *ngIf="authService.renderByPage('int01')">
                 <i class="dropdown icon "></i> ตรวจสอบรายได้
                 <div class="menu ">
-                    <a class="item " [routerLink]="[ '/int01/1/1'] " *ngIf="authService.renderByPage('int01/1/1')"
-                        routerLinkActive="active " style=" color:White ">ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต</a>
+                    <a class="item " [routerLink]="[ '/int01/1/1'] " *ngIf="authService.renderByPage('int01/1/1')" routerLinkActive="active "
+                        style=" color:White ">ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต</a>
 
-                    <a class="item " [routerLink]="[ '/int01/2/1'] " *ngIf="authService.renderByPage('int01/2/1')"
-                        routerLinkActive="active " style=" color:White ">ตรวจสอบใบอนุญาต</a>
-                    <a class="item " [routerLink]="[ '/int01/3/1'] " *ngIf="authService.renderByPage('int01/3/1')"
-                        routerLinkActive="active " style=" color:White ">ตรวจสอบใบเสร็จค่าปรับเปรียบเทียบคดี</a>
-                    <a class="item " [routerLink]="[ '/int01/8/1'] " *ngIf="authService.renderByPage('/int01/8/1')"
-                        routerLinkActive="active " style=" color:White ">ตรวจสอบการนำฝาก/ส่งเงินรายได้</a>
-                    <a class="item " [routerLink]="[ '/int01/4/1'] " *ngIf="authService.renderByPage('int01/4/1')"
-                        routerLinkActive="active " style=" color:White ">ตรวจสอบงบสรุปยอดเงินค่าภาษีกับงบทดลอง</a>
-                    <a class="item " [routerLink]="[ '/int01/5/1'] " *ngIf="authService.renderByPage('int01/5/1')"
-                        routerLinkActive="active " style=" color:White ">ตรวจสอบสถิติการชำระภาษีของผู้ประกอบการ</a>
-                    <a class="item " [routerLink]="[ '/int01/6/1'] " *ngIf="authService.renderByPage('int01/6/1')"
-                        routerLinkActive="active " style=" color:White ">ตรวจสอบสถติการต่ออายุใบอนุญาตของผู้ประกอบการ</a>
-                    <a class="item " [routerLink]="[ '/int01/7/1'] " *ngIf="authService.renderByPage('int01/7/1')"
-                        routerLinkActive="active " style=" color:White ">ตรวจสอบการพิมพ์ใบอนุญาตซ้ำ</a>
-                    <a class="item " [routerLink]="[ '/int01/9/1'] " *ngIf="authService.renderByPage('int01/9/1')"
-                        routerLinkActive="active " style=" color:White ">รายงานตัดปีงบประมาณเงินผลประโยชน์ </a>
+                    <a class="item " [routerLink]="[ '/int01/2/1'] " *ngIf="authService.renderByPage('int01/2/1')" routerLinkActive="active "
+                        style=" color:White ">ตรวจสอบใบอนุญาต</a>
+                    <a class="item " [routerLink]="[ '/int01/3/1'] " *ngIf="authService.renderByPage('int01/3/1')" routerLinkActive="active "
+                        style=" color:White ">ตรวจสอบใบเสร็จค่าปรับเปรียบเทียบคดี</a>
+                    <a class="item " [routerLink]="[ '/int01/8/1'] " *ngIf="authService.renderByPage('/int01/8/1')" routerLinkActive="active "
+                        style=" color:White ">ตรวจสอบการนำฝาก/ส่งเงินรายได้</a>
+                    <a class="item " [routerLink]="[ '/int01/4/1'] " *ngIf="authService.renderByPage('int01/4/1')" routerLinkActive="active "
+                        style=" color:White ">ตรวจสอบงบสรุปยอดเงินค่าภาษีกับงบทดลอง</a>
+                    <a class="item " [routerLink]="[ '/int01/5/1'] " *ngIf="authService.renderByPage('int01/5/1')" routerLinkActive="active "
+                        style=" color:White ">ตรวจสอบสถิติการชำระภาษีของผู้ประกอบการ</a>
+                    <a class="item " [routerLink]="[ '/int01/6/1'] " *ngIf="authService.renderByPage('int01/6/1')" routerLinkActive="active "
+                        style=" color:White ">ตรวจสอบสถติการต่ออายุใบอนุญาตของผู้ประกอบการ</a>
+                    <a class="item " [routerLink]="[ '/int01/7/1'] " *ngIf="authService.renderByPage('int01/7/1')" routerLinkActive="active "
+                        style=" color:White ">ตรวจสอบการพิมพ์ใบอนุญาตซ้ำ</a>
+                    <a class="item " [routerLink]="[ '/int01/9/1'] " *ngIf="authService.renderByPage('int01/9/1')" routerLinkActive="active "
+                        style=" color:White ">รายงานตัดปีงบประมาณเงินผลประโยชน์ </a>
 
                 </div>
             </div>
@@ -74,46 +69,35 @@
                     <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('int05-S1')">
                         <i class="dropdown icon "></i> ตรวจสอบแสตมป์
                         <div class="menu ">
-                            <a class="item " [routerLink]="[ '/int05/1'] " *ngIf="authService.renderByPage('int05/1')"
-                                routerLinkActive="active ">ตรวจแสตมป์พื้นที่</a>
-                            <a class="item " [routerLink]="[ '/int05/1/1'] " *ngIf="authService.renderByPage('int05/1/1')"
-                                routerLinkActive="active ">ตรวจแสตมป์พื้นที่ สาขา </a>
+                            <a class="item " [routerLink]="[ '/int05/1'] " *ngIf="authService.renderByPage('int05/1')" routerLinkActive="active ">ตรวจแสตมป์พื้นที่</a>
+                            <a class="item " [routerLink]="[ '/int05/1/1'] " *ngIf="authService.renderByPage('int05/1/1')" routerLinkActive="active ">ตรวจแสตมป์พื้นที่ สาขา </a>
                         </div>
                     </div>
                     <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('int05-S1')">
                         <i class="dropdown icon "></i> ตรวจสอบสินทรัพย์
                         <div class="menu ">
-                            <a class="item " [routerLink]="[ '/int05/3'] " *ngIf="authService.renderByPage('int05/3')"
-                                routerLinkActive="active ">ตรวจสอบสินทรัพย์แบบอัพโหลด</a>
-                            <a class="item " [routerLink]="[ '/int05/3/1'] " *ngIf="authService.renderByPage('int05/3/1')"
-                                routerLinkActive="active ">ตรวจสอบสินทรัพย์แบบเพิ่มข้อมูล</a>
-                            <a class="item " [routerLink]="[ '/int05/3/2'] " *ngIf="authService.renderByPage('int05/3/2')"
-                                routerLinkActive="active ">ตรวจสอบข้อมูลสินทรัพย์</a>
-                            <a class="item " [routerLink]="[ '/int05/3/3'] " *ngIf="authService.renderByPage('int05/3/3')"
-                                routerLinkActive="active ">บันทึกข้อมูลสินทรัพย์</a>
+                            <a class="item " [routerLink]="[ '/int05/3'] " *ngIf="authService.renderByPage('int05/3')" routerLinkActive="active ">ตรวจสอบสินทรัพย์แบบอัพโหลด</a>
+                            <a class="item " [routerLink]="[ '/int05/3/1'] " *ngIf="authService.renderByPage('int05/3/1')" routerLinkActive="active ">ตรวจสอบสินทรัพย์แบบเพิ่มข้อมูล</a>
+                            <a class="item " [routerLink]="[ '/int05/3/2'] " *ngIf="authService.renderByPage('int05/3/2')" routerLinkActive="active ">ตรวจสอบข้อมูลสินทรัพย์</a>
+                            <a class="item " [routerLink]="[ '/int05/3/3'] " *ngIf="authService.renderByPage('int05/3/3')" routerLinkActive="active ">บันทึกข้อมูลสินทรัพย์</a>
 
                         </div>
                     </div>
-                    <a class="item " [routerLink]="[ authService.renderByPage('admin') ? '/int05/4/admin' : '/int05/4']"
-                        *ngIf="authService.renderByPage('int05/4')" routerLinkActive="active ">ตรวจสอบผลการจัดซื้อจัดจ้าง</a>
-                    <a class="item " [routerLink]="[ '/int05/4']" *ngIf="authService.renderByPage('int05/4')"
-                        routerLinkActive="active ">บันทึกผลการจัดซื้อจัดจ้าง</a>
+                    <a class="item " [routerLink]="[ authService.renderByPage('admin') ? '/int05/4/admin' : '/int05/4']" *ngIf="authService.renderByPage('int05/4')"
+                        routerLinkActive="active ">ตรวจสอบผลการจัดซื้อจัดจ้าง</a>
+                    <a class="item " [routerLink]="[ '/int05/4']" *ngIf="authService.renderByPage('int05/4')" routerLinkActive="active ">บันทึกผลการจัดซื้อจัดจ้าง</a>
                 </div>
             </div>
             <div class="ui simple dropdown item " *ngIf="authService.renderByPage('int07')">
                 <i class="dropdown icon "></i> ตรวจสอบบัญชี
                 <div class="menu ">
 
-                    <a class="item " [routerLink]="[ '/int07/1'] " *ngIf="authService.renderByPage('int07/1')"
-                        routerLinkActive="active ">ตรวจสอบข้อมูลบัญชี
+                    <a class="item " [routerLink]="[ '/int07/1'] " *ngIf="authService.renderByPage('int07/1')" routerLinkActive="active ">ตรวจสอบข้อมูลบัญชี
                     </a>
-                    <a class="item " [routerLink]="[ '/int07/3'] " *ngIf="authService.renderByPage('int07/3')"
-                        routerLinkActive="active ">ตรวจสอบงบทดลองกระทบยอด เดบิต เครดิต บัญชีแยกประเภท</a>
-                    <a class="item " [routerLink]="[ '/int07/7'] " *ngIf="authService.renderByPage('int07/7')"
-                        routerLinkActive="active ">ตรวจสอบรายงานเคลื่อนไหวเงินฝากคลัง
+                    <a class="item " [routerLink]="[ '/int07/3'] " *ngIf="authService.renderByPage('int07/3')" routerLinkActive="active ">ตรวจสอบงบทดลองกระทบยอด เดบิต เครดิต บัญชีแยกประเภท</a>
+                    <a class="item " [routerLink]="[ '/int07/7'] " *ngIf="authService.renderByPage('int07/7')" routerLinkActive="active ">ตรวจสอบรายงานเคลื่อนไหวเงินฝากคลัง
                     </a>
-                    <a class="item " [routerLink]="[ '/int07/6'] " *ngIf="authService.renderByPage('int07/6')"
-                        routerLinkActive="active ">ตรวจการนำส่งเงินบัญชีเจ้าหนี้ อปท.
+                    <a class="item " [routerLink]="[ '/int07/6'] " *ngIf="authService.renderByPage('int07/6')" routerLinkActive="active ">ตรวจการนำส่งเงินบัญชีเจ้าหนี้ อปท.
                     </a>
 
                 </div>
@@ -135,24 +119,19 @@
                     <a class="item " [routerLink]="[ '/int06/5'] " *ngIf="authService.renderByPage('int06/5')" routerLinkActive="active ">บันทึกรายการคุมเช็ค</a>
                     <a class="item " [routerLink]="[ '/int06/6'] " *ngIf="authService.renderByPage('int06/6')" routerLinkActive="active ">บันทึกรายการคุม KTB-Corporate</a>
                     <a class="item " [routerLink]="[ '/int06/11'] " *ngIf="authService.renderByPage('int06/11')" routerLinkActive="active ">สร้างแบบขอเบิก</a>
-                    <a class="item " [routerLink]="[ '/int06/7'] " *ngIf="authService.renderByPage('int06/7')"
-                        routerLinkActive="active ">ตรวจการเบิกค่าสาธารณูปโภค</a>
-                    <a class="item " [routerLink]="[ '/int06/8'] " *ngIf="authService.renderByPage('int06/8')"
-                        routerLinkActive="active ">บันทึกข้อมูลการเบิกค่าสาธารณูปโภค</a>
-                    <a class="item " [routerLink]="[ '/int06/12'] " *ngIf="authService.renderByPage('int06/12')" routerLinkActive="active ">รายงานตัดปีเงินงบประมาณ
-                        - เงินนอกงบประมาณ</a>
+                    <a class="item " [routerLink]="[ '/int06/7'] " *ngIf="authService.renderByPage('int06/7')" routerLinkActive="active ">ตรวจการเบิกค่าสาธารณูปโภค</a>
+                    <a class="item " [routerLink]="[ '/int06/8'] " *ngIf="authService.renderByPage('int06/8')" routerLinkActive="active ">บันทึกข้อมูลการเบิกค่าสาธารณูปโภค</a>
+                    <a class="item " [routerLink]="[ '/int06/12'] " *ngIf="authService.renderByPage('int06/12')" routerLinkActive="active ">รายงานตัดปีเงินงบประมาณ - เงินนอกงบประมาณ</a>
                 </div>
             </div>
-            <a class="item " [routerLink]="[ '/int01/8/1'] " *ngIf="authService.renderByPage('int01/8/1')"
-                routerLinkActive="active " style="color: #000; ">ค้นหากระดาษทำการ</a>
+            <a class="item " [routerLink]="[ '/int01/8/1'] " *ngIf="authService.renderByPage('int01/8/1')" routerLinkActive="active "
+                style="color: #000; ">ค้นหากระดาษทำการ</a>
 
             <div class="ui simple dropdown item " *ngIf="authService.renderByPage('int11')">
                 <i class="dropdown icon "></i> ทะเบียนติดตามงาน
                 <div class="menu ">
-                    <a class="item " [routerLink]="[ '/int11/1'] " *ngIf="authService.renderByPage('int11/1')"
-                        routerLinkActive="active ">ทะเบียนคุมการติดตามผลการตรวจสอบของโครงการ</a>
-                    <a class="item " [routerLink]="[ '/int11/2'] " *ngIf="authService.renderByPage('int11/2')"
-                        routerLinkActive="active ">ทะเบียนคุมการติดตามผลการตรวจสอบของหน่วยรับตรวจ</a>
+                    <a class="item " [routerLink]="[ '/int11/1'] " *ngIf="authService.renderByPage('int11/1')" routerLinkActive="active ">ทะเบียนคุมการติดตามผลการตรวจสอบของโครงการ</a>
+                    <a class="item " [routerLink]="[ '/int11/2'] " *ngIf="authService.renderByPage('int11/2')" routerLinkActive="active ">ทะเบียนคุมการติดตามผลการตรวจสอบของหน่วยรับตรวจ</a>
                 </div>
             </div>
         </div>
@@ -165,12 +144,10 @@
             <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('tax-audit-s1')">
                 <i class="dropdown icon "></i>การคัดเลือกราย
                 <div class="menu ">
-                    <a class="item " [routerLink]="[ '/trader-selection'] " *ngIf="authService.renderByPage('trader-selection')"
-                        routerLinkActive="active ">สร้างกระดาษทำการคัดเลือกราย</a>
+                    <a class="item " [routerLink]="[ '/trader-selection'] " *ngIf="authService.renderByPage('trader-selection')" routerLinkActive="active ">สร้างกระดาษทำการคัดเลือกราย</a>
                     <a class="item " [routerLink]="[ '/create-working-paper-trader'] " *ngIf="authService.renderByPage('create-working-paper-trader')"
                         routerLinkActive="active ">กำหนดเงื่อนไขเพื่อวิเคราะห์ความเสี่ยง </a>
-                    <a class="item " [routerLink]="[ '/add-external-data'] " *ngIf="authService.renderByPage('add-external-data')"
-                        routerLinkActive="active ">ส่งกระดาษทำการคัดเลือกราย </a>
+                    <a class="item " [routerLink]="[ '/add-external-data'] " *ngIf="authService.renderByPage('add-external-data')" routerLinkActive="active ">ส่งกระดาษทำการคัดเลือกราย </a>
                     <a class="item " [routerLink]="[ '/add-external-data/receive-line-user'] " *ngIf="authService.renderByPage('/add-external-data/receive-line-user')"
                         routerLinkActive="active ">รับกระดาษทำการคัดเลือกราย </a>
 
@@ -179,13 +156,12 @@
             <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('tax-audit-s2')">
                 <i class="dropdown icon "></i>การตรวจสอบภาษี
                 <div class="menu ">
-                    <a class="item " *ngIf="authService.renderByPage('analysis')" [routerLink]="[ '/analysis'] "
-                        routerLinkActive="active ">การวิเคราะห์ข้อมูลเบื้องต้น
+                    <a class="item " *ngIf="authService.renderByPage('analysis')" [routerLink]="[ '/analysis'] " routerLinkActive="active ">การวิเคราะห์ข้อมูลเบื้องต้น
                     </a>
                     <a class="item " routerLinkActive="active ">รวบรวมข้อมูลเบื้องต้น </a>
                     <a class="item " routerLinkActive="active ">ขออนุมัติออกตรวจสอบภาษี </a>
-                    <a class="item " *ngIf="authService.renderByPage('select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน')"
-                        [routerLink]="[ '/select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน'] " routerLinkActive="active ">สร้างกระดาษทำการตรวจสอบภาษี
+                    <a class="item " *ngIf="authService.renderByPage('select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน')" [routerLink]="[ '/select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน'] "
+                        routerLinkActive="active ">สร้างกระดาษทำการตรวจสอบภาษี
                     </a>
                     <a class="item " routerLinkActive="active ">สรุปผลการตรวจสอบภาษี</a>
                 </div>
@@ -193,15 +169,13 @@
             <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('tax-audit-s3')">
                 <i class="dropdown icon "></i>รายงานผลการตรวจสอบภาษี
                 <div class="menu ">
-                    <a class="item " *ngIf="authService.renderByPage('int10/1')" [routerLink]="[ '/int10/1'] "
-                        routerLinkActive="active ">รายงานผลการตรวจสอบภาษี
+                    <a class="item " *ngIf="authService.renderByPage('int10/1')" [routerLink]="[ '/int10/1'] " routerLinkActive="active ">รายงานผลการตรวจสอบภาษี
                     </a>
                     <a class="item " routerLinkActive="active ">ติดตามผลการตรวจสอบภาษี </a>
                 </div>
             </div>
             <a class="item " routerLinkActive="active ">ทะเบียนคุมหนังสือเรียก</a>
-            <a class="item " *ngIf="authService.renderByPage('tax-audit-manage')" [routerLink]="[ 'tax-audit-manage'] "
-                routerLinkActive="active ">บันทึกข้อความ หนังสือราชการ
+            <a class="item " *ngIf="authService.renderByPage('tax-audit-manage')" [routerLink]="[ 'tax-audit-manage'] " routerLinkActive="active ">บันทึกข้อความ หนังสือราชการ
             </a>
         </div>
     </div>
@@ -216,8 +190,7 @@
             <a class="item " *ngIf="authService.renderByPage('cop02/1')" [routerLink]="[ '/cop02/1'] " routerLinkActive="active ">รวบรวมข้อมูลเพื่อเตรียมออกตรวจปฏิบัติการ
             </a>
             <a class="item " *ngIf="authService.renderByPage('cop03/1')" [routerLink]="[ '/cop03/1'] " routerLinkActive="active ">จัดทำหนังสือขออนุมัติเดินทางไปราชการตรวจปฏิบัติการ</a>
-            <a class="item " *ngIf="authService.renderByPage('cop03/1/1')" [routerLink]="[ '/cop03/1/1'] "
-                routerLinkActive="active ">ค้นหาหนังสือขออนนุมัติเดินทางไปราชการ
+            <a class="item " *ngIf="authService.renderByPage('cop03/1/1')" [routerLink]="[ '/cop03/1/1'] " routerLinkActive="active ">ค้นหาหนังสือขออนนุมัติเดินทางไปราชการ
             </a>
             <a class="item " *ngIf="authService.renderByPage('cop04/1')" [routerLink]="[ '/cop04/1'] " routerLinkActive="active ">บันทึกผลการตรวจปฏิบัติการ
             </a>
@@ -229,11 +202,15 @@
         </div>
     </div>
     <div class="ui simple dropdown item " style=" color:White " *ngIf="authService.renderByPage('epa')">
-        ระบบตรวจส่งออก
+        ระบบการตรวจส่งออก
         <i class="dropdown icon "></i>
         <div class="menu ">
-            <a class="item " [routerLink]="[ '/epa01/1'] " routerLinkActive="active ">จัดการข้อมูลต้นทาง </a>
-            <a class="item " [routerLink]="[ '/epa02/1'] " routerLinkActive="active ">จัดการข้อมูลปายทาง</a>
+            <a class="item " [routerLink]="[ '/epa01/1'] " routerLinkActive="active ">ดาวน์โหลดข้อมูลแบบ"คำขอยกเว้นหรือคืนภาษี (ภส.05-01) </a>
+            <a class="item " [routerLink]="[ '/epa02/1'] " routerLinkActive="active ">ดาวน์โหลดการตรวจปล่อยจากโรงงาน</a>
+            <a class="item " [routerLink]="[ '/epa02/1'] " routerLinkActive="active ">รายงานสรุปผลการตรวจปล่อยสินค้าจากโรงอุตสาหกรรม
+            </a>
+            <a class="item " [routerLink]="[ '/epa02/1'] " routerLinkActive="active ">รายงานสรุปผลการตรวจส่งออก
+            </a>
         </div>
     </div>
 
