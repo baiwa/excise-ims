@@ -2,7 +2,7 @@
 <div id="int02-2" class="ui grid">
   <div class="sixteen wide column">
     <div class="ui top attached header">
-      <span>แบบสอบทานระบบการควบคุมภายใน</span>
+      <span>แบบสอบถามระบบการควบคุมภายใน</span>
     </div>
     <div class="ui bottom attached segment">
       <form class="ui form" (submit)="onAdd($event)" ngNativeValidate>
@@ -43,7 +43,7 @@
                   </div>
                 </th>
                 <th style="text-align: center !important">ลำดับ</th>
-                <th style="text-align: center !important">แบบสอบทานด้าน</th>
+                <th style="text-align: center !important">แบบสอบถามด้าน</th>
                 <th style="text-align: center !important">สร้างโดย</th>
                 <th style="text-align: center !important">จัดการ</th>
               </tr>
@@ -104,7 +104,7 @@
           </button>
           <button type="button" style="margin-left: auto" (click)="onSaved()" class="ui mini green button {{(!finished && !rl && rlLen == 0)|| unsave || datatable == undefined || datatable.length == 0 ? 'disabled' : ''}} ">
             <i class="paper plane icon"></i>
-            ส่งแบบสอบทาน
+            ส่งแบบสอบถาม
           </button>
           <button type="button" (click)="onCancel()" style="margin-left: auto" class="ui mini button">
             <i class="remove icon"></i>

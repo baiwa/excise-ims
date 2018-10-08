@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +25,8 @@ import th.co.baiwa.excise.ia.persistence.vo.Int0611ExcelVo;
 
 @Service
 public class Int06113Service {
+	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private LovRepository lovRepository;
@@ -33,10 +39,23 @@ public class Int06113Service {
         DataTableAjax<Int06113Vo> dataTableAjax = new DataTableAjax<>();
         if ("TRUE".equalsIgnoreCase(formVo.getSearchFlag())){
 
-            Date date = DateConstant.convertStrToDate(formVo.getYear(), ExciseConstants.FORMAT_DATE.YYYY, ExciseConstants.LOCALE.TH);
-            String yyyy = DateConstant.convertDateToStr(date, ExciseConstants.FORMAT_DATE.YYYY, ExciseConstants.LOCALE.EN);
-            formVo.setYear(yyyy);
+        	if(StringUtils.isNotBlank(formVo.getYear())) {
+        		Date date = DateConstant.convertStrToDate(formVo.getYear(), ExciseConstants.FORMAT_DATE.YYYY, ExciseConstants.LOCALE.TH);
+                String yyyy = DateConstant.convertDateToStr(date, ExciseConstants.FORMAT_DATE.YYYY, ExciseConstants.LOCALE.EN);            
+                Date previousYearDate = DateUtils.addYears(date, -1);
+                
+                String previousYear = DateConstant.convertDateToStr(previousYearDate, ExciseConstants.FORMAT_DATE.YYYY, ExciseConstants.LOCALE.EN);
+                String yearFrom = previousYear+"1001";
+                String yearTo = yyyy+"0930";
+                
+                formVo.setYear(yyyy);
+                formVo.setYearFrom(yearFrom);
+                formVo.setYearTo(yearTo);
+        	}
 
+        	String officeCode = office(formVo);
+        	formVo.setOfficeCode(officeCode);
+        	
             Long count = expensesDao.countCheckCost(formVo);
             List<Int06113Vo> datas = expensesDao.findAllCheckCost(formVo);
             
@@ -90,4 +109,19 @@ public class Int06113Service {
     public List<LabelValueBean> year() {
 		return expensesDao.year();
     }
+    
+    public String office(Int06113FormVo formVo) {    	
+    	StringBuilder strOfficeCode = new StringBuilder();   
+    	try {
+    		Lov sector = lovRepository.findByTypeAndLovId("SECTOR_VALUE", Long.valueOf(formVo.getSector()));
+        	Lov area = lovRepository.findByTypeAndLovId("SECTOR_VALUE", Long.valueOf(formVo.getArea()));
+        	strOfficeCode.append(sector.getSubType());
+        	strOfficeCode.append(area.getSubType());
+		} catch (Exception e) {
+			strOfficeCode = null;
+			logger.error(e.getMessage());
+		}
+    	
+    	return strOfficeCode.toString();
+	}
 }

@@ -33,7 +33,7 @@ export class Int021Component implements OnInit {
     this.qtnYear = null;
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
-      { label: "แบบสอบทานระบบการควบคุมภายใน", route: "#" },
+      { label: "แบบสอบถามระบบการควบคุมภายใน", route: "#" },
       { label: "สร้างแบบแสอบทานระบบการควบคุมภายใน", route: "#" }
     ];
   }

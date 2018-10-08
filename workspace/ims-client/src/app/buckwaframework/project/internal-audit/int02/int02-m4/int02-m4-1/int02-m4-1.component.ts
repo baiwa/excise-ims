@@ -20,8 +20,8 @@ breadcrumb: BreadCrumb[];
     constructor() {
         this.breadcrumb = [
             { label: "ตรวจสอบภายใน", route: "#" },
-            { label: "แบบสอบทานระบบการควบคุมภายใน", route: "#" },
-            { label: "สรุปผลแบบสอบทานระบบการควบคุมภายใน", route: "#" },
+            { label: "แบบสอบถามระบบการควบคุมภายใน", route: "#" },
+            { label: "สรุปผลแบบสอบถามระบบการควบคุมภายใน", route: "#" },
           ];
      }
 

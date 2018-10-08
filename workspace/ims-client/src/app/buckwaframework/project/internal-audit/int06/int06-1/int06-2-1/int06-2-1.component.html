@@ -26,6 +26,20 @@
           </div>
           <div class="two wide field "></div>
         </div>
+        <div class="inline fields centered ui grid">
+          <div class="three wide field">
+            <label class="text-right full-width">ปีงบประมาณ</label>
+          </div>
+          <div class="four wide field ">
+            <select class="ui dropdown full-width" [(ngModel)]="model.year" name="year" id="year">
+              <option value="">เลือก</option>
+              <option *ngFor="let item of yearList" value="{{item.value}}">{{item.label}}</option>
+            </select>
+          </div>
+          <div class="seven wide field ">
+            
+          </div>
+        </div>
         <br><br><br><br>
         <div class="ui stackable center aligned page grid">
           <button class="ui mini primary button" type="button" (click)="search()"><i class="search icon"></i> ค้นหา</button>

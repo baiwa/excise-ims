@@ -62,9 +62,9 @@ export class Int022Component implements OnInit {
 
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
-      { label: "แบบสอบทานระบบการควบคุมภายใน", route: "#" },
-      { label: "สร้างแบบสอบทานระบบการควบคุมภายใน", route: "#" },
-      { label: "เพิ่ม/แก้ไข ด้านแบบสอบทาน", route: "#" },
+      { label: "แบบสอบถามระบบการควบคุมภายใน", route: "#" },
+      { label: "สร้างแบบสอบถามระบบการควบคุมภายใน", route: "#" },
+      { label: "เพิ่ม/แก้ไข ด้านแบบสอบถาม", route: "#" },
     ];
 
     for (let i = 0; i < 3; i++) {
@@ -268,7 +268,7 @@ export class Int022Component implements OnInit {
           }
         });
       }
-    }, "ต้องส่งแบบสอบทานหรือไม่ ? ");
+    }, "ต้องส่งแบบสอบถามหรือไม่ ? ");
   }
 
   onCancel(): void {

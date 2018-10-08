@@ -8,8 +8,11 @@ public class Int06113FormVo extends DataTableRequest {
 
 	private static final long serialVersionUID = -2931078995199121213L;
 	private String year;
+	private String yearFrom;
+	private String yearTo;
 	private String sector;
 	private String area;
+	private String officeCode;
 	private String searchFlag = "FALSE";
 	private List<Int0611ExcelVo> dataBudget;
 	private List<Int06112ExcelVo> dataLedger;
@@ -20,6 +23,22 @@ public class Int06113FormVo extends DataTableRequest {
 
 	public void setYear(String year) {
 		this.year = year;
+	}
+
+	public String getYearFrom() {
+		return yearFrom;
+	}
+
+	public void setYearFrom(String yearFrom) {
+		this.yearFrom = yearFrom;
+	}
+
+	public String getYearTo() {
+		return yearTo;
+	}
+
+	public void setYearTo(String yearTo) {
+		this.yearTo = yearTo;
 	}
 
 	public String getSector() {
@@ -36,6 +55,14 @@ public class Int06113FormVo extends DataTableRequest {
 
 	public void setArea(String area) {
 		this.area = area;
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 
 	public String getSearchFlag() {
@@ -61,4 +88,5 @@ public class Int06113FormVo extends DataTableRequest {
 	public void setDataLedger(List<Int06112ExcelVo> dataLedger) {
 		this.dataLedger = dataLedger;
 	}
+
 }

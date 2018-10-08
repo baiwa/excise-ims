@@ -27,7 +27,8 @@ export class Int0611Component implements OnInit {
     private int061Service : Int061Service
   ) {
     this.loading = false;
-    this.tableLoading = false;   
+    this.tableLoading = false; 
+    this.int061Service.setDataBudget(null);
   }
 
 

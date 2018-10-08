@@ -10,7 +10,8 @@ public class ExciseConstants {
 	    }
 	    
 	    public static class FORMAT_DATE {
-	        public static final String DDMMYYYY = "dd/MM/yyyy"; 
+	        public static final String DDMMYYYY = "dd/MM/yyyy";
+	        public static final String YYYYMMDD = "yyyyMMdd"; 
 	        public static final String DD  = "dd";
 	        public static final String MM  = "MM";
 	        public static final String YYYY  = "yyyy";
