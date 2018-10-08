@@ -14,13 +14,12 @@
             <label>สรรพสามิตภาค</label>
           </div>
           <div class="four wide field">
-            <!-- <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)"
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)"
               [(ngModel)]="code1">
               <option value="00">เลือก</option>
               <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
-            </select> -->
-            <select ng-model="code1" ng-options="x for x in names">
             </select>
+
           </div>
           <div class="two wide field">
             <label>สรรพสามิตพื้นที่</label>

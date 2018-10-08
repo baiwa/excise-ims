@@ -1,6 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { AjaxService } from "../../../../../common/services";
-import { TextDateTH, formatter } from "../../../../../common/helper";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { AjaxService } from "../../../../../common/services/ajax.service";
+import { MessageBarService } from "../../../../../common/services/message-bar.service";
+import { Router, ActivatedRoute, Params } from "@angular/router";
+import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
 declare var $: any;
 
 const URL = {
@@ -23,7 +25,12 @@ export class Int0121Component implements OnInit {
   code2: any = '00';
   code3: any = '00';
 
-  constructor(private ajax: AjaxService) { }
+  startDate: any = '';
+  endDate: any = '';
+  constructor(private router: Router,
+    private ajax: AjaxService,
+    private route: ActivatedRoute,
+    private messageBarService: MessageBarService) { }
 
   ngOnInit() {
 
@@ -32,7 +39,15 @@ export class Int0121Component implements OnInit {
       maxDate: new Date(),
       type: "month",
       text: TextDateTH,
-      formatter: formatter('ดป')
+      formatter: formatter('ดป'),
+      onChange: (date, text) => {
+
+
+        var mm = ((date.getMonth() + 1) + "").length == 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+        var yyyy = date.getFullYear();
+        this.startDate = yyyy + "" + mm;
+        console.log(this.startDate);
+      }
 
     });
 
@@ -40,19 +55,19 @@ export class Int0121Component implements OnInit {
       maxDate: new Date(),
       type: "month",
       text: TextDateTH,
-      formatter: formatter('ดป')
+      formatter: formatter('ดป'),
+      onChange: (date, text) => {
+
+        var mm = ((date.getMonth() + 1) + "").length == 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+        var yyyy = date.getFullYear();
+        this.endDate = yyyy + "" + mm;
+        console.log(this.endDate);
+      }
     });
 
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.search").css("width", "100%");
-    this.productList = [
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " }
-    ];
+
     this.travelTo1Dropdown();
   }
 
@@ -61,7 +76,7 @@ export class Int0121Component implements OnInit {
     this.code3 = '00';
     this.ajax.post(URL.DROPDOWN, { type: "SECTOR_VALUE" }, res => {
       this.travelTo1List = res.json();
-      console.log(this.travelTo1List);
+      //console.log(this.travelTo1List);
     });
   }
 
@@ -88,12 +103,37 @@ export class Int0121Component implements OnInit {
   searchWs() {
     let ofCode = this.getOfCode(this.code1, this.code2, this.code3);
 
-    console.log(ofCode);
+    console.log("ofCode : " + ofCode);
+    console.log("startDate : " + this.startDate);
+    console.log("endDate : " + this.endDate);
+    if (ofCode == '000000') {
+      this.messageBarService.errorModal('กรุณาเลือกภาคพื่นที่ที่ตรวจสอบใบอนุญาติ', 'แจ้งเตือน');
+      return;
+
+    }
+
+    if (this.startDate == null || this.startDate == undefined || this.startDate == '') {
+      this.messageBarService.errorModal('กรุณากำหนดช่วงเวลาเริ่มต้นตรวจสอบใบอนุญาติ', 'แจ้งเตือน');
+      return;
+    }
+
+    if (this.endDate == null || this.endDate == undefined || this.endDate == '') {
+      this.messageBarService.errorModal('กรุณากำหนดช่วงเวลาสิ้นสุดตรวจสอบใบอนุญาติ', 'แจ้งเตือน');
+      return;
+    }
+
+    this.router.navigate(["/int01/2/2"], {
+      queryParams: {
+        ofCode: ofCode,
+        startDate: this.startDate,
+        endDate: this.endDate
+      }
+    });
   }
 
 
   getOfCode(code1, code2, code3) {
-    console.log(code1);
+    //console.log(code1);
     let ofCode = "";
     if (code1 == '00') {
       ofCode += '00';
@@ -107,7 +147,7 @@ export class Int0121Component implements OnInit {
 
 
     }
-    console.log(code2);
+    //console.log(code2);
     if (code2 == '00') {
       ofCode += '00';
     } else {
@@ -118,7 +158,7 @@ export class Int0121Component implements OnInit {
         }
       }
     }
-    console.log(code3);
+    //console.log(code3);
     if (code3 == '00') {
       ofCode += '00';
     } else {
@@ -129,7 +169,7 @@ export class Int0121Component implements OnInit {
         }
       }
     }
-    console.log(ofCode);
+    //console.log(ofCode);
     return ofCode;
 
   }

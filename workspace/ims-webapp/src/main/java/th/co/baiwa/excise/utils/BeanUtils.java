@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-public class BeanUtils {
+public class BeanUtils extends org.apache.commons.beanutils.BeanUtils{
 
 	public static Object getDefaultValueIfNull(final Object value, final Object defaultValue) {
 		Object result = defaultValue;

@@ -35,7 +35,6 @@ import th.co.baiwa.excise.ws.entity.response.licfri6020.LicFri6020;
 import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleRequest;
 import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleResponse;
 import th.go.excise.dexsrvint.wsdl.ldapgateway.ldpagauthenandgetuserrole.LDPAGAuthenAndGetUserRolePortType;
-import th.go.excise.dexsrvint.wsdl.ldapgateway.ldpagauthenandgetuserrole.LDPAGAuthenAndGetUserRoleService;
 
 @Service
 public class WebServiceExciseService {
@@ -123,11 +122,11 @@ public class WebServiceExciseService {
 		return responseServiceExcise;
 	}
 
-	public LicFri6010 licFri6010(String offcode, String yearMonthFrom, String yearMonthTo, String pageNo, String dataPerPage) {
+	public LicFri6010 licFri6010(String officeCode, String yearMonthFrom, String yearMonthTo, String pageNo, String dataPerPage) {
 		logger.info("restful API : LicFri6010");
 		LicFri6010 licFri6010 = new LicFri6010();
 
-		licFri6010.setOffcode(offcode);
+		licFri6010.setOffcode(officeCode);
 		licFri6010.setYearMonthFrom(yearMonthFrom);
 		licFri6010.setYearMonthTo(yearMonthTo);
 		licFri6010.setPageNo(pageNo);

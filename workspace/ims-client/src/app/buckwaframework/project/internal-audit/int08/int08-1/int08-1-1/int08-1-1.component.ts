@@ -36,19 +36,19 @@ export class Int0811Component implements OnInit {
   columnList: any[];
   percentList: any[];
   // BreadCrumb
-breadcrumb: BreadCrumb[];
+  breadcrumb: BreadCrumb[];
   constructor(
     private router: Router,
     private ajax: AjaxService,
     private route: ActivatedRoute,
-    private messageBarService: MessageBarService,
+    private messageBarService: MessageBarService
   ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "การประเมินความเสี่ยง", route: "#" },
       { label: "ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต", route: "#" },
     ];
-   }
+  }
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
@@ -395,7 +395,7 @@ breadcrumb: BreadCrumb[];
             $(row).find('td:eq(4)').addClass('bg-c-yellow');
             $(row).find('td:eq(5)').addClass('bg-c-yellow');
           }
- 
+
         }
 
       });
