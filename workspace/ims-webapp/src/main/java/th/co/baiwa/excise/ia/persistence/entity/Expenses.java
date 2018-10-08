@@ -60,18 +60,8 @@ public class Expenses extends BaseEntity {
 	private String note;
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
-	@Column(name = "SECTOR")
-	private String sector;
-	@Column(name = "AREA")
-	private String area;
-	@Column(name = "BRANCH")
-	private String branch;
-	@Column(name = "SECTOR_ID")
-	private String sectorId;
-	@Column(name = "AREA_ID")
-	private String areaId;
-	@Column(name = "BRANCH_ID")
-	private String branchId;
+	@Column(name = "OFFICE_DESC")
+	private String officeDesc;
 
 	public Long getId() {
 		return id;
@@ -257,52 +247,12 @@ public class Expenses extends BaseEntity {
 		this.officeCode = officeCode;
 	}
 
-	public String getSector() {
-		return sector;
+	public String getOfficeDesc() {
+		return officeDesc;
 	}
 
-	public void setSector(String sector) {
-		this.sector = sector;
-	}
-
-	public String getArea() {
-		return area;
-	}
-
-	public void setArea(String area) {
-		this.area = area;
-	}
-
-	public String getBranch() {
-		return branch;
-	}
-
-	public void setBranch(String branch) {
-		this.branch = branch;
-	}
-
-	public String getSectorId() {
-		return sectorId;
-	}
-
-	public void setSectorId(String sectorId) {
-		this.sectorId = sectorId;
-	}
-
-	public String getAreaId() {
-		return areaId;
-	}
-
-	public void setAreaId(String areaId) {
-		this.areaId = areaId;
-	}
-
-	public String getBranchId() {
-		return branchId;
-	}
-
-	public void setBranchId(String branchId) {
-		this.branchId = branchId;
+	public void setOfficeDesc(String officeDesc) {
+		this.officeDesc = officeDesc;
 	}
 
 }

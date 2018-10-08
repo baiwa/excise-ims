@@ -1,4 +1,5 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<!-- step -->
 <div class="ui ordered steps full-width">
   <div class="completed step">
     <div class="content">
@@ -29,7 +30,7 @@
       <form class="ui form">
         <input type="hidden" id="searchFlag" name="searchFlag">
         <div class="inline fields centered ui grid">
-          <div class="three wide field ">
+          <div class="three wide field required">
             <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
           </div>
           <div class="four wide field ">
@@ -38,18 +39,18 @@
               <option *ngFor="let item of sectorList" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
             </select>
           </div>
-          <div class="three wide field ">
+          <div class="three wide field required">
             <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
           </div>
           <div class="four wide field ">
-            <select class="ui dropdown full-width" [(ngModel)]="form.arae" name="arae" id="arae">
+            <select class="ui dropdown full-width" [(ngModel)]="form.area" name="area" id="area">
               <option value="">เลือก</option>
               <option *ngFor="let item of araeList" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
             </select>
           </div>
         </div>
         <div class="inline fields centered ui grid">
-          <div class="three wide field ">
+          <div class="three wide field required">
             <label class="text-right full-width">ปีงบประมาณ</label>
           </div>
           <div class="four wide field ">

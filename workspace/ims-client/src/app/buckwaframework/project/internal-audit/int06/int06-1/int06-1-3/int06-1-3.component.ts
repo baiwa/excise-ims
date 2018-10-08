@@ -4,6 +4,8 @@ import { From } from 'projects/internal-audit/int06/int06-1/int06-1-3/form.model
 import { BreadCrumb } from 'models/breadcrumb';
 import { Int061Service } from 'projects/internal-audit/int06/int06-1/int06-1.service';
 import { Router } from '@angular/router';
+import { Utils } from 'helpers/utils';
+import { MessageBarService } from 'services/message-bar.service';
 declare var $: any;
 @Component({
   selector: 'app-int06-1-3',
@@ -25,15 +27,16 @@ export class Int0613Component implements OnInit {
   ];
   constructor(
     private int0613Servicen: Int0613Service,
-    private int061Service : Int061Service,
-    private router : Router
-  ) { 
-    if(this.int061Service.getDataLedger() == null){
+    private int061Service: Int061Service,
+    private router: Router,
+    private message: MessageBarService
+  ) {
+    if (this.int061Service.getDataLedger() == null) {
       this.router.navigate(['/int06/1/1-2']);
     }
   }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.callDropdown();
   }
 
@@ -48,24 +51,38 @@ export class Int0613Component implements OnInit {
   }
 
   changeSector = (e) => {
-    if(e.target.value != null && e.target.value != ""){
+    if (e.target.value != null && e.target.value != "") {
       $("#arae").dropdown('restore defaults');
       let idMaster = e.target.value;
       this.int0613Servicen.area(idMaster, this.callBackArea);
-    }   
+    }
   }
 
   year = () => {
     this.int0613Servicen.year(this.callBackYear);
   }
   search = () => {
+
+    if (Utils.isNull($("#sector").val())) {
+      this.message.alert('กรุณาระบุ สำนักงานสรรพสามิตภาค');
+      return false;
+    }
+    if (Utils.isNull($("#area").val())) {
+      this.message.alert('กรุณาระบุ สำนักงานสรรพสามิตพื้นที่');
+      return false;
+    }
+    if (Utils.isNull($("#year").val())) {
+      this.message.alert('กรุณาระบุ ปีงบประมาณ');
+      return false;
+    }
+
     this.int0613Servicen.search(this.int061Service);
   }
 
-  clear = async() => {   
-    await this.int0613Servicen.clear(); 
+  clear = async () => {
+    await this.int0613Servicen.clear();
     await $(".ui.dropdown").dropdown('restore defaults');
-    
+
   }
 
   dataTable = () => {

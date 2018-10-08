@@ -23,12 +23,27 @@ export class Int0621Service {
 
   }
 
+  year = (yearCb: Function) => {
+    let url = "ia/int06121/year";
+    this.ajax.get(url, res => {
+      yearCb(res.json());
+    });
+  }
+
   setSearchFlag(searchFlag: string) {
     this.model.searchFlag = searchFlag;
   }
 
   search(model: FormSearch) {
     this.model = model;
+    this.model.searchFlag = "TRUE";
+    $("#dataTable").DataTable().ajax.reload();
+  }
+  clear = () => {
+    $("#year").dropdown('restore defaults');
+    this.model.accountId = "";
+    this.model.accountName = "";
+    this.model.searchFlag = "FALSE";
     $("#dataTable").DataTable().ajax.reload();
   }
   dataTable = () => {
@@ -49,7 +64,8 @@ export class Int0621Service {
           return JSON.stringify($.extend({}, d, {
             "accountId": this.model.accountId,
             "accountName": this.model.accountName,
-            "searchFlag": this.model.searchFlag
+            "searchFlag": this.model.searchFlag,
+            "year": $("#year").val(),
           }));
         },
       },
@@ -245,6 +261,7 @@ class FormSearch {
   accountId: string = "";
   accountName: string = "";
   searchFlag: string = "";
+  year: string = "";
 }
 
 class FormEdit {

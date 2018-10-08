@@ -3,7 +3,7 @@ import { BreadCrumb } from 'models/breadcrumb';
 import { Int0621Service } from 'projects/internal-audit/int06/int06-1/int06-2-1/int06-2-1.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IaService } from 'services/ia.service';
-
+declare var $: any;
 @Component({
     selector: 'app-int06-2-1',
     templateUrl: './int06-2-1.component.html',
@@ -17,40 +17,50 @@ export class Int0621Component implements OnInit {
         { label: "ตรวจสอบเบิกจ่าย", route: "#" },
         { label: "บันทึกข้อมูลค่าใช้จ่าย", route: "#" },
     ];
-
-    model : FormSearch;
+    yearList: any;
+    model: FormSearch;
     data: Data;
-    
+
     constructor(
-        private int0621Service: Int0621Service, 
-        private router : Router,
-        private route : ActivatedRoute,
+        private int0621Service: Int0621Service,
+        private router: Router,
+        private route: ActivatedRoute,
         private iaService: IaService
     ) {
         this.model = new FormSearch();
         this.data = new Data();
-        
-        
+
+
     }
 
-    ngOnInit() {        
+    ngOnInit() {
+        $("#year").dropdown();
         this.iaService.setData(null);
-        this.int0621Service.setSearchFlag(this.route.snapshot.queryParams["searchFlag"]  || "" || undefined);
+        this.int0621Service.setSearchFlag(this.route.snapshot.queryParams["searchFlag"] || "" || undefined);
         this.dataTable();
+        this.year();
     }
 
 
     search() {
-        this.model.searchFlag="TRUE";
+        this.model.searchFlag = "TRUE";
         this.int0621Service.search(this.model);
     }
     clear() {
         this.model = new FormSearch();
-        this.int0621Service.search(this.model);
+        this.int0621Service.clear();
     }
 
-    dataTable=()=> {        
+    dataTable = () => {
         this.int0621Service.dataTable();
+    }
+
+    year = () => {
+        this.int0621Service.year(this.callBackYear);
+    }
+
+    callBackYear = (result) => {
+        this.yearList = result;
     }
 
 }
@@ -59,6 +69,7 @@ class FormSearch {
     accountId: string = "";
     accountName: string = "";
     searchFlag: string = "";
+    year: string = ""
 }
 
 class Data {

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.MessageConstant;
 import th.co.baiwa.excise.ia.persistence.entity.Expenses;
@@ -16,14 +18,18 @@ public class Int06122Service {
 
     @Autowired
     private ExpensesRepository expensesRepository;
+    
+    @Autowired
+    private LovRepository lovRepository;
 
     @Transactional
     public String save(Expenses expenses) {
         String msg = "";
         try {
-        	String offictId = UserLoginUtils.getCurrentUserBean().getOfficeId();
-        	office(offictId);
-        	
+        	String offictCode = UserLoginUtils.getCurrentUserBean().getOfficeId();        	
+        	expenses.setOfficeCode(offictCode);
+        	Lov lov = lovRepository.findBySubType(offictCode);
+        	expenses.setOfficeDesc(lov.getSubTypeDescription());
             expensesRepository.save(expenses);
             msg = MessageConstant.MSG.STATUS.SAVE.SUCCESS;
         } catch (Exception e) {
@@ -68,10 +74,6 @@ public class Int06122Service {
             msg = MessageConstant.MSG.STATUS.SAVE.FAIL;
         }
         return msg;
-    }
-    
-    public void office(String officeId) {
-    	
-    }
+    }   
 }
 

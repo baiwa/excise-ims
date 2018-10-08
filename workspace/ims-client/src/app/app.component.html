@@ -121,8 +121,13 @@
             <div class="ui simple dropdown item " *ngIf="authService.renderByPage('int06')">
                 <i class="dropdown icon "></i> ตรวจสอบเบิกจ่าย
                 <div class="menu ">
-                    <a class="item " [routerLink]="[ '/int06/1/1'] " *ngIf="authService.renderByPage('int06/1')" routerLinkActive="active ">ตรวจสอบข้อมูลค่าใช้จ่าย</a>
-                    <a class="item " [routerLink]="['/int06/1/2-1'] " *ngIf="authService.renderByPage('int06/1/2-1')" routerLinkActive="active ">บันทึกข้อมูลค่าใช้จ่าย</a>
+                    <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('int06-1')">
+                        <i class="dropdown icon "></i> ตรวจสอบข้อมูลค่าใช้จ่าย
+                        <div class="menu ">
+                            <a class="item " [routerLink]="[ '/int06/1/1'] " *ngIf="authService.renderByPage('int06/1')" routerLinkActive="active"> ตรวจสอบข้อมูลค่าใช้จ่าย</a>
+                            <a class="item " [routerLink]="['/int06/1/2-1'] " *ngIf="authService.renderByPage('int06/1/2-1')" routerLinkActive="active">บันทึกข้อมูลค่าใช้จ่าย </a>
+                        </div>
+                    </div>
                     <a class="item " [routerLink]="[ '/int06/2'] " *ngIf="authService.renderByPage('int06/2')" routerLinkActive="active ">ตรวจสอบเปรียบเทียบสรุปรายการขอเบิกกับงบทดลอง</a>
                     <a class="item " [routerLink]="[ '/int06/3'] " *ngIf="authService.renderByPage('int06/3')" routerLinkActive="active ">ตรวจเบิกจ่าย</a>
                     <a class="item " [routerLink]="[ '/int06/9'] " *ngIf="authService.renderByPage('int06/9')" routerLinkActive="active ">บันทึกข้อมูลรับโอนเงิน</a>
