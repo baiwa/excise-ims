@@ -8,11 +8,29 @@ public class Int06113FormVo extends DataTableRequest {
 
 	private static final long serialVersionUID = -2931078995199121213L;
 	private String year;
+	private String yearFrom;
+	private String yearTo;
 	private String sector;
 	private String area;
 	private String searchFlag = "FALSE";
 	private List<Int0611ExcelVo> dataBudget;
 	private List<Int06112ExcelVo> dataLedger;
+
+	public String getYearFrom() {
+		return yearFrom;
+	}
+
+	public void setYearFrom(String yearFrom) {
+		this.yearFrom = yearFrom;
+	}
+
+	public String getYearTo() {
+		return yearTo;
+	}
+
+	public void setYearTo(String yearTo) {
+		this.yearTo = yearTo;
+	}
 
 	public String getYear() {
 		return year;

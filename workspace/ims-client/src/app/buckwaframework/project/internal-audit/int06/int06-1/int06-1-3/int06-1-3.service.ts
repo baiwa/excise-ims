@@ -45,7 +45,7 @@ export class Int0613Service {
         this.form.dataBudget = int061Service.getDataBudget();
         this.form.dataLedger = int061Service.getDataLedger();
 
-        console.log("Data Service : ",this.form);
+        console.log("Data Service : ", this.form);
         $("#dataTable").DataTable().ajax.reload();
 
     }
@@ -80,15 +80,18 @@ export class Int0613Service {
             },
             "drawCallback": () => {
                 $('.mark-tr').closest('tr').addClass('negative');
-              },
+            },
             "columns": [
                 {
                     "data": "accountId",
                     "render": function (data, type, row, meta) {
                         var order = meta.row + meta.settings._iDisplayStart + 1;
-                        if (row.differenceExperimentalBudget != row.differenceledger) {                           
-                            return '<span class="mark-tr">' +order+ '</span>';
-                          }
+                        var differenceExperimentalBudget = Utils.moneyFormat(row.differenceExperimentalBudget);
+                        var differenceledger = Utils.moneyFormat(row.differenceledger);
+                       
+                        if (differenceExperimentalBudget != "0.00" || differenceledger != "0.00" ) {                            
+                            return '<span class="mark-tr">' + order + '</span>';
+                        }
                         return order;
                     },
                     "className": "ui center aligned"
@@ -101,103 +104,103 @@ export class Int0613Service {
                 }, {
                     "data": "serviceReceive",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "suppressReceive",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "budgetReceive",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "sumReceive",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "serviceWithdraw",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "suppressWithdraw",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "budgetWithdraw",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "sumWithdraw",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "experimentalBudget",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "differenceExperimentalBudget",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "ledger",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "differenceledger",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "serviceBalance",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "suppressBalance",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "budgetBalance",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "sumBalance",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "averageCost",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
@@ -206,7 +209,7 @@ export class Int0613Service {
                 }, {
                     "data": "averageFrom",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
@@ -215,35 +218,35 @@ export class Int0613Service {
                 }, {
                     "data": "moneyBudget",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
                     "data": "moneyOut",
                     "className": "ui right aligned",
-                    "render":(data,row)=>{
+                    "render": (data, row) => {
                         return Utils.moneyFormat(data);
                     }
                 }, {
-                    "data": "note",    
-                    "className": "ui center aligned", 
-                    "render":(data,row)=>{
+                    "data": "note",
+                    "className": "ui center aligned",
+                    "render": (data, row) => {
                         var btn = '';
                         btn += '<button class="ui mini blue button btn-detail"><i class="eye icon"></i>หมายเหตุ</button>';
                         return btn;
-                    }               
+                    }
                 }
             ]
         });
         this.table.on('click', 'tbody tr button.btn-detail', (e) => {
             var closestRow = $(e.target).closest('tr');
-            var data = this.table.row(closestRow).data();             
+            var data = this.table.row(closestRow).data();
             console.log(data.note);
             $("#detail").modal({
-                "onShow" : () =>{
+                "onShow": () => {
                     $("#des").html(data.note);
                 }
             }).modal('show');
-          });
+        });
     }
 }

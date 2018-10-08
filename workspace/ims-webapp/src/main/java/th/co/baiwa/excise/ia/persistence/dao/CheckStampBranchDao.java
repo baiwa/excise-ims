@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -45,7 +46,7 @@ public class CheckStampBranchDao {
             sql.append(" AND TO_CHAR(DATE_OF_PAY,'YYYYMMDD') BETWEEN ? AND ?");
             params.add(formVo.getDateForm());
             params.add(formVo.getDateTo());
-        }
+        }        
 
 		sql.append(" ORDER BY CREATED_DATE DESC ");
 		String countSql = OracleUtils.countForDatatable(sql);
@@ -75,7 +76,9 @@ public class CheckStampBranchDao {
             params.add(formVo.getDateTo());
         }
         sql.append(" ORDER BY CREATED_DATE DESC ");
-		List<Int05111Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), stamRowmapper);
+        
+        String limitsql = OracleUtils.limitForDataTable(sql, formVo.getStart(), formVo.getLength());
+		List<Int05111Vo> list = jdbcTemplate.query(limitsql, params.toArray(), stamRowmapper);
 		return list;
 
 	}

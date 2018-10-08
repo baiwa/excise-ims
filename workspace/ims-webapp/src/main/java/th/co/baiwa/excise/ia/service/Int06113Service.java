@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +35,19 @@ public class Int06113Service {
         DataTableAjax<Int06113Vo> dataTableAjax = new DataTableAjax<>();
         if ("TRUE".equalsIgnoreCase(formVo.getSearchFlag())){
 
-            Date date = DateConstant.convertStrToDate(formVo.getYear(), ExciseConstants.FORMAT_DATE.YYYY, ExciseConstants.LOCALE.TH);
-            String yyyy = DateConstant.convertDateToStr(date, ExciseConstants.FORMAT_DATE.YYYY, ExciseConstants.LOCALE.EN);
-            formVo.setYear(yyyy);
+        	if(StringUtils.isNotBlank(formVo.getYear())) {
+        		Date date = DateConstant.convertStrToDate(formVo.getYear(), ExciseConstants.FORMAT_DATE.YYYY, ExciseConstants.LOCALE.TH);
+                String yyyy = DateConstant.convertDateToStr(date, ExciseConstants.FORMAT_DATE.YYYY, ExciseConstants.LOCALE.EN);            
+                Date previousYearDate = DateUtils.addYears(date, -1);
+                
+                String previousYear = DateConstant.convertDateToStr(previousYearDate, ExciseConstants.FORMAT_DATE.YYYY, ExciseConstants.LOCALE.EN);
+                String yearFrom = previousYear+"1001";
+                String yearTo = yyyy+"0930";
+                
+                formVo.setYear(yyyy);
+                formVo.setYearFrom(yearFrom);
+                formVo.setYearTo(yearTo);
+        	}            
 
             Long count = expensesDao.countCheckCost(formVo);
             List<Int06113Vo> datas = expensesDao.findAllCheckCost(formVo);

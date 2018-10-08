@@ -1,6 +1,7 @@
 package th.co.baiwa.excise.ia.persistence.dao;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -60,7 +61,8 @@ public class ExpensesDao {
         }
 
         sql.append(" ORDER BY CREATED_DATE DESC ");
-        List<Int06121Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), expensesRowmapper);
+        String limit = OracleUtils.limit(sql.toString(), formVo.getStart(), formVo.getLength());
+        List<Int06121Vo> list = jdbcTemplate.query(limit, params.toArray(), expensesRowmapper);
         return list;
 
     }
@@ -112,8 +114,9 @@ public class ExpensesDao {
             params.add(StringUtils.trim(formVo.getArea()));
         }
         if (StringUtils.isNotBlank(formVo.getYear())){
-            sql.append(" AND TO_CHAR(CREATED_DATE,'YYYY') = ? ");
-            params.add(StringUtils.trim(formVo.getYear()));
+        	sql.append(" AND TO_CHAR(CREATED_DATE,'YYYYMMDD')  bETWEEN  ? AND ? ");
+            params.add(StringUtils.trim(formVo.getYearFrom()));
+            params.add(StringUtils.trim(formVo.getYearTo()));
         }
 
         String countSql = OracleUtils.countForDatatable(sql);
@@ -134,8 +137,9 @@ public class ExpensesDao {
             params.add(StringUtils.trim(formVo.getArea()));
         }
         if (StringUtils.isNotBlank(formVo.getYear())){
-            sql.append(" AND TO_CHAR(CREATED_DATE,'YYYY') = ? ");
-            params.add(StringUtils.trim(formVo.getYear()));
+            sql.append(" AND TO_CHAR(CREATED_DATE,'YYYYMMDD')  bETWEEN  ? AND ? ");
+            params.add(StringUtils.trim(formVo.getYearFrom()));
+            params.add(StringUtils.trim(formVo.getYearTo()));
         }
 
         sql.append(" ORDER BY CREATED_DATE DESC ");
@@ -178,16 +182,28 @@ public class ExpensesDao {
     };
 
     public List<LabelValueBean> year(){
-        String sql ="SELECT DISTINCT TO_CHAR(CREATED_DATE,'YYYY') YEAR FROM IA_EXPENSES";
+        String sql ="SELECT DISTINCT TO_CHAR(CREATED_DATE,'YYYYMMDD') YEAR FROM IA_EXPENSES";
         List<LabelValueBean> list = jdbcTemplate.query(sql.toString(), yearRowmapper);
         return list;
     }
     private RowMapper<LabelValueBean> yearRowmapper = new RowMapper<LabelValueBean>() {
         @Override
         public LabelValueBean mapRow(ResultSet rs, int arg1) throws SQLException {
-            Date date = DateConstant.convertStrToDate(rs.getString("YEAR"), ExciseConstants.FORMAT_DATE.YYYY, ExciseConstants.LOCALE.EN);
-            String yyyy = DateConstant.convertDateToStr(date,ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.TH);
-            LabelValueBean vo = new LabelValueBean(yyyy,yyyy);
+            Date date = DateConstant.convertStrToDate(rs.getString("YEAR"), ExciseConstants.FORMAT_DATE.YYYYMMDD, ExciseConstants.LOCALE.EN);
+            
+            String strDate = DateConstant.convertDateToStr(date,ExciseConstants.FORMAT_DATE.YYYYMMDD,ExciseConstants.LOCALE.EN);
+            String yyyyEn = DateConstant.convertDateToStr(date,ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.EN);            
+            String yyyyTh = DateConstant.convertDateToStr(date,ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.TH);
+            
+            int intDate = Integer.parseInt(strDate); 
+            int intYyyy = Integer.parseInt(yyyyEn+"1001");
+            
+            String result = yyyyTh;
+            if (intDate >= intYyyy) {
+            	result = DateConstant.convertDateToStr(DateUtils.addYears(date, 1), ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.TH);
+			 
+			}
+            LabelValueBean vo = new LabelValueBean(result,result);
             return vo;
         }
     };

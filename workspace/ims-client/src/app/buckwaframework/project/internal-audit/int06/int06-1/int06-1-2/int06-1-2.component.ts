@@ -28,6 +28,7 @@ export class Int0612Component implements OnInit, AfterViewInit {
     private cdRef: ChangeDetectorRef
   ) {
 
+    this.int061Service.setDataLedger(null)
     if (this.int061Service.getDataBudget() == null) {
       this.router.navigate(['/int06/1/1']);
     }
