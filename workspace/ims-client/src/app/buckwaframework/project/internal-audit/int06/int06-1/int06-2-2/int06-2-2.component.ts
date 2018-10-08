@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { BreadCrumb } from 'models/breadcrumb';
 import { Int0622Service } from 'projects/internal-audit/int06/int06-1/int06-2-2/int06-2-2.service';
 import { IaService } from 'services/ia.service';
-import { async } from 'q';
 import { MessageBarService } from 'services/message-bar.service';
 import { AjaxService } from 'services/ajax.service';
 
@@ -105,6 +104,13 @@ export class Int0622Component implements OnInit {
     if (e.target.value == "") {
       this.model.averageFrom = 0;
     }
+  }
+
+  blurAccountId=(e)=>{
+    this.loading = true;
+    this.int0622Service.blurAccountId(e.target.value).then(then=>{
+      this.loading = false;
+    });
   }
 
   onSubmit() {

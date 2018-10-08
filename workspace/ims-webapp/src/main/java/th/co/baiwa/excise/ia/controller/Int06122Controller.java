@@ -28,5 +28,11 @@ public class Int06122Controller {
 	public String edit(@RequestBody Int06121Vo expenses){
 		return int06122Service.edit(expenses);
 	}
+	
+	@PostMapping("/checkData")
+	@ResponseBody
+	public String checkDate(@RequestBody String accountId) {
+		return int06122Service.checkData(accountId);		 
+	}
 
 }
