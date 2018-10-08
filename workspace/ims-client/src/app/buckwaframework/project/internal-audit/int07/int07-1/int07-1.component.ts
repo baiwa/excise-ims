@@ -77,10 +77,6 @@ export class Int071Component implements OnInit {
     $("#modalInt071").modal("hide");
   }
 
-<<<<<<< Updated upstream
-
-
-=======
   getLoading = args => {
     this.loading = args;
     this.loadingTable = args;
@@ -89,5 +85,4 @@ export class Int071Component implements OnInit {
   getStatusSave = flg => {
     this.checkSave = flg;
   };
->>>>>>> Stashed changes
 }
