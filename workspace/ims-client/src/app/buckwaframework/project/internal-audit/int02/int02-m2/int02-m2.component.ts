@@ -35,10 +35,10 @@ export class Int02M2Component implements OnInit {
     // TODO
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
-      { label: "แบบสอบทานระบบการควบคุมภายใน", route: "#" },
-      { label: "สร้างแบบสอบทานระบบการควบคุมภายใน", route: "#" },
-      { label: "เพิ่ม/แก้ไข ด้านแบบสอบทาน", route: "#" },
-      { label: "เพิ่ม/แก้ไข รายละเอียดแบบสอบทาน", route: "#" },
+      { label: "แบบสอบถามระบบการควบคุมภายใน", route: "#" },
+      { label: "สร้างแบบสอบถามระบบการควบคุมภายใน", route: "#" },
+      { label: "เพิ่ม/แก้ไข ด้านแบบสอบถาม", route: "#" },
+      { label: "เพิ่ม/แก้ไข รายละเอียดแบบสอบถาม", route: "#" },
     ];
 
   }
@@ -84,7 +84,7 @@ export class Int02M2Component implements OnInit {
           this.savings = false;
         });
       }
-    }, "ต้องการส่งผลแบบสอบทานจริงหรือไม่?");
+    }, "ต้องการส่งผลแบบสอบถามจริงหรือไม่?");
   }
 
   onSubmit(form) {

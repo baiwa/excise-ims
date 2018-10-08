@@ -7,8 +7,8 @@
                 <div class="auto">
                     <i class="exclamation triangle icon"></i>
                     <div class="content">
-                        ขณะนี้ไม่สามารถตอบแบบสอบทานได้<br>
-                        เนื่องจากระบบได้ปิดรับแบบสอบทานแล้ว
+                        ขณะนี้ไม่สามารถตอบแบบสอบถามได้<br>
+                        เนื่องจากระบบได้ปิดรับแบบสอบถามแล้ว
                         <div class="sub header">กรุณาเข้ามาใหม่อีกครั้ง</div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                         </thead>
                         <tbody *ngIf="qtn.detail.length == 0">
                             <tr>
-                                <td class="text-center" colspan="4">ไม่พบแบบสอบทาน</td>
+                                <td class="text-center" colspan="4">ไม่พบแบบสอบถาม</td>
                             </tr>
                         </tbody>
                         <tbody *ngIf="qtn.detail.length>0">
@@ -106,7 +106,7 @@
                 <div class="save-btn center aligned column">
                     <button class="ui mini primary button {{saving ? 'loading' : ''}}" type="submit">บันทึก</button>
                     <button class="ui mini primary button {{questionnaire[0].finished == null || !questionnaire[0].finished == 'N' ? 'disabled' : ''}}"
-                        (click)="send()" type="button">ส่งผลการประเมินแบบสอบทาน</button>
+                        (click)="send()" type="button">ส่งผลการประเมินแบบสอบถาม</button>
                 </div>
             </div>
         </form>

@@ -43,7 +43,7 @@ export class Int02M51Component implements OnInit, OnDestroy {
     ) {
         this.breadcrumb = [
             { label: "ตรวจสอบภายใน", route: "#" },
-            { label: "แบบสอบทานระบบการควบคุมภายใน", route: "#" },
+            { label: "แบบสอบถามระบบการควบคุมภายใน", route: "#" },
             { label: "รายงานการประเมินผลและการปรับปรุงการควบคุมภายใน (แบบ ปย.2)", route: "#" },
         ];
     }

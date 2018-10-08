@@ -12,20 +12,20 @@
         <i class="dropdown icon "></i>
         <div class="menu " style="width: 340px;">
             <div class="ui simple dropdown item " *ngIf="authService.renderByPage('int02')">
-                <i class="dropdown icon "></i> แบบสอบทานระบบการควบคุมภายใน
+                <i class="dropdown icon "></i> แบบสอบถามระบบการควบคุมภายใน
                 <div class="menu" style="margin:20px;">
                     <a class="item" [routerLink]="['/int02/1']" *ngIf="authService.renderByPage('int02/1')"
-                        routerLinkActive="active">สร้างแบบสอบทานระบบการควบคุมภายใน</a>
+                        routerLinkActive="active">สร้างแบบสอบถามระบบการควบคุมภายใน</a>
                     <a class="item" [routerLink]="['/int02/m2']" *ngIf="authService.renderByPage('int02/m2')"
-                        routerLinkActive="active">แบบสอบทานระบบการควบคุมภายใน</a>
+                        routerLinkActive="active">แบบสอบถามระบบการควบคุมภายใน</a>
                     <a class="item" [routerLink]="['/int02/m4']" *ngIf="authService.renderByPage('int02/m4')"
-                        routerLinkActive="active">สรุปผลแบบสอบทานระบบการควบคุมภายใน</a>
+                        routerLinkActive="active">สรุปผลแบบสอบถามระบบการควบคุมภายใน</a>
                     <a class="item" [routerLink]="['/int02/m5/1']" *ngIf="authService.renderByPage('int02/m5/1')"
                         routerLinkActive="active">รายงานการประเมินผลและการปรับปรุงการควบคุมภายใน (แบบ ปย.2)</a>
                     <a class="item" [routerLink]="['/int02/m5/2']" *ngIf="authService.renderByPage('int02/m5/2')"
                         routerLinkActive="active">ค้นหารายงานการประเมินผลและการปรับปรุงการควบคุมภายใน (แบบ ปย.2)</a>
                     <a class="item" [routerLink]="['/int02/m3']" *ngIf="authService.renderByPage('int02/m3')"
-                        routerLinkActive="active">จัดการข้อมูลแบบสอบทานระบบการควบคุมภายใน</a>
+                        routerLinkActive="active">จัดการข้อมูลแบบสอบถามระบบการควบคุมภายใน</a>
                 </div>
             </div>
             <div class="ui simple dropdown item " *ngIf="authService.renderByPage('int08')">
