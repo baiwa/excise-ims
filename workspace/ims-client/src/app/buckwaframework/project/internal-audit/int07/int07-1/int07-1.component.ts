@@ -1,14 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { Int071Service } from "./int07-1.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var $: any;
 @Component({
-  selector: 'int07-1',
-  templateUrl: './int07-1.component.html',
-  styleUrls: ['./int07-1.component.css']
+  selector: "int07-1",
+  templateUrl: "./int07-1.component.html",
+  styleUrls: ["./int07-1.component.css"],
+  providers: [Int071Service]
 })
 export class Int071Component implements OnInit {
-
-  constructor() { }
+  breadcrumb: BreadCrumb[] = [];
+  loading: boolean = false;
+  loadingTable: boolean = false;
+  checkSave: boolean = false;
+  constructor(private selfService: Int071Service) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบบัญชี", route: "#" },
+      { label: "ตรวจสอบข้อมูลบัญชี", route: "#" }
+    ];
+  }
 
 
   ngOnInit() {
@@ -28,20 +40,54 @@ export class Int071Component implements OnInit {
     });
 
   }
+
+  onSave = () => {
+    this.loadingTable = true;
+    this.selfService.saveData(this.getLoading, this.getStatusSave);
+  };
+
+  changeUpload = (e: any) => {
+    e.preventDefault;
+    this.loading = true;
+    this.selfService.onChangeUpload(e, this.getLoading);
+  };
+
+  uplodFile = (e: any) => {
+    e.preventDefault;
+    // this.loading = true;
+    this.loadingTable = true;
+
+    this.selfService.onUpload(e, this.getLoading);
+  };
+
+  onCheck() {
+    this.selfService.onCheck();
+    // [routerLink]="[ '/int07/2']
+  }
+
   hideData() {
-    $('#Int072').hide();
+    $("#dataTable").hide();
   }
-  showData() {
-    $('#Int072').show();
-  }
+
   popupEditData() {
-    $('#modalInt071').modal('show');
+    $("#modalInt071").modal("show");
   }
 
   closePopupEdit() {
-    $('#modalInt071').modal('hide');
+    $("#modalInt071").modal("hide");
   }
 
+<<<<<<< Updated upstream
 
 
+=======
+  getLoading = args => {
+    this.loading = args;
+    this.loadingTable = args;
+  };
+
+  getStatusSave = flg => {
+    this.checkSave = flg;
+  };
+>>>>>>> Stashed changes
 }

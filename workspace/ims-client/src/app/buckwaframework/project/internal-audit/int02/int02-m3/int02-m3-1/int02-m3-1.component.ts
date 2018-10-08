@@ -157,6 +157,32 @@ export class Int02M31Component implements OnInit {
         this[`chk${i}`] = this[`chk${i}`].filter(
           obj => obj.qtnReportManId != id
         );
+
+        // console.log(this.chkSelect);
+        // //check length dtl
+        // if (this.chkSelect.length > 0) {
+        //   for (let a = 0; a < this.chkSelect.length; a++) {
+        //     // console.log("length: ", this.chkSelect.length);
+        //     // console.log(this.chkSelect[a].qtnReportManId, "==", id, a);
+        //     // console.log(this.chkSelect.filter(obj => obj.qtnReportManId != id));
+        //     if (this.chkSelect[a].qtnReportManId == id) {
+        //       //   // this.chkSelect.splice(this.chkSelect.length, 1);
+        //       //   // console.log(this.chkSelect);
+        //       this.chkSelect = this.chkSelect.filter(
+        //         obj => obj.qtnReportManId != id
+        //       );
+        //     }
+        //   }
+        // }
+
+        // this.chkSelect.forEach((obj, index) => {
+        //   if (obj.qtnReportManId == id) {
+        //     let d = this.chkSelect.findIndex(ob => ob.qtnReportManId == id);
+        //     this.chkSelect.splice(d, 1);
+        //     console.log(this.chkSelect);
+        //   }
+        // });
+
         this[`${table}`].map((obj, index) => {
           if (obj.qtnReportManId == id) {
             if (e.target.checked) {
@@ -172,6 +198,7 @@ export class Int02M31Component implements OnInit {
               const del = this.chkSelect.findIndex(
                 ob => ob.qtnReportManId == id
               );
+              console.log(del);
               this.chkSelect.splice(del, 1);
 
               // del != -1 && this[`chk${i}`].splice(del, 1);
@@ -187,7 +214,7 @@ export class Int02M31Component implements OnInit {
               //check delete
               this.chkSelect.push(obj);
 
-              this[`chk${i}`].push(obj);
+              // this[`chk${i}`].push(obj);
               // $(`#chk${i}-${index}`)[0].checked = true;
             } else {
               // this[`chk${i}`].push(obj);
@@ -213,7 +240,7 @@ export class Int02M31Component implements OnInit {
     //   ? $(`#chk${i}`).prop("checked", true)
     //   : $(`#chk${i}`).prop("checked", false);
 
-    if (this.chkSelect.length) {
+    if (this.chkSelect.length > 0) {
       for (let i = 0; i < this.chkSelect.length; i++) {
         console.log(
           this.chkSelect[i].qtnReportManId,
@@ -230,12 +257,7 @@ export class Int02M31Component implements OnInit {
   };
 
   onAddField = () => {
-    var tt = this.numbers.length;
-    if (tt <= 100) {
-      this.numbers.push("");
-    } else {
-      this.msg.errorModal("สามารถเพิ่มสูงสุดได้ 100 หัวข้อ", "เกิดข้อผิดพลาด");
-    }
+    this.numbers.push("");
   };
 
   onDelField = index => {
@@ -264,11 +286,6 @@ export class Int02M31Component implements OnInit {
 
   onEditData = data => {
     $(".ui.modal.show").modal("show");
-    console.log(
-      $("datatable")
-        .rows()
-        .data()
-    );
     console.log(this.table);
     this.dataSelect = data;
     this.showEdit = data.qtnMainDetail;
