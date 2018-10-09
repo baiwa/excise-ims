@@ -10,25 +10,25 @@
             <div class="ui form">
                 <div class="inline fields">
                     <div class="two wide  field">
-                        <label>เลขที่ใบอนุญาต</label>
+                        <label class="text-right full-width">เลขที่ใบอนุญาต : </label>
                     </div>
                     <div class="three wide  field">
-                        <input type="text">
+                        <input type="text" [(ngModel)]="lic.licNo">
                     </div>
                     <div class="two wide  field">
-                        <label>เลขที่แบบพิมพ์</label>
+                        <label class="text-right full-width">เลขที่แบบพิมพ์ : </label>
                     </div>
                     <div class="three wide  field">
-                        <input type="text">
+                        <input type="text" [(ngModel)]="lic.printCode">
                     </div>
                     <div class="two wide  field">
-                        <label>จำนวนเงิน</label>
+                        <label class="text-right full-width">จำนวนเงิน : </label>
                     </div>
                     <div class="three wide  field">
-                        <input type="text">
+                        <input type="text" [(ngModel)]="lic.licAmount">
                     </div>
                     <div class="one wide  field">
-                        <button class="ui mini primary button width-100">
+                        <button class="ui mini primary button width-100" (click)="editDataInlist()">
                             <i class="add icon"></i>
                             เพิ่ม
                         </button>
@@ -42,22 +42,22 @@
         <div class="ui segment">
             <br>
             <div style="overflow-x: scroll;">
-                <table id="dataTable" class="ui small celled table striped selectable" style="width: 120%;">
+                <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
                     <thead>
                         <tr class="center aligned">
-                            <th>ลำดับที่</th>
-                            <th>วันที่ออกใบอนุญาต</th>
-                            <th>วันที่นำส่งเงิน (ระบบรายได้)</th>
-                            <th>ประเภทใบอนุญาต</th>
-                            <th>เลขแบบพิมพ์</th>
-                            <th>เลขที่ใบอนุญาต</th>
-                            <th>จำนวนเงินจากระบบ</th>
-                            <th>จำนวนเงินจากสำเนาใบอนุญาต</th>
-                            <th>จำนวนเงินค่าธรรมเนียม อปท. 10%</th>
-                            <th>จำนวนเงินค่ามหาดไทย 10%</th>
-                            <th>รวม</th>
-                            <th>วันที่ใบอนุญาตมีผล</th>
-                            <th>วันที่หมดอายุใบอนุญาต</th>
+                            <th style="text-align: center;">ลำดับที่</th>
+                            <th style="text-align: center;">วันที่ออกใบอนุญาต</th>
+                            <th style="text-align: center;">วันที่นำส่งเงิน<br>(ระบบรายได้)</th>
+                            <th style="text-align: center;">ประเภทใบอนุญาต</th>
+                            <th style="text-align: center;">เลขแบบพิมพ์</th>
+                            <th style="text-align: center;">เลขที่ใบอนุญาต</th>
+                            <th style="text-align: center;">จำนวนเงินจากระบบ</th>
+                            <th style="text-align: center;">จำนวนเงินจากสำเนาใบอนุญาต</th>
+                            <th style="text-align: center;">จำนวนเงินค่าธรรมเนียม<br>อปท. 10%</th>
+                            <th style="text-align: center;">จำนวนเงินค่ามหาดไทย<br>10%</th>
+                            <th style="text-align: center;">รวม</th>
+                            <th style="text-align: center;">วันที่ใบอนุญาตมีผล</th>
+                            <th style="text-align: center;">วันที่หมดอายุใบอนุญาต</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,7 +78,7 @@
                             <i class="print icon"></i>
                             Export
                         </a>
-                        <a class="ui mini primary button widtd-100">
+                        <a class="ui mini primary button widtd-100" (click)="saveAllData()">
                             <i class="arrow save icon"></i>
                             บันทึก
                         </a>
@@ -109,7 +109,7 @@
                 </div>
                 <div class="eight wide field">
                     <label class="custom-label-w-15">เลขที่ใบอนุญาต</label>
-                    <input type="text" value="" readonly="488.70" />
+                    <input type="text" value="" />
                 </div>
             </div>
             <div class="inline fields">
@@ -117,7 +117,7 @@
                 </div>
                 <div class="eight wide field">
                     <label class="custom-label-w-15">เลขที่ใบอนุญาต</label>
-                    <input type="text" value="" readonly="488.70" />
+                    <input type="text" value="" />
                 </div>
             </div>
 
@@ -188,7 +188,7 @@
         <div class="actions">
             <div class="ui center aligned grid">
                 <div class="six wide column">
-                    <button class="ui mini primary button ">
+                    <button class="ui mini primary button " (click)="saveAllData()">
                         <i class="save icon"></i>
                         บันทึก
                     </button>

@@ -28,7 +28,7 @@ public class License  extends BaseEntity {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_LICENSE_GEN")
 	@Column(name="LIC_ID")
 	
-	private long licId;
+	private Long licId;
 
 	@Column(name="CUS_FULL_NAME")
 	private String cusFullName;
@@ -86,13 +86,7 @@ public class License  extends BaseEntity {
 	@Column(name="START_DATE")
 	private String startDate;
 
-	public long getLicId() {
-		return licId;
-	}
-
-	public void setLicId(long licId) {
-		this.licId = licId;
-	}
+	
 
 	public String getCusFullName() {
 		return cusFullName;
@@ -244,6 +238,14 @@ public class License  extends BaseEntity {
 
 	public void setLicAmount(BigDecimal licAmount) {
 		this.licAmount = licAmount;
+	}
+
+	public Long getLicId() {
+		return licId;
+	}
+
+	public void setLicId(Long licId) {
+		this.licId = licId;
 	}
 
 
