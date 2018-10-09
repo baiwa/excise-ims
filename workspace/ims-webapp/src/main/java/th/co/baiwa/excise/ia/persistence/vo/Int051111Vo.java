@@ -20,6 +20,8 @@ public class Int051111Vo {
 	private String fivePartDate;
 	private String stampCheckDate;
 	private String stampChecker;
+	private String stampChecker2;
+	private String stampChecker3;
 	private String stampType;
 	private Long stampTypeId;
 	private String stampBrand;
@@ -36,6 +38,22 @@ public class Int051111Vo {
 	private String createdDate;
 	private String fileName;
 	private ExciseFile[] file;
+
+	public String getStampChecker3() {
+		return stampChecker3;
+	}
+
+	public void setStampChecker3(String stampChecker3) {
+		this.stampChecker3 = stampChecker3;
+	}
+
+	public String getStampChecker2() {
+		return stampChecker2;
+	}
+
+	public void setStampChecker2(String stampChecker2) {
+		this.stampChecker2 = stampChecker2;
+	}
 
 	public String getWorkSheetDetailId() {
 		return workSheetDetailId;

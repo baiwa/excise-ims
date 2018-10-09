@@ -165,6 +165,56 @@ public class Int05112Service {
 
 	}
 
+	public void saveSummary(List<Int05112Vo> list) {
+		
+		/* save summary of year */
+		if (!list.isEmpty()) {
+
+			for (Int05112Vo item : list) {
+				if (StringUtils.isNoneBlank(item.getColumnId()) && StringUtils.isNotBlank(item.getYear())) {
+					IaStampDetailSummary summary = iaStampDetailSummaryRepository.findByStampGenreIdAndYear(Long.valueOf(item.getColumnId()), item.getYear());
+					if (summary != null) {
+						summary.setNumberOfStamp(new BigDecimal(item.getBranchUpToDateNumberOfStamp()));
+						summary.setSumOfValue(item.getBranchUpToDateMoneyOfStamp());
+						summary.setStampGenreId(Long.valueOf(item.getColumnId()));
+						summary.setYear(item.getYear());
+
+						iaStampDetailSummaryRepository.save(summary);
+					} else {
+						/* create row */
+						IaStampDetailSummary vo = new IaStampDetailSummary();
+						vo.setNumberOfStamp(new BigDecimal(item.getBranchUpToDateNumberOfStamp()));
+						vo.setSumOfValue(item.getBranchUpToDateMoneyOfStamp());
+						vo.setStampGenreId(Long.valueOf(item.getColumnId()));
+						vo.setYear(item.getYear());
+
+						iaStampDetailSummaryRepository.save(vo);
+					}
+				}
+			}
+		}
+	}
+
+	public String calulateYear(Date date) {
+		Date nextYearDate = DateUtils.addYears(date, 1);
+
+		String monthNow = DateConstant.convertDateToStr(date, ExciseConstants.FORMAT_DATE.MM,ExciseConstants.LOCALE.EN);
+		String yearNow = DateConstant.convertDateToStr(date, ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.EN);
+
+		String nextYear = DateConstant.convertDateToStr(nextYearDate, ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.EN);
+
+		String year = "";
+		int month = 9;
+		if (Integer.parseInt(monthNow) > month) {
+			year = nextYear;
+		} else {
+			year = yearNow;
+		}
+
+		System.out.println(year);
+		return year;
+	}
+	
 	public boolean isMonthEqual(String monthId, String month) {
 		return monthId.equals(month);
 	}
@@ -280,83 +330,5 @@ public class Int05112Service {
 		}
 	}
 
-	public void saveSummary(List<Int05112Vo> list) {
-		
-		/* save summary of year */
-		if (!list.isEmpty()) {
-
-			for (Int05112Vo item : list) {
-				if (StringUtils.isNoneBlank(item.getColumnId()) && StringUtils.isNotBlank(item.getYear())) {
-					IaStampDetailSummary summary = iaStampDetailSummaryRepository.findByStampGenreIdAndYear(Long.valueOf(item.getColumnId()), item.getYear());
-					if (summary != null) {
-						summary.setNumberOfStamp(new BigDecimal(item.getBranchUpToDateNumberOfStamp()));
-						summary.setSumOfValue(item.getBranchUpToDateMoneyOfStamp());
-						summary.setStampGenreId(Long.valueOf(item.getColumnId()));
-						
-						
-						summary.setYear(item.getYear());
-
-						iaStampDetailSummaryRepository.save(summary);
-					} else {
-						/* create row */
-						IaStampDetailSummary vo = new IaStampDetailSummary();
-						vo.setNumberOfStamp(new BigDecimal(item.getBranchUpToDateNumberOfStamp()));
-						vo.setSumOfValue(item.getBranchUpToDateMoneyOfStamp());
-						vo.setStampGenreId(Long.valueOf(item.getColumnId()));
-						vo.setYear(item.getYear());
-
-						iaStampDetailSummaryRepository.save(vo);
-					}
-				}
-			}
-		}
-	}
-
-	public String calulateYear(Date date) {
-		/* calculate Date */
-		//Date date = new Date();
-//		Date date = DateConstant.convertStrToDate(ddMMyyy, "yyyyMMdd",ExciseConstants.LOCALE.EN);
-		Date nextYearDate = DateUtils.addYears(date, 1);
-
-		String monthNow = DateConstant.convertDateToStr(date, ExciseConstants.FORMAT_DATE.MM,ExciseConstants.LOCALE.EN);
-		String yearNow = DateConstant.convertDateToStr(date, ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.EN);
-
-		String nextYear = DateConstant.convertDateToStr(nextYearDate, ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.EN);
-
-		String year = "";
-		int month = 9;
-		if (Integer.parseInt(monthNow) > month) {
-			year = nextYear;
-		} else {
-			year = yearNow;
-		}
-
-		System.out.println(year);
-		return year;
-	}
-/*	public static void main(String[] args) {
-		 calculate Date 
-		
-		Date d = DateConstant.convertStrToDate(ddMMyyy, "yyyyMMdd",ExciseConstants.LOCALE.EN);
-		Date nextYearDate = DateUtils.addYears(d, 1);
-		Date previousYearDate = DateUtils.addYears(d, -1);
-
-		String dateNow = DateConstant.convertDateToStr(d, ExciseConstants.FORMAT_DATE.YYYYMMDD,ExciseConstants.LOCALE.EN);
-		String yearNow = DateConstant.convertDateToStr(d, ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.EN);
-
-		String nextYear = DateConstant.convertDateToStr(nextYearDate, ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.EN);
-		String previousYearAdd = DateConstant.convertDateToStr(previousYearDate, ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.EN);
-
-		String dateFrom = "";
-		String dateTo = "";
-		if (Integer.parseInt(yearNow + "1001") <= Integer.parseInt(dateNow)) {
-			dateFrom = yearNow + "1001";
-			dateTo = nextYear + "0930";
-		} else {
-			dateFrom = previousYearAdd + "1001";
-			dateTo = yearNow + "0930";
-		}
-		System.out.println(dateFrom+" : "+dateTo);
-	}*/
 }
 

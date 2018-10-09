@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AjaxService, MessageBarService } from 'app/buckwaframework/common/services';
-import { TextDateTH } from 'app/buckwaframework/common/helper';
+import { TextDateTH, Utils } from 'app/buckwaframework/common/helper';
 import { formatter } from 'app/buckwaframework/common/helper/datepicker';
 import { BreadCrumb } from 'models/breadcrumb';
 declare var $: any;
@@ -15,19 +15,20 @@ export class Int0511Component implements OnInit {
   area: any;
   branch: any;
   showData: boolean = true;
+  statusList: any;
   $form: any;
-  listFileName : any;
-  breadcrumb : BreadCrumb[]
-  loading : boolean = false;
+  listFileName: any;
+  breadcrumb: BreadCrumb[]
+  loading: boolean = false;
   formModal: FormModal = new FormModal();
   constructor(
     private ajax: AjaxService,
     private message: MessageBarService) {
-      this.breadcrumb = [
-        { label: "ตรวจสอบภายใน", route: "#" },
-        { label: "ตรวจสอบพัสดุ", route: "#" },
-        { label: "ตรวจสอบแสตมป์", route: "#" },
-      ];
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบพัสดุ", route: "#" },
+      { label: "ตรวจสอบแสตมป์", route: "#" },
+    ];
   }
 
   ngOnInit() {
@@ -36,6 +37,7 @@ export class Int0511Component implements OnInit {
     this.sectorDropdown();
     this.calenda();
     this.table();
+    this.status();
   }
   ngAfterViewInit() {
     $(".ui.dropdown.ai").dropdown().css('width', '100%');;
@@ -50,7 +52,7 @@ export class Int0511Component implements OnInit {
     $("#area").dropdown('restore defaults');
     const URL = "ia/int05111/area";
     let params = e.target.value;
-    if(params!=""){
+    if (params != "") {
       this.ajax.post(URL, params, res => {
         console.log("Id : ", res.json());
         this.area = res.json();
@@ -59,14 +61,21 @@ export class Int0511Component implements OnInit {
   }
   areaOnchange = (e) => {
     $("#branch").dropdown('restore defaults');
-    const URL = "ia/int05111/area";
+    const URL = "ia/int05111/branch";
     let params = e.target.value;
-    if(params!=""){
+    if (params != "") {
       this.ajax.post(URL, params, res => {
         console.log("Id : ", res.json());
         this.branch = res.json();
       });
     }
+  }
+
+  status = () => {
+    let url = "ia/int05111/status"
+    this.ajax.get(url, res => {
+      this.statusList = res.json();
+    })    
   }
 
   onClear = () => {
@@ -167,12 +176,13 @@ export class Int0511Component implements OnInit {
         "type": "POST",
         "data": (d) => {
           return JSON.stringify($.extend({}, d, {
-            "sector": ($("#sector option:selected").text()=="กรุณาเลือก" ? "":$("#sector option:selected").text()),
-            "area": ($("#area option:selected").text()=="กรุณาเลือก" ? "":$("#area option:selected").text()),
-            "branch": ($("#branch option:selected").text()=="กรุณาเลือก" ? "":$("#branch option:selected").text()),
+            "sector": $("#sector").val(),//($("#sector option:selected").text()=="กรุณาเลือก" ? "":$("#sector option:selected").text()),
+            "area": $("#area").val(),//($("#area option:selected").text()=="กรุณาเลือก" ? "":$("#area option:selected").text()),
+            "branch": $("#branch").val(),//($("#branch option:selected").text()=="กรุณาเลือก" ? "":$("#branch option:selected").text()),
             "dateForm": $("#dateForm").val(),
             "dateTo": $("#dateTo").val(),
-            "searchFlag": $("#searchFlag").val()
+            "searchFlag": $("#searchFlag").val(),
+            "status" : $("#status").val()
           }));
         },
       },
@@ -185,28 +195,29 @@ export class Int0511Component implements OnInit {
           },
           "className": "ui center aligned"
         }, {
-          "data": "dateOfPay"
+          "data": "dateOfPay",
+          "className": "ui center aligned"
         }, {
           "data": "status",
           "className": "ui center aligned",
         }, {
           "data": "departmentName",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "bookNumberWithdrawStamp",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "dateWithdrawStamp",
           "className": "ui center aligned"
         }, {
           "data": "bookNumberDeliverStamp",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "dateDeliverStamp",
           "className": "ui center aligned"
         }, {
           "data": "fivePartNumber",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "fivePartDate",
           "className": "ui center aligned"
@@ -215,34 +226,49 @@ export class Int0511Component implements OnInit {
           "className": "ui center aligned"
         }, {
           "data": "stampChecker",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
+        }, {
+          "data": "stampChecker2",
+          "className": "ui left aligned"
+        }, {
+          "data": "stampChecker3",
+          "className": "ui left aligned"
         }, {
           "data": "stampBrand",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "numberOfBook",
-          "className": "ui center aligned"
+          "className": "ui right aligned"
         }, {
           "data": "numberOfStamp",
-          "className": "ui center aligned"
+          "className": "ui right aligned"
         }, {
           "data": "valueOfStampPrinted",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": function (data) {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "sumOfValue",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": function (data) {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "taxStamp",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render": function (data) {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "stampCodeStart",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "stampCodeEnd",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "note",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "note",
           "render": function (data, type, row) {
@@ -261,43 +287,51 @@ export class Int0511Component implements OnInit {
       var data = table.row(closestRow).data();
       console.log(data);
 
-      $('#modal-detail').modal({ 
+      $('#modal-detail').modal({
         autofocus: false,
-        onShow : ()=>{
+        onHidden: () => {
+          this.formModal = new FormModal();
+        },
+        onDeny: () => {
+          this.formModal = new FormModal();
+        },
+        onShow: () => {
+          this.formModal.bookNumberDeliverStamp = data.bookNumberDeliverStamp;
+          this.formModal.bookNumberWithdrawStamp = data.bookNumberWithdrawStamp;
+          this.formModal.createdDate = data.createdDate;
+          this.formModal.dateDeliverStamp = data.dateDeliverStamp;
+          this.formModal.dateWithdrawStamp = data.dateWithdrawStamp;
+          this.formModal.departmentName = data.departmentName;
+          this.formModal.exciseDepartment = data.exciseDepartment;
+          this.formModal.exciseDistrict = data.exciseDistrict;
+          this.formModal.exciseRegion = data.exciseRegion;
+          this.formModal.fivePartDate = data.fivePartDate;
+          this.formModal.fivePartNumber = data.fivePartNumber;
+          this.formModal.note = data.note;
+          this.formModal.numberOfBook = data.numberOfBook;
+          this.formModal.numberOfStamp = data.numberOfStamp;
+          this.formModal.serialNumber = data.serialNumber;
+          this.formModal.stampBrand = data.stampBrand;
+          this.formModal.stampCheckDate = data.stampCheckDate;
+          this.formModal.stampChecker = data.stampChecker;
+          this.formModal.stampChecker2 = data.stampChecker2;
+          this.formModal.stampChecker3 = data.stampChecker3;
+          this.formModal.stampCodeEnd = data.stampCodeEnd;
+          this.formModal.stampCodeStart = data.stampCodeStart;
+          this.formModal.stampType = data.stampType;
+          this.formModal.status = data.status;
+          this.formModal.sumOfValue = data.sumOfValue;
+          this.formModal.taxStamp = data.taxStamp;
+          this.formModal.valueOfStampPrinted = data.valueOfStampPrinted;
+          this.formModal.workSheetDetailId = data.workSheetDetailId;
+          this.formModal.fileName = data.fileName;
           this.formModal.dateOfPay = data.dateOfPay;
-        this.formModal.bookNumberDeliverStamp = data.bookNumberDeliverStamp;
-        this.formModal.bookNumberWithdrawStamp = data.bookNumberWithdrawStamp;
-        this.formModal.createdDate = data.createdDate;
-        this.formModal.dateDeliverStamp = data.dateDeliverStamp;
-        this.formModal.dateWithdrawStamp = data.dateWithdrawStamp;
-        this.formModal.departmentName = data.departmentName;
-        this.formModal.exciseDepartment = data.exciseDepartment;
-        this.formModal.exciseDistrict = data.exciseDistrict;
-        this.formModal.exciseRegion = data.exciseRegion;
-        this.formModal.fivePartDate = data.fivePartDate;
-        this.formModal.fivePartNumber = data.fivePartNumber;
-        this.formModal.note = data.note;
-        this.formModal.numberOfBook = data.numberOfBook;
-        this.formModal.numberOfStamp = data.numberOfStamp;
-        this.formModal.serialNumber = data.serialNumber;
-        this.formModal.stampBrand = data.stampBrand;
-        this.formModal.stampCheckDate = data.stampCheckDate;
-        this.formModal.stampChecker = data.stampChecker;
-        this.formModal.stampCodeEnd = data.stampCodeEnd;
-        this.formModal.stampCodeStart = data.stampCodeStart;
-        this.formModal.stampType = data.stampType;
-        this.formModal.status = data.status;
-        this.formModal.sumOfValue = data.sumOfValue;
-        this.formModal.taxStamp = data.taxStamp;
-        this.formModal.valueOfStampPrinted = data.valueOfStampPrinted;
-        this.formModal.workSheetDetailId = data.workSheetDetailId;
-        this.formModal.fileName = data.fileName;
-        var url = 'ia/int0511/listFile';
-        this.ajax.post(url,JSON.stringify(data.workSheetDetailId),res=>{
+          var url = 'ia/int0511/listFile';
+          this.ajax.post(url, JSON.stringify(data.workSheetDetailId), res => {
             this.listFileName = res.json();
-        });
+          });
         }
-      
+
       }).modal('show');
     });
     table.on('click', 'tbody tr button.btn-edit', (e) => {
@@ -305,45 +339,53 @@ export class Int0511Component implements OnInit {
       var data = table.row(closestRow).data();
       this.loading = true;
       $('#modal-edit').modal({
-         autofocus: false,
-         onShow : ()=>{
-           
-              console.log("FormModal : ", data);
-              this.calenda();
-              this.formModal.dateOfPay = data.dateOfPay;
-              this.formModal.bookNumberDeliverStamp = data.bookNumberDeliverStamp;
-              this.formModal.bookNumberWithdrawStamp = data.bookNumberWithdrawStamp;
-              this.formModal.createdDate = data.createdDate;
-              this.formModal.dateDeliverStamp = data.dateDeliverStamp;
-              this.formModal.dateWithdrawStamp = data.dateWithdrawStamp;
-              this.formModal.departmentName = data.departmentName;
-              this.formModal.exciseDepartment = data.exciseDepartment;
-              this.formModal.exciseDistrict = data.exciseDistrict;
-              this.formModal.exciseRegion = data.exciseRegion;
-              this.formModal.fivePartDate = data.fivePartDate;
-              this.formModal.fivePartNumber = data.fivePartNumber;
-              this.formModal.note = data.note;
-              this.formModal.numberOfBook = data.numberOfBook;
-              this.formModal.numberOfStamp = data.numberOfStamp;
-              this.formModal.serialNumber = data.serialNumber;
-              this.formModal.stampBrand = data.stampBrand;
-              this.formModal.stampCheckDate = data.stampCheckDate;
-              this.formModal.stampChecker = data.stampChecker;
-              this.formModal.stampCodeEnd = data.stampCodeEnd;
-              this.formModal.stampCodeStart = data.stampCodeStart;
-              this.formModal.stampType = data.stampType;
-              this.formModal.status = data.status;
-              this.formModal.sumOfValue = data.sumOfValue;
-              this.formModal.taxStamp = data.taxStamp;
-              this.formModal.valueOfStampPrinted = data.valueOfStampPrinted;
-              this.formModal.workSheetDetailId = data.workSheetDetailId;
-              this.formModal.fileName = data.fileName;
-              $("#status").dropdown('set selected');                           
-         },
-         onHidden:()=>{
+        autofocus: false,
+        onHidden: () => {
+          this.formModal = new FormModal();
           this.loading = false;
-         }
-        }).modal('show');            
+        },
+        onDeny: () => {
+          this.formModal = new FormModal();
+          this.loading = false;
+        },
+        onShow: () => {
+
+          console.log("FormModal : ", data);
+          this.calenda();
+          this.formModal.dateOfPay = data.dateOfPay;
+          this.formModal.bookNumberDeliverStamp = data.bookNumberDeliverStamp;
+          this.formModal.bookNumberWithdrawStamp = data.bookNumberWithdrawStamp;
+          this.formModal.createdDate = data.createdDate;
+          this.formModal.dateDeliverStamp = data.dateDeliverStamp;
+          this.formModal.dateWithdrawStamp = data.dateWithdrawStamp;
+          this.formModal.departmentName = data.departmentName;
+          this.formModal.exciseDepartment = data.exciseDepartment;
+          this.formModal.exciseDistrict = data.exciseDistrict;
+          this.formModal.exciseRegion = data.exciseRegion;
+          this.formModal.fivePartDate = data.fivePartDate;
+          this.formModal.fivePartNumber = data.fivePartNumber;
+          this.formModal.note = data.note;
+          this.formModal.numberOfBook = data.numberOfBook;
+          this.formModal.numberOfStamp = data.numberOfStamp;
+          this.formModal.serialNumber = data.serialNumber;
+          this.formModal.stampBrand = data.stampBrand;
+          this.formModal.stampCheckDate = data.stampCheckDate;
+          this.formModal.stampChecker = data.stampChecker;
+          this.formModal.stampChecker2 = data.stampChecker2;
+          this.formModal.stampChecker3 = data.stampChecker3;
+          this.formModal.stampCodeEnd = data.stampCodeEnd;
+          this.formModal.stampCodeStart = data.stampCodeStart;
+          this.formModal.stampType = data.stampType;
+          this.formModal.status = data.status;
+          this.formModal.sumOfValue = data.sumOfValue;
+          this.formModal.taxStamp = data.taxStamp;
+          this.formModal.valueOfStampPrinted = data.valueOfStampPrinted;
+          this.formModal.workSheetDetailId = data.workSheetDetailId;
+          this.formModal.fileName = data.fileName;
+          this.formModal.dateOfPay = data.dateOfPay;
+          $("#status").dropdown('set selected');
+        },
+      }).modal('show');
     });
     table.on('click', 'tbody tr button.btn-delete', (e) => {
       var closestRow = $(e.target).closest('tr');
@@ -388,6 +430,8 @@ class FormModal {
   fivePartDate: string = null;
   stampCheckDate: string = null;
   stampChecker: string = null;
+  stampChecker2: string = null;
+  stampChecker3: string = null;
   stampType: string = null;
   stampBrand: string = null;
   numberOfBook: string = null;

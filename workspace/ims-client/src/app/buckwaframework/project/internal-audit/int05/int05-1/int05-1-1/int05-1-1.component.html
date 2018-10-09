@@ -16,7 +16,7 @@
       <div class="four wide field ">
         <select name="sector " id="sector" class="ui dropdown ai search full-width" (change)="sectorOnchange($event)">
           <option value="">กรุณาเลือก</option>
-          <option *ngFor="let item of sector; index as i;" value="{{item.value}}">{{item.label}}</option>
+          <option *ngFor="let item of sector; index as i;" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
         </select>
       </div>
       <div class="three wide field ">
@@ -25,7 +25,7 @@
       <div class="four wide field ">
         <select name="area" id="area" class="ui dropdown ai search full-width" (change)="areaOnchange($event)">
           <option value="">กรุณาเลือก</option>
-          <option *ngFor="let item of area" value="{{item.value}}">{{item.label}}</option>
+          <option *ngFor="let item of area" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
         </select>
       </div>
     </div>
@@ -37,14 +37,17 @@
       <div class="four wide field ">
         <select name="branch" id="branch" class="ui dropdown ai search full-width">
           <option value="">กรุณาเลือก</option>
-          <option *ngFor="let item of branch; index as i;" value="{{item.value}}">{{item.label}}</option>
+          <option *ngFor="let item of branch; index as i;" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
         </select>
       </div>
       <div class="three wide field ">
-        
+        <label class="text-right full-width">สถานะ</label>
       </div>
       <div class="four wide field ">
-        
+        <select name="status" id="status" class="ui dropdown ai search full-width" >
+          <option value="">กรุณาเลือก</option>
+          <option *ngFor="let item of statusList" value="{{item.typeDescription}}">{{item.typeDescription}}</option>
+        </select>
       </div>
     </div>
     <!-- row 3 -->    
@@ -61,7 +64,7 @@
         </div>
       </div>
       <div class="three wide field ">
-        <label class="text-right full-width">วันนี้สิ้นสุด</label>
+        <label class="text-right full-width">วันที่สิ้นสุด</label>
       </div>
       <div class="four wide field ">
         <div class="ui input">
@@ -86,46 +89,48 @@
 <div class="ui segment {{loading ? 'loading' : ''}}">
   <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%">
     <thead>
-      <tr style="text-align: center;">
-        <th rowspan="2">ลำดับ</th>
-        <th rowspan="2">วันที่ การรับ-จ่าย</th>
-        <th rowspan="2">สถานะ การรับ-จ่าย</th>
-        <th rowspan="2">หน่วยงาน/ผู้ประกอบการที่รับ-จ่ายแสตมป์</th>
-        <th colspan="2">หนังสือขอเบิกแสตมป์</th>
-        <th colspan="2">หนังสือส่งแสตมป์</th>
-        <th rowspan="2">เลขที่ใบ 5 ตอน</th>
-        <th rowspan="2">ลงวันวันที่</th>
-        <th rowspan="2">วันที่ตรวจนับ</th>
-        <th rowspan="2">ผู้ตรวจนับ</th>
-        <th rowspan="2">ชนิดแสตมป์/ขนาดบรรจุ</th>
-        <th rowspan="2">จำนวน (เล่ม)</th>
-        <th rowspan="2">จำนวน (ดวง)</th>
-        <th rowspan="2">มูลค่าที่พิมพ์ (บาทต่อดวง)</th>
-        <th rowspan="2">รวมค่าพิมพ์ (บาท)</th>
-        <th rowspan="2">ค่าภาษี (บาท)</th>
-        <th colspan="2">รหัสแสตมป์</th>
-        <th rowspan="2">หมายเหตุ</th>
-        <th rowspan="2">Action</th>
+      <tr>
+        <th style="text-align: center !important" rowspan="2">ลำดับ</th>
+        <th style="text-align: center !important" rowspan="2">วันที่ การรับ-จ่าย</th>
+        <th style="text-align: center !important" rowspan="2">สถานะ การรับ-จ่าย</th>
+        <th style="text-align: center !important" rowspan="2">หน่วยงาน/ผู้ประกอบการที่รับ-จ่ายแสตมป์</th>
+        <th style="text-align: center !important" colspan="2">หนังสือขอเบิกแสตมป์</th>
+        <th style="text-align: center !important" colspan="2">หนังสือส่งแสตมป์</th>
+        <th style="text-align: center !important" rowspan="2">เลขที่ใบ 5 ตอน</th>
+        <th style="text-align: center !important" rowspan="2">ลงวันวันที่</th>
+        <th style="text-align: center !important" rowspan="2">วันที่ตรวจนับ</th>
+        <th style="text-align: center !important" rowspan="2">วันที่ตรวจนับ</th>
+        <th style="text-align: center !important" rowspan="2">วันที่ตรวจนับ</th>
+        <th style="text-align: center !important" rowspan="2">ผู้ตรวจนับ</th>
+        <th style="text-align: center !important" rowspan="2">ชนิดแสตมป์/ขนาดบรรจุ</th>
+        <th style="text-align: center !important" rowspan="2">จำนวน (เล่ม)</th>
+        <th style="text-align: center !important" rowspan="2">จำนวน (ดวง)</th>
+        <th style="text-align: center !important" rowspan="2">มูลค่าที่พิมพ์ (บาทต่อดวง)</th>
+        <th style="text-align: center !important" rowspan="2">รวมค่าพิมพ์ (บาท)</th>
+        <th style="text-align: center !important" rowspan="2">ค่าภาษี (บาท)</th>
+        <th style="text-align: center !important" colspan="2">รหัสแสตมป์</th>
+        <th style="text-align: center !important" rowspan="2">หมายเหตุ</th>
+        <th style="text-align: center !important" rowspan="2">Action</th>
 
       </tr>
       <tr>
-        <th>เลขที่หนังสือ</th>
-        <th>ลงวันที่</th>
+        <th style="text-align: center !important" >เลขที่หนังสือ</th>
+        <th style="text-align: center !important" >ลงวันที่</th>
+ 
+        <th style="text-align: center !important" >เลขที่หนังสือ</th>
+        <th style="text-align: center !important" >ลงวันที่</th>
 
-        <th>เลขที่หนังสือ</th>
-        <th>ลงวันที่</th>
-
-        <th>รหัสแสตมป์(เริ่ม)</th>
-        <th>รหัสแสตมป์(ถึง)</th>
+        <th style="text-align: center !important" >รหัสแสตมป์(เริ่ม)</th>
+        <th style="text-align: center !important" >รหัสแสตมป์(ถึง)</th>
       </tr>
     </thead>
   </table>
   <br>
   <br>
   <div class="ui centered grid">
-    <a class="ui mini primary button" routerLink="/int05/1/1/2">สรุปแสตป์รายปีงบประมาณ</a>
-    <button class="ui mini primary button"> Export</button>
-    <button class="ui mini primary button"> พิมพ์รายงานตัดปีแสตมป์</button>
+    <a class="ui mini primary button" routerLink="/int05/1/1/2"><i class="file alternate outline icon"></i>สรุปแสตป์รายปีงบประมาณ</a>
+    <button class="ui mini yellow button"><i class="file alternate outline icon"></i> ส่งออก</button>
+    <button class="ui mini yellow button"><i class="file alternate outline icon"></i>พิมพ์รายงานตัดปีแสตมป์</button>
   </div><br>
 </div>
 
@@ -269,6 +274,28 @@
           </div>
         </div>
         <div class="one wide field "></div>
+      </div>
+      <!-- row 6 (2)-->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>ผู้ตรวจนับ</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.stampChecker2" name="stampChecker2" id="stampChecker2" type="text">
+        </div>
+        <div class="eight wide field "></div>
+      </div>
+       <!-- row 6 (3)-->
+       <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="three wide field ">
+          <label>ผู้ตรวจนับ</label>
+        </div>
+        <div class="four wide field ">
+          <input [(ngModel)]="formModal.stampChecker3" name="stampChecker3" id="stampChecker3" type="text">
+        </div>
+        <div class="eight wide field "></div>
       </div>
       <!-- row 7 -->
       <div class="inline fields  ui grid ">
@@ -484,6 +511,28 @@
         </div>
         <div class="four wide field ">
           {{formModal.stampChecker}}
+        </div>
+      </div>
+      <!-- row 6 (2)-->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="eight wide field "></div>
+        <div class="three wide field ">
+          <label>ผู้ตรวจนับ : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.stampChecker2}}
+        </div>
+      </div>
+      <!-- row 6 (3)-->
+      <div class="inline fields  ui grid">
+        <div class="one wide field "></div>
+        <div class="eight wide field "></div>
+        <div class="three wide field ">
+          <label>ผู้ตรวจนับ : </label>
+        </div>
+        <div class="four wide field ">
+          {{formModal.stampChecker3}}
         </div>
       </div>
       <!-- row 7 -->

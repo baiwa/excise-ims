@@ -80,6 +80,12 @@ public class IaStampDetail extends BaseEntity {
 	@Column(name = "STAMP_CHECKER")
 	private String stampChecker;
 
+	@Column(name = "STAMP_CHECKER_2")
+	private String stampChecker2;
+
+	@Column(name = "STAMP_CHECKER_3")
+	private String stampChecker3;
+
 	@Column(name = "STAMP_CODE_END")
 	private String stampCodeEnd;
 
@@ -106,6 +112,33 @@ public class IaStampDetail extends BaseEntity {
 
 	@Column(name = "FILE_NAME")
 	private String fileName;
+
+	@Column(name = "DEPARTMENT_NAME")
+	private String departmentName;
+
+	public String getStampChecker2() {
+		return stampChecker2;
+	}
+
+	public void setStampChecker2(String stampChecker2) {
+		this.stampChecker2 = stampChecker2;
+	}
+
+	public String getStampChecker3() {
+		return stampChecker3;
+	}
+
+	public void setStampChecker3(String stampChecker3) {
+		this.stampChecker3 = stampChecker3;
+	}
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
 
 	public long getWorkSheetDetailId() {
 		return workSheetDetailId;

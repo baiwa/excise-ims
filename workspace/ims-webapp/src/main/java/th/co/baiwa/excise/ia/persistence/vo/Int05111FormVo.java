@@ -12,11 +12,29 @@ public class Int05111FormVo extends DataTableRequest {
 	private String sector;
 	private String area;
 	private String branch;
+	private String officeCode;
 	private String dateForm;
 	private String dateTo;
+	private String status;
 	private List<Int05111Vo> dataList;
 	private Int0511Vo data;
 	private String searchFlag;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
 
 	public String getSector() {
 		return sector;

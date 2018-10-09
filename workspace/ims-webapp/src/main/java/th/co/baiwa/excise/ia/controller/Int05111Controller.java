@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
-import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int05111FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int05111Vo;
@@ -31,15 +30,25 @@ public class Int05111Controller {
 
 	@GetMapping("/sector")
 	@ResponseBody
-	public List<LabelValueBean> sector() {
+	public List<Lov> sector() {
 		return int05111Service.sector();
 	}
 
 	@PostMapping("/area")
-	@ResponseBody
-	public List<LabelValueBean> area(@RequestBody String id) {
-		return int05111Service.area(id);
-	}
+    @ResponseBody
+    public List<Lov> sector(@RequestBody Long idMaster){
+
+        List<Lov> arae = int05111Service.area(idMaster);
+        return arae;
+    }
+	
+	@PostMapping("/branch")
+    @ResponseBody
+    public List<Lov> branch(@RequestBody Long idMaster){
+
+        List<Lov> branch = int05111Service.branch(idMaster);
+        return branch;
+    }
 
 	@PostMapping("/save")
 	@ResponseBody
