@@ -17,7 +17,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import baiwa.co.th.ws.Response;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.IaStamGenre;
@@ -31,7 +32,6 @@ import th.co.baiwa.excise.ia.persistence.repository.IaStampFileRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int051111Vo;
 import th.co.baiwa.excise.ta.controller.ExciseDetailController;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseFile;
-import th.co.baiwa.excise.ws.WebServiceExciseService;
 
 @Service
 public class Int051111Service {
@@ -48,9 +48,9 @@ public class Int051111Service {
 	
 	@Autowired
 	private IaStampFileRepository iaStampFileRepository;
-
+	
 	@Autowired
-	 private WebServiceExciseService webServiceExciseService;
+	private LovRepository lovRepository;
 	
     @Value("${app.datasource.path.upload}")
     private String pathed;
@@ -64,13 +64,16 @@ public class Int051111Service {
             IaStampDetail entity = new IaStampDetail();
             
             /*get sector*/
-            Response response = webServiceExciseService.webServiceLdap(UserLoginUtils.getCurrentUsername(), "password");
-            entity.setExciseRegion(response.getOffice());
+            String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeId();          
+            entity.setOfficeCode(officeCode);        
             
+            Lov lov = lovRepository.findBySubType(officeCode);
+            if (lov != null) {
+				entity.setOfficeDesc(lov.getSubTypeDescription());
+			}
             /* set sector area and branch*/
             entity.setDateOfPay(DateConstant.convertStrDDMMYYYYToDate(form.getDateOfPay()));            
-            entity.setStatus(form.getStatus());
-            entity.setDepartmentName(form.getDepartmentName());
+            entity.setStatus(form.getStatus());            
             entity.setBookNumberWithdrawStamp(form.getBookNumberWithdrawStamp());
             entity.setDateWithdrawStamp(DateConstant.convertStrDDMMYYYYToDate(form.getDateWithdrawStamp()));
             entity.setBookNumberDeliverStamp(form.getBookNumberDeliverStamp());

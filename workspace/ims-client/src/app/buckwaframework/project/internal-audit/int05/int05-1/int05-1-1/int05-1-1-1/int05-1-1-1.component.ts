@@ -1,37 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { File } from './../../../../../../common/models/file';
 import { TextDateTH, formatter } from '../../../../../../common/helper/datepicker';
 import { MessageBarService, AjaxService } from 'app/buckwaframework/common/services';
 import { BreadCrumb } from 'models/breadcrumb';
+import { Int05111Service } from 'projects/internal-audit/int05/int05-1/int05-1-1/int05-1-1-1/int05-1-1-1.service';
 declare var jQuery: any;
 declare var $: any;
 
 @Component({
   selector: 'app-int05-1-1-1',
   templateUrl: './int05-1-1-1.component.html',
-  styleUrls: ['./int05-1-1-1.component.css']
+  styleUrls: ['./int05-1-1-1.component.css'],
+  providers: [Int05111Service]
 })
-export class Int05111Component implements OnInit {
+export class Int05111Component implements OnInit,AfterViewInit {
 
   formModal: FormModal = new FormModal();
   data: FormModal[];
-  stampType : any;
-  stampGenre :any;
+  stampType: any;
+  stampGenre: any;
   table: any;
   randomNumber: number;
-  listButton : any;
-  numberButton : number;
-  file :File[];
-  loading : boolean;
+  listButton: any;
+  numberButton: number;
+  file: File[];
+  loading: boolean;
+  statusList: any;
   breadcrumb: BreadCrumb[]
   constructor(
     private message: MessageBarService,
-    private ajax: AjaxService,    
+    private ajax: AjaxService,
+    private int05111Service: Int05111Service
   ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบพัสดุ", route: "#" },
-      { label: "ตรวจสอบพัสดุพื้นที่สาขา", route: "int05/1/1" },
+      { label: "ตรวจสอบแสตมป์", route: "int05/1/1" },
       { label: "เพิ่มข้อมูลแสตมป์", route: "#" },
     ];
     this.data = []
@@ -40,51 +44,59 @@ export class Int05111Component implements OnInit {
     this.stampGenre = null;
     this.file = new Array<File>();
     this.listButton = [];
-    this.numberButton=1;
+    this.numberButton = 1;
     this.loading = false;
   }
 
   ngOnInit() {
     this.calenda();
-    this.dataTable();    
+    this.dataTable();
     this.stampTypeList();
     this.listButton.push(this.numberButton);
+    this.status()
   }
   ngAfterViewInit() {
     this.callDropdown();
   }
 
-  checkBlank=(e)=>{
-    if(e == null || e=="") return true;
+  status = () => {
+    this.int05111Service.status().then((res)=>{
+
+      this.statusList = res;
+      console.log(this.statusList);
+    });
   }
-  restoreDropdown(){
+  checkBlank = (e) => {
+    if (e == null || e == "") return true;
+  }
+  restoreDropdown() {
     $("#stampType").dropdown('restore defaults');
     $("#stampBrand").dropdown('restore defaults');
     $("#status").dropdown('restore defaults');
   }
-  callDropdown(){
-    $("#stampType").dropdown().css('width','100%');
-    $("#stampBrand").dropdown().css('width','100%');
-    $("#status").dropdown().css('width','100%');
+  callDropdown() {
+    $("#stampType").dropdown().css('width', '100%');
+    $("#stampBrand").dropdown().css('width', '100%');
+    $("#status").dropdown().css('width', '100%');
   }
-  stampTypeList=()=> {
+  stampTypeList = () => {
     let url = "ia/int051111/stamTypes";
-    this.ajax.get(url,res=>{
+    this.ajax.get(url, res => {
       this.stampType = res.json();
     })
   }
-  stampGenreList=(e)=>{
-    if(!this.checkBlank(e.target.value)){
+  stampGenreList = (e) => {
+    if (!this.checkBlank(e.target.value)) {
       $("#stampBrand").dropdown('restore defaults');
-      console.log("id : "+e.target.value);
-      
-      let url = "ia/int051111/stamGenre/"+e.target.value;
-      this.ajax.get(url,res=>{
+      console.log("id : " + e.target.value);
+
+      let url = "ia/int051111/stamGenre/" + e.target.value;
+      this.ajax.get(url, res => {
         console.log(res.json());
         this.stampGenre = res.json();
       })
-    }   
-  }  
+    }
+  }
   calenda = () => {
     $("#dateF").calendar({
       maxDate: new Date(),
@@ -132,27 +144,27 @@ export class Int05111Component implements OnInit {
     });
   }
 
-  onAddButton=()=>{     
+  onAddButton = () => {
     console.log("Add Button");
-    this.listButton.push(++this.numberButton);    
+    this.listButton.push(++this.numberButton);
     console.log(this.listButton);
   }
-  deleteButton=(e)=>{
-    console.log("Delete Button : ",e);
-    let id="#"+e;
-    let idButton="#delete"+e;
+  deleteButton = (e) => {
+    console.log("Delete Button : ", e);
+    let id = "#" + e;
+    let idButton = "#delete" + e;
     $(id).remove();
-    let index = this.listButton.findIndex(obj => obj == e);      
+    let index = this.listButton.findIndex(obj => obj == e);
     this.listButton.splice(index, 1);
   }
-  onAddFile=()=>{
+  onAddFile = () => {
     this.listButton.forEach(element => {
-      var fileName = "#fileName"+element;
+      var fileName = "#fileName" + element;
       var file = $(fileName)[0].files[0];
       this.onUpload(file);
     });
   }
-  onUpload=(event)=>{    
+  onUpload = (event) => {
     if (event) {
       let reader = new FileReader();
 
@@ -163,7 +175,7 @@ export class Int05111Component implements OnInit {
           type: type,
           value: e.target.result
         };
-        
+
         this.file.push(f);
         console.log(this.file);
       };
@@ -172,64 +184,64 @@ export class Int05111Component implements OnInit {
   }
 
   onAdd = () => {
-    if(this.checkBlank($("#dateOfPay").val())){
-      this.message.alert("กรุณาระบุ วันที่รับ - จ่าย","แจ้งเตือน");
+    if (this.checkBlank($("#dateOfPay").val())) {
+      this.message.alert("กรุณาระบุ วันที่รับ - จ่าย", "แจ้งเตือน");
       return false;
     }
-    if(this.checkBlank($("#status").val())){
-      this.message.alert("กรุณาระบุ วันที่รับ - จ่าย","แจ้งเตือน");
+    if (this.checkBlank($("#status").val())) {
+      this.message.alert("กรุณาระบุ วันที่รับ - จ่าย", "แจ้งเตือน");
       return false;
     }
-    if(this.checkBlank($("#departmentName").val())){
-      this.message.alert("กรุณาระบุ หน่วยงาน / ผู้ประกอบการ","แจ้งเตือน");
+    if (this.checkBlank($("#departmentName").val())) {
+      this.message.alert("กรุณาระบุ หน่วยงาน / ผู้ประกอบการ", "แจ้งเตือน");
       return false;
     }
-    if(this.checkBlank($("#stampType").val())){
-      this.message.alert("กรุณาระบุ ประเภทแสตมป์","แจ้งเตือน");
+    if (this.checkBlank($("#stampType").val())) {
+      this.message.alert("กรุณาระบุ ประเภทแสตมป์", "แจ้งเตือน");
       return false;
     }
-    if(this.checkBlank($("#stampBrand").val())){
-      this.message.alert("กรุณาระบุ ชนิดแสตมป์","แจ้งเตือน");
+    if (this.checkBlank($("#stampBrand").val())) {
+      this.message.alert("กรุณาระบุ ชนิดแสตมป์", "แจ้งเตือน");
       return false;
     }
 
-    if ($("#edit").val() == "edit" && $("#idEdit").val()!="") {
-      
+    if ($("#edit").val() == "edit" && $("#idEdit").val() != "") {
+
       const index = this.data.findIndex(obj => obj.idRandom == $("#idEdit").val());
-      this.formModal.sumOfValue = this.formModal.numberOfStamp*this.formModal.valueOfStampPrinted;
+      this.formModal.sumOfValue = this.formModal.numberOfStamp * this.formModal.valueOfStampPrinted;
       this.formModal.dateOfPay = $("#dateOfPay").val();
       this.formModal.dateDeliverStamp = $("#dateDeliverStamp").val();
       this.formModal.dateWithdrawStamp = $("#dateWithdrawStamp").val();
       this.formModal.fivePartDate = $("#fivePartDate").val();
       this.formModal.stampCheckDate = $("#stampCheckDate").val();
       this.formModal.stampTypeId = this.formModal.stampType;
-      this.formModal.stampType = ($("#stampType option:selected").text()=="กรุณาเลือก" ? "":$("#stampType option:selected").text());
+      this.formModal.stampType = ($("#stampType option:selected").text() == "กรุณาเลือก" ? "" : $("#stampType option:selected").text());
       this.formModal.stampBrandId = this.formModal.stampBrand
-      this.formModal.stampBrand = ($("#stampBrand option:selected").text()=="กรุณาเลือก" ? "":$("#stampBrand option:selected").text())
+      this.formModal.stampBrand = ($("#stampBrand option:selected").text() == "กรุณาเลือก" ? "" : $("#stampBrand option:selected").text())
       this.formModal.file = this.file;
       this.data[index] = this.formModal;
       $("#edit").val("");
       $("#idEdit").val("");
     } else {
-      console.log("Add : ",this.formModal.dateOfPay);
-      for(let i=0;i<this.listButton;i++){
-        let getNameFile = $("input[name=fileName"+this.listButton[i]+"]").val();
+      console.log("Add : ", this.formModal.dateOfPay);
+      for (let i = 0; i < this.listButton; i++) {
+        let getNameFile = $("input[name=fileName" + this.listButton[i] + "]").val();
         this.onUpload(getNameFile);
       }
       this.formModal.idRandom = this.randomNumber++;
       // sum money
-      this.formModal.sumOfValue = this.formModal.numberOfStamp*this.formModal.valueOfStampPrinted;
+      this.formModal.sumOfValue = this.formModal.numberOfStamp * this.formModal.valueOfStampPrinted;
       this.formModal.dateOfPay = $("#dateOfPay").val();
       this.formModal.dateDeliverStamp = $("#dateDeliverStamp").val();
       this.formModal.dateWithdrawStamp = $("#dateWithdrawStamp").val();
       this.formModal.fivePartDate = $("#fivePartDate").val();
       this.formModal.stampCheckDate = $("#stampCheckDate").val();
       this.formModal.stampTypeId = this.formModal.stampType;
-      this.formModal.stampType = ($("#stampType option:selected").text()=="กรุณาเลือก" ? "":$("#stampType option:selected").text());
+      this.formModal.stampType = ($("#stampType option:selected").text() == "กรุณาเลือก" ? "" : $("#stampType option:selected").text());
       this.formModal.stampBrandId = this.formModal.stampBrand
-      this.formModal.stampBrand = ($("#stampBrand option:selected").text()=="กรุณาเลือก" ? "":$("#stampBrand option:selected").text())
+      this.formModal.stampBrand = ($("#stampBrand option:selected").text() == "กรุณาเลือก" ? "" : $("#stampBrand option:selected").text())
       this.formModal.file = this.file;
-      
+
       this.data.push(this.formModal);
     }
     console.log(this.data);
@@ -245,22 +257,22 @@ export class Int05111Component implements OnInit {
     this.formModal.stampCheckDate = "";
     this.restoreDropdown();
     this.onAddFile();
-    this.numberButton=1;
+    this.numberButton = 1;
     this.listButton = [this.numberButton];
     $("#fileName1").val("");
   }
 
   onSave = () => {
     console.log(this.data.length);
-    if(this.data.length==0){
-      this.message.alert("ไม่มีข้อมูล","แจ้งเตือน");
+    if (this.data.length == 0) {
+      this.message.alert("ไม่มีข้อมูล", "แจ้งเตือน");
       return false;
     }
 
     this.message.comfirm((res) => {
       if (res) {
-        this.loading =true;
-        let url = 'ia/int051111/save';    
+        this.loading = true;
+        let url = 'ia/int051111/save';
         this.ajax.post(url, JSON.stringify(this.data),
           res => {
             this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
@@ -268,12 +280,12 @@ export class Int05111Component implements OnInit {
             this.table.clear().draw();
             this.table.rows.add(this.data); // Add new data
             this.table.columns.adjust().draw(); // Redraw the DataTable
-            this.loading =false;
+            this.loading = false;
           }, error => {
             this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
-            this.loading =false;
+            this.loading = false;
           });
-         
+
       }
     }, "", "ยืนยันการทำรายการ");
   }
@@ -343,10 +355,10 @@ export class Int05111Component implements OnInit {
         }, {
           "data": "taxStamp",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "stampCodeStart",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "stampCodeEnd",
           "className": "ui center aligned"
         }, {
@@ -370,9 +382,9 @@ export class Int05111Component implements OnInit {
 
     this.table.on('click', 'tbody tr button.btn-edit', (e) => {
       var closestRow = $(e.target).closest('tr');
-      var data = this.table.row(closestRow).data(); 
-      console.log("data : ",data);
-      setTimeout(() => {        
+      var data = this.table.row(closestRow).data();
+      console.log("data : ", data);
+      setTimeout(() => {
         this.formModal.dateOfPay = data.dateOfPay;
         this.formModal.bookNumberDeliverStamp = data.bookNumberDeliverStamp;
         this.formModal.bookNumberWithdrawStamp = data.bookNumberWithdrawStamp;
@@ -394,18 +406,18 @@ export class Int05111Component implements OnInit {
         this.formModal.stampCodeEnd = data.stampCodeEnd;
         this.formModal.stampCodeStart = data.stampCodeStart;
         this.formModal.stampType = data.stampType;
-        this.formModal.stampTypeId = data.stampTypeId;        
+        this.formModal.stampTypeId = data.stampTypeId;
         this.formModal.status = data.status;
         this.formModal.sumOfValue = data.sumOfValue;
         this.formModal.taxStamp = data.taxStamp;
         this.formModal.valueOfStampPrinted = data.valueOfStampPrinted;
         this.formModal.workSheetDetailId = data.workSheetDetailId;
         this.formModal.fileName = data.fileName;
-        $("#status").dropdown('set selected',this.formModal.status);
-        $("#stampType").dropdown('set selected',this.formModal.stampTypeId);
+        $("#status").dropdown('set selected', this.formModal.status);
+        $("#stampType").dropdown('set selected', this.formModal.stampTypeId);
         setTimeout(() => {
-          $("#stampBrand").dropdown('set selected',this.formModal.stampBrandId);
-        }, 50);       
+          $("#stampBrand").dropdown('set selected', this.formModal.stampBrandId);
+        }, 50);
         $("#edit").val("edit");
         $("#idEdit").val(data.idRandom);
 
@@ -418,12 +430,12 @@ export class Int05111Component implements OnInit {
       this.message.comfirm((res) => {
         if (res) {
           let index = this.data.findIndex(obj => obj.idRandom == data.idRandom);
-          
+
           this.data.splice(index, 1);
 
           setTimeout(() => {
             this.formModal.dateOfPay = "";
-            this.formModal.bookNumberDeliverStamp ="";
+            this.formModal.bookNumberDeliverStamp = "";
             this.formModal.bookNumberWithdrawStamp = "";
             this.formModal.dateDeliverStamp = "";
             this.formModal.dateWithdrawStamp = "";
@@ -453,7 +465,7 @@ export class Int05111Component implements OnInit {
             $("#stampBrand").dropdown('restore defaults');
             $("#status").dropdown('restore defaults');
           }, 40);
-          
+
           this.table.clear().draw();
           this.table.rows.add(this.data); // Add new data
           this.table.columns.adjust().draw(); // Redraw the DataTable
@@ -483,7 +495,7 @@ class FormModal {
   stampType: string = null;
   stampBrand: string = null;
   stampTypeId: string = null;
-  stampBrandId:string = null;
+  stampBrandId: string = null;
   numberOfBook: string = null;
   numberOfStamp: number = null;
   valueOfStampPrinted: number = null;
@@ -494,5 +506,5 @@ class FormModal {
   note: string = null;
   fileName: [any];
   idRandom: number = 0;
-  file : File[];
+  file: File[];
 }

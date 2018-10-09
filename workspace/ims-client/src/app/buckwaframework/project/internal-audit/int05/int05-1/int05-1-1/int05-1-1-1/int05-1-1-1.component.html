@@ -33,8 +33,7 @@
                     <div class="four wide field ">
                         <select class="ui search dropdown" [(ngModel)]="formModal.status" name="status" id="status">
                             <option value="">กรุณาเลือก</option>
-                            <option value="รับ">รับ </option>
-                            <option value="จ่าย">จ่าย </option>
+                            <option *ngFor="let item of statusList" value="{{item.typeDescription}}">{{item.typeDescription}} </option>                           
                         </select>
                     </div>
                     <div class="one wide field "></div>

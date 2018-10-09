@@ -5,12 +5,10 @@ import java.util.Date;
 
 public class Int05112DetailVo {
 	private Long workSheetDetailId;
-	private String exciseDepartment;
-	private String exciseRegion;
-	private String exciseDistrict;
 	private Date dateOfPay;
 	private String status;
-	private String departmentName;
+	private String officeCode;
+	private String officeDesc;
 	private String bookNumberWithdraw_Stamp;
 	private String dateWithdrawStamp;
 	private String bookNumberDeliverStamp;
@@ -41,30 +39,6 @@ public class Int05112DetailVo {
 		this.workSheetDetailId = workSheetDetailId;
 	}
 
-	public String getExciseDepartment() {
-		return exciseDepartment;
-	}
-
-	public void setExciseDepartment(String exciseDepartment) {
-		this.exciseDepartment = exciseDepartment;
-	}
-
-	public String getExciseRegion() {
-		return exciseRegion;
-	}
-
-	public void setExciseRegion(String exciseRegion) {
-		this.exciseRegion = exciseRegion;
-	}
-
-	public String getExciseDistrict() {
-		return exciseDistrict;
-	}
-
-	public void setExciseDistrict(String exciseDistrict) {
-		this.exciseDistrict = exciseDistrict;
-	}
-
 	public Date getDateOfPay() {
 		return dateOfPay;
 	}
@@ -81,12 +55,20 @@ public class Int05112DetailVo {
 		this.status = status;
 	}
 
-	public String getDepartmentName() {
-		return departmentName;
+	public String getOfficeCode() {
+		return officeCode;
 	}
 
-	public void setDepartmentName(String departmentName) {
-		this.departmentName = departmentName;
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
+
+	public String getOfficeDesc() {
+		return officeDesc;
+	}
+
+	public void setOfficeDesc(String officeDesc) {
+		this.officeDesc = officeDesc;
 	}
 
 	public String getBookNumberWithdraw_Stamp() {

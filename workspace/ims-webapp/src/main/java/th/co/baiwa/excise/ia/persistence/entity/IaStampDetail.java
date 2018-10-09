@@ -44,17 +44,11 @@ public class IaStampDetail extends BaseEntity {
 	@Column(name = "DATE_WITHDRAW_STAMP")
 	private Date dateWithdrawStamp;
 
-	@Column(name = "DEPARTMENT_NAME")
-	private String departmentName;
+	@Column(name = "OFFICE_CODE")
+	private String officeCode;
 
-	@Column(name = "EXCISE_DEPARTMENT")
-	private String exciseDepartment;
-
-	@Column(name = "EXCISE_DISTRICT")
-	private String exciseDistrict;
-
-	@Column(name = "EXCISE_REGION")
-	private String exciseRegion;
+	@Column(name = "OFFICE_DESC")
+	private String officeDesc;
 
 	@Column(name = "FIVE_PART_DATE")
 	private Date fivePartDate;
@@ -161,36 +155,20 @@ public class IaStampDetail extends BaseEntity {
 		this.dateWithdrawStamp = dateWithdrawStamp;
 	}
 
-	public String getDepartmentName() {
-		return departmentName;
+	public String getOfficeCode() {
+		return officeCode;
 	}
 
-	public void setDepartmentName(String departmentName) {
-		this.departmentName = departmentName;
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 
-	public String getExciseDepartment() {
-		return exciseDepartment;
+	public String getOfficeDesc() {
+		return officeDesc;
 	}
 
-	public void setExciseDepartment(String exciseDepartment) {
-		this.exciseDepartment = exciseDepartment;
-	}
-
-	public String getExciseDistrict() {
-		return exciseDistrict;
-	}
-
-	public void setExciseDistrict(String exciseDistrict) {
-		this.exciseDistrict = exciseDistrict;
-	}
-
-	public String getExciseRegion() {
-		return exciseRegion;
-	}
-
-	public void setExciseRegion(String exciseRegion) {
-		this.exciseRegion = exciseRegion;
+	public void setOfficeDesc(String officeDesc) {
+		this.officeDesc = officeDesc;
 	}
 
 	public Date getFivePartDate() {

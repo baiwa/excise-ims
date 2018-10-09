@@ -19,7 +19,7 @@ export class Int05112Component implements OnInit {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบพัสดุ", route: "#" },
-      { label: "ตรวจสอบพัสดุภาคพื้นที่", route: "int05/1" },
+      { label: "ตรวจสอบแสตมป์", route: "int05/1/1" },
       { label: "สรุปแสตมป์รายปีงบประมาณ", route: "#" },
     ];
     this.data = []
@@ -126,7 +126,6 @@ export class Int05112Component implements OnInit {
         { "data": "branchUpToDateNumberOfStamp", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
         { "data": "branchUpToDateMoneyOfStamp", "render": function (data, type, row, meta) { if (row.order.split(".").length == 1) return ''; return data; }, "className": "ui center aligned" },
 
-        { "data": "note", "className": "ui center aligned" },
 
       ]
     });
