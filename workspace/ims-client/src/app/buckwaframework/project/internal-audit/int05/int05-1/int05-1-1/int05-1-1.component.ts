@@ -26,7 +26,7 @@ export class Int0511Component implements OnInit {
       this.breadcrumb = [
         { label: "ตรวจสอบภายใน", route: "#" },
         { label: "ตรวจสอบพัสดุ", route: "#" },
-        { label: "ตรวจสอบพัสดุพื้นที่สาขา", route: "#" },
+        { label: "ตรวจสอบแสตมป์", route: "#" },
       ];
   }
 

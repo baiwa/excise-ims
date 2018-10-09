@@ -4,12 +4,10 @@ import java.math.BigDecimal;
 
 public class Int0511Vo {
 	private String workSheetDetailId;
-	private String exciseDepartment;
-	private String exciseRegion;
-	private String exciseDistrict;
 	private String dateOfPay;
 	private String status;
-	private String departmentName;
+	private String officeDesc;
+	private String officeCode;
 	private String bookNumberWithdrawStamp;
 	private String dateWithdrawStamp;
 	private String bookNumberDeliverStamp;
@@ -32,44 +30,12 @@ public class Int0511Vo {
 	private String createdDate;
 	private String fileName;
 
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
 	public String getWorkSheetDetailId() {
 		return workSheetDetailId;
 	}
 
 	public void setWorkSheetDetailId(String workSheetDetailId) {
 		this.workSheetDetailId = workSheetDetailId;
-	}
-
-	public String getExciseDepartment() {
-		return exciseDepartment;
-	}
-
-	public void setExciseDepartment(String exciseDepartment) {
-		this.exciseDepartment = exciseDepartment;
-	}
-
-	public String getExciseRegion() {
-		return exciseRegion;
-	}
-
-	public void setExciseRegion(String exciseRegion) {
-		this.exciseRegion = exciseRegion;
-	}
-
-	public String getExciseDistrict() {
-		return exciseDistrict;
-	}
-
-	public void setExciseDistrict(String exciseDistrict) {
-		this.exciseDistrict = exciseDistrict;
 	}
 
 	public String getDateOfPay() {
@@ -88,12 +54,20 @@ public class Int0511Vo {
 		this.status = status;
 	}
 
-	public String getDepartmentName() {
-		return departmentName;
+	public String getOfficeDesc() {
+		return officeDesc;
 	}
 
-	public void setDepartmentName(String departmentName) {
-		this.departmentName = departmentName;
+	public void setOfficeDesc(String officeDesc) {
+		this.officeDesc = officeDesc;
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 
 	public String getBookNumberWithdrawStamp() {
@@ -254,6 +228,14 @@ public class Int0511Vo {
 
 	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 }

@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
@@ -21,19 +24,22 @@ import th.co.baiwa.excise.ia.persistence.vo.Int0511Vo;
 
 @Service
 public class Int05111Service {
-	
+
 	@Autowired
 	private CheckStampBranchDao checkStampBranchDao;
-	
+
 	@Autowired
 	private IaStamDetailRepository iaStamDetailRepository;
-	
+
 	@Autowired
 	private IaStampFileRepository iaStampFileRepository;
 
+	@Autowired
+	private LovRepository lovRepository;
+
 	public DataTableAjax<Int05111Vo> findAll(Int05111FormVo formVo) {
-	    formVo.setDateForm(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateForm()));
-	    formVo.setDateTo(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateTo()));
+		formVo.setDateForm(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateForm()));
+		formVo.setDateTo(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateTo()));
 		List<Int05111Vo> list = checkStampBranchDao.findAll(formVo);
 		Long count = checkStampBranchDao.count(formVo);
 		DataTableAjax<Int05111Vo> dataTableAjax = new DataTableAjax<>();
@@ -58,15 +64,18 @@ public class Int05111Service {
 
 	@Transactional
 	public void save(Int05111FormVo formVo) {
-			
-		Int0511Vo form = formVo.getData();		
+
+		Int0511Vo form = formVo.getData();
 		IaStampDetail entity = iaStamDetailRepository.findOne(Long.valueOf(form.getWorkSheetDetailId()));
-		//entity.setExciseDepartment(form.getExciseDepartment());
-		//entity.setExciseRegion(form.getExciseRegion());
-		//entity.setExciseDistrict(form.getExciseDistrict());
+
+		/* officeCode */
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeId();
+		entity.setOfficeCode(officeCode);
+		Lov lov = lovRepository.findBySubType(officeCode);
+		entity.setOfficeDesc(lov.getSubTypeDescription());
+
 		entity.setDateOfPay(DateConstant.convertStrDDMMYYYYToDate(form.getDateOfPay()));
 		entity.setStatus(form.getStatus());
-		entity.setDepartmentName(form.getDepartmentName());
 		entity.setBookNumberWithdrawStamp(form.getBookNumberWithdrawStamp());
 		entity.setDateWithdrawStamp(DateConstant.convertStrDDMMYYYYToDate(form.getDateWithdrawStamp()));
 		entity.setBookNumberDeliverStamp(form.getBookNumberDeliverStamp());
@@ -85,22 +94,26 @@ public class Int05111Service {
 		entity.setStampCodeStart(form.getStampCodeStart());
 		entity.setStampCodeEnd(form.getStampCodeEnd());
 		entity.setNote(form.getNote());
-		entity.setCreatedDate(DateConstant.convertStrDDMMYYYYToDate(form.getCreatedDate()));		
-		iaStamDetailRepository.save(entity);		
+		entity.setCreatedDate(DateConstant.convertStrDDMMYYYYToDate(form.getCreatedDate()));
+		iaStamDetailRepository.save(entity);
 	}
-	
+
 	public void delete(Int05111FormVo formvo) {
-		
+
 		IaStampDetail entity = iaStamDetailRepository.findOne(Long.valueOf(formvo.getData().getWorkSheetDetailId()));
 		iaStamDetailRepository.delete(entity);
 	}
-	
-	public List<String> listFile(String id){		
+
+	public List<String> listFile(String id) {
 		List<String> fileName = new ArrayList<>();
 		List<IaStampFile> list = iaStampFileRepository.findByDetailId(id);
 		for (IaStampFile iaStampFile : list) {
 			fileName.add(iaStampFile.getFileName());
 		}
 		return fileName;
+	}
+	
+	public List<Lov> status(){
+		return lovRepository.findByType("STAMP");
 	}
 }

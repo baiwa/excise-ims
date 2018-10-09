@@ -14,6 +14,7 @@ export class Int071Component implements OnInit {
   loading: boolean = false;
   loadingTable: boolean = false;
   checkSave: boolean = false;
+
   constructor(private selfService: Int071Service) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
@@ -22,24 +23,11 @@ export class Int071Component implements OnInit {
     ];
   }
 
-
-  ngOnInit() {
+  ngAfterViewInit() {
     this.hideData();
-
-    $('#Int072').DataTable({
-      createdRow: function (row, data, dataIndex) {
-       console.log("row" , row);
-       console.log("data" , data);
-       console.log("dataIndex" , dataIndex);
-          //$(row).addClass('bg-c-red');
-        
-       
-
-      }         
-
-    });
-
   }
+
+  ngOnInit() {}
 
   onSave = () => {
     this.loadingTable = true;
@@ -67,14 +55,6 @@ export class Int071Component implements OnInit {
 
   hideData() {
     $("#dataTable").hide();
-  }
-
-  popupEditData() {
-    $("#modalInt071").modal("show");
-  }
-
-  closePopupEdit() {
-    $("#modalInt071").modal("hide");
   }
 
   getLoading = args => {

@@ -38,12 +38,8 @@ public class IaStampDetailDao {
 	    	public Int05112DetailVo mapRow(ResultSet rs, int arg1) throws SQLException {
 	    		Int05112DetailVo vo = new Int05112DetailVo();
 	    		vo.setWorkSheetDetailId(rs.getLong("WORK_SHEET_DETAIL_ID"));
-	    		vo.setExciseDepartment(rs.getString("EXCISE_DEPARTMENT"));
-	    		vo.setExciseRegion(rs.getString("EXCISE_REGION"));
-	    		vo.setExciseDistrict(rs.getString("EXCISE_DISTRICT"));
 	    		vo.setDateOfPay(rs.getDate("DATE_OF_PAY"));
 	    		vo.setStatus(rs.getString("STATUS"));
-	    		vo.setDepartmentName(rs.getString("DEPARTMENT_NAME"));
 	    		vo.setBookNumberWithdraw_Stamp(rs.getString("BOOK_NUMBER_WITHDRAW_STAMP"));
 	    		vo.setDateWithdrawStamp(DateConstant.convertDateToStr(rs.getDate("DATE_WITHDRAW_STAMP"), FORMAT_DATE.DDMMYYYY));
 	    		vo.setBookNumberDeliverStamp(rs.getString("BOOK_NUMBER_DELIVER_STAMP"));

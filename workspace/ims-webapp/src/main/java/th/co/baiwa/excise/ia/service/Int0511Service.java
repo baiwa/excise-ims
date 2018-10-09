@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
@@ -29,6 +32,9 @@ public class Int0511Service {
 	
 	@Autowired
 	private IaStampFileRepository iaStampFileRepository;
+	
+	@Autowired
+	private LovRepository lovRepository;
 
 	public DataTableAjax<Int0511Vo> findAll(Int0511FormVo formVo) {
 	    
@@ -63,12 +69,16 @@ public class Int0511Service {
 			
 		Int0511Vo form = formVo.getData();		
 		IaStampDetail entity = iaStamDetailRepository.findOne(Long.valueOf(form.getWorkSheetDetailId()));
-		//entity.setExciseDepartment(form.getExciseDepartment());
-		//entity.setExciseRegion(form.getExciseRegion());
-		//entity.setExciseDistrict(form.getExciseDistrict());
+		
+		/*officeCode*/
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeId();
+		entity.setOfficeCode(officeCode);
+		Lov lov  = lovRepository.findBySubType(officeCode);
+		entity.setOfficeDesc(lov.getSubTypeDescription());
+		
 		entity.setDateOfPay(DateConstant.convertStrDDMMYYYYToDate(form.getDateOfPay()));
 		entity.setStatus(form.getStatus());
-		entity.setDepartmentName(form.getDepartmentName());
+		
 		entity.setBookNumberWithdrawStamp(form.getBookNumberWithdrawStamp());
 		entity.setDateWithdrawStamp(DateConstant.convertStrDDMMYYYYToDate(form.getDateWithdrawStamp()));
 		entity.setBookNumberDeliverStamp(form.getBookNumberDeliverStamp());

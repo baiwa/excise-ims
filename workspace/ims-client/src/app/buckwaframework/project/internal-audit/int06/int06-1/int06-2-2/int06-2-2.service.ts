@@ -2,8 +2,7 @@ import { Injectable } from "@angular/core";
 import { AjaxService } from "services/ajax.service";
 import { MessageBarService } from "services/message-bar.service";
 import { Router } from "@angular/router";
-import { async } from "q";
-
+declare var $: any;
 @Injectable()
 export class Int0622Service {
   model: FormSave;
@@ -15,7 +14,15 @@ export class Int0622Service {
   ) {
     this.model = new FormSave();
   }
-
+  blurAccountId = (value) => {
+    let url = "ia/int06122/checkData";
+    return this.ajax.post(url, JSON.stringify(value), success => {
+      if(success.json() == "NOTEMPTY"){
+        this.message.errorModal('รหัสบัญชี มีอยู่ในระบบแล้ว');
+        $("#accountId").val("");
+      }
+    });
+  }
   save(model: FormSave) {
     // this.message.comfirm((res) => {
     //   if (res) {

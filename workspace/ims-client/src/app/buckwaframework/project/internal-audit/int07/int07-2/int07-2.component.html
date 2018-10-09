@@ -1,35 +1,45 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
-<div class="ui attached segment {{ loadingTable? 'loading': '' }}">
-    <table class="ui  small celled table" id="dataTable">
-        <thead>
-            <tr>
-                <th style="text-align: center;">เลขที่บัญชีแยกประเภท</th>
-                <th style="text-align: center;">ชื่อบัญชีแยกประเภท</th>
-                <th style="text-align: center;">ยอดยกมา</th>
-                <th style="text-align: center;">เดบิต</th>
-                <th style="text-align: center;">เครดิต</th>
-                <th style="text-align: center;">ยอดยกไป</th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>ผลรวม</th>
-                <th class="sum"></th>
-            </tr>
-        </tfoot>
-    </table>
 
-    <div class="ui center aligned grid">
-        <div class="eight wide column">
-            <button class="ui mini primary button width-100">    
-                <i class="print  icon"></i>
-             Export
+<div class="ui grid">
+    <div class="sixteen wide column">
+        <div class="ui attached segment {{ loadingTable? 'loading': '' }}">
+            <table class="ui  small celled table" id="dataTable">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">เลขที่บัญชีแยกประเภท</th>
+                        <th style="text-align: center;">ชื่อบัญชีแยกประเภท</th>
+                        <th style="text-align: center;">ยอดยกมา</th>
+                        <th style="text-align: center;">เดบิต</th>
+                        <th style="text-align: center;">เครดิต</th>
+                        <th style="text-align: center;">ยอดยกไป</th>
+                    </tr>
+                </thead>
+                <tfoot *ngIf="footer.debit && footer.credit">
+                    <tr>
+                        <th class="ui disabled"></th>
+                        <th>ผลรวม</th>
+                        <th style="text-align: right;">0.00</th>
+                        <th style="text-align: right;">{{this.DF(footer.debit)}}</th>
+                        <th style="text-align: right;">{{this.DF(footer.credit)}}</th>
+                        <th style="text-align: right;">0.00</th>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="ui center aligned grid">
+                <div class="eight wide column">
+                    <button class="ui mini primary button width-100" routerLink="/int07/1">    
+                <i class="reply icon"></i>
+             กลับ
             </button>
+
+                    <button class="ui mini primary button width-100" (click)="onExport()">    
+                <i class="print icon"></i>
+             ส่งออก
+            </button>
+                </div>
+            </div>
+
         </div>
     </div>
-
 </div>

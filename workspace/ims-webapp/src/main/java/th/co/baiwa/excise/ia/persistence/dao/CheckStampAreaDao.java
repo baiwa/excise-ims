@@ -86,8 +86,7 @@ public class CheckStampAreaDao {
 			Int0511Vo vo = new Int0511Vo();
 
 			vo.setDateOfPay(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("DATE_OF_PAY")));
-			vo.setStatus(rs.getString("STATUS"));
-			vo.setDepartmentName(rs.getString("DEPARTMENT_NAME"));
+			vo.setStatus(rs.getString("STATUS"));			
 			vo.setBookNumberWithdrawStamp(rs.getString("BOOK_NUMBER_WITHDRAW_STAMP"));
 			vo.setDateWithdrawStamp(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("DATE_WITHDRAW_STAMP")));
 			vo.setBookNumberDeliverStamp(rs.getString("BOOK_NUMBER_DELIVER_STAMP"));
@@ -102,8 +101,7 @@ public class CheckStampAreaDao {
 			vo.setValueOfStampPrinted(rs.getBigDecimal("VALUE_OF_STAMP_PRINTED"));
 			vo.setSumOfValue(rs.getBigDecimal("SUM_OF_VALUE"));
 			vo.setSerialNumber(rs.getString("SERIAL_NUMBER"));
-			vo.setNote(rs.getString("NOTE"));
-			
+			vo.setNote(rs.getString("NOTE"));			
 			vo.setWorkSheetDetailId(rs.getString("WORK_SHEET_DETAIL_ID"));			
 			vo.setStampType(rs.getString("STAMP_TYPE"));
 			vo.setTaxStamp(rs.getBigDecimal("TAX_STAMP"));

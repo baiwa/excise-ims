@@ -216,4 +216,11 @@ public class ExpensesDao {
 			return vo;
 		}
 	};
+	
+	public Long checkData(String dateFrom, String dateTo, String accountId) {
+		
+		String sql = "SELECT COUNT(1) FROM IA_EXPENSES WHERE ACCOUNT_ID = ? AND TO_CHAR(CREATED_DATE,'YYYYMMDD')  BETWEEN  ? AND ?";
+		Long count = jdbcTemplate.queryForObject(sql, new Object[] {accountId, dateFrom, dateTo}, Long.class);
+		return count;
+	}
 }

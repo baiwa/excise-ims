@@ -17,7 +17,7 @@
             <label class="text-right full-width">รหัสบัญชี</label>
           </div>
           <div class="four wide field {{f.submitted && accountId.invalid ? 'error' : ''}}">
-            <input type="text" name="accountId" ngModel [(ngModel)]="model.accountId" #accountId="ngModel" required />
+            <input type="text" name="accountId" ngModel [(ngModel)]="model.accountId" #accountId="ngModel" id="accountId" required  (blur)="blurAccountId($event)"/>
           </div>
           <div class="two wide field required ">
             <label class="text-right full-width">ชื่อบัญชี</label>

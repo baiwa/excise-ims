@@ -1,5 +1,8 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.util.Date;
+
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,7 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.constant.MessageConstant;
+import th.co.baiwa.excise.ia.persistence.dao.ExpensesDao;
 import th.co.baiwa.excise.ia.persistence.entity.Expenses;
 import th.co.baiwa.excise.ia.persistence.repository.ExpensesRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int06121Vo;
@@ -21,6 +27,9 @@ public class Int06122Service {
     
     @Autowired
     private LovRepository lovRepository;
+    
+    @Autowired
+    private ExpensesDao expensesDao;
 
     @Transactional
     public String save(Expenses expenses) {
@@ -75,5 +84,34 @@ public class Int06122Service {
         }
         return msg;
     }   
+    
+    public String checkData(String accountId) {
+    	String msg = "NOTEMPTY"; 
+    	Date nextYearDate = DateUtils.addYears(new Date(), 1);
+    	Date previousYearDate = DateUtils.addYears(new Date(), -1);
+    	
+    	String dateNow = DateConstant.convertDateToStr(new Date(), ExciseConstants.FORMAT_DATE.YYYYMMDD,ExciseConstants.LOCALE.EN);
+    	String yearNow = DateConstant.convertDateToStr(new Date(), ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.EN);
+    	
+    	String nextYear = DateConstant.convertDateToStr(nextYearDate, ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.EN);
+    	String previousYear = DateConstant.convertDateToStr(previousYearDate, ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.EN);
+    	
+    	String dateFrom = "";
+    	String dateTo ="";
+    	if (Integer.parseInt(yearNow+"1001")<=Integer.parseInt(dateNow)) {
+    		dateFrom = yearNow+"1001";
+    		dateTo = nextYear+"0930";
+		}else {
+			dateFrom = previousYear+"1001";
+    		dateTo = yearNow+"0930";
+		}
+    	
+    	Long count = expensesDao.checkData(dateFrom, dateTo, accountId);
+    	if (count == 0) {
+    		msg = "EMPTY";
+		}
+    	return msg;
+    }
 }
+
 

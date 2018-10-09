@@ -23,7 +23,7 @@ public class Int072Controller {
 	
 	@PostMapping("/datatable")
 	@ResponseBody
-	public DataTableAjax<VerifyAccountDetil> datatable(VerifyAccountDetil vo){
+	public DataTableAjax<VerifyAccountDetil> datatable(@RequestBody VerifyAccountDetil vo){
 		logger.info("Query DATATABLE Int072!!");
 		return int072Service.queryDatatable(vo);
 	}

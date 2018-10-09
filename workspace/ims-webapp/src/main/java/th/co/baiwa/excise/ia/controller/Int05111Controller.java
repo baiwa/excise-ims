@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int05111FormVo;
@@ -58,5 +59,12 @@ public class Int05111Controller {
 	@ResponseBody
 	public List<String> listFile(@RequestBody String id) {
 		return int05111Service.listFile(id);		
+	}
+	
+	@GetMapping("/status")
+	@ResponseBody
+	public List<Lov> status(){		
+		List<Lov> status = int05111Service.status();
+		return status;
 	}
 }
