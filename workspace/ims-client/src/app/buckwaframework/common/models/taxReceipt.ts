@@ -18,5 +18,7 @@ export class TaxReceipt {
     tpbsFundAmount: number = 0.0;
     sendAmount: number = 0.0;
     stampAmount: number = 0.0;
-	customAmount: number = 0.0;
+    customAmount: number = 0.0;
+    sum: number = 0.0;
+    portal: string = "";
 }

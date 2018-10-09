@@ -27,7 +27,10 @@ export class Int0112Component implements OnInit {
 
   breadcrumb: BreadCrumb[]; // Breadcrump navs
   loading: Observable<boolean>; // On Loading
-
+  action: any;
+  budgetYear: any;
+  fix: any;
+  keyC: any;
   constructor(
     private msg: MessageBarService,
     private main: Int011Service,
@@ -50,12 +53,24 @@ export class Int0112Component implements OnInit {
     this.loading = this.self.onLoad(); // On Load Service
     this.taxReceipt = this.self.taxReceiptObs(); // Table Service
     this.totalReceipt = this.self.totalReceiptCal();
+    //this.self.initDatatable();
+
+
+
+  }
+
+  ngAfterViewInit() {
+    this.setData();
+
   }
 
   addPrint(e: any) {
     e.preventDefault();
     if (this.form.valid) {
+
+      this.form.controls.permit_no.setValue(this.action + this.form.controls.permit_no.value)
       this.self.setPrint(this.form);
+      this.setData();
     }
   }
 
@@ -104,5 +119,45 @@ export class Int0112Component implements OnInit {
     let day = date.substring(6);
     return (date && date != null) ? `${day}/${month}/${year}` : "-";
   }
+
+  keyDownC() {
+    this.action = 'C';
+  }
+
+  keyDownN() {
+    this.action = 'N';
+  }
+
+  setData() {
+    let _data = this.main.getData() ? this.main.getData() : { travelTo1: '00', travelTo2: '00', travelTo3: '00', startDate: '01/09/2561', endDate: '21/09/2561' };
+    const { travelTo1, travelTo2, travelTo3, startDate, endDate } = _data;
+    const _start = startDate.split("/");
+    const _end = endDate.split("/");
+    const data = {
+      "OfficeCode": travelTo1 + travelTo2 + travelTo3,
+      "YearMonthFrom": `${parseInt(_start[2]) - 543}${_start[1]}${_start[0]}`,
+      "YearMonthTo": `${parseInt(_end[2]) - 543}${_end[1]}${_end[0]}`,
+      "DateType": "Income",
+      "PageNo": "0",
+      "DataPerPage": "0"
+    };
+    this.budgetYear = '';
+    var dateTime = new Date().toLocaleString("th-TH");
+    if (new Date().getMonth() > 8) {
+      this.budgetYear = parseInt(dateTime.split(' ')[0].split('/')[2].substr(2)) + 1;
+    } else {
+      this.budgetYear = dateTime.split(' ')[0].split('/')[2].substr(2);
+    }
+    console.log('budgetYear', data.OfficeCode + this.budgetYear + '/');
+    //this.form.controls.permit_no.setValue();
+    //this.budgetYear = data.OfficeCode + this.budgetYear + '/'
+    $('#keyC').val(data.OfficeCode + this.budgetYear + '/000');
+    $('#keyN').val(data.OfficeCode + this.budgetYear + '/000');
+    this.keyC = data.OfficeCode + this.budgetYear + '/000';
+    // this.fix = data.OfficeCode + this.budgetYear + '/000';
+
+  }
+
+
 
 }

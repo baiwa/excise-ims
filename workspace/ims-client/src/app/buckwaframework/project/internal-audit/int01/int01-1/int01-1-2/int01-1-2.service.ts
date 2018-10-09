@@ -45,6 +45,7 @@ export class Int0112Service {
                 // Add Index
                 obj.index = index;
                 obj.status = (obj.checkedAmount && obj.checkedAmount != obj.netTaxAmount) ? "diff" : "equa";
+                obj.portal = this.checkRunningReceiptNo(index);
                 // Calculate Total
                 this.totalReceipt.netTaxAmount = obj.netTaxAmount + this.totalReceipt.netTaxAmount;
                 this.totalReceipt.checkedAmount = obj.checkedAmount + this.totalReceipt.checkedAmount;
@@ -59,9 +60,47 @@ export class Int0112Service {
 
                 const { netTaxAmount, netLocAmount, locOthAmount, locExpAmount } = obj; // extract structure
                 obj.sumAmount = netTaxAmount + netLocAmount + locOthAmount + locExpAmount; // sum
+                this.totalReceipt.sum += obj.sumAmount;
 
             });
         });
+    }
+
+    checkRunningReceiptNo(i) {
+        let rec = this.taxReceipt[i];
+        if (rec.receiptNo != null && rec.receiptNo != undefined) {
+            let recFull = rec.receiptNo.split('/');
+            let recPre = recFull[0];
+            let recSub = recFull[1];
+            if (i > 0) {
+                let topRec = this.taxReceipt[i - 1];
+                if (topRec.receiptNo != null && topRec.receiptNo != undefined) {
+                    let topFull = topRec.receiptNo.split('/');
+                    let topPre = topFull[0];
+                    let topSub = topFull[1];
+
+                    if (recPre === topPre && (parseInt(recSub) != parseInt(topSub) + 1)) {
+                        return "portal";
+                    }
+                }
+            }
+            let downRec = this.taxReceipt[i + 1];
+            if (downRec != null && downRec != undefined && downRec.receiptNo != null && downRec.receiptNo != undefined) {
+                let downFull = downRec.receiptNo.split('/');
+                let downPre = downFull[0];
+                let downSub = downFull[1];
+                if (recPre === downPre && (parseInt(recSub) != parseInt(downSub) - 1)) {
+                    return "portal";
+                }
+            }
+
+        } else {
+            return "portal"
+        }
+
+
+
+        return "";
     }
 
     setPrint(form: NgForm, func?: Function) {
@@ -69,6 +108,7 @@ export class Int0112Service {
         // Find Tax
         let find = new TaxReceipt();
         find.receiptNo = permit_no.value;
+        console.log('setPrint', find.receiptNo);
         if (this.findByTax(find, 'receiptNo')) {
             // On Loading
             this.loading = true;
@@ -82,6 +122,15 @@ export class Int0112Service {
                 find.status = "diff";
             }
             this.update(find.index, find);
+            //this.totalReceipt = new TaxReceipt();
+            let sumCheckNewAmount = 0;
+            this.taxReceipt.forEach((obj, index) => {
+
+                sumCheckNewAmount = sumCheckNewAmount + (obj.checkedAmount == null || obj.checkedAmount == undefined ? 0 : parseFloat(obj.checkedAmount + ''));
+                console.log(sumCheckNewAmount);
+
+            });
+            this.totalReceipt.checkedAmount = sumCheckNewAmount;
             // Clear Input
             form.resetForm();
             // Refresh DataTable
@@ -132,7 +181,7 @@ export class Int0112Service {
         this.loading = true;
         this.ajax.post(URL.SAVE, { data: this.taxReceipt }, response => {
             const { msg, data } = response.json();
-            if (msg.messageCode=="MSG_00002") {
+            if (msg.messageCode == "MSG_00002") {
                 this.msg.successModal(msg.messageTh);
                 this.taxReceipt = data;
                 setTimeout(() => {
@@ -172,11 +221,8 @@ export class Int0112Service {
             searching: false,
             lengthChange: false,
             paging: false,
-            order: [[ 0, 'asc' ]],
-            columnDefs: [{
-                orderable: false,
-                targets: [4, 8, 9 , 10, 11, 12, 13, 14, 15, 16]
-            }]
+            order: [[0, 'asc']],
+
         });
     }
 
