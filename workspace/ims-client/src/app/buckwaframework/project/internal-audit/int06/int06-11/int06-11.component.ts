@@ -14,7 +14,7 @@ declare var $: any;
 export class Int0611Component implements OnInit, AfterViewInit {
 
   form: FormGroup = new FormGroup({
-    bill: new FormControl('3', Validators.required),
+    bill: new FormControl('', Validators.required),
     type: new FormControl('', Validators.required),
     level: new FormControl('', Validators.required),
 
@@ -26,21 +26,21 @@ export class Int0611Component implements OnInit, AfterViewInit {
     chkChild1: new FormControl(false, Validators.required),
     chkChild2: new FormControl(false, Validators.required),
     // Type Radios
-    typeChild0: new FormControl({ disabled: false }, Validators.required),
-    typeChild1: new FormControl({ disabled: false }, Validators.required),
-    typeChild2: new FormControl({ disabled: false }, Validators.required),
+    typeChild0: new FormControl({ disabled: false }),
+    typeChild1: new FormControl({ disabled: false }),
+    typeChild2: new FormControl({ disabled: false }),
     // Level Dropdowns
-    levelChild0: new FormControl({ disabled: false }, Validators.required),
-    levelChild1: new FormControl({ disabled: false }, Validators.required),
-    levelChild2: new FormControl({ disabled: false }, Validators.required),
+    levelChild0: new FormControl({ disabled: false }),
+    levelChild1: new FormControl({ disabled: false }),
+    levelChild2: new FormControl({ disabled: false }),
     // Major Dropdowns
-    majorChild0: new FormControl({ disabled: false }, Validators.required),
-    majorChild1: new FormControl({ disabled: false }, Validators.required),
-    majorChild2: new FormControl({ disabled: false }, Validators.required),
+    majorChild0: new FormControl({ disabled: false }),
+    majorChild1: new FormControl({ disabled: false }),
+    majorChild2: new FormControl({ disabled: false }),
     // TypeEducation Dropdowns
-    typeEduChild0: new FormControl({ disabled: false }, Validators.required),
-    typeEduChild1: new FormControl({ disabled: false }, Validators.required),
-    typeEduChild2: new FormControl({ disabled: false }, Validators.required),
+    typeEduChild0: new FormControl({ disabled: false }),
+    typeEduChild1: new FormControl({ disabled: false }),
+    typeEduChild2: new FormControl({ disabled: false }),
   });
 
   bills: Lov[] = [];
@@ -67,49 +67,68 @@ export class Int0611Component implements OnInit, AfterViewInit {
    */
   handleSubmit(e: any) {
     e.preventDefault(); // prevent refresh to post form
+    for(let key in this.form.controls) {
+      if (this.form.controls[key].invalid) {
+        console.log(key);
+      }
+    }
     if (this.form.valid) {
-      console.log(this.form.controls);
+      this.changepage();
     }
   }
   handleBill(control) {
-    const { type, level } = this.form.controls;
-    const controls = this.form.controls;
     switch (control.target.value) {
       case '1':
-        type.setValidators([Validators.required]); // Type Set Validators
-        level.setValidators([Validators.required]); // Level Set Validators
+        this.setControls('type'); // Type Set Validators
+        this.setControls('level'); // Level Set Validators
         for (let i = 0; i < 3; i++) {
-          controls[`chkChild${i}`].clearValidators();
-          controls[`typeChild${i}`].clearValidators();
+          this.clearControls(`chkChild${i}`);
         }
         break;
       case '2':
-        type.clearValidators(); // Type Clear Validators
-        level.clearValidators(); // Level Clear Validators
+        this.clearControls('type'); // Type Clear Validators
+        this.clearControls('level'); // Level Clear Validators
+        for (let i = 0; i < 3; i++) {
+          this.setControls(`chkChild${i}`);
+        }
         break;
       case '3':
-        type.clearValidators(); // Type Clear Validators
-        level.clearValidators(); // Level Clear Validators
+        this.clearControls('type'); // Type Clear Validators
+        this.clearControls('level'); // Level Clear Validators
+        for (let i = 0; i < 3; i++) {
+          this.setControls(`chkChild${i}`);
+        }
         break;
       case '4':
-        type.setValidators([Validators.required]); // Type Set Validators
-        level.setValidators([Validators.required]); // Level Set Validators
+        this.setControls('type'); // Type Set Validators
+        this.setControls('level'); // Level Set Validators
         for (let i = 0; i < 3; i++) {
-          controls[`chkChild${i}`].clearValidators();
-          controls[`typeChild${i}`].clearValidators();
+          this.clearControls(`chkChild${i}`);
+        }
+        break;
+      default:
+        this.setControls('type'); // Type Set Validators
+        this.setControls('level'); // Level Set Validators
+        for (let i = 0; i < 3; i++) {
+          this.setControls(`chkChild${i}`);
         }
         break;
     }
-    this.form.updateValueAndValidity();
   }
   handleChkChild(control, i) {
     if (control.target.checked) {
       $(`#levelChild${i}`).parent().removeClass('disabled');
       $(`#majorChild${i}`).parent().removeClass('disabled');
       $(`#typeEduChild${i}`).parent().removeClass('disabled');
+      this.setControls(`typeChild${i}`);
       this.setControls(`levelChild${i}`);
       this.setControls(`majorChild${i}`);
       this.setControls(`typeEduChild${i}`);
+      for (let o = 0; o < 3; o++) {
+        if (i != o) {
+          this.clearControls(`chkChild${o}`);
+        }
+      }
     } else {
       $(`#levelChild${i}`).dropdown('restore defaults');
       $(`#majorChild${i}`).dropdown('restore defaults');
@@ -119,6 +138,7 @@ export class Int0611Component implements OnInit, AfterViewInit {
       $(`#levelChild${i}`).parent().addClass('disabled');
       $(`#majorChild${i}`).parent().addClass('disabled');
       $(`#typeEduChild${i}`).parent().addClass('disabled');
+      this.clearControls(`typeChild${i}`);
       this.clearControls(`levelChild${i}`);
       this.clearControls(`majorChild${i}`);
       this.clearControls(`typeEduChild${i}`);
@@ -179,7 +199,7 @@ export class Int0611Component implements OnInit, AfterViewInit {
     }
     return hidden;
   }
-  setControls(control: string){
+  setControls(control: string) {
     this.form.controls[control].setValidators([Validators.required]);
     this.form.controls[control].enable();
     this.form.controls[control].updateValueAndValidity();
@@ -192,21 +212,21 @@ export class Int0611Component implements OnInit, AfterViewInit {
   }
 
 
-  // changepage() {
-  //   const bill = this.form.controls.bill;
-  //   let page = "";
-  //   if (bill.value == '1') {
-  //     page = 'int06/11/1';
-  //   } else if (bill.value == '2') {
-  //     page = 'int06/11/2';
-  //   } else if (bill.value == '3') {
-  //     page = 'int06/11/3';
-  //   } else if (bill.value == '4') {
-  //     page = 'int06/11/4';
-  //   }
+  changepage() {
+    const bill = this.form.controls.bill;
+    let page = "";
+    if (bill.value == '1') {
+      page = 'int06/11/1';
+    } else if (bill.value == '2') {
+      page = 'int06/11/2';
+    } else if (bill.value == '3') {
+      page = 'int06/11/3';
+    } else if (bill.value == '4') {
+      page = 'int06/11/4';
+    }
 
-  //   this.router.navigate([page], {
-  //   });
-  // }
+    this.router.navigate([page], {
+    });
+  }
 
 }

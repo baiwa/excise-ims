@@ -63,7 +63,7 @@
             <div class="ui centered inline fields grid" [ngClass]="{ 'hidden': hidden(['1','2','4']).hidden }">
               <div class="one wide field" [ngClass]="{ 'required': required('chkChild'+i).required }">
                 <div class="ui checkbox">
-                  <input type="checkbox" (change)="handleChkChild($event, i)" name="chkChild{{i}}">
+                  <input type="checkbox" (change)="handleChkChild($event, i)" formControlName="chkChild{{i}}" name="chkChild{{i}}">
                   <label></label>
                 </div>
               </div>
@@ -83,8 +83,8 @@
                   </div>
                   <div class="inline fields">
                     <div class="four wide field" [ngClass]="{ 'error': invalid('typeChild'+i, ngForm).error }">
-                      <div class="ui checkbox">
-                        <input type="radio" name="typeChild{{i}}" [attr.disabled]="disabled('chkChild'+i).disabled"
+                      <div class="ui checkbox" [ngClass]="{'disabled': !disabled('chkChild'+i).disabled}">
+                        <input type="radio" name="typeChild{{i}}"
                           value="สถานศึกษาของทางราชการ" formControlName="typeChild{{i}}">
                         <label>สถานศึกษาของทางราชการ</label>
                       </div>
@@ -110,8 +110,8 @@
                   </div>
                   <div class="inline fields">
                     <div class="four wide field" [ngClass]="{ 'error': invalid('typeChild'+i, ngForm).error }">
-                      <div class="ui checkbox">
-                        <input type="radio" name="typeChild{{i}}" [attr.disabled]="disabled('chkChild'+i).disabled"
+                      <div class="ui checkbox" [ngClass]="{'disabled': !disabled('chkChild'+i).disabled}">
+                        <input type="radio" name="typeChild{{i}}"
                           value="สถานศึกษาของเอกชน" formControlName="typeChild{{i}}">
                         <label>สถานศึกษาของเอกชน</label>
                       </div>
