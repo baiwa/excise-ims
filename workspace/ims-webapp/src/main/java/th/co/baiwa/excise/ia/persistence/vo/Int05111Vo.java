@@ -4,12 +4,9 @@ import java.math.BigDecimal;
 
 public class Int05111Vo {
 	private String workSheetDetailId;
-	private String exciseDepartment;
-	private String exciseRegion;
-	private String exciseDistrict;
 	private String dateOfPay;
 	private String status;
-	private String departmentName;
+	private String officeDesc;
 	private String bookNumberWithdrawStamp;
 	private String dateWithdrawStamp;
 	private String bookNumberDeliverStamp;
@@ -18,6 +15,8 @@ public class Int05111Vo {
 	private String fivePartDate;
 	private String stampCheckDate;
 	private String stampChecker;
+	private String stampChecker2;
+	private String stampChecker3;
 	private String stampType;
 	private String stampBrand;
 	private BigDecimal numberOfBook;
@@ -28,6 +27,31 @@ public class Int05111Vo {
 	private String stampCodeStart;
 	private String stampCodeEnd;
 	private String note;
+	private String departmentName;
+
+	public String getStampChecker2() {
+		return stampChecker2;
+	}
+
+	public void setStampChecker2(String stampChecker2) {
+		this.stampChecker2 = stampChecker2;
+	}
+
+	public String getStampChecker3() {
+		return stampChecker3;
+	}
+
+	public void setStampChecker3(String stampChecker3) {
+		this.stampChecker3 = stampChecker3;
+	}
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
 
 	public String getWorkSheetDetailId() {
 		return workSheetDetailId;
@@ -35,30 +59,6 @@ public class Int05111Vo {
 
 	public void setWorkSheetDetailId(String workSheetDetailId) {
 		this.workSheetDetailId = workSheetDetailId;
-	}
-
-	public String getExciseDepartment() {
-		return exciseDepartment;
-	}
-
-	public void setExciseDepartment(String exciseDepartment) {
-		this.exciseDepartment = exciseDepartment;
-	}
-
-	public String getExciseRegion() {
-		return exciseRegion;
-	}
-
-	public void setExciseRegion(String exciseRegion) {
-		this.exciseRegion = exciseRegion;
-	}
-
-	public String getExciseDistrict() {
-		return exciseDistrict;
-	}
-
-	public void setExciseDistrict(String exciseDistrict) {
-		this.exciseDistrict = exciseDistrict;
 	}
 
 	public String getDateOfPay() {
@@ -77,12 +77,12 @@ public class Int05111Vo {
 		this.status = status;
 	}
 
-	public String getDepartmentName() {
-		return departmentName;
+	public String getOfficeDesc() {
+		return officeDesc;
 	}
 
-	public void setDepartmentName(String departmentName) {
-		this.departmentName = departmentName;
+	public void setOfficeDesc(String officeDesc) {
+		this.officeDesc = officeDesc;
 	}
 
 	public String getBookNumberWithdrawStamp() {

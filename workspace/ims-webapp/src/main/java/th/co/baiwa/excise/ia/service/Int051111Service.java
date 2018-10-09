@@ -72,7 +72,8 @@ public class Int051111Service {
 				entity.setOfficeDesc(lov.getSubTypeDescription());
 			}
             /* set sector area and branch*/
-            entity.setDateOfPay(DateConstant.convertStrDDMMYYYYToDate(form.getDateOfPay()));            
+            entity.setDateOfPay(DateConstant.convertStrDDMMYYYYToDate(form.getDateOfPay())); 
+            entity.setDepartmentName(form.getDepartmentName());
             entity.setStatus(form.getStatus());            
             entity.setBookNumberWithdrawStamp(form.getBookNumberWithdrawStamp());
             entity.setDateWithdrawStamp(DateConstant.convertStrDDMMYYYYToDate(form.getDateWithdrawStamp()));
@@ -82,6 +83,8 @@ public class Int051111Service {
             entity.setFivePartDate(DateConstant.convertStrDDMMYYYYToDate(form.getFivePartDate()));
             entity.setStampCheckDate(DateConstant.convertStrDDMMYYYYToDate(form.getStampCheckDate()));
             entity.setStampChecker(form.getStampChecker());
+            entity.setStampChecker2(form.getStampChecker2());
+            entity.setStampChecker3(form.getStampChecker3());
             entity.setStampType(form.getStampType());
             entity.setStampBrand(form.getStampBrand());
             entity.setNumberOfBook(form.getNumberOfBook());

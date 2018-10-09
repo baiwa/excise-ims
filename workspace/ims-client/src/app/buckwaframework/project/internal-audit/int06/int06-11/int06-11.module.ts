@@ -12,7 +12,7 @@ import { Int06111Component } from './int06-11-1/int06-11-1.component';
 import { Int06112Component } from './int06-11-2/int06-11-2.component';
 import { Int06113Component } from './int06-11-3/int06-11-3.component';
 import { Int06114Component } from './int06-11-4/int06-11-4.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -27,8 +27,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    FormsModule
-    
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     Int0611Component,

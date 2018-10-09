@@ -29,18 +29,14 @@ public class CheckStampBranchDao {
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
 
-        if(StringUtils.isNotBlank(formVo.getSector())){
-            sql.append(" AND EXCISE_DEPARTMENT=? ");
-            params.add(StringUtils.trim(formVo.getSector()));
+		if(StringUtils.isNotBlank(formVo.getOfficeCode())){
+            sql.append(" AND OFFICE_CODE LIKE ? ");
+            params.add(StringUtils.trim(formVo.getOfficeCode()+"%"));
         }
-        if (StringUtils.isNotBlank(formVo.getArea())){
-            sql.append(" AND EXCISE_REGION=? ");
-            params.add(StringUtils.trim(formVo.getArea()));
-        }
-        if (StringUtils.isNotBlank(formVo.getBranch())){
-            sql.append(" AND EXCISE_DISTRICT=? ");
-            params.add(StringUtils.trim(formVo.getBranch()));
-        }
+		if (StringUtils.isNotBlank(formVo.getStatus())) {
+			sql.append(" AND STATUS = ? ");
+            params.add(StringUtils.trim(formVo.getStatus()));
+		}
         if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())){
             sql.append(" AND TO_CHAR(DATE_OF_PAY,'YYYYMMDD') BETWEEN ? AND ?");
             params.add(formVo.getDateForm());
@@ -57,18 +53,14 @@ public class CheckStampBranchDao {
 
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
-        if(StringUtils.isNotBlank(formVo.getSector())){
-            sql.append(" AND EXCISE_DEPARTMENT=? ");
-            params.add(StringUtils.trim(formVo.getSector()));
+        if(StringUtils.isNotBlank(formVo.getOfficeCode())){
+            sql.append(" AND OFFICE_CODE LIKE ? ");
+            params.add(StringUtils.trim(formVo.getOfficeCode()+"%"));
         }
-        if (StringUtils.isNotBlank(formVo.getArea())){
-            sql.append(" AND EXCISE_REGION=? ");
-            params.add(StringUtils.trim(formVo.getArea()));
-        }
-        if (StringUtils.isNotBlank(formVo.getBranch())){
-            sql.append(" AND EXCISE_DISTRICT=? ");
-            params.add(StringUtils.trim(formVo.getBranch()));
-        }
+        if (StringUtils.isNotBlank(formVo.getStatus())) {
+			sql.append(" AND STATUS = ? ");
+            params.add(StringUtils.trim(formVo.getStatus()));
+		}
         if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())){
             sql.append(" AND TO_CHAR(DATE_OF_PAY,'YYYYMMDD') BETWEEN ? AND ?");
             params.add(formVo.getDateForm());
@@ -88,7 +80,9 @@ public class CheckStampBranchDao {
 			Int05111Vo vo = new Int05111Vo();
 
 			vo.setDateOfPay(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("DATE_OF_PAY")));
-			vo.setStatus(rs.getString("STATUS"));			
+			vo.setStatus(rs.getString("STATUS"));
+			vo.setOfficeDesc(rs.getString("OFFICE_DESC"));
+			vo.setDepartmentName(rs.getString("DEPARTMENT_NAME"));
 			vo.setBookNumberWithdrawStamp(rs.getString("BOOK_NUMBER_WITHDRAW_STAMP"));
 			vo.setDateWithdrawStamp(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("DATE_WITHDRAW_STAMP")));
 			vo.setBookNumberDeliverStamp(rs.getString("BOOK_NUMBER_DELIVER_STAMP"));
@@ -97,6 +91,8 @@ public class CheckStampBranchDao {
 			vo.setFivePartDate(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("FIVE_PART_DATE")));
 			vo.setStampCheckDate(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("STAMP_CHECK_DATE")));
 			vo.setStampChecker(rs.getString("STAMP_CHECKER"));
+			vo.setStampChecker2(rs.getString("STAMP_CHECKER_2"));
+			vo.setStampChecker3(rs.getString("STAMP_CHECKER_3"));
 			vo.setStampBrand(rs.getString("STAMP_BRAND"));
 			vo.setNumberOfBook(rs.getBigDecimal("NUMBER_OF_BOOK"));
 			vo.setNumberOfStamp(rs.getInt("NUMBER_OF_STAMP"));

@@ -141,6 +141,28 @@
                     </div>
                     <div class="one wide field "></div>
                 </div>
+                <!-- row 6  (2)-->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>ผู้ตรวจนับ</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.stampChecker2" name="stampChecker2" id="stampChecker2" type="text">
+                    </div>
+                    <div class="eight wide field "></div>
+                </div>
+                <!-- row 6  (3)-->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>ผู้ตรวจนับ</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input [(ngModel)]="formModal.stampChecker3" name="stampChecker3" id="stampChecker3" type="text">
+                    </div>
+                    <div class="eight wide field "></div>
+                </div>
                 <!-- row 7 -->
                 <div class="inline fields  ui grid ">
                     <div class="one wide field "></div>
@@ -184,7 +206,7 @@
                 <!-- row 9  -->
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
-                    <div class="three wide field">
+                    <div class="three wide field required">
                         <label>มูลค่าพิมพ์ (บาท/ดวง)</label>
                     </div>
                     <div class="four wide field ">
@@ -274,6 +296,8 @@
           <th rowspan="2">วันที่ใบ 5 ตอน</th>
           <th rowspan="2">วันที่ตรวจนับ</th>
           <th rowspan="2">ผู้ตรวจนับ</th>
+          <th rowspan="2">ผู้ตรวจนับ</th>
+          <th rowspan="2">ผู้ตรวจนับ</th>
           <th rowspan="2">ชนิดแสตมป์/ขนาดบรรจุ</th>
           <th rowspan="2">จำนวน (เล่ม)</th>
           <th rowspan="2">จำนวน (ดวง)</th>
@@ -300,4 +324,20 @@
         <button class="ui mini gray button" type="button" routerLink="/int05/1/1"><i class="reply icon"></i>กลับ</button>
         <button class="ui mini blue button" type="button" (click)="onSave()"><i class="save icon"></i>บันทึก</button>
     </div><br>
+  </div>
+
+  <!-- modal success -->
+  <div class="ui tiny modal" id="success">
+    <i class="close icon"></i>
+    <div class="header">
+      แจ้งเตือน
+    </div>
+    <div class=" content">
+      ทำรายการสำเร็จ
+    </div>
+    <div class="actions">
+      <div class="ui inverted green deny button">
+        ปิด
+      </div>
+    </div>
   </div>

@@ -1,86 +1,103 @@
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from 'services/ajax.service';
 import { TextDateTH, formatter } from 'helpers/datepicker';
+import { FormSearch } from 'projects/internal-audit/int06/int06-6/form-search.model';
+import { BreadCrumb } from 'models/breadcrumb';
+import { Int066Service } from 'projects/internal-audit/int06/int06-6/int06-6.service';
+import { Utils } from 'helpers/utils';
 
 declare var $: any;
 
 const URL = {
-  DROPDOWN : "combobox/controller/getDropByTypeAndParentId"
+  DROPDOWN: "combobox/controller/getDropByTypeAndParentId"
 };
 @Component({
   selector: 'int06-6',
   templateUrl: './int06-6.component.html',
-  styleUrls: ['./int06-6.component.css']
+  styleUrls: ['./int06-6.component.css'],
+  providers: [Int066Service]
 })
 export class Int066Component implements OnInit {
 
-  private selectedProduct: string = "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก ";
-  private productList: any[];
+  breadcrumb: BreadCrumb[] = [
+    { label: "ตรวจสอบภายใน", route: "#" },
+    { label: "ตรวจสอบเบิกจ่าย", route: "#" },
+    { label: "ค้นหารายการคุม KTB-Corporate", route: "#" }
+  ];
+  form: FormSearch = new FormSearch();
+  startDate: any = "";
+  endDate: any = "";
+  sectorList: any;
+  areaList: any;
+  branchList: any;
 
-  travelTo1List: any;
-  travelTo2List: any;
-  travelTo3List: any;
+  constructor(
+    private ajax: AjaxService,
+    private int066Service: Int066Service
+  ) { }
 
-  constructor(private ajax: AjaxService) { }
+  ngAfterViewInit() {
+    this.calenda();
+    this.dataTable();
+  }
 
   ngOnInit() {
-    this.hidedata();
-    $("#calendar1").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-
-    });
-
-    $("#calendar2").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    });
-    
     $(".ui.dropdown").dropdown();
-    $(".ui.dropdown.search").css("width", "100%");
-    this.productList = [
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " }
-    ];
-    this.travelTo1Dropdown();
+    this.sector();
   }
 
-  travelTo1Dropdown = () => {
-    this.ajax.post(URL.DROPDOWN, { type: "SECTOR_VALUE" }, res => {
-      this.travelTo1List = res.json();
+  sector = () => {
+    this.int066Service.sector().then((res) => {
+      this.sectorList = res;
     });
   }
-
-  travelTo2Dropdown = e => {
-    var id = e.target.value;
-    if (id != "") {
-      this.ajax.post(URL.DROPDOWN, { type: "SECTOR_VALUE", lovIdMaster: id }, res => {
-        this.travelTo2List = res.json();
+  area = (e) => {
+    $("#area").dropdown('restore defaults');
+    $("#branch").dropdown('restore defaults');
+    this.areaList = null;
+    this.branchList = null
+    if (Utils.isNotNull(e.target.value)) {
+      this.int066Service.area(e.target.value).then((res) => {
+        this.areaList = res;;
       });
     }
   }
-
-  travelTo3Dropdown = e => {
-    var id = e.target.value;
-    if (id != "") {
-      this.ajax.post(URL.DROPDOWN, { type: "SECTOR_VALUE", lovIdMaster: id }, res => {
-        this.travelTo3List = res.json();
+  branch = (e) => {
+    this.branchList = null
+    $("#branch").dropdown('restore defaults');
+    if (Utils.isNotNull(e.target.value)) {
+      this.int066Service.branch(e.target.value).then((res) => {
+        this.branchList = res;
       });
     }
-  }
 
-  hidedata(){
-    $('#hideData').hide();
   }
-  showdata(){
-    $('#hideData').show();
+  search = () => {
+    this.int066Service.search();
+  }
+  clear = () => {
+    $(".ui.dropdown").dropdown('restore defaults');
+    $("#dateFrom").val("");
+    $("#dateTo").val("");
+    this.int066Service.clear();
+  }
+  dataTable = () => {
+    this.int066Service.dataTable();
+  }
+  calenda = () => {
+    $("#dateF").calendar({
+      maxDate: new Date(),
+      endCalendar: $("#dateT"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $("#dateT").calendar({
+      maxDate: new Date(),
+      startCalendar: $("#dateF"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
   }
 }

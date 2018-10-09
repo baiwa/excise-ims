@@ -4,6 +4,7 @@ import { TextDateTH, formatter } from '../../../../../../common/helper/datepicke
 import { MessageBarService, AjaxService } from 'app/buckwaframework/common/services';
 import { BreadCrumb } from 'models/breadcrumb';
 import { Int05111Service } from 'projects/internal-audit/int05/int05-1/int05-1-1/int05-1-1-1/int05-1-1-1.service';
+import { Router } from '@angular/router';
 declare var jQuery: any;
 declare var $: any;
 
@@ -30,7 +31,8 @@ export class Int05111Component implements OnInit,AfterViewInit {
   constructor(
     private message: MessageBarService,
     private ajax: AjaxService,
-    private int05111Service: Int05111Service
+    private int05111Service: Int05111Service,
+    private route: Router
   ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
@@ -100,14 +102,14 @@ export class Int05111Component implements OnInit,AfterViewInit {
   calenda = () => {
     $("#dateF").calendar({
       maxDate: new Date(),
-      endCalendar: $("#dateTo"),
+      endCalendar: $("#dateT"),
       type: "date",
       text: TextDateTH,
       formatter: formatter()
     });
     $("#dateT").calendar({
       maxDate: new Date(),
-      startCalendar: $("#dateForm"),
+      startCalendar: $("#dateF"),
       type: "date",
       text: TextDateTH,
       formatter: formatter()
@@ -204,6 +206,10 @@ export class Int05111Component implements OnInit,AfterViewInit {
       this.message.alert("กรุณาระบุ ชนิดแสตมป์", "แจ้งเตือน");
       return false;
     }
+    if (this.checkBlank($("#valueOfStampPrinted").val())){
+      this.message.alert("กรุณาระบุ มูลค่าพิมพ์ (บาท/ดวง)", "แจ้งเตือน");
+      return false;
+    }
 
     if ($("#edit").val() == "edit" && $("#idEdit").val() != "") {
 
@@ -275,12 +281,19 @@ export class Int05111Component implements OnInit,AfterViewInit {
         let url = 'ia/int051111/save';
         this.ajax.post(url, JSON.stringify(this.data),
           res => {
-            this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
-            this.data = [];
-            this.table.clear().draw();
-            this.table.rows.add(this.data); // Add new data
-            this.table.columns.adjust().draw(); // Redraw the DataTable
-            this.loading = false;
+            $("#success").modal({
+              "onHidden" : ()=>{
+                this.data = [];                
+                this.loading = false;
+                this.route.navigate(['/int05/1/1']);
+              },
+              "onDeny" : ()=>{
+                this.data = [];               
+                this.loading = false;
+                this.route.navigate(['/int05/1/1']);
+              }
+            }).modal('show');
+            
           }, error => {
             this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
             this.loading = false;
@@ -312,7 +325,7 @@ export class Int05111Component implements OnInit,AfterViewInit {
           "data": "status",
           "className": "ui center aligned",
         }, {
-          "data": "officeDesc",
+          "data": "departmentName",
           "className": "ui center aligned"
         }, {
           "data": "bookNumberWithdrawStamp",
@@ -337,6 +350,12 @@ export class Int05111Component implements OnInit,AfterViewInit {
           "className": "ui center aligned"
         }, {
           "data": "stampChecker",
+          "className": "ui center aligned"
+        },{
+          "data": "stampChecker2",
+          "className": "ui center aligned"
+        },{
+          "data": "stampChecker3",
           "className": "ui center aligned"
         }, {
           "data": "stampBrand",
@@ -494,6 +513,8 @@ class FormModal {
   fivePartDate: string = null;
   stampCheckDate: string = null;
   stampChecker: string = null;
+  stampChecker2: string = null;
+  stampChecker3: string = null;
   stampType: string = null;
   stampBrand: string = null;
   stampTypeId: string = null;

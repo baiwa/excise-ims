@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 
-import { Int065Component } from './int06-5.component';
 
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../../../common/services';
@@ -9,6 +8,8 @@ import { Int0651Component } from './int06-5-1/int06-5-1.component';
 import { Int0652Component } from './int06-5-2/int06-5-2.component';
 import { Int0653Component } from './int06-5-3/int06-5-3.component';
 import { Int0654Component } from './int06-5-4/int06-5-4.component';
+import { Int065Component } from 'projects/internal-audit/int06/int06-5/int06-5.component';
+import { BreadcrumbModule } from '../../../../common/components';
 
 const routes: Routes = [
     { path: '', component: Int065Component, canActivate: [AuthGuard] },
@@ -21,7 +22,8 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    CommonModule
+    CommonModule,
+    BreadcrumbModule
   ],
   declarations: [
     Int065Component,

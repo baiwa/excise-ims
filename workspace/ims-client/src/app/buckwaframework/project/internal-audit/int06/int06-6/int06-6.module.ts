@@ -9,6 +9,7 @@ import { Int0661Component } from './int06-6-1/int06-6-1.component';
 import { Int0662Component } from './int06-6-2/int06-6-2.component';
 import { Int0663Component } from './int06-6-3/int06-6-3.component';
 import { Int0664Component } from './int06-6-4/int06-6-4.component';
+import { BreadcrumbModule } from '../../../../common/components';
 
 const routes: Routes = [
   { path: '', component: Int066Component, canActivate: [AuthGuard] },
@@ -21,7 +22,8 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    CommonModule
+    CommonModule,
+    BreadcrumbModule
   ],
   declarations: [
     Int066Component,
