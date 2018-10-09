@@ -16,41 +16,41 @@ public class Int05112Vo extends DataTableRequest {
 	private Integer branchLastYeatNumberOfStamp = 0;
 	private BigDecimal branchLastYeatMoneyOfStamp = new BigDecimal(0);
 
-	private String octoberRecieve;
-	private String octoberPay;
+	private Integer octoberRecieve = 0;
+	private Integer octoberPay = 0;
 
-	private String novemberRecieve;
-	private String novemberPay;
+	private Integer novemberRecieve = 0;
+	private Integer novemberPay = 0;
 
-	private String decemberRecieve;
-	private String decemberPay;
+	private Integer decemberRecieve = 0;
+	private Integer decemberPay = 0;
 
-	private String januaryRecieve;
-	private String januaryPay;
+	private Integer januaryRecieve = 0;
+	private Integer januaryPay = 0; 
 
-	private String februaryRecieve;
-	private String februaryPay;
+	private Integer februaryRecieve = 0;
+	private Integer februaryPay = 0;
 
-	private String marchRecieve;
-	private String marchPay;
+	private Integer marchRecieve = 0;
+	private Integer marchPay = 0;
 
-	private String aprilRecieve;
-	private String aprilPay;
+	private Integer aprilRecieve = 0;
+	private Integer aprilPay = 0;
 
-	private String mayRecieve;
-	private String mayPay;
+	private Integer mayRecieve = 0;
+	private Integer mayPay;
 
-	private String juneRecieve;
-	private String junePay;
+	private Integer juneRecieve = 0;
+	private Integer junePay = 0;
 
-	private String julyRecieve;
-	private String julyPay;
+	private Integer julyRecieve = 0;
+	private Integer julyPay = 0;
 
-	private String augustRecieve;
-	private String augustPay;
+	private Integer augustRecieve = 0;
+	private Integer augustPay = 0;
 
-	private String septemberRecieve;
-	private String septemberPay;
+	private Integer septemberRecieve = 0;
+	private Integer septemberPay = 0;
 
 	private Integer summaryYearRecieve = 0;
 	private Integer summaryYearPay = 0;
@@ -69,14 +69,6 @@ public class Int05112Vo extends DataTableRequest {
 
 	private String columnId;
 	private String year;
-
-	public String getYear() {
-		return year;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
-	}
 
 	public String getOrder() {
 		return order;
@@ -110,195 +102,195 @@ public class Int05112Vo extends DataTableRequest {
 		this.branchLastYeatMoneyOfStamp = branchLastYeatMoneyOfStamp;
 	}
 
-	public String getOctoberRecieve() {
+	public Integer getOctoberRecieve() {
 		return octoberRecieve;
 	}
 
-	public void setOctoberRecieve(String octoberRecieve) {
+	public void setOctoberRecieve(Integer octoberRecieve) {
 		this.octoberRecieve = octoberRecieve;
 	}
 
-	public String getOctoberPay() {
+	public Integer getOctoberPay() {
 		return octoberPay;
 	}
 
-	public void setOctoberPay(String octoberPay) {
+	public void setOctoberPay(Integer octoberPay) {
 		this.octoberPay = octoberPay;
 	}
 
-	public String getNovemberRecieve() {
+	public Integer getNovemberRecieve() {
 		return novemberRecieve;
 	}
 
-	public void setNovemberRecieve(String novemberRecieve) {
+	public void setNovemberRecieve(Integer novemberRecieve) {
 		this.novemberRecieve = novemberRecieve;
 	}
 
-	public String getNovemberPay() {
+	public Integer getNovemberPay() {
 		return novemberPay;
 	}
 
-	public void setNovemberPay(String novemberPay) {
+	public void setNovemberPay(Integer novemberPay) {
 		this.novemberPay = novemberPay;
 	}
 
-	public String getDecemberRecieve() {
+	public Integer getDecemberRecieve() {
 		return decemberRecieve;
 	}
 
-	public void setDecemberRecieve(String decemberRecieve) {
+	public void setDecemberRecieve(Integer decemberRecieve) {
 		this.decemberRecieve = decemberRecieve;
 	}
 
-	public String getDecemberPay() {
+	public Integer getDecemberPay() {
 		return decemberPay;
 	}
 
-	public void setDecemberPay(String decemberPay) {
+	public void setDecemberPay(Integer decemberPay) {
 		this.decemberPay = decemberPay;
 	}
 
-	public String getJanuaryRecieve() {
+	public Integer getJanuaryRecieve() {
 		return januaryRecieve;
 	}
 
-	public void setJanuaryRecieve(String januaryRecieve) {
+	public void setJanuaryRecieve(Integer januaryRecieve) {
 		this.januaryRecieve = januaryRecieve;
 	}
 
-	public String getJanuaryPay() {
+	public Integer getJanuaryPay() {
 		return januaryPay;
 	}
 
-	public void setJanuaryPay(String januaryPay) {
+	public void setJanuaryPay(Integer januaryPay) {
 		this.januaryPay = januaryPay;
 	}
 
-	public String getFebruaryRecieve() {
+	public Integer getFebruaryRecieve() {
 		return februaryRecieve;
 	}
 
-	public void setFebruaryRecieve(String februaryRecieve) {
+	public void setFebruaryRecieve(Integer februaryRecieve) {
 		this.februaryRecieve = februaryRecieve;
 	}
 
-	public String getFebruaryPay() {
+	public Integer getFebruaryPay() {
 		return februaryPay;
 	}
 
-	public void setFebruaryPay(String februaryPay) {
+	public void setFebruaryPay(Integer februaryPay) {
 		this.februaryPay = februaryPay;
 	}
 
-	public String getMarchRecieve() {
+	public Integer getMarchRecieve() {
 		return marchRecieve;
 	}
 
-	public void setMarchRecieve(String marchRecieve) {
+	public void setMarchRecieve(Integer marchRecieve) {
 		this.marchRecieve = marchRecieve;
 	}
 
-	public String getMarchPay() {
+	public Integer getMarchPay() {
 		return marchPay;
 	}
 
-	public void setMarchPay(String marchPay) {
+	public void setMarchPay(Integer marchPay) {
 		this.marchPay = marchPay;
 	}
 
-	public String getAprilRecieve() {
+	public Integer getAprilRecieve() {
 		return aprilRecieve;
 	}
 
-	public void setAprilRecieve(String aprilRecieve) {
+	public void setAprilRecieve(Integer aprilRecieve) {
 		this.aprilRecieve = aprilRecieve;
 	}
 
-	public String getAprilPay() {
+	public Integer getAprilPay() {
 		return aprilPay;
 	}
 
-	public void setAprilPay(String aprilPay) {
+	public void setAprilPay(Integer aprilPay) {
 		this.aprilPay = aprilPay;
 	}
 
-	public String getMayRecieve() {
+	public Integer getMayRecieve() {
 		return mayRecieve;
 	}
 
-	public void setMayRecieve(String mayRecieve) {
+	public void setMayRecieve(Integer mayRecieve) {
 		this.mayRecieve = mayRecieve;
 	}
 
-	public String getMayPay() {
+	public Integer getMayPay() {
 		return mayPay;
 	}
 
-	public void setMayPay(String mayPay) {
+	public void setMayPay(Integer mayPay) {
 		this.mayPay = mayPay;
 	}
 
-	public String getJuneRecieve() {
+	public Integer getJuneRecieve() {
 		return juneRecieve;
 	}
 
-	public void setJuneRecieve(String juneRecieve) {
+	public void setJuneRecieve(Integer juneRecieve) {
 		this.juneRecieve = juneRecieve;
 	}
 
-	public String getJunePay() {
+	public Integer getJunePay() {
 		return junePay;
 	}
 
-	public void setJunePay(String junePay) {
+	public void setJunePay(Integer junePay) {
 		this.junePay = junePay;
 	}
 
-	public String getJulyRecieve() {
+	public Integer getJulyRecieve() {
 		return julyRecieve;
 	}
 
-	public void setJulyRecieve(String julyRecieve) {
+	public void setJulyRecieve(Integer julyRecieve) {
 		this.julyRecieve = julyRecieve;
 	}
 
-	public String getJulyPay() {
+	public Integer getJulyPay() {
 		return julyPay;
 	}
 
-	public void setJulyPay(String julyPay) {
+	public void setJulyPay(Integer julyPay) {
 		this.julyPay = julyPay;
 	}
 
-	public String getAugustRecieve() {
+	public Integer getAugustRecieve() {
 		return augustRecieve;
 	}
 
-	public void setAugustRecieve(String augustRecieve) {
+	public void setAugustRecieve(Integer augustRecieve) {
 		this.augustRecieve = augustRecieve;
 	}
 
-	public String getAugustPay() {
+	public Integer getAugustPay() {
 		return augustPay;
 	}
 
-	public void setAugustPay(String augustPay) {
+	public void setAugustPay(Integer augustPay) {
 		this.augustPay = augustPay;
 	}
 
-	public String getSeptemberRecieve() {
+	public Integer getSeptemberRecieve() {
 		return septemberRecieve;
 	}
 
-	public void setSeptemberRecieve(String septemberRecieve) {
+	public void setSeptemberRecieve(Integer septemberRecieve) {
 		this.septemberRecieve = septemberRecieve;
 	}
 
-	public String getSeptemberPay() {
+	public Integer getSeptemberPay() {
 		return septemberPay;
 	}
 
-	public void setSeptemberPay(String septemberPay) {
+	public void setSeptemberPay(Integer septemberPay) {
 		this.septemberPay = septemberPay;
 	}
 
@@ -396,6 +388,14 @@ public class Int05112Vo extends DataTableRequest {
 
 	public void setColumnId(String columnId) {
 		this.columnId = columnId;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 }

@@ -248,7 +248,7 @@ export class Int05111Component implements OnInit,AfterViewInit {
     this.table.clear().draw();
     this.table.rows.add(this.data); // Add new data
     this.table.columns.adjust().draw(); // Redraw the DataTable
-    this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
+    //this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
     this.formModal = new FormModal();
     this.formModal.dateOfPay = "";
     this.formModal.dateDeliverStamp = "";
@@ -306,12 +306,13 @@ export class Int05111Component implements OnInit,AfterViewInit {
           },
           "className": "ui center aligned"
         }, {
-          "data": "dateOfPay"
+          "data": "dateOfPay",
+          "className": "ui center aligned",
         }, {
           "data": "status",
           "className": "ui center aligned",
         }, {
-          "data": "departmentName",
+          "data": "officeDesc",
           "className": "ui center aligned"
         }, {
           "data": "bookNumberWithdrawStamp",
@@ -354,16 +355,16 @@ export class Int05111Component implements OnInit,AfterViewInit {
           "className": "ui center aligned"
         }, {
           "data": "taxStamp",
-          "className": "ui center aligned"
+          "className": "ui right aligned"
         }, {
           "data": "stampCodeStart",
-          "className": "ui center aligned"
+          
         }, {
           "data": "stampCodeEnd",
-          "className": "ui center aligned"
+          
         }, {
           "data": "note",
-          "className": "ui center aligned"
+          
         }, {
           "data": "note",
           "render": function (data, type, row) {
@@ -373,6 +374,7 @@ export class Int05111Component implements OnInit,AfterViewInit {
             return btn;
           },
           "className": "ui center aligned"
+          
         }
       ]
     });

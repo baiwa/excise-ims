@@ -3,7 +3,6 @@ package th.co.baiwa.excise.ia.persistence.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.constant.DateConstant;
-import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.constant.ExciseConstants.FORMAT_DATE;
 import th.co.baiwa.excise.ia.persistence.vo.Int05112DetailVo;
 
@@ -21,12 +19,12 @@ public class IaStampDetailDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	public List<Int05112DetailVo> findAll() {
-		String SQL = "SELECT * FROM IA_STAMP_DETAIL WHERE TO_CHAR(DATE_OF_PAY,'YYYY')=?";
-		StringBuilder sql = new StringBuilder(SQL);
-		String year = DateConstant.convertDateToStr(new Date(), ExciseConstants.FORMAT_DATE.YYYY,ExciseConstants.LOCALE.EN);
+	public List<Int05112DetailVo> findAll(String dateFrom,String dateTo) {
+		String SQL = "SELECT * FROM IA_STAMP_DETAIL WHERE TO_CHAR(DATE_OF_PAY,'YYYYMMDD')  BETWEEN  ? AND ? ";
+		StringBuilder sql = new StringBuilder(SQL);		
 		List<Object> params = new ArrayList<>();
-		params.add(year);
+		params.add(dateFrom);
+		params.add(dateTo);
 		
 		//String sqlLimit = OracleUtils.limitForDataTable(sql.toString(), formVo.getStart(),formVo.getLength());
         List<Int05112DetailVo> list = jdbcTemplate.query(sql.toString(), params.toArray(), iaStampDetailRowmapper);

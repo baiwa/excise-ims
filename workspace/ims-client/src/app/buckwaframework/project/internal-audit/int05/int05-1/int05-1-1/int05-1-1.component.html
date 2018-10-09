@@ -8,47 +8,49 @@
 <div class="ui attached segment">
   <form class="ui form">
     <input type="hidden" id="searchFlag" name="searchFlag">
-    <!--<div class="inline fields  ui grid">
-      <div class="one wide field "></div>
+    <!-- row 1 -->
+    <div class="inline fields  ui grid">
       <div class="three wide field ">
-        <label>สำนักงานสรรพสามิตภาค</label>
+        <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
       </div>
       <div class="four wide field ">
-        <select name="sector" id="sector" class="ui dropdown ai search" (change)="sectorOnchange($event)">
+        <select name="sector " id="sector" class="ui dropdown ai search full-width" (change)="sectorOnchange($event)">
           <option value="">กรุณาเลือก</option>
           <option *ngFor="let item of sector; index as i;" value="{{item.value}}">{{item.label}}</option>
         </select>
       </div>
       <div class="three wide field ">
-        <label>สำนักงานสรรพสามิตพื้นที่</label>
+        <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
       </div>
       <div class="four wide field ">
-        <select name="area" id="area" class="ui dropdown ai search" (change)="areaOnchange($event)">
+        <select name="area" id="area" class="ui dropdown ai search full-width" (change)="areaOnchange($event)">
           <option value="">กรุณาเลือก</option>
           <option *ngFor="let item of area" value="{{item.value}}">{{item.label}}</option>
         </select>
       </div>
-      <div class="one wide field "></div>
-    </div>-->
-    <!--<div class="inline fields  ui grid">
-      <div class="one wide field "></div>
+    </div>
+    <!-- row 2 -->
+    <div class="inline fields  ui grid">
       <div class="three wide field ">
-        <label>สรรพสามิตพื้นที่สาขา</label>
+        <label class="text-right full-width">สรรพสามิตพื้นที่สาขา</label>
       </div>
       <div class="four wide field ">
-        <select name="branch" id="branch" class="ui dropdown ai search">
+        <select name="branch" id="branch" class="ui dropdown ai search full-width">
           <option value="">กรุณาเลือก</option>
           <option *ngFor="let item of branch; index as i;" value="{{item.value}}">{{item.label}}</option>
         </select>
       </div>
-      <div class="three wide field "></div>
-      <div class="four wide field "></div>
-      <div class="one wide field "></div>
-    </div>-->
-    <div class="inline fields  ui grid">
-      <div class="one wide field "></div>
       <div class="three wide field ">
-        <label class="text-right">วันที่เริ่มต้น</label>
+        
+      </div>
+      <div class="four wide field ">
+        
+      </div>
+    </div>
+    <!-- row 3 -->    
+    <div class="inline fields  ui grid">
+      <div class="three wide field ">
+        <label class="text-right full-width">วันที่เริ่มต้น</label>
       </div>
       <div class="four wide field ">
         <div class="ui calendar width100" id="dateF">
@@ -59,7 +61,7 @@
         </div>
       </div>
       <div class="three wide field ">
-        <label class="text-right">วันนี้สิ้นสุด</label>
+        <label class="text-right full-width">วันนี้สิ้นสุด</label>
       </div>
       <div class="four wide field ">
         <div class="ui input">
@@ -118,6 +120,8 @@
       </tr>
     </thead>
   </table>
+  <br>
+  <br>
   <div class="ui centered grid">
     <a class="ui mini primary button" routerLink="/int05/1/1/2">สรุปแสตป์รายปีงบประมาณ</a>
     <button class="ui mini primary button"> Export</button>
