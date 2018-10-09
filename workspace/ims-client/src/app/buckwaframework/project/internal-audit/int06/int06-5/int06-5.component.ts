@@ -32,12 +32,13 @@ export class Int065Component implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.calenda();
-    this.dataTable();
+    
   }
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
     this.sector();
+    this.dataTable();
   }
 
   sector = () => {
@@ -73,6 +74,7 @@ export class Int065Component implements OnInit, AfterViewInit {
     $(".ui.dropdown").dropdown('restore defaults');
     $("#dateFrom").val("");
     $("#dateTo").val("");
+    this.form.searchFlag = "FALSE";
     this.int065Service.clear();
   }
 

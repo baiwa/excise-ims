@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AjaxService } from "services/ajax.service";
 import { MessageBarService } from "services/message-bar.service";
 import { FormSearch } from "projects/internal-audit/int06/int06-5/from-search.model";
+import { Utils } from "helpers/utils";
 
 declare var $: any;
 
@@ -44,7 +45,9 @@ export class Int065Service {
   }
   clear = () =>{
     this.form.searchFlag = "FALSE";
-    $("#dataTable").DataTable().ajax.reload();
+      $("#dataTable").DataTable().ajax.reload();
+    
+    console.log(this.form.searchFlag);
 
   }
   dataTable = () => {
@@ -83,19 +86,22 @@ export class Int065Service {
           "className": "ui center aligned"
         }, {
           "data": "refPayment",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "amount",
-          "className": "ui center aligned"
+          "className": "ui right aligned",
+          "render" : (data) =>{
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "budgetType",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "itemDesc",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "payee",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, 
       ]
     });    

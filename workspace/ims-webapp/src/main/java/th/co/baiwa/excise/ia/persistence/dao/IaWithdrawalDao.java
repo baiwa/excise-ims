@@ -3,6 +3,7 @@ package th.co.baiwa.excise.ia.persistence.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +12,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.ia.persistence.vo.Int065FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int065Vo;
 import th.co.baiwa.excise.utils.OracleUtils;
@@ -21,19 +24,21 @@ public class IaWithdrawalDao {
 	private JdbcTemplate jdbcTemplate;
 	private final String CHECK = "เช็ค";
 	private final String CHECK_KTB = "KTB-Corporate";
-	private final String SQL = "SELECT TO_CHAR(ps.PAYMENT_DATE,'YYYYMMDD')PAYMENT_DATE , " + 
+	private final String SQL = "SELECT ps.PAYMENT_DATE PAYMENT_DATE , " + 
 							"        ps.WITHDRAWAL_ID WITHDRAWAL_ID, " + 
 							"        ps.REF_PAYMENT REF_PAYMENT, " + 
 							"        ps.PAYEE PAYEE, " + 
 							"        LS.ITEM_DESC ITEM_DESC,"+
 							"        ps.OFFICE_CODE OFFICE_CODE, " + 
-							"        LS.BUDGET_TYPE BUDGET_TYPE" + 
+							"        LS.BUDGET_TYPE BUDGET_TYPE,  "+ 
+							"        ps.AMOUNT  AMOUNT" + 
 							"        FROM  " + 
 							"   		(SELECT TO_CHAR(ps.PAYMENT_DATE,'YYYYMMDD')PAYMENT_DATE , " + 
 							"            ps.WITHDRAWAL_ID WITHDRAWAL_ID, " + 
 							"            ps.REF_PAYMENT REF_PAYMENT, "+ 
 							"            ps.OFFICE_CODE," + 
-							"            ps.PAYEE PAYEE " + 
+							"            ps.PAYEE PAYEE, "+
+							"            ps.AMOUNT AMOUNT" + 
 							"   FROM IA_WITHDRAWAL_PERSONS ps ) PS  " + 
 							"   INNER JOIN  " + 
 							"   (SELECT WITHDRAWAL_ID,ITEM_DESC,BUDGET_TYPE " + 
@@ -127,12 +132,14 @@ public class IaWithdrawalDao {
 		@Override
 		public Int065Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Int065Vo vo = new Int065Vo();
-			vo.setPaymentDate(rs.getString("PAYMENT_DATE"));
+			Date date = DateConstant.convertStrToDate(rs.getString("PAYMENT_DATE"), ExciseConstants.FORMAT_DATE.YYYYMMDD,ExciseConstants.LOCALE.EN);
+			String dateStr = DateConstant.convertDateToStr(date, ExciseConstants.FORMAT_DATE.DDMMYYYY,ExciseConstants.LOCALE.TH);
+			vo.setPaymentDate(dateStr);
 			vo.setRefPayment(rs.getString("REF_PAYMENT"));
 			vo.setPayee(rs.getString("PAYEE"));
 			vo.setItemDesc(rs.getString("ITEM_DESC"));
 			vo.setBudgetType(rs.getString("BUDGET_TYPE"));
-			
+			vo.setAmount(rs.getString("AMOUNT"));
 			return vo;
 		}
 	};
