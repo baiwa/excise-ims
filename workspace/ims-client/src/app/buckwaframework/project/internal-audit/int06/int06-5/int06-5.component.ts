@@ -66,10 +66,14 @@ export class Int065Component implements OnInit, AfterViewInit {
     }
   }
 
+  search = () => {
+    this.int065Service.search();
+  }
   clear = () => {
     $(".ui.dropdown").dropdown('restore defaults');
     $("#dateFrom").val("");
     $("#dateTo").val("");
+    this.int065Service.clear();
   }
 
   dataTable = () => {

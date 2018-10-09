@@ -3,6 +3,7 @@ import { AjaxService, MessageBarService } from 'app/buckwaframework/common/servi
 import { TextDateTH, Utils } from 'app/buckwaframework/common/helper';
 import { formatter } from 'app/buckwaframework/common/helper/datepicker';
 import { BreadCrumb } from 'models/breadcrumb';
+import { async } from '@angular/core/testing';
 declare var $: any;
 @Component({
   selector: 'app-int05-1-1',
@@ -167,8 +168,8 @@ export class Int0511Component implements OnInit {
     const table = $("#dataTable").DataTable({
       "serverSide": true,
       "searching": false,
-      "ordering": false,
       "processing": true,
+      "ordering": false,
       "scrollX": true,
       "ajax": {
         "url": '/ims-webapp/api/ia/int05111/findAll',
@@ -348,42 +349,44 @@ export class Int0511Component implements OnInit {
           this.formModal = new FormModal();
           this.loading = false;
         },
-        onShow: () => {
+        onShow: async() => {
+          
+            console.log("FormModal : ", data);
+            this.calenda();
+            this.formModal.dateOfPay = await data.dateOfPay;
+            this.formModal.bookNumberDeliverStamp =  await data.bookNumberDeliverStamp;
+            this.formModal.bookNumberWithdrawStamp = await data.bookNumberWithdrawStamp;
+            this.formModal.createdDate = await data.createdDate;
+            this.formModal.dateDeliverStamp = await data.dateDeliverStamp;
+            this.formModal.dateWithdrawStamp = await data.dateWithdrawStamp;
+            this.formModal.departmentName = await data.departmentName;
+            this.formModal.exciseDepartment = await data.exciseDepartment;
+            this.formModal.exciseDistrict = await data.exciseDistrict;
+            this.formModal.exciseRegion = await data.exciseRegion;
+            this.formModal.fivePartDate = await data.fivePartDate;
+            this.formModal.fivePartNumber = await data.fivePartNumber;
+            this.formModal.note = await data.note;
+            this.formModal.numberOfBook = await data.numberOfBook;
+            this.formModal.numberOfStamp = await data.numberOfStamp;
+            this.formModal.serialNumber = await data.serialNumber;
+            this.formModal.stampBrand = await data.stampBrand;
+            this.formModal.stampCheckDate = await data.stampCheckDate;
+            this.formModal.stampChecker = await data.stampChecker;
+            this.formModal.stampChecker2 = await data.stampChecker2;
+            this.formModal.stampChecker3 = await data.stampChecker3;
+            this.formModal.stampCodeEnd = await data.stampCodeEnd;
+            this.formModal.stampCodeStart = await data.stampCodeStart;
+            this.formModal.stampType = await data.stampType;
+            this.formModal.status = await data.status;
+            this.formModal.sumOfValue = await data.sumOfValue;
+            this.formModal.taxStamp = await data.taxStamp;
+            this.formModal.valueOfStampPrinted = await data.valueOfStampPrinted;
+            this.formModal.workSheetDetailId = await data.workSheetDetailId;
+            this.formModal.fileName = await data.fileName;
+            this.formModal.dateOfPay = await data.dateOfPay;
 
-          console.log("FormModal : ", data);
-          this.calenda();
-          this.formModal.dateOfPay = data.dateOfPay;
-          this.formModal.bookNumberDeliverStamp = data.bookNumberDeliverStamp;
-          this.formModal.bookNumberWithdrawStamp = data.bookNumberWithdrawStamp;
-          this.formModal.createdDate = data.createdDate;
-          this.formModal.dateDeliverStamp = data.dateDeliverStamp;
-          this.formModal.dateWithdrawStamp = data.dateWithdrawStamp;
-          this.formModal.departmentName = data.departmentName;
-          this.formModal.exciseDepartment = data.exciseDepartment;
-          this.formModal.exciseDistrict = data.exciseDistrict;
-          this.formModal.exciseRegion = data.exciseRegion;
-          this.formModal.fivePartDate = data.fivePartDate;
-          this.formModal.fivePartNumber = data.fivePartNumber;
-          this.formModal.note = data.note;
-          this.formModal.numberOfBook = data.numberOfBook;
-          this.formModal.numberOfStamp = data.numberOfStamp;
-          this.formModal.serialNumber = data.serialNumber;
-          this.formModal.stampBrand = data.stampBrand;
-          this.formModal.stampCheckDate = data.stampCheckDate;
-          this.formModal.stampChecker = data.stampChecker;
-          this.formModal.stampChecker2 = data.stampChecker2;
-          this.formModal.stampChecker3 = data.stampChecker3;
-          this.formModal.stampCodeEnd = data.stampCodeEnd;
-          this.formModal.stampCodeStart = data.stampCodeStart;
-          this.formModal.stampType = data.stampType;
-          this.formModal.status = data.status;
-          this.formModal.sumOfValue = data.sumOfValue;
-          this.formModal.taxStamp = data.taxStamp;
-          this.formModal.valueOfStampPrinted = data.valueOfStampPrinted;
-          this.formModal.workSheetDetailId = data.workSheetDetailId;
-          this.formModal.fileName = data.fileName;
-          this.formModal.dateOfPay = data.dateOfPay;
-          $("#status").dropdown('set selected');
+            await $("#status").dropdown('set selected', this.formModal.status);            
+         
         },
       }).modal('show');
     });
