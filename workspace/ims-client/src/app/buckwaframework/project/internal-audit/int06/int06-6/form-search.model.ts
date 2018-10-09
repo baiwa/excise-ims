@@ -4,4 +4,5 @@ export class FormSearch {
     branch : string = "";
     dateFrom : string = "";
     dateTo : string = "";
+    searchFlag : string = "FALSE";
 }

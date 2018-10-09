@@ -72,14 +72,17 @@ export class Int066Component implements OnInit {
     }
 
   }
-
-  dataTable = () => {
-    this.int066Service.dataTable();
+  search = () => {
+    this.int066Service.search();
   }
   clear = () => {
     $(".ui.dropdown").dropdown('restore defaults');
     $("#dateFrom").val("");
     $("#dateTo").val("");
+    this.int066Service.clear();
+  }
+  dataTable = () => {
+    this.int066Service.dataTable();
   }
   calenda = () => {
     $("#dateF").calendar({

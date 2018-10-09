@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.excise.ia.persistence.vo.Int065FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int065Vo;
 import th.co.baiwa.excise.ia.service.Int066Service;
 
 @Controller
@@ -19,11 +22,11 @@ public class Int066Controller {
 	@Autowired
 	private Int066Service int066Service;
 	
-	/*@PostMapping("/findAll")
+	@PostMapping("/findAll")
 	@ResponseBody
-	public DataTableAjax<Int05111Vo> findAll(@RequestBody Int05111FormVo formVo) {
-		return int05111Service.findAll(formVo);
-	}*/
+	public DataTableAjax<Int065Vo> findAll(@RequestBody Int065FormVo formVo) {
+		return int066Service.findAll(formVo);
+	}
 
 	@GetMapping("/sector")
 	@ResponseBody

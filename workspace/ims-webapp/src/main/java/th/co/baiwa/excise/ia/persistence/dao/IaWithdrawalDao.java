@@ -20,6 +20,7 @@ public class IaWithdrawalDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	private final String CHECK = "เช็ค";
+	private final String CHECK_KTB = "KTB-Corporate";
 	private final String SQL = "SELECT TO_CHAR(ps.PAYMENT_DATE,'YYYYMMDD')PAYMENT_DATE , " + 
 							"        ps.WITHDRAWAL_ID WITHDRAWAL_ID, " + 
 							"        ps.REF_PAYMENT REF_PAYMENT, " + 
@@ -65,6 +66,47 @@ public class IaWithdrawalDao {
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
 		params.add(CHECK);
+		
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			sql.append(" AND OFFICE_CODE LIKE ?");
+			params.add(formVo.getOfficeCode()+"%");
+		}
+        if (StringUtils.isNotBlank(formVo.getDateFrom()) && StringUtils.isNotBlank(formVo.getDateTo())){
+            sql.append(" AND PAYMENT_DATE BETWEEN ? AND ?");
+            params.add(formVo.getDateFrom());
+            params.add(formVo.getDateTo());
+        }
+         String limit = OracleUtils.limit(sql.toString(), formVo.getStart(), formVo.getLength());
+		List<Int065Vo> list = jdbcTemplate.query(limit, params.toArray(), stamRowmapper);
+		return list;
+
+	}
+	
+	public Long countKtb(Int065FormVo formVo) {
+
+		StringBuilder sql = new StringBuilder(SQL);
+		List<Object> params = new ArrayList<>();
+		params.add(CHECK_KTB);
+		
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			sql.append(" AND OFFICE_CODE LIKE ?");
+			params.add(formVo.getOfficeCode()+"%");
+		}
+        if (StringUtils.isNotBlank(formVo.getDateFrom()) && StringUtils.isNotBlank(formVo.getDateTo())){
+            sql.append(" AND PAYMENT_DATE BETWEEN ? AND ?");
+            params.add(formVo.getDateFrom());
+            params.add(formVo.getDateTo());
+        }
+		String countSql = OracleUtils.countForDatatable(sql);
+		Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+		return count;
+	}
+
+	public List<Int065Vo> findAllKtb(Int065FormVo formVo) {
+
+		StringBuilder sql = new StringBuilder(SQL);
+		List<Object> params = new ArrayList<>();
+		params.add(CHECK_KTB);
 		
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
 			sql.append(" AND OFFICE_CODE LIKE ?");
