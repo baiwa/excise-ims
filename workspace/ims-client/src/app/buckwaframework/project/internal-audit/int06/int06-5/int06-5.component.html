@@ -1,121 +1,100 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
-  <div class="sixteen wide column">
-    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>ค้นหารายการคุมเช็ค </span>
-    </div>
-
-    <div class="ui attached segment">
-      <div class="ui form">
-        <div class="inline fields">
-          <div class="two wide field"></div>
-          <div class="two wide field">
-            <label>สรรพสามิตภาค</label>
-          </div>
-          <div class="four wide field">
-            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)">
-              <option value="">เลือก</option>
-              <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
-            </select>
-          </div>
-          <div class="two wide field">
-            <label>สรรพสามิตพื้นที่</label>
-          </div>
-          <div class="four wide field">
-            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)">
-              <option value="">เลือก</option>
-              <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="inline fields">
-          <div class="two wide field"></div>
-          <div class="two wide field">
-            <label>สรรพสามิตสาขา</label>
-          </div>
-          <div class="four wide field">
-            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3">
-              <option value="">เลือก</option>
-              <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
-            </select>
-          </div>
-          <div class="two wide field ">
-            <label>วันที่
-            </label>
-          </div>
-          <div class="two wide field">
-            <div class="ui calendar" id="calendar1" style="width:100%">
-              <div class="ui input left icon">
-                <i class="time icon"></i>
-                <input type="text" name="endDate" id="endDate">
-              </div>
-            </div>
-          </div>
-          <label>ถึง</label>
-          <div class="two wide field">
-            <div class="ui calendar" id="calendar2" style="width:100%">
-              <div class="ui input left icon">
-                <i class="time icon"></i>
-                <input type="text" name="endDate" id="endDate">
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="ui center aligned grid">
-          <div class="eight wide column">
-            <button class="ui mini primary button width-100"  (click)="showdata()">
-              <i class="search icon"></i>
-              ค้นหา
-            </button>
-            <button class="ui mini  button width-100"  (click)="hidedata()">
-              <i class="trash outline icon"></i>
-              ล้างข้อมูล
-            </button>
-            <button class="ui mini green button width-100"  routerLink='/int06/5/1'>
-              <i class="add icon"></i>
-              เพิ่มข้อมูล
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-</div>
-<div class="ui segment" id="hideData">
-  <div style="overflow-x: scroll;">
-    <table id="tableData" class="ui small celled table striped selectable" style="width: 100%">
-      <thead>
-        <tr style="text-align: center;">
-        <th>ลำดับที่</th>
-        <th>วันที่สั่งจ่าย</th>
-        <th>เช็คเล่มที่</th>
-        <th>จำนวนเงินสั่งจ่ายในเช็ค</th>
-        <th>ประเภทงบประมาณ</th>
-        <th>ผู้รับเงิน</th>
-        <th>จัดการ</th>
-        </tr>
-      </thead>
-      <tbody>
-        											
-      </tbody>
-    </table>
-  </div>
-  <br>
-  <div class="ui center aligned grid">
     <div class="sixteen wide column">
+        
+        <div class="ui top attached header segment">
+            <span>ค้นหารายการคุมเช็ค</span>
+        </div>
 
-      <button class="ui mini primary button">
-        <i class="print icon"></i>
-        ส่งออก
-      </button>
-      <button class="ui mini  button" (click)="hidedata()">
-        <i class="close icon"></i>
-        ยกเลิก
-      </button>
+        <div class="ui attached segment">
+            <form class="ui form">
+                <input type="hidden" id="searchFlag" name="searchFlag">
+                <!-- row 1 -->
+                <div class="inline fields  ui grid">
+                    <div class="three wide field ">
+                        <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
+                    </div>
+                    <div class="four wide field ">
+                        <select name="sector " id="sector" class="ui dropdown ai search full-width" (change)="area($event)">
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let item of sectorList; index as i;" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+                        </select>
+                    </div>
+                    <div class="three wide field ">
+                        <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
+                    </div>
+                    <div class="four wide field ">
+                        <select name="area" id="area" class="ui dropdown ai search full-width" (change)="branch($event)">
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let item of areaList" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- row 2 -->
+                <div class="inline fields  ui grid">
+                    <div class="three wide field ">
+                        <label class="text-right full-width">สรรพสามิตพื้นที่สาขา</label>
+                    </div>
+                    <div class="four wide field ">
+                        <select name="branch" id="branch" class="ui dropdown ai search full-width">
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let item of branchList; index as i;" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+                        </select>
+                    </div>
+                    <div class="seven wide field "></div>
+                </div>
+                <!-- row 3 -->
+                <div class="inline fields  ui grid">
+                    <div class="three wide field ">
+                        <label class="text-right full-width">วันที่เริ่มต้น</label>
+                    </div>
+                    <div class="four wide field ">
+                        <div class="ui calendar full-width" id="dateF">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input name="dateFrom" type="text" id="dateFrom" autocomplete="off" [attr.readonly]="null"
+                                    placeholder="dd/MM/yyyy" [attr.required]="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="three wide field ">
+                        <label class="text-right full-width">วันที่สิ้นสุด</label>
+                    </div>
+                    <div class="four wide field ">
+                        <div class="ui input">
+                            <div class="ui calendar full-width" id="dateT">
+                                <div class="ui input left icon">
+                                    <i class="time icon"></i>
+                                    <input name="dateTo" type="text" id="dateTo" autocomplete="off" [attr.readonly]="null"
+                                        placeholder="dd/MM/yyyy" [attr.required]="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="one wide field "></div>
+                </div><br>
+                <div class="ui stackable center aligned page grid">
+                    <button class="ui mini primary button" type="button" (click)="onSearch()"><i class="search icon"></i>ค้นหา</button>
+                    <button class="ui mini gray button " type="button" (click)="clear()"><i class="delete icon"></i>ล้างข้อมูล</button>
+                </div><br>
+            </form>
+
+        </div>
     </div>
-  </div>
-
 </div>
 
+<div class="ui segment">
+    <table id="dataTable" class="ui small celled table striped selectable nowrap" style="width: 100%;">
+        <thead>
+            <tr>
+                <th style="text-align: center !important">ลำดับ</th>
+                <th style="text-align: center !important">วันที่สั่งจ่าย</th>
+                <th style="text-align: center !important">เช็คเล่มที่</th>
+                <th style="text-align: center !important">จำนวนเงินสั่งจ่ายในเช็ค</th>
+                <th style="text-align: center !important">ประเภทงบประมาณ</th>
+                <th style="text-align: center !important">รายการ</th>
+                <th style="text-align: center !important">ผู้รับเงิน</th>
+            </tr>
+        </thead>       
+    </table>
+</div>

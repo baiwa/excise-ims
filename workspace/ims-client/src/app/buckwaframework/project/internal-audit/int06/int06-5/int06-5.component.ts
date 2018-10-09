@@ -1,87 +1,96 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, AfterViewInit, ViewChild } from "@angular/core";
+import { BreadCrumb } from "models/breadcrumb";
+import { Int065Service } from "projects/internal-audit/int06/int06-5/int06-5.service";
+import { FormSearch } from "projects/internal-audit/int06/int06-5/from-search.model";
+import { TextDateTH, formatter } from "helpers/datepicker";
+import { Utils } from "helpers/utils";
 
-import { AjaxService } from 'services/ajax.service';
-import { TextDateTH, formatter } from 'helpers/datepicker';
-
-const URL = {
-  DROPDOWN : "combobox/controller/getDropByTypeAndParentId"
-};
 declare var $: any;
+
 @Component({
-  selector: 'int06-5',
-  templateUrl: './int06-5.component.html',
-  styleUrls: ['./int06-5.component.css']
+  selector: "app-int06-5",
+  templateUrl: "./int06-5.component.html",
+  styleUrls: ["./int06-5.component.css"],
+  providers: [Int065Service]
 })
-export class Int065Component implements OnInit {
- 
-  private selectedProduct: string = "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก ";
-  private productList: any[];
+export class Int065Component implements OnInit, AfterViewInit {
 
-  travelTo1List: any;
-  travelTo2List: any;
-  travelTo3List: any;
+  breadcrumb: BreadCrumb[] = [
+    { label: "ตรวจสอบภายใน", route: "#" },
+    { label: "ตรวจสอบเบิกจ่าย", route: "#" },
+    { label: "บันทึกรายการคุมเช็ค", route: "#" }
+  ];
+  form: FormSearch = new FormSearch();
+  startDate: any = "";
+  endDate: any = "";
+  sectorList: any;
+  areaList: any;
+  branchList: any;
 
-  constructor(private ajax: AjaxService) { }
+  constructor(private int065Service: Int065Service) {
+  }
+
+  ngAfterViewInit() {
+    this.calenda();
+    this.dataTable();
+  }
 
   ngOnInit() {
-    this.hidedata();
-    $("#calendar1").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-
-    });
-
-    $("#calendar2").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    });
-    
     $(".ui.dropdown").dropdown();
-    $(".ui.dropdown.search").css("width", "100%");
-    this.productList = [
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " },
-      { value: "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก " }
-    ];
-    this.travelTo1Dropdown();
+    this.sector();
   }
 
-  travelTo1Dropdown = () => {
-    this.ajax.post(URL.DROPDOWN, { type: "SECTOR_VALUE" }, res => {
-      this.travelTo1List = res.json();
+  sector = () => {
+    this.int065Service.sector().then((res) => {
+      this.sectorList = res;
+    });
+  }
+  area = (e) => {
+    $("#area").dropdown('restore defaults');
+    $("#branch").dropdown('restore defaults');
+    this.areaList = null;
+    this.branchList = null
+    if (Utils.isNotNull(e.target.value)) {
+      this.int065Service.area(e.target.value).then((res) => {
+        this.areaList = res;;
+      });
+    }
+  }
+  branch = (e) => {
+    this.branchList = null
+    $("#branch").dropdown('restore defaults');
+    if (Utils.isNotNull(e.target.value)) {
+      this.int065Service.branch(e.target.value).then((res) => {
+        this.branchList = res;
+      });
+    }
+  }
+
+  clear = () => {
+    $(".ui.dropdown").dropdown('restore defaults');
+    $("#dateFrom").val("");
+    $("#dateTo").val("");
+  }
+
+  dataTable = () => {
+    this.int065Service.dataTable();
+  }
+
+  calenda = () => {
+    $("#dateF").calendar({
+      maxDate: new Date(),
+      endCalendar: $("#dateT"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $("#dateT").calendar({
+      maxDate: new Date(),
+      startCalendar: $("#dateF"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
     });
   }
 
-  travelTo2Dropdown = e => {
-    var id = e.target.value;
-    if (id != "") {
-      this.ajax.post(URL.DROPDOWN, { type: "SECTOR_VALUE", lovIdMaster: id }, res => {
-        this.travelTo2List = res.json();
-      });
-    }
-  }
-
-  travelTo3Dropdown = e => {
-    var id = e.target.value;
-    if (id != "") {
-      this.ajax.post(URL.DROPDOWN, { type: "SECTOR_VALUE", lovIdMaster: id }, res => {
-        this.travelTo3List = res.json();
-      });
-    }
-  }
-
-  hidedata(){
-    $('#hideData').hide();
-  }
-  showdata(){
-    $('#hideData').show();
-  }
 }

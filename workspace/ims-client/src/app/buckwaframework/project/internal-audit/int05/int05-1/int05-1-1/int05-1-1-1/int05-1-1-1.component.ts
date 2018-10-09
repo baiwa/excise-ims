@@ -102,14 +102,14 @@ export class Int05111Component implements OnInit,AfterViewInit {
   calenda = () => {
     $("#dateF").calendar({
       maxDate: new Date(),
-      endCalendar: $("#dateTo"),
+      endCalendar: $("#dateT"),
       type: "date",
       text: TextDateTH,
       formatter: formatter()
     });
     $("#dateT").calendar({
       maxDate: new Date(),
-      startCalendar: $("#dateForm"),
+      startCalendar: $("#dateF"),
       type: "date",
       text: TextDateTH,
       formatter: formatter()
