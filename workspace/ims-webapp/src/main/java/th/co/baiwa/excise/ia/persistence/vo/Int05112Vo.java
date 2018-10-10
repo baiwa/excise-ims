@@ -18,39 +18,51 @@ public class Int05112Vo extends DataTableRequest {
 
 	private Integer octoberRecieve = 0;
 	private Integer octoberPay = 0;
+	private Integer octoberBalance = 0;
 
 	private Integer novemberRecieve = 0;
 	private Integer novemberPay = 0;
+	private Integer novemberBalance = 0;
 
 	private Integer decemberRecieve = 0;
 	private Integer decemberPay = 0;
+	private Integer decemberBalance = 0;
 
 	private Integer januaryRecieve = 0;
-	private Integer januaryPay = 0; 
+	private Integer januaryPay = 0;
+	private Integer januaryBalance = 0;
 
 	private Integer februaryRecieve = 0;
 	private Integer februaryPay = 0;
+	private Integer februaryBalance = 0;
 
 	private Integer marchRecieve = 0;
 	private Integer marchPay = 0;
+	private Integer marchBalance = 0;
 
 	private Integer aprilRecieve = 0;
 	private Integer aprilPay = 0;
+	private Integer aprilBalance = 0;
 
 	private Integer mayRecieve = 0;
 	private Integer mayPay;
+	private Integer mayBalance = 0;
 
 	private Integer juneRecieve = 0;
 	private Integer junePay = 0;
+	private Integer juneBalance = 0;
 
 	private Integer julyRecieve = 0;
 	private Integer julyPay = 0;
+	private Integer julyBalance = 0;
 
 	private Integer augustRecieve = 0;
 	private Integer augustPay = 0;
+	private Integer augustBalance = 0;
 
 	private Integer septemberRecieve = 0;
 	private Integer septemberPay = 0;
+	private Integer septemberBalance = 0;
 
 	private Integer summaryYearRecieve = 0;
 	private Integer summaryYearPay = 0;
@@ -118,6 +130,14 @@ public class Int05112Vo extends DataTableRequest {
 		this.octoberPay = octoberPay;
 	}
 
+	public Integer getOctoberBalance() {
+		return octoberBalance;
+	}
+
+	public void setOctoberBalance(Integer octoberBalance) {
+		this.octoberBalance = octoberBalance;
+	}
+
 	public Integer getNovemberRecieve() {
 		return novemberRecieve;
 	}
@@ -132,6 +152,14 @@ public class Int05112Vo extends DataTableRequest {
 
 	public void setNovemberPay(Integer novemberPay) {
 		this.novemberPay = novemberPay;
+	}
+
+	public Integer getNovemberBalance() {
+		return novemberBalance;
+	}
+
+	public void setNovemberBalance(Integer novemberBalance) {
+		this.novemberBalance = novemberBalance;
 	}
 
 	public Integer getDecemberRecieve() {
@@ -150,6 +178,14 @@ public class Int05112Vo extends DataTableRequest {
 		this.decemberPay = decemberPay;
 	}
 
+	public Integer getDecemberBalance() {
+		return decemberBalance;
+	}
+
+	public void setDecemberBalance(Integer decemberBalance) {
+		this.decemberBalance = decemberBalance;
+	}
+
 	public Integer getJanuaryRecieve() {
 		return januaryRecieve;
 	}
@@ -164,6 +200,14 @@ public class Int05112Vo extends DataTableRequest {
 
 	public void setJanuaryPay(Integer januaryPay) {
 		this.januaryPay = januaryPay;
+	}
+
+	public Integer getJanuaryBalance() {
+		return januaryBalance;
+	}
+
+	public void setJanuaryBalance(Integer januaryBalance) {
+		this.januaryBalance = januaryBalance;
 	}
 
 	public Integer getFebruaryRecieve() {
@@ -182,6 +226,14 @@ public class Int05112Vo extends DataTableRequest {
 		this.februaryPay = februaryPay;
 	}
 
+	public Integer getFebruaryBalance() {
+		return februaryBalance;
+	}
+
+	public void setFebruaryBalance(Integer februaryBalance) {
+		this.februaryBalance = februaryBalance;
+	}
+
 	public Integer getMarchRecieve() {
 		return marchRecieve;
 	}
@@ -196,6 +248,14 @@ public class Int05112Vo extends DataTableRequest {
 
 	public void setMarchPay(Integer marchPay) {
 		this.marchPay = marchPay;
+	}
+
+	public Integer getMarchBalance() {
+		return marchBalance;
+	}
+
+	public void setMarchBalance(Integer marchBalance) {
+		this.marchBalance = marchBalance;
 	}
 
 	public Integer getAprilRecieve() {
@@ -214,6 +274,14 @@ public class Int05112Vo extends DataTableRequest {
 		this.aprilPay = aprilPay;
 	}
 
+	public Integer getAprilBalance() {
+		return aprilBalance;
+	}
+
+	public void setAprilBalance(Integer aprilBalance) {
+		this.aprilBalance = aprilBalance;
+	}
+
 	public Integer getMayRecieve() {
 		return mayRecieve;
 	}
@@ -228,6 +296,14 @@ public class Int05112Vo extends DataTableRequest {
 
 	public void setMayPay(Integer mayPay) {
 		this.mayPay = mayPay;
+	}
+
+	public Integer getMayBalance() {
+		return mayBalance;
+	}
+
+	public void setMayBalance(Integer mayBalance) {
+		this.mayBalance = mayBalance;
 	}
 
 	public Integer getJuneRecieve() {
@@ -246,6 +322,14 @@ public class Int05112Vo extends DataTableRequest {
 		this.junePay = junePay;
 	}
 
+	public Integer getJuneBalance() {
+		return juneBalance;
+	}
+
+	public void setJuneBalance(Integer juneBalance) {
+		this.juneBalance = juneBalance;
+	}
+
 	public Integer getJulyRecieve() {
 		return julyRecieve;
 	}
@@ -260,6 +344,14 @@ public class Int05112Vo extends DataTableRequest {
 
 	public void setJulyPay(Integer julyPay) {
 		this.julyPay = julyPay;
+	}
+
+	public Integer getJulyBalance() {
+		return julyBalance;
+	}
+
+	public void setJulyBalance(Integer julyBalance) {
+		this.julyBalance = julyBalance;
 	}
 
 	public Integer getAugustRecieve() {
@@ -278,6 +370,14 @@ public class Int05112Vo extends DataTableRequest {
 		this.augustPay = augustPay;
 	}
 
+	public Integer getAugustBalance() {
+		return augustBalance;
+	}
+
+	public void setAugustBalance(Integer augustBalance) {
+		this.augustBalance = augustBalance;
+	}
+
 	public Integer getSeptemberRecieve() {
 		return septemberRecieve;
 	}
@@ -292,6 +392,14 @@ public class Int05112Vo extends DataTableRequest {
 
 	public void setSeptemberPay(Integer septemberPay) {
 		this.septemberPay = septemberPay;
+	}
+
+	public Integer getSeptemberBalance() {
+		return septemberBalance;
+	}
+
+	public void setSeptemberBalance(Integer septemberBalance) {
+		this.septemberBalance = septemberBalance;
 	}
 
 	public Integer getSummaryYearRecieve() {
