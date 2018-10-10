@@ -53,7 +53,7 @@
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
                     <div class="three wide field ">
-                        <label>หนังสือขอเบิกแสตมป์</label>
+                        <label>หนังสือขอเบิกแสตมป์ (หน่วยเบิก)</label>
                     </div>
                     <div class="four wide field ">
                         <input [(ngModel)]="formModal.bookNumberWithdrawStamp" name="bookNumberWithdrawStamp" id="bookNumberWithdrawStamp" type="text">
@@ -121,8 +121,8 @@
                 <!-- row 6 -->
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
-                    <div class="three wide field ">
-                        <label>ผู้ตรวจนับ</label>
+                    <div class="three wide field required ">
+                        <label>ผู้ตรวจนับและรับแสตมป์</label>
                     </div>
                     <div class="four wide field ">
                         <input [(ngModel)]="formModal.stampChecker" name="stampChecker" id="stampChecker" type="text">
@@ -144,8 +144,8 @@
                 <!-- row 6  (2)-->
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
-                    <div class="three wide field ">
-                        <label>ผู้ตรวจนับ</label>
+                    <div class="three wide field required">
+                        <label>ผู้ตรวจนับและรับแสตมป์</label>
                     </div>
                     <div class="four wide field ">
                         <input [(ngModel)]="formModal.stampChecker2" name="stampChecker2" id="stampChecker2" type="text">
@@ -155,8 +155,8 @@
                 <!-- row 6  (3)-->
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
-                    <div class="three wide field ">
-                        <label>ผู้ตรวจนับ</label>
+                    <div class="three wide field required ">
+                        <label>ผู้ตรวจนับและรับแสตมป์</label>
                     </div>
                     <div class="four wide field ">
                         <input [(ngModel)]="formModal.stampChecker3" name="stampChecker3" id="stampChecker3" type="text">
@@ -235,7 +235,7 @@
                         <input [(ngModel)]="formModal.stampCodeStart" name="stampCodeStart" id="stampCodeStart" type="text">
                     </div>
                     <div class="three wide field ">
-                        <label>รหัสแสตมป์(เริ่ม)</label>
+                        <label>รหัสแสตมป์(ถึง)</label>
                     </div>
                     <div class="four wide field ">
                         <input [(ngModel)]="formModal.stampCodeEnd" name="stampCodeEnd" id="stampCodeEnd" type="text">
