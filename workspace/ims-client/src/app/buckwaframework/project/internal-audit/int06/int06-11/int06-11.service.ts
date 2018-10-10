@@ -13,17 +13,17 @@ const _bills: Lov[] = [
 ];
 
 const _types: Lov[] = [
-    { value: "1", label: "วิชาการ" },
-    { value: "2", label: "วิชางาน" },
-    { value: "3", label: "วิชาญีปุ่น" },
-    { value: "4", label: "วิชาญไชยชาญ" }
+    { value: "1", label: "ทั่วไป" },
+    { value: "2", label: "วิชาการ" },
+    { value: "3", label: "อำนวยการ" },
+    { value: "4", label: "บริหาร" }
 ];
 
 const _levels: Lov[] = [
-    { value: "1", label: "ชำนาญการพิเศษ" },
-    { value: "2", label: "ชำแหละ" },
-    { value: "3", label: "ชำเรา" },
-    { value: "4", label: "ปลูกชำ" }
+    { value: "1", label: "ปฏิบัติการ" },
+    { value: "2", label: "ชำนาญการ" },
+    { value: "3", label: "ชำนาญการพิเศษ" },
+    { value: "4", label: "เชี่ยวชาญ" }
 ];
 
 const _levelChilds: Lov[] = [
