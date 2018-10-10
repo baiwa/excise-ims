@@ -1,11 +1,8 @@
 package th.co.baiwa.excise.ia.service;
 
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.excise.constant.DateConstant;
@@ -13,6 +10,8 @@ import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.IaWithdrawalDao;
 import th.co.baiwa.excise.ia.persistence.vo.Int065FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int065Vo;
+
+import java.util.List;
 
 @Service
 public class Int066Service {
@@ -55,6 +54,10 @@ public class Int066Service {
 	public List<Lov> branch(Long idMaster) {
         return lovRepository.findByLovIdMasterOrderBySubType(idMaster);
     }
+
+	public List<Lov> budgetType(){
+		return lovRepository.findByTypeAndLovIdMasterIsNullOrderBySubType("BUDGET_TYPE");
+	}
 	
 	public String mappingOfficeCode(Int065FormVo formVo) {
 		Lov sectors = new Lov();

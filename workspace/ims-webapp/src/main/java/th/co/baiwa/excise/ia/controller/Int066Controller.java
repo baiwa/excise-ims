@@ -44,7 +44,13 @@ public class Int066Controller {
 	@PostMapping("/branch")
     @ResponseBody
     public List<Lov> branch(@RequestBody Long idMaster){
-        List<Lov> branch = int066Service	.branch(idMaster);
+        List<Lov> branch = int066Service.branch(idMaster);
         return branch;
     }
+
+	@GetMapping("/budgetType")
+	@ResponseBody
+	public List<Lov> budgetType(){
+		return int066Service.budgetType();
+	}
 }

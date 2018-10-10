@@ -61,6 +61,10 @@ public class IaWithdrawalDao {
             params.add(formVo.getDateFrom());
             params.add(formVo.getDateTo());
         }
+        if (StringUtils.isNotBlank(formVo.getBudgetType())){
+        	sql.append(" AND BUDGET_TYPE = ?");
+        	params.add(formVo.getBudgetType());
+		}
 		String countSql = OracleUtils.countForDatatable(sql);
 		Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
 		return count;
@@ -81,6 +85,10 @@ public class IaWithdrawalDao {
             params.add(formVo.getDateFrom());
             params.add(formVo.getDateTo());
         }
+		if (StringUtils.isNotBlank(formVo.getBudgetType())){
+			sql.append(" AND BUDGET_TYPE = ?");
+			params.add(formVo.getBudgetType());
+		}
          String limit = OracleUtils.limit(sql.toString(), formVo.getStart(), formVo.getLength());
 		List<Int065Vo> list = jdbcTemplate.query(limit, params.toArray(), stamRowmapper);
 		return list;
@@ -102,6 +110,10 @@ public class IaWithdrawalDao {
             params.add(formVo.getDateFrom());
             params.add(formVo.getDateTo());
         }
+		if (StringUtils.isNotBlank(formVo.getBudgetType())){
+			sql.append(" AND BUDGET_TYPE = ?");
+			params.add(formVo.getBudgetType());
+		}
 		String countSql = OracleUtils.countForDatatable(sql);
 		Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
 		return count;
@@ -122,6 +134,10 @@ public class IaWithdrawalDao {
             params.add(formVo.getDateFrom());
             params.add(formVo.getDateTo());
         }
+		if (StringUtils.isNotBlank(formVo.getBudgetType())){
+			sql.append(" AND BUDGET_TYPE = ?");
+			params.add(formVo.getBudgetType());
+		}
          String limit = OracleUtils.limit(sql.toString(), formVo.getStart(), formVo.getLength());
 		List<Int065Vo> list = jdbcTemplate.query(limit, params.toArray(), stamRowmapper);
 		return list;

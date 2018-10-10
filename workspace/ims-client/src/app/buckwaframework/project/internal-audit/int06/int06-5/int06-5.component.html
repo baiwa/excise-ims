@@ -42,7 +42,15 @@
                             <option *ngFor="let item of branchList; index as i;" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
                         </select>
                     </div>
-                    <div class="seven wide field "></div>
+                    <div class="three wide field ">
+                        <label class="text-right full-width">ประเภทงบประมาณ</label>
+                    </div>
+                    <div class="four wide field ">
+                        <select name="budgetType" id="budgetType" class="ui dropdown ai search full-width office" >
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let item of budgetTypeList" value="{{item.value1}}">{{item.value1}}</option>
+                        </select>
+                    </div>
                 </div>
                 <!-- row 3 -->
                 <div class="inline fields  ui grid">

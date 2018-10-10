@@ -1,20 +1,15 @@
 package th.co.baiwa.excise.ia.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.*;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int065FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int065Vo;
 import th.co.baiwa.excise.ia.service.Int065Service;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("api/ia/int065")
@@ -48,4 +43,10 @@ public class Int065Controller {
         List<Lov> branch = int065Service.branch(idMaster);
         return branch;
     }
+
+    @GetMapping("/budgetType")
+	@ResponseBody
+	public List<Lov> budgetType(){
+		return int065Service.budgetType();
+	}
 }

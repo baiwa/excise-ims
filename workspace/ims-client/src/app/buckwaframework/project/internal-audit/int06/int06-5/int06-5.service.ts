@@ -43,6 +43,15 @@ export class Int065Service {
       })
     });
   }
+
+  budgetType = () => {
+    let url = "ia/int065/budgetType";
+    return new Promise((resolve, reject) => {
+      this.ajax.get(url, res => {
+        resolve(res.json())
+      });
+    });
+  }
   search = () => {
     this.form.searchFlag = "TRUE";
     $("#dataTable").DataTable().ajax.reload();
@@ -76,6 +85,7 @@ export class Int065Service {
             "dateFrom": $("#dateFrom").val(),
             "dateTo": $("#dateTo").val(),
             "searchFlag": $("#searchFlag").val(),
+            "budgetType" : $("#budgetType").val(),
           }));
         },
       },

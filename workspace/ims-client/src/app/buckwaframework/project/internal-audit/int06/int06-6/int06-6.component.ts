@@ -30,6 +30,7 @@ export class Int066Component implements OnInit {
   sectorList: any;
   areaList: any;
   branchList: any;
+  budgetTypeList: any;
 
   constructor(
     private ajax: AjaxService,
@@ -39,6 +40,7 @@ export class Int066Component implements OnInit {
   ngAfterViewInit() {
     this.calenda();
     this.dataTable();
+    this.budgetType();
   }
 
   ngOnInit() {
@@ -70,7 +72,12 @@ export class Int066Component implements OnInit {
         this.branchList = res;
       });
     }
+  }
 
+  budgetType = () => {
+    this.int066Service.budgetType().then((res)=>{
+      this.budgetTypeList = res;
+    });
   }
   search = () => {
     this.int066Service.search();

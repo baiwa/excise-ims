@@ -43,7 +43,6 @@ public class CheckStampBranchDao {
             params.add(formVo.getDateTo());
         }        
 
-		sql.append(" ORDER BY CREATED_DATE DESC ");
 		String countSql = OracleUtils.countForDatatable(sql);
 		Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
 		return count;
@@ -66,9 +65,9 @@ public class CheckStampBranchDao {
             params.add(formVo.getDateForm());
             params.add(formVo.getDateTo());
         }
-        sql.append(" ORDER BY CREATED_DATE DESC ");
+        sql.append(" ORDER BY DATE_OF_PAY DESC ");
         
-        String limitsql = OracleUtils.limitForDataTable(sql, formVo.getStart(), formVo.getLength());
+        String limitsql = OracleUtils.limitForDataTable(sql.toString(), formVo.getStart(), formVo.getLength());
 		List<Int05111Vo> list = jdbcTemplate.query(limitsql, params.toArray(), stamRowmapper);
 		return list;
 

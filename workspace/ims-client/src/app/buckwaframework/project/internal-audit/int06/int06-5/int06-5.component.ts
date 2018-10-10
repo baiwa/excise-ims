@@ -26,6 +26,7 @@ export class Int065Component implements OnInit, AfterViewInit {
   sectorList: any;
   areaList: any;
   branchList: any;
+  budgetTypeList: any;
 
   constructor(private int065Service: Int065Service) {
   }
@@ -39,6 +40,7 @@ export class Int065Component implements OnInit, AfterViewInit {
     $(".ui.dropdown").dropdown();
     this.sector();
     this.dataTable();
+    this.budgetType();
   }
 
   sector = () => {
@@ -67,11 +69,17 @@ export class Int065Component implements OnInit, AfterViewInit {
     }
   }
 
+  budgetType = () => {
+    this.int065Service.budgetType().then((res)=>{
+      this.budgetTypeList = res;
+    });
+  }
+
   search = () => {
     $("#searchFlag").val("TRUE");
     this.int065Service.search();
   }
-  clear = () => { 
+  clear = () => {
     this.int065Service.clear();
 
 
