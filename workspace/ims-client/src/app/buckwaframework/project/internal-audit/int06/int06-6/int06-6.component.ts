@@ -75,10 +75,7 @@ export class Int066Component implements OnInit {
   search = () => {
     this.int066Service.search();
   }
-  clear = () => {
-    $(".ui.dropdown").dropdown('restore defaults');
-    $("#dateFrom").val("");
-    $("#dateTo").val("");
+  clear = () => {    
     this.int066Service.clear();
   }
   dataTable = () => {

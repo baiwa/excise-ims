@@ -14,7 +14,7 @@
                 <div class="inline fields  ui grid">
                     <div class="one wide field "></div>
                     <div class="three wide field required">
-                        <label>วันที่รับ - จ่าย</label>
+                        <label>วันที่รับ - จ่าย - ส่งคืน</label>
                     </div>
                     <div class="four wide field ">
                         <div class="ui input">
@@ -28,10 +28,10 @@
                         </div>
                     </div>
                     <div class="three wide field required">
-                        <label>สถานะการ รับ - จ่าย</label>
+                        <label>สถานะการ รับ - จ่าย - ส่งคืน</label>
                     </div>
                     <div class="four wide field ">
-                        <select class="ui search dropdown" [(ngModel)]="formModal.status" name="status" id="status">
+                        <select class="ui search dropdown" [(ngModel)]="formModal.status" name="status" id="status" (change)="changeStatus($event)">
                             <option value="">กรุณาเลือก</option>
                             <option *ngFor="let item of statusList" value="{{item.typeDescription}}">{{item.typeDescription}} </option>                           
                         </select>
@@ -56,7 +56,7 @@
                         <label>หนังสือขอเบิกแสตมป์ (หน่วยเบิก)</label>
                     </div>
                     <div class="four wide field ">
-                        <input [(ngModel)]="formModal.bookNumberWithdrawStamp" name="bookNumberWithdrawStamp" id="bookNumberWithdrawStamp" type="text">
+                        <input [(ngModel)]="formModal.bookNumberWithdrawStamp" name="bookNumberWithdrawStamp" id="bookNumberWithdrawStamp" type="text" [disabled]="statusSendBack" class="statusSendBack">
                     </div>
                     <div class="three wide field ">
                         <label>ลงวันที่ขอเบิกแสตมป์</label>
@@ -66,7 +66,7 @@
                             <div class="ui input left icon">
                                 <i class="time icon"></i>
                                 <input [(ngModel)]="formModal.dateWithdrawStamp" name="dateWithdrawStamp" id="dateWithdrawStamp" type="text" autocomplete="off"
-                                    [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                                    [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true" [disabled]="statusSendBack" class="statusSendBack">
                             </div>
                         </div>
                     </div>
@@ -125,7 +125,7 @@
                         <label>ผู้ตรวจนับและรับแสตมป์</label>
                     </div>
                     <div class="four wide field ">
-                        <input [(ngModel)]="formModal.stampChecker" name="stampChecker" id="stampChecker" type="text">
+                        <input [(ngModel)]="formModal.stampChecker" name="stampChecker" id="stampChecker" type="text" [disabled]="statusPay" class="statusPay">
                     </div>
                     <div class="three wide field ">
                         <label>วันที่ตรวจนับ</label>
@@ -135,7 +135,7 @@
                             <div class="ui input left icon">
                                 <i class="time icon"></i>
                                 <input [(ngModel)]="formModal.stampCheckDate" name="stampCheckDate" id="stampCheckDate" type="text" autofocus="false" [attr.readonly]="null"
-                                    placeholder="dd/MM/yyyy" [attr.required]="true">
+                                    placeholder="dd/MM/yyyy" [attr.required]="true" [disabled]="statusPay" class="statusPay">
                             </div>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                         <label>ผู้ตรวจนับและรับแสตมป์</label>
                     </div>
                     <div class="four wide field ">
-                        <input [(ngModel)]="formModal.stampChecker2" name="stampChecker2" id="stampChecker2" type="text">
+                        <input [(ngModel)]="formModal.stampChecker2" name="stampChecker2" id="stampChecker2" type="text" [disabled]="statusPay" class="statusPay">
                     </div>
                     <div class="eight wide field "></div>
                 </div>
@@ -159,7 +159,7 @@
                         <label>ผู้ตรวจนับและรับแสตมป์</label>
                     </div>
                     <div class="four wide field ">
-                        <input [(ngModel)]="formModal.stampChecker3" name="stampChecker3" id="stampChecker3" type="text">
+                        <input [(ngModel)]="formModal.stampChecker3" name="stampChecker3" id="stampChecker3" type="text" [disabled]="statusPay" class="statusPay">
                     </div>
                     <div class="eight wide field "></div>
                 </div>
@@ -221,7 +221,7 @@
                         <label>ค่าภาษี (บาท)</label>
                     </div>
                     <div class="four wide field ">
-                        <input [(ngModel)]="formModal.taxStamp" name="taxStamp" id="taxStamp" type="text">
+                        <input [(ngModel)]="formModal.taxStamp" name="taxStamp" id="taxStamp" type="text" [disabled]="statusReceive"  class="statusReceive">
                     </div>
                     <div class="eight wide field"></div>
                 </div>
@@ -249,11 +249,11 @@
                         <label>แนบไฟล์</label>
                     </div>
                     <div class="four wide field ">
-                        <input name="fileName{{item}}" id="fileName{{item}}" type="file"  accept="*">                        
+                        <input name="fileName{{item}}" id="fileName{{item}}" type="file"  accept="*" [disabled]="statusSendBackFile" class="statusSendBackFile">                        
                     </div>
                     <div class="eight wide field " *ngIf="item === numberButton; then thenBlock; else elseBlock"></div>
                     <ng-template #thenBlock>
-                        <button class="ui mini basic primary button" type="button" (click)="onAddButton(item);"><i class="add icon"></i>เพิ่มไฟล์</button>
+                        <button class="ui mini basic primary button" type="button" id="addFile" (click)="onAddButton(item);"  [disabled]="statusSendBackFile"><i class="add icon"></i>เพิ่มไฟล์</button>
                     </ng-template>
                     <ng-template #elseBlock>
                         <button class="ui mini basic red button" type="button" (click)="deleteButton(item);"><i class="add icon"></i>ลบ</button>                        
@@ -287,8 +287,8 @@
       <thead>
         <tr style="text-align: center;">        
           <th rowspan="2">ลำดับ</th>
-          <th rowspan="2">วันที่ รับ - จ่าย</th>
-          <th rowspan="2">สถานะ การรับ-จ่าย</th>
+          <th rowspan="2">วันที่ รับ - จ่าย - ส่งคืน</th>
+          <th rowspan="2">สถานะ การรับ - จ่าย - ส่งคืน</th>
           <th rowspan="2">หน่วยงาน/ผู้ประกอบการที่รับ-จ่ายแสตมป์</th>
           <th colspan="2">หนังสือขอเบิกแสตมป์</th>
           <th colspan="2">หนังสือส่งแสตมป์</th>
@@ -321,7 +321,7 @@
       </thead>
     </table><br>
     <div class="ui centered grid">
-        <button class="ui mini gray button" type="button" routerLink="/int05/1/1"><i class="reply icon"></i>กลับ</button>
+        <button class="ui mini gray button" type="button" (click)="backConfirm()"><i class="reply icon"></i>กลับ</button>
         <button class="ui mini blue button" type="button" (click)="onSave()"><i class="save icon"></i>บันทึก</button>
     </div><br>
   </div>

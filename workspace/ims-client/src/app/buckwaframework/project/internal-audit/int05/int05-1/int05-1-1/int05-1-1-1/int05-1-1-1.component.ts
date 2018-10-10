@@ -14,7 +14,7 @@ declare var $: any;
   styleUrls: ['./int05-1-1-1.component.css'],
   providers: [Int05111Service]
 })
-export class Int05111Component implements OnInit,AfterViewInit {
+export class Int05111Component implements OnInit, AfterViewInit {
 
   formModal: FormModal = new FormModal();
   data: FormModal[];
@@ -27,6 +27,10 @@ export class Int05111Component implements OnInit,AfterViewInit {
   file: File[];
   loading: boolean;
   statusList: any;
+  statusReceive: boolean = false;
+  statusSendBack: boolean = false;
+  statusSendBackFile: boolean = false;
+  statusPay: boolean = false;
   breadcrumb: BreadCrumb[]
   constructor(
     private message: MessageBarService,
@@ -48,6 +52,7 @@ export class Int05111Component implements OnInit,AfterViewInit {
     this.listButton = [];
     this.numberButton = 1;
     this.loading = false;
+
   }
 
   ngOnInit() {
@@ -61,8 +66,21 @@ export class Int05111Component implements OnInit,AfterViewInit {
     this.callDropdown();
   }
 
+  backConfirm = () => {
+    let countTable = $("#dataTable").DataTable().data().count();
+    console.log(countTable);
+    if (countTable > 0) {
+      this.message.comfirm((res) => {
+        if (res) {
+          this.route.navigate(['/int05/1/1']);
+        }
+      }, "ยกเลิกการทำรายการ");
+    }else{
+      this.route.navigate(['/int05/1/1']);
+    }
+  }
   status = () => {
-    this.int05111Service.status().then((res)=>{
+    this.int05111Service.status().then((res) => {
 
       this.statusList = res;
       console.log(this.statusList);
@@ -99,53 +117,49 @@ export class Int05111Component implements OnInit,AfterViewInit {
       })
     }
   }
-  calenda = () => {
-    $("#dateF").calendar({
-      maxDate: new Date(),
-      endCalendar: $("#dateT"),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    });
-    $("#dateT").calendar({
-      maxDate: new Date(),
-      startCalendar: $("#dateF"),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    });
-    $("#dateOfPayForm").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    }, 'blur');
-    $("#dateWithdrawStampForm").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    });
-    $("#dateDeliverStampForm").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    });
-    $("#fivePartDateForm").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    });
-    $("#stampCheckDateForm").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    });
-  }
 
+  changeStatus = (e) => {
+    let customreadonly = 'custom-readonly';
+
+    if (e.target.value == "รับ") {
+      this.statusReceive = true;
+      this.statusSendBackFile = true;
+      this.statusPay = false;
+      this.statusSendBack = false;
+
+      $(".statusSendBack").removeClass(customreadonly);
+      $(".statusPay").removeClass(customreadonly);
+
+      $(".statusSendBackFile").addClass(customreadonly);
+      $(".statusReceive").addClass(customreadonly);
+    }
+    if (e.target.value == "ส่งคืน") {
+      this.statusSendBack = true;
+      this.statusPay = true;
+      this.statusReceive = true;
+      $(".statusReceive").removeClass(customreadonly);
+      $(".statusPay").removeClass(customreadonly);
+
+      $(".statusSendBack").addClass(customreadonly);
+      $(".statusPay").addClass(customreadonly);
+      $(".statusReceive").addClass(customreadonly);
+
+      this.statusSendBackFile = false;
+      $(".statusSendBackFile").removeClass(customreadonly);
+    }
+    if (e.target.value == "จ่าย") {
+      this.statusPay = true;
+      this.statusSendBack = false;
+      this.statusReceive = false;
+      this.statusSendBackFile = false;
+      $(".statusSendBackFile").removeClass(customreadonly);
+
+      $(".statusSendBack").removeClass(customreadonly);
+      $(".statusReceive").removeClass(customreadonly);
+
+      $(".statusPay").addClass(customreadonly);
+    }
+  }
   onAddButton = () => {
     console.log("Add Button");
     this.listButton.push(++this.numberButton);
@@ -206,7 +220,7 @@ export class Int05111Component implements OnInit,AfterViewInit {
       this.message.alert("กรุณาระบุ ชนิดแสตมป์", "แจ้งเตือน");
       return false;
     }
-    if (this.checkBlank($("#valueOfStampPrinted").val())){
+    if (this.checkBlank($("#valueOfStampPrinted").val())) {
       this.message.alert("กรุณาระบุ มูลค่าพิมพ์ (บาท/ดวง)", "แจ้งเตือน");
       return false;
     }
@@ -282,18 +296,18 @@ export class Int05111Component implements OnInit,AfterViewInit {
         this.ajax.post(url, JSON.stringify(this.data),
           res => {
             $("#success").modal({
-              "onHidden" : ()=>{
-                this.data = [];                
+              "onHidden": () => {
+                this.data = [];
                 this.loading = false;
                 this.route.navigate(['/int05/1/1']);
               },
-              "onDeny" : ()=>{
-                this.data = [];               
+              "onDeny": () => {
+                this.data = [];
                 this.loading = false;
                 this.route.navigate(['/int05/1/1']);
               }
             }).modal('show');
-            
+
           }, error => {
             this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
             this.loading = false;
@@ -351,10 +365,10 @@ export class Int05111Component implements OnInit,AfterViewInit {
         }, {
           "data": "stampChecker",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "stampChecker2",
           "className": "ui center aligned"
-        },{
+        }, {
           "data": "stampChecker3",
           "className": "ui center aligned"
         }, {
@@ -377,13 +391,13 @@ export class Int05111Component implements OnInit,AfterViewInit {
           "className": "ui right aligned"
         }, {
           "data": "stampCodeStart",
-          
+
         }, {
           "data": "stampCodeEnd",
-          
+
         }, {
           "data": "note",
-          
+
         }, {
           "data": "note",
           "render": function (data, type, row) {
@@ -393,7 +407,7 @@ export class Int05111Component implements OnInit,AfterViewInit {
             return btn;
           },
           "className": "ui center aligned"
-          
+
         }
       ]
     });
@@ -493,6 +507,52 @@ export class Int05111Component implements OnInit,AfterViewInit {
         }
       }, "", "ยืนยันการลบ");
 
+    });
+  }
+  calenda = () => {
+    $("#dateF").calendar({
+      maxDate: new Date(),
+      endCalendar: $("#dateT"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $("#dateT").calendar({
+      maxDate: new Date(),
+      startCalendar: $("#dateF"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $("#dateOfPayForm").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    }, 'blur');
+    $("#dateWithdrawStampForm").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $("#dateDeliverStampForm").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $("#fivePartDateForm").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $("#stampCheckDateForm").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
     });
   }
 

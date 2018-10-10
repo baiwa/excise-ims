@@ -15,7 +15,7 @@
                         <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
                     </div>
                     <div class="four wide field ">
-                        <select name="sector " id="sector" class="ui dropdown ai search full-width" (change)="area($event)">
+                        <select name="sector " id="sector" class="ui dropdown ai search full-width office" (change)="area($event)">
                             <option value="">กรุณาเลือก</option>
                             <option *ngFor="let item of sectorList; index as i;" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
                         </select>
@@ -24,7 +24,7 @@
                         <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
                     </div>
                     <div class="four wide field ">
-                        <select name="area" id="area" class="ui dropdown ai search full-width" (change)="branch($event)">
+                        <select name="area" id="area" class="ui dropdown ai search full-width office" (change)="branch($event)">
                             <option value="">กรุณาเลือก</option>
                             <option *ngFor="let item of areaList" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
                         </select>
@@ -36,7 +36,7 @@
                         <label class="text-right full-width">สรรพสามิตพื้นที่สาขา</label>
                     </div>
                     <div class="four wide field ">
-                        <select name="branch" id="branch" class="ui dropdown ai search full-width">
+                        <select name="branch" id="branch" class="ui dropdown ai search full-width office">
                             <option value="">กรุณาเลือก</option>
                             <option *ngFor="let item of branchList; index as i;" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
                         </select>

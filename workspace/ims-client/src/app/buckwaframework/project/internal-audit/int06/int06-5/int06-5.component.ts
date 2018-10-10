@@ -32,7 +32,7 @@ export class Int065Component implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.calenda();
-    
+
   }
 
   ngOnInit() {
@@ -68,14 +68,13 @@ export class Int065Component implements OnInit, AfterViewInit {
   }
 
   search = () => {
+    $("#searchFlag").val("TRUE");
     this.int065Service.search();
   }
-  clear = () => {
-    $(".ui.dropdown").dropdown('restore defaults');
-    $("#dateFrom").val("");
-    $("#dateTo").val("");
-    this.form.searchFlag = "FALSE";
+  clear = () => { 
     this.int065Service.clear();
+
+
   }
 
   dataTable = () => {
