@@ -32,7 +32,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
   firstNumber: any;
   lastNumber: any;
   loading: boolean;
-
+  isOpen: any = 'open';
 
   constructor(
     private route: ActivatedRoute,
@@ -430,6 +430,9 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
             }
           });
         }
+      },
+      fixedColumns: {
+        leftColumns: 1
       }
     });
 
@@ -438,5 +441,21 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       this.onLoading = false;
     }, 500);
     console.log(json);
+  }
+
+  hideProductType() {
+    //this.isOpen = 'closed';
+    $('#divProduct').removeClass("three wide column");
+    $('#divProduct').addClass("one wide column");
+    $('#divDataTable').removeClass("thirteen wide column");
+    $('#divDataTable').addClass("fifteen wide column");
+    $('#productType').hide();
+  }
+  showProductType() {
+    $('#divProduct').removeClass("one wide column");
+    $('#divProduct').addClass("three wide column");
+    $('#divDataTable').removeClass("fifteen wide column");
+    $('#divDataTable').addClass("thirteen wide column");
+    $('#productType').show();
   }
 }
