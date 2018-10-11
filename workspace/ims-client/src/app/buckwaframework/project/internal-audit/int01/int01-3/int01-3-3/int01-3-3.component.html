@@ -3,7 +3,7 @@
         <div class="ui ordered steps ">
             <div class=" step">
                 <div class="content">
-                    <div class=" title">ขั้นตอนที่ 1</div>
+                    <div class="active title">ขั้นตอนที่ 1</div>
                     <div class="description">ตรวจสอบการรับเงินค่าปรับ
                         <br>เปรียบเทียบคดี</div>
                 </div>
@@ -15,63 +15,41 @@
                         <br>เปรียบเทียบคดี</div>
                 </div>
             </div>
-            <div class=" step">
-                <div class="content">
-                    <div class="title">ขั้นตอนที่ 3</div>
-                    <div class="description">ตรวจสอบการบันทึกบัญชี
-                        <br>รายได้แผ่นดิน</div>
-                </div>
-            </div>
-            <div class=" step">
-                <div class="content">
-                    <div class="title">ขั้นตอนที่ 4</div>
-                    <div class="description">ตรวจสอบการบันทึกบัญชีเงินสินบน - รางวัล</div>
-                </div>
-            </div>
-            <div class=" step">
-                <div class="content">
-                    <div class="title">ขั้นตอนที่ 5</div>
-                    <div class="description">ตรวจสอบการเบิก - จ่ายเงินสินบน - รางวัล</div>
-                </div>
-            </div>
         </div>
 
 
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-            <span>เพิ่มข้อมูลการนำส่งเงินค่าปรับเปรียบเทียบคดี</span>
+            <span>อัพโหลดไฟล์รายงานเคลื่อนไหวเงินฝากคลัง</span>
         </div>
         <div class="ui attached segment">
             <div class="ui form">
                 <div class="inline fields">
-                    <div class="six wide field"></div>
-                    <div class="one wide field">เลขที่ใบเสร็จ</div>
+                    <div class="five wide field"></div>
+                    <div class="three wide field">บัญชีแยกประเภท  </div>
                     <div class="five wide field">
-                        <input type="text">
+                        <input type="file">
+                    </div>
+                </div>
+                <div class="inline fields">
+                    <div class="five wide field"></div>
+                    <div class="three wide field">รายงานเคลื่อนไหวเงินฝากคลัง  </div>
+                    <div class="five wide field">
+                        <input type="file">
                     </div>
                 </div>
 
-                <div class="inline fields">
-                    <div class="three wide field"></div>
-                    <div class="three wide field">รายงานผลอธิบดี :</div>
-                    <div class="one wide field">เลขหนังสือ</div>
-                    <div class="two wide field">
-                        <input type="text">
-                    </div>
-                    <div class="one wide field">วันที่</div>
-                    <div class="two wide field">
-                        <input type="text">
-                    </div>
-                </div>
-                <div class="inline fields">
-                    <div class="three wide field"></div>
-                    <div class="three wide field">แจ้งติดตามหน่วยรับตรวจครั้งที่ 1 :</div>
-                    <div class="one wide field">เลขหนังสือ</div>
-                    <div class="two wide field">
-                        <input type="text">
-                    </div>
-                    <div class="one wide field">วันที่</div>
-                    <div class="two wide field">
-                        <input type="text">
+
+
+                <br>
+                <div class="ui form">
+                    <div class="ui center aligned grid">
+                        <div class="one wide field"></div>
+                        <div class="ten wide column">
+                            <a class="ui mini primary button widtd-100">
+                                <i class="add icon"></i>เพิ่ม
+                            </a>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -83,345 +61,183 @@
                     <table id="table1" class="ui small celled table striped selectable" style="width: 120%;">
                         <thead>
                             <tr class="center aligned">
-                                <th rowspan="2">ลำดับที่</th>
-                                <th rowspan="2">วันที่ออกใบเสร็จ </th>
-                                <th rowspan="2">เลขที่ใบเสร็จ</th>
-                                <th colspan="3">จำนวนเงินค่าปรับ</th>
-                                <th rowspan="2">การแบ่งเงินค่าปรับ</th>
-                                <th colspan="2">การนำส่งรายได้แผ่นดิน</th>
-                                <th colspan="2">การนำส่งเงินสินบน - รางวัล</th>
-                                <th rowspan="2">หน่วยต้นทุน</th>
+                                <th rowspan="2">ลำดับที่ </th>
+                                <th rowspan="2">ศูนย์ต้นทุน GF    </th>
+                                <th rowspan="2">เดือน </th>                            
+                                <th rowspan="2">จำนวนเงินค่าปรับ  </th>
+                                <th colspan="3">การแบ่งเงินค่าปรับ		</th>
+                                <th rowspan="2">"บัญชีแยกประเภท (GL)"                  </th>
+                                <th rowspan="2">"ผลต่าง    (GL)"                     </th>
+                                <th rowspan="2">"เคลื่อนไหวเงินฝากคลัง   (10658)"        </th>
+                                    <th  rowspan="2">"ผลต่าง  (10658)"  </th>
 
                             </tr>
                             <tr style="text-align: center">
                                 <th>รายได้แผ่นดิน 60%</th>
                                 <th>สินบน 20%</th>
                                 <th>รางวัล 20%</th>
-                                <th>ว.ด.ป ใบ Pay in</th>
-                                <th>จำนวนเงิน</th>
-                                <th>ว.ด.ป ใบ Pay in</th>
-                                <th>จำนวนเงิน</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>1</td>
-                                <td>06/11/60</td>
-                                <td>&nbsp;</td>
+                                <td>300600212</td>
+                                <td>มกราคม</td>
                                 <td>5,000.00</td>
                                 <td>3,000.00</td>
                                 <td>1,000.00</td>
                                 <td>1,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                           
-                               
+                                <td>3,000.00</td>
+                                <td>0.00</td>
+                                <td>2,000.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>2</td>
-                                <td>06/11/60</td>
-                                <td>&nbsp;</td>
+                                <td>300600212</td>
+                                <td>กุมภาพันธ์</td>
                                 <td>5,000.00</td>
                                 <td>3,000.00</td>
                                 <td>1,000.00</td>
                                 <td>1,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                              
-                                <td>&nbsp;</td>
-                              
+                                <td>2,890.00</td>
+                                <td>110.00</td>
+                                <td>2,000.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>3</td>
-                                <td>06/11/60</td>
-                                <td>&nbsp;</td>
+                                <td>300600212</td>
+                                <td>มีนาคม</td>
                                 <td>5,000.00</td>
                                 <td>3,000.00</td>
                                 <td>1,000.00</td>
                                 <td>1,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                               
+                                <td>3,000.00</td>
+                                <td>0.00</td>
+                                <td>1,888.00</td>
+                                <td>112.00</td>
                             </tr>
                             <tr>
                                 <td>4</td>
-                                <td>06/11/60</td>
-                                <td>&nbsp;</td>
+                                <td>300600212</td>
+                                <td>เมษายน</td>
                                 <td>5,000.00</td>
                                 <td>3,000.00</td>
                                 <td>1,000.00</td>
                                 <td>1,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                              
+                                <td>3,000.00</td>
+                                <td>0.00</td>
+                                <td>2,000.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>5</td>
-                                <td>06/11/60</td>
-                                <td>&nbsp;</td>
-                                <td>5,000.00</td>
-                                <td>3,000.00</td>
+                                <td>300600212</td>
+                                <td>พฤษภาคม</td>
                                 <td>1,000.00</td>
-                                <td>1,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                              
+                                <td>600.00</td>
+                                <td>200.00</td>
+                                <td>200.00</td>
+                                <td>600.00</td>
+                                <td>0.00</td>
+                                <td>390.00</td>
+                                <td>10.00</td>
                             </tr>
                             <tr>
                                 <td>6</td>
-                                <td>06/11/60</td>
-                                <td>&nbsp;</td>
+                                <td>300600212</td>
+                                <td>มิถุนายน</td>
+                                <td>5,000.00</td>
+                                <td>3,000.00</td>
                                 <td>1,000.00</td>
-                                <td>600.00</td>
-                                <td>200.00</td>
-                                <td>200.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                               
+                                <td>1,000.00</td>
+                                <td>3,000.00</td>
+                                <td>0.00</td>
+                                <td>2,000.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>7</td>
-                                <td>06/11/60</td>
-                                <td>&nbsp;</td>
+                                <td>300600212</td>
+                                <td>กุรกฎาคม</td>
                                 <td>5,000.00</td>
                                 <td>3,000.00</td>
                                 <td>1,000.00</td>
                                 <td>1,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                               
+                                <td>3,000.00</td>
+                                <td>0.00</td>
+                                <td>1,922.00</td>
+                                <td>78.00</td>
                             </tr>
                             <tr>
                                 <td>8</td>
-                                <td>10/11/60</td>
-                                <td>&nbsp;</td>
-                                <td>5,000.00</td>
-                                <td>3,000.00</td>
-                                <td>1,000.00</td>
-                                <td>1,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                             
+                                <td>300600212</td>
+                                <td>สิงหาคม</td>
+                                <td>10,000.00</td>
+                                <td>6,000.00</td>
+                                <td>2,000.00</td>
+                                <td>2,000.00</td>
+                                <td>5,600.00</td>
+                                <td>400.00</td>
+                                <td>4,000.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>9</td>
-                                <td>10/11/60</td>
-                                <td>&nbsp;</td>
-                                <td>10,000.00</td>
-                                <td>6,000.00</td>
+                                <td>300600212</td>
+                                <td>กันยายน</td>
+                                <td>5,000.00</td>
+                                <td>3,000.00</td>
+                                <td>1,000.00</td>
+                                <td>1,000.00</td>
+                                <td>3,000.00</td>
+                                <td>0.00</td>
                                 <td>2,000.00</td>
-                                <td>2,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                               
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>10</td>
-                                <td>10/11/60</td>
-                                <td>&nbsp;</td>
-                                <td>5,000.00</td>
-                                <td>3,000.00</td>
+                                <td>300600212</td>
+                                <td>ตุลาคม</td>
                                 <td>1,000.00</td>
-                                <td>1,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                              
+                                <td>600.00</td>
+                                <td>200.00</td>
+                                <td>200.00</td>
+                                <td>600.00</td>
+                                <td>0.00</td>
+                                <td>400.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>11</td>
-                                <td>10/11/60</td>
-                                <td>&nbsp;</td>
-                                <td>1,000.00</td>
-                                <td>600.00</td>
-                                <td>200.00</td>
-                                <td>200.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                               
+                                <td>300600212</td>
+                                <td>พฤษจิกายน</td>
+                                <td>10,000.00</td>
+                                <td>6,000.00</td>
+                                <td>2,000.00</td>
+                                <td>2,000.00</td>
+                                <td>7,200.00</td>
+                                <td>-1,200.00</td>
+                                <td>4,000.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>12</td>
-                                <td>10/11/60</td>
-                                <td>&nbsp;</td>
+                                <td>300600212</td>
+                                <td>ธันวาคม</td>
                                 <td>10,000.00</td>
                                 <td>6,000.00</td>
                                 <td>2,000.00</td>
                                 <td>2,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                              
-                            </tr>
-                            <tr>
-                                <td>13</td>
-                                <td>17/11/60</td>
-                                <td>&nbsp;</td>
-                                <td>30,000.00</td>
-                                <td>18,000.00</td>
                                 <td>6,000.00</td>
-                                <td>6,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                               
-                            </tr>
-                            <tr>
-                                <td>14</td>
-                                <td>17/11/60</td>
-                                <td>&nbsp;</td>
-                                <td>5,000.00</td>
-                                <td>3,000.00</td>
-                                <td>1,000.00</td>
-                                <td>1,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                               
-                            </tr>
-                            <tr>
-                                <td>15</td>
-                                <td>17/11/60</td>
-                                <td>&nbsp;</td>
-                                <td>5,000.00</td>
-                                <td>3,000.00</td>
-                                <td>1,000.00</td>
-                                <td>1,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                               
-                            </tr>
-                            <tr>
-                                <td>16</td>
-                                <td>17/11/60</td>
-                                <td>&nbsp;</td>
-                                <td>10,000.00</td>
-                                <td>6,000.00</td>
-                                <td>2,000.00</td>
-                                <td>2,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                               
-                            </tr>
-                            <tr>
-                                <td>17</td>
-                                <td>17/11/60</td>
-                                <td>&nbsp;</td>
-                                <td>1,000.00</td>
-                                <td>600.00</td>
-                                <td>200.00</td>
-                                <td>200.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                
-                            </tr>
-                            <tr>
-                                <td>18</td>
-                                <td>17/11/60</td>
-                                <td>&nbsp;</td>
-                                <td>5,000.00</td>
-                                <td>3,000.00</td>
-                                <td>1,000.00</td>
-                                <td>1,000.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                               
-                            </tr>
-                            <tr>
-                                <td>19</td>
-                                <td>07/12/60</td>
-                                <td>&nbsp;</td>
-                                <td>1,000.00</td>
-                                <td>600.00</td>
-                                <td>200.00</td>
-                                <td>200.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                             
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td>07/12/60</td>
-                                <td>&nbsp;</td>
-                                <td>1,000.00</td>
-                                <td>600.00</td>
-                                <td>200.00</td>
-                                <td>200.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                              
-                            </tr>
-                            <tr>
-                                <td>21</td>
-                                <td>07/12/60</td>
-                                <td>&nbsp;</td>
-                                <td>1,000.00</td>
-                                <td>600.00</td>
-                                <td>200.00</td>
-                                <td>200.00</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                             
+                                <td>0.00</td>
+                                <td>4,000.00</td>
+                                <td>0.00</td>
                             </tr>
 
+                            
                         </tbody>
                     </table>
                 </div>
@@ -430,29 +246,23 @@
                 <div class="ui form">
                     <div class="ui center aligned grid">
                         <div class="eight wide column">
-                            <a class="ui mini primary button widtd-100" routerLink='/int01/3/2'>
-                                <i class="arrow circle left icon"></i>ขั้นตอนที่ 1
-                            </a>
+                          
                             <a class="ui mini primary button widtd-100" routerLink='/int01/3/1'>
                                 <i class="home icon"></i>กลับหน้าหลัก
-                              </a>
-  
+                            </a>
+
                             <a class="ui mini button widtd-100">
                                 <i class="print icon"></i>
                                 ส่งออก
                             </a>
                             <a class="ui mini button widtd-100">
-                                    <i class="save icon"></i>
-                                   บันทึก
-                                </a>
-                            <a class="ui mini primary button widtd-100" routerLink='/int01/3/4'>
-                                ขั้นตอนที่ 3
-                                <i class="arrow circle right icon"></i>
+                                <i class="save icon"></i>
+                                บันทึก
                             </a>
+                          
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
