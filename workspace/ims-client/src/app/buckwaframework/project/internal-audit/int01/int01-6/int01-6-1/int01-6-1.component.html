@@ -77,13 +77,16 @@
             </div>
             <br>
         </div>
-
-        <div class="ui {{ loading? 'loading' : '' }} segment">
+        <div class="ui top attached header">
+            <span><h3>ผลการค้นหา</h3></span>
+        </div>
+        <div class="ui attached segment {{ loading? 'loading' : '' }} ">
 
             <div style="overflow-x: auto;white-space: nowrap;">
                 <table id="table" class="ui small celled table nowrap striped selectable " style="width: 100%">
                     <thead>
                         <tr>
+                            <th rowspan="2" style="text-align: center !important;">ลำดับ</th>
                             <th rowspan="2" style="text-align: center !important;">ผู้ขออนุญาต</th>
                             <th rowspan="2" style="text-align: center !important;">ประเภทใบอนุญาต</th>
                             <th rowspan="1" colspan="2" style="text-align: center !important;" *ngFor="let data of trHtml1">{{data}}</th>
@@ -93,7 +96,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="text-center" *ngFor="let data of dataT">
+                        <tr class="text-center" *ngFor="let data of dataT; let i=index">
+                            <td style="text-align: center !important;">{{i+1}}</td>
                             <td style="text-align: center !important;">{{data.CusFullName}}</td>
                             <td style="text-align: center !important;">{{data.LicName}}</td>
                             <td style="text-align: center !important;" *ngFor="let data2 of trHtml2; let i=index" class="{{data.year[i]==''?'bg-row-highlight':''}}">{{data.year[i]}}</td>
@@ -104,7 +108,8 @@
             <br>
             <div class="ui center aligned grid">
                 <div class="sixteen wide column">
-                    <button type="button" class="ui button orange">ส่งออก</button>
+                        <button class="ui blue basic button" (click)="exportFile()">
+                                <i class="file excel outline icon"></i>ส่งออก</button>
                 </div>
             </div>
             <br>

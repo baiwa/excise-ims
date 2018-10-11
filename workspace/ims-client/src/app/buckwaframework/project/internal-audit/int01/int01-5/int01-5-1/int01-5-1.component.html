@@ -77,8 +77,11 @@
             </div>
             <br>
         </div>
-
-        <div class="ui {{ loading? 'loading' : '' }} segment">
+        
+        <div class="ui top attached header">
+            <span><h3>ผลการค้นหา</h3></span>
+        </div>
+        <div class="ui attached segment {{ loading? 'loading' : '' }} ">
 
             <div style="overflow-x: auto;white-space: nowrap;">
                 <table id="table" class="ui small celled table nowrap striped selectable " style="width: 100%">
@@ -91,12 +94,12 @@
                             <th style="text-align: center !important;" *ngFor="let data of trHtml2">{{data}}</th>
                         </tr>
                     </thead>
-                    <!-- <tbody>
+                    <tbody>
                         <tr class="text-center" *ngFor="let data of dataT">
                             <td style="text-align: center !important;">{{data.IncomeName}}</td>
-                            <td style="text-align: center !important;" *ngFor="let data2 of trHtml2; let i=index" class="{{data.year[i]==''?'bg-row-highlight':''}}">{{data.year[i]}}</td>
+                            <!-- <td style="text-align: center !important;" *ngFor="let data2 of trHtml2; let i=index" class="{{data.year[i]==''?'bg-row-highlight':''}}">{{data.year[i]}}</td> -->
                         </tr>
-                    </tbody> -->
+                    </tbody>
                 </table>
             </div>
             <br>

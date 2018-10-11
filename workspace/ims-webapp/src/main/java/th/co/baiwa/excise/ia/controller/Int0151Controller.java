@@ -1,16 +1,20 @@
 package th.co.baiwa.excise.ia.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.ia.persistence.vo.Int091FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int091Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int0151FormVo;
+import th.co.baiwa.excise.ia.service.Int0151Service;
+import th.co.baiwa.excise.ws.entity.response.incfri8020.IncomeList;
 
 @Controller
 @RequestMapping("api/ia/int0151")
@@ -18,18 +22,21 @@ public class Int0151Controller {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
+	@Autowired
+	private Int0151Service int0151Service;
+	
 	@PostMapping("/list")
 	@ResponseBody
-	public DataTableAjax<Int091Vo> list(@RequestBody Int091FormVo formVo){
-		DataTableAjax<Int091Vo> list = null;
-		log.info("formVo.getSearchFlag() {}",formVo.getSearchFlag());
+	public List<IncomeList> list(@RequestBody Int0151FormVo formVo){
+		
+		List<IncomeList> licenseList8020List = new ArrayList<IncomeList>();
 		try {
-			 //list = int091Service.findAll(formVo);
-			 log.info("Data {} row",list.getData().size());
+			licenseList8020List = int0151Service.licFri8020(formVo);
+			
 		} catch (Exception e) {
-			log.error("Error ! ==> Int091Controller method findAll");
+			log.error("Error ! ==> Int0151Controller method licFri8020",e);
 		}
 		
-		return list;
+		return licenseList8020List;
 	}
 }
