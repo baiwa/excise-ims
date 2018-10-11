@@ -432,7 +432,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         }
       },
       fixedColumns: {
-        leftColumns: 1
+        leftColumns: 2
       }
     });
 

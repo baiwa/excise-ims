@@ -29,9 +29,13 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssPerDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ws.entity.api.RequestServiceExcise;
+import th.co.baiwa.excise.ws.entity.response.IncFri8000.req.RequestData8000Req;
+import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.IncFri8000Res;
 import th.co.baiwa.excise.ws.entity.response.incfri8020.IncFri8020;
 import th.co.baiwa.excise.ws.entity.response.licfri6010.LicFri6010;
 import th.co.baiwa.excise.ws.entity.response.licfri6020.LicFri6020;
+import th.co.baiwa.excise.ws.entity.response.regfri4000.req.RequestDataReq;
+import th.co.baiwa.excise.ws.entity.response.regfri4000.res.Regfri4000Res;
 import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleRequest;
 import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleResponse;
 import th.go.excise.dexsrvint.wsdl.ldapgateway.ldpagauthenandgetuserrole.LDPAGAuthenAndGetUserRolePortType;
@@ -61,6 +65,12 @@ public class WebServiceExciseService {
 
 	@Value("${ws.excise.endpointLicFri6020}")
 	private String endpointLicFri6020;
+
+	@Value("${ws.excise.endpointIncFri8000}")
+    private String endpointIncFri8000;
+
+    @Value("${ws.excise.endpointRegFri4000}")
+    private String endpointRegFri4000;
 
 	@Value("${os.excise.applicationId}")
 	private String applicationId;
@@ -119,6 +129,36 @@ public class WebServiceExciseService {
 		String responseData = restfulService(endpointIncFri8020, incFri8020);
 		Gson gson = new Gson();
 		IncFri8020 responseServiceExcise = gson.fromJson(responseData, IncFri8020.class);
+		return responseServiceExcise;
+	}
+	public Regfri4000Res IncFri4000(String type, String active, String pageNo, String dataPerPage) {
+		logger.info("restful API : IncFri4000");
+		RequestDataReq regfri4000Req = new RequestDataReq();
+		regfri4000Req.setType(type);
+		regfri4000Req.setActive(active);
+		regfri4000Req.setNid("");
+		regfri4000Req.setNewregId("");
+		regfri4000Req.setActive(active);
+		regfri4000Req.setPageNo(pageNo);
+		regfri4000Req.setDataPerPage(dataPerPage);
+		
+		String responseData = restfulService(endpointRegFri4000, regfri4000Req);
+		Gson gson = new Gson();
+		Regfri4000Res responseServiceExcise = gson.fromJson(responseData, Regfri4000Res.class);
+		return responseServiceExcise;
+	}
+	public IncFri8000Res IncFri8000(String yearMonthFrom, String yearMonthTo, String dateType, String pageNo, String dataPerPage) {
+		logger.info("restful API : IncFri8000Res");
+		RequestData8000Req rFri8000Req = new RequestData8000Req();
+		rFri8000Req.setYearMonthFrom(yearMonthFrom);
+		rFri8000Req.setYearMonthTo(yearMonthTo);
+		rFri8000Req.setDateType(dateType);
+		rFri8000Req.setPageNo(pageNo);
+		rFri8000Req.setDataPerPage(dataPerPage);
+		
+		String responseData = restfulService(endpointIncFri8000, rFri8000Req);
+		Gson gson = new Gson();
+		IncFri8000Res responseServiceExcise = gson.fromJson(responseData, IncFri8000Res.class);
 		return responseServiceExcise;
 	}
 
