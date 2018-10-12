@@ -6,7 +6,9 @@ import { TravelService } from "../../../../../common/services/travel.service";
 import { forEach } from "@angular/router/src/utils/collection";
 import { monthsToNumber } from "helpers/datepicker";
 
-declare var $: any;
+declare var $: any;const URL = {
+  export:"/ia/int0151/exportFile"
+}
 @Component({
   selector: "app-int01-5-1",
   templateUrl: "./int01-5-1.component.html",
@@ -50,6 +52,8 @@ export class Int0151Component implements OnInit {
   ngOnInit() {
     this.calenda();
     this.travelTo1Dropdown();
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
   }
 
   ngAfterViewInit() {
@@ -87,11 +91,11 @@ export class Int0151Component implements OnInit {
   this.loading = true;
 
   this.officeCode="000300";
-  this.yearMonthFrom="201802";
-  this.yearMonthTo="201808";
+  this.yearMonthFrom=(parseInt($("#dateIn1").val().split(" ")[1])-543).toString()+monthsToNumber($("#dateIn1").val().split(" ")[0]);
+  this.yearMonthTo=(parseInt($("#dateIn2").val().split(" ")[1])-543).toString()+monthsToNumber($("#dateIn2").val().split(" ")[0]);
   this.dateType="Income";
-	this.pageNo="0";
-  this.dataPerPage="1000";
+	this.pageNo="1";
+  this.dataPerPage="100";
 
   this.dataT= [];
   const URL = "ia/int0151/list";
@@ -101,9 +105,7 @@ export class Int0151Component implements OnInit {
         yearMonthTo:this.yearMonthTo,
         dateType:this.dateType,
         pageNo: this.pageNo,
-        dataPerPage: this.dataPerPage,
-        yearForm:this.yearForm,
-        yearTo:this.yearTo
+        dataPerPage: this.dataPerPage
       }, async res => {
         const licenseList8020List = await res.json();
 
@@ -193,5 +195,19 @@ export class Int0151Component implements OnInit {
   }
   setTravelTo = e => {
     console.log(" e.target.value : ", e.target.value);
+  }
+
+  exportFile=()=>{
+    console.log("exportFile");
+    let param = "";
+
+    param +="?officeCode=" + this.officeCode;
+    param +="&yearMonthFrom=" + this.yearMonthFrom;
+    param +="&yearMonthTo=" + this.yearMonthTo;
+    param +="&dateType=" + this.dateType;
+    param +="&pageNo=" + this.pageNo;
+    param +="&dataPerPage=" + this.dataPerPage;
+   
+    this.ajax.download(URL.export+param);
   }
 }

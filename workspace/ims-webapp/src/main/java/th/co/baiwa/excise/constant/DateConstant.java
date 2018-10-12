@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class DateConstant {
@@ -279,4 +280,23 @@ public class DateConstant {
 		LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
 		return localDate;
 	}
+	public static String getMonthTextTH(int month) {
+		String[] months = {
+		         "มกราคม",
+		         "กุมภาพันธ์",
+		         "มีนาคม",
+		         "เมษายน",
+		         "พฤษภาคม",
+		         "มิถุนายน",
+		         "กรกฎาคม",
+		         "สิงหาคม",
+		         "กันยายน",
+		         "ตุลาคม",
+		         "พฤศจิกายน",
+		         "ธันวาคม"};
+		
+		return months[month] ;//(BeanUtils.isEmpty(month))?months[month]:"";
+	}
+	
+	
 }

@@ -39,6 +39,8 @@ export class Int0171Component implements OnInit {
     this.calenda();
     this.travelTo1Dropdown();
     this.dataTable();
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
   }
 
   ngAfterViewInit() {

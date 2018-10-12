@@ -14,7 +14,7 @@
             <label>สำนักงานสรรพสามิตภาค</label>
           </div>
           <div class="seven wide field">
-            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)">
+            <select class="ui dropdown ai search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)">
               <option value="">เลือก</option>
               <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>
@@ -26,7 +26,7 @@
             <label>สำนักงานสรรพสามิตพื้นที่</label>
           </div>
           <div class="seven wide field">
-            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)">
+            <select class="ui dropdown ai search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)">
               <option value="">เลือก</option>
               <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>
@@ -38,7 +38,7 @@
             <label>สำนักงานสรพพสามิตสาขา</label>
           </div>
           <div class="seven wide field">
-            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3" (change)="setTravelTo($event)">
+            <select class="ui dropdown ai search selection" style="width: 100%;" id="travelTo3" (change)="setTravelTo($event)">
               <option value="">เลือก</option>
               <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>

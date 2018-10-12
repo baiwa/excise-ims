@@ -175,7 +175,7 @@ public class Int0161Service {
 			
 			row = sheet.createRow(rowNum);
 			cell = row.createCell(0);
-			cell.setCellValue("ตรวจสอบสถิติการต่ออายุใบอนุญาต");
+			cell.setCellValue("รายงานสถิติการต่ออายุใบอนุญาต");
 			cell.setCellStyle(fontHeader);
 			sheet.addMergedRegion(new CellRangeAddress(rowNum,rowNum, 0, 9)); //tr colspan=10
 			rowNum++;rowNum++;
@@ -240,7 +240,7 @@ public class Int0161Service {
 				int index = 0;
 				for (int i = yearForm; i <= yearTo; i++) {
 					cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellCenter);cell.setCellValue(detail.getYear().get(index++));
-					cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellCenter);cell.setCellValue(detail.getYear().get(index++));
+					cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellRight );cell.setCellValue(detail.getYear().get(index++));
 				}
 				
 				

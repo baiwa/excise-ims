@@ -48,6 +48,9 @@ export class Int0161Component implements OnInit {
   ngOnInit() {
     this.calenda();
     this.travelTo1Dropdown();
+    $(".ui.dropdown").dropdown();
+    $(".ui.dropdown.ai").css("width", "100%");
+    
   }
 
   ngAfterViewInit() {

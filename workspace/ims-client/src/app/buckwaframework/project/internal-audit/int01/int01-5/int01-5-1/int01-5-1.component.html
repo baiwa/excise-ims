@@ -14,7 +14,7 @@
                         <label>สำนักงานสรรพสามิตภาค</label>
                     </div>
                     <div class="seven wide field">
-                        <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)">
+                        <select class="ui dropdown ai search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)">
                             <option value="">เลือก</option>
                             <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                         </select>
@@ -26,7 +26,7 @@
                         <label>สำนักงานสรรพสามิตพื้นที่</label>
                     </div>
                     <div class="seven wide field">
-                        <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)">
+                        <select class="ui dropdown ai search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)">
                             <option value="">เลือก</option>
                             <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                         </select>
@@ -38,7 +38,7 @@
                         <label>สำนักงานสรพพสามิตสาขา</label>
                     </div>
                     <div class="seven wide field">
-                        <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3" (change)="setTravelTo($event)">
+                        <select class="ui dropdown ai search selection" style="width: 100%;" id="travelTo3" (change)="setTravelTo($event)">
                             <option value="">เลือก</option>
                             <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                         </select>
@@ -86,8 +86,9 @@
             <div style="overflow-x: auto;white-space: nowrap;">
                 <table id="table" class="ui small celled table nowrap striped selectable " style="width: 100%">
                     <thead>
-                        <tr>
-                            <th rowspan="2" style="text-align: center !important;">ผู้ประกอบการ</th>
+                        <tr> 
+                            <th rowspan="2" style="text-align: center !important;">ลำดับ</th>
+                            <th rowspan="2" style="text-align: center !important;">ชื่อรายได้</th>
                             <th rowspan="1" colspan="2" style="text-align: center !important;" *ngFor="let data of trHtml1">{{data}}</th>
                         </tr>
                         <tr>
@@ -95,9 +96,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="text-center" *ngFor="let data of dataT">
-                            <td style="text-align: center !important;">{{data.IncomeName}}</td>
-                            <!-- <td style="text-align: center !important;" *ngFor="let data2 of trHtml2; let i=index" class="{{data.year[i]==''?'bg-row-highlight':''}}">{{data.year[i]}}</td> -->
+                        <tr class="text-center" *ngFor="let data of dataT;let i = index">
+                            <td style="text-align: center !important;">{{i+1}}</td>
+                            <td style="text-align: left   !important;">{{data.IncomeName}}</td>
+                            <td style="text-align: center !important;" *ngFor="let data2 of trHtml2; let i=index" class="{{data.dataGruop[i]==''?'bg-row-highlight':''}}">{{data.dataGruop[i]}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -105,7 +107,8 @@
             <br>
             <div class="ui center aligned grid">
                 <div class="sixteen wide column">
-                    <button type="button" class="ui button orange">ส่งออก</button>
+                        <button class="ui blue basic button" (click)="exportFile()">
+                                <i class="file excel outline icon"></i>ส่งออก</button>
                 </div>
             </div>
             <br>
