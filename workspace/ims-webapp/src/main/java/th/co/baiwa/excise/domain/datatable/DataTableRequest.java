@@ -2,35 +2,36 @@ package th.co.baiwa.excise.domain.datatable;
 
 import java.io.Serializable;
 
-public class DataTableRequest implements Serializable{
-	
-	private static final long serialVersionUID = 498837492551085248L;
-	
-	private Integer start;
-	private Integer length;
-	private Long draw;
+public class DataTableRequest implements Serializable {
 
-	public Integer getStart() {
-		return start;
-	}
+    private static final long serialVersionUID = 498837492551085248L;
 
-	public void setStart(Integer start) {
-		this.start = start;
-	}
+    private Integer start;
+    private Integer length;
+    private Long draw;
 
-	public Integer getLength() {
-		return length;
-	}
+    public Integer getStart() {
+        return start;
+    }
 
-	public void setLength(Integer length) {
-		this.length = length;
-	}
+    public void setStart(Integer start) {
+        this.start = start;
+    }
 
-	public Long getDraw() {
-		return draw;
-	}
+    public Integer getLength() {
+        return length;
+    }
 
-	public void setDraw(Long draw) {
-		this.draw = draw;
-	}
+    public void setLength(Integer length) {
+        this.length = length;
+    }
+
+    public Long getDraw() {
+        return draw;
+    }
+
+    public void setDraw(Long draw) {
+        this.draw = draw;
+    }
+
 }

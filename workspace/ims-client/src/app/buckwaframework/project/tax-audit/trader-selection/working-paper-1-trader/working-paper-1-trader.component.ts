@@ -138,7 +138,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
       
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> ' +
+      '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
       "</tr>" +
       '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +

@@ -75,7 +75,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     // subscribe to router event
     this.from = this.route.snapshot.queryParams["from"];
     this.month = this.route.snapshot.queryParams["month"];
-    console.log(this.month);
+    
 
     //split function
     var from_split = this.from.split("/");
@@ -115,15 +115,15 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       '<th rowspan="2" style="text-align: center !important" >ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
       '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
       '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
-      '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
+      '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +      
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> ' +
+      '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ค่าเฉลี่ยภาษี</th> ' +
       '<th rowspan="2" style="text-align: center !important">ค่าร้อยละสูงสุด</th> ' +
@@ -353,6 +353,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     json += ' { "data": "exciseId","className":"center" }, ';
     json += ' { "data": "exciseOperatorName" }, ';
     json += ' { "data": "exciseFacName" }, ';
+    json += ' { "data": "coordinates" }, '; 
     json += ' { "data": "exciseArea" }, ';
     json += ' { "data": "exciseFacAddress" ,"className":"center" }, ';
     json += ' { "data": "exciseRegisCapital","className":"center" }, ';
@@ -361,8 +362,8 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     json += ' { "data": "no1" }, ';
     json += ' { "data": "no2" }, ';
     json += ' { "data": "no3" }, ';
-    json += ' { "data": "coordinates" }, ';
     json += ' { "data": "sector" }, ';
+    
     json += ' { "data": "industrialAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
     json += ' { "data": "status" }, ';
@@ -390,14 +391,13 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       }
     }
     json += "]";
-    console.log(json);
     let jsonMapping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable({
       lengthChange: true,
       searching: false,
       scrollX: true,
       select: true,
-      ordering: false,
+      ordering: true,
       pageLength: 10,
       processing: true,
       serverSide: true,
@@ -440,7 +440,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.onLoading = false;
     }, 500);
-    console.log(json);
+    
   }
 
   hideProductType() {

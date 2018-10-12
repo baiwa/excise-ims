@@ -115,12 +115,13 @@ export class SendLineUserComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
       '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
       '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
       '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
+      
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> ' +
@@ -160,7 +161,9 @@ export class SendLineUserComponent implements OnInit {
       serverSide: true,
       paging: false,
       pagingType: "full_numbers",
-
+      fixedColumns : { 
+        leftColumns : 2 
+      },
       ajax: {
         type: "POST",
         url: URL,
@@ -193,6 +196,7 @@ export class SendLineUserComponent implements OnInit {
         { data: "exciseId", className: "center" },
         { data: "companyName" },
         { data: "companyName" },
+        { data: "exciseOwnerArea1" },
         { data: "exciseOwnerArea" },
         { data: "firstMonth", className: "center" },
         { data: "lastMonth", className: "center" },
@@ -201,7 +205,7 @@ export class SendLineUserComponent implements OnInit {
         { data: "no1" },
         { data: "no2" },
         { data: "no3" },
-        { data: "exciseOwnerArea1" },
+        
         { data: "productType" },
         { data: "factoryAddress" },
         { data: "registeredCapital" },
