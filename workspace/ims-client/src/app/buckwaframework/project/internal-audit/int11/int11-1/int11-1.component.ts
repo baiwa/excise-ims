@@ -10,25 +10,26 @@ declare var $: any;
   styleUrls: ['./int11-1.component.css']
 })
 export class Int111Component implements OnInit {
-
+  // id : string = "";
   isSearch: boolean = false;
-  datatable: any[];
+  datatable: any;
   statusList: any[];
   projectName: string = "";
   status: string = "";
   $form: any;
   $page: any;
+  form : Int111Form = new Int111Form();
 
   // BreadCrumb
-breadcrumb: BreadCrumb[];
+  breadcrumb: BreadCrumb[];
 
   constructor(
     private ajaxService: AjaxService,
     private ajax: AjaxService,
     private router: Router,
     private route: ActivatedRoute,
-    private messageBarService: MessageBarService, 
-  ) { 
+    private messageBarService: MessageBarService,
+  ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ทะเบียนคุมการติดตามงาน", route: "#" },
@@ -51,7 +52,7 @@ breadcrumb: BreadCrumb[];
     $(".follow-project-dropdown").dropdown().css('width', '100%');
   }
 
-  initDatatable(): void {
+  initDatatable =()=> {
     const URL = AjaxService.CONTEXT_PATH + "ia/int111/search";
     this.datatable = $("#dataTable").DataTable({
       lengthChange: false,
@@ -66,7 +67,7 @@ breadcrumb: BreadCrumb[];
       ajax: {
         type: "POST",
         url: URL,
-				contentType : "application/json",
+        contentType: "application/json",
         data: function (d) {
           return JSON.stringify($.extend({
             "projectName": $('#projectName').val(),
@@ -383,11 +384,12 @@ breadcrumb: BreadCrumb[];
         {
           data: "status",
           className: "center aglined",
-          render: function (data) {
+          render: function (data,row) {
             var html = '';
             if (data != 'เสร็จสิ้น') {
               html += '<button type="button" class="ui mini yellow button edit-button"><i class="edit icon"></i>แก้ไข</button>';
-            }
+              html += '<button type="button" class="ui mini blue button close-button"> <i class="close outline icon"></i>ปิดงาน</button>';
+            } 
             return html;
           }
         }
@@ -398,7 +400,28 @@ breadcrumb: BreadCrumb[];
             queryParams: { id: data.followUpProjectId }
           });
         });
+      }, createdRow: function (row, data, dataIndex) {
+        if (data.status === 'เสร็จสิ้น') {
+          $(row).find('td:eq(26),td:eq(27),td:eq(28)').addClass('bg-c-green');
+        }
       }
+    });
+    this.datatable.on('click', 'tbody tr button.close-button', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = this.datatable.row(closestRow).data();
+      console.log("data : ", data);
+      this.form.id = data.followUpProjectId;
+      $('#modolClose').modal('show');
+       
+    });
+  }
+
+  onClicksavenote =()=>{
+    this.form.note = $('#noteclosejob').val();
+    var url = "ia/int111/notecloseJob";
+    this.ajaxService.post(url,JSON.stringify(this.form), res=>{
+      $('#modolClose').modal('hide');
+      $("#dataTable").DataTable().ajax.reload();
     });
   }
 
@@ -468,14 +491,14 @@ breadcrumb: BreadCrumb[];
     }, "คุณต้องการลบข้อมูลใช่หรือไม่ ? ");
   }
 
-  clickCheckAll = event =>  {
+  clickCheckAll = event => {
     if (event.target.checked) {
       $(".ui.checkbox.follow-proj-chkbox").checkbox("check");
     } else {
       $(".ui.checkbox.follow-proj-chkbox").checkbox("uncheck");
     }
   }
-  
+
   // export() {
   //   var url = AjaxService.CONTEXT_PATH + "ia/int111/export?projectName=" + $('#projectName').val() +
   //     "&status=" + $('#status').val();
@@ -484,9 +507,14 @@ breadcrumb: BreadCrumb[];
 
 
   exportFollowUpProject() {
-    const URL = "ia/int111/exportFollowUpProject?projectName=" + $('#projectName').val() +"&status=" + $('#status').val();
-    console.log("projectName :" + $('#projectName').val()+ " , " +"status :"+$('#status').val());
+    const URL = "ia/int111/exportFollowUpProject?projectName=" + $('#projectName').val() + "&status=" + $('#status').val();
+    console.log("projectName :" + $('#projectName').val() + " , " + "status :" + $('#status').val());
     this.ajax.download(URL);
   }
 
 }
+
+class Int111Form{
+  note : string ="";
+  id : string = "";
+} 

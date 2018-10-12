@@ -1,3 +1,4 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
 
   <div class="sixteen wide column">
@@ -454,10 +455,6 @@
 
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
-            <button class="ui mini primary button" (click)="closeJob()" *ngIf="showCloseJob">
-              <i class="edit outline icon"></i>
-              ปิดงาน
-            </button>
             <button class="ui mini primary button" (click)="saveData()">
               <i class="save icon"></i>
               บันทึก

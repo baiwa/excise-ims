@@ -119,6 +119,7 @@ public class IaFollowUpDepartmentDao {
 			vo.setTrackResult3Date(DateConstant.convertDateToStrDDMMYYYY(rs.getTimestamp("TRACK_RESULT3_DATE")));
 			vo.setStatus(rs.getString("STATUS"));
 			vo.setVersion(String.valueOf(rs.getInt("VERSION")));
+			vo.setNote(rs.getString("NOTE"));
 			return vo;
 		}
 	};

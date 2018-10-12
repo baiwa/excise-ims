@@ -250,6 +250,12 @@ breadcrumb: BreadCrumb[];
     }, "คุณต้องการปิดงานใช่หรือไม่ ? ");
   }
 
+  modolClose(){
+    $('#modolClose')
+  .modal('show')
+;
+  }
+
   changeStatus() {
     if ($('#followUp1Bnum').val()) {
       $('#status').val('แจ้งติดตามครั่งที่ 1');

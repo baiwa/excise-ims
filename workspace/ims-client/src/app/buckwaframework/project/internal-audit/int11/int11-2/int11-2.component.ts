@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { MessageBarService } from '../../../../common/services/message-bar.service';
+import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 
 declare var $: any;
 @Component({
@@ -11,7 +12,7 @@ declare var $: any;
 })
 export class Int112Component implements OnInit {
 
-  datatable: any[];
+  datatable: any;
   exciseDepartment: string = "";
   exciseRegion: string = "";
   exciseDistrict: string = "";
@@ -22,13 +23,23 @@ export class Int112Component implements OnInit {
   regionList: any[];
   distrList: any[];
   statusList: any[];
+  form : Int112Form = new Int112Form();
+
+ // BreadCrumb
+ breadcrumb: BreadCrumb[];
 
   constructor(
     private ajaxService: AjaxService,
     private ajax: AjaxService,
     private router: Router,
     private route: ActivatedRoute,
-    private messageBarService: MessageBarService, ) { }
+    private messageBarService: MessageBarService, ) {
+      this.breadcrumb = [
+        { label: "ตรวจสอบภายใน", route: "#" },
+        { label: "ทะเบียนคุมการติดตามงาน", route: "#" },
+        { label: "ค้นหาการติดตามผลการตรวจสอบของหน่วยรับตรวจ", route: "#" },
+      ];
+     }
 
   ngOnInit() {
     this.$form = $('#followUpDepartmentform');
@@ -46,7 +57,7 @@ export class Int112Component implements OnInit {
     $(".follow-department-dropdown").dropdown().css('width', '100%');
   }
 
-  initDatatable(): void {
+  initDatatable =()=> {
     const URL = AjaxService.CONTEXT_PATH + "ia/int112/search";
     this.datatable = $("#dataTable").DataTable({
       lengthChange: false,
@@ -383,6 +394,7 @@ export class Int112Component implements OnInit {
             var html = '';
             if (data != 'เสร็จสิ้น') {
               html += '<button type="button" class="ui mini yellow button edit-button"><i class="edit icon"></i>แก้ไข</button>';
+              html += '<button type="button" class="ui mini blue button close-button"> <i class="close outline icon"></i>ปิดงาน</button>';
             }
             return html;
           }
@@ -394,7 +406,28 @@ export class Int112Component implements OnInit {
             queryParams: { id: data.followUpDepartmentId }
           });
         });
+      }, createdRow: function (row, data, dataIndex) {
+        if (data.status === 'เสร็จสิ้น') {
+          $(row).find('td:eq(26),td:eq(27),td:eq(28)').addClass('bg-c-green');
+        }
       }
+    });
+    this.datatable.on('click', 'tbody tr button.close-button', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = this.datatable.row(closestRow).data();
+      console.log("data : ", data);
+      this.form.id = data.followUpDepartmentId;
+      $('#modolClose').modal('show');
+       
+    });
+  }
+
+  onClicksavenote =()=>{
+    this.form.note = $('#noteclosejob').val();
+    var url = "ia/int112/notecloseJob";
+    this.ajaxService.post(url,JSON.stringify(this.form), res=>{
+      $('#modolClose').modal('hide');
+      $("#dataTable").DataTable().ajax.reload();
     });
   }
 
@@ -551,3 +584,8 @@ export class Int112Component implements OnInit {
     this.ajax.download(URL);
   }
 }
+
+class Int112Form{
+  note : string ="";
+  id : string = "";
+} 

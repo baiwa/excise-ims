@@ -5,6 +5,7 @@ import { AjaxService } from '../../../../../common/services/ajax.service';
 import { Router, ActivatedRoute } from "@angular/router";
 import { MessageBarService } from '../../../../../common/services/message-bar.service';
 import { IaFollowUpDepartment } from '../../../../../common/models/IaFollowUpDepartment';
+import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 
 declare var $: any;
 @Component({
@@ -24,13 +25,21 @@ export class Int1121Component implements OnInit {
   departmentList: any[];
   regionList: any[];
   distrList: any[];
+  // BreadCrumb
+ breadcrumb: BreadCrumb[];
 
   constructor(
     private ajaxService: AjaxService,
     private router: Router,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
-  ) { }
+  ) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ทะเบียนคุมการติดตามงาน", route: "#" },
+      { label: "เพิ่มรายการติดตามผลการตรวจสอบของหน่วยรับตรวจ", route: "#" },
+    ];
+   }
 
   ngOnInit() {
     this.$form = $("#followUpDepartmentForm");

@@ -37,7 +37,10 @@ import th.co.baiwa.excise.constant.IaConstant.IA_REGIS_TRACK_CONTROL.STATUS;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ia.persistence.dao.IaFollowUpDepartmentDao;
 import th.co.baiwa.excise.ia.persistence.entity.IaFollowUpDepartment;
+import th.co.baiwa.excise.ia.persistence.entity.IaFollowUpProject;
 import th.co.baiwa.excise.ia.persistence.repository.IaFollowUpDepartmentRepository;
+import th.co.baiwa.excise.ia.persistence.vo.Int111Form;
+import th.co.baiwa.excise.ia.persistence.vo.Int112Form;
 import th.co.baiwa.excise.ia.persistence.vo.Int112FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int112Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
@@ -285,6 +288,14 @@ public class IaFollowUpDepartmentService {
 		iaFollowUpDepartmentRepository.save(followUpDepartment);
 		
 	}
+	
+	public void notecloseJob(Int112Form form) {
+		IaFollowUpDepartment iaFollow = iaFollowUpDepartmentRepository.findOne(Long.valueOf(form.getId()));
+		iaFollow.setNote(form.getNote());
+		iaFollow.setStatus(STATUS.COMPLETE_DESC);
+		iaFollowUpDepartmentRepository.save(iaFollow);
+	}
+	
 	
 	public void shiftDate(Int11ShiftDateVo vo) {
 		Date date = DateConstant.convertStrDDMMYYYYToDate(vo.getDate());

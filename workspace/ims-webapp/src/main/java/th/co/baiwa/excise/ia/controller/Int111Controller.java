@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.excise.constant.MessageConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
+import th.co.baiwa.excise.ia.persistence.vo.Int111Form;
 import th.co.baiwa.excise.ia.persistence.vo.Int111FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int111Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
@@ -92,6 +94,13 @@ public class Int111Controller {
 	public ResponseEntity<?> shiftDate(@RequestBody Int11ShiftDateVo vo) {
 		iaFollowUpProjectService.shiftDate(vo);
 		return new ResponseEntity<Int11ShiftDateVo>(vo, HttpStatus.OK);
+	}
+	
+	@PostMapping("/notecloseJob")
+	@ResponseBody
+	public String notecloseJob(@RequestBody Int111Form form) {
+		iaFollowUpProjectService.notecloseJob(form);
+		return MessageConstant.MSG.STATUS.SAVE.SUCCESS;
 	}
 	
 /*	@GetMapping("/export")

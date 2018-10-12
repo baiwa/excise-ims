@@ -123,6 +123,23 @@ public class IaFollowUpDepartment extends BaseEntity {
 	
 	@Column(name="STATUS")
 	private String status;
+	
+	@Column(name="NOTE")
+	private String note;
+	
+	
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public Long getFollowUpDepartmentId() {
 		return followUpDepartmentId;

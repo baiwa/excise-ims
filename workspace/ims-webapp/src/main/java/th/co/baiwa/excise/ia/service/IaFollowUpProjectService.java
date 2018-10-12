@@ -38,6 +38,7 @@ import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ia.persistence.dao.IaFollowUpProjectDao;
 import th.co.baiwa.excise.ia.persistence.entity.IaFollowUpProject;
 import th.co.baiwa.excise.ia.persistence.repository.IaFollowUpProjectRepository;
+import th.co.baiwa.excise.ia.persistence.vo.Int111Form;
 import th.co.baiwa.excise.ia.persistence.vo.Int111FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int111Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
@@ -155,6 +156,7 @@ public class IaFollowUpProjectService {
 	public void saveOrUpdate(Int111FormVo vo) {
 		log.info("SaveOrUpdate IaFollowUpproject Project Name : {}", vo.getProjectName());
 		IaFollowUpProject iaFollowUpProject = new IaFollowUpProject();
+		
 		if (StringUtils.isNotBlank(vo.getFollowUpProjectId())) {
 			iaFollowUpProject.setFollowUpProjectId(Long.valueOf(vo.getFollowUpProjectId()));
 			iaFollowUpProject.setIsDeleted(FLAG.N_FLAG);
@@ -267,6 +269,13 @@ public class IaFollowUpProjectService {
 		
 		iaFollowUpProjectRepository.save(followUpProject);
 		
+	}
+	
+	public void notecloseJob(Int111Form form) {
+		IaFollowUpProject iaFollow = iaFollowUpProjectRepository.findOne(Long.valueOf(form.getId()));
+		iaFollow.setNote(form.getNote());
+		iaFollow.setStatus(STATUS.COMPLETE_DESC);
+		iaFollowUpProjectRepository.save(iaFollow);
 	}
 	
 	public void shiftDate(Int11ShiftDateVo vo) {

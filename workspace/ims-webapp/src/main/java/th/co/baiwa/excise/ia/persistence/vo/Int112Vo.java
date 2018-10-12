@@ -50,7 +50,18 @@ public class Int112Vo implements Serializable {
 	private String maturity360Display;
 	private String performance3DateDisplay;
 	private String trackResult3DateDisplay;
+	private String note;
 	
+	
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	public String getFollowUpDepartmentId() {
 		return followUpDepartmentId;
 	}
