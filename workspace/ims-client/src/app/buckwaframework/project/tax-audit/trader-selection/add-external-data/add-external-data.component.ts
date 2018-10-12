@@ -98,6 +98,7 @@ export class AddExternalDataComponent implements OnInit {
     json += ' "serverSide": true, ';
     json += ' "paging": true, ';
     json += ' "pagingType": "full_numbers", ';
+    json += ' "fixedColumns" : { "leftColumns" : 2}, ';
     json += " ";
     json += ' "ajax": { ';
     json += ' "type": "POST", ';
@@ -118,6 +119,7 @@ export class AddExternalDataComponent implements OnInit {
     json += ' { "data": "exciseId","className":"center" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
+    json += ' { "data": "exciseOwnerArea1" }, ';
     json += ' { "data": "exciseOwnerArea" }, ';
     json += ' { "data": "firstMonth" ,"className":"center" }, ';
     json += ' { "data": "lastMonth","className":"center" }, ';
@@ -126,7 +128,7 @@ export class AddExternalDataComponent implements OnInit {
     json += ' { "data": "no1" }, ';
     json += ' { "data": "no2" }, ';
     json += ' { "data": "no3" }, ';
-    json += ' { "data": "exciseOwnerArea1" }, ';
+    
     json += ' { "data": "productType" }, ';
     json += ' { "data": "factoryAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
@@ -295,12 +297,13 @@ export class AddExternalDataComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
       '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
       '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
       '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
+      
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> ' +

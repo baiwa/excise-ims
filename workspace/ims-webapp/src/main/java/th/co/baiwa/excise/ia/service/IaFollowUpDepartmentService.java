@@ -30,6 +30,8 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.constant.IaConstant.IA_REGIS_TRACK_CONTROL.STATUS;
 import th.co.baiwa.excise.domain.LabelValueBean;
@@ -42,6 +44,8 @@ import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
 
 @Service
 public class IaFollowUpDepartmentService {
+	
+	private final String  REGIS_TRACK_CONTROL_STATUS = "REGIS_TRACK_CONTROL_STATUS"; 
 	// Set property Style Excel
 	private CellStyle thStyle;
 	private CellStyle cellCenter;
@@ -147,18 +151,6 @@ public class IaFollowUpDepartmentService {
 		return response;
 	}
 	
-	public List<LabelValueBean> getStatusDropdown() {
-		List<LabelValueBean> dropdownList = new ArrayList<>();
-		dropdownList.add(new LabelValueBean(STATUS.TRACKING_FIRST_DESC, STATUS.TRACKING_FIRST_DESC));
-		dropdownList.add(new LabelValueBean(STATUS.RESULT_OPT_FIRST_DESC, STATUS.RESULT_OPT_FIRST_DESC));
-		dropdownList.add(new LabelValueBean(STATUS.REPORT_TRACKING_FIRST_DESC, STATUS.REPORT_TRACKING_FIRST_DESC));
-		dropdownList.add(new LabelValueBean(STATUS.TRACKING_SECOND_DESC, STATUS.TRACKING_SECOND_DESC));
-		dropdownList.add(new LabelValueBean(STATUS.RESULT_OPT_SECOND_DESC, STATUS.RESULT_OPT_SECOND_DESC));
-		dropdownList.add(new LabelValueBean(STATUS.REPORT_TRACKING_SECOND_DESC, STATUS.REPORT_TRACKING_SECOND_DESC));
-		dropdownList.add(new LabelValueBean(STATUS.COMPLETE_DESC, STATUS.COMPLETE_DESC));
-		return dropdownList;
-	}
-	
 	public List<LabelValueBean> getDepartmentDropdown() {
 		return iaFollowUpDepartmentDao.queryDeapertment();
 	}
@@ -200,6 +192,13 @@ public class IaFollowUpDepartmentService {
 		iaFollowUpDepartment.setPerformance2Date(DateConstant.convertStrDDMMYYYYToDate(vo.getPerformance2Date()));
 		iaFollowUpDepartment.setTrackResult2Bnum(vo.getTrackResult2Bnum());
 		iaFollowUpDepartment.setTrackResult2Date(DateConstant.convertStrDDMMYYYYToDate(vo.getTrackResult2Date()));
+		iaFollowUpDepartment.setFollowUp3Bnum(vo.getFollowUp3Bnum());
+		iaFollowUpDepartment.setFollowUp3Date(DateConstant.convertStrDDMMYYYYToDate(vo.getFollowUp3Date()));
+		iaFollowUpDepartment.setMaturity360(DateConstant.convertStrDDMMYYYYToDate(vo.getMaturity360()));
+		iaFollowUpDepartment.setPerformance3Bnum(vo.getPerformance3Bnum());
+		iaFollowUpDepartment.setPerformance3Date(DateConstant.convertStrDDMMYYYYToDate(vo.getPerformance3Date()));
+		iaFollowUpDepartment.setTrackResult3Bnum(vo.getTrackResult3Bnum());
+		iaFollowUpDepartment.setTrackResult3Date(DateConstant.convertStrDDMMYYYYToDate(vo.getTrackResult3Date()));
 		
 		iaFollowUpDepartment.setStatus(vo.getStatus());
 		if (StringUtils.isNotBlank(vo.getVersion())) {
@@ -208,6 +207,16 @@ public class IaFollowUpDepartmentService {
 		iaFollowUpDepartmentRepository.save(iaFollowUpDepartment);
 	}
 
+	public List<LabelValueBean> getStatusDropdown() {
+		List<LabelValueBean> dropdownList = new ArrayList<>();
+		List<Lov> statusList  = ApplicationCache.getListOfValueByValueType(REGIS_TRACK_CONTROL_STATUS);
+		for (Lov lov : statusList) {
+			dropdownList.add(new LabelValueBean(lov.getValue2(), lov.getValue1()));
+		}
+		
+		return dropdownList;
+	}
+	
 	public Int112Vo findById(Long id) {
 		IaFollowUpDepartment iaFollowUpDepartment = iaFollowUpDepartmentRepository.findOne(id);
 		
@@ -237,6 +246,13 @@ public class IaFollowUpDepartmentService {
 		vo.setPerformance2Date(DateConstant.convertDateToStrDDMMYYYY(iaFollowUpDepartment.getPerformance2Date()));
 		vo.setTrackResult2Bnum(iaFollowUpDepartment.getTrackResult2Bnum());
 		vo.setTrackResult2Date(DateConstant.convertDateToStrDDMMYYYY(iaFollowUpDepartment.getTrackResult2Date()));
+		vo.setFollowUp3Bnum(iaFollowUpDepartment.getFollowUp3Bnum());
+		vo.setFollowUp3Date(DateConstant.convertDateToStrDDMMYYYY(iaFollowUpDepartment.getFollowUp3Date()));
+		vo.setMaturity360(DateConstant.convertDateToStrDDMMYYYY(iaFollowUpDepartment.getMaturity360()));
+		vo.setPerformance3Bnum(iaFollowUpDepartment.getPerformance3Bnum());
+		vo.setPerformance3Date(DateConstant.convertDateToStrDDMMYYYY(iaFollowUpDepartment.getPerformance3Date()));
+		vo.setTrackResult3Bnum(iaFollowUpDepartment.getTrackResult3Bnum());
+		vo.setTrackResult3Date(DateConstant.convertDateToStrDDMMYYYY(iaFollowUpDepartment.getTrackResult3Date()));
 		vo.setStatus(iaFollowUpDepartment.getStatus());
 		vo.setVersion(iaFollowUpDepartment.getVersion().toString());
 	
@@ -319,7 +335,8 @@ public class IaFollowUpDepartmentService {
 		String[] tbTH1 = { "ลำดับ", "สำนักงานสรรพสามิต", "รายงานผลอธิบดี", "", "แจ้งติดตามหน่วยรับตรวจครั้งที่ 1", "",
 				"วันครบกำหนดครั้งที่ 1", "", "หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 1", "",
 				"รายงานการติดตามครั้งที่ 1", "", "แจ้งติดตามหน่วยรับตรวจครั้งที่ 2", "", "วันครบกำหนดครั้งที่2",
-				"หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 2", "", "รายงานการติดตามครั้งที่ 2", "", "สถานะการติดตาม" };
+				"หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 2", "", "รายงานการติดตามครั้งที่ 2", "", "", "แจ้งติดตามหน่วยรับตรวจครั้งที่ 3", "", "วันครบกำหนดครั้งที่3",
+				"หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 3", "", "รายงานการติดตามครั้งที่ 3", "สถานะการติดตาม" };
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
@@ -328,6 +345,7 @@ public class IaFollowUpDepartmentService {
 
 		String[] tbTH2 = { "เลขหนังสือ", "วันที่", "เลขหนังสือ", "วันที่", "45 วัน", "60 วัน", "เลขหนังสือ", "วันที่",
 				"เลขหนังสือ", "วันที่", "เลขหนังสือ", "วันที่", "60 วัน", "เลขหนังสือ", "วันที่", "เลขหนังสือ",
+				"วันที่", "เลขหนังสือ", "วันที่", "60 วัน", "เลขหนังสือ", "วันที่", "เลขหนังสือ",
 				"วันที่" };
 		row = sheet.createRow(1);
 		int cellNumtbTH2 = 2;
@@ -547,6 +565,69 @@ public class IaFollowUpDepartmentService {
 			cell = row.createCell(cellNum);
 			if(StringUtils.isNotBlank(detail.getTrackResult2Date())) {
 				cell.setCellValue(detail.getTrackResult2Date());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getFollowUp3Bnum())) {
+				cell.setCellValue(detail.getFollowUp3Bnum());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getFollowUp3Date())) {
+				cell.setCellValue(detail.getFollowUp3Date());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getMaturity360())) {
+				cell.setCellValue(detail.getMaturity360());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getPerformance3Bnum())) {
+				cell.setCellValue(detail.getPerformance3Bnum());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getPerformance3Date())) {
+				cell.setCellValue(detail.getPerformance3Date());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getTrackResult3Bnum())) {
+				cell.setCellValue(detail.getTrackResult3Bnum());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getTrackResult3Date())) {
+				cell.setCellValue(detail.getTrackResult3Date());
 			}else {
 				cell.setCellValue("-");
 			}

@@ -20,7 +20,7 @@ export class Int111Component implements OnInit {
   $page: any;
 
   // BreadCrumb
-// breadcrumb: BreadCrumb[];
+breadcrumb: BreadCrumb[];
 
   constructor(
     private ajaxService: AjaxService,
@@ -29,11 +29,11 @@ export class Int111Component implements OnInit {
     private route: ActivatedRoute,
     private messageBarService: MessageBarService, 
   ) { 
-    // this.breadcrumb = [
-    //   { label: "ตรวจสอบภายใน", route: "#" },
-    //   { label: "ทะเบียนติดตามงาน", route: "#" },
-    //   { label: "ค้นหาการติดตามผลการตรวจสอบของโครงการ", route: "#" },
-    // ];
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ทะเบียนคุมการติดตามงาน", route: "#" },
+      { label: "ค้นหาการติดตามผลการตรวจสอบของโครงการ", route: "#" },
+    ];
   }
 
   ngOnInit() {

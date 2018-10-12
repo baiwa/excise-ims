@@ -6,6 +6,9 @@ import { TravelService } from "../../../../../common/services/travel.service";
 import { forEach } from "@angular/router/src/utils/collection";
 import { monthsToNumber } from "helpers/datepicker";
 declare var $: any;
+const URL = {
+  export:"/ia/int0171/exportFile"
+}
 @Component({
   selector: "app-int01-7-1",
   templateUrl: "./int01-7-1.component.html",
@@ -108,7 +111,13 @@ clickClear = function () {
       },
     },
     "columns": [
-     {
+      {
+        "data": "CusFullName",
+        "className":"center",
+        "render": function (data, type, row, meta) {
+          return meta.row + meta.settings._iDisplayStart + 1;
+        }
+      },{
         "data": "CusFullName"
       }, {
         "data": "LicName"
@@ -153,5 +162,17 @@ clickClear = function () {
   }
   setTravelTo = e => {
     console.log(" e.target.value : ", e.target.value);
+  }
+  exportFile=()=>{
+    console.log("exportFile");
+    let param = "";
+
+    param +="?offcode=" + this.offcode,
+    param +="&yearMonthFrom=" + this.yearMonthFrom, 
+    param +="&yearMonthTo=" + this.yearMonthTo,
+    param +="&pageNo=" + this.pageNo,
+    param +="&dataPerPage=" + this.dataPerPage
+
+    this.ajax.download(URL.export+param);
   }
 }

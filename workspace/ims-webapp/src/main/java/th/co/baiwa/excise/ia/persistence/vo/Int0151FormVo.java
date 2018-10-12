@@ -2,7 +2,7 @@ package th.co.baiwa.excise.ia.persistence.vo;
 
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
-public class Int0161FormVo extends DataTableRequest {
+public class Int0151FormVo extends DataTableRequest {
 
 	private String searchFlag;
 
@@ -10,14 +10,12 @@ public class Int0161FormVo extends DataTableRequest {
 	private String nid;
 	private String newregId;
 
-	private String offcode;
+	private String officeCode;
 	private String yearMonthFrom;
 	private String yearMonthTo;
+	private String dateType;
 	private String pageNo;
 	private String dataPerPage;
-
-	private int yearForm;
-	private int yearTo;
 
 	public String getSearchFlag() {
 		return searchFlag;
@@ -51,12 +49,12 @@ public class Int0161FormVo extends DataTableRequest {
 		this.newregId = newregId;
 	}
 
-	public String getOffcode() {
-		return offcode;
+	public String getOfficeCode() {
+		return officeCode;
 	}
 
-	public void setOffcode(String offcode) {
-		this.offcode = offcode;
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 
 	public String getYearMonthFrom() {
@@ -75,6 +73,14 @@ public class Int0161FormVo extends DataTableRequest {
 		this.yearMonthTo = yearMonthTo;
 	}
 
+	public String getDateType() {
+		return dateType;
+	}
+
+	public void setDateType(String dateType) {
+		this.dateType = dateType;
+	}
+
 	public String getPageNo() {
 		return pageNo;
 	}
@@ -89,22 +95,6 @@ public class Int0161FormVo extends DataTableRequest {
 
 	public void setDataPerPage(String dataPerPage) {
 		this.dataPerPage = dataPerPage;
-	}
-
-	public int getYearForm() {
-		return yearForm;
-	}
-
-	public void setYearForm(int yearForm) {
-		this.yearForm = yearForm;
-	}
-
-	public int getYearTo() {
-		return yearTo;
-	}
-
-	public void setYearTo(int yearTo) {
-		this.yearTo = yearTo;
 	}
 
 }

@@ -32,8 +32,10 @@ export class Int0151Component implements OnInit {
   monthForm: any=0;
   monthTo: any=0;
 
-  nid: any;
-  newregId: any;
+  officeCode: any;
+  yearMonthFrom: any;
+  yearMonthTo: any;
+  dateType: any;
   pageNo: any;
   dataPerPage: any;
 
@@ -83,27 +85,33 @@ export class Int0151Component implements OnInit {
 
  getdata = () =>{
   this.loading = true;
-  this.nid="0105555155742";
-	this.newregId="";
+
+  this.officeCode="000300";
+  this.yearMonthFrom="201802";
+  this.yearMonthTo="201808";
+  this.dateType="Income";
 	this.pageNo="0";
   this.dataPerPage="1000";
+
   this.dataT= [];
-  const URL = "ia/int0161/list";
+  const URL = "ia/int0151/list";
       this.ajax.post(URL, { 
-        nid: this.nid, 
-        newregId: this.newregId,
+        officeCode:this.officeCode,
+        yearMonthFrom:this.yearMonthFrom,
+        yearMonthTo:this.yearMonthTo,
+        dateType:this.dateType,
         pageNo: this.pageNo,
         dataPerPage: this.dataPerPage,
         yearForm:this.yearForm,
         yearTo:this.yearTo
       }, async res => {
-        const licenseList6020List = await res.json();
+        const licenseList8020List = await res.json();
 
         setTimeout(() => {
           this.loading = false;
         },200);
         
-      licenseList6020List.forEach(element => {
+      licenseList8020List.forEach(element => {
         this.dataT.push(element);
       });
       console.log("dataT : ",this.dataT);

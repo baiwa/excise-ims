@@ -5,6 +5,9 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { TravelService } from "../../../../../common/services/travel.service";
 import { forEach } from "@angular/router/src/utils/collection";
 declare var $: any;
+const URL = {
+  export:"/ia/int0161/exportFile"
+}
 @Component({
   selector: "app-int01-6-1",
   templateUrl: "./int01-6-1.component.html",
@@ -13,6 +16,7 @@ declare var $: any;
 export class Int0161Component implements OnInit {
 
   dataT: any[]= [];
+  dataT2: any[]= [];
   loading: boolean = false;
 
   stringColumns: any;
@@ -27,8 +31,9 @@ export class Int0161Component implements OnInit {
   yearForm: any=0;
   yearTo: any=0;
 
-  nid: any;
-  newregId: any;
+  offcode: any;
+  yearMonthFrom: any;
+  yearMonthTo: any;
   pageNo: any;
   dataPerPage: any;
 
@@ -76,33 +81,51 @@ export class Int0161Component implements OnInit {
     $('input[type=calendar]').val("");
   }
 
- getdata = () =>{
+ getdata = async () =>{
   this.loading = true;
-  this.nid="0105555155742";
-	this.newregId="";
-	this.pageNo="0";
-  this.dataPerPage="1000";
+  
+  this.offcode="100300";
+  this.yearMonthFrom=(parseInt(this.yearForm)-543)+"01";
+  this.yearMonthTo=(parseInt(this.yearTo)-543)+"12";
+
+	this.pageNo=1;
+  this.dataPerPage="50";
+
   this.dataT= [];
+  // this.dataT2= [];
+
   const URL = "ia/int0161/list";
-      this.ajax.post(URL, { 
-        nid: this.nid, 
-        newregId: this.newregId,
-        pageNo: this.pageNo,
+  let licenseList6010List = [];
+  // do {
+    licenseList6010List= [];
+    await this.ajax.post(URL, { 
+        offcode: this.offcode, 
+        yearMonthFrom: this.yearMonthFrom,
+        yearMonthTo: this.yearMonthTo,
+        pageNo:this.pageNo,
         dataPerPage: this.dataPerPage,
         yearForm:this.yearForm,
         yearTo:this.yearTo
-      }, async res => {
-        const licenseList6020List = await res.json();
+      }, res => {
+        licenseList6010List = res.json();
 
         setTimeout(() => {
           this.loading = false;
         },200);
         
-      licenseList6020List.forEach(element => {
+      licenseList6010List.forEach(element => {
         this.dataT.push(element);
       });
-      console.log("dataT : ",this.dataT);
+      // console.log("pageNo : ",this.pageNo);
+      // console.log("dataPerPage : ",licenseList6010List.length);
+      // console.log("dataT2.length : ",this.dataT2.length);
+      
+      console.log("dataT2 : ",this.dataT);
       });
+    //   this.pageNo++;
+    // } while (licenseList6010List.length==1000);
+
+    // await console.log("dataT2 all : ",this.dataT2);
  }
   createTrAndDataTable = async () => {
 
@@ -156,5 +179,20 @@ export class Int0161Component implements OnInit {
   }
   setTravelTo = e => {
     console.log(" e.target.value : ", e.target.value);
+  }
+
+  exportFile=()=>{
+    console.log("exportFile");
+    let param = "";
+
+    param +="?offcode=" + this.offcode;
+    param +="&yearMonthFrom=" + this.yearMonthFrom;
+    param +="&yearMonthTo=" + this.yearMonthTo;
+    param +="&pageNo=" + this.pageNo;
+    param +="&dataPerPage=" + this.dataPerPage;
+    param +="&yearForm=" + this.yearForm;
+    param +="&yearTo=" + this.yearTo;
+   
+    this.ajax.download(URL.export+param);
   }
 }

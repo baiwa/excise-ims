@@ -110,6 +110,13 @@ public class IaFollowUpDepartmentDao {
 			vo.setPerformance2Date(DateConstant.convertDateToStrDDMMYYYY(rs.getTimestamp("PERFORMANCE2_DATE")));
 			vo.setTrackResult2Bnum(rs.getString("TRACK_RESULT2_BNUM"));
 			vo.setTrackResult2Date(DateConstant.convertDateToStrDDMMYYYY(rs.getTimestamp("TRACK_RESULT2_DATE")));
+			vo.setFollowUp3Bnum(rs.getString("FOLLOW_UP3_BNUM"));
+			vo.setFollowUp3Date(DateConstant.convertDateToStrDDMMYYYY(rs.getTimestamp("FOLLOW_UP3_DATE")));
+			vo.setMaturity360(DateConstant.convertDateToStrDDMMYYYY(rs.getTimestamp("MATURITY3_60")));
+			vo.setPerformance3Bnum(rs.getString("PERFORMANCE3_BNUM"));
+			vo.setPerformance3Date(DateConstant.convertDateToStrDDMMYYYY(rs.getTimestamp("PERFORMANCE3_DATE")));
+			vo.setTrackResult3Bnum(rs.getString("TRACK_RESULT3_BNUM"));
+			vo.setTrackResult3Date(DateConstant.convertDateToStrDDMMYYYY(rs.getTimestamp("TRACK_RESULT3_DATE")));
 			vo.setStatus(rs.getString("STATUS"));
 			vo.setVersion(String.valueOf(rs.getInt("VERSION")));
 			return vo;

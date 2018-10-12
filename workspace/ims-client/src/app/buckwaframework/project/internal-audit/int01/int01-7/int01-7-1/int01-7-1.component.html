@@ -77,11 +77,14 @@
       </div>
       <br>
     </div>
-
-    <div class="ui {{ loading? 'loading' : '' }} segment">
+    <div class="ui top attached header">
+      <span><h3>ผลการค้นหา</h3></span>
+  </div>
+  <div class="ui attached segment {{ loading? 'loading' : '' }} ">
       <table id="table" class="ui small celled table nowrap striped selectable " style="width: 100%">
         <thead>
           <tr>
+            <th style="text-align: center !important;">ลำดับ</th>
             <th style="text-align: center !important;">ผู้ประกอบการ</th>
             <th style="text-align: center !important;">ประเภทใบอนุญาต</th>
             <th style="text-align: center !important;">แบบพิมพ์สรรพสามิต</th>
@@ -93,7 +96,8 @@
       <br>
       <div class="ui center aligned grid">
         <div class="sixteen wide column">
-          <button type="button" class="ui button orange">ส่งออก</button>
+            <button class="ui blue basic button" (click)="exportFile()">
+                <i class="file excel outline icon"></i>ส่งออก</button>
         </div>
       </div>
       <br>
