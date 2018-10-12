@@ -4,6 +4,7 @@ import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
 import { AjaxService } from '../../../../../common/services/ajax.service';
 import { Router, ActivatedRoute } from "@angular/router";
 import { MessageBarService } from '../../../../../common/services/message-bar.service';
+import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 
 declare var $: any;
 @Component({
@@ -18,12 +19,21 @@ export class Int1111Component implements OnInit {
   id: any;
   showCloseJob: boolean = false;
 
+  // BreadCrumb
+breadcrumb: BreadCrumb[];
+
   constructor(
     private ajaxService: AjaxService,
     private router: Router,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
-  ) { }
+  ) { 
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ทะเบียนคุมการติดตามงาน", route: "#" },
+      { label: "เพิ่มรายการติดตามผลการตรวจสอบของโครงการ", route: "#" },
+    ];
+  }
 
   ngOnInit() {
     this.$form = $("#followUpProjectForm");

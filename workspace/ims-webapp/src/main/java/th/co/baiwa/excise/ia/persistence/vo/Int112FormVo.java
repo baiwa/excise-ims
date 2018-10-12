@@ -26,6 +26,13 @@ public class Int112FormVo extends DataTableRequest {
 	private String performance2Date;
 	private String trackResult2Bnum;
 	private String trackResult2Date;
+	private String followUp3Bnum;
+	private String followUp3Date;
+	private String maturity360;
+	private String performance3Bnum;
+	private String performance3Date;
+	private String trackResult3Bnum;
+	private String trackResult3Date;
 	private String status;
 	private String version;
 	
@@ -154,6 +161,48 @@ public class Int112FormVo extends DataTableRequest {
 	}
 	public void setTrackResult2Date(String trackResult2Date) {
 		this.trackResult2Date = trackResult2Date;
+	}
+	public String getFollowUp3Bnum() {
+		return followUp3Bnum;
+	}
+	public void setFollowUp3Bnum(String followUp3Bnum) {
+		this.followUp3Bnum = followUp3Bnum;
+	}
+	public String getFollowUp3Date() {
+		return followUp3Date;
+	}
+	public void setFollowUp3Date(String followUp3Date) {
+		this.followUp3Date = followUp3Date;
+	}
+	public String getMaturity360() {
+		return maturity360;
+	}
+	public void setMaturity360(String maturity360) {
+		this.maturity360 = maturity360;
+	}
+	public String getPerformance3Bnum() {
+		return performance3Bnum;
+	}
+	public void setPerformance3Bnum(String performance3Bnum) {
+		this.performance3Bnum = performance3Bnum;
+	}
+	public String getPerformance3Date() {
+		return performance3Date;
+	}
+	public void setPerformance3Date(String performance3Date) {
+		this.performance3Date = performance3Date;
+	}
+	public String getTrackResult3Bnum() {
+		return trackResult3Bnum;
+	}
+	public void setTrackResult3Bnum(String trackResult3Bnum) {
+		this.trackResult3Bnum = trackResult3Bnum;
+	}
+	public String getTrackResult3Date() {
+		return trackResult3Date;
+	}
+	public void setTrackResult3Date(String trackResult3Date) {
+		this.trackResult3Date = trackResult3Date;
 	}
 	public String getStatus() {
 		return status;

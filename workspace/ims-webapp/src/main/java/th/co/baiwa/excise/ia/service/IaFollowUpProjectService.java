@@ -30,12 +30,13 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.constant.IaConstant.IA_REGIS_TRACK_CONTROL.STATUS;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ia.persistence.dao.IaFollowUpProjectDao;
 import th.co.baiwa.excise.ia.persistence.entity.IaFollowUpProject;
-
 import th.co.baiwa.excise.ia.persistence.repository.IaFollowUpProjectRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int111FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int111Vo;
@@ -43,6 +44,8 @@ import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
 
 @Service
 public class IaFollowUpProjectService {
+	
+	private final String  REGIS_TRACK_CONTROL_STATUS = "REGIS_TRACK_CONTROL_STATUS"; 
 	// Set property Style Excel
 	private CellStyle thStyle;
 	private CellStyle cellCenter;
@@ -191,13 +194,11 @@ public class IaFollowUpProjectService {
 	
 	public List<LabelValueBean> getStatusDropdown() {
 		List<LabelValueBean> dropdownList = new ArrayList<>();
-		dropdownList.add(new LabelValueBean(STATUS.TRACKING_FIRST_DESC, STATUS.TRACKING_FIRST_DESC));
-		dropdownList.add(new LabelValueBean(STATUS.RESULT_OPT_FIRST_DESC, STATUS.RESULT_OPT_FIRST_DESC));
-		dropdownList.add(new LabelValueBean(STATUS.REPORT_TRACKING_FIRST_DESC, STATUS.REPORT_TRACKING_FIRST_DESC));
-		dropdownList.add(new LabelValueBean(STATUS.TRACKING_SECOND_DESC, STATUS.TRACKING_SECOND_DESC));
-		dropdownList.add(new LabelValueBean(STATUS.RESULT_OPT_SECOND_DESC, STATUS.RESULT_OPT_SECOND_DESC));
-		dropdownList.add(new LabelValueBean(STATUS.REPORT_TRACKING_SECOND_DESC, STATUS.REPORT_TRACKING_SECOND_DESC));
-		dropdownList.add(new LabelValueBean(STATUS.COMPLETE_DESC, STATUS.COMPLETE_DESC));
+		List<Lov> statusList  = ApplicationCache.getListOfValueByValueType(REGIS_TRACK_CONTROL_STATUS);
+		for (Lov lov : statusList) {
+			dropdownList.add(new LabelValueBean(lov.getValue2(), lov.getValue1()));
+		}
+		
 		return dropdownList;
 	}
 	

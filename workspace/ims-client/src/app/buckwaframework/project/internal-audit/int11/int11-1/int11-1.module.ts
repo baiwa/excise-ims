@@ -5,6 +5,7 @@ import { AuthGuard } from "../../../../common/services";
 import { FormsModule } from "@angular/forms";
 import { Int111Component } from "./int11-1.component";
 import { Int1111Component } from "./int11-1-1/int11-1-1.component";
+import { BreadcrumbModule } from "../../../../common/components";
 
 const routes: Routes = [
   { path: "", component: Int111Component, canActivate: [AuthGuard] },
@@ -12,7 +13,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule, FormsModule],
+  imports: [RouterModule.forChild(routes), CommonModule, FormsModule,BreadcrumbModule],
   declarations: [
     Int111Component, 
     Int1111Component
