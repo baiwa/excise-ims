@@ -18,6 +18,11 @@ public class IncomeList {
     @SerializedName("IncomeName")
     @Expose
     private String incomeName;
+    
+    @SerializedName("IncomeCode")
+    @Expose
+    private String incomeCode;
+    
     @SerializedName("ReceiptNo")
     @Expose
     private String receiptNo;
@@ -131,6 +136,12 @@ public class IncomeList {
 	}
 	public void setCustomAmount(String customAmount) {
 		this.customAmount = customAmount;
+	}
+	public String getIncomeCode() {
+		return incomeCode;
+	}
+	public void setIncomeCode(String incomeCode) {
+		this.incomeCode = incomeCode;
 	}
 	
 }
