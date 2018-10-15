@@ -1,326 +1,347 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
-  <div class="sixteen wide column">
-    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>บันทึกรายการโอนเงิน </span>
+    <div class="sixteen wide column">
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+            <span>บันทึกรายการโอนเงิน </span>
+        </div>
+
+        <div class="ui attached segment">
+            <form [formGroup]="transferForm" (submit)="addData()">
+                <div class="ui form">
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>เอกสารอ้างอิง :</label>
+                        </div>
+                        <div class="one wide field ">
+                            <label>ที่ กค</label>
+                        </div>
+                        <div class="three wide field " [ngClass]="{ 'error': submitted && f.mofNum.errors }">
+                            <input type="text" formControlName="mofNum" [ngClass]="{ 'is-invalid': submitted && f.mofNum.errors }">
+                        </div>
+                        <div class="one wide field ">
+                            <label class="custom-label-w-25 text-right">เลขที่</label>
+                        </div>
+                        <div class="three wide field " [ngClass]="{ 'error': submitted && f.refNum.errors }">
+                            <input type="number" formControlName="refNum">
+                        </div>
+                        <div class="two wide field text-right">
+                            <label class="custom-label-w-25 text-right">วันที่เอกสาร</label>
+                        </div>
+                        <div class="three wide field" [ngClass]="{ 'error': submitted && f.refDate.errors }">
+                            <div class="ui calendar" id="calendar" style="width:100%">
+                                <div class="ui input left icon">
+                                    <i class="time icon"></i>
+                                    <input type="text" formControlName="refDate" id="refDate" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>รายการโอนเงิน</label>
+                        </div>
+                        <div class="four wide field" [ngClass]="{ 'error': submitted && f.transferList.errors }">
+                            <select class="ui search dropdown ai search" formControlName="transferList" id="transferList">
+                                <option value="">เลือก</option>
+                                <option *ngFor="let data of comboBox1 | async" [ngValue]="data.value1">{{data.value1}}</option>
+                            </select>
+                        </div>
+
+                        <div class="one wide field ">
+                            <label class="custom-label-w-25 text-right">ประเภทเงิน</label>
+                        </div>
+                        <div class="four wide field " [ngClass]="{ 'error': submitted && f.budgetType.errors }">
+                            <select class="ui search dropdown ai search" formControlName="budgetType" id="budgetType">
+                                <option value="">เลือก</option>
+                                <option *ngFor="let data of comboBox2 | async" value="{{data.value1}}">{{data.value1}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>งบ</label>
+                        </div>
+                        <div class="four wide field " [ngClass]="{ 'error': submitted && f.budget.errors }">
+                            <select class="ui search dropdown ai search" formControlName="budget" id="budget" (change)="budgetChange($event)">
+                                <option value="">เลือก</option>
+                                <option *ngFor="let data of comboBox3" value="{{data.budgetId}}">{{data.budgetName}}</option>
+                            </select>
+                        </div>
+                        <div class="one wide field ">
+                            <label class="custom-label-w-25 text-right">หมวด</label>
+                        </div>
+                        <div class="four wide field " [ngClass]="{ 'error': submitted && f.ctgBudget.errors }">
+                            <select class="ui search dropdown ai search" formControlName="ctgBudget" id="ctgBudget" (change)="ctgBudgetChange($event)">
+                                <option value="">เลือก</option>
+                                <option *ngFor="let data of combobox4" value="{{data.categoryId}}">{{data.categoryName}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>หมวดย่อย</label>
+                        </div>
+                        <div class="four wide field" [ngClass]="{ 'error': submitted && f.subCtgBudget.errors }">
+                            <select class="ui search dropdown ai search" formControlName="subCtgBudget" id="subCtgBudget">
+                                <option value="">เลือก</option>
+                                <option *ngFor="let data of combobox5" value="{{data.listId}}">{{data.listName}}</option>
+                            </select>
+                        </div>
+                        <div class="one wide field ">
+                            <label class="custom-label-w-25 text-right">กิจกรรม</label>
+                        </div>
+                        <div class="four wide field " [ngClass]="{ 'error': submitted && f.activities.errors }">
+                            <select class="ui search dropdown ai search" formControlName="activities" id="activities">
+                                <option value="">เลือก</option>
+                                <option *ngFor="let data of comboBox6 | async" value="{{data.value1}}">{{data.value1}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>คำอธิบายรายการ</label>
+                        </div>
+                        <div class="nine wide field " [ngClass]="{ 'error': submitted && f.descriptionList.errors }">
+                            <input type="text" formControlName="descriptionList" id="descriptionList">
+                        </div>
+                    </div>
+
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>จำนวนเงิน</label>
+                        </div>
+                        <div class="four wide field " [ngClass]="{ 'error': submitted && f.amount.errors }">
+                            <input type="number" formControlName="amount" id="amount">
+                        </div>
+                    </div>
+
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>หมายเหตุ</label>
+                        </div>
+                        <div class="nine wide field" [ngClass]="{ 'error': submitted && f.note.errors }">
+                            <textarea rows="6" cols="10" formControlName="note" id="note"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="ui center aligned grid">
+                        <div class="four wide column">
+                            <button *ngIf="flag !== 'EDIT'" class="ui mini primary button" (click)="checkStatus('SAVE')" type="submit">
+                                <i class="save icon"></i>เพิ่ม
+                            </button>
+
+                            <button *ngIf="flag === 'EDIT'" class="ui mini green button" (click)="checkStatus('EDIT')" type="submit">
+                                <i class="save icon"></i>บันทัก
+                            </button>
+
+                            <button class="ui mini button" type="button" routerLink="/int06/9">
+                                <i class="reply icon"></i>กลับ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- <form #f="ngForm" (submit)="addData($event, f)">
+                <div class="ui form">
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>เอกสารอ้างอิง :</label>
+                        </div>
+                        <div class="one wide field ">
+                            <label>ที่ กค</label>
+                        </div>
+                        <div class="three wide field {{ f.submitted && f.controls.mofNum.invalid ? 'error' : '' }}">
+                            <input type="text" name="mofNum" id="mofNum" ngModel required>
+                        </div>
+                        <div class="one wide field ">
+                            <label class="custom-label-w-25 text-right">เลขที่</label>
+                        </div>
+                        <div class="three wide field {{ f.submitted && f.controls.refNum.invalid ? 'error' : '' }}">
+                            <input type="number" name="refNum" id="refNum" ngModel required>
+                        </div>
+                        <div class="two wide field text-right">
+                            <label class="custom-label-w-25 text-right">วันที่เอกสาร</label>
+                        </div>
+                        <div class="three wide field">
+                            <div class="ui calendar" id="calendar" style="width:100%">
+                                <div class="ui input left icon">
+                                    <i class="time icon"></i>
+                                    <input type="text" name="refDate" id="refDate" autocomplete="off" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>รายการโอนเงิน</label>
+                        </div>
+                        <div class="four wide field {{ f.submitted && f.controls.transferList.invalid ? 'error' : '' }}">
+                            <select class="ui search dropdown ai search" name="transferList" id="transferList" ngModel required>
+                            <option value="">เลือก</option>
+                            <option *ngFor="let data of comboBox1 | async" value="{{data.value1}}">{{data.value1}}</option>
+                        </select>
+                        </div>
+
+                        <div class="one wide field ">
+                            <label class="custom-label-w-25 text-right">ประเภทเงิน</label>
+                        </div>
+                        <div class="four wide field {{ f.submitted && f.controls.budgetType.invalid ? 'error' : '' }}">
+                            <select class="ui search dropdown ai search" name="budgetType" id="budgetType" ngModel required>
+                            <option value="">เลือก</option>
+                            <option *ngFor="let data of comboBox2 | async" value="{{data.value1}}">{{data.value1}}</option>
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>งบ</label>
+                        </div>
+                        <div class="four wide field {{ f.submitted && f.controls.budget.invalid ? 'error' : '' }}">
+                            <select class="ui search dropdown ai search" name="budget" id="budget" (change)="budgetChange($event)" ngModel required>
+                                <option value="">เลือก</option>
+                                <option *ngFor="let data of comboBox3" value="{{data.budgetId}}">{{data.budgetName}}</option>
+                            </select>
+                        </div>
+                        <div class="one wide field ">
+                            <label class="custom-label-w-25 text-right">หมวด</label>
+                        </div>
+                        <div class="four wide field {{ f.submitted && f.controls.ctgBudget.invalid ? 'error' : '' }}">
+                            <select class="ui search dropdown ai search" name="ctgBudget" id="ctgBudget" (change)="ctgBudgetChange($event)" ngModel required>
+                                <option value="">เลือก</option>
+                                <option *ngFor="let data of combobox4" value="{{data.categoryId}}">{{data.categoryName}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>หมวดย่อย</label>
+                        </div>
+                        <div class="four wide field {{ f.submitted && f.controls.subCtgBudget.invalid ? 'error' : '' }}">
+                            <select class="ui search dropdown ai search" name="subCtgBudget" id="subCtgBudget" ngModel required>
+                            <option value="">เลือก</option>
+                            <option *ngFor="let data of combobox5" value="{{data.listId}}">{{data.listName}}</option>
+                        </select>
+                        </div>
+                        <div class="one wide field ">
+                            <label class="custom-label-w-25 text-right">กิจกรรม</label>
+                        </div>
+                        <div class="four wide field {{ f.submitted && f.controls.activities.invalid ? 'error' : '' }}">
+                            <select class="ui search dropdown ai search" name="activities" id="activities" ngModel required>
+                            <option value="">เลือก</option>
+                            <option *ngFor="let data of comboBox6 | async" value="{{data.value1}}">{{data.value1}}</option>
+                          </select>
+                        </div>
+                    </div>
+
+
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>คำอธิบายรายการ</label>
+                        </div>
+                        <div class="nine wide field {{ f.submitted && f.controls.descriptionList.invalid ? 'error' : '' }}">
+                            <input type="text" name="descriptionList" id="descriptionList" ngModel required>
+                        </div>
+                    </div>
+
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>จำนวนเงิน</label>
+                        </div>
+                        <div class="four wide field {{ f.submitted && f.controls.amount.invalid ? 'error' : '' }}">
+                            <input type="number" name="amount" id="amount" ngModel required>
+                        </div>
+                    </div>
+
+                    <div class="inline fields">
+                        <div class="one wide field "></div>
+                        <div class="two wide field ">
+                            <label>หมายเหตุ</label>
+                        </div>
+                        <div class="nine wide field {{ f.submitted && f.controls.note.invalid ? 'error' : '' }}">
+                            <textarea rows="6" cols="10" name="note" id="note" ngModel required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="ui center aligned grid">
+                        <div class="four wide column">
+                            <button *ngIf="flag !== 'EDIT'" class="ui mini primary button" (click)="checkStatus('SAVE')" type="submit">
+                                <i class="save icon"></i>เพิ่ม
+                            </button>
+
+                            <button *ngIf="flag === 'EDIT'" class="ui mini green button" (click)="checkStatus('EDIT')" type="submit">
+                                <i class="save icon"></i>บันทัก
+                            </button>
+
+                            <button class="ui mini button" type="button" routerLink="/int06/9">
+                                <i class="reply icon"></i>กลับ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form> -->
+
+            <div class="ui segment" id="int0621">
+                <div style="overflow-x: scroll;">
+                    <table id="datatable" class="ui small celled table striped selectable" style="width: 150%">
+                        <thead>
+                            <tr style="text-align: center;">
+                                <th rowspan="2">ลำดับที่</th>
+                                <th colspan="3">เอกสารอ้างอิง</th>
+                                <th rowspan="2">รายการโอนเงิน</th>
+                                <th rowspan="2">ประเภทเงิน</th>
+                                <th rowspan="2">รหัส</th>
+                                <th rowspan="2">กิจกรรม</th>
+                                <th rowspan="2">งบ</th>
+                                <th rowspan="2">หมวด</th>
+                                <th rowspan="2">หมวดย่อย</th>
+                                <th rowspan="2">รายการ</th>
+                                <th rowspan="2">จำนวนเงิน</th>
+                                <th rowspan="2">หมายเหตุ</th>
+                            </tr>
+                            <tr>
+                                <th>วันที่ กค</th>
+                                <th>เลขที่</th>
+                                <th>ว.ด.ป</th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                </div>
+                <br>
+                <div class="ui center aligned grid">
+                    <div class="sixteen wide column">
+                        <button class="ui mini primary button" (click)="onSave()"> 
+                            <i class="save icon"></i> บันทึก
+                        </button>
+
+                        <button class="ui mini  button" (click)="hidedata()">
+                            <i class="close icon"></i> ยกเลิก
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
-
-    <div class="ui attached segment">
-      <div class="ui form">
-        <div class="inline fields">
-          <div class="one wide field "></div>
-          <div class="two wide field ">
-            <label>เอกสารอ้างอิง :</label>
-          </div>
-          <div class="one wide field ">
-            <label>ที่ กค</label>
-          </div>
-          <div class="three wide field">
-            <input type="text">
-          </div>
-          <div class="one wide field ">
-            <label>เลขที่</label>
-          </div>
-          <div class="three wide field">
-            <input type="text">
-          </div>
-          <div class="two wide field ">
-            <label>วันที่เอกสาร</label>
-          </div>
-          <div class="three wide field">
-            <input type="text">
-          </div>
-        </div>
-
-        <div class="inline fields">
-          <div class="one wide field "></div>
-          <div class="two wide field ">
-            <label>รายการโอนเงิน</label>
-          </div>
-          <div class="four wide field ">
-            <select class="ui dropdown ai">
-              <option value="0">กรุณาเลือก</option>
-            </select>
-          </div>
-          <div class="one wide field ">
-            <label>ประเภทเงิน</label>
-          </div>
-          <div class="four wide field ">
-            <select class="ui dropdown ai">
-              <option value="0">กรุณาเลือก</option>
-            </select>
-          </div>
-        </div>
-
-
-        <div class="inline fields">
-          <div class="one wide field "></div>
-          <div class="two wide field ">
-            <label>ประเภทงบ</label>
-          </div>
-          <div class="four wide field ">
-            <select class="ui dropdown ai">
-              <option value="0">กรุณาเลือก</option>
-            </select>
-          </div>
-          <div class="one wide field ">
-            <label>กิจกรรม</label>
-          </div>
-          <div class="four wide field ">
-            <select class="ui dropdown ai">
-              <option value="0">กรุณาเลือก</option>
-            </select>
-          </div>
-        </div>
-
-
-        <div class="inline fields">
-          <div class="one wide field "></div>
-          <div class="two wide field ">
-            <label>คำอธิบายรายการ</label>
-          </div>
-          <div class="nine wide field">
-            <input type="text">
-          </div>
-        </div>
-
-        <div class="inline fields">
-          <div class="one wide field "></div>
-          <div class="two wide field ">
-            <label>จำนวนเงิน</label>
-          </div>
-          <div class="four wide field">
-            <input type="text">
-          </div>
-        </div>
-
-        <div class="inline fields">
-          <div class="one wide field "></div>
-          <div class="two wide field ">
-            <label>หมายเหตุ</label>
-          </div>
-          <div class="nine wide field">
-            <textarea rows="6" cols="10"></textarea>
-          </div>
-        </div>
-
-
-
-        <div class="ui center aligned grid">
-          <div class="four wide column">
-            <button class="ui mini primary button" (click)="showdata()">
-              <i class="add icon"></i>
-              เพิ่ม
-            </button>
-
-          </div>
-        </div>
-      </div>
-
-
-      <div class="ui segment" id="int0621">
-        <div style="overflow-x: scroll;">
-          <table id="tableData" class="ui small celled table striped selectable" style="width: 150%">
-            <thead>
-              <tr style="text-align: center;">
-                <th rowspan="2">ลำดับที่</th>
-                <th colspan="3">เอกสารอ้างอิง</th>
-                <th rowspan="2">รายการโอนเงิน</th>
-                <th rowspan="2">ประเภทเงิน</th>
-                <th rowspan="2">รหัส</th>
-                <th rowspan="2">กิจกรรม</th>
-                <th rowspan="2">งบ</th>
-                <th rowspan="2">หมวด</th>
-                <th rowspan="2">หมวดย่อย</th>
-                <th rowspan="2">รายการ</th>
-                <th rowspan="2">จำนวนเงิน</th>
-                <th rowspan="2">หมายเหตุ</th>
-              </tr>
-              <tr>
-                <th>วันที่ กค</th>
-                <th>เลขที่</th>
-                <th>ว.ด.ป</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>0617.2/ว</td>
-                <td>1487</td>
-                <td>24/10/60</td>
-                <td>กรมโอนประจำงวด</td>
-                <td>งบประมาณ</td>
-                <td>121</td>
-                <td>ค่าใช้จ่ายบุคลากรฯ</td>
-                <td>บุคลากร</td>
-                <td>พนักงานราชการ</td>
-                <td>เงินค่าตอบแทนพนักงานราชการ</td>
-                <td>ค่าตอบแทนพนักงาน</td>
-                <td>330,000.00</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>0617.2/ว</td>
-                <td>1487</td>
-                <td>24/10/60</td>
-                <td>กรมโอนประจำงวด</td>
-                <td>งบประมาณ</td>
-                <td>221</td>
-                <td>ค่าใช้จ่ายบุคลากรฯ</td>
-                <td>ดำเนินงาน</td>
-                <td>ค่าใช้สอย</td>
-                <td>เงินสมทบกองทุนประกันสังคม</td>
-                <td>ประกันสังคอม</td>
-                <td>16,506.00</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>0617.2/ว</td>
-                <td>1450</td>
-                <td>19/10/60</td>
-                <td>กรมโอนประจำงวด</td>
-                <td>งบประมาณ</td>
-                <td>211</td>
-                <td>ค่าใช้จ่ายบุคลากรฯ</td>
-                <td>ดำเนินงาน</td>
-                <td>ค่าตอบแทน</td>
-                <td>ค่าเช่าบ้าน</td>
-                <td>ค่าเช่าบ้าน</td>
-                <td>14,600.00</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>0617.2/ว</td>
-                <td>1450</td>
-                <td>19/10/60</td>
-                <td>กรมโอนประจำงวด</td>
-                <td>งบประมาณ</td>
-                <td>222</td>
-                <td>ปราบปราม</td>
-                <td>ดำเนินงาน</td>
-                <td>ค่าใช้สอย</td>
-                <td>ค่าใช้จ่ายในการเดินทางไปราชการ(ค่าเบี้ยเลี้ยง ค่าเช่าที่พักและค่าพาหนะ)</td>
-                <td>ค่าเบี้ยเลี้ยงสำหรับงานออกตรวจปราบปราม</td>
-                <td>39,420.00</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>0617.2/ว</td>
-                <td>1450</td>
-                <td>19/10/60</td>
-                <td>กรมโอนประจำงวด</td>
-                <td>งบประมาณ</td>
-                <td>222</td>
-                <td>จัดเก็บภาษี/ปราบปราม</td>
-                <td>ดำเนินงาน</td>
-                <td>ค่าใช้สอย</td>
-                <td>ค่าใช้จ่ายในการเดินทางไปราชการ(ค่าเบี้ยเลี้ยง ค่าเช่าที่พักและค่าพาหนะ)</td>
-                <td>ค่าเบี้ยเลี้ยงสำหรับตรวจเปรียบเทียบและตรวจตัดปี</td>
-                <td>106,720.00</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>0617.2/ว</td>
-                <td>1450</td>
-                <td>19/10/60</td>
-                <td>กรมโอนประจำงวด</td>
-                <td>งบประมาณ</td>
-                <td>222</td>
-                <td>จัดเก็บภาษี/ปราบปราม</td>
-                <td>ดำเนินงาน</td>
-                <td>ค่าใช้สอย</td>
-                <td>ค่าใช้จ่ายในการเดินทางไปราชการ(ค่าเบี้ยเลี้ยง ค่าเช่าที่พักและค่าพาหนะ)</td>
-                <td>ค่าใช้จ่ายในการเดินทางไปราชการ</td>
-                <td>30,720.00</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>7</td>
-                <td>0617.2/ว</td>
-                <td>1450</td>
-                <td>19/10/60</td>
-                <td>กรมโอนประจำงวด</td>
-                <td>งบประมาณ</td>
-                <td>231</td>
-                <td>จัดเก็บภาษี/ปราบปราม</td>
-                <td>ดำเนินงาน</td>
-                <td>ค่าวัสดุ</td>
-                <td>ค่าวัสดุสำนักงานและแบบพิมพ์</td>
-                <td>ค่าวัสดุสำนักงาน</td>
-                <td>10,000.00</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>8</td>
-                <td>0617.2/ว</td>
-                <td>1450</td>
-                <td>19/10/60</td>
-                <td>กรมโอนประจำงวด</td>
-                <td>งบประมาณ</td>
-                <td>233</td>
-                <td>จัดเก็บภาษี/ปราบปราม</td>
-                <td>ดำเนินงาน</td>
-                <td>ค่าวัสดุ</td>
-                <td>ค่าวัสดุน้ำมันเชื้อเพลิง</td>
-                <td>ค่าน้ำมันเชื้อเพลิงและหล่อลื่น</td>
-                <td>11,250.00</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>9</td>
-                <td>0617.2/ว</td>
-                <td>1450</td>
-                <td>19/10/60</td>
-                <td>กรมโอนประจำงวด</td>
-                <td>งบประมาณ</td>
-                <td>233</td>
-                <td>ปราบปราม</td>
-                <td>ดำเนินงาน</td>
-                <td>ค่าวัสดุ</td>
-                <td>ค่าวัสดุน้ำมันเชื้อเพลิง</td>
-                <td>ค่าน้ำมันเชื้อเพลิงและหล่อลื่น</td>
-                <td>33,750.00</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>10</td>
-                <td>0617.2/</td>
-                <td>14111</td>
-                <td>24/10/60</td>
-                <td>ภาคขอโอน</td>
-                <td>งบประมาณ</td>
-                <td>222</td>
-                <td>จัดเก็บภาษี</td>
-                <td>ดำเนินงาน</td>
-                <td>ค่าใช้สอย</td>
-                <td>ค่าใช้จ่ายในการเดินทางไปราชการ(ค่าเบี้ยเลี้ยง ค่าเช่าที่พักและค่าพาหนะ)</td>
-                <td>ค่าเบี้ยเลี้ยงสำหรับงานออกตรวจปราบปราม</td>
-                <td>157,680.00</td>
-                <td></td>
-              </tr>
-
-            </tbody>
-          </table>
-        </div>
-        <br>
-        <div class="ui center aligned grid">
-          <div class="sixteen wide column">
-
-            <button class="ui mini primary button">
-              <i class="save icon"></i>
-              บันทึก
-            </button>
-            <button class="ui mini  button"  (click)="hidedata()">
-                <i class="close icon"></i>
-              ยกเลิก
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
+</div>
