@@ -15,7 +15,7 @@
                 <i class="dropdown icon "></i> ระบบการควบคุมภายใน
                 <div class="menu" style="margin:20px;">
                     <div class="ui simple dropdown item ">
-                        <i class="dropdown icon "></i> แบบสอบถามระบบการควบคุมภายใน
+                         แบบสอบถามระบบการควบคุมภายใน<i class="dropdown icon "></i>
                         <div class="menu" style="margin:20px;">
                             <a class="item" [routerLink]="['/int02/1']" *ngIf="authService.renderByPage('int02/1')"
                                 routerLinkActive="active">สร้างแบบสอบถามระบบการควบคุมภายใน</a>
@@ -27,16 +27,8 @@
                                 routerLinkActive="active">จัดการข้อมูลแบบสอบถามระบบการควบคุมภายใน</a>
                         </div>
                     </div>
-                    <div class="ui simple dropdown item " *ngIf="authService.renderByPage('int02')">
-                        <i class="dropdown icon "></i> แบบประเมินระบบการควบคุมภายใน
-                        <div class="menu" style="margin:20px;">
-                            <a class="item" [routerLink]="['/int02/m5/1']" *ngIf="authService.renderByPage('int02/m5/1')"
-                                routerLinkActive="active">รายงานการประเมินผลและการปรับปรุงการควบคุมภายใน
-                                (แบบ ปย.2)</a>
-                            <a class="item" [routerLink]="['/int02/m5/2']" *ngIf="authService.renderByPage('int02/m5/2')"
-                                routerLinkActive="active">ค้นหารายงานการประเมินผลและการปรับปรุงการควบคุมภายใน
-                                (แบบ ปย.2)</a>
-                        </div>
+                    <div class="ui simple dropdown item " [routerLink]="['/int02/m5/1']" *ngIf="authService.renderByPage('int02/m5/1')">
+                  แบบประเมินระบบการควบคุมภายใน                
                     </div>
                 </div>
             </div>
@@ -299,9 +291,9 @@
 
     <div class="right menu ">
         <a class="item " *ngIf="!authService.getLogin() " style="color:white; " [routerLink]="[ '/login'] ">เข้าสู่ระบบ</a>
-        <div class="item " *ngIf="authService.getLogin() " style=" color:White ">{{authService.getUser().username}}</div>
+        <div class="item " *ngIf="authService.getLogin() " style=" color:White ">Page Name <br> นายมาโนส เบิ้ม <br>นักวิชาการสรรพสามิตชำนาญการ<br>สรรพสามิตภาค 2 (สตป.)</div>
         <a class="item " *ngIf="authService.getLogin() " (click)="logout() " style=" color:White ">ออกจากระบบ</a>
-    </div>
+    </div>  
 </div>
 <div class="ui tiny test modal transition hidden baiwa-alert" style="height: 0;">
     <div class="header ">

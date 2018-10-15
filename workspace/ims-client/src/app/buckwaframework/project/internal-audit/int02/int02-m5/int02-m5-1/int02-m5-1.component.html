@@ -1,8 +1,7 @@
-<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
-<div class="ui grid" style="margin: 2%">
+<div class="ui grid" style="margin: 1%">
     <div class="sixteen wide column segments">
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-            <span>รายงานการประเมินผลและการปรับปรุงการควบคุมภายใน (แบบ ปย.2)</span>
+            <span>                    แบบประเมินระบบการควบคุมภายใน</span>
         </div>
         <div class="ui attached segment">
             <div class="ui centered grid row">
@@ -16,10 +15,10 @@
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                            <select class="ui search dropdown ai" aria-placeholder="สรรพสามิตภาค" id="sector"
-                                                (change)="changeSector()" name="sector" [(ngModel)]="sectorSelectted">
-                                                <option value="0"></option>
-                                                <option *ngFor="let dat of sector; let i=index" value="{{dat.lovId}}">{{dat.subTypeDescription}}</option>
+                                            <select class="ui search dropdown ai" aria-placeholder="สรรพสามิตภาค" id="sector"  name="sector"
+                                                [(ngModel)]="sectorSelectted">
+                                                <option value="">เลือก</option>
+                                                <option *ngFor="let item of sectorList" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -28,10 +27,9 @@
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                            <select class="ui search dropdown ai" aria-placeholder="สรรพสามิตภาค" id="area"
-                                                name="area" [(ngModel)]="areaSelectted">
+                                            <select class="ui search dropdown ai" aria-placeholder="สรรพสามิตภาค" id="area" name="area" [(ngModel)]="areaSelectted">
                                                 <option value="0"></option>
-                                                <option *ngFor="let dat of area; let i=index" value="{{dat.lovId}}">{{dat.subTypeDescription}}</option>
+                                                <!-- <option *ngFor="let dat of area; let i=index" value="{{dat.lovId}}">{{dat.subTypeDescription}}</option> -->
                                             </select>
                                         </div>
                                     </div>
@@ -42,10 +40,9 @@
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                            <select class="ui search dropdown ai" aria-placeholder="สรรพสามิตภาค" id="local"
-                                                name="local" [(ngModel)]="localSelectted">
+                                            <select class="ui search dropdown ai" aria-placeholder="สรรพสามิตภาค" id="local" name="local" [(ngModel)]="localSelectted">
                                                 <option value="0"></option>
-                                                <option *ngFor="let dat of local; let i=index" value="{{dat.lovId}}">{{dat.subTypeDescription}}</option>
+                                                <!-- <option *ngFor="let dat of local; let i=index" value="{{dat.lovId}}">{{dat.subTypeDescription}}</option> -->
                                             </select>
                                         </div>
                                     </div>
@@ -62,22 +59,49 @@
                         </div>
                     </div>
                 </div>
+                <br>
                 <div class="ui centered row grid">
-                    <div class="ui centered two wide column" style="padding: 0;">
-                        <div class="ui form">
-                            <div class="inline fields">
-                                <div class="sixteen aligned center wide field">
-                                    <button class="ui blue button" (click)="search()" type="button">
-                                        <i class="search icon"></i>
-                                        ค้นหา
-                                    </button>
-                                    <button class="ui green button" (click)="create()" type="button">ตรวจสอบ</button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="sixteen aligned center ">
+                        <button class="ui mini primary button" (click)="showData()" type="submit">
+                            <i class="search icon"></i>
+                            ค้นหา
+                        </button>
+                        <button class="ui mini green button" [routerLink]="[ '/int02/m5/1/1'] " >
+                            <i class="add  icon"></i>
+                            รายการใหม่</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+
+<div class="ui attached segment" id="data">
+    <table class="ui small collapsing celled table aligned hover striped selectable" id="dataTable" style="width: 100%;">
+        <thead>
+            <tr style="text-align: center">
+                <th>ที่</th>
+                <th>หน่วยรับตวจ</th>
+                <th>ปีงบประมาณ</th>
+                <th>วันที่ทำการ</th>
+                <th>ผู้บันทึก</th>
+                <th>จัดการ</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <br>
+    <div class="ui centered row grid">
+        <div class="sixteen aligned center ">
+            <button class="ui mini red button">
+                <i class="trash icon"></i>
+                ลบ
+            </button>
+
+        </div>
+    </div>
+    <br>
+
+
 </div>

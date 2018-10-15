@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
+import { Int02m51Service } from "projects/internal-audit/int02/int02-m5/int02-m5-1/int02-m5-1.service";
+import { promise } from "protractor";
 var jQuery: any;
 declare var jQuery: any;
 declare var $: any;
@@ -16,7 +18,8 @@ const URL = {
 @Component({
     selector: "app-int02-m5-1",
     templateUrl: "./int02-m5-1.component.html",
-    styleUrls: ["./int02-m5-1.component.css"]
+    styleUrls: ["./int02-m5-1.component.css"],
+    providers: [Int02m51Service]
 })
 export class Int02M51Component implements OnInit, OnDestroy {
 
@@ -26,9 +29,9 @@ export class Int02M51Component implements OnInit, OnDestroy {
 
     // BreadCrumb
     breadcrumb: BreadCrumb[];
-    sector: any[] = [];
-    area: any[] = [];
-    local: any[] = [];
+    sectorList: any;
+    areaList: any;
+    localList: any;
 
     sectorSelectted: any;
     areaSelectted: any;
@@ -39,13 +42,10 @@ export class Int02M51Component implements OnInit, OnDestroy {
         private router: Router,
         private route: ActivatedRoute,
         private ajax: AjaxService,
-        private messageBarService: MessageBarService
+        private messageBarService: MessageBarService,
+        private int02m51Service:Int02m51Service
     ) {
-        this.breadcrumb = [
-            { label: "ตรวจสอบภายใน", route: "#" },
-            { label: "แบบสอบถามระบบการควบคุมภายใน", route: "#" },
-            { label: "รายงานการประเมินผลและการปรับปรุงการควบคุมภายใน (แบบ ปย.2)", route: "#" },
-        ];
+
     }
 
     ngOnDestroy(): void {
@@ -53,69 +53,28 @@ export class Int02M51Component implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.subSectionName = "สำนักงานสรรพสามิตพื้นที่เชียงราย";
-        this.sectorCombobox(null);
-
+        this.hideData();
+        $(".ui.dropdown").dropdown();
+        this.sector();
+        $(".ui.dropdown.ai").css("width", "100%");
+      
     }
 
-    sectorCombobox = (lovIdMaster) => {
+    hideData() {
+        $('#data').hide();
+    }
 
-        const URL = "combobox/controller/getDropByTypeAndParentId";
-        this.ajax.post(URL, { type: this.SECTOR_VALUE, lovIdMaster: lovIdMaster }, res => {
-            this.sector = res.json();
-            console.log(this.sector);
+    showData() {
+        $('#data').show();
+    }
+    sector=()=>{
+        this.int02m51Service.sector().then(res=>{
+            console.log(res);
+            this.sectorList = res;
         });
-
-    }
-
-    areaCombobox = (lovIdMaster) => {
-
-        const URL = "combobox/controller/getDropByTypeAndParentId";
-        this.ajax.post(URL, { type: this.SECTOR_VALUE, lovIdMaster: lovIdMaster }, res => {
-            this.area = res.json();
-            //console.log(this.sector);
-        });
-
-    }
-
-    localCombobox = (lovIdMaster) => {
-
-        const URL = "combobox/controller/getDropByTypeAndParentId";
-        this.ajax.post(URL, { type: this.SECTOR_VALUE, lovIdMaster: lovIdMaster }, res => {
-            this.local = res.json();
-            //console.log(this.sector);
-        });
-
+        
     }
 
 
-
-    create(): void {
-        this.router.navigate(['/int02/m5/1/1']);
-    }
-
-    // search(): void {
-    //     this.router.navigate(['/int02/m5/2']);
-    // }
-
-    search() {
-        this.subSectionName = $("#subSectionName").val();
-        console.log(this.subSectionName);
-        this.router.navigate(["/int02/m5/2"], {
-            queryParams: { subSectionName: this.subSectionName }
-        });
-    }
-
-
-    changeSector() {
-        //console.log(this.sectorSelectted);
-        this.areaCombobox(this.sectorSelectted);
-        this.local = [];
-    }
-
-    changeArea() {
-        //console.log(this.sectorSelectted);
-        this.localCombobox(this.sectorSelectted);
-    }
 
 }
