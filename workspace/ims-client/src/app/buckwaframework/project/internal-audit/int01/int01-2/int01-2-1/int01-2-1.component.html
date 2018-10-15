@@ -3,7 +3,7 @@
   <div class="sixteen wide column">
     <h2 class="ui header">ตรวจสอบใบอนุญาตสุรา ยาสูบ ไพ่</h2>
 
-    <div class="ui top attached header">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span> ตรวจสอบใบอนุญาตสุรา ยาสูบ ไพ่</span>
     </div>
 
@@ -12,7 +12,7 @@
         <div class="inline fields">
           <div class="two wide field"></div>
           <div class="two wide field">
-            <label>สรรพสามิตภาค</label>
+            <label class="text-right full-width">สรรพสามิตภาค</label>
           </div>
           <div class="four wide field">
             <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)"
@@ -23,7 +23,7 @@
 
           </div>
           <div class="two wide field">
-            <label>สรรพสามิตพื้นที่</label>
+            <label class="text-right full-width">สรรพสามิตพื้นที่</label>
           </div>
           <div class="four wide field">
             <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)"
@@ -36,7 +36,7 @@
         <div class="inline fields">
           <div class="two wide field"></div>
           <div class="two wide field">
-            <label>สรรพสามิตสาขา</label>
+            <label class="text-right full-width">สรรพสามิตสาขา</label>
           </div>
           <div class="four wide field">
             <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3" [(ngModel)]="code3">
@@ -45,7 +45,7 @@
             </select>
           </div>
           <div class="two wide field ">
-            <label>วันที่
+            <label class="text-right full-width">วันที่
             </label>
           </div>
           <div class="two wide field">

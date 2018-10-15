@@ -50,10 +50,11 @@ export class Int0121Component implements OnInit {
       formatter: formatter(),
       onChange: (date, text) => {
 
-        //var dd = date.day;
+        var dd = date.getDate() + "".length == 1 ? "0" + date.getDate() : date.getDate();
+        console.log(dd);
         var mm = ((date.getMonth() + 1) + "").length == 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
         var yyyy = date.getFullYear();
-        this.startDate = yyyy + "" + mm;
+        this.startDate = yyyy + "" + mm + "" + dd;
         console.log(this.startDate);
       }
 
@@ -65,10 +66,10 @@ export class Int0121Component implements OnInit {
       text: TextDateTH,
       formatter: formatter(),
       onChange: (date, text) => {
-
+        var dd = date.getDate() + "".length == 1 ? "0" + date.getDate() : date.getDate();
         var mm = ((date.getMonth() + 1) + "").length == 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
         var yyyy = date.getFullYear();
-        this.endDate = yyyy + "" + mm;
+        this.endDate = yyyy + "" + mm + "" + dd;
         console.log(this.endDate);
       }
     });

@@ -50,7 +50,7 @@ public class Int012Controller {
 		do {
 
 			wsData = new ArrayList<LicenseList6010>();
-			LicFri6010 licFri6010 = webServiceExciseService.licFri6010(int0121Vo.getOffCode(), int0121Vo.getStartDate(), int0121Vo.getEndDate(), i++ + "", MAX_SIZE_WEB_SERVICE);
+			LicFri6010 licFri6010 = webServiceExciseService.licFri6010(int0121Vo.getOffCode(), int0121Vo.getStartDate().substring(0, 6), int0121Vo.getEndDate().substring(0, 6), i++ + "", MAX_SIZE_WEB_SERVICE);
 			if (RESPONSE_CODE_SUCCESS.equals(licFri6010.getResponseCode())) {
 				if (BeanUtils.isNotEmpty(licFri6010.getResponseData()) && BeanUtils.isNotEmpty(licFri6010.getResponseData().getLicenseList())) {
 					wsData = licFri6010.getResponseData().getLicenseList();
@@ -76,6 +76,12 @@ public class Int012Controller {
 		} while (MAX_SIZE_WEB_SERVICE.equals(wsData.size() + ""));
 
 		return licenseList;
+	}
+	@PostMapping("/searchCurrentLicense")
+	@ResponseBody
+	public List<License> searchCurrentLicense(@RequestBody Int0121Vo int0121Vo) {
+		logger.info("searchCurrentLicense");
+		return licenseService.searchLicenseByLicDateOffCode(int0121Vo.getStartDate(), int0121Vo.getEndDate(), int0121Vo.getOffCode());
 	}
 
 	@PostMapping("/save")

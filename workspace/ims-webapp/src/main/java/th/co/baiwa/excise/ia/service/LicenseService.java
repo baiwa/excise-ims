@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,25 +15,40 @@ import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class LicenseService {
+
+	private Logger logger = LoggerFactory.getLogger(LicenseService.class);
 	@Autowired
 	private LicenseRepository licenseRepository;
 
 	@Transactional
 	public void saveLicenseList(List<License> licenseList) {
+		logger.info("saveLicenseList");
 		for (License license : licenseList) {
-			if(BeanUtils.isNotEmpty(license.getLicId())) {
-				License newLicense = licenseRepository.findOne(license.getLicId());
-				newLicense.setPrintCode(license.getPrintCode());
-				newLicense.setLicAmount(license.getLicAmount());
-			}else {
+			List<License> newLicense = licenseRepository.findBylicNo(license.getLicNo());
+			if (BeanUtils.isNotEmpty(newLicense)) {
+				for (License lic : newLicense) {
+
+					lic.setPrintCode(license.getPrintCode());
+					lic.setLicAmount(license.getLicAmount());
+					licenseRepository.save(lic);
+				}
+			} else {
 				licenseRepository.save(license);
 			}
+
 		}
 	}
+
 	
+	
+	public List<License> searchLicenseByLicDateOffCode(String startDate , String endDate , String offCode) {
+		logger.info("searchLicenseByLicDateOffCode {} ,{}, {}" , startDate ,endDate , offCode);
+		return licenseRepository.searchLicenseByLicDateOffCode(startDate, endDate, offCode);
+	}
 	public License searchLicenseById(Long id) {
 		return licenseRepository.findOne(id);
 	}
+
 	public List<License> findBylicNo(String licNo) {
 		return licenseRepository.findBylicNo(licNo);
 	}

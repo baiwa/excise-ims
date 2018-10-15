@@ -15,4 +15,8 @@ public interface LicenseRepository extends CommonJpaCrudRepository<License, Long
 	@Query("SELECT r FROM License r WHERE r.isDeleted = '"+FLAG.N_FLAG+"' AND r.licNo =  ?1")
 	public List<License> findBylicNo(String licNo);
 	
+	
+	@Query("select l from License l where l.isDeleted = '"+FLAG.N_FLAG+"' AND l.licDate >= ?1 AND l.licDate <= ?2 AND l.offCode = ?3")
+	public List<License> searchLicenseByLicDateOffCode(String startDate , String endDate , String offCode);
+	
 }
