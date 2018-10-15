@@ -25,14 +25,13 @@ export class Int0691Component implements OnInit {
   comboBox2: Observable<ComboBox[]>;
   comboBox3: Promise<any>;
   combobox4: any = [];
-  combo4: boolean = false;
   combobox5: Promise<any>;
   comboBox6: Observable<ComboBox[]>;
   transferId: any = "";
   flag: any = "";
   submitted = false;
   budgetData: any = [];
-  // loading = true;
+  loading: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -54,7 +53,7 @@ export class Int0691Component implements OnInit {
       .css("width", "100%");
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     //set formbuilder
     this.transferForm = this.formBuilder.group({
       mofNum: ["", Validators.required],
@@ -76,6 +75,10 @@ export class Int0691Component implements OnInit {
     //on flag 'EDIT' Int06-9
     this.transferId = this.route.snapshot.queryParams["transferId"];
     this.flag = this.route.snapshot.queryParams["flag"];
+
+    if (this.flag !== "EDIT") {
+      this.loading = false;
+    }
 
     $(".ui.dropdown.ai")
       .dropdown()
@@ -137,7 +140,6 @@ export class Int0691Component implements OnInit {
       if (this.transferForm.invalid) {
         return;
       } else {
-        console.log("valid");
         //form is valid
         this.selfService.addData(this.transferForm.value, this.flag);
       }
@@ -159,20 +161,17 @@ export class Int0691Component implements OnInit {
   }
 
   setValueOnEdit(data) {
-    console.log(this.budgetData);
     console.log("data: ", data);
     let dataFilter = this.budgetData.filter(
       obj => obj.listId == data.budgetCode
     );
 
-    console.log(dataFilter);
     //filter combobox3
     let filterIdCombo3 = dataFilter[0].budgetId;
     //filter combobox4
     let filterIdCombo4 = dataFilter[0].categoryId;
     //filter combobox5
     let filterIdCombo5 = dataFilter[0].listId;
-    console.log(filterIdCombo3, " ", filterIdCombo4, " ", filterIdCombo5);
 
     this.transferForm.patchValue({
       mofNum: data.mofNum,
@@ -208,6 +207,9 @@ export class Int0691Component implements OnInit {
         setTimeout(() => {
           $("#subCtgBudget").dropdown("set selected", filterIdCombo5);
         }, 500);
+      })
+      .then(() => {
+        this.loading = false;
       });
   }
 
@@ -220,17 +222,11 @@ export class Int0691Component implements OnInit {
   }
 
   async budgetChange(e) {
-    await this.selfService
-      .getCtgBudget(e.target.value)
-      .then(value => {
-        value.forEach(obj => {
-          this.combobox4.push(obj);
-        });
-      })
-      .then(() => {
-        this.combo4 = true;
-        console.log(this.combo4);
+    await this.selfService.getCtgBudget(e.target.value).then(value => {
+      value.forEach(obj => {
+        this.combobox4.push(obj);
       });
+    });
   }
 
   async ctgBudgetChange(e) {

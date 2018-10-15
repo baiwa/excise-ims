@@ -7,7 +7,7 @@
 
         <div class="ui attached segment">
             <form [formGroup]="transferForm" (submit)="addData()">
-                <div class="ui form">
+                <div class="ui form {{ loading ? 'loading' : '' }}">
                     <div class="inline fields">
                         <div class="one wide field "></div>
                         <div class="two wide field ">
@@ -32,7 +32,7 @@
                             <div class="ui calendar" id="calendar" style="width:100%">
                                 <div class="ui input left icon">
                                     <i class="time icon"></i>
-                                    <input type="text" formControlName="refDate" id="refDate" autocomplete="off">
+                                    <input type="text" formControlName="refDate" id="refDate" autocomplete="off" readonly="">
                                 </div>
                             </div>
                         </div>
@@ -153,153 +153,6 @@
                     </div>
                 </div>
             </form>
-            <!-- <form #f="ngForm" (submit)="addData($event, f)">
-                <div class="ui form">
-                    <div class="inline fields">
-                        <div class="one wide field "></div>
-                        <div class="two wide field ">
-                            <label>เอกสารอ้างอิง :</label>
-                        </div>
-                        <div class="one wide field ">
-                            <label>ที่ กค</label>
-                        </div>
-                        <div class="three wide field {{ f.submitted && f.controls.mofNum.invalid ? 'error' : '' }}">
-                            <input type="text" name="mofNum" id="mofNum" ngModel required>
-                        </div>
-                        <div class="one wide field ">
-                            <label class="custom-label-w-25 text-right">เลขที่</label>
-                        </div>
-                        <div class="three wide field {{ f.submitted && f.controls.refNum.invalid ? 'error' : '' }}">
-                            <input type="number" name="refNum" id="refNum" ngModel required>
-                        </div>
-                        <div class="two wide field text-right">
-                            <label class="custom-label-w-25 text-right">วันที่เอกสาร</label>
-                        </div>
-                        <div class="three wide field">
-                            <div class="ui calendar" id="calendar" style="width:100%">
-                                <div class="ui input left icon">
-                                    <i class="time icon"></i>
-                                    <input type="text" name="refDate" id="refDate" autocomplete="off" required>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="inline fields">
-                        <div class="one wide field "></div>
-                        <div class="two wide field ">
-                            <label>รายการโอนเงิน</label>
-                        </div>
-                        <div class="four wide field {{ f.submitted && f.controls.transferList.invalid ? 'error' : '' }}">
-                            <select class="ui search dropdown ai search" name="transferList" id="transferList" ngModel required>
-                            <option value="">เลือก</option>
-                            <option *ngFor="let data of comboBox1 | async" value="{{data.value1}}">{{data.value1}}</option>
-                        </select>
-                        </div>
-
-                        <div class="one wide field ">
-                            <label class="custom-label-w-25 text-right">ประเภทเงิน</label>
-                        </div>
-                        <div class="four wide field {{ f.submitted && f.controls.budgetType.invalid ? 'error' : '' }}">
-                            <select class="ui search dropdown ai search" name="budgetType" id="budgetType" ngModel required>
-                            <option value="">เลือก</option>
-                            <option *ngFor="let data of comboBox2 | async" value="{{data.value1}}">{{data.value1}}</option>
-                        </select>
-                        </div>
-                    </div>
-
-                    <div class="inline fields">
-                        <div class="one wide field "></div>
-                        <div class="two wide field ">
-                            <label>งบ</label>
-                        </div>
-                        <div class="four wide field {{ f.submitted && f.controls.budget.invalid ? 'error' : '' }}">
-                            <select class="ui search dropdown ai search" name="budget" id="budget" (change)="budgetChange($event)" ngModel required>
-                                <option value="">เลือก</option>
-                                <option *ngFor="let data of comboBox3" value="{{data.budgetId}}">{{data.budgetName}}</option>
-                            </select>
-                        </div>
-                        <div class="one wide field ">
-                            <label class="custom-label-w-25 text-right">หมวด</label>
-                        </div>
-                        <div class="four wide field {{ f.submitted && f.controls.ctgBudget.invalid ? 'error' : '' }}">
-                            <select class="ui search dropdown ai search" name="ctgBudget" id="ctgBudget" (change)="ctgBudgetChange($event)" ngModel required>
-                                <option value="">เลือก</option>
-                                <option *ngFor="let data of combobox4" value="{{data.categoryId}}">{{data.categoryName}}</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="inline fields">
-                        <div class="one wide field "></div>
-                        <div class="two wide field ">
-                            <label>หมวดย่อย</label>
-                        </div>
-                        <div class="four wide field {{ f.submitted && f.controls.subCtgBudget.invalid ? 'error' : '' }}">
-                            <select class="ui search dropdown ai search" name="subCtgBudget" id="subCtgBudget" ngModel required>
-                            <option value="">เลือก</option>
-                            <option *ngFor="let data of combobox5" value="{{data.listId}}">{{data.listName}}</option>
-                        </select>
-                        </div>
-                        <div class="one wide field ">
-                            <label class="custom-label-w-25 text-right">กิจกรรม</label>
-                        </div>
-                        <div class="four wide field {{ f.submitted && f.controls.activities.invalid ? 'error' : '' }}">
-                            <select class="ui search dropdown ai search" name="activities" id="activities" ngModel required>
-                            <option value="">เลือก</option>
-                            <option *ngFor="let data of comboBox6 | async" value="{{data.value1}}">{{data.value1}}</option>
-                          </select>
-                        </div>
-                    </div>
-
-
-                    <div class="inline fields">
-                        <div class="one wide field "></div>
-                        <div class="two wide field ">
-                            <label>คำอธิบายรายการ</label>
-                        </div>
-                        <div class="nine wide field {{ f.submitted && f.controls.descriptionList.invalid ? 'error' : '' }}">
-                            <input type="text" name="descriptionList" id="descriptionList" ngModel required>
-                        </div>
-                    </div>
-
-                    <div class="inline fields">
-                        <div class="one wide field "></div>
-                        <div class="two wide field ">
-                            <label>จำนวนเงิน</label>
-                        </div>
-                        <div class="four wide field {{ f.submitted && f.controls.amount.invalid ? 'error' : '' }}">
-                            <input type="number" name="amount" id="amount" ngModel required>
-                        </div>
-                    </div>
-
-                    <div class="inline fields">
-                        <div class="one wide field "></div>
-                        <div class="two wide field ">
-                            <label>หมายเหตุ</label>
-                        </div>
-                        <div class="nine wide field {{ f.submitted && f.controls.note.invalid ? 'error' : '' }}">
-                            <textarea rows="6" cols="10" name="note" id="note" ngModel required></textarea>
-                        </div>
-                    </div>
-
-                    <div class="ui center aligned grid">
-                        <div class="four wide column">
-                            <button *ngIf="flag !== 'EDIT'" class="ui mini primary button" (click)="checkStatus('SAVE')" type="submit">
-                                <i class="save icon"></i>เพิ่ม
-                            </button>
-
-                            <button *ngIf="flag === 'EDIT'" class="ui mini green button" (click)="checkStatus('EDIT')" type="submit">
-                                <i class="save icon"></i>บันทัก
-                            </button>
-
-                            <button class="ui mini button" type="button" routerLink="/int06/9">
-                                <i class="reply icon"></i>กลับ
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form> -->
 
             <div class="ui segment" id="int0621">
                 <div style="overflow-x: scroll;">

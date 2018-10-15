@@ -100,8 +100,6 @@ export class Int0691Service {
   };
 
   addData = (transferForm, flag: string, id?: number) => {
-    // console.log(transferForm);
-    console.log(this.budgetData);
     let dataFilter = this.budgetData.filter(
       obj => obj.listId == transferForm.subCtgBudget
     );
@@ -124,7 +122,6 @@ export class Int0691Service {
     if (flag === "SAVE") {
       $("#int0621").show();
       this.showDatatable.push(data);
-      console.log("this.showDatatable:", this.showDatatable);
       this.DATATABLE();
     } else {
       data.transferId = id;
