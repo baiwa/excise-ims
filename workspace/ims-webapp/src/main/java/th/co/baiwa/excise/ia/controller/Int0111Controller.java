@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.CommonMessage;
-import th.co.baiwa.excise.ia.persistence.entity.tax.IaTaxReceipt;
 import th.co.baiwa.excise.ia.persistence.entity.tax.IaTaxReceiptReq;
-import th.co.baiwa.excise.ia.service.Int0111Service;
+import th.co.baiwa.excise.ia.persistence.entity.tax.IaTaxReceiptVo;
+import th.co.baiwa.excise.ia.persistence.entity.tax.TaxReceipt;
+import th.co.baiwa.excise.ia.service.TaxReceiptService;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.entity.response.incfri8020.IncFri8020;
 
@@ -29,7 +32,7 @@ public class Int0111Controller {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private Int0111Service int0111Service;
+	private TaxReceiptService taxReceiptService;
 	
 	@GetMapping("/")
 	@ResponseBody
@@ -40,12 +43,12 @@ public class Int0111Controller {
 	
 	@PostMapping("/")
 	@ResponseBody
-	public List<IaTaxReceipt> data(@RequestBody IncFri8020 req) {
+	public List<TaxReceipt> data(@RequestBody IncFri8020 req) {
 		logger.info("Int0111Controller::data");
-		List<IaTaxReceipt> iaTaxReceiptList = int0111Service.wsPulling(req);
-		Collections.sort(iaTaxReceiptList, new Comparator<IaTaxReceipt>() {
+		List<TaxReceipt> iaTaxReceiptList = taxReceiptService.wsPulling(req);
+		Collections.sort(iaTaxReceiptList, new Comparator<TaxReceipt>() {
 		      @Override
-		      public int compare(final IaTaxReceipt object1, final IaTaxReceipt object2) {
+		      public int compare(final TaxReceipt object1, final TaxReceipt object2) {
 		    	  
 		    	  String rec1 = object1.getReceiptNo();
 		    	  String rec2 = object2.getReceiptNo();
@@ -64,9 +67,35 @@ public class Int0111Controller {
 
 	@PostMapping("/save")
 	@ResponseBody
-	public CommonMessage<List<IaTaxReceipt>> save(@RequestBody IaTaxReceiptReq req) {
+	public CommonMessage<List<TaxReceipt>> save(@RequestBody IaTaxReceiptReq req) {
 		logger.info("Int0111Controller::save");
-		return int0111Service.save(req);
+		return taxReceiptService.save(req);
 	}
+	
+	
+	@PostMapping("/lov")
+	@ResponseBody
+	public List<Lov> getTaxReceipt(@RequestBody Lov lov) {
+		logger.info("getTaxReceipt");
+		return ApplicationCache.getListOfValueByValueType(lov.getType(), lov.getSubType());
+	}
+	
+	@PostMapping("/searchSummaryTaxReceipt")
+	@ResponseBody
+	public List<IaTaxReceiptVo> searchSummaryTaxReceipt(@RequestBody IncFri8020 req) {
+		String officeCode = req.getOfficeCode();
+		String dateFrom = req.getYearMonthFrom();
+		String dateTo = req.getYearMonthTo();
+		String dateType = req.getDateType();
+		logger.info("searchSummaryTaxReceipt {} {} {} {} {} {}", officeCode, dateFrom, dateTo, dateType, req.getPageNo(), req.getDataPerPage());
+		IaTaxReceiptVo tax = new IaTaxReceiptVo();
+		tax.setOfficeCode(officeCode);
+		tax.setDateFrom(dateFrom);
+		tax.setDateTo(dateTo);
+		tax.setDateType(dateType);
+		logger.info("searchSummaryTaxReceipt");
+		return taxReceiptService.searchSummaryTaxReceipt(tax);
+	}
+	
 	
 }

@@ -208,6 +208,11 @@ img.image-width-18 {
     
 }
 
+ui.top.attached.text-center.header{
+    background: #1e83db !important;
+    color: white !important;
+}
+
 /* fixed table bordered left TH */
 .ui.celled.table tr td, .ui.celled.table tr th {
     border-left: 1px solid rgba(34,36,38,.1) !important;

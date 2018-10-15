@@ -3,13 +3,13 @@ package th.co.baiwa.excise.ia.persistence.entity.tax;
 import java.util.List;
 
 public class IaTaxReceiptReq {
-	private List<IaTaxReceipt> data;
+	private List<TaxReceipt> data;
 
-	public List<IaTaxReceipt> getData() {
+	public List<TaxReceipt> getData() {
 		return data;
 	}
 
-	public void setData(List<IaTaxReceipt> data) {
+	public void setData(List<TaxReceipt> data) {
 		this.data = data;
 	}
 }

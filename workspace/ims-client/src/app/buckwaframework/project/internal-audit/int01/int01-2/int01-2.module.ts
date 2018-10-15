@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { Int0121Component } from './int01-2-1/int01-2-1.component';
 import { Int0122Component } from './int01-2-2/int01-2-2.component';
 import { Int0123Component } from './int01-2-3/int01-2-3.component';
+import { BreadcrumbModule } from '../../../../common/components';
 
 const routes: Routes = [
     { path: '1', component: Int0121Component, canActivate: [AuthGuard] },
@@ -18,7 +19,8 @@ const routes: Routes = [
     imports: [
         RouterModule.forChild(routes),
         CommonModule,
-        FormsModule
+        FormsModule,
+        BreadcrumbModule
     ],
     declarations: [
         Int0121Component,

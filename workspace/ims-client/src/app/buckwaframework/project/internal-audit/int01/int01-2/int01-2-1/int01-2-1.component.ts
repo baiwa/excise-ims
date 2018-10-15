@@ -3,6 +3,7 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
+import { BreadCrumb } from "models/breadcrumb";
 declare var $: any;
 
 const URL = {
@@ -17,6 +18,7 @@ export class Int0121Component implements OnInit {
   private selectedProduct: string = "สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก ";
   private productList: any[];
 
+  breadcrumb: BreadCrumb[];
   travelTo1List: any;
   travelTo2List: any;
   travelTo3List: any;
@@ -30,19 +32,25 @@ export class Int0121Component implements OnInit {
   constructor(private router: Router,
     private ajax: AjaxService,
     private route: ActivatedRoute,
-    private messageBarService: MessageBarService) { }
+    private messageBarService: MessageBarService) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบรายได้", route: "#" },
+      { label: "ตรวจสอบใบอนุญาต", route: "#" }
+    ];
+  }
 
   ngOnInit() {
 
 
     $("#calendar1").calendar({
       maxDate: new Date(),
-      type: "month",
+      type: "date",
       text: TextDateTH,
-      formatter: formatter('ดป'),
+      formatter: formatter(),
       onChange: (date, text) => {
 
-
+        //var dd = date.day;
         var mm = ((date.getMonth() + 1) + "").length == 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
         var yyyy = date.getFullYear();
         this.startDate = yyyy + "" + mm;
@@ -53,9 +61,9 @@ export class Int0121Component implements OnInit {
 
     $("#calendar2").calendar({
       maxDate: new Date(),
-      type: "month",
+      type: "date",
       text: TextDateTH,
-      formatter: formatter('ดป'),
+      formatter: formatter(),
       onChange: (date, text) => {
 
         var mm = ((date.getMonth() + 1) + "").length == 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;

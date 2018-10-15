@@ -1,3 +1,4 @@
+
 package th.co.baiwa.excise.ia.persistence.entity.tax;
 
 import java.math.BigDecimal;
@@ -14,7 +15,7 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_TAX_RECEIPT")
-public class IaTaxReceipt extends BaseEntity {
+public class TaxReceipt extends BaseEntity {
 
 	private static final long serialVersionUID = -1413517835451948526L;
 	@Id
@@ -77,6 +78,9 @@ public class IaTaxReceipt extends BaseEntity {
 	
 	@Column(name = "TAX_PRINT_NO")
 	private String taxPrintNo;
+	
+	@Column(name = "INCOME_CODE")
+	private String incomeCode;
 
 	public Long getTaxReceiptId() {
 		return taxReceiptId;
@@ -228,6 +232,14 @@ public class IaTaxReceipt extends BaseEntity {
 
 	public void setTaxPrintNo(String taxPrintNo) {
 		this.taxPrintNo = taxPrintNo;
+	}
+
+	public String getIncomeCode() {
+		return incomeCode;
+	}
+
+	public void setIncomeCode(String incomeCode) {
+		this.incomeCode = incomeCode;
 	}
 	
 }

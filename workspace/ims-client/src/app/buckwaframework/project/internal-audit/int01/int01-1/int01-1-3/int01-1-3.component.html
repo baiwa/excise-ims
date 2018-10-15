@@ -2,14 +2,14 @@
     <div class="sixteen wide column">
         <h2 class="ui header">ตรวจสอบงบสรุปยอดภาษี</h2>
 
-        <div class="ui top attached header">
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>รายงานการใช้ใบเสร็จรับเงินภาษีสรรพสามิต
             </span>
         </div>
 
 
         <div class="ui attached segment">
-            <table class="ui small celled table striped selectable">
+            <table class="ui small celled table striped selectable" id="datatableTax">
                 <thead>
                     <tr style="text-align: center;">
                         <th>ลำดับที่</th>
@@ -25,346 +25,39 @@
                         <th> ชดเชยกรมศุลฯ
                             <br>0.75%</th>
                         <th>ค่าพิมพ์แสตมป์ 1%</th>
+                        <th>ผู้สูงอายุุ 1%</th>
                         <th>นำส่ง</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>ภาษีน้ำมันและผลิตภัณฑ์น้ำมัน</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>ภาษีเครื่องดื่ม</td>
 
-                        <td>1</td>
-                        <td> 157.09 </td>
-                        <td> 15.70 </td>
-                        <td> 14.91 </td>
-                        <td> 0.79 </td>
-                        <td> 1.18 </td>
-                        <td> - </td>
-                        <td> 155.91 </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>ภาษีเครื่องไฟฟ้า</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>ภาษีแบตเตอรี่</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>ภาษีแก้วเลดคริสตัลและแก้วคริสตัลอื่น ๆ</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>ภาษีรถยนต์</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>ภาษีรถจักรยานยนต์</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>ภาษีเรือ</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>ภาษีเครื่องหอมและเครื่องสำอาง</td>
-                        <td>6</td>
-                        <td> 1,386.15 </td>
-                        <td> 165.61 </td>
-                        <td> 131.67 </td>
-                        <td> 6.94 </td>
-                        <td> 10.41 </td>
-                        <td> - </td>
-                        <td> 1,375.74 </td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>ภาษีพรมและสิ่งทอปูพื้นอื่น ๆ</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>11</td>
-                        <td>ภาษีหินอ่อนและหินแกรนิต</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>12</td>
-                        <td>ภาษีสารทำลายชั้นบรรยากาศ</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>13</td>
-                        <td>ภาษีสุราแช่</td>
-                        <td>3</td>
-                        <td> 9,987.00 </td>
-                        <td> 786.20 </td>
-                        <td> 746.88 </td>
-                        <td> 39.32 </td>
-                        <td> 58.97 </td>
-                        <td> 78.62 </td>
-                        <td> 7,724.41 </td>
-                    </tr>
-                    <tr>
-                        <td>14</td>
-                        <td>ภาษีสุราแช่ชุมชน</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>15</td>
-                        <td>ภาษีสุรากลั่น</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>16</td>
-                        <td>ภาษีสุรากลั่นชุมชน</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>17</td>
-                        <td>ภาษียาสูบ</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>18</td>
-                        <td>ภาษีไพ่</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>19</td>
-                        <td>ภาษีไนต์คลับ ดิสโกเค ผับ บาร์ ฯ</td>
-                        <td>1</td>
-                        <td> 2,930.00 </td>
-                        <td> 293.00 </td>
-                        <td> 278.35 </td>
-                        <td> 14.65 </td>
-                        <td> 21.98 </td>
-                        <td> - </td>
-                        <td> 2,908.02 </td>
-                    </tr>
-                    <tr>
-                        <td>20</td>
-                        <td>ภาษีสถานอาบน้ำหรืออบตัวและนวด</td>
-                        <td>3</td>
-                        <td> 28,903.88 </td>
-                        <td> 28,903.88 </td>
-                        <td> 2,745.85 </td>
-                        <td> 144.53 </td>
-                        <td> 216.78 </td>
-                        <td> - </td>
-                        <td> 28,687.10 </td>
-                    </tr>
-                    <tr>
-                        <td>21</td>
-                        <td>ภาษีสนามม้า</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>22</td>
-                        <td>ภาษีการออกสลากกินแบ่ง</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>23</td>
-                        <td>ภาษีสนามกอล์ฟ</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>24</td>
-                        <td>ภาษีกิจการโทรคมนาคม</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>25</td>
-                        <td>ค่าใบขนสุรา</td>
-                        <td>4</td>
-                        <td> 1,700.00 </td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td> 1,700.00 </td>
-                    </tr>
-                    <tr>
-                        <td>26</td>
-                        <td>ชำรุด</td>
-                        <td>3</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>รวม</td>
-                        <td>&nbsp;</td>
 
-                        <td>21</td>
-                        <td>45064.12</td>
-                        <td>30164.39</td>
-                        <td>3917.66</td>
-                        <td>206.23</td>
-                        <td>309.32</td>
-                        <td>78.62</td>
-                        <td>42551.18</td>
-                    </tr>
                 </tbody>
+                <tfoot>
+                    <tr class="text-right">
+                        <th colspan="2" style="text-align: right">รวม</th>
+                        <th>{{sumTax.count}}</th>
+                        <th>{{df(sumTax.netTaxAmount)}}</th>
+                        <th>{{df(sumTax.netLocAmount)}}</th>
+                        <th>{{df(sumTax.locOthAmount)}}</th>
+                        <th>{{df(sumTax.locExpAmount)}}</th>
+                        <th>{{df(sumTax.customAmount)}}</th>
+                        <th>{{df(sumTax.stampAmount)}}</th>
+                        <th>{{df(sumTax.olderFundAmount)}}</th>
+                        <th>{{df(sumTax.sendAmount)}}</th>
+
+                    </tr>
+                </tfoot>
+
             </table>
         </div>
 
-        <div class="ui top attached header">
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>เงินกองทุน อบจ. เงินบำรุงองค์การ</span>
         </div>
 
         <div class="ui attached segment">
-            <table id="table2" class="ui small celled table striped selectable">
+            <table id="datatableMaintain" class="ui small celled table striped selectable">
                 <thead>
                     <tr style="text-align: center;">
                         <th>ลำดับที่</th>
@@ -380,119 +73,28 @@
                         <th> ชดเชยกรมศุลฯ
                             <br>0.75%</th>
                         <th>ค่าพิมพ์แสตมป์ 1%</th>
+                        <th>ผู้สูงอายุุ 1%</th>
                         <th>นำส่ง</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>เงินบำรุงกองทุน สสส. 2% (สุรา)</td>
-                        <td>3</td>
-                        <td> 174.24 </td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>เงินบำรุงกองทุน สสส. 2% (ยาสูบ)</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>เงินบำรุงกองทุน กกท. 2% (สุรา)</td>
-                        <td>3</td>
-                        <td> 157.24 </td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>เงินบำรุงกองทุน กกท. 2% (ยาสูบ)</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>เงินบำรุงองค์การฯ สสท.98.5 % (สุรา)</td>
-                        <td>3</td>
-                        <td> 147.54 </td>
-                        <td> 114.41 </td>
-                        <td> 1.74 </td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>เงินฝากบำรุงองค์การฯ สสท. 1.5 % (สุรา)</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>เงินบำรุงองค์การฯ สสท.98.5 % (ยาสูบ)</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>เงินฝากบำรุงองค์การฯ สสท.1.5 % (ยาสูบ)</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>รวม</td>
-                        <td>&nbsp;</td>
-                        <td>9</td>
-                        <td> 479.02 </td>
-                        <td> 114.41 </td>
-                        <td> 1.74 </td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td> - </td>
-                    </tr>
+
                 </tbody>
+                <tfoot>
+                    <tr class="text-right">
+                        <th colspan="2" style="text-align: right">รวม</th>
+                        <th>{{sumMaintain.count}}</th>
+                        <th>{{df(sumMaintain.netTaxAmount)}}</th>
+                        <th>{{df(sumMaintain.netLocAmount)}}</th>
+                        <th>{{df(sumMaintain.locOthAmount)}}</th>
+                        <th>{{df(sumMaintain.locExpAmount)}}</th>
+                        <th>{{df(sumMaintain.customAmount)}}</th>
+                        <th>{{df(sumMaintain.stampAmount)}}</th>
+                        <th>{{df(sumMaintain.olderFundAmount)}}</th>
+                        <th>{{df(sumMaintain.sendAmount)}}</th>
+
+                    </tr>
+                </tfoot>
             </table>
         </div>
 

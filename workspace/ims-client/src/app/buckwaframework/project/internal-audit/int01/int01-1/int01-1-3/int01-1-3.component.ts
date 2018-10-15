@@ -8,6 +8,8 @@ import { AjaxService } from "services/ajax.service";
 import { DecimalFormat } from "helpers/index";
 import { Observable } from "rxjs";
 import { MessageBarService } from "services/message-bar.service";
+import { async } from "q";
+import { Lov } from "projects/internal-audit/int06/int06-11/int06-11.service";
 declare var $: any;
 @Component({
   selector: 'app-int01-1-3',
@@ -19,14 +21,55 @@ export class Int0113Component implements OnInit {
   private selectedProduct: string = 'สำนักงานสรรพสามิตพื้นที่เมืองพิษณุโลก ';
   private productList: any[];
   private receipt: TaxReceipt[];
-  private taxReceipt: TaxReceipt[];
-  private moneyReceipt: TaxReceipt[];
-  private tableTax: TaxReceipt[];
-  private tableMonth: TaxReceipt[];
+  private taxReceipt: Lov[];
+  private moneyReceipt: Lov[];
+  private tableTax: any[];
+  private tableMaintain: any[];
+  private datatableTax: any;
+  private datatableMaintain: any;
+  private receiptTax: any[];
+  private sumTax: TaxReceipt;
+  private receiptMaintain: any[];
+  private sumMaintain: TaxReceipt;
 
-  constructor(private ajax: AjaxService, private main: Int011Service, private msg: MessageBarService) { }
 
-  ngOnInit() {
+  constructor(private ajax: AjaxService, private main: Int011Service, private msg: MessageBarService) {
+    this.getlov();
+  }
+
+  async ngOnInit() {
+
+    this.getListAndFiterdData();
+
+
+  }
+
+  async getlov() {
+    this.tableTax = [];
+    this.tableMaintain = [];
+    this.receiptTax = [];
+    console.log("getlov");
+    await this.ajax.post("ia/int0111/lov", { type: 'INC_CODE', subType: 'TAX' }, res => {
+      let lov = res.json();
+      lov.forEach(element => {
+        this.tableTax.push(element.value1);
+      });
+      // console.log(this.tableTax);
+    });
+    await this.ajax.post("ia/int0111/lov", { type: 'INC_CODE', subType: 'MAINTAIN' }, res => {
+
+      let lov = res.json();
+      lov.forEach(element => {
+        this.tableMaintain.push(element.value1);
+      });
+      //console.log(this.tableMaintain);
+    });
+    await this.getListAndFiterdData();
+
+  }
+
+
+  getListAndFiterdData() {
     let _data = this.main.getData() ? this.main.getData() : { travelTo1: '00', travelTo2: '00', travelTo3: '00', startDate: '01/09/2561', endDate: '21/09/2561' };
     const { travelTo1, travelTo2, travelTo3, startDate, endDate } = _data;
     const _start = startDate.split("/");
@@ -39,28 +82,158 @@ export class Int0113Component implements OnInit {
       "PageNo": "0",
       "DataPerPage": "0"
     };
-    this.ajax.post("ia/int0111/", data, res => {
+
+    this.ajax.post("ia/int0111/searchSummaryTaxReceipt", data, res => {
       this.receipt = res.json();
+      console.log(this.receipt);
+      this.sumTax = new TaxReceipt();
+      this.sumTax.count = 0;
+      this.sumTax.netTaxAmount = 0;
+      this.sumTax.netLocAmount = 0;
+      this.sumTax.locOthAmount = 0;
+      this.sumTax.locExpAmount = 0;
+      this.sumTax.customAmount = 0;
+      this.sumTax.stampAmount = 0;
+      this.sumTax.olderFundAmount = 0;
+      this.sumTax.sendAmount = 0;
+      this.sumMaintain = new TaxReceipt();
+      this.sumMaintain.count = 0;
+      this.sumMaintain.netTaxAmount = 0;
+      this.sumMaintain.netLocAmount = 0;
+      this.sumMaintain.locOthAmount = 0;
+      this.sumMaintain.locExpAmount = 0;
+      this.sumMaintain.customAmount = 0;
+      this.sumMaintain.stampAmount = 0;
+      this.sumMaintain.olderFundAmount = 0;
+      this.sumMaintain.sendAmount = 0;
+      this.receiptTax = [];
+      this.receiptMaintain = [];
       this.receipt.forEach(element => {
-        if (element.incomeName.indexOf('ภาษี') == 0) {
-          this.taxReceipt.push(element)
+        if (this.tableTax.indexOf(element.incomeCode) > 0) {
+          this.receiptTax.push(element);
+          this.sumTax.count += element.count;
+          this.sumTax.netTaxAmount += element.netTaxAmount;
+          this.sumTax.netLocAmount += element.netLocAmount;
+          this.sumTax.locOthAmount += element.locOthAmount;
+          this.sumTax.locExpAmount += element.locExpAmount;
+          this.sumTax.customAmount += element.customAmount;
+          this.sumTax.stampAmount += element.stampAmount;
+          this.sumTax.olderFundAmount += element.olderFundAmount;
+          this.sumTax.sendAmount += element.sendAmount;
+          console.log("sumTax coount", this.sumTax.count);
         }
 
-        if (element.incomeName.indexOf('เงินบำรุง') == 0) {
-          this.moneyReceipt.push(element)
+        if (this.tableMaintain.indexOf(element.incomeCode) > 0) {
+          this.receiptMaintain.push(element);
+          this.sumMaintain.count += element.count;
+          this.sumMaintain.netTaxAmount += element.netTaxAmount;
+          this.sumMaintain.netLocAmount += element.netLocAmount;
+          this.sumMaintain.locOthAmount += element.locOthAmount;
+          this.sumMaintain.locExpAmount += element.locExpAmount;
+          this.sumMaintain.customAmount += element.customAmount;
+          this.sumMaintain.stampAmount += element.stampAmount;
+          this.sumMaintain.olderFundAmount += element.olderFundAmount;
+          this.sumMaintain.sendAmount += element.sendAmount;
+          console.log("sumMaintain count", this.sumMaintain.count);
         }
       });
+      this.initTableTax();
+      this.initTableMonth();
     });
-
-
-
   }
 
   initTableTax() {
-    // tableTax
+    if (this.datatableTax != null && this.datatableTax != undefined) {
+      this.datatableTax.destroy();
+    }
+
+    this.datatableTax = $("#datatableTax").DataTable({
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: false,
+      paging: false,
+      data: this.receiptTax,
+      columns: [
+
+        {
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "center"
+        },
+        //  { data: "incomeCode" },
+        { data: "incomeName" },
+        { data: "count" },
+        { data: "netTaxAmount" },
+        { data: "netLocAmount" },
+        { data: "locOthAmount" },
+        { data: "locExpAmount" },
+        { data: "customAmount" },
+        { data: "stampAmount" },
+        { data: "olderFundAmount" },
+        { data: "sendAmount" }
+
+
+
+      ], columnDefs: [
+
+        { targets: [2, 3, 4, 5, 6, 7, 8, 9, 10], className: "right aligned" }
+
+      ]
+
+    });
   }
+  df(what): string {
+    const df = new DecimalFormat("###,###.00");
+    return df.format(what);
+  }
+
   initTableMonth() {
-    // tableMonth
+    if (this.datatableMaintain != null && this.datatableMaintain != undefined) {
+      this.datatableMaintain.destroy();
+    }
+
+    this.datatableMaintain = $("#datatableMaintain").DataTable({
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: false,
+      paging: false,
+      data: this.receiptMaintain,
+      columns: [
+
+        {
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          className: "center"
+        },
+        //  { data: "incomeCode" },
+        { data: "incomeName" },
+        { data: "count" },
+        { data: "netTaxAmount" },
+        { data: "netLocAmount" },
+        { data: "locOthAmount" },
+        { data: "locExpAmount" },
+        { data: "customAmount" },
+        { data: "stampAmount" },
+        { data: "olderFundAmount" },
+        { data: "sendAmount" }
+
+
+
+      ], columnDefs: [
+
+        { targets: [2, 3, 4, 5, 6, 7, 8, 9, 10], className: "right aligned" }
+
+      ]
+
+    });
   }
 
 }

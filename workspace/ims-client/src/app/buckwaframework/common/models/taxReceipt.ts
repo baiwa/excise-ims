@@ -1,6 +1,7 @@
 export class TaxReceipt {
     [x: string]: any;
     // String
+    count: number = 0;
     taxPrintNo: string = "-";
     taxReceiptId: string = "-";
     receiptDate: string = "-";
