@@ -18,6 +18,7 @@ export class Int0122Component implements OnInit {
     dataTableList: any[];
     lic: Lic;
     datatable: any;
+    breadcrumb: { label: string; route: string; }[];
     constructor(private router: Router,
         private ajax: AjaxService,
         private route: ActivatedRoute,
@@ -26,7 +27,12 @@ export class Int0122Component implements OnInit {
         this.offCode = this.route.snapshot.queryParams["ofCode"];
         this.startDate = this.route.snapshot.queryParams["startDate"];
         this.endDate = this.route.snapshot.queryParams["endDate"];
-
+        this.breadcrumb = [
+            { label: "ตรวจสอบภายใน", route: "#" },
+            { label: "ตรวจสอบรายได้", route: "#" },
+            { label: "ตรวจสอบใบอนุญาต", route: "#" },
+            { label: "ค้นหาและตรวจสอบใบอนุญาต", route: "#" }
+        ];
 
     }
 

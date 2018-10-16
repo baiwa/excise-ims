@@ -20,11 +20,18 @@ export class Int0123Component implements OnInit {
   table1: any;
   table2: any;
   table3: any;
+  breadcrumb: { label: string; route: string; }[];
   constructor(private router: Router,
     private ajax: AjaxService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService) {
-
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบรายได้", route: "#" },
+      { label: "ตรวจสอบใบอนุญาต", route: "#" },
+      { label: "ค้นหาและตรวจสอบใบอนุญาต", route: "#" },
+      { label: "สรุปผลการตรวจใบอนุญาต", route: "#" }
+    ];
   }
 
   ngOnInit() {
@@ -81,16 +88,21 @@ export class Int0123Component implements OnInit {
         //  { data: "incomeCode" },
         { data: "licName" },
         { data: "printCode" },
-        { data: "licType" },
-        { data: "licPrice" },
-        { data: "licAmount" }
+        { data: "licAmount" },
+        { data: "licPrice" }
 
 
 
 
       ], columnDefs: [
 
-        { targets: [4], className: "right aligned" }
+        { targets: [3, 4], className: "right aligned" },
+        { targets: [0, 2], className: "center aligned" },
+        { targets: [1], className: "left aligned" },
+        {
+          targets: [4],
+          render: $.fn.dataTable.render.number(",", ".", 2, "")
+        }
 
       ]
 
@@ -121,16 +133,21 @@ export class Int0123Component implements OnInit {
         //  { data: "incomeCode" },
         { data: "licName" },
         { data: "printCode" },
-        { data: "licType" },
-        { data: "licPrice" },
-        { data: "licAmount" }
+        { data: "licAmount" },
+        { data: "licPrice" }
 
 
 
 
       ], columnDefs: [
 
-        { targets: [4], className: "right aligned" }
+        { targets: [3, 4], className: "right aligned" },
+        { targets: [0, 2], className: "center aligned" },
+        { targets: [1], className: "left aligned" },
+        {
+          targets: [4],
+          render: $.fn.dataTable.render.number(",", ".", 2, "")
+        }
 
       ]
 
@@ -160,17 +177,21 @@ export class Int0123Component implements OnInit {
         },
         { data: "licName" },
         { data: "printCode" },
-        { data: "licType" },
-        { data: "licPrice" },
-        { data: "licAmount" }
+        { data: "licAmount" },
+        { data: "licPrice" }
 
 
 
 
       ], columnDefs: [
 
-        { targets: [4], className: "right aligned" }
-
+        { targets: [3, 4], className: "right aligned" },
+        { targets: [0, 2], className: "center aligned" },
+        { targets: [1], className: "left aligned" },
+        {
+          targets: [4],
+          render: $.fn.dataTable.render.number(",", ".", 2, "")
+        }
       ]
 
     });

@@ -3,6 +3,8 @@ package th.co.baiwa.buckwaframework.security.provider;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,6 +22,8 @@ import th.go.excise.dexsrvint.schema.ldapuserbase.MessageBase;
 
 @Component("wsAuthenticationProvider")
 public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
+	
+	private Logger logger = LoggerFactory.getLogger(WebServiceAuthenticationProvider.class);
 
 	@Autowired
 	private WebServiceExciseService webServiceExciseService;
