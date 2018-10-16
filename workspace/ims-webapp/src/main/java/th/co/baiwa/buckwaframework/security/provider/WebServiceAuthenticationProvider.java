@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import baiwa.co.th.ws.Response;
 import th.co.baiwa.buckwaframework.security.domain.UserDetails;
+import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleResponse;
 import th.go.excise.dexsrvint.schema.ldapuserbase.MessageBase;
@@ -38,7 +39,7 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 
 	@Override
 	protected org.springframework.security.core.userdetails.UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-		System.out.println("WebServiceAuthenticationProvider");
+		logger.info("WebServiceAuthenticationProvider : {}" , username);
 		String name = authentication.getName();
 		String password = authentication.getCredentials().toString();
 		List<SimpleGrantedAuthority> grantedAuthorityList = new ArrayList<>();
@@ -50,7 +51,11 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 			Response response = webServiceExciseService.webServiceLdap(name, password);
 			if ("200".equals(response.getStatusCode())) {
 				userDetails.setOfficeId(response.getOffice());
-				System.out.println("login success : " + response.getOffice());
+//				userDetails.setOfficeId(authenAndGetUserRoleResponse.getOfficeId());
+//				userDetails.setUserThaiName(authenAndGetUserRoleResponse.getUserThaiName());
+//				userDetails.setUserThaiSurname(authenAndGetUserRoleResponse.getUserThaiSurname());
+//				userDetails.setTitle(authenAndGetUserRoleResponse.getTitle());
+				logger.info("login success {}" , username);
 				
 			} else {
 				throw new BadCredentialsException(response.getStatusMessage());
@@ -63,6 +68,10 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 			}
 			
 			userDetails.setOfficeId(authenAndGetUserRoleResponse.getOfficeId());
+			userDetails.setUserThaiName(authenAndGetUserRoleResponse.getUserThaiName());
+			userDetails.setUserThaiSurname(authenAndGetUserRoleResponse.getUserThaiSurname());
+			userDetails.setTitle(authenAndGetUserRoleResponse.getTitle());
+			//BeanUtils.copyProperties(userDetails, licenseList6010);
 		}
 		
 		return userDetails;

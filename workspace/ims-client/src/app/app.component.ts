@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+
 import {
   Router,
   NavigationEnd,
@@ -12,6 +13,8 @@ import { TranslateService } from "./buckwaframework/common/services/translate.se
 
 // models
 import { User } from "./buckwaframework/common/models/user";
+import { AjaxService } from "services/ajax.service";
+import { MessageBarService } from "services/message-bar.service";
 
 declare var jQuery: any;
 declare var $: any;
@@ -24,10 +27,13 @@ declare var $: any;
 export class AppComponent implements OnInit {
   user: User;
   loading: boolean;
+
   constructor(
     private authService: AuthService,
     private router: Router,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private ajax: AjaxService,
+    private messageBarService: MessageBarService,
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +62,8 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
+
 
   changeToEnglish() {
     this.translateService.use("en");
