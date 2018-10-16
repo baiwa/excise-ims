@@ -388,7 +388,7 @@ export class Int111Component implements OnInit {
             var html = '';
             if (data != 'เสร็จสิ้น') {
               html += '<button type="button" class="ui mini yellow button edit-button"><i class="edit icon"></i>แก้ไข</button>';
-              html += '<button type="button" class="ui mini blue button close-button"> <i class="close outline icon"></i>ปิดงาน</button>';
+              html += '<button type="button" class="ui mini blue button close-button"> <i class="power off icon"></i>ปิดงาน</button>';
             } 
             return html;
           }
