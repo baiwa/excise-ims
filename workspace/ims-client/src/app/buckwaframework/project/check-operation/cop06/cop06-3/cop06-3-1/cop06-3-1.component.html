@@ -1,0 +1,170 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+      <h2 class="ui header">รายงานการตรวจปฏิบัติการรับสินค้าสำเร็จรูป</h2>
+
+      <div class="ui top attached header">
+          <span>Criteria</span>
+      </div>
+     
+        <div class="ui attached segment">
+            <div class="ui form">
+                <div class="inline fields">
+                    <div class="eight wide field ">
+                        <label class="custom-label-w-25">ทะเบียนสรรพสามิต</label>
+                        <select class="ui search dropdown ope04-1" style="width: 100% !important">
+                      <option *ngFor="let list of exciseIdArr">{{list}}</option>
+                  </select>
+                    </div>
+                    <div class="eight wide field ">
+                        <label class="custom-label-w-20">เลขประจำตัวผู้เสียภาษี</label>
+                        <input type="text" class="custom-readonly" placeholder="เลขประจำตัวผู้เสียภาษี" readonly="" value="-">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="eight wide field">
+                        <label class="custom-label-w-25">ผู้ประกอบการ </label>
+                        <input type="text" class="custom-readonly" placeholder="ผู้ประกอบการ"  name="companyName" id="companyName" readonly="">
+                    </div>
+                    <div class="eight wide field ">
+                        <label class="custom-label-w-20">เลขที่วิเคราะห์</label>
+                        <input type="text" class="custom-readonly" placeholder="เลขที่วิเคราะห์" name="analysNumber" id="analysNumber" readonly="">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="eight wide field">
+                        <label class="custom-label-w-25">ประเภท </label>
+                        <input type="text" class="custom-readonly" placeholder="ประเภท" readonly="" value="-">
+                    </div>
+                    <div class="eight wide field ">
+                        <label class="custom-label-w-20">พิกัด</label>
+                        <input type="text" class="custom-readonly" placeholder="พิกัด"  readonly="">
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="three wide field">
+                        <label class="custom-label-w-25">รอบระยะเวลาการตรวจสอบ</label>
+                    </div>
+                    <div class="four wide field">
+                        <div class="ui calendar" id="calendarFront" style="width:100%">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text"  placeholder="MM/YYYY">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="four wide field">
+                        <label>-</label>
+                        <div class="ui calendar" id="calendarLast" style="width:100%">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="text" name="endDate" id="endDate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <div class="ui center aligned grid">
+                    <div class="six wide column">
+                        <button class="ui mini primary button"  (click)="showdata()">
+            <i class="file icon"></i>
+            แสดงกระดาษทำการ
+          </button>
+                        <button class="ui mini button" (click)="hidedata()">
+            <i class="close icon"></i>
+            ยกเลิก
+          </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+
+      <div class="ui segment" id="showData">
+          <div class="ui grid center aligned">
+              <div class="sixteen wide column">
+                  <!-- {{firstDataList.companyName}} -->
+                  <br> กระดาษทำการรับวัตถุดิบ
+                  <br> เดือน
+              </div>
+          </div>
+          <br>
+          <div style="overflow-x: scroll;">
+              <table class="ui small celled table striped selectable" style="width: 120%;" id="showDt">
+                  <thead>
+                      <tr style="text-align: center;">
+                          <th>ลำดับ</th>
+                          <th>รายการ</th>
+                          <th>ปริมาณรับจากการผลิต ตามงบเดือน	
+                          </th>
+                          <th>ปริมาณรับจากการผลิต แบบ ภส.07-02		
+                          </th>
+                          <th>ใบรับสินค้าสำเร็จรูป
+                          </th>
+                          <th>ผลต่างคู่ข้อมูล	
+                          </th>
+                          <!-- {{row[0].column6}} -->                          
+                      </tr>
+                  </thead>
+              </table>
+          </div>
+          <br>
+          <div class="ui center aligned grid">
+              <div class="six wide column">
+                  <button class="ui mini primary button" >
+          <i class="print icon"></i>
+         บันทึกข้อมูล
+        </button>
+                  <button class="ui mini button" >
+          <i class="refresh icon"></i>
+          ล้างข้อมูล
+        </button>
+              </div>
+          </div>
+      </div>
+
+      <div class="ui top attached header">
+          <span>อัพโหลด Template ข้อมูลสำหรับการรับวัตถุดิบ</span>
+      </div>
+
+      <form id="upload-form" ngNativeValidate>
+          <div class="ui attached segment">
+              <div class="ui form">
+                  <div class="inline fields">
+                      <div class="eight wide field ">
+                          <label class="custom-label-w-25">เลือกไฟล์ Template ข้อมูล</label>
+                          <input type="file"  required>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="ui center aligned grid">
+                  <div class="four wide column">
+                      <button class="ui mini primary button" type="submit">
+                          <i class="upload icon"></i>
+                          อัพโหลด
+                      </button>
+                      <button class="ui mini button" type="reset">
+                          <i class="trash outline icon"></i>
+                          ลบไฟล์
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </form>
+
+      <br>
+      <div class="ui grid center aligned">
+          <div class="sixteen wide column">
+              <button class="ui mini button" >
+        <i class="arrow left icon"></i>
+        ย้อนกลับ
+      </button>
+          </div>
+      </div>
+  </div>
+</div>
