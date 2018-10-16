@@ -3,6 +3,7 @@ import { AjaxService } from "../../../../common/services/ajax.service";
 import { Router } from "@angular/router";
 import { ExciseService } from "../../../../common/services/excise.service";
 import { TextDateTH } from "../../../../common/helper/datepicker";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var $: any;
 @Component({
@@ -11,6 +12,11 @@ declare var $: any;
   styleUrls: ["./add-external-data.component.css"]
 })
 export class AddExternalDataComponent implements OnInit {
+  breadcrumb: BreadCrumb[] = [
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การคัดเลือกราย', route: '#' },
+    { label: 'ส่งกระดาษทำการคัดเลือกราย', route: '#' },
+  ]
   userManagementDt: any;
   before: any;
   last: any;
@@ -50,8 +56,8 @@ export class AddExternalDataComponent implements OnInit {
       this.coordinatesArr = res.json();
     });
     //get Sector in select option
-    const URL2 = "combobox/controller/getSector";
-    this.ajax.post(URL2, {}, res => {
+    const URL2 = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL2, {type : 'SECTOR_VALUE'}, res => {
       this.sectorArr = res.json();
     });
 
@@ -99,7 +105,6 @@ export class AddExternalDataComponent implements OnInit {
     json += ' "paging": true, ';
     json += ' "pagingType": "full_numbers", ';
     json += ' "fixedColumns" : { "leftColumns" : 3}, ';
-    json += " ";
     json += ' "ajax": { ';
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';

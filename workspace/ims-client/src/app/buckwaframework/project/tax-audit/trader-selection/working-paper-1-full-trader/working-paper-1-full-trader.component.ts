@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { ExciseService } from "../../../../common/services/excise.service";
 import { TextDateTH, digit } from "../../../../common/helper/datepicker";
 import { CurrencyPipe } from "@angular/common";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var jQuery: any;
 declare var $: any;
@@ -13,6 +14,11 @@ declare var $: any;
   styleUrls: ["./working-paper-1-full-trader.component.css"]
 })
 export class WorkingPaper1FullTraderComponent implements OnInit {
+  breadcrumb: BreadCrumb[] = [
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การคัดเลือกราย', route: '#' },
+    { label: 'สร้างกระดาษทำการคัดเลือกราย', route: '#' },
+  ]
   userManagementDt: any;
   router: any;
   listItem: any[];

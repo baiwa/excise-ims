@@ -10,6 +10,7 @@ import { SendLineUserComponent } from './send-line-user/send-line-user.component
 import { ReceivePlanWsComponent } from './receive-plan-ws/receive-plan-ws.component';
 import { ReceiveLineUserComponent } from './receive-line-user/receive-line-user.component';
 import { ChkStatusComponent } from './chk-status/chk-status.component';
+import { BreadcrumbModule } from '../../../../common/components';
 
 const routes: Routes = [
     { path: '', component: AddExternalDataComponent, canActivate: [AuthGuard] },
@@ -24,7 +25,8 @@ const routes: Routes = [
     imports: [
         RouterModule.forChild(routes),
         CommonModule,
-        FormsModule
+        FormsModule,
+        BreadcrumbModule
     ],
     declarations: [
         AddExternalDataComponent,

@@ -4,6 +4,7 @@ import { AjaxService } from "../../../../common/services/ajax.service";
 import { Router, ActivatedRoute } from "@angular/router";
 
 import { TextDateTH } from "../../../../common/helper/datepicker";
+import { BreadCrumb } from "models/breadcrumb";
 declare var $: any;
 @Component({
   selector: "app-analyst-basic-data-trader",
@@ -11,6 +12,12 @@ declare var $: any;
   styleUrls: ["./analyst-basic-data-trader.component.css"]
 })
 export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
+  breadcrumb: BreadCrumb[] = [
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การคัดเลือกราย', route: '#' },
+    { label: 'สร้างกระดาษทำการคัดเลือกราย', route: '/trader-selection/' },
+    { label: 'วิเคราะห์ข้อมูลเบื้องต้น', route: '#' }
+  ]
   listMenu: any[] = [];
   listMenu1: any[] = [];
   valueForFontList: any[] = [];

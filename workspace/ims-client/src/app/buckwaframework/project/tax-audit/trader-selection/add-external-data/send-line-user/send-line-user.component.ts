@@ -5,6 +5,7 @@ import { ExciseService } from "../../../../../common/services/excise.service";
 import { TextDateTH, digit } from "../../../../../common/helper/datepicker";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { CurrencyPipe } from "@angular/common";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var jQuery: any;
 declare var $: any;
@@ -14,6 +15,11 @@ declare var $: any;
   styleUrls: ["./send-line-user.component.css"]
 })
 export class SendLineUserComponent implements OnInit {
+  breadcrumb: BreadCrumb[] = [
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การคัดเลือกราย', route: '#' },
+    { label: 'ส่งกระดาษทำการคัดเลือกราย', route: '#' },
+  ]
   sendLineUser: any;
   listItem: any[];
   before: any;
