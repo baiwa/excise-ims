@@ -192,6 +192,12 @@ const routes: Routes = [
     loadChildren: "projects/check-operation/cop05/cop05.module#Cop05Module",
     canActivate: [AuthGuard]
   },
+  {
+    path: "cop06",
+    loadChildren: "projects/check-operation/cop06/cop06.module#Cop06Module",
+    canActivate: [AuthGuard]
+  },
+
 
   {
     path: "int01",
