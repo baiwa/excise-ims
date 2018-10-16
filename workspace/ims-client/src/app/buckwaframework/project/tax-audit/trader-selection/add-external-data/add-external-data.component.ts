@@ -117,6 +117,7 @@ export class AddExternalDataComponent implements OnInit {
     json += ' "columns": [ ';
 
     json += ' { "data": "exciseId","className":"center" }, ';
+    json += ' { "data": "exciseIdOld","className":"center" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "exciseOwnerArea1" }, ';
@@ -295,6 +296,7 @@ export class AddExternalDataComponent implements OnInit {
     var str =
 
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
+      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
@@ -306,7 +308,7 @@ export class AddExternalDataComponent implements OnInit {
       
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> ' +
+      '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
       '<th colspan="' +
       this.month / 2 +

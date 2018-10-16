@@ -126,6 +126,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     document.getElementById("trDrinamic").innerHTML =
 
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
+      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
 
@@ -215,6 +216,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += " }, ";
     json += ' "columns": [ ';
     json += ' { "data": "exciseId","className":"center" }, ';
+    json += ' { "data": "exciseIdOld","className":"center"}, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "exciseOwnerArea1" }, ';
@@ -233,7 +235,6 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' { "data": "status" } ';
 
     json += "] } ";
-    console.log(json);
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
   }

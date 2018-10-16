@@ -117,6 +117,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     document.getElementById("trDrinamic").innerHTML =
 
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
+      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
@@ -212,6 +213,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     json += " }, ";
     json += ' "columns": [ ';
     json += ' { "data": "exciseId","className":"center" }, ';
+    json += ' { "data": "exciseIdOld","className":"center"}, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "exciseOwnerArea1" }, ';

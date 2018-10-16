@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class MockupVo extends DataTableRequest {
 	private Integer exciseRegisttionNumberId;
 	private String exciseId;
+    private String exciseIdOld;
 	private String exciseOperatorName;
 	private String exciseFacName;
 	private String exciseArea;
@@ -78,7 +79,15 @@ public class MockupVo extends DataTableRequest {
 	private String monthMaxPercen;
 	private String monthMinPercen;
 
-	public String getAnalysNumber() {
+    public String getExciseIdOld() {
+        return exciseIdOld;
+    }
+
+    public void setExciseIdOld(String exciseIdOld) {
+        this.exciseIdOld = exciseIdOld;
+    }
+
+    public String getAnalysNumber() {
 		return analysNumber;
 	}
 
@@ -651,10 +660,10 @@ public class MockupVo extends DataTableRequest {
 		this.monthMinPercen = monthMinPercen;
 	}
 
-	
 
-	
 
-	
+
+
+
 
 }

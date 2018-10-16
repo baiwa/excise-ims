@@ -9,6 +9,7 @@ public class PlanWorksheetHeaderDetail extends DataTableRequest{
 	private BigDecimal worksheetHeaderId;
 	private String analysNumber;
 	private String exciseId;
+	private String exciseIdOld;
 	private String companyName;
 	private String factoryName;
 	private String factoryAddress;
@@ -58,6 +59,13 @@ public class PlanWorksheetHeaderDetail extends DataTableRequest{
 	private String amount24;
 	
 	
+	
+	public String getExciseIdOld() {
+		return exciseIdOld;
+	}
+	public void setExciseIdOld(String exciseIdOld) {
+		this.exciseIdOld = exciseIdOld;
+	}
 	public BigDecimal getWorksheetHeaderId() {
 		return worksheetHeaderId;
 	}

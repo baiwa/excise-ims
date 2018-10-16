@@ -113,6 +113,7 @@ export class SendLineUserComponent implements OnInit {
       '<tr><th rowspan="2" style="text-align: center !important"><input type="checkbox" name="select-all" id="select-all"></th>' +
       '<th rowspan="2" style="text-align: center !important">ลำดับ</th>' +
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
+      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
@@ -124,7 +125,7 @@ export class SendLineUserComponent implements OnInit {
       
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> ' +
+      '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
       "</tr>" +
       '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
@@ -194,6 +195,7 @@ export class SendLineUserComponent implements OnInit {
           className: "center"
         },
         { data: "exciseId", className: "center" },
+        { data: "exciseIdOld", className: "center" },
         { data: "companyName" },
         { data: "companyName" },
         { data: "exciseOwnerArea1" },
