@@ -43,6 +43,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
   ngOnDestroy() { }
 
   ngOnInit() {
+    $('.ui.accordion').accordion();
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     this.listMenu = [
@@ -120,7 +121,8 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
       '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
+      '<th rowspan="2" style="text-align: center !important">เปอร์เซ็นส่วนเบี่ยงเบน</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +      
       '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +      
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
@@ -315,6 +317,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
   };
 
   selectExciseProductType(productionType): void {
+    console.log(productionType);
     this.exciseProductType = productionType;
     if (this.userManagementDt != null) {
       this.userManagementDt.destroy();
@@ -360,6 +363,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     json += ' { "data": "exciseFacAddress" ,"className":"center" }, ';
     json += ' { "data": "exciseRegisCapital","className":"center" }, ';
     json += ' { "data": "change","className":"center" }, ';
+    json += ' { "data": "deviation","className":"center" }, ';    
     json += ' { "data": "payingtax" ,"className":"center"}, ';
     json += ' { "data": "no1" }, ';
     json += ' { "data": "no2" }, ';
@@ -434,7 +438,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         }
       },
       fixedColumns: {
-        leftColumns: 2
+        leftColumns: 3
       }
     });
 

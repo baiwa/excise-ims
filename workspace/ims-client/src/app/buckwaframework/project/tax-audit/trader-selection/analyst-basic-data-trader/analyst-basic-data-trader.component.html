@@ -183,29 +183,34 @@
             </div>
             <div class="ui attached segment">
                 <div class="ui grid">
-                    <div id="divProduct" class="three wide column" style="padding-right: 0;">
-                        <i class="angle left icon" (click)="hideProductType()"></i>
-                        <i class="angle right icon" (click)="showProductType()"></i>
-                        <div id="productType" class="ui vertical menu" style="width: auto">
-                            <div class="item">
-                                <div class="header">พิกัดสินค้า</div>
-                                <div class="menu">
-                                    <div class="item hover {{exciseProductType == item && 'active'}}" *ngFor="let item of listMenu"
-                                        (click)="selectExciseProductType(item)">-
+                    <div id="divProduct" class="three wide column" style="padding-right: 0;">                        
+                        <div class="ui  styled accordion">
+                                <div class="active title">
+                                  <i class="dropdown icon"></i>
+                                  พิกัดสินค้า
+                                </div>
+                                <div class="content active" >     
+                                    <div class="ui divided selection list">
+                                        <a *ngFor="let item of listMenu"  class="item {{exciseProductType == item  ? 'active' : ''}} " (click)="selectExciseProductType(item)">
                                         {{item}}
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="header">พิกัดบริการ</div>
-                                <div class="menu">
-                                    <div class="item hover {{exciseProductType == item && 'active'}}" *ngFor="let item of listMenu1"
-                                        (click)="selectExciseProductType(item)">-
+                                <div class="title">
+                                  <i class="dropdown icon"></i>
+                                  พิกัดบริการ
+                                </div>
+                                <div class="content ">
+                                    <div class="ui divided selection list">
+                                        <a class="item {{exciseProductType == item  ? 'active' : ''}} " *ngFor="let item of listMenu1" (click)="selectExciseProductType(item)">
                                         {{item}}
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="header">พิกัดสินค้านำเข้า</div>
-                            </div>
-                        </div>
-
+                                <div class="title">
+                                  พิกัดสินค้านำเข้า
+                                </div>
+                              </div>
                     </div>
 
 
@@ -228,6 +233,7 @@
                                         <th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ
                                             (บาท)</th>
                                         <th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th>
+                                        <th rowspan="2" style="text-align: center !important">เปอร์เซ็นส่วนเบี่ยงเบน</th>
                                         <th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th>
                                         <th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3
                                             ปีงบประมาณ</th>                                        

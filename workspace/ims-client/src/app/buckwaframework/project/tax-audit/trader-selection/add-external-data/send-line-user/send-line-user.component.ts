@@ -120,6 +120,7 @@ export class SendLineUserComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
       '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
+      '<th rowspan="2" style="text-align: center !important">เปอร์เซ็นส่วนเบี่ยงเบน</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
       '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
       
@@ -163,7 +164,7 @@ export class SendLineUserComponent implements OnInit {
       paging: false,
       pagingType: "full_numbers",
       fixedColumns : { 
-        leftColumns : 2 
+        leftColumns : 3 
       },
       ajax: {
         type: "POST",
@@ -203,6 +204,7 @@ export class SendLineUserComponent implements OnInit {
         { data: "firstMonth", className: "center" },
         { data: "lastMonth", className: "center" },
         { data: "percentage", className: "center" },
+        { data: "deviation",className:"center" },
         { data: "totalMonth", className: "center" },
         { data: "no1" },
         { data: "no2" },
