@@ -3,6 +3,7 @@ import { MessageBarService } from "../../../../common/services/message-bar.servi
 import { Router } from "@angular/router";
 import { ExciseService } from "../../../../common/services/excise.service";
 import { AjaxService } from "../../../../common/services/ajax.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var jQuery: any;
 declare var $: any;
@@ -12,6 +13,11 @@ declare var $: any;
   styleUrls: []
 })
 export class CreateWorkingPaperTraderComponent implements OnInit {
+  breadcrumb: BreadCrumb[] = [
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การคัดเลือกราย', route: '#' },
+    { label: 'สร้างกระดาษทำการคัดเลือกราย', route: '#' },
+  ]
   private count: number = 1;
   numbers: number[];
   from: any;

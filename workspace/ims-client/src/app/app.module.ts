@@ -32,11 +32,14 @@ import { LoginPage } from "./buckwaframework/project/pages/login/login";
 import { ModalModule } from "components/index";
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     TranslatePipe,
-    LoginPage
+    LoginPage,
+
+
   ],
   imports: [
     BrowserModule,

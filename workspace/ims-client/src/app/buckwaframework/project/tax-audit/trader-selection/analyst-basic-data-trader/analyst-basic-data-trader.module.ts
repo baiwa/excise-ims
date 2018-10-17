@@ -5,14 +5,14 @@ import { AnalystBasicDataTraderComponent } from './analyst-basic-data-trader.com
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../../../common/services';
 import { FormsModule } from '@angular/forms';
-import { ModalModule } from '../../../../common/components';
+import { ModalModule, BreadcrumbModule } from '../../../../common/components';
 
 const routes: Routes = [
     { path: '', component: AnalystBasicDataTraderComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule, FormsModule, ModalModule],
+  imports: [RouterModule.forChild(routes), CommonModule, FormsModule, ModalModule,BreadcrumbModule],
   declarations: [AnalystBasicDataTraderComponent],
   exports: [RouterModule]
 })

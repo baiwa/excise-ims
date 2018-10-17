@@ -16,7 +16,7 @@ declare var $: any;
       padding-top: 14px !important;
     }
     .sixteen.wide.column.bread {
-      padding-top: 0;
+      padding-top: 14;
     }
     .shadow {
       background-color: #fff;

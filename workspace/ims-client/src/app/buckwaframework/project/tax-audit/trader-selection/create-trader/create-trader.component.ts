@@ -6,6 +6,8 @@ import { TextDateTH, digit, formatter } from "../../../../common/helper/datepick
 import { createTraderSerivce } from "projects/tax-audit/trader-selection/create-trader/create-trader.service";
 declare var jQuery: any;
 declare var $: any;
+import { BreadCrumb } from 'models/index';
+
 @Component({
   selector: "create-trader",
   templateUrl: "./create-trader.component.html",
@@ -20,6 +22,11 @@ export class CreateTraderComponent implements OnInit {
   selectedSEndMonth: any;
   selectStartDateObj: any;
   selectEndDateObj: any;
+  breadcrumb: BreadCrumb[] = [
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การคัดเลือกราย', route: '#' },
+    { label: 'สร้างกระดาษทำการคัดเลือกราย', route: '#' }
+  ]
   constructor(
     private ajax: AjaxService,
     private router: Router,
