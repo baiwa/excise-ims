@@ -7,12 +7,13 @@
   <div class="inline fields" style="text-align: center !important;">หน่วยงาน กลุ่มตรวจสอบภายใน</div>
   <div class="inline fields" style="text-align: center !important;">เดินทางไปราชการที่ {{travelToHeadString}}</div>
   <div class="inline fields" style="text-align: center !important;">ตั้งแต่วันที่ {{dateFromHead}} - {{dateToHead}}</div>
+
   <br>
-  <div class="ui center aligned grid">
+  <!-- <div class="ui center aligned grid">
     <div class="eight wide column">
       <button class="ui  primary button" type="button" (click)="modalAddHead()">แก้ไข</button>
     </div>
-  </div>
+  </div> -->
 </div>
 
 <br>
@@ -40,7 +41,7 @@
         <th rowspan="2" style="text-align: center !important;">หมายเหตุ</th>
         <th rowspan="2" style="text-align: center !important;width:70px !important">จัดการ</th>
       </tr>
-      <tr>			
+      <tr>
         <th style="text-align: center !important;">จำนวนวัน</th>
         <th style="text-align: center !important;">จำนวนเงิน</th>
         <th style="text-align: center !important;">จำนวนวัน</th>
@@ -51,12 +52,12 @@
     <tfoot>
       <tr>
         <th rowspan="1" colspan="4" style="text-align: center !important;"> รวม </th>
-        <th rowspan="1" style="text-align: right !important;">{{totalFeedMoney}}</th>
+        <th rowspan="1" style="text-align: right !important;">{{ df(totalFeedMoney)}}</th>
         <th rowspan="1" style="text-align: center !important;"></th>
-        <th rowspan="1" style="text-align: right !important;">{{totalRoostMoney}}</th>
-        <th rowspan="1" style="text-align: right !important;">{{totalPassage}}</th>
-        <th rowspan="1" style="text-align: right !important;">{{totalOtherExpenses}}</th>
-        <th rowspan="1" style="text-align: right !important;">{{totalTotalMoney}}</th>
+        <th rowspan="1" style="text-align: right !important;">{{ df(totalRoostMoney)}}</th>
+        <th rowspan="1" style="text-align: right !important;">{{ df(totalPassage)}}</th>
+        <th rowspan="1" style="text-align: right !important;">{{ df(totalOtherExpenses)}}</th>
+        <th rowspan="1" style="text-align: right !important;">{{ df(totalTotalMoney)}}</th>
         <th colspan="2" style="text-align: center !important;"></th>
       </tr>
 
@@ -64,7 +65,9 @@
   </table>
   <div class="ui grid">
     <div class="three wide column" style="text-align: right !important;">
-      <label><b>หมายเหตุท้ายเอกสาร</b></label>
+      <label>
+        <b>หมายเหตุท้ายเอกสาร</b>
+      </label>
     </div>
     <div class="ten wide column">
       <div class="ui form " style="width: 100%">
@@ -75,10 +78,11 @@
   </div>
 
   <div class="ui form center aligned grid">
-      <button class="ui  grey button" type="button" (click)="clickBack()">กลับ</button>
-      <button class="ui  primary button" type="button" (click)="save()">บันทึก</button>
-  </div> 
-<br><br>
+    <button class="ui  grey button" type="button" (click)="clickBack()">กลับ</button>
+    <button class="ui  primary button" type="button" (click)="save()">บันทึก</button>
+  </div>
+  <br>
+  <br>
 
 </div>
 
@@ -90,207 +94,261 @@
   </div>
 
   <div class="scrolling content">
-  <form id="addModal-form" ngNativeValidate >
-    <div class="ui form center aligned">
+    <form id="addModal-form" ngNativeValidate>
+      <div class="ui form center aligned">
 
-      <input type="hidden" id="id">
-      <input type="hidden" id="idDtl">
-      <input type="hidden" id="idProcess">
+        <input type="hidden" id="id">
+        <input type="hidden" id="idDtl">
+        <input type="hidden" id="idProcess">
 
 
-      <div class="inline fields">
-        <div class="three wide field right aligned">
-          <label>ชื่อ</label>
+        <div class="inline fields">
+          <div class="three wide field right aligned">
+            <label>ชื่อ</label>
+          </div>
+          <div class="three wide field">
+            <input id="name" type="text">
+          </div>
+          <div class="two wide field right aligned">
+            <label>นามสกุล</label>
+          </div>
+          <div class="three wide field">
+            <input id="lastName" type="text">
+          </div>
         </div>
-        <div class="three wide field">
-          <input id="name" type="text">
+        <div class="inline fields">
+          <div class="three wide field right aligned">
+            <label>ตำแหน่ง</label>
+          </div>
+          <div class="three wide field">
+            <input id="position" type="text">
+          </div>
+          <div class="two wide field right aligned">
+            <label>ประเภท</label>
+          </div>
+          <div class="three wide field">
+            <select class="ui dropdown" id="type" name="type" (change)="gradeDropdown($event)" style="width: 100%">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of typeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
+            </select>
+          </div>
+          <div class="two wide field right aligned">
+            <label>ระดับ</label>
+          </div>
+          <div class="three wide field">
+            <select class="ui dropdown" id="grade" name="grade" style="width: 100%">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of gradeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
+            </select>
+          </div>
         </div>
-        <div class="two wide field right aligned">
-          <label>นามสกุล</label>
-        </div>
-        <div class="three wide field">
-          <input id="lastName" type="text">
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="three wide field right aligned">
-          <label>ตำแหน่ง</label>
-        </div>
-        <div class="three wide field">
-          <input id="position" type="text">
-        </div>
-        <div class="two wide field right aligned">
-          <label>ประเภท</label>
-        </div>
-        <div class="three wide field">
-          <select class="ui dropdown" id="type" name="type" (change)="gradeDropdown($event)" style="width: 100%">
-            <option value="">เลือก</option>
-            <option *ngFor="let data of typeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
-          </select>
-        </div>
-        <div class="two wide field right aligned">
-          <label>ระดับ</label>
-        </div>
-        <div class="three wide field">
-          <select class="ui dropdown" id="grade" name="grade" style="width: 100%">
-            <option value="">เลือก</option>
-            <option *ngFor="let data of gradeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="three wide field ui right aligned">
-          <label>วันขออนุญาต</label>
-        </div>
-        <div class="three wide field">
-          <div class="ui calendar" id="modalDate3" style="width: 100%">
-            <div class="ui input left icon">
-              <i class="time icon"></i>
-              <input type="text" name="date-raw" id="permissionDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+        <div class="inline fields">
+          <div class="three wide field ui right aligned">
+            <label>วันขออนุญาต</label>
+          </div>
+          <div class="three wide field">
+            <div class="ui calendar" id="modalDate3" style="width: 100%">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" name="date-raw" id="permissionDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy"
+                  [attr.required]="true">
+              </div>
+            </div>
+          </div>
+          <div class="two wide field ui right aligned">
+            <label>วันเขียนเบิก</label>
+          </div>
+          <div class="three wide field">
+            <div class="ui calendar" id="modalDate4" style="width: 100%">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" name="date-raw" id="writeDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+              </div>
             </div>
           </div>
         </div>
-        <div class="two wide field ui right aligned">
-          <label>วันเขียนเบิก</label>
-        </div>
-        <div class="three wide field">
-          <div class="ui calendar" id="modalDate4" style="width: 100%">
-            <div class="ui input left icon">
-              <i class="time icon"></i>
-              <input type="text" name="date-raw" id="writeDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+
+        <div class="inline fields">
+          <div class="three wide field ui right aligned">
+            <label>ออกเดินทางจาก</label>
+          </div>
+          <div class="two wide field ">
+            <div class="ui radio checkbox departureFrom1">
+              <input type="radio" name="departureFrom" id="departureFrom1" value="1179" (click)="getDepartureFrom($event)">
+              <label>
+                <b>บ้านพัก</b>
+              </label>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="three wide field ui right aligned">
-          <label>เดินทางจาก</label>
-        </div>
-        <div class="three wide field ui right aligned" style="width: 100%">
-          <select class="ui dropdown" id="departure">
-            <option value="">เลือก</option>
-            <option *ngFor="let data of departureList" value="{{data.lovId}}">{{data.typeDescription}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="three wide field ui right aligned">
-          <label>วัน เวลา ออกเดินทาง</label>
-        </div>
-        <div class="three wide field">
-          <div class="ui calendar" id="modalDate5" style="width: 100%">
-            <div class="ui input left icon">
-              <i class="time icon"></i>
-              <input type="text" name="date-raw" id="departureDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+          <div class="two wide field ">
+            <div class="ui radio checkbox departureFrom2">
+              <input type="radio" name="departureFrom" id="departureFrom2" value="1180" (click)="getDepartureFrom($event)">
+              <label>
+                <b>สำนักงาน</b>
+              </label>
             </div>
           </div>
-        </div>
-        <div class="two wide field ui right aligned" >
-          <label>วัน เวลา กลับถึง</label>
-        </div>
-        <div class="three wide field">
-          <div class="ui calendar" id="modalDate6" style="width: 100%">
-            <div class="ui input left icon">
-              <i class="time icon"></i>
-              <input type="text" name="date-raw" id="returnDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+          <div class="two wide field ">
+            <div class="ui radio checkbox departureFrom3">
+              <input type="radio" name="departureFrom" id="departureFrom3" value="1181" (click)="getDepartureFrom($event)">
+              <label>
+                <b>ประเทศไทย</b>
+              </label>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <div class="inline fields">
-        <div class="three wide field ui right aligned">
-          <label>กรณีค่าเบี้ยเลี้ยง</label>
-        </div>
-        <div class="three wide field">
-          <select class="ui dropdown" id="allowance" style="width: 100%" (change)="ngIfallowance($event)">
-            <option value="">เลือก</option>
-            <option *ngFor="let data of allowanceList" value="{{data.lovId}}">{{data.typeDescription}}</option>
-          </select>
-        </div>
-        <div class="two wide field ui right aligned" *ngIf=" ifallowance =='1184' && ifallowance !='' ">
-          <label>กรณีฝึกอบรม</label>
-        </div>
-        <div class="three wide field" *ngIf=" ifallowance =='1184' && ifallowance !=''">
-          <select class="ui dropdown" id="training" style="width: 100%">
-            <option value="">เลือก</option>
-            <option *ngFor="let data of trainingList" value="{{data.lovId}}">{{data.typeDescription}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="three wide field right aligned">
-          <label>กรณีที่พัก</label>
-        </div>
-        <div class="three wide field">
-          <select class="ui dropdown" id="roost" style="width: 100%" (change)="ngIfroost($event)">
-            <option value="">เลือก</option>
-            <option *ngFor="let data of roostList" value="{{data.lovId}}">{{data.typeDescription}}</option>
-          </select>
-        </div>
-        <div class="two wide field right aligned"  *ngIf=" ifroost =='1188'  && ifroost !='' ">
-          <label>ประเภทการฝึกอบรม</label>
-        </div>
-        <div class="three wide field"  *ngIf=" ifroost =='1188'  && ifroost !='' ">
-          <select class="ui dropdown" id="trainingType" style="width: 100%" >
-            <option value="">เลือก</option>
-            <option *ngFor="let data of trainingTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
-          </select>
-        </div>
-        <div class="two wide field right aligned"  *ngIf=" ifroost !='1187' && ifroost !='' ">
-          <label>ประเภทห้อง</label>
-        </div>
-        <div class="three wide field"  *ngIf=" ifroost !='1187'  && ifroost !='' ">
-          <select class="ui dropdown" id="roomType" style="width: 100%" >
-            <option value="">เลือก</option>
-            <option *ngFor="let data of roomTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
-          </select>
+          <div class="two wide field "></div>
+          <div class="two wide field ui right aligned">
+            <label>ตั่งแต่วันที่ เวลา</label>
+          </div>
+          <div class="three wide field">
+            <div class="ui calendar" id="modalDate5" style="width: 100%">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" name="date-raw" id="departureDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy"
+                  [attr.required]="true">
+              </div>
+            </div>
+          </div>
         </div>
 
-      </div>
-      <div class="inline fields">
-        <div class="three wide field ui right aligned">
-          <label>จำนวนวันเข้าพัก</label>
-        </div>
-        <div class="three wide field" >
-          <input id="numberDate" type="number" [attr.step]="1" required>
-        </div>
-      </div>
-      <div class="inline fields">
-        <div class="three wide field right aligned">
-          <label>ค่าพาหนะ</label>
-        </div>
-        <div class="three wide field">
-          <input id="passage" type="number" [attr.step]="1" required>
-        </div>
-
-        <div class="two wide field right aligned">
-          <label>ค่าใช้จ่ายอื่น</label>
-        </div>
-        <div class="three wide field">
-          <input id="otherExpenses" type="number" [attr.step]="1" required>
-        </div>
-      </div>
-      <div class="ui grid">
-        <div class="three wide column">
-          <label><b>หมายเหตุ</b></label>
-        </div>
-        <div class="ten wide column">
-          <div class="ui form " style="width: 100%">
-            <textarea id="remarkT"></textarea>
+        <div class="inline fields">
+          <div class="three wide field ui right aligned">
+            <label>กลับถึง</label>
+          </div>
+          <div class="two wide field ">
+            <div class="ui radio checkbox departureTo1">
+              <input type="radio" name="departureTo" id="departureTo1" value="1179" (click)="getDepartureTo($event)">
+              <label>
+                <b>บ้านพัก</b>
+              </label>
+            </div>
+          </div>
+          <div class="two wide field ">
+            <div class="ui radio checkbox departureTo2">
+              <input type="radio" name="departureTo" id="departureTo2" value="1180" (click)="getDepartureTo($event)">
+              <label>
+                <b>สำนักงาน</b>
+              </label>
+            </div>
+          </div>
+          <div class="two wide field ">
+            <div class="ui radio checkbox departureTo3">
+              <input type="radio" name="departureTo" id="departureTo3" value="1181" (click)="getDepartureTo($event)">
+              <label>
+                <b>ประเทศไทย</b>
+              </label>
+            </div>
+          </div>
+          <div class="two wide field "></div>
+          <div class="two wide field ui right aligned">
+            <label>กลับถึงวันที่ เวลา</label>
+          </div>
+          <div class="three wide field">
+            <div class="ui calendar" id="modalDate6" style="width: 100%">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text" name="date-raw" id="returnDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+              </div>
+            </div>
           </div>
         </div>
-        <div class="three wide field"></div>
+
+
+        <div class="inline fields">
+          <div class="three wide field ui right aligned">
+            <label>กรณีค่าเบี้ยเลี้ยง</label>
+          </div>
+          <div class="three wide field">
+            <select class="ui dropdown" id="allowance" style="width: 100%" (change)="ngIfallowance($event)">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of allowanceList" value="{{data.lovId}}">{{data.typeDescription}}</option>
+            </select>
+          </div>
+          <div class="two wide field ui right aligned" *ngIf=" ifallowance =='1184' && ifallowance !='' ">
+            <label>กรณีฝึกอบรม</label>
+          </div>
+          <div class="three wide field" *ngIf=" ifallowance =='1184' && ifallowance !=''">
+            <select class="ui dropdown" id="training" style="width: 100%">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of trainingList" value="{{data.lovId}}">{{data.typeDescription}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="inline fields">
+          <div class="three wide field right aligned">
+            <label>กรณีที่พัก</label>
+          </div>
+          <div class="three wide field">
+            <select class="ui dropdown" id="roost" style="width: 100%" (change)="ngIfroost($event)">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of roostList" value="{{data.lovId}}">{{data.typeDescription}}</option>
+            </select>
+          </div>
+          <div class="two wide field right aligned" *ngIf=" ifroost =='1188'  && ifroost !='' ">
+            <label>ประเภทการฝึกอบรม</label>
+          </div>
+          <div class="three wide field" *ngIf=" ifroost =='1188'  && ifroost !='' ">
+            <select class="ui dropdown" id="trainingType" style="width: 100%">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of trainingTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
+            </select>
+          </div>
+          <div class="two wide field right aligned" *ngIf=" ifroost !='1187' && ifroost !='' ">
+            <label>ประเภทห้อง</label>
+          </div>
+          <div class="three wide field" *ngIf=" ifroost !='1187'  && ifroost !='' ">
+            <select class="ui dropdown" id="roomType" style="width: 100%">
+              <option value="">เลือก</option>
+              <option *ngFor="let data of roomTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="inline fields">
+          <div class="three wide field ui right aligned">
+            <label>จำนวนวันเข้าพัก</label>
+          </div>
+          <div class="three wide field">
+            <input id="numberDate" type="number" [attr.step]="1" required>
+          </div>
+        </div>
+        <div class="inline fields">
+          <div class="three wide field right aligned">
+            <label>ค่าพาหนะ</label>
+          </div>
+          <div class="three wide field">
+            <input id="passage" type="number" [attr.step]="1" required>
+          </div>
+
+          <div class="two wide field right aligned">
+            <label>ค่าใช้จ่ายอื่น</label>
+          </div>
+          <div class="three wide field">
+            <input id="otherExpenses" type="number" [attr.step]="1" required>
+          </div>
+        </div>
+        <div class="ui grid">
+          <div class="three wide column">
+            <label>
+              <b>หมายเหตุ</b>
+            </label>
+          </div>
+          <div class="ten wide column">
+            <div class="ui form " style="width: 100%">
+              <textarea id="remarkT"></textarea>
+            </div>
+          </div>
+          <div class="three wide field"></div>
+        </div>
+        <br>
       </div>
-      <br>
-    </div>
     </form>
   </div>
 
   <div class="actions">
     <div class="ui red deny button">ยกเลิก</div>
     <div class="ui primary button" *ngIf=" btnModal=='E' " (click)="editData()">ดำเนินการแก้ไข</div>
-    <div class="ui green button"  *ngIf=" btnModal=='S' " (click)="saveData()">บันทึก</div>
+    <div class="ui green button" *ngIf=" btnModal=='S' " (click)="saveData()">บันทึก</div>
   </div>
 </div>
 <!--End add modal -->
@@ -310,63 +368,65 @@
       <div class="inline fields">
         <div class="three wide field"></div>
         <div class="two wide field">
-            <label>เดินทางไป</label>
+          <label>เดินทางไป</label>
         </div>
-    </div>
-    <div class="inline fields">
-      <div class="three wide field">
+      </div>
+      <div class="inline fields">
+        <div class="three wide field">
           <label>สรรพสามิตภาค</label>
-      </div>
-      <div class="five wide field">
+        </div>
+        <div class="five wide field">
           <select class="ui dropdown search selection" style="width: 100%;" id="travelToHead1" (change)="travelToHead2Dropdown($event)">
-              <option value="">เลือก</option>
-              <option *ngFor="let data of travelToHead1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            <option value="">เลือก</option>
+            <option *ngFor="let data of travelToHead1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
           </select>
-      </div>
-      <div class="three wide field">
+        </div>
+        <div class="three wide field">
           <label>สรรพสามิตพื้นที่</label>
-      </div>
-      <div class="five wide field">
+        </div>
+        <div class="five wide field">
           <select class="ui dropdown search selection" style="width: 100%;" id="travelToHead2" (change)="travelToHead3Dropdown($event)">
-              <option value="">เลือก</option>
-              <option *ngFor="let data of travelToHead2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            <option value="">เลือก</option>
+            <option *ngFor="let data of travelToHead2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
           </select>
+        </div>
       </div>
-  </div>
-  <div class="inline fields">
-      <div class="three wide field">
+      <div class="inline fields">
+        <div class="three wide field">
           <label>สรพพสามิตสาขา</label>
-      </div>
-      <div class="five wide field">
-          <select class="ui dropdown search selection" style="width: 100%;" id="travelToHead3"  (change)="setTravelToHead($event)" >
-              <option value="">เลือก</option>
-              <option *ngFor="let data of travelToHead3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+        </div>
+        <div class="five wide field">
+          <select class="ui dropdown search selection" style="width: 100%;" id="travelToHead3" (change)="setTravelToHead($event)">
+            <option value="">เลือก</option>
+            <option *ngFor="let data of travelToHead3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
           </select>
+        </div>
       </div>
-  </div>
       <div class="inline fields">
         <div class="three wide field">
           <label>ตั้งแต่วันที่</label>
         </div>
         <div class="five wide field">
           <div class="ui calendar" id="modalDate1" style="width: 100%;">
-              <div class="ui input left icon">
-                  <i class="time icon"></i>
-                  <input type="text" id="departureDateHead" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
-              </div>
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input type="text" id="departureDateHead" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                [attr.required]="true">
+            </div>
           </div>
-      </div>
+        </div>
         <div class="three wide field">
           <label>ถึง</label>
         </div>
         <div class="five wide field">
           <div class="ui calendar" id="modalDate2" style="width: 100%;">
-              <div class="ui input left icon">
-                  <i class="time icon"></i>
-                  <input type="text" id="returnDateHead" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
-              </div>
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input type="text" id="returnDateHead" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
+                [attr.required]="true">
+            </div>
           </div>
-      </div>
+        </div>
       </div>
 
     </div>

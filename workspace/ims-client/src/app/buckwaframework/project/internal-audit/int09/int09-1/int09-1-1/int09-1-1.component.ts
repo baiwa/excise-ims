@@ -51,6 +51,20 @@ export class Int0911Component implements OnInit, OnDestroy {
     this.fileUpload = new Array<File>(); // initial file array
   }
 
+  
+  ngOnInit() {
+    this.idProcess = this.route.snapshot.queryParams["idProcess"];
+    console.log("idProcess : ",this.idProcess);
+    this.getHead();
+    this.documentTypeDropdown();
+    this.dataTable();
+    this.dataTable2();
+  }
+
+  ngOnDestroy() {
+    $('#modalAddDocument').remove();
+  }
+
   documentTypeDropdown = () =>{
     const URL = "combobox/controller/getDropByTypeAndParentId";
     this.ajax.post(URL, { type: "ACC_FEE", lovIdMaster: 1171 }, res => {
@@ -381,8 +395,8 @@ export class Int0911Component implements OnInit, OnDestroy {
 
       this.pickedType = (this.head.pickedType==1162)?'ก่อนเดินทาง':'หลังเดินทาง';
       this.fiscalYear = this.head.fiscalYear;
-      this.departureDate = this.head.departureDate;
-      this.returnDate = this.head.returnDate;
+      this.departureDate = parseInt(this.head.departureDate.split("/")[0])+" "+TextDateTH.months[parseInt(this.head.departureDate.split("/")[1]) - 1]+" "+this.head.departureDate.split("/")[2];
+      this.returnDate = parseInt(this.head.returnDate.split("/")[0])+" "+TextDateTH.months[parseInt(this.head.returnDate.split("/")[1]) - 1]+" "+this.head.returnDate.split("/")[2];;
       this.travelToDescription = this.head.travelToDescription;
     });
   }
@@ -434,18 +448,6 @@ export class Int0911Component implements OnInit, OnDestroy {
     }
   };
 
-  ngOnDestroy() {
-    $('#modalAddDocument').remove();
-  }
 
-  
-  ngOnInit() {
-    this.idProcess = this.route.snapshot.queryParams["idProcess"];
-    console.log("idProcess : ",this.idProcess);
-    this.getHead();
-    this.documentTypeDropdown();
-    this.dataTable();
-    this.dataTable2();
-  }
   
 }

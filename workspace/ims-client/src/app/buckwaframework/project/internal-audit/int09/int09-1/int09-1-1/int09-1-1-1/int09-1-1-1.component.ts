@@ -15,6 +15,7 @@ import {
   DecimalFormat
 } from "../../../../../../common/helper";
 import { TravelService } from "../../../../../../common/services/travel.service";
+
 declare var $: any;
 @Component({
   selector: "app-int09-1-1-1",
@@ -46,12 +47,17 @@ export class Int09111Component implements OnInit, AfterViewInit {
    
   typeList: any;
   gradeList: any;
-  departureList: any;
+  // departureList: any;
   trainingList: any;
   allowanceList: any;
   roostList: any;
   trainingTypeList: any;
   roomTypeList: any;
+
+  departureFrom:any;
+  departureTo:any;
+
+  head:any;
 
   constructor(
     private ajax: AjaxService,
@@ -60,6 +66,54 @@ export class Int09111Component implements OnInit, AfterViewInit {
     private msg: MessageBarService,
     private travelService: TravelService
   ) { }
+
+  ngOnInit() {
+    // $('.ui.dropdown').dropdown();
+    this.idProcess = this.route.snapshot.queryParams["idProcess"];
+    console.log("idProcess : ", this.idProcess);
+    this.dataTable();
+    this.calenda();
+    this.getHead();
+    this.travelToHead1Dropdown();
+    this.typeDropdown();
+    // this.departureDropdown();
+    this.allowanceDropdown();
+    this.trainingDropdown();
+    this.roostDropdown();
+    this.trainingTypeDropdown();
+    this.roomTypeDropdown();
+
+  }
+
+
+  ngAfterViewInit() {
+
+  }
+  getHead = () =>{
+  
+    const URL = "ia/int0911/gethead";
+    this.ajax.post(URL, { idProcess: this.idProcess}, res => {
+      this.head = res.json();
+      console.log("Head : ",this.head);
+
+      // this.pickedTypeH = (this.head.pickedType==1162)?'ก่อนเดินทาง':'หลังเดินทาง';
+      // this.fiscalYearH = this.head.fiscalYear;
+      this.dateFromHead = parseInt(this.head.departureDate.split("/")[0])+" "+TextDateTH.months[parseInt(this.head.departureDate.split("/")[1]) - 1]+" "+this.head.departureDate.split("/")[2];
+      this.dateToHead = parseInt(this.head.returnDate.split("/")[0])+" "+TextDateTH.months[parseInt(this.head.returnDate.split("/")[1]) - 1]+" "+this.head.returnDate.split("/")[2];
+      this.travelToHeadString = this.head.travelToDescription;
+    });
+  }
+
+  getDepartureFrom = (e) =>{
+  console.log("getDepartureFrom : ",e.target.value);
+  this.departureFrom=e.target.value;
+  
+  }
+
+  getDepartureTo = (e) =>{
+    console.log("getDepartureTo : ",e.target.value);
+    this.departureTo=e.target.value;
+    }
 
   calenda = function () {
     let promise = new Promise((resolve, reject) => {
@@ -146,22 +200,27 @@ export class Int09111Component implements OnInit, AfterViewInit {
           "className": "ui right aligned"
         }, {
           "data": "feedMoney",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": $.fn.dataTable.render.number(',', '.', 2, '')
         }, {
           "data": "roostDay",
           "className": "ui right aligned"
         }, {
           "data": "roostMoney",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": $.fn.dataTable.render.number(',', '.', 2, '')
         }, {
           "data": "passage",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": $.fn.dataTable.render.number(',', '.', 2, '')
         }, {
           "data": "otherExpenses",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": $.fn.dataTable.render.number(',', '.', 2, '')
         }, {
           "data": "totalMoney",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": $.fn.dataTable.render.number(',', '.', 2, '')
         }, {
           "data": "remark"
         }, {
@@ -218,6 +277,11 @@ export class Int09111Component implements OnInit, AfterViewInit {
     this.totalTotalMoney+=data.totalMoney;
   }
 
+  df(what): string {
+    const df = new DecimalFormat("###,###.00");
+    return df.format(what);
+  }
+
   setSum0 = () =>{
     this.totalFeedMoney=0;
     this.totalRoostMoney=0;
@@ -246,12 +310,12 @@ export class Int09111Component implements OnInit, AfterViewInit {
       });
     }
   }
-  departureDropdown = () =>{
-    const URL = "combobox/controller/getDropByTypeAndParentId";
-    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1178}, res => {
-      this.departureList = res.json();
-    });
-  }
+  // departureDropdown = () =>{
+  //   const URL = "combobox/controller/getDropByTypeAndParentId";
+  //   this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1178}, res => {
+  //     this.departureList = res.json();
+  //   });
+  // }
   
   allowanceDropdown = () =>{
     const URL = "combobox/controller/getDropByTypeAndParentId";
@@ -300,6 +364,16 @@ export class Int09111Component implements OnInit, AfterViewInit {
     $('#modalAdd').modal({
       onShow: ()=>{
         this.calenda();
+        $('.ui.radio.checkbox').checkbox('set unchecked');
+
+        $("#type").dropdown("restore defaults");
+        $("#grade").dropdown("restore defaults");
+        $("#training").dropdown("restore defaults");
+        $("#allowance").dropdown("restore defaults");
+        $("#roost").dropdown("restore defaults");
+        $("#trainingType").dropdown("restore defaults");
+        $("#roomType").dropdown("restore defaults");
+        
         $('input[type=text]').val("");
         $('input[type=number]').val("");
         $('#remarkT').val("");
@@ -323,14 +397,34 @@ export class Int09111Component implements OnInit, AfterViewInit {
        
          $("#type").dropdown('set selected',data.int09FormDtlVo.type);
          setTimeout(() => {
-          console.log("data.int09FormDtlVo.grade : ",data.int09FormDtlVo.grade);
           $("#grade").dropdown('set selected',data.int09FormDtlVo.grade);
          }, 500);
       
 
          $("#permissionDate").val(data.int09FormDtlVo.permissionDate);
          $("#writeDate").val(data.int09FormDtlVo.writeDate);
-         $("#departure").dropdown('set selected',data.int09FormDtlVo.departure);
+
+         
+         this.departureFrom=data.int09FormDtlVo.departureFrom;
+          if(this.departureFrom==1179){
+            $('.ui.radio.checkbox.departureFrom1').checkbox('set checked');
+          }else if(this.departureFrom==1180){
+            $('.ui.radio.checkbox.departureFrom2').checkbox('set checked');
+          }else if(this.departureFrom==1181){
+            $('.ui.radio.checkbox.departureFrom3').checkbox('set checked');
+          }
+
+         this.departureTo=data.int09FormDtlVo.departureTo;
+          if(this.departureTo==1179){
+            $('.ui.radio.checkbox.departureTo1').checkbox('set checked');
+          }else if(this.departureTo==1180){
+            $('.ui.radio.checkbox.departureTo2').checkbox('set checked');
+          }else if(this.departureTo==1181){
+            $('.ui.radio.checkbox.departureTo3').checkbox('set checked');
+          }
+        
+       
+        //  $("#departure").dropdown('set selected',data.int09FormDtlVo.departure);
 
          $("#departureDate").val(data.int09FormDtlVo.departureDate);
          $("#returnDate").val(data.int09FormDtlVo.returnDate);
@@ -363,7 +457,8 @@ export class Int09111Component implements OnInit, AfterViewInit {
       grade:$("#grade").val(),
       permissionDate:$("#permissionDate").val(),
       writeDate:$("#writeDate").val(),
-      departure:$("#departure").val(),
+      departureFrom:this.departureFrom,
+      departureTo:this.departureTo,
       departureDate:$("#departureDate").val(),
       returnDate:$("#returnDate").val(),
       allowance:$("#allowance").val(),
@@ -403,7 +498,8 @@ export class Int09111Component implements OnInit, AfterViewInit {
       grade:$("#grade").val(),
       permissionDate:$("#permissionDate").val(),
       writeDate:$("#writeDate").val(),
-      departure:$("#departure").val(),
+      departureFrom:this.departureFrom,
+      departureTo:this.departureTo,
       departureDate:$("#departureDate").val(),
       returnDate:$("#returnDate").val(),
       allowance:$("#allowance").val(),
@@ -435,14 +531,14 @@ export class Int09111Component implements OnInit, AfterViewInit {
     this.calenda();
   }
 
-  saveHead() {
-    var DateH1 = $("#departureDateHead").val().split("/");
-    var DateH2 = $("#returnDateHead").val().split("/");
+  // saveHead() {
+  //   var DateH1 = $("#departureDateHead").val().split("/");
+  //   var DateH2 = $("#returnDateHead").val().split("/");
 
-    this.dateFromHead = DateH1[0] + " " + TextDateTH.months[parseInt(DateH1[1]) - 1] + " " + DateH1[2];
-    this.dateToHead = DateH2[0] + " " + TextDateTH.months[parseInt(DateH2[1]) - 1] + " " + DateH2[2];
-    $('#modalAddHead').modal('hide');
-  }
+  //   this.dateFromHead = DateH1[0] + " " + TextDateTH.months[parseInt(DateH1[1]) - 1] + " " + DateH1[2];
+  //   this.dateToHead = DateH2[0] + " " + TextDateTH.months[parseInt(DateH2[1]) - 1] + " " + DateH2[2];
+  //   $('#modalAddHead').modal('hide');
+  // }
 
 
 
@@ -518,28 +614,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
   }
 
 
-  ngOnInit() {
-    // $('.ui.dropdown').dropdown();
-    this.idProcess = this.route.snapshot.queryParams["idProcess"];
-    console.log("idProcess : ", this.idProcess);
-    this.dataTable();
-    this.calenda();
-
-    this.travelToHead1Dropdown();
-    this.typeDropdown();
-    this.departureDropdown();
-    this.allowanceDropdown();
-    this.trainingDropdown();
-    this.roostDropdown();
-    this.trainingTypeDropdown();
-    this.roomTypeDropdown();
-
-  }
-
-
-  ngAfterViewInit() {
-
-  }
+ 
 
 
 

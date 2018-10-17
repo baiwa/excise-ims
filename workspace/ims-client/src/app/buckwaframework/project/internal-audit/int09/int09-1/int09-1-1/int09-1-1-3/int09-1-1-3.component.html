@@ -47,11 +47,11 @@
     <tfoot>
       <tr>
         <th rowspan="1" colspan="3" style="text-align: center !important;"> รวม </th>
-        <th rowspan="1" style="text-align: right !important;">{{totalFeedMoney}}</th>
-        <th rowspan="1" style="text-align: right !important;">{{totalRoostMoney}}</th>
-        <th rowspan="1" style="text-align: right !important;">{{totalPassage}}</th>
-        <th rowspan="1" style="text-align: right !important;">{{totalOtherExpenses}}</th>
-        <th rowspan="1" style="text-align: right !important;">{{totalTotalMoney}}</th>
+        <th rowspan="1" style="text-align: right !important;">{{df(totalFeedMoney)}}</th>
+        <th rowspan="1" style="text-align: right !important;">{{df(totalRoostMoney)}}</th>
+        <th rowspan="1" style="text-align: right !important;">{{df(totalPassage)}}</th>
+        <th rowspan="1" style="text-align: right !important;">{{df(totalOtherExpenses)}}</th>
+        <th rowspan="1" style="text-align: right !important;">{{df(totalTotalMoney)}}</th>
         <th colspan="2" style="text-align: center !important;"></th>
       </tr>
 
@@ -144,40 +144,89 @@
           </div>
         </div>
         <div class="inline fields">
-          <div class="three wide field ui right aligned">
-            <label>เดินทางจาก</label>
-          </div>
-          <div class="three wide field ui right aligned" style="width: 100%">
-            <select class="ui dropdown" id="departure">
-              <option value="">เลือก</option>
-              <option *ngFor="let data of departureList" value="{{data.lovId}}">{{data.typeDescription}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="inline fields">
-          <div class="three wide field ui right aligned">
-            <label>วัน เวลา ออกเดินทาง</label>
-          </div>
-          <div class="three wide field">
-            <div class="ui calendar" id="modalDate5" style="width: 100%">
-              <div class="ui input left icon">
-                <i class="time icon"></i>
-                <input type="text" name="date-raw" id="departureDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+            <div class="three wide field ui right aligned">
+              <label>ออกเดินทางจาก</label>
+            </div>
+            <div class="two wide field ">
+              <div class="ui radio checkbox departureFrom1">
+                <input type="radio" name="departureFrom" id="departureFrom1" value="1179" (click)="getDepartureFrom($event)">
+                <label>
+                  <b>บ้านพัก</b>
+                </label>
+              </div>
+            </div>
+            <div class="two wide field ">
+              <div class="ui radio checkbox departureFrom2">
+                <input type="radio" name="departureFrom" id="departureFrom2" value="1180" (click)="getDepartureFrom($event)">
+                <label>
+                  <b>สำนักงาน</b>
+                </label>
+              </div>
+            </div>
+            <div class="two wide field ">
+              <div class="ui radio checkbox departureFrom3">
+                <input type="radio" name="departureFrom" id="departureFrom3" value="1181" (click)="getDepartureFrom($event)">
+                <label>
+                  <b>ประเทศไทย</b>
+                </label>
+              </div>
+            </div>
+            <div class="two wide field "></div>
+            <div class="two wide field ui right aligned">
+              <label>ตั่งแต่วันที่ เวลา</label>
+            </div>
+            <div class="three wide field">
+              <div class="ui calendar" id="modalDate5" style="width: 100%">
+                <div class="ui input left icon">
+                  <i class="time icon"></i>
+                  <input type="text" name="date-raw" id="departureDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy"
+                    [attr.required]="true">
+                </div>
               </div>
             </div>
           </div>
-          <div class="two wide field ui right aligned" >
-            <label>วัน เวลา กลับถึง</label>
-          </div>
-          <div class="three wide field">
-            <div class="ui calendar" id="modalDate6" style="width: 100%">
-              <div class="ui input left icon">
-                <i class="time icon"></i>
-                <input type="text" name="date-raw" id="returnDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+  
+          <div class="inline fields">
+            <div class="three wide field ui right aligned">
+              <label>กลับถึง</label>
+            </div>
+            <div class="two wide field ">
+              <div class="ui radio checkbox departureTo1">
+                <input type="radio" name="departureTo" id="departureTo1" value="1179" (click)="getDepartureTo($event)">
+                <label>
+                  <b>บ้านพัก</b>
+                </label>
+              </div>
+            </div>
+            <div class="two wide field ">
+              <div class="ui radio checkbox departureTo2">
+                <input type="radio" name="departureTo" id="departureTo2" value="1180" (click)="getDepartureTo($event)">
+                <label>
+                  <b>สำนักงาน</b>
+                </label>
+              </div>
+            </div>
+            <div class="two wide field ">
+              <div class="ui radio checkbox departureTo3">
+                <input type="radio" name="departureTo" id="departureTo3" value="1181" (click)="getDepartureTo($event)">
+                <label>
+                  <b>ประเทศไทย</b>
+                </label>
+              </div>
+            </div>
+            <div class="two wide field "></div>
+            <div class="two wide field ui right aligned">
+              <label>กลับถึงวันที่ เวลา</label>
+            </div>
+            <div class="three wide field">
+              <div class="ui calendar" id="modalDate6" style="width: 100%">
+                <div class="ui input left icon">
+                  <i class="time icon"></i>
+                  <input type="text" name="date-raw" id="returnDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                </div>
               </div>
             </div>
           </div>
-        </div>
         <div class="inline fields">
           <div class="three wide field ui right aligned">
             <label>กรณีค่าเบี้ยเลี้ยง</label>

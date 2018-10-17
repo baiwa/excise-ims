@@ -46,12 +46,15 @@ export class Int09113Component implements OnInit, AfterViewInit {
    
   typeList: any;
   gradeList: any;
-  departureList: any;
+  // departureList: any;
   trainingList: any;
   allowanceList: any;
   roostList: any;
   trainingTypeList: any;
   roomTypeList: any;
+
+  departureFrom:any;
+  departureTo:any;
 
   constructor(
     private ajax: AjaxService,
@@ -141,19 +144,24 @@ export class Int09113Component implements OnInit, AfterViewInit {
           "data": "position"
         }, {
           "data": "feedMoney",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": $.fn.dataTable.render.number(',', '.', 2, '')
         }, {
           "data": "roostMoney",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": $.fn.dataTable.render.number(',', '.', 2, '')
         }, {
           "data": "passage",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": $.fn.dataTable.render.number(',', '.', 2, '')
         }, {
           "data": "otherExpenses",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": $.fn.dataTable.render.number(',', '.', 2, '')
         }, {
           "data": "totalMoney",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": $.fn.dataTable.render.number(',', '.', 2, '')
         }, {
           "data": "remark"
         }, {
@@ -211,6 +219,11 @@ export class Int09113Component implements OnInit, AfterViewInit {
     this.totalTotalMoney+=data.totalMoney;
   }
 
+  df(what): string {
+    const df = new DecimalFormat("###,###.00");
+    return df.format(what);
+  }
+
   setSum0 = () =>{
     this.totalFeedMoney=0;
     this.totalRoostMoney=0;
@@ -238,12 +251,12 @@ export class Int09113Component implements OnInit, AfterViewInit {
       });
     }
   }
-  departureDropdown = () =>{
-    const URL = "combobox/controller/getDropByTypeAndParentId";
-    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1178}, res => {
-      this.departureList = res.json();
-    });
-  }
+  // departureDropdown = () =>{
+  //   const URL = "combobox/controller/getDropByTypeAndParentId";
+  //   this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1178}, res => {
+  //     this.departureList = res.json();
+  //   });
+  // }
   
   allowanceDropdown = () =>{
     const URL = "combobox/controller/getDropByTypeAndParentId";
@@ -287,11 +300,32 @@ export class Int09113Component implements OnInit, AfterViewInit {
     });
   }
 
+  getDepartureFrom = (e) =>{
+    console.log("getDepartureFrom : ",e.target.value);
+    this.departureFrom=e.target.value;
+    
+    }
+  
+    getDepartureTo = (e) =>{
+      console.log("getDepartureTo : ",e.target.value);
+      this.departureTo=e.target.value;
+      }
+
   modalAdd() {
     this.btnModal = 'S';
     $('#modalAdd').modal({
       onShow: ()=>{
         this.calenda();
+        $('.ui.radio.checkbox').checkbox('set unchecked');
+
+        $("#type").dropdown("restore defaults");
+        $("#grade").dropdown("restore defaults");
+        $("#training").dropdown("restore defaults");
+        $("#allowance").dropdown("restore defaults");
+        $("#roost").dropdown("restore defaults");
+        $("#trainingType").dropdown("restore defaults");
+        $("#roomType").dropdown("restore defaults");
+        
         $('input[type=text]').val("");
         $('input[type=number]').val("");
         $('#remarkT').val("");
@@ -323,7 +357,24 @@ export class Int09113Component implements OnInit, AfterViewInit {
          $("#permissionDate").val(data.int09FormDtlVo.permissionDate);
          $("#writeDate").val(data.int09FormDtlVo.writeDate);
 
-         $("#departure").dropdown('set selected',data.int09FormDtlVo.departure);
+         this.departureFrom=data.int09FormDtlVo.departureFrom;
+         if(this.departureFrom==1179){
+           $('.ui.radio.checkbox.departureFrom1').checkbox('set checked');
+         }else if(this.departureFrom==1180){
+           $('.ui.radio.checkbox.departureFrom2').checkbox('set checked');
+         }else if(this.departureFrom==1181){
+           $('.ui.radio.checkbox.departureFrom3').checkbox('set checked');
+         }
+
+        this.departureTo=data.int09FormDtlVo.departureTo;
+         if(this.departureTo==1179){
+           $('.ui.radio.checkbox.departureTo1').checkbox('set checked');
+         }else if(this.departureTo==1180){
+           $('.ui.radio.checkbox.departureTo2').checkbox('set checked');
+         }else if(this.departureTo==1181){
+           $('.ui.radio.checkbox.departureTo3').checkbox('set checked');
+         }
+        //  $("#departure").dropdown('set selected',data.int09FormDtlVo.departure);
 
          $("#departureDate").val(data.int09FormDtlVo.departureDate);
          $("#returnDate").val(data.int09FormDtlVo.returnDate);
@@ -355,7 +406,8 @@ export class Int09113Component implements OnInit, AfterViewInit {
       grade:$("#grade").val(),
       permissionDate:$("#permissionDate").val(),
       writeDate:$("#writeDate").val(),
-      departure:$("#departure").val(),
+      departureFrom:this.departureFrom,
+      departureTo:this.departureTo,
       departureDate:$("#departureDate").val(),
       returnDate:$("#returnDate").val(),
       allowance:$("#allowance").val(),
@@ -396,7 +448,8 @@ export class Int09113Component implements OnInit, AfterViewInit {
       grade:$("#grade").val(),
       permissionDate:$("#permissionDate").val(),
       writeDate:$("#writeDate").val(),
-      departure:$("#departure").val(),
+      departureFrom:this.departureFrom,
+      departureTo:this.departureTo,
       departureDate:$("#departureDate").val(),
       returnDate:$("#returnDate").val(),
       allowance:$("#allowance").val(),
@@ -519,7 +572,7 @@ export class Int09113Component implements OnInit, AfterViewInit {
 
     this.travelToHead1Dropdown();
     this.typeDropdown();
-    this.departureDropdown();
+    // this.departureDropdown();
     this.allowanceDropdown();
     this.trainingDropdown();
     this.roostDropdown();

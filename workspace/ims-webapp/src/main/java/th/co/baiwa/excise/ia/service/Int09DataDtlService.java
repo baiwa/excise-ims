@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +38,7 @@ public class Int09DataDtlService {
 	
 	public Int09TableDtlVo getDataDtl(Int09FormDtlVo formDtlVo) throws ParseException {
 		Int09TableDtlVo vo = new Int09TableDtlVo();
-		long totalMoney = 0;
+		Float totalMoney = 0f;
 		vo.setIdProcess(formDtlVo.getIdProcess());
 		vo.setName(formDtlVo.getName()+" "+formDtlVo.getLastName());
 		vo.setPosition(formDtlVo.getPosition());
@@ -44,23 +46,23 @@ public class Int09DataDtlService {
 		Long feedDay = getFeedDay(formDtlVo.getDepartureDate(),formDtlVo.getReturnDate());
 		vo.setFeedDay(feedDay);
 		
-		Long feedMoney = getFeedMoney(formDtlVo);
-		vo.setFeedMoney(feedMoney*feedDay);
-		totalMoney+=vo.getFeedMoney();
+		Float feedMoney = getFeedMoney(formDtlVo);
+		vo.setFeedMoney(new BigDecimal(feedMoney*Float.parseFloat(feedDay.toString())));
+		totalMoney+=vo.getFeedMoney().floatValue();
 		
-		vo.setRoostDay(Long.parseLong(formDtlVo.getNumberDate()));
+		vo.setRoostDay(formDtlVo.getNumberDate());
 		
-		Long roostMoney = getRoostMoney(formDtlVo);
-		vo.setRoostMoney(roostMoney*Long.parseLong(formDtlVo.getNumberDate()));
-		totalMoney+=vo.getRoostMoney();
+		Float roostMoney = getRoostMoney(formDtlVo);
+		vo.setRoostMoney(new BigDecimal(roostMoney*formDtlVo.getNumberDate()));
+		totalMoney+=vo.getRoostMoney().floatValue();
 		
 		vo.setPassage(formDtlVo.getPassage());
-		totalMoney+=vo.getPassage();
+		totalMoney+=vo.getPassage().floatValue();
 		
 		vo.setOtherExpenses(formDtlVo.getOtherExpenses());
-		totalMoney+=vo.getOtherExpenses();
+		totalMoney+=vo.getOtherExpenses().floatValue();
 		
-		vo.setTotalMoney(totalMoney);
+		vo.setTotalMoney(new BigDecimal(totalMoney));
 		vo.setRemark(formDtlVo.getRemark());
 		return vo;
 	}
@@ -80,40 +82,40 @@ public class Int09DataDtlService {
 		iaTravelEstimatorDao.editDataFormDtl(formDtlVo);
 	}
 	
-	public Long getFeedMoney(Int09FormDtlVo formDtlVo) {
-		long feedMoney = 0;
+	public Float getFeedMoney(Int09FormDtlVo formDtlVo) {
+		Float feedMoney = 0f;
 		if("1183".equals(formDtlVo.getAllowance())) {
 			//ค่าเบี้ยเลี้ยง กรณีปกติ เอาระดับมาคิด
 			Lov data = lovRepository.findByTypeAndLovId("ACC_FEE",Long.parseLong(formDtlVo.getGrade()));
-			feedMoney = Long.parseLong(data.getValue1());
+			feedMoney = Float.parseFloat(data.getValue1());
 
 		}else {
 			//ค่าเบี้ยเลี้ยง กรณีฝึกอบรม เอากรณีฝึกอบรมมาคิด
 			Lov data = lovRepository.findByTypeAndLovId("ACC_FEE",Long.parseLong(formDtlVo.getTraining()));
-			feedMoney = Long.parseLong(data.getValue2());
+			feedMoney = Float.parseFloat(data.getValue2());
 			
 		}
 		return feedMoney;
 	}
 	
-	public Long getRoostMoney(Int09FormDtlVo formDtlVo) {
-		long roostMoney = 0;
+	public Float getRoostMoney(Int09FormDtlVo formDtlVo) {
+		Float roostMoney = 0f;
 		if("1186".equals(formDtlVo.getRoost())) {
 			//ค่าที่พัก กรณีปกติ เอาระดับมาคิด
 			Lov data = lovRepository.findByTypeAndLovId("ACC_FEE",Long.parseLong(formDtlVo.getGrade()));
 			
 			if("1191".equals(formDtlVo.getRoomType())) {
 				//ค่าที่พัก กรณีปกติ ห้องเดี่ยว
-				roostMoney = Long.parseLong(data.getValue2());
+				roostMoney = Float.parseFloat(data.getValue2());
 			}else {
 				//ค่าที่พัก กรณีปกติ ห้องคู่
-				roostMoney = Long.parseLong(data.getValue3());
+				roostMoney = Float.parseFloat(data.getValue3());
 			}
 
 		}else if("1187".equals(formDtlVo.getRoost())) {
 			//ค่าที่พัก กรณีเหมาจ่าย เอาระดับมาคิด
 			Lov data = lovRepository.findByTypeAndLovId("ACC_FEE",Long.parseLong(formDtlVo.getGrade()));
-			roostMoney = Long.parseLong(data.getValue4());
+			roostMoney = Float.parseFloat(data.getValue4());
 
 		}else{
 			//ค่าที่พัก กรณีฝึกอบรม เอาระดับมาคิด
@@ -121,16 +123,16 @@ public class Int09DataDtlService {
 			
 			if("1191".equals(formDtlVo.getRoomType())) {
 				//ค่าที่พัก กรณีฝึกอบรม ห้องเดี่ยว
-				roostMoney = Long.parseLong(data.getValue2());
+				roostMoney = Float.parseFloat(data.getValue2());
 			}else {
 				//ค่าที่พัก กรณีฝึกอบรม ห้องคู่
-				roostMoney = Long.parseLong(data.getValue4());
+				roostMoney = Float.parseFloat(data.getValue4());
 			}
 		}
 		return roostMoney;
 	}
 	
-	public Long getFeedDay(String dateF1,String dateF2) throws ParseException {
+	public long getFeedDay(String dateF1,String dateF2) throws ParseException {
 		  long feedDay = 0;
 		  Date date1 = DateUtils.parseDate(dateF1,"dd/MM/yyyy");
 		  Date date2 = DateUtils.parseDate(dateF2,"dd/MM/yyyy");

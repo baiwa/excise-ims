@@ -194,7 +194,7 @@ export class Int0151Component implements OnInit {
     }
   }
   setTravelTo = e => {
-    console.log(" e.target.value : ", e.target.value);
+    console.log(" e.target.value : ", e);
   }
 
   exportFile=()=>{
