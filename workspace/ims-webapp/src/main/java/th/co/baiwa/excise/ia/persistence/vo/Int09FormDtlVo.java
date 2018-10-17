@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
+import java.math.BigDecimal;
+
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
 public class Int09FormDtlVo extends DataTableRequest {
@@ -14,7 +16,8 @@ public class Int09FormDtlVo extends DataTableRequest {
 	private String grade;
 	private String permissionDate;
 	private String writeDate;
-	private String departure;
+	private String departureFrom;
+	private String departureTo;
 	private String departureDate;
 	private String returnDate;
 	private String allowance;
@@ -22,9 +25,9 @@ public class Int09FormDtlVo extends DataTableRequest {
 	private String roost;
 	private String trainingType;
 	private String roomType;
-	private String numberDate;
-	private Long passage;
-	private Long otherExpenses;
+	private Long numberDate;
+	private BigDecimal passage;
+	private BigDecimal otherExpenses;
 	private String remark;
 
 	public Long getId() {
@@ -107,12 +110,20 @@ public class Int09FormDtlVo extends DataTableRequest {
 		this.writeDate = writeDate;
 	}
 
-	public String getDeparture() {
-		return departure;
+	public String getDepartureFrom() {
+		return departureFrom;
 	}
 
-	public void setDeparture(String departure) {
-		this.departure = departure;
+	public void setDepartureFrom(String departureFrom) {
+		this.departureFrom = departureFrom;
+	}
+
+	public String getDepartureTo() {
+		return departureTo;
+	}
+
+	public void setDepartureTo(String departureTo) {
+		this.departureTo = departureTo;
 	}
 
 	public String getDepartureDate() {
@@ -171,27 +182,27 @@ public class Int09FormDtlVo extends DataTableRequest {
 		this.roomType = roomType;
 	}
 
-	public String getNumberDate() {
+	public Long getNumberDate() {
 		return numberDate;
 	}
 
-	public void setNumberDate(String numberDate) {
+	public void setNumberDate(Long numberDate) {
 		this.numberDate = numberDate;
 	}
 
-	public Long getPassage() {
+	public BigDecimal getPassage() {
 		return passage;
 	}
 
-	public void setPassage(Long passage) {
+	public void setPassage(BigDecimal passage) {
 		this.passage = passage;
 	}
 
-	public Long getOtherExpenses() {
+	public BigDecimal getOtherExpenses() {
 		return otherExpenses;
 	}
 
-	public void setOtherExpenses(Long otherExpenses) {
+	public void setOtherExpenses(BigDecimal otherExpenses) {
 		this.otherExpenses = otherExpenses;
 	}
 

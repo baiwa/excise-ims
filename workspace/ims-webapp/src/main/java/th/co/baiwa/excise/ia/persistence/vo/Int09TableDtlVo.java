@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
+import java.math.BigDecimal;
+
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
 public class Int09TableDtlVo extends DataTableRequest {
@@ -10,12 +12,12 @@ public class Int09TableDtlVo extends DataTableRequest {
 	private String name;
 	private String position;
 	private Long feedDay;
-	private Long feedMoney;
+	private BigDecimal feedMoney;
 	private Long roostDay;
-	private Long roostMoney;
-	private Long passage;
-	private Long otherExpenses;
-	private Long totalMoney;
+	private BigDecimal roostMoney;
+	private BigDecimal passage;
+	private BigDecimal otherExpenses;
+	private BigDecimal totalMoney;
 	private String remark;
 
 	private Int09FormDtlVo int09FormDtlVo;
@@ -68,11 +70,11 @@ public class Int09TableDtlVo extends DataTableRequest {
 		this.feedDay = feedDay;
 	}
 
-	public Long getFeedMoney() {
+	public BigDecimal getFeedMoney() {
 		return feedMoney;
 	}
 
-	public void setFeedMoney(Long feedMoney) {
+	public void setFeedMoney(BigDecimal feedMoney) {
 		this.feedMoney = feedMoney;
 	}
 
@@ -84,35 +86,35 @@ public class Int09TableDtlVo extends DataTableRequest {
 		this.roostDay = roostDay;
 	}
 
-	public Long getRoostMoney() {
+	public BigDecimal getRoostMoney() {
 		return roostMoney;
 	}
 
-	public void setRoostMoney(Long roostMoney) {
+	public void setRoostMoney(BigDecimal roostMoney) {
 		this.roostMoney = roostMoney;
 	}
 
-	public Long getPassage() {
+	public BigDecimal getPassage() {
 		return passage;
 	}
 
-	public void setPassage(Long passage) {
+	public void setPassage(BigDecimal passage) {
 		this.passage = passage;
 	}
 
-	public Long getOtherExpenses() {
+	public BigDecimal getOtherExpenses() {
 		return otherExpenses;
 	}
 
-	public void setOtherExpenses(Long otherExpenses) {
+	public void setOtherExpenses(BigDecimal otherExpenses) {
 		this.otherExpenses = otherExpenses;
 	}
 
-	public Long getTotalMoney() {
+	public BigDecimal getTotalMoney() {
 		return totalMoney;
 	}
 
-	public void setTotalMoney(Long totalMoney) {
+	public void setTotalMoney(BigDecimal totalMoney) {
 		this.totalMoney = totalMoney;
 	}
 
@@ -131,7 +133,5 @@ public class Int09TableDtlVo extends DataTableRequest {
 	public void setInt09FormDtlVo(Int09FormDtlVo int09FormDtlVo) {
 		this.int09FormDtlVo = int09FormDtlVo;
 	}
-
-	
 
 }

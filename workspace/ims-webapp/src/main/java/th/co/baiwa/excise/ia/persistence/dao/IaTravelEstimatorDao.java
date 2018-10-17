@@ -334,12 +334,12 @@ public class IaTravelEstimatorDao {
 			    		vo.setName(rs.getString("NAME"));
 			    		vo.setPosition(rs.getString("POSITION"));
 			    		vo.setFeedDay(rs.getLong("FEED_DAY"));
-			    		vo.setFeedMoney(rs.getLong("FEED_MONEY"));
+			    		vo.setFeedMoney(rs.getBigDecimal("FEED_MONEY"));
 			    		vo.setRoostDay(rs.getLong("ROOST_DAY"));
-			    		vo.setRoostMoney(rs.getLong("ROOST_MONEY"));
-			    		vo.setPassage(rs.getLong("PASSAGE"));
-			    		vo.setOtherExpenses(rs.getLong("OTHER_EXPENSES"));
-			    		vo.setTotalMoney(rs.getLong("TOTAL_MONEY"));
+			    		vo.setRoostMoney(rs.getBigDecimal("ROOST_MONEY"));
+			    		vo.setPassage(rs.getBigDecimal("PASSAGE"));
+			    		vo.setOtherExpenses(rs.getBigDecimal("OTHER_EXPENSES"));
+			    		vo.setTotalMoney(rs.getBigDecimal("TOTAL_MONEY"));
 			    		vo.setRemark(rs.getString("REMARK"));
 			    		
 			    		Int09FormDtlVo formVo = new Int09FormDtlVo();
@@ -353,7 +353,8 @@ public class IaTravelEstimatorDao {
 			    		formVo.setGrade(rs.getString("GRADE"));
 			    		formVo.setPermissionDate(rs.getString("PERMISSION_DATE"));
 			    		formVo.setWriteDate(rs.getString("WRITE_DATE"));
-			    		formVo.setDeparture(rs.getString("DEPARTURE"));
+			    		formVo.setDepartureFrom(rs.getString("DEPARTURE_FROM"));
+			    		formVo.setDepartureTo(rs.getString("DEPARTURE_TO"));
 			    		formVo.setDepartureDate(rs.getString("DEPARTURE_DATE"));
 			    		formVo.setReturnDate(rs.getString("RETURN_DATE"));
 			    		formVo.setAllowance(rs.getString("ALLOWANCE"));
@@ -361,9 +362,9 @@ public class IaTravelEstimatorDao {
 			    		formVo.setRoost(rs.getString("ROOST"));
 			    		formVo.setTrainingType(rs.getString("TRAINING_TYPE"));
 			    		formVo.setRoomType(rs.getString("ROOM_TYPE"));
-			    		formVo.setNumberDate(rs.getString("NUMBER_DATE"));
-			    		formVo.setPassage(rs.getLong("B_PASSAGE"));
-			    		formVo.setOtherExpenses(rs.getLong("B_OTHER_EXPENSES"));
+			    		formVo.setNumberDate(rs.getLong("NUMBER_DATE"));
+			    		formVo.setPassage(rs.getBigDecimal("B_PASSAGE"));
+			    		formVo.setOtherExpenses(rs.getBigDecimal("B_OTHER_EXPENSES"));
 			    		formVo.setRemark(rs.getString("B_REMARK"));
 			    		
 			    		vo.setInt09FormDtlVo(formVo);
@@ -579,7 +580,8 @@ public class IaTravelEstimatorDao {
 				    	"GRADE,  " +
 				    	"PERMISSION_DATE,  " +
 				    	"WRITE_DATE,  " +
-				    	"DEPARTURE,  " +
+				    	"DEPARTURE_FROM,  " +
+				    	"DEPARTURE_TO,  " +
 				    	"DEPARTURE_DATE,  " +
 				    	"RETURN_DATE,  " +
 				    	"ALLOWANCE,  " +
@@ -612,6 +614,7 @@ public class IaTravelEstimatorDao {
 				    	"?,  " +
 				    	"?,  " +
 				    	"?,  " +
+				    	"?,  " +
 		    			"?) ",new Object[] {
 		    					id,
 		    					idDtl, 
@@ -622,7 +625,8 @@ public class IaTravelEstimatorDao {
 		    					formDtlVo.getGrade(),  
 		    					formDtlVo.getPermissionDate(),  
 		    					formDtlVo.getWriteDate(),  
-		    					formDtlVo.getDeparture(),  
+		    					formDtlVo.getDepartureFrom(),  
+		    					formDtlVo.getDepartureTo(),  
 		    					formDtlVo.getDepartureDate(),  
 		    					formDtlVo.getReturnDate(),  
 		    					formDtlVo.getAllowance(),  
@@ -648,7 +652,8 @@ public class IaTravelEstimatorDao {
 				    	"GRADE=?,  " +
 				    	"PERMISSION_DATE=?,  " +
 				    	"WRITE_DATE=?,  " +
-				    	"DEPARTURE=?,  " +
+				    	"DEPARTURE_FROM=?,  " +
+				    	"DEPARTURE_TO=?,  " +
 				    	"DEPARTURE_DATE=?,  " +
 				    	"RETURN_DATE=?,  " +
 				    	"ALLOWANCE=?,  " +
@@ -668,7 +673,8 @@ public class IaTravelEstimatorDao {
 		    					formDtlVo.getGrade(),  
 		    					formDtlVo.getPermissionDate(),  
 		    					formDtlVo.getWriteDate(),  
-		    					formDtlVo.getDeparture(),  
+		    					formDtlVo.getDepartureFrom(),  
+		    					formDtlVo.getDepartureTo(),  
 		    					formDtlVo.getDepartureDate(),  
 		    					formDtlVo.getReturnDate(),  
 		    					formDtlVo.getAllowance(),  
