@@ -11,6 +11,7 @@ import { Int09112Component } from "./int09-1-1-2/int09-1-1-2.component";
 import { Int09113Component } from "./int09-1-1-3/int09-1-1-3.component";
 import { Int09114Component } from "./int09-1-1-4/int09-1-1-4.component";
 import { Int09115Component } from "./int09-1-1-5/int09-1-1-5.component";
+import { BreadcrumbModule } from "app/buckwaframework/common/components";
 
 const routes: Routes = [
   { path: "", component: Int0911Component, canActivate: [AuthGuard] },
@@ -22,7 +23,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule, FormsModule],
+  imports: [RouterModule.forChild(routes), CommonModule, FormsModule,
+    BreadcrumbModule],
   declarations: [
     Int0911Component,
     Int09111Component,

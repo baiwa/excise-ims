@@ -5,6 +5,7 @@ import { TravelCostHeader } from "../../../../common/models";
 import { Router, ActivatedRoute } from "@angular/router";
 import { TravelCostDetail } from "app/buckwaframework/common/models/travelcostdetail";
 import { IaService } from 'app/buckwaframework/common/services/ia.service';
+import { BreadCrumb } from 'models/index';
 
 
 declare var $: any;
@@ -28,6 +29,7 @@ export class Int091Component implements OnInit {
   travelTo3AddList: any;
 
   travelToDescription: any;
+  breadcrumb: BreadCrumb[];
 
   constructor(
     private message: MessageBarService,
@@ -37,7 +39,12 @@ export class Int091Component implements OnInit {
     private authService: AuthService,
     private iaService: IaService,
     private msg: MessageBarService
-  ) { }
+  ) {
+    this.breadcrumb = [
+      { label: "ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ", route: "#" }
+    ];
+    
+   }
   calenda = function () {
     // endCalendar: $("#date2"),
     // startCalendar: $("#date"),

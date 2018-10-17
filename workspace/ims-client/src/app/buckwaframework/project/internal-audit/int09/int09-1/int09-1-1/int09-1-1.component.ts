@@ -17,6 +17,8 @@ import {
 import { TravelService } from "../../../../../common/services/travel.service";
 import { Headers } from "@angular/http/src/headers";
 import { File } from "app/buckwaframework/common/models/file";
+import { BreadCrumb } from 'models/index';
+
 declare var $: any;
 @Component({
   selector: "app-int09-1-1",
@@ -37,7 +39,7 @@ export class Int0911Component implements OnInit, OnDestroy {
   returnDate:any;
   travelToDescription:any;
 
-  z
+  breadcrumb: BreadCrumb[];
 
 
   constructor(
@@ -48,6 +50,11 @@ export class Int0911Component implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private travelService: TravelService
   ) {
+    this.breadcrumb = [
+      { label: "ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ", route: "#" },
+      { label: "รายละเอียดเอกสาร", route: "#" }
+ 
+    ];
 
     this.fileUpload = new Array<File>(); // initial file array
   }

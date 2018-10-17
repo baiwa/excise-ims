@@ -15,6 +15,7 @@ import {
   DecimalFormat
 } from "../../../../../../common/helper";
 import { TravelService } from "../../../../../../common/services/travel.service";
+import { BreadCrumb } from 'models/index';
 
 declare var $: any;
 @Component({
@@ -58,6 +59,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
   departureTo:any;
 
   head:any;
+  breadcrumb: BreadCrumb[]
 
   constructor(
     private ajax: AjaxService,
@@ -66,7 +68,14 @@ export class Int09111Component implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private msg: MessageBarService,
     private travelService: TravelService
-  ) { }
+  ) {
+
+    this.breadcrumb = [
+      { label: "ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ", route: "#" },
+      { label: "รายละเอียดเอกสาร", route: "#" },
+      { label: "สร้างเอกสารประมาณการค่าใช้จ่าย", route: "#" }
+    ]
+   }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-09111');

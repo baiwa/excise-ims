@@ -15,6 +15,8 @@ import {
   DecimalFormat
 } from "../../../../../../common/helper";
 import { TravelService } from "../../../../../../common/services/travel.service";
+import { BreadCrumb } from 'models/index';
+
 declare var $: any;
 @Component({
   selector: "app-int09-1-1-4",
@@ -24,6 +26,8 @@ declare var $: any;
 export class Int09114Component implements OnInit, AfterViewInit {
 
   idProcess:any;
+  breadcrumb: BreadCrumb[]
+
   constructor(
     private ajax: AjaxService,
     private authService: AuthService,
@@ -31,7 +35,13 @@ export class Int09114Component implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private msg: MessageBarService,
     private travelService: TravelService
-  ) {}
+  ) {
+    this.breadcrumb = [
+  { label: "ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ", route: "#" },
+  { label: "รายละเอียดเอกสาร", route: "#" },
+  { label: "สร้างเอกสารใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ", route: "#" }
+  ]
+}
   calenda = function () {
     $("#date").calendar({
       maxDate: new Date(),

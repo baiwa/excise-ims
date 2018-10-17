@@ -1,3 +1,5 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<br>
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
   <span>รายละเอียดใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ</span>
 </div>
@@ -139,7 +141,7 @@
     </div>
     <div class="ui grid">
       <div class="two wide column">
-        <label>รายระเอียดการเดินทาง</label>
+        <label>รายละเอียดการเดินทาง</label>
       </div>
       <div class="nine wide column">
         <textarea rows="5" id="remark"></textarea>
@@ -162,37 +164,82 @@
     </div>
     <div class="ui grid">
       <div class="two wide column">
-        <label>โดยออกเดินทางจาก</label>
+        <label>ออกเดินทางจาก</label>
       </div>
-      <div class="four wide column">
-        <select class="ui dropdown search selection" style="width: 100%;" id="sector" (change)="sectorOnchange($event)">
-          <option value="">เลือก</option>
-          <option value="1">สนง.-บ้าน</option>
-          <option value="2">บ้าน-สนง.</option>
-          <option value="3">สนง.-สนง.</option>
-        </select>
+      <div class="one wide column ">
+        <div class="ui radio checkbox departureFrom1">
+          <input type="radio" name="departureFrom" id="departureFrom1" value="1179" (click)="getDepartureFrom($event)">
+          <label>
+            <b>บ้านพัก</b>
+          </label>
+        </div>
       </div>
-    </div>
-    <div class="ui grid">
-      <div class="two wide column">
-        <label>วัน เวลา ออกเดินทาง</label>
+      <div class="one wide column ">
+        <div class="ui radio checkbox departureFrom2">
+          <input type="radio" name="departureFrom" id="departureFrom2" value="1180" (click)="getDepartureFrom($event)">
+          <label>
+            <b>สำนักงาน</b>
+          </label>
+        </div>
       </div>
-      <div class="four wide column">
-        <div class="ui calendar" id="date1">
-          <div class="ui input left icon" style="width: 100%">
+      <div class="one wide column ">
+        <div class="ui radio checkbox departureFrom3">
+          <input type="radio" name="departureFrom" id="departureFrom3" value="1181" (click)="getDepartureFrom($event)">
+          <label>
+            <b>ประเทศไทย</b>
+          </label>
+        </div>
+      </div>
+      <div class="two wide column ui right aligned">
+        <label>ตั่งแต่วันที่ เวลา</label>
+      </div>
+      <div class="three wide column">
+        <div class="ui calendar" id="modalDate5" style="width: 100%">
+          <div class="ui input left icon">
             <i class="time icon"></i>
-            <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+            <input type="text" name="date-raw" id="departureDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy"
+              [attr.required]="true">
           </div>
         </div>
       </div>
-      <div class="two wide column">
-        <label>วัน เวลา กลับถึง</label>
+    </div>
+
+    <div class="ui grid">
+      <div class="two wide column ui">
+        <label>กลับถึง</label>
       </div>
-      <div class="four wide column">
-        <div class="ui calendar" id="date1">
-          <div class="ui input left icon" style="width: 100%">
+      <div class="one wide column ">
+        <div class="ui radio checkbox departureTo1">
+          <input type="radio" name="departureTo" id="departureTo1" value="1179" (click)="getDepartureTo($event)">
+          <label>
+            <b>บ้านพัก</b>
+          </label>
+        </div>
+      </div>
+      <div class="one wide column ">
+        <div class="ui radio checkbox departureTo2">
+          <input type="radio" name="departureTo" id="departureTo2" value="1180" (click)="getDepartureTo($event)">
+          <label>
+            <b>สำนักงาน</b>
+          </label>
+        </div>
+      </div>
+      <div class="one wide column ">
+        <div class="ui radio checkbox departureTo3">
+          <input type="radio" name="departureTo" id="departureTo3" value="1181" (click)="getDepartureTo($event)">
+          <label>
+            <b>ประเทศไทย</b>
+          </label>
+        </div>
+      </div>
+      <div class="two wide column ui right aligned">
+        <label>กลับถึงวันที่ เวลา</label>
+      </div>
+      <div class="three wide column">
+        <div class="ui calendar" id="modalDate6" style="width: 100%">
+          <div class="ui input left icon">
             <i class="time icon"></i>
-            <input type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+            <input type="text" name="date-raw" id="returnDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
           </div>
         </div>
       </div>
@@ -556,7 +603,7 @@
                       </div>
                       <div class="ui grid">
                           <div class="two wide column">
-                            <label>รายระเอียดการเดินทาง</label>
+                            <label>รายละเอียดการเดินทาง</label>
                           </div>
                           <div class="nine wide column">
                             <textarea rows="5" id="remark"></textarea>
