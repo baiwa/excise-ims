@@ -5,6 +5,7 @@ import { ExciseService } from "../../../../../common/services/excise.service";
 import { TextDateTH, digit } from "../../../../../common/helper/datepicker";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { CurrencyPipe } from "@angular/common";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var jQuery: any;
 declare var $: any;
@@ -14,6 +15,11 @@ declare var $: any;
   styleUrls: ["./send-line-user.component.css"]
 })
 export class SendLineUserComponent implements OnInit {
+  breadcrumb: BreadCrumb[] = [
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การคัดเลือกราย', route: '#' },
+    { label: 'ส่งกระดาษทำการคัดเลือกราย', route: '#' },
+  ]
   sendLineUser: any;
   listItem: any[];
   before: any;
@@ -120,6 +126,7 @@ export class SendLineUserComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
       '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
+      '<th rowspan="2" style="text-align: center !important">เปอร์เซ็นส่วนเบี่ยงเบน</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
       '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
       
@@ -163,7 +170,7 @@ export class SendLineUserComponent implements OnInit {
       paging: false,
       pagingType: "full_numbers",
       fixedColumns : { 
-        leftColumns : 2 
+        leftColumns : 3 
       },
       ajax: {
         type: "POST",
@@ -203,6 +210,7 @@ export class SendLineUserComponent implements OnInit {
         { data: "firstMonth", className: "center" },
         { data: "lastMonth", className: "center" },
         { data: "percentage", className: "center" },
+        { data: "deviation",className:"center" },
         { data: "totalMonth", className: "center" },
         { data: "no1" },
         { data: "no2" },

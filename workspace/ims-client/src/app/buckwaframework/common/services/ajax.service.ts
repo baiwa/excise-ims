@@ -13,7 +13,7 @@ export class AjaxService {
   public static CONTEXT_PATH = "/ims-webapp/api/";
   public static isDebug = true;
 
-  constructor(private http: Http) {}
+  constructor(private http: Http) { }
 
   post(url: string, body: any, success: any, error?: any, header?: Headers) {
     if (AjaxService.isDebug) {
@@ -41,11 +41,13 @@ export class AjaxService {
     if (error) {
       errorFn = error;
     }
-    return this.http
+    let res = this.http
       .get(AjaxService.CONTEXT_PATH + url)
       .toPromise()
       .then(success)
       .catch(errorFn);
+    //console.log("res : ", res.Json());
+    return res;
   }
 
   private handleError(error: any): Promise<any> {
@@ -105,11 +107,11 @@ export class AjaxService {
       .catch(errorFn);
   }
 
-  download(url: string ){
-    let full_url= AjaxService.CONTEXT_PATH +url;
+  download(url: string) {
+    let full_url = AjaxService.CONTEXT_PATH + url;
     window.open(full_url);
   }
 
- 
+
 
 }

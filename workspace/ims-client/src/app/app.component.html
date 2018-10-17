@@ -15,7 +15,7 @@
                 <i class="dropdown icon "></i> ระบบการควบคุมภายใน
                 <div class="menu" style="margin:20px;">
                     <div class="ui simple dropdown item ">
-                         แบบสอบถามระบบการควบคุมภายใน<i class="dropdown icon "></i>
+                        แบบสอบถามระบบการควบคุมภายใน<i class="dropdown icon "></i>
                         <div class="menu" style="margin:20px;">
                             <a class="item" [routerLink]="['/int02/1']" *ngIf="authService.renderByPage('int02/1')"
                                 routerLinkActive="active">สร้างแบบสอบถามระบบการควบคุมภายใน</a>
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="ui simple dropdown item " [routerLink]="['/int02/m5/1']" *ngIf="authService.renderByPage('int02/m5/1')">
-                  แบบประเมินระบบการควบคุมภายใน                
+                        แบบประเมินระบบการควบคุมภายใน
                     </div>
                 </div>
             </div>
@@ -237,6 +237,8 @@
             <a class="item " *ngIf="authService.renderByPage('cop03/1/1')" [routerLink]="[ '/cop03/1/1'] "
                 routerLinkActive="active ">ค้นหาหนังสือขออนนุมัติเดินทางไปราชการ
             </a>
+            <a class="item " *ngIf="authService.renderByPage('cop06')" [routerLink]="[ '/cop06'] " routerLinkActive="active ">บันทึกรายงานการตรวจปฏิบัติการ
+            </a>
             <a class="item " *ngIf="authService.renderByPage('cop04/1')" [routerLink]="[ '/cop04/1'] " routerLinkActive="active ">บันทึกผลการตรวจปฏิบัติการ
             </a>
             <a class="item " *ngIf="authService.renderByPage('cop04/2')" [routerLink]="[ '/cop04/2'] " routerLinkActive="active ">ค้นหาบันทึกผลการตรวจปฏิบัติการ
@@ -291,9 +293,12 @@
 
     <div class="right menu ">
         <a class="item " *ngIf="!authService.getLogin() " style="color:white; " [routerLink]="[ '/login'] ">เข้าสู่ระบบ</a>
-        <div class="item " *ngIf="authService.getLogin() " style=" color:White ">Page Name <br> นายมาโนส เบิ้ม <br>นักวิชาการสรรพสามิตชำนาญการ<br>สรรพสามิตภาค 2 (สตป.)</div>
+        <div class="item " *ngIf="authService.getLogin() " style=" color:White ">
+
+            <div id="userDetail" style="text-align: right"></div>
+        </div>
         <a class="item " *ngIf="authService.getLogin() " (click)="logout() " style=" color:White ">ออกจากระบบ</a>
-    </div>  
+    </div>
 </div>
 <div class="ui tiny test modal transition hidden baiwa-alert" style="height: 0;">
     <div class="header ">
@@ -347,6 +352,6 @@
 
 <div class="ui vertical footer " style="background:#1e83db; color: white; ">
     <div class="ui center aligned container ">
-        <p>@สงวนลิขสิทธิ์ 2560 กรมสรรพสามิต / เลขที่ 1488 ถนน นครไชยศรี เขตดุสิต กรุงเทพมหานคร 10300</p>
+        <p id="versionProgram"></p>
     </div>
 </div>

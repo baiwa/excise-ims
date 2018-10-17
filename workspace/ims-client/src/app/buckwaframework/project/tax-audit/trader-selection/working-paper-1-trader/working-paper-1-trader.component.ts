@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { ExciseService } from "../../../../common/services/excise.service";
 import { TextDateTH, digit } from "../../../../common/helper/datepicker";
 import { CurrencyPipe } from "@angular/common";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var jQuery: any;
 declare var $: any;
@@ -13,6 +14,11 @@ declare var $: any;
   styleUrls: ["./working-paper-1-trader.component.css"]
 })
 export class WorkingPaper1TraderComponent implements OnInit {
+  breadcrumb: BreadCrumb[] = [
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การคัดเลือกราย', route: '#' },
+    { label: 'สร้างกระดาษทำการคัดเลือกราย', route: '#' },
+  ]
   userManagementDt: any;
   before: any;
   last: any;
@@ -134,6 +140,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
       '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
+      '<th rowspan="2" style="text-align: center !important">เปอร์เซ็นส่วนเบี่ยงเบน</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
       '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
       
@@ -194,7 +201,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' "processing": true, ';
     json += ' "serverSide": true, ';
     json += ' "paging": true, ';
-    json += ' "fixedColumns": { "leftColumns" : 2 }, ';
+    json += ' "fixedColumns": { "leftColumns" : 3 }, ';
     json += ' "pagingType": "full_numbers", ';
     json += " ";
     json += ' "ajax": { ';
@@ -222,8 +229,9 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' { "data": "exciseOwnerArea1" }, ';
     json += ' { "data": "exciseOwnerArea" }, ';
     json += ' { "data": "firstMonth" ,"className":"center" }, ';
-    json += ' { "data": "lastMonth","className":"center" }, ';
+    json += ' { "data": "lastMonth","className":"center" }, ';    
     json += ' { "data": "percentage","className":"center" }, ';
+    json += ' { "data": "deviation","className":"center" }, ';
     json += ' { "data": "totalMonth" ,"className":"center"}, ';
     json += ' { "data": "no1" }, ';
     json += ' { "data": "no2" }, ';

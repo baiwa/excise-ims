@@ -1,0 +1,166 @@
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header"> รายงานการตรวจปฏิบัติการวัตถุดิบที่ขอลดหย่อนภาษีที่ยื่นต่อกรมสรรพสามิต (ภส.05 - 02) </h2>
+
+    <div class="ui top attached header">
+      <span>Criteria</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">ทะเบียนสรรพสามิต</label>
+            <input type="text" class="custom-readonly" placeholder="ทะเบียนสรรพสามิต" readonly="" value="2560-00178-5">
+          </div>
+          <div class="eight wide field ">
+            <label class="custom-label-w-20">เลขประจำตัวผู้เสียภาษี</label>
+            <input type="text" class="custom-readonly" placeholder="เลขประจำตัวผู้เสียภาษี" readonly="" value="1-5599-00168-99-6">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">ผู้ประกอบการ </label>
+            <input type="text" class="custom-readonly" placeholder="ผู้ประกอบการ" readonly="" value="บ. ฮอนด้า มอเตอร์ ประเทศไทย">
+          </div>
+          <div class="eight wide field ">
+            <label class="custom-label-w-20">เลขที่วิเคราะห์</label>
+            <input type="text" class="custom-readonly" placeholder="เลขที่วิเคราะห์" readonly="" value="256000000001">
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field required">
+            <label class="custom-label-w-25">รอบระยะเวลาการตรวจสอบ</label>
+            <div class="eight wide field">
+              <div class="ui icon input">
+                <input type="text" class="custom-readonly" placeholder="MM/YYYY" value="11/2560" readonly="">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+            <div class="eight wide field">
+              <label>-</label>
+              <div class="ui icon input">
+                <input type="text" class="custom-readonly" placeholder="MM/YYYY" value="11/2560" readonly="">
+                <i class="add to calendar icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline fields">
+          <div class="eight wide field">
+            <label class="custom-label-w-25">ประเภท </label>
+            <input type="text" class="custom-readonly" placeholder="" readonly="" value="สินค้า">
+          </div>
+          <div class="eight wide field ">
+            <label class="custom-label-w-20">พิกัด</label>
+            <input type="text" class="custom-readonly" placeholder="" readonly="" value="รถยนต์">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="ui top attached header">
+      <span>อัพโหลด Template ข้อมูลการตรวจสอบรายการวัตถุดิบที่ขอลดหย่อนภาษีที่ยื่นต่อกรมสรรพสามิต (ภส.05 - 02) </span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="eight wide field ">
+            <label class="custom-label-w-25">เลือกไฟล์ Template ข้อมูล</label>
+            <input type="file" />
+          </div>
+        </div>
+      </div>
+
+      <div class="ui center aligned grid">
+        <div class="four wide column">
+          <button class="ui mini primary button" (click)="uploadData()">
+            <i class="upload icon"></i>
+            อัพโหลด
+          </button>
+          <button class="ui mini button" (click)="clearData()">
+            <i class="trash outline icon"></i>
+            ลบไฟล์
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui segment">
+      <div class="ui grid center aligned">
+        <div class="sixteen wide column">
+          บ. ฮอนด้า มอเตอร์ ประเทศไทย
+          <br> กระดาษทำการตรวจสอบรายการวัตถุดิบที่ขอลดหย่อนภาษีที่ยื่นต่อกรมสรรพสามิต (ภส.05 - 02)
+          <br> เดือน พ.ย. 2559 - ส.ค. 2559
+        </div>
+      </div>
+      <br>
+      <div style="overflow-x: scroll">
+        <table class="ui small celled table striped selectable" style="width: 120%">
+          <thead>
+            <tr style="text-align: center;">
+              <th rowspan="2">เดือน</th>
+              <th rowspan="2">รายการ</th>
+              <th colspan="3">ขอลดหย่อนตามแบบ ภส. 05 - 03</th>
+              <th colspan="4">ใบเสร็จเงิน</th>
+              <th rowspan="2">ผลต่าง</th>
+            </tr>
+            <tr style="text-align: center;">
+              <th style="border-left: 1px solid rgba(34,36,38,.1);">ภาษีรวม</th>
+              <th>ปริมาณ</th>
+              <th>ภาษีต่อหน่วย</th>
+              <th>เลขที่ใบเสร็จ</th>
+              <th>ภาษีรวม</th>
+              <th>ปริมาณ</th>
+              <th>ภาษีต่อหน่วย</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="center aligned">ม.ค.59</td>
+              <td>3150-TF0-TO10-M1</td>
+              <td class="right aligned">15000</td>
+              <td class="right aligned">1500 </td>
+              <td class="right aligned">10</td>
+              <td class="center aligned">17-01-2559 </td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td class="right aligned">1500</td>
+              <td class="right aligned">
+                <span class="ui green horizontal label right aligned" style="float: right;">0</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div class="ui center aligned grid">
+        <div class="six wide column">
+          <button class="ui mini primary button">
+            <i class="print icon"></i>
+            บันทึกข้อมูล
+          </button>
+          <button class="ui mini button" (click)="clearData()">
+            <i class="refresh icon"></i>
+            ล้างข้อมูล
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <div class="ui grid center aligned">
+      <div class="sixteen wide column">
+        <button class="ui mini button" routerLink="/select-form/สินค้า/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน">
+          <i class="arrow left icon"></i>
+          ย้อนกลับ
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

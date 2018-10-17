@@ -3,6 +3,7 @@ import { AjaxService } from "../../../../common/services/ajax.service";
 import { Router } from "@angular/router";
 import { ExciseService } from "../../../../common/services/excise.service";
 import { TextDateTH } from "../../../../common/helper/datepicker";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var $: any;
 @Component({
@@ -11,6 +12,11 @@ declare var $: any;
   styleUrls: ["./add-external-data.component.css"]
 })
 export class AddExternalDataComponent implements OnInit {
+  breadcrumb: BreadCrumb[] = [
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การคัดเลือกราย', route: '#' },
+    { label: 'ส่งกระดาษทำการคัดเลือกราย', route: '#' },
+  ]
   userManagementDt: any;
   before: any;
   last: any;
@@ -50,8 +56,8 @@ export class AddExternalDataComponent implements OnInit {
       this.coordinatesArr = res.json();
     });
     //get Sector in select option
-    const URL2 = "combobox/controller/getSector";
-    this.ajax.post(URL2, {}, res => {
+    const URL2 = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL2, {type : 'SECTOR_VALUE'}, res => {
       this.sectorArr = res.json();
     });
 
@@ -98,8 +104,7 @@ export class AddExternalDataComponent implements OnInit {
     json += ' "serverSide": true, ';
     json += ' "paging": true, ';
     json += ' "pagingType": "full_numbers", ';
-    json += ' "fixedColumns" : { "leftColumns" : 2}, ';
-    json += " ";
+    json += ' "fixedColumns" : { "leftColumns" : 3}, ';
     json += ' "ajax": { ';
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
@@ -125,6 +130,7 @@ export class AddExternalDataComponent implements OnInit {
     json += ' { "data": "firstMonth" ,"className":"center" }, ';
     json += ' { "data": "lastMonth","className":"center" }, ';
     json += ' { "data": "percentage","className":"center" }, ';
+    json += ' { "data": "deviation","className":"center" }, '; 
     json += ' { "data": "totalMonth" ,"className":"center"}, ';
     json += ' { "data": "no1" }, ';
     json += ' { "data": "no2" }, ';
@@ -303,6 +309,7 @@ export class AddExternalDataComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
       '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
+      '<th rowspan="2" style="text-align: center !important">เปอร์เซ็นส่วนเบี่ยงเบน</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
       '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
       

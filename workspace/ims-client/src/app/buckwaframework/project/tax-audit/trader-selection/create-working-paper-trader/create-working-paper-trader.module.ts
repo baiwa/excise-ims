@@ -5,13 +5,14 @@ import { CreateWorkingPaperTraderComponent } from './create-working-paper-trader
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../../../common/services';
 import { FormsModule } from '@angular/forms';
+import { BreadcrumbModule } from '../../../../common/components';
 
 const routes: Routes = [
     { path: '', component: CreateWorkingPaperTraderComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule, FormsModule],
+  imports: [RouterModule.forChild(routes), CommonModule, FormsModule,BreadcrumbModule],
   declarations: [CreateWorkingPaperTraderComponent],
   exports: [RouterModule]
 })

@@ -5,6 +5,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
+import { AuthService } from "services/auth.service";
 declare var $: any;
 @Component({
   selector: "int08-1-1",
@@ -41,7 +42,9 @@ export class Int0811Component implements OnInit {
     private router: Router,
     private ajax: AjaxService,
     private route: ActivatedRoute,
-    private messageBarService: MessageBarService
+    private messageBarService: MessageBarService,
+
+    private authService: AuthService
   ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
@@ -51,6 +54,7 @@ export class Int0811Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08110');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
 

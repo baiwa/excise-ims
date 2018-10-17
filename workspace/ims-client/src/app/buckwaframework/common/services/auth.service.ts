@@ -8,7 +8,7 @@ import { AjaxService } from "./ajax.service";
 
 // model
 import { User } from "../models/user";
-
+declare var $: any;
 @Injectable()
 export class AuthService {
   readonly LOGIN_URL = "security/login";
@@ -41,6 +41,7 @@ export class AuthService {
           // this.user.username = 'admin';
           // this.userSubject.next(this.user);
           this.router.navigate(["/home"]);
+          this.userDetail();
           resolve("OK");
         },
         (resp: Response) => {
@@ -59,6 +60,23 @@ export class AuthService {
     this.user = new User();
     this.ajaxService.delete(this.LOGIN_URL, (res: Response) => {
       this.router.navigate(["/login"]);
+    });
+  }
+  userDetail() {
+    this.ajaxService.get("restful/userDetail", res => {
+      console.log("userDetail", res.json());
+      let detail = res.json();
+      $("#userDetail").html('HOME' + '<BR/>' + detail.fullName + '<BR/>' + detail.title + '<BR/>' + detail.position);
+      $("#versionProgram").html('@สงวนลิขสิทธิ์ 2560 กรมสรรพสามิต / เลขที่ 1488 ถนน นครไชยศรี เขตดุสิต กรุงเทพมหานคร 10300    V.' + detail.versionProgram);
+    });
+  }
+
+  reRenderVersionProgram(pageCode) {
+    this.ajaxService.get("restful/versionProgramByPageCode?pageCode=" + pageCode, res => {
+      console.log("versionProgramByPageCode", res.json());
+      let detail = res.json();
+      $("#userDetail").html(pageCode + '<BR/>' + detail.fullName + '<BR/>' + detail.title + '<BR/>' + detail.position);
+      $("#versionProgram").html('@สงวนลิขสิทธิ์ 2560 กรมสรรพสามิต / เลขที่ 1488 ถนน นครไชยศรี เขตดุสิต กรุงเทพมหานคร 10300    V.' + detail.versionProgram);
     });
   }
 
