@@ -4,6 +4,9 @@ import { AjaxService, MessageBarService, AuthService } from "../../../../../comm
 import { Router, ActivatedRoute } from "@angular/router";
 import { TravelService } from "../../../../../common/services/travel.service";
 import { forEach } from "@angular/router/src/utils/collection";
+import { BreadCrumb } from 'models/index';
+
+
 declare var $: any;
 const URL = {
   export:"/ia/int0161/exportFile"
@@ -37,6 +40,8 @@ export class Int0161Component implements OnInit {
   pageNo: any;
   dataPerPage: any;
 
+  breadcrumb: BreadCrumb[];
+
   constructor(
     private authService: AuthService,
     private ajax: AjaxService,
@@ -44,7 +49,13 @@ export class Int0161Component implements OnInit {
     private route: ActivatedRoute,
     private msg: MessageBarService,
     private travelService: TravelService
-  ) { }
+  ) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบรายได้", route: "#" },
+      { label: "ตรวจสอบสถิติการต่ออายุใบอนุญาต", route: "#" }
+    ];
+   }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-01610');

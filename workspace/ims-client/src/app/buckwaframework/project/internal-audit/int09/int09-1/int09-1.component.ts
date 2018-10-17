@@ -41,6 +41,7 @@ export class Int091Component implements OnInit {
     private msg: MessageBarService
   ) {
     this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ", route: "#" }
     ];
     

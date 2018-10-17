@@ -36,6 +36,7 @@ export class Int09115Component implements OnInit, AfterViewInit {
     private travelService: TravelService
   ) {
     this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ", route: "#" },
       { label: "รายละเอียดเอกสาร", route: "#" },
       { label: "สร้างเอกสารบันทึกข้อความ", route: "#" }

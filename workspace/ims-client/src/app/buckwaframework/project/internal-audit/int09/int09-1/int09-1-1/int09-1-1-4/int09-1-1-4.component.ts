@@ -37,9 +37,10 @@ export class Int09114Component implements OnInit, AfterViewInit {
     private travelService: TravelService
   ) {
     this.breadcrumb = [
-  { label: "ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ", route: "#" },
-  { label: "รายละเอียดเอกสาร", route: "#" },
-  { label: "สร้างเอกสารใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ", route: "#" }
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ", route: "#" },
+      { label: "รายละเอียดเอกสาร", route: "#" },
+      { label: "สร้างเอกสารใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ", route: "#" }
   ]
 }
   calenda = function () {

@@ -51,6 +51,7 @@ export class Int0911Component implements OnInit, OnDestroy {
     private travelService: TravelService
   ) {
     this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ", route: "#" },
       { label: "รายละเอียดเอกสาร", route: "#" }
  
@@ -457,3 +458,4 @@ export class Int0911Component implements OnInit, OnDestroy {
     }
   };
 
+}

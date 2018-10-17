@@ -5,6 +5,9 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { TravelService } from "../../../../../common/services/travel.service";
 import { forEach } from "@angular/router/src/utils/collection";
 import { monthsToNumber } from "helpers/datepicker";
+import { BreadCrumb } from 'models/index';
+
+
 declare var $: any;
 const URL = {
   export:"/ia/int0171/exportFile"
@@ -27,6 +30,8 @@ export class Int0171Component implements OnInit {
   dataPerPage: any;
   searchFlag: any = "FALSE";
 
+  breadcrumb: BreadCrumb[];
+
   constructor(
     private ajax: AjaxService,
     private router: Router,
@@ -34,7 +39,13 @@ export class Int0171Component implements OnInit {
     private authService: AuthService,
     private msg: MessageBarService,
     private travelService: TravelService
-  ) { }
+  ) { 
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบรายได้", route: "#" },
+      { label: "ตรวจสอบสถิติการพิมพ์ใบอนุญาตซ้ำ", route: "#" }
+    ];
+  }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-01710');
