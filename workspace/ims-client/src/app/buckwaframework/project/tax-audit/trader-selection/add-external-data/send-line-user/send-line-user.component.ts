@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { ExciseService } from "../../../../../common/services/excise.service";
@@ -14,7 +14,7 @@ declare var $: any;
   templateUrl: "./send-line-user.component.html",
   styleUrls: ["./send-line-user.component.css"]
 })
-export class SendLineUserComponent implements OnInit {
+export class SendLineUserComponent implements OnInit,AfterViewInit {
   breadcrumb: BreadCrumb[] = [
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การคัดเลือกราย', route: '#' },
@@ -58,8 +58,8 @@ export class SendLineUserComponent implements OnInit {
     });
 
     //get Sector in select option
-    const URL2 = "combobox/controller/getSector";
-    this.ajax.post(URL2, {}, res => {
+    const URL2 = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL2, {type : "SECTOR_VALUE"}, res => {
       this.sectorArr = res.json();
     });
 
@@ -134,6 +134,7 @@ export class SendLineUserComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
+      '<th rowspan="2" style="text-align: center !important">พิกัดอื่นๆ</th> ' +
       "</tr>" +
       '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
       this.month / 2 +
@@ -152,22 +153,26 @@ export class SendLineUserComponent implements OnInit {
       "</th>" +
       "</tr>";
 
-    this.initDatatable();
+    
   }
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {
+    this.initDatatable();
+   }
 
   initDatatable(): void {
+    if (this.sendLineUser != null || this.sendLineUser != undefined){
+      this.sendLineUser.destroy();
+    }
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
-    var sendLineUserCheckbox = (this.sendLineUser = $(
-      "#sendLineUser"
-    ).DataTable({
+    var sendLineUserCheckbox = (this.sendLineUser = $("#sendLineUser").DataTable({
       lengthChange: false,
       searching: false,
       ordering: false,
       processing: true,
       serverSide: true,
-      paging: false,
+      paging: true,
+      scrollX: true,
       pagingType: "full_numbers",
       fixedColumns : { 
         leftColumns : 3 
@@ -219,7 +224,8 @@ export class SendLineUserComponent implements OnInit {
         { data: "productType" },
         { data: "factoryAddress" },
         { data: "registeredCapital" },
-        { data: "status" }
+        { data: "status" },
+        { "data": "otherCoordinates" }
       ]
     }));
 

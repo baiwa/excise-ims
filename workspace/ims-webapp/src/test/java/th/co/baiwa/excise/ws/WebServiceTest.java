@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.IncFri8000Res;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.IncomeList8000Res;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.ResponseData8000Res;
@@ -41,7 +42,7 @@ public class WebServiceTest {
 		}
 	}
 
-	// @Test
+	//@Test
 	public void regfri4000() {
 		Regfri4000Res re = webServiceExciseService.IncFri4000("1", "1", "1", "100");
 		ResponseDataRes xxx = re.getResponseData();
@@ -50,7 +51,7 @@ public class WebServiceTest {
 		}
 	}
 
-	@Test
+	//@Test
 	public void regfri8000() {
 		IncFri8000Res re = webServiceExciseService.IncFri8000("201802", "201808", "Income", "1", "10");
 		ResponseData8000Res xxx = re.getResponseData();
@@ -64,5 +65,4 @@ public class WebServiceTest {
 //		Gson gson = new Gson();
 //		System.out.println(gson.toJson(response));
 //	}
-
 }

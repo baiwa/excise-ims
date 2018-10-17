@@ -137,17 +137,11 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
-      '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
-      '<th colspan="' +
-      this.month / 2 +
-      '" style="text-align: center !important">การชำระภาษี ' +
-      this.month / 2 +
-      " เดือนแรก</th> " +
-      '<th colspan="' +
-      this.month / 2 +
-      '" style="text-align: center !important">การชำระภาษี ' +
-      this.month / 2 +
-      " เดือนหลัง </th> " +
+      '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +      
+
+      '<th colspan="' + this.month / 2 +'" style="text-align: center !important">การชำระภาษี ' +this.month / 2 +" เดือนแรก</th> " +
+      '<th colspan="' + this.month / 2 +'" style="text-align: center !important">การชำระภาษี ' +this.month / 2 + " เดือนหลัง </th> " +
+      '<th rowspan="2" style="text-align: center !important">พิกัดอื่นๆ</th> ' +
       "</tr>" +
       '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
       this.month / 2 +
@@ -195,13 +189,14 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
     var json = "";
     json += ' { "lengthChange": true, ';
-    json += ' "searching": false, ';
+    json += ' "searching": false, ';    
     json += ' "select": true, ';
     json += ' "ordering": true, ';
     json += ' "pageLength": 10, ';
     json += ' "processing": true, ';
     json += ' "serverSide": true, ';
     json += ' "paging": true, ';
+    json += ' "scrollX": true, ';
     json += ' "pagingType": "full_numbers", ';
     json += ' "fixedColumns" : { "leftColumns" : 3}, ';
     json += " ";
@@ -238,14 +233,16 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     json += ' { "data": "factoryAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
     json += ' { "data": "status" }, ';
+   
 
     for (var i = 0; i < this.month; i++) {
       if (i != this.month - 1) {
         json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"}, ';
       } else {
-        json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"} ';
+        json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"}, ';
       }
     }
+    json += ' { "data": "otherCoordinates" } ';
     json += "] } ";
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
