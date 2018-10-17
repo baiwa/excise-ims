@@ -18,6 +18,14 @@ export class IaFollowUpProject {
 	performance2Date: any;
 	trackResult2Bnum: string;
 	trackResult2Date: string;
+	followUp3Bnum: string;
+	followUp3Date: any;
+	maturity360: any;
+	performance3Bnum: string;
+	performance3Date: any;
+	trackResult3Bnum: string;
+	trackResult3Date: string;
+	note: string;
 	status: string;
 	createdBy: string;
 	createdDate: any;

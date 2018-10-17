@@ -34,6 +34,8 @@ public class Int111FormVo extends DataTableRequest {
 	private String trackResult3Date;
 	private String status;
 	private String version;
+	
+	
 	public String getFollowUpProjectId() {
 		return followUpProjectId;
 	}

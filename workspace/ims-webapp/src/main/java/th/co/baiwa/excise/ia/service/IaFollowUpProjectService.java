@@ -328,7 +328,7 @@ public class IaFollowUpProjectService {
 				"วันครบกำหนดครั้งที่ 1", "", "หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 1", "",
 				"รายงานการติดตามครั้งที่ 1", "", "แจ้งติดตามหน่วยรับตรวจครั้งที่ 2", "", "วันครบกำหนดครั้งที่2",
 				"หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 2", "", "รายงานการติดตามครั้งที่ 2", "", "แจ้งติดตามหน่วยรับตรวจครั้งที่ 3", "", "วันครบกำหนดครั้งที่3",
-				"หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 3", "", "รายงานการติดตามครั้งที่ 3", "", "สถานะการติดตาม" };
+				"หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 3", "", "รายงานการติดตามครั้งที่ 3", "", "สถานะการติดตาม","หมายเหตุ" };
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
@@ -350,18 +350,19 @@ public class IaFollowUpProjectService {
 		
 		cell = row.createCell(0);cell.setCellStyle(thStyle);
 		cell = row.createCell(1);cell.setCellStyle(thStyle);
-		cell = row.createCell(19);cell.setCellStyle(thStyle);
+		cell = row.createCell(26);cell.setCellStyle(thStyle);
+		cell = row.createCell(27);cell.setCellStyle(thStyle);
 
 		/* set sheet */
 		// setColumnWidth
-		for (int i = 1; i <= 19; i++) {
+		for (int i = 1; i <= 27; i++) {
 			if (i == 1) {
 				// วันครบกำหนดครั้งที่2
 				sheet.setColumnWidth(i, 76 * 255);
-			} else if (i == 19) {
+			} else if (i == 27) {
 				// โครงการ => รายงานการติดตามครั้งที่ 2
-				sheet.setColumnWidth(i, 76 * 150);
-			} else if (i != 1 && i != 19)
+				sheet.setColumnWidth(i, 76 * 80);
+			} else if (i != 1 && i != 27)
 				// การติดตาม
 				sheet.setColumnWidth(i, 76 * 70);
 		}
@@ -376,10 +377,14 @@ public class IaFollowUpProjectService {
 		}
 		sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 16));
 		sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 18));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 20));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 23));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 25));
 		
 		sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
 		sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
-		sheet.addMergedRegion(new CellRangeAddress(0, 1, 19,19));
+		sheet.addMergedRegion(new CellRangeAddress(0, 1, 26,26));
+		sheet.addMergedRegion(new CellRangeAddress(0, 1, 27,27));
 		/* End set sheet */
 		
 		
@@ -630,6 +635,15 @@ public class IaFollowUpProjectService {
 			cell = row.createCell(cellNum);
 			if(StringUtils.isNotBlank(detail.getStatus())) {
 				cell.setCellValue(detail.getStatus());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getNote())) {
+				cell.setCellValue(detail.getNote());
 			}else {
 				cell.setCellValue("-");
 			}
