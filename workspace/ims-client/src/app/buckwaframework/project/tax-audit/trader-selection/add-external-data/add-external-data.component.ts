@@ -145,9 +145,10 @@ export class AddExternalDataComponent implements OnInit {
       if (i != this.month - 1) {
         json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"}, ';
       } else {
-        json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"} ';
+        json += ' { "data": "amount' + (i + 1) + '" ,"className":"center"}, ';
       }
     }
+    json += ' { "data": "otherCoordinates" } ';
     json += "] } ";
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
@@ -317,16 +318,9 @@ export class AddExternalDataComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
-      '<th colspan="' +
-      this.month / 2 +
-      '" style="text-align: center !important">การชำระภาษี ' +
-      this.month / 2 +
-      " เดือนแรก</th> " +
-      '<th colspan="' +
-      this.month / 2 +
-      '" style="text-align: center !important">การชำระภาษี ' +
-      this.month / 2 +
-      " เดือนหลัง </th> " +
+      '<th colspan="' + this.month / 2 + '" style="text-align: center !important">การชำระภาษี ' + this.month / 2 + " เดือนแรก</th> " +
+      '<th colspan="' +  this.month / 2 + '" style="text-align: center !important">การชำระภาษี ' + this.month / 2 + " เดือนหลัง </th> " +
+      '<th rowspan="2" style="text-align: center !important">พิกัดอื่นๆ</th> ' +
       "</tr>" +
       '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
       this.month / 2 +

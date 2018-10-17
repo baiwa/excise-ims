@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -23,8 +24,7 @@ public class ExciseRegisttionNumberDao {
 
 	private final String sqlTaExciseId = " select D.*  from EXCISEADM.ta_excise_registtion_number D ";
 
-	public List<ExciseRegistartionNumber> queryByExciseId(String register, String exciseProductType, int start,
-			int length, List<String> conditionList) {
+	public List<ExciseRegistartionNumber> queryByExciseId(String register, String exciseProductType, int start, int length, List<String> conditionList, String formSearch) {
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlTaExciseId);
 		if (BeanUtils.isNotEmpty(conditionList)) {
@@ -66,7 +66,19 @@ public class ExciseRegisttionNumberDao {
 			}
 			sql.append(" ) ");
 		}
+        if (StringUtils.isNotBlank(formSearch)){
+            sql.append(" AND D.TA_EXCISE_OPERATOR_NAME LIKE ?");
+            sql.append(" OR D.TA_EXCISE_ID LIKE ?");
+            sql.append(" OR D.TA_EXCISE_FAC_ADDRESS LIKE ?");
+            sql.append(" OR D.TA_EXCISE_SECTOR_AREA LIKE ?");
+            sql.append(" OR D.TA_EXCISE_AREA LIKE ?");
 
+            objList.add("%"+StringUtils.trim(formSearch)+"%");
+            objList.add("%"+StringUtils.trim(formSearch)+"%");
+            objList.add("%"+StringUtils.trim(formSearch)+"%");
+            objList.add("%"+StringUtils.trim(formSearch)+"%");
+            objList.add("%"+StringUtils.trim(formSearch)+"%");
+        }
 		sql.append(" order By TA_EXCISE_REGISTTION_NUMBER_ID ");
 		List<ExciseRegistartionNumber> list = jdbcTemplate.query(
 				OracleUtils.limitForDataTable(sql.toString(), start, length), objList.toArray(),
@@ -75,7 +87,7 @@ public class ExciseRegisttionNumberDao {
 		return list;
 	}
 
-	public long queryCountByExciseId(String exciseProductType, List<String> conditionList) {
+	public long queryCountByExciseId(String exciseProductType, List<String> conditionList, String formSearch) {
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlTaExciseId);
 		if (BeanUtils.isNotEmpty(conditionList)) {
@@ -117,7 +129,19 @@ public class ExciseRegisttionNumberDao {
 			}
 			sql.append(" ) ");
 		}
+        if (StringUtils.isNotBlank(formSearch)){
+            sql.append(" AND D.TA_EXCISE_OPERATOR_NAME LIKE ?");
+            sql.append(" OR D.TA_EXCISE_ID LIKE ?");
+            sql.append(" OR D.TA_EXCISE_FAC_ADDRESS LIKE ?");
+            sql.append(" OR D.TA_EXCISE_SECTOR_AREA LIKE ?");
+            sql.append(" OR D.TA_EXCISE_AREA LIKE ?");
 
+            objList.add("%"+StringUtils.trim(formSearch)+"%");
+            objList.add("%"+StringUtils.trim(formSearch)+"%");
+            objList.add("%"+StringUtils.trim(formSearch)+"%");
+            objList.add("%"+StringUtils.trim(formSearch)+"%");
+            objList.add("%"+StringUtils.trim(formSearch)+"%");
+        }
 		sql.append(" order By TA_EXCISE_REGISTTION_NUMBER_ID ");
 		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()), objList.toArray(),
 				Long.class);

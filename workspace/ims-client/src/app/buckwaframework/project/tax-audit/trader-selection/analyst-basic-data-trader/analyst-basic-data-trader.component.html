@@ -152,11 +152,11 @@
                     </div>
                     &nbsp;&nbsp;&nbsp;
                     <div class="five wide field ">
-                        <input type="text" placeholder="" value="">
+                        <input type="text" [(ngModel)]="formSearch" name="formSearch" id="formSearch">
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="two wide field ">
-                        <button class="ui mini primary button" routerLink="/#/add-data?id=${data}">
+                        <button class="ui mini primary button" (click)="search()">
                             ค้นหา
                         </button>
                         <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -184,8 +184,15 @@
 
             </div>
             <div class="ui attached segment">
+                    <br>
                 <div class="ui grid">
-                    <div id="divProduct" class="three wide column" style="padding-right: 0;">                        
+                    <button  (click)="toggleBar()" class="ui button custom-menu" type="button"><i class="bars icon"></i>เมนู</button>
+                   
+                    <!-- <i (click)="hideProductType()"><i class="bars icon"></i></i>
+                    <i (click)="showProductType()"><i class="bars icon"></i></i> -->
+                </div>
+                <div class="ui grid">
+                    <div id="divProduct" [ngClass]="{'three wide column': !toggle, 'transition-left' : toggle}" style="padding-right: 0;">                        
                         <div class="ui  styled accordion">
                                 <div class="active title">
                                   <i class="dropdown icon"></i>
@@ -217,72 +224,15 @@
 
 
 
-                    <div id="divDataTable" class="thirteen wide column">
+                    <div id="divDataTable" [ngClass]="{'thirteen': !toggle, 'sixteen': toggle,'wide': true, 'column': true, 'transition-left-2': toggle}">
                         <div class="ui active inverted dimmer" *ngIf="onLoading">
                             <div class="ui medium text loader">กำลังโหลด...</div>
                         </div>
                         <div>
                             <!-- <div style="overflow-x: scroll;overflow-y: hidden;padding-bottom: 14px;"> -->
-                            <table id="userManagementDt" class="ui small celled table aligned hover nowrap" style="width: 150%">
+                            <table id="userManagementDt" class="ui small celled table aligned hover nowrap" style="width: 100%">
                                 <thead id="trDrinamic">
-                                    <tr>
-                                        <th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิตเดิม/ใหม่</th> 
-                                        <th rowspan="2" style="text-align: center !important">เลขทะเบียนสรรพสามิตกเก่า</th>
-                                        <th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th>
-                                        <th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th>
-                                        <th rowspan="2" style="text-align: center !important">ภาค</th>
-                                        <th rowspan="2" style="text-align: center !important">พื้นที่</th>
-                                        <th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ
-                                            (บาท)</th>
-                                        <th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th>
-                                        <th rowspan="2" style="text-align: center !important">เปอร์เซ็นส่วนเบี่ยงเบน</th>
-                                        <th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th>
-                                        <th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3
-                                            ปีงบประมาณ</th>                                        
-                                        <th rowspan="2" style="text-align: center !important">พิกัด</th>
-                                        <th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th>
-                                        <th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th>
-                                        <th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th>
-                                        <th colspan="12" style="text-align: center !important">การชำระภาษี {{ month/2
-                                            }}
-                                            เดือนแรก
-                                        </th>
-                                        <th colspan="12" style="text-align: center !important">การชำระภาษี {{ month/2
-                                            }}
-                                            เดือนหลัง </th>
-                                        <th rowspan="2" style="text-align: center !important">เพิ่มข้อมูลภายนอก</th>
-                                    </tr>
-                                    <tr>
-                                        <th style="border-left: 1px solid rgba(34,36,38,.1);">{{ month/2 }} เดือนแรก</th>
-                                        <th style="text-align: center !important">{{ month/2 }} เดือนหลัง </th>
-                                        <th style="text-align: center !important">2558</th>
-                                        <th style="text-align: center !important">2559</th>
-                                        <th style="text-align: center !important">2560</th>
-                                        <th style="text-align: center !important">พ.ค. 58</th>
-                                        <th style="text-align: center !important">มิ.ย. 58</th>
-                                        <th style="text-align: center !important">ก.ค. 58</th>
-                                        <th style="text-align: center !important">ส.ค. 58</th>
-                                        <th style="text-align: center !important">ก.ย. 58</th>
-                                        <th style="text-align: center !important">ต.ค. 58</th>
-                                        <th style="text-align: center !important">พ.ย. 58</th>
-                                        <th style="text-align: center !important">ธ.ค. 58</th>
-                                        <th style="text-align: center !important">ม.ค. 59</th>
-                                        <th style="text-align: center !important">ก.พ. 59</th>
-                                        <th style="text-align: center !important">มี.ค. 59</th>
-                                        <th style="text-align: center !important">เม.ย. 59 </th>
-                                        <th style="text-align: center !important">พ.ค. 58</th>
-                                        <th style="text-align: center !important">มิ.ย. 58</th>
-                                        <th style="text-align: center !important">ก.ค. 58</th>
-                                        <th style="text-align: center !important">ส.ค. 58</th>
-                                        <th style="text-align: center !important">ก.ย. 58</th>
-                                        <th style="text-align: center !important">ต.ค. 58</th>
-                                        <th style="text-align: center !important">พ.ย. 58</th>
-                                        <th style="text-align: center !important">ธ.ค. 58</th>
-                                        <th style="text-align: center !important">ม.ค. 59</th>
-                                        <th style="text-align: center !important">ก.พ. 59</th>
-                                        <th style="text-align: center !important">มี.ค. 59</th>
-                                        <th style="text-align: center !important">เม.ย. 59 </th>
-                                    </tr>
+                                    <!-- table -->
                                 </thead>
                                 <tbody>
                                 </tbody>

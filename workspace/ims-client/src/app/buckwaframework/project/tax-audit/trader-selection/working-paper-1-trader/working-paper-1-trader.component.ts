@@ -148,6 +148,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
+      '<th rowspan="2" style="text-align: center !important">พิกัดอื่นๆ</th> ' +
       "</tr>" +
       '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
       this.month / 2 +
@@ -198,6 +199,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' "select": true, ';
     json += ' "ordering": false, ';
     json += ' "pageLength": 10, ';
+    json += ' "scrollX": true, ';
     json += ' "processing": true, ';
     json += ' "serverSide": true, ';
     json += ' "paging": true, ';
@@ -240,9 +242,11 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' { "data": "productType" }, '
     json += ' { "data": "factoryAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
-    json += ' { "data": "status" } ';
+    json += ' { "data": "status" }, ';
+    json += ' { "data": "otherCoordinates" } ';
 
     json += "] } ";
+    console.log(json);
     let jsonMaping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
   }

@@ -23,7 +23,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
   valueForFontList: any[] = [];
   condition: any[] = [];
   valueForBackEndList: any[] = [];
-  showmenu: boolean = true;
+  showmenu: boolean = false;
   userManagementDt: any;
   month: any;
   from: any;
@@ -40,7 +40,8 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
   lastNumber: any;
   loading: boolean;
   isOpen: any = 'open';
-
+  formSearch: string = "";
+  toggle: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -83,7 +84,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     // subscribe to router event
     this.from = this.route.snapshot.queryParams["from"];
     this.month = this.route.snapshot.queryParams["month"];
-    
+
 
     //split function
     var from_split = this.from.split("/");
@@ -129,13 +130,14 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปอร์เซ็นส่วนเบี่ยงเบน</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +      
-      '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +      
+      '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
+      '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ค่าเฉลี่ยภาษี</th> ' +
+
       '<th rowspan="2" style="text-align: center !important">ค่าร้อยละสูงสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ค่าร้อยละต่ำสุด</th> ' +
       '<th colspan="' +
@@ -148,6 +150,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       '" style="text-align: center !important">การชำระภาษี ' +
       this.month / 2 +
       " เดือนหลัง </th> " +
+      '<th rowspan="2" style="text-align: center !important">พิกัดอื่นๆ</th> ' +
       "</tr>" +
       '<tr><th style="text-align: center !important;border-left: 1px solid rgba(34,36,38,.1);">' +
       this.month / 2 +
@@ -165,7 +168,9 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       (currYear - 1) +
       "</th>" +
       trHeaderColumn +
-      "</tr>";
+      "</tr>"
+      ;
+
 
     //show values
     var sum_month = TextDateTH.months[m - 1];
@@ -355,7 +360,17 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     this.initDatatable();
   };
 
+  search = () => {
+    console.log(this.formSearch);
+    if (this.userManagementDt != null || this.userManagementDt != undefined) {
+      this.userManagementDt.destroy();
+    }
+    //$('#userManagementDt').DataTable().ajax.reload();
+    this.initDatatable();
+  }
+
   initDatatable(): void {
+
     this.onLoading = true;
     var d = new Date();
     const URL = AjaxService.CONTEXT_PATH + "/working/test/list";
@@ -365,18 +380,18 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     json += ' { "data": "exciseIdOld","className":"center"}, ';
     json += ' { "data": "exciseOperatorName" }, ';
     json += ' { "data": "exciseFacName" }, ';
-    json += ' { "data": "coordinates" }, '; 
+    json += ' { "data": "coordinates" }, ';
     json += ' { "data": "exciseArea" }, ';
     json += ' { "data": "exciseFacAddress" ,"className":"center" }, ';
     json += ' { "data": "exciseRegisCapital","className":"center" }, ';
     json += ' { "data": "change","className":"center" }, ';
-    json += ' { "data": "deviation","className":"center" }, ';    
+    json += ' { "data": "deviation","className":"center" }, ';
     json += ' { "data": "payingtax" ,"className":"center"}, ';
     json += ' { "data": "no1" }, ';
     json += ' { "data": "no2" }, ';
     json += ' { "data": "no3" }, ';
     json += ' { "data": "sector" }, ';
-    
+
     json += ' { "data": "industrialAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
     json += ' { "data": "status" }, ';
@@ -400,9 +415,10 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         json +=
           ' { "data": "exciseLatestTaxReceiveAmount' +
           (i + 1) +
-          '" ,"className":"right amount"} ';
+          '" ,"className":"right amount"}, ';
       }
     }
+    json += ' { "data": "otherCoordinates","className":"left" }';
     json += "]";
     let jsonMapping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable({
@@ -422,9 +438,10 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
         data: {
           exciseProductType: this.exciseProductType.replace("*", ""),
           startBackDate: this.from,
-          condition:
-            this.condition != undefined ? this.condition.toString() : "",
-          month: this.month
+          condition: this.condition != undefined ? this.condition.toString() : "",
+          month: this.month,
+          formSearch: this.formSearch
+
         }
       },
 
@@ -453,22 +470,14 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.onLoading = false;
     }, 500);
-    
+
   }
 
-  hideProductType() {
-    //this.isOpen = 'closed';
-    $('#divProduct').removeClass("three wide column");
-    $('#divProduct').addClass("one wide column");
-    $('#divDataTable').removeClass("thirteen wide column");
-    $('#divDataTable').addClass("fifteen wide column");
-    $('#productType').hide();
-  }
-  showProductType() {
-    $('#divProduct').removeClass("one wide column");
-    $('#divProduct').addClass("three wide column");
-    $('#divDataTable').removeClass("fifteen wide column");
-    $('#divDataTable').addClass("thirteen wide column");
-    $('#productType').show();
+  toggleBar() {
+    if (this.toggle) {
+      this.toggle = false;
+    } else {
+      this.toggle = true;
+    }
   }
 }
