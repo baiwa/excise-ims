@@ -5,6 +5,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
 import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
+import { AuthService } from "services/auth.service";
 declare var $: any;
 @Component({
   selector: "int08-3-1",
@@ -43,6 +44,8 @@ export class Int0831Component implements OnInit {
   columnList: any[] = [];
   constructor(private router: Router,
     private ajax: AjaxService,
+    
+private authService: AuthService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
     private _location: Location) {
@@ -64,6 +67,7 @@ export class Int0831Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08310');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     this.budgetYear = this.route.snapshot.queryParams["budgetYear"];

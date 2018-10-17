@@ -10,6 +10,7 @@ import { Observable } from "rxjs";
 import { MessageBarService } from "services/message-bar.service";
 import { async } from "q";
 import { Lov } from "projects/internal-audit/int06/int06-11/int06-11.service";
+import { AuthService } from "services/auth.service";
 declare var $: any;
 @Component({
   selector: 'app-int01-1-3',
@@ -33,12 +34,13 @@ export class Int0113Component implements OnInit {
   private sumMaintain: TaxReceipt;
 
 
-  constructor(private ajax: AjaxService, private main: Int011Service, private msg: MessageBarService) {
+  constructor(private ajax: AjaxService, private main: Int011Service, private msg: MessageBarService,private authService: AuthService) {
     this.getlov();
   }
 
   async ngOnInit() {
-
+    
+    this.authService.reRenderVersionProgram('INT-01130');
     this.getListAndFiterdData();
 
 

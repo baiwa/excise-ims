@@ -4,7 +4,7 @@ import {
   TravelCostDetail,
   Contract
 } from "../../../../../common/models";
-import { AjaxService, MessageBarService } from "../../../../../common/services";
+import { AjaxService, MessageBarService, AuthService } from "../../../../../common/services";
 import { Prices } from "../../../../../common/helper/travel";
 import { Router, ActivatedRoute } from "@angular/router";
 import {
@@ -44,6 +44,7 @@ export class Int0911Component implements OnInit, OnDestroy {
     private message: MessageBarService,
     private ajax: AjaxService,
     private router: Router,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private travelService: TravelService
   ) {
@@ -53,6 +54,7 @@ export class Int0911Component implements OnInit, OnDestroy {
 
   
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-09110');
     this.idProcess = this.route.snapshot.queryParams["idProcess"];
     console.log("idProcess : ",this.idProcess);
     this.getHead();
@@ -448,6 +450,3 @@ export class Int0911Component implements OnInit, OnDestroy {
     }
   };
 
-
-  
-}

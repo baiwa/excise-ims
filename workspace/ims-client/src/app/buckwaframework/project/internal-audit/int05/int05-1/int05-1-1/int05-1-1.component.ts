@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AjaxService, MessageBarService } from 'app/buckwaframework/common/services';
+import { AjaxService, MessageBarService, AuthService } from 'app/buckwaframework/common/services';
 import { TextDateTH, Utils } from 'app/buckwaframework/common/helper';
 import { formatter } from 'app/buckwaframework/common/helper/datepicker';
 import { BreadCrumb } from 'models/breadcrumb';
@@ -23,6 +23,7 @@ export class Int0511Component implements OnInit {
   loading: boolean = false;
   formModal: FormModal = new FormModal();
   constructor(
+    private authService: AuthService,
     private ajax: AjaxService,
     private message: MessageBarService) {
     this.breadcrumb = [
@@ -33,6 +34,7 @@ export class Int0511Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-05110');
     this.$form = $("#formSearch");
     $(".ui.dropdown.ai").dropdown().css('width', '100%');
     this.sectorDropdown();

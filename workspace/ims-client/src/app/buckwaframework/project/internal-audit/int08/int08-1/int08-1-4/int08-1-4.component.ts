@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from "@angular/core"
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
+import { AuthService } from "services/auth.service";
 
 declare var jQuery: any;
 declare var $: any;
@@ -23,10 +24,12 @@ export class Int0814Component implements OnInit, AfterViewInit {
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
-    private messageBarService: MessageBarService
+    private messageBarService: MessageBarService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08140');
     this.riskHdrName = "";
     this.budgetYear = "";
     this.wsRiskList = ["ปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ", "ปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ"];

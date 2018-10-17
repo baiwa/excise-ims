@@ -7,6 +7,7 @@ import { ComboBox } from "models/combobox";
 import { TextDateTH, formatter } from "helpers/datepicker";
 import { ActivatedRoute } from "@angular/router";
 import { async } from "@angular/core/testing";
+import { AuthService } from "../../../../../common/services";
 
 declare var $: any;
 @Component({
@@ -36,6 +37,7 @@ export class Int0691Component implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private selfService: Int0691Service,
+    private authService: AuthService,
     private route: ActivatedRoute
   ) {
     this.breadcrumb = [
@@ -54,7 +56,7 @@ export class Int0691Component implements OnInit {
   }
 
   ngOnInit() {
-    //set formbuilder
+    this.authService.reRenderVersionProgram('INT-06910');
     this.transferForm = this.formBuilder.group({
       mofNum: ["", Validators.required],
       refNum: ["", Validators.required],

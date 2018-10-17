@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'services/auth.service';
 declare var $: any;
 @Component({
   selector: 'app-int01-4-3',
@@ -9,9 +10,11 @@ export class Int0143Component implements OnInit {
 
  
   public listDatas: any[] = [];
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-01430');
+
     this.listDatas = [
       ['4102020103', 'รายได้ภาษีสุรา', '0.00', '0.00', '-659764.50', '203010', 'ภาษีสุรา', '159000.50', '400764.00', '100000.00', '659764.50', '0.00'],
       ['4102020109', 'รายได้ภาษีรถยนต์', '0.00', '0.00', '-25000.00', '250010', 'ภาษีีแบตเตอรี่', '10000.00', '7500.00', '7500.00', '25000.00', '0.00'],

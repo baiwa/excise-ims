@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
+import { AuthService } from "services/auth.service";
 
 
 
@@ -37,12 +38,14 @@ export class Int08310Component implements OnInit {
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
+    private authService: AuthService,
     private messageBarService: MessageBarService
   ) {
     this.fileExel = new Array<File>(); // initial file array
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08310');
     //$(".ui.dropdown").dropdown();
     $('.menu .item').tab();
     //console.log('ngOnInit');

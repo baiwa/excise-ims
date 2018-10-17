@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { Router } from "@angular/router";
 import { Int0611Service, Lov } from './int06-11.service';
+import { AuthService } from 'services/auth.service';
 
 declare var $: any;
 
@@ -50,11 +51,14 @@ export class Int0611Component implements OnInit, AfterViewInit {
   majorChilds: Lov[] = [];
   typeEduChilds: Lov[] = [];
   children: any[] = [1, 2, 3];
-  constructor(private router: Router, private service: Int0611Service) {
+  constructor(private router: Router, private service: Int0611Service,
+    private authService: AuthService) {
     this.initDropdowns();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-06110');
+   }
 
   ngAfterViewInit() {
     $(`.ui.fluid.dropdown`).dropdown({

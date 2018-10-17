@@ -3,6 +3,7 @@ import { Int072Service } from "./int07-2.service";
 import { ActivatedRoute } from "@angular/router";
 import { BreadCrumb } from "models/breadcrumb";
 import { DecimalFormat } from "helpers/decimalformat";
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 @Component({
@@ -20,6 +21,7 @@ export class Int072Component implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private authService: AuthService,
     private selfService: Int072Service
   ) {
     this.breadcrumb = [
@@ -43,6 +45,7 @@ export class Int072Component implements OnInit {
   ngAfterViewInit() {}
 
   async ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-07200');
     this.verifyAccountHeaderId = this.route.snapshot.queryParams[
       "verifyAccountHeaderId"
     ];

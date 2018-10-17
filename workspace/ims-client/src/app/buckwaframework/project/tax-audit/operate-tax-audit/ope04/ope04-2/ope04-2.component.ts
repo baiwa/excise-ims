@@ -3,6 +3,7 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { TextDateTH, digit } from "../../../../../common/helper/datepicker";
 import { DecimalFormat } from "../../../../../common/helper";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 @Component({
@@ -31,6 +32,7 @@ export class Ope042Component implements OnInit, AfterViewInit {
   allData: any;
 
   constructor(
+    private authService: AuthService,
     private ajax: AjaxService,
     private messageBarService: MessageBarService
   ) {
@@ -49,6 +51,7 @@ export class Ope042Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('OPE-04200');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ope04-1").css("width", "100%");
 

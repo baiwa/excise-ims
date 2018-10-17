@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 @Component({
@@ -21,6 +22,8 @@ export class Int0141Component implements OnInit {
   fileExel: File[];
   constructor(
     private router: Router,
+    
+private authService: AuthService,
     private route: ActivatedRoute,
     private ajax: AjaxService,
     private messageBarService: MessageBarService
@@ -30,6 +33,7 @@ export class Int0141Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-01410');
 
   }
 

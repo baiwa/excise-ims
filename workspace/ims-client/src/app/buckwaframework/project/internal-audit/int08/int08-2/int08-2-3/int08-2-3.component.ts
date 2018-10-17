@@ -4,6 +4,7 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Alert } from "../../../../../../../../node_modules/@types/selenium-webdriver";
+import { AuthService } from "services/auth.service";
 
 declare var jQuery: any;
 declare var $: any;
@@ -27,6 +28,7 @@ export class Int0823Component implements OnInit {
   datatable: any;
 
   constructor(
+    private authService: AuthService,
     private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
@@ -34,6 +36,7 @@ export class Int0823Component implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08230');
     this.id = this.route.snapshot.queryParams["id"];
     this.findRiskById();
     this.initDatatable();

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { MessageBarService } from '../../../../common/services/message-bar.service';
 import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
+import { AuthService } from 'services/auth.service';
 declare var $: any;
 @Component({
   selector: 'int11-1',
@@ -26,6 +27,7 @@ export class Int111Component implements OnInit {
   constructor(
     private ajaxService: AjaxService,
     private ajax: AjaxService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
@@ -38,6 +40,7 @@ export class Int111Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-11100');
     this.$form = $('#followUpProjectForm');
     this.$page = $('#followUpProjectPage');
   }

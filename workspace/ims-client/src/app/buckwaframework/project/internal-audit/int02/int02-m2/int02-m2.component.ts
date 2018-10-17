@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from "@angular/router";
 import { Questionnaire, _Questionnaire } from "./int02-m2.mock";
-import { AjaxService, MessageBarService } from "../../../../common/services";
+import { AjaxService, MessageBarService, AuthService } from "../../../../common/services";
 import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 declare var $: any;
 
@@ -29,6 +29,7 @@ export class Int02M2Component implements OnInit {
   breadcrumb: BreadCrumb[];
 
   constructor(
+    private authService: AuthService,
     private ajax: AjaxService, 
     private msg: MessageBarService
   ) {
@@ -55,6 +56,7 @@ export class Int02M2Component implements OnInit {
   } */
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-02500');
     this.questionnaire = _Questionnaire;
     // Pull Data
     this.pull();

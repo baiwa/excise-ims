@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 @Component({
@@ -10,9 +11,11 @@ export class Int0142Component implements OnInit {
   selectZone: any[];
   selectArea: any[];
 
-  constructor() {}
+  constructor(
+    private authService: AuthService) {}
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-01420');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     this.selectZone = [

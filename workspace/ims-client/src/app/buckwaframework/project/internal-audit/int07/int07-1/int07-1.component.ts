@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Int071Service } from "./int07-1.service";
 import { BreadCrumb } from "models/breadcrumb";
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 @Component({
@@ -15,7 +16,7 @@ export class Int071Component implements OnInit {
   loadingTable: boolean = false;
   checkSave: boolean = false;
 
-  constructor(private selfService: Int071Service) {
+  constructor(private selfService: Int071Service,private authService: AuthService) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบบัญชี", route: "#" },
@@ -27,7 +28,10 @@ export class Int071Component implements OnInit {
     this.hideData();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-07100');
+
+  }
 
   onSave = () => {
     this.loadingTable = true;

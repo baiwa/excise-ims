@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { AjaxService, MessageBarService } from "../../../../../common/services";
+import { AjaxService, MessageBarService, AuthService } from "../../../../../common/services";
 import { BaseModel, ManageReq } from "../../../../../common/models";
 import { toFormData } from "../../../../../common/helper";
 
@@ -45,7 +45,8 @@ export class Int02M31Component implements OnInit {
     private ajax: AjaxService,
     private router: Router,
     private route: ActivatedRoute,
-    private msg: MessageBarService
+    private msg: MessageBarService,
+    private authService: AuthService
   ) {
     this.mainId = "";
     this.qtnMainList = [];
@@ -53,6 +54,7 @@ export class Int02M31Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-02600');
     //get params link "/int02/m3"
     this.headerCode = this.route.snapshot.queryParams["qtnHeaderCode"];
     this.qtnHeaderName = this.route.snapshot.queryParams["qtnHeaderName"];

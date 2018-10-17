@@ -4,7 +4,7 @@ import { NgForm } from "@angular/forms";
 import { Observable } from "rxjs";
 
 import { BreadCrumb, ComboBox } from "models/index";
-import { AjaxService } from "services/index";
+import { AjaxService, AuthService } from "services/index";
 import { Int011Service } from "../int01-1.services";
 import { Int0111Service } from "./int01-1-1.service";
 
@@ -27,6 +27,7 @@ export class Int0111Component implements OnInit, AfterViewInit {
   constructor(
     private ajax: AjaxService,
     private router: Router,
+    private authService: AuthService,
     private main: Int011Service,
     private self: Int0111Service,
   ) {
@@ -39,6 +40,8 @@ export class Int0111Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    
+    this.authService.reRenderVersionProgram('INT-01110');
     // Start End Calendars
     this.self.calendar("calendar1", "calendar2", this.form);
   }

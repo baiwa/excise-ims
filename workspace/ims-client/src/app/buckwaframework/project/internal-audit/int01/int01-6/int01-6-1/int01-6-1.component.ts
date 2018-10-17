@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter } from "../../../../../common/helper";
-import { AjaxService, MessageBarService } from "../../../../../common/services";
+import { AjaxService, MessageBarService, AuthService } from "../../../../../common/services";
 import { Router, ActivatedRoute } from "@angular/router";
 import { TravelService } from "../../../../../common/services/travel.service";
 import { forEach } from "@angular/router/src/utils/collection";
@@ -38,6 +38,7 @@ export class Int0161Component implements OnInit {
   dataPerPage: any;
 
   constructor(
+    private authService: AuthService,
     private ajax: AjaxService,
     private router: Router,
     private route: ActivatedRoute,
@@ -46,6 +47,7 @@ export class Int0161Component implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-01610');
     this.calenda();
     this.travelTo1Dropdown();
     $(".ui.dropdown").dropdown();

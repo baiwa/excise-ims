@@ -8,6 +8,7 @@ import { AjaxService } from "services/ajax.service";
 import { DecimalFormat } from "helpers/index";
 import { Observable } from "rxjs";
 import { MessageBarService } from "services/message-bar.service";
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 
@@ -34,6 +35,8 @@ export class Int0112Component implements OnInit {
   constructor(
     private msg: MessageBarService,
     private main: Int011Service,
+    
+private authService: AuthService,
     private self: Int0112Service,
     private ajax: AjaxService) {
     // TODO
@@ -48,6 +51,7 @@ export class Int0112Component implements OnInit {
   }
 
   async ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-01120');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     this.loading = this.self.onLoad(); // On Load Service

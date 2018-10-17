@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TextDateTH, DecimalFormat, digit } from '../../../../../common/helper';
-import { AjaxService, MessageBarService } from '../../../../../common/services';
+import { AjaxService, MessageBarService, AuthService } from '../../../../../common/services';
 declare var $: any;
 @Component({
   selector: 'ope04-4',
@@ -29,6 +29,7 @@ export class Ope044Component implements OnInit {
 
   constructor(
     private ajax: AjaxService,
+    private authService: AuthService,
     private messageBarService: MessageBarService
   ) {
     this.exciseIdArr = "";
@@ -46,6 +47,8 @@ export class Ope044Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('OPE-04400');
+
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ope04-1").css("width", "100%");
 

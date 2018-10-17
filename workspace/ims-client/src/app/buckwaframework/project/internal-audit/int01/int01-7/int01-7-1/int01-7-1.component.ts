@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter } from "../../../../../common/helper";
-import { AjaxService, MessageBarService } from "../../../../../common/services";
+import { AjaxService, MessageBarService, AuthService } from "../../../../../common/services";
 import { Router, ActivatedRoute } from "@angular/router";
 import { TravelService } from "../../../../../common/services/travel.service";
 import { forEach } from "@angular/router/src/utils/collection";
@@ -31,11 +31,13 @@ export class Int0171Component implements OnInit {
     private ajax: AjaxService,
     private router: Router,
     private route: ActivatedRoute,
+    private authService: AuthService,
     private msg: MessageBarService,
     private travelService: TravelService
   ) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-01710');
     this.calenda();
     this.travelTo1Dropdown();
     this.dataTable();

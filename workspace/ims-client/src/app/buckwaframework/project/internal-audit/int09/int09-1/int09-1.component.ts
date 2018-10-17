@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter ,stringToDate} from "../../../../common/helper/datepicker";
-import { AjaxService, MessageBarService } from "../../../../common/services";
+import { AjaxService, MessageBarService, AuthService } from "../../../../common/services";
 import { TravelCostHeader } from "../../../../common/models";
 import { Router, ActivatedRoute } from "@angular/router";
 import { TravelCostDetail } from "app/buckwaframework/common/models/travelcostdetail";
@@ -34,6 +34,7 @@ export class Int091Component implements OnInit {
     private ajax: AjaxService,
     private route: ActivatedRoute,
     private router: Router,
+    private authService: AuthService,
     private iaService: IaService,
     private msg: MessageBarService
   ) { }
@@ -355,6 +356,7 @@ export class Int091Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-09100');
     this.dataTable();
     this.calenda();
     this.pickedTypeDropdown();

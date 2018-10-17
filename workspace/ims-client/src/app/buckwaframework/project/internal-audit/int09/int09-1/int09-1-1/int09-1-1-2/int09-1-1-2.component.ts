@@ -4,7 +4,7 @@ import {
   TravelCostDetail,
   Contract
 } from "../../../../../../common/models";
-import { AjaxService, MessageBarService } from "../../../../../../common/services";
+import { AjaxService, MessageBarService, AuthService } from "../../../../../../common/services";
 import { Prices } from "../../../../../../common/helper/travel";
 import { Router, ActivatedRoute } from "@angular/router";
 import {
@@ -27,6 +27,7 @@ export class Int09112Component implements OnInit, AfterViewInit {
   constructor(
     private ajax: AjaxService,
     private router: Router,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private msg: MessageBarService,
     private travelService: TravelService
@@ -64,6 +65,8 @@ export class Int09112Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-09112');
+
     this.idProcess = this.route.snapshot.queryParams["idProcess"];
     console.log("idProcess : ",this.idProcess);
     this.calenda();

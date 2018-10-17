@@ -5,6 +5,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Alert } from "../../../../../../../../node_modules/@types/selenium-webdriver";
 import { log } from "util";
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 declare var $: any;
@@ -31,6 +32,8 @@ export class Int0825Component implements OnInit {
   active: any;
 
   constructor(
+    
+private authService: AuthService,
     private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
@@ -41,6 +44,7 @@ export class Int0825Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08250');
     this.budgetYear = this.route.snapshot.queryParams["budgetYear"];
     this.columnList = [];
     this.percentList = [];

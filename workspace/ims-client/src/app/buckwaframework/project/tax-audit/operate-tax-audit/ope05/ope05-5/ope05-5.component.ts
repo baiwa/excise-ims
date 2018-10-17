@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'services/auth.service';
 
 @Component({
   selector: 'ope05-5',
@@ -9,9 +10,10 @@ export class Ope055Component implements OnInit {
 
   public showData: boolean = false;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('OPE-05500');
   }
 
   uploadData() {

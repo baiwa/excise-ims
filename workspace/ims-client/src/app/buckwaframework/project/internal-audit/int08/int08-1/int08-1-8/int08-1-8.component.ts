@@ -4,6 +4,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
 import { Utils } from "../../../../../common/helper";
+import { AuthService } from "services/auth.service";
 
 
 declare var jQuery: any;
@@ -35,13 +36,15 @@ export class Int0818Component implements OnInit {
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
-    private messageBarService: MessageBarService
+    private messageBarService: MessageBarService ,
+    
+private authService: AuthService
   ) {
     this.fileExel = new Array<File>(); // initial file array
   }
   uu
   ngOnInit() {
-    //$(".ui.dropdown").dropdown();
+    this.authService.reRenderVersionProgram('INT-08118');
     $('.menu .item').tab()
     this.riskHrdData = new RiskHrdData();
     this.id = this.route.snapshot.queryParams["id"];

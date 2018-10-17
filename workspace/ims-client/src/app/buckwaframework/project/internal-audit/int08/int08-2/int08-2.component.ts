@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 @Component({
@@ -9,9 +10,10 @@ declare var $: any;
 export class Int082Component implements OnInit {
   showData: boolean = false;
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08200');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
   }

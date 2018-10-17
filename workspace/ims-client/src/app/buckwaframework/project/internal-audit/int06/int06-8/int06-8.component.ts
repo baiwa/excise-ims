@@ -3,7 +3,7 @@ import { TextDateTH, formatter } from "helpers/datepicker";
 import { BreadCrumb } from "models/breadcrumb";
 import { AjaxService } from "services/ajax.service";
 import { Router } from "@angular/router";
-import { MessageBarService } from "../../../../common/services";
+import { MessageBarService, AuthService } from "../../../../common/services";
 import { NgForm } from "@angular/forms";
 import { Int068Service } from "./int06-8.service";
 import { Observable } from "rxjs";
@@ -29,7 +29,7 @@ export class Int068Component implements OnInit, AfterViewInit {
   statusTime: any = null;
   // loading: boolean = true;
 
-  constructor(private int068Service: Int068Service) {
+  constructor(private int068Service: Int068Service,private authService: AuthService) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
@@ -58,6 +58,7 @@ export class Int068Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-06800');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     $("#monthInVoiceDate")

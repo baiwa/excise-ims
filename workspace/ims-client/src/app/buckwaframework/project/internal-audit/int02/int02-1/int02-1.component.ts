@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { formatter, TextDateTH, toDateLocale } from 'helpers/index';
-import { AjaxService, IaService } from 'services/index';
+import { AjaxService, IaService, AuthService } from 'services/index';
 import { BreadCrumb } from 'models/index';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -28,7 +28,8 @@ export class Int021Component implements OnInit {
   qtnName: string;
   qtnYear: string;
   breadcrumb: BreadCrumb[];
-  constructor(private ajax: AjaxService, private router: Router, private iaService: IaService, private int02: Int02Service) {
+  constructor(private ajax: AjaxService, private router: Router, private iaService: IaService, private int02: Int02Service,
+    private authService: AuthService) {
     this.qtnName = null;
     this.qtnYear = null;
     this.breadcrumb = [
@@ -39,7 +40,7 @@ export class Int021Component implements OnInit {
   }
 
   ngOnInit() {
-
+    this.authService.reRenderVersionProgram('INT-02100');
     this.ajax.post(URL.LOV_SECTOR, { type: "SECTOR_VALUE" }, res => { // SECTOR
       this.sectors = res.json();
     });

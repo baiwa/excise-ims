@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
+import { AuthService } from "services/auth.service";
 declare var $: any;
 @Component({
   selector: "int08-3-5",
@@ -21,6 +22,7 @@ export class Int0835Component implements OnInit {
   riskAssRiskWsHdrList: any;
   constructor(private router: Router,
     private ajax: AjaxService,
+    private authService: AuthService,
     private messageBarService: MessageBarService,
     private route: ActivatedRoute) {
     this.isConditionShow = false;
@@ -28,6 +30,8 @@ export class Int0835Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08350');
+
     this.columnList = [];
     this.percentList = [];
     this.budgetYear = this.route.snapshot.queryParams["budgetYear"];

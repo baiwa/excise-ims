@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from "@angular/core";
 import { AjaxService } from "services/ajax.service";
 import { Router } from "@angular/router";
-import { MessageBarService } from "../../../../common/services";
+import { MessageBarService, AuthService } from "../../../../common/services";
 import { TextDateTH, formatter } from "helpers/datepicker";
 import { BreadCrumb, ComboBox } from "models/index";
 import { Int067Service } from "./int06-7.service";
@@ -24,7 +24,8 @@ export class Int067Component implements OnInit, AfterViewInit {
     private int067Service: Int067Service,
     private ajax: AjaxService,
     private router: Router,
-    private msg: MessageBarService
+    private msg: MessageBarService,
+    private authService: AuthService
   ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
@@ -42,6 +43,7 @@ export class Int067Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-06700');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     $("#budgetYearCal")

@@ -5,6 +5,7 @@ import { AjaxService } from '../../../../../common/services/ajax.service';
 import { Router, ActivatedRoute } from "@angular/router";
 import { MessageBarService } from '../../../../../common/services/message-bar.service';
 import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
+import { AuthService } from 'services/auth.service';
 
 declare var $: any;
 @Component({
@@ -24,7 +25,9 @@ breadcrumb: BreadCrumb[];
 
   constructor(
     private ajaxService: AjaxService,
-    private router: Router,
+    private router: Router, 
+    
+    private authService: AuthService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
   ) { 
@@ -36,6 +39,7 @@ breadcrumb: BreadCrumb[];
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-11110');
     this.$form = $("#followUpProjectForm");
     this.id = this.route.snapshot.queryParams["id"];
     if (this.id) {

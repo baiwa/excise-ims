@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'services/auth.service';
 
 @Component({
   selector: 'app-epa01-1',
@@ -11,9 +12,11 @@ export class Epa011Component implements OnInit {
   IsNumber= true;
   Char : string;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('EXP-01100');
 
     var num:number = 5; 
     var i:number; 

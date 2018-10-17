@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute } from "@angular/router";
+import { AuthService } from "services/auth.service";
 
 declare var jQuery: any;
 declare var $: any;
@@ -21,11 +22,13 @@ export class Int0838Component implements OnInit {
 
   isConditionShow: any;
   constructor(private router: Router,
+    private authService: AuthService,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08380');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     this.id = this.route.snapshot.queryParams["id"];

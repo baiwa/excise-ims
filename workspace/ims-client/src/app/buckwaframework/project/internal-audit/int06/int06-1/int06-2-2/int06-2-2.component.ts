@@ -4,6 +4,7 @@ import { Int0622Service } from 'projects/internal-audit/int06/int06-1/int06-2-2/
 import { IaService } from 'services/ia.service';
 import { MessageBarService } from 'services/message-bar.service';
 import { AjaxService } from 'services/ajax.service';
+import { AuthService } from 'services/auth.service';
 
 @Component({
   selector: 'app-int06-2-2',
@@ -19,6 +20,7 @@ export class Int0622Component implements OnInit {
   constructor(
     private int0622Service: Int0622Service,
     private iaService: IaService,
+    private authService: AuthService,
     private message: MessageBarService,
     private ajax: AjaxService
   ) {
@@ -32,7 +34,7 @@ export class Int0622Component implements OnInit {
   }
 
   ngOnInit() {
-
+    this.authService.reRenderVersionProgram('INT-06220');
     if (this.iaService.getData() != null) {
       console.log(this.iaService.getData());
       this.model = this.iaService.getData();

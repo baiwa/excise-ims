@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { TextDateTH, DecimalFormat, digit } from '../../../../../common/helper';
-import { AjaxService, MessageBarService } from '../../../../../common/services';
+import { AjaxService, MessageBarService, AuthService } from '../../../../../common/services';
 declare var $: any;
 @Component({
   selector: 'ope04-5',
@@ -28,6 +28,8 @@ export class Ope045Component implements OnInit, AfterViewInit {
   allData: any;
 
   constructor(
+    
+private authService: AuthService,
     private ajax: AjaxService,
     private messageBarService: MessageBarService
   ) {
@@ -46,6 +48,7 @@ export class Ope045Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('OPE-04500');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ope04-1").css("width", "100%");
 

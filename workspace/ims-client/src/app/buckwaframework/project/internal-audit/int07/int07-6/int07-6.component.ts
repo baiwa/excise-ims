@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { AjaxService } from '../../../../common/services';
+import { AjaxService, AuthService } from '../../../../common/services';
 import { MessageBarService } from 'app/buckwaframework/common/services';
 import { BreadCrumb } from '../../../../common/models';
 
@@ -47,6 +47,7 @@ export class Int076Component implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
+    private authService: AuthService,
     private ajax: AjaxService,
     private message: MessageBarService,
     private messageBarService: MessageBarService,
@@ -59,6 +60,7 @@ export class Int076Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-07600');
     this.dataEdit = new Data();
     this.view1 = true;
 

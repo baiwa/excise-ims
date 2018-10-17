@@ -3,6 +3,7 @@ import { BreadCrumb } from 'models/breadcrumb';
 import { Int0621Service } from 'projects/internal-audit/int06/int06-1/int06-2-1/int06-2-1.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IaService } from 'services/ia.service';
+import { AuthService } from 'services/auth.service';
 declare var $: any;
 @Component({
     selector: 'app-int06-2-1',
@@ -24,6 +25,7 @@ export class Int0621Component implements OnInit {
     constructor(
         private int0621Service: Int0621Service,
         private router: Router,
+        private authService: AuthService,
         private route: ActivatedRoute,
         private iaService: IaService
     ) {
@@ -34,6 +36,7 @@ export class Int0621Component implements OnInit {
     }
 
     ngOnInit() {
+        this.authService.reRenderVersionProgram('INT-06210');
         $("#year").dropdown();
         this.iaService.setData(null);
         this.int0621Service.setSearchFlag(this.route.snapshot.queryParams["searchFlag"] || "" || undefined);

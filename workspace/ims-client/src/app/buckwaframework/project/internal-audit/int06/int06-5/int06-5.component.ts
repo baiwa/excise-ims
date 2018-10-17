@@ -4,6 +4,7 @@ import { Int065Service } from "projects/internal-audit/int06/int06-5/int06-5.ser
 import { FormSearch } from "projects/internal-audit/int06/int06-5/from-search.model";
 import { TextDateTH, formatter } from "helpers/datepicker";
 import { Utils } from "helpers/utils";
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 
@@ -28,7 +29,7 @@ export class Int065Component implements OnInit, AfterViewInit {
   branchList: any;
   budgetTypeList: any;
 
-  constructor(private int065Service: Int065Service) {
+  constructor(private int065Service: Int065Service,private authService: AuthService) {
   }
 
   ngAfterViewInit() {
@@ -37,6 +38,7 @@ export class Int065Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-06500');
     $(".ui.dropdown").dropdown();
     this.sector();
     this.dataTable();

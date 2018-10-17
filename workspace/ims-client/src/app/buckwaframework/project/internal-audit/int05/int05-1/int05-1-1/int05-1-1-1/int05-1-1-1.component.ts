@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { File } from './../../../../../../common/models/file';
 import { TextDateTH, formatter } from '../../../../../../common/helper/datepicker';
-import { MessageBarService, AjaxService } from 'app/buckwaframework/common/services';
+import { MessageBarService, AjaxService, AuthService } from 'app/buckwaframework/common/services';
 import { BreadCrumb } from 'models/breadcrumb';
 import { Int05111Service } from 'projects/internal-audit/int05/int05-1/int05-1-1/int05-1-1-1/int05-1-1-1.service';
 import { Router } from '@angular/router';
@@ -35,6 +35,8 @@ export class Int05111Component implements OnInit, AfterViewInit {
   constructor(
     private message: MessageBarService,
     private ajax: AjaxService,
+    
+private authService: AuthService,
     private int05111Service: Int05111Service,
     private route: Router
   ) {
@@ -56,6 +58,7 @@ export class Int05111Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-05111');
     this.calenda();
     this.dataTable();
     this.stampTypeList();

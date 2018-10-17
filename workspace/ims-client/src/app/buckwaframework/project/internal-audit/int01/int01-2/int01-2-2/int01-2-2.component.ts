@@ -4,6 +4,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
 import { DecimalFormat } from "helpers/index";
+import { AuthService } from "services/auth.service";
 declare var $: any;
 @Component({
     selector: "int01-2-2",
@@ -20,6 +21,7 @@ export class Int0122Component implements OnInit {
     datatable: any;
     breadcrumb: { label: string; route: string; }[];
     constructor(private router: Router,
+        private authService: AuthService,
         private ajax: AjaxService,
         private route: ActivatedRoute,
         private messageBarService: MessageBarService) {
@@ -37,6 +39,7 @@ export class Int0122Component implements OnInit {
     }
 
     ngOnInit() {
+        this.authService.reRenderVersionProgram('INT-01220');
         this.lic = new Lic();
         $(".ui.dropdown").dropdown();
         $(".ui.dropdown.ai").css("width", "100%");

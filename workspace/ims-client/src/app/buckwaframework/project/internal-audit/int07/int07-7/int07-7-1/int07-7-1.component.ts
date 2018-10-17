@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'services/auth.service';
 
 declare var $: any;
 @Component({
@@ -8,9 +9,11 @@ declare var $: any;
 })
 export class Int0771Component implements OnInit {
 
-  constructor() { }
+  constructor(
+    private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-07710');
   }
 
   popupEditData() {

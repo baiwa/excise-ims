@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
+import { AuthService } from "services/auth.service";
 declare var $: any;
 @Component({
   selector: 'app-int08-1-7',
@@ -22,12 +23,14 @@ export class Int0817Component implements OnInit {
   constructor(private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private authService: AuthService) {
     this.isConditionShow = false;
     this.ispercent = false;
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08170');
     this.columnList = [];
     this.percentList = [];
     this.budgetYear = this.route.snapshot.queryParams["budgetYear"];

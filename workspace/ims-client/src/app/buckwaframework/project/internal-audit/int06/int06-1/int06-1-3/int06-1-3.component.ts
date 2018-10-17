@@ -6,6 +6,7 @@ import { Int061Service } from 'projects/internal-audit/int06/int06-1/int06-1.ser
 import { Router } from '@angular/router';
 import { Utils } from 'helpers/utils';
 import { MessageBarService } from 'services/message-bar.service';
+import { AuthService } from 'services/auth.service';
 declare var $: any;
 @Component({
   selector: 'app-int06-1-3',
@@ -29,6 +30,7 @@ export class Int0613Component implements OnInit {
     private int0613Servicen: Int0613Service,
     private int061Service: Int061Service,
     private router: Router,
+    private authService: AuthService,
     private message: MessageBarService
   ) {
     if (this.int061Service.getDataLedger() == null) {
@@ -37,6 +39,7 @@ export class Int0613Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-06130');
     this.callDropdown();
   }
 

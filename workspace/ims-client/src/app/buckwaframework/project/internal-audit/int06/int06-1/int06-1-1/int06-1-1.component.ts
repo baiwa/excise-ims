@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Int0611Service } from './int06-1-1.service';
 import { BreadCrumb } from '../../../../../common/models';
 import { Int061Service } from 'projects/internal-audit/int06/int06-1/int06-1.service';
+import { AuthService } from 'services/auth.service';
 
 declare var $: any;
 
@@ -23,6 +24,7 @@ export class Int0611Component implements OnInit {
   show : boolean = true;
   
   constructor(
+    private authService: AuthService,
     private int0611Service : Int0611Service,
     private int061Service : Int061Service
   ) {
@@ -33,6 +35,7 @@ export class Int0611Component implements OnInit {
 
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-06110');
   } 
   ngAfterViewInit() {
     this.dataTable();

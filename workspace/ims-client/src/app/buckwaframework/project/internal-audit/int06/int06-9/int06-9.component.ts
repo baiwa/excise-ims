@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter } from "helpers/datepicker";
 import { AjaxService } from "services/ajax.service";
 import { Router, ActivatedRoute } from "@angular/router";
-import { MessageBarService } from "../../../../common/services";
+import { MessageBarService, AuthService } from "../../../../common/services";
 import { Observable } from "rxjs";
 import { ComboBox } from "models/combobox";
 import { Int069Service } from "./int06-9.service";
@@ -29,6 +29,7 @@ export class Int069Component implements OnInit {
   constructor(
     private selfService: Int069Service,
     private ajax: AjaxService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private msg: MessageBarService
@@ -42,6 +43,7 @@ export class Int069Component implements OnInit {
   }
 
   async ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-06900');
     this.comboBox1 = await this.selfService.dropdown("TRANSFER");
     this.comboBox2 = await this.selfService.dropdown("BUDGET_TYPE");
     this.comboBox3 = await this.selfService.dropdown("ACTIVITY");

@@ -57,7 +57,8 @@ export class Int022Component implements OnInit {
     private message: MessageBarService,
     private dialog: DialogService,
     private iaService: IaService,
-    private auth: AuthService
+    private auth: AuthService,
+    private authService: AuthService
   ) {
 
     this.breadcrumb = [
@@ -82,6 +83,7 @@ export class Int022Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.reRenderVersionProgram('INT-02200');
     // Dropdown
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");

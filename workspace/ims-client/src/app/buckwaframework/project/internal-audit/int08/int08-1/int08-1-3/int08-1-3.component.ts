@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 @Component({
@@ -10,7 +11,7 @@ export class Int0813Component implements OnInit {
   showData: boolean = false;
   public data: String[];
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.data = [
       "ประเมินความเสี่ยงโครงการ - งบประมาณ",
       "ประเมินความเสี่ยงโครงการ - ประสิทธิภาพ",
@@ -29,6 +30,7 @@ export class Int0813Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08130');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
   }

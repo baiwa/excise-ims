@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { MessageBarService } from '../../../../../common/services/message-bar.service';
 import { IaFollowUpDepartment } from '../../../../../common/models/IaFollowUpDepartment';
 import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
+import { AuthService } from 'services/auth.service';
 
 declare var $: any;
 @Component({
@@ -26,11 +27,12 @@ export class Int1121Component implements OnInit {
   regionList: any[];
   distrList: any[];
   // BreadCrumb
- breadcrumb: BreadCrumb[];
+  breadcrumb: BreadCrumb[];
 
   constructor(
     private ajaxService: AjaxService,
     private router: Router,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
   ) {
@@ -39,9 +41,10 @@ export class Int1121Component implements OnInit {
       { label: "ทะเบียนคุมการติดตามงาน", route: "#" },
       { label: "เพิ่มรายการติดตามผลการตรวจสอบของหน่วยรับตรวจ", route: "#" },
     ];
-   }
+  }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-11210');
     this.$form = $("#followUpDepartmentForm");
     this.id = this.route.snapshot.queryParams["id"];
   }
@@ -461,7 +464,7 @@ export class Int1121Component implements OnInit {
 
       $('#followUp3Bnum').prop('disabled', '');
       $('#followUp3Date').prop('disabled', '');
-    }else {
+    } else {
       $('#followUp3Bnum').prop('disabled', 'disabled');
       $('#performance3Bnum').prop('disabled', 'disabled');
       $('#trackResult3Bnum').prop('disabled', 'disabled');
@@ -493,7 +496,7 @@ export class Int1121Component implements OnInit {
       $('#trackResult3Bnum').prop('disabled', 'disabled');
       $('#trackResult3Date').prop('disabled', 'disabled');
     }
-    
+
     if ($('#trackResult3Bnum').val()) {
       $('#status').val('รายงานการติดตามครั้งที่ 3');
     }

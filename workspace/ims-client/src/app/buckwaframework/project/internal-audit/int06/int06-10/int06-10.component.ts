@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TextDateTH, formatter } from 'helpers/datepicker';
+import { AuthService } from 'services/auth.service';
 declare var $: any;
 @Component({
   selector: 'app-int06-10',
@@ -8,9 +9,10 @@ declare var $: any;
 })
 export class Int0610Component implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-06100');
     this.hidedata();
 
     $("#calendar1").calendar({    

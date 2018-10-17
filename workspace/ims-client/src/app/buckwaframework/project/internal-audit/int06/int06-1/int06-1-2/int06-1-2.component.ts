@@ -3,6 +3,7 @@ import { Int0612Service } from 'projects/internal-audit/int06/int06-1/int06-1-2/
 import { BreadCrumb } from 'models/breadcrumb';
 import { Int061Service } from 'projects/internal-audit/int06/int06-1/int06-1.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'services/auth.service';
 declare var $: any;
 @Component({
   selector: 'app-int06-1-2',
@@ -25,6 +26,7 @@ export class Int0612Component implements OnInit, AfterViewInit {
     private int0612Service: Int0612Service,
     private int061Service: Int061Service,
     private router: Router,
+    private authService: AuthService,
     private cdRef: ChangeDetectorRef
   ) {
 
@@ -35,6 +37,8 @@ export class Int0612Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-06120');
+
   }
   ngAfterViewInit() {
     this.dataTable();

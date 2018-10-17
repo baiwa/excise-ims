@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageBarService } from 'app/buckwaframework/common/services';
+import { MessageBarService, AuthService } from 'app/buckwaframework/common/services';
 import { BreadCrumb } from 'models/breadcrumb';
 import { Utils } from 'helpers/utils';
 declare var $: any;
@@ -15,6 +15,7 @@ export class Int05112Component implements OnInit {
   data: FormModal[];
   breadcrumb: BreadCrumb[];
   constructor(
+    private authService: AuthService,
     private message: MessageBarService
   ) {
     this.breadcrumb = [
@@ -27,6 +28,8 @@ export class Int05112Component implements OnInit {
   }
 
   ngOnInit() {
+    
+    this.authService.reRenderVersionProgram('INT-05112');
     $(".ui.dropdown").dropdown();
   }
   ngAfterViewInit() {

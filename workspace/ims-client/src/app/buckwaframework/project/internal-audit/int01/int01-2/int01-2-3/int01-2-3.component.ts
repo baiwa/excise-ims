@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
+import { AuthService } from "services/auth.service";
 declare var $: any;
 @Component({
   selector: 'int01-2-3',
@@ -23,6 +24,7 @@ export class Int0123Component implements OnInit {
   breadcrumb: { label: string; route: string; }[];
   constructor(private router: Router,
     private ajax: AjaxService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService) {
     this.breadcrumb = [
@@ -35,6 +37,7 @@ export class Int0123Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-01230');
     this.offCode = this.route.snapshot.queryParams["offCode"];
     this.startDate = this.route.snapshot.queryParams["startDate"];
     this.endDate = this.route.snapshot.queryParams["endDate"];

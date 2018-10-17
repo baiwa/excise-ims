@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'services/auth.service';
 
 @Component({
   selector: 'app-epa02-1-1',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Epa0211Component implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('EXP-02110');
   }
 
 }

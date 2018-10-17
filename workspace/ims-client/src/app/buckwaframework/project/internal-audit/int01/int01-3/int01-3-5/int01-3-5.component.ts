@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'services/auth.service';
 
 @Component({
   selector: 'app-int01-3-5',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Int0135Component implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-01350');
   }
 
 }

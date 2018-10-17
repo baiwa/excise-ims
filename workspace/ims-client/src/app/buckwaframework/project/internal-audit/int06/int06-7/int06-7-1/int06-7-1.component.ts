@@ -5,6 +5,7 @@ import { Int0671Service } from "./int06-7-1.service";
 import { Observable } from "rxjs/Observable";
 import { async } from "q";
 import * as moment from "moment";
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 @Component({
@@ -23,7 +24,7 @@ export class Int0671Component implements OnInit, AfterViewInit {
   dat: any;
   dataEdit: any;
 
-  constructor(private int0671Service: Int0671Service) {
+  constructor(private int0671Service: Int0671Service,   private authService: AuthService) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
@@ -38,6 +39,7 @@ export class Int0671Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-06710');
     //set data on edit
     this.dataList.subscribe(value => {
       this.dataEdit = value;

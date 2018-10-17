@@ -4,7 +4,7 @@ import {
   TravelCostDetail,
   Contract
 } from "../../../../../../common/models";
-import { AjaxService, MessageBarService } from "../../../../../../common/services";
+import { AjaxService, MessageBarService, AuthService } from "../../../../../../common/services";
 import { Prices } from "../../../../../../common/helper/travel";
 import { Router, ActivatedRoute } from "@angular/router";
 import {
@@ -61,6 +61,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
 
   constructor(
     private ajax: AjaxService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private msg: MessageBarService,
@@ -68,6 +69,7 @@ export class Int09111Component implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-09111');
     // $('.ui.dropdown').dropdown();
     this.idProcess = this.route.snapshot.queryParams["idProcess"];
     console.log("idProcess : ", this.idProcess);
@@ -614,7 +616,6 @@ export class Int09111Component implements OnInit, AfterViewInit {
   }
 
 
- 
 
 
 

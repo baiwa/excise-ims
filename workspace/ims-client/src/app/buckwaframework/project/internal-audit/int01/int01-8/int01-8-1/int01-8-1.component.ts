@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AjaxService } from "services/ajax.service";
 import { TextDateTH, formatter } from "helpers/datepicker";
+import { AuthService } from "services/auth.service";
 declare var $: any;
 const URL = {
   DROPDOWN: "combobox/controller/getDropByTypeAndParentId"
@@ -18,9 +19,10 @@ export class Int0181Component implements OnInit {
   travelTo2List: any;
   travelTo3List: any;
 
-  constructor(private ajax: AjaxService) { }
+  constructor(private ajax: AjaxService,private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-01810');
     this.hideData();
 
     $("#calendar1").calendar({

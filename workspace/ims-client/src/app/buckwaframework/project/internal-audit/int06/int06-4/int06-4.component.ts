@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'services/auth.service';
 
 declare var $: any;
 @Component({
@@ -10,9 +11,10 @@ export class Int064Component implements OnInit {
 
   private showData: boolean = false;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-06400');
   }
 
   clearData() {

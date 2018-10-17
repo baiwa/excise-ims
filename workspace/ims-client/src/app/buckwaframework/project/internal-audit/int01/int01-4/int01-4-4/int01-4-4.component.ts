@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 @Component({
@@ -11,9 +12,11 @@ export class Int0144Component implements OnInit {
   listData: any[] = [];
   actionsModal: string;
 
-  constructor(private messageBarService: MessageBarService) {}
+  constructor(private messageBarService: MessageBarService,
+    private authService: AuthService) {}
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-01440');
     $(".ui.dropdown").hide().dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     this.listData = [

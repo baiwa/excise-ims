@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { DecimalFormat, TextDateTH, digit } from "../../../../../common/helper";
-import { AjaxService } from "../../../../../common/services";
+import { AjaxService, AuthService } from "../../../../../common/services";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 
 declare var $: any;
@@ -31,6 +31,8 @@ export class Ope043Component implements OnInit, AfterViewInit {
   columnExcel2: any;
 
   constructor(
+    
+private authService: AuthService,
     private ajax: AjaxService,
     private messageBarService: MessageBarService
   ) {
@@ -50,6 +52,7 @@ export class Ope043Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('OPE-04300');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ope04-1").css("width", "100%");
 

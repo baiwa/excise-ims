@@ -4,6 +4,7 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Alert } from "../../../../../../../../node_modules/@types/selenium-webdriver";
+import { AuthService } from "services/auth.service";
 
 declare var jQuery: any;
 declare var $: any;
@@ -25,10 +26,12 @@ export class Int0832Component implements OnInit {
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
+    private authService: AuthService,
     private messageBarService: MessageBarService
   ) { }
   1
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08320');
     this.riskHdrName = "";
     this.budgetYear = "";
     this.wsRiskList = ["ปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ",

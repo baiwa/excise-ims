@@ -4,6 +4,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
 import { BreadCrumb } from "models/breadcrumb";
+import { AuthService } from "services/auth.service";
 declare var $: any;
 
 const URL = {
@@ -31,6 +32,8 @@ export class Int0121Component implements OnInit {
   endDate: any = '';
   constructor(private router: Router,
     private ajax: AjaxService,
+    
+private authService: AuthService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService) {
     this.breadcrumb = [
@@ -41,7 +44,7 @@ export class Int0121Component implements OnInit {
   }
 
   ngOnInit() {
-
+    this.authService.reRenderVersionProgram('INT-01210');
 
     $("#calendar1").calendar({
       maxDate: new Date(),

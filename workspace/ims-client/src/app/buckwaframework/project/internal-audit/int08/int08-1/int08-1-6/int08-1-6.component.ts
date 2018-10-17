@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
+import { AuthService } from "services/auth.service";
 
 
 declare var jQuery: any;
@@ -33,12 +34,15 @@ export class Int0816Component implements OnInit {
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
-    private messageBarService: MessageBarService
+    private messageBarService: MessageBarService,
+    
+private authService: AuthService
   ) {
     this.fileExel = new Array<File>(); // initial file array
   }
   uu
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08160');
     //$(".ui.dropdown").dropdown();
     $('.menu .item').tab()
     this.riskHrdData = new RiskHrdData();

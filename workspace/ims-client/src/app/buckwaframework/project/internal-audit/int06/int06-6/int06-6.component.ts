@@ -5,6 +5,7 @@ import { FormSearch } from 'projects/internal-audit/int06/int06-6/form-search.mo
 import { BreadCrumb } from 'models/breadcrumb';
 import { Int066Service } from 'projects/internal-audit/int06/int06-6/int06-6.service';
 import { Utils } from 'helpers/utils';
+import { AuthService } from 'services/auth.service';
 
 declare var $: any;
 
@@ -34,7 +35,8 @@ export class Int066Component implements OnInit {
 
   constructor(
     private ajax: AjaxService,
-    private int066Service: Int066Service
+    private int066Service: Int066Service,
+    private authService: AuthService
   ) { }
 
   ngAfterViewInit() {
@@ -44,6 +46,7 @@ export class Int066Component implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-06600');
     $(".ui.dropdown").dropdown();
     this.sector();
   }
