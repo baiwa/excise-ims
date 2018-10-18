@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+ืยimport { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { MessageBarService } from '../../../../common/services/message-bar.service';
@@ -20,7 +20,7 @@ export class Int111Component implements OnInit {
   $form: any;
   $page: any;
   form : Int111Form = new Int111Form();
-
+  searchFlag : string ="FALSE";
   // BreadCrumb
   breadcrumb: BreadCrumb[];
 
@@ -55,15 +55,15 @@ export class Int111Component implements OnInit {
     $(".follow-project-dropdown").dropdown().css('width', '100%');
   }
 
-  initDatatable =()=> {
+  initDatatable = ()=> {
     const URL = AjaxService.CONTEXT_PATH + "ia/int111/search";
-    this.datatable = $("#dataTable").DataTable({
+      this.datatable= $("#dataTable").DataTable({
       lengthChange: false,
       searching: false,
       ordering: false,
       pageLength: 10,
       processing: true,
-      serverSide: false,
+      serverSide: true,
       paging: true,
       scrollX: true,
 
@@ -71,17 +71,18 @@ export class Int111Component implements OnInit {
         type: "POST",
         url: URL,
         contentType: "application/json",
-        data: function (d) {
-          return JSON.stringify($.extend({
+        data: (d)=> {
+          return JSON.stringify($.extend({}, d, {
             "projectName": $('#projectName').val(),
-            "status": $('#status').val()
-          }, d, {}));
+            "status": $('#status').val(),
+            "searchFlag" : $("#searchFlag").val()
+          }));
         }
       },
       columns: [
         {
           data: "followUpProjectId",
-          className: "center aglined",
+          className: "text-center",
           render: function (data) {
             return (
               '<div class="ui checkbox follow-proj-chkbox"><input name="checkId" value="' +
@@ -418,6 +419,7 @@ export class Int111Component implements OnInit {
        
     });
   }
+  
 
   onClicksavenote =()=>{
     this.form.note = $('#noteclosejob').val();
@@ -440,14 +442,16 @@ export class Int111Component implements OnInit {
   }
 
   searchData() {
+    $("#searchFlag").val("TRUE");
     $("#dataTable").DataTable().ajax.reload();
   }
 
   clearData() {
+    console.log("Clear");
     $('#projectName').val('');
-    $('#status').val('');
-    $(".follow-project-dropdown").dropdown('restore defaults');
-    this.searchData()
+    $("#status").dropdown('restore defaults');
+    $("#searchFlag").val("FALSE");
+    $("#dataTable").DataTable().ajax.reload();
   }
 
   addData() {
