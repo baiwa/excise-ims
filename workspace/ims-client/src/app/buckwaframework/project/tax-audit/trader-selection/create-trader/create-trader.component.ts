@@ -66,7 +66,7 @@ export class CreateTraderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    $(".ui.dropdown").dropdown();
     console.log("this.formatter1 :", this.formatter1.cell);
 
     $("#calendar").calendar({

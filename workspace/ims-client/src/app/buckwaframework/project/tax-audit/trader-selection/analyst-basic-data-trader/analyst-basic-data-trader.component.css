@@ -19,8 +19,9 @@
 }
 
 .transition-left {
-    position: fixed;
-    left: -270px;
+    /* position: fixed;
+    left: -270px; */
+    display: none
 }
 .custom-menu{
     border-top-left-radius: 0rem;
