@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.ExcelUtils;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.entity.VerifyAccountDetil;
 import th.co.baiwa.excise.ia.persistence.entity.VerifyAccountHeader;
@@ -77,8 +78,8 @@ public class Int071Service {
 
 						Cell cell = row.getCell(colIx);
 						if (cell != null) {
-							map.put(getStringValue(cell), cell.getColumnIndex());
-							columns.add(getStringValue(cell));
+							map.put(ExcelUtils.getCellValueAsString(cell), cell.getColumnIndex());
+							columns.add(ExcelUtils.getCellValueAsString(cell));
 						}
 					}
 					if (BeanUtils.isEmpty(objHeader.getDisbursementCode())
@@ -100,8 +101,8 @@ public class Int071Service {
 
 						Cell cell = row.getCell(colIx);
 						if (cell != null) {
-							map.put(getStringValue(cell), cell.getColumnIndex());
-							columns.add(getStringValue(cell));
+							map.put(ExcelUtils.getCellValueAsString(cell), cell.getColumnIndex());
+							columns.add(ExcelUtils.getCellValueAsString(cell));
 						} else {
 							columns.add("");
 						}
@@ -123,25 +124,25 @@ public class Int071Service {
 		return dataTableAjax;
 	}
 
-	public static String getStringValue(Cell cell) {
-
-		if (cell == null)
-			return "";
-
-		switch (cell.getCellTypeEnum()) {
-		case BOOLEAN:
-			return cell.getBooleanCellValue() ? "1" : "0";
-		case FORMULA:
-			return cell.getCellFormula();
-		case NUMERIC:
-			cell.setCellType(CellType.STRING);
-			return cell.getStringCellValue();
-		case STRING:
-			return cell.getStringCellValue();
-		default:
-			return "";
-		}
-	}
+//	public static String getStringValue(Cell cell) {
+//
+//		if (cell == null)
+//			return "";
+//
+//		switch (cell.getCellTypeEnum()) {
+//		case BOOLEAN:
+//			return cell.getBooleanCellValue() ? "1" : "0";
+//		case FORMULA:
+//			return cell.getCellFormula();
+//		case NUMERIC:
+//			cell.setCellType(CellType.STRING);
+//			return cell.getStringCellValue();
+//		case STRING:
+//			return cell.getStringCellValue();
+//		default:
+//			return "";
+//		}
+//	}
 
 	public void addData(List<Int071ExcelVo> excelVo, List<String> data, int rowId, long headerId) {
 		Int071ExcelVo vo = new Int071ExcelVo();
