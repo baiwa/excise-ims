@@ -72,7 +72,7 @@ public class RestfulController {
 				commonHeader.setVersionProgram(exportAudit);
 			} else if (pageCode.indexOf(REP) >= 0) {
 				commonHeader.setVersionProgram(reportAudit);
-			}
+			} 
 		}
 		return commonHeader;
 	}

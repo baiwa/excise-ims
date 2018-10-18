@@ -55,6 +55,10 @@ public class IncomeList {
 	@SerializedName("CustomAmount")
 	@Expose
 	private String customAmount;
+	
+	@SerializedName("TrnDate")
+	@Expose
+	private String trnDate;
 
 	private List<String> dataGruop;
 

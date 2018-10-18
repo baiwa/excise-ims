@@ -5,7 +5,7 @@ import { Int0181Component } from "./int01-8-1/int01-8-1.component";
 
 import { Routes, RouterModule } from "@angular/router";
 import { AuthGuard } from "../../../../common/services";
-import { BreadcrumbModule } from "components/breadcrumb/breadcrumb.module";
+import { BreadcrumbModule } from '../../../../common/components';
 
 const routes: Routes = [
   { path: "1", component: Int0181Component, canActivate: [AuthGuard] }
