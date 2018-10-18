@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -331,7 +332,7 @@ public class Int062Service {
 		}
 
 		if (!BeanUtils.isNotEmpty(objHeader.getReportDate())) {
-			objHeader.setReportDate(date);
+//			objHeader.setReportDate(date);
 		}
 
 		if (countHeader == 1) {
@@ -339,8 +340,11 @@ public class Int062Service {
 			String[] lineTwo = hd2.split(" ");
 			String disbursementName = lineTwo[1] + " " + lineTwo[2];
 			String time = data.get(4);
+			String dateTimeStr = date + " " + time;
+			Date dateTime = DateConstant.convertStrToDate(dateTimeStr, DateConstant.DD_MM_YYYY_HH_mm, DateConstant.LOCAL_EN);
 			objHeader.setDisbursementName(disbursementName);
-			objHeader.setReportTime(time);
+			objHeader.setReportDate(dateTime);
+//			objHeader.setReportTime(time);
 		}
 
 		long headerId = 0L;

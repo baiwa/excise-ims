@@ -1,6 +1,7 @@
 package th.co.baiwa.excise.ia.persistence.entity;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,16 +42,13 @@ public class CwpTblHdr extends BaseEntity {
 	private String disbursementName;
 
 	@Column(name="REPORT_DATE")
-	private Timestamp reportDate;
+	private Date reportDate;
 
 	@Column(name="TRIAL_BALANCE_TYPE")
 	private String trialBalanceType;
 
-	public CwpTblHdr() {
-	}
-
 	public long getCwpTblHdrId() {
-		return this.cwpTblHdrId;
+		return cwpTblHdrId;
 	}
 
 	public void setCwpTblHdrId(long cwpTblHdrId) {
@@ -58,7 +56,7 @@ public class CwpTblHdr extends BaseEntity {
 	}
 
 	public String getDepartment() {
-		return this.department;
+		return department;
 	}
 
 	public void setDepartment(String department) {
@@ -66,7 +64,7 @@ public class CwpTblHdr extends BaseEntity {
 	}
 
 	public String getDisbursementCode() {
-		return this.disbursementCode;
+		return disbursementCode;
 	}
 
 	public void setDisbursementCode(String disbursementCode) {
@@ -74,23 +72,23 @@ public class CwpTblHdr extends BaseEntity {
 	}
 
 	public String getDisbursementName() {
-		return this.disbursementName;
+		return disbursementName;
 	}
 
 	public void setDisbursementName(String disbursementName) {
 		this.disbursementName = disbursementName;
 	}
 
-	public Timestamp getReportDate() {
-		return this.reportDate;
+	public Date getReportDate() {
+		return reportDate;
 	}
 
-	public void setReportDate(Timestamp reportDate) {
+	public void setReportDate(Date reportDate) {
 		this.reportDate = reportDate;
 	}
 
 	public String getTrialBalanceType() {
-		return this.trialBalanceType;
+		return trialBalanceType;
 	}
 
 	public void setTrialBalanceType(String trialBalanceType) {
