@@ -46,15 +46,42 @@
                     </div>
                 </div>
 
+                <div class="inline fields">
+                    <div class="three wide required field">
+                        <label> สถานะผู้ประกอบ</label>
+                    </div>
+                    <div class="three wide field ui ">
+                        <div class="ui selection dropdown full-width">
+                            <input type="hidden" name="gender">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">เลือก</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">สถานะผู้ประกอบการ</div>
+                                <div class="item" data-value="2">ประกอบกิจการ</div>
+                                <div class="item" data-value="3">เลิกกิจการ</div>
+                                <div class="item" data-value="4">โอนกิจการ</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="one wide field"></div>
+                    <div class="two wide field">
+                        
+                    </div>
+                    <div class="three wide field ui calendar" id="calendar1">
+                    </div>
+                    <div class="one wide field">
+                    </div>
+                </div>
+
                 <div class="ui center aligned grid">
                     <div class="eight wide column">
                         <button type="submit" class="ui mini primary button">
                             <i class="search icon"></i>
                             วิเคราะห์ข้อมูลเบื้องต้น
                         </button>
-                        <button type="submit" class="ui mini primary button" (click)="webService()">
+                        <!-- <button type="submit" class="ui mini primary button" (click)="webService()">
                             Web Service
-                        </button>
+                        </button> -->
                         <!-- routerLink="/analyst-basic-data-trader" -->
                         <button type="reset" class="ui mini button">
                             <i class="refresh icon"></i>
