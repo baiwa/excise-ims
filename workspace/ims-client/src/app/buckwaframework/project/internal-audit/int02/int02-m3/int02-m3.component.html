@@ -1,4 +1,4 @@
-<app-breadcrumb [route]="breadcrumb"></app-breadcrumb> -->
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui modal show transition hidden" style="height: calc(6em + 15px);">
     <i class="close icon"></i>
     <div class="header">
@@ -46,8 +46,27 @@
                 </div>
 
                 <div class="centered fifteen wide column ">
+
+
+                    <table id="manageDataExternal" class="ui small celled table aligned hover striped selectable" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">
+                                    <input id="checkAll" type="checkbox" (click)="clickCheckAll($event)" />
+                                </th>
+                                <th rowspan="2" style="text-align: center !important">ที่</th>
+                                <th rowspan="2" style="text-align: center !important">ด้านแบบสอบถามระบบการควบคุมภายใน</th>
+                                <th rowspan="1" colspan="2" style="text-align: center !important">จัดการ</th>
+                            </tr>
+                            <tr style="display:none">
+                                <td>ลบ</td>
+                                <td>เพิ่ม</td>
+                            </tr>
+                        </thead>
+                    </table>
+
                     <div class="inline fields">
-                        <div class="eight wide field" style="text-align: right">
+                        <div class="eight wide field" style="text-align: center">
                             <button class="ui small green button" type="button" (click)="addData()">
                                 <i class="add icon"></i>
                                 เพิ่ม
@@ -59,20 +78,6 @@
                         </div>
                     </div>
 
-                    <table id="manageDataExternal" class="ui small celled table aligned hover striped selectable" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th rowspan="2"><input id="checkAll" type="checkbox" (click)="clickCheckAll($event)" /></th>
-                                <th rowspan="2" style="text-align: center !important">ที่</th>
-                                <th rowspan="2" style="text-align: center !important">ด้านแบบสอบถามระบบการควบคุมภายใน</th>
-                                <th rowspan="1" colspan="2" style="text-align: center !important">จัดการ</th>
-                            </tr>
-                            <tr style="display:none">
-                                <td>ลบ</td>
-                                <td>เพิ่ม</td>
-                            </tr>
-                        </thead>
-                    </table>
                 </div>
 
             </div>
