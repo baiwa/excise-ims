@@ -4,6 +4,7 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
+import { AuthService } from "services/auth.service";
 
 
 declare var jQuery: any;
@@ -54,10 +55,12 @@ export class Int0821Component implements OnInit {
     private ajax: AjaxService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
-    private _location: Location
+    private _location: Location,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08210');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
 
@@ -196,7 +199,7 @@ export class Int0821Component implements OnInit {
           data: "riskAssInfHdrId",
           render: function () {
             return '<button type="button" class="ui mini button primary dtl" (click)="ExportOtherDtl()" ><i class="table icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button primary export"><i class="print icon"></i> Export</button>';
+              + '<button type="button" class="ui mini button yellow export"><i class="print icon"></i> Export</button>';
           }
         }
       ],
