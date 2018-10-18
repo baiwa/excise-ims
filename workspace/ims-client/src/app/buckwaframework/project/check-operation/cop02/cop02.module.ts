@@ -8,6 +8,7 @@ import { Cop0211Component } from "./cop02-1/cop02-1-1/cop02-1-1.component";
 import { Cop0212Component } from "./cop02-1/cop02-1-2/cop02-1-2.component";
 import { TaxWsReviewComponent } from './cop02-1/cop02-1-1/tax-ws-review/tax-ws-review.component';
 import { FormsModule } from "@angular/forms";
+import { BreadcrumbModule } from "../../../common/components";
 
 const routes: Routes = [
   { path: "1", component: Cop021Component, canActivate: [AuthGuard] },
@@ -17,7 +18,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule,FormsModule],
+  imports: [RouterModule.forChild(routes), CommonModule,FormsModule,BreadcrumbModule],
   declarations: [Cop021Component, Cop0211Component, Cop0212Component, TaxWsReviewComponent],
   exports: [RouterModule]
 })

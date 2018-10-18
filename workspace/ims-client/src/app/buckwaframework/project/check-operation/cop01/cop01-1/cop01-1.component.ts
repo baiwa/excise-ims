@@ -4,6 +4,9 @@ import { Router } from "@angular/router";
 import { ExciseService } from "../../../../common/services/excise.service";
 import { AjaxService } from "../../../../common/services/ajax.service";
 import { TextDateTH, digit, formatter } from "../../../../common/helper/datepicker";
+import { AuthService } from "app/buckwaframework/common/services";
+import { BreadCrumb } from "app/buckwaframework/common/models";
+
 
 declare var $: any;
 @Component({
@@ -48,8 +51,13 @@ export class Cop011Component implements OnInit {
   date1:any;
   date2:any;
   date3:any;
+  breadcrumb: BreadCrumb[];
 
-  constructor( private ajax: AjaxService, private messageBarService: MessageBarService,  private router: Router, private ex: ExciseService) { 
+  constructor( private ajax: AjaxService, 
+    private messageBarService: MessageBarService,  
+    private router: Router, 
+    private ex: ExciseService,
+    private authService: AuthService ) { 
     this.selectedStartMonth = null;
     this.selectedSEndMonth = null;
     this.selectStartDateObj = null;
@@ -58,10 +66,16 @@ export class Cop011Component implements OnInit {
     this.date2 = null;
     this.formatter1 = formatter('ดป');
     this.formatter2 = formatter('ดป');
+    this.breadcrumb = [
+      { label: "จัดทำแผนการตรวจปฏิบัติการ", route: "#" },
+      { label: "2", route: "#" },
+      { label: "3", route: "#" },
+    ];
 
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('OPE-01010');
     this.numbers = [];
     this.minisFinanceTarget = "";
     this.onAddField();  

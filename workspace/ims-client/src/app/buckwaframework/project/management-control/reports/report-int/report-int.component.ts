@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TextDateTH, formatter } from '../../../../common/helper/datepicker';
+import { AuthService } from 'services/auth.service';
 
 declare var $: any;
 @Component({
@@ -12,9 +13,11 @@ export class ReportIntComponent implements OnInit {
   year: any;
   toggled: boolean;
 
-  constructor() { }
+  constructor( private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('REP-04010');
+
     // calendar
     $('#year').calendar({
       maxDate: new Date(),

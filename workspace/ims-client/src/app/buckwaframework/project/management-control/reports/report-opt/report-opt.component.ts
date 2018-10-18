@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter } from "../../../../common/helper/datepicker";
+import { AuthService } from "app/buckwaframework/common/services";
 
 declare var $: any;
 @Component({
@@ -11,8 +12,9 @@ export class ReportOptComponent implements OnInit {
   target: any;
   year: any;
   toggled: boolean;
-  constructor() {}
+  constructor(  private authService: AuthService) {}
   ngOnInit() {
+    this.authService.reRenderVersionProgram('REP-04020');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     // calendar

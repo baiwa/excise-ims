@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TextDateTH } from '../../../../../../common/helper';
-import { AjaxService, ExciseService } from '../../../../../../common/services';
+import { AjaxService, ExciseService, AuthService } from '../../../../../../common/services';
 import { Router } from '@angular/router';
 declare var $: any;
 @Component({
@@ -29,7 +29,8 @@ export class TaxWsReviewComponent implements OnInit {
   constructor(
     private ex: ExciseService,
     private router: Router,
-    private ajax: AjaxService
+    private ajax: AjaxService,
+    private authService: AuthService
   ) {
     this.flag = "";
     this.analysNumberArr = "";
@@ -38,6 +39,7 @@ export class TaxWsReviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('OPE-02000');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     $("#exciseBtn").prop("disabled", true);
