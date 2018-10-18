@@ -20,8 +20,8 @@ export class Int111Component implements OnInit {
   status: string = "";
   $form: any;
   $page: any;
-  form : Int111Form = new Int111Form();
-  searchFlag : string ="FALSE";
+  form: Int111Form = new Int111Form();
+  searchFlag: string = "FALSE";
   // BreadCrumb
   breadcrumb: BreadCrumb[];
 
@@ -56,9 +56,9 @@ export class Int111Component implements OnInit {
     $(".follow-project-dropdown").dropdown().css('width', '100%');
   }
 
-  initDatatable = ()=> {
+  initDatatable = () => {
     const URL = AjaxService.CONTEXT_PATH + "ia/int111/search";
-      this.datatable= $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTable({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -72,11 +72,11 @@ export class Int111Component implements OnInit {
         type: "POST",
         url: URL,
         contentType: "application/json",
-        data: (d)=> {
+        data: (d) => {
           return JSON.stringify($.extend({}, d, {
             "projectName": $('#projectName').val(),
             "status": $('#status').val(),
-            "searchFlag" : $("#searchFlag").val()
+            "searchFlag": $("#searchFlag").val()
           }));
         }
       },
@@ -389,12 +389,12 @@ export class Int111Component implements OnInit {
         {
           data: "status",
           className: "center aglined",
-          render: function (data,row) {
+          render: function (data, row) {
             var html = '';
             if (data != 'เสร็จสิ้น') {
               html += '<button type="button" class="ui mini yellow button edit-button"><i class="edit icon"></i>แก้ไข</button>';
               html += '<button type="button" class="ui mini blue button close-button"> <i class="power off icon"></i>ปิดงาน</button>';
-            } 
+            }
             return html;
           }
         }
@@ -417,15 +417,15 @@ export class Int111Component implements OnInit {
       console.log("data : ", data);
       this.form.id = data.followUpProjectId;
       $('#modolClose').modal('show');
-       
+
     });
   }
-  
 
-  onClicksavenote =()=>{
+
+  onClicksavenote = () => {
     this.form.note = $('#noteclosejob').val();
     var url = "ia/int111/notecloseJob";
-    this.ajaxService.post(url,JSON.stringify(this.form), res=>{
+    this.ajaxService.post(url, JSON.stringify(this.form), res => {
       $('#modolClose').modal('hide');
       $("#dataTable").DataTable().ajax.reload();
     });
@@ -522,7 +522,7 @@ export class Int111Component implements OnInit {
 
 }
 
-class Int111Form{
-  note : string ="";
-  id : string = "";
+class Int111Form {
+  note: string = "";
+  id: string = "";
 } 

@@ -19,9 +19,10 @@ export class Int1111Component implements OnInit {
   $form: any;
   id: any;
   showCloseJob: boolean = false;
+  headerName: string = 'เพิ่มรายการติดตามผลการตรวจสอบของโครงการ';
 
   // BreadCrumb
-breadcrumb: BreadCrumb[];
+  breadcrumb: BreadCrumb[];
 
   constructor(
     private ajaxService: AjaxService,
@@ -30,12 +31,8 @@ breadcrumb: BreadCrumb[];
     private authService: AuthService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
-  ) { 
-    this.breadcrumb = [
-      { label: "ตรวจสอบภายใน", route: "#" },
-      { label: "ทะเบียนคุมการติดตามงาน", route: "#" },
-      { label: "เพิ่มรายการติดตามผลการตรวจสอบของโครงการ", route: "#" },
-    ];
+  ) {
+
   }
 
   ngOnInit() {
@@ -43,9 +40,15 @@ breadcrumb: BreadCrumb[];
     this.$form = $("#followUpProjectForm");
     this.id = this.route.snapshot.queryParams["id"];
     if (this.id) {
+      this.headerName = 'แก้ไขรายการติดตามผลการตรวจสอบของโครงการ';
       this.showCloseJob = true;
       this.getFolloUpProject();
     }
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ทะเบียนคุมการติดตามงาน", route: "#" },
+      { label: this.headerName, route: "#" },
+    ];
   }
 
   ngAfterViewInit() {
@@ -254,10 +257,10 @@ breadcrumb: BreadCrumb[];
     }, "คุณต้องการปิดงานใช่หรือไม่ ? ");
   }
 
-  modolClose(){
+  modolClose() {
     $('#modolClose')
-  .modal('show')
-;
+      .modal('show')
+      ;
   }
 
   changeStatus() {
@@ -371,7 +374,7 @@ breadcrumb: BreadCrumb[];
 
       $('#followUp3Bnum').prop('disabled', '');
       $('#followUp3Date').prop('disabled', '');
-    }else {
+    } else {
       $('#followUp3Bnum').prop('disabled', 'disabled');
       $('#performance3Bnum').prop('disabled', 'disabled');
       $('#trackResult3Bnum').prop('disabled', 'disabled');
@@ -403,7 +406,7 @@ breadcrumb: BreadCrumb[];
       $('#trackResult3Bnum').prop('disabled', 'disabled');
       $('#trackResult3Date').prop('disabled', 'disabled');
     }
-    
+
     if ($('#trackResult3Bnum').val()) {
       $('#status').val('รายงานการติดตามครั้งที่ 3');
     }

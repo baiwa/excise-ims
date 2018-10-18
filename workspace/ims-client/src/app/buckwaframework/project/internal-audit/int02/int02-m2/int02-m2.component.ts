@@ -30,7 +30,7 @@ export class Int02M2Component implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private ajax: AjaxService, 
+    private ajax: AjaxService,
     private msg: MessageBarService
   ) {
     // TODO
