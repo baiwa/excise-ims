@@ -6,6 +6,7 @@ import { Cop041Component } from './cop04-1.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../../../common/services';
 import { Cop0411Component } from './cop04-1-1/cop04-1-1.component';
+import { BreadcrumbModule } from '../../../../common/components';
 
 const routes: Routes = [
     { path: '', component: Cop041Component, canActivate: [AuthGuard] },
@@ -15,7 +16,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    CommonModule
+    CommonModule,BreadcrumbModule
   ],
   declarations: [
     Cop041Component,
