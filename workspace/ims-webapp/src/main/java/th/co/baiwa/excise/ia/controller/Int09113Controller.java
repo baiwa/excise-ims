@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.CommonMessage;
@@ -97,6 +98,32 @@ public class Int09113Controller {
 			return ApplicationCache.getMessage("MSG_00003");
 		}
 		return ApplicationCache.getMessage("MSG_00002");
+	}
+	
+	@PostMapping("/getAllowanceRAndRoostR")
+	@ResponseBody
+	public Lov getAllowanceRAndRoostR(@RequestBody Int09111And3FormVo formVo){
+		Lov lov = new Lov();
+		try {
+			lov = int09113Service.getAllowanceRAndRoostR(formVo);
+			 
+		} catch (Exception e) {
+			log.error("Error ! getAllowanceRAndRoostR ",e);
+		}
+		return lov;
+	}
+	
+	@PostMapping("/getNumberDateAllowance")
+	@ResponseBody
+	public Float getNumberDateAllowance(@RequestBody Int09111And3FormVo formVo){
+		Float numberDate = 0f;
+		try {
+			numberDate = int09113Service.getNumberDateAllowance(formVo);
+			 
+		} catch (Exception e) {
+			log.error("Error ! getNumberDate ",e);
+		}
+		return numberDate;
 	}
 
 	

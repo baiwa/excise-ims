@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter } from "helpers/datepicker";
 import { AjaxService } from "services/ajax.service";
+import { AuthService } from "services/auth.service";
 declare var $: any;
 
 const URL = {
@@ -19,9 +20,11 @@ export class Int0131Component implements OnInit {
   travelTo2List: any;
   travelTo3List: any;
 
-  constructor(private ajax: AjaxService) { }
+  constructor(private ajax: AjaxService,private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-01310');
+
 
     
     $("#calendar1").calendar({

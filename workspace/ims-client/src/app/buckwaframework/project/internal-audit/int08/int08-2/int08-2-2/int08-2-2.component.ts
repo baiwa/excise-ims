@@ -4,6 +4,7 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Alert } from "../../../../../../../../node_modules/@types/selenium-webdriver";
+import { AuthService } from "services/auth.service";
 
 declare var jQuery: any;
 declare var $: any;
@@ -29,9 +30,12 @@ export class Int0822Component implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
+
+    private authService: AuthService,
     private messageBarService: MessageBarService) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-08220');
     this.riskAssInfHdrName = "";
     this.budgetYear = "";
     this.infRiskList = ["ปัจจัยเสี่ยงจำนวนครั้งการใช้งานไม่ได้ของระบบ"];
@@ -203,10 +207,10 @@ export class Int0822Component implements OnInit, AfterViewInit {
   cancelFlow() {
     this.messageBarService.comfirm(foo => {
       // let msg = "";
-      this.riskType ="0";
+      this.riskType = "0";
       if (foo) {
         this.router.navigate(["/int08/2/1"], {
-          queryParams: { budgetYear: this.budgetYear ,riskType: this.riskType }
+          queryParams: { budgetYear: this.budgetYear, riskType: this.riskType }
         }
         );
       }

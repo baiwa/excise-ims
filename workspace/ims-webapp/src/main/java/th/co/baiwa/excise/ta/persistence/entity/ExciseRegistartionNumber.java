@@ -6,9 +6,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 public class ExciseRegistartionNumber extends BaseEntity {
-
+	
+	private static final long serialVersionUID = -6016147600470629335L;
 	private Integer exciseRegisttionNumberId;
 	private String exciseId;
+	private String exciseIdOld;
 	private String exciseOperatorName;
 	private String exciseIdenNumber;
 	private String exciseFacName;
@@ -33,6 +35,14 @@ public class ExciseRegistartionNumber extends BaseEntity {
 	private String industrialAddress;
 	private String registeredCapital;
 	private String status;
+
+	public String getExciseIdOld() {
+		return exciseIdOld;
+	}
+
+	public void setExciseIdOld(String exciseIdOld) {
+		this.exciseIdOld = exciseIdOld;
+	}
 
 	private ExciseTaxReceive exciseTaxReceive;
 

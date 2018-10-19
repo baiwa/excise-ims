@@ -24,7 +24,7 @@ public class ExciseRegisttionNumberDao {
 
 	private final String sqlTaExciseId = " select D.*  from EXCISEADM.ta_excise_registtion_number D ";
 
-	public List<ExciseRegistartionNumber> queryByExciseId(String register, String exciseProductType, int start, int length, List<String> conditionList, String formSearch) {
+	public List<ExciseRegistartionNumber> queryByExciseId(String register, String exciseProductType,  List<String> conditionList, String formSearch) {
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlTaExciseId);
 		if (BeanUtils.isNotEmpty(conditionList)) {
@@ -34,6 +34,8 @@ public class ExciseRegisttionNumberDao {
 
 		}
 		sql.append(" where 1=1 ");
+
+
 		if (exciseProductType != null && exciseProductType.length() > 0) {
 			sql.append(" and  TA_EXCISE_PRODUCT_TYPE = ? ");
 			objList.add(exciseProductType);
@@ -80,8 +82,7 @@ public class ExciseRegisttionNumberDao {
             objList.add("%"+StringUtils.trim(formSearch)+"%");
         }
 		sql.append(" order By TA_EXCISE_REGISTTION_NUMBER_ID ");
-		List<ExciseRegistartionNumber> list = jdbcTemplate.query(
-				OracleUtils.limitForDataTable(sql.toString(), start, length), objList.toArray(),
+		List<ExciseRegistartionNumber> list = jdbcTemplate.query(sql.toString(), objList.toArray(),
 				exciseRegisttionRowmapper);
 
 		return list;
@@ -156,6 +157,7 @@ public class ExciseRegisttionNumberDao {
 
 			vo.setExciseRegisttionNumberId(rs.getInt("TA_EXCISE_REGISTTION_NUMBER_ID"));
 			vo.setExciseId(rs.getString("TA_EXCISE_ID"));
+			vo.setExciseIdOld(rs.getString("TA_EXCISE_OLD_ID"));
 			vo.setExciseOperatorName(rs.getString("TA_EXCISE_OPERATOR_NAME"));
 			vo.setExciseIdenNumber(rs.getString("TA_EXCISE_IDEN_NUMBER"));
 			vo.setExciseFacName(rs.getString("TA_EXCISE_FAC_NAME"));

@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.persistence.dao;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.vo.Int09111And3FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0911FormVo;
@@ -357,12 +359,16 @@ public class IaTravelEstimatorDao {
 			    		formVo.setDepartureTo(rs.getString("DEPARTURE_TO"));
 			    		formVo.setDepartureDate(rs.getString("DEPARTURE_DATE"));
 			    		formVo.setReturnDate(rs.getString("RETURN_DATE"));
-			    		formVo.setAllowance(rs.getString("ALLOWANCE"));
-			    		formVo.setTraining(rs.getString("TRAINING"));
-			    		formVo.setRoost(rs.getString("ROOST"));
-			    		formVo.setTrainingType(rs.getString("TRAINING_TYPE"));
-			    		formVo.setRoomType(rs.getString("ROOM_TYPE"));
-			    		formVo.setNumberDate(rs.getLong("NUMBER_DATE"));
+			    		
+			    		formVo.setNumberDateAllowance(rs.getLong("NUMBER_DATE_ALLOWANCE"));
+			    		formVo.setNumberHoursAllowance(rs.getLong("NUMBER_HOURS_ALLOWANCE"));
+			    		formVo.setAllowanceR(rs.getBigDecimal("ALLOWANCE_R"));
+			    		formVo.setAllowanceTotal(rs.getBigDecimal("ALLOWANCE_TOTAL"));
+			    		
+			    		formVo.setNumberDateRoost(rs.getLong("NUMBER_DATE_ROOST"));
+			    		formVo.setRoostR(rs.getBigDecimal("ROOST_R"));
+			    		formVo.setRoostTotal(rs.getBigDecimal("ROOST_TOTAL"));
+			    		
 			    		formVo.setPassage(rs.getBigDecimal("B_PASSAGE"));
 			    		formVo.setOtherExpenses(rs.getBigDecimal("B_OTHER_EXPENSES"));
 			    		formVo.setRemark(rs.getString("B_REMARK"));
@@ -584,18 +590,20 @@ public class IaTravelEstimatorDao {
 				    	"DEPARTURE_TO,  " +
 				    	"DEPARTURE_DATE,  " +
 				    	"RETURN_DATE,  " +
-				    	"ALLOWANCE,  " +
-				    	"TRAINING,  " +
-				    	"ROOST,  " +
-				    	"TRAINING_TYPE,  " +
-				    	"ROOM_TYPE,  " +
-				    	"NUMBER_DATE,  " +
+						"NUMBER_DATE_ALLOWANCE,  " +
+						"NUMBER_HOURS_ALLOWANCE,  " +
+						"ALLOWANCE_R,  " +
+						"ALLOWANCE_TOTAL,  " +
+						"NUMBER_DATE_ROOST,  " +
+						"ROOST_R,  " +
+						"ROOST_TOTAL,  " +
 				    	"PASSAGE,  " +
 				    	"OTHER_EXPENSES,  " +
 				    	"REMARK " +
 		    			")VALUES( " + 
 		    			"?, " +
 				    	"?, " +
+				    	"?,  " +
 				    	"?,  " +
 				    	"?,  " +
 				    	"?,  " +
@@ -629,12 +637,16 @@ public class IaTravelEstimatorDao {
 		    					formDtlVo.getDepartureTo(),  
 		    					formDtlVo.getDepartureDate(),  
 		    					formDtlVo.getReturnDate(),  
-		    					formDtlVo.getAllowance(),  
-		    					formDtlVo.getTraining(),  
-		    					formDtlVo.getRoost(),  
-		    					formDtlVo.getTrainingType(),  
-		    					formDtlVo.getRoomType(),  
-		    					formDtlVo.getNumberDate(),  
+		    					
+		    					formDtlVo.getNumberDateAllowance(),  
+		    					formDtlVo.getNumberHoursAllowance(),  
+		    					formDtlVo.getAllowanceR(),  
+		    					formDtlVo.getAllowanceTotal(),  
+		    					
+		    					formDtlVo.getNumberDateRoost(),  
+		    					formDtlVo.getRoostR(),  
+		    					formDtlVo.getRoostTotal(),  
+		    					
 		    					formDtlVo.getPassage(),  
 		    					formDtlVo.getOtherExpenses(),  
 		    					formDtlVo.getRemark() 
@@ -656,12 +668,13 @@ public class IaTravelEstimatorDao {
 				    	"DEPARTURE_TO=?,  " +
 				    	"DEPARTURE_DATE=?,  " +
 				    	"RETURN_DATE=?,  " +
-				    	"ALLOWANCE=?,  " +
-				    	"TRAINING=?,  " +
-				    	"ROOST=?,  " +
-				    	"TRAINING_TYPE=?,  " +
-				    	"ROOM_TYPE=?,  " +
-				    	"NUMBER_DATE=?,  " +
+				    	"NUMBER_DATE_ALLOWANCE=?,  " +
+				    	"NUMBER_HOURS_ALLOWANCE=?,  " +
+				    	"ALLOWANCE_R=?,  " +
+				    	"ALLOWANCE_TOTAL=?,  " +
+				    	"NUMBER_DATE_ROOST=?,  " +
+				    	"ROOST_R=?,  " +
+				    	"ROOST_TOTAL=?,  " +
 				    	"PASSAGE=?,  " +
 				    	"OTHER_EXPENSES=?,  " +
 				    	"REMARK=? WHERE ID=?  ",new Object[] {
@@ -677,12 +690,16 @@ public class IaTravelEstimatorDao {
 		    					formDtlVo.getDepartureTo(),  
 		    					formDtlVo.getDepartureDate(),  
 		    					formDtlVo.getReturnDate(),  
-		    					formDtlVo.getAllowance(),  
-		    					formDtlVo.getTraining(),  
-		    					formDtlVo.getRoost(),  
-		    					formDtlVo.getTrainingType(),  
-		    					formDtlVo.getRoomType(),  
-		    					formDtlVo.getNumberDate(),  
+		    					
+		    					formDtlVo.getNumberDateAllowance(),  
+		    					formDtlVo.getNumberHoursAllowance(),  
+		    					formDtlVo.getAllowanceR(),  
+		    					formDtlVo.getAllowanceTotal(),  
+		    					
+		    					formDtlVo.getNumberDateRoost(),  
+		    					formDtlVo.getRoostR(),  
+		    					formDtlVo.getRoostTotal(), 
+		    					
 		    					formDtlVo.getPassage(),  
 		    					formDtlVo.getOtherExpenses(),  
 		    					formDtlVo.getRemark(),
@@ -729,5 +746,43 @@ public class IaTravelEstimatorDao {
 		    					"NO"});
 		    	return documentName;
 		}
+		    
+		    public Lov getAllowanceRAndRoostR(Int09111And3FormVo formVo) {
+				StringBuilder sql = new StringBuilder(" SELECT * FROM SYS_LOV WHERE TYPE='ACC_FEE' AND LOV_ID = ? ");
+				List<Object> params = new ArrayList<>();
+				Lov lov = new Lov();
+
+				params.add(formVo.getId());
+				
+				log.info(" getAllowanceRAndRoostR LOV_ID : {}",formVo.getId());
+				log.info(" getAllowanceRAndRoostR sql : {}",sql.toString());
+				
+		        List<Lov> list = jdbcTemplate.query(sql.toString(), params.toArray(), getAllowanceRAndRoostRRowmapper);
+		        
+		        lov.setValue1(list.get(0).getValue1());
+		        lov.setValue2(list.get(0).getValue2());
+		        lov.setValue3(list.get(0).getValue3());
+		        lov.setValue4(list.get(0).getValue4());
+		        lov.setValue5(list.get(0).getValue5());
+		        
+		        return lov;
+		    }
+			
+			 private RowMapper<Lov> getAllowanceRAndRoostRRowmapper = new RowMapper<Lov>() {
+			    	@Override
+			    	public Lov mapRow(ResultSet rs, int arg1) throws SQLException {
+			    		Lov vo = new Lov();
+			    		
+			    		vo.setValue1(rs.getString("VALUE1"));
+			    		vo.setValue2(rs.getString("VALUE2"));
+			    		vo.setValue3(rs.getString("VALUE3"));
+			    		vo.setValue4(rs.getString("VALUE4"));
+			    		vo.setValue5(rs.getString("VALUE5"));
+			    	
+			
+			    	    	
+			    		return vo;
+			    	}
+			    };
 		    
 }

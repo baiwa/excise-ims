@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.IaTravelEstimatorDao;
@@ -73,6 +74,17 @@ public class Int09111Service {
 		iaTravelEstimatorDao.addDocument(formVo.getIdProcess(), formVo.getCreatedBy(),formVo.getDocumentType(),formVo.getSubject());
 		// ล้างข้อมูล
 		iaTravelEstimatorDao.deleteTravelEstimatorDtl(formVo.getIdProcess(),"111");
+	}
+	
+	public Lov getAllowanceRAndRoostR(Int09111And3FormVo formVo) {
+		Lov lov = new Lov();
+		lov = iaTravelEstimatorDao.getAllowanceRAndRoostR(formVo);
+		return lov;
+	}
+	public Float getNumberDateAllowance(Int09111And3FormVo formVo) throws ParseException {
+		Float numberDate = 0f;
+		numberDate = int09DataDtlService.getNumberDateAllowance(formVo.getInt09FormDtlVo().getDepartureDate(),formVo.getInt09FormDtlVo().getReturnDate());
+		return numberDate;
 	}
 	
 

@@ -1,7 +1,8 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid" style="margin: 1%">
     <div class="sixteen wide column segments">
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-            <span>                    แบบประเมินระบบการควบคุมภายใน</span>
+            <span> แบบประเมินระบบการควบคุมภายใน</span>
         </div>
         <div class="ui attached segment">
             <div class="ui centered grid row">
@@ -15,10 +16,9 @@
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                            <select class="ui search dropdown ai" aria-placeholder="สรรพสามิตภาค" id="sector"  name="sector"
-                                                [(ngModel)]="sectorSelectted">
-                                                <option value="">เลือก</option>
-                                                <option *ngFor="let item of sectorList" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+                                            <select class="ui dropdown ai selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)" [(ngModel)]="code1">
+                                                <option value="00">เลือก</option>
+                                                <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -27,9 +27,9 @@
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                            <select class="ui search dropdown ai" aria-placeholder="สรรพสามิตภาค" id="area" name="area" [(ngModel)]="areaSelectted">
-                                                <option value="0"></option>
-                                                <!-- <option *ngFor="let dat of area; let i=index" value="{{dat.lovId}}">{{dat.subTypeDescription}}</option> -->
+                                            <select class="ui dropdown ai selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)" [(ngModel)]="code2">
+                                                <option value="00">เลือก</option>
+                                                <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -40,9 +40,9 @@
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                            <select class="ui search dropdown ai" aria-placeholder="สรรพสามิตภาค" id="local" name="local" [(ngModel)]="localSelectted">
-                                                <option value="0"></option>
-                                                <!-- <option *ngFor="let dat of local; let i=index" value="{{dat.lovId}}">{{dat.subTypeDescription}}</option> -->
+                                            <select class="ui dropdown ai selection" style="width: 100%;" id="travelTo3" [(ngModel)]="code3">
+                                                <option value="00">เลือก</option>
+                                                <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -50,8 +50,11 @@
                                         <label class="text-right full-width">ปีงบประมาณ: </label>
                                     </div>
                                     <div class="ten centered wide field">
-                                        <div class="ui input">
-                                            <input type="text">
+                                        <div class="ui calendar" id="budgetyear" style="width:100%">
+                                            <div class="ui input left icon">
+                                                <i class="time icon"></i>
+                                                <input type="text" name="date" id="date" readonly>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -62,11 +65,11 @@
                 <br>
                 <div class="ui centered row grid">
                     <div class="sixteen aligned center ">
-                        <button class="ui mini primary button" (click)="showData()" type="submit">
+                        <button class="ui mini primary button" (click)="searchWs()">
                             <i class="search icon"></i>
                             ค้นหา
                         </button>
-                        <button class="ui mini green button" [routerLink]="[ '/int02/m5/1/1'] " >
+                        <button class="ui mini green button"  (click)="searchWs()">
                             <i class="add  icon"></i>
                             รายการใหม่</button>
                     </div>
@@ -82,7 +85,7 @@
         <thead>
             <tr style="text-align: center">
                 <th>ที่</th>
-                <th>หน่วยรับตวจ</th>
+                <th>หน่วยรับตรวจ</th>
                 <th>ปีงบประมาณ</th>
                 <th>วันที่ทำการ</th>
                 <th>ผู้บันทึก</th>
