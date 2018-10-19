@@ -32,7 +32,7 @@ export class AddExternalDataComponent implements OnInit {
   curr: any;
   sector: any;
   sectorArr: any;
-
+  toggle: boolean = false;
   loading: boolean = true;
 
   constructor(
@@ -98,13 +98,13 @@ export class AddExternalDataComponent implements OnInit {
     json += ' "scrollX": true, ';
     json += ' "searching": false, ';
     json += ' "select": true, ';
-    json += ' "ordering": true, ';
+    json += ' "ordering": false, ';
     json += ' "pageLength": 10, ';
     json += ' "processing": true, ';
     json += ' "serverSide": true, ';
     json += ' "paging": true, ';
     json += ' "pagingType": "full_numbers", ';
-    json += ' "fixedColumns" : { "leftColumns" : 3}, ';
+    json += ' "fixedColumns" : { "leftColumns" : 2}, ';
     json += ' "ajax": { ';
     json += ' "type": "POST", ';
     json += ' "url": "' + URL + '", ';
@@ -122,7 +122,7 @@ export class AddExternalDataComponent implements OnInit {
     json += ' "columns": [ ';
 
     json += ' { "data": "exciseId","className":"center" }, ';
-    json += ' { "data": "exciseIdOld","className":"center" }, ';
+    
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "exciseOwnerArea1" }, ';
@@ -139,6 +139,7 @@ export class AddExternalDataComponent implements OnInit {
     json += ' { "data": "productType" }, ';
     json += ' { "data": "factoryAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
+    json += ' { "data": "exciseIdOld","className":"center" }, ';
     json += ' { "data": "status" }, ';
 
     for (var i = 0; i < this.month; i++) {
@@ -209,7 +210,7 @@ export class AddExternalDataComponent implements OnInit {
 
   changeCoordinates = () => {
     this.coordinates = $("#coordinates").val();
-    this.userManagementDt.destroy().draw();
+    this.userManagementDt.destroy();
     this.initDatatable();
   };
 
@@ -220,6 +221,19 @@ export class AddExternalDataComponent implements OnInit {
     }
     this.initDatatable();
   };
+  
+  toggleBar() {
+    if (this.toggle) {
+      this.toggle = false;
+    } else {
+      this.toggle = true;
+    }
+  }
+
+  onClear=()=>{
+    $("#sector").dropdown('restore defaults');
+    $("#coordinates").dropdown('restore defaults');
+  }
 
   directAccess = (withOut?: any) => {
     const headerUrl = AjaxService.CONTEXT_PATH + "filter/exise/getStartEndDate";
@@ -302,8 +316,7 @@ export class AddExternalDataComponent implements OnInit {
     }
     var str =
 
-      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
-      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +      
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
@@ -316,6 +329,7 @@ export class AddExternalDataComponent implements OnInit {
       
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
       '<th colspan="' + this.month / 2 + '" style="text-align: center !important">การชำระภาษี ' + this.month / 2 + " เดือนแรก</th> " +

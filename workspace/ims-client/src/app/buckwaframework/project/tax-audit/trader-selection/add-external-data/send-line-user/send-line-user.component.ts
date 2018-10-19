@@ -14,7 +14,7 @@ declare var $: any;
   templateUrl: "./send-line-user.component.html",
   styleUrls: ["./send-line-user.component.css"]
 })
-export class SendLineUserComponent implements OnInit,AfterViewInit {
+export class SendLineUserComponent implements OnInit, AfterViewInit {
   breadcrumb: BreadCrumb[] = [
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การคัดเลือกราย', route: '#' },
@@ -59,7 +59,7 @@ export class SendLineUserComponent implements OnInit,AfterViewInit {
 
     //get Sector in select option
     const URL2 = "combobox/controller/getDropByTypeAndParentId";
-    this.ajax.post(URL2, {type : "SECTOR_VALUE"}, res => {
+    this.ajax.post(URL2, { type: "SECTOR_VALUE" }, res => {
       this.sectorArr = res.json();
     });
 
@@ -116,10 +116,10 @@ export class SendLineUserComponent implements OnInit,AfterViewInit {
       trHeaderColumn += items[i];
     }
     document.getElementById("trDrinamic").innerHTML =
-      '<tr><th rowspan="2" style="text-align: center !important"><input type="checkbox" name="select-all" id="select-all"></th>' +
+      '<tr><th rowspan="2" style="text-align: center !important"> <div class="ui checkbox check-all"><input type="checkbox" id="check" (click)="clickCheckAll($event)"></div></th>' +
       '<th rowspan="2" style="text-align: center !important">ลำดับ</th>' +
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
-      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
+      
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
@@ -129,9 +129,10 @@ export class SendLineUserComponent implements OnInit,AfterViewInit {
       '<th rowspan="2" style="text-align: center !important">เปอร์เซ็นส่วนเบี่ยงเบน</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
       '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
-      
+
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
       '<th rowspan="2" style="text-align: center !important">พิกัดอื่นๆ</th> ' +
@@ -153,15 +154,15 @@ export class SendLineUserComponent implements OnInit,AfterViewInit {
       "</th>" +
       "</tr>";
 
-    
+
   }
 
   ngAfterViewInit() {
     this.initDatatable();
-   }
+  }
 
   initDatatable(): void {
-    if (this.sendLineUser != null || this.sendLineUser != undefined){
+    if (this.sendLineUser != null || this.sendLineUser != undefined) {
       this.sendLineUser.destroy();
     }
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
@@ -174,8 +175,8 @@ export class SendLineUserComponent implements OnInit,AfterViewInit {
       paging: true,
       scrollX: true,
       pagingType: "full_numbers",
-      fixedColumns : { 
-        leftColumns : 3 
+      fixedColumns: {
+        leftColumns: 3
       },
       ajax: {
         type: "POST",
@@ -191,12 +192,13 @@ export class SendLineUserComponent implements OnInit,AfterViewInit {
       },
       columns: [
         {
+          data: "exciseId",
           render: function (data, type, full, meta) {
-            return `<input type="checkbox" name="chk${meta.row}" id="chk${
-              meta.row
-              }" value="${$("<div/>")
-                .text(data)
-                .html()}">`;
+            return (
+              '<div class="ui checkbox follow-proj-chkbox"><input name="checkId" value="' +
+              data +
+              '" type="checkbox"><label></label></div>'
+            );
           },
           className: "center"
         },
@@ -207,7 +209,7 @@ export class SendLineUserComponent implements OnInit,AfterViewInit {
           className: "center"
         },
         { data: "exciseId", className: "center" },
-        { data: "exciseIdOld", className: "center" },
+        
         { data: "companyName" },
         { data: "companyName" },
         { data: "exciseOwnerArea1" },
@@ -215,15 +217,16 @@ export class SendLineUserComponent implements OnInit,AfterViewInit {
         { data: "firstMonth", className: "center" },
         { data: "lastMonth", className: "center" },
         { data: "percentage", className: "center" },
-        { data: "deviation",className:"center" },
+        { data: "deviation", className: "center" },
         { data: "totalMonth", className: "center" },
         { data: "no1" },
         { data: "no2" },
         { data: "no3" },
-        
+
         { data: "productType" },
         { data: "factoryAddress" },
         { data: "registeredCapital" },
+        { data: "exciseIdOld", className: "center" },
         { data: "status" },
         { "data": "otherCoordinates" }
       ]
@@ -258,15 +261,39 @@ export class SendLineUserComponent implements OnInit,AfterViewInit {
     });
   }
 
+  clickCheckAll = event => {
+    if (event.target.checked) {
+      $(".ui.checkbox.follow-proj-chkbox").checkbox("check");
+    } else {
+      $(".ui.checkbox.follow-proj-chkbox").checkbox("uncheck");
+    }
+  }
+
   onSend(viewStatus) {
 
     $(".ui.modal.confirm").modal("hide");
-    var data = this.sendLineUser.rows().data();
-    for (let i = 0; i < data.length; i++) {
-      if ((<HTMLInputElement>document.getElementById(`chk${i}`)).checked) {
-        this.exciseId.push(data[i].exciseId);
-      }
-    } //end for loops
+
+    // var data = this.sendLineUser.rows().data();
+    // for (let i = 0; i < data.length; i++) {
+    //   if ((<HTMLInputElement>document.getElementById(`chk${i}`)).checked) {
+    //     this.exciseId.push(data[i].exciseId);
+    //   }
+    // } //end for loops
+
+    //var dataCheckbox = [];
+    let checkboxes = $(".ui.checkbox.follow-proj-chkbox");
+    for (var i = 0; i < checkboxes.length; i++) {
+      if (checkboxes.length == 1) {
+        if (checkboxes.checkbox("is checked")) {
+          this.exciseId.push(checkboxes.find("[type=checkbox]").val());
+        }
+      } else {
+        if (checkboxes.checkbox("is checked")[i]) {
+          this.exciseId.push(checkboxes.find("[type=checkbox]")[i].value);
+        }
+      }       
+    }
+    console.log(this.exciseId);
 
     if (this.exciseId.length != 0) {
       const URL = "filter/exise/listFullDataNoPaging";
@@ -276,7 +303,8 @@ export class SendLineUserComponent implements OnInit,AfterViewInit {
           analysNumber: this.analysNumber,
           exiceList: this.exciseId,
           flag: "S",
-          viewStatus: viewStatus
+          viewStatus: viewStatus,
+          
         },
         res => {
           var data = res.json();
@@ -302,19 +330,23 @@ export class SendLineUserComponent implements OnInit,AfterViewInit {
     this.coordinates = (<HTMLInputElement>(
       document.getElementById("coordinates")
     )).value;
-    this.sendLineUser.destroy();
+    //this.sendLineUser.destroy();
     this.initDatatable();
   };
 
   changeSector = () => {
     this.sector = (<HTMLInputElement>document.getElementById("sector")).value;
-    this.sendLineUser.destroy();
+    //this.sendLineUser.destroy();
     this.initDatatable();
   };
 
-  openModel() {
-    //$(".ui.modal.condition").modal("hide");
+  openModel = () => {
     $(".ui.modal.confirm").modal("show");
+  }
+
+  onClear = () => {
+    $("#sector").dropdown('restore defaults');
+    $("#coordinates").dropdown('restore defaults');
   }
 
 }

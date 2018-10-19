@@ -67,40 +67,38 @@
             <div class="ui active inverted dimmer" *ngIf="loading">
                 <div class="ui text loader">Loading</div>
             </div>
+                <div class="ui form">
+                    <div class="inline fields">
+                        <div class="three wide field"></div>
+                        <div class="three wide field">
+                            <label style="width: 5em;">ภาค</label>
+                            <select class="ui dropdown ai" style="width: 100% !important" name="sector" id="sector"
+                                (change)="changeSector()">
+                                <option value="">ทั้งหมด</option>
+                                <option *ngFor="let list of sectorArr">{{list.value1}}</option>
+                            </select>                            
+                        </div>
+                        <div class="three wide field">
+                            <label style="width: 5em;">พิกัด</label>
+                            <select class="ui dropdown ai" style="width: 100% !important" name="coordinates" id="coordinates"
+                                (change)="changeCoordinates()">
+                                <option value="">ทั้งหมด</option>
+                                <option *ngFor="let list of coordinatesArr">{{list.value1}}</option>
+                            </select>
+                        </div>
+                        <div class="three wide field"> 
+                            <button class="ui gray button" (click)="onClear()"><i class="undo icon"></i>ข้อมูลทั้งหมด</button>
+                        </div>
+                    </div>
+                </div>
             <div class="ui grid">
-                <div class="two wide column"></div>
-                <div class="seven wide column">
-                    <div class="ui form">
-                        <div class="inline fields">
-                            <div class="sixteen wide field">
-                                <label style="width: 5em;">ภาค</label>
-                                <select class="ui dropdown ai" style="width: 100% !important" name="sector" id="sector"
-                                    (change)="changeSector()">
-                                    <option value="">ทั้งหมด</option>
-                                    <option *ngFor="let list of sectorArr">{{list.value1}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="seven wide column">
-                    <div class="ui form">
-                        <div class="inline fields">
-                            <div class="sixteen wide field">
-                                <label style="width: 5em;">พิกัด</label>
-                                <select class="ui dropdown ai" style="width: 100% !important" name="coordinates" id="coordinates"
-                                    (change)="changeCoordinates()">
-                                    <option value="">ทั้งหมด</option>
-                                    <option *ngFor="let list of coordinatesArr">{{list.value1}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <button  (click)="toggleBar()" class="ui button custom-menu" type="button"><i class="bars icon"></i>เมนู</button>
+                    
+                    <!-- <i (click)="hideProductType()"><i class="bars icon"></i></i>
+                    <i (click)="showProductType()"><i class="bars icon"></i></i> -->
             </div>
-
             <div class="ui grid">
-                <div class="three wide column">
+                <div [ngClass]="{'three wide column': !toggle, 'transition-left' : toggle}" >
                     <div class="ui vertical menu" style="width: auto">
                         <div class="item">
                             <div class="header">แยกข้อมูลตามกลุ่มของการชำระภาษี</div>
@@ -116,14 +114,14 @@
                         <div class="item">
                             <div class="menu">
                                 <a class="item" (click)="sendLineUserValues()" routerLink="/add-external-data/send-line-user">-
-                                    ส่งรายให้ภาคพื้นที่/ส่วนกลาง</a>
+                                    ส่งรายให้ส่วนกลางและภาคพื้นที่</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="thirteen wide column">
-                    <div class="{{ loading ? 'hidden' : '' }}" style="padding-bottom: 14px;">
+                <div [ngClass]="{'thirteen': !toggle, 'sixteen': toggle,'wide': true, 'column': true, 'transition-left-2': toggle}">
+                    <div style="padding-bottom: 14px;">
                         <table id="userManagementDt" class="ui small celled table aligned nowrap hover" style="width: 100%;">
                             <thead id="trDrinamic">
                                 <tr style="text-align: center !important">
