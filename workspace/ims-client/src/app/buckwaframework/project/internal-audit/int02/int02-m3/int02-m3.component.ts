@@ -144,7 +144,7 @@ breadcrumb: BreadCrumb[];
         {
           className: "ui center aligned",
           render: function(data, type, full, meta) {
-            return `<button class="ui mini orange button" type="button" id="edit-${
+            return `<button class="ui mini  yellow button" type="button" id="edit-${
               full.qtnHeaderId
             }" value="${
               full.qtnHeaderName

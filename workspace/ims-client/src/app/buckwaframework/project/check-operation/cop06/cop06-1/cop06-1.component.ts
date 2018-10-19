@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DecimalFormat } from 'helpers/decimalformat';
 import { TextDateTH, digit } from 'helpers/datepicker';
 import { AjaxService } from 'services/ajax.service';
-import { MessageBarService } from '../../../../common/services';
+import { MessageBarService, AuthService } from '../../../../common/services';
+import { BreadCrumb } from 'models/breadcrumb';
 declare var $: any;
 @Component({
   selector: 'app-cop06-1',
@@ -11,17 +12,22 @@ declare var $: any;
 })
 export class Cop061Component implements OnInit {
 
-
+  breadcrumb: BreadCrumb[];
   constructor(
+    private authService: AuthService,
     private ajax: AjaxService,
     private messageBarService: MessageBarService
   ) {
-
+    this.breadcrumb = [
+      { label: "รายงานการตรวจปฏิบัติการ", route: "#" },
+      { label: "รายงานการตรวจปฏิบัติการรับวัตถุดิบ", route: "#" },
+    ];
 
 
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('OPE-06100');
     this.hidedata();
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ope04-1").css("width", "100%");

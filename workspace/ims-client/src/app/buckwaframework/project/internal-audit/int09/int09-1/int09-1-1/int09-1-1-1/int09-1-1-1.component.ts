@@ -14,8 +14,8 @@ import {
   formatter,
   DecimalFormat
 } from "../../../../../../common/helper";
-import { TravelService } from "../../../../../../common/services/travel.service";
 import { BreadCrumb } from 'models/index';
+import { TravelService } from "services/travel.service";
 
 declare var $: any;
 @Component({
@@ -49,17 +49,20 @@ export class Int09111Component implements OnInit, AfterViewInit {
   typeList: any;
   gradeList: any;
   // departureList: any;
-  trainingList: any;
-  allowanceList: any;
-  roostList: any;
-  trainingTypeList: any;
-  roomTypeList: any;
+  // trainingList: any;
+  // allowanceList: any;
+  // roostList: any;
+  // trainingTypeList: any;
+  // roomTypeList: any;
 
   departureFrom:any;
   departureTo:any;
 
   head:any;
-  breadcrumb: BreadCrumb[]
+  breadcrumb: BreadCrumb[];
+
+  allowanceR:any;
+  roostR:any;
 
   constructor(
     private ajax: AjaxService,
@@ -89,11 +92,11 @@ export class Int09111Component implements OnInit, AfterViewInit {
     this.travelToHead1Dropdown();
     this.typeDropdown();
     // this.departureDropdown();
-    this.allowanceDropdown();
-    this.trainingDropdown();
-    this.roostDropdown();
-    this.trainingTypeDropdown();
-    this.roomTypeDropdown();
+    // this.allowanceDropdown();
+    // this.trainingDropdown();
+    // this.roostDropdown();
+    // this.trainingTypeDropdown();
+    // this.roomTypeDropdown();
 
   }
 
@@ -114,6 +117,113 @@ export class Int09111Component implements OnInit, AfterViewInit {
       this.dateToHead = parseInt(this.head.returnDate.split("/")[0])+" "+TextDateTH.months[parseInt(this.head.returnDate.split("/")[1]) - 1]+" "+this.head.returnDate.split("/")[2];
       this.travelToHeadString = this.head.travelToDescription;
     });
+  }
+
+  getAllowanceRAndRoostR=e=>{
+    console.log("value : ",e.target.value);
+    const URL = "ia/int09111/getAllowanceRAndRoostR";
+    if(e.target.value!=''){
+      this.ajax.post(URL, { id: e.target.value}, res => {
+        let lov = res.json();
+        console.log("value lov : ",lov);
+        $('#allowanceR').val(lov.value1);
+        $('#roostR').val(lov.value4);
+      });
+    }
+  }
+
+  getAllowanceTotal=()=>{
+    console.log("departureDate : ", $('#departureDate').val());
+    console.log("returnDate : ",$('#returnDate').val());
+    if($('#departureDate').val()!=''&&$('#returnDate').val()!=''){
+      const URL = "ia/int09111/getNumberDateAllowance";
+        this.ajax.post(URL, {
+          int09FormDtlVo:{  departureDate:$('#departureDate').val(),
+                            returnDate:$('#returnDate').val()}
+                          }, res => {
+          let numberDateAllowance = res.json();
+          
+          let hours = parseFloat((numberDateAllowance%1).toFixed(2))*100;
+          let allowanceHalf = 0;
+          if(hours>=12){
+            allowanceHalf = ($('#allowanceR').val()/2);
+          }else{
+            allowanceHalf = 0;
+          }
+          
+          
+          $('#numberDateAllowance').val(parseInt(numberDateAllowance));
+          $('#numberHoursAllowance').val(hours);
+
+          $('#numberDateRoost').val(parseInt(numberDateAllowance));
+          $('#roostTotal').val(parseInt(numberDateAllowance)*$('#roostR').val());
+          
+          $('#allowanceTotal').val(parseInt(numberDateAllowance)*$('#allowanceR').val()+allowanceHalf);
+
+          console.log("getNumberDate : ",numberDateAllowance);
+          console.log("allowanceTotal : ",$('#allowanceTotal').val()); 
+          this.getExpensesTotal();
+        });
+       
+    }
+  }
+  changeAllowanceR=()=>{
+          let numberDateAllowance = $('#numberDateAllowance').val();
+          
+          let hours =  $('#numberHoursAllowance').val();
+          let allowanceHalf = 0;
+          if(hours>=12){
+            allowanceHalf = ($('#allowanceR').val()/2);
+          }else{
+            allowanceHalf = 0;
+          }
+
+          $('#allowanceTotal').val(parseInt(numberDateAllowance)*$('#allowanceR').val()+allowanceHalf);
+
+          console.log("getNumberDate : ",numberDateAllowance);
+          console.log("allowanceTotal : ",$('#allowanceTotal').val()); 
+          this.getExpensesTotal();
+       
+       
+    
+  }
+
+  changeRoostR=()=>{
+
+          let numberDateRoost = $('#numberDateRoost').val();
+          
+          let hours =  $('#numberHoursAllowance').val();
+
+          $('#roostTotal').val(parseInt(numberDateRoost)*$('#roostR').val());
+
+          console.log("numberDateRoost : ",numberDateRoost);
+          console.log("roostTotal : ",$('#roostTotal').val()); 
+          this.getExpensesTotal();
+    
+  }
+
+  getRoostTotal=e=>{
+    console.log("getRoostTotal numberDateRoost : ",e.target.value);
+    let numberDateRoost = e.target.value;
+
+          $('#roostTotal').val(numberDateRoost*$('#roostR').val());
+          console.log("roostTotal : ",$('#roostTotal').val());
+
+          this.getExpensesTotal();
+     
+    
+  }
+
+  getExpensesTotal=()=>{
+    let expensesTotal = 0;
+    expensesTotal += ($('#allowanceTotal').val()!="")?parseFloat($('#allowanceTotal').val()):0;
+    expensesTotal += ($('#roostTotal').val()!="")?parseFloat($('#roostTotal').val()):0;
+    expensesTotal += ($('#passage').val()!="")?parseFloat($('#passage').val()):0;
+    expensesTotal += ($('#otherExpenses').val()!="")?parseFloat($('#otherExpenses').val()):0;
+
+    $('#expensesTotal').val(expensesTotal);
+
+    console.log("expensesTotal : ",expensesTotal);
   }
 
   getDepartureFrom = (e) =>{
@@ -163,15 +273,21 @@ export class Int09111Component implements OnInit, AfterViewInit {
         });
         $("#modalDate5").calendar({
           endCalendar: $("#modalDate6"),
-          type: "date",
           text: TextDateTH,
-          formatter: formatter()
+          formatter: formatter("วดปเวลา"),
+          onChange: (date,text) => {
+            $('#departureDate').val(text)
+            this.getAllowanceTotal();
+          }
         });
         $("#modalDate6").calendar({
           startCalendar: $("#modalDate5"),
-          type: "date",
           text: TextDateTH,
-          formatter: formatter()
+          formatter: formatter("วดปเวลา"),
+          onChange: (date,text) => {
+            $('#returnDate').val(text)
+            this.getAllowanceTotal();
+          }
         });
       }
     });
@@ -329,47 +445,47 @@ export class Int09111Component implements OnInit, AfterViewInit {
   //   });
   // }
   
-  allowanceDropdown = () =>{
-    const URL = "combobox/controller/getDropByTypeAndParentId";
-    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1182}, res => {
-      this.allowanceList = res.json();
-    });
-  }
-  ngIfallowance=e=>{
-  this.ifallowance=e.target.value;
+  // allowanceDropdown = () =>{
+  //   const URL = "combobox/controller/getDropByTypeAndParentId";
+  //   this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1182}, res => {
+  //     this.allowanceList = res.json();
+  //   });
+  // }
+  // ngIfallowance=e=>{
+  // this.ifallowance=e.target.value;
   
-  }
+  // }
 
-  trainingDropdown = () =>{
-    const URL = "combobox/controller/getDropByTypeAndParentId";
-    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 336}, res => {
-      this.trainingList = res.json();
-    });
-  }
+  // trainingDropdown = () =>{
+  //   const URL = "combobox/controller/getDropByTypeAndParentId";
+  //   this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 336}, res => {
+  //     this.trainingList = res.json();
+  //   });
+  // }
 
-  roostDropdown = () =>{
-    const URL = "combobox/controller/getDropByTypeAndParentId";
-    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1185}, res => {
-      this.roostList = res.json();
-    });
-  }
-  ngIfroost=e=>{
-    this.ifroost=e.target.value;
+  // roostDropdown = () =>{
+  //   const URL = "combobox/controller/getDropByTypeAndParentId";
+  //   this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1185}, res => {
+  //     this.roostList = res.json();
+  //   });
+  // }
+  // ngIfroost=e=>{
+  //   this.ifroost=e.target.value;
     
-    }
+  //   }
 
-  trainingTypeDropdown = () =>{
-    const URL = "combobox/controller/getDropByTypeAndParentId";
-    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1189}, res => {
-      this.trainingTypeList = res.json();
-    });
-  }
-  roomTypeDropdown = () =>{
-    const URL = "combobox/controller/getDropByTypeAndParentId";
-    this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1190}, res => {
-      this.roomTypeList = res.json();
-    });
-  }
+  // trainingTypeDropdown = () =>{
+  //   const URL = "combobox/controller/getDropByTypeAndParentId";
+  //   this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1189}, res => {
+  //     this.trainingTypeList = res.json();
+  //   });
+  // }
+  // roomTypeDropdown = () =>{
+  //   const URL = "combobox/controller/getDropByTypeAndParentId";
+  //   this.ajax.post(URL, { type: "ACC_FEE",lovIdMaster: 1190}, res => {
+  //     this.roomTypeList = res.json();
+  //   });
+  // }
 
   modalAdd() {
     this.btnModal = 'S';
@@ -441,13 +557,15 @@ export class Int09111Component implements OnInit, AfterViewInit {
          $("#departureDate").val(data.int09FormDtlVo.departureDate);
          $("#returnDate").val(data.int09FormDtlVo.returnDate);
 
-         $("#allowance").dropdown('set selected',data.int09FormDtlVo.allowance);
-         $("#training").dropdown('set selected',data.int09FormDtlVo.training);
-         $("#roost").dropdown('set selected',data.int09FormDtlVo.roost);
-         $("#trainingType").dropdown('set selected',data.int09FormDtlVo.trainingType);
-         $("#roomType").dropdown('set selected',data.int09FormDtlVo.roomType);
+         $("#numberDateAllowance").val(data.int09FormDtlVo.numberDateAllowance);
+         $("#numberHoursAllowance").val(data.int09FormDtlVo.numberHoursAllowance);
+         $("#allowanceR").dropdown('set selected',data.int09FormDtlVo.allowanceR);
+         $("#allowanceTotal").dropdown('set selected',data.int09FormDtlVo.allowanceTotal);
+         
+         $("#numberDateRoost").val(data.int09FormDtlVo.numberDateRoost);
+         $("#roostR").dropdown('set selected',data.int09FormDtlVo.roostR);
+         $("#roostTotal").dropdown('set selected',data.int09FormDtlVo.roostTotal);
 
-         $("#numberDate").val(data.int09FormDtlVo.numberDate);
          $("#passage").val(data.int09FormDtlVo.passage);
          $("#otherExpenses").val(data.int09FormDtlVo.otherExpenses);
          $("#remarkT").val(data.int09FormDtlVo.remark);
@@ -473,12 +591,17 @@ export class Int09111Component implements OnInit, AfterViewInit {
       departureTo:this.departureTo,
       departureDate:$("#departureDate").val(),
       returnDate:$("#returnDate").val(),
-      allowance:$("#allowance").val(),
-      training:$("#training").val(),
-      roost:$("#roost").val(),
-      trainingType:$("#trainingType").val(),
-      roomType:$("#roomType").val(),
-      numberDate:$("#numberDate").val(),
+
+      numberDateAllowance:$("#numberDateAllowance").val(),
+      numberHoursAllowance:$("#numberHoursAllowance").val(),
+      allowanceR:$("#allowanceR").val(),
+      allowanceTotal:$("#allowanceTotal").val(),
+
+      numberDateRoost:$("#numberDateRoost").val(),
+      roostR:$("#roostR").val(),
+      roostTotal:$("#roostTotal").val(),
+
+      
       passage:$("#passage").val(),
       otherExpenses:$("#otherExpenses").val(),
       remark:$("#remarkT").val()}
@@ -514,12 +637,16 @@ export class Int09111Component implements OnInit, AfterViewInit {
       departureTo:this.departureTo,
       departureDate:$("#departureDate").val(),
       returnDate:$("#returnDate").val(),
-      allowance:$("#allowance").val(),
-      training:$("#training").val(),
-      roost:$("#roost").val(),
-      trainingType:$("#trainingType").val(),
-      roomType:$("#roomType").val(),
-      numberDate:$("#numberDate").val(),
+      
+      numberDateAllowance:$("#numberDateAllowance").val(),
+      numberHoursAllowance:$("#numberHoursAllowance").val(),
+      allowanceR:$("#allowanceR").val(),
+      allowanceTotal:$("#allowanceTotal").val(),
+
+      numberDateRoost:$("#numberDateRoost").val(),
+      roostR:$("#roostR").val(),
+      roostTotal:$("#roostTotal").val(),
+      
       passage:$("#passage").val(),
       otherExpenses:$("#otherExpenses").val(),
       remark:$("#remarkT").val()}

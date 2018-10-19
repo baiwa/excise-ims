@@ -1,5 +1,6 @@
 import { Component, AfterViewInit } from "@angular/core";
 import * as Chart from "chart.js";
+import { AuthService } from "services/auth.service";
 declare var $: any;
 @Component({
   selector: "app-mgc01-2",
@@ -9,9 +10,10 @@ declare var $: any;
 export class Mgc012Component implements AfterViewInit {
   canvas: any;
   ctx: any;
-  constructor() {}
+  constructor(  private authService: AuthService) {}
 
   ngAfterViewInit() {
+    this.authService.reRenderVersionProgram('REP-01012');
     this.canvas = <HTMLCanvasElement>document.getElementById("myChart2");
     this.ctx = this.canvas.getContext("2d");
     let myChart = new Chart(this.ctx, {

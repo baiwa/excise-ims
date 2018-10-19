@@ -9,18 +9,20 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.MockupVo;
+import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.vo.MockupForm;
 import th.co.baiwa.excise.ta.service.ListOfValueService;
 import th.co.baiwa.excise.ta.service.MockupService;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
-
-import static org.springframework.http.ResponseEntity.*;
 
 @Controller
 @RequestMapping("api/working/test")
@@ -37,11 +39,11 @@ public class MockupController {
 	
 	@PostMapping("/list")
 	@ResponseBody
-	public ResponseDataTable<MockupVo> listdata(@ModelAttribute MockupVo vo, MockupForm input) {
+	public DataTableAjax<MockupVo> listdata(@ModelAttribute MockupVo vo, MockupForm input) {
 		String[] fulldate = input.getStartBackDate().split("/");
 		Calendar date = Calendar.getInstance(DateConstant.LOCAL_TH);
 		date.set(Integer.parseInt(fulldate[1]), Integer.parseInt(fulldate[0]), 1);
-		ResponseDataTable<MockupVo> listdata= mockupService.findAll("" , vo, date.getTime(), input.getMonth(),input.getExciseProductType(),input.getFormSearch());
+		DataTableAjax<MockupVo> listdata= mockupService.findAll("" , vo, date.getTime(), input.getMonth(),input.getExciseProductType(),input.getFormSearch(),input);
 		return listdata;
 	}
 	

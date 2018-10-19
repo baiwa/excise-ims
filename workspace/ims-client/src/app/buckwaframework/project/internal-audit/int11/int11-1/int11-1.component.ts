@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { MessageBarService } from '../../../../common/services/message-bar.service';
 import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 import { AuthService } from 'services/auth.service';
+import { Component, OnInit } from '@angular/core';
 declare var $: any;
 @Component({
   selector: 'int11-1',
@@ -19,8 +20,8 @@ export class Int111Component implements OnInit {
   status: string = "";
   $form: any;
   $page: any;
-  form : Int111Form = new Int111Form();
-
+  form: Int111Form = new Int111Form();
+  searchFlag: string = "FALSE";
   // BreadCrumb
   breadcrumb: BreadCrumb[];
 
@@ -55,7 +56,7 @@ export class Int111Component implements OnInit {
     $(".follow-project-dropdown").dropdown().css('width', '100%');
   }
 
-  initDatatable =()=> {
+  initDatatable = () => {
     const URL = AjaxService.CONTEXT_PATH + "ia/int111/search";
     this.datatable = $("#dataTable").DataTable({
       lengthChange: false,
@@ -63,7 +64,7 @@ export class Int111Component implements OnInit {
       ordering: false,
       pageLength: 10,
       processing: true,
-      serverSide: false,
+      serverSide: true,
       paging: true,
       scrollX: true,
 
@@ -71,17 +72,18 @@ export class Int111Component implements OnInit {
         type: "POST",
         url: URL,
         contentType: "application/json",
-        data: function (d) {
-          return JSON.stringify($.extend({
+        data: (d) => {
+          return JSON.stringify($.extend({}, d, {
             "projectName": $('#projectName').val(),
-            "status": $('#status').val()
-          }, d, {}));
+            "status": $('#status').val(),
+            "searchFlag": $("#searchFlag").val()
+          }));
         }
       },
       columns: [
         {
           data: "followUpProjectId",
-          className: "center aglined",
+          className: "text-center",
           render: function (data) {
             return (
               '<div class="ui checkbox follow-proj-chkbox"><input name="checkId" value="' +
@@ -387,12 +389,12 @@ export class Int111Component implements OnInit {
         {
           data: "status",
           className: "center aglined",
-          render: function (data,row) {
+          render: function (data, row) {
             var html = '';
             if (data != 'เสร็จสิ้น') {
               html += '<button type="button" class="ui mini yellow button edit-button"><i class="edit icon"></i>แก้ไข</button>';
               html += '<button type="button" class="ui mini blue button close-button"> <i class="power off icon"></i>ปิดงาน</button>';
-            } 
+            }
             return html;
           }
         }
@@ -415,14 +417,15 @@ export class Int111Component implements OnInit {
       console.log("data : ", data);
       this.form.id = data.followUpProjectId;
       $('#modolClose').modal('show');
-       
+
     });
   }
 
-  onClicksavenote =()=>{
+
+  onClicksavenote = () => {
     this.form.note = $('#noteclosejob').val();
     var url = "ia/int111/notecloseJob";
-    this.ajaxService.post(url,JSON.stringify(this.form), res=>{
+    this.ajaxService.post(url, JSON.stringify(this.form), res => {
       $('#modolClose').modal('hide');
       $("#dataTable").DataTable().ajax.reload();
     });
@@ -440,14 +443,16 @@ export class Int111Component implements OnInit {
   }
 
   searchData() {
+    $("#searchFlag").val("TRUE");
     $("#dataTable").DataTable().ajax.reload();
   }
 
   clearData() {
+    console.log("Clear");
     $('#projectName').val('');
-    $('#status').val('');
-    $(".follow-project-dropdown").dropdown('restore defaults');
-    this.searchData()
+    $("#status").dropdown('restore defaults');
+    $("#searchFlag").val("FALSE");
+    $("#dataTable").DataTable().ajax.reload();
   }
 
   addData() {
@@ -517,7 +522,7 @@ export class Int111Component implements OnInit {
 
 }
 
-class Int111Form{
-  note : string ="";
-  id : string = "";
+class Int111Form {
+  note: string = "";
+  id: string = "";
 } 

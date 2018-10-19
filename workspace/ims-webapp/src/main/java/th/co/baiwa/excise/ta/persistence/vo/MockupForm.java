@@ -5,6 +5,7 @@ import th.co.baiwa.excise.domain.DataTableRequest;
 public class MockupForm extends DataTableRequest {
 
     private String formSearch;
+    private String coordinatesFlag;
 
     public String getFormSearch() {
         return formSearch;
@@ -12,5 +13,13 @@ public class MockupForm extends DataTableRequest {
 
     public void setFormSearch(String formSearch) {
         this.formSearch = formSearch;
+    }
+
+    public String getCoordinatesFlag() {
+        return coordinatesFlag;
+    }
+
+    public void setCoordinatesFlag(String coordinatesFlag) {
+        this.coordinatesFlag = coordinatesFlag;
     }
 }

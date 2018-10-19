@@ -1,15 +1,16 @@
 package th.co.baiwa.buckwaframework.common.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResponseDataTable<T> {
 	
-	private Integer draw;
-	private Integer start;
-	private Integer length;
-	private Integer recordsTotal;
-	private Integer recordsFiltered;
-	private List<T> data;
+	private Integer draw=0;
+	private Integer start=0;
+	private Integer length=0;
+	private Integer recordsTotal=0;
+	private Integer recordsFiltered=0;
+	private List<T> data =new ArrayList<>();
 
 	public Integer getDraw() {
 		return draw;

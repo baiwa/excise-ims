@@ -52,7 +52,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.authService.reRenderVersionProgram('OPE-04100');
+    this.authService.reRenderVersionProgram('OPE-04010');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ope04-1").css("width", "100%");
 

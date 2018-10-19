@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter } from "../../../common/helper";
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 @Component({
@@ -10,11 +11,12 @@ declare var $: any;
 export class MgcontrolComponent implements OnInit {
   public topic: string;
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.topic = "";
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('REP-03010');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     // context

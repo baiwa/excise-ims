@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'services/auth.service';
+import { BreadCrumb } from 'models/breadcrumb';
 
 @Component({
   selector: 'app-cop06-12',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Cop0612Component implements OnInit {
 
-  constructor() { }
+  breadcrumb: BreadCrumb[];
+  constructor(private authService: AuthService) {
+    this.breadcrumb = [
+      { label: "รายงานการตรวจปฏิบัติการ", route: "#" },
+     { label: "รายงานการตรวจปฏิบัติการตรวจสอบมูลค่าขอยกเว้นภาษี", route: "#" },
+    ];
+   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('OPE-06012');
   }
 
 }

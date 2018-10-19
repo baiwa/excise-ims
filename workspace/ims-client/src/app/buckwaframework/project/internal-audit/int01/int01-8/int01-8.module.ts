@@ -5,6 +5,7 @@ import { Int0181Component } from "./int01-8-1/int01-8-1.component";
 
 import { Routes, RouterModule } from "@angular/router";
 import { AuthGuard } from "../../../../common/services";
+import { BreadcrumbModule } from "components/breadcrumb/breadcrumb.module";
 
 const routes: Routes = [
   { path: "1", component: Int0181Component, canActivate: [AuthGuard] }
@@ -12,8 +13,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes),
-    FormsModule, CommonModule],
+    FormsModule,
+    CommonModule,
+    BreadcrumbModule
+  ],
   declarations: [Int0181Component],
   exports: [RouterModule]
 })
-export class Int018Module {}
+export class Int018Module { }

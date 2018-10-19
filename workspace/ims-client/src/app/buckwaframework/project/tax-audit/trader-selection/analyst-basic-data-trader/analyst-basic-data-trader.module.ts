@@ -12,7 +12,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule, FormsModule, ModalModule,BreadcrumbModule],
+  imports: [
+    RouterModule.forChild(routes), 
+    CommonModule, 
+    FormsModule, 
+    ModalModule,
+    BreadcrumbModule
+  ],
   declarations: [AnalystBasicDataTraderComponent],
   exports: [RouterModule]
 })

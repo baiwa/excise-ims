@@ -28,13 +28,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.constant.IaConstant.IA_REGIS_TRACK_CONTROL.STATUS;
 import th.co.baiwa.excise.domain.LabelValueBean;
+import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.IaFollowUpProjectDao;
 import th.co.baiwa.excise.ia.persistence.entity.IaFollowUpProject;
 import th.co.baiwa.excise.ia.persistence.repository.IaFollowUpProjectRepository;
@@ -146,11 +146,18 @@ public class IaFollowUpProjectService {
 	@Autowired
 	private IaFollowUpProjectRepository iaFollowUpProjectRepository;
 	
-	public ResponseDataTable<Int111Vo> searchIaFollowUpProject(Int111FormVo formVo) {
-		ResponseDataTable<Int111Vo> response = new ResponseDataTable<Int111Vo>();
-		List<Int111Vo> iaFollowUpProjectList = iaFollowUpProjectDao.searchCriteria(formVo);
-		response.setData(iaFollowUpProjectList);
-		return response;
+	public DataTableAjax<Int111Vo> searchIaFollowUpProject(Int111FormVo formVo) {
+		DataTableAjax<Int111Vo> dataTableAjax = new DataTableAjax<Int111Vo>();
+		
+		if ("TRUE".equalsIgnoreCase(formVo.getSearchFlag())) {
+			List<Int111Vo> iaFollowUpProjectList = iaFollowUpProjectDao.searchCriteria(formVo);
+				
+			dataTableAjax.setDraw(formVo.getDraw() + 1);
+			dataTableAjax.setRecordsTotal(Long.valueOf(iaFollowUpProjectList.size()));
+			dataTableAjax.setRecordsFiltered(Long.valueOf(iaFollowUpProjectList.size()));
+			dataTableAjax.setData(iaFollowUpProjectList);
+		}
+		return dataTableAjax;
 	}
 	
 	public void saveOrUpdate(Int111FormVo vo) {

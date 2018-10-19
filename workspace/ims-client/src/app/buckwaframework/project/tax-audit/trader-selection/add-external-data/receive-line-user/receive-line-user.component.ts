@@ -59,8 +59,8 @@ export class ReceiveLineUserComponent implements OnInit {
     });
 
     //get Sector in select option
-    const URL2 = "combobox/controller/getSector";
-    this.ajax.post(URL2, {}, res => {
+    const URL2 = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL2, {type : "SECTOR_VALUE"}, res => {
       this.sectorArr = res.json();
     });
 
@@ -104,15 +104,17 @@ export class ReceiveLineUserComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
       '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
       '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
       '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
+
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ทุนจดทะเบียน</th> ' +
+      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
+      '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
       "</tr>" +
       '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
@@ -172,15 +174,14 @@ export class ReceiveLineUserComponent implements OnInit {
 
   initDatatable(): void {
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
-    var sendLineUserCheckbox = (this.sendLineUser = $(
-      "#sendLineUser"
-    ).DataTable({
+    var sendLineUserCheckbox = (this.sendLineUser = $("#sendLineUser").DataTable({
       lengthChange: false,
       searching: false,
       ordering: false,
       processing: true,
       serverSide: true,
-      paging: false,
+      scrollX: true,
+      paging: true,
       pagingType: "full_numbers",
 
       ajax: {
@@ -215,6 +216,7 @@ export class ReceiveLineUserComponent implements OnInit {
         { data: "exciseId", className: "center" },
         { data: "companyName" },
         { data: "companyName" },
+        { data: "exciseOwnerArea1" },
         { data: "exciseOwnerArea" },
         { data: "firstMonth", className: "center" },
         { data: "lastMonth", className: "center" },
@@ -223,10 +225,11 @@ export class ReceiveLineUserComponent implements OnInit {
         { data: "no1" },
         { data: "no2" },
         { data: "no3" },
-        { data: "exciseOwnerArea1" },
+
         { data: "productType" },
         { data: "factoryAddress" },
         { data: "registeredCapital" },
+        { data: "exciseIdOld", className: "center" },
         { data: "status" }
       ]
     }));

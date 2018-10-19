@@ -11,6 +11,7 @@ import { AuthGuard } from "../../../common/services";
 import { Cop011Component } from "./cop01-1/cop01-1.component";
 import { Cop012Component } from "./cop01-2/cop01-2.component";
 import { Cop013Component } from "./cop01-3/cop01-3.component";
+import { BreadcrumbModule } from "../../../common/components";
 
 const routes: Routes = [
   { path: "1", component: Cop011Component, canActivate: [AuthGuard] },
@@ -19,7 +20,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule,FormsModule],
+  imports: [RouterModule.forChild(routes), CommonModule,FormsModule,BreadcrumbModule],
   declarations: [Cop011Component, Cop012Component, Cop013Component],
   exports: [RouterModule],
   

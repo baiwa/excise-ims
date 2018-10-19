@@ -159,9 +159,9 @@ export class Int091Component implements OnInit {
           "render": function (data, type, row) {
             var s = '';
             if (data == 1162) {
-              s = 'ก่อนเดินทาง';
+              s = 'ก่อนเดินทางไปราชการ';
             } else {
-              s = 'หลังเดินทาง';
+              s = 'หลังเดินทางไปราชการ';
             }
             return s;
           }

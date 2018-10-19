@@ -1,17 +1,20 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, AfterViewInit, AfterViewChecked } from "@angular/core";
 import { ExciseService } from "../../../../common/services/excise.service";
 import { AjaxService } from "../../../../common/services/ajax.service";
 import { Router, ActivatedRoute } from "@angular/router";
 
 import { TextDateTH } from "../../../../common/helper/datepicker";
 import { BreadCrumb } from "models/breadcrumb";
+import { SummaryModel } from "projects/tax-audit/trader-selection/analyst-basic-data-trader/summaryFooter.model";
+import { AnalystBasicDataTraderService } from "projects/tax-audit/trader-selection/analyst-basic-data-trader/analyst-basic-data-trader.service";
 declare var $: any;
 @Component({
   selector: "app-analyst-basic-data-trader",
   templateUrl: "./analyst-basic-data-trader.component.html",
-  styleUrls: ["./analyst-basic-data-trader.component.css"]
+  styleUrls: ["./analyst-basic-data-trader.component.css"],
+  providers: [AnalystBasicDataTraderService]
 })
-export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
+export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
   breadcrumb: BreadCrumb[] = [
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การคัดเลือกราย', route: '#' },
@@ -42,15 +45,20 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
   isOpen: any = 'open';
   formSearch: string = "";
   toggle: boolean = false;
+  summary: SummaryModel = new SummaryModel();
+  coordinatesFlag: string = "";
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private ex: ExciseService
+    private ex: ExciseService,
+    private analystService: AnalystBasicDataTraderService
   ) { }
 
-  ngOnDestroy() { }
-
+  ngAfterViewInit() {
+    //this.selectExciseProductType(this.listMenu[0]);
+  }
   ngOnInit() {
+    this.coordinatesFlag = "";
     $('.ui.accordion').accordion();
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
@@ -65,6 +73,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       "แบตเตอรี่",
 
     ];
+
     this.listMenu1 = [
       "ไนท์คลับและดิสโกเธค",
       "สถานอาบน้ำหรืออบตัวและนวด",
@@ -122,7 +131,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     document.getElementById("trDrinamic").innerHTML =
 
       '<th rowspan="2" style="text-align: center !important" >ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
-      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
@@ -134,6 +142,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ค่าเฉลี่ยภาษี</th> ' +
@@ -221,6 +230,10 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     );
     return listMenu;
   };
+
+  webService = () => {
+
+  }
 
   onSend = () => {
     this.loading = true;
@@ -327,9 +340,38 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     this.valueForBackEndList.push("<:" + this.replaceAllValue(this.lastNumber));
     $(".ui.modal.condition").modal("hide");
   };
-
-  selectExciseProductType(productionType): void {
+  clearExciseProductType = () => {
+    this.exciseProductType = null;
+  }
+  selectExciseProductType(productionType) {
     console.log(productionType);
+    this.coordinatesFlag = "1"
+    console.log(this.coordinatesFlag);
+    this.summary.taxData = productionType;
+    this.exciseProductType = productionType;
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
+    this.initDatatable();
+  }
+
+  selectExciseProductType2(productionType) {
+    console.log(productionType);
+    this.coordinatesFlag = "2"
+    console.log(this.coordinatesFlag);
+    this.summary.taxData = productionType;
+    this.exciseProductType = productionType;
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
+    this.initDatatable();
+  }
+
+  selectExciseProductType3(productionType) {
+    console.log(productionType);
+    this.coordinatesFlag = "3"
+    console.log(this.coordinatesFlag);
+    this.summary.taxData = productionType;
     this.exciseProductType = productionType;
     if (this.userManagementDt != null) {
       this.userManagementDt.destroy();
@@ -377,7 +419,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     var json = "";
     json += " [ ";
     json += ' { "data": "exciseId","className":"center" }, ';
-    json += ' { "data": "exciseIdOld","className":"center"}, ';
     json += ' { "data": "exciseOperatorName" }, ';
     json += ' { "data": "exciseFacName" }, ';
     json += ' { "data": "coordinates" }, ';
@@ -394,6 +435,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
 
     json += ' { "data": "industrialAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
+    json += ' { "data": "exciseIdOld","className":"center"}, ';
     json += ' { "data": "status" }, ';
     json += ' { "data": "avgTotal","className":"right" }, ';
     json += ' { "data": "monthMaxPercen","className":"right" }, ';
@@ -420,6 +462,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
     }
     json += ' { "data": "otherCoordinates","className":"left" }';
     json += "]";
+
     let jsonMapping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable({
       lengthChange: true,
@@ -429,7 +472,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
       ordering: true,
       pageLength: 10,
       processing: true,
-      serverSide: true,
+      serverSide: false,
       paging: true,
       pagingType: "full_numbers",
       ajax: {
@@ -440,29 +483,25 @@ export class AnalystBasicDataTraderComponent implements OnInit, OnDestroy {
           startBackDate: this.from,
           condition: this.condition != undefined ? this.condition.toString() : "",
           month: this.month,
-          formSearch: this.formSearch
-
+          formSearch: this.formSearch,
+          coordinatesFlag: this.coordinatesFlag
         }
       },
 
       columns: jsonMapping,
-      fnDrawCallback: function (oSettings) {
+      fnDrawCallback: (oSettings) => {
         if ($(".amount").length > 0) {
           $(".amount").each(function () {
-            if (
-              this.innerHTML == "" ||
-              this.innerHTML == null ||
-              this.innerHTML == "0" ||
-              this.innerHTML == 0
-            ) {
+            if (this.innerHTML == "" || this.innerHTML == null || this.innerHTML == "0" || this.innerHTML == 0) {
               this.className = "center amount null";
               this.innerHTML = "-";
             }
           });
         }
+        this.summary.totalNumber = $('#userManagementDt').DataTable().page.info().recordsTotal
       },
       fixedColumns: {
-        leftColumns: 3
+        leftColumns: 2
       }
     });
 

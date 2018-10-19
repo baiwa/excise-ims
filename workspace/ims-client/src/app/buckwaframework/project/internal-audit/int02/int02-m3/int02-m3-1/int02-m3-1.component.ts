@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { AjaxService, MessageBarService, AuthService } from "../../../../../common/services";
-import { BaseModel, ManageReq } from "../../../../../common/models";
+import { BaseModel, ManageReq, BreadCrumb } from "../../../../../common/models";
 import { toFormData } from "../../../../../common/helper";
 
 const URL = {
@@ -40,6 +40,7 @@ export class Int02M31Component implements OnInit {
   showEdit: any;
   chkSelect: any = [];
   chkAllSelect: any = [];
+  breadcrumb: BreadCrumb[];
 
   constructor(
     private ajax: AjaxService,
@@ -51,6 +52,12 @@ export class Int02M31Component implements OnInit {
     this.mainId = "";
     this.qtnMainList = [];
     this.qtnMinorList = [];
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "แบบสอบถามระบบการควบคุมภายใน", route: "#" },
+      { label: "จัดการข้อมูลแบบสอบถามระบบการควบคุมภายใน", route: "#" },
+      { label: "รายละเอียดด้าน", route: "#" }
+    ];
   }
 
   ngOnInit() {

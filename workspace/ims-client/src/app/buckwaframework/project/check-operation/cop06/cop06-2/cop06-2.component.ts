@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'services/auth.service';
+import { BreadCrumb } from 'models/breadcrumb';
 
 @Component({
   selector: 'app-cop06-2',
@@ -7,10 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Cop062Component implements OnInit {
   showData: boolean = false;
-
-  constructor() { }
+  breadcrumb: BreadCrumb[];
+  constructor(  private authService: AuthService) { 
+    this.breadcrumb = [
+      { label: "รายงานการตรวจปฏิบัติการ", route: "#" },
+      { label: "รายงานการตรวจปฏิบัติการหาความสัมพันธ์ การเบิกใช้วัตถุดิบกับการรับสินค้าสำเร็จรูป", route: "#" },
+     
+    
+    ];
+  }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('OPE-06020');
   }
 
   uploadData() {
