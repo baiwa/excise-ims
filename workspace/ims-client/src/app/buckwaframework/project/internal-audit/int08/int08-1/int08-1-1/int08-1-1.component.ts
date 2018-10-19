@@ -194,7 +194,7 @@ export class Int0811Component implements OnInit {
           data: "riskHdrId",
           render: function () {
             return '<button type="button" class="ui mini button  primary dtl"><i class="table icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button  primary export"><i class="print icon "></i> Export</button>';
+              + '<button type="button" class="ui mini button yellow export"><i class="print icon "></i> Export</button>';
           }
         }
       ],

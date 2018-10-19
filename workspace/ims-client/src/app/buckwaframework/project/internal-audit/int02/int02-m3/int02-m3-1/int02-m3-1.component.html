@@ -1,3 +1,4 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui modal show transition hidden" style="height: calc(6em + 15px);">
     <i class="close icon"></i>
     <div class="header">
@@ -96,9 +97,7 @@
                         </div>
 
                         <div class="two wide field">
-                            <a class="primary" (click)="onAddField()" style="cursor: pointer;">
-                                <i class="add icon"></i> เพิ่มข้อย่อย
-                            </a>
+                            &nbsp;
                         </div>
 
                         <div class="eight wide field">
@@ -106,7 +105,9 @@
                         </div>
 
                         <div class="two wide field">
-                            &nbsp;
+                            <a class="primary" (click)="onAddField()" style="cursor: pointer;">
+                                <i class="add icon"></i> 
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -115,7 +116,7 @@
                     <div class="row">
                         <div class="column">
 
-                            <button class="ui small blue button " type="button" (click)="onSaveData()">
+                            <button class="ui small green button " type="button" (click)="onSaveData()">
                                 <i class="add icon "></i> เพิ่ม
                             </button>
                         </div>
@@ -140,7 +141,7 @@
                                                 <input type="checkbox" name="chk1" id="chk1" (click)="chkAll($event, 'table', 1)">
                                             </th>
                                             <th style="text-align: center !important ;width: 80%">รายการ</th>
-                                            <th style="text-align: center !important ;width: 15%">#</th>
+                                            <th style="text-align: center !important ;width: 15%">จัดการ</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -169,7 +170,7 @@
                                             <div class="ui center aligned grid">
                                                 <div class="row">
                                                     <div class="column">
-                                                        <button class="ui tiny orange button" type="button" name="edit-{{i}}"
+                                                        <button class="ui tiny   yellow button" type="button" name="edit-{{i}}"
                                                             id="edit-{{i}}" (click)="onEditData(t)">
                                                             <i class="edit icon "></i> แก้ไข
                                                         </button>

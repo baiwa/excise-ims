@@ -6,6 +6,7 @@ import { Cop061Component } from "projects/check-operation/cop06/cop06-1/cop06-1.
 import { AuthGuard } from "services/auth-guard.service";
 import { Cop0612Component } from "projects/check-operation/cop06/cop06-1/cop06-1-2/cop06-1-2.component";
 import { Cop0611Component } from "projects/check-operation/cop06/cop06-1/cop06-1-1/cop06-1-1.component";
+import { BreadcrumbModule } from "../../../../common/components";
 
 const routes: Routes = [
   { path: "", component: Cop061Component, canActivate: [AuthGuard] },
@@ -15,7 +16,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule],
+  imports: [RouterModule.forChild(routes), CommonModule,BreadcrumbModule
+	],
   declarations: [ Cop061Component,Cop0611Component,Cop0612Component],
   exports: [RouterModule]
 })

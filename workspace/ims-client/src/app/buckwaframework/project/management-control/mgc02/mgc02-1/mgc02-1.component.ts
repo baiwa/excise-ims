@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { formatter, TextDateTH } from "../../../../common/helper/datepicker";
+import { AuthService } from "services/auth.service";
 declare var $: any;
 @Component({
   selector: "app-mgc02-1",
@@ -12,7 +13,7 @@ export class Mgc021Component implements OnInit {
   selectProduct: String;
   selectZone: String;
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.products = [
       "ทั้งหมด",
       "สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน",
@@ -49,7 +50,9 @@ export class Mgc021Component implements OnInit {
     ];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.reRenderVersionProgram('REP-02010');
+  }
 
   onSelectProducts = event => {
     this.selectProduct = this.products[event.target.value];

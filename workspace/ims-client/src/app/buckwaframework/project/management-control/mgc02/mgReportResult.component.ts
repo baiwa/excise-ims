@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { formatter, TextDateTH } from "../../../common/helper/datepicker";
+import { AuthService } from "services/auth.service";
 declare var $: any;
 @Component({
   selector: "app-mgReportResult",
@@ -16,7 +17,7 @@ export class MgReportResultComponent implements OnInit {
 
   sent: boolean;
 
-  constructor() {
+  constructor(  private authService: AuthService) {
     // Mock Data
     this.typeDocs = [
       "ระบบการตรวจภาษี",
@@ -28,6 +29,7 @@ export class MgReportResultComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('REP-02000');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     // calendar

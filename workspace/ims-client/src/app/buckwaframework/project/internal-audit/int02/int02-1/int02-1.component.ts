@@ -124,7 +124,7 @@ export class Int021Component implements OnInit {
             if (full.qtnFinished == "Y") {
               str = "";
             } else {
-              str = `<button class="ui icon yellow mini button" id="edit-${full.qtnMasterId}" value="edit-${full.qtnMasterId}"><i class="edit icon"></i></button>`;
+              str = `<button class="ui  mini yellow button" id="edit-${full.qtnMasterId}" value="edit-${full.qtnMasterId}"><i class="edit icon"></i>แก้ไข</button>`;
             }
             return str;
           },

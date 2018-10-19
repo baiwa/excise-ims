@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AjaxService } from "../../../../common/services/ajax.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { MessageBarService } from "../../../../common/services/message-bar.service";
+import { AuthService } from 'services/auth.service';
 
 
 declare var jQuery: any;
@@ -25,12 +26,14 @@ export class Cop013Component implements OnInit {
   constructor(private router: Router, 
     private route: ActivatedRoute, 
     private ajax: AjaxService, 
-    private messageBarService: MessageBarService
+    private messageBarService: MessageBarService,
+    private authService: AuthService
   ) {
     
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('OPE-01030');
     this.planStart = this.route.snapshot.queryParams["planStart"];
     this.initDatatable();
  }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageBarService, AjaxService } from '../../../common/services';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BreadCrumb } from 'models/breadcrumb';
 declare var jQuery: any;
 declare var $: any;
 @Component({
@@ -12,6 +13,8 @@ export class Cop06Component implements OnInit {
   private showSubMenuMat: boolean = false;
   private showSubMenuIns: boolean = false;
   private showSubMenuTax: boolean = false;
+  
+breadcrumb: BreadCrumb[];
   private coordinate: String;
   private routerOpe051: String;
   constructor(
@@ -19,7 +22,10 @@ export class Cop06Component implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService
-  ) {}
+  ) {    this.breadcrumb = [
+    { label: "รายงานการตรวจปฏิบัติการ", route: "#" },
+  
+  ];}
   ngOnInit(): void {
     this.coordinate = this.route.snapshot.params["coordinate"];
     if (this.coordinate == "สนามกอล์ฟ") {

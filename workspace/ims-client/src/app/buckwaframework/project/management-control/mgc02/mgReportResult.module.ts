@@ -28,4 +28,8 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class MgReportResultComponentModule { }
+export class MgReportResultComponentModule {
+
+
+  
+ }

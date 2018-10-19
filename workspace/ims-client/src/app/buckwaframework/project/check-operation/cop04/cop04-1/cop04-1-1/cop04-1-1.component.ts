@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BreadCrumb } from 'models/breadcrumb';
 
 @Component({
   selector: 'app-cop04-1-1',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Cop0411Component implements OnInit {
 
-  constructor() { }
+  breadcrumb: BreadCrumb[];
+  constructor() { 
+    this.breadcrumb = [     
+     { label: "บันทึกผลการตรวจปฏิบัติการ", route: "#" },
+    ];
+
+  }
 
   ngOnInit() {
   }
