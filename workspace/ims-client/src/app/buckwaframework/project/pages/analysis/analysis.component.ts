@@ -1,19 +1,35 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { AnalysisService } from "projects/pages/analysis/analysis.service";
+import { BreadCrumb } from "models/breadcrumb";
+import { TextDateTH, formatter } from "helpers/datepicker";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 declare var $: any;
 @Component({
   selector: "analysis",
-  templateUrl: "analysis.component.html"
+  templateUrl: "analysis.component.html",
+  providers: [AnalysisService]
 })
 export class AnalysisPage implements OnInit {
+  breadcrumb: BreadCrumb[] = [
+    { label: "ตรวจสอบภาษี", route: "#" },
+    { label: "การตรวจสอบภาษี", route: "#" },
+    { label: "การวิเคราะห์ข้อมูลเบื้องต้น", route: "#" },
+  ];
   showSelectCoordinate: boolean = false;
   coordinateList: any[];
 
   productList: any[];
   serviceList: any[];
-
-  constructor(private router: Router) {}
+  loading: boolean = true;
+  exciseIdList: any;
+  form: FormGroup;
+  constructor(
+    private router: Router,
+    private analysisService: AnalysisService,
+    private formBuilder: FormBuilder,
+  ) { }
 
   ngOnInit(): void {
     $(".ui.dropdown").dropdown();
@@ -41,8 +57,23 @@ export class AnalysisPage implements OnInit {
       { value: "กิจการที่ได้รับอนุญาตหรือสัมปทานจากรัฐ" },
       { value: "สนามกอล์ฟ" }
     ];
-  }
+    this.exciseIdLists();
+    this.calenda();
 
+    this.form = this.formBuilder.group({          
+      exciseId: ["", Validators.required],
+      userNumber: ["", Validators.required],
+      dateForm: ["", Validators.required],
+      dateTo: ["", Validators.required],
+      type :  ["", Validators.required],
+      coordinates: ["", Validators.required]
+    });
+
+    console.log(this.form);
+  }
+  get f() {
+    return this.form.controls;
+  }
   selectCatagory() {
     var value = $("#selectCatagory").val();
     if (value == 1) {
@@ -74,5 +105,30 @@ export class AnalysisPage implements OnInit {
     }
 
     this.router.navigate(["/result-analysis", category, coordinate]);
+  }
+
+  exciseIdLists = () => {
+    this.analysisService.exciseIdList().then(res => {
+      this.exciseIdList = res;
+      this.loading = false;
+    });
+    console.log(this.exciseIdList);
+  }
+
+  calenda = () => {
+    $("#dateF").calendar({
+      maxDate: new Date(),
+      endCalendar: $("#dateT"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('month-year')
+    });
+    $("#dateT").calendar({
+      maxDate: new Date(),
+      startCalendar: $("#dateF"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('month-year')
+    });    
   }
 }
