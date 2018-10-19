@@ -403,7 +403,7 @@ export class Int0911Component implements OnInit, OnDestroy {
       this.head = res.json();
       console.log("Head : ",this.head);
 
-      this.pickedType = (this.head.pickedType==1162)?'ก่อนเดินทาง':'หลังเดินทาง';
+      this.pickedType = (this.head.pickedType==1162)?'ก่อนเดินทางไปราชการ':'หลังเดินทางไปราชการ';
       this.fiscalYear = this.head.fiscalYear;
       this.departureDate = parseInt(this.head.departureDate.split("/")[0])+" "+TextDateTH.months[parseInt(this.head.departureDate.split("/")[1]) - 1]+" "+this.head.departureDate.split("/")[2];
       this.returnDate = parseInt(this.head.returnDate.split("/")[0])+" "+TextDateTH.months[parseInt(this.head.returnDate.split("/")[1]) - 1]+" "+this.head.returnDate.split("/")[2];;

@@ -20,12 +20,16 @@ public class Int09FormDtlVo extends DataTableRequest {
 	private String departureTo;
 	private String departureDate;
 	private String returnDate;
-	private String allowance;
-	private String training;
-	private String roost;
-	private String trainingType;
-	private String roomType;
-	private Long numberDate;
+
+	private Long numberDateAllowance;
+	private Long numberHoursAllowance;
+	private BigDecimal allowanceR;
+	private BigDecimal allowanceTotal;
+
+	private Long numberDateRoost;
+	private BigDecimal roostR;
+	private BigDecimal roostTotal;
+
 	private BigDecimal passage;
 	private BigDecimal otherExpenses;
 	private String remark;
@@ -142,52 +146,60 @@ public class Int09FormDtlVo extends DataTableRequest {
 		this.returnDate = returnDate;
 	}
 
-	public String getAllowance() {
-		return allowance;
+	public Long getNumberDateAllowance() {
+		return numberDateAllowance;
 	}
 
-	public void setAllowance(String allowance) {
-		this.allowance = allowance;
+	public void setNumberDateAllowance(Long numberDateAllowance) {
+		this.numberDateAllowance = numberDateAllowance;
 	}
 
-	public String getTraining() {
-		return training;
+	public Long getNumberHoursAllowance() {
+		return numberHoursAllowance;
 	}
 
-	public void setTraining(String training) {
-		this.training = training;
+	public void setNumberHoursAllowance(Long numberHoursAllowance) {
+		this.numberHoursAllowance = numberHoursAllowance;
 	}
 
-	public String getRoost() {
-		return roost;
+	public BigDecimal getAllowanceR() {
+		return allowanceR;
 	}
 
-	public void setRoost(String roost) {
-		this.roost = roost;
+	public void setAllowanceR(BigDecimal allowanceR) {
+		this.allowanceR = allowanceR;
 	}
 
-	public String getTrainingType() {
-		return trainingType;
+	public BigDecimal getAllowanceTotal() {
+		return allowanceTotal;
 	}
 
-	public void setTrainingType(String trainingType) {
-		this.trainingType = trainingType;
+	public void setAllowanceTotal(BigDecimal allowanceTotal) {
+		this.allowanceTotal = allowanceTotal;
 	}
 
-	public String getRoomType() {
-		return roomType;
+	public Long getNumberDateRoost() {
+		return numberDateRoost;
 	}
 
-	public void setRoomType(String roomType) {
-		this.roomType = roomType;
+	public void setNumberDateRoost(Long numberDateRoost) {
+		this.numberDateRoost = numberDateRoost;
 	}
 
-	public Long getNumberDate() {
-		return numberDate;
+	public BigDecimal getRoostR() {
+		return roostR;
 	}
 
-	public void setNumberDate(Long numberDate) {
-		this.numberDate = numberDate;
+	public void setRoostR(BigDecimal roostR) {
+		this.roostR = roostR;
+	}
+
+	public BigDecimal getRoostTotal() {
+		return roostTotal;
+	}
+
+	public void setRoostTotal(BigDecimal roostTotal) {
+		this.roostTotal = roostTotal;
 	}
 
 	public BigDecimal getPassage() {

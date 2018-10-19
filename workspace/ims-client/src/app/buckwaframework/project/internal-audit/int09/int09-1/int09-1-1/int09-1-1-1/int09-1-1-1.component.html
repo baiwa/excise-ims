@@ -138,7 +138,7 @@
             <label>ระดับ</label>
           </div>
           <div class="three wide field">
-            <select class="ui dropdown" id="grade" name="grade" style="width: 100%">
+            <select class="ui dropdown" id="grade" name="grade" (change)="getAllowanceRAndRoostR($event)" style="width: 100%">
               <option value="">เลือก</option>
               <option *ngFor="let data of gradeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
@@ -249,14 +249,14 @@
             <div class="ui calendar" id="modalDate6" style="width: 100%">
               <div class="ui input left icon">
                 <i class="time icon"></i>
-                <input type="text" name="date-raw" id="returnDate" autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
+                <input type="text" name="date-raw" id="returnDate"  autocomplete="off" [attr.readonly]="null" placeholder="dd/MM/yyyy" [attr.required]="true">
               </div>
             </div>
           </div>
         </div>
 
 
-        <div class="inline fields">
+        <!-- <div class="inline fields">
           <div class="three wide field ui right aligned">
             <label>กรณีค่าเบี้ยเลี้ยง</label>
           </div>
@@ -305,13 +305,75 @@
             </select>
           </div>
 
+        </div> -->
+        <div class="inline fields">
+          <div class="three wide field ui right aligned">
+            <label>จำนวนวัน</label>
+          </div>
+          <div class="two wide field">
+            <input id="numberDateAllowance" type="number" [attr.step]="1" required>
+          </div>
+          <div class="one wide field ui right aligned">
+            <label>วัน</label>
+          </div>
+          <div class="two wide field">
+            <input id="numberHoursAllowance" type="number" [attr.step]="1" required>
+          </div>
+          <div class="one wide field ui right aligned">
+            <label>ชั่วโมง</label>
+          </div>
         </div>
+
+        <div class="inline fields">
+          <div class="three wide field ui right aligned">
+            <label>ค่าเบี้ยเลี้ยง</label>
+          </div>
+          <div class="three wide field">
+            <input id="allowanceR" type="number" (change)="changeAllowanceR()" [attr.step]="1" required>
+          </div>
+          <div class="one wide field ui right aligned">
+            <label>บาท</label>
+          </div>
+          <div class="two wide field ui right aligned">
+            <label>ค่าเบี้ยเลี้ยงรวม</label>
+          </div>
+          <div class="three wide field">
+            <input id="allowanceTotal" type="number" [attr.step]="1" required>
+          </div>
+          <div class="one wide field ui right aligned">
+            <label>บาท</label>
+          </div>
+        </div>
+
         <div class="inline fields">
           <div class="three wide field ui right aligned">
             <label>จำนวนวันเข้าพัก</label>
           </div>
+          <div class="two wide field">
+            <input id="numberDateRoost" type="number" (change)="getRoostTotal($event)" [attr.step]="1" required>
+          </div>
+          <div class="one wide field ui right aligned">
+            <label>วัน</label>
+          </div>
+        </div>
+        <div class="inline fields">
+          <div class="three wide field ui right aligned">
+            <label>ค่าที่พัก</label>
+          </div>
           <div class="three wide field">
-            <input id="numberDate" type="number" [attr.step]="1" required>
+            <input id="roostR" type="number" (change)="changeRoostR()" [attr.step]="1" required>
+          </div>
+          <div class="one wide field ui right aligned">
+            <label>บาท</label>
+          </div>
+          <div class="two wide field ui right aligned">
+            <label>ค่าที่พักรวม</label>
+          </div>
+          <div class="three wide field">
+            <input id="roostTotal" type="number" [attr.step]="1" required>
+          </div>
+          <div class="one wide field ui right aligned">
+            <label>บาท</label>
           </div>
         </div>
         <div class="inline fields">
@@ -319,14 +381,31 @@
             <label>ค่าพาหนะ</label>
           </div>
           <div class="three wide field">
-            <input id="passage" type="number" [attr.step]="1" required>
+            <input id="passage" type="number" (change)="getExpensesTotal()" [attr.step]="1" required>
+          </div>
+          <div class="one wide field ui right aligned">
+            <label>บาท</label>
           </div>
 
           <div class="two wide field right aligned">
             <label>ค่าใช้จ่ายอื่น</label>
           </div>
           <div class="three wide field">
-            <input id="otherExpenses" type="number" [attr.step]="1" required>
+            <input id="otherExpenses" type="number" (change)="getExpensesTotal()" [attr.step]="1" required>
+          </div>
+          <div class="one wide field ui right aligned">
+            <label>บาท</label>
+          </div>
+        </div>
+        <div class="inline fields">
+          <div class="three wide field ui right aligned">
+            <label>ค่าใช้จ่ายรวม</label>
+          </div>
+          <div class="three wide field">
+            <input id="expensesTotal" type="number" [attr.step]="1" required>
+          </div>
+          <div class="one wide field ui right aligned">
+            <label>บาท</label>
           </div>
         </div>
         <div class="ui grid">
