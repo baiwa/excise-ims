@@ -26,8 +26,8 @@ export class Cop012Component implements OnInit {
   ) {
     this.formatter1 = formatter('ดป');
     this.breadcrumb = [
+      { label: "ค้นหาแผนการตรวจปฏิบัติการ", route: "#" },
       { label: "จัดทำแผนการตรวจปฏิบัติการ", route: "#" },
-      { label: "2", route: "#" },
       { label: "3", route: "#" },
     ];
    }
