@@ -67,6 +67,7 @@ export class Int062Component implements OnInit {
     this.loading = true;
     this.selfService.onUpload(event, this.getLoading).then(() => {
       this.loading = false;
+      console.log(this.loading);
     });
     this.showData = true;
   }

@@ -44,9 +44,6 @@ public class CwpTblHdr extends BaseEntity {
 	@Column(name="REPORT_DATE")
 	private Date reportDate;
 
-	@Column(name="TRIAL_BALANCE_TYPE")
-	private String trialBalanceType;
-
 	public long getCwpTblHdrId() {
 		return cwpTblHdrId;
 	}
@@ -85,14 +82,6 @@ public class CwpTblHdr extends BaseEntity {
 
 	public void setReportDate(Date reportDate) {
 		this.reportDate = reportDate;
-	}
-
-	public String getTrialBalanceType() {
-		return trialBalanceType;
-	}
-
-	public void setTrialBalanceType(String trialBalanceType) {
-		this.trialBalanceType = trialBalanceType;
 	}
 
 }

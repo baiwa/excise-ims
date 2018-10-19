@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.excise.ia.persistence.vo.Int062ExcelVo;
+import th.co.baiwa.excise.ia.persistence.entity.CwpScwdDtl;
 import th.co.baiwa.excise.ia.persistence.vo.Int062FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int062Vo;
 import th.co.baiwa.excise.ia.service.Int062Service;
 
 @Controller
@@ -28,7 +29,7 @@ public class Int062Controller {
 	
 	@PostMapping("/uploadExcel")
 	@ResponseBody
-	public List<Int062ExcelVo> upload(@ModelAttribute Int062FormVo formVo)
+	public List<Int062Vo> upload(@ModelAttribute Int062FormVo formVo)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
 		logger.info("INT062 UPLOAD FILE EXCEL!!");
 		return int062Service.upload(formVo);

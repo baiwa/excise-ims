@@ -76,11 +76,11 @@ export class Int062Service {
     return new Promise<any>((resovle, reject) => {
       this.ajax.upload(URL.UPLOAD_EXCEL, formBody, res => {
         console.log(res.json());
-        resovle();
+        // resovle("SUCCESS");
         // this.loading = false;
         // loadingTable(this.loading);
       });
-      reject("ERROR");
+      // reject("ERROR");
     });
   };
 
