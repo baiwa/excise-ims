@@ -6,6 +6,7 @@ import { Int054Component } from "./int05-4/int05-4.component";
 import { Int054AdminComponent } from "./int05-4-admin/int05-4-admin.component";
 import { Int0541Component } from "./int05-4/int05-4-1/int05-4-1.component";
 import { FormsModule } from "@angular/forms";
+import { BreadcrumbModule } from "components/breadcrumb/breadcrumb.module";
 
 const routes: Routes = [
   { path: "1", loadChildren: "./int05-1/int05-1.module#Int051Module" },
@@ -17,7 +18,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule, FormsModule],
+  imports: [
+    RouterModule.forChild(routes),
+    CommonModule,
+    FormsModule,
+    BreadcrumbModule
+  ],
   declarations: [Int054Component, Int054AdminComponent, Int0541Component],
   exports: [RouterModule]
 })

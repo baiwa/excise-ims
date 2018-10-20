@@ -3,6 +3,7 @@ import { TextDateTH, formatter } from "../../../../../common/helper";
 import { MessageBarService, AjaxService } from "../../../../../common/services";
 import { File } from "./../../../../../common/models/file";
 import { Router, ActivatedRoute } from "@angular/router";
+import { BreadCrumb } from "models/breadcrumb";
 
 const URL = {
   SAVE_PcmList: "/ia/int0541/savePcmList",
@@ -17,6 +18,7 @@ declare var $: any;
   styleUrls: ["./int05-4-1.component.css"]
 })
 export class Int0541Component implements OnInit {
+  breadcrumb: BreadCrumb[] = [];
   supplyChoice: string = "";
   numbers: string[] = [""];
   budgetType: string = "";
@@ -46,6 +48,11 @@ export class Int0541Component implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบพัสดุ", route: "#" },
+      { label: "เพิ่มข้อมูลจัดซื้อจัดจ้าง", route: "#" }
+    ];
     this.budgetTypeList = [
       "งบบุคลากร",
       "งบดำเนินงาน (โครงการ)",
