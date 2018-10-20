@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { AnalysisService } from "projects/pages/analysis/analysis.service";
 import { BreadCrumb } from "models/breadcrumb";
 import { TextDateTH, formatter } from "helpers/datepicker";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, NgForm } from "@angular/forms";
 import { AnalysisForm } from "projects/pages/analysis/analysisForm.model";
 import { IaService } from "services/ia.service";
 
@@ -57,12 +57,15 @@ export class AnalysisPage implements OnInit {
   //   }
   // }
 
-  goToAnalysisResult() {
+  goToAnalysisResult = (form) => {
 
-    this.form.dateFrom = $("#dateFrom").val();
-    this.form.dateTo = $("#dateTo").val();
-    this.modalService.setData(this.form);
-    this.router.navigate(["/result-analysis"]);
+    console.log(form.Validators);
+    console.log(form.value);
+    console.log("top");
+    // this.form.dateFrom = $("#dateFrom").val();
+    // this.form.dateTo = $("#dateTo").val();
+    // this.modalService.setData(this.form);
+    // this.router.navigate(["/result-analysis"]);
   }
 
   exciseIdLists = () => {

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { IaService } from 'services/ia.service';
 import { ResultAnalysisForm } from 'projects/pages/result-analysis/result-analysis-form.model';
 import { ResultAnalysisSerivce } from 'projects/pages/result-analysis/result-analysis.service';
+import { BreadCrumb } from 'models/breadcrumb';
 
 declare var $: any;
 
@@ -16,6 +17,13 @@ declare var $: any;
 })
 export class ResultAnalysisPage implements OnInit {
 
+    breadcrumb: BreadCrumb[] = [
+        { label: "ตรวจสอบภาษี", route: "#" },
+        { label: "การตรวจสอบภาษี", route: "#" },
+        { label: "การวิเคราะห์ข้อมูลเบื้องต้น", route: "/analysis" },
+        { label: "ผลการวิเคราะห์ข้อมูลเบื้องต้น", route: "#" },
+      ];
+      
     private category: String;
     private coordinate: String;
     form: ResultAnalysisForm = new ResultAnalysisForm();

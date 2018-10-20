@@ -1,32 +1,33 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
     <div class="sixteen wide column">
+            <h2 class="ui header">วิเคราะห์ข้อมูลเบื้องต้น</h2>
         <div class="ui top attached header">
             <span>วิเคราะห์ข้อมูลเบื้องต้น</span>
         </div>
 
         <div class="ui attached segment  {{loading ? 'loading' : ''}} ">
-            <form>
+            <form (ngSubmit)="f.form.valid && goToAnalysisResult($event)" #f="ngForm"  novalidate>
                 <div class="ui form">
                     <div class="inline fields">
                         <div class="one wide field"></div>
                         <div class="three wide field required"><label class="text-right full-width">เลขทะเบียนสรรพสามิต</label></div>
-                        <div class="three wide field">
-                            <select class="ui dropdown full-width" [(ngModel)]="form.exciseId" name="exciseId" id="exciseId" (change)="changeExciseId($event)">
+                        <div class="three wide field "  >
+                            <select class="ui dropdown full-width" [(ngModel)]="form.exciseId" name="exciseId" id="exciseId" (change)="changeExciseId($event)" required>
                                 <option value="">เลือก</option>
                                 <option *ngFor="let item of exciseIdList" value="{{item.label}}">{{item.label}}</option>
                             </select>
                         </div>
                         <div class="three wide field"><label class="text-right full-width">เลขประจำตัวผู้เสียภาษีอากร</label></div>
-                        <div class="three wide field">
-                            <input type="text" [(ngModel)]="form.userNumber" name="userNumber" id="userNumber">
+                        <div class="three wide field" >
+                            <input type="text" [(ngModel)]="form.userNumber" name="userNumber" id="userNumber" required>
                         </div>
                     </div>
 
                     <div class="inline fields">
                         <div class="one wide field"></div>
                         <div class="three wide field required"><label class="text-right full-width">รอบระยะเวลาการตรวจสอบ</label></div>
-                        <div class="three wide field ui calendar required " id="dateF">
+                        <div class="three wide field ui calendar" required id="dateF" >
                             <div class="ui input left icon">
                                 <i class="time icon"></i>
                                 <input type="calendar" readonly="" id="dateFrom" name="dateFrom" [attr.required]="true"
@@ -34,7 +35,7 @@
                             </div>
                         </div>
                         <div class="three wide field required"><label class="text-right full-width">ถึง</label></div>
-                        <div class="three wide field ui calendar required " id="dateT">
+                        <div class="three wide field ui calendar required" id="dateT">
                             <div class="ui input left icon">
                                 <i class="time icon"></i>
                                 <input type="calendar" readonly="" id="dateTo" name="dateTo" [attr.required]="true"
@@ -73,9 +74,7 @@
                             <div class="ui grid">
                                 <div class="center aligned row">
                                     <div class="column">
-                                        <div class="ui mini primary button" (click)="goToAnalysisResult()">
-                                            <i class="table icon"></i> วิเคราะห์ข้อมูลเบื้องต้น
-                                        </div>
+                                        <button class="ui mini primary button" type="submit"><i class="table icon"></i> วิเคราะห์ข้อมูลเบื้องต้น</button>                                        
                                         <div class="ui mini button" (click)="resetSearch()">
                                             <i class="refresh icon"></i> ล้างข้อมูล
                                         </div>

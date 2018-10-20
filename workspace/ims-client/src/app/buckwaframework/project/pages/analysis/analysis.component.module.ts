@@ -8,12 +8,18 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BreadcrumbModule } from '../../../common/components';
 
 const routes: Routes = [
-    { path: '', component: AnalysisPage, canActivate: [AuthGuard] }
+  { path: '', component: AnalysisPage, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule,ReactiveFormsModule,FormsModule,BreadcrumbModule],
-  declarations: [AnalysisPage],
+  imports: [
+    RouterModule.forChild(routes),
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    BreadcrumbModule],
+  declarations: [AnalysisPage
+  ],
   exports: [RouterModule]
 })
 export class AnalysisPageModule { }
