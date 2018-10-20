@@ -27,9 +27,9 @@
                     <div class="inline fields">
                         <div class="three wide field"></div>
                         <div class="eight wide field" [ngClass]="{ 'error': submitted && f.systemSort.errors }">
-                            <label class="custom-label-w-25">เลือก</label>
+                            <label class="custom-label-w-25">รูปแบบการจัดเรียงข้อมูล</label>
                             <select class="ui dropdown ai" name="systemSort" formControlName="systemSort">
-                          <option value=""></option>
+                          <option value="">เลือก</option>
                           <option value="0">จัดเรียงตามรหัสงบประมาณ</option>
                           <option value="1">จัดเรียงตามวันที่</option>
                         </select>

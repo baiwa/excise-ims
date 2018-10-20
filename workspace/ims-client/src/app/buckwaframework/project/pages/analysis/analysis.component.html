@@ -1,80 +1,91 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
     <div class="sixteen wide column">
-        <h2 class="ui header">วิเคราะห์ข้อมูลเบื้องต้น</h2>
-
         <div class="ui top attached header">
-            <span>เงื่อนไข</span>
+            <span>วิเคราะห์ข้อมูลเบื้องต้น</span>
         </div>
 
-        <div class="ui attached segment">
-            <div id="userManagementForm" class="ui form">
-                <div class="inline fields">
-                    <div class="eight wide field required">
-                        <label class="custom-label-w-25">เลขทะเบียนสรรพสามิต</label>
-                        <input type="text" value="2560-00178-5">
-                    </div>
-                    <div class="eight wide field">
-                        <label class="custom-label-w-20">เลขประจำตัวผู้เสียภาษีอากร</label>
-                        <input type="text" value="1-5599-00168-99-6">
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="eight wide field required">
-                        <label class="custom-label-w-25">รอบระยะเวลาการตรวจสอบ</label>
-                        <div class="eight wide field">
-                            <div class="ui icon input">
-                                <input type="text" placeholder="MM/YYYY" value="11/2560">
-                                <i class="add to calendar icon"></i>
-                            </div>
+        <div class="ui attached segment  {{loading ? 'loading' : ''}} ">
+            <form>
+                <div class="ui form">
+                    <div class="inline fields">
+                        <div class="one wide field"></div>
+                        <div class="three wide field required"><label class="text-right full-width">เลขทะเบียนสรรพสามิต</label></div>
+                        <div class="three wide field">
+                            <select class="ui dropdown full-width" [(ngModel)]="form.exciseId" name="exciseId" id="exciseId" (change)="changeExciseId($event)">
+                                <option value="">เลือก</option>
+                                <option *ngFor="let item of exciseIdList" value="{{item.label}}">{{item.label}}</option>
+                            </select>
                         </div>
-                        <div class="eight wide field">
-                            <label>-</label>
-                            <div class="ui icon input">
-                                <input type="text" placeholder="MM/YYYY" value="12/2560">
-                                <i class="add to calendar icon"></i>
-                            </div>
+                        <div class="three wide field"><label class="text-right full-width">เลขประจำตัวผู้เสียภาษีอากร</label></div>
+                        <div class="three wide field">
+                            <input type="text" [(ngModel)]="form.userNumber" name="userNumber" id="userNumber">
                         </div>
                     </div>
-                </div>
 
-                <div class="inline fields">
-                    <div class="eight wide field required">
-                        <label class="custom-label-w-25">ประเภท</label>
-                        <select id="selectCatagory" class="ui dropdown ai" (change)="selectCatagory()">
-                            <option value="0">- เลือกประเภท -</option>
-                            <option value="1">สินค้า</option>
-                            <option value="2">บริการ</option>
-                        </select>
+                    <div class="inline fields">
+                        <div class="one wide field"></div>
+                        <div class="three wide field required"><label class="text-right full-width">รอบระยะเวลาการตรวจสอบ</label></div>
+                        <div class="three wide field ui calendar required " id="dateF">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="calendar" readonly="" id="dateFrom" name="dateFrom" [attr.required]="true"
+                                    autocomplete="off" placeholder="MMyyyy" [(ngModel)]="form.dateFrom">
+                            </div>
+                        </div>
+                        <div class="three wide field required"><label class="text-right full-width">ถึง</label></div>
+                        <div class="three wide field ui calendar required " id="dateT">
+                            <div class="ui input left icon">
+                                <i class="time icon"></i>
+                                <input type="calendar" readonly="" id="dateTo" name="dateTo" [attr.required]="true"
+                                    autocomplete="off" placeholder="dMMyyyy"[(ngModel)]="form.dateTo">
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="inline fields" *ngIf="showSelectCoordinate">
-                    <div class="eight wide field required">
-                        <label class="custom-label-w-25">พิกัด</label>
-                        <select id="selectCoordinate" class="ui dropdown ai">
-                            <option *ngFor="let item of coordinateList; index as i;" value="{{item.value}}">{{item.value}}</option>
-                        </select>
+                    <div class="inline fields">
+                        <div class="two wide field"></div>
+                        <div class="two wide field"><label class="text-right full-width">ประเภท</label></div>
+                        <div class="three wide field required">
+                            <input type="text" disabled class="custom-readonly" [(ngModel)]="form.type" name="type" id="type">
+                        </div>
                     </div>
-                </div>
+                    <div class="inline fields">
+                        <div class="two wide field"></div>
+                        <div class="two wide field"><label class="text-right full-width">พิกัด</label></div>
+                        <div class="three wide field required">
+                            <input type="text" disabled class="custom-readonly" [(ngModel)]="form.coordinates" name="coordinates"
+                                id="coordinates">
+                        </div>
+                    </div>
 
-                <div class="fields">
-                    <div class="sixteen wide field">
-                        <div class="ui grid">
-                            <div class="center aligned row">
-                                <div class="column">
-                                    <div class="ui mini primary button" (click)="goToAnalysisResult();">
-                                        <i class="table icon"></i> วิเคราะห์ข้อมูลเบื้องต้น
-                                    </div>
-                                    <div class="ui mini button" (click)="resetSearch()">
-                                        <i class="refresh icon"></i> ล้างข้อมูล
+                    <div class="inline fields" *ngIf="showSelectCoordinate">
+                        <div class="eight wide field required">
+                            <label class="custom-label-w-25">พิกัด</label>
+                            <select id="selectCoordinate" class="ui dropdown ai">
+                                <option *ngFor="let item of coordinateList; index as i;" value="{{item.value}}">{{item.value}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="fields">
+                        <div class="sixteen wide field">
+                            <div class="ui grid">
+                                <div class="center aligned row">
+                                    <div class="column">
+                                        <div class="ui mini primary button" (click)="goToAnalysisResult()">
+                                            <i class="table icon"></i> วิเคราะห์ข้อมูลเบื้องต้น
+                                        </div>
+                                        <div class="ui mini button" (click)="resetSearch()">
+                                            <i class="refresh icon"></i> ล้างข้อมูล
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

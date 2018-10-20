@@ -10,11 +10,11 @@
                 <div class="inline fields">
                     <div class="ten wide field">
                         <label class="custom-label-w-25">เลขทะเบียนสรรพสามิต</label>
-                        <input type="text" readonly="" class="custom-readonly" value="2560-00178-5">
+                        <input [(ngModel)]="form.exciseId" name="exciseId" type="text" readonly="" class="custom-readonly" >
                     </div>
                     <div class="six wide field">
                         <label class="custom-label-w-25">เลขประจำตัวผู้เสียภาษีอากร</label>
-                        <input type="text" readonly="" class="custom-readonly" value="1-5599-00168-99-6">
+                        <input [(ngModel)]="form.userNumber" name="userNumber" type="text" readonly="" class="custom-readonly" >
                     </div>
                 </div>
 
@@ -23,62 +23,62 @@
                         <label class="custom-label-w-25">รอบระยะเวลาการตรวจสอบ</label>
                         <div class="eight wide field">
                             <div class="ui icon input">
-                                <input type="text" class="custom-readonly" placeholder="MM/YYYY" value="11/2560" readonly="">
+                                <input [(ngModel)]="form.dateFrom" name="dateFrom" type="text" class="custom-readonly" placeholder="MM/yyyy"  readonly="">
                                 <i class="add to calendar icon"></i>
                             </div>
                         </div>
                         <div class="eight wide field">
                             <label>-</label>
                             <div class="ui icon input">
-                                <input type="text" class="custom-readonly" placeholder="MM/YYYY" value="12/2560" readonly="">
+                                <input [(ngModel)]="form.dateTo" name="dateTo" type="text" class="custom-readonly" placeholder="MM/yyyy" readonly="">
                                 <i class="add to calendar icon"></i>
                             </div>
                         </div>
                     </div>
                     <div class="six wide field">
                         <label class="custom-label-w-25">เลขที่วิเคราะห์</label>
-                        <input type="text" readonly="" class="custom-readonly" value="256000000001">
+                        <input [(ngModel)]="form.numberAnalysis" name="numberAnalysis" type="text" readonly="" class="custom-readonly">
                     </div>
                 </div>
 
                 <div class="inline fields">
                     <div class="ten wide field">
                         <label class="custom-label-w-25">ผู้ประกอบการ</label>
-                        <input type="text" readonly="" class="custom-readonly" value="บ. ฮอนด้า มอเตอร์ ประเทศไทย">
+                        <input [(ngModel)]="form.entrepreneur" name="entrepreneur" type="text" readonly="" class="custom-readonly">
                     </div>
                     <div class="six wide field">
                         <label class="custom-label-w-25">ประเภท</label>
-                        <input type="text" readonly="" class="custom-readonly" [value]="category">
+                        <input [(ngModel)]="form.type" name="type" type="text" readonly="" class="custom-readonly">
                     </div>
                 </div>
                 <div class="inline fields">
                     <div class="ten wide field">
                         <label class="custom-label-w-25">โรงอุตสาหกรรม</label>
-                        <input type="text" readonly="" class="custom-readonly" value="ฮอนด้า บางบ่อ">
+                        <input [(ngModel)]="form.factory" name="factory" type="text" readonly="" class="custom-readonly">
                     </div>
                     <div class="six wide field">
                         <label class="custom-label-w-25">พิกัด</label>
-                        <input type="text" readonly="" class="custom-readonly" [value]="coordinate">
+                        <input [(ngModel)]="form.coordinates" name="coordinates" type="text" readonly="" class="custom-readonly">
                     </div>
                 </div>
 
                 <div class="inline fields">
                     <div class="ten wide field">
                         <label class="custom-label-w-25">ที่ตั้ง</label>
-                        <input type="text" readonly="" class="custom-readonly" value="65/9 ถนน สุขุมวิท, บางบ่อ, สมุทรปราการ 15200">
+                        <input [(ngModel)]="form.address" name="address" type="text" readonly="" class="custom-readonly">
                     </div>
                 </div>
 
                 <div class="inline fields">
                     <div class="ten wide field">
                         <label class="custom-label-w-25">วิเคราะห์โดย</label>
-                        <input type="text" readonly="" class="custom-readonly" value="User 1">
+                        <input [(ngModel)]="form.analysisBy" name="analysisBy" type="text" readonly="" class="custom-readonly">
                     </div>
                 </div>
                 <div class="inline fields">
                     <div class="ten wide field">
                         <label class="custom-label-w-25">พื้นที่ตั้ง</label>
-                        <input type="text" readonly="" class="custom-readonly" value="ภาค 10">
+                        <input [(ngModel)]="form.sector" name="sector" type="text" readonly="" class="custom-readonly">
                     </div>
                 </div>
             </div>

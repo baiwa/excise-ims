@@ -71,6 +71,14 @@ public class CwpScwdDtl extends BaseEntity {
 
 	@Column(name="WITHHOLDING_TAX")
 	private BigDecimal withholdingTax;
+	
+	public CwpScwdDtl() {
+		fee = new BigDecimal(0);
+		fines = new BigDecimal(0);
+		netAmount = new BigDecimal(0);
+		withdrawAmount = new BigDecimal(0);
+		withholdingTax = new BigDecimal(0);
+	}
 
 	public long getCwpScwdDtlId() {
 		return cwpScwdDtlId;

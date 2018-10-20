@@ -13,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -26,18 +25,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.util.ExcelUtils;
 import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.ia.persistence.dao.CwpScwdDtlDao;
 import th.co.baiwa.excise.ia.persistence.entity.CwpScwdDtl;
 import th.co.baiwa.excise.ia.persistence.entity.CwpScwdHdr;
 import th.co.baiwa.excise.ia.persistence.entity.CwpTblDtl;
 import th.co.baiwa.excise.ia.persistence.entity.CwpTblHdr;
-import th.co.baiwa.excise.ia.persistence.entity.VerifyAccountHeader;
 import th.co.baiwa.excise.ia.persistence.repository.CwpScwdDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.CwpScwdHdrRepository;
 import th.co.baiwa.excise.ia.persistence.repository.CwpTblDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.CwpTblHdrRepository;
-import th.co.baiwa.excise.ia.persistence.vo.Int062ExcelVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int062CwpDtlVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int062FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int071ExcelVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int062Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
@@ -49,28 +48,65 @@ public class Int062Service {
 
 	@Autowired
 	private CwpScwdDtlRepository cwpScwdDtlRepository;
-	
+
 	@Autowired
 	private CwpTblHdrRepository cwpTblHdrRepository;
-	
+
 	@Autowired
 	private CwpTblDtlRepository cwpTblDtlRepository;
+	
+	@Autowired
+	private CwpScwdDtlDao cwpScwdDtlDao;
 
-	public List<Int062ExcelVo> upload(Int062FormVo formVo)
+	public List<Int062Vo> upload(Int062FormVo formVo)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
-		long headerId = 0L;
-		headerId = readExcel1(formVo.getFileExcel1());
-		//query *headerId*
-		
+		long idFile1 = 0L;
+		idFile1 = readExcel1(formVo.getFileExcel1());
+		// query *headerId*
+		List<Int062Vo> responseList = new ArrayList<Int062Vo>();
+		Int062Vo response = new Int062Vo();
 		/*         */
-		long detailId = 0L;
-		detailId = readExcel2(formVo.getFileExcel2());
+		long idFile2 = 0L;
+		idFile2 = readExcel2(formVo.getFileExcel2());
 		
-
-		return null;
+		List<Int062CwpDtlVo> findDivideMonth;
+//		List<CwpScwdDtl> findGroupMonth;
+//		List<List<CwpScwdDtl>> dataRes = new ArrayList<List<CwpScwdDtl>>();
+		List<CwpScwdDtl> findByHDRId = cwpScwdDtlDao.findByHDRId(idFile1);
+		for (int i = 0; i < findByHDRId.size(); i++) {
+			String budgetCode = findByHDRId.get(i).getBudgetCode();
+			findDivideMonth = new ArrayList<Int062CwpDtlVo>();
+			findDivideMonth = cwpScwdDtlDao.findDivideMonth(budgetCode);
+			
+			for (int j = 0; j < findDivideMonth.size(); j++) {
+				response = new Int062Vo();
+				CwpScwdDtl cwp = new CwpScwdDtl();
+				String calMonth = findDivideMonth.get(j).getCalMonth();
+//				findGroupMonth = new ArrayList<CwpScwdDtl>();
+//				findGroupMonth = cwpScwdDtlDao.findGroupMonth(budgetCode, calMonth);
+				response.setCwpScwdDtlList(cwpScwdDtlDao.findGroupMonth(budgetCode, calMonth));
+				for (CwpScwdDtl cwpScwdDtl : response.getCwpScwdDtlList()) {
+					cwp = new CwpScwdDtl();
+					
+					cwp.setFee(cwp.getFee().add(cwpScwdDtl.getFee()));
+					cwp.setFines(cwp.getFines().add(cwpScwdDtl.getFines()));
+					cwp.setNetAmount(cwp.getNetAmount().add(cwpScwdDtl.getNetAmount()));
+					cwp.setWithdrawAmount(cwp.getWithdrawAmount().add(cwpScwdDtl.getWithdrawAmount()));
+					cwp.setWithholdingTax(cwp.getWithholdingTax().add(cwpScwdDtl.getWithholdingTax()));
+					
+				}
+				response.setCwpScwdDtl(cwp);
+//				//add data to response
+//				List<CwpScwdDtl> dataLVL1 = new ArrayList<CwpScwdDtl>();
+//				dataLVL1.addAll(findGroupMonth);
+//				dataRes.add(dataLVL1);
+			}
+			responseList.add(response);
+		}
+		return responseList;
 	}
 
-	//file excel 1
+	// read file excel 1
 	@SuppressWarnings("unused")
 	private long readExcel1(MultipartFile file1)
 			throws IOException, EncryptedDocumentException, InvalidFormatException {
@@ -86,7 +122,7 @@ public class Int062Service {
 		int countHeader = 0;
 
 		/* rows */
-		loopRow: for (int r = 0; r < totalRows; r++) {
+		loopRow: for (int r = 0; r <= totalRows; r++) {
 
 			Row row = sheet.getRow(r);
 			if (row != null) {
@@ -112,14 +148,12 @@ public class Int062Service {
 							columns.add(ExcelUtils.getCellValueAsString(cell));
 						}
 					}
-					if (
-							BeanUtils.isEmpty(objHeader.getDisbursementCode())
+					if (BeanUtils.isEmpty(objHeader.getDisbursementCode())
 							|| BeanUtils.isEmpty(objHeader.getDisbursementName())
 							|| BeanUtils.isEmpty(objHeader.getDepartment())
 							|| !(BeanUtils.isNotEmpty(objHeader.getDateDocumentStart()))
 							|| !(BeanUtils.isNotEmpty(objHeader.getDateDocumentEnd()))
-							|| !(BeanUtils.isNotEmpty(objHeader.getDateReport()))
-						) {
+							|| !(BeanUtils.isNotEmpty(objHeader.getDateReport()))) {
 						headerId = addDataHeader(objHeader, columns, countHeader);
 						countHeader++;
 					}
@@ -139,7 +173,7 @@ public class Int062Service {
 							columns.add("");
 						}
 					}
-					//set data detail
+					// set data detail
 					boolean checkDetail = addDataDetail(datailList, columns, headerId);
 					// continue loop *if checkDetail = true*
 					if (checkDetail) {
@@ -165,38 +199,37 @@ public class Int062Service {
 		if (BeanUtils.isEmpty(objHeader.getDepartment()) && countHeader == 2) {
 			objHeader.setDepartment(columns.get(1));
 		}
-		if (!(BeanUtils.isNotEmpty(objHeader.getDateDocumentStart())) && !(BeanUtils.isNotEmpty(objHeader.getDateDocumentEnd()))
-				&& countHeader == 3) {
+		if (!(BeanUtils.isNotEmpty(objHeader.getDateDocumentStart()))
+				&& !(BeanUtils.isNotEmpty(objHeader.getDateDocumentEnd())) && countHeader == 3) {
 			String[] dateSplit = (StringUtils.trim(columns.get(1))).split(" ");
 			String startStr = dateSplit[0].replaceAll("\\.", "/");
 			String endStr = dateSplit[2].replaceAll("\\.", "/");
-			
-			Date startDate = DateConstant.convertStrToDate(startStr, DateConstant.DD_MM_YYYY,DateConstant.LOCAL_EN);
-			Date endDate = DateConstant.convertStrToDate(endStr, DateConstant.DD_MM_YYYY,DateConstant.LOCAL_EN);
+
+			Date startDate = DateConstant.convertStrToDate(startStr, DateConstant.DD_MM_YYYY, DateConstant.LOCAL_EN);
+			Date endDate = DateConstant.convertStrToDate(endStr, DateConstant.DD_MM_YYYY, DateConstant.LOCAL_EN);
 			objHeader.setDateDocumentStart(startDate);
 			objHeader.setDateDocumentEnd(endDate);
 		}
 		if (!(BeanUtils.isNotEmpty(objHeader.getDateReport())) && countHeader == 4) {
-			Date dateReport = DateConstant.convertStrToDate(columns.get(1).replaceAll("\\.", "/"), DateConstant.DD_MM_YYYY,DateConstant.LOCAL_EN);
+			Date dateReport = DateConstant.convertStrToDate(columns.get(1).replaceAll("\\.", "/"),
+					DateConstant.DD_MM_YYYY, DateConstant.LOCAL_EN);
 			objHeader.setDateReport(dateReport);
 		}
 
 		// check to save
-		if (
-				BeanUtils.isNotEmpty(objHeader.getDisbursementCode()) 
+		if (BeanUtils.isNotEmpty(objHeader.getDisbursementCode())
 				&& BeanUtils.isNotEmpty(objHeader.getDisbursementName())
-				&& BeanUtils.isNotEmpty(objHeader.getDepartment()) 
+				&& BeanUtils.isNotEmpty(objHeader.getDepartment())
 				&& BeanUtils.isNotEmpty(objHeader.getDateDocumentStart())
-				&& BeanUtils.isNotEmpty(objHeader.getDateDocumentEnd()) 
-				&& BeanUtils.isNotEmpty(objHeader.getDateReport())
-			) {
+				&& BeanUtils.isNotEmpty(objHeader.getDateDocumentEnd())
+				&& BeanUtils.isNotEmpty(objHeader.getDateReport())) {
 			logger.info("SAVE HEADER!!!");
 			CwpScwdHdr headerData = cwpScwdHdrRepository.save(objHeader);
 			headerId = headerData.getCwpScwdHdrId();
 		}
 		return headerId;
 	}
-	
+
 	public boolean addDataDetail(List<CwpScwdDtl> detailList, List<String> columns, long headerId) {
 		CwpScwdDtl obj = new CwpScwdDtl();
 		boolean checkDetail = false;
@@ -204,14 +237,15 @@ public class Int062Service {
 			try {
 				String recordStr = columns.get(0).replaceAll("\\.", "/");
 				String postdStr = columns.get(1).replaceAll("\\.", "/");
-				//check is not header table
-				if(columns.get(0).equals(recordStr) && columns.get(1).equals(postdStr)) {
+				// check is not header table
+				if (columns.get(0).equals(recordStr) && columns.get(1).equals(postdStr)) {
 					checkDetail = true;
 					return checkDetail;
 				}
-				Date recordDate = DateConstant.convertStrToDate(recordStr, DateConstant.DD_MM_YYYY,DateConstant.LOCAL_EN);
-				
-				Date postDate = DateConstant.convertStrToDate(postdStr, DateConstant.DD_MM_YYYY,DateConstant.LOCAL_EN);
+				Date recordDate = DateConstant.convertStrToDate(recordStr, DateConstant.DD_MM_YYYY,
+						DateConstant.LOCAL_EN);
+
+				Date postDate = DateConstant.convertStrToDate(postdStr, DateConstant.DD_MM_YYYY, DateConstant.LOCAL_EN);
 				obj.setCwpScwdHdrId(headerId);
 				obj.setRecordDate(recordDate);
 				obj.setPostDate(postDate);
@@ -236,25 +270,27 @@ public class Int062Service {
 		}
 		return checkDetail;
 	}
-	
-	//file excel 2
-	private long readExcel2(MultipartFile file2) throws IOException, EncryptedDocumentException, InvalidFormatException {
-		long detailId = 0L;
-		
-		byte[] byt = file2.getBytes();
-		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(byt));
-		Sheet sheet = workbook.getSheetAt(0);
-		int totalRows = sheet.getLastRowNum();
-		Map<String, Integer> map = new HashMap<String, Integer>();
+
+	// file excel 2
+	private long readExcel2(MultipartFile file2)
+			throws IOException, EncryptedDocumentException, InvalidFormatException {
 		// set object value header columns
 		CwpTblHdr objHeader = new CwpTblHdr();
 		List<CwpTblDtl> detailList = new ArrayList<CwpTblDtl>();
 		int countHeader = 0;
 		long headerId = 0L;
+		ArrayList<String> dateStr = new ArrayList<String>(); // for save date-time
+
+		/* read file */
+		byte[] byt = file2.getBytes();
+		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(byt));
+		Sheet sheet = workbook.getSheetAt(0);
+		int totalRows = sheet.getLastRowNum();
+		Map<String, Integer> map = new HashMap<String, Integer>();
 
 		/* rows */
 
-		for (int r = 0; r < totalRows; r++) {
+		for (int r = 0; r <= totalRows; r++) {
 
 			Row row = sheet.getRow(r);
 			if (row != null) {
@@ -283,9 +319,8 @@ public class Int062Service {
 					if (BeanUtils.isEmpty(objHeader.getDisbursementCode())
 							|| BeanUtils.isEmpty(objHeader.getDisbursementName())
 							|| BeanUtils.isEmpty(objHeader.getDepartment())
-							|| !BeanUtils.isNotEmpty(objHeader.getReportDate())
-							|| BeanUtils.isEmpty(objHeader.getTrialBalanceType())) {
-						headerId = addDataHeader2(objHeader, columns, countHeader);
+							|| !BeanUtils.isNotEmpty(objHeader.getReportDate())) {
+						headerId = addDataHeader2(objHeader, columns, countHeader, dateStr);
 						countHeader++;
 					}
 				}
@@ -312,27 +347,28 @@ public class Int062Service {
 				}
 			}
 		}
-		
-		return detailId;
+		// save detail
+		cwpTblDtlRepository.save(detailList);
+
+		return headerId;
 	}
-	
-	public long addDataHeader2(CwpTblHdr objHeader, List<String> data, int countHeader) {
+
+	public long addDataHeader2(CwpTblHdr objHeader, List<String> data, int countHeader, List<String> dateStr) {
 		String hd1 = data.get(2);
 		String[] lineOne = hd1.split(" ");
 		String disbursementCode = lineOne[1];
 		String department = lineOne[2];
-		String date = data.get(4);
 
-		if (BeanUtils.isEmpty(objHeader.getDisbursementCode())) {
-			objHeader.setDisbursementCode(disbursementCode);
-		}
+		if (countHeader == 0) {
 
-		if (BeanUtils.isEmpty(objHeader.getDepartment())) {
-			objHeader.setDepartment(department);
-		}
+			dateStr.add(data.get(4).replaceAll("\\.", "/"));
+			if (BeanUtils.isEmpty(objHeader.getDisbursementCode())) {
+				objHeader.setDisbursementCode(disbursementCode);
+			}
 
-		if (!BeanUtils.isNotEmpty(objHeader.getReportDate())) {
-//			objHeader.setReportDate(date);
+			if (BeanUtils.isEmpty(objHeader.getDepartment())) {
+				objHeader.setDepartment(department);
+			}
 		}
 
 		if (countHeader == 1) {
@@ -340,50 +376,42 @@ public class Int062Service {
 			String[] lineTwo = hd2.split(" ");
 			String disbursementName = lineTwo[1] + " " + lineTwo[2];
 			String time = data.get(4);
-			String dateTimeStr = date + " " + time;
-			Date dateTime = DateConstant.convertStrToDate(dateTimeStr, DateConstant.DD_MM_YYYY_HH_mm, DateConstant.LOCAL_EN);
+			String dateTimeStr = dateStr.get(0) + " " + time;
+			Date dateTime = DateConstant.convertStrToDate(dateTimeStr, DateConstant.DD_MM_YYYY_HH_MM_SS,
+					DateConstant.LOCAL_EN);
 			objHeader.setDisbursementName(disbursementName);
 			objHeader.setReportDate(dateTime);
-//			objHeader.setReportTime(time);
 		}
 
 		long headerId = 0L;
-//		if (BeanUtils.isNotEmpty(header.getDisbursementCode()) && BeanUtils.isNotEmpty(header.getDisbursementName())
-//				&& BeanUtils.isNotEmpty(header.getDepartment()) && BeanUtils.isNotEmpty(header.getReportDate())
-//				&& BeanUtils.isNotEmpty(header.getReportTime())) {
-//			logger.info("SAVE HEADER!!!!!!!");
-////			VerifyAccountHeader headerData = verifyAccountHdRepository.save(header);
-//
-//			// set headerId for Detail
-//			headerId = headerData.getVerifyAccountHeaderId();
-//		}
+		if (BeanUtils.isNotEmpty(objHeader.getDisbursementCode())
+				&& BeanUtils.isNotEmpty(objHeader.getDisbursementName())
+				&& BeanUtils.isNotEmpty(objHeader.getDepartment()) && BeanUtils.isNotEmpty(objHeader.getReportDate())) {
+			logger.info("SAVE HEADER!!!!!!!");
+			CwpTblHdr headerData = cwpTblHdrRepository.save(objHeader);
+
+			// set headerId for Detail
+			headerId = headerData.getCwpTblHdrId();
+		}
 
 		return headerId;
 	}
-	
+
 	public void addDataDetail2(List<CwpTblDtl> detailList, List<String> data, long headerId) {
-//		CwpTblDtl vo = new CwpTblDtl();
-//		try {
-//			if(headerId > 0) {
-//				vo.setVerifyAccountHeaderId(headerId);
-//			}
-//			vo.setColum0(StringUtils.trim(data.get(0)));
-//			vo.setColum1(StringUtils.trim(data.get(1)));
-//			vo.setColum2(StringUtils.trim(data.get(2)));
-//			vo.setColum3(StringUtils.trim(data.get(3)));
-//			vo.setColum4(StringUtils.trim(data.get(4)));
-//			vo.setColum5(StringUtils.trim(data.get(5)));
-//			vo.setColum6(StringUtils.trim(data.get(6)));
-//			vo.setColum7(StringUtils.trim(data.get(7)));
-//			vo.setColum8(StringUtils.trim(data.get(8)));
-//			vo.setColum9(StringUtils.trim(data.get(9)));
-//			vo.setColum10(StringUtils.trim(data.get(10)));
-//			vo.setColum11(StringUtils.trim(data.get(11)));
-//
-//			detailList.add(vo);
-//		} catch (Exception e) {
-//			detailList.add(vo);
-//		}
+		CwpTblDtl en = new CwpTblDtl();
+		try {
+			en.setCwpTblHdrId(headerId);
+			en.setLedgerAccountNumber(StringUtils.trim(data.get(0)));
+			en.setLedgerAccountName(StringUtils.trim(data.get(2)));
+			en.setBringForward(new BigDecimal(StringUtils.trim(data.get(4))));
+			en.setDebit(new BigDecimal(StringUtils.trim(data.get(7))));
+			en.setCredit(new BigDecimal(StringUtils.trim(data.get(8))));
+			en.setCarryForward(new BigDecimal(StringUtils.trim(data.get(9))));
+
+			detailList.add(en);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

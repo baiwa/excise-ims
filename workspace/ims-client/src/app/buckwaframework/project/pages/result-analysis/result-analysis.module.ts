@@ -4,13 +4,17 @@ import { ResultAnalysisPage } from './result-analysis.component';
 
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../../common/services';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
-    { path: ':category/:coordinate', component: ResultAnalysisPage, canActivate: [AuthGuard] }
+    { path: '', component: ResultAnalysisPage, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule],
+  imports: [RouterModule.forChild(routes), 
+    CommonModule,
+    FormsModule
+  ],
   declarations: [ResultAnalysisPage],
   exports: [RouterModule]
 })
