@@ -3,12 +3,10 @@ package th.co.baiwa.excise.ia.persistence.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
 import th.co.baiwa.excise.ia.persistence.entity.IaProcurement;
-import th.co.baiwa.excise.ia.persistence.vo.Int0541Vo;
 
 public interface IaProcurementRepository extends CommonJpaCrudRepository<IaProcurement, Long> {
 	@Query(

@@ -190,4 +190,12 @@ public class IncomeList {
 		this.dataGruop = dataGruop;
 	}
 
+	public String getTrnDate() {
+		return trnDate;
+	}
+
+	public void setTrnDate(String trnDate) {
+		this.trnDate = trnDate;
+	}
+
 }

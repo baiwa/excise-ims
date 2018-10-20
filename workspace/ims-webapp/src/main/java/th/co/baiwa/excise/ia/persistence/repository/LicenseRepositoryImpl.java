@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.co.baiwa.excise.domain.Int0802Vo;
 import th.co.baiwa.excise.ia.persistence.entity.License;
 import th.co.baiwa.excise.utils.BeanUtils;
 

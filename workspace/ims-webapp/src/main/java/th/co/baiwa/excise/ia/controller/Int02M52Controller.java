@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.ia.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,7 @@ import th.co.baiwa.excise.ia.service.Int02m052Service;
 @Controller
 @RequestMapping("api/ia/02m052")
 public class Int02M52Controller {
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private Int02m052Service int02m052Service;
