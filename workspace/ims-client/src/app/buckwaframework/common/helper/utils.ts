@@ -1,3 +1,5 @@
+import { DecimalFormat } from "helpers/decimalformat";
+
 export class Utils {
 
     public static isNull(obj) {
@@ -28,4 +30,9 @@ export class Utils {
         var result = formatter.format(money).substring(1);
         return (op == "-" ? op + result : result);
     }
+    public static moneyFormatDecimal(money) {
+        var df = new DecimalFormat("###,###.00");
+        return df.format(money);
+    }
+
 }

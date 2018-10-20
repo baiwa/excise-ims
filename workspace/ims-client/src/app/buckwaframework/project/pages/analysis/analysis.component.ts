@@ -43,7 +43,6 @@ export class AnalysisPage implements OnInit {
 
     this.exciseIdLists();
     this.calenda();
-    console.log(this.form);
   }
   // selectCatagory() {
   //   var value = $("#selectCatagory").val();
@@ -90,14 +89,14 @@ export class AnalysisPage implements OnInit {
     $("#dateF").calendar({
       maxDate: new Date(),
       endCalendar: $("#dateT"),
-      type: "date",
+      type: "month",
       text: TextDateTH,
       formatter: formatter('month-year')
     });
     $("#dateT").calendar({
       maxDate: new Date(),
       startCalendar: $("#dateF"),
-      type: "date",
+      type: "month",
       text: TextDateTH,
       formatter: formatter('month-year')
     });
