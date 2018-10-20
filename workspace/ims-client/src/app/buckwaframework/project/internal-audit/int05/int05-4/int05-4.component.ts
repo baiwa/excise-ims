@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { MessageBarService, AjaxService } from "../../../../common/services";
 import { TextDateTH, formatter } from "../../../../common/helper";
+import { BreadCrumb } from "models/breadcrumb";
 
 const URL = {
   INIT_DATATABLE: AjaxService.CONTEXT_PATH + "ia/int054/filterFindIaPcm",
@@ -15,6 +16,7 @@ declare var $: any;
   styleUrls: ["./int05-4.component.css"]
 })
 export class Int054Component implements OnInit, AfterViewInit {
+  breadcrumb: BreadCrumb[] = [];
   showData: boolean = false;
   budgetYear: string = "";
   budgetType: string = "";
@@ -30,6 +32,12 @@ export class Int054Component implements OnInit, AfterViewInit {
     private router: Router,
     private msg: MessageBarService
   ) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบพัสดุ", route: "#" },
+      { label: "บันทึกผลการจัดซื้อจัดจ้าง", route: "#" }
+    ];
+
     this.budgetTypeList = [
       "งบบุคลากร",
       "งบดำเนินงาน (โครงการ)",

@@ -3,6 +3,7 @@ import { TextDateTH, formatter } from "helpers/datepicker";
 import { AjaxService } from "services/ajax.service";
 import { Router } from "@angular/router";
 import { MessageBarService } from "../../../../common/services";
+import { BreadCrumb } from "models/breadcrumb";
 
 const URL = {
   INIT_DATATABLE: AjaxService.CONTEXT_PATH + "ia/int054/filterFindIaPcm"
@@ -22,12 +23,19 @@ export class Int054AdminComponent implements OnInit {
   budgetTypeList: string[];
   dataTable: any;
   budgetType: any;
+  breadcrumb: BreadCrumb[] = [];
 
   constructor(
     private ajax: AjaxService,
     private router: Router,
     private msg: MessageBarService
   ) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบพัสดุ", route: "#" },
+      { label: "ตรวจสอบผลการจัดซื้อจัดจ้าง", route: "#" }
+    ];
+
     this.budgetTypeList = [
       "งบบุคลากร",
       "งบดำเนินงาน (โครงการ)",

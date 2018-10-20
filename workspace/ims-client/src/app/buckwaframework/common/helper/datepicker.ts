@@ -67,8 +67,9 @@ export var formatter = (what: string = "") => {
     case "ดป":
       return {
         header: function(date, mode, settings) {
+          let month = date.getMonth();
           let _year = toDateLocale(date)[0].split("/")[2];
-          return _year;
+          return TextDateTH.months[month] + " " + _year;
         },
         date: function(date, settings) {
           if (!date) return "";
@@ -192,8 +193,9 @@ export var formatter = (what: string = "") => {
     case "month-year":
       return {
         header: function(date, mode, settings) {
+          let month = date.getMonth();
           let _year = toDateLocale(date)[0].split("/")[2];
-          return _year;
+          return TextDateTH.months[month] + " " + _year;
         },
         date: function(date, settings) {
           let _month = toDateLocale(date)[0].split("/")[1];
