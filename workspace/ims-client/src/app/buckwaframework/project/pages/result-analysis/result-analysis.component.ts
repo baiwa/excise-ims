@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { IaService } from 'services/ia.service';
+import { ResultAnalysisForm } from 'projects/pages/result-analysis/result-analysis-form.model';
+import { ResultAnalysisSerivce } from 'projects/pages/result-analysis/result-analysis.service';
 
 declare var $: any;
 
@@ -8,23 +11,25 @@ declare var $: any;
     templateUrl: 'result-analysis.component.html',
     styles: [`
         
-    `]
+    `],
+    providers: [ResultAnalysisSerivce]
 })
 export class ResultAnalysisPage implements OnInit {
 
     private category: String;
     private coordinate: String;
-
+    form: ResultAnalysisForm = new ResultAnalysisForm();
     constructor(
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private modalService: IaService,
+        private resultAnalysisSerivce: ResultAnalysisSerivce
     ) {
 
     }
 
-    ngOnInit(): void {
-        this.coordinate = this.route.snapshot.params['coordinate'];
-        this.category = this.route.snapshot.params['category'];
+    ngOnInit() {
+        this.setDataService();
     }
 
     ngAfterViewInit() {
@@ -35,6 +40,29 @@ export class ResultAnalysisPage implements OnInit {
         this.initDatatable5();
     }
 
+    setDataService() {
+
+        let model = this.modalService.getData();
+        console.log(model);
+
+        this.resultAnalysisSerivce.findDataFromExciseId(model.exciseId).then(res => {
+
+            console.log(res);
+            //set data in service
+            this.form.exciseId = model.exciseId;
+            this.form.userNumber = res.analysNumber;
+            this.form.dateFrom = model.dateFrom;
+            this.form.dateTo = model.dateTo;
+            this.form.entrepreneur = res.companyName; // query
+            this.form.type = model.type;
+            this.form.factory = res.factoryName; // query
+            this.form.coordinates = model.coordinates;
+            this.form.address = model.factoryAddress; //query
+            this.form.analysisBy = model.createdBy; //query
+            this.form.sector = model.exciseOwnerArea1 //query
+        });
+
+    }
     initDatatable1() {
 
         let table1mock =

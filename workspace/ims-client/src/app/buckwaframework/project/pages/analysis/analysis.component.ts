@@ -4,6 +4,8 @@ import { AnalysisService } from "projects/pages/analysis/analysis.service";
 import { BreadCrumb } from "models/breadcrumb";
 import { TextDateTH, formatter } from "helpers/datepicker";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { AnalysisForm } from "projects/pages/analysis/analysisForm.model";
+import { IaService } from "services/ia.service";
 
 declare var $: any;
 @Component({
@@ -23,88 +25,45 @@ export class AnalysisPage implements OnInit {
   productList: any[];
   serviceList: any[];
   loading: boolean = true;
+
+  //data
   exciseIdList: any;
-  form: FormGroup;
+  form: AnalysisForm = new AnalysisForm();
+  coordinates: string = "";
   constructor(
     private router: Router,
     private analysisService: AnalysisService,
-    private formBuilder: FormBuilder,
+    private modalService: IaService
+
   ) { }
 
   ngOnInit(): void {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
-    this.productList = [
-      { value: "สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน" },
-      { value: "สินค้าเครื่องดื่ม" },
-      { value: "สินค้าเครื่องไฟฟ้า" },
-      { value: "สินค้าแบตเตอร์รี่" },
-      { value: "สินค้าแก้วและเครื่องแก้ว" },
-      { value: "สินค้ารถยนต์" },
-      { value: "สินค้ารถจักรยานยนต์" },
-      { value: "สินค้าเรือ" },
-      { value: "สินค้าผลิตภัณฑ์เครื่องหอมและเครื่องสำอาง" },
-      { value: "สินค้าพรมและสิ่งทอปูพื้นอื่นๆ" },
-      { value: "สินค้าหินอ่อนและหินแกรนิต" },
-      { value: "สินค้าสารทำลายชั้นบรรยากาศ" },
-      { value: "สินค้าไพ่" }
-    ];
 
-    this.serviceList = [
-      { value: "กิจการบันเทิงหรือหย่อนใจ" },
-      { value: "กิจการเสี่ยงโชค" },
-      { value: "กิจการที่มีผลกระทต่อสิ่งแวดล้อม" },
-      { value: "กิจการที่ได้รับอนุญาตหรือสัมปทานจากรัฐ" },
-      { value: "สนามกอล์ฟ" }
-    ];
     this.exciseIdLists();
     this.calenda();
-
-    this.form = this.formBuilder.group({          
-      exciseId: ["", Validators.required],
-      userNumber: ["", Validators.required],
-      dateForm: ["", Validators.required],
-      dateTo: ["", Validators.required],
-      type :  ["", Validators.required],
-      coordinates: ["", Validators.required]
-    });
-
     console.log(this.form);
   }
-  get f() {
-    return this.form.controls;
-  }
-  selectCatagory() {
-    var value = $("#selectCatagory").val();
-    if (value == 1) {
-      this.showSelectCoordinate = true;
-      this.coordinateList = this.productList;
-    } else if (value == 2) {
-      this.showSelectCoordinate = true;
-      this.coordinateList = this.serviceList;
-    } else {
-      this.showSelectCoordinate = false;
-    }
-  }
+  // selectCatagory() {
+  //   var value = $("#selectCatagory").val();
+  //   if (value == 1) {
+  //     this.showSelectCoordinate = true;
+  //     this.coordinateList = this.productList;
+  //   } else if (value == 2) {
+  //     this.showSelectCoordinate = true;
+  //     this.coordinateList = this.serviceList;
+  //   } else {
+  //     this.showSelectCoordinate = false;
+  //   }
+  // }
 
   goToAnalysisResult() {
-    var coordinate = $("#selectCoordinate").val();
-    var category = $("#selectCatagory").val();
-    if (!coordinate) {
-      coordinate = "สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน";
-    }
 
-    if (category) {
-      if (category == 1) {
-        category = "สินค้า";
-      } else {
-        category = "บริการ";
-      }
-    } else {
-      category = "สินค้า";
-    }
-
-    this.router.navigate(["/result-analysis", category, coordinate]);
+    this.form.dateFrom = $("#dateFrom").val();
+    this.form.dateTo = $("#dateTo").val();
+    this.modalService.setData(this.form);
+    this.router.navigate(["/result-analysis"]);
   }
 
   exciseIdLists = () => {
@@ -113,6 +72,18 @@ export class AnalysisPage implements OnInit {
       this.loading = false;
     });
     console.log(this.exciseIdList);
+  }
+
+  changeExciseId = (event) => {
+    let exciseId = event.target.value;
+
+    this.analysisService.changeExciseId(exciseId).then(res => {
+
+      this.form.coordinates = res.productType;
+
+      //call function check typr
+      this.form.type = this.checkType(exciseId.substring(14, 15));
+    });
   }
 
   calenda = () => {
@@ -129,6 +100,15 @@ export class AnalysisPage implements OnInit {
       type: "date",
       text: TextDateTH,
       formatter: formatter('month-year')
-    });    
+    });
+  }
+
+  checkType(typeId) {
+    switch (typeId) {
+      case "1": { return "สินค้น"; }
+      case "2": { return "บริการ"; }
+      case "3": { return "นำเข้า"; }
+      default: { return ""; }
+    }
   }
 }

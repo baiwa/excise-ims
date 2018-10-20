@@ -17,4 +17,14 @@ export class AnalysisService {
         });
 
     }
+
+    changeExciseId =(exciseId): Promise<any>=>{
+        let url = "ta/analysis/findByExciseId";
+        return new Promise((resolve, reject) => {
+            this.ajax.post(url, JSON.stringify(exciseId), res => {
+                resolve(res.json())
+            })
+        });
+
+    }
 }
