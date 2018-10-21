@@ -124,7 +124,7 @@ export class Int0833Component implements OnInit {
     this.ajax.post(url, { parentId: this.id, riskType: 'MAIN', page: 'int08-3-3' }, res => {
       var conditionList = res.json();
       if (conditionList.length == 0) {
-        msgMessage = "กรุณากำหนดเงื่อนไข RL";
+        msgMessage = "กรุณากำหนดเงื่อนไขความเสี่ยง";
       }
       if (msgMessage == "") {
         var url = "ia/int083/updateRiskAssExcAreaHdr";

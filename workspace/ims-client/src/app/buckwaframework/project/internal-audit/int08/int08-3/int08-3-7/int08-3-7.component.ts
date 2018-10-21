@@ -127,7 +127,7 @@ export class Int0837Component implements OnInit {
       var conditionList = res.json();
       console.log("conditionList", conditionList.length)
       if (conditionList.length == 0) {
-        msgMessage = "กรุณากำหนดเงื่อนไข RL";
+        msgMessage = "กรุณากำหนดเงื่อนไขความเสี่ยง";
       }
       if (msgMessage == "") {
         var url = "ia/int083/updateRiskAssExcPenDtl";

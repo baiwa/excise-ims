@@ -1,7 +1,9 @@
+<app-breadcrumb [route]="breadcrumb" ></app-breadcrumb>
+
 <div class="ui grid">
   <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>รายละเอียดหัวกระดาษทำการ</span>
+      <span>รายละเอียดปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ</span>
     </div>
     <div class="ui attached segment">
       <div class="ui form">
@@ -63,11 +65,11 @@
             </button>
             <button class="ui mini primary button" (click)="modalConditionRL()">
              <i class="setting icon"></i>
-              กำหนดเงื่อนไข RL
+              กำหนดเงื่อนไขความเสี่ยง
             </button>
             <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
             <i class="print icon"></i>
-              Export
+              ส่งออก
             </button>
             <button class="ui mini  button" (click)="cancelFlow()">
               ยกเลิก
@@ -80,7 +82,7 @@
   </div>
   <div class="sixteen wide column" *ngIf="getConditionShow()">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>กำหนดเงื่อนไข RL ปัจจัยเสี่ยงอื่นๆ</span>
+      <span>กำหนดเงื่อนไขความเสี่ยง ปัจจัยเสี่ยงอื่นๆ</span>
     </div>
 
     <div class="ui attached segment">

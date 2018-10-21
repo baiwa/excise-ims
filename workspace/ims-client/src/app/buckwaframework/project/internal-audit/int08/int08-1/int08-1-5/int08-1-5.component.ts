@@ -3,6 +3,7 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var jQuery: any;
 declare var $: any;
@@ -18,15 +19,22 @@ export class Int0815Component implements OnInit {
   datatable: any;
   id: any;
   riskAssRiskWsHdr: any;
-
   userCheck: any;
-
   isConditionShow: any;
+  breadcrumb: BreadCrumb[]
+
   constructor(private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
     private route: ActivatedRoute,
-    private authService: AuthService) { }
+    private authService: AuthService) { 
+      this.breadcrumb = [
+        { label: "ตรวจสอบภายใน", route: "#" },
+        { label: "การประเมินความเสี่ยง ", route: "#" },
+        { label: "ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต", route: "#" },
+        { label: "รายละเอียดปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ", route: "#" },
+      ];
+    }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-08150');

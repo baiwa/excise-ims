@@ -3,6 +3,7 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var jQuery: any;
 declare var $: any;
@@ -21,12 +22,21 @@ export class Int0814Component implements OnInit, AfterViewInit {
   wsRiskList: any[];
   pageMapping: any[];
   riskType: any;
+  breadcrumb: BreadCrumb[]
+
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
     private authService: AuthService
-  ) { }
+  ) { 
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง ", route: "#" },
+      { label: "ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต", route: "#" },
+      { label: "กำหนดปัจจัยเสี่ยงประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต", route: "#" },
+    ];
+  }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-08140');

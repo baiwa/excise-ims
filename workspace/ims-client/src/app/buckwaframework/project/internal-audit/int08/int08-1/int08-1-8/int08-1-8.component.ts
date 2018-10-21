@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 
 import { Utils } from "../../../../../common/helper";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 
 declare var jQuery: any;
@@ -29,10 +30,8 @@ export class Int0818Component implements OnInit {
   dataTableList: RiskData[] = [];
   riskHrdData: RiskHrdData;
   isConditionShow: any;
-
   fileExel: File[];
-
-
+  breadcrumb: BreadCrumb[]
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
@@ -41,6 +40,12 @@ export class Int0818Component implements OnInit {
 private authService: AuthService
   ) {
     this.fileExel = new Array<File>(); // initial file array
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง ", route: "#" },
+      { label: "ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต", route: "#" },
+      { label: "รายละเอียดปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ", route: "#" },
+    ];
   }
   uu
   ngOnInit() {

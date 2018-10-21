@@ -3,6 +3,7 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 declare var $: any;
 @Component({
   selector: 'app-int08-1-7',
@@ -20,6 +21,8 @@ export class Int0817Component implements OnInit {
   isConditionShow: any;
   ispercent: any;
   riskAssRiskWsHdrList: any;
+  breadcrumb: BreadCrumb[]
+
   constructor(private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
@@ -27,6 +30,12 @@ export class Int0817Component implements OnInit {
     private authService: AuthService) {
     this.isConditionShow = false;
     this.ispercent = false;
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง ", route: "#" },
+      { label: "ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต", route: "#" },
+      { label: "รายละเอียดประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต", route: "#" },
+    ];
   }
 
   ngOnInit() {
