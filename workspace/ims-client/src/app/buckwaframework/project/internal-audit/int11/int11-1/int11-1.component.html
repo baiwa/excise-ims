@@ -3,21 +3,19 @@
 <div class="ui grid">
 
   <div class="sixteen wide column">
-
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>ค้นหาการติดตามผลการตรวจสอบของโครงการ</span>
     </div>
 
     <div id="followUpProjectPage" class="ui attached segment">
+      <form class="ui form">
       <div id="followUpProjectForm" class="ui form">
         <input type="hidden" id="searchFlag" name="searchFlag">
         <div class="inline fields">
           <div class="two wide field "></div>
-
           <div class="two wide field ">
             <!-- <label>โครงการ</label> -->
           </div>
-
           <div class="four wide field ">
               <label>โครงการ</label>
             <input type="text" id="projectName" name="projectName" [(ngModel)]="projectName">
@@ -55,13 +53,12 @@
           </div>
         </div>
       </div>
+      </form>
     </div>
     <br/>
-
-
   </div>
 </div>
-
+<!-- form search -->
 <div class="ui segment {{loading ? 'loading' : ''}}">
     <table id="dataTable" class="ui small celled table nowrap striped selectable " style="width: 100%">
         <thead>

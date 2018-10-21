@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,14 +16,19 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.constant.ExciseConstants;
+import th.co.baiwa.excise.ia.persistence.vo.Int0610FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int0610Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int065FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int065Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int111FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int111Vo;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
 public class IaWithdrawalDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	private String SQL_SEARCH_CRITERIA = "SELECT * FROM IA_WITHDRAWAL_LIST WHERE IS_DELETED='N'";
 	private final String CHECK = "เช็ค";
 	private final String CHECK_KTB = "KTB-Corporate";
 	private final String SQL = "SELECT ps.PAYMENT_DATE PAYMENT_DATE , " + 
@@ -159,4 +166,87 @@ public class IaWithdrawalDao {
 			return vo;
 		}
 	};
+	
+	public Long counwith(Int0610FormVo formVo) {
+
+		StringBuilder sql = new StringBuilder(SQL);
+		List<Object> param = new ArrayList<>();
+		
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			sql.append(" AND OFFICE_CODE LIKE ?");
+			param.add(formVo.getOfficeCode()+"%");
+		}
+		if (StringUtils.isNotBlank(formVo.getBudge())) {
+    		sql.append(" AND BUDGE = ? ");
+    		param.add(formVo.getBudge());
+    	}
+    	
+    	if (StringUtils.isNotBlank(formVo.getActivity())) {
+    		sql.append(" AND ACTIVITY = ? ");
+    		param.add(formVo.getActivity());
+    	}
+    	 if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())){
+             sql.append(" AND TO_CHAR(WITHDRAWAL_DATE,'YYYYMMDD') BETWEEN ? AND ?");
+             param.add(formVo.getDateForm());
+             param.add(formVo.getDateTo());
+         }
+    	 
+		String countSql = OracleUtils.countForDatatable(sql);
+		Long count = jdbcTemplate.queryForObject(countSql, param.toArray(), Long.class);
+		return count;
+	}
+
+	 public List<Int0610Vo> findAll(Int0610FormVo formVo) {
+	    	StringBuilder sql = new StringBuilder(SQL_SEARCH_CRITERIA);
+	    	List<Object> param = new ArrayList<>();
+	    	
+	    	if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+				sql.append(" AND OFFICE_CODE LIKE ?");
+				param.add(formVo.getOfficeCode()+"%");
+			}
+	    	if (StringUtils.isNotBlank(formVo.getBudge())) {
+	    		sql.append(" AND BUDGE = ? ");
+	    		param.add(formVo.getBudge());
+	    	}
+	    	
+	    	if (StringUtils.isNotBlank(formVo.getActivity())) {
+	    		sql.append(" AND ACTIVITY = ? ");
+	    		param.add(formVo.getActivity());
+	    	}
+	    	 if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())){
+	             sql.append(" AND TO_CHAR(WITHDRAWAL_DATE,'YYYYMMDD') BETWEEN ? AND ?");
+	             param.add(formVo.getDateForm());
+	             param.add(formVo.getDateTo());
+	         }
+	    	
+	    	List<Int0610Vo> list = jdbcTemplate.query(sql.toString(), param.toArray(), iaWithdrawalRowmapper);
+	    	return list;
+	    }
+	 
+	 private RowMapper<Int0610Vo> iaWithdrawalRowmapper = new RowMapper<Int0610Vo>() {
+			@Override
+			public Int0610Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+				Int0610Vo vo = new Int0610Vo();
+				Date date = DateConstant.convertStrToDate(rs.getString("WITHDRAWAL_DATE"), ExciseConstants.FORMAT_DATE.YYYYMMDD,ExciseConstants.LOCALE.EN);
+				String dateStr = DateConstant.convertDateToStr(date, ExciseConstants.FORMAT_DATE.DDMMYYYY,ExciseConstants.LOCALE.TH);
+				vo.setWithdrawaldate(dateStr);
+				vo.setWithdrawalid(rs.getString("WITHDRAWAL_ID"));
+				vo.setRefnum(rs.getString("REF_NUM"));
+				vo.setActivities(rs.getString("ACTIVITIES"));
+				vo.setBudgettype(rs.getString("BUDGET_TYPE"));
+				vo.setWithdrawalamount(rs.getString("WITHDRAWAL_AMOUNT"));
+				vo.setSocialsecurity(rs.getString("SOCIAL_SECURITY"));
+				vo.setWithholdingtax(rs.getString("WITHHOLDING_TAX"));
+				vo.setReceivedamount(rs.getString("RECEIVED_AMOUNT"));
+				vo.setAnotheramount(rs.getString("ANOTHER_AMOUNT"));
+				vo.setPaymentdocnum(rs.getString("PAYMENT_DOC_NUM"));
+				vo.setWithdrawaldocnum(rs.getString("WITHDRAWAL_DOC_NUM"));
+				vo.setItemdesc(rs.getString("ITEM_DESC"));
+				vo.setNote(rs.getString("NOTE"));
+				vo.setBudgetname(rs.getString("BUDGET_NAME"));
+				vo.setCategoryname(rs.getString("CATEGORY_NAME"));
+				vo.setListname(rs.getString("LIST_NAME"));
+				return vo;
+			}
+		};
 }

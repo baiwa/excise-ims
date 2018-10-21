@@ -1,109 +1,215 @@
+<!-- breadcrumb -->
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
 <div class="ui grid">
   <div class="sixteen wide column">
+    <!-- Form Header Name -->
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>บันทึกรายการขอเบิก </span>
     </div>
 
     <div class="ui attached segment">
       <div class="ui form">
-
+        <!-- Form row 1 -->
         <div class="inline fields">
-          <div class="one wide field "></div>
-          <div class="two wide field ">
-            <label>เลขที่เอกสารอ้างอิง</label>
+          <div class="three wide field ">
+            <label class="text-right full-width">เลขที่เอกสารอ้างอิง</label>
           </div>
           <div class="four wide field">
-            <input type="text">
+            <input type="text" id="refnum" name="refnum">
           </div>
-          <div class="two wide field ">
-            <label>วันที่ขอเบิก</label>
+          <div class="three wide field ">
+            <label class="text-right full-width">วันที่ขอเบิก</label>
           </div>
           <div class="four wide field">
-            <input type="text">
+            <div class="ui calendar" id="dateWithdraw" style="width:100%">
+              <div class="ui input left icon">
+                <i class="time icon"></i>
+                <input type="text">
+              </div>
+            </div>
           </div>
         </div>
 
+        <!-- Form row 2 -->
         <div class="inline fields">
-          <div class="one wide field "></div>
-          <div class="two wide field ">
-            <label>รายการโอนเงิน</label>
+          <div class="three wide field ">
+            <label class="text-right full-width">กิจกรรม</label>
           </div>
           <div class="four wide field ">
-            <select class="ui dropdown ai">
-              <option value="0">กรุณาเลือก</option>
+            <select name="activity" id="activity" class="ui dropdown ai search full-width">
+              <option value="">กรุณาเลือก</option>
+              <option *ngFor="let item of activityList" value="{{item.lovId}}">{{item.value1}}</option>
             </select>
           </div>
-          <div class="two wide field ">
-            <label>ประเภทเงิน</label>
+          <div class="three wide field ">
+            <label class="text-right full-width">งบ</label>
           </div>
           <div class="four wide field ">
-            <select class="ui dropdown ai">
-              <option value="0">กรุณาเลือก</option>
+            <select name="budged" id="budged" class="ui dropdown ai search full-width" (change)="budgedOnchange($event)">
+              <option value="">กรุณาเลือก</option>
+              <option *ngFor="let item of budged; index as i;" value="{{item.budgetId}}">{{item.budgetName}}</option>
             </select>
           </div>
         </div>
 
+        <!-- Form row 3 -->
         <div class="inline fields">
-          <div class="one wide field "></div>
-          <div class="two wide field ">
-            <label>คำอธิบายรายการ</label>
+          <div class="three wide field ">
+            <label class="text-right full-width">หมวด</label>
           </div>
-          <div class="ten wide field">
+          <div class="four wide field">
+            <select name="category" id="category" class="ui dropdown ai search full-width" (change)="categoryOnchange($event)">
+              <option value="">กรุณาเลือก</option>
+              <option *ngFor="let item of category" value="{{item.categoryId}}">{{item.categoryName}}</option>
+            </select>
+          </div>
+          <div class="three wide field ">
+            <label class="text-right full-width">หมวดย่อย</label>
+          </div>
+          <div class="four wide field">
+            <select name="list" id="list" class="ui dropdown ai search full-width">
+              <option value="">กรุณาเลือก</option>
+              <option *ngFor="let item of list" value="{{item.listId}}">{{item.listName}}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Form row 4 -->
+        <div class="inline fields">
+          <div class="three wide field ">
+            <label class="text-right full-width">ประเภทงบประมาณ</label>
+          </div>
+          <div class="four wide field">
+            <select name="budget" id="budget" class="ui dropdown ai search full-width">
+              <option value="">กรุณาเลือก</option>
+              <option *ngFor="let item of budgetList" value="{{item.lovId}}">{{item.value1}}</option>
+            </select>
+          </div>
+          <div class="three wide field ">
+            <label class="text-right full-width">จำนวนเงินขอเบิก</label>
+          </div>
+          <div class="four wide field">
             <input type="text">
           </div>
         </div>
 
+        <!-- Form row 5 -->
         <div class="inline fields">
-          <div class="one wide field "></div>
-          <div class="two wide field ">
-            <label>จำนวนเงินขอเบิก</label>
+          <div class="three wide field ">
+            <label class="text-right full-width">หักประกันสังคม</label>
           </div>
           <div class="four wide field">
             <input type="text">
           </div>
-          <div class="two wide field ">
-            <label>ภาษีหัก ณ ที่จ่าย</label>
+          <div class="three wide field ">
+            <label class="text-right full-width">ภาษีหัก ณ ที่จ่าย</label>
           </div>
           <div class="four wide field">
             <input type="text">
           </div>
         </div>
 
+        <!-- Form row 6 -->
         <div class="inline fields">
-          <div class="one wide field "></div>
-          <div class="two wide field ">
-            <label>หักประกันสังคม</label>
+          <div class="three wide field ">
+            <label class="text-right full-width">อื่น ๆ</label>
           </div>
           <div class="four wide field">
             <input type="text">
           </div>
-          <div class="two wide field ">
-            <label>อื่น ๆ</label>
+          <div class="three wide field ">
+            <label class="text-right full-width">จำนวนเงินขอรับ</label>
           </div>
           <div class="four wide field">
             <input type="text">
           </div>
         </div>
 
+        <!-- Form row 7 -->
         <div class="inline fields">
-          <div class="one wide field "></div>
-          <div class="two wide field ">
-            <label>จำนวนเงินขอรับ</label>
+          <div class="three wide field ">
+            <label class="text-right full-width">เลขที่เอกสารขอเบิก</label>
           </div>
           <div class="four wide field">
             <input type="text">
           </div>
-          <div class="two wide field ">
-            <label>เลขที่เอกสารขอเบิก</label>
+          <div class="three wide field ">
+            <label class="text-right full-width">เลขที่เอกสารขอจ่าย</label>
           </div>
           <div class="four wide field">
             <input type="text">
+          </div>
+        </div>
+
+        <!-- Form row 8 -->
+        <div class="inline fields">
+          <div class="three wide field ">
+            <label class="text-right full-width">คำอธิบายรายการ</label>
+          </div>
+          <div class="eleven wide field">
+            <input type="text">
+          </div>
+        </div>
+        <!-- Form row 9 -->
+        <div class="inline fields">
+          <div class="three wide field ">
+            <label class="text-right full-width">หมายเหตุ</label>
+          </div>
+          <div class="eleven wide field">
+            <textarea rows="4"></textarea>
           </div>
         </div>
       </div>
       <br>
 
-      <div class="ui segment">
+      <!-- Form Person -->
+      <div class="ui attached segment">
+        <div class="ui form">
+          <div class="field ">
+            <label class="text-center full-width">
+              <h3>รายละเอียดการจ่ายเงิน</h3>
+            </label>
+          </div>
+          <br>
+          <div class="three fields">
+            <div class="field">
+              <label>วิธีการจ่าย</label>
+              <select name="pmmethod" id="pmmethod" class="ui dropdown ai search full-width">
+                <option value="">กรุณาเลือก</option>
+                <option *ngFor="let item of pmmethodList" value="{{item.lovId}}">{{item.value1}}</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>เลขที่อ้างอิงการจ่าย</label>
+              <input type="text">
+            </div>
+            <div class="field">
+              <label>วันที่สั่งจ่าย</label>
+              <div class="ui calendar" id="datePersons" style="width:100%">
+                <div class="ui input left icon">
+                  <i class="time icon"></i>
+                  <input type="text">
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label>จำนวนเงินที่จ่าย</label>
+              <input type="text">
+            </div>
+            <div class="field">
+              <label>ผู้รับเงิน</label>
+              <input type="text">
+            </div>
+            <div class="field">
+              <label>ผู้รับเงิน</label>
+              <input type="text">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="ui segment">
         <div style="overflow-x: scroll;">
           <table id="tableData" class="ui small celled table striped selectable" style="width: 150%">
             <thead>
@@ -116,31 +222,28 @@
                 <th rowspan="2">หมายเหตุ</th>
                 <th rowspan="2">-</th>
               </tr>
-
             </thead>
             <tbody>
-
-
-
-
             </tbody>
           </table>
         </div>
-        <br>
-        <div class="ui center aligned grid">
-          <div class="sixteen wide column">
+        <br> -->
+      <br>
+      <!-- Button -->
+      <div class="ui center aligned grid ">
+        <div class="sixteen wide column">
 
-            <button class="ui mini primary button">
-              <i class="save icon"></i>
-              บันทึก
-            </button>
-            <button class="ui mini  button" (click)="hidedata()">
-              <i class="close icon"></i>
-              ยกเลิก
-            </button>
-          </div>
+          <button class="ui mini primary button">
+            <i class="save icon"></i>
+            บันทึก
+          </button>
+          <button class="ui mini  button" [routerLink]="[ '/int06/10'] ">
+            <i class="close icon"></i>
+            ยกเลิก
+          </button>
         </div>
-
       </div>
+
     </div>
   </div>
+</div>

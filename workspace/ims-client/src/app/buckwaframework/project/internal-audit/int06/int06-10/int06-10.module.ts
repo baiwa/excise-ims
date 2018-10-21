@@ -1,15 +1,14 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 
+import { Int0610Component } from './int06-10.component';
 
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../../../common/services';
-
-
-
-import { Int0610Component } from 'projects/internal-audit/int06/int06-10/int06-10.component';
 import { Int06101Component } from './int06-10-1/int06-10-1.component';
 import { Int06102Component } from './int06-10-2/int06-10-2.component';
+import { BreadcrumbModule } from '../../../../common/components';
 
 
 const routes: Routes = [
@@ -22,7 +21,9 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    CommonModule
+    CommonModule,
+    FormsModule,
+    BreadcrumbModule
   ],
   declarations: [
     Int0610Component,

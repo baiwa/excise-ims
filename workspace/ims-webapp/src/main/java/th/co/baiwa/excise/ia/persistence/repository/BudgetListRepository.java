@@ -10,9 +10,13 @@ import th.co.baiwa.excise.ia.persistence.entity.BudgetList;
 public interface BudgetListRepository extends CommonJpaCrudRepository<BudgetList, Long> {
 
 	@Query(
-			value = "select DISTINCT L.BUDGET_ID, L.BUDGET_NAME from IA_BUDGET_LIST L",
+			value = "select * from IA_BUDGET_LIST L",
 			nativeQuery = true
 	)
 	public List<BudgetList> quryBudgetName();
+	
+	List<BudgetList> findDistinctByBudgetId(String budgetId);
 
+	
+	
 }

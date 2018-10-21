@@ -93,8 +93,6 @@ export class Int0511Component implements OnInit {
   onSearch = () => {
     $("#searchFlag").val("TRUE");
     $("#dataTable").DataTable().ajax.reload();
-
-
   }
 
   calenda = () => {
