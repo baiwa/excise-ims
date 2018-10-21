@@ -3,7 +3,7 @@
 <div class="ui grid">
   <div class="sixteen wide column" *ngIf="!getConditionShow()">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>รายละเอียดปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ</span>
+      <span>รายละเอียดหัวกระดาษทำการ{{riskAssRiskWsHdr.riskHdrName}}</span>
     </div>
     <div class="ui attached segment">
       <div class="ui form">
@@ -45,7 +45,7 @@
   </div>
   <div class="sixteen wide column ">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>เพิ่มข้อมูลกระดาษทำการ</span>
+      <span>รายละเอียดข้อมูลกระดาษทำการ{{riskAssRiskWsHdr.riskHdrName}}</span>
     </div>
 
     <div class="ui attached segment">
@@ -60,11 +60,11 @@
               <th rowspan="2" style="text-align: center !important" class="two wide field ">หน่วยงาน</th>
               <th rowspan="2" style="text-align: center !important" class="two wide field ">สถานะ</th>
               <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-              <th rowspan="2" style="text-align: center !important">ลบ</th>
+              <!-- <th rowspan="2" style="text-align: center !important">ลบ</th> -->
             </tr>
             <tr>
-              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important" class="one wide field ">RL</th>
-              <th style="text-align: center !important" class="one wide field ">แปลค่า</th>
+              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important" class="one wide field ">อัตราความเสี่ยง</th>
+              <th style="text-align: center !important" class="one wide field ">แปลค่าความเสี่ยง</th>
             </tr>
           </thead>
         </table>
@@ -80,11 +80,12 @@
               <i class="setting icon"></i>
               กำหนดเงื่อนไขความเสี่ยง
             </button>
-            <button class="ui mini primary button" (click)="ExportOtherDtl()">
+            <button class="ui mini yellow button" (click)="ExportOtherDtl()">
               <i class="print icon"></i>
               ส่งออก
             </button>
-            <button class="ui mini  button" (click)="cancelFlow()">
+            <button class="ui mini button" (click)="cancelFlow()">
+                <i class="close icon"></i>
               ยกเลิก
             </button>
           </div>
@@ -95,7 +96,7 @@
   </div>
   <div class="sixteen wide column" *ngIf="getConditionShow()">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>กำหนดเงื่อนไขความเสี่ยง ปัจจัยเสี่ยงอื่นๆ</span>
+      <span>กำหนดเงื่อนไขความเสี่ยง{{riskAssRiskWsHdr.riskHdrName}}</span>
     </div>
 
     <div class="ui attached segment">

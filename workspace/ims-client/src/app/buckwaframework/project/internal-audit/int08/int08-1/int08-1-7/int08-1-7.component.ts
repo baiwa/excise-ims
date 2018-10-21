@@ -65,7 +65,7 @@ export class Int0817Component implements OnInit {
         console.log(element);
         trHTML += '<th rowspan="2" style="text-align: center !important;">' + element + '</th>';
       });
-      trHTML += '<th rowspan="2" style="text-align: center !important;" >รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th style="text-align: center !important">แปลค่า</th></tr>';
+      trHTML += '<th rowspan="2" style="text-align: center !important;" >รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th><th style="text-align: center !important">แปลค่าความเสี่ยง</th></tr>';
       $("#trColumn").html(trHTML);
       this.initDatatable();
     }, errRes => {

@@ -118,8 +118,8 @@ export class Int0814Component implements OnInit, AfterViewInit {
         {
           data: "riskHrdId",
           render: function () {
-            return '<button type="button" class="ui mini button primary dtl"><i class="table icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button del"><i class="trash alternate icon"></i> ลบ</button>';
+            return '<button type="button" class="ui mini button primary dtl"><i class="eye icon"></i> รายละเอียด</button>'
+              + '<button type="button" class="ui mini button red del"><i class="trash alternate icon"></i> ลบ</button>';
           }
         }
       ],

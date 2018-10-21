@@ -44,11 +44,12 @@
             <button class="ui mini primary button" (click)="modalpercent()">
               กำหนดค่าร้อยละ
             </button>
-            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+            <button class="ui mini yellow button" (click)="addRiskAssRiskWsHdr()">
               <i class="print icon"></i>
               ส่งออก
             </button>
-            <button class="ui mini primary button" (click)="cancelFlow()">
+            <button class="ui mini button" (click)="cancelFlow()">
+              <i class="close icon"></i>
               ยกเลิก
             </button>
           </div>
@@ -60,7 +61,7 @@
     <BR/>
     <div class="sixteen wide column" *ngIf="getConditionShow()">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>กำหนดเงื่อนไขความเสี่ยง ปัจจัยเสี่ยงอื่นๆ</span>
+        <span>กำหนดเงื่อนไขความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
       </div>
 
       <div class="ui attached segment">
@@ -97,7 +98,8 @@
                 <i class="save icon"></i>
                 บันทึก
               </button>
-              <button class="ui mini primary button" (click)="closepercent()">
+              <button class="ui mini button" (click)="closepercent()">
+                  <i class="close icon"></i>
                 ยกเลิก
               </button>
             </div>

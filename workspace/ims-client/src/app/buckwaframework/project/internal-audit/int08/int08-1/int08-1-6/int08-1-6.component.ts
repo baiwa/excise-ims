@@ -3,6 +3,7 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 
 declare var jQuery: any;
@@ -29,7 +30,7 @@ export class Int0816Component implements OnInit {
   isConditionShow: any;
 
   fileExel: File[];
-
+  breadcrumb: BreadCrumb[]
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -39,8 +40,14 @@ export class Int0816Component implements OnInit {
 private authService: AuthService
   ) {
     this.fileExel = new Array<File>(); // initial file array
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง ", route: "#" },
+      { label: "ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต", route: "#" },
+      { label: "รายละเอียดปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ", route: "#" },
+    ];
   }
-  uu
+  
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-08160');
     //$(".ui.dropdown").dropdown();

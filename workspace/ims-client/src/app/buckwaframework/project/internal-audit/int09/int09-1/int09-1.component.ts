@@ -193,8 +193,8 @@ export class Int091Component implements OnInit {
           "className": "ui center aligned",
           "render": function (data, type, row) {
             var btn = '';
-            btn += '<button class="mini ui primary button btn-edit">รายละเอียด</button>';
-            btn += '<button class="mini ui red button btn-delete">ยกเลิก</button>';
+            btn += '<button class="mini ui primary button btn-edit"><i class="eye icon"></i>รายละเอียด</button>';
+            btn += '<button class="mini ui button btn-delete"><i class="close icon"></i>ยกเลิก</button>';
             return btn;
           }
         }

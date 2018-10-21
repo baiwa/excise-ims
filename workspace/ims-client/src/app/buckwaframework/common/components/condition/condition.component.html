@@ -8,8 +8,8 @@
           <th style="text-align: center !important">ค่าเริ่มต้น</th>
           <th style="text-align: center !important">...</th>
           <th style="text-align: center !important">ค่าสิ้นสุด</th>
-          <th style="text-align: center !important">ค่า RL</th>
-          <th style="text-align: center !important">แปลงค่า</th>
+          <th style="text-align: center !important">อัตราความเสี่ยง</th>
+          <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
           <th style="text-align: center !important">สี</th>
           <th style="text-align: center !important"></th>
         </tr>
@@ -71,7 +71,7 @@
   <div class="inline fields latest-inline">
     <div class="sixteen wide field">
       <div class="ui center aligned grid btn">
-        <button class="ui mini primary button" type="button" (click)="addRow()">
+        <button class="ui mini green button" type="button" (click)="addRow()">
           <i class="add icon"></i>
           เพิ่ม
         </button>
@@ -79,8 +79,8 @@
           <i class="save icon"></i>
           บันทึก
         </button>
-        <button class="ui mini primary button" type="button" (click)="cancel()">
-          <i class="window close outline icon"></i>
+        <button class="ui mini button" type="button" (click)="cancel()">
+          <i class="close icon"></i>
           ยกเลิก
         </button>
       </div>

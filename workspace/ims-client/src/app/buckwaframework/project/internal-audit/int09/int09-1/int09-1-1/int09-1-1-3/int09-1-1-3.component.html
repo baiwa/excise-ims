@@ -11,7 +11,7 @@
   <br>
   <div class="ui center aligned grid">
     <div class="eight wide column">
-      <button class="ui  primary button" type="button" (click)="modalAddHead()">แก้ไข</button>
+      <button class="ui mini yellow button" type="button" (click)="modalAddHead()"><i class="edit icon"></i>แก้ไข</button>
     </div>
   </div>
 </div>
@@ -24,7 +24,7 @@
 
 <div class="ui attached  segment">
   <div class="inline fields" style="text-align: right !important;">
-    <button class="ui green button" type="button" (click)="modalAdd()">เพิ่ม</button>
+    <button class="ui mini green button" type="button" (click)="modalAdd()"><i class="plus icon"></i>เพิ่ม</button>
   </div>
   <table id="tableData" class="ui small celled table nowrap striped selectable" style="width: 100%">
     <thead>
@@ -60,8 +60,8 @@
     </tfoot>
   </table>
   <div class="ui form center aligned grid">
-      <button class="ui  grey button" type="button" (click)="clickBack()">กลับ</button>
-      <button class="ui  primary button" type="button" (click)="save()">บันทึก</button>
+      <button class="ui mini primary button" type="button" (click)="save()"><i class="save icon"></i>บันทึก</button>
+      <button class="ui mini button" type="button" (click)="clickBack()"><i class="close icon"></i>ยกเลิก</button>
   </div> 
 <br><br>
 </div>
@@ -404,9 +404,9 @@
   </div>
 
   <div class="actions">
-    <div class="ui red deny button">ยกเลิก</div>
-    <div class="ui primary button" *ngIf=" btnModal=='E' " (click)="editData()">ดำเนินการแก้ไข</div>
-    <div class="ui green button" *ngIf=" btnModal=='S' " (click)="saveData()">บันทึก</div>
+    <div class="ui mini primary button" *ngIf=" btnModal=='S' " (click)="saveData()"><i class="save icon"></i>บันทึก</div>
+    <div class="ui mini yellow button" *ngIf=" btnModal=='E' " (click)="editData()"><i class="edit icon"></i>ดำเนินการแก้ไข</div>
+    <div class="ui mini deny button"><i class="close icon"></i>ยกเลิก</div>
   </div>
 </div>
 <!--End add modal -->

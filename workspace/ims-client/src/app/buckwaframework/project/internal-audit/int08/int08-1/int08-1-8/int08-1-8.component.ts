@@ -73,7 +73,7 @@ private authService: AuthService
 
 
 
-  findRiskById() {
+  findRiskById= () => {
     let url = "ia/int08/findRiskById"
     this.ajax.post(url, { riskHrdId: this.id }, res => {
 
@@ -175,16 +175,16 @@ private authService: AuthService
         { data: "departmentName" },
         { data: "riskCost" },
         { data: "rl" },
-        { data: "valueTranslation" },
-        {
-          data: "riskHdrId",
-          render: function () {
-            return '<button type="button" class="ui mini button del"><i class="trash alternate icon"></i> ลบ </button>';
-          }
-        }
+        { data: "valueTranslation" }
+        // {
+        //   data: "riskHdrId",
+        //   render: function () {
+        //     return '<button type="button" class="ui mini button del"><i class="trash alternate icon"></i> ลบ </button>';
+        //   }
+        // }
       ],
       columnDefs: [
-        { targets: [0, 2, 4, 5, 6], className: "center aligned" },
+        { targets: [0, 2, 4, 5], className: "center aligned" },
         { targets: [3], className: "right aligned" },
         { targets: [1], className: "left aligned" }
       ],

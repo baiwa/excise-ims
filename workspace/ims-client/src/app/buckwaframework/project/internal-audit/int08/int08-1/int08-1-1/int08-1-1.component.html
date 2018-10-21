@@ -18,8 +18,8 @@
             <div class="ui calendar" style="width:100%" id="year">
               <div class="ui input left icon">
                 <i class="calendar icon"></i>
-                <input type="calendar" id="budgetYear" placeholder="ปี" maxlength="4" name="budgetYear" [(ngModel)]="budgetYear"
-                  readonly="" autocomplete="off">
+                <input type="calendar" id="budgetYear" placeholder="ปี" maxlength="4" name="budgetYear" [(ngModel)]="budgetYear" readonly=""
+                  autocomplete="off">
               </div>
             </div>
           </div>
@@ -30,7 +30,6 @@
             <select class="ui search dropdown ai" id="riskType" name="riskType" [(ngModel)]="riskType">
               <option value="0">ปัจจัยเสี่ยงงบประมาณทั้งหมด</option>
               <option *ngFor="let risk of riskList; index as i;" value="{{risk.value}}">{{risk.description}}</option>
-
             </select>
           </div>
         </div>
@@ -63,7 +62,7 @@
             <th style="text-align: center !important">ปีงบประมาณ</th>
             <th style="text-align: center !important">วันที่สร้าง</th>
             <th style="text-align: center !important">ผู้สร้าง</th>
-            <th style="text-align: center !important">Action</th>
+            <th style="text-align: center !important">จัดการ</th>
           </tr>
         </thead>
       </table>
@@ -76,10 +75,8 @@
           </button>
         </div>
       </div>
-
-
     </div>
-    <BR />
+    <BR>
 
     <div class="sixteen wide column" *ngIf="showForm==1">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
@@ -87,14 +84,11 @@
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{riskAssRiskWsHdr.budgetYear}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr.riskHdrName}}</label>
           </div>
@@ -102,11 +96,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row 1 -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -115,7 +106,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -141,7 +133,6 @@
               </div>
             </div>
           </div>
-
         </div>
 
 
@@ -149,37 +140,33 @@
           <table id="dataTableF1" class="ui small celled table nowrap striped selectable" style="width: 100%;">
             <thead>
               <tr>
-
                 <th rowspan="2" style="text-align: center !important">ลำดับ</th>
                 <th rowspan="2" style="text-align: center !important">โครงการตามยุทธศาสตร์</th>
                 <th colspan="4" style="text-align: center !important">งบประมาณที่ใช้ตามแผนยุทธศาสตร์</th>
                 <th rowspan="2" style="text-align: center !important">เงินงบประมาณที่กรมอนุมัติ</th>
                 <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-
               </tr>
               <tr>
                 <th style="text-align: center !important ;border-left: 1px solid rgba(34,36,38,.1) !important">เงินงบประมาณ</th>
                 <th style="text-align: center !important">เงินท้องถิ่น</th>
                 <th style="text-align: center !important">เงินอื่น ๆ </th>
                 <th style="text-align: center !important">รวม</th>
-                <th style="text-align: center !important">RL</th>
-                <th style="text-align: center !important">แปลค่า</th>
+                <th style="text-align: center !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
               </tr>
-
-
             </thead>
           </table>
-
         </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
-            <button class="ui mini primary button">
+            <button class="ui mini yellow button">
               <i class=" print icon "></i>
               ส่งออก
             </button>
             <button class="ui mini button " (click)="clearDataForm1() ">
-              <i class="arrow left icon"></i>
-              กลับ
+              <i class="close  icon"></i>
+              ยกเลิก
             </button>
 
           </div>
@@ -223,7 +210,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -264,24 +252,23 @@
                 <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
               </tr>
               <tr>
-                <th style="text-align: center !important ;border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-                <th style="text-align: center !important">แปลค่า</th>
+                <th style="text-align: center !important ;border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
               </tr>
-
-
             </thead>
           </table>
 
         </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
-            <button class="ui mini primary button">
+            <button class="ui mini yellow button">
               <i class=" print icon "></i>
               ส่งออก
             </button>
             <button class="ui mini button " (click)="clearDataForm2() ">
-              <i class="arrow left icon"></i>
-              กลับ
+              <i class="close icon"></i>
+              ยกเลิก
             </button>
 
           </div>
@@ -323,7 +310,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -364,8 +352,8 @@
                 <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
               </tr>
               <tr>
-                <th style="text-align: center !important ;border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-                <th style="text-align: center !important">แปลค่า</th>
+                <th style="text-align: center !important ;border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
               </tr>
 
 
@@ -373,15 +361,16 @@
           </table>
 
         </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
-            <button class="ui mini primary button">
+            <button class="ui mini yellow button">
               <i class=" print icon "></i>
               ส่งออก
             </button>
             <button class="ui mini button " (click)="clearDataForm3() ">
-              <i class="arrow left icon"></i>
-              กลับ
+              <i class=" close icon"></i>
+              ยกเลิก
             </button>
 
           </div>
@@ -425,7 +414,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -464,15 +454,16 @@
           </table>
 
         </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
-            <button class="ui mini primary button">
+            <button class="ui mini yellow button">
               <i class=" print icon "></i>
               ส่งออก
             </button>
             <button class="ui mini button " (click)="clearDataForm3() ">
-              <i class="arrow left icon"></i>
-              กลับ
+              <i class="close icon"></i>
+              ยกเลิก
             </button>
 
           </div>

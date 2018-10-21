@@ -1,9 +1,11 @@
-<app-breadcrumb [route]="breadcrumb" ></app-breadcrumb>
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 
 <div class="ui grid">
+
+  <!-- form 1 -->
   <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>รายละเอียดปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ</span>
+      <span>รายละเอียดหัวกระดาษทำการ{{riskAssRiskWsHdr.riskHdrName}}</span>
     </div>
     <div class="ui attached segment">
       <div class="ui form">
@@ -16,7 +18,6 @@
             <input type="text" placeholder="ชื่อกระดาษทำการ" maxlength="100" class="custom" name="riskHrdPaperName" id="riskHrdPaperName"
               [(ngModel)]="riskHrdPaperName">
           </div>
-
         </div>
         <div class="inline fields">
           <div class="two wide field "></div>
@@ -33,7 +34,19 @@
             <input type="text" placeholder="ผู้ตรวจ" class="custom" name="userCheck" id="userCheck" [(ngModel)]="userCheck">
           </div>
         </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- form 2 -->
+  <div class="sixteen wide column ">
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>รายละเอียดกระดาษทำการ{{riskAssRiskWsHdr.riskHdrName}}</span>
+      </div>
+      <div class="ui attached segment">
+        <div class="ui form">
+
+        <!-- table -->
         <table id="dataTable" class="ui small celled table " style="width: 100%;">
           <thead>
             <tr>
@@ -41,7 +54,8 @@
               <th rowspan="2" style="text-align: center !important" class="four wide field ">โครงการตามยุทธศาสตร์</th>
               <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
               <th colspan="4" style="text-align: center !important">งบประมาณที่ใช้ตามแผนยุทธศาสตร์</th>
-              <th rowspan="2" style="text-align: center !important">เงินงบประมาณที่<br>กรมอนุมัติ</th>
+              <th rowspan="2" style="text-align: center !important">เงินงบประมาณที่
+                <br>กรมอนุมัติ</th>
               <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
             </tr>
             <tr>
@@ -49,8 +63,8 @@
               <th style="text-align: center !important">เงินท้องถิ่น</th>
               <th style="text-align: center !important">เงินอื่น ๆ </th>
               <th style="text-align: center !important">รวม</th>
-              <th style="text-align: center !important">RL</th>
-              <th style="text-align: center !important">แปลค่า</th>
+              <th style="text-align: center !important">อัตราความเสี่ยง</th>
+              <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
             </tr>
           </thead>
         </table>
@@ -64,33 +78,34 @@
               บันทึก
             </button>
             <button class="ui mini primary button" (click)="modalConditionRL()">
-             <i class="setting icon"></i>
+              <i class="setting icon"></i>
               กำหนดเงื่อนไขความเสี่ยง
             </button>
-            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
-            <i class="print icon"></i>
+            <button class="ui mini yellow button" (click)="addRiskAssRiskWsHdr()">
+              <i class="print icon"></i>
               ส่งออก
             </button>
-            <button class="ui mini  button" (click)="cancelFlow()">
+            <button class="ui mini button" (click)="cancelFlow()">
+              <i class="close icon"></i>
               ยกเลิก
             </button>
           </div>
-
         </div>
       </div>
     </div>
   </div>
+
+  <!-- form condition -->
   <div class="sixteen wide column" *ngIf="getConditionShow()">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>กำหนดเงื่อนไขความเสี่ยง ปัจจัยเสี่ยงอื่นๆ</span>
+      <span>กำหนดเงื่อนไขความเสี่ยง{{riskAssRiskWsHdr.riskHdrName}}</span>
     </div>
-
     <div class="ui attached segment">
       <div class="ui form">
         <condition [riskId]="id" [riskType]="'MAIN'" [page]="'int08-1-5'" (out)="closeConditionRL($event)"></condition>
       </div>
       <br/>
-
     </div>
   </div>
+
 </div>

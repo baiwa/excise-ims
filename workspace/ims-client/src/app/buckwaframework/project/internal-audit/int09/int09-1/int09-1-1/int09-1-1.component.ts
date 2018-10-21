@@ -138,10 +138,10 @@ export class Int0911Component implements OnInit, OnDestroy {
           "className": "ui center aligned",
           "render" : function(data,type,row){
             var btn = '';
-            btn +='<button class="mini ui primary button btn-download">ดาวน์โหลด</button>';
-            btn +='<button class="mini ui red button btn-delete">ลบ</button>';
-            btn +='<button class="mini ui green button btn-approve">อนุมัติ</button>';
-            btn +='<button class="mini ui red button btn-unapproved">ไม่อนุมัติ</button>';
+            btn +='<button class="mini ui yellow button btn-download"><i class="download icon"></i>ดาวน์โหลด</button>';
+            btn +='<button class="mini ui red button btn-delete"><i class="trash alternate icon"></i>ลบ</button>';
+            btn +='<button class="mini ui green button btn-approve"><i class="check icon"></i>อนุมัติ</button>';
+            btn +='<button class="mini ui orange button btn-unapproved"><i class="minus circle icon"></i>ไม่อนุมัติ</button>';
               return btn;
           }
         }
@@ -278,10 +278,10 @@ export class Int0911Component implements OnInit, OnDestroy {
           "className": "ui center aligned",
           "render" : function(data,type,row){
             var btn = '';
-            btn +='<button class="mini ui primary button btn-download">ดาวน์โหลด</button>';
-            btn +='<button class="mini ui red button btn-delete">ลบ</button>';
-            btn +='<button class="mini ui green button btn-approve">อนุมัติ</button>';
-            btn +='<button class="mini ui red button btn-unapproved">ไม่อนุมัติ</button>';
+            btn +='<button class="mini ui yellow button btn-download"><i class="download icon"></i>ดาวน์โหลด</button>';
+            btn +='<button class="mini ui red button btn-delete"><i class="trash alternate icon"></i>ลบ</button>';
+            btn +='<button class="mini ui green button btn-approve"><i class="check icon"></i>อนุมัติ</button>';
+            btn +='<button class="mini ui orange button btn-unapproved"><i class="minus circle icon"></i>ไม่อนุมัติ</button>';
               return btn;
           }
         }

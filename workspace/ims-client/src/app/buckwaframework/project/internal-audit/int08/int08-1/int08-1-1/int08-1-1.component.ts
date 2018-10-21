@@ -193,8 +193,8 @@ export class Int0811Component implements OnInit {
         {
           data: "riskHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button  primary dtl"><i class="table icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button yellow export"><i class="print icon "></i> Export</button>';
+            return '<button type="button" class="ui mini button  primary dtl"><i class="eye icon"></i> รายละเอียด</button>'
+              + '<button type="button" class="ui mini button yellow export"><i class="print icon "></i> ส่งออก</button>';
           }
         }
       ],
@@ -547,7 +547,7 @@ export class Int0811Component implements OnInit {
         //console.log(element);
         trHTML += '<th rowspan="2" style="text-align: center !important;">' + element + '</th>';
       });
-      trHTML += '<th rowspan="2" style="text-align: center !important;" >รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th style="text-align: center !important">แปลค่า</th></tr>';
+      trHTML += '<th rowspan="2" style="text-align: center !important;" >รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th><th style="text-align: center !important">แปลค่าความเสี่ยง</th></tr>';
       $("#trColumn").html(trHTML);
       this.initDatatable4();
     }, errRes => {
