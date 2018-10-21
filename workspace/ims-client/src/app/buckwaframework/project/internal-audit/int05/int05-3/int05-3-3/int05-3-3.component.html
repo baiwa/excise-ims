@@ -53,12 +53,15 @@
           <div class="sixteen wide field ">
             <div class="seven wide field "></div>
             <button class="ui mini primary button" (click)="searchAssetBalance()">
+              <i class="search icon"></i>
               ค้นหา
             </button>
-            <button class="ui mini primary button" (click)="cleanSearchPanel()">
+            <button class="ui mini button" (click)="cleanSearchPanel()">
+              <i class="sync icon"></i>
               ล้างข้อมูล
             </button>
-            <button class="ui mini primary button" (click)="createAssetBalance()">
+            <button class="ui mini green button" (click)="createAssetBalance()">
+              <i class="plus icon"></i>
               เพิ่มข้อมูล
             </button>
           </div>
@@ -84,7 +87,8 @@
 
         <div class="ui grid">
           <div class="sixteen wide center aligned column">
-            <button class="ui mini primary button" (click)="deleteAssetBalance()">
+            <button class="ui mini red button" (click)="deleteAssetBalance()">
+                <i class="trash alternate icon"></i>
               ลบ
             </button>
           </div>

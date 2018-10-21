@@ -1,9 +1,10 @@
 <app-breadcrumb [route]="breadcrumb" ></app-breadcrumb>
-
+<br>
 <!-- table -->
-    <div class="ui top attached header">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>สรุปแสตมป์รายปีงบประมาณ</span>
     </div>
+    
     <div class="ui attached segment">
         <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%">
                 <thead>
@@ -97,8 +98,8 @@
         </table>
         <br>
         <div class="ui centered grid">
-            <button class="ui mini gray button" type="button"  routerLink="/int05/1/1">กลับ</button>
-            <button class="ui mini blue button" type="button">ส่งออก</button>
+            <button class="ui mini yellow button" type="button"><i class="print icon"></i>ส่งออก</button>
+            <button class="ui mini button" type="button"  routerLink="/int05/1/1"><i class="close icon"></i>ยกเลิก</button>
         </div>
         <br>
     </div>

@@ -96,7 +96,7 @@ export class Int0531Component implements OnInit {
           className: "center aglined",
           render: function (data) {
             var html = '';
-            html += '<button type="button" class="ui mini primary button edit-button"><i class="edit icon"></i>แก้ไข</button>';
+            html += '<button type="button" class="ui mini yellow button edit-button"><i class="edit icon"></i>แก้ไข</button>';
             return html;
           }
         }

@@ -1,8 +1,6 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
     <div class="sixteen wide column">
-        <h2 class="ui header">ค้นหาข้อมูลการจัดซื้อจัดจ้าง</h2>
-
 
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>ค้นหาข้อมูลการจัดซื้อจัดจ้าง</span>
@@ -79,16 +77,16 @@
 
                     <div class="ui center aligned grid">
                         <div class="sixteen wide column">
-                            <button class="ui small primary button" (click)="uploadFile()">
+                            <button class="ui mini primary button" (click)="uploadFile()">
                           <i class="search icon"></i> ค้นหา
                         </button>
 
-                            <button class="ui small button" type="reset" (click)="clearFile()">
-                          <i class="close icon"></i> ล้างข้อมูล
+                            <button class="ui mini button" type="reset" (click)="clearFile()">
+                          <i class="sync icon"></i> ล้างข้อมูล
                         </button>
 
-                            <button class="ui small green button" (click)="addData()">
-                          <i class="add icon"></i> เพิ่มข้อมูล
+                            <button class="ui mini green button" (click)="addData()">
+                          <i class="plus icon"></i> เพิ่มข้อมูล
                         </button>
                         </div>
                     </div>
@@ -120,8 +118,8 @@
                         <!-- <button *ngIf="dataTable.length > 0" class="ui disabled small red button" (click)="onDelete()">
                           <i class="trash icon"></i> ลบ
                         </button> -->
-                        <button class="ui small red button" (click)="onDelete()">
-                            <i class="trash icon"></i> ลบ
+                        <button class="ui mini red button" (click)="onDelete()">
+                            <i class="trash alternate icon"></i> ลบ
                           </button>
                     </div>
                 </div>

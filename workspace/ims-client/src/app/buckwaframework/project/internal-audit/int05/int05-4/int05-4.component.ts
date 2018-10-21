@@ -193,13 +193,13 @@ export class Int054Component implements OnInit, AfterViewInit {
         {
           className: "center",
           render: function(data, type, full, meta) {
-            return `<button class="ui mini blue button" type="button" <i class="search icon"></i> รายละเอียด</button>`;
+            return `<button class="ui mini blue button" type="button" <i class="eye icon"></i> รายละเอียด</button>`;
           }
         },
         {
           className: "center",
           render: function(data, type, full, meta) {
-            return `<button class="ui mini orange button" type="button" id="edit-${
+            return `<button class="ui mini yellow button" type="button" id="edit-${
               full.procurementId
             }"> <i class="edit icon"></i> แก้ไข</button>`;
           }

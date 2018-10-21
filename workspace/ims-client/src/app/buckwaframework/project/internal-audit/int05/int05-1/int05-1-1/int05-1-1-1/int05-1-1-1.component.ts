@@ -43,7 +43,7 @@ private authService: AuthService,
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบพัสดุ", route: "#" },
-      { label: "ตรวจสอบแสตมป์", route: "int05/1/1" },
+      { label: "ตรวจสอบแสตมป์", route: "#" },
       { label: "เพิ่มข้อมูลแสตมป์", route: "#" },
     ];
     this.data = []
@@ -405,8 +405,8 @@ private authService: AuthService,
           "data": "note",
           "render": function (data, type, row) {
             var btn = '';
-            btn += '<button class="ui mini yellow button btn-edit">แก้ไข</button>';
-            btn += '<button class="ui mini red button btn-delete">ลบ</button>';
+            btn += '<button class="ui mini yellow button btn-edit"><i class="edit icon"></i>แก้ไข</button>';
+            btn += '<button class="ui mini red button btn-delete"><i class="trash alternate icon"></i>ลบ</button>';
             return btn;
           },
           "className": "ui center aligned"

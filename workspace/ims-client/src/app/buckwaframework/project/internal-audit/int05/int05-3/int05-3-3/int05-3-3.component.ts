@@ -85,9 +85,9 @@ export class Int0533Component implements OnInit {
           data: "assetBalanceId",
           render: function (data, type, row, meta) {
 
-            return '<button type="button" class="ui mini button  dtl">รายละเอียด</button>' +
-              '<button type="button" class="ui mini button  edit">แก้ไข</button>' +
-              '<button type="button" class="ui mini button  addHis">เพิ่มประวัติ</button>';
+            return '<button type="button" class="ui mini primary button  dtl"><i class="eye icon"></i>รายละเอียด</button>' +
+              '<button type="button" class="ui mini yellow button  edit"><i class="edit icon"></i>แก้ไข</button>' +
+              '<button type="button" class="ui mini green button  addHis"><i class="plus icon"></i>เพิ่มประวัติ</button>';
           }
         }
 

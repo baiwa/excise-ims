@@ -4,6 +4,8 @@ import { AjaxService } from "services/ajax.service";
 import { Router } from "@angular/router";
 import { MessageBarService } from "../../../../common/services";
 import { BreadCrumb } from "models/breadcrumb";
+import { Location } from "@angular/common";
+
 
 const URL = {
   INIT_DATATABLE: AjaxService.CONTEXT_PATH + "ia/int054/filterFindIaPcm"
@@ -155,7 +157,7 @@ export class Int054AdminComponent implements OnInit {
               full.qtnHeaderId
             }" value="${full.qtnHeaderCode +
               "," +
-              full.qtnHeaderName}"> <i class="search icon"></i> รายละเอียด</button>`;
+              full.qtnHeaderName}"> <i class="eye icon"></i> รายละเอียด</button>`;
           }
         }
       ]

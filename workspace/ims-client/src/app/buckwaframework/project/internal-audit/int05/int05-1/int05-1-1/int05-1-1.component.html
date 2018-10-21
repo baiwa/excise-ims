@@ -1,7 +1,7 @@
 <app-breadcrumb [route]="breadcrumb" ></app-breadcrumb>
-
+<br>
 <!-- form search -->
-<div class="ui top attached header">
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
   <span>ค้นหาข้อมูลแสตมป์</span>
 </div>
 
@@ -80,7 +80,7 @@
     </div><br><br><br>
     <div class="ui stackable center aligned page grid">
       <button class="ui mini primary button" type="button" (click)="onSearch()"><i class="search icon"></i> ค้นหา</button>
-      <button class="ui mini gray button " type="button" (click)="onClear()"><i class="delete icon"></i> ล้างข้อมูล</button>
+      <button class="ui mini button " type="button" (click)="onClear()"><i class="sync icon"></i> ล้างข้อมูล</button>
       <button class="ui mini green button" routerLink="/int05/1/1/1"><i class="add icon"></i>เพิ่มข้อมูล</button>
     </div><br>
   </form>
@@ -110,7 +110,7 @@
         <th style="text-align: center !important" rowspan="2">ค่าภาษี (บาท)</th>
         <th style="text-align: center !important" colspan="2">รหัสแสตมป์</th>
         <th style="text-align: center !important" rowspan="2">หมายเหตุ</th>
-        <th style="text-align: center !important" rowspan="2">Action</th>
+        <th style="text-align: center !important" rowspan="2">จัดการ</th>
 
       </tr>
       <tr>
@@ -129,8 +129,8 @@
   <br>
   <div class="ui centered grid">
     <a class="ui mini primary button" routerLink="/int05/1/1/2"><i class="file alternate outline icon"></i>สรุปแสตป์รายปีงบประมาณ</a>
-    <button class="ui mini yellow button"><i class="file alternate outline icon"></i> ส่งออก</button>
-    <button class="ui mini yellow button"><i class="file alternate outline icon"></i>พิมพ์รายงานตัดปีแสตมป์</button>
+    <button class="ui mini yellow button"><i class="print icon"></i> ส่งออก</button>
+    <button class="ui mini primary button"><i class="file alternate outline icon"></i>พิมพ์รายงานตัดปีแสตมป์</button>
   </div><br>
 </div>
 

@@ -2,7 +2,7 @@
 
 <div class="ui grid">
     <div class="sixteen wide column">        
-        <div class="ui top attached header">
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>เพิ่มข้อมูลแสตมป์</span>
         </div>
         <div class="ui attached {{loading ? 'loading' : ''}} segment">
@@ -256,7 +256,7 @@
                         <button class="ui mini basic primary button" type="button" id="addFile" (click)="onAddButton(item);"  [disabled]="statusSendBackFile"><i class="add icon"></i>เพิ่มไฟล์</button>
                     </ng-template>
                     <ng-template #elseBlock>
-                        <button class="ui mini basic red button" type="button" (click)="deleteButton(item);"><i class="add icon"></i>ลบ</button>                        
+                        <button class="ui mini basic red button" type="button" (click)="deleteButton(item);"><i class="trash alternate icon"></i>ลบ</button>                        
                     </ng-template>      
                 </div>
                 <div id="add-button"></div>
@@ -306,7 +306,7 @@
           <th rowspan="2">ค่าภาษี (บาท)</th>
           <th colspan="2">รหัสแสตมป์</th>
           <th rowspan="2">หมายเหตุ</th>
-          <th rowspan="2">Action</th>  
+          <th rowspan="2">จัดการ</th>  
         </tr>
         <tr>
           <th>เลขที่หนังสือ</th>
@@ -321,8 +321,8 @@
       </thead>
     </table><br>
     <div class="ui centered grid">
-        <button class="ui mini gray button" type="button" (click)="backConfirm()"><i class="reply icon"></i>กลับ</button>
         <button class="ui mini blue button" type="button" (click)="onSave()"><i class="save icon"></i>บันทึก</button>
+        <button class="ui mini button" type="button" (click)="backConfirm()"><i class="close icon"></i>กลับ</button>
     </div><br>
   </div>
 
