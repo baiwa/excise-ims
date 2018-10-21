@@ -469,7 +469,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
       searching: false,
       scrollX: true,
       select: true,
-      ordering: true,
+      ordering: false,
       pageLength: 10,
       processing: true,
       serverSide: false,

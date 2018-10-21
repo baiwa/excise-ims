@@ -191,7 +191,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     json += ' { "lengthChange": true, ';
     json += ' "searching": false, ';    
     json += ' "select": true, ';
-    json += ' "ordering": true, ';
+    json += ' "ordering": false, ';
     json += ' "pageLength": 10, ';
     json += ' "processing": true, ';
     json += ' "serverSide": true, ';

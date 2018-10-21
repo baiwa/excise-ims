@@ -7,39 +7,39 @@
         </div>
 
         <div class="ui attached segment  {{loading ? 'loading' : ''}} ">
-            <form (ngSubmit)="f.form.valid && goToAnalysisResult($event)" #f="ngForm"  novalidate>
+            <form [formGroup]="formControl" (submit)="goToAnalysisResult($event)">
                 <div class="ui form">
                     <div class="inline fields">
                         <div class="one wide field"></div>
                         <div class="three wide field required"><label class="text-right full-width">เลขทะเบียนสรรพสามิต</label></div>
-                        <div class="three wide field "  >
-                            <select class="ui dropdown full-width" [(ngModel)]="form.exciseId" name="exciseId" id="exciseId" (change)="changeExciseId($event)" required>
+                        <div class="three wide field " [ngClass]="{ 'error': submitted && f.exciseId.invalid }" >
+                            <select class="ui dropdown full-width" formControlName="exciseId" name="exciseId" id="exciseId" (change)="changeExciseId($event)" required>
                                 <option value="">เลือก</option>
                                 <option *ngFor="let item of exciseIdList" value="{{item.label}}">{{item.label}}</option>
                             </select>
                         </div>
                         <div class="three wide field"><label class="text-right full-width">เลขประจำตัวผู้เสียภาษีอากร</label></div>
-                        <div class="three wide field" >
-                            <input type="text" [(ngModel)]="form.userNumber" name="userNumber" id="userNumber" required>
+                        <div class="three wide field">
+                            <input type="text" formControlName="userNumber" name="userNumber" id="userNumber">
                         </div>
                     </div>
 
                     <div class="inline fields">
                         <div class="one wide field"></div>
                         <div class="three wide field required"><label class="text-right full-width">รอบระยะเวลาการตรวจสอบ</label></div>
-                        <div class="three wide field ui calendar" required id="dateF" >
+                        <div class="three wide field ui calendar" required id="dateF" [ngClass]="{ 'error': submitted && f.dateFrom.invalid }">
                             <div class="ui input left icon">
                                 <i class="time icon"></i>
                                 <input type="calendar" readonly="" id="dateFrom" name="dateFrom" [attr.required]="true"
-                                    autocomplete="off" placeholder="MMyyyy" [(ngModel)]="form.dateFrom">
+                                    autocomplete="off" placeholder="MMyyyy" formControlName="dateFrom">
                             </div>
                         </div>
                         <div class="three wide field required"><label class="text-right full-width">ถึง</label></div>
-                        <div class="three wide field ui calendar required" id="dateT">
+                        <div class="three wide field ui calendar required" id="dateT" [ngClass]="{ 'error': submitted && f.dateTo.invalid }">
                             <div class="ui input left icon">
                                 <i class="time icon"></i>
                                 <input type="calendar" readonly="" id="dateTo" name="dateTo" [attr.required]="true"
-                                    autocomplete="off" placeholder="dMMyyyy"[(ngModel)]="form.dateTo">
+                                    autocomplete="off" placeholder="dMMyyyy" formControlName="dateTo">
                             </div>
                         </div>
                     </div>
@@ -48,14 +48,14 @@
                         <div class="two wide field"></div>
                         <div class="two wide field"><label class="text-right full-width">ประเภท</label></div>
                         <div class="three wide field required">
-                            <input type="text" disabled class="custom-readonly" [(ngModel)]="form.type" name="type" id="type">
+                            <input type="text" disabled class="custom-readonly" formControlName="type" name="type" id="type">
                         </div>
                     </div>
                     <div class="inline fields">
                         <div class="two wide field"></div>
                         <div class="two wide field"><label class="text-right full-width">พิกัด</label></div>
                         <div class="three wide field required">
-                            <input type="text" disabled class="custom-readonly" [(ngModel)]="form.coordinates" name="coordinates"
+                            <input type="text" disabled class="custom-readonly" formControlName="coordinates" name="coordinates"
                                 id="coordinates">
                         </div>
                     </div>

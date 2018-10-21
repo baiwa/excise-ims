@@ -56,7 +56,7 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
     this.ajax.post(URL, {}, res => {
       this.coordinatesArr = res.json();
     });
-
+    
     //get Sector in select option
     const URL2 = "combobox/controller/getDropByTypeAndParentId";
     this.ajax.post(URL2, { type: "SECTOR_VALUE" }, res => {
@@ -116,7 +116,8 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
       trHeaderColumn += items[i];
     }
     document.getElementById("trDrinamic").innerHTML =
-      '<tr><th rowspan="2" style="text-align: center !important"> <div class="ui checkbox check-all"><input type="checkbox" id="check" (click)="clickCheckAll($event)"></div></th>' +
+      //'<tr><th rowspan="2" style="text-align: center !important"> <div><input type="checkbox" id="check" ></div></th>' +
+      '<tr><th rowspan="2" style="text-align: center !important"><input type="checkbox" name="select-all" id="select-all"></th>' +
       '<th rowspan="2" style="text-align: center !important">ลำดับ</th>' +
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       
@@ -154,30 +155,30 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
       "</th>" +
       "</tr>";
 
-
+      
   }
 
   ngAfterViewInit() {
-    this.initDatatable();
+     this.initDatatable();
   }
 
   initDatatable(): void {
-    if (this.sendLineUser != null || this.sendLineUser != undefined) {
-      this.sendLineUser.destroy();
-    }
+    // if (this.sendLineUser != null || this.sendLineUser != undefined) {
+    //   this.sendLineUser.destroy();
+    // }
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
-    var sendLineUserCheckbox = (this.sendLineUser = $("#sendLineUser").DataTable({
+    var sendLineUserCheckbox = (this.sendLineUser = $("#sendLineUser").DataTable({      
       lengthChange: false,
       searching: false,
       ordering: false,
       processing: true,
       serverSide: true,
-      paging: true,
-      scrollX: true,
+      paging: false,
       pagingType: "full_numbers",
-      fixedColumns: {
-        leftColumns: 3
-      },
+      scrollX: true,
+      // fixedColumns: {
+      //   leftColumns: 3
+      // },
       ajax: {
         type: "POST",
         url: URL,
@@ -192,13 +193,12 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
       },
       columns: [
         {
-          data: "exciseId",
           render: function (data, type, full, meta) {
-            return (
-              '<div class="ui checkbox follow-proj-chkbox"><input name="checkId" value="' +
-              data +
-              '" type="checkbox"><label></label></div>'
-            );
+            return `<input type="checkbox" name="chk${meta.row}" id="chk${
+              meta.row
+              }" value="${$("<div/>")
+                .text(data)
+                .html()}">`;
           },
           className: "center"
         },
@@ -261,39 +261,23 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
     });
   }
 
-  clickCheckAll = event => {
-    if (event.target.checked) {
-      $(".ui.checkbox.follow-proj-chkbox").checkbox("check");
-    } else {
-      $(".ui.checkbox.follow-proj-chkbox").checkbox("uncheck");
-    }
-  }
+  // clickCheckAll = event => {
+  //   if (event.target.checked) {
+  //     $(".follow-proj-chkbox").checkbox("check");
+  //   } else {
+  //     $(".follow-proj-chkbox").checkbox("uncheck");
+  //   }
+  // }
 
   onSend(viewStatus) {
 
     $(".ui.modal.confirm").modal("hide");
-
-    // var data = this.sendLineUser.rows().data();
-    // for (let i = 0; i < data.length; i++) {
-    //   if ((<HTMLInputElement>document.getElementById(`chk${i}`)).checked) {
-    //     this.exciseId.push(data[i].exciseId);
-    //   }
-    // } //end for loops
-
-    //var dataCheckbox = [];
-    let checkboxes = $(".ui.checkbox.follow-proj-chkbox");
-    for (var i = 0; i < checkboxes.length; i++) {
-      if (checkboxes.length == 1) {
-        if (checkboxes.checkbox("is checked")) {
-          this.exciseId.push(checkboxes.find("[type=checkbox]").val());
-        }
-      } else {
-        if (checkboxes.checkbox("is checked")[i]) {
-          this.exciseId.push(checkboxes.find("[type=checkbox]")[i].value);
-        }
-      }       
-    }
-    console.log(this.exciseId);
+    var data = this.sendLineUser.rows().data();
+    for (let i = 0; i < data.length; i++) {
+      if ((<HTMLInputElement>document.getElementById(`chk${i}`)).checked) {
+        this.exciseId.push(data[i].exciseId);
+      }
+    } //end for loops
 
     if (this.exciseId.length != 0) {
       const URL = "filter/exise/listFullDataNoPaging";
@@ -303,8 +287,7 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
           analysNumber: this.analysNumber,
           exiceList: this.exciseId,
           flag: "S",
-          viewStatus: viewStatus,
-          
+          viewStatus: viewStatus
         },
         res => {
           var data = res.json();

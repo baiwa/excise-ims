@@ -25,47 +25,56 @@ export class AnalysisPage implements OnInit {
   productList: any[];
   serviceList: any[];
   loading: boolean = true;
-
+  submitted:boolean = false;
   //data
   exciseIdList: any;
   form: AnalysisForm = new AnalysisForm();
+  formControl: FormGroup;
   coordinates: string = "";
   constructor(
     private router: Router,
     private analysisService: AnalysisService,
-    private modalService: IaService
+    private modalService: IaService,
+    private formBuilder: FormBuilder,
 
   ) { }
 
   ngOnInit(): void {
+
+    this.formControl = this.formBuilder.group({
+      exciseId: ["", Validators.required],
+      userNumber: [""],
+      dateFrom: ["", Validators.required],      
+      dateTo: ["", Validators.required],
+      type: [""],
+      coordinates: [""]
+    });
+
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
 
     this.exciseIdLists();
     this.calenda();
+
   }
-  // selectCatagory() {
-  //   var value = $("#selectCatagory").val();
-  //   if (value == 1) {
-  //     this.showSelectCoordinate = true;
-  //     this.coordinateList = this.productList;
-  //   } else if (value == 2) {
-  //     this.showSelectCoordinate = true;
-  //     this.coordinateList = this.serviceList;
-  //   } else {
-  //     this.showSelectCoordinate = false;
-  //   }
-  // }
+  get f() {
+    return this.formControl.controls;
+  }
+  goToAnalysisResult = (event: any) => {
+    event.preventDefault();
+    this.submitted = true;
+    for(let key in this.formControl.controls) {
+      console.log(key, this.formControl.get(key).valid);
+    }
+    // console.log(this.formControl.value);
 
-  goToAnalysisResult = (form) => {
-
-    console.log(form.Validators);
-    console.log(form.value);
-    console.log("top");
-    // this.form.dateFrom = $("#dateFrom").val();
-    // this.form.dateTo = $("#dateTo").val();
-    // this.modalService.setData(this.form);
-    // this.router.navigate(["/result-analysis"]);
+    if (this.formControl.invalid) {
+      return;
+    }
+    this.form.dateFrom = $("#dateFrom").val();
+    this.form.dateTo = $("#dateTo").val();
+    this.modalService.setData(this.formControl.value);
+    this.router.navigate(["/result-analysis"]);
   }
 
   exciseIdLists = () => {
@@ -81,9 +90,11 @@ export class AnalysisPage implements OnInit {
 
     this.analysisService.changeExciseId(exciseId).then(res => {
 
+      this.formControl.get('coordinates').setValue( res.productType);
       this.form.coordinates = res.productType;
 
       //call function check typr
+      this.formControl.get('type').setValue(this.checkType(exciseId.substring(14, 15)));
       this.form.type = this.checkType(exciseId.substring(14, 15));
     });
   }
@@ -94,14 +105,20 @@ export class AnalysisPage implements OnInit {
       endCalendar: $("#dateT"),
       type: "month",
       text: TextDateTH,
-      formatter: formatter('month-year')
+      formatter: formatter('month-year'),
+      onChange : (date,text)=>{
+        this.formControl.get('dateFrom').setValue(text);        
+      }
     });
     $("#dateT").calendar({
       maxDate: new Date(),
       startCalendar: $("#dateF"),
       type: "month",
       text: TextDateTH,
-      formatter: formatter('month-year')
+      formatter: formatter('month-year'),
+      onChange : (date,text)=>{
+        this.formControl.get('dateTo').setValue(text);        
+      }
     });
   }
 
