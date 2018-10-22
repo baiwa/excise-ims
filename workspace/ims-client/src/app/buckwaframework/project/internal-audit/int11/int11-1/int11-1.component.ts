@@ -65,9 +65,10 @@ export class Int111Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: true,
-      paging: true,
+      paging: false,
       scrollX: true,
-
+      scrollY: '50vh',
+      scrollCollapse: true,
       ajax: {
         type: "POST",
         url: URL,
