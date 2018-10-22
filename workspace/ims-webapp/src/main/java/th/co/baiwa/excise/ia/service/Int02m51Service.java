@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.excise.ia.persistence.entity.IntCtrlAss;
 import th.co.baiwa.excise.ia.persistence.repository.IntCtrlAssRepository;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
+import th.co.baiwa.excise.ws.entity.response.assessment.Assessment;
 
 @Service
 public class Int02m51Service {
@@ -30,6 +31,11 @@ public class Int02m51Service {
 	public IntCtrlAss insertIntCtrlAss(IntCtrlAss intCtrlAss){
 		logger.info("insertIntCtrlAss {} , {} , {}" , intCtrlAss.getBudgetYear() , intCtrlAss.getOfficeCode() , intCtrlAss.getIntCtrlAssName());
 		return intCtrlAssRepository.save(intCtrlAss);
+	}
+	
+	public Assessment assessmentForm1(IntCtrlAss intCtrlAss){
+		logger.info("assessment {} , {} , {}" , intCtrlAss.getBudgetYear() , intCtrlAss.getOfficeCode());
+		return webServiceExciseService.assessmentForm1(intCtrlAss.getBudgetYear(), intCtrlAss.getOfficeCode());
 	}
 	
 	

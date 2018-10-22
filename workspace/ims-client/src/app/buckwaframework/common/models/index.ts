@@ -19,6 +19,7 @@ import { ComboBox } from "./combobox";
 import { TaxReceipt } from "./taxReceipt";
 import { AssetBalance } from "./AssetBalance";
 import { AssetMaintenance } from "./AssetMaintenance";
+import { IntCtrlAss } from "./IntCtrlAss";
 
 export {
   AlertMessage,
@@ -41,5 +42,6 @@ export {
   ComboBox,
   TaxReceipt,
   AssetBalance,
-  AssetMaintenance
+  AssetMaintenance,
+  IntCtrlAss
 };

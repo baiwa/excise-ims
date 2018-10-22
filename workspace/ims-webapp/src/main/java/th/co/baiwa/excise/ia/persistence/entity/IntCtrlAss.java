@@ -18,18 +18,16 @@ public class IntCtrlAss extends BaseEntity {
 
 	@Id
 	@SequenceGenerator(name = "IA_INT_CTRL_ASS_GEN", sequenceName = "IA_INT_CTRL_ASS_SEQ", allocationSize = 1)
-
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_INT_CTRL_ASS_GEN")
-
+	@Column(name = "INT_CTRL_ASS_ID")
+	private Long intCtrlAssId;
+	
 	@Column(name = "INT_CTRL_ASS_NAME")
 	private String intCtrlAssName;
 
 	@Column(name = "BUDGET_YEAR")
 	private String budgetYear;
 
-	@Column(name = "INT_CTRL_ASS_ID")
-	private Long intCtrlAssId;
-	
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
 

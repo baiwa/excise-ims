@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,6 +17,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.ia.persistence.entity.IntCtrlAss;
 import th.co.baiwa.excise.ia.service.Int02m51Service;
 import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.excise.ws.entity.response.assessment.Assessment;
 
 @Controller
 @RequestMapping("api/ia/int02m51")
@@ -24,6 +26,8 @@ public class Int02m51Controller {
 	private Logger logger = LoggerFactory.getLogger(Int02m51Controller.class);
 	
 	private final String ASSESSMENT_INTERNAL_AUDIT = "ASSESSMENT_INTERNAL_AUDIT";
+	
+	
 	@Autowired
 	private Int02m51Service int02m51Service;
 	
@@ -38,7 +42,7 @@ public class Int02m51Controller {
 	
 	@PostMapping("/downloadNewTempage")
 	@ResponseBody
-	public List<IntCtrlAss> downloadNewTempage(IntCtrlAss intput){
+	public List<IntCtrlAss> downloadNewTempage(@RequestBody IntCtrlAss intput){
 		logger.info("downloadNewTempage officeCode {} year {}" ,intput.getOfficeCode() , intput.getBudgetYear() );
 		List<IntCtrlAss> intCtrlAsseList = int02m51Service.findByBudgetYearAndOfficeCode(intput.getBudgetYear(), intput.getOfficeCode());
 		if(BeanUtils.isEmpty(intCtrlAsseList)) {
@@ -59,6 +63,13 @@ public class Int02m51Controller {
 		}
 		return intCtrlAsseList;
 		
+	}
+	@PostMapping("/getAssessmentForm1")
+	@ResponseBody
+	public Assessment getAssessmentForm1(@RequestBody IntCtrlAss intput){
+		logger.info("getAssessmentForm1 officeCode {} year {}" ,intput.getOfficeCode() , intput.getBudgetYear() );
+		
+		return int02m51Service.assessmentForm1(intput);
 	}
 	
 	

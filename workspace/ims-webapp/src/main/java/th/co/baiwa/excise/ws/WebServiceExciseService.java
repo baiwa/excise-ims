@@ -31,6 +31,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ws.entity.api.RequestServiceExcise;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.req.RequestData8000Req;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.IncFri8000Res;
+import th.co.baiwa.excise.ws.entity.response.assessment.Assessment;
 import th.co.baiwa.excise.ws.entity.response.incfri8020.IncFri8020;
 import th.co.baiwa.excise.ws.entity.response.licfri6010.LicFri6010;
 import th.co.baiwa.excise.ws.entity.response.licfri6020.LicFri6020;
@@ -74,6 +75,9 @@ public class WebServiceExciseService {
 
 	@Value("${os.excise.applicationId}")
 	private String applicationId;
+	
+	@Value("${ws.excise.get.assessment}")
+	private String endpointAssessment;
 
 	@Autowired
 	private LoginLdap loginLdapProxy;
@@ -98,7 +102,7 @@ public class WebServiceExciseService {
 		return response;
 	}
 
-	private String restfulService(String endPoint, Object object) {
+	private String postRestful(String endPoint, Object object) {
 		RequestServiceExcise requestRestful = new RequestServiceExcise();
 		requestRestful.setSystemid(systemId);
 		requestRestful.setUsername(username);
@@ -116,6 +120,16 @@ public class WebServiceExciseService {
 		logger.info("Body Service response: " + response.getBody());
 		return response.getBody();
 	}
+	private String getRestful(String endPoint) {
+		logger.info("Restful HTTP GET : to" + endPoint);
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		ResponseEntity<String> response = restTemplate.exchange(endPoint, HttpMethod.GET, entity, String.class);
+		logger.info("Body Service response: " + response.getBody());
+		return response.getBody();
+	}
 
 	public IncFri8020 IncFri8020(String officeCode, String yearMonthFrom, String yearMonthTo, String dateType, String pageNo, String dataPerPage) {
 		logger.info("restful API : IncFri8020");
@@ -126,7 +140,7 @@ public class WebServiceExciseService {
 		incFri8020.setDateType(dateType);
 		incFri8020.setPageNo(pageNo);
 		incFri8020.setDataPerPage(dataPerPage);
-		String responseData = restfulService(endpointIncFri8020, incFri8020);
+		String responseData = postRestful(endpointIncFri8020, incFri8020);
 		Gson gson = new Gson();
 		IncFri8020 responseServiceExcise = gson.fromJson(responseData, IncFri8020.class);
 		return responseServiceExcise;
@@ -142,7 +156,7 @@ public class WebServiceExciseService {
 		regfri4000Req.setPageNo(pageNo);
 		regfri4000Req.setDataPerPage(dataPerPage);
 		
-		String responseData = restfulService(endpointRegFri4000, regfri4000Req);
+		String responseData = postRestful(endpointRegFri4000, regfri4000Req);
 		Gson gson = new Gson();
 		Regfri4000Res responseServiceExcise = gson.fromJson(responseData, Regfri4000Res.class);
 		return responseServiceExcise;
@@ -156,7 +170,7 @@ public class WebServiceExciseService {
 		rFri8000Req.setPageNo(pageNo);
 		rFri8000Req.setDataPerPage(dataPerPage);
 		
-		String responseData = restfulService(endpointIncFri8000, rFri8000Req);
+		String responseData = postRestful(endpointIncFri8000, rFri8000Req);
 		Gson gson = new Gson();
 		IncFri8000Res responseServiceExcise = gson.fromJson(responseData, IncFri8000Res.class);
 		return responseServiceExcise;
@@ -171,7 +185,7 @@ public class WebServiceExciseService {
 		licFri6010.setYearMonthTo(yearMonthTo);
 		licFri6010.setPageNo(pageNo);
 		licFri6010.setDataPerPage(dataPerPage);
-		String responseData = restfulService(endpointLicFri6010, licFri6010);
+		String responseData = postRestful(endpointLicFri6010, licFri6010);
 		Gson gson = new Gson();
 		LicFri6010 responseServiceExcise = gson.fromJson(responseData, LicFri6010.class);
 		return responseServiceExcise;
@@ -184,12 +198,23 @@ public class WebServiceExciseService {
 		licFri6020.setNewregId(newregId);
 		licFri6020.setPageNo(pageNo);
 		licFri6020.setDataPerPage(dataPerPage);
-		String responseData = restfulService(endpointLicFri6020, licFri6020);
+		String responseData = postRestful(endpointLicFri6020, licFri6020);
 		Gson gson = new Gson();
 		LicFri6020 responseServiceExcise = gson.fromJson(responseData, LicFri6020.class);
 		return responseServiceExcise;
 	}
+	
+	public Assessment assessmentForm1(String budgetYear ,String oCode ) {
+		logger.info(" assessment restful API {} , {} " ,budgetYear,oCode);
+		String responseData = getRestful(endpointAssessment).replaceAll("\\\\n", "<br/>");
+		Gson gson = new Gson();
+		Assessment responseServiceExcise = gson.fromJson(responseData, Assessment.class);
+		return responseServiceExcise;
+	}
 
+	
+	
+	
 	public List<RiskAssRiskWsDtl> getRiskAssRiskWsDtlList(RiskAssRiskWsDtl riskAssRiskWsDtl) {
 		List<RiskAssRiskWsDtl> riskAssRiskWsDtlList = new ArrayList<RiskAssRiskWsDtl>();
 		RiskAssRiskWsDtl risk = new RiskAssRiskWsDtl();
