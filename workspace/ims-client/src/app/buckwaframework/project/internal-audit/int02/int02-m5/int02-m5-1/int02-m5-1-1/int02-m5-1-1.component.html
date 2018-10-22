@@ -1,6 +1,6 @@
-<div class="ui grid" style="margin: 2%">
+<div class="ui grid">
   <div class="sixteen wide column">
-    <div class="ui column segment">
+    <div class="ui attached segment">
       <h5 class="ui right aligned header">
         แบบ ปย.2
       </h5>
@@ -13,22 +13,23 @@
       <h5 class="ui center aligned header">
         สำหรับปีสิ้นสุดวันที่ 30 เดือน กันยายน พ.ศ.{{budgetYear}}
       </h5>
-      <div class="ui center aligned scrolled">
-        <table id="datatable" class="ui celled table striped selectable">
-          <thead>
-            <tr>
-              <th style="width: 20%">จุดที่ควรประเมิน</th>
-              <th style="width: 20%">ความเห็น / คำอธิบาย</th>
-              <th style="width: 18%">ผลการตรวจ<br> (กลุ่มตรวจสอบภายใน)</th>
-            </tr>
-          </thead>
-          <tbody id="tr">
 
-          </tbody>
-        </table>
-      </div>
+      <table class="ui small collapsing celled table aligned hover striped selectable" id="dataTable" style="width: 100%;">
+        <thead>
+          <tr>
+            <th style="width: 20%">จุดที่ควรประเมิน</th>
+            <th style="width: 20%">ความเห็น / คำอธิบาย</th>
+            <th style="width: 18%">ผลการตรวจ<br> (กลุ่มตรวจสอบภายใน)</th>
+          </tr>
+        </thead>
+        <tbody id="tr">
+
+        </tbody>
+      </table>
+
       <div class="ui center aligned last-button">
-        <button class="ui icon mini button" (click)="save()">บันทึก</button>
+        <button class="ui icon mini primary button" (click)="save()">บันทึก</button>
+        <button class="ui icon mini button" (click)="save()">ยกเลิก</button>
       </div>
     </div>
   </div>

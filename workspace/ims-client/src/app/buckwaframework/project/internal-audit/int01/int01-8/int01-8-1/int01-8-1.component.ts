@@ -65,8 +65,8 @@ export class Int0181Component implements OnInit {
         var dd = date.getDate() + "".length == 1 ? "0" + date.getDate() : date.getDate();
         console.log(dd);
         var mm = ((date.getMonth() + 1) + "").length == 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
-        var yyyy = date.getFullYear();
-        this.startDate = yyyy + "" + mm + "" + dd;
+        var ปปปป = date.getFullYear();
+        this.startDate = ปปปป + "" + mm + "" + dd;
         console.log(this.startDate);
       }
 
@@ -82,8 +82,8 @@ export class Int0181Component implements OnInit {
         var dd = date.getDate() + "".length == 1 ? "0" + date.getDate() : date.getDate();
         console.log(dd);
         var mm = ((date.getMonth() + 1) + "").length == 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
-        var yyyy = date.getFullYear();
-        this.endDate = yyyy + "" + mm + "" + dd;
+        var ปปปป = date.getFullYear();
+        this.endDate = ปปปป + "" + mm + "" + dd;
         console.log(this.endDate);
       }
     });

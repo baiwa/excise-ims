@@ -28,7 +28,7 @@ public class QuestionnaireHeader extends BaseEntity  {
 	@SequenceGenerator(name="IA_QTN_HEADER_CODE_GEN", sequenceName="IA_QTN_HEADER_CODE_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_QTN_HEADER_CODE_GEN")
 	@Column(name="QTN_HEADER_ID")
-	private long qtnHeaderId;
+	private Long qtnHeaderId;
 
 	@Column(name="QTN_HEADER_CODE")
 	private String qtnHeaderCode;
@@ -39,11 +39,11 @@ public class QuestionnaireHeader extends BaseEntity  {
 	public QuestionnaireHeader() {
 	}
 
-	public long getQtnHeaderId() {
+	public Long getQtnHeaderId() {
 		return this.qtnHeaderId;
 	}
 
-	public void setQtnHeaderId(long qtnHeaderId) {
+	public void setQtnHeaderId(Long qtnHeaderId) {
 		this.qtnHeaderId = qtnHeaderId;
 	}
 

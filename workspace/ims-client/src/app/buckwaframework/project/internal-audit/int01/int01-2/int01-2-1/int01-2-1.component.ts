@@ -32,8 +32,8 @@ export class Int0121Component implements OnInit {
   endDate: any = '';
   constructor(private router: Router,
     private ajax: AjaxService,
-    
-private authService: AuthService,
+
+    private authService: AuthService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService) {
     this.breadcrumb = [
@@ -56,8 +56,8 @@ private authService: AuthService,
         var dd = date.getDate() + "".length == 1 ? "0" + date.getDate() : date.getDate();
         console.log(dd);
         var mm = ((date.getMonth() + 1) + "").length == 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
-        var yyyy = date.getFullYear();
-        this.startDate = yyyy + "" + mm + "" + dd;
+        var ปปปป = date.getFullYear();
+        this.startDate = ปปปป + "" + mm + "" + dd;
         console.log(this.startDate);
       }
 
@@ -71,8 +71,8 @@ private authService: AuthService,
       onChange: (date, text) => {
         var dd = date.getDate() + "".length == 1 ? "0" + date.getDate() : date.getDate();
         var mm = ((date.getMonth() + 1) + "").length == 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
-        var yyyy = date.getFullYear();
-        this.endDate = yyyy + "" + mm + "" + dd;
+        var ปปปป = date.getFullYear();
+        this.endDate = ปปปป + "" + mm + "" + dd;
         console.log(this.endDate);
       }
     });

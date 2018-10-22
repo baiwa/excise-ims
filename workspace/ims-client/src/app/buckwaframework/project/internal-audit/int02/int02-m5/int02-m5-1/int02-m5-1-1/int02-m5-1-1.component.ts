@@ -62,6 +62,18 @@ export class Int02M511Component implements OnInit {
                 }
             };
         });
+        this.datatable = $("#dataTable").DataTable({
+            lengthChange: false,
+            searching: false,
+            ordering: false,
+            pageLength: 10,
+            processing: true,
+            serverSide: false,
+            paging: true,
+            language: {
+                processing: "encours....veuillez patienter"
+            }
+        });
 
 
         $("#tr").html(trData);
@@ -70,5 +82,7 @@ export class Int02M511Component implements OnInit {
     save() {
         alert("บันทึกละ เอาไงต่อ");
     }
+
+
 
 }
