@@ -313,13 +313,13 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
     this.coordinates = (<HTMLInputElement>(
       document.getElementById("coordinates")
     )).value;
-    //this.sendLineUser.destroy();
+    this.sendLineUser.destroy();
     this.initDatatable();
   };
 
   changeSector = () => {
     this.sector = (<HTMLInputElement>document.getElementById("sector")).value;
-    //this.sendLineUser.destroy();
+    this.sendLineUser.destroy();
     this.initDatatable();
   };
 

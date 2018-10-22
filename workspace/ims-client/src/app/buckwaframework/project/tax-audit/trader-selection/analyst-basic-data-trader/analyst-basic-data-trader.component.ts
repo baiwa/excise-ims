@@ -7,6 +7,7 @@ import { TextDateTH } from "../../../../common/helper/datepicker";
 import { BreadCrumb } from "models/breadcrumb";
 import { SummaryModel } from "projects/tax-audit/trader-selection/analyst-basic-data-trader/summaryFooter.model";
 import { AnalystBasicDataTraderService } from "projects/tax-audit/trader-selection/analyst-basic-data-trader/analyst-basic-data-trader.service";
+import { count } from "rxjs/operators";
 declare var $: any;
 @Component({
   selector: "app-analyst-basic-data-trader",
@@ -32,6 +33,8 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
   from: any;
   before: any;
   last: any;
+  countPay: number = 0;
+  countNonPay: number = 0;
   private currYear: any;
   private prevYear: any;
   exciseProductType: any;
@@ -44,6 +47,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
   loading: boolean;
   isOpen: any = 'open';
   formSearch: string = "";
+  productionType : string = "";
   toggle: boolean = false;
   summary: SummaryModel = new SummaryModel();
   coordinatesFlag: string = "";
@@ -345,38 +349,66 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
   }
   selectExciseProductType(productionType) {
     console.log(productionType);
+    this.productionType = productionType;
     this.coordinatesFlag = "1"
-    console.log(this.coordinatesFlag);
-    this.summary.taxData = productionType;
-    this.exciseProductType = productionType;
-    if (this.userManagementDt != null) {
-      this.userManagementDt.destroy();
-    }
-    this.initDatatable();
+    let formSearch = $("#formSearch").val();
+    let dateFrom = this.from;
+    let dateTo = this.month;
+    this.analystService.countList(this.productionType, this.coordinatesFlag,formSearch,dateFrom,dateTo).then(res => {
+      console.log("Count : ", res);
+      this.countPay = res;
+
+      this.summary.taxData = productionType;
+      this.exciseProductType = productionType;
+      if (this.userManagementDt != null) {
+        this.userManagementDt.destroy();
+      }
+      this.initDatatable();
+    });
+
+
   }
 
   selectExciseProductType2(productionType) {
     console.log(productionType);
+    this.productionType = productionType;
     this.coordinatesFlag = "2"
-    console.log(this.coordinatesFlag);
-    this.summary.taxData = productionType;
-    this.exciseProductType = productionType;
-    if (this.userManagementDt != null) {
-      this.userManagementDt.destroy();
-    }
-    this.initDatatable();
+    let formSearch = $("#formSearch").val();
+    let dateFrom = this.from;
+    let dateTo = this.month;
+    this.analystService.countList(this.productionType, this.coordinatesFlag,formSearch,dateFrom,dateTo).then(res => {
+
+      console.log("Count : ", res);
+      this.countPay = res;
+
+      this.summary.taxData = productionType;
+      this.exciseProductType = productionType;
+      if (this.userManagementDt != null) {
+        this.userManagementDt.destroy();
+      }
+      this.initDatatable();
+    });
+
   }
 
   selectExciseProductType3(productionType) {
     console.log(productionType);
+    this.productionType = productionType;
     this.coordinatesFlag = "3"
-    console.log(this.coordinatesFlag);
-    this.summary.taxData = productionType;
-    this.exciseProductType = productionType;
-    if (this.userManagementDt != null) {
-      this.userManagementDt.destroy();
-    }
-    this.initDatatable();
+    let formSearch = $("#formSearch").val();
+    let dateFrom = this.from;
+    let dateTo = this.month;
+    this.analystService.countList(this.productionType, this.coordinatesFlag,formSearch,dateFrom,dateTo).then(res => {
+      console.log("Count : ", res);
+      this.countPay = res;
+
+      this.summary.taxData = productionType;
+      this.exciseProductType = productionType;
+      if (this.userManagementDt != null) {
+        this.userManagementDt.destroy();
+      }
+      this.initDatatable();
+    });
   }
 
   replaceAllValue(data) {
@@ -404,11 +436,20 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
 
   search = () => {
     console.log(this.formSearch);
-    if (this.userManagementDt != null || this.userManagementDt != undefined) {
-      this.userManagementDt.destroy();
-    }
-    //$('#userManagementDt').DataTable().ajax.reload();
-    this.initDatatable();
+
+    let formSearch = $("#formSearch").val();
+    let dateFrom = this.from;
+    let dateTo = this.month;
+    this.analystService.countList(this.productionType, this.coordinatesFlag,formSearch,dateFrom,dateTo).then(res => {
+      console.log("Count : ", res);
+      this.countPay = res;     
+      this.summary.taxData = this.productionType;
+      this.exciseProductType = this.productionType;
+      if (this.userManagementDt != null) {
+        this.userManagementDt.destroy();
+      }
+      this.initDatatable();
+    });    
   }
 
   initDatatable(): void {
@@ -489,7 +530,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
       },
 
       columns: jsonMapping,
-      fnDrawCallback: (oSettings) => {
+      drawCallback: (oSettings) => {
         if ($(".amount").length > 0) {
           $(".amount").each(function () {
             if (this.innerHTML == "" || this.innerHTML == null || this.innerHTML == "0" || this.innerHTML == 0) {
@@ -499,6 +540,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
           });
         }
         this.summary.totalNumber = $('#userManagementDt').DataTable().page.info().recordsTotal
+        this.countNonPay = this.summary.totalNumber - this.countPay;
       },
       fixedColumns: {
         leftColumns: 2

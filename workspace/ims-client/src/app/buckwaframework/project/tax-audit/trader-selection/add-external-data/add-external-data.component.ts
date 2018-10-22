@@ -210,6 +210,7 @@ export class AddExternalDataComponent implements OnInit {
 
   changeCoordinates = () => {
     this.coordinates = $("#coordinates").val();
+    console.log(this.coordinates);
     this.userManagementDt.destroy();
     this.initDatatable();
   };

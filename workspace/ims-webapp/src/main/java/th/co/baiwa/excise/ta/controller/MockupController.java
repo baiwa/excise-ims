@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,8 +20,8 @@ import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.DataTableRequest;
 import th.co.baiwa.excise.domain.MockupVo;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.excise.ta.persistence.vo.AnalysisFromCountVo;
 import th.co.baiwa.excise.ta.persistence.vo.MockupForm;
-import th.co.baiwa.excise.ta.service.ListOfValueService;
 import th.co.baiwa.excise.ta.service.MockupService;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 
@@ -30,10 +31,7 @@ public class MockupController {
 
 	@Autowired
 	private MockupService mockupService;
-	
-	@Autowired
-	private ListOfValueService listOfValueService;
-	
+		
 	@Autowired
 	private PlanWorksheetHeaderService planWorksheetHeaderService;	
 	
@@ -46,6 +44,14 @@ public class MockupController {
 		DataTableAjax<MockupVo> listdata= mockupService.findAll("" , vo, date.getTime(), input.getMonth(),input.getExciseProductType(),input.getFormSearch(),input);
 		return listdata;
 	}
+	
+	@PostMapping("/countList")
+	@ResponseBody
+	public Long countListdata(@RequestBody AnalysisFromCountVo countVo) {		
+		Long listdata= mockupService.countListdata(countVo);
+		return listdata;
+	}
+	
 	
 	@PostMapping("/createWorkSheet")
 	@ResponseBody

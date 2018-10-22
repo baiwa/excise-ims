@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.ta.persistence.entity.ExciseRegistartionNumber;
+import th.co.baiwa.excise.ta.persistence.vo.AnalysisFromCountVo;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.utils.OracleUtils;
 
@@ -24,6 +25,39 @@ public class ExciseRegisttionNumberDao {
 
 	private final String sqlTaExciseId = " select D.*  from EXCISEADM.ta_excise_registtion_number D ";
 
+	public Long countListdataPay(AnalysisFromCountVo countVo) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT COUNT(1) FROM (SELECT DISTINCT TA_EXCISE_ID FROM");
+		sql.append(" (SELECT H.*");
+		sql.append(" FROM TA_EXCISE_REGISTTION_NUMBER H");
+		sql.append(" INNER JOIN TA_EXCISE_TAX_RECEIVE D");
+		sql.append(" ON H.TA_EXCISE_ID = D.TA_EXCISE_ID");
+		sql.append(" AND D.TA_EXCISE_TAX_RECEIVE_MONTH  IN");
+		sql.append(" (SELECT REPLACE(TO_CHAR( add_MONTHS( Sysdate, LEVEL-12 ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) Month_AFTER");
+		sql.append(" FROM dual CONNECT BY LEVEL <= 12) where SUBSTR(H.TA_EXCISE_ID,15,1)=? " );
+		sql.append(" AND H.TA_EXCISE_PRODUCT_TYPE=?");
+		List<Object> params = new ArrayList<>();
+		params.add(countVo.getCoordinatesFlag());
+		params.add(countVo.getProductionType());
+		
+		if (StringUtils.isNotBlank(countVo.getFormSearch())){
+            sql.append(" AND H.TA_EXCISE_OPERATOR_NAME LIKE ?");
+            sql.append(" OR H.TA_EXCISE_ID LIKE ?");
+            sql.append(" OR H.TA_EXCISE_FAC_ADDRESS LIKE ?");
+            sql.append(" OR H.TA_EXCISE_SECTOR_AREA LIKE ?");
+            sql.append(" OR H.TA_EXCISE_AREA LIKE ?");
+
+            params.add("%"+StringUtils.trim(countVo.getFormSearch())+"%");
+            params.add("%"+StringUtils.trim(countVo.getFormSearch())+"%");
+            params.add("%"+StringUtils.trim(countVo.getFormSearch())+"%");
+            params.add("%"+StringUtils.trim(countVo.getFormSearch())+"%");
+            params.add("%"+StringUtils.trim(countVo.getFormSearch())+"%");
+        }	
+		sql.append("))");
+		Long count = jdbcTemplate.queryForObject(sql.toString(), params.toArray(), Long.class);
+
+		return count;
+	}
 	public List<ExciseRegistartionNumber> queryByExciseId(String register, String exciseProductType,  List<String> conditionList, String formSearch) {
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlTaExciseId);

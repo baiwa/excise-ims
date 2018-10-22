@@ -16,6 +16,7 @@ import th.co.baiwa.excise.ia.persistence.dao.ExciseRegisttionNumberDao;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseTaxReceiveDao;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseRegistartionNumber;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseTaxReceive;
+import th.co.baiwa.excise.ta.persistence.vo.AnalysisFromCountVo;
 import th.co.baiwa.excise.ta.persistence.vo.MockupForm;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -265,9 +266,14 @@ public class MockupService {
 
 		return responseDataTable;
 	}
+	
+	public Long countListdata(AnalysisFromCountVo countVo) {
+		Long count = exciseRegisttionNumberDao.countListdataPay(countVo);
+		return count;
+	}
 
 	public void createWorkSheetService(MockupVo mockupVo, Date startBackDate, int month, String formSearch) {
-		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseId("", null,  null, formSearch);
+		exciseRegisttionNumberDao.queryByExciseId("", null,  null, formSearch);
 
 	}	
 
