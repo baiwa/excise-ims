@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,16 +22,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.excise.constant.MessageConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
-import th.co.baiwa.excise.ia.persistence.vo.Int111Form;
+import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int112Form;
 import th.co.baiwa.excise.ia.persistence.vo.Int112FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int112Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int11ShiftDateVo;
 import th.co.baiwa.excise.ia.service.IaFollowUpDepartmentService;
-import th.co.baiwa.excise.ia.service.IaFollowUpProjectService;
 
 @Controller
 @RequestMapping("api/ia/int112")
@@ -46,7 +42,7 @@ public class Int112Controller {
 	
 	@PostMapping("/search")
 	@ResponseBody
-	public ResponseDataTable<Int112Vo> search(@RequestBody Int112FormVo formVo) {
+	public DataTableAjax<Int112Vo> search(@RequestBody Int112FormVo formVo) {
 		return iaFollowUpDepartmentService.searchIaFollowUpDepartment(formVo);
 	}
 	
