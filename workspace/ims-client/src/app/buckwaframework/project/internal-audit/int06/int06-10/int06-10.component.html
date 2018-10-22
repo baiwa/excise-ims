@@ -15,7 +15,7 @@
             <label class="text-right full-width">ประเภทงบประมาณ</label>
           </div>
           <div class="four wide field ">
-              <select name="budget" id="budget" class="ui dropdown ai search full-width">
+              <select name="budget" id="budget" class="ui ai dropdown  search full-width">
                 <option value="">กรุณาเลือก</option>
                 <option *ngFor="let item of budgetList" value="{{item.lovId}}">{{item.value1}}</option>
                </select>
@@ -24,7 +24,7 @@
             <label class="text-right full-width">กิจกรรม</label>
           </div>
           <div class="four wide field ">
-              <select name="activity" id="activity" class="ui dropdown ai search full-width" >
+              <select name="activity" id="activity" class="ui ai dropdown  search full-width" >
                 <option value="">กรุณาเลือก</option>
                 <option *ngFor="let item of activityList" value="{{item.lovId}}">{{item.value1}}</option>
               </select>

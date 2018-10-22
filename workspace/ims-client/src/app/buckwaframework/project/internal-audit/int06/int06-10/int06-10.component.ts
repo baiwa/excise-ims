@@ -31,6 +31,7 @@ export class Int0610Component implements OnInit, AfterViewInit {
    }
 
   ngOnInit() {
+    $(".ui.dropdown.ai").dropdown().css('width', '100%');
     this.authService.reRenderVersionProgram('INT-06100');
     this.calenda();
     this.activity();
@@ -38,7 +39,7 @@ export class Int0610Component implements OnInit, AfterViewInit {
     this.dataTable();
   }
   ngAfterViewInit() {
-    $(".ui.dropdown.ai").dropdown().css('width', '100%');
+    
   }
 
   onSearch = () => {
