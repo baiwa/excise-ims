@@ -18,14 +18,12 @@ public class AnalysisTaxDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private final String SQL = "SELECT * FROM TA_PLAN_WORK_SHEET_HEADER WHERE FLAG != 'N' AND IS_DELETED='N' AND ROWNUM <= 10";
+	private final String SQL = "SELECT * FROM TA_PLAN_WORK_SHEET_HEADER WHERE FLAG != 'N' AND IS_DELETED='N' ";
 
 	public List<LabelValueBean> findAllExciseIdNotN() {
-
-		StringBuilder sql = new StringBuilder(SQL);
-
-		sql.append(" ORDER BY EXCISE_ID DESC ");
-		List<LabelValueBean> list = jdbcTemplate.query(sql.toString(), exciseIdRowmapper);
+		String sql = "SELECT DISTINCT EXCISE_ID FROM TA_PLAN_WORK_SHEET_HEADER WHERE FLAG != 'N' AND IS_DELETED='N' ORDER BY EXCISE_ID ASC";
+		
+		List<LabelValueBean> list = jdbcTemplate.query(sql, exciseIdRowmapper);
 		return list;
 	}
 

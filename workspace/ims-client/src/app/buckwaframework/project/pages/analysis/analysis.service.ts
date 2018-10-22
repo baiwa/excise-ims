@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AjaxService } from 'services/ajax.service';
-
+declare var $: any;
 @Injectable()
 export class AnalysisService {
     constructor(
@@ -18,13 +18,21 @@ export class AnalysisService {
 
     }
 
-    changeExciseId =(exciseId): Promise<any>=>{
+    changeExciseId = (exciseId): Promise<any> => {
         let url = "ta/analysis/findByExciseId";
         return new Promise((resolve, reject) => {
             this.ajax.post(url, JSON.stringify(exciseId), res => {
                 resolve(res.json())
             })
         });
-
     }
+
+    clear=()=>{
+        $("#exciseId").dropdown('restore defaults');
+        $("#coordinates").val('');
+        $("#type").val('');
+        $("#dateTo").val('');
+        $("#dateFrom").val('');
+        $("#userNumber").val('');
+      }
 }

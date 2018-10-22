@@ -200,7 +200,7 @@ export var formatter = (what: string = "") => {
         date: function(date, settings) {
           let _month = toDateLocale(date)[0].split("/")[1];
           let _year = toDateLocale(date)[0].split("/")[2];
-          return `${_month}/${_year}`;
+          return digit(_month)+"/"+_year;
         }
       };
 

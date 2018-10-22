@@ -77,6 +77,10 @@ export class AnalysisPage implements OnInit {
     this.router.navigate(["/result-analysis"]);
   }
 
+  clear=()=>{
+    this.analysisService.clear();
+  }
+
   exciseIdLists = () => {
     this.analysisService.exciseIdList().then(res => {
       this.exciseIdList = res;
@@ -86,10 +90,11 @@ export class AnalysisPage implements OnInit {
   }
 
   changeExciseId = (event) => {
+    this.loading = true;
     let exciseId = event.target.value;
 
     this.analysisService.changeExciseId(exciseId).then(res => {
-
+      this.loading = false;
       this.formControl.get('coordinates').setValue( res.productType);
       this.form.coordinates = res.productType;
 

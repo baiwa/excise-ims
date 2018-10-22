@@ -13,7 +13,7 @@
                         <div class="one wide field"></div>
                         <div class="three wide field required"><label class="text-right full-width">เลขทะเบียนสรรพสามิต</label></div>
                         <div class="three wide field " [ngClass]="{ 'error': submitted && f.exciseId.invalid }" >
-                            <select class="ui dropdown full-width" formControlName="exciseId" name="exciseId" id="exciseId" (change)="changeExciseId($event)" required>
+                            <select class="ui dropdown search selection  full-width" formControlName="exciseId" name="exciseId" id="exciseId" (change)="changeExciseId($event)" required>
                                 <option value="">เลือก</option>
                                 <option *ngFor="let item of exciseIdList" value="{{item.label}}">{{item.label}}</option>
                             </select>
@@ -46,7 +46,7 @@
 
                     <div class="inline fields">
                         <div class="two wide field"></div>
-                        <div class="two wide field"><label class="text-right full-width">ประเภท</label></div>
+                        <div class="two wide field "><label class="text-right full-width">ประเภท</label></div>
                         <div class="three wide field required">
                             <input type="text" disabled class="custom-readonly" formControlName="type" name="type" id="type">
                         </div>
@@ -75,7 +75,7 @@
                                 <div class="center aligned row">
                                     <div class="column">
                                         <button class="ui mini primary button" type="submit"><i class="table icon"></i> วิเคราะห์ข้อมูลเบื้องต้น</button>                                        
-                                        <div class="ui mini button" (click)="resetSearch()">
+                                        <div class="ui mini button" (click)="clear()">
                                             <i class="refresh icon"></i> ล้างข้อมูล
                                         </div>
                                     </div>
