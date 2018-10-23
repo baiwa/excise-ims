@@ -2,7 +2,7 @@
 <div class="ui grid">
   <div class="sixteen wide column">
     <h2 class="ui header">วิเคราะห์ข้อมูลเบื้องต้น</h2>
-    <div class="ui top attached header">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>วิเคราะห์ข้อมูลเบื้องต้น</span>
     </div>
 
@@ -30,7 +30,7 @@
             <div class="three wide field required"><label class="text-right full-width">รอบระยะเวลาการตรวจสอบ</label></div>
             <div class="three wide field ui calendar" required id="dateF" [ngClass]="{ 'error': submitted && f.dateFrom.invalid }">
               <div class="ui input left icon">
-                <i class="time icon"></i>
+                <i class="calendar alter nate outline icon"></i>
                 <input type="calendar" readonly="" id="dateFrom" name="dateFrom" [attr.required]="true" autocomplete="off"
                   placeholder="ดด/ปปปป" formControlName="dateFrom">
               </div>
@@ -38,7 +38,7 @@
             <div class="three wide field required"><label class="text-right full-width">ถึง</label></div>
             <div class="three wide field ui calendar required" id="dateT" [ngClass]="{ 'error': submitted && f.dateTo.invalid }">
               <div class="ui input left icon">
-                <i class="time icon"></i>
+                <i class="calendar alter nate outline icon"></i>
                 <input type="calendar" readonly="" id="dateTo" name="dateTo" [attr.required]="true" autocomplete="off"
                   placeholder="ดด/ปปปป" formControlName="dateTo">
               </div>

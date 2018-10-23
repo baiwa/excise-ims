@@ -1,35 +1,34 @@
-
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 
 <div class="ui grid">
-    <div class="sixteen wide column">
-        <h2 class="ui header">ค้นหาแผนการตรวจปฏิบัติการ</h2>
-        <div class="ui top attached header">
-            <span>ค้นหาแผนการตรวจปฏิบัติการ</span>
-        </div>
-        <div class="ui attached segment">
-            <div class="ui form">
-                <div class="inline fields">
-                    <div class="four wide field "></div>
-                    <div class="two wide field ">
-                        <label>ปีงบประมาณ </label>
-                    </div>
-                    <div class="ui calendar" id="calendar">
-                        <div class="ui input left icon">
-                            <i class="time icon"></i>
-                            <input type="calendar" id="planStart" name="planStart" [attr.required]="true"   autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="four wide field "></div>
-                </div>
-                <br>
-                <div class="inline fields ui center aligned grid">
-                    <button class="ui mini primary button" (click)="search()">ค้นหา</button>
-                    <div class="one wide field "></div>
-                    <button class="ui mini button">ยกเลิก</button>
-                </div>
-                <br>
-                <br>
-
-
+  <div class="sixteen wide column">
+    <h2 class="ui header">ค้นหาแผนการตรวจปฏิบัติการ</h2>
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>ค้นหาแผนการตรวจปฏิบัติการ</span>
+    </div>
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="four wide field "></div>
+          <div class="two wide field ">
+            <label>ปีงบประมาณ </label>
+          </div>
+          <div class="ui calendar" id="calendar">
+            <div class="ui input left icon">
+              <i class="calendar alter nate outline icon"></i>
+              <input type="calendar" id="planStart" name="planStart" [attr.required]="true" autocomplete="off">
             </div>
+          </div>
+          <div class="four wide field "></div>
+        </div>
+        <br>
+        <div class="inline fields ui center aligned grid">
+          <button class="ui mini primary button" (click)="search()">ค้นหา</button>
+          <div class="one wide field "></div>
+          <button class="ui mini button">ยกเลิก</button>
+        </div>
+        <br>
+        <br>
+
+
+      </div>

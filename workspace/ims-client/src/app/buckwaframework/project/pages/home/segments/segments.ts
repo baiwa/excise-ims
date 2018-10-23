@@ -28,11 +28,11 @@ export class Segments {
     selectSegment(what: string): string {
         switch (what) {
             case '':
-                return `<div class="ui segments">\r\n<div class="ui top attached header">Header</div>\r\n\t<div class="ui bottom segment">\r\n\t\t<p>Content</p>\r\n\t</div>\r\n</div>`;
+                return `<div class="ui segments">\r\n<div class="ui top centered attached header segment" style="background: #1e83db;color: white">Header</div>\r\n\t<div class="ui bottom segment">\r\n\t\t<p>Content</p>\r\n\t</div>\r\n</div>`;
             case 'loading':
-                return `<div class="ui segments">\r\n<div class="ui top attached header">Header</div>\r\n\t<div class="ui bottom segment">\r\n\t\t<div class="ui active dimmer" *ngIf="true">\r\n\t\t\t<div class="ui small text loader">Loading</div>\r\n\t\t</div>\r\n\t\t<p>Content</p>\r\n\t</div>\r\n</div>`;
+                return `<div class="ui segments">\r\n<div class="ui top centered attached header segment" style="background: #1e83db;color: white">Header</div>\r\n\t<div class="ui bottom segment">\r\n\t\t<div class="ui active dimmer" *ngIf="true">\r\n\t\t\t<div class="ui small text loader">Loading</div>\r\n\t\t</div>\r\n\t\t<p>Content</p>\r\n\t</div>\r\n</div>`;
             case 'loading-inverted':
-                return `<div class="ui segments">\r\n<div class="ui top attached header">Header</div>\r\n\t<div class="ui bottom segment">\r\n\t\t<div class="ui inverted active dimmer" *ngIf="true">\r\n\t\t\t<div class="ui small text loader">Loading</div>\r\n\t\t</div>\r\n\t\t<p>Content</p>\r\n\t</div>\r\n</div>`;
+                return `<div class="ui segments">\r\n<div class="ui top centered attached header segment" style="background: #1e83db;color: white">Header</div>\r\n\t<div class="ui bottom segment">\r\n\t\t<div class="ui inverted active dimmer" *ngIf="true">\r\n\t\t\t<div class="ui small text loader">Loading</div>\r\n\t\t</div>\r\n\t\t<p>Content</p>\r\n\t</div>\r\n</div>`;
         }
     }
 }
