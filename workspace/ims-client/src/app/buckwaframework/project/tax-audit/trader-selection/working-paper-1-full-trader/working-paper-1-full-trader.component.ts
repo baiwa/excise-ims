@@ -41,7 +41,11 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
   flag: any = 'N';
   coordinates: any;
 
-  constructor(private route: ActivatedRoute, private ex: ExciseService) {
+  constructor(
+    private route: ActivatedRoute, 
+    private ex: ExciseService,
+    private ajax : AjaxService
+    ) {
     this._num1 = new Array();
     this._num2 = new Array();
     this._percent1 = new Array();
@@ -51,6 +55,12 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
   ngOnInit() {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
+
+    const URL = "combobox/controller/getCoordinates";
+    this.ajax.post(URL, {}, res => {
+      console.log("Coordinates : ",res.json());
+      this.listItem = res.json();
+    });
     //call ExciseService
     var {
       before,
@@ -167,6 +177,10 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
 
   ngAfterViewInit() { }
 
+  searchAll=()=>{
+    $("#prod").dropdown('restore defaults');
+  }
+
   toggleBar() {
     if (this.toggle) {
       this.toggle = false;
@@ -175,8 +189,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     }
   }
   
-  filterDataByCriteria(index) {
-    console.log(index);
+  filterDataByCriteria(index) {    
     this.indexFilter = index;
     if (this.userManagementDt != null) {
       this.userManagementDt.destroy();
@@ -185,8 +198,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     this.initDatatable();
   }
 
-  filterAllDataByCriteria() {
-    console.log("filterAllDataByCriteria");
+  filterAllDataByCriteria() {    
     this.indexFilter = "";
     if (this.userManagementDt != null) {
       this.userManagementDt.destroy();
@@ -207,21 +219,6 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     json += ' "serverSide": true, ';
     json += ' "paging": true, ';
     json += ' "scrollX": true, ';
-    json += ' "language": {';
-    json += '   "info": "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",';
-    json += '   "paginate": {';
-    json += '     "first": "หน้าแรก",';
-    json += '     "last": "หน้าสุดท้าย",';
-    json += '     "next": "ถัดไป",';
-    json += '     "previous": "ก่อนหน้า"';
-    json += '   },';
-    json += '   "lengthMenu": "แสดง _MENU_ รายการ",';
-    json += '   "loadingRecords": "กำลังดาวน์โหลด...",';
-    json += '   "processing": "กำลังประมวลผล...",';
-    json += '   "search": "ค้นหาทั้งหมด",';
-    json += '   "infoEmpty": "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",';
-    json += '   "emptyTable": "ไม่พบข้อมูล"';
-    json += ' },';
     json += ' "pagingType": "full_numbers", ';
     json += ' "fixedColumns" : { "leftColumns" : 2}, ';
     json += " ";
@@ -235,6 +232,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     json += ' "num2": "' + this.num2 + '", ';
     json += ' "percent1": "' + this.percent1 + '", ';
     json += ' "percent2": "' + this.percent2 + '", ';
+    json += ' "productType": "' +(this.exciseProductType == undefined ? "" : this.exciseProductType) + '", ';
     json += ' "analysNumber": "' + this.analysNumber + '" ';
     json += " } ";
     json += " }, ";
@@ -269,11 +267,11 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     json += ' { "data": "otherCoordinates" } ';
     json += "] } ";
     let jsonMaping = JSON.parse(json);
-    this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
+    this.userManagementDt = $("#userManagementDt").DataTableTh(jsonMaping);
   }
 
-  changeCoordinates = () => {
-    this.coordinates = $("#coordinates").val();
+  changeProd = () => {
+    this.exciseProductType = $("#prod").val();    
     if (this.userManagementDt != null) {
       this.userManagementDt.destroy();
     }

@@ -308,7 +308,7 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
           var data = res.json();
           if (data.messageId == 3) {
             this.messageBarService.successModal(data.messageTh, "สำเร็จ");
-            this.sendLineUser.destroy().draw();
+            this.sendLineUser.destroy();
             this.initDatatable();
 
           } else {
