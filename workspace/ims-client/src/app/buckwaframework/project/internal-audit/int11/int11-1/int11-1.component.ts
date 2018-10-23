@@ -5,6 +5,7 @@ import { MessageBarService } from '../../../../common/services/message-bar.servi
 import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 import { AuthService } from 'services/auth.service';
 import { Component, OnInit } from '@angular/core';
+
 declare var $: any;
 @Component({
   selector: 'int11-1',
@@ -67,8 +68,9 @@ export class Int111Component implements OnInit {
       serverSide: true,
       paging: false,
       scrollX: true,
-      scrollY: '50vh',
-      scrollCollapse: true,
+      // scrollY: '50vh',
+      // scrollCollapse: true,
+      deferLoading: 10,
       ajax: {
         type: "POST",
         url: URL,
@@ -446,10 +448,10 @@ export class Int111Component implements OnInit {
   searchData() {
     $("#searchFlag").val("TRUE");
     $("#dataTable").DataTable().ajax.reload();
+    $("#dataTable").DataTable().ajax.reload();
   }
 
   clearData() {
-    console.log("Clear");
     $('#projectName').val('');
     $("#status").dropdown('restore defaults');
     $("#searchFlag").val("FALSE");

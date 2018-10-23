@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { MessageBarService } from "services/message-bar.service";
 import { AuthService } from "services/auth.service";
 import { BreadCrumb } from "models/breadcrumb";
+import { DecimalFormat } from "helpers/decimalformat";
 declare var $: any;
 const URL = {
   DROPDOWN: "combobox/controller/getDropByTypeAndParentId",
@@ -199,7 +200,8 @@ export class Int0181Component implements OnInit {
 
             console.log("ROW", row.TrnDate);
             if (row.TrnDate != null && row.TrnDate != undefined && row.TrnDate != '') {
-              return row.TrnDate.substr(6) + '/' + row.TrnDate.substr(5, 6) + '/' + row.TrnDate.substr(0, 4);
+              console.log("ROW", row.TrnDate.substr(6) + '/' + row.TrnDate.substr(4, 5) + '/' + row.TrnDate.substr(0, 4));
+              return row.TrnDate.substr(6) + '/' + row.TrnDate.substr(6, 6) + '/' + row.TrnDate.substr(0, 4);
             } else {
               return '-';
             }
@@ -211,8 +213,8 @@ export class Int0181Component implements OnInit {
         //{ data: "TrnDate" },
         {
           render: function (data, type, row, meta) {
-
-            return row.NettaxAmount + row.NetLocAmount;
+            var df = new DecimalFormat("###,###.00");
+            return df.format(Number(row.NettaxAmount) + Number(row.NetLocAmount));
 
           },
           className: "right"
@@ -270,6 +272,10 @@ export class Int0181Component implements OnInit {
 
       }
     });
+  }
+  public static moneyFormatDecimal(money) {
+    var df = new DecimalFormat("###,###.00");
+    return df.format(money);
   }
 
 

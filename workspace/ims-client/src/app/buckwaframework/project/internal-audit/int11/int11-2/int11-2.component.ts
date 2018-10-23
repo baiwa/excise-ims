@@ -25,6 +25,7 @@ export class Int112Component implements OnInit {
   distrList: any[];
   statusList: any[];
   form : Int112Form = new Int112Form();
+  searchFlag: string = "FALSE";
 
  // BreadCrumb
  breadcrumb: BreadCrumb[];
@@ -60,7 +61,7 @@ export class Int112Component implements OnInit {
     $(".follow-department-dropdown").dropdown().css('width', '100%');
   }
 
-  initDatatable =()=> {
+  initDatatable = () => {
     const URL = AjaxService.CONTEXT_PATH + "ia/int112/search";
     this.datatable = $("#dataTable").DataTable({
       lengthChange: false,
@@ -68,20 +69,24 @@ export class Int112Component implements OnInit {
       ordering: false,
       pageLength: 10,
       processing: true,
-      serverSide: false,
+      serverSide: true,
       paging: false,
       scrollX: true,
+      // scrollY: '50vh',
+      // scrollCollapse: true,
+      deferLoading: 10,
       ajax: {
         type: "POST",
         url: URL,
         contentType: "application/json",
-        data: function (d) {
-          return JSON.stringify($.extend({
+        data: (d) => {
+          return JSON.stringify($.extend({}, d, {
             "exciseDepartment": $('#exciseDepartment').val(),
             "exciseRegion": $('#exciseRegion').val(),
             "exciseDistrict": $('#exciseDistrict').val(),
-            "status": $('#status').val()
-          }, d, {}));
+            "status": $('#status').val(),
+            "searchFlag": $("#searchFlag").val()
+          }));
         }
       },
       columns: [
@@ -506,6 +511,8 @@ export class Int112Component implements OnInit {
   }
 
   searchData() {
+    $("#searchFlag").val("TRUE");
+    $("#dataTable").DataTable().ajax.reload();
     $("#dataTable").DataTable().ajax.reload();
   }
 
@@ -517,8 +524,8 @@ export class Int112Component implements OnInit {
     this.status = "";
     this.regionList = [];
     this.distrList = [];
+    $("#searchFlag").val("FALSE");
     $(".follow-department-dropdown").dropdown('restore defaults');
-
     this.searchData();
   }
 

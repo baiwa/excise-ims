@@ -28,18 +28,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.constant.IaConstant.IA_REGIS_TRACK_CONTROL.STATUS;
 import th.co.baiwa.excise.domain.LabelValueBean;
+import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.IaFollowUpDepartmentDao;
 import th.co.baiwa.excise.ia.persistence.entity.IaFollowUpDepartment;
-import th.co.baiwa.excise.ia.persistence.entity.IaFollowUpProject;
 import th.co.baiwa.excise.ia.persistence.repository.IaFollowUpDepartmentRepository;
-import th.co.baiwa.excise.ia.persistence.vo.Int111Form;
 import th.co.baiwa.excise.ia.persistence.vo.Int112Form;
 import th.co.baiwa.excise.ia.persistence.vo.Int112FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int112Vo;
@@ -147,11 +145,19 @@ public class IaFollowUpDepartmentService {
 	@Autowired
 	private IaFollowUpDepartmentRepository iaFollowUpDepartmentRepository;
 	
-	public ResponseDataTable<Int112Vo> searchIaFollowUpDepartment(Int112FormVo formVo) {
-		ResponseDataTable<Int112Vo> response = new ResponseDataTable<Int112Vo>();
-		List<Int112Vo> iaFollowUpDepartmentList = iaFollowUpDepartmentDao.searchCriteria(formVo);
-		response.setData(iaFollowUpDepartmentList);
-		return response;
+	public DataTableAjax<Int112Vo> searchIaFollowUpDepartment(Int112FormVo formVo) {
+		DataTableAjax<Int112Vo> dataTableAjax = new DataTableAjax<Int112Vo>();
+		
+		if ("TRUE".equalsIgnoreCase(formVo.getSearchFlag())) {
+			List<Int112Vo> iaFollowUpDepartmentList = iaFollowUpDepartmentDao.searchCriteria(formVo);
+			
+			dataTableAjax.setDraw(formVo.getDraw() + 1);
+			dataTableAjax.setRecordsTotal(Long.valueOf(iaFollowUpDepartmentList.size()));
+			dataTableAjax.setRecordsFiltered(Long.valueOf(iaFollowUpDepartmentList.size()));
+			dataTableAjax.setData(iaFollowUpDepartmentList);
+		}
+		
+		return dataTableAjax;
 	}
 	
 	public List<LabelValueBean> getDepartmentDropdown() {

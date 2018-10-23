@@ -1,83 +1,81 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
-    <div class="sixteen wide column">
-        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-            <h3>ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต</h3>
-        </div>
-        <div class="ui bottom attached segment">
-            <form class="ui sixteen wide grid" (submit)="onSubmit(f)" #f="ngForm">
-                <div class="sixteen wide column">
-                    <div class="ui form">
-                        <div class="inline fields">
-                            <div class="three wide field">
-                                <label class="text-right full-width">สรรพสามิตภาค</label>
-                            </div>
-                            <div class="five wide field {{ f.submitted && f.controls.travelTo1.invalid ? 'error' : '' }}">
-                                <select class="ui dropdown search selection" id="travelTo1" name="travelTo1" ngModel
-                                    (change)="dropdown($event, 'comboBox2')">
-                                    <option value="">เลือก</option>
-                                    <option *ngFor="let data of comboBox1 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
-                                </select>
-                            </div>
-                            <div class="two wide field">
-                                <label class="text-right full-width">สรรพสามิตพื้นที่</label>
-                            </div>
-                            <div class="five wide field">
-                                <select class="ui dropdown search selection" id="travelTo2" name="travelTo2" ngModel
-                                    (change)="dropdown($event, 'comboBox3')">
-                                    <option value="">เลือก</option>
-                                    <option *ngFor="let data of comboBox2 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="inline fields">
-                            <div class="three wide field">
-                                <label class="text-right full-width">สรพพสามิตสาขา</label>
-                            </div>
-                            <div class="five wide field">
-                                <select class="ui dropdown search selection" id="travelTo3" name="travelTo3" ngModel>
-                                    <option value="">เลือก</option>
-                                    <option *ngFor="let data of comboBox3 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
-                                </select>
-                            </div>
-                            <div class="two wide field ">
-                                <label class="text-right full-width">วันที่</label>
-                            </div>
-                            <div class="two wide field {{f.submitted && f.controls.startDate.invalid ? 'error' : ''}}">
-                                <div class="ui calendar full-width" id="calendar1">
-                                    <div class="ui input left icon">
-                                        <i class="calendar alternate icon"></i>
-                                        <input type="text" placeholder="วัน/เดือน/ปี" name="startDate" id="startDate"
-                                            autocomplete="off" ngModel required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="one wide field">
-                                <label class="text-center full-width">ถึง</label>
-                            </div>
-                            <div class="two wide field {{f.submitted && f.controls.endDate.invalid ? 'error' : ''}}">
-                                <div class="ui calendar full-width" id="calendar2">
-                                    <div class="ui input left icon">
-                                        <i class="calendar alternate icon"></i>
-                                        <input type="text" placeholder="วัน/เดือน/ปี" name="endDate" id="endDate"
-                                            autocomplete="off" ngModel required>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sixteen wide center aligned column">
-                    <button class="ui primary mini button" type="submit">
-                        <i class="search icon"></i>
-                        ค้นหา
-                    </button>
-                    <button class="ui mini button" type="reset" (click)="reset()">
-                        <i class="refresh icon"></i>
-                        ล้างข้อมูล
-                    </button>
-                </div>
-            </form>
-        </div>
+  <div class="sixteen wide column">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <h3>ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต</h3>
     </div>
+    <div class="ui bottom attached segment">
+      <form class="ui sixteen wide grid" (submit)="onSubmit(f)" #f="ngForm">
+        <div class="sixteen wide column">
+          <div class="ui form">
+            <div class="inline fields">
+              <div class="three wide field">
+                <label class="text-right full-width">สรรพสามิตภาค</label>
+              </div>
+              <div class="five wide field {{ f.submitted && f.controls.travelTo1.invalid ? 'error' : '' }}">
+                <select class="ui dropdown search selection" id="travelTo1" name="travelTo1" ngModel (change)="dropdown($event, 'comboBox2')">
+                  <option value="">เลือก</option>
+                  <option *ngFor="let data of comboBox1 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                </select>
+              </div>
+              <div class="two wide field">
+                <label class="text-right full-width">สรรพสามิตพื้นที่</label>
+              </div>
+              <div class="five wide field">
+                <select class="ui dropdown search selection" id="travelTo2" name="travelTo2" ngModel (change)="dropdown($event, 'comboBox3')">
+                  <option value="">เลือก</option>
+                  <option *ngFor="let data of comboBox2 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="inline fields">
+              <div class="three wide field">
+                <label class="text-right full-width">สรรพสามิตสาขา</label>
+              </div>
+              <div class="five wide field">
+                <select class="ui dropdown search selection" id="travelTo3" name="travelTo3" ngModel>
+                  <option value="">เลือก</option>
+                  <option *ngFor="let data of comboBox3 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                </select>
+              </div>
+              <div class="two wide field ">
+                <label class="text-right full-width">วันที่</label>
+              </div>
+              <div class="two wide field {{f.submitted && f.controls.startDate.invalid ? 'error' : ''}}">
+                <div class="ui calendar full-width" id="calendar1">
+                  <div class="ui input left icon">
+                    <i class="calendar alternate icon"></i>
+                    <input type="text" placeholder="วัน/เดือน/ปี" name="startDate" id="startDate" autocomplete="off"
+                      ngModel required>
+                  </div>
+                </div>
+              </div>
+              <div class="one wide field">
+                <label class="text-center full-width">ถึง</label>
+              </div>
+              <div class="two wide field {{f.submitted && f.controls.endDate.invalid ? 'error' : ''}}">
+                <div class="ui calendar full-width" id="calendar2">
+                  <div class="ui input left icon">
+                    <i class="calendar alternate icon"></i>
+                    <input type="text" placeholder="วัน/เดือน/ปี" name="endDate" id="endDate" autocomplete="off"
+                      ngModel required>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sixteen wide center aligned column">
+          <button class="ui primary mini button" type="submit">
+            <i class="search icon"></i>
+            ค้นหา
+          </button>
+          <button class="ui mini button" type="reset" (click)="reset()">
+            <i class="refresh icon"></i>
+            ล้างข้อมูล
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

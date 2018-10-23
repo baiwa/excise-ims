@@ -86,13 +86,17 @@
         </div>
 
       </div>
-      <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 150%;">
+    </div>
+  </div>
+</div>
+
+  <div class="ui segment {{loading ? 'loading' : ''}}">
+      <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%;">
         <thead>
           <tr>
             <th rowspan="2" style="text-align: center !important;">
               <div class="ui checkbox check-all">
                 <input type="checkbox" (click)="clickCheckAll($event)">
-                <label></label>
               </div>
             </th>
             <th rowspan="2" style="text-align: center !important;">สำนักงานสรรพสามิต</th>
@@ -154,14 +158,8 @@
           </button>
         </div>
       </div>
-
-    </div>
     <br/>
-
-
   </div>
-</div>
-
 <!-- modol close -->
 <div class="ui modal" id="modolClose">
     <div class="header">
@@ -173,7 +171,8 @@
         <div class="field">
           <textarea id="noteclosejob"></textarea>
         </div>
-      </div>
+        <input type="hidden" id="searchFlag" name="searchFlag">
+    </div>
     </div>
     <div class="actions">
       <div class="ui primary button" (click)="onClicksavenote()">

@@ -56,7 +56,7 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
     this.ajax.post(URL, {}, res => {
       this.coordinatesArr = res.json();
     });
-    
+
     //get Sector in select option
     const URL2 = "combobox/controller/getDropByTypeAndParentId";
     this.ajax.post(URL2, { type: "SECTOR_VALUE" }, res => {
@@ -120,7 +120,7 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
       '<tr><th rowspan="2" style="text-align: center !important"><input type="checkbox" name="select-all" id="select-all"></th>' +
       '<th rowspan="2" style="text-align: center !important">ลำดับ</th>' +
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
-      
+
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
@@ -155,11 +155,11 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
       "</th>" +
       "</tr>";
 
-      
+
   }
 
   ngAfterViewInit() {
-     this.initDatatable();
+    this.initDatatable();
   }
 
   initDatatable(): void {
@@ -167,7 +167,7 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
     //   this.sendLineUser.destroy();
     // }
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
-    var sendLineUserCheckbox = (this.sendLineUser = $("#sendLineUser").DataTable({      
+    var sendLineUserCheckbox = (this.sendLineUser = $("#sendLineUser").DataTable({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -176,6 +176,21 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
       paging: false,
       pagingType: "full_numbers",
       scrollX: true,
+      language: {
+        info: "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+        paginate: {
+          first: "หน้าแรก",
+          last: "หน้าสุดท้าย",
+          next: "ถัดไป",
+          previous: "ก่อนหน้า"
+        },
+        lengthMenu: "แสดง _MENU_ รายการ",
+        loadingRecords: "กำลังดาวน์โหลด...",
+        processing: "กำลังประมวลผล...",
+        search: "ค้นหาทั้งหมด",
+        infoEmpty: "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",
+        emptyTable: "ไม่พบข้อมูล",
+      },
       // fixedColumns: {
       //   leftColumns: 3
       // },
@@ -209,7 +224,7 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
           className: "center"
         },
         { data: "exciseId", className: "center" },
-        
+
         { data: "companyName" },
         { data: "companyName" },
         { data: "exciseOwnerArea1" },
