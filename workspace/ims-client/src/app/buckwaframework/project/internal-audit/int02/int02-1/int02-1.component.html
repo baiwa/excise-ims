@@ -1,8 +1,8 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
   <div class="sixteen wide column">
-    
-    <div class="ui top attached header">
+
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>แบบสอบถามระบบการควบคุมภายใน</span>
     </div>
 
@@ -43,8 +43,11 @@
                 <div class="ui input">
                   <div class="ui calendar" id="calendar">
                     <div class="ui input {{ checkValid('calendar_data', f) ? 'error' : ''  }} ">
-                      <input type="calendar" readonly="" placeholder="ปี" id="calendar_data" name="calendar_data"
-                        autocomplete="off" ngModel>
+                      <div class="ui input left icon">
+                        <i class="calendar alter nate outline icon"></i>
+                        <input type="calendar" readonly="" placeholder="ปี" id="calendar_data" name="calendar_data"
+                          autocomplete="off" ngModel>
+                      </div>
                     </div>
                   </div>
                 </div>
