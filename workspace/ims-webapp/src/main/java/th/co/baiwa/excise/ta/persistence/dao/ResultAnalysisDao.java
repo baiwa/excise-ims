@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.excise.ta.persistence.vo.ResultAnalysisRequestvo;
 import th.co.baiwa.excise.ta.persistence.vo.ResultAnalysisVo;
 import th.co.baiwa.excise.utils.OracleUtils;
 
@@ -18,25 +19,25 @@ public class ResultAnalysisDao {
 	private JdbcTemplate jdbcTemplate;
 
 	/*ProdcutsTax*/
-	public Long countfindProdcutsTax() {
+	public Long countfindProdcutsTax(ResultAnalysisRequestvo vo) {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT T1.PS_03_07_LIST ,T1.PS_03_07_DETAIL, T2.PS_07_04_DETAIL , (T1.PS_03_07_DETAIL - T2.PS_07_04_DETAIL) DIFF FROM TA_PS_03_07 T1");
-		sql.append(" INNER JOIN TA_PS_07_04 T2 ON T1.EXCISE_ID = T2.EXCISE_ID");
-        sql.append(" ORDER BY T1.EXCISE_ID DESC");
-
+		sql.append(" INNER JOIN TA_PS_07_04 T2 ON T1.EXCISE_ID = T2.EXCISE_ID AND T1.PS_03_07_LIST = T2.PS_07_04_LIST");
+        sql.append(" WHERE T1.EXCISE_ID = ? ORDER BY T1.EXCISE_ID DESC");
+        
 		String countSql = OracleUtils.countForDatatable(sql.toString());
-		Long count = jdbcTemplate.queryForObject(countSql, Long.class);
+		Long count = jdbcTemplate.queryForObject(countSql, new Object[] {vo.getExciseId()}, Long.class);
 		return count;
 	}
 
-	public List<ResultAnalysisVo> findProdcutsTax() {
+	public List<ResultAnalysisVo> findProdcutsTax(ResultAnalysisRequestvo vo) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT T1.PS_03_07_LIST ,T1.PS_03_07_DETAIL, T2.PS_07_04_DETAIL , (T1.PS_03_07_DETAIL - T2.PS_07_04_DETAIL) DIFF FROM TA_PS_03_07 T1");
-		sql.append(" INNER JOIN TA_PS_07_04 T2 ON T1.EXCISE_ID = T2.EXCISE_ID");
-		sql.append(" ORDER BY T1.EXCISE_ID DESC");
+		sql.append(" INNER JOIN TA_PS_07_04 T2 ON T1.EXCISE_ID = T2.EXCISE_ID AND T1.PS_03_07_LIST = T2.PS_07_04_LIST");
+        sql.append(" WHERE T1.EXCISE_ID = ? ORDER BY T1.EXCISE_ID DESC");        
 		
-		List<ResultAnalysisVo> list = jdbcTemplate.query(sql.toString(), prodcutsTaxamRowmapper);
+		List<ResultAnalysisVo> list = jdbcTemplate.query(sql.toString(), new Object[] {vo.getExciseId()}, prodcutsTaxamRowmapper);
 		return list;
 
 	}
@@ -55,25 +56,25 @@ public class ResultAnalysisDao {
 	};
 	
 	/*Price*/
-	public Long countfindPrice() {
+	public Long countfindPrice(ResultAnalysisRequestvo vo) {
 
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT T1.PS_03_07_LIST ,T1.PS_03_07_DETAIL, T2.PS_07_04_DETAIL , (T1.PS_03_07_DETAIL - T2.PS_07_04_DETAIL) DIFF FROM TA_PS_03_07 T1");
-		sql.append(" INNER JOIN TA_PS_07_04 T2 ON T1.EXCISE_ID = T2.EXCISE_ID");
-        sql.append(" ORDER BY T1.EXCISE_ID DESC");
+		sql.append(" SELECT T1.PS_03_07_LIST ,T1.PS_03_07_DETAIL, T2.PS_02_01_DETAIL , (T1.PS_03_07_DETAIL - T2.PS_02_01_DETAIL) DIFF FROM TA_PS_03_07 T1");
+		sql.append(" INNER JOIN TA_PS_02_01 T2 ON T1.EXCISE_ID = T2.EXCISE_ID AND T1.PS_03_07_LIST=T2.PS_02_01_LIST");
+        sql.append(" WHERE T1.EXCISE_ID = ? ORDER BY T1.EXCISE_ID DESC");
 
 		String countSql = OracleUtils.countForDatatable(sql.toString());
-		Long count = jdbcTemplate.queryForObject(countSql, Long.class);
+		Long count = jdbcTemplate.queryForObject(countSql, new Object[] {vo.getExciseId()}, Long.class);
 		return count;
 	}
 
-	public List<ResultAnalysisVo> findPrice() {
+	public List<ResultAnalysisVo> findPrice(ResultAnalysisRequestvo vo) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT T1.PS_03_07_LIST ,T1.PS_03_07_DETAIL, T2.PS_07_04_DETAIL , (T1.PS_03_07_DETAIL - T2.PS_07_04_DETAIL) DIFF FROM TA_PS_03_07 T1");
-		sql.append(" INNER JOIN TA_PS_07_04 T2 ON T1.EXCISE_ID = T2.EXCISE_ID");
-        sql.append(" ORDER BY T1.EXCISE_ID DESC");
+		sql.append(" SELECT T1.PS_03_07_LIST ,T1.PS_03_07_DETAIL, T2.PS_02_01_DETAIL , (T1.PS_03_07_DETAIL - T2.PS_02_01_DETAIL) DIFF FROM TA_PS_03_07 T1");
+		sql.append(" INNER JOIN TA_PS_02_01 T2 ON T1.EXCISE_ID = T2.EXCISE_ID AND T1.PS_03_07_LIST=T2.PS_02_01_LIST");
+        sql.append(" WHERE T1.EXCISE_ID = ? ORDER BY T1.EXCISE_ID DESC");
 
-		List<ResultAnalysisVo> list = jdbcTemplate.query(sql.toString(), priceRowmapper);
+		List<ResultAnalysisVo> list = jdbcTemplate.query(sql.toString(), new Object[] {vo.getExciseId()}, priceRowmapper);
 		return list;
 
 	}
@@ -92,25 +93,25 @@ public class ResultAnalysisDao {
 	};
 		
 	/*ValueProductTax*/
-	public Long countfindValueProductTax() {
+	public Long countfindValueProductTax(ResultAnalysisRequestvo vo) {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT T1.PS_03_07_LIST ,T1.PS_03_07_DETAIL, T2.RE_RETAIL_PRICE_DETAIL , (T1.PS_03_07_DETAIL - T2.RE_RETAIL_PRICE_DETAIL) DIFF FROM TA_PS_03_07 T1");
-		sql.append(" INNER JOIN TA_RE_RETAIL_PRICE T2 ON T1.EXCISE_ID = T2.EXCISE_ID");
-        sql.append(" ORDER BY T1.EXCISE_ID DESC");
+		sql.append(" INNER JOIN TA_RE_RETAIL_PRICE T2 ON T1.EXCISE_ID = T2.EXCISE_ID AND T1.PS_03_07_LIST=T2.RE_RETAIL_PRICE_LIST");
+        sql.append(" WHERE T1.EXCISE_ID = ? ORDER BY T1.EXCISE_ID DESC");
 
 		String countSql = OracleUtils.countForDatatable(sql.toString());
-		Long count = jdbcTemplate.queryForObject(countSql, Long.class);
+		Long count = jdbcTemplate.queryForObject(countSql, new Object[] {vo.getExciseId()}, Long.class);
 		return count;
 	}
 
-	public List<ResultAnalysisVo> findValueProductTax() {
+	public List<ResultAnalysisVo> findValueProductTax(ResultAnalysisRequestvo vo) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT T1.PS_03_07_LIST ,T1.PS_03_07_DETAIL, T2.RE_RETAIL_PRICE_DETAIL , (T1.PS_03_07_DETAIL - T2.RE_RETAIL_PRICE_DETAIL) DIFF FROM TA_PS_03_07 T1");
-		sql.append(" INNER JOIN TA_RE_RETAIL_PRICE T2 ON T1.EXCISE_ID = T2.EXCISE_ID");
-        sql.append(" ORDER BY T1.EXCISE_ID DESC");
+		sql.append(" INNER JOIN TA_RE_RETAIL_PRICE T2 ON T1.EXCISE_ID = T2.EXCISE_ID AND T1.PS_03_07_LIST=T2.RE_RETAIL_PRICE_LIST");
+        sql.append("  WHERE T1.EXCISE_ID = ? ORDER BY T1.EXCISE_ID DESC");
 		
-		List<ResultAnalysisVo> list = jdbcTemplate.query(sql.toString(), valueProductTaxRowmapper);
+		List<ResultAnalysisVo> list = jdbcTemplate.query(sql.toString(), new Object[] {vo.getExciseId()}, valueProductTaxRowmapper);
 		return list;
 
 	}
@@ -129,25 +130,25 @@ public class ResultAnalysisDao {
 	};
 	
 	/*tax rate*/
-	public Long countfindTaxRate() {
+	public Long countfindTaxRate(ResultAnalysisRequestvo vo) {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT T1.PS_03_07_LIST ,T1.PERCENTAGE PERCENTAGE_03_07, T2.PERCENTAGE PERCENTAGE_02_01, (T1.PERCENTAGE - T2.PERCENTAGE) DIFF  FROM TA_PS_03_07 T1");
-		sql.append(" INNER JOIN  TA_PS_02_01 T2 ON T1.EXCISE_ID = T2.EXCISE_ID");
-        sql.append(" ORDER BY T1.EXCISE_ID DESC");
+		sql.append(" INNER JOIN  TA_PS_02_01 T2 ON T1.EXCISE_ID = T2.EXCISE_ID AND T1.PS_03_07_LIST=T2.PS_02_01_LIST");
+        sql.append(" WHERE T1.EXCISE_ID = ? ORDER BY T1.EXCISE_ID DESC");
 
 		String countSql = OracleUtils.countForDatatable(sql.toString());
-		Long count = jdbcTemplate.queryForObject(countSql, Long.class);
+		Long count = jdbcTemplate.queryForObject(countSql, new Object[] {vo.getExciseId()}, Long.class);
 		return count;
 	}
 
-	public List<ResultAnalysisVo> findTaxRate() {
+	public List<ResultAnalysisVo> findTaxRate(ResultAnalysisRequestvo vo) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT T1.PS_03_07_LIST ,T1.PERCENTAGE PERCENTAGE_03_07, T2.PERCENTAGE PERCENTAGE_02_01, (T1.PERCENTAGE - T2.PERCENTAGE) DIFF  FROM TA_PS_03_07 T1");
-		sql.append(" INNER JOIN  TA_PS_02_01 T2 ON T1.EXCISE_ID = T2.EXCISE_ID");
-        sql.append(" ORDER BY T1.EXCISE_ID DESC");
+		sql.append(" INNER JOIN  TA_PS_02_01 T2 ON T1.EXCISE_ID = T2.EXCISE_ID AND T1.PS_03_07_LIST=T2.PS_02_01_LIST");
+        sql.append(" WHERE T1.EXCISE_ID = ? ORDER BY T1.EXCISE_ID DESC");
 		
-		List<ResultAnalysisVo> list = jdbcTemplate.query(sql.toString(), taxRateRowmapper);
+		List<ResultAnalysisVo> list = jdbcTemplate.query(sql.toString(), new Object[] {vo.getExciseId()}, taxRateRowmapper);
 		return list;
 
 	}
@@ -167,25 +168,25 @@ public class ResultAnalysisDao {
 	
 
 	/*Submit payment*/
-	public Long countfindSubmitPayment() {
+	public Long countfindSubmitPayment(ResultAnalysisRequestvo vo) {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT T1.PS_03_07_LIST ,t1.TAX_CAL,t2.TAX_PAY   ,(t2.TAX_PAY - t1.TAX_CAL) diff FROM TA_PS_03_07 T1");
-		sql.append(" INNER JOIN  TA_TAX_PAY t2 ON T1.EXCISE_ID = t2.EXCISE_ID");
-        sql.append(" ORDER BY T1.EXCISE_ID DESC");
+		sql.append(" INNER JOIN  TA_TAX_PAY t2 ON T1.EXCISE_ID = t2.EXCISE_ID AND T1.PS_03_07_LIST=T2.TA_TAX_PAY_LIST");
+        sql.append(" WHERE T1.EXCISE_ID = ? ORDER BY T1.EXCISE_ID DESC");
 
 		String countSql = OracleUtils.countForDatatable(sql.toString());
-		Long count = jdbcTemplate.queryForObject(countSql, Long.class);
+		Long count = jdbcTemplate.queryForObject(countSql, new Object[] {vo.getExciseId()}, Long.class);
 		return count;
 	}
 
-	public List<ResultAnalysisVo> findSubmitPayment() {
+	public List<ResultAnalysisVo> findSubmitPayment(ResultAnalysisRequestvo vo) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT T1.PS_03_07_LIST ,t1.TAX_CAL,t2.TAX_PAY   ,(t2.TAX_PAY - t1.TAX_CAL) diff FROM TA_PS_03_07 T1");
-		sql.append(" INNER JOIN  TA_TAX_PAY t2 ON T1.EXCISE_ID = t2.EXCISE_ID");
-        sql.append(" ORDER BY T1.EXCISE_ID DESC");
+		sql.append(" INNER JOIN  TA_TAX_PAY t2 ON T1.EXCISE_ID = t2.EXCISE_ID AND T1.PS_03_07_LIST=T2.TA_TAX_PAY_LIST");
+        sql.append(" WHERE T1.EXCISE_ID = ? ORDER BY T1.EXCISE_ID DESC");
         
-		List<ResultAnalysisVo> list = jdbcTemplate.query(sql.toString(), submitPaymentRowmapper);
+		List<ResultAnalysisVo> list = jdbcTemplate.query(sql.toString(), new Object[] {vo.getExciseId()}, submitPaymentRowmapper);
 		return list;
 
 	}

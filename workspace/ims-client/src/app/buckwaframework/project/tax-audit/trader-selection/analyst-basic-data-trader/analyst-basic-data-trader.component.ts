@@ -51,6 +51,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
   toggle: boolean = false;
   summary: SummaryModel = new SummaryModel();
   coordinatesFlag: string = "";
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -503,7 +504,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
     }
     json += ' { "data": "otherCoordinates","className":"left" }';
     json += "]";
-
     let jsonMapping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTable({
       lengthChange: true,

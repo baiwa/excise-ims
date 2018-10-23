@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.dao.ResultAnalysisDao;
+import th.co.baiwa.excise.ta.persistence.vo.ResultAnalysisRequestvo;
 import th.co.baiwa.excise.ta.persistence.vo.ResultAnalysisVo;
 
 @Service
@@ -16,12 +17,12 @@ public class ResultAnalysisService {
 	private ResultAnalysisDao resultAnalysisDao;
 
 	/* findProdcutsTax */
-	public DataTableAjax<ResultAnalysisVo> findProdcutsTax() {
+	public DataTableAjax<ResultAnalysisVo> findProdcutsTax(ResultAnalysisRequestvo vo) {
 
 		DataTableAjax<ResultAnalysisVo> dataTableAjax = new DataTableAjax<>();
 
-		List<ResultAnalysisVo> list = resultAnalysisDao.findProdcutsTax();
-		Long count = resultAnalysisDao.countfindProdcutsTax();
+		List<ResultAnalysisVo> list = resultAnalysisDao.findProdcutsTax(vo);
+		Long count = resultAnalysisDao.countfindProdcutsTax(vo);
 
 		dataTableAjax.setRecordsTotal(count);
 		dataTableAjax.setRecordsFiltered(count);
@@ -31,12 +32,12 @@ public class ResultAnalysisService {
 	}
 
 	/* findprice */
-	public DataTableAjax<ResultAnalysisVo> findPrice() {
+	public DataTableAjax<ResultAnalysisVo> findPrice(ResultAnalysisRequestvo vo) {
 
 		DataTableAjax<ResultAnalysisVo> dataTableAjax = new DataTableAjax<>();
 
-		List<ResultAnalysisVo> list = resultAnalysisDao.findPrice();
-		Long count = resultAnalysisDao.countfindPrice();
+		List<ResultAnalysisVo> list = resultAnalysisDao.findPrice(vo);
+		Long count = resultAnalysisDao.countfindPrice(vo);
 
 		dataTableAjax.setRecordsTotal(count);
 		dataTableAjax.setRecordsFiltered(count);
@@ -46,12 +47,12 @@ public class ResultAnalysisService {
 	}
 
 	/*findValueProductTax*/
-	public DataTableAjax<ResultAnalysisVo> findValueProductTax() {
+	public DataTableAjax<ResultAnalysisVo> findValueProductTax(ResultAnalysisRequestvo vo) {
 
 		DataTableAjax<ResultAnalysisVo> dataTableAjax = new DataTableAjax<>();
 
-		List<ResultAnalysisVo> list = resultAnalysisDao.findValueProductTax();
-		Long count = resultAnalysisDao.countfindValueProductTax();
+		List<ResultAnalysisVo> list = resultAnalysisDao.findValueProductTax(vo);
+		Long count = resultAnalysisDao.countfindValueProductTax(vo);
 
 		dataTableAjax.setRecordsTotal(count);
 		dataTableAjax.setRecordsFiltered(count);
@@ -61,12 +62,12 @@ public class ResultAnalysisService {
 	}
 	
 	/*tax rate*/
-	public DataTableAjax<ResultAnalysisVo> findTaxRate() {
+	public DataTableAjax<ResultAnalysisVo> findTaxRate(ResultAnalysisRequestvo vo) {
 
 		DataTableAjax<ResultAnalysisVo> dataTableAjax = new DataTableAjax<>();
 
-		List<ResultAnalysisVo> list = resultAnalysisDao.findTaxRate();
-		Long count = resultAnalysisDao.countfindTaxRate();
+		List<ResultAnalysisVo> list = resultAnalysisDao.findTaxRate(vo);
+		Long count = resultAnalysisDao.countfindTaxRate(vo);
 
 		dataTableAjax.setRecordsTotal(count);
 		dataTableAjax.setRecordsFiltered(count);
@@ -76,12 +77,12 @@ public class ResultAnalysisService {
 	}
 	
 	/*Submit payment*/
-	public DataTableAjax<ResultAnalysisVo> findSubmitPayment() {
+	public DataTableAjax<ResultAnalysisVo> findSubmitPayment(ResultAnalysisRequestvo vo) {
 
 		DataTableAjax<ResultAnalysisVo> dataTableAjax = new DataTableAjax<>();
 
-		List<ResultAnalysisVo> list = resultAnalysisDao.findSubmitPayment();
-		Long count = resultAnalysisDao.countfindSubmitPayment();
+		List<ResultAnalysisVo> list = resultAnalysisDao.findSubmitPayment(vo);
+		Long count = resultAnalysisDao.countfindSubmitPayment(vo);
 
 		dataTableAjax.setRecordsTotal(count);
 		dataTableAjax.setRecordsFiltered(count);

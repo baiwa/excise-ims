@@ -110,7 +110,7 @@
         </div>
         <div class="ui attached segment">
             <div class="ui active inverted dimmer" *ngIf="loading">
-                <div class="ui text loader">Loading</div>
+                <div class="ui text loader">กำลังโหลด</div>
             </div>
             <div class="ui form">
 
@@ -251,21 +251,21 @@
                 
                 <div class="ui grid">
                     <div class="three wide column"></div>
-                    <div class="five wide column"><i class="circle icon"></i> ข้อมูลภาพรวมของพิกัด : {{summary.taxData}}</div>
+                    <div class="five wide column"><i class="circle icon"></i> ข้อมูลภาพรวมของพิกัด : <span >{{summary.taxData}}</span></div>
                     <div class="eight wide column"> - ภาษีเฉลี่ย : </div>
                 </div>
                 <div class="ui grid">
                     <div class="three wide column"></div>
-                    <div class="thirteen wide column">   - จำนวนรายทั้งหมด : {{summary.totalNumber}} ราย</div>                                                       
+                    <div class="thirteen wide column">   - จำนวนรายทั้งหมด : <span>{{summary.totalNumber}}</span> ราย</div>                                                       
                 </div>
                 <div class="ui grid">
                     <div class="three wide column"></div>
-                    <div class="five wide column">  - รายที่มีการชำระภาษี : {{countPay}} ราย</div>
+                    <div class="five wide column">  - รายที่มีการชำระภาษี : <span>{{countPay}}</span> ราย</div>
                    
                 </div>
                 <div class="ui grid">
                     <div class="three wide column"></div>
-                    <div class="thirteen wide column"> - รายที่ไม่ชำระภาษี : {{countNonPay}} ราย</div>                   
+                    <div class="thirteen wide column"> - รายที่ไม่ชำระภาษี : <span>{{countNonPay}}</span> ราย</div>                   
                 </div>
                 <div class="ui center aligned grid">
                     <div class="sixteen wide column">

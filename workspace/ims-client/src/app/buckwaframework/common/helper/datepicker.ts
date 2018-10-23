@@ -73,9 +73,9 @@ export var formatter = (what: string = "") => {
         },
         date: function(date, settings) {
           if (!date) return "";
-          let _month = toDateLocale(date)[0].split("/")[1];
           let _year = toDateLocale(date)[0].split("/")[2];
-          return digit(_month)+"/"+_year;
+          let _month = date.getMonth();
+          return TextDateTH.months[_month] + " " + _year;
         }
       };
     case "ป":

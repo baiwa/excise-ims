@@ -24,7 +24,7 @@ export class ResultAnalysisSerivce {
         });
     }
 
-    initDatatable1 = () => {
+    initDatatable1 = (exciseId) => {
         this.table1 = $("#table1").DataTable({
             "serverSide": false,
             "searching": false,
@@ -51,7 +51,9 @@ export class ResultAnalysisSerivce {
                 "contentType": "application/json",
                 "type": "POST",
                 "data": (d) => {
-                    return JSON.stringify($.extend({}, d, {}));
+                    return JSON.stringify($.extend({}, d, {
+                        "exciseId": exciseId
+                    }));
                 },
             },
             "columns": [
@@ -83,8 +85,7 @@ export class ResultAnalysisSerivce {
                     "className": "ui right aligned"
                 }
             ],
-            "footerCallback": function (row, data, start, end, display) {
-                console.log(data);
+            "footerCallback": function (row, data, start, end, display) {                
                 var sumColumn1 = 0;
                 var sumColumn2 = 0;
                 var sumColumn3 = 0;
@@ -100,7 +101,6 @@ export class ResultAnalysisSerivce {
                 var formatsumColumn2 = '<b>' + Utils.moneyFormatDecimal(sumColumn2) + '</b>';
                 var formatsumColumn3 = '<b>' + Utils.moneyFormatDecimal(sumColumn3) + '</b>';
 
-                // console.log(formatsumColumn1);
                 $(api.column(1).footer()).html(formatsumColumn1);
                 $(api.column(2).footer()).html(formatsumColumn2);
                 $(api.column(3).footer()).html(formatsumColumn3);
@@ -109,7 +109,7 @@ export class ResultAnalysisSerivce {
         });
     }
 
-    initDatatable2 = () => {
+    initDatatable2 = (exciseId) => {
         this.table2 = $("#table2").DataTable({
             "serverSide": false,
             "searching": false,
@@ -136,7 +136,9 @@ export class ResultAnalysisSerivce {
                 "contentType": "application/json",
                 "type": "POST",
                 "data": (d) => {
-                    return JSON.stringify($.extend({}, d, {}));
+                    return JSON.stringify($.extend({}, d, {
+                        "exciseId": exciseId
+                    }));
                 },
             },
             "columns": [
@@ -169,7 +171,7 @@ export class ResultAnalysisSerivce {
                 }
             ],
             "footerCallback": function (row, data, start, end, display) {
-                console.log(data);
+                
                 var sumColumn1 = 0;
                 var sumColumn2 = 0;
                 var sumColumn3 = 0;
@@ -185,7 +187,6 @@ export class ResultAnalysisSerivce {
                 var formatsumColumn2 = '<b>' + Utils.moneyFormatDecimal(sumColumn2) + '</b>';
                 var formatsumColumn3 = '<b>' + Utils.moneyFormatDecimal(sumColumn3) + '</b>';
 
-                // console.log(formatsumColumn1);
                 $(api.column(1).footer()).html(formatsumColumn1);
                 $(api.column(2).footer()).html(formatsumColumn2);
                 $(api.column(3).footer()).html(formatsumColumn3);
@@ -193,7 +194,7 @@ export class ResultAnalysisSerivce {
             }
         });
     }
-    initDatatable3 = () => {
+    initDatatable3 = (exciseId) => {
         this.table3 = $("#table3").DataTable({
             "serverSide": false,
             "searching": false,
@@ -220,7 +221,9 @@ export class ResultAnalysisSerivce {
                 "contentType": "application/json",
                 "type": "POST",
                 "data": (d) => {
-                    return JSON.stringify($.extend({}, d, {}));
+                    return JSON.stringify($.extend({}, d, {
+                        "exciseId": exciseId
+                    }));
                 },
             },
             "columns": [
@@ -253,7 +256,7 @@ export class ResultAnalysisSerivce {
                 }
             ],
             "footerCallback": function (row, data, start, end, display) {
-                console.log(data);
+                
                 var sumColumn1 = 0;
                 var sumColumn2 = 0;
                 var sumColumn3 = 0;
@@ -269,7 +272,6 @@ export class ResultAnalysisSerivce {
                 var formatsumColumn2 = '<b>' + Utils.moneyFormatDecimal(sumColumn2) + '</b>';
                 var formatsumColumn3 = '<b>' + Utils.moneyFormatDecimal(sumColumn3) + '</b>';
 
-                // console.log(formatsumColumn1);
                 $(api.column(1).footer()).html(formatsumColumn1);
                 $(api.column(2).footer()).html(formatsumColumn2);
                 $(api.column(3).footer()).html(formatsumColumn3);
@@ -277,7 +279,7 @@ export class ResultAnalysisSerivce {
             }
         });
     }
-    initDatatable4 = () => {
+    initDatatable4 = (exciseId) => {
         this.table4 = $("#table4").DataTable({
             "serverSide": false,
             "searching": false,
@@ -304,7 +306,9 @@ export class ResultAnalysisSerivce {
                 "contentType": "application/json",
                 "type": "POST",
                 "data": (d) => {
-                    return JSON.stringify($.extend({}, d, {}));
+                    return JSON.stringify($.extend({}, d, {
+                        "exciseId": exciseId
+                    }));
                 },
             },
             "columns": [
@@ -336,8 +340,7 @@ export class ResultAnalysisSerivce {
                     "className": "ui right aligned"
                 }
             ],
-            "footerCallback": function (row, data, start, end, display) {
-                console.log(data);
+            "footerCallback": function (row, data, start, end, display) {             
                 var sumColumn1 = 0;
                 var sumColumn2 = 0;
                 var sumColumn3 = 0;
@@ -353,7 +356,6 @@ export class ResultAnalysisSerivce {
                 var formatsumColumn2 = '<b>' + sumColumn2 + '%</b>';
                 var formatsumColumn3 = '<b>' + sumColumn3 + '%</b>';
 
-                // console.log(formatsumColumn1);
                 $(api.column(1).footer()).html(formatsumColumn1);
                 $(api.column(2).footer()).html(formatsumColumn2);
                 $(api.column(3).footer()).html(formatsumColumn3);
@@ -361,7 +363,7 @@ export class ResultAnalysisSerivce {
             }
         });
     }
-    initDatatable5 = () => {
+    initDatatable5 = (exciseId) => {
         this.table5 = $("#table5").DataTable({
             "serverSide": false,
             "searching": false,
@@ -388,7 +390,9 @@ export class ResultAnalysisSerivce {
                 "contentType": "application/json",
                 "type": "POST",
                 "data": (d) => {
-                    return JSON.stringify($.extend({}, d, {}));
+                    return JSON.stringify($.extend({}, d, {
+                        "exciseId": exciseId
+                    }));
                 },
             },
             "columns": [
@@ -420,8 +424,7 @@ export class ResultAnalysisSerivce {
                     "className": "ui right aligned"
                 }
             ],
-            "footerCallback": function (row, data, start, end, display) {
-                console.log(data);
+            "footerCallback": function (row, data, start, end, display) {                
                 var sumColumn1 = 0;
                 var sumColumn2 = 0;
                 var sumColumn3 = 0;
@@ -437,7 +440,6 @@ export class ResultAnalysisSerivce {
                 var formatsumColumn2 = '<b>' + Utils.moneyFormatDecimal(sumColumn2) + '</b>';
                 var formatsumColumn3 = '<b>' + Utils.moneyFormatDecimal(sumColumn3) + '</b>';
 
-                // console.log(formatsumColumn1);
                 $(api.column(1).footer()).html(formatsumColumn1);
                 $(api.column(2).footer()).html(formatsumColumn2);
                 $(api.column(3).footer()).html(formatsumColumn3);

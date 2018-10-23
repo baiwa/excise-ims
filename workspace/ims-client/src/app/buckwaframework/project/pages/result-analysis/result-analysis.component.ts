@@ -22,8 +22,8 @@ export class ResultAnalysisPage implements OnInit {
         { label: "การตรวจสอบภาษี", route: "#" },
         { label: "การวิเคราะห์ข้อมูลเบื้องต้น", route: "/analysis" },
         { label: "ผลการวิเคราะห์ข้อมูลเบื้องต้น", route: "#" },
-      ];
-      
+    ];
+
     private category: String;
     private coordinate: String;
     form: ResultAnalysisForm = new ResultAnalysisForm();
@@ -37,22 +37,18 @@ export class ResultAnalysisPage implements OnInit {
     }
 
     ngOnInit() {
-        
+
         this.setDataService();
     }
 
     ngAfterViewInit() {
-        this.initDatatable1();
-        this.initDatatable2();
-        this.initDatatable3();
-        this.initDatatable4();
-        this.initDatatable5();
+
     }
 
     setDataService() {
 
         let model = this.modalService.getData();
-        if(model == null){
+        if (model == null) {
             this.router.navigate(['/analysis']);
             return false;
         }
@@ -73,30 +69,36 @@ export class ResultAnalysisPage implements OnInit {
             this.form.address = res.factoryAddress; //query
             this.form.analysisBy = res.createdBy; //query
             this.form.sector = res.exciseOwnerArea1 //query
+
+            this.initDatatable1(model.exciseId);
+            this.initDatatable2(model.exciseId);
+            this.initDatatable3(model.exciseId);
+            this.initDatatable4(model.exciseId);
+            this.initDatatable5(model.exciseId);
         });
 
     }
-    initDatatable1=()=> {
-        this.resultAnalysisSerivce.initDatatable1();
+    initDatatable1 = (exciseId) => {
+        this.resultAnalysisSerivce.initDatatable1(exciseId);
     }
 
-    initDatatable2=()=> {
-        this.resultAnalysisSerivce.initDatatable2();
+    initDatatable2 = (exciseId) => {
+        this.resultAnalysisSerivce.initDatatable2(exciseId);
     }
 
-    initDatatable3() {
-        this.resultAnalysisSerivce.initDatatable3();        
+    initDatatable3 = (exciseId) => {
+        this.resultAnalysisSerivce.initDatatable3(exciseId);
     }
 
-    initDatatable4() {
-        this.resultAnalysisSerivce.initDatatable4();  
+    initDatatable4 = (exciseId) => {
+        this.resultAnalysisSerivce.initDatatable4(exciseId);
     }
 
-    initDatatable5() {
-        this.resultAnalysisSerivce.initDatatable5();
+    initDatatable5 = (exciseId) => {
+        this.resultAnalysisSerivce.initDatatable5(exciseId);
     }
 
-    goToOpe03() {
+    goToOpe03 = () => {
         this.router.navigate(['/select-form', this.category, this.coordinate]);
     }
 }
