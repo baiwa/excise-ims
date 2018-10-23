@@ -1,55 +1,67 @@
-<div class="ui grid">
-  <div class="sixteen wide column">
- 
-    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>จัดการข้อมูลต้นทาง</span>
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+  <span>จัดการข้อมูลต้นทาง</span>
+</div>
+
+<div class="ui attached segment">
+
+  <div class="ui grid center aligned">
+    <div class="sixteen wide column">
+      <h3>ค้นหาข้อมูลแบบคำขอยกเว้นหรือคืนภาษี (ภส.05-01)" </h3>
+    </div>
+  </div>
+  <br>
+  <br>
+
+  <div id="exportForm" class="ui form">
+    <div class="inline fields">
+        <input type="hidden" id="searchFlag" name="searchFlag">
+      <div class="two wide field "></div>
+      <div class="two wide field ">
+        <label>เลขทะเบียนสรรพสามิต :
+        </label>
       </div>
-    <div class="ui attached segment">
-
-      <div class="ui grid center aligned">
-        <div class="sixteen wide column">
-          <h3>ค้นหาข้อมูลคำขอยกเว้นหรือคืนภาษี (ภส.05-01)" </h3>
-        </div>
+      <div class="four wide field ">
+        <input type="text" [(ngModel)]="exciseId">
       </div>
-      <br>
-      <br>
+      <div class="two wide field ">
+        <label>วันที่ขนสินค้าออก :
+        </label>
+      </div>
+      <div class="four wide field ">
+        <input type="text" placeholder="" value="">
+      </div>
+      <div class="two wide field "></div>
+    </div>
+    <br>
 
-
-      <div class="ui form">
-        <div class="inline fields">
-          <div class="three wide field ">
-            <label>เลขทะเบียนสรรพสามิต :
-            </label>
-          </div>
-          <div class="six wide field ">
-            <input type="text" placeholder="" value="">
-
-          </div>
-          <br>
-
-          <div class="two wide field ">
-            <label>วันที่ขนสินค้าออก :
-            </label>
-          </div>
-          <div class="six wide field ">
-            <input type="text" placeholder="" value="">
-          </div>
-        </div>
-        <br>
-        <br>
-        <div class="ui center aligned grid">
-          <div class="four wide column">
-            <button class="ui mini primary button" routerLink="/epa01/1/1" style="width: 100px;">
-              <i class="search icon"></i>
-              ค้นหา
-            </button>
-            <button class="ui mini button" style="width: 100px;">
-              ยกเลิก
-            </button>
-          </div>
-        </div>
-        <br>
-        <br>
-
+    <div class="ui center aligned grid">
+      <div class="four wide column">
+        <button class="ui mini primary button" (click)="onClickSearch()">
+          <i class="search icon"></i>
+          ค้นหา
+        </button>
+        <button class="ui mini button" (click)="onClickClear()">
+            ล้างผลการค้นหาทั้งหมด
+        </button>
       </div>
     </div>
+    <br>
+  </div>
+
+</div>
+
+<!-- form search -->
+<div class="ui segment {{loading ? 'loading' : ''}}" style="width: 100%;">
+  <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%;">
+    <thead>
+      <tr>
+        <th style="text-align: center !important;">ลำดับที่</th>
+        <th style="text-align: center !important;">ออกจากโรงอุตสาหกรรม/คลังสินค้า</th>
+        <th style="text-align: center !important;">ด่านศุลกากรปลายทาง</th>
+        <th style="text-align: center !important;">วันที่ออกจากโรงอุตสาหกรรม/คลังสินค้า</th>
+        <th style="text-align: center !important;">วันที่ถึงด่านศุลกากร</th>
+        <th style="text-align: center !important;">ทำรายการ</th>
+      </tr>
+    </thead>
+  </table>
+</div>
