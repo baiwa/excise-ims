@@ -556,9 +556,9 @@ public class PlanWorksheetHeaderService {
 				for (Ope041Vo formUpload : formUploadList) {
 					if (opeData.getProduct().equals(formUpload.getColumn2())) {
 						opeData.setColumn6(formUpload.getColumn6());
-						opeData.setDayRecieve(NumberUtils.stringToLong(formUpload.getColumn4()));
-						opeData.setExd1(NumberUtils.stringToLong(formUpload.getColumn6()));
-						opeData.setTaxInvoice(NumberUtils.stringToLong(formUpload.getColumn3()));
+						opeData.setDayRecieve(NumberUtils.stringToLong(BeanUtils.isNotEmpty(formUpload.getColumn4())? formUpload.getColumn4() : "0"));
+						opeData.setExd1(NumberUtils.stringToLong(BeanUtils.isNotEmpty(formUpload.getColumn6())? formUpload.getColumn6() : "0"));
+						opeData.setTaxInvoice(NumberUtils.stringToLong(BeanUtils.isNotEmpty(formUpload.getColumn3())? formUpload.getColumn3() : "0"));
 						if (opeData.getMonthRecieve() > opeData.getDayRecieve()) {
 							opeData.setCalMax(opeData.getMonthRecieve());
 						} else {

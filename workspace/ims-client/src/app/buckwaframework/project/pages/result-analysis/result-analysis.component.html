@@ -242,18 +242,20 @@
                         <div class="ui grid">
                             <div class="center aligned row">
                                 <div class="column">
-                                    <div class="ui mini primary button" (click)="search()">
+                                    <!-- <div class="ui mini primary button" (click)="search()">
                                         <i class="save icon"></i> บันทึกผลการวิเคราะห์ข้อมูล
-                                    </div>
-                                    <div class="ui mini button" (click)="resetSearch()">
+                                    </div> -->
+                                    <div class="ui mini button" routerLink="/analysis">
+                                        <!-- (click)="resetSearch()"  -->
                                         <i class="refresh icon"></i> ล้างผลการวิเคราะห์ข้อมูล
                                     </div>
-                                    <div class="ui mini button" (click)="goToOpe03()">
+                                    <div class="ui mini primary button" routerLink="/select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน">
+                                         <!-- (click)="goToOpe03()" -->
                                         <i class="file text outline icon"></i> สร้างกระดาษทำการ
                                     </div>
-                                    <div class="ui mini button" (click)="resetSearch()">
+                                    <!-- <div class="ui mini button" (click)="resetSearch()">
                                         <i class="print icon"></i> พิมพ์
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
