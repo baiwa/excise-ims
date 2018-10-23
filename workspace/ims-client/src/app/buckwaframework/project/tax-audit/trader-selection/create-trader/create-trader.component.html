@@ -1,95 +1,96 @@
-
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <form class="ui grid" (submit)="onSubmit($event)" ngNativeValidate>
-    <div class="sixteen wide column">
-        <h2 class="ui header">สร้างกระดาษทำการคัดเลือกราย</h2>
+  <div class="sixteen wide column">
+    <h2 class="ui header">สร้างกระดาษทำการคัดเลือกราย</h2>
 
-        <div class="ui top attached header">
-            <span>สร้างกระดาษทำการคัดเลือกราย</span>
+    <div class="ui top attached header">
+      <span>สร้างกระดาษทำการคัดเลือกราย</span>
+    </div>
+
+    <div class="ui attached segment">
+
+      <div class="ui form">
+
+        <div class="inline fields">
+          <div class="ten wide field">
+          </div>
+          <div class="six wide field">
+            <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
+            <input value="" readonly="" class="custom-readonly" />
+          </div>
         </div>
 
-        <div class="ui attached segment">
+        <div class="inline fields">
+          <div class="three wide required field">
+            <label>ระยะเวลาที่ตรวจสอบ</label>
+          </div>
+          <div class="three wide field ui calendar" id="calendar">
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input type="calendar" readonly="" id="calendarraw" name="calendarraw" [attr.required]="true"
+                autocomplete="off" placeholder="วว/ดด/ปปปป">
+            </div>
+          </div>
+          <div class="one wide field"></div>
+          <div class="two wide field">
+            <label>ถึง</label>
+          </div>
+          <div class="three wide field ui calendar" id="calendar1">
+            <div class="ui input left icon">
+              <i class="time icon"></i>
+              <input type="calendar" readonly="" id="calendar1raw" name="calendar1raw" [attr.required]="true"
+                autocomplete="off" placeholder="วว/ดด/ปปปป">
+            </div>
+          </div>
+          <div class="one wide field">
+            <label>เดือน</label>
+          </div>
+        </div>
 
-            <div class="ui form">
+        <div class="inline fields">
+          <div class="three wide required field">
+            <label> สถานะผู้ประกอบ</label>
+          </div>
+          <div class="three wide field ui ">
+            <div class="ui selection dropdown full-width">
+              <input type="hidden" name="gender">
+              <i class="dropdown icon"></i>
+              <div class="default text">เลือก</div>
+              <div class="menu">
+                <div class="item" data-value="1">สถานะผู้ประกอบการ</div>
+                <div class="item" data-value="2">ประกอบกิจการ</div>
+                <div class="item" data-value="3">เลิกกิจการ</div>
+                <div class="item" data-value="4">โอนกิจการ</div>
+              </div>
+            </div>
+          </div>
+          <div class="one wide field"></div>
+          <div class="two wide field">
 
-                <div class="inline fields">
-                    <div class="ten wide field">
-                    </div>
-                    <div class="six wide field">
-                        <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
-                        <input value="" readonly="" class="custom-readonly" />
-                    </div>
-                </div>
+          </div>
+          <div class="three wide field ui calendar" id="calendar1">
+          </div>
+          <div class="one wide field">
+          </div>
+        </div>
 
-                <div class="inline fields">
-                    <div class="three wide required field">
-                        <label>ระยะเวลาที่ตรวจสอบ</label>
-                    </div>
-                    <div class="three wide field ui calendar" id="calendar">
-                        <div class="ui input left icon">
-                            <i class="time icon"></i>
-                            <input type="calendar" readonly="" id="calendarraw" name="calendarraw" [attr.required]="true" autocomplete="off" placeholder="ddMMปปปป">
-                        </div>
-                    </div>
-                    <div class="one wide field"></div>
-                    <div class="two wide field">
-                        <label>ถึง</label>
-                    </div>
-                    <div class="three wide field ui calendar" id="calendar1">
-                        <div class="ui input left icon">
-                            <i class="time icon"></i>
-                            <input type="calendar" readonly="" id="calendar1raw" name="calendar1raw" [attr.required]="true"  autocomplete="off" placeholder="ddMMปปปป">
-                        </div>
-                    </div>
-                    <div class="one wide field">
-                        <label>เดือน</label>
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="three wide required field">
-                        <label> สถานะผู้ประกอบ</label>
-                    </div>
-                    <div class="three wide field ui ">
-                        <div class="ui selection dropdown full-width">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">เลือก</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">สถานะผู้ประกอบการ</div>
-                                <div class="item" data-value="2">ประกอบกิจการ</div>
-                                <div class="item" data-value="3">เลิกกิจการ</div>
-                                <div class="item" data-value="4">โอนกิจการ</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="one wide field"></div>
-                    <div class="two wide field">
-                        
-                    </div>
-                    <div class="three wide field ui calendar" id="calendar1">
-                    </div>
-                    <div class="one wide field">
-                    </div>
-                </div>
-
-                <div class="ui center aligned grid">
-                    <div class="eight wide column">
-                        <button type="submit" class="ui mini primary button">
-                            <i class="search icon"></i>
-                            วิเคราะห์ข้อมูลเบื้องต้น
-                        </button>
-                        <!-- <button type="submit" class="ui mini primary button" (click)="webService()">
+        <div class="ui center aligned grid">
+          <div class="eight wide column">
+            <button type="submit" class="ui mini primary button">
+              <i class="search icon"></i>
+              วิเคราะห์ข้อมูลเบื้องต้น
+            </button>
+            <!-- <button type="submit" class="ui mini primary button" (click)="webService()">
                             Web Service
                         </button>  -->
-                        <!-- routerLink="/analyst-basic-data-trader" -->
-                        <button type="reset" class="ui mini button">
-                            <i class="refresh icon"></i>
-                            ล้างข้อมูล
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <!-- routerLink="/analyst-basic-data-trader" -->
+            <button type="reset" class="ui mini button">
+              <i class="refresh icon"></i>
+              ล้างข้อมูล
+            </button>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </form>
