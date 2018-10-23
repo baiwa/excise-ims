@@ -1,0 +1,41 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<div class="ui grid">
+    <div class="sixteen wide column">
+      <h2 class="ui header"> {{sectorHeader}}</h2>
+  
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>รายการที่เลือก</span>
+      </div>
+  
+      <div class="ui attached segment">
+        <div class="ui form">
+          <div class="inline fields">
+            <div class="six wide field">
+              <label class="custom-label-w-20">เลขที่วิเคราะห์ข้อมูล</label>
+              <input value="{{analysNumber}}" readonly="" class="custom-readonly">
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="ui segment {{loading ? 'loading':''}}">
+        <div class="ui grid">
+         
+        </div>
+        <form ngNativeValidate (submit)="onSend($event)">
+          <div class="ui grid">
+            <div class="sixteen wide column">
+              <div >
+                <table id="sendLineUser" class="ui small celled table aligned hover striped selectable nowrap" style="width:100%;">
+                  <thead id="trDrinamic">
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>         
+        </form>
+      </div>
+    </div>
+  </div>

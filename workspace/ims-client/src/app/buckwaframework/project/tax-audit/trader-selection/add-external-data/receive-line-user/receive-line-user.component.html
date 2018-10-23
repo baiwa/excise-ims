@@ -1,3 +1,4 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
   <div class="sixteen wide column">
     <h2 class="ui header">เลือกรายเพื่อตรวจสอบ</h2>
@@ -17,7 +18,7 @@
       </div>
     </div>
 
-    <div class="ui segment">
+    <div class="ui segment {{loading?'loading':''}}">
       <div class="ui grid">
         <div class="two wide column"></div>
         <div class="seven wide column">
@@ -66,7 +67,7 @@
               <i class="save icon"></i>
               ส่งข้อมูลให้กลับให้ สมฐ.
             </button>
-            <button type="button" class="ui mini button" routerLink="/add-external-data">
+            <button type="button" class="ui mini button" (click)="appriveData()">
               <i class="refresh icon"></i>
               ล้างข้อมูล
             </button>

@@ -273,7 +273,11 @@ public class PlanWorksheetHeaderService {
 				}
 			}
 		}
-		PlanWorksheetHeaderDetailList.add(planShow);
+		if(BeanUtils.isNotEmpty(planShow) && BeanUtils.isNotEmpty(planShow.getExciseId())) {
+			PlanWorksheetHeaderDetailList.add(planShow);
+			
+		}
+		
 		ResponseDataTable<PlanWorksheetHeaderDetail> responseDataTable = new ResponseDataTable<PlanWorksheetHeaderDetail>();
 		long count = planWorksheetHeaderDao.queryCountByPlanWorksheetHeader(vo);
 		responseDataTable.setDraw(vo.getDraw().intValue() + 1);

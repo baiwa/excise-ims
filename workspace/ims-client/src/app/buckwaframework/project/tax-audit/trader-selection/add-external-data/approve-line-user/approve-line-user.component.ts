@@ -1,22 +1,22 @@
-import { Component, OnInit } from "@angular/core";
-import { AjaxService } from "../../../../../common/services/ajax.service";
-import { Router, ActivatedRoute, Params } from "@angular/router";
-import { ExciseService } from "../../../../../common/services/excise.service";
-import { MessageBarService } from "../../../../../common/services/message-bar.service";
-import { BreadCrumb } from "models/breadcrumb";
-
-declare var jQuery: any;
+import { Component, OnInit } from '@angular/core';
+import { ApproveLineUserService } from 'projects/tax-audit/trader-selection/add-external-data/approve-line-user/approve-line-user.service';
+import { AjaxService } from 'services/ajax.service';
+import { MessageBarService } from 'services/message-bar.service';
+import { ExciseService } from 'services/excise.service';
+import { Router } from '@angular/router';
+import { BreadCrumb } from 'models/breadcrumb';
 declare var $: any;
 @Component({
-  selector: 'app-receive-line-user',
-  templateUrl: './receive-line-user.component.html',
-  styleUrls: ['./receive-line-user.component.css']
+  selector: 'app-approve-line-user',
+  templateUrl: './approve-line-user.component.html',
+  styleUrls: ['./approve-line-user.component.css'],
+  providers: [ApproveLineUserService]
 })
-export class ReceiveLineUserComponent implements OnInit {
+export class ApproveLineUserComponent implements OnInit {
   breadcrumb: BreadCrumb[] = [
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การคัดเลือกราย', route: '#' },
-    { label: 'รับกระดาษทำการคัดเลือกลาย', route: '#' },
+    { label: 'รายการที่เลือก', route: '#' },
   ]
   sendLineUser: any;
   listItem: any[];
@@ -34,13 +34,14 @@ export class ReceiveLineUserComponent implements OnInit {
   sector: any;
   sectorArr: any;
   role: string;
-  loading: boolean = true;
+  loading:boolean = true;
+  sectorHeader : string ="";
   constructor(
-    private route: ActivatedRoute,
+    private approveLineUserService: ApproveLineUserService,
+    private ajax: AjaxService,
     private messageBarService: MessageBarService,
     private ex: ExciseService,
     private router: Router,
-    private ajax: AjaxService
   ) {
     this.exciseId = [];
     const URL = "filter/exise/getOfficeCodeByUserLogin";
@@ -50,27 +51,24 @@ export class ReceiveLineUserComponent implements OnInit {
       if (officeCode.substr(0, 2) == "00") {
         this.role = 'C'
       } else {
-        this.role = 'S'
+        this.role = 'S';
         this.sector = 'ภาคที่ ' + (Number(officeCode.substr(0, 2)));
+        console.log(this.sector);
       }
     });
-  }
+   }
 
   ngOnInit() {
+
     console.log("ngOnInit");
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
+
     //get coordinates in select option
-    const URL = "combobox/controller/getCoordinates";
-    this.ajax.post(URL, {}, res => {
-      this.coordinatesArr = res.json();
-    });
+    this.getCoordinatesArr();
 
     //get Sector in select option
-    const URL2 = "combobox/controller/getDropByTypeAndParentId";
-    this.ajax.post(URL2, { type: "SECTOR_VALUE" }, res => {
-      this.sectorArr = res.json();
-    });
+    this.getSectorArr()
 
     const analysUrl = "combobox/controller/getAnalysNumber";
     this.ajax
@@ -103,6 +101,17 @@ export class ReceiveLineUserComponent implements OnInit {
     this.workSheetNumber = workSheetNumber;
   }
 
+  getCoordinatesArr = () => {
+    this.approveLineUserService.getCoordinatesArr().then(res => {
+      this.coordinatesArr = res;
+    })
+  }
+
+  getSectorArr = () => {
+    this.approveLineUserService.getSectorArr().then(res => {
+      this.sectorArr = res;
+    })
+  }
   directAccess = (withOut?: any) => {
     const headerUrl = AjaxService.CONTEXT_PATH + "filter/exise/getStartEndDate";
     let analysNumber: any;
@@ -123,43 +132,43 @@ export class ReceiveLineUserComponent implements OnInit {
       var currYear = currDate.getFullYear() + 543;
 
       document.getElementById("trDrinamic").innerHTML =
-        '<tr><th rowspan="2" style="text-align: center !important"><input type="checkbox" name="select-all" id="select-all"></th>' +
-        '<th rowspan="2" style="text-align: center !important">ลำดับ</th>' +
-        '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
-        '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
-        '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
-        '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
-        '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
-        '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
-        '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
-        '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
-        '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
+      
+      '<th rowspan="2" style="text-align: center !important">ลำดับ</th>' +
+      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
+      '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
+      '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
+      '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
+      '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
 
-        '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
-        '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
-        '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
-        '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
-        '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
-        "</tr>" +
-        '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
-        this.month / 2 +
-        " เดือนแรก</th>" +
-        '<th style="text-align: center !important">' +
-        this.month / 2 +
-        " เดือนหลัง </th>" +
-        '<th style="text-align: center !important">' +
-        (currYear - 3) +
-        "</th>" +
-        '<th style="text-align: center !important">' +
-        (currYear - 2) +
-        "</th>" +
-        '<th style="text-align: center !important">' +
-        (currYear - 1) +
-        "</th>" +
-        "</tr>";
-
+      '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
+      '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
+      '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
+      "</tr>" +
+      '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
+      this.month / 2 +
+      " เดือนแรก</th>" +
+      '<th style="text-align: center !important">' +
+      this.month / 2 +
+      " เดือนหลัง </th>" +
+      '<th style="text-align: center !important">' +
+      (currYear - 3) +
+      "</th>" +
+      '<th style="text-align: center !important">' +
+      (currYear - 2) +
+      "</th>" +
+      '<th style="text-align: center !important">' +
+      (currYear - 1) +
+      "</th>" +
+      "</tr>";
+      
       return res;
-    }).then(() => {
+    }).then(()=>{
       this.initDatatable();
       this.loading = false;
     });
@@ -176,8 +185,8 @@ export class ReceiveLineUserComponent implements OnInit {
 
   ngAfterViewInit() { }
 
-  initDatatable(): void {
-    const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
+  initDatatable=(): void => {
+    const URL = AjaxService.CONTEXT_PATH + "/filter/exise/approve/list";
     var sendLineUserCheckbox = (this.sendLineUser = $("#sendLineUser").DataTableTh({
       lengthChange: false,
       searching: false,
@@ -193,30 +202,17 @@ export class ReceiveLineUserComponent implements OnInit {
         url: URL,
         data: {
           paging: false,
-          flag: "S",
+          flag: "F",
           viewStatus: this.role,
           productType: this.coordinates == undefined ? "" : this.coordinates,
           analysNumber: this.analysNumber,
           sector: this.sector
         }
       },
-      columns: [
+      columns: [        
         {
-          data: "exciseId",
-          render: function (data, type, full, meta) {
-            console.log(data);
-            return `<input type="checkbox" name="chk${meta.row}" id="chk${
-              meta.row
-              }" value="${$("<div/>")
-                .text(data)
-                .html()}">`;
-
-          },
-          className: "center"
-        },
-        {
-          data: "exciseId",
-          render: function (data, type, row, meta) {
+          render:  (data, type, row, meta)=> {
+            this.sectorHeader = row.exciseOwnerArea1;
             return meta.row + meta.settings._iDisplayStart + 1;
           },
           className: "center"
@@ -308,10 +304,9 @@ export class ReceiveLineUserComponent implements OnInit {
         res => {
           var data = res.json();
           if (data.messageId == 3) {
-            this.router.navigate(['/add-external-data/approve-line-user']);
-            // this.messageBarService.successModal(data.messageTh, "สำเร็จ");
-            // this.sendLineUser.destroy();
-            // this.initDatatable();
+            this.messageBarService.successModal(data.messageTh, "สำเร็จ");
+            this.sendLineUser.destroy().draw();
+            this.initDatatable();
           } else {
             this.messageBarService.errorModal(data.messageTh, "เกิดข้อผิดพลาด");
           }
@@ -338,13 +333,4 @@ export class ReceiveLineUserComponent implements OnInit {
     this.sendLineUser.destroy();
     this.initDatatable();
   };
-
-  appriveData = () => {
-    
-    this.messageBarService.comfirm((res) => {
-      if (res) {
-        this.router.navigate(['/add-external-data/approve-line-user']);
-      }
-    }, '', "ยืนยันการลบ");
-  }
 }

@@ -159,7 +159,7 @@ public class PlanWorksheetHeaderDao {
 		StringBuilder sql = new StringBuilder();
 		sql.append(" UPDATE TA_PLAN_WORK_SHEET_HEADER H ");
 		sql.append(" set H.FLAG = 'F', ");
-		sql.append("  H.SECTOR = 'F' ");
+		sql.append("  H.SECTOR = 'Y' ");
 		sql.append(" where H.FLAG = 'S' ");
 		sql.append(" and H.VIEW_STATUS = 'S' ");
 		if(BeanUtils.isNotEmpty(exciseList)) {
