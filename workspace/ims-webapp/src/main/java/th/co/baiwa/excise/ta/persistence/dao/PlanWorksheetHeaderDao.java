@@ -107,6 +107,75 @@ public class PlanWorksheetHeaderDao {
 		objList.add(exciseId);
 		return jdbcTemplate.update(sql, objList.toArray());
 	}
+	public int updateForCenterApproveStep1(List<String> exciseList) {
+		
+		List<Object> objList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" UPDATE TA_PLAN_WORK_SHEET_HEADER H ");
+		sql.append(" set H.VIEW_STATUS = 'S' ");
+		sql.append(" where H.FLAG = 'S' ");
+		sql.append(" and H.VIEW_STATUS = 'C' ");
+		if(BeanUtils.isNotEmpty(exciseList)) {
+			sql.append(" And H.EXCISE_ID not in (");
+			for (int i = 0; i < exciseList.size(); i++) {
+				sql.append("?");
+				if( i != exciseList.size()-1 ) {
+					sql.append(",");
+				}
+				objList.add(exciseList.get(i));
+			}
+			sql.append(")");
+			return jdbcTemplate.update(sql.toString(), objList.toArray());
+		}
+		return 0;
+	}
+	public int updateForCenterApproveStep2(List<String> exciseList) {
+		
+		List<Object> objList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" UPDATE TA_PLAN_WORK_SHEET_HEADER H ");
+		sql.append(" set H.FLAG = 'F' ,  ");
+		sql.append("  H.CENTRAL = 'Y'   ");
+		sql.append(" where H.FLAG = 'S' ");
+		sql.append(" and H.VIEW_STATUS = 'C' ");
+		if(BeanUtils.isNotEmpty(exciseList)) {
+			sql.append(" And H.EXCISE_ID in (");
+			for (int i = 0; i < exciseList.size(); i++) {
+				sql.append("?");
+				if( i != exciseList.size()-1 ) {
+					sql.append(",");
+				}
+				objList.add(exciseList.get(i));
+			}
+			sql.append(")");
+			return jdbcTemplate.update(sql.toString(), objList.toArray());
+		}
+		return 0;
+		
+	}
+	public int updateForSectorApprove(List<String> exciseList) {
+		
+		List<Object> objList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" UPDATE TA_PLAN_WORK_SHEET_HEADER H ");
+		sql.append(" set H.FLAG = 'F', ");
+		sql.append("  H.SECTOR = 'F' ");
+		sql.append(" where H.FLAG = 'S' ");
+		sql.append(" and H.VIEW_STATUS = 'S' ");
+		if(BeanUtils.isNotEmpty(exciseList)) {
+			sql.append(" And H.EXCISE_ID in (");
+			for (int i = 0; i < exciseList.size(); i++) {
+				sql.append("?");
+				if( i != exciseList.size()-1 ) {
+					sql.append(",");
+				}
+				objList.add(exciseList.get(i));
+			}
+			sql.append(")");
+			return jdbcTemplate.update(sql.toString(), objList.toArray());
+		}
+		return 0;
+	}
 
 	private Object[] planWorksheetHeaderToArrayObject(PlanWorksheetHeader value) {
 

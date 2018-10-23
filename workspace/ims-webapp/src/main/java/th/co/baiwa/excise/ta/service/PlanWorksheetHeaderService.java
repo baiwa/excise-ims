@@ -135,7 +135,7 @@ public class PlanWorksheetHeaderService {
 				}
 			}
 			logger.info("set PlanWorksheetDetail : "+ exciseRegistartionNumber.getExciseId());
-			planWorksheetHeader.setTotalMonth(new BigDecimal(countReciveMonth));
+			planWorksheetHeader.setTotalMonth(new BigDecimal(firstMonth + lastMonth));
 			planWorksheetHeader.setPercentage(percenttage);
 			planWorksheetHeader.setFirstMonth(new BigDecimal(firstMonth));
 			planWorksheetHeader.setLastMonth(new BigDecimal(lastMonth));
@@ -338,26 +338,11 @@ public class PlanWorksheetHeaderService {
 		int count = 0;
 		String office = UserLoginUtils.getCurrentUserBean().getOfficeId();
 		boolean isCentral = "00".equals(office.substring(0, 2));
-		for (String exice : vo.getExiceList()) {
-			PlanWorksheetHeader planWorksheetHeader = new PlanWorksheetHeader();
-			planWorksheetHeader.setExciseId(exice);
-			planWorksheetHeader.setAnalysNumber(vo.getAnalysNumber());
-			List<PlanWorksheetHeader> planWorksheetHeaders = planWorksheetHeaderDao.queryPlanWorksheetHeaderCriteria(planWorksheetHeader);
-			String central = "";
-			String sector = "";
-			if(BeanUtils.isNotEmpty(planWorksheetHeaders)) {
-				 central = planWorksheetHeaders.get(0).getCentral();
-				 sector = planWorksheetHeaders.get(0).getSector();
-				 if(isCentral) {
-					 central = "Y";
-				 }else {
-					 sector = "Y";
-				 }
-				if("Y".equals(central)&& "Y".equals(sector)) {
-					vo.setFlag("F");
-				}
-			}
-			count += planWorksheetHeaderDao.updatePlanWorksheetHeaderFlag(vo.getFlag(), vo.getAnalysNumber(), exice , vo.getViewStatus(),sector , central );
+		if(isCentral) {
+			count+=planWorksheetHeaderDao.updateForCenterApproveStep1(vo.getExiceList());
+			count+=planWorksheetHeaderDao.updateForCenterApproveStep2(vo.getExiceList());
+		}else {
+			count+=planWorksheetHeaderDao.updateForSectorApprove(vo.getExiceList());
 		}
 		return count;
 	}

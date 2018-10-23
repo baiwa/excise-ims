@@ -39,7 +39,6 @@ export class ReceiveLineUserComponent implements OnInit {
     const URL = "filter/exise/getOfficeCodeByUserLogin";
     this.ajax.post(URL, {}, res => {
       let officeCode = res.json();
-      officeCode = '00500';
       console.log(officeCode);
       if (officeCode.substr(0, 2) == "00") {
         this.role = 'C'
@@ -61,7 +60,7 @@ export class ReceiveLineUserComponent implements OnInit {
 
     //get Sector in select option
     const URL2 = "combobox/controller/getDropByTypeAndParentId";
-    this.ajax.post(URL2, {type : "SECTOR_VALUE"}, res => {
+    this.ajax.post(URL2, { type: "SECTOR_VALUE" }, res => {
       this.sectorArr = res.json();
     });
 
@@ -190,7 +189,7 @@ export class ReceiveLineUserComponent implements OnInit {
         url: URL,
         data: {
           paging: false,
-          flag: "S",
+          // flag: "S",
           viewStatus: this.role,
           productType: this.coordinates == undefined ? "" : this.coordinates,
           analysNumber: this.analysNumber,
@@ -269,10 +268,11 @@ export class ReceiveLineUserComponent implements OnInit {
     var flag = 'S';
     var viewStatus = '';
     if (this.role == 'C') {
-      viewStatus = 'S';
-    } else {
-
       viewStatus = 'C';
+      flag = 'F'
+    } else {
+      flag = 'C'
+      viewStatus = 'S';
     }
     var data = this.sendLineUser.rows().data();
     for (let i = 0; i < data.length; i++) {

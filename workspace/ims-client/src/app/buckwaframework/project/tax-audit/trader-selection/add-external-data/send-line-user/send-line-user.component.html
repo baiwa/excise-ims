@@ -1,6 +1,6 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <!-- modal confirm -->
-<div class="ui modal confirm">
+<!-- <div class="ui modal confirm">
     <i class="close icon" style="margin-top: -50px"></i>
     <div class="header">
         เลือกปลายทาง
@@ -15,12 +15,7 @@
         </div>       
     </div>
 
-    <!-- <div class="ui grid">
-        <div class="sixteen wide center aligned column">
-            <button class="ui button" type="button">center</button>
-        </div>
-    </div> -->
-</div>
+</div> -->
 
 <!-- form -->
 <div class="ui grid">
@@ -83,34 +78,35 @@
         </div>
 
         <div class="ui segment">
-                <div class="ui form">
-                    <div class="inline fields">
-                        <div class="three wide field"></div>
-                        <div class="three wide field">
-                            <label style="width: 5em;">ภาค</label>
-                            <select class="ui dropdown ai" name="sector" id="sector" (change)="changeSector()">
-                                <option value="">ทั้งหมด</option>
-                                <option *ngFor="let list of sectorArr">{{list.value1}}</option>
-                            </select>
-                        </div>
-                        <div class="three wide field">
-                            <label style="width: 5em;">พิกัด</label>
-                            <select class="ui dropdown ai" name="coordinates" id="coordinates" (change)="changeCoordinates()">
-                                <option value="">ทั้งหมด</option>
-                                <option *ngFor="let list of coordinatesArr">{{list.value1}}</option>
-                            </select>
-                        </div>
-                        <div class="three wide field"> 
-                            <button class="ui gray button" (click)="onClear()"><i class="undo icon"></i>ข้อมูลทั้งหมด</button>
-                        </div>
+            <div class="ui form">
+                <div class="inline fields">
+                    <div class="three wide field"></div>
+                    <div class="three wide field">
+                        <label style="width: 5em;">ภาค</label>
+                        <select class="ui dropdown ai" name="sector" id="sector" (change)="changeSector()">
+                            <option value="">ทั้งหมด</option>
+                            <option *ngFor="let list of sectorArr">{{list.value1}}</option>
+                        </select>
+                    </div>
+                    <div class="three wide field">
+                        <label style="width: 5em;">พิกัด</label>
+                        <select class="ui dropdown ai" name="coordinates" id="coordinates" (change)="changeCoordinates()">
+                            <option value="">ทั้งหมด</option>
+                            <option *ngFor="let list of coordinatesArr">{{list.value1}}</option>
+                        </select>
+                    </div>
+                    <div class="three wide field">
+                        <button class="ui gray button" (click)="onClear()"><i class="undo icon"></i>ข้อมูลทั้งหมด</button>
                     </div>
                 </div>
-           
-            <form ngNativeValidate (submit)="openModel()">
+            </div>
+
+            <form ngNativeValidate (submit)="onSend('C')">
                 <div class="ui grid">
                     <div class="sixteen wide column">
                         <div>
-                            <table id="sendLineUser" class="ui small celled table aligned hover striped selectable nowrap" style="width: 100%;">
+                            <table id="sendLineUser" class="ui small celled table aligned hover striped selectable nowrap"
+                                style="width: 100%;">
                                 <thead id="trDrinamic">
                                     <!-- table -->
 
