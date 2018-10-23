@@ -5,7 +5,6 @@ import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 public class Int111FormVo extends DataTableRequest {
 
 	private static final long serialVersionUID = -4113970619958725482L;
-
 	private String followUpProjectId;
 	private String projectName;
 	private String informRectorBnum;
@@ -34,7 +33,7 @@ public class Int111FormVo extends DataTableRequest {
 	private String trackResult3Date;
 	private String status;
 	private String version;
-	private String searchFlag = "FALSE";
+	private String searchFlag;
 
 	public String getSearchFlag() {
 		return searchFlag;

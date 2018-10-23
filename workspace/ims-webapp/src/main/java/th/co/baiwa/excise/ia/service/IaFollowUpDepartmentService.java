@@ -32,6 +32,7 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.constant.ExciseConstants.SEARCH_FLAG;
 import th.co.baiwa.excise.constant.IaConstant.IA_REGIS_TRACK_CONTROL.STATUS;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
@@ -148,12 +149,13 @@ public class IaFollowUpDepartmentService {
 	public DataTableAjax<Int112Vo> searchIaFollowUpDepartment(Int112FormVo formVo) {
 		DataTableAjax<Int112Vo> dataTableAjax = new DataTableAjax<Int112Vo>();
 		
-		if ("TRUE".equalsIgnoreCase(formVo.getSearchFlag())) {
+		if (SEARCH_FLAG.TRUE.equalsIgnoreCase(formVo.getSearchFlag())) {
 			List<Int112Vo> iaFollowUpDepartmentList = iaFollowUpDepartmentDao.searchCriteria(formVo);
+			long count = iaFollowUpDepartmentDao.countCriteria(formVo);
 			
 			dataTableAjax.setDraw(formVo.getDraw() + 1);
-			dataTableAjax.setRecordsTotal(Long.valueOf(iaFollowUpDepartmentList.size()));
-			dataTableAjax.setRecordsFiltered(Long.valueOf(iaFollowUpDepartmentList.size()));
+			dataTableAjax.setRecordsTotal(count);
+			dataTableAjax.setRecordsFiltered(count);
 			dataTableAjax.setData(iaFollowUpDepartmentList);
 		}
 		

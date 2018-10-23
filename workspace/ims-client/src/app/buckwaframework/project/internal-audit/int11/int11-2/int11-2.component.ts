@@ -24,11 +24,11 @@ export class Int112Component implements OnInit {
   regionList: any[];
   distrList: any[];
   statusList: any[];
-  form : Int112Form = new Int112Form();
+  form: Int112Form = new Int112Form();
   searchFlag: string = "FALSE";
 
- // BreadCrumb
- breadcrumb: BreadCrumb[];
+  // BreadCrumb
+  breadcrumb: BreadCrumb[];
 
   constructor(
     private ajaxService: AjaxService,
@@ -37,12 +37,12 @@ export class Int112Component implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService, ) {
-      this.breadcrumb = [
-        { label: "ตรวจสอบภายใน", route: "#" },
-        { label: "ทะเบียนคุมการติดตามงาน", route: "#" },
-        { label: "ค้นหาการติดตามผลการตรวจสอบของหน่วยรับตรวจ", route: "#" },
-      ];
-     }
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ทะเบียนคุมการติดตามงาน", route: "#" },
+      { label: "ค้นหาการติดตามผลการตรวจสอบของหน่วยรับตรวจ", route: "#" },
+    ];
+  }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-11200');
@@ -64,17 +64,26 @@ export class Int112Component implements OnInit {
   initDatatable = () => {
     const URL = AjaxService.CONTEXT_PATH + "ia/int112/search";
     this.datatable = $("#dataTable").DataTable({
-      lengthChange: false,
-      searching: false,
-      ordering: false,
-      pageLength: 10,
-      processing: true,
       serverSide: true,
-      paging: false,
+      searching: false,
+      processing: true,
+      ordering: false,
       scrollX: true,
-      // scrollY: '50vh',
-      // scrollCollapse: true,
-      deferLoading: 10,
+      language: {
+        info: "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+        paginate: {
+          first: "หน้าแรก",
+          last: "หน้าสุดท้าย",
+          next: "ถัดไป",
+          previous: "ก่อนหน้า"
+        },
+        lengthMenu: "แสดง _MENU_ รายการ",
+        loadingRecords: "กำลังดาวน์โหลด...",
+        processing: "กำลังประมวลผล...",
+        search: "ค้นหาทั้งหมด",
+        infoEmpty: "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",
+        emptyTable: "ไม่พบข้อมูล",
+      },
       ajax: {
         type: "POST",
         url: URL,
@@ -103,301 +112,115 @@ export class Int112Component implements OnInit {
         },
         {
           data: "exciseDepartment",
-          render: function (data, row, type) {
-            var v = '-';
-            if (data) {
-              v = data + ' ' + type.exciseRegion + ' ' + type.exciseDistrict;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "informRectorBnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "informRectorDate",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "followUp1Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "followUp1Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "maturity145",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "maturity160",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "performance1Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "performance1Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "trackResult1Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "trackResult1Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "followUp2Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "followUp2Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "maturity260",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "performance2Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "performance2Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "trackResult2Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "trackResult2Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "followUp3Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "followUp3Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "maturity360",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "performance3Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "performance3Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "trackResult3Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "trackResult3Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "status",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "note",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          className: "ui center aligned"
         },
         {
           data: "status",
-          className: "center aglined",
+          className: "ui center aligned",
           render: function (data) {
             var html = '';
             if (data != 'เสร็จสิ้น') {
@@ -426,14 +249,14 @@ export class Int112Component implements OnInit {
       console.log("data : ", data);
       this.form.id = data.followUpDepartmentId;
       $('#modolClose').modal('show');
-       
+
     });
   }
 
-  onClicksavenote =()=>{
+  onClicksavenote = () => {
     this.form.note = $('#noteclosejob').val();
     var url = "ia/int112/notecloseJob";
-    this.ajaxService.post(url,JSON.stringify(this.form), res=>{
+    this.ajaxService.post(url, JSON.stringify(this.form), res => {
       $('#modolClose').modal('hide');
       $("#dataTable").DataTable().ajax.reload();
     });
@@ -512,8 +335,10 @@ export class Int112Component implements OnInit {
 
   searchData() {
     $("#searchFlag").val("TRUE");
-    $("#dataTable").DataTable().ajax.reload();
-    $("#dataTable").DataTable().ajax.reload();
+    this.datatable.ajax.reload();
+    setTimeout(() => {
+      this.datatable.columns.adjust().draw();
+    }, 350);
   }
 
   clearData() {
@@ -526,7 +351,7 @@ export class Int112Component implements OnInit {
     this.distrList = [];
     $("#searchFlag").val("FALSE");
     $(".follow-department-dropdown").dropdown('restore defaults');
-    this.searchData();
+    this.datatable.ajax.reload();
   }
 
   addData() {
@@ -573,7 +398,7 @@ export class Int112Component implements OnInit {
     }, "คุณต้องการลบข้อมูลใช่หรือไม่ ? ");
   }
 
-  clickCheckAll = event =>  {
+  clickCheckAll = event => {
     if (event.target.checked) {
       $(".ui.checkbox.follow-dep-chkbox").checkbox("check");
     } else {
@@ -589,13 +414,13 @@ export class Int112Component implements OnInit {
   // }
 
   exportFollowUpDepartment() {
-    const URL = "ia/int112/exportFollowUpDepartment?exciseDepartment=" + $('#exciseDepartment').val() +"&exciseRegion=" + $('#exciseRegion').val() + "&exciseDistrict=" + $('#exciseDistrict').val() +"&status=" + $('#status').val();
-    console.log("exciseDepartment :" + $('#exciseDepartment').val()+ " , exciseRegion :"+$('#exciseRegion').val()+" , exciseDistrict :"+$('#exciseDistrict').val()+" , status :"+$('#status').val() );
+    const URL = "ia/int112/exportFollowUpDepartment?exciseDepartment=" + $('#exciseDepartment').val() + "&exciseRegion=" + $('#exciseRegion').val() + "&exciseDistrict=" + $('#exciseDistrict').val() + "&status=" + $('#status').val();
+    console.log("exciseDepartment :" + $('#exciseDepartment').val() + " , exciseRegion :" + $('#exciseRegion').val() + " , exciseDistrict :" + $('#exciseDistrict').val() + " , status :" + $('#status').val());
     this.ajax.download(URL);
   }
 }
 
-class Int112Form{
-  note : string ="";
-  id : string = "";
+class Int112Form {
+  note: string = "";
+  id: string = "";
 } 

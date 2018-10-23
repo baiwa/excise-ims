@@ -1,188 +1,184 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
-<div class="ui grid">
 
-  <div class="sixteen wide column">
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+  <span>ค้นหาการติดตามผลการตรวจสอบของหน่วยรับตรวจ</span>
+</div>
 
-    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>ค้นหาการติดตามผลการตรวจสอบของหน่วยรับตรวจ</span>
-    </div>
+<div id="followUpDepartmentPage" class="ui attached segment">
+  <div id="followUpDepartmentform" class="ui form">
+    <div class="inline fields">
+      <div class="two wide field "></div>
+      <div class="two wide field ">
+        <label>สำนักงานสรรพสามิตภาค</label>
+      </div>
 
-    <div id="followUpDepartmentPage" class="ui attached segment">
-      <div id="followUpDepartmentform" class="ui form">
-        <div class="inline fields">
-          <div class="two wide field "></div>
+      <div class="four wide field ">
+        <select class="ui search dropdown follow-department-dropdown" id="exciseDepartment" name="exciseDepartment"
+          [(ngModel)]="exciseDepartment" (change)="changeDepartment($event)">
+          <option value="">กรุณาเลือก </option>
+          <option *ngFor="let department of departmentList; index as i;" value="{{department.value}}">{{department.label}}</option>
 
-          <div class="two wide field ">
-            <label>สรรพสามิตภาค</label>
-          </div>
+        </select>
+      </div>
 
-          <div class="four wide field ">
-            <select class="ui search dropdown follow-department-dropdown" id="exciseDepartment" name="exciseDepartment" [(ngModel)]="exciseDepartment"
-              (change)="changeDepartment($event)">
-              <option value="">กรุณาเลือก </option>
-              <option *ngFor="let department of departmentList; index as i;" value="{{department.value}}">{{department.label}}</option>
+      <div class="two wide field ">
+        <label>สำนักงานสรรพสามิตพื้นที่</label>
+      </div>
 
-            </select>
-          </div>
+      <div class="four wide field ">
+        <select class="ui search dropdown follow-department-dropdown" id="exciseRegion" name="exciseRegion" [(ngModel)]="exciseRegion"
+          (change)="changeRegion($event)">
+          <option value="">กรุณาเลือก </option>
+          <option *ngFor="let region of regionList; index as i;" value="{{region.value}}">{{region.label}}</option>
 
-          <div class="two wide field ">
-            <label>สรรพสามิตพื้นที่</label>
-          </div>
-
-          <div class="four wide field ">
-            <select class="ui search dropdown follow-department-dropdown" id="exciseRegion" name="exciseRegion" [(ngModel)]="exciseRegion"
-              (change)="changeRegion($event)">
-              <option value="">กรุณาเลือก </option>
-              <option *ngFor="let region of regionList; index as i;" value="{{region.value}}">{{region.label}}</option>
-
-            </select>
-          </div>
-        </div>
-
-        <div class="inline fields">
-          <div class="two wide field "></div>
-
-          <div class="two wide field ">
-            <label>สรรพสามิตพื้นสาขา</label>
-          </div>
-
-          <div class="four wide field ">
-            <select class="ui search dropdown follow-department-dropdown" id="exciseDistrict" name="exciseDistrict" [(ngModel)]="exciseDistrict">
-              <option value="">กรุณาเลือก </option>
-              <option *ngFor="let distr of distrList; index as i;" value="{{distr.value}}">{{distr.label}}</option>
-
-            </select>
-          </div>
-
-          <div class="two wide field ">
-            <label>สถานะ</label>
-          </div>
-
-          <div class="four wide field ">
-            <select class="ui search dropdown follow-department-dropdown" id="status" name="status" [(ngModel)]="status">
-              <option value="">กรุณาเลือก </option>
-              <option *ngFor="let status of statusList; index as i;" value="{{status.value}}">{{status.label}}</option>
-
-            </select>
-          </div>
-        </div>
-        <br>
-
-        <div class="ui center aligned grid">
-          <div class="sixteen wide column">
-            <button class="ui mini primary button" (click)="searchData()">
-              <i class="search icon"></i>
-              ค้นหา
-            </button>
-            <button class="ui mini button" (click)="clearData()">
-              <i class="refresh icon"></i>
-              ล้างข้อมูล
-            </button>
-            <button class="ui mini green button" (click)="addData()">
-              <i class="add icon"></i>
-              เพิ่มข้อมูลติดตาม
-            </button>
-          </div>
-        </div>
-
+        </select>
       </div>
     </div>
+
+    <div class="inline fields">
+      <div class="two wide field "></div>
+
+      <div class="two wide field ">
+        <label>สำนักงานสรรพสามิตพื้นสาขา</label>
+      </div>
+
+      <div class="four wide field ">
+        <select class="ui search dropdown follow-department-dropdown" id="exciseDistrict" name="exciseDistrict"
+          [(ngModel)]="exciseDistrict">
+          <option value="">กรุณาเลือก </option>
+          <option *ngFor="let distr of distrList; index as i;" value="{{distr.value}}">{{distr.label}}</option>
+
+        </select>
+      </div>
+
+      <div class="two wide field ">
+        <label>สถานะ</label>
+      </div>
+
+      <div class="four wide field ">
+        <select class="ui search dropdown follow-department-dropdown" id="status" name="status" [(ngModel)]="status">
+          <option value="">กรุณาเลือก </option>
+          <option *ngFor="let status of statusList; index as i;" value="{{status.value}}">{{status.label}}</option>
+
+        </select>
+      </div>
+    </div>
+    <br>
+
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button" (click)="searchData()">
+          <i class="search icon"></i>
+          ค้นหา
+        </button>
+        <button class="ui mini button" (click)="clearData()">
+          <i class="refresh icon"></i>
+          ล้างผลการค้นหาทั้งหมด
+        </button>
+        <button class="ui mini green button" (click)="addData()">
+          <i class="add icon"></i>
+          เพิ่มข้อมูลติดตาม
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>
 
-  <div class="ui segment {{loading ? 'loading' : ''}}">
-      <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%;">
-        <thead>
-          <tr>
-            <th rowspan="2" style="text-align: center !important;">
-              <div class="ui checkbox check-all">
-                <input type="checkbox" (click)="clickCheckAll($event)">
-              </div>
-            </th>
-            <th rowspan="2" style="text-align: center !important;">สำนักงานสรรพสามิต</th>
-            <th colspan="2" style="text-align: center !important;">รายงานผลอธิบดี</th>
-            <th colspan="2" style="text-align: center !important;">แจ้งติดตามหน่วยรับตรวจครั้งที่ 1</th>
-            <th colspan="2" style="text-align: center !important;">วันครบกำหนดครั้งที่ 1</th>
-            <th colspan="2" style="text-align: center !important;">หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 1</th>
-            <th colspan="2" style="text-align: center !important;">รายงานการติดตามครั้งที่ 1</th>
-            <th colspan="2" style="text-align: center !important;">แจ้งติดตามหน่วยรับตรวจครั้งที่ 2</th>
-            <th colspan="1" style="text-align: center !important;">วันครบกำหนดครั้งที่ 2</th>
-            <th colspan="2" style="text-align: center !important;">หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 2</th>
-            <th colspan="2" style="text-align: center !important;">รายงานการติดตามครั้งที่ 2</th>
-            <th colspan="2" style="text-align: center !important;">แจ้งติดตามหน่วยรับตรวจครั้งที่ 3</th>
-            <th colspan="1" style="text-align: center !important;">วันครบกำหนดครั้งที่ 3</th>
-            <th colspan="2" style="text-align: center !important;">หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 3</th>
-            <th colspan="2" style="text-align: center !important;">รายงานการติดตามครั้งที่ 3</th>
-            <th rowspan="2" style="text-align: center !important;">สถานะการติดตาม</th>
-            <th rowspan="2" style="text-align: center !important;">หมายเหตุ</th>
-            <th rowspan="2" style="text-align: center !important;">จัดการ</th>
-          </tr>
-          <tr>
-            <th style="border-left: 1px solid rgba(34,36,38,.1); text-align: center !important;">เลขหนังสือ</th>
-            <th style="text-align: center !important;">วันที่</th>
-            <th style="text-align: center !important;">เลขหนังสือ</th>
-            <th style="text-align: center !important;">วันที่</th>
-            <th style="text-align: center !important;">45 วัน</th>
-            <th style="text-align: center !important;">60 วัน</th>
-            <th style="text-align: center !important;">เลขหนังสือ</th>
-            <th style="text-align: center !important;">วันที่</th>
-            <th style="text-align: center !important;">เลขหนังสือ</th>
-            <th style="text-align: center !important;">วันที่</th>
-            <th style="text-align: center !important;">เลขหนังสือ</th>
-            <th style="text-align: center !important;">วันที่</th>
-            <th style="text-align: center !important;">60 วัน</th>
-            <th style="text-align: center !important;">เลขหนังสือ</th>
-            <th style="text-align: center !important;">วันที่</th>
-            <th style="text-align: center !important;">เลขหนังสือ</th>
-            <th style="text-align: center !important;">วันที่</th>
-            <th style="text-align: center !important;">เลขหนังสือ</th>
-            <th style="text-align: center !important;">วันที่</th>
-            <th style="text-align: center !important;">60 วัน</th>
-            <th style="text-align: center !important;">เลขหนังสือ</th>
-            <th style="text-align: center !important;">วันที่</th>
-            <th style="text-align: center !important;">เลขหนังสือ</th>
-            <th style="text-align: center !important;">วันที่</th>
-          </tr>
-        </thead>
-      </table>
-      <br/>
-      <div class="ui center aligned grid">
-        <div class="sixteen wide column">
-          <button class="ui mini yellow button" (click)="exportFollowUpDepartment()">
-            <i class="print icon"></i>
-            ส่งออก
-          </button>
-          <button class="ui mini red button" (click)="deleteData()">
-            <i class="trash alternate icon"></i>
-            ลบ
-          </button>
-        </div>
-      </div>
-    <br/>
+<div class="ui segment {{loading ? 'loading' : ''}}">
+  <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%;">
+    <thead>
+      <tr>
+        <th rowspan="2" style="text-align: center !important;">
+          <div class="ui checkbox check-all">
+            <input type="checkbox" (click)="clickCheckAll($event)"><label></label>
+          </div>
+        </th>
+        <th rowspan="2" style="text-align: center !important;">สำนักงานสรรพสามิต</th>
+        <th colspan="2" style="text-align: center !important;">รายงานผลอธิบดี</th>
+        <th colspan="2" style="text-align: center !important;">แจ้งติดตามหน่วยรับตรวจครั้งที่ 1</th>
+        <th colspan="2" style="text-align: center !important;">วันครบกำหนดครั้งที่ 1</th>
+        <th colspan="2" style="text-align: center !important;">หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 1</th>
+        <th colspan="2" style="text-align: center !important;">รายงานการติดตามครั้งที่ 1</th>
+        <th colspan="2" style="text-align: center !important;">แจ้งติดตามหน่วยรับตรวจครั้งที่ 2</th>
+        <th colspan="1" style="text-align: center !important;">วันครบกำหนดครั้งที่ 2</th>
+        <th colspan="2" style="text-align: center !important;">หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 2</th>
+        <th colspan="2" style="text-align: center !important;">รายงานการติดตามครั้งที่ 2</th>
+        <th colspan="2" style="text-align: center !important;">แจ้งติดตามหน่วยรับตรวจครั้งที่ 3</th>
+        <th colspan="1" style="text-align: center !important;">วันครบกำหนดครั้งที่ 3</th>
+        <th colspan="2" style="text-align: center !important;">หน่วยรับตรวจแจ้งผลการดำเนินงานครั้งที่ 3</th>
+        <th colspan="2" style="text-align: center !important;">รายงานการติดตามครั้งที่ 3</th>
+        <th rowspan="2" style="text-align: center !important;">สถานะการติดตาม</th>
+        <th rowspan="2" style="text-align: center !important;">หมายเหตุ</th>
+        <th rowspan="2" style="text-align: center !important;">จัดการ</th>
+      </tr>
+      <tr>
+        <th style="border-left: 1px solid rgba(34,36,38,.1); text-align: center !important;">เลขหนังสือ</th>
+        <th style="text-align: center !important;">วันที่</th>
+        <th style="text-align: center !important;">เลขหนังสือ</th>
+        <th style="text-align: center !important;">วันที่</th>
+        <th style="text-align: center !important;">45 วัน</th>
+        <th style="text-align: center !important;">60 วัน</th>
+        <th style="text-align: center !important;">เลขหนังสือ</th>
+        <th style="text-align: center !important;">วันที่</th>
+        <th style="text-align: center !important;">เลขหนังสือ</th>
+        <th style="text-align: center !important;">วันที่</th>
+        <th style="text-align: center !important;">เลขหนังสือ</th>
+        <th style="text-align: center !important;">วันที่</th>
+        <th style="text-align: center !important;">60 วัน</th>
+        <th style="text-align: center !important;">เลขหนังสือ</th>
+        <th style="text-align: center !important;">วันที่</th>
+        <th style="text-align: center !important;">เลขหนังสือ</th>
+        <th style="text-align: center !important;">วันที่</th>
+        <th style="text-align: center !important;">เลขหนังสือ</th>
+        <th style="text-align: center !important;">วันที่</th>
+        <th style="text-align: center !important;">60 วัน</th>
+        <th style="text-align: center !important;">เลขหนังสือ</th>
+        <th style="text-align: center !important;">วันที่</th>
+        <th style="text-align: center !important;">เลขหนังสือ</th>
+        <th style="text-align: center !important;">วันที่</th>
+      </tr>
+    </thead>
+  </table>
+  <br />
+  <div class="ui center aligned grid">
+    <div class="sixteen wide column">
+      <button class="ui mini yellow button" (click)="exportFollowUpDepartment()">
+        <i class="print icon"></i>
+        ส่งออก
+      </button>
+      <button class="ui mini red button" (click)="deleteData()">
+        <i class="trash alternate icon"></i>
+        ลบ
+      </button>
+    </div>
   </div>
+  <br />
+</div>
+
 <!-- modol close -->
 <div class="ui modal" id="modolClose">
-    <div class="header">
-      หมายเหตุปิดงาน
-    </div>
-    <div class="content scrolling">
+  <div class="header">
+    หมายเหตุปิดงาน
+  </div>
+  <div class="content scrolling">
     <!-- row 1 -->
     <div class="ui form">
-        <div class="field">
-          <textarea id="noteclosejob"></textarea>
-        </div>
-        <input type="hidden" id="searchFlag" name="searchFlag">
-    </div>
-    </div>
-    <div class="actions">
-      <div class="ui primary button" (click)="onClicksavenote()">
-          <i class="save icon"></i>
-        บันทึก
+      <div class="field">
+        <textarea id="noteclosejob"></textarea>
       </div>
-      <div class="ui icon deny button">
-        <i class="close icon"></i>
-        ยกเลิก
-      </div>
+      <input type="hidden" id="searchFlag" name="searchFlag">
     </div>
-  
   </div>
+  <div class="actions">
+    <div class="ui primary button" (click)="onClicksavenote()">
+      <i class="save icon"></i>
+      บันทึก
+    </div>
+    <div class="ui icon deny button">
+      <i class="close icon"></i>
+      ยกเลิก
+    </div>
+  </div>
+
+</div>

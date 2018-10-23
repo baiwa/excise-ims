@@ -17,5 +17,9 @@ public class ExciseConstants {
 	        public static final String YYYY  = "yyyy";
 	    }
 	    
+	    public static class SEARCH_FLAG {
+	    	public static final String TRUE = "TRUE";
+	    	public static final String FALSE = "FALSE";
+	    }
 
 }

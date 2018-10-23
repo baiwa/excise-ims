@@ -1,7 +1,6 @@
 
 package th.co.baiwa.excise.ia.controller;
 
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -39,87 +38,91 @@ public class Int111Controller {
 
 	@Autowired
 	private IaFollowUpProjectService iaFollowUpProjectService;
-	
+
 	@PostMapping("/search")
 	@ResponseBody
 	public DataTableAjax<Int111Vo> search(@RequestBody Int111FormVo formVo) {
 		return iaFollowUpProjectService.searchIaFollowUpProject(formVo);
 	}
-	
+
 	@GetMapping("/status")
 	@ResponseBody
 	public ResponseEntity<?> statusDropdown() {
 		return new ResponseEntity<List<LabelValueBean>>(iaFollowUpProjectService.getStatusDropdown(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/get/followUpProject/{id}")
 	@ResponseBody
 	public ResponseEntity<?> getFollowUpproject(@PathVariable("id") Long id) {
 		Int111Vo iaFollowUpProject = iaFollowUpProjectService.findById(id);
 		return new ResponseEntity<Int111Vo>(iaFollowUpProject, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/update")
 	@ResponseBody
 	public ResponseEntity<?> update(@RequestBody Int111FormVo vo) {
 		iaFollowUpProjectService.saveOrUpdate(vo);
 		return new ResponseEntity<Int111FormVo>(vo, HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/save")
 	@ResponseBody
 	public ResponseEntity<?> save(@RequestBody Int111FormVo vo) {
 		iaFollowUpProjectService.saveOrUpdate(vo);
 		return new ResponseEntity<Int111FormVo>(vo, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
 	@ResponseBody
 	public ResponseEntity<?> delete(@PathVariable("id") List<Long> ids) {
 		iaFollowUpProjectService.delete(ids);
 		return new ResponseEntity<List<Long>>(ids, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/closeJob")
 	@ResponseBody
 	public ResponseEntity<?> closeJob(@RequestBody Int111FormVo vo) {
 		iaFollowUpProjectService.closeJob(vo);
 		return new ResponseEntity<Int111FormVo>(vo, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/shiftDate")
 	@ResponseBody
 	public ResponseEntity<?> shiftDate(@RequestBody Int11ShiftDateVo vo) {
 		iaFollowUpProjectService.shiftDate(vo);
 		return new ResponseEntity<Int11ShiftDateVo>(vo, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/notecloseJob")
 	@ResponseBody
 	public String notecloseJob(@RequestBody Int111Form form) {
 		iaFollowUpProjectService.notecloseJob(form);
 		return MessageConstant.MSG.STATUS.SAVE.SUCCESS;
 	}
-	
-/*	@GetMapping("/export")
-	public ResponseEntity<FileSystemResource> export(@ModelAttribute Int111FormVo formVo) throws Exception {
-		String fileName = String.format("EXPORT_IA_FOLLOW_UP_PROJECT_%s.xlsx", DateConstant.convertDateToStrDDMMYYYY(new Date()));
 
-		FileSystemResource file = iaFollowUpProjectService.exportFile(formVo);
-        		
-		HttpHeaders respHeaders = new HttpHeaders();
-        respHeaders.setContentType(MediaType.TEXT_PLAIN);
-        respHeaders.setContentLength(file.getFile().length());
-        respHeaders.setContentDispositionFormData("attachment", fileName);
-        
-		return new ResponseEntity<FileSystemResource>(file, respHeaders, HttpStatus.OK);
-	}*/
-	
+	/*
+	 * @GetMapping("/export") public ResponseEntity<FileSystemResource>
+	 * export(@ModelAttribute Int111FormVo formVo) throws Exception { String
+	 * fileName = String.format("EXPORT_IA_FOLLOW_UP_PROJECT_%s.xlsx",
+	 * DateConstant.convertDateToStrDDMMYYYY(new Date()));
+	 * 
+	 * FileSystemResource file = iaFollowUpProjectService.exportFile(formVo);
+	 * 
+	 * HttpHeaders respHeaders = new HttpHeaders();
+	 * respHeaders.setContentType(MediaType.TEXT_PLAIN);
+	 * respHeaders.setContentLength(file.getFile().length());
+	 * respHeaders.setContentDispositionFormData("attachment", fileName);
+	 * 
+	 * return new ResponseEntity<FileSystemResource>(file, respHeaders,
+	 * HttpStatus.OK); }
+	 */
+
 	@GetMapping("/exportFollowUpProject")
 	@ResponseBody
-	public  void exportFollowUpProject(@ModelAttribute Int111FormVo formVo, HttpServletResponse response) throws Exception {
-		log.info("projectName : "+formVo.getProjectName()+ ", status : " +formVo.getStatus());
+	public void exportFollowUpProject(@ModelAttribute Int111FormVo formVo, HttpServletResponse response)
+			throws Exception {
+		log.info("projectName : " + formVo.getProjectName() + ", status : " + formVo.getStatus());
 		iaFollowUpProjectService.exportFollowUpProject(formVo, response);
-	 
+
 	}
 }

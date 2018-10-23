@@ -1,4 +1,3 @@
-
 import { Router, ActivatedRoute } from '@angular/router';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { MessageBarService } from '../../../../common/services/message-bar.service';
@@ -6,13 +5,21 @@ import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 import { AuthService } from 'services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
+class Int111Form {
+  note: string = "";
+  id: string = "";
+}
+
 declare var $: any;
+
 @Component({
   selector: 'int11-1',
   templateUrl: './int11-1.component.html',
   styleUrls: ['./int11-1.component.css']
 })
+
 export class Int111Component implements OnInit {
+
   // id : string = "";
   isSearch: boolean = false;
   datatable: any;
@@ -45,12 +52,12 @@ export class Int111Component implements OnInit {
     this.authService.reRenderVersionProgram('INT-11100');
     this.$form = $('#followUpProjectForm');
     this.$page = $('#followUpProjectPage');
+    this.initDatatable();
   }
 
-  ngAfterViewInit() {
-    this.getStatusDropdown();
-    this.initDatatable();
-    this.initDropdown();
+  async ngAfterViewInit() {
+    await this.getStatusDropdown();
+    await this.initDropdown();
   }
 
   initDropdown() {
@@ -60,22 +67,31 @@ export class Int111Component implements OnInit {
   initDatatable = () => {
     const URL = AjaxService.CONTEXT_PATH + "ia/int111/search";
     this.datatable = $("#dataTable").DataTable({
-      lengthChange: false,
-      searching: false,
-      ordering: false,
-      pageLength: 10,
-      processing: true,
-      serverSide: true,
-      paging: false,
-      scrollX: true,
-      // scrollY: '50vh',
-      // scrollCollapse: true,
-      deferLoading: 10,
-      ajax: {
-        type: "POST",
-        url: URL,
-        contentType: "application/json",
-        data: (d) => {
+      "serverSide": true,
+      "searching": false,
+      "processing": true,
+      "ordering": false,
+      "scrollX": true,
+      "language": {
+        "info": "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+        "paginate": {
+          "first": "หน้าแรก",
+          "last": "หน้าสุดท้าย",
+          "next": "ถัดไป",
+          "previous": "ก่อนหน้า"
+        },
+        "lengthMenu": "แสดง _MENU_ รายการ",
+        "loadingRecords": "กำลังดาวน์โหลด...",
+        "processing": "กำลังประมวลผล...",
+        "search": "ค้นหาทั้งหมด",
+        "infoEmpty": "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",
+        "emptyTable": "ไม่พบข้อมูล",
+      },
+      "ajax": {
+        "type": "POST",
+        "url": URL,
+        "contentType": "application/json",
+        "data": (d) => {
           return JSON.stringify($.extend({}, d, {
             "projectName": $('#projectName').val(),
             "status": $('#status').val(),
@@ -83,316 +99,130 @@ export class Int111Component implements OnInit {
           }));
         }
       },
-      columns: [
+      "columns": [
         {
-          data: "followUpProjectId",
-          className: "text-center",
-          render: function (data) {
+          "data": "followUpProjectId",
+          "className": "ui center aligned",
+          "render": function (data) {
             return (
               '<div class="ui checkbox follow-proj-chkbox"><input name="checkId" value="' +
               data +
-              '" type="checkbox"><label></label></div>'
+              '"type="checkbox"><label></label></div>'
             );
           }
         },
         {
-          data: "projectName",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "projectName",
+          "className": "ui center aligned",
         },
         {
-          data: "informRectorBnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "informRectorBnum",
+          "className": "ui center aligned",
         },
         {
-          data: "informRectorDate",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "informRectorDate",
+          "className": "ui center aligned",
         },
         {
-          data: "followUp1Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "followUp1Bnum",
+          "className": "ui center aligned",
         },
         {
-          data: "followUp1Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "followUp1Date",
+          "className": "ui center aligned",
         },
         {
-          data: "maturity145",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "maturity145",
+          "className": "ui center aligned",
         },
         {
-          data: "maturity160",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "maturity160",
+          "className": "ui center aligned",
         },
         {
-          data: "performance1Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "performance1Bnum",
+          "className": "ui center aligned",
         },
         {
-          data: "performance1Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "performance1Date",
+          "className": "ui center aligned",
         },
         {
-          data: "trackResult1Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "trackResult1Bnum",
+          "className": "ui center aligned",
         },
         {
-          data: "trackResult1Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "trackResult1Date",
+          "className": "ui center aligned",
         },
         {
-          data: "followUp2Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "followUp2Bnum",
+          "className": "ui center aligned",
         },
         {
-          data: "followUp2Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "followUp2Date",
+          "className": "ui center aligned",
         },
         {
-          data: "maturity260",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "maturity260",
+          "className": "ui center aligned",
         },
         {
-          data: "performance2Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "performance2Bnum",
+          "className": "ui center aligned",
         },
         {
-          data: "performance2Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "performance2Date",
+          "className": "ui center aligned",
         },
         {
-          data: "trackResult2Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "trackResult2Bnum",
+          "className": "ui center aligned",
         },
         {
-          data: "trackResult2Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "trackResult2Date",
+          "className": "ui center aligned",
         },
         {
-          data: "followUp3Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "followUp3Bnum",
+          "className": "ui center aligned",
         },
         {
-          data: "followUp3Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "followUp3Date",
+          "className": "ui center aligned",
         },
         {
-          data: "maturity360",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "maturity360",
+          "className": "ui center aligned",
         },
         {
-          data: "performance3Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "performance3Bnum",
+          "className": "ui center aligned",
         },
         {
-          data: "performance3Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "performance3Date",
+          "className": "ui center aligned",
         },
         {
-          data: "trackResult3Bnum",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "trackResult3Bnum",
+          "className": "ui center aligned",
         },
         {
-          data: "trackResult3Date",
-          className: "center aglined",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "trackResult3Date",
+          "className": "ui center aligned",
         },
         {
-          data: "status",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "status",
+          "className": "ui center aligned",
         },
         {
-          data: "note",
-          render: function (data) {
-            var v = '-';
-            if (data) {
-              v = data;
-            }
-            return v;
-          }
+          "data": "note",
+          "className": "ui center aligned",
         },
         {
-          data: "status",
-          className: "center aglined",
-          render: function (data, row) {
+          "data": "status",
+          "className": "ui center aligned",
+          "render": function (data, row) {
             var html = '';
             if (data != 'เสร็จสิ้น') {
               html += '<button type="button" class="ui mini yellow button edit-button"><i class="edit icon"></i>แก้ไข</button>';
@@ -408,22 +238,22 @@ export class Int111Component implements OnInit {
             queryParams: { id: data.followUpProjectId }
           });
         });
-      }, createdRow: function (row, data, dataIndex) {
+      },
+      createdRow: function (row, data, dataIndex) {
         if (data.status === 'เสร็จสิ้น') {
           $(row).find('td:eq(26),td:eq(27),td:eq(28)').addClass('bg-c-green');
         }
       }
     });
+
     this.datatable.on('click', 'tbody tr button.close-button', (e) => {
       var closestRow = $(e.target).closest('tr');
       var data = this.datatable.row(closestRow).data();
       console.log("data : ", data);
       this.form.id = data.followUpProjectId;
       $('#modolClose').modal('show');
-
     });
   }
-
 
   onClicksavenote = () => {
     this.form.note = $('#noteclosejob').val();
@@ -447,15 +277,17 @@ export class Int111Component implements OnInit {
 
   searchData() {
     $("#searchFlag").val("TRUE");
-    $("#dataTable").DataTable().ajax.reload();
-    $("#dataTable").DataTable().ajax.reload();
+    this.datatable.ajax.reload();
+    setTimeout(() => {
+      this.datatable.columns.adjust().draw();
+    }, 350);
   }
 
   clearData() {
     $('#projectName').val('');
     $("#status").dropdown('restore defaults');
     $("#searchFlag").val("FALSE");
-    $("#dataTable").DataTable().ajax.reload();
+    this.datatable.ajax.reload();
   }
 
   addData() {
@@ -516,16 +348,10 @@ export class Int111Component implements OnInit {
   //   window.open(url);
   // }
 
-
   exportFollowUpProject() {
     const URL = "ia/int111/exportFollowUpProject?projectName=" + $('#projectName').val() + "&status=" + $('#status').val();
     console.log("projectName :" + $('#projectName').val() + " , " + "status :" + $('#status').val());
     this.ajax.download(URL);
   }
 
-}
-
-class Int111Form {
-  note: string = "";
-  id: string = "";
 } 

@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,11 +15,12 @@ import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ia.persistence.vo.Int112FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int112Vo;
+import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
 public class IaFollowUpDepartmentDao {
 
-	private Logger log = LoggerFactory.getLogger(IaFollowUpDepartmentDao.class);
+//	private Logger log = LoggerFactory.getLogger(IaFollowUpDepartmentDao.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -29,31 +28,61 @@ public class IaFollowUpDepartmentDao {
     private String SQL_SEARCH_CRITERIA = " SELECT * FROM IA_FOLLOW_UP_DEPARTMENT WHERE IS_DELETED = 'N' ";
     private String SQL_EXPORT_DATA = " SELECT * FROM IA_FOLLOW_UP_DEPARTMENT WHERE IS_DELETED = 'N' ";
     
-    public List<Int112Vo> searchCriteria(Int112FormVo formVo) {
+    public long countCriteria(Int112FormVo formVo) {
     	StringBuilder sql = new StringBuilder(SQL_SEARCH_CRITERIA);
-    	List<Object> param = new ArrayList<>();
+    	List<Object> params = new ArrayList<>();
     	
     	if (StringUtils.isNotBlank(formVo.getExciseDepartment())) {
     		sql.append(" AND EXCISE_DEPARTMENT = ? ");
-    		param.add(queryValue1SysLov(formVo.getExciseDepartment()));
+    		params.add(queryValue1SysLov(formVo.getExciseDepartment()));
     	}
     	
     	if (StringUtils.isNotBlank(formVo.getExciseRegion())) {
     		sql.append(" AND EXCISE_REGION = ? ");
-    		param.add(queryValue1SysLov(formVo.getExciseRegion()));
+    		params.add(queryValue1SysLov(formVo.getExciseRegion()));
     	}
     	
     	if (StringUtils.isNotBlank(formVo.getExciseDistrict())) {
     		sql.append(" AND EXCISE_DISTRICT = ? ");
-    		param.add(queryDescSysLov(formVo.getExciseDistrict()));
+    		params.add(queryDescSysLov(formVo.getExciseDistrict()));
     	}
     	
     	if (StringUtils.isNotBlank(formVo.getStatus())) {
     		sql.append(" AND STATUS = ? ");
-    		param.add(formVo.getStatus());
+    		params.add(formVo.getStatus());
     	}
     	
-    	List<Int112Vo> list = jdbcTemplate.query(sql.toString(), param.toArray(), iaFollowUpDepartmentRowmapper);
+    	String countSql = OracleUtils.countForDatatable(sql);
+    	Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+		return count;
+	}
+    
+    public List<Int112Vo> searchCriteria(Int112FormVo formVo) {
+    	StringBuilder sql = new StringBuilder(SQL_SEARCH_CRITERIA);
+    	List<Object> params = new ArrayList<>();
+    	
+    	if (StringUtils.isNotBlank(formVo.getExciseDepartment())) {
+    		sql.append(" AND EXCISE_DEPARTMENT = ? ");
+    		params.add(queryValue1SysLov(formVo.getExciseDepartment()));
+    	}
+    	
+    	if (StringUtils.isNotBlank(formVo.getExciseRegion())) {
+    		sql.append(" AND EXCISE_REGION = ? ");
+    		params.add(queryValue1SysLov(formVo.getExciseRegion()));
+    	}
+    	
+    	if (StringUtils.isNotBlank(formVo.getExciseDistrict())) {
+    		sql.append(" AND EXCISE_DISTRICT = ? ");
+    		params.add(queryDescSysLov(formVo.getExciseDistrict()));
+    	}
+    	
+    	if (StringUtils.isNotBlank(formVo.getStatus())) {
+    		sql.append(" AND STATUS = ? ");
+    		params.add(formVo.getStatus());
+    	}
+    	
+    	String sqlLimit = OracleUtils.limitForDataTable(sql, formVo.getStart(), formVo.getLength());
+    	List<Int112Vo> list = jdbcTemplate.query(sqlLimit, params.toArray(), iaFollowUpDepartmentRowmapper);
     	return list;
     }
     
@@ -187,4 +216,5 @@ public class IaFollowUpDepartmentDao {
 		lovId = jdbcTemplate.queryForObject(SQL, new Object[] { subDesc }, String.class);
 		return lovId;
 	}
+
 }
