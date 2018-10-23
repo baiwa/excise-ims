@@ -91,11 +91,15 @@
                 <div class="seven wide column" style="padding-bottom: 0" >
                     <div class="ui form">
                         <div class="inline fields">
-                            <div class="sixteen wide field">
-                                <label style="width: 5em;">พิกัด</label>
-                                <select class="ui dropdown ai">
-                                    <option *ngFor="let item of listItem" value="{{item}}">{{item}}</option>
+                            <div class="twelve wide field">
+                                <label>พิกัด</label>
+                                <select class="ui dropdown ai" name="prod" id="prod" (change)="changeProd()">
+                                    <option value="">ทั้งหมด</option>
+                                    <option *ngFor="let item of listItem" value="{{item.value1}}">{{item.value1}}</option>
                                 </select>
+                            </div>
+                            <div class="four wide field">
+                                    <button type="button" class="ui mini button" (click)="searchAll()"><i class="sync icon" ></i>ข้อมูลทั้งหมด</button>
                             </div>
                         </div>
                     </div>

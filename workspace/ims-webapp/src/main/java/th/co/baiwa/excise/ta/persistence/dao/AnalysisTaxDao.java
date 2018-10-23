@@ -21,7 +21,7 @@ public class AnalysisTaxDao {
 	private final String SQL = "SELECT * FROM TA_PLAN_WORK_SHEET_HEADER WHERE FLAG != 'N' AND IS_DELETED='N' ";
 
 	public List<LabelValueBean> findAllExciseIdNotN() {
-		String sql = "SELECT DISTINCT EXCISE_ID FROM TA_PLAN_WORK_SHEET_HEADER WHERE FLAG != 'N' AND IS_DELETED='N' ORDER BY EXCISE_ID ASC";
+		String sql = "SELECT EXCISE_ID FROM  TA_PLAN_WORK_SHEET_HEADER WHERE FLAG='S' AND CENTRAL ='Y' OR SECTOR='Y' ORDER BY EXCISE_ID ASC";
 		
 		List<LabelValueBean> list = jdbcTemplate.query(sql, exciseIdRowmapper);
 		return list;
