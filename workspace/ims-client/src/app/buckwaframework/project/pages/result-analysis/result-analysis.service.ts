@@ -31,6 +31,21 @@ export class ResultAnalysisSerivce {
             "ordering": false,
             "processing": true,
             "scrollX": true,
+            "language": {
+                "info": "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+                "paginate": {
+                    "first": "หน้าแรก",
+                    "last": "หน้าสุดท้าย",
+                    "next": "ถัดไป",
+                    "previous": "ก่อนหน้า"
+                },
+                "lengthMenu": "แสดง _MENU_ รายการ",
+                "loadingRecords": "กำลังดาวน์โหลด...",
+                "processing": "กำลังประมวลผล...",
+                "search": "ค้นหาทั้งหมด",
+                "infoEmpty": "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",
+                "emptyTable": "ไม่พบข้อมูล",
+            },
             "ajax": {
                 "url": '/ims-webapp/api/ta/resultAnalysis/findProdcutsTax',
                 "contentType": "application/json",
@@ -73,22 +88,22 @@ export class ResultAnalysisSerivce {
                 var sumColumn1 = 0;
                 var sumColumn2 = 0;
                 var sumColumn3 = 0;
-                for(let rs of data){
-                    sumColumn1+=parseFloat(rs.dataTax0307);
-                    sumColumn2+=parseFloat(rs.budget);
+                for (let rs of data) {
+                    sumColumn1 += parseFloat(rs.dataTax0307);
+                    sumColumn2 += parseFloat(rs.budget);
                 }
-                sumColumn3 = sumColumn1- sumColumn2;
+                sumColumn3 = sumColumn1 - sumColumn2;
                 var api = this.api(), data;
 
                 // format money
-                var formatsumColumn1 = '<b>'+Utils.moneyFormatDecimal(sumColumn1)+'</b>';
-                var formatsumColumn2 = '<b>'+Utils.moneyFormatDecimal(sumColumn2)+'</b>';
-                var formatsumColumn3 = '<b>'+Utils.moneyFormatDecimal(sumColumn3)+'</b>';
-               
-               // console.log(formatsumColumn1);
-                 $( api.column( 1 ).footer() ).html(formatsumColumn1);
-                 $( api.column( 2 ).footer() ).html(formatsumColumn2);
-                 $( api.column( 3 ).footer() ).html(formatsumColumn3);
+                var formatsumColumn1 = '<b>' + Utils.moneyFormatDecimal(sumColumn1) + '</b>';
+                var formatsumColumn2 = '<b>' + Utils.moneyFormatDecimal(sumColumn2) + '</b>';
+                var formatsumColumn3 = '<b>' + Utils.moneyFormatDecimal(sumColumn3) + '</b>';
+
+                // console.log(formatsumColumn1);
+                $(api.column(1).footer()).html(formatsumColumn1);
+                $(api.column(2).footer()).html(formatsumColumn2);
+                $(api.column(3).footer()).html(formatsumColumn3);
 
             }
         });
@@ -101,6 +116,21 @@ export class ResultAnalysisSerivce {
             "ordering": false,
             "processing": true,
             "scrollX": true,
+            "language": {
+                "info": "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+                "paginate": {
+                    "first": "หน้าแรก",
+                    "last": "หน้าสุดท้าย",
+                    "next": "ถัดไป",
+                    "previous": "ก่อนหน้า"
+                },
+                "lengthMenu": "แสดง _MENU_ รายการ",
+                "loadingRecords": "กำลังดาวน์โหลด...",
+                "processing": "กำลังประมวลผล...",
+                "search": "ค้นหาทั้งหมด",
+                "infoEmpty": "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",
+                "emptyTable": "ไม่พบข้อมูล",
+            },
             "ajax": {
                 "url": '/ims-webapp/api/ta/resultAnalysis/findPrice',
                 "contentType": "application/json",
@@ -143,22 +173,22 @@ export class ResultAnalysisSerivce {
                 var sumColumn1 = 0;
                 var sumColumn2 = 0;
                 var sumColumn3 = 0;
-                for(let rs of data){
-                    sumColumn1+=parseFloat(rs.dataTax0307);
-                    sumColumn2+=parseFloat(rs.budget);
+                for (let rs of data) {
+                    sumColumn1 += parseFloat(rs.dataTax0307);
+                    sumColumn2 += parseFloat(rs.budget);
                 }
-                sumColumn3 = sumColumn1- sumColumn2;
+                sumColumn3 = sumColumn1 - sumColumn2;
                 var api = this.api(), data;
 
                 // format money
-                var formatsumColumn1 = '<b>'+Utils.moneyFormatDecimal(sumColumn1)+'</b>';
-                var formatsumColumn2 = '<b>'+Utils.moneyFormatDecimal(sumColumn2)+'</b>';
-                var formatsumColumn3 = '<b>'+Utils.moneyFormatDecimal(sumColumn3)+'</b>';
-               
-               // console.log(formatsumColumn1);
-                 $( api.column( 1 ).footer() ).html(formatsumColumn1);
-                 $( api.column( 2 ).footer() ).html(formatsumColumn2);
-                 $( api.column( 3 ).footer() ).html(formatsumColumn3);
+                var formatsumColumn1 = '<b>' + Utils.moneyFormatDecimal(sumColumn1) + '</b>';
+                var formatsumColumn2 = '<b>' + Utils.moneyFormatDecimal(sumColumn2) + '</b>';
+                var formatsumColumn3 = '<b>' + Utils.moneyFormatDecimal(sumColumn3) + '</b>';
+
+                // console.log(formatsumColumn1);
+                $(api.column(1).footer()).html(formatsumColumn1);
+                $(api.column(2).footer()).html(formatsumColumn2);
+                $(api.column(3).footer()).html(formatsumColumn3);
 
             }
         });
@@ -170,6 +200,21 @@ export class ResultAnalysisSerivce {
             "ordering": false,
             "processing": true,
             "scrollX": true,
+            "language": {
+                "info": "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+                "paginate": {
+                    "first": "หน้าแรก",
+                    "last": "หน้าสุดท้าย",
+                    "next": "ถัดไป",
+                    "previous": "ก่อนหน้า"
+                },
+                "lengthMenu": "แสดง _MENU_ รายการ",
+                "loadingRecords": "กำลังดาวน์โหลด...",
+                "processing": "กำลังประมวลผล...",
+                "search": "ค้นหาทั้งหมด",
+                "infoEmpty": "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",
+                "emptyTable": "ไม่พบข้อมูล",
+            },
             "ajax": {
                 "url": '/ims-webapp/api/ta/resultAnalysis/findValueProductTax',
                 "contentType": "application/json",
@@ -212,22 +257,22 @@ export class ResultAnalysisSerivce {
                 var sumColumn1 = 0;
                 var sumColumn2 = 0;
                 var sumColumn3 = 0;
-                for(let rs of data){
-                    sumColumn1+=parseFloat(rs.dataTax0307);
-                    sumColumn2+=parseFloat(rs.budget);
+                for (let rs of data) {
+                    sumColumn1 += parseFloat(rs.dataTax0307);
+                    sumColumn2 += parseFloat(rs.budget);
                 }
-                sumColumn3 = sumColumn1- sumColumn2;
+                sumColumn3 = sumColumn1 - sumColumn2;
                 var api = this.api(), data;
 
                 // format money
-                var formatsumColumn1 = '<b>'+Utils.moneyFormatDecimal(sumColumn1)+'</b>';
-                var formatsumColumn2 = '<b>'+Utils.moneyFormatDecimal(sumColumn2)+'</b>';
-                var formatsumColumn3 = '<b>'+Utils.moneyFormatDecimal(sumColumn3)+'</b>';
-               
-               // console.log(formatsumColumn1);
-                 $( api.column( 1 ).footer() ).html(formatsumColumn1);
-                 $( api.column( 2 ).footer() ).html(formatsumColumn2);
-                 $( api.column( 3 ).footer() ).html(formatsumColumn3);
+                var formatsumColumn1 = '<b>' + Utils.moneyFormatDecimal(sumColumn1) + '</b>';
+                var formatsumColumn2 = '<b>' + Utils.moneyFormatDecimal(sumColumn2) + '</b>';
+                var formatsumColumn3 = '<b>' + Utils.moneyFormatDecimal(sumColumn3) + '</b>';
+
+                // console.log(formatsumColumn1);
+                $(api.column(1).footer()).html(formatsumColumn1);
+                $(api.column(2).footer()).html(formatsumColumn2);
+                $(api.column(3).footer()).html(formatsumColumn3);
 
             }
         });
@@ -239,6 +284,21 @@ export class ResultAnalysisSerivce {
             "ordering": false,
             "processing": true,
             "scrollX": true,
+            "language": {
+                "info": "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+                "paginate": {
+                    "first": "หน้าแรก",
+                    "last": "หน้าสุดท้าย",
+                    "next": "ถัดไป",
+                    "previous": "ก่อนหน้า"
+                },
+                "lengthMenu": "แสดง _MENU_ รายการ",
+                "loadingRecords": "กำลังดาวน์โหลด...",
+                "processing": "กำลังประมวลผล...",
+                "search": "ค้นหาทั้งหมด",
+                "infoEmpty": "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",
+                "emptyTable": "ไม่พบข้อมูล",
+            },
             "ajax": {
                 "url": '/ims-webapp/api/ta/resultAnalysis/findTaxRate',
                 "contentType": "application/json",
@@ -253,13 +313,13 @@ export class ResultAnalysisSerivce {
                 }, {
                     "data": "dataTax0307",
                     "render": (data, row) => {
-                        return data+"%";
+                        return data + "%";
                     },
                     "className": "ui right aligned",
                 }, {
                     "data": "budget",
                     "render": (data, row) => {
-                        return data+"%";
+                        return data + "%";
                     },
                     "className": "ui right aligned"
                 }, {
@@ -267,9 +327,9 @@ export class ResultAnalysisSerivce {
                     "render": (data, row) => {
                         var span = ``;
                         if (data == 0) {
-                            span = `<div class="ui green horizontal label">` + data+"%" + `</div>`;
+                            span = `<div class="ui green horizontal label">` + data + "%" + `</div>`;
                         } else {
-                            span = `<div class="ui red horizontal label">` + data+"%" + `</div>`;
+                            span = `<div class="ui red horizontal label">` + data + "%" + `</div>`;
                         }
                         return span;
                     },
@@ -281,22 +341,22 @@ export class ResultAnalysisSerivce {
                 var sumColumn1 = 0;
                 var sumColumn2 = 0;
                 var sumColumn3 = 0;
-                for(let rs of data){
-                    sumColumn1+=parseFloat(rs.dataTax0307);
-                    sumColumn2+=parseFloat(rs.budget);
+                for (let rs of data) {
+                    sumColumn1 += parseFloat(rs.dataTax0307);
+                    sumColumn2 += parseFloat(rs.budget);
                 }
-                sumColumn3 = sumColumn1- sumColumn2;
+                sumColumn3 = sumColumn1 - sumColumn2;
                 var api = this.api(), data;
 
                 // format money
-                var formatsumColumn1 = '<b>'+sumColumn1+'%</b>';
-                var formatsumColumn2 = '<b>'+sumColumn2+'%</b>';
-                var formatsumColumn3 = '<b>'+sumColumn3+'%</b>';
-               
-               // console.log(formatsumColumn1);
-                 $( api.column( 1 ).footer() ).html(formatsumColumn1);
-                 $( api.column( 2 ).footer() ).html(formatsumColumn2);
-                 $( api.column( 3 ).footer() ).html(formatsumColumn3);
+                var formatsumColumn1 = '<b>' + sumColumn1 + '%</b>';
+                var formatsumColumn2 = '<b>' + sumColumn2 + '%</b>';
+                var formatsumColumn3 = '<b>' + sumColumn3 + '%</b>';
+
+                // console.log(formatsumColumn1);
+                $(api.column(1).footer()).html(formatsumColumn1);
+                $(api.column(2).footer()).html(formatsumColumn2);
+                $(api.column(3).footer()).html(formatsumColumn3);
 
             }
         });
@@ -308,6 +368,21 @@ export class ResultAnalysisSerivce {
             "ordering": false,
             "processing": true,
             "scrollX": true,
+            "language": {
+                "info": "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+                "paginate": {
+                    "first": "หน้าแรก",
+                    "last": "หน้าสุดท้าย",
+                    "next": "ถัดไป",
+                    "previous": "ก่อนหน้า"
+                },
+                "lengthMenu": "แสดง _MENU_ รายการ",
+                "loadingRecords": "กำลังดาวน์โหลด...",
+                "processing": "กำลังประมวลผล...",
+                "search": "ค้นหาทั้งหมด",
+                "infoEmpty": "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",
+                "emptyTable": "ไม่พบข้อมูล",
+            },
             "ajax": {
                 "url": '/ims-webapp/api/ta/resultAnalysis/findSubmitPayment',
                 "contentType": "application/json",
@@ -350,22 +425,22 @@ export class ResultAnalysisSerivce {
                 var sumColumn1 = 0;
                 var sumColumn2 = 0;
                 var sumColumn3 = 0;
-                for(let rs of data){
-                    sumColumn1+=parseFloat(rs.dataTax0307);
-                    sumColumn2+=parseFloat(rs.budget);
+                for (let rs of data) {
+                    sumColumn1 += parseFloat(rs.dataTax0307);
+                    sumColumn2 += parseFloat(rs.budget);
                 }
-                sumColumn3 = sumColumn1- sumColumn2;
+                sumColumn3 = sumColumn1 - sumColumn2;
                 var api = this.api(), data;
 
                 // format money
-                var formatsumColumn1 = '<b>'+Utils.moneyFormatDecimal(sumColumn1)+'</b>';
-                var formatsumColumn2 = '<b>'+Utils.moneyFormatDecimal(sumColumn2)+'</b>';
-                var formatsumColumn3 = '<b>'+Utils.moneyFormatDecimal(sumColumn3)+'</b>';
-               
-               // console.log(formatsumColumn1);
-                 $( api.column( 1 ).footer() ).html(formatsumColumn1);
-                 $( api.column( 2 ).footer() ).html(formatsumColumn2);
-                 $( api.column( 3 ).footer() ).html(formatsumColumn3);
+                var formatsumColumn1 = '<b>' + Utils.moneyFormatDecimal(sumColumn1) + '</b>';
+                var formatsumColumn2 = '<b>' + Utils.moneyFormatDecimal(sumColumn2) + '</b>';
+                var formatsumColumn3 = '<b>' + Utils.moneyFormatDecimal(sumColumn3) + '</b>';
+
+                // console.log(formatsumColumn1);
+                $(api.column(1).footer()).html(formatsumColumn1);
+                $(api.column(2).footer()).html(formatsumColumn2);
+                $(api.column(3).footer()).html(formatsumColumn3);
 
             }
         });
