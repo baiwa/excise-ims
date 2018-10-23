@@ -163,11 +163,13 @@ private authService: AuthService,
       $(".statusPay").addClass(customreadonly);
     }
   }
+
   onAddButton = () => {
     console.log("Add Button");
     this.listButton.push(++this.numberButton);
     console.log(this.listButton);
   }
+
   deleteButton = (e) => {
     console.log("Delete Button : ", e);
     let id = "#" + e;
@@ -176,6 +178,7 @@ private authService: AuthService,
     let index = this.listButton.findIndex(obj => obj == e);
     this.listButton.splice(index, 1);
   }
+
   onAddFile = () => {
     this.listButton.forEach(element => {
       var fileName = "#fileName" + element;
@@ -183,6 +186,7 @@ private authService: AuthService,
       this.onUpload(file);
     });
   }
+  
   onUpload = (event) => {
     if (event) {
       let reader = new FileReader();

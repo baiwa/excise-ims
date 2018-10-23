@@ -3,6 +3,7 @@ import { AuthService } from 'services/auth.service';
 import { BreadCrumb } from 'models/breadcrumb';
 import { formatter, TextDateTH } from 'helpers/datepicker';
 import { AjaxService } from 'services/ajax.service';
+import { MessageBarService } from 'services/message-bar.service';
 
 
 declare var $: any;
@@ -12,16 +13,24 @@ declare var $: any;
   styleUrls: ['./int06-10-1.component.css']
 })
 export class Int06101Component implements OnInit {
-
+  num1: number[];
+  num2: number[];
+  percent1: string[];
+  percent2: string[];
+  percent3: string[];
   breadcrumb: BreadCrumb[]
   pmmethodList : any;
   activityList : any;
   budgetList : any;
   budged : any;
+  listButton: any;
+  numberButton: number;
+  numbers: number[];
   category : any;
   list : any;
 
   constructor(
+    private messageBarService: MessageBarService,
     private authService: AuthService,
     private ajax: AjaxService,) {
       this.breadcrumb = [
@@ -29,17 +38,38 @@ export class Int06101Component implements OnInit {
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
       { label: "ทะเบียนคุมการรับจ่ายเงิน", route: "#" },
       { label: "บันทึกรายการขอเบิก", route: "#" },
+      
     ];
+    this.listButton = [];
+    this.numberButton = 1;
      }
 
   ngOnInit() {
+    $(".ui.dropdown.ai").dropdown().css('width', '100%');
+    this.listButton.push(this.numberButton);
     this.authService.reRenderVersionProgram('INT-06101');
     this.budgeDropdown();
     this.calenda();
     this.pmmethod();
     this.activity();
     this.budge();
+    this.numbers = [];
+    this.numbers.push(this.numbers.length+1);
   }
+
+
+  
+  onAddField = () => {
+    let num = this.numbers.length;
+    if (num < 30) {
+      this.numbers.push(num + 1);
+    } else {
+      this.messageBarService.errorModal(
+        "ไม่สามารถทำรายการได้",
+        "เกิดข้อผิดพลาด"
+      );
+    }
+  };
 
   calenda = () => {
     $("#datePersons").calendar({    
@@ -55,6 +85,31 @@ export class Int06101Component implements OnInit {
      formatter: formatter()
     });
   }
+
+  
+  onAddButton = () => {
+    console.log("Add Button");
+    this.listButton.push(++this.numberButton);
+    console.log(this.listButton);
+  }
+
+  deleteButton = (e) => {
+    console.log("Delete Button : ", e);
+    let id = "#" + e;
+    let idButton = "#delete" + e;
+    $(id).remove();
+    let index = this.listButton.findIndex(obj => obj == e);
+    this.listButton.splice(index, 1);
+  }
+
+  onAddFile = () => {
+    this.listButton.forEach(element => {
+      var fileName = "#fileName" + element;
+      var file = $(fileName)[0].files[0];
+
+    });
+  }
+  
 
   pmmethod = () => {
     let url = "ia/int06101/pmmethod"

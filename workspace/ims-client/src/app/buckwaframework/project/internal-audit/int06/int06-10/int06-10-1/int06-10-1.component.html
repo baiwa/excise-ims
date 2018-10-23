@@ -25,7 +25,7 @@
             <div class="ui calendar" id="dateWithdraw" style="width:100%">
               <div class="ui input left icon">
                 <i class="time icon"></i>
-                <input type="text">
+                <input type="text" placeholder="วว/ดด/ปปปป">
               </div>
             </div>
           </div>
@@ -100,7 +100,7 @@
             <label class="text-right full-width">หักประกันสังคม</label>
           </div>
           <div class="four wide field">
-            <input type="text">
+            <input type="text" >
           </div>
           <div class="three wide field ">
             <label class="text-right full-width">ภาษีหัก ณ ที่จ่าย</label>
@@ -172,7 +172,7 @@
             </label>
           </div>
           <br>
-          <div class="three fields">
+          <div class="three fields"  *ngFor="let num of listButton; let i = index" [attr.data-index]="i" >
             <div class="field">
               <label>วิธีการจ่าย</label>
               <select name="pmmethod" id="pmmethod" class="ui dropdown ai search full-width">
@@ -182,7 +182,7 @@
             </div>
             <div class="field">
               <label>เลขที่อ้างอิงการจ่าย</label>
-              <input type="text">
+              <input type="text" id="num1{{i}}" name="num1{{i}}">
             </div>
             <div class="field">
               <label>วันที่สั่งจ่าย</label>
@@ -200,11 +200,18 @@
             <div class="field">
               <label>ผู้รับเงิน</label>
               <input type="text">
-            </div>
+            </div>        
             <div class="field">
-              <label>ผู้รับเงิน</label>
-              <input type="text">
-            </div>
+              <label>&nbsp;</label>
+              <div class="eight wide field " *ngIf="num === numberButton; then thenBlock; else elseBlock"></div>
+              <ng-template #thenBlock>
+                <button class="ui mini  green button" type="button" id="addFile" (click)="onAddButton(num);"  [disabled]="statusSendBackFile"><i class="add icon"></i>เพิ่ม</button>
+            </ng-template>
+            <ng-template #elseBlock>
+                <button class="ui mini  red button" type="button" (click)="deleteButton(num);"><i class="trash alternate icon"></i>ลบ</button>                        
+            </ng-template>
+          </div>
+
           </div>
         </div>
       </div>
