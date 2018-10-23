@@ -97,7 +97,7 @@ public class WebServiceExciseService {
 
 	public Response webServiceLdap(String user, String pass) {
 		logger.info("Baiwa webServiceLdap : {} ", user);
-		Response response = loginLdapProxy.login(username, password);
+		Response response = loginLdapProxy.login(user, pass);
 		logger.info(response.toString());
 		return response;
 	}
