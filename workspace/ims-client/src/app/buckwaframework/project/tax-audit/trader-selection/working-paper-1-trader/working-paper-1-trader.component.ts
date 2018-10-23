@@ -213,21 +213,21 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' "paging": true, ';
     json += ' "fixedColumns": { "leftColumns" : 2 }, ';
     json += ' "pagingType": "full_numbers", ';
-    json += ' "language": {';
-    json += '   "info": "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",';
-    json += '   "paginate": {';
-    json += '     "first": "หน้าแรก",';
-    json += '     "last": "หน้าสุดท้าย",';
-    json += '     "next": "ถัดไป",';
-    json += '     "previous": "ก่อนหน้า"';
-    json += '   },';
-    json += '   "lengthMenu": "แสดง _MENU_ รายการ",';
-    json += '   "loadingRecords": "กำลังดาวน์โหลด...",';
-    json += '   "processing": "กำลังประมวลผล...",';
-    json += '   "search": "ค้นหาทั้งหมด",';
-    json += '   "infoEmpty": "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",';
-    json += '   "emptyTable": "ไม่พบข้อมูล"';
-    json += ' },';
+    // json += ' "language": {';
+    // json += '   "info": "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",';
+    // json += '   "paginate": {';
+    // json += '     "first": "หน้าแรก",';
+    // json += '     "last": "หน้าสุดท้าย",';
+    // json += '     "next": "ถัดไป",';
+    // json += '     "previous": "ก่อนหน้า"';
+    // json += '   },';
+    // json += '   "lengthMenu": "แสดง _MENU_ รายการ",';
+    // json += '   "loadingRecords": "กำลังดาวน์โหลด...",';
+    // json += '   "processing": "กำลังประมวลผล...",';
+    // json += '   "search": "ค้นหาทั้งหมด",';
+    // json += '   "infoEmpty": "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",';
+    // json += '   "emptyTable": "ไม่พบข้อมูล"';
+    // json += ' },';
     json += " ";
     json += ' "ajax": { ';
     json += ' "type": "POST", ';
@@ -268,9 +268,8 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' { "data": "otherCoordinates" } ';
 
     json += "] } ";
-    console.log(json);
     let jsonMaping = JSON.parse(json);
-    this.userManagementDt = $("#userManagementDt").DataTable(jsonMaping);
+    this.userManagementDt = $("#userManagementDt").DataTableTh(jsonMaping);
   }
 
   updateFlg() {

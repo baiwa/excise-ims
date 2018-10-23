@@ -349,14 +349,12 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
     this.exciseProductType = null;
   }
   selectExciseProductType(productionType) {
-    console.log(productionType);
     this.productionType = productionType;
     this.coordinatesFlag = "1"
     let formSearch = $("#formSearch").val();
     let dateFrom = this.from;
     let dateTo = this.month;
-    this.analystService.countList(this.productionType, this.coordinatesFlag, formSearch, dateFrom, dateTo).then(res => {
-      console.log("Count : ", res);
+    this.analystService.countList(this.productionType, this.coordinatesFlag, formSearch, dateFrom, dateTo).then(res => {     
       this.countPay = res;
 
       this.summary.taxData = productionType;
@@ -371,7 +369,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
   }
 
   selectExciseProductType2(productionType) {
-    console.log(productionType);
     this.productionType = productionType;
     this.coordinatesFlag = "2"
     let formSearch = $("#formSearch").val();
@@ -379,7 +376,6 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
     let dateTo = this.month;
     this.analystService.countList(this.productionType, this.coordinatesFlag, formSearch, dateFrom, dateTo).then(res => {
 
-      console.log("Count : ", res);
       this.countPay = res;
 
       this.summary.taxData = productionType;
@@ -393,14 +389,12 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
   }
 
   selectExciseProductType3(productionType) {
-    console.log(productionType);
     this.productionType = productionType;
     this.coordinatesFlag = "3"
     let formSearch = $("#formSearch").val();
     let dateFrom = this.from;
     let dateTo = this.month;
-    this.analystService.countList(this.productionType, this.coordinatesFlag, formSearch, dateFrom, dateTo).then(res => {
-      console.log("Count : ", res);
+    this.analystService.countList(this.productionType, this.coordinatesFlag, formSearch, dateFrom, dateTo).then(res => {      
       this.countPay = res;
 
       this.summary.taxData = productionType;
@@ -436,13 +430,12 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
   };
 
   search = () => {
-    console.log(this.formSearch);
 
     let formSearch = $("#formSearch").val();
     let dateFrom = this.from;
     let dateTo = this.month;
     this.analystService.countList(this.productionType, this.coordinatesFlag, formSearch, dateFrom, dateTo).then(res => {
-      console.log("Count : ", res);
+      
       this.countPay = res;
       this.summary.taxData = this.productionType;
       this.exciseProductType = this.productionType;

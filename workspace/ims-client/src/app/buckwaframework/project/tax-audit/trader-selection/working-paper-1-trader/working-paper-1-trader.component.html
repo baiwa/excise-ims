@@ -93,15 +93,15 @@
                 <div class="seven wide column" style="padding-bottom: 0">
                     <div class="ui form">
                         <div class="inline fields">
-                            <div class="thirteen wide field">
-                                <label style="width: 5em;">พิกัด</label>
+                            <div class="twelve wide field">
+                                <label> พิกัด</label>
                                 <select class="ui dropdown ai" name="coordinates" id="coordinates" (change)="changeCoordinates()">
                                     <option value="">ทั้งหมด</option>
                                     <option *ngFor="let list of coordinatesArr">{{list.value1}}</option>
                                 </select>
                             </div>
-                            <div class="three wide field">
-                                <button type="button" class="ui mini button"><i class="sync icon" (click)="searchAll()"></i>ข้อมูลทั้ง</button>
+                            <div class="four wide field">
+                                <button type="button" class="ui mini button" (click)="searchAll()"><i class="sync icon" ></i>ข้อมูลทั้งหมด</button>
                             </div>
                         </div>
                     </div>
