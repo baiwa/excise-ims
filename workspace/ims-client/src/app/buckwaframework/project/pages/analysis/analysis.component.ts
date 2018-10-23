@@ -101,6 +101,7 @@ export class AnalysisPage implements OnInit {
       //call function check typr
       this.formControl.get('type').setValue(this.checkType(exciseId.substring(14, 15)));
       this.form.type = this.checkType(exciseId.substring(14, 15));
+      console.log(this.form);
     });
   }
 
