@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ta.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -43,6 +44,12 @@ public class MockupController {
 		date.set(Integer.parseInt(fulldate[1]), Integer.parseInt(fulldate[0]), 1);
 		DataTableAjax<MockupVo> listdata= mockupService.findAll("" , vo, date.getTime(), input.getMonth(),input.getExciseProductType(),input.getFormSearch(),input);
 		return listdata;
+	}
+	
+	@PostMapping("/average")
+	@ResponseBody
+	public BigDecimal average(MockupForm form) {
+		return average(form);
 	}
 	
 	@PostMapping("/countList")

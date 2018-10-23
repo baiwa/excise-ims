@@ -38,7 +38,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
   coordinates: any;
   coordinatesArr: any;
   flag: any;
-
+  toggle: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -131,21 +131,19 @@ export class WorkingPaper1TraderComponent implements OnInit {
     //}
     document.getElementById("trDrinamic").innerHTML =
 
-      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
-      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
+      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +      
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
-
       '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
       '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
       '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปอร์เซ็นส่วนเบี่ยงเบน</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
-      '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
-      
+      '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +      
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
+      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
       '<th rowspan="2" style="text-align: center !important">พิกัดอื่นๆ</th> ' +
@@ -172,7 +170,17 @@ export class WorkingPaper1TraderComponent implements OnInit {
   }
 
   ngAfterViewInit() { }
-
+  
+  searchAll=()=>{
+    $("#coordinates").dropdown('restore defaults');
+  }
+  toggleBar() {
+    if (this.toggle) {
+      this.toggle = false;
+    } else {
+      this.toggle = true;
+    }
+  }
   filterDataByCriteria(index) {
     this.indexFilter = index;
     if (this.userManagementDt != null) {
@@ -203,8 +211,23 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' "processing": true, ';
     json += ' "serverSide": true, ';
     json += ' "paging": true, ';
-    json += ' "fixedColumns": { "leftColumns" : 3 }, ';
+    json += ' "fixedColumns": { "leftColumns" : 2 }, ';
     json += ' "pagingType": "full_numbers", ';
+    json += ' "language": {';
+    json += '   "info": "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",';
+    json += '   "paginate": {';
+    json += '     "first": "หน้าแรก",';
+    json += '     "last": "หน้าสุดท้าย",';
+    json += '     "next": "ถัดไป",';
+    json += '     "previous": "ก่อนหน้า"';
+    json += '   },';
+    json += '   "lengthMenu": "แสดง _MENU_ รายการ",';
+    json += '   "loadingRecords": "กำลังดาวน์โหลด...",';
+    json += '   "processing": "กำลังประมวลผล...",';
+    json += '   "search": "ค้นหาทั้งหมด",';
+    json += '   "infoEmpty": "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",';
+    json += '   "emptyTable": "ไม่พบข้อมูล"';
+    json += ' },';
     json += " ";
     json += ' "ajax": { ';
     json += ' "type": "POST", ';
@@ -224,8 +247,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += " } ";
     json += " }, ";
     json += ' "columns": [ ';
-    json += ' { "data": "exciseId","className":"center" }, ';
-    json += ' { "data": "exciseIdOld","className":"center"}, ';
+    json += ' { "data": "exciseId","className":"center" }, ';    
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "exciseOwnerArea1" }, ';
@@ -237,11 +259,11 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += ' { "data": "totalMonth" ,"className":"center"}, ';
     json += ' { "data": "no1" }, ';
     json += ' { "data": "no2" }, ';
-    json += ' { "data": "no3" }, ';
-    
+    json += ' { "data": "no3" }, ';    
     json += ' { "data": "productType" }, '
     json += ' { "data": "factoryAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
+    json += ' { "data": "exciseIdOld","className":"center"}, ';
     json += ' { "data": "status" }, ';
     json += ' { "data": "otherCoordinates" } ';
 
@@ -290,7 +312,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
 
   changeCoordinates = () => {
     this.coordinates = $("#coordinates").val();
-    this.userManagementDt.destroy().draw();
+    this.userManagementDt.destroy();
     this.initDatatable();
   };
 

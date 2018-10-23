@@ -77,7 +77,7 @@
 
         <div class="ui segment">
             <div class="ui grid">
-                <div class="three wide column" style="padding-bottom: 0"></div>
+                <div class="three wide column" style="padding-bottom: 0"></div>                   
                 <div class="six wide column" style="padding-bottom: 0">
                     <button class="ui mini primary button" routerLink="/working-paper-1-trader">
                         <i class="list icon"></i>
@@ -88,7 +88,7 @@
                         แสดงข้อมูลฉบับเต็ม
                     </button>
                 </div>
-                <div class="seven wide column" style="padding-bottom: 0">
+                <div class="seven wide column" style="padding-bottom: 0" >
                     <div class="ui form">
                         <div class="inline fields">
                             <div class="sixteen wide field">
@@ -101,9 +101,11 @@
                     </div>
                 </div>
             </div>
-
+            <div class="ui grid">
+                <button  (click)="toggleBar()" class="ui button custom-menu" type="button"><i class="bars icon"></i>เมนู</button>
+            </div><br>
             <div class="ui grid" style="margin-top: 0">
-                <div class="three wide column" style="padding-right: 0;">
+                <div style="padding-right: 0;"  [ngClass]="{'three wide column': !toggle, 'transition-left' : toggle}">
                     <div class="ui vertical menu" style="width: auto" name="coordinates" id="coordinates" (change)="changeCoordinates()">
                         <div class="item">
                             <div class="header">แยกข้อมูลตามกลุ่มของการชำระภาษี</div>
@@ -126,7 +128,7 @@
                     </div>
                 </div>
 
-                <div class="thirteen wide column" style="padding-top: 0">
+                <div style="padding-top: 0" [ngClass]="{'thirteen': !toggle, 'sixteen': toggle,'wide': true, 'column': true, 'transition-left-2': toggle}">
                     <div>
                         <table id="userManagementDt" class="ui small celled table aligned hover striped selectable nowrap" style="width: 100%;">
                             <thead id="trDrinamic">

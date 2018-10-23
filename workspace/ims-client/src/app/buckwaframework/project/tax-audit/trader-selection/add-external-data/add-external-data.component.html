@@ -104,17 +104,9 @@
                             <div class="header">แยกข้อมูลตามกลุ่มของการชำระภาษี</div>
                         </div>
                         <div class="item">
-                            <div class="menu">
-                                <a class="item hover {{(flag == 'N' || flag == '') && 'active'}}" (click)="FlagN()">-
-                                    รายที่ไม่อยู่ในเงื่อนไข</a>
-                                <a class="item hover {{flag == 'NOT N' && 'active'}}" (click)="FlagNotN()">-
-                                    รายที่อยู่ในเงื่อนไข</a>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="menu">
-                                <a class="item" (click)="sendLineUserValues()" routerLink="/add-external-data/send-line-user">-
-                                    ส่งรายให้ส่วนกลางและภาคพื้นที่</a>
+                            <div class="menu">                               
+                                <a class="item hover {{flag == 'NOT N' && 'active'}}" (click)="FlagNotN()">-รายที่อยู่ในเงื่อนไข</a>
+                                <a class="item hover {{(flag == 'N' || flag == '') && 'active'}}" (click)="FlagN()">-รายที่ไม่อยู่ในเงื่อนไข</a>
                             </div>
                         </div>
                     </div>
@@ -185,6 +177,15 @@
                 </div>
 
             </div>
+            <br>
+            <div class="ui center aligned grid">
+                <div class="eight wide column">
+                  <button type="button" class="ui mini primary button" (click)="sendLineUserValues()" routerLink="/add-external-data/send-line-user">
+                    <i class="search icon"></i>
+                    ส่งรายให้ส่วนกลางและภาคพื้นที่
+                  </button>                 
+                </div>
+              </div><br>
         </div>
     </div>
 </div>

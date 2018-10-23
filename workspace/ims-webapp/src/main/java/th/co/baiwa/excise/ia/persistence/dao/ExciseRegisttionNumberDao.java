@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.ta.persistence.entity.ExciseRegistartionNumber;
 import th.co.baiwa.excise.ta.persistence.vo.AnalysisFromCountVo;
+import th.co.baiwa.excise.ta.persistence.vo.MockupForm;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.utils.OracleUtils;
 
@@ -58,7 +59,7 @@ public class ExciseRegisttionNumberDao {
 
 		return count;
 	}
-	public List<ExciseRegistartionNumber> queryByExciseId(String register, String exciseProductType,  List<String> conditionList, String formSearch) {
+	public List<ExciseRegistartionNumber> queryByExciseId(String register, String exciseProductType,  List<String> conditionList, String formSearch, String coordinatesFlag) {
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlTaExciseId);
 		if (BeanUtils.isNotEmpty(conditionList)) {
@@ -73,6 +74,11 @@ public class ExciseRegisttionNumberDao {
 		if (exciseProductType != null && exciseProductType.length() > 0) {
 			sql.append(" and  TA_EXCISE_PRODUCT_TYPE = ? ");
 			objList.add(exciseProductType);
+		}
+		
+		if(StringUtils.isNotBlank(coordinatesFlag)) {
+			sql.append("AND SUBSTR(TA_EXCISE_ID,15,1) = ? ");
+			objList.add(coordinatesFlag);
 		}
 
 		if (BeanUtils.isNotEmpty(conditionList)) {
@@ -122,7 +128,7 @@ public class ExciseRegisttionNumberDao {
 		return list;
 	}
 
-	public long queryCountByExciseId(String exciseProductType, List<String> conditionList, String formSearch) {
+	public long queryCountByExciseId(String exciseProductType, List<String> conditionList, String formSearch, String coordinatesFlag) {
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlTaExciseId);
 		if (BeanUtils.isNotEmpty(conditionList)) {
@@ -135,6 +141,11 @@ public class ExciseRegisttionNumberDao {
 		if (exciseProductType != null && exciseProductType.length() > 0) {
 			sql.append(" and  TA_EXCISE_PRODUCT_TYPE = ? ");
 			objList.add(exciseProductType);
+		}
+		
+		if(StringUtils.isNotBlank(coordinatesFlag)) {
+			sql.append("AND SUBSTR(TA_EXCISE_ID,15,1) = ? ");
+			objList.add(coordinatesFlag);
 		}
 
 		if (BeanUtils.isNotEmpty(conditionList)) {
@@ -270,6 +281,30 @@ public class ExciseRegisttionNumberDao {
 				exciseRegisttionRowmapper);
 
 		return list;
+	}
+	
+	public BigDecimal average(MockupForm form) {
+		String sqlQuery = "SELECT * FROM (SELECT to_number(D.TA_EXCISE_TAX_RECEIVE_AMOUNT) amount , " + 
+				"  H.TA_EXCISE_ID TA_EXCISE_ID, " + 
+				"  H.TA_EXCISE_PRODUCT_TYPE TA_EXCISE_PRODUCT_TYPE " + 
+				" FROM TA_EXCISE_REGISTTION_NUMBER H " + 
+				" INNER JOIN TA_EXCISE_TAX_RECEIVE D " + 
+				" ON H.TA_EXCISE_ID = D.TA_EXCISE_ID " + 
+				" AND D.TA_EXCISE_TAX_RECEIVE_MONTH IN " + 
+				"  (SELECT REPLACE(TO_CHAR( add_MONTHS( Sysdate, LEVEL-12 ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) Month_AFTER " + 
+				"  FROM dual " + 
+				"    CONNECT BY LEVEL <= 12 " + 
+				"  )) " + 
+				"WHERE TA_EXCISE_PRODUCT_TYPE  = 'น้ำมัน' " + 
+				"AND SUBSTR(TA_EXCISE_ID,15,1) = '1'";
+		List<Object> objList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder(sqlQuery);
+		
+		
+		List<ExciseRegistartionNumber> list = jdbcTemplate.query(sql.toString(), objList.toArray(),
+				exciseRegisttionRowmapper);
+
+		return new BigDecimal(0);
 	}
 
 }

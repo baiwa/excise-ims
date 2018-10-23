@@ -31,18 +31,14 @@ public class MockupService {
 
 	public DataTableAjax<MockupVo> findAll(String register, MockupVo mockupVo, Date startBackDate, int month, String exciseProductType,String formSearch,MockupForm formvo) {
 
-		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseId(register, exciseProductType, mockupVo.getCondition(),formSearch);
+		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.queryByExciseId(register, exciseProductType, mockupVo.getCondition(),formSearch,formvo.getCoordinatesFlag());
 		DecimalFormat formatter = new DecimalFormat("#,###.00");
 
 		List<ExciseTaxReceive> taxReciveList = null;
 		MockupVo vo = null;
 		List<MockupVo> mockupVoList = new ArrayList<MockupVo>();
 		List<String> monthNameList = exciseTaxReceiveDao.queryMonthShotName(startBackDate, month);
-		for (ExciseRegistartionNumber registartionNumber : regisNumberList) {
-
-			
-			if (StringUtils.isNotBlank(formvo.getCoordinatesFlag())) {
-				if (formvo.getCoordinatesFlag().equals(registartionNumber.getExciseId().substring(14, 15))) {
+		for (ExciseRegistartionNumber registartionNumber : regisNumberList) {	
 
 					taxReciveList = exciseTaxReceiveDao.queryByExciseTaxReceiveAndFilterDataSelection(registartionNumber.getExciseId(), startBackDate, month);
 					int count = 0;
@@ -252,12 +248,10 @@ public class MockupService {
 					vo.setAvgTotal(formatterNonScal.format(totalAvg)+"");
 					vo.setMonthMaxPercen(formatterNonScal.format(maxAvg)+" %");
 					vo.setMonthMinPercen(formatterNonScal.format(minAvg)+" %");
-					mockupVoList.add(vo);
-				}
-			}
+					mockupVoList.add(vo);			
 		}
 
-		long countRes = exciseRegisttionNumberDao.queryCountByExciseId(exciseProductType, mockupVo.getCondition(), formSearch);
+		long countRes = exciseRegisttionNumberDao.queryCountByExciseId(exciseProductType, mockupVo.getCondition(), formSearch,formvo.getCoordinatesFlag());
 
 		DataTableAjax<MockupVo> responseDataTable = new DataTableAjax<>();		
 		responseDataTable.setData(mockupVoList);
@@ -267,13 +261,16 @@ public class MockupService {
 		return responseDataTable;
 	}
 	
+	public BigDecimal average(MockupForm input) {
+		return average(input);
+	}
 	public Long countListdata(AnalysisFromCountVo countVo) {
 		Long count = exciseRegisttionNumberDao.countListdataPay(countVo);
 		return count;
 	}
 
-	public void createWorkSheetService(MockupVo mockupVo, Date startBackDate, int month, String formSearch) {
-		exciseRegisttionNumberDao.queryByExciseId("", null,  null, formSearch);
+	public void createWorkSheetService(MockupVo mockupVo, Date startBackDate, int month, String formSearch , MockupForm formvo) {
+		exciseRegisttionNumberDao.queryByExciseId("", null,  null, formSearch, formvo.getCoordinatesFlag());
 
 	}	
 

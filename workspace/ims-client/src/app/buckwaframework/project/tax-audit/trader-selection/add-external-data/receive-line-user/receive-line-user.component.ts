@@ -39,6 +39,7 @@ export class ReceiveLineUserComponent implements OnInit {
     const URL = "filter/exise/getOfficeCodeByUserLogin";
     this.ajax.post(URL, {}, res => {
       let officeCode = res.json();
+      officeCode = '00500';
       console.log(officeCode);
       if (officeCode.substr(0, 2) == "00") {
         this.role = 'C'

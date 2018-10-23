@@ -51,7 +51,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
   toggle: boolean = false;
   summary: SummaryModel = new SummaryModel();
   coordinatesFlag: string = "";
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -505,32 +505,15 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
     json += ' { "data": "otherCoordinates","className":"left" }';
     json += "]";
     let jsonMapping = JSON.parse(json);
-    this.userManagementDt = $("#userManagementDt").DataTable({
-      lengthChange: true,
-      searching: false,
-      scrollX: true,
-      select: true,
-      ordering: false,
+    this.userManagementDt = $("#userManagementDt").DataTableTh({
+      lengthChange: true,            
+      select: true,      
       pageLength: 10,
       processing: true,
       serverSide: false,
       paging: true,
       pagingType: "full_numbers",
-      language: {
-        info: "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
-        paginate: {
-          first: "หน้าแรก",
-          last: "หน้าสุดท้าย",
-          next: "ถัดไป",
-          previous: "ก่อนหน้า"
-        },
-        lengthMenu: "แสดง _MENU_ รายการ",
-        loadingRecords: "กำลังดาวน์โหลด...",
-        processing: "กำลังประมวลผล...",
-        search: "ค้นหาทั้งหมด",
-        infoEmpty: "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",
-        emptyTable: "ไม่พบข้อมูล",
-      },
+     
       ajax: {
         type: "POST",
         url: URL,
@@ -569,6 +552,20 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
 
   }
 
+  searchAll = () => {
+    if (this.userManagementDt != null) {
+      this.userManagementDt.destroy();
+    }
+    this.condition = [];
+    this.formSearch = "";
+    this.coordinatesFlag = "";
+
+    this.exciseProductType = "";
+    this.from = this.route.snapshot.queryParams["from"];
+    this.month = this.route.snapshot.queryParams["month"];
+
+    this.initDatatable();
+  }
   toggleBar() {
     if (this.toggle) {
       this.toggle = false;

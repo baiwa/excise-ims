@@ -33,7 +33,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
   _percent1: any;
   _percent2: any;
   month: any;
-
+  toggle: boolean = false;
   indexFilter: any;
   from: any;
   analysNumber: any;
@@ -123,7 +123,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     document.getElementById("trDrinamic").innerHTML =
 
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
-      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
+      
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
@@ -137,6 +137,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
+      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +      
 
       '<th colspan="' + this.month / 2 +'" style="text-align: center !important">การชำระภาษี ' +this.month / 2 +" เดือนแรก</th> " +
@@ -165,6 +166,15 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
   }
 
   ngAfterViewInit() { }
+
+  toggleBar() {
+    if (this.toggle) {
+      this.toggle = false;
+    } else {
+      this.toggle = true;
+    }
+  }
+  
   filterDataByCriteria(index) {
     console.log(index);
     this.indexFilter = index;
@@ -197,8 +207,23 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     json += ' "serverSide": true, ';
     json += ' "paging": true, ';
     json += ' "scrollX": true, ';
+    json += ' "language": {';
+    json += '   "info": "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",';
+    json += '   "paginate": {';
+    json += '     "first": "หน้าแรก",';
+    json += '     "last": "หน้าสุดท้าย",';
+    json += '     "next": "ถัดไป",';
+    json += '     "previous": "ก่อนหน้า"';
+    json += '   },';
+    json += '   "lengthMenu": "แสดง _MENU_ รายการ",';
+    json += '   "loadingRecords": "กำลังดาวน์โหลด...",';
+    json += '   "processing": "กำลังประมวลผล...",';
+    json += '   "search": "ค้นหาทั้งหมด",';
+    json += '   "infoEmpty": "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",';
+    json += '   "emptyTable": "ไม่พบข้อมูล"';
+    json += ' },';
     json += ' "pagingType": "full_numbers", ';
-    json += ' "fixedColumns" : { "leftColumns" : 3}, ';
+    json += ' "fixedColumns" : { "leftColumns" : 2}, ';
     json += " ";
     json += ' "ajax": { ';
     json += ' "type": "POST", ';
@@ -214,8 +239,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     json += " } ";
     json += " }, ";
     json += ' "columns": [ ';
-    json += ' { "data": "exciseId","className":"center" }, ';
-    json += ' { "data": "exciseIdOld","className":"center"}, ';
+    json += ' { "data": "exciseId","className":"center" }, ';    
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "exciseOwnerArea1" }, ';
@@ -227,11 +251,11 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     json += ' { "data": "totalMonth" ,"className":"center"}, ';
     json += ' { "data": "no1" }, ';
     json += ' { "data": "no2" }, ';
-    json += ' { "data": "no3" }, ';
-    
+    json += ' { "data": "no3" }, ';    
     json += ' { "data": "productType" }, ';
     json += ' { "data": "factoryAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
+    json += ' { "data": "exciseIdOld","className":"center"}, ';
     json += ' { "data": "status" }, ';
    
 
