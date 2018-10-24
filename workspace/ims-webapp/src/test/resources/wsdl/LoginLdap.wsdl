@@ -21,9 +21,22 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    </element>
    <complexType name="Response">
     <sequence>
-     <element name="office" nillable="true" type="xsd:string"/>
+     <element name="accessAttr" nillable="true" type="xsd:string"/>
+     <element name="cnName" nillable="true" type="xsd:string"/>
+     <element name="code" nillable="true" type="xsd:string"/>
+     <element name="description" nillable="true" type="xsd:string"/>
+     <element name="email" nillable="true" type="xsd:string"/>
+     <element name="officeCode" nillable="true" type="xsd:string"/>
+     <element name="officeId" nillable="true" type="xsd:string"/>
      <element name="statusCode" nillable="true" type="xsd:string"/>
-     <element name="statusMessage" nillable="true" type="xsd:string"/>
+     <element name="success" nillable="true" type="xsd:string"/>
+     <element name="title" nillable="true" type="xsd:string"/>
+     <element name="userEngName" nillable="true" type="xsd:string"/>
+     <element name="userEngSurname" nillable="true" type="xsd:string"/>
+     <element name="userId" nillable="true" type="xsd:string"/>
+     <element name="userThaiId" nillable="true" type="xsd:string"/>
+     <element name="userThaiName" nillable="true" type="xsd:string"/>
+     <element name="userThaiSurname" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
   </schema>
@@ -89,7 +102,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       <wsdl:port binding="impl:LoginLdapSoapBinding" name="LoginLdap">
 
+<!--          <wsdlsoap:address location="http://localhost:8181/LdapUserLogin/services/LoginLdap"/> -->
          <wsdlsoap:address location="http://150.95.24.42:8080/LdapUserLogin/services/LoginLdap"/>
+
 
       </wsdl:port>
 

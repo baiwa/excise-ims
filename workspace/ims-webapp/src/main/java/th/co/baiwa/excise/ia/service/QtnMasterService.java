@@ -92,7 +92,7 @@ public class QtnMasterService {
 		String code = UserLoginUtils.getCurrentUserBean().getOfficeId(); // 010100
 		String user = UserLoginUtils.getCurrentUserBean().getUsername();
 		if (BeanUtils.isEmpty(code)) { // Pull UserBean from WebServiceLDAP
-			code = webService.webServiceLdap(user, "password").getOffice();
+			code = webService.webServiceLdap(user, "password").getOfficeCode();
 		}
 		Date date = new Date();
 		String sector = code.substring(0, 2);

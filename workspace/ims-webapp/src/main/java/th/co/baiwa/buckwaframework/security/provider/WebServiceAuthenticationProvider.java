@@ -50,27 +50,26 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 		if (!"excise".equals(env)) {
 			Response response = webServiceExciseService.webServiceLdap(name, password);
 			if ("200".equals(response.getStatusCode())) {
-				userDetails.setOfficeId(response.getOffice());
-//				userDetails.setOfficeId(authenAndGetUserRoleResponse.getOfficeId());
-//				userDetails.setUserThaiName(authenAndGetUserRoleResponse.getUserThaiName());
-//				userDetails.setUserThaiSurname(authenAndGetUserRoleResponse.getUserThaiSurname());
-//				userDetails.setTitle(authenAndGetUserRoleResponse.getTitle());
+				userDetails.setOfficeId(response.getOfficeCode());
+				userDetails.setUserThaiName(response.getUserThaiName());
+				userDetails.setUserThaiSurname(response.getUserThaiSurname());
+				userDetails.setTitle(response.getTitle());
 				logger.info("login success {}" , username);
 				
 			} else {
-				throw new BadCredentialsException(response.getStatusMessage());
+				throw new BadCredentialsException(response.getStatusCode());
 			}
 		}else {
-			AuthenAndGetUserRoleResponse authenAndGetUserRoleResponse = webServiceExciseService.ldpagAuthenAndGetUserRoleServiceProxy(name, password);
-			MessageBase messageBase = authenAndGetUserRoleResponse.getMessage();
-			if("000".equals(messageBase.getCode())) {
-				
-			}
-			
-			userDetails.setOfficeId(authenAndGetUserRoleResponse.getOfficeId());
-			userDetails.setUserThaiName(authenAndGetUserRoleResponse.getUserThaiName());
-			userDetails.setUserThaiSurname(authenAndGetUserRoleResponse.getUserThaiSurname());
-			userDetails.setTitle(authenAndGetUserRoleResponse.getTitle());
+//			AuthenAndGetUserRoleResponse authenAndGetUserRoleResponse = webServiceExciseService.ldpagAuthenAndGetUserRoleServiceProxy(name, password);
+//			MessageBase messageBase = authenAndGetUserRoleResponse.getMessage();
+//			if("000".equals(messageBase.getCode())) {
+//				
+//			}
+//			
+//			userDetails.setOfficeId(authenAndGetUserRoleResponse.getOfficeId());
+//			userDetails.setUserThaiName(authenAndGetUserRoleResponse.getUserThaiName());
+//			userDetails.setUserThaiSurname(authenAndGetUserRoleResponse.getUserThaiSurname());
+//			userDetails.setTitle(authenAndGetUserRoleResponse.getTitle());
 			//BeanUtils.copyProperties(userDetails, licenseList6010);
 		}
 		

@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 
 import baiwa.co.th.ws.LoginLdap;
 import th.co.baiwa.exampleproject.ws.consumer.currentdate.operation.CurrentDate;
-import th.go.excise.dexsrvint.wsdl.ldapgateway.ldpagauthenandgetuserrole.LDPAGAuthenAndGetUserRolePortType;
 
 @Configuration
 public class WebServiceConfig {
@@ -74,27 +73,27 @@ public class WebServiceConfig {
 			return loginLdapProxy;
 		}
 
-		@Bean(name = "ldapgAuthenAndGetUserRolePortTypeProxy")
-		public LDPAGAuthenAndGetUserRolePortType ldapgAuthenAndGetUserRolePortTypeProxy() {
-			JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
-			jaxWsProxyFactoryBean.setServiceClass(LDPAGAuthenAndGetUserRolePortType.class);
-			jaxWsProxyFactoryBean.setAddress(exciseLdap);
-
-			LDPAGAuthenAndGetUserRolePortType ldapgAuthenAndGetUserRolePortTypeProxy = (LDPAGAuthenAndGetUserRolePortType) jaxWsProxyFactoryBean.create();
-
-			Client client = ClientProxy.getClient(ldapgAuthenAndGetUserRolePortTypeProxy);
-			HTTPConduit http = (HTTPConduit) client.getConduit();
-			HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
-			httpClientPolicy.setConnectionTimeout(36000);
-			httpClientPolicy.setReceiveTimeout(36000);
-			httpClientPolicy.setAllowChunking(false);
-			http.setClient(httpClientPolicy);
-
-			client.getInInterceptors().add(new LoggingInInterceptor());
-			client.getOutInterceptors().add(new LoggingOutInterceptor());
-
-			return ldapgAuthenAndGetUserRolePortTypeProxy;
-		}
+//		@Bean(name = "ldapgAuthenAndGetUserRolePortTypeProxy")
+//		public LDPAGAuthenAndGetUserRolePortType ldapgAuthenAndGetUserRolePortTypeProxy() {
+//			JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
+//			jaxWsProxyFactoryBean.setServiceClass(LDPAGAuthenAndGetUserRolePortType.class);
+//			jaxWsProxyFactoryBean.setAddress(exciseLdap);
+//
+//			LDPAGAuthenAndGetUserRolePortType ldapgAuthenAndGetUserRolePortTypeProxy = (LDPAGAuthenAndGetUserRolePortType) jaxWsProxyFactoryBean.create();
+//
+//			Client client = ClientProxy.getClient(ldapgAuthenAndGetUserRolePortTypeProxy);
+//			HTTPConduit http = (HTTPConduit) client.getConduit();
+//			HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
+//			httpClientPolicy.setConnectionTimeout(36000);
+//			httpClientPolicy.setReceiveTimeout(36000);
+//			httpClientPolicy.setAllowChunking(false);
+//			http.setClient(httpClientPolicy);
+//
+//			client.getInInterceptors().add(new LoggingInInterceptor());
+//			client.getOutInterceptors().add(new LoggingOutInterceptor());
+//
+//			return ldapgAuthenAndGetUserRolePortTypeProxy;
+//		}
 
 	}
 }

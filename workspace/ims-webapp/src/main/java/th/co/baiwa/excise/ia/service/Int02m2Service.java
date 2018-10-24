@@ -179,7 +179,7 @@ public class Int02m2Service {
 		String code = UserLoginUtils.getCurrentUserBean().getOfficeId(); // 010100
 		String user = UserLoginUtils.getCurrentUserBean().getUsername();
 		if (BeanUtils.isEmpty(code)) { // Pull UserBean from WebServiceLDAP
-			code = webService.webServiceLdap(user, "password").getOffice();
+			code = webService.webServiceLdap(user, "password").getOfficeCode();
 		}
 		List<Lov> lov = ApplicationCache.getListOfValueByValueType("SECTOR_LIST", code);
 		logger.info("{} {} {}", lov.get(0).getSubTypeDescription(), lov.get(0).getLovId(), code);

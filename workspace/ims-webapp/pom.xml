@@ -485,16 +485,16 @@
 										<extraarg>classpath:wsdl/LoginLdap.wsdl</extraarg>
 									</extraargs>
 								</wsdlOption>
-								<wsdlOption>
-									<wsdl>${basedir}/src/test/resources/wsdl/LDPAGAuthenAndGetUserRoleService.wsdl</wsdl>
-									<extraargs>
-										<extraarg>-verbose</extraarg>
-										<extraarg>-p</extraarg><!-- targetNamespace -->
-										<extraarg>http://ws.baiwa.th.com=th.co.baiwa.exampleproject.ws.excisews</extraarg>
-										<extraarg>-wsdlLocation</extraarg>
-										<extraarg>classpath:wsdl/LDPAGAuthenAndGetUserRoleService.wsdl</extraarg>
-									</extraargs>
-								</wsdlOption>
+<!-- 								<wsdlOption> -->
+<!-- 									<wsdl>${basedir}/src/test/resources/wsdl/LDPAGAuthenAndGetUserRoleService.wsdl</wsdl> -->
+<!-- 									<extraargs> -->
+<!-- 										<extraarg>-verbose</extraarg> -->
+<!-- 										<extraarg>-p</extraarg>targetNamespace -->
+<!-- 										<extraarg>http://ws.baiwa.th.com=th.co.baiwa.exampleproject.ws.excisews</extraarg> -->
+<!-- 										<extraarg>-wsdlLocation</extraarg> -->
+<!-- 										<extraarg>classpath:wsdl/LDPAGAuthenAndGetUserRoleService.wsdl</extraarg> -->
+<!-- 									</extraargs> -->
+<!-- 								</wsdlOption> -->
 							</wsdlOptions>
 						</configuration>
 						<goals>

@@ -82,18 +82,18 @@ public class WebServiceExciseService {
 	@Autowired
 	private LoginLdap loginLdapProxy;
 
-	@Autowired
-	private LDPAGAuthenAndGetUserRolePortType ldapgAuthenAndGetUserRolePortTypeProxy;
+//	@Autowired
+//	private LDPAGAuthenAndGetUserRolePortType ldapgAuthenAndGetUserRolePortTypeProxy;
 
-	public AuthenAndGetUserRoleResponse ldpagAuthenAndGetUserRoleServiceProxy(String user, String pass) {
-		logger.info("Excise ldpagAuthenAndGetUserRoleServiceProxy : {} ", user);
-		AuthenAndGetUserRoleRequest wsLdap = new AuthenAndGetUserRoleRequest();
-		wsLdap.setUserId(user);
-		wsLdap.setPassword(pass);
-		wsLdap.setApplicationId(applicationId);
-		AuthenAndGetUserRoleResponse response = ldapgAuthenAndGetUserRolePortTypeProxy.ldpagAuthenAndGetUserRoleOperation(wsLdap);
-		return response;
-	}
+//	public AuthenAndGetUserRoleResponse ldpagAuthenAndGetUserRoleServiceProxy(String user, String pass) {
+//		logger.info("Excise ldpagAuthenAndGetUserRoleServiceProxy : {} ", user);
+//		AuthenAndGetUserRoleRequest wsLdap = new AuthenAndGetUserRoleRequest();
+//		wsLdap.setUserId(user);
+//		wsLdap.setPassword(pass);
+//		wsLdap.setApplicationId(applicationId);
+//		AuthenAndGetUserRoleResponse response = ldapgAuthenAndGetUserRolePortTypeProxy.ldpagAuthenAndGetUserRoleOperation(wsLdap);
+//		return response;
+//	}
 
 	public Response webServiceLdap(String user, String pass) {
 		logger.info("Baiwa webServiceLdap : {} ", user);
