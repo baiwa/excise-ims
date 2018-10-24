@@ -37,9 +37,6 @@ import th.co.baiwa.excise.ws.entity.response.licfri6010.LicFri6010;
 import th.co.baiwa.excise.ws.entity.response.licfri6020.LicFri6020;
 import th.co.baiwa.excise.ws.entity.response.regfri4000.req.RequestDataReq;
 import th.co.baiwa.excise.ws.entity.response.regfri4000.res.Regfri4000Res;
-import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleRequest;
-import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleResponse;
-import th.go.excise.dexsrvint.wsdl.ldapgateway.ldpagauthenandgetuserrole.LDPAGAuthenAndGetUserRolePortType;
 
 @Service
 public class WebServiceExciseService {

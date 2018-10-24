@@ -16,10 +16,7 @@ import org.springframework.stereotype.Component;
 
 import baiwa.co.th.ws.Response;
 import th.co.baiwa.buckwaframework.security.domain.UserDetails;
-import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
-import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleResponse;
-import th.go.excise.dexsrvint.schema.ldapuserbase.MessageBase;
 
 @Component("wsAuthenticationProvider")
 public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
