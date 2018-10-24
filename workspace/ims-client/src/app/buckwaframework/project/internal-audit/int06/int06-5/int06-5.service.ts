@@ -102,6 +102,9 @@ export class Int065Service {
         "data": "refPayment",
         "className": "ui left aligned"
       }, {
+        "data": "bankName",
+        "className": "ui center aligned"
+      }, {
         "data": "amount",
         "className": "ui right aligned",
         "render": (data) => {

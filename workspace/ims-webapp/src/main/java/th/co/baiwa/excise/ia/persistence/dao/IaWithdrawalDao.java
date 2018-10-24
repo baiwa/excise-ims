@@ -35,6 +35,7 @@ public class IaWithdrawalDao {
 							"        ps.WITHDRAWAL_ID WITHDRAWAL_ID, " + 
 							"        ps.REF_PAYMENT REF_PAYMENT, " + 
 							"        ps.PAYEE PAYEE, " + 
+							"        ps.BANK_NAME BANK_NAME, " + 
 							"        LS.ITEM_DESC ITEM_DESC,"+
 							"        ps.OFFICE_CODE OFFICE_CODE, " + 
 							"        LS.BUDGET_TYPE BUDGET_TYPE,  "+ 
@@ -44,6 +45,7 @@ public class IaWithdrawalDao {
 							"            ps.WITHDRAWAL_ID WITHDRAWAL_ID, " + 
 							"            ps.REF_PAYMENT REF_PAYMENT, "+ 
 							"            ps.OFFICE_CODE," + 
+							"            ps.BANK_NAME BANK_NAME, " + 
 							"            ps.PAYEE PAYEE, "+
 							"            ps.AMOUNT AMOUNT" + 
 							"   FROM IA_WITHDRAWAL_PERSONS ps ) PS  " + 
@@ -160,6 +162,7 @@ public class IaWithdrawalDao {
 			vo.setPaymentDate(dateStr);
 			vo.setRefPayment(rs.getString("REF_PAYMENT"));
 			vo.setPayee(rs.getString("PAYEE"));
+			vo.setBankName(rs.getString("BANK_NAME"));
 			vo.setItemDesc(rs.getString("ITEM_DESC"));
 			vo.setBudgetType(rs.getString("BUDGET_TYPE"));
 			vo.setAmount(rs.getString("AMOUNT"));

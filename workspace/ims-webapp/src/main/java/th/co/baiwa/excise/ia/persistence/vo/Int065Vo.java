@@ -7,6 +7,15 @@ public class Int065Vo {
 	private String budgetType;
 	private String itemDesc;
 	private String payee;
+	private String bankName;
+
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
 
 	public String getPaymentDate() {
 		return paymentDate;
