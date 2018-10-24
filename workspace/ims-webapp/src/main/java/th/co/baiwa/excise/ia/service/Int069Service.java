@@ -23,9 +23,7 @@ public class Int069Service {
 
 	public DataTableAjax<TransferList> filterByform(Int069FormVo en) {
 		List<TransferList> listData = new ArrayList<TransferList>();
-//		listData = transferListRepository.findByFilter(en.getTransferList(), en.getBudgetType(), en.getActivities());
 		listData = transferListDao.queryByFilter(en);
-//		, en.getStart(), en.getEnd()
 
 		DataTableAjax<TransferList> dataTableAjax = new DataTableAjax<>();
 		dataTableAjax.setRecordsTotal(listData.size());
@@ -35,7 +33,6 @@ public class Int069Service {
 	}
 
 	public void delete(TransferList vo) {
-//		TransferList xxx = transferListRepository.findOne(vo.getTransferId());
 		transferListRepository.delete(vo.getTransferId());
 	}
 
