@@ -1,11 +1,11 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <br>
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-  <span>หัวกระดาษปะมาณการค่าใช้จ่ายในการเดินทางไปราชการ</span>
+  <span>หัวกระดาษประมาณการค่าใช้จ่ายในการเดินทางไปราชการ</span>
 </div>
 <div class="ui attached  segment">
   <br>
-  <div class="inline fields" style="text-align: center !important;">ปะมาณการค่าใช้จ่ายในการเดินทางไปราชการ</div>
+  <div class="inline fields" style="text-align: center !important;">ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ</div>
   <div class="inline fields" style="text-align: center !important;">หน่วยงาน กลุ่มตรวจสอบภายใน</div>
   <div class="inline fields" style="text-align: center !important;">เดินทางไปราชการที่ {{travelToHeadString}}</div>
   <div class="inline fields" style="text-align: center !important;">ตั้งแต่วันที่ {{dateFromHead}} - {{dateToHead}}</div>
@@ -130,7 +130,7 @@
           </div>
           <div class="three wide field">
             <select class="ui dropdown" id="type" name="type" (change)="gradeDropdown($event)" style="width: 100%">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of typeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -139,7 +139,7 @@
           </div>
           <div class="three wide field">
             <select class="ui dropdown" id="grade" name="grade" (change)="getAllowanceRAndRoostR($event)" style="width: 100%">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of gradeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -262,7 +262,7 @@
           </div>
           <div class="three wide field">
             <select class="ui dropdown" id="allowance" style="width: 100%" (change)="ngIfallowance($event)">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of allowanceList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -271,7 +271,7 @@
           </div>
           <div class="three wide field" *ngIf=" ifallowance =='1184' && ifallowance !=''">
             <select class="ui dropdown" id="training" style="width: 100%">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of trainingList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -282,7 +282,7 @@
           </div>
           <div class="three wide field">
             <select class="ui dropdown" id="roost" style="width: 100%" (change)="ngIfroost($event)">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of roostList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -291,7 +291,7 @@
           </div>
           <div class="three wide field" *ngIf=" ifroost =='1188'  && ifroost !='' ">
             <select class="ui dropdown" id="trainingType" style="width: 100%">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of trainingTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -300,7 +300,7 @@
           </div>
           <div class="three wide field" *ngIf=" ifroost !='1187'  && ifroost !='' ">
             <select class="ui dropdown" id="roomType" style="width: 100%">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of roomTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -438,7 +438,7 @@
 <div class="ui large modal  transition hidden" id='modalAddHead'>
 
   <div class="header" style="text-align: center !important;">
-    ระบุรายละเอียดหัวกระดาษปะมาณการค่าใช้จ่ายในการเดินทางไปราชการ
+    ระบุรายละเอียดหัวกระดาษประมาณการค่าใช้จ่ายในการเดินทางไปราชการ
   </div>
 
   <div class="content">
@@ -454,31 +454,31 @@
       </div>
       <div class="inline fields">
         <div class="three wide field">
-          <label>สรรพสามิตภาค</label>
+          <label>สำนักงานสรรพสามิตภาค</label>
         </div>
         <div class="five wide field">
           <select class="ui dropdown search selection" style="width: 100%;" id="travelToHead1" (change)="travelToHead2Dropdown($event)">
-            <option value="">เลือก</option>
+            <option value="">กรุณาเลือก</option>
             <option *ngFor="let data of travelToHead1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
           </select>
         </div>
         <div class="three wide field">
-          <label>สรรพสามิตพื้นที่</label>
+          <label>สำนักงานสรรพสามิตพื้นที่</label>
         </div>
         <div class="five wide field">
           <select class="ui dropdown search selection" style="width: 100%;" id="travelToHead2" (change)="travelToHead3Dropdown($event)">
-            <option value="">เลือก</option>
+            <option value="">กรุณาเลือก</option>
             <option *ngFor="let data of travelToHead2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
           </select>
         </div>
       </div>
       <div class="inline fields">
         <div class="three wide field">
-          <label>สรรพสามิตสาขา</label>
+          <label>สำนักงานสรรพสามิตสาขา</label>
         </div>
         <div class="five wide field">
           <select class="ui dropdown search selection" style="width: 100%;" id="travelToHead3" (change)="setTravelToHead($event)">
-            <option value="">เลือก</option>
+            <option value="">กรุณาเลือก</option>
             <option *ngFor="let data of travelToHead3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
           </select>
         </div>

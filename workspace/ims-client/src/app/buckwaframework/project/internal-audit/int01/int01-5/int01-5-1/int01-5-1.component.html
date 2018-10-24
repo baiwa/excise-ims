@@ -17,7 +17,7 @@
                     </div>
                     <div class="seven wide field">
                         <select class="ui dropdown ai search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)">
-                            <option value="">เลือก</option>
+                            <option value="">กรุณาเลือก</option>
                             <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                         </select>
                     </div>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="seven wide field">
                         <select class="ui dropdown ai search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)">
-                            <option value="">เลือก</option>
+                            <option value="">กรุณาเลือก</option>
                             <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                         </select>
                     </div>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="seven wide field">
                         <select class="ui dropdown ai search selection" style="width: 100%;" id="travelTo3" (change)="setTravelTo($event)">
-                            <option value="">เลือก</option>
+                            <option value="">กรุณาเลือก</option>
                             <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                         </select>
                     </div>

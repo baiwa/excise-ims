@@ -181,9 +181,18 @@ export class Int091Component implements OnInit {
           "className": "ui center aligned",
           "render": function (data, type, row) {
             var s = '';
+   
             if (data == 1167) {
               s = 'ดำเนินการสำเร็จ';
-            } else {
+            }else if (data == 1862) {
+              s = 'อนุมัติเดินทาง';
+            }else if (data == 1863) {
+              s = 'ยืมเงิน';
+            }else if (data == 1864) {
+              s = 'กันเงิน';
+            }else if (data == 1865) {
+              s = 'ชดใช้เงินยืม';
+            }else {
               s = 'กำลังดำเนินการ';
             }
             return s;
@@ -194,7 +203,7 @@ export class Int091Component implements OnInit {
           "render": function (data, type, row) {
             var btn = '';
             btn += '<button class="mini ui primary button btn-edit"><i class="eye icon"></i>รายละเอียด</button>';
-            btn += '<button class="mini ui button btn-delete"><i class="close icon"></i>ยกเลิก</button>';
+            btn += '<button class="mini red ui button btn-delete"><i class="close icon"></i>ยกเลิกรายการ</button>';
             return btn;
           }
         }
@@ -371,6 +380,7 @@ export class Int091Component implements OnInit {
     this.statusDropdown();
     this.travelTo1Dropdown();
     this.travelTo1AddDropdown();
+    
   }
 
 }

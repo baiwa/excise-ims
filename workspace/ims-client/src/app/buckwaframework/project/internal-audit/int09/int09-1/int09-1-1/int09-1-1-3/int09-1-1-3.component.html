@@ -107,7 +107,7 @@
           </div>
           <div class="three wide field">
             <select class="ui dropdown" id="type" name="type" (change)="gradeDropdown($event)" style="width: 100%">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of typeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -116,7 +116,7 @@
           </div>
           <div class="three wide field">
             <select class="ui dropdown" id="grade" name="grade" (change)="getAllowanceRAndRoostR($event)" style="width: 100%">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of gradeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -239,7 +239,7 @@
           </div>
           <div class="three wide field">
             <select class="ui dropdown" id="allowance" style="width: 100%" (change)="ngIfallowance($event)">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of allowanceList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -248,7 +248,7 @@
           </div>
           <div class="three wide field" *ngIf=" ifallowance =='1184' && ifallowance !=''">
             <select class="ui dropdown" id="training" style="width: 100%">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of trainingList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -259,7 +259,7 @@
           </div>
           <div class="three wide field">
             <select class="ui dropdown" id="roost" style="width: 100%" (change)="ngIfroost($event)">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of roostList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -268,7 +268,7 @@
           </div>
           <div class="three wide field" *ngIf=" ifroost =='1188'  && ifroost !='' ">
             <select class="ui dropdown" id="trainingType" style="width: 100%">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of trainingTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -277,7 +277,7 @@
           </div>
           <div class="three wide field" *ngIf=" ifroost !='1187'  && ifroost !='' ">
             <select class="ui dropdown" id="roomType" style="width: 100%">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of roomTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
             </select>
           </div>
@@ -436,7 +436,7 @@
         </div>
         <div class="five wide field">
           <select class="ui dropdown search selection" style="width: 100%;" id="branch">
-            <option value="">เลือก</option>
+            <option value="">กรุณาเลือก</option>
             <option *ngFor="let data of branchDropdown" value="{{data.value}}">{{data.label}}</option>
           </select>
         </div>
