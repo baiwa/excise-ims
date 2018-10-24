@@ -6,6 +6,7 @@ import { TextDateTH, digit } from "../../../../../common/helper/datepicker";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { CurrencyPipe } from "@angular/common";
 import { BreadCrumb } from "models/breadcrumb";
+import { AuthService } from "services/auth.service";
 
 declare var jQuery: any;
 declare var $: any;
@@ -41,13 +42,14 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
     private messageBarService: MessageBarService,
     private ex: ExciseService,
     private router: Router,
-    private ajax: AjaxService
+    private ajax: AjaxService,
+    private authService: AuthService
   ) {
     this.exciseId = [];
   }
 
   ngOnInit() {
-
+    this.authService.reRenderVersionProgram('TAX-01060');
     console.log("ngOnInit");
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");

@@ -5,6 +5,7 @@ import { ExciseService } from "../../../../common/services/excise.service";
 import { TextDateTH, digit } from "../../../../common/helper/datepicker";
 import { CurrencyPipe } from "@angular/common";
 import { BreadCrumb } from "models/breadcrumb";
+import { AuthService } from "services/auth.service";
 
 declare var jQuery: any;
 declare var $: any;
@@ -43,7 +44,8 @@ export class WorkingPaper1TraderComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private ex: ExciseService,
-    private ajax: AjaxService
+    private ajax: AjaxService,
+    private authService: AuthService
   ) {
     this._num1 = new Array();
     this._num2 = new Array();
@@ -52,6 +54,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('TAX-08000');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     //get coordinates in select option
@@ -131,7 +134,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
     //}
     document.getElementById("trDrinamic").innerHTML =
 
-      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +      
+      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
@@ -140,7 +143,7 @@ export class WorkingPaper1TraderComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
       '<th rowspan="2" style="text-align: center !important">เปอร์เซ็นส่วนเบี่ยงเบน</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
-      '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +      
+      '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
@@ -170,8 +173,8 @@ export class WorkingPaper1TraderComponent implements OnInit {
   }
 
   ngAfterViewInit() { }
-  
-  searchAll=()=>{
+
+  searchAll = () => {
     $("#coordinates").dropdown('restore defaults');
   }
   toggleBar() {
@@ -232,19 +235,19 @@ export class WorkingPaper1TraderComponent implements OnInit {
     json += " } ";
     json += " }, ";
     json += ' "columns": [ ';
-    json += ' { "data": "exciseId","className":"center" }, ';    
+    json += ' { "data": "exciseId","className":"center" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "exciseOwnerArea1" }, ';
     json += ' { "data": "exciseOwnerArea" }, ';
     json += ' { "data": "firstMonth" ,"className":"center" }, ';
-    json += ' { "data": "lastMonth","className":"center" }, ';    
+    json += ' { "data": "lastMonth","className":"center" }, ';
     json += ' { "data": "percentage","className":"center" }, ';
     json += ' { "data": "deviation","className":"center" }, ';
     json += ' { "data": "totalMonth" ,"className":"center"}, ';
     json += ' { "data": "no1" }, ';
     json += ' { "data": "no2" }, ';
-    json += ' { "data": "no3" }, ';    
+    json += ' { "data": "no3" }, ';
     json += ' { "data": "productType" }, '
     json += ' { "data": "factoryAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';

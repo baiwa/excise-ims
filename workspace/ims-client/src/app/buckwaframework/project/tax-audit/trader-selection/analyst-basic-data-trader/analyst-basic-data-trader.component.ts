@@ -8,6 +8,7 @@ import { BreadCrumb } from "models/breadcrumb";
 import { SummaryModel } from "projects/tax-audit/trader-selection/analyst-basic-data-trader/summaryFooter.model";
 import { AnalystBasicDataTraderService } from "projects/tax-audit/trader-selection/analyst-basic-data-trader/analyst-basic-data-trader.service";
 import { count } from "rxjs/operators";
+import { AuthService } from "services/auth.service";
 declare var $: any;
 @Component({
   selector: "app-analyst-basic-data-trader",
@@ -56,13 +57,15 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private ex: ExciseService,
-    private analystService: AnalystBasicDataTraderService
+    private analystService: AnalystBasicDataTraderService,
+    private authService: AuthService
   ) { }
 
   ngAfterViewInit() {
     //this.selectExciseProductType(this.listMenu[0]);
   }
   ngOnInit() {
+    this.authService.reRenderVersionProgram('TAX-02000');
     this.coordinatesFlag = "";
     $('.ui.accordion').accordion();
     $(".ui.dropdown").dropdown();
@@ -354,7 +357,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
     let formSearch = $("#formSearch").val();
     let dateFrom = this.from;
     let dateTo = this.month;
-    this.analystService.countList(this.productionType, this.coordinatesFlag, formSearch, dateFrom, dateTo).then(res => {     
+    this.analystService.countList(this.productionType, this.coordinatesFlag, formSearch, dateFrom, dateTo).then(res => {
       this.countPay = res;
 
       this.summary.taxData = productionType;
@@ -394,7 +397,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
     let formSearch = $("#formSearch").val();
     let dateFrom = this.from;
     let dateTo = this.month;
-    this.analystService.countList(this.productionType, this.coordinatesFlag, formSearch, dateFrom, dateTo).then(res => {      
+    this.analystService.countList(this.productionType, this.coordinatesFlag, formSearch, dateFrom, dateTo).then(res => {
       this.countPay = res;
 
       this.summary.taxData = productionType;
@@ -435,7 +438,7 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
     let dateFrom = this.from;
     let dateTo = this.month;
     this.analystService.countList(this.productionType, this.coordinatesFlag, formSearch, dateFrom, dateTo).then(res => {
-      
+
       this.countPay = res;
       this.summary.taxData = this.productionType;
       this.exciseProductType = this.productionType;
@@ -499,14 +502,14 @@ export class AnalystBasicDataTraderComponent implements OnInit, AfterViewInit {
     json += "]";
     let jsonMapping = JSON.parse(json);
     this.userManagementDt = $("#userManagementDt").DataTableTh({
-      lengthChange: true,            
-      select: true,      
+      lengthChange: true,
+      select: true,
       pageLength: 10,
       processing: true,
       serverSide: false,
       paging: true,
       pagingType: "full_numbers",
-     
+
       ajax: {
         type: "POST",
         url: URL,

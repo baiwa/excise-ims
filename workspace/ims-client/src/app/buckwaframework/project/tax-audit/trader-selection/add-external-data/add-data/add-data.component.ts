@@ -5,7 +5,8 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { Excise, ExciseTax, File } from "../../../../../common/models/index";
 import {
   ExciseService,
-  MessageBarService
+  MessageBarService,
+  AuthService
 } from "../../../../../common/services/index";
 
 @Component({
@@ -24,7 +25,8 @@ export class AddDataComponent implements OnInit {
     private _location: Location,
     private ajax: AjaxService,
     private ex: ExciseService,
-    private messageBarService: MessageBarService
+    private messageBarService: MessageBarService,
+    private authService: AuthService
   ) {
     this.id = this.route.snapshot.queryParams["id"];
     this.num = this.route.snapshot.queryParams["num"];
@@ -37,6 +39,7 @@ export class AddDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('TAX-01010');
     const url = `excise/detail/list/${this.num}/${this.id}/3`;
     if (this.ex.get(this.id) === null) {
       this.ajax.get(

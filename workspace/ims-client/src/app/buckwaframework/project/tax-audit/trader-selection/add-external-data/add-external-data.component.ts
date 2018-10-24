@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { ExciseService } from "../../../../common/services/excise.service";
 import { TextDateTH } from "../../../../common/helper/datepicker";
 import { BreadCrumb } from "models/breadcrumb";
+import { AuthService } from "services/auth.service";
 
 declare var $: any;
 @Component({
@@ -38,7 +39,8 @@ export class AddExternalDataComponent implements OnInit {
   constructor(
     private ex: ExciseService,
     private router: Router,
-    private ajax: AjaxService
+    private ajax: AjaxService,
+    private authService: AuthService
   ) {
     this.flag = "";
     this.analysNumberArr = "";
@@ -47,6 +49,8 @@ export class AddExternalDataComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.authService.reRenderVersionProgram('INT-11110');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     $("#exciseBtn").prop("disabled", true);
@@ -57,7 +61,7 @@ export class AddExternalDataComponent implements OnInit {
     });
     //get Sector in select option
     const URL2 = "combobox/controller/getDropByTypeAndParentId";
-    this.ajax.post(URL2, {type : 'SECTOR_VALUE'}, res => {
+    this.ajax.post(URL2, { type: 'SECTOR_VALUE' }, res => {
       this.sectorArr = res.json();
     });
 
@@ -137,7 +141,7 @@ export class AddExternalDataComponent implements OnInit {
     json += ' "columns": [ ';
 
     json += ' { "data": "exciseId","className":"center" }, ';
-    
+
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "exciseOwnerArea1" }, ';
@@ -145,12 +149,12 @@ export class AddExternalDataComponent implements OnInit {
     json += ' { "data": "firstMonth" ,"className":"center" }, ';
     json += ' { "data": "lastMonth","className":"center" }, ';
     json += ' { "data": "percentage","className":"center" }, ';
-    json += ' { "data": "deviation","className":"center" }, '; 
+    json += ' { "data": "deviation","className":"center" }, ';
     json += ' { "data": "totalMonth" ,"className":"center"}, ';
     json += ' { "data": "no1" }, ';
     json += ' { "data": "no2" }, ';
     json += ' { "data": "no3" }, ';
-    
+
     json += ' { "data": "productType" }, ';
     json += ' { "data": "factoryAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
@@ -237,7 +241,7 @@ export class AddExternalDataComponent implements OnInit {
     }
     this.initDatatable();
   };
-  
+
   toggleBar() {
     if (this.toggle) {
       this.toggle = false;
@@ -246,7 +250,7 @@ export class AddExternalDataComponent implements OnInit {
     }
   }
 
-  onClear=()=>{
+  onClear = () => {
     $("#sector").dropdown('restore defaults');
     $("#coordinates").dropdown('restore defaults');
   }
@@ -332,7 +336,7 @@ export class AddExternalDataComponent implements OnInit {
     }
     var str =
 
-      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +      
+      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
@@ -342,14 +346,14 @@ export class AddExternalDataComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">เปอร์เซ็นส่วนเบี่ยงเบน</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
       '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
-      
+
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
       '<th colspan="' + this.month / 2 + '" style="text-align: center !important">การชำระภาษี ' + this.month / 2 + " เดือนแรก</th> " +
-      '<th colspan="' +  this.month / 2 + '" style="text-align: center !important">การชำระภาษี ' + this.month / 2 + " เดือนหลัง </th> " +
+      '<th colspan="' + this.month / 2 + '" style="text-align: center !important">การชำระภาษี ' + this.month / 2 + " เดือนหลัง </th> " +
       '<th rowspan="2" style="text-align: center !important">พิกัดอื่นๆ</th> ' +
       "</tr>" +
       '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +

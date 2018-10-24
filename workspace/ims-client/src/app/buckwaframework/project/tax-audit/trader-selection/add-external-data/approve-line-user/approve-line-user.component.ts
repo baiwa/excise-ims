@@ -5,6 +5,7 @@ import { MessageBarService } from 'services/message-bar.service';
 import { ExciseService } from 'services/excise.service';
 import { Router } from '@angular/router';
 import { BreadCrumb } from 'models/breadcrumb';
+import { AuthService } from 'services/auth.service';
 declare var $: any;
 @Component({
   selector: 'app-approve-line-user',
@@ -34,14 +35,15 @@ export class ApproveLineUserComponent implements OnInit {
   sector: any;
   sectorArr: any;
   role: string;
-  loading:boolean = true;
-  sectorHeader : string ="";
+  loading: boolean = true;
+  sectorHeader: string = "";
   constructor(
     private approveLineUserService: ApproveLineUserService,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
     private ex: ExciseService,
     private router: Router,
+    private authService: AuthService
   ) {
     this.exciseId = [];
     const URL = "filter/exise/getOfficeCodeByUserLogin";
@@ -56,10 +58,10 @@ export class ApproveLineUserComponent implements OnInit {
         console.log(this.sector);
       }
     });
-   }
+  }
 
   ngOnInit() {
-
+    this.authService.reRenderVersionProgram('TAX-01020');
     console.log("ngOnInit");
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
@@ -132,43 +134,43 @@ export class ApproveLineUserComponent implements OnInit {
       var currYear = currDate.getFullYear() + 543;
 
       document.getElementById("trDrinamic").innerHTML =
-      
-      '<th rowspan="2" style="text-align: center !important">ลำดับ</th>' +
-      '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
-      '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
-      '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
-      '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
-      '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
 
-      '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
-      '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
-      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
-      '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
-      '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
-      "</tr>" +
-      '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
-      this.month / 2 +
-      " เดือนแรก</th>" +
-      '<th style="text-align: center !important">' +
-      this.month / 2 +
-      " เดือนหลัง </th>" +
-      '<th style="text-align: center !important">' +
-      (currYear - 3) +
-      "</th>" +
-      '<th style="text-align: center !important">' +
-      (currYear - 2) +
-      "</th>" +
-      '<th style="text-align: center !important">' +
-      (currYear - 1) +
-      "</th>" +
-      "</tr>";
-      
+        '<th rowspan="2" style="text-align: center !important">ลำดับ</th>' +
+        '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
+        '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
+        '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
+        '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
+        '<th rowspan="2" style="text-align: center !important">พื้นที่</th> ' +
+        '<th colspan="2" style="text-align: center !important">การชำระภาษีในสภาวะปกติ (บาท)</th> ' +
+        '<th rowspan="2" style="text-align: center !important">เปลี่ยนแปลง (ร้อยละ)</th> ' +
+        '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
+        '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
+
+        '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
+        '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
+        '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
+        '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
+        '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
+        "</tr>" +
+        '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
+        this.month / 2 +
+        " เดือนแรก</th>" +
+        '<th style="text-align: center !important">' +
+        this.month / 2 +
+        " เดือนหลัง </th>" +
+        '<th style="text-align: center !important">' +
+        (currYear - 3) +
+        "</th>" +
+        '<th style="text-align: center !important">' +
+        (currYear - 2) +
+        "</th>" +
+        '<th style="text-align: center !important">' +
+        (currYear - 1) +
+        "</th>" +
+        "</tr>";
+
       return res;
-    }).then(()=>{
+    }).then(() => {
       this.initDatatable();
       this.loading = false;
     });
@@ -185,7 +187,7 @@ export class ApproveLineUserComponent implements OnInit {
 
   ngAfterViewInit() { }
 
-  initDatatable=(): void => {
+  initDatatable = (): void => {
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/approve/list";
     var sendLineUserCheckbox = (this.sendLineUser = $("#sendLineUser").DataTableTh({
       lengthChange: false,
@@ -209,9 +211,9 @@ export class ApproveLineUserComponent implements OnInit {
           sector: this.sector
         }
       },
-      columns: [        
+      columns: [
         {
-          render:  (data, type, row, meta)=> {
+          render: (data, type, row, meta) => {
             this.sectorHeader = row.exciseOwnerArea1;
             return meta.row + meta.settings._iDisplayStart + 1;
           },

@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { ExciseService } from "../../../../common/services/excise.service";
 import { AjaxService } from "../../../../common/services/ajax.service";
 import { BreadCrumb } from "models/breadcrumb";
+import { AuthService } from "services/auth.service";
 
 declare var jQuery: any;
 declare var $: any;
@@ -34,10 +35,12 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
   constructor(
     private messageBarService: MessageBarService,
     private router: Router,
-    private ex: ExciseService
-  ) {}
+    private ex: ExciseService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('TAX-05000');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     //call ExciseService
@@ -45,7 +48,7 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
 
     const URL =
       AjaxService.CONTEXT_PATH + "/combobox/controller/getAnalysNumber";
-    $.post(URL, function(data) {
+    $.post(URL, function (data) {
       this.analysNumbers = data;
       var optionList = "";
       for (var i = 0; i < this.analysNumbers.length; i++) {
@@ -62,7 +65,7 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
       )).value = this.analysNumbers[0];
       const URL = AjaxService.CONTEXT_PATH + "filter/exise/getStartEndDate";
       var analysNumber = this.analysNumbers[0];
-      $.post(URL, { analysNumber: analysNumber }, function(returnedData) {
+      $.post(URL, { analysNumber: analysNumber }, function (returnedData) {
         (<HTMLInputElement>document.getElementById("before")).value =
           returnedData[0];
         (<HTMLInputElement>document.getElementById("last")).value =
@@ -84,10 +87,10 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
         }
 
         returnedData;
-      }).fail(function() {
+      }).fail(function () {
         console.error("error");
       });
-    }).fail(function() {
+    }).fail(function () {
       console.error("error");
     });
 
@@ -161,7 +164,7 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
     var analysNumber = (<HTMLInputElement>(
       document.getElementById("analysNumber")
     )).value;
-    $.post(URL, { analysNumber: analysNumber }, function(returnedData) {
+    $.post(URL, { analysNumber: analysNumber }, function (returnedData) {
       (<HTMLInputElement>document.getElementById("before")).value =
         returnedData[0];
       (<HTMLInputElement>document.getElementById("last")).value =
@@ -183,7 +186,7 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
       }
 
       return returnedData;
-    }).fail(function() {
+    }).fail(function () {
       console.error("error");
     });
   };

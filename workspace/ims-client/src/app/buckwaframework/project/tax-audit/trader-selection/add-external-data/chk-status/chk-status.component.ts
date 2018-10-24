@@ -3,6 +3,7 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { ExciseService } from "../../../../../common/services/excise.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
+import { AuthService } from "services/auth.service";
 
 declare var jQuery: any;
 declare var $: any;
@@ -18,13 +19,14 @@ export class ChkStatusComponent implements OnInit {
     private messageBarService: MessageBarService,
     private ex: ExciseService,
     private router: Router,
-    private ajax: AjaxService
+    private ajax: AjaxService,
+    private authService: AuthService
   ) {
 
   }
 
   ngOnInit() {
-
+    this.authService.reRenderVersionProgram('TAX-01030');
 
   }
 

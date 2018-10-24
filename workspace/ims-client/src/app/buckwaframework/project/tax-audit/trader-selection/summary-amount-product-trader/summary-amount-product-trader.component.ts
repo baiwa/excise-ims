@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'services/auth.service';
 
 @Component({
   selector: 'app-summary-amount-product-trader',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SummaryAmountProductTraderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('TAX-06000');
   }
 
 }

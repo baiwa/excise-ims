@@ -5,6 +5,7 @@ import { ExciseService } from "../../../../common/services/excise.service";
 import { TextDateTH, digit } from "../../../../common/helper/datepicker";
 import { CurrencyPipe } from "@angular/common";
 import { BreadCrumb } from "models/breadcrumb";
+import { AuthService } from "services/auth.service";
 
 declare var jQuery: any;
 declare var $: any;
@@ -42,10 +43,11 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
   coordinates: any;
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private ex: ExciseService,
-    private ajax : AjaxService
-    ) {
+    private ajax: AjaxService,
+    private authService: AuthService
+  ) {
     this._num1 = new Array();
     this._num2 = new Array();
     this._percent1 = new Array();
@@ -53,12 +55,13 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('TAX-07000');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
 
     const URL = "combobox/controller/getCoordinates";
     this.ajax.post(URL, {}, res => {
-      console.log("Coordinates : ",res.json());
+      console.log("Coordinates : ", res.json());
       this.listItem = res.json();
     });
     //call ExciseService
@@ -133,7 +136,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     document.getElementById("trDrinamic").innerHTML =
 
       '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
-      
+
       '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">ภาค</th> ' +
@@ -143,15 +146,15 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
       '<th rowspan="2" style="text-align: center !important">เปอร์เซ็นส่วนเบี่ยงเบน</th> ' +
       '<th rowspan="2" style="text-align: center !important">ชำระภาษี(เดือน)</th> ' +
       '<th colspan="3" style="text-align: center !important">การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ</th> ' +
-      
+
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
-      '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +      
+      '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
 
-      '<th colspan="' + this.month / 2 +'" style="text-align: center !important">การชำระภาษี ' +this.month / 2 +" เดือนแรก</th> " +
-      '<th colspan="' + this.month / 2 +'" style="text-align: center !important">การชำระภาษี ' +this.month / 2 + " เดือนหลัง </th> " +
+      '<th colspan="' + this.month / 2 + '" style="text-align: center !important">การชำระภาษี ' + this.month / 2 + " เดือนแรก</th> " +
+      '<th colspan="' + this.month / 2 + '" style="text-align: center !important">การชำระภาษี ' + this.month / 2 + " เดือนหลัง </th> " +
       '<th rowspan="2" style="text-align: center !important">พิกัดอื่นๆ</th> ' +
       "</tr>" +
       '<tr><th style="border-left: 1px solid rgba(34,36,38,.1);">' +
@@ -177,7 +180,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
 
   ngAfterViewInit() { }
 
-  searchAll=()=>{
+  searchAll = () => {
     $("#prod").dropdown('restore defaults');
   }
 
@@ -188,8 +191,8 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
       this.toggle = true;
     }
   }
-  
-  filterDataByCriteria(index) {    
+
+  filterDataByCriteria(index) {
     this.indexFilter = index;
     if (this.userManagementDt != null) {
       this.userManagementDt.destroy();
@@ -198,7 +201,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     this.initDatatable();
   }
 
-  filterAllDataByCriteria() {    
+  filterAllDataByCriteria() {
     this.indexFilter = "";
     if (this.userManagementDt != null) {
       this.userManagementDt.destroy();
@@ -211,7 +214,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/list";
     var json = "";
     json += ' { "lengthChange": true, ';
-    json += ' "searching": false, ';    
+    json += ' "searching": false, ';
     json += ' "select": true, ';
     json += ' "ordering": false, ';
     json += ' "pageLength": 10, ';
@@ -232,12 +235,12 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     json += ' "num2": "' + this.num2 + '", ';
     json += ' "percent1": "' + this.percent1 + '", ';
     json += ' "percent2": "' + this.percent2 + '", ';
-    json += ' "productType": "' +(this.exciseProductType == undefined ? "" : this.exciseProductType) + '", ';
+    json += ' "productType": "' + (this.exciseProductType == undefined ? "" : this.exciseProductType) + '", ';
     json += ' "analysNumber": "' + this.analysNumber + '" ';
     json += " } ";
     json += " }, ";
     json += ' "columns": [ ';
-    json += ' { "data": "exciseId","className":"center" }, ';    
+    json += ' { "data": "exciseId","className":"center" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "companyName" }, ';
     json += ' { "data": "exciseOwnerArea1" }, ';
@@ -245,17 +248,17 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
     json += ' { "data": "firstMonth" ,"className":"center" }, ';
     json += ' { "data": "lastMonth","className":"center" }, ';
     json += ' { "data": "percentage","className":"center" }, ';
-    json += ' { "data": "deviation","className":"center" }, '; 
+    json += ' { "data": "deviation","className":"center" }, ';
     json += ' { "data": "totalMonth" ,"className":"center"}, ';
     json += ' { "data": "no1" }, ';
     json += ' { "data": "no2" }, ';
-    json += ' { "data": "no3" }, ';    
+    json += ' { "data": "no3" }, ';
     json += ' { "data": "productType" }, ';
     json += ' { "data": "factoryAddress" }, ';
     json += ' { "data": "registeredCapital" }, ';
     json += ' { "data": "exciseIdOld","className":"center"}, ';
     json += ' { "data": "status" }, ';
-   
+
 
     for (var i = 0; i < this.month; i++) {
       if (i != this.month - 1) {
@@ -271,7 +274,7 @@ export class WorkingPaper1FullTraderComponent implements OnInit {
   }
 
   changeProd = () => {
-    this.exciseProductType = $("#prod").val();    
+    this.exciseProductType = $("#prod").val();
     if (this.userManagementDt != null) {
       this.userManagementDt.destroy();
     }

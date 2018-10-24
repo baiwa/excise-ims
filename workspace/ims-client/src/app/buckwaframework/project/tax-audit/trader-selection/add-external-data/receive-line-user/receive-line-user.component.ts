@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { ExciseService } from "../../../../../common/services/excise.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { BreadCrumb } from "models/breadcrumb";
+import { AuthService } from "services/auth.service";
 
 declare var jQuery: any;
 declare var $: any;
@@ -40,7 +41,8 @@ export class ReceiveLineUserComponent implements OnInit {
     private messageBarService: MessageBarService,
     private ex: ExciseService,
     private router: Router,
-    private ajax: AjaxService
+    private ajax: AjaxService,
+    private authService: AuthService
   ) {
     this.exciseId = [];
     const URL = "filter/exise/getOfficeCodeByUserLogin";
@@ -57,6 +59,7 @@ export class ReceiveLineUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('TAX-01040');
     console.log("ngOnInit");
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
@@ -340,7 +343,7 @@ export class ReceiveLineUserComponent implements OnInit {
   };
 
   appriveData = () => {
-    
+
     this.messageBarService.comfirm((res) => {
       if (res) {
         this.router.navigate(['/add-external-data/approve-line-user']);

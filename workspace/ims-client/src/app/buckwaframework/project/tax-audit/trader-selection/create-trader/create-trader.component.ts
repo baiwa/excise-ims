@@ -7,6 +7,7 @@ import { createTraderSerivce } from "projects/tax-audit/trader-selection/create-
 declare var jQuery: any;
 declare var $: any;
 import { BreadCrumb } from 'models/index';
+import { AuthService } from "services/auth.service";
 
 @Component({
   selector: "create-trader",
@@ -30,7 +31,8 @@ export class CreateTraderComponent implements OnInit {
   constructor(
     private ajax: AjaxService,
     private router: Router,
-    private serivce: createTraderSerivce
+    private serivce: createTraderSerivce,
+    private authService: AuthService
   ) {
     this.selectedStartMonth = null;
     this.selectedSEndMonth = null;
@@ -66,6 +68,7 @@ export class CreateTraderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.reRenderVersionProgram('TAX-04000');
     $(".ui.dropdown").dropdown();
     console.log("this.formatter1 :", this.formatter1.cell);
 
