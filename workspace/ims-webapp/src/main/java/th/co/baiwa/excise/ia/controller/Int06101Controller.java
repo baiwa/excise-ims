@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.ia.persistence.entity.BudgetList;
+import th.co.baiwa.excise.ia.persistence.vo.Int06101FormVo;
 import th.co.baiwa.excise.ia.service.Int06101Service;
 
 
@@ -62,6 +65,20 @@ public class Int06101Controller {
 	public List<BudgetList> getListName(@RequestBody BudgetList categoryId){
 		logger.info("list Int06101!!");
 		return int06101Service.getListName(categoryId);
+	}
+	
+	@PostMapping("/add")
+	@ResponseBody
+	public Message add(@RequestBody Int06101FormVo formVo){
+		
+		try {
+			 int06101Service.add(formVo);
+			 
+		} catch (Exception e) {
+			logger.error("Error ! add ",e);
+			return ApplicationCache.getMessage("MSG_00003");
+		}
+		return ApplicationCache.getMessage("MSG_00002");
 	}
 	
 

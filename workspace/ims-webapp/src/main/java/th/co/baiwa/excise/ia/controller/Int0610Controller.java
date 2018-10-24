@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.ia.persistence.vo.Int05111FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int05111Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0610FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0610Vo;
 import th.co.baiwa.excise.ia.service.Int0610Service;

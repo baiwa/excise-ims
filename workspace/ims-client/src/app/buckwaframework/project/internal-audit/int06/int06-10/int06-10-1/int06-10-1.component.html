@@ -12,20 +12,20 @@
       <div class="ui form">
         <!-- Form row 1 -->
         <div class="inline fields">
-          <div class="three wide field ">
+          <div class="three wide field required">
             <label class="text-right full-width">เลขที่เอกสารอ้างอิง</label>
           </div>
           <div class="four wide field">
             <input type="text" id="refnum" name="refnum">
           </div>
-          <div class="three wide field ">
+          <div class="three wide field required">
             <label class="text-right full-width">วันที่ขอเบิก</label>
           </div>
-          <div class="four wide field">
+          <div class="four wide field required">
             <div class="ui calendar" id="dateWithdraw" style="width:100%">
               <div class="ui input left icon">
-                <i class="calendar alter nate outline icon"></i>
-                <input type="text" placeholder="วว/ดด/ปปปป">
+                <i class="time icon"></i>
+                <input type="text" placeholder="วว/ดด/ปปปป" id="withdrawal" name="withdrawal">
               </div>
             </div>
           </div>
@@ -33,19 +33,19 @@
 
         <!-- Form row 2 -->
         <div class="inline fields">
-          <div class="three wide field ">
+          <div class="three wide field required">
             <label class="text-right full-width">กิจกรรม</label>
           </div>
-          <div class="four wide field ">
+          <div class="four wide field required">
             <select name="activity" id="activity" class="ui dropdown ai search full-width">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of activityList" value="{{item.lovId}}">{{item.value1}}</option>
             </select>
           </div>
-          <div class="three wide field ">
+          <div class="three wide field required">
             <label class="text-right full-width">งบ</label>
           </div>
-          <div class="four wide field ">
+          <div class="four wide field required">
             <select name="budged" id="budged" class="ui dropdown ai search full-width" (change)="budgedOnchange($event)">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of budged; index as i;" value="{{item.budgetId}}">{{item.budgetName}}</option>
@@ -55,19 +55,19 @@
 
         <!-- Form row 3 -->
         <div class="inline fields">
-          <div class="three wide field ">
+          <div class="three wide field required">
             <label class="text-right full-width">หมวด</label>
           </div>
-          <div class="four wide field">
+          <div class="four wide field required">
             <select name="category" id="category" class="ui dropdown ai search full-width" (change)="categoryOnchange($event)">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of category" value="{{item.categoryId}}">{{item.categoryName}}</option>
             </select>
           </div>
-          <div class="three wide field ">
+          <div class="three wide field required">
             <label class="text-right full-width">หมวดย่อย</label>
           </div>
-          <div class="four wide field">
+          <div class="four wide field required">
             <select name="list" id="list" class="ui dropdown ai search full-width">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of list" value="{{item.listId}}">{{item.listName}}</option>
@@ -76,21 +76,21 @@
         </div>
 
         <!-- Form row 4 -->
-        <div class="inline fields">
+        <div class="inline fields required">
           <div class="three wide field ">
             <label class="text-right full-width">ประเภทงบประมาณ</label>
           </div>
-          <div class="four wide field">
+          <div class="four wide field required">
             <select name="budget" id="budget" class="ui dropdown ai search full-width">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of budgetList" value="{{item.lovId}}">{{item.value1}}</option>
             </select>
           </div>
-          <div class="three wide field ">
+          <div class="three wide field required">
             <label class="text-right full-width">จำนวนเงินขอเบิก</label>
           </div>
           <div class="four wide field">
-            <input type="text">
+            <input type="number" id="amountOfMoney" name="amountOfMoney">
           </div>
         </div>
 
@@ -100,13 +100,13 @@
             <label class="text-right full-width">หักประกันสังคม</label>
           </div>
           <div class="four wide field">
-            <input type="text">
+            <input type="text" id="deductSocial" name="deductSocial">
           </div>
           <div class="three wide field ">
             <label class="text-right full-width">ภาษีหัก ณ ที่จ่าย</label>
           </div>
           <div class="four wide field">
-            <input type="text">
+            <input type="number" id="withholding" name="withholding">
           </div>
         </div>
 
@@ -116,13 +116,13 @@
             <label class="text-right full-width">อื่น ๆ</label>
           </div>
           <div class="four wide field">
-            <input type="text">
+            <input type="text" id="other" name="other">
           </div>
           <div class="three wide field ">
             <label class="text-right full-width">จำนวนเงินขอรับ</label>
           </div>
           <div class="four wide field">
-            <input type="text">
+            <input type="number" id="amountOfMoney1" name="amountOfMoney1">
           </div>
         </div>
 
@@ -132,13 +132,13 @@
             <label class="text-right full-width">เลขที่เอกสารขอเบิก</label>
           </div>
           <div class="four wide field">
-            <input type="text">
+            <input type="text" id="numberRequested" name="numberRequested">
           </div>
           <div class="three wide field ">
             <label class="text-right full-width">เลขที่เอกสารขอจ่าย</label>
           </div>
           <div class="four wide field">
-            <input type="text">
+            <input type="text" id="documentNumber" name="documentNumber">
           </div>
         </div>
 
@@ -148,7 +148,7 @@
             <label class="text-right full-width">คำอธิบายรายการ</label>
           </div>
           <div class="eleven wide field">
-            <input type="text">
+            <input type="text" id="itemDescription" name="itemDescription">
           </div>
         </div>
         <!-- Form row 9 -->
@@ -157,91 +157,70 @@
             <label class="text-right full-width">หมายเหตุ</label>
           </div>
           <div class="eleven wide field">
-            <textarea rows="4"></textarea>
+            <textarea rows="4" id="note" name="note"></textarea>
           </div>
         </div>
       </div>
       <br>
 
       <!-- Form Person -->
-      <div class="ui attached segment">
-        <div class="ui form">
+      <div class="ui form attached segment">    
           <div class="field ">
             <label class="text-center full-width">
               <h3>รายละเอียดการจ่ายเงิน</h3>
             </label>
           </div>
           <br>
-          <div class="three fields" *ngFor="let num of listButton; let i = index" [attr.data-index]="i">
-            <div class="field">
+          <div class="three fields"  *ngFor="let num of listButton;" >
+            <div class="field required">
               <label>วิธีการจ่าย</label>
-              <select name="pmmethod" id="pmmethod" class="ui dropdown ai search full-width">
+              <select name="pmmethod" id="pmmethod" class="ai ui dropdown  search full-width">
                 <option value="">กรุณาเลือก</option>
                 <option *ngFor="let item of pmmethodList" value="{{item.lovId}}">{{item.value1}}</option>
               </select>
             </div>
-            <div class="field">
+            <div class="field required">
               <label>เลขที่อ้างอิงการจ่าย</label>
-              <input type="text" id="num1{{i}}" name="num1{{i}}">
+              <input type="text" id="referenceNumber" name="referenceNumber">
             </div>
-            <div class="field">
+            <div class="field required">
               <label>วันที่สั่งจ่าย</label>
-              <div class="ui calendar" id="datePersons" style="width:100%">
+              <div class="frame ui calendar" id="datePersons" style="width:100%">
                 <div class="ui input left icon">
-                  <i class="calendar alter nate outline icon"></i>
-                  <input type="text">
+                  <i class="time icon"></i>
+                  <input type="text"  id="datePersons1" name="datePersons1">
                 </div>
               </div>
             </div>
-            <div class="field">
+            <div class="field required">
               <label>จำนวนเงินที่จ่าย</label>
-              <input type="text">
+              <input type="number" id="amountPaid" name="amountPaid">
             </div>
-            <div class="field">
+            <div class="field required">
               <label>ผู้รับเงิน</label>
-              <input type="text">
-            </div>
+              <input type="text" id="payee" name="payee">
+            </div>        
             <div class="field">
               <label>&nbsp;</label>
               <div class="eight wide field " *ngIf="num === numberButton; then thenBlock; else elseBlock"></div>
               <ng-template #thenBlock>
-                <button class="ui mini  green button" type="button" id="addFile" (click)="onAddButton(num);" [disabled]="statusSendBackFile"><i
-                    class="add icon"></i>เพิ่ม</button>
-              </ng-template>
-              <ng-template #elseBlock>
-                <button class="ui mini  red button" type="button" (click)="deleteButton(num);"><i class="trash alternate icon"></i>ลบ</button>
-              </ng-template>
-            </div>
-
+                <button class="ui mini  green button" type="button" id="addFile" (click)="onAddButton(num);"  [disabled]="statusSendBackFile"><i class="add icon"></i>เพิ่ม</button>
+            </ng-template>
+            <ng-template #elseBlock>
+                <button class="ui mini  red button" type="button" (click)="deleteButton(num);"><i class="trash alternate icon"></i>ลบ</button>                        
+            </ng-template>
+          </div>
           </div>
         </div>
-      </div>
+     
 
-      <!-- <div class="ui segment">
-        <div style="overflow-x: scroll;">
-          <table id="tableData" class="ui small celled table striped selectable" style="width: 150%">
-            <thead>
-              <tr style="text-align: center;">
-                <th rowspan="2">วิธีการจ่าย</th>
-                <th rowspan="2">เลขที่อ้างอิงการจ่าย</th>
-                <th rowspan="2">วันที่สั่งจ่าย</th>
-                <th rowspan="2">จำนวนเงินที่จ่าย</th>
-                <th rowspan="2">ผู้รับเงิน</th>
-                <th rowspan="2">หมายเหตุ</th>
-                <th rowspan="2">-</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-        <br> -->
+
       <br>
       <!-- Button -->
       <div class="ui center aligned grid ">
         <div class="sixteen wide column">
 
-          <button class="ui mini primary button">
+          <button class="ui mini primary button" (click)="saveData()">
             <i class="save icon"></i>
             บันทึก
           </button>

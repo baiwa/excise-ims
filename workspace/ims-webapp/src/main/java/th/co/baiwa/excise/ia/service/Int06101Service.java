@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.ia.persistence.dao.BudgetListDao;
 import th.co.baiwa.excise.ia.persistence.entity.BudgetList;
 import th.co.baiwa.excise.ia.persistence.repository.BudgetListRepository;
+import th.co.baiwa.excise.ia.persistence.vo.Int06101FormVo;
 import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
@@ -68,6 +70,10 @@ public class Int06101Service {
 		}
 		return data;
 	}
-	
+
+	public void add(Int06101FormVo formVo) {
+
+		budgetListDao.add06101(formVo);
+	}
 
 }

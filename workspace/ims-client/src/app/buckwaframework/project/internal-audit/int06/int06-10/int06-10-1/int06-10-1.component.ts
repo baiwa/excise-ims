@@ -4,6 +4,8 @@ import { BreadCrumb } from 'models/breadcrumb';
 import { formatter, TextDateTH } from 'helpers/datepicker';
 import { AjaxService } from 'services/ajax.service';
 import { MessageBarService } from 'services/message-bar.service';
+import { IaFollowUpProject } from 'models/IaFollowUpProject';
+import { ActivatedRoute } from '@angular/router';
 
 
 declare var $: any;
@@ -15,6 +17,9 @@ declare var $: any;
 export class Int06101Component implements OnInit {
   num1: number[];
   num2: number[];
+  iaFollowUpProject: IaFollowUpProject;
+  $form: any;
+  id: any;
   percent1: string[];
   percent2: string[];
   percent3: string[];
@@ -28,10 +33,15 @@ export class Int06101Component implements OnInit {
   numbers: number[];
   category : any;
   list : any;
+  travelToDescription: any;
 
+
+ 
   constructor(
     private messageBarService: MessageBarService,
     private authService: AuthService,
+    private route: ActivatedRoute,
+    private ajaxService: AjaxService,
     private ajax: AjaxService,) {
       this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
@@ -45,11 +55,23 @@ export class Int06101Component implements OnInit {
      }
 
   ngOnInit() {
+    $('.ui.calendar').calendar();
+
+
+
+     $('.ui.calendar').calendar({    
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+     formatter: formatter()
+    });
+    
     $(".ui.dropdown.ai").dropdown().css('width', '100%');
     this.listButton.push(this.numberButton);
     this.authService.reRenderVersionProgram('INT-06101');
     this.budgeDropdown();
     this.calenda();
+    
     this.pmmethod();
     this.activity();
     this.budge();
@@ -72,12 +94,8 @@ export class Int06101Component implements OnInit {
   };
 
   calenda = () => {
-    $("#datePersons").calendar({    
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-     formatter: formatter()
-    });
+
+
     $("#dateWithdraw").calendar({    
       maxDate: new Date(),
       type: "date",
@@ -86,11 +104,100 @@ export class Int06101Component implements OnInit {
     });
   }
 
+  saveData() {
+    if (!$('#refnum').val()) {
+      this.messageBarService.alert("กรุณากรอกเลขที่เอกสารอ้างอิง", "แจ้งเดือน");
+      return;
+    }
+
+    if (!$('#withdrawal').val()) {
+      this.messageBarService.alert("กรุณากรอกวันที่ขอเบิก", "แจ้งเดือน");
+      return;
+    }
+
+    if (!$('#activity').val()) {
+      this.messageBarService.alert("กรุณากรอกกิจกรรม", "แจ้งเดือน");
+      return;
+    }
+    if (!$('#budged').val()) {
+      this.messageBarService.alert("กรุณากรอกงบ", "แจ้งเดือน");
+      return;
+    }
+    if (!$('#category').val()) {
+      this.messageBarService.alert("กรุณากรอกหมวดย่อย", "แจ้งเดือน");
+      return;
+    }
+    if (!$('#budget').val()) {
+      this.messageBarService.alert("กรุณากรอกประเภทงบประมาณ", "แจ้งเดือน");
+      return;
+    }
+    if (!$('#amountOfMoney').val()) {
+      this.messageBarService.alert("กรุณากรอกจำนวนเงินขอเบิก", "แจ้งเดือน");
+      return;
+    }
+    if (!$('#pmmethod').val()) {
+      this.messageBarService.alert("กรุณากรอกวิธีการจ่าย", "แจ้งเดือน");
+      return;
+    }
+    if (!$('#datePersons').val()) {
+      this.messageBarService.alert("กรุณากรอกวันที่สั่งจ่าย", "แจ้งเดือน");
+      return;
+    }
+    if (!$('#amountPaid').val()) {
+      this.messageBarService.alert("กรุณากรอกจำนวนเงินที่จ่าย", "แจ้งเดือน");
+      return;
+    }
+    if (!$('#payee').val()) {
+      this.messageBarService.alert("กรุณากรอกผู้รับเงิน", "แจ้งเดือน");
+      return;
+    } 
+
+      const URL = "ia/int06101/add";
+      this.ajax.post(URL, {        
+        refnum :$("#refnum").val(),
+        withdrawal :$("#withdrawal").val(),
+        activity:$("#activity").val(),
+        budged:$("#budged").val(),
+        category:$("#category").val(),
+        list:$("#list").val(),
+        budget:$("#budget").val(),
+        amountOfMoney:$("#amountOfMoney").val(),
+        deductSocial:$("#deductSocial").val(),
+        withholding:$("#withholding").val(),
+        other:$("#other").val(),
+        amountOfMoney1:$("#amountOfMoney1").val(),
+        numberRequested:$("#numberRequested").val(),
+        documentNumber:$("#documentNumber").val(),
+        itemDescription:$("#itemDescription").val(),
+        note:$("#note").val(),
+    
+      }, res => {
+        const msg = res.json();
+        
+      if (msg.messageType == "C") {
+        this.messageBarService.successModal(msg.messageTh);
+      } else {
+        this.messageBarService.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+    }
   
+
+
   onAddButton = () => {
     console.log("Add Button");
     this.listButton.push(++this.numberButton);
     console.log(this.listButton);
+
+    $(".frame").calendar({    
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+     formatter: formatter()
+    });
+    
   }
 
   deleteButton = (e) => {
@@ -102,14 +209,7 @@ export class Int06101Component implements OnInit {
     this.listButton.splice(index, 1);
   }
 
-  onAddFile = () => {
-    this.listButton.forEach(element => {
-      var fileName = "#fileName" + element;
-      var file = $(fileName)[0].files[0];
 
-    });
-  }
-  
 
   pmmethod = () => {
     let url = "ia/int06101/pmmethod"

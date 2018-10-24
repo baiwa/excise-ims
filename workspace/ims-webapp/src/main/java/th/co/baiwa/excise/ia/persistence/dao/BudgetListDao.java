@@ -10,7 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.BudgetList;
+import th.co.baiwa.excise.ia.persistence.vo.Int06101FormVo;
 
 @Repository
 public class BudgetListDao {
@@ -77,4 +79,54 @@ public class BudgetListDao {
 			return en;
 		}
 	};
+	
+    public Long add06101 (Int06101FormVo formVo) {
+    	Long id = jdbcTemplate.queryForObject(" SELECT IA_WITHDRAWAL_LIST_SEQ.NEXTVAL FROM dual ",long.class);
+    	jdbcTemplate.update(" INSERT INTO IA_WITHDRAWAL_LIST (WITHDRAWAL_ID, " + 
+    			"REF_NUM, " + 
+    			"WITHDRAWAL_DATE, " + 
+    			"ACTIVITIES, " + 
+    			"BUDGET_ID, " + 
+    			"CATEGORY_ID, " + 
+    			"BUDGET_TYPE, " + 
+    			"WITHDRAWAL_AMOUNT, " + 
+    			"SOCIAL_SECURITY, " + 
+    			"WITHHOLDING_TAX, " + 
+    			"ANOTHER_AMOUNT, " + 
+    			"RECEIVED_AMOUNT, " + 
+    			"WITHDRAWAL_DOC_NUM, " + 
+    			"PAYMENT_DOC_NUM, " + 
+    			"ITEM_DESC, " + 
+    			"LIST_ID, " + 
+    			"NOTE) " + 
+    			" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ", new Object[] {
+    					id,
+    					formVo.getRefnum(),    				
+    				DateConstant.convertStrDDMMYYYYToDate(formVo.getWithdrawal()),
+    					formVo.getActivity(),
+    					formVo.getBudge(),
+    					formVo.getCategory(),    					
+    					formVo.getBudget(),
+    					formVo.getAmountOfMoney(),
+    					formVo.getDeductSocial(),
+    					formVo.getWithholding(),
+    					formVo.getOther(),
+    					formVo.getAmountOfMoney1(),
+    					formVo.getNumberRequested(),
+    					formVo.getDocumentNumber(),
+    					formVo.getItemDescription(),
+    					formVo.getNote(),
+    					formVo.getList()
+
+    					
+    					
+    			});
+    	//jdbcTemplate.update("",new Object[] {});
+    	return id;
+		    }
+
+	
+	
+	
+	
 }
