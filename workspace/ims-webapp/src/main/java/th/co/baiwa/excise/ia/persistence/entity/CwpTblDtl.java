@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
@@ -30,7 +31,7 @@ public class CwpTblDtl extends BaseEntity {
 	@SequenceGenerator(name="IA_CWP_TBL_DTL_GEN", sequenceName="IA_CWP_TBL_DTL_SEQ", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_CWP_TBL_DTL_GEN")
 	@Column(name="CWP_TBL_DTL_ID")
-	private long cwpTblDtlId;
+	private Long cwpTblDtlId;
 
 	@Column(name="BRING_FORWARD")
 	private BigDecimal bringForward;
@@ -41,7 +42,7 @@ public class CwpTblDtl extends BaseEntity {
 	private BigDecimal credit;
 
 	@Column(name="CWP_TBL_HDR_ID")
-	private long cwpTblHdrId;
+	private Long cwpTblHdrId;
 
 	private BigDecimal debit;
 
@@ -50,12 +51,15 @@ public class CwpTblDtl extends BaseEntity {
 
 	@Column(name="LEDGER_ACCOUNT_NUMBER")
 	private String ledgerAccountNumber;
+	
+	@Transient
+	private BigDecimal diff;
 
-	public long getCwpTblDtlId() {
+	public Long getCwpTblDtlId() {
 		return cwpTblDtlId;
 	}
 
-	public void setCwpTblDtlId(long cwpTblDtlId) {
+	public void setCwpTblDtlId(Long cwpTblDtlId) {
 		this.cwpTblDtlId = cwpTblDtlId;
 	}
 
@@ -83,11 +87,11 @@ public class CwpTblDtl extends BaseEntity {
 		this.credit = credit;
 	}
 
-	public long getCwpTblHdrId() {
+	public Long getCwpTblHdrId() {
 		return cwpTblHdrId;
 	}
 
-	public void setCwpTblHdrId(long cwpTblHdrId) {
+	public void setCwpTblHdrId(Long cwpTblHdrId) {
 		this.cwpTblHdrId = cwpTblHdrId;
 	}
 
@@ -114,7 +118,13 @@ public class CwpTblDtl extends BaseEntity {
 	public void setLedgerAccountNumber(String ledgerAccountNumber) {
 		this.ledgerAccountNumber = ledgerAccountNumber;
 	}
-	
-	
+
+	public BigDecimal getDiff() {
+		return diff;
+	}
+
+	public void setDiff(BigDecimal diff) {
+		this.diff = diff;
+	}
 
 }

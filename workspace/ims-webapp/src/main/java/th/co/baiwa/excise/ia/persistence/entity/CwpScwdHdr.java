@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
@@ -48,6 +49,9 @@ public class CwpScwdHdr extends BaseEntity  {
 
 	@Column(name="DISBURSEMENT_NAME")
 	private String disbursementName;
+	
+	@Column(name="FILE_UPLOAD_ID")
+	private Long fileUploadID;
 
 	public long getCwpScwdHdrId() {
 		return cwpScwdHdrId;
@@ -103,6 +107,14 @@ public class CwpScwdHdr extends BaseEntity  {
 
 	public void setDisbursementName(String disbursementName) {
 		this.disbursementName = disbursementName;
+	}
+
+	public Long getFileUploadID() {
+		return fileUploadID;
+	}
+
+	public void setFileUploadID(Long fileUploadID) {
+		this.fileUploadID = fileUploadID;
 	}
 	
 
