@@ -202,15 +202,16 @@
                     <a class="item " *ngIf="authService.renderByPage('analysis')" [routerLink]="[ '/analysis'] "
                         routerLinkActive="active ">การวิเคราะห์ข้อมูลเบื้องต้น
                     </a>
-                    <a class="item " routerLinkActive="active ">รวบรวมข้อมูลเบื้องต้น </a>
-                    <a class="item " routerLinkActive="active ">ขออนุมัติออกตรวจสอบภาษี </a>
+                    <!-- <a class="item " routerLinkActive="active ">รวบรวมข้อมูลเบื้องต้น </a> -->
+                    <a class="item " [routerLink]="[ 'tax-audit-manage'] " routerLinkActive="active ">ขออนุมัติออกตรวจสอบภาษี
+                    </a>
                     <a class="item " *ngIf="authService.renderByPage('select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน')"
                         [routerLink]="[ '/select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน'] " routerLinkActive="active ">สร้างกระดาษทำการตรวจสอบภาษี
                     </a>
-                    <a class="item " routerLinkActive="active ">สรุปผลการตรวจสอบภาษี</a>
+                    <!-- <a class="item " routerLinkActive="active ">สรุปผลการตรวจสอบภาษี</a> -->
                 </div>
             </div>
-            <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('tax-audit-s3')">
+            <!-- <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('tax-audit-s3')">
                 <i class="dropdown icon "></i>รายงานผลการตรวจสอบภาษี
                 <div class="menu ">
                     <a class="item " *ngIf="authService.renderByPage('int10/1')" [routerLink]="[ '/int10/1'] "
@@ -219,7 +220,7 @@
                     <a class="item " routerLinkActive="active ">ติดตามผลการตรวจสอบภาษี </a>
                 </div>
             </div>
-            <a class="item " routerLinkActive="active ">ทะเบียนคุมหนังสือเรียก</a>
+            <a class="item " routerLinkActive="active ">ทะเบียนคุมหนังสือเรียก</a> -->
             <a class="item " *ngIf="authService.renderByPage('tax-audit-manage')" [routerLink]="[ 'tax-audit-manage'] "
                 routerLinkActive="active ">บันทึกข้อความ หนังสือราชการ
             </a>
