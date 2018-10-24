@@ -61,17 +61,16 @@ public class Int062Service {
 	public List<Int062Vo> upload(Int062FormVo formVo)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
 		long idFile1 = 0L;
-		idFile1 = readExcel1(formVo.getFileExcel1());
+		long fileUploadID = System.currentTimeMillis();
+		idFile1 = readExcel1(formVo.getFileExcel1(), fileUploadID);
 		// query *headerId*
 		List<Int062Vo> responseList = new ArrayList<Int062Vo>();
 		Int062Vo response = new Int062Vo();
 		/*         */
 		long idFile2 = 0L;
-		idFile2 = readExcel2(formVo.getFileExcel2());
+		idFile2 = readExcel2(formVo.getFileExcel2(), fileUploadID);
 		
 		List<Int062CwpDtlVo> findDivideMonth;
-//		List<CwpScwdDtl> findGroupMonth;
-//		List<List<CwpScwdDtl>> dataRes = new ArrayList<List<CwpScwdDtl>>();
 		List<CwpScwdDtl> findByHDRId = cwpScwdDtlDao.findByHDRId(idFile1);
 		for (int i = 0; i < findByHDRId.size(); i++) {
 			String budgetCode = findByHDRId.get(i).getBudgetCode();
@@ -82,40 +81,41 @@ public class Int062Service {
 				response = new Int062Vo();
 				CwpScwdDtl cwp = new CwpScwdDtl();
 				String calMonth = findDivideMonth.get(j).getCalMonth();
-//				findGroupMonth = new ArrayList<CwpScwdDtl>();
-//				findGroupMonth = cwpScwdDtlDao.findGroupMonth(budgetCode, calMonth);
 				response.setCwpScwdDtlList(cwpScwdDtlDao.findGroupMonth(budgetCode, calMonth));
+				cwp = new CwpScwdDtl();
+				
 				for (CwpScwdDtl cwpScwdDtl : response.getCwpScwdDtlList()) {
-					cwp = new CwpScwdDtl();
-					
 					cwp.setFee(cwp.getFee().add(cwpScwdDtl.getFee()));
 					cwp.setFines(cwp.getFines().add(cwpScwdDtl.getFines()));
 					cwp.setNetAmount(cwp.getNetAmount().add(cwpScwdDtl.getNetAmount()));
 					cwp.setWithdrawAmount(cwp.getWithdrawAmount().add(cwpScwdDtl.getWithdrawAmount()));
 					cwp.setWithholdingTax(cwp.getWithholdingTax().add(cwpScwdDtl.getWithholdingTax()));
 					
+					//set idExcel1
+					cwp.setCwpScwdHdrId(idFile1);
+					//set idExcel2
+					cwp.setIdExcel2(idFile2);
 				}
-				response.setCwpScwdDtl(cwp);
 //				//add data to response
-//				List<CwpScwdDtl> dataLVL1 = new ArrayList<CwpScwdDtl>();
-//				dataLVL1.addAll(findGroupMonth);
-//				dataRes.add(dataLVL1);
+				response.setCwpScwdDtl(cwp);
+				response.setFileUploadID(fileUploadID);
+				responseList.add(response);
 			}
-			responseList.add(response);
+			
 		}
 		return responseList;
 	}
 
 	// read file excel 1
 	@SuppressWarnings("unused")
-	private long readExcel1(MultipartFile file1)
+	private long readExcel1(MultipartFile file1, long fileUploadID)
 			throws IOException, EncryptedDocumentException, InvalidFormatException {
 		byte[] byt = file1.getBytes();
 		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(byt));
 		Sheet sheet = workbook.getSheetAt(0);
 		int totalRows = sheet.getLastRowNum();
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		// set object value header columns
+		// set object header value columns
 		CwpScwdHdr objHeader = new CwpScwdHdr();
 		List<CwpScwdDtl> datailList = new ArrayList<CwpScwdDtl>();
 		long headerId = 0L;
@@ -154,7 +154,7 @@ public class Int062Service {
 							|| !(BeanUtils.isNotEmpty(objHeader.getDateDocumentStart()))
 							|| !(BeanUtils.isNotEmpty(objHeader.getDateDocumentEnd()))
 							|| !(BeanUtils.isNotEmpty(objHeader.getDateReport()))) {
-						headerId = addDataHeader(objHeader, columns, countHeader);
+						headerId = addDataHeader(objHeader, columns, countHeader, fileUploadID);
 						countHeader++;
 					}
 				}
@@ -188,7 +188,7 @@ public class Int062Service {
 	}
 
 	// add Data header
-	private long addDataHeader(CwpScwdHdr objHeader, List<String> columns, int countHeader) {
+	private long addDataHeader(CwpScwdHdr objHeader, List<String> columns, int countHeader, long fileUploadID) {
 		long headerId = 0L;
 		if (BeanUtils.isEmpty(objHeader.getDisbursementCode()) && countHeader == 0) {
 			objHeader.setDisbursementCode(columns.get(1));
@@ -223,6 +223,7 @@ public class Int062Service {
 				&& BeanUtils.isNotEmpty(objHeader.getDateDocumentStart())
 				&& BeanUtils.isNotEmpty(objHeader.getDateDocumentEnd())
 				&& BeanUtils.isNotEmpty(objHeader.getDateReport())) {
+			objHeader.setFileUploadID(fileUploadID);
 			logger.info("SAVE HEADER!!!");
 			CwpScwdHdr headerData = cwpScwdHdrRepository.save(objHeader);
 			headerId = headerData.getCwpScwdHdrId();
@@ -272,7 +273,7 @@ public class Int062Service {
 	}
 
 	// file excel 2
-	private long readExcel2(MultipartFile file2)
+	private long readExcel2(MultipartFile file2, long fileUploadID)
 			throws IOException, EncryptedDocumentException, InvalidFormatException {
 		// set object value header columns
 		CwpTblHdr objHeader = new CwpTblHdr();
@@ -320,7 +321,7 @@ public class Int062Service {
 							|| BeanUtils.isEmpty(objHeader.getDisbursementName())
 							|| BeanUtils.isEmpty(objHeader.getDepartment())
 							|| !BeanUtils.isNotEmpty(objHeader.getReportDate())) {
-						headerId = addDataHeader2(objHeader, columns, countHeader, dateStr);
+						headerId = addDataHeader2(objHeader, columns, countHeader, dateStr, fileUploadID);
 						countHeader++;
 					}
 				}
@@ -353,7 +354,7 @@ public class Int062Service {
 		return headerId;
 	}
 
-	public long addDataHeader2(CwpTblHdr objHeader, List<String> data, int countHeader, List<String> dateStr) {
+	public long addDataHeader2(CwpTblHdr objHeader, List<String> data, int countHeader, List<String> dateStr, long fileUploadID) {
 		String hd1 = data.get(2);
 		String[] lineOne = hd1.split(" ");
 		String disbursementCode = lineOne[1];
@@ -388,6 +389,7 @@ public class Int062Service {
 				&& BeanUtils.isNotEmpty(objHeader.getDisbursementName())
 				&& BeanUtils.isNotEmpty(objHeader.getDepartment()) && BeanUtils.isNotEmpty(objHeader.getReportDate())) {
 			logger.info("SAVE HEADER!!!!!!!");
+			objHeader.setFileUploadID(fileUploadID);
 			CwpTblHdr headerData = cwpTblHdrRepository.save(objHeader);
 
 			// set headerId for Detail
