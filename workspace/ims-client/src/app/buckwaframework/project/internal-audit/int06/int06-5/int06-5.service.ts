@@ -66,7 +66,7 @@ export class Int065Service {
   }
 
   dataTable = () => {
-    this.table = $("#dataTable").DataTable({
+    this.table = $("#dataTable").DataTableTh({
       "serverSide": true,
       "searching": false,
       "ordering": false,
