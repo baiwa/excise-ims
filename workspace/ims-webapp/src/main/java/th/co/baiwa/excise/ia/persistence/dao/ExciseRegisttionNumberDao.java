@@ -41,7 +41,7 @@ public class ExciseRegisttionNumberDao {
 		sql.append(" AND H.TA_EXCISE_PRODUCT_TYPE=?");
 		List<Object> params = new ArrayList<>();
 		
-		Date date = DateConstant.convertStrToDate(StringUtils.trim(countVo.getDateFrom()), DateConstant.MM_YYYY, DateConstant.LOCAL_EN);
+		Date date = DateConstant.convertStrToDate(StringUtils.trim(countVo.getDateFrom()), DateConstant.MM_YYYY, DateConstant.LOCAL_TH);
 		params.add(date);
 		params.add(countVo.getDateTo());
 		params.add(countVo.getDateTo());
