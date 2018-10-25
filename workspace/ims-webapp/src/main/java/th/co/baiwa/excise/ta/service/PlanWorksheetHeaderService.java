@@ -618,6 +618,7 @@ public class PlanWorksheetHeaderService {
 			}
 			if (!isExist) {
 				opeDataTable1 = new Ope041DataTable();
+				opeDataTable1.setProduct(formUpload.getColumn2());
 				opeDataTable1.setTaxInvoice(NumberUtils.stringToLong(formUpload.getColumn3()));
 				opeDataTable1.setDayRecieve(NumberUtils.stringToLong(formUpload.getColumn4()));
 				opeDataTable1.setExd1(NumberUtils.stringToLong(formUpload.getColumn6()));
