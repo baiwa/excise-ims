@@ -58,13 +58,11 @@ export class Opeo46Service {
 
     upload = (form: any) => {
         let url = "ta/opo046/upload";
-        this.ajax.upload(url,form, success => {            
-            this.dataExcel = success.json();            
-            if (this.dataExcel.data.length == 0) {
+        this.ajax.upload(url, form, success => {
+            this.dataExcel = success.json();
+            if (Utils.isNull(this.dataExcel)) {
                 this.message.errorModal('ไม่สามารถอัปโหลดไฟล์');
             }
-        }, error => {
-            console.log("Fail!");
         });
     }
 
@@ -82,6 +80,38 @@ export class Opeo46Service {
         $("#exciseId").dropdown('restore defaults');
         $("#dataFrom").val('');
         $("#dateTo").val('');
+        $("#fileName").val('');
+        this.dataExcel = null;
+        if (this.table != null) {
+            this.table.destroy();
+        }
+        this.dataTable();
+    }
+
+    save = () => {
+        let data = this.table.data();
+        let url = "ta/opo046/save";
+        
+        let list = [];
+        for(let i=0 ;i<data.length;i++) {  
+            let row = this.table.row(i).data();
+            console.log(row);
+            list.push(row);
+        }
+        console.log(list);
+        if (data.length == 0) {
+            this.message.alert("ไม่มีข้อมูล");
+            return;
+        }
+        this.message.comfirm((res) => {
+            if (res) {
+                 this.ajax.post(url, list, res => { 
+                    this.message.successModal("บันทึก");
+                },err=>{
+                    this.message.errorModal("บันทึกไม่สำเร็จ");
+                });
+            }
+        }, "", "ยืนยันการลบ");
     }
     dataTable = () => {
         this.table = $("#dataTable").DataTableTh({
@@ -97,8 +127,9 @@ export class Opeo46Service {
                     return JSON.stringify($.extend({}, d, {
                         "exciseId": $("#exciseId").val(),
                         "searchFlag": this.searchFlag,
-                        //"dataExcel" : this.dataExcel
+                        "dataExcel": this.dataExcel
                     }));
+
                 },
             },
             "columns": [
@@ -118,10 +149,7 @@ export class Opeo46Service {
                 },
                 {
                     "data": "amount",
-                    "className": "ui right aligned",
-                    "render": (data) => {
-                        return Utils.moneyFormatDecimal(data);
-                    }
+                    "className": "ui right aligned"
                 },
                 {
                     "data": "taxPerAmount",
@@ -144,11 +172,21 @@ export class Opeo46Service {
                 },
                 {
                     "data": "unit",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render": (data) => {
+                        return Utils.moneyFormatDecimal(data);
+                    }
                 },
                 {
                     "data": "unit",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render": (data, type, row, ) => {
+                        if (Utils.isNotNull(row.unit)) {
+                            let diff = row.taxPerAmount - row.unit;
+                            return Utils.moneyFormatDecimal(diff);
+                        }
+                        return "";
+                    }
                 },
             ]
         });

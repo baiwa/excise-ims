@@ -8,6 +8,15 @@ public class Ope046ExcelVo {
 	private String column4;
 	private String column5;
 	private String column6;
+	private String flag = "N";
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
 
 	public String getColumn1() {
 		return column1;

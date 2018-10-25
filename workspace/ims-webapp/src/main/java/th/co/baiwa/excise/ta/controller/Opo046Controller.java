@@ -52,4 +52,12 @@ public class Opo046Controller {
 	public List<Ope046ExcelVo> upload(@ModelAttribute Ope046FormVo formVo) throws EncryptedDocumentException, InvalidFormatException, IOException {		
 		return ope046Service.readFileExcel(formVo);
 	}
+
+    @PostMapping("/save")
+    @ResponseBody
+    public List<Ope046Vo> save(@RequestBody List<Ope046Vo> vo)
+    {
+         ope046Service.save(vo);
+         return vo;
+    }
 }

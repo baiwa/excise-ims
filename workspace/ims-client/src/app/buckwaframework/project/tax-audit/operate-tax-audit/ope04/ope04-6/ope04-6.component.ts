@@ -5,6 +5,7 @@ import { Opeo46Service } from './opeo4-6.service';
 import { Ope046Form } from './ope04-6.modesl';
 import { TextDateTH } from 'helpers/datepicker';
 import { formatter } from 'helpers/datepicker';
+import { Utils } from 'helpers/utils';
 declare var $: any;
 @Component({
   selector: 'ope04-6',
@@ -25,6 +26,7 @@ export class Ope046Component implements OnInit {
   form: Ope046Form = new Ope046Form();
   exciseIdList: any;
   loading: boolean = false;
+  buttonDisabled : boolean = false;
   constructor(
     private authService: AuthService,
     private opeo46Service: Opeo46Service,
@@ -49,8 +51,9 @@ export class Ope046Component implements OnInit {
   }
 
   search = () => {
-    this.opeo46Service.search();
-
+    if (Utils.isNotNull(this.form.exciseId)) {
+      this.opeo46Service.search();
+    }
   }
   claer = () => {
     this.opeo46Service.claer();
@@ -63,14 +66,24 @@ export class Ope046Component implements OnInit {
       this.form.userNumber = res.taxFeeId;
     });
   }
-   onChangeUpload(file: any) {
-     this.opeo46Service.onChangeUpload(file);
+  onChangeUpload(file: any) {
+    this.opeo46Service.onChangeUpload(file);
   }
 
-  upload=()=>{
+  upload = () => {
+    this.loading = true;
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
     this.opeo46Service.upload(formBody);
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
+  }
+
+  save = async() => {
+    this.buttonDisabled = await true;
+    await this.opeo46Service.save();
+    this.buttonDisabled = await false;
   }
   calenda = () => {
     let date = new Date();
@@ -81,7 +94,12 @@ export class Ope046Component implements OnInit {
       text: TextDateTH,
       formatter: formatter('month-year'),
       onChange: (date, text) => {
-        this.form.dateFrom = text;
+        let array = text.split("/");
+        let _month = array[0];
+        let _year = array[1];
+        let month = TextDateTH.months[parseInt(_month)];
+        console.log(month);
+        this.form.dateFrom = month + " " + _year;
       }
     });
     $("#dateT").calendar({
@@ -91,7 +109,12 @@ export class Ope046Component implements OnInit {
       text: TextDateTH,
       formatter: formatter('month-year'),
       onChange: (date, text) => {
-        this.form.dateTo = text;
+        let array = text.split("/");
+        let _month = array[0];
+        let _year = array[1];
+        let month = TextDateTH.months[parseInt(_month)];
+        console.log(month);
+        this.form.dateTo = month + " " + _year;
       }
     });
   }

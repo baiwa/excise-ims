@@ -19,8 +19,17 @@ public class Ope046FormVo extends DataTableRequest {
 	private String productType;
 	private MultipartFile fileName;
 	private List<Ope046ExcelVo> dataExcel;
+	private List<Ope046FormVo> dataList;
 
-	public List<Ope046ExcelVo> getDataExcel() {
+    public List<Ope046FormVo> getDataList() {
+        return dataList;
+    }
+
+    public void setDataList(List<Ope046FormVo> dataList) {
+        this.dataList = dataList;
+    }
+
+    public List<Ope046ExcelVo> getDataExcel() {
 		return dataExcel;
 	}
 

@@ -7,7 +7,7 @@
       <span>Criteria</span>
     </div>
 
-    <div class="ui attached segment">
+    <div class="ui attached segment {{loading ? 'loading' : ''}}">
       <form class="ui form"  id="upload-form">
         <!-- row 1 -->
         <div class="inline fields  ui grid">
@@ -26,7 +26,7 @@
             <label class="text-right full-width">เลขประจำตัวผู้เสียภาษี</label>
           </div>
           <div class="four wide field ">
-            <input type="text" class="custom-readonly" disabled [(ngModel)]="form.userNumber">
+            <input type="text" class="custom-readonly" disabled [(ngModel)]="form.userNumber" name="userNumber">
           </div>
         </div>
 
@@ -147,7 +147,7 @@
       <br>
       <div class="ui center aligned grid">
         <div class="six wide column">
-          <button class="ui mini primary button">
+          <button class="ui mini primary button" (click)="save()" [disabled]="buttonDisabled">
             <i class="print icon"></i>
             บันทึกข้อมูล
           </button>
