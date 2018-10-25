@@ -13,5 +13,9 @@ public class RiskExcelServiceTest {
 	private RiskAssRiskWsService riskAssRiskWsHdrService;
 	
 	
+	@Autowired
+	private Int065Service int065Service;
+	
+	
 	
 }

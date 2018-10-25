@@ -5,9 +5,13 @@ import { FormSearch } from "projects/internal-audit/int06/int06-5/from-search.mo
 import { TextDateTH, formatter } from "helpers/datepicker";
 import { Utils } from "helpers/utils";
 import { AuthService } from "services/auth.service";
+import { AjaxService } from "services/ajax.service";
+
 
 declare var $: any;
-
+const URL = {
+  export:"/ia/int065/exportFile"
+}
 @Component({
   selector: "app-int06-5",
   templateUrl: "./int06-5.component.html",
@@ -26,11 +30,16 @@ export class Int065Component implements OnInit, AfterViewInit {
   startDate: any = "";
   endDate: any = "";
   sectorList: any;
+  offcode: any;
+  yearMonthFrom: any;
+  yearMonthTo: any;
+  pageNo: any;
+  dataPerPage: any;
   areaList: any;
   branchList: any;
   budgetTypeList: any;
 
-  constructor(private int065Service: Int065Service,private authService: AuthService) {
+  constructor(private int065Service: Int065Service,private authService: AuthService, private ajax: AjaxService,) {
   }
 
   ngAfterViewInit() {
@@ -88,6 +97,20 @@ export class Int065Component implements OnInit, AfterViewInit {
 
   }
 
+  exportFile=()=>{
+    console.log("ia/int065/exportFile");
+    let param = "";
+
+    param +="?sector=" +  $("#sector").val();
+    param +="&area=" +  $("#area").val();
+    param +="&branch=" + $("#branch").val();
+    param +="&dateFrom=" + $("#dateFrom").val();
+    param +="&dateTo=" + $("#dateTo").val();
+    param +="&budgetType=" +$("#budgetType").val();
+    this.ajax.download(URL.export+param);
+  }
+
+  
   dataTable = () => {
     this.int065Service.dataTable();
   }
@@ -108,5 +131,6 @@ export class Int065Component implements OnInit, AfterViewInit {
       formatter: formatter()
     });
   }
+
 
 }

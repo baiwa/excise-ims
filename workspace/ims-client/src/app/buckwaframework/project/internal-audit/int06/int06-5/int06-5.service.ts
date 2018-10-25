@@ -3,7 +3,9 @@ import { AjaxService } from "services/ajax.service";
 import { MessageBarService } from "services/message-bar.service";
 import { FormSearch } from "projects/internal-audit/int06/int06-5/from-search.model";
 import { Utils } from "helpers/utils";
-
+const URL = {
+  export:"/ia/int065/exportFile"
+}
 declare var $: any;
 
 @Injectable()
@@ -12,6 +14,7 @@ export class Int065Service {
   form: FormSearch = new FormSearch();
   table: any;
   constructor(
+    
     private ajax: AjaxService,
     private message: MessageBarService
   ) {
@@ -63,6 +66,19 @@ export class Int065Service {
     $("#dateTo").val("");
     $("#dataTable").DataTable().ajax.reload();
 
+  }
+
+  exportFile=()=>{
+    console.log("ia/int065/exportFile");
+    let param = "";
+
+    param +="?sector=" +  $("#sector").val();
+    param +="&area=" +  $("#area").val();
+    param +="&branch=" + $("#branch").val();
+    param +="&dateFrom=" + $("#dateFrom").val();
+    param +="&dateTo=" + $("#dateTo").val();
+    param +="&budgetType=" +$("#budgetType").val();
+    this.ajax.download(URL.export+param);
   }
 
   dataTable = () => {
@@ -121,7 +137,10 @@ export class Int065Service {
         "className": "ui left aligned"
       },
       ]
+    
     });
   }
+
+
 
 }
