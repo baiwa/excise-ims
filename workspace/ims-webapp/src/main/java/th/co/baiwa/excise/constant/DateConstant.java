@@ -37,9 +37,9 @@ public class DateConstant {
 	public static final Locale LOCAL_EN = new Locale("en", "US");
 	// public static final String[] MONTH_SHOT_NAMES = { "ม.ค.", "ก.พ.", "มี.ค.",
 	// "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.","ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค." };
-	// public static final String[] MONTH_NAMES = { "มกราคม", "กุมภาพันธ์",
-	// "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน",
-	// "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
+	 public static final String[] MONTH_NAMES = { "มกราคม", "กุมภาพันธ์",
+	 "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน",
+	 "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
 	public static final String YYYYMMDD = "yyyyMMdd";
 	public static final String MM_YYYY = "MM/yyyy";
 
