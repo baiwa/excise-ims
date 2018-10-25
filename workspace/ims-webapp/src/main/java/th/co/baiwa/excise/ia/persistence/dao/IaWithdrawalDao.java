@@ -65,6 +65,7 @@ public class IaWithdrawalDao {
 			sql.append(" AND OFFICE_CODE LIKE ?");
 			params.add(formVo.getOfficeCode()+"%");
 		}
+	
         if (StringUtils.isNotBlank(formVo.getDateFrom()) && StringUtils.isNotBlank(formVo.getDateTo())){
             sql.append(" AND PAYMENT_DATE BETWEEN ? AND ?");
             params.add(formVo.getDateFrom());
@@ -252,4 +253,26 @@ public class IaWithdrawalDao {
 				return vo;
 			}
 		};
+	public List<Int065Vo> exportFile(Int065FormVo formVo) {
+		StringBuilder sql = new StringBuilder(SQL);
+		List<Object> params = new ArrayList<>();
+		params.add(CHECK);
+		
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			sql.append(" AND OFFICE_CODE LIKE ?");
+			params.add(formVo.getOfficeCode()+"%");
+		}
+        if (StringUtils.isNotBlank(formVo.getDateFrom()) && StringUtils.isNotBlank(formVo.getDateTo())){
+            sql.append(" AND PAYMENT_DATE BETWEEN ? AND ?");
+            params.add(formVo.getDateFrom());
+            params.add(formVo.getDateTo());
+        }
+		if (StringUtils.isNotBlank(formVo.getBudgetType())){
+			sql.append(" AND BUDGET_TYPE = ?");
+			params.add(formVo.getBudgetType());
+		}
+  
+		List<Int065Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), stamRowmapper);
+		return list;
+	}
 }

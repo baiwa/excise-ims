@@ -1,21 +1,16 @@
 package th.co.baiwa.excise.ia.service;
 
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Date;
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,12 +28,13 @@ import th.co.baiwa.excise.upload.service.ExcalService;
 public class Int065Service {
 	@Autowired
 	private ExcalService excalService;
+	
 	@Autowired
 	private LovRepository lovRepository;
 
 	@Autowired
 	private IaWithdrawalDao iaWithdrawalDao;
-
+	
 	public DataTableAjax<Int065Vo> findAll(Int065FormVo formVo) {
 
 		DataTableAjax<Int065Vo> dataTableAjax = new DataTableAjax<>();
@@ -116,90 +112,102 @@ public class Int065Service {
 	}
 
 	public void exportFile(Int065FormVo formVo, HttpServletResponse response) throws IOException {
-		String[] columns = {"ลำดับ", "วันที่สั่งจ่าย", "เช็คเล่มที่ ", "จำนวนเงินสั่งจ่ายในเช็ค", "ประเภทงบประมาณ","รายการ","ผู้รับเงิน"};
+		
+		/* create spreadsheet */
+		XSSFWorkbook workbook = excalService.setUpExcel();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		System.out.println("Creating excel");
+		
+		String[] columns = {"ลำดับ", "วันที่สั่งจ่าย", "เช็คเล่มที่ ", "ชื่อธนาคาร", "จำนวนเงินสั่งจ่ายในเช็ค", "ประเภทงบประมาณ","รายการ","ผู้รับเงิน"};
+		
+		for (cellNum = 0; cellNum < columns.length; cellNum++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(columns[cellNum]);
+			cell.setCellStyle(excalService.thStyle);
+		}
+		
 		String officeCode = mappingOfficeCode(formVo);
 		formVo.setOfficeCode(officeCode);
 		formVo.setDateFrom(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateFrom()));
 		formVo.setDateTo(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateTo()));
-		List<Int065Vo> list = iaWithdrawalDao.findAll(formVo);
+		List<Int065Vo> list = iaWithdrawalDao.exportFile(formVo);
 
+		rowNum = 2;
+		cellNum = 0;
+		int no = 1;
 		
-		 // Create a Workbook
-        Workbook workbook = new XSSFWorkbook(); // new HSSFWorkbook() for generating `.xls` file
-
-        /* CreationHelper helps us create instances of various things like DataFormat, 
-           Hyperlink, RichTextString etc, in a format (HSSF, XSSF) independent way */
-        CreationHelper createHelper = workbook.getCreationHelper();
-
-        // Create a Sheet
-        Sheet sheet = workbook.createSheet("Employee");
-
-        // Create a Font for styling header cells
-        Font headerFont = workbook.createFont();
-        headerFont.setBold(true);
-        headerFont.setFontHeightInPoints((short) 14);
-        headerFont.setColor(IndexedColors.RED.getIndex());
-
-        // Create a CellStyle with the font
-        CellStyle headerCellStyle = workbook.createCellStyle();
-        headerCellStyle.setFont(headerFont);
-
-        // Create a Row
-        Row headerRow = sheet.createRow(0);
-
         // Create cells
-        for(int i = 0; i < columns.length; i++) {
-            Cell cell = headerRow.createCell(i);
-            cell.setCellValue(columns[i]);
-            cell.setCellStyle(headerCellStyle);
+        for(Int065Vo item : list) {
+        	row = sheet.createRow(rowNum);
+			// No.
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(excalService.cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(item.getPaymentDate());
+			cell.setCellStyle(excalService.cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(item.getRefPayment());
+			cell.setCellStyle(excalService.cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(item.getBankName());
+			cell.setCellStyle(excalService.cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(item.getAmount());
+			cell.setCellStyle(excalService.cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(item.getBudgetType());
+			cell.setCellStyle(excalService.cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(item.getItemDesc());
+			cell.setCellStyle(excalService.cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(item.getPayee());
+			cell.setCellStyle(excalService.cellLeft);
+			cellNum++;
+			
+			no++;
+			rowNum++;
+			cellNum = 0;
         }
 
-        // Create Cell Style for formatting Date
-        CellStyle dateCellStyle = workbook.createCellStyle();
-        dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd-MM-yyyy"));
-
-        // Create Other rows and cells with employees data
-        int rowNum = 1;
-        for(Int065Vo employee: list) {
-            Row row = sheet.createRow(rowNum++);
-            row.createCell(0)
-                    .setCellValue(employee.getAmount());
-
-            row.createCell(1)
-                    .setCellValue(employee.getBankName());
-            row.createCell(2)
-            .setCellValue(employee.getBudgetType());
-            row.createCell(3)
-            .setCellValue(employee.getPayee());
-            row.createCell(4)
-            .setCellValue(employee.getRefPayment());
-            row.createCell(5)
-            .setCellValue(employee.getItemDesc());
-            row.createCell(6)
-            .setCellValue(employee.getPaymentDate());
-
-//            Cell dateOfBirthCell = row.createCell(2);
-//            dateOfBirthCell.setCellValue(new Date());
-//            dateOfBirthCell.setCellStyle(dateCellStyle);
-
-           
-        }
-
-		// Resize all columns to fit the content size
-        for(int i = 0; i < columns.length; i++) {
-            sheet.autoSizeColumn(i);
-        }
-
-        // Write the output to a file
-        FileOutputStream fileOut = new FileOutputStream("D://poi-generated-file.xlsx");
-        workbook.write(fileOut);
-        fileOut.close();
-
-        // Closing the workbook
-        workbook.close();
-    
+		/*set	fileName*/		
+		String fileName ="poi-generated-file";
+		System.out.println(fileName);
 		
-	
+		/* write it as an excel attachment */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+		byte [] outArray = outByteStream.toByteArray();
+		response.setContentType("application/vnd.ms-excel");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename="+fileName+".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outArray);
+		outStream.flush();
+		outStream.close();
+		
+		System.out.println("Done");
+
 	}
 
 }

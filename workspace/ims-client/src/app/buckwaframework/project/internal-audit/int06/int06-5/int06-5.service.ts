@@ -4,7 +4,7 @@ import { MessageBarService } from "services/message-bar.service";
 import { FormSearch } from "projects/internal-audit/int06/int06-5/from-search.model";
 import { Utils } from "helpers/utils";
 const URL = {
-  export:"/ia/int065/exportFile"
+  export:"ia/int065/exportFile"
 }
 declare var $: any;
 
@@ -68,6 +68,19 @@ export class Int065Service {
 
   }
 
+  exportFile=()=>{
+    
+    let param = "";
+
+    param +="?sector=" +  this.form.sector;
+    param +="&area=" +  this.form.area;
+    param +="&branch=" + this.form.branch;
+    param +="&dateFrom=" + this.form.dateFrom;
+    param +="&dateTo=" + this.form.dateTo;
+    param +="&budgetType=" +$("#budgetType").val();
+    console.log(URL.export+param);
+    this.ajax.download(URL.export+param);
+  }
 
   dataTable = () => {
     this.table = $("#dataTable").DataTableTh({
@@ -82,6 +95,7 @@ export class Int065Service {
         "type": "POST",
         "data": (d) => {
           console.log("flag :", $("#searchFlag").val());
+          console.log("sector :", $("#sector").val());
           return JSON.stringify($.extend({}, d, {
             "sector": $("#sector").val(),
             "area": $("#area").val(),
