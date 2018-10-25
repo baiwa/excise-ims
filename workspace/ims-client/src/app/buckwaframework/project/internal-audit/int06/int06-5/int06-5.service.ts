@@ -68,18 +68,6 @@ export class Int065Service {
 
   }
 
-  exportFile=()=>{
-    console.log("ia/int065/exportFile");
-    let param = "";
-
-    param +="?sector=" +  $("#sector").val();
-    param +="&area=" +  $("#area").val();
-    param +="&branch=" + $("#branch").val();
-    param +="&dateFrom=" + $("#dateFrom").val();
-    param +="&dateTo=" + $("#dateTo").val();
-    param +="&budgetType=" +$("#budgetType").val();
-    this.ajax.download(URL.export+param);
-  }
 
   dataTable = () => {
     this.table = $("#dataTable").DataTableTh({
