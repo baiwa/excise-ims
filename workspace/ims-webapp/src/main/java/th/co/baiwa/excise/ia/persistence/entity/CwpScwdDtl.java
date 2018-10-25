@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
@@ -31,7 +32,7 @@ public class CwpScwdDtl extends BaseEntity {
 	@SequenceGenerator(name="IA_CWP_SCWD_DTL_GEN", sequenceName="IA_CWP_SCWD_DTL_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_CWP_SCWD_DTL_GEN")
 	@Column(name="CWP_SCWD_DTL_ID")
-	private long cwpScwdDtlId;
+	private Long cwpScwdDtlId;
 
 	@Column(name="BANK_ACCOUNT")
 	private String bankAccount;
@@ -40,7 +41,7 @@ public class CwpScwdDtl extends BaseEntity {
 	private String budgetCode;
 
 	@Column(name="CWP_SCWD_HDR_ID")
-	private long cwpScwdHdrId;
+	private Long cwpScwdHdrId;
 
 	@Column(name="DUCUMENT_NUMBER")
 	private String ducumentNumber;
@@ -72,6 +73,15 @@ public class CwpScwdDtl extends BaseEntity {
 	@Column(name="WITHHOLDING_TAX")
 	private BigDecimal withholdingTax;
 	
+	@Transient
+	private String postDateStr;
+
+	@Transient
+	private String recordDateStr;
+	
+	@Transient
+	private Long idExcel2;
+	
 	public CwpScwdDtl() {
 		fee = new BigDecimal(0);
 		fines = new BigDecimal(0);
@@ -80,11 +90,11 @@ public class CwpScwdDtl extends BaseEntity {
 		withholdingTax = new BigDecimal(0);
 	}
 
-	public long getCwpScwdDtlId() {
+	public Long getCwpScwdDtlId() {
 		return cwpScwdDtlId;
 	}
 
-	public void setCwpScwdDtlId(long cwpScwdDtlId) {
+	public void setCwpScwdDtlId(Long cwpScwdDtlId) {
 		this.cwpScwdDtlId = cwpScwdDtlId;
 	}
 
@@ -104,11 +114,11 @@ public class CwpScwdDtl extends BaseEntity {
 		this.budgetCode = budgetCode;
 	}
 
-	public long getCwpScwdHdrId() {
+	public Long getCwpScwdHdrId() {
 		return cwpScwdHdrId;
 	}
 
-	public void setCwpScwdHdrId(long cwpScwdHdrId) {
+	public void setCwpScwdHdrId(Long cwpScwdHdrId) {
 		this.cwpScwdHdrId = cwpScwdHdrId;
 	}
 
@@ -198,6 +208,30 @@ public class CwpScwdDtl extends BaseEntity {
 
 	public void setWithholdingTax(BigDecimal withholdingTax) {
 		this.withholdingTax = withholdingTax;
+	}
+
+	public String getPostDateStr() {
+		return postDateStr;
+	}
+
+	public void setPostDateStr(String postDateStr) {
+		this.postDateStr = postDateStr;
+	}
+
+	public String getRecordDateStr() {
+		return recordDateStr;
+	}
+
+	public void setRecordDateStr(String recordDateStr) {
+		this.recordDateStr = recordDateStr;
+	}
+
+	public Long getIdExcel2() {
+		return idExcel2;
+	}
+
+	public void setIdExcel2(Long idExcel2) {
+		this.idExcel2 = idExcel2;
 	}
 
 }

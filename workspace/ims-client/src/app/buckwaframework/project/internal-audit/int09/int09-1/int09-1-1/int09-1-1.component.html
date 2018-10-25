@@ -67,7 +67,6 @@
           <th style="text-align: center !important;">ผู้สร้าง</th>
           <th style="text-align: center !important;">ชื่อเอกสาร</th>
           <th style="text-align: center !important;">ขนาด (KB)</th>
-          <th style="text-align: center !important;">สถานะการดำเนินการ</th>
           <th style="text-align: center !important;width:180px !important">จัดการ</th>
         </tr>
 
@@ -96,7 +95,7 @@
             </div>
             <div class="six wide field">
                 <select class="ui dropdown search selection" id="documentType"  id="documentType" style = "width:100%">
-                    <option value="">เลือก</option>
+                    <option value="">กรุณาเลือก</option>
                     <option *ngFor="let data of documentTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
                 </select>
             </div>

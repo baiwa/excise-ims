@@ -64,5 +64,17 @@ public class Ope041DataTable extends Ope041Vo {
 	public void setColumnName(String columnName) {
 		this.columnName = columnName;
 	}
+	@Override
+	public String toString() {
+		return "Ope041DataTable [no=" + no + ", product=" + product + ", taxInvoice=" + taxInvoice + ", dayRecieve=" + dayRecieve + ", monthRecieve=" + monthRecieve + ", exd1=" + exd1 + ", calMax=" + calMax + ", diff=" + diff + ", columnName=" + columnName + ", getNo()=" + getNo()
+				+ ", getProduct()=" + getProduct() + ", getTaxInvoice()=" + getTaxInvoice() + ", getDayRecieve()=" + getDayRecieve() + ", getMonthRecieve()=" + getMonthRecieve() + ", getExd1()=" + getExd1() + ", getCalMax()=" + getCalMax() + ", getDiff()=" + getDiff() + ", getColumnName()="
+				+ getColumnName() + ", getId()=" + getId() + ", getExciseId()=" + getExciseId() + ", getStartDate()=" + getStartDate() + ", getEndDate()=" + getEndDate() + ", getType()=" + getType() + ", getAccMonth()=" + getAccMonth() + ", getProduct1()=" + getProduct1() + ", getProduct2()="
+				+ getProduct2() + ", getProduct3()=" + getProduct3() + ", getProduct4()=" + getProduct4() + ", getProduct5()=" + getProduct5() + ", getProduct6()=" + getProduct6() + ", getMonthRecieve1()=" + getMonthRecieve1() + ", getMonthRecieve2()=" + getMonthRecieve2() + ", getMonthRecieve3()="
+				+ getMonthRecieve3() + ", getMonthRecieve4()=" + getMonthRecieve4() + ", getMonthRecieve5()=" + getMonthRecieve5() + ", getMonthRecieve6()=" + getMonthRecieve6() + ", getDate()=" + getDate() + ", getAnalysNumber()=" + getAnalysNumber() + ", getFileExel()=" + getFileExel()
+				+ ", getColumn1()=" + getColumn1() + ", getColumn2()=" + getColumn2() + ", getColumn3()=" + getColumn3() + ", getColumn4()=" + getColumn4() + ", getColumn5()=" + getColumn5() + ", getColumn6()=" + getColumn6() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
+	
+	
 	
 }

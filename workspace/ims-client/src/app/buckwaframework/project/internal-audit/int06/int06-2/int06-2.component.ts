@@ -3,6 +3,9 @@ import { AuthService } from "services/auth.service";
 import { Int062Service } from "./int06-2.service";
 import { BreadCrumb } from "models/breadcrumb";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Observable } from "rxjs";
+import { ComboBox } from "models/combobox";
+import { Router } from "@angular/router";
 
 declare var $: any;
 @Component({
@@ -14,9 +17,10 @@ declare var $: any;
 export class Int062Component implements OnInit {
   checkListOfwithdraw: FormGroup;
   breadcrumb: BreadCrumb[] = [];
-  showData: boolean = false;
   loading: boolean = false;
   submitted: boolean = false;
+  comboBox: Observable<ComboBox[]>;
+  comboBoxId: string = "";
 
   constructor(
     private authService: AuthService,
@@ -28,12 +32,15 @@ export class Int062Component implements OnInit {
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
       { label: "ตรวจสอบการเบิกและจ่ายเงิน", route: "#" }
     ];
+
+    this.comboBox = this.selfService.dropdown("SORT_SYSTEM", null);
   }
 
   ngAfterViewInit() {
     $("#export .dropdown").dropdown({
       transition: "drop"
     });
+    $("#showTable").hide();
   }
 
   ngOnInit() {
@@ -42,9 +49,8 @@ export class Int062Component implements OnInit {
     this.checkListOfwithdraw = this.formBuilder.group({
       fileExcel1: ["", Validators.required],
       fileExcel2: ["", Validators.required],
-      systemSort: ["", Validators.required]
+      sortSystem: ["", Validators.required]
     });
-    console.log(this.checkListOfwithdraw);
 
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
@@ -58,37 +64,53 @@ export class Int062Component implements OnInit {
     $("#modalInt062").modal("hide");
   }
 
-  uploadData(event: any) {
+  uploadData(e: any) {
+    e.preventDefault();
     this.submitted = true;
     // stop here if form is invalid
     if (this.checkListOfwithdraw.invalid) {
       return;
     }
+
     this.loading = true;
-    this.selfService.onUpload(event, this.getLoading).then(() => {
+    this.selfService.onUpload().then(() => {
       this.loading = false;
-      console.log(this.loading);
     });
-    this.showData = true;
   }
 
   clearData() {
-    this.showData = false;
+    $("#showTable").hide();
   }
 
   get f() {
     return this.checkListOfwithdraw.controls;
   }
 
-  // onChangeUpload(e: any) {
-  //   this.loading = true;
-  //   this.selfService.onChangeUpload(e, this.getLoading);
-  // }
+  onChangeUpload(e: any) {
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
+    // this.selfService.onChangeUpload(e, this.getLoading);
+  }
 
-  // onChangeUpload2(e: any) {
-  //   this.loading = true;
-  //   this.selfService.onChangeUpload2(e, this.getLoading);
-  // }
+  onChangeUpload2(e: any) {
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
+    // this.selfService.onChangeUpload2(e, this.getLoading);
+  }
+
+  changeSortSystem(e) {
+    // console.log(e.target.value);
+    this.comboBoxId = e.target.value;
+    console.log(this.comboBoxId);
+  }
+
+  compareTR() {
+    this.selfService.compareTR(this.comboBoxId);
+  }
 
   getLoading = args => {
     this.loading = args;

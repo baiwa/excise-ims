@@ -12,7 +12,7 @@
                         <div class="three wide field"></div>
                         <div class="eight wide field" [ngClass]="{ 'error': submitted && f.fileExcel1.errors }">
                             <label class="custom-label-w-25">รายงานสรุปรายการขอเบิก</label>
-                            <input type="file" name="fileExcel1" formControlName="fileExcel1" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                            <input type="file" name="fileExcel1" formControlName="fileExcel1" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="onChangeUpload($event)">
                         </div>
                     </div>
 
@@ -20,33 +20,30 @@
                         <div class="three wide field"></div>
                         <div class="eight wide field" [ngClass]="{ 'error': submitted && f.fileExcel2.errors }">
                             <label class="custom-label-w-25">รายงานงบทดลอง</label>
-                            <input type="file" name="fileExcel2" formControlName="fileExcel2" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                            <input type="file" name="fileExcel2" formControlName="fileExcel2" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="onChangeUpload2($event)">
                         </div>
                     </div>
 
                     <div class="inline fields">
                         <div class="three wide field"></div>
-                        <div class="eight wide field" [ngClass]="{ 'error': submitted && f.systemSort.errors }">
+                        <div class="eight wide field" [ngClass]="{ 'error': submitted && f.sortSystem.errors }">
                             <label class="custom-label-w-25">รูปแบบการจัดเรียงข้อมูล</label>
-                            <select class="ui dropdown ai" name="systemSort" formControlName="systemSort">
-                          <option value="">เลือก</option>
-                          <option value="0">จัดเรียงตามรหัสงบประมาณ</option>
-                          <option value="1">จัดเรียงตามวันที่</option>
-                        </select>
+                            <select class="ui dropdown ai" name="sortSystem" formControlName="sortSystem" (change)="changeSortSystem($event)">
+                                <option value="">เลือก</option>
+                                <option *ngFor="let data of comboBox | async" value="{{data.lovId}}">{{data.typeDescription}}</option>
+                            </select>
                         </div>
                     </div>
 
-
-
                     <div class="ui center aligned grid">
                         <div class="four wide column">
-                            <button class="ui mini primary button" type="submit">
+                            <button class="ui mini yellow button" type="submit">
                                 <i class="upload icon"></i>
                                 อัพโหลด
                             </button>
                             <button class="ui mini button" type="button" (click)="clearData()">
-                                <i class="trash outline icon"></i>
-                                ลบไฟล์
+                                <i class="refresh icon"></i>
+                                ล้างข้อมูล
                             </button>
                         </div>
                     </div>
@@ -55,11 +52,11 @@
         </div>
 
 
-        <div class="ui segment" *ngIf="showData">
+        <div class="ui segment" id="showTable">
             <div class="ui attached segment">
                 <div style="overflow-x: scroll;">
-                    <table id="tableData" class="ui small celled table striped selectable" style="width: 150%">
-                        <thead>
+                    <table id="tableData" class="ui small celled table striped selectable" style="width: 130%">
+                        <thead id="trDataUpload">
                             <tr style="text-align: center;">
                                 <th>วันบันทึก</th>
                                 <th>วันผ่านรายการ</th>
@@ -76,367 +73,15 @@
                                 <th>จำนวนเงินสุทธิ</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>28.12.2015</td>
-                                <td>28.12.2015</td>
-                                <td>KG</td>
-                                <td>3300002603</td>
-                                <td>ห้างหุ้นส่วนจำกัด เอส ซี โอ เอ็ม ซั</td>
-                                <td>3470641964</td>
-                                <td>P590000037</td>
-                                <td>3006</td>
-                                <td>96,500.00</td>
-                                <td>-901.87</td>
-                                <td>0</td>
-                                <td>-12</td>
-                                <td>95,586.13</td>
-
-                            </tr>
-                            <tr>
-                                <td>28.12.2015</td>
-                                <td>28.12.2015</td>
-                                <td>KG</td>
-                                <td>3300002704</td>
-                                <td>บริษัท พี วี ปิโตรเลียม ออยล์ จำกั</td>
-                                <td>2081648938</td>
-                                <td>P590000036</td>
-                                <td>3006</td>
-                                <td>31,744.14</td>
-                                <td>-296.67</td>
-                                <td>0</td>
-                                <td>-12</td>
-                                <td>31,435.47</td>
-
-                            </tr>
-                            <tr>
-                                <td>28.12.2015</td>
-                                <td>28.12.2015</td>
-                                <td>KG</td>
-                                <td>3300003002</td>
-                                <td>บริษัท ฮะเส็งฮวด สเตชั่นเนอรี่ จำกั</td>
-                                <td>2701117577</td>
-                                <td>P590000038</td>
-                                <td>3006</td>
-                                <td>49,987.00</td>
-                                <td>-467.17</td>
-                                <td>0</td>
-                                <td>-12</td>
-                                <td>49,507.83</td>
-
-                            </tr>
-                            <tr class="bg-row-blue-highlight" style="text-align: right;">
-                                <td colspan="8" style="text-align: left;">รวมเดือน</td>
-                                <td>178,231.14</td>
-                                <td>-1665.71</td>
-                                <td>0</td>
-                                <td>-36</td>
-                                <td>176,529.43</td>
-
-                            </tr>
-                            <tr>
-                                <td>12.01.2016</td>
-                                <td>12.01.2016</td>
-                                <td>KG</td>
-                                <td>3300001903</td>
-                                <td>บริษัท ไทยอีสเทิร์น ก๊อปปี้ จำกัด</td>
-                                <td>6510065771</td>
-                                <td>P590000044</td>
-                                <td>3006</td>
-                                <td>2,033.00</td>
-                                <td>-19</td>
-                                <td>0</td>
-                                <td>-12</td>
-                                <td>2,002.00</td>
-
-                            </tr>
-                            <tr>
-                                <td>12.01.2016</td>
-                                <td>12.01.2016</td>
-                                <td>KG</td>
-                                <td>3300004701</td>
-                                <td>บริษัท เค.ยู.ซิเคียวริตี้ แอนด์ เซอ</td>
-                                <td>7510148065</td>
-                                <td>P590000042</td>
-                                <td>3006</td>
-                                <td>19,500.00</td>
-                                <td>-182.24</td>
-                                <td>-768</td>
-                                <td>-12</td>
-                                <td>18,537.76</td>
-
-                            </tr>
-                            <tr>
-                                <td>21.01.2016</td>
-                                <td>21.01.2016</td>
-                                <td>KG</td>
-                                <td>3300002904</td>
-                                <td>บริษัท พี วี ปิโตรเลียม ออยล์ จำกั</td>
-                                <td>2081648938</td>
-                                <td>P590000055</td>
-                                <td>3006</td>
-                                <td>29,620.75</td>
-                                <td>-276.83</td>
-                                <td>0</td>
-                                <td>-12</td>
-                                <td>29,331.92</td>
-
-                            </tr>
-                            <tr class="bg-row-blue-highlight" style="text-align: right;">
-                                <td colspan="8" style="text-align: left;">รวมเดือน</td>
-                                <td>51,153.75</td>
-                                <td>-478.07</td>
-                                <td>-768</td>
-                                <td>-36</td>
-                                <td>49,871.68</td>
-
-                            </tr>
-                            <tr class="bg-row-purple-highlight" style="text-align: right;">
-                                <td colspan="8" style="text-align: left;">รวมทั้งรหัสงบประมาณ</td>
-                                <td>229,384.89</td>
-                                <td>-2143.78</td>
-                                <td>-768</td>
-                                <td>-72</td>
-                                <td>226,401.11</td>
-
-                            </tr>
-                            <tr>
-                                <td>24.05.2016</td>
-                                <td>24.05.2016</td>
-                                <td>KL</td>
-                                <td>3600001844</td>
-                                <td>สนง สรรพสามิตภาค-ภาคที่ 2 (ชลบุรี)</td>
-                                <td>2076045589</td>
-                                <td>P590000143</td>
-                                <td>90909080170973</td>
-                                <td>180</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>180</td>
-
-                            </tr>
-                            <tr>
-                                <td>23.05.2016</td>
-                                <td>23.06.2016</td>
-                                <td>KL</td>
-                                <td>3600001443</td>
-                                <td>สนง สรรพสามิตภาค-ภาคที่ 2 (ชลบุรี)</td>
-                                <td>2076045589</td>
-                                <td>P590000169</td>
-                                <td>90909080170973</td>
-                                <td>20,255.00</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>20,255.00</td>
-
-                            </tr>
-                            <tr>
-                                <td>21.05.2016</td>
-                                <td>21.07.2016</td>
-                                <td>KL</td>
-                                <td>3600005040</td>
-                                <td>สนง สรรพสามิตภาค-ภาคที่ 2 (ชลบุรี)</td>
-                                <td>2076045589</td>
-                                <td>P590000191</td>
-                                <td>90909080170973</td>
-                                <td>2,243.00</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>2,243.00</td>
-
-                            </tr>
-                            <tr class="bg-row-blue-highlight" style="text-align: right;">
-                                <td colspan="8" style="text-align: left;">รวมเดือน</td>
-                                <td>22,678.00</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>22,678.00</td>
-
-                            </tr>
-                            <tr>
-                                <td>16.06.2016</td>
-                                <td>16.08.2016</td>
-                                <td>KL</td>
-                                <td>3600015649</td>
-                                <td>สนง สรรพสามิตภาค-ภาคที่ 2 (ชลบุรี)</td>
-                                <td>2076045589</td>
-                                <td>P590000215</td>
-                                <td>90909080170973</td>
-                                <td>1,880.25</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1,880.25</td>
-
-                            </tr>
-                            <tr>
-                                <td>16.0.2016</td>
-                                <td>16.09.2016</td>
-                                <td>KL</td>
-                                <td>3600003965</td>
-                                <td>สนง สรรพสามิตภาค-ภาคที่ 2 (ชลบุรี)</td>
-                                <td>2076045589</td>
-                                <td>P590000248</td>
-                                <td>90909080170973</td>
-                                <td>1,470.00</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1,470.00</td>
-
-                            </tr>
-                            <tr class="bg-row-blue-highlight" style="text-align: right;">
-                                <td colspan="8" style="text-align: left;">รวมเดือน</td>
-                                <td>3,350.25</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>3,350.25</td>
-
-                            </tr>
-                            <tr class="bg-row-purple-highlight" style="text-align: right;">
-                                <td colspan="8" style="text-align: left;">รวมทั้งรหัสงบประมาณ</td>
-                                <td>26,028.25</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>26,028.25</td>
-
-                            </tr>
-                            <tr>
-                                <td>06.11.2015</td>
-                                <td>06.11.2015</td>
-                                <td>KC</td>
-                                <td>3100002220</td>
-                                <td>การประปาส่วนภูมิภาค</td>
-                                <td>9804341441</td>
-                                <td>P590000008</td>
-                                <td>300613001000000</td>
-                                <td>1,440.22</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>-12</td>
-                                <td>1,428.22</td>
-
-                            </tr>
-                            <tr>
-                                <td>19.11.2015</td>
-                                <td>19.11.2015</td>
-                                <td>KA</td>
-                                <td>3100000653</td>
-                                <td>บริษัท พี วี ปิโตรเลียม ออยล์ จำกั</td>
-                                <td>2081648938</td>
-                                <td>P590000014</td>
-                                <td>300613001000000</td>
-                                <td>25,207.23</td>
-                                <td>-235.58</td>
-                                <td>0</td>
-                                <td>-12</td>
-                                <td>24,959.65</td>
-
-                            </tr>
-                            <tr>
-                                <td>19.11.2015</td>
-                                <td>19.11.2015</td>
-                                <td>KC</td>
-                                <td>3100011402</td>
-                                <td>การประปาส่วนภูมิภาค</td>
-                                <td>9804341441</td>
-                                <td>P590000010</td>
-                                <td>300613001000000</td>
-                                <td>2,037.28</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>-12</td>
-                                <td>2,025.28</td>
-
-                            </tr>
-                            <tr class="bg-row-blue-highlight" style="text-align: right;">
-                                <td colspan="8" style="text-align: left;">รวมเดือน</td>
-                                <td>28,684.73</td>
-                                <td>-235.58</td>
-                                <td>0</td>
-                                <td>-36</td>
-                                <td>28,413.15</td>
-
-                            </tr>
-                            <tr>
-                                <td>08.12.2015</td>
-                                <td>08.12.2015</td>
-                                <td>KC</td>
-                                <td>3100005830</td>
-                                <td>บริษัท ไปรษณีย์ไทย จำกัด</td>
-                                <td>1231385308</td>
-                                <td>P590000027</td>
-                                <td>300613001000000</td>
-                                <td>1,731.00</td>
-                                <td>-17.31</td>
-                                <td>0</td>
-                                <td>-12</td>
-                                <td>1,701.69</td>
-
-                            </tr>
-                            <tr>
-                                <td>11.12.2015</td>
-                                <td>11.12.2015</td>
-                                <td>KC</td>
-                                <td>3100000689</td>
-                                <td>การประปาส่วนภูมิภาค</td>
-                                <td>9804341441</td>
-                                <td>P590000034</td>
-                                <td>300613001000000</td>
-                                <td>1,686.32</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>-12</td>
-                                <td>1,674.32</td>
-
-                            </tr>
-                            <tr>
-                                <td>11.12.2015</td>
-                                <td>11.12.2015</td>
-                                <td>KC</td>
-                                <td>3100013901</td>
-                                <td>การไฟฟ้าส่วนภูมิภาค</td>
-                                <td>730072665</td>
-                                <td>P590000032</td>
-                                <td>300613001000000</td>
-                                <td>54,571.29</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>-12</td>
-                                <td>54,559.29</td>
-
-                            </tr>
-                            <tr class="bg-row-blue-highlight" style="text-align: right;">
-                                <td colspan="8" style="text-align: left;">รวมเดือน</td>
-                                <td>57,988.61</td>
-                                <td>-17.31</td>
-                                <td>0</td>
-                                <td>-36</td>
-                                <td>57,935.30</td>
-
-                            </tr>
-                            <tr class="bg-row-purple-highlight" style="text-align: right;">
-                                <td colspan="8" style="text-align: left;">รวมทั้งรหัสงบประมาณ</td>
-                                <td>86,673.34</td>
-                                <td>-252.89</td>
-                                <td>0</td>
-                                <td>-72</td>
-                                <td>86,348.45</td>
-
-                            </tr>
+                        <tbody id="tdDataUpload">
+                            <!-- show tdDataUpload -->
                         </tbody>
                     </table>
                 </div>
                 <br>
                 <div class="ui center aligned grid">
                     <div class="sixteen wide column">
-                        <button class="ui mini primary button" routerLink='/int06/2/1'>
+                        <button class="ui mini primary button" (click)="compareTR()">
                     <i class="save icon"></i> 
                     เปรียบเทียบ TR
                   </button>

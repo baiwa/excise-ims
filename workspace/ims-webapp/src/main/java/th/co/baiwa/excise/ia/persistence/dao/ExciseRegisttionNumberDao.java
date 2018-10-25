@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseRegistartionNumber;
 import th.co.baiwa.excise.ta.persistence.vo.AnalysisFromCountVo;
 import th.co.baiwa.excise.ta.persistence.vo.MockupForm;
@@ -34,10 +36,15 @@ public class ExciseRegisttionNumberDao {
 		sql.append(" INNER JOIN TA_EXCISE_TAX_RECEIVE D");
 		sql.append(" ON H.TA_EXCISE_ID = D.TA_EXCISE_ID");
 		sql.append(" AND D.TA_EXCISE_TAX_RECEIVE_MONTH  IN");
-		sql.append(" (SELECT REPLACE(TO_CHAR( add_MONTHS( Sysdate, LEVEL-12 ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) Month_AFTER");
-		sql.append(" FROM dual CONNECT BY LEVEL <= 12) where SUBSTR(H.TA_EXCISE_ID,15,1)=? " );
+		sql.append(" (SELECT REPLACE(TO_CHAR( add_MONTHS( ?, LEVEL- ? ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) Month_AFTER");
+		sql.append(" FROM dual CONNECT BY LEVEL <= ?) where SUBSTR(H.TA_EXCISE_ID,15,1)=? " );
 		sql.append(" AND H.TA_EXCISE_PRODUCT_TYPE=?");
 		List<Object> params = new ArrayList<>();
+		
+		Date date = DateConstant.convertStrToDate(StringUtils.trim(countVo.getDateFrom()), DateConstant.MM_YYYY, DateConstant.LOCAL_TH);
+		params.add(date);
+		params.add(countVo.getDateTo());
+		params.add(countVo.getDateTo());
 		params.add(countVo.getCoordinatesFlag());
 		params.add(countVo.getProductionType());
 		

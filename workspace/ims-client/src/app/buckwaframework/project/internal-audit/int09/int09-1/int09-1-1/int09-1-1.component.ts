@@ -260,28 +260,12 @@ export class Int0911Component implements OnInit, OnDestroy {
           "data": "documantSize",
           "className": "ui right aligned"
         }, {
-          "data": "status",
-          "className": "ui center aligned",
-          "render": function (data, type, row) {
-            var s = '';
-            if (data == 1196) {
-              s = 'ไม่อนุมัติ';
-            } else if (data == 1195) {
-              s = 'อนุมัติ';
-            }else {
-              s = 'รออนุมัติ';
-            }
-            return s;
-          }
-        },{
           "data": "id",
           "className": "ui center aligned",
           "render" : function(data,type,row){
             var btn = '';
             btn +='<button class="mini ui yellow button btn-download"><i class="download icon"></i>ดาวน์โหลด</button>';
             btn +='<button class="mini ui red button btn-delete"><i class="trash alternate icon"></i>ลบ</button>';
-            btn +='<button class="mini ui green button btn-approve"><i class="check icon"></i>อนุมัติ</button>';
-            btn +='<button class="mini ui orange button btn-unapproved"><i class="minus circle icon"></i>ไม่อนุมัติ</button>';
               return btn;
           }
         }

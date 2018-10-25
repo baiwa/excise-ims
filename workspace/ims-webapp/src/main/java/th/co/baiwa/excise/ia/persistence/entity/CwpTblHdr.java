@@ -43,6 +43,9 @@ public class CwpTblHdr extends BaseEntity {
 
 	@Column(name="REPORT_DATE")
 	private Date reportDate;
+	
+	@Column(name="FILE_UPLOAD_ID")
+	private Long fileUploadID;
 
 	public long getCwpTblHdrId() {
 		return cwpTblHdrId;
@@ -82,6 +85,14 @@ public class CwpTblHdr extends BaseEntity {
 
 	public void setReportDate(Date reportDate) {
 		this.reportDate = reportDate;
+	}
+
+	public Long getFileUploadID() {
+		return fileUploadID;
+	}
+
+	public void setFileUploadID(Long fileUploadID) {
+		this.fileUploadID = fileUploadID;
 	}
 
 }

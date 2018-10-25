@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.persistence.dao;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import oracle.net.aso.d;
+import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.CwpScwdDtl;
 import th.co.baiwa.excise.ia.persistence.vo.Int062CwpDtlVo;
 
@@ -95,7 +96,7 @@ public class CwpScwdDtlDao {
 			dtlVo.setBudgetCode(rs.getString("BUDGET_CODE"));
 			dtlVo.setBankAccount(rs.getString("BANK_ACCOUNT"));
 			dtlVo.setCwpScwdHdrId(rs.getLong("CWP_SCWD_HDR_ID"));
-			dtlVo.setCwpScwdDtlId(rs.getInt("CWP_SCWD_DTL_ID"));
+			dtlVo.setCwpScwdDtlId(rs.getLong("CWP_SCWD_DTL_ID"));
 			dtlVo.setDucumentNumber(rs.getString("DUCUMENT_NUMBER"));
 			dtlVo.setFee(rs.getBigDecimal("FEE"));
 			dtlVo.setFines(rs.getBigDecimal("FINES"));
@@ -108,8 +109,49 @@ public class CwpScwdDtlDao {
 			dtlVo.setWithdrawAmount(rs.getBigDecimal("WITHDRAW_AMOUNT"));
 			dtlVo.setWithholdingTax(rs.getBigDecimal("WITHHOLDING_TAX"));
 			
+			//change format date -> string
+			String recordDate = DateConstant.convertDateToStrDDMMYYYY(dtlVo.getRecordDate());
+			String postDate = DateConstant.convertDateToStrDDMMYYYY(dtlVo.getPostDate());
+			dtlVo.setRecordDateStr(recordDate);
+			dtlVo.setPostDateStr(postDate);
+			
 			return dtlVo;
 		}
 	};
+	
+	public List<CwpScwdDtl> queryBudget(CwpScwdDtl en) {
+		List<Object> valueList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder(" SELECT DISTINCT D.BUDGET_CODE, D.CWP_SCWD_HDR_ID FROM IA_CWP_SCWD_DTL D ");
+		sql.append(" WHERE D.CWP_SCWD_HDR_ID = ? ");
+		sql.append(" ORDER BY D.BUDGET_CODE");
+		valueList.add(en.getCwpScwdHdrId());
+
+		List<CwpScwdDtl> budgetList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingQueryBudget);
+		return budgetList;
+	}
+
+	private RowMapper<CwpScwdDtl> fieldMappingQueryBudget = new RowMapper<CwpScwdDtl>() {
+		@Override
+		public CwpScwdDtl mapRow(ResultSet rs, int arg1) throws SQLException {
+			CwpScwdDtl dtlVo = new CwpScwdDtl();
+			dtlVo.setBudgetCode(rs.getString("BUDGET_CODE"));
+			dtlVo.setCwpScwdHdrId(rs.getLong("CWP_SCWD_HDR_ID"));
+			return dtlVo;
+		}
+	};
+	
+	public BigDecimal sumNetAmount(Long cwpScwdHdrId, String budgetCode) {
+		List<Object> valueList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder(" SELECT SUM(D.NET_AMOUNT) AS TOTAL_NETAMOUNT ");
+		sql.append(" FROM IA_CWP_SCWD_DTL D ");
+		sql.append(" WHERE D.CWP_SCWD_HDR_ID = ? ");
+		sql.append(" AND D.BUDGET_CODE = ? ");
+		valueList.add(cwpScwdHdrId);
+		valueList.add(budgetCode);
+
+		BigDecimal totalNetAmount = jdbcTemplate.queryForObject(sql.toString(), valueList.toArray(), BigDecimal.class);
+		return totalNetAmount;
+	}
+	
 
 }

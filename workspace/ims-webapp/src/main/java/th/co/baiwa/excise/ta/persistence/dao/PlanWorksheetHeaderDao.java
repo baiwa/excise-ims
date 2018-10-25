@@ -633,21 +633,18 @@ public class PlanWorksheetHeaderDao {
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
 
-		sql.append(" WITH THAI_MONTH AS ");
-		sql.append(" ( SELECT REPLACE(TO_CHAR( add_MONTHS( ? , LEVEL-? ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) MONTH_AFTER ");
-		sql.append(" FROM dual ");
-		sql.append(" CONNECT BY LEVEL <= ? ) ");
+//		sql.append(" WITH THAI_MONTH AS ");
+//		sql.append(" ( SELECT REPLACE(TO_CHAR( add_MONTHS( ? , LEVEL-? ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) MONTH_AFTER FROM dual CONNECT BY LEVEL <= ? ) ");
 		sql.append(" SELECT * ");
 		sql.append(" FROM TA_EXCISE_ACC_MONTH_04_07_DTL D ");
 		sql.append(" WHERE D.EXCISE_ID = ? ");
 		sql.append(" AND D.TYPE = ?  ");
-		sql.append(" AND D.ACC_MONTH IN (SELECT * FROM THAI_MONTH)  ");
-		sql.append(" AND ROWNUM <= 1 ");
+//		sql.append(" AND D.ACC_MONTH IN (SELECT REPLACE(TO_CHAR( add_MONTHS( Sysdate, LEVEL-12 ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) Month_AFTER   FROM dual CONNECT BY LEVEL <= 12)  ");
 
-		valueList.add(date);
-		valueList.add(backMonth);
-		valueList.add(backMonth);
-		valueList.add(exciseId);
+//		valueList.add(date);
+//		valueList.add(backMonth);
+//		valueList.add(backMonth);
+		valueList.add(exciseId.trim());
 		valueList.add(type);
 
 		List<Ope041Vo> exciseIdFromAccDTLList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingAccMonthVo);

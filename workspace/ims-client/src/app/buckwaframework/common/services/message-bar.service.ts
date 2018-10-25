@@ -82,7 +82,7 @@ export class MessageBarService {
     $("#alert-content").html(msg);
     $("#alert-actions").html(
       `<div class="ui green mini cancel inverted button">
-            <i class="check icon"></i> โอเค
+            <i class="check icon"></i> ตกลง
         </div>`
     );
     $("#alert").modal("show");

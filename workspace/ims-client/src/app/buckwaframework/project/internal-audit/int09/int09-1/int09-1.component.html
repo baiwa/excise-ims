@@ -9,7 +9,7 @@
     <input type="hidden" id="id">
     <input type="hidden" id="travelTo">
     <input type="hidden" id="travelToId">
-    <div class="inline fields">
+    <!-- <div class="inline fields">
       <div class="two wide field"></div>
       <div class="two wide field">
         <label>วันที่สร้าง</label>
@@ -50,11 +50,12 @@
       </div>
       <div class="four wide field">
         <select class="ui dropdown search selection" style="width: 100%;" id="pickedType">
-          <option value="">เลือก</option>
+          <option value="">กรุณาเลือก</option>
           <option *ngFor="let data of pickedTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
         </select>
       </div>
-    </div>
+    </div> -->
+
     <div class="inline fields">
 
       <div class="two wide field"></div>
@@ -75,7 +76,7 @@
       </div>
       <div class="four wide field">
         <select class="ui dropdown search selection" style="width: 100%;" id="status">
-          <option value="">เลือก</option>
+          <option value="">กรุณาเลือก</option>
           <option *ngFor="let data of statusList" value="{{data.lovId}}">{{data.typeDescription}}</option>
         </select>
       </div>
@@ -117,20 +118,20 @@
     <div class="inline fields">
       <div class="two wide field"></div>
       <div class="two wide field">
-        <label>สรรพสามิตภาค</label>
+        <label>สำนักงานสรรพสามิตภาค</label>
       </div>
       <div class="four wide field">
         <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)">
-          <option value="">เลือก</option>
+          <option value="">กรุณาเลือก</option>
           <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
         </select>
       </div>
       <div class="two wide field">
-        <label>สรรพสามิตพื้นที่</label>
+        <label>สำนักงานสรรพสามิตพื้นที่</label>
       </div>
       <div class="four wide field">
         <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)">
-          <option value="">เลือก</option>
+          <option value="">กรุณาเลือก</option>
           <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
         </select>
       </div>
@@ -138,11 +139,11 @@
     <div class="inline fields">
       <div class="two wide field"></div>
       <div class="two wide field">
-        <label>สรรพสามิตสาขา</label>
+        <label>สำนักงานสรรพสามิตสาขา</label>
       </div>
       <div class="four wide field">
         <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3" (change)="setTravelTo($event)">
-          <option value="">เลือก</option>
+          <option value="">กรุณาเลือก</option>
           <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
         </select>
       </div>
@@ -151,7 +152,7 @@
     <div class="ui center aligned grid">
       <div class="eight wide column">
         <button class="ui mini primary button" type="button" (click)="clickSearch()"><i class="search icon"></i>ค้นหา</button>
-        <button class="ui mini grey button" type="button" (click)="clickClear()"><i class="sync icon"></i> ล้างข้อมูล</button>
+        <button class="ui mini button" type="button" (click)="clickClear()"><i class="sync icon"></i> ล้างข้อมูล</button>
         <button class="ui mini  green button" type="button" (click)="modalAddHead()"><i class="plus icon"></i>รายการใหม่</button>
       </div>
     </div>
@@ -202,7 +203,7 @@
         </div>
         <div class="four wide field column">
           <select class="ui dropdown search selection" style="width: 100%;" id="pickedTypeAdd">
-            <option value="">เลือก</option>
+            <option value="">กรุณาเลือก</option>
             <option *ngFor="let data of pickedTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
           </select>
         </div>
@@ -256,20 +257,20 @@
       <div class="inline fields">
         <div class="two wide field"></div>
         <div class="two wide field">
-          <label>สรรพสามิตภาค</label>
+          <label>สำนักงานสรรพสามิตภาค</label>
         </div>
         <div class="four wide field">
           <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1Add" (change)="travelTo2AddDropdown($event)">
-            <option value="">เลือก</option>
+            <option value="">กรุณาเลือก</option>
             <option *ngFor="let data of travelTo1AddList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
           </select>
         </div>
         <div class="two wide field">
-          <label>สรรพสามิตพื้นที่</label>
+          <label>สำนักงานสรรพสามิตพื้นที่</label>
         </div>
         <div class="four wide field">
           <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2Add" (change)="travelTo3AddDropdown($event)">
-            <option value="">เลือก</option>
+            <option value="">กรุณาเลือก</option>
             <option *ngFor="let data of travelTo2AddList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
           </select>
         </div>
@@ -277,11 +278,11 @@
       <div class="inline fields">
         <div class="two wide field"></div>
         <div class="two wide field">
-          <label>สรรพสามิตสาขา</label>
+          <label>สำนักงานสรรพสามิตสาขา</label>
         </div>
         <div class="four wide field">
           <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3Add" (change)="setTravelToAdd($event)">
-            <option value="">เลือก</option>
+            <option value="">กรุณาเลือก</option>
             <option *ngFor="let data of travelTo3AddList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
           </select>
         </div>

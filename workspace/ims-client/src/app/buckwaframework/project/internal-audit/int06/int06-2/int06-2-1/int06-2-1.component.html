@@ -1,139 +1,86 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
-  <div class="sixteen wide column">
-    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>ตรวจสอบสรุปรายการขอเบิก </span>
+    <div class="sixteen wide column">
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+            <span>เปรียบเทียบรายงานสรุปรายการขอเบิก </span>
+        </div>
+
+        <div class="ui attached segment {{loadingInit? 'loading': ''}}">
+            <form (submit)="showData($event)">
+                <div class="ui form">
+                    <div class="inline fields" *ngFor="let loop of budgetCodeList; let i = index">
+                        <div class="two wide field ">
+                            <label class="full-width text-right">รหัสงบประมาณ</label>
+                        </div>
+                        <div class="four wide field ">
+                            <div class="ui input">
+                                <input type="text" name="budgetCode{{i}}" value="{{loop.budgetCode}}" readonly>
+                            </div>
+                        </div>
+                        <div class="nine wide field ">
+                            <select class="ui fluid search dropdown ai" name="TR{{i}}" id="TR{{i}}" multiple="">
+                              <option value="">กรุณาเลือก</option>
+                              <option *ngFor="let data of budgetDropdown" value="{{data.cwpTblDtlId}}">{{data.ledgerAccountName}}</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui center aligned grid">
+                    <div class="four wide column">
+                        <button class="ui mini primary button" type="submit">
+                          <i class="upload icon"></i>
+                          เปรียบเทียบ
+                        </button>
+
+                        <button class="ui mini button" type="button" (click)="hideData()">
+                            <i class="sync icon"></i>
+                          ล้างข้อมูล
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div class="ui attached segment">
-      <div class="ui form">
-        <div class="inline fields">
-          <div class="eight wide field ">
-            <label class="custom-label-w-25">รหัสงบประมาณ</label>
-            <input type="text" />
-          </div>
-          <div class="six wide field ">         
-            <select class="ui dropdown ai">
-              <option value="0">กรุณาเลือก</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="inline fields">
-          <div class="eight wide field ">
-            <label class="custom-label-w-25">รหัสงบประมาณ</label>
-            <input type="text" />
-          </div>
-          <div class="six wide field ">          
-            <select class="ui dropdown ai">
-              <option value="0">กรุณาเลือก</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="inline fields">
-          <div class="eight wide field ">
-            <label class="custom-label-w-25">รหัสงบประมาณ</label>
-            <input type="text" />
-          </div>
-          <div class="six wide field ">         
-            <select class="ui dropdown ai">
-              <option value="0">กรุณาเลือก</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="ui center aligned grid">
-        <div class="four wide column">
-          <button class="ui mini primary button" (click)="showData()">
-            <i class="upload icon"></i>
-            เปรียบเทียบ
-          </button>
-
-
-          <button class="ui mini button" (click)="hideData()">
-              <i class="sync icon"></i>
-            ล้างข้อมูล
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 
-<div class="ui segment" id="Int0621">
-  <div class="ui center aligned grid">
-    <div class="sixteen wide column">
-      <label> ตารางแสดงผลการเปรียบเทียบสรุปรายการขอเบิกกับงบทดลอง</label>
+<div class="ui segment {{loadingTable? 'loading': ''}}" id="Int0621">
+    <div class="ui center aligned grid">
+        <div class="sixteen wide column">
+            <label> ตารางแสดงผลการเปรียบเทียบสรุปรายการขอเบิกกับงบทดลอง</label>
+        </div>
     </div>
-  </div>
-  <br>
+    <br>
     <div>
-      <table id="tableData" class="ui small celled table striped selectable" style="width: 100%">
-        <thead>
-          <tr style="text-align: center;">
-            <th>รหัสงบประมาณ</th>
-            <th>ชื่องบประมาณ</th>
-            <th>ผลรวมตามรหัสงบประมาณ</th>
-            <th>TR-งบทดลอง</th>
-            <th>จำนวน TR-งบทดลอง</th>
-            <th>ผลต่าง</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>3006</td>
-            <td>เงินนอกงบประมาณ</td>
-            <td> 229,384.89 </td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-
-          </tr>
-          <tr>
-            <td>90909080170973</td>
-            <td>เงินงบประมาณกลาง</td>
-            <td> 26,028.25 </td>
-            <td>TR รับงบกลาง</td>
-            <td> 26,028.25 </td>
-            <td>0</td>
-
-          </tr>
-          <tr>
-            <td>300613001000000</td>
-
-
-            <td>เงินงบประมาณ</td>
-            <td> 86,673.34 </td>
-            <td>TR รับงบบุคลากร</td>
-            <td> 65,442.00 </td>
-            <td>-</td>
-
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>TR รับงบดำเนินงาน</td>
-            <td> 34,278.00 </td>
-            <td>- 13,046.66 </td>
-          
-          </tr>
-        </tbody>
-      </table>
+        <table id="tableData" class="ui small celled table striped selectable" style="width: 90%">
+            <thead>
+                <tr style="text-align: center;">
+                    <th>รหัสงบประมาณ</th>
+                    <th style="width: 180px;">ชื่องบประมาณ</th>
+                    <th style="width: 190px;">ผลรวมตามรหัสงบประมาณ</th>
+                    <th>TR-งบทดลอง</th>
+                    <th style="width: 200px;">จำนวน TR-งบทดลอง</th>
+                    <th>ผลต่าง</th>
+                </tr>
+            </thead>
+            <tbody id="tdDataCompare">
+                <!-- tdDataCompare -->
+            </tbody>
+        </table>
     </div>
     <br>
     <div class="ui center aligned grid">
-      <div class="sixteen wide column">
-        <button class="ui mini primary button" routerLink='/int06/2'>
+        <div class="sixteen wide column">
+            <button class="ui mini primary button" routerLink='/int06/2'>
           <i class="arrow circle left icon"></i>
       กลับ
         </button>
-        <button class="ui mini primary button">
+            <button class="ui mini primary button">
           <i class="print icon"></i>
           ส่งออก
         </button>
-      </div>
+        </div>
     </div>
 
 </div>
