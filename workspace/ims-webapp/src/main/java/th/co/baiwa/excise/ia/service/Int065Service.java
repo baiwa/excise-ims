@@ -166,7 +166,7 @@ public class Int065Service {
 			
 			cell = row.createCell(cellNum);
 			cell.setCellValue(item.getAmount());
-			cell.setCellStyle(excalService.cellLeft);
+			cell.setCellStyle(excalService.cellRight);
 			cellNum++;
 			
 			cell = row.createCell(cellNum);
@@ -188,9 +188,13 @@ public class Int065Service {
 			rowNum++;
 			cellNum = 0;
         }
+        
+        for (int i = 0; i < columns.length; i++) {
+        	   sheet.autoSizeColumn(i);
+        	  }
 
 		/*set	fileName*/		
-		String fileName ="poi-generated-file";
+		String fileName ="Checklist";
 		System.out.println(fileName);
 		
 		/* write it as an excel attachment */

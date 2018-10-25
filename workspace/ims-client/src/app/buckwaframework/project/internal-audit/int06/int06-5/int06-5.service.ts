@@ -80,6 +80,9 @@ export class Int065Service {
     param +="&budgetType=" +$("#budgetType").val();
     console.log(URL.export+param);
     this.ajax.download(URL.export+param);
+
+    
+
   }
 
   dataTable = () => {

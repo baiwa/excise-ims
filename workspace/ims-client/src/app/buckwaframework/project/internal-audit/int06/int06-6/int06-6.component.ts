@@ -89,6 +89,11 @@ export class Int066Component implements OnInit {
   clear = () => {    
     this.int066Service.clear();
   }
+
+  exportFile=()=>{
+    this.int066Service.exportFile();
+  }
+
   dataTable = () => {
     this.int066Service.dataTable();
   }

@@ -4,7 +4,9 @@ import { MessageBarService } from "../../../../common/services";
 import { FormSearch } from "projects/internal-audit/int06/int06-6/form-search.model";
 
 declare var $: any;
-
+const URL = {
+  export:"ia/int066/exportFile"
+}
 @Injectable()
 export class Int066Service {
   form: FormSearch = new FormSearch();
@@ -48,6 +50,24 @@ export class Int066Service {
         resolve(res.json())
       });
     });
+  }
+
+  
+  exportFile=()=>{
+    
+    let param = "";
+
+    param +="?sector=" +  this.form.sector;
+    param +="&area=" +  this.form.area;
+    param +="&branch=" + this.form.branch;
+    param +="&dateFrom=" + this.form.dateFrom;
+    param +="&dateTo=" + this.form.dateTo;
+    param +="&budgetType=" +$("#budgetType").val();
+    console.log(URL.export+param);
+    this.ajax.download(URL.export+param);
+
+    
+
   }
 
   search = () => {
