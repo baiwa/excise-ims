@@ -155,7 +155,11 @@ const routes: Routes = [
     loadChildren: "projects/export-audit/epa02/epa02.module#Epa02Module",
     canActivate: [AuthGuard]
   },
-
+  {
+    path: "epa03",
+    loadChildren: "projects/export-audit/epa03/epa03.module#Epa03Module",
+    canActivate: [AuthGuard]
+  },
   {
     path: "mgcontrol",
     loadChildren: "projects/management-control/mgcontrol/mgcontrol.module#MgcontrolComponentModule",

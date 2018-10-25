@@ -21,7 +21,7 @@ public class ExportCheckingDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private String SQL_SEARCH_DATA = " SELECT T1.EXCISE_NAME EXCISE_NAME, T2.DESTINATION DESTINATION, T2.DATE_DESTINATION DATE_DESTINATION " + 
+	private String SQL_SEARCH_DATA = " SELECT T1.EXCISE_ID EXCISE_ID, T1.EXCISE_NAME EXCISE_NAME, T2.DESTINATION DESTINATION, T2.DATE_DESTINATION DATE_DESTINATION " + 
 			"FROM TAX_RE_05_01_1 T1  " + 
 			"JOIN   " + 
 			"TAX_RE_05_01_2 T2  " + 
@@ -60,6 +60,7 @@ public class ExportCheckingDao {
 		@Override
 		public Epa011Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Epa011Vo vo = new Epa011Vo();
+			vo.setExciseId(rs.getString("EXCISE_ID"));
 			vo.setExciseName(rs.getString("EXCISE_NAME"));
 			vo.setDestination(rs.getString("DESTINATION"));
 			vo.setDateDestination(rs.getString("DATE_DESTINATION"));

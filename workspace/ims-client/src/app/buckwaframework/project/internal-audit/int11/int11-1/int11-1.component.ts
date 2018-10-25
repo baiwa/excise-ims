@@ -280,7 +280,7 @@ export class Int111Component implements OnInit {
     this.datatable.ajax.reload();
     setTimeout(() => {
       this.datatable.columns.adjust().draw();
-    }, 400);
+    }, 500);
   }
 
   clearData() {

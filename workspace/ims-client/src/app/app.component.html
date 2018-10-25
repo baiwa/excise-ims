@@ -251,19 +251,47 @@
 
         </div>
     </div>
-    <div class="ui simple dropdown item " style=" color:White " *ngIf="authService.renderByPage('epa')">
+
+    <!-- ///// START Menu Export Checking ///// -->
+    <div class="ui simple dropdown item " style="color:White;">
         ระบบการตรวจส่งออก
         <i class="dropdown icon "></i>
-        <div class="menu ">
-            <a class="item " [routerLink]="[ '/epa01/1'] " routerLinkActive="active ">ดาวน์โหลดข้อมูลแบบ"คำขอยกเว้นหรือคืนภาษี
-                (ภส.05-01) </a>
-            <a class="item " [routerLink]="[ '/epa02/1'] " routerLinkActive="active ">ดาวน์โหลดการตรวจปล่อยจากโรงงาน</a>
-            <a class="item " [routerLink]="[ '/epa02/1'] " routerLinkActive="active ">รายงานสรุปผลการตรวจปล่อยสินค้าจากโรงอุตสาหกรรม
-            </a>
-            <a class="item " [routerLink]="[ '/epa02/1'] " routerLinkActive="active ">รายงานสรุปผลการตรวจส่งออก
-            </a>
+        <div class="menu" style="width: 360px;">
+            <div class="ui dropdown item ">
+                การตรวจส่งออกสินค้า ณ โรงอุตสาหกรรม หรือคลังสินค้า<i class="dropdown icon "></i>
+                <div class="menu">
+                    <a class="item " [routerLink]="['/epa01/1']">
+                        ค้นหาข้อมูลแบบคำขอยกเว้น หรือคืนภาษี (ภส.05-01)</a>
+                    <a class="item " [routerLink]="['/epa01/2']">
+                        บันทึกผลการตรวจส่งออกสินค้า ณ โรงอุตสาหกรรม หรือคลังสินค้า</a>
+                    <a class="item " [routerLink]="['/epa01/3']">
+                        รายงานผลการตรวจส่งออกสินค้า ณ โรงอุตสาหกรรม หรือคลังสินค้า</a>
+                </div>
+            </div>
+            <div class="ui dropdown item ">
+                การตรวจส่งออกสินค้า ณ ด่านส่งออกสินค้า<i class="dropdown icon "></i>
+                <div class="menu">
+                    <a class="item " [routerLink]="['/epa02/1']">
+                        ค้นหาข้อมูลผลการตรวจส่งออกสินค้า ณ โรงอุตสาหกรรม หรือคลังสินค้า</a>
+                    <a class="item " [routerLink]="['/epa02/2']">
+                        บันทึกผลการตรวจส่งออกสินค้า ณ ด่านส่งออกสินค้า</a>
+                    <a class="item " [routerLink]="['/epa02/3']">
+                        รายงานผลการตรวจส่งออกสินค้า ณ ด่านส่งออกสินค้า</a>
+                    <a class="item " [routerLink]="['/epa02/4']">
+                        สรุปผลการตรวจส่งออก ณ ด่านส่งออกสินค้า</a>
+                </div>
+            </div>
+            <div class="ui dropdown item ">
+                รายงานผลการตรวจส่งออก<i class="dropdown icon "></i>
+                <div class="menu">
+                    <a class="item" [routerLink]="['/epa03/1']">ค้นหาข้อมูลการรายงานผลการตรวจส่งออก</a>
+                    <a class="item" [routerLink]="['/epa03/2']">ค้นหาข้อมูลใบขนสินค้าขาออก</a>
+                    <a class="item" [routerLink]="['/epa03/3']">รายงานสรุปผลการตรวจส่งออก</a>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- ///// END Menu Export Checking ///// -->
 
     <div class="ui simple dropdown item " style=" color:White " *ngIf="authService.renderByPage('report')">
         ระบบบริหารและควบคุม

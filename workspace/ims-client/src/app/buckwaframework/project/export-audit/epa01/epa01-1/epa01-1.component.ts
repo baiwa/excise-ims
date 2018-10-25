@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'services/auth.service';
 import { AjaxService } from '../../../../common/services/ajax.service';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -22,7 +23,8 @@ export class Epa011Component implements OnInit {
     private authService: AuthService,
     private ajaxService: AjaxService,
     private ajax: AjaxService,
-    ) { }
+    private router: Router,
+  ) { }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('EXP-01100');
@@ -73,26 +75,34 @@ export class Epa011Component implements OnInit {
           render: function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
-        },{
+        }, {
           data: "exciseName",
           className: "ui center aligned",
-        },{
+        }, {
           data: "destination",
           className: "ui center aligned",
-        },{
+        }, {
           data: "dateDestination",
           className: "ui center aligned",
-        },{
+        }, {
           data: "dateDestination",
           className: "ui center aligned",
-        },{
+        }, {
           data: "dateDestination",
           className: "ui center aligned",
           render: function (data, row) {
             return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>ตรวจสอบ</button>';
           }
         },
-      ]
+      ],
+      rowCallback: (row, data, index) => {
+        $("td > .checking-button", row).bind("click", () => {
+          console.log("[Data]: ", data);
+          this.router.navigate(["/epa01/2"], {
+            queryParams: { exciseId: data.exciseId }
+          });
+        });
+      },
     });
   };
 
