@@ -7,14 +7,16 @@ import { Routes, RouterModule } from "@angular/router";
 import { BreadcrumbModule } from "../../../common/components";
 import { Cop071Component } from "projects/check-operation/cop07/cop07-1/cop07-1.component";
 import { AuthGuard } from "app/buckwaframework/common/services";
+import { Cop0711Component } from "projects/check-operation/cop07/cop07-1/cop07-1-1/cop07-1-1.component";
 
 const routes: Routes = [
   { path: "1", component: Cop071Component, canActivate: [AuthGuard] },
+  { path: "1/1", component: Cop0711Component, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes), CommonModule,FormsModule,BreadcrumbModule],
-  declarations: [Cop071Component],
+  declarations: [Cop071Component,Cop0711Component],
   exports: [RouterModule]
 })
 export class Cop07Module {}

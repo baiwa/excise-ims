@@ -130,7 +130,12 @@ export class Cop071Component implements OnInit {
       var closestRow = $(e.target).closest('tr');
       var data = table.row(closestRow).data();
       this.router.navigate(['/cop07/1/1'], {
-        queryParams: {idProcess:data.id}
+        queryParams: {
+          id:data.id,
+          fiscalYear:data.fiscalYear,
+          asPlanNumber:data.asPlanNumber,
+          outsidePlanNumber:data.outsidePlanNumber
+        }
       });
       console.log(data);
     });

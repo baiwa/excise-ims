@@ -1,0 +1,109 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<br>
+
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+  <span>รายละเอียดแผนปฏิบัติการ</span>
+</div>
+
+<div class="ui attached  segment">
+  <br>
+  <div class="inline fields" style="text-align: center !important;">แผนปฏิบัติการ เดือน &nbsp; {{fiscalYear}}</div>
+  <div class="inline fields" style="text-align: center !important;">ตามแผนปฏิบัติการ &nbsp; {{asPlanNumber}} &nbsp; ราย</div>
+  <div class="inline fields" style="text-align: center !important;">นอกแผนปฏิบัติการ &nbsp; {{outsidePlanNumber}} &nbsp; ราย</div>
+  <br>
+  <div class="inline fields" style="text-align: center !important;">
+    <button class="mini ui yellow button">
+      <i class="edit icon"></i>แก้ไขจำนวนแผนปฏิบัติการ</button>
+    <button class="ui mini green button" type="button" (click)="modalAddDocument()">
+      <i class="plus icon"></i>เพิ่มข้อมูล</button>
+  </div>
+</div>
+<br>
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+  <span>รายละเอียดตามแผนปฏิบัติการ</span>
+</div>
+<form id="upload-form" ngNativeValidate (submit)="onUpload($event)">
+  <div class="ui attached  segment">
+
+    <table id="tableData" class="ui small celled table nowrap striped selectable" style="width: 100%">
+      <thead>
+
+        <tr>
+          <th style="text-align: center !important;">ลำดับ</th>
+          <th style="text-align: center !important;">เลขที่ผู้ประกอบการ</th>
+          <th style="text-align: center !important;">ชื่อผู้ประกอบการ</th>
+          <th style="text-align: center !important;">สถานที่ตั้งของผู้ประกอบการ</th>
+          <th style="text-align: center !important;">วันที่ตรวจ</th>
+          <th style="text-align: center !important;">แผนปฏิบัติการ</th>
+          <th style="text-align: center !important;">สถานะ</th>
+          <th style="text-align: center !important;width:180px !important">จัดการ</th>
+        </tr>
+
+      </thead>
+    </table>
+
+  </div>
+  <br>
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>รายละเอียดนอกแผนปฏิบัติการ</span>
+  </div>
+  <form id="upload-form" ngNativeValidate (submit)="onUpload($event)">
+    <div class="ui attached  segment">
+      <div class="ui form center aligned" ngNativeValidate>
+
+        <br>
+        <table id="tableData2" class="ui small celled table nowrap striped selectable" style="width: 100%">
+          <thead>
+
+            <tr>
+                <th style="text-align: center !important;">ลำดับ</th>
+                <th style="text-align: center !important;">เลขที่ผู้ประกอบการ</th>
+                <th style="text-align: center !important;">ชื่อผู้ประกอบการ</th>
+                <th style="text-align: center !important;">สถานที่ตั้งของผู้ประกอบการ</th>
+                <th style="text-align: center !important;">วันที่ตรวจ</th>
+                <th style="text-align: center !important;">แผนปฏิบัติการ</th>
+                <th style="text-align: center !important;">สถานะ</th>
+                <th style="text-align: center !important;width:180px !important">จัดการ</th>
+            </tr>
+
+          </thead>
+        </table>
+      </div>
+      <div class="ui form center aligned grid">
+        <button class="ui mini button" type="button" (click)="clickBack()">
+          <i class="close icon"></i>ยกเลิก</button>
+      </div>
+      <br>
+      <br>
+    </div>
+  </form>
+  <!-- add modal -->
+  <div class="ui large modal transition hidden" id='modalAddDocument'>
+
+    <div class="header" style="text-align: center !important;">
+        เพิ่มข้อมูล
+    </div>
+
+    <div class="content">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="three wide field"></div>
+          <div class="two wide field">
+            <label>ประเภทเอกสาร</label>
+          </div>
+          <div class="six wide field">
+            <select class="ui dropdown search selection" id="documentType" id="documentType" style="width:100%">
+              <option value="">กรุณาเลือก</option>
+              <option *ngFor="let data of documentTypeList" value="{{data.lovId}}">{{data.typeDescription}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <div class="ui red deny button">ยกเลิก</div>
+      <div class="ui green button" (click)="addDocument()">ตกลง</div>
+    </div>
+  </div>
+  <!--End add modal -->
