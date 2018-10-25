@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.annotation.JsonFormat.Value;
+
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
@@ -405,37 +407,55 @@ public class PlanWorksheetHeaderService {
 		
 		opeDataTable.setNo(Long.valueOf("1"));
 		opeDataTable.setProduct(database.getProduct1());
-		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve1()));
+		opeDataTable.setMonthRecieve(Long.valueOf(0));
+		if(BeanUtils.isNotEmpty(database.getMonthRecieve1())) {
+			opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve1()));
+		}
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo(Long.valueOf("2"));
 		opeDataTable.setProduct(database.getProduct2());
-		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve2()));
+		opeDataTable.setMonthRecieve(Long.valueOf(0));
+		if(BeanUtils.isNotEmpty(database.getMonthRecieve2())) {
+			opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve2()));
+		}
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo(Long.valueOf("3"));
 		opeDataTable.setProduct(database.getProduct3());
-		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve3()));
+		opeDataTable.setMonthRecieve(Long.valueOf(0));
+		if(BeanUtils.isNotEmpty(database.getMonthRecieve3())) {
+			opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve3()));
+		}
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo(Long.valueOf("4"));
 		opeDataTable.setProduct(database.getProduct4());
-		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve4()));
+		opeDataTable.setMonthRecieve(Long.valueOf(0));
+		if(BeanUtils.isNotEmpty(database.getMonthRecieve4())) {
+			opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve4()));
+		}
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo(Long.valueOf("5"));
 		opeDataTable.setProduct(database.getProduct5());
-		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve5()));
+		opeDataTable.setMonthRecieve(Long.valueOf(0));
+		if(BeanUtils.isNotEmpty(database.getMonthRecieve5())) {
+			opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve5()));
+		}
 		opeDataTableList.add(opeDataTable);
 
 		opeDataTable = new Ope041DataTable();
 		opeDataTable.setNo(Long.valueOf("6"));
 		opeDataTable.setProduct(database.getProduct6());
-		opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve6()));
+		opeDataTable.setMonthRecieve(Long.valueOf(0));
+		if(BeanUtils.isNotEmpty(database.getMonthRecieve6())) {
+			opeDataTable.setMonthRecieve(NumberUtils.stringToLong(database.getMonthRecieve6()));
+		}
 		opeDataTableList.add(opeDataTable);
 		}
 
