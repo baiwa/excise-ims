@@ -24,63 +24,63 @@ export class Int06101Component implements OnInit {
   percent2: string[];
   percent3: string[];
   breadcrumb: BreadCrumb[]
-  pmmethodList : any;
-  activityList : any;
-  budgetList : any;
-  budged : any;
+  pmmethodList: any;
+  activityList: any;
+  budgetList: any;
+  budged: any;
   listButton: any;
   numberButton: number;
   numbers: number[];
-  category : any;
-  list : any;
+  category: any;
+  list: any;
   travelToDescription: any;
 
 
- 
+
   constructor(
     private messageBarService: MessageBarService,
     private authService: AuthService,
     private route: ActivatedRoute,
     private ajaxService: AjaxService,
-    private ajax: AjaxService,) {
-      this.breadcrumb = [
+    private ajax: AjaxService, ) {
+    this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
       { label: "ทะเบียนคุมการรับจ่ายเงิน", route: "#" },
       { label: "บันทึกรายการขอเบิก", route: "#" },
-      
+
     ];
     this.listButton = [];
     this.numberButton = 1;
-     }
+  }
 
   ngOnInit() {
     $('.ui.calendar').calendar();
 
 
 
-     $('.ui.calendar').calendar({    
+    $('.ui.calendar').calendar({
       maxDate: new Date(),
       type: "date",
       text: TextDateTH,
-     formatter: formatter()
+      formatter: formatter()
     });
-    
+
     $(".ui.dropdown.ai").dropdown().css('width', '100%');
     this.listButton.push(this.numberButton);
     this.authService.reRenderVersionProgram('INT-06101');
     this.budgeDropdown();
     this.calenda();
-    
+
     this.pmmethod();
     this.activity();
     this.budge();
     this.numbers = [];
-    this.numbers.push(this.numbers.length+1);
+    this.numbers.push(this.numbers.length + 1);
   }
 
 
-  
+
   onAddField = () => {
     let num = this.numbers.length;
     if (num < 30) {
@@ -96,84 +96,84 @@ export class Int06101Component implements OnInit {
   calenda = () => {
 
 
-    $("#dateWithdraw").calendar({    
+    $("#dateWithdraw").calendar({
       maxDate: new Date(),
       type: "date",
       text: TextDateTH,
-     formatter: formatter()
+      formatter: formatter()
     });
   }
 
   saveData() {
     if (!$('#refnum').val()) {
-      this.messageBarService.alert("กรุณากรอกเลขที่เอกสารอ้างอิง", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกเลขที่เอกสารอ้างอิง", "แจ้งเตือน");
       return;
     }
 
     if (!$('#withdrawal').val()) {
-      this.messageBarService.alert("กรุณากรอกวันที่ขอเบิก", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกวันที่ขอเบิก", "แจ้งเตือน");
       return;
     }
 
     if (!$('#activity').val()) {
-      this.messageBarService.alert("กรุณากรอกกิจกรรม", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกกิจกรรม", "แจ้งเตือน");
       return;
     }
     if (!$('#budged').val()) {
-      this.messageBarService.alert("กรุณากรอกงบ", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกงบ", "แจ้งเตือน");
       return;
     }
     if (!$('#category').val()) {
-      this.messageBarService.alert("กรุณากรอกหมวดย่อย", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกหมวดย่อย", "แจ้งเตือน");
       return;
     }
     if (!$('#budget').val()) {
-      this.messageBarService.alert("กรุณากรอกประเภทงบประมาณ", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกประเภทงบประมาณ", "แจ้งเตือน");
       return;
     }
     if (!$('#amountOfMoney').val()) {
-      this.messageBarService.alert("กรุณากรอกจำนวนเงินขอเบิก", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกจำนวนเงินขอเบิก", "แจ้งเตือน");
       return;
     }
     if (!$('#pmmethod').val()) {
-      this.messageBarService.alert("กรุณากรอกวิธีการจ่าย", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกวิธีการจ่าย", "แจ้งเตือน");
       return;
     }
     if (!$('#datePersons').val()) {
-      this.messageBarService.alert("กรุณากรอกวันที่สั่งจ่าย", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกวันที่สั่งจ่าย", "แจ้งเตือน");
       return;
     }
     if (!$('#amountPaid').val()) {
-      this.messageBarService.alert("กรุณากรอกจำนวนเงินที่จ่าย", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกจำนวนเงินที่จ่าย", "แจ้งเตือน");
       return;
     }
     if (!$('#payee').val()) {
-      this.messageBarService.alert("กรุณากรอกผู้รับเงิน", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกผู้รับเงิน", "แจ้งเตือน");
       return;
-    } 
+    }
 
-      const URL = "ia/int06101/add";
-      this.ajax.post(URL, {        
-        refnum :$("#refnum").val(),
-        withdrawal :$("#withdrawal").val(),
-        activity:$("#activity").val(),
-        budged:$("#budged").val(),
-        category:$("#category").val(),
-        list:$("#list").val(),
-        budget:$("#budget").val(),
-        amountOfMoney:$("#amountOfMoney").val(),
-        deductSocial:$("#deductSocial").val(),
-        withholding:$("#withholding").val(),
-        other:$("#other").val(),
-        amountOfMoney1:$("#amountOfMoney1").val(),
-        numberRequested:$("#numberRequested").val(),
-        documentNumber:$("#documentNumber").val(),
-        itemDescription:$("#itemDescription").val(),
-        note:$("#note").val(),
-    
-      }, res => {
-        const msg = res.json();
-        
+    const URL = "ia/int06101/add";
+    this.ajax.post(URL, {
+      refnum: $("#refnum").val(),
+      withdrawal: $("#withdrawal").val(),
+      activity: $("#activity").val(),
+      budged: $("#budged").val(),
+      category: $("#category").val(),
+      list: $("#list").val(),
+      budget: $("#budget").val(),
+      amountOfMoney: $("#amountOfMoney").val(),
+      deductSocial: $("#deductSocial").val(),
+      withholding: $("#withholding").val(),
+      other: $("#other").val(),
+      amountOfMoney1: $("#amountOfMoney1").val(),
+      numberRequested: $("#numberRequested").val(),
+      documentNumber: $("#documentNumber").val(),
+      itemDescription: $("#itemDescription").val(),
+      note: $("#note").val(),
+
+    }, res => {
+      const msg = res.json();
+
       if (msg.messageType == "C") {
         this.messageBarService.successModal(msg.messageTh);
       } else {
@@ -181,9 +181,9 @@ export class Int06101Component implements OnInit {
       }
       $("#searchFlag").val("TRUE");
       $('#tableData').DataTable().ajax.reload();
-      });
-    }
-  
+    });
+  }
+
 
 
   onAddButton = () => {
@@ -191,13 +191,13 @@ export class Int06101Component implements OnInit {
     this.listButton.push(++this.numberButton);
     console.log(this.listButton);
 
-    $(".frame").calendar({    
+    $(".frame").calendar({
       maxDate: new Date(),
       type: "date",
       text: TextDateTH,
-     formatter: formatter()
+      formatter: formatter()
     });
-    
+
   }
 
   deleteButton = (e) => {
@@ -213,28 +213,28 @@ export class Int06101Component implements OnInit {
 
   pmmethod = () => {
     let url = "ia/int06101/pmmethod"
-    this.ajax.post(url,{}, res => {
+    this.ajax.post(url, {}, res => {
       this.pmmethodList = res.json();
-    })    
+    })
   }
 
   activity = () => {
     let url = "ia/int06101/activity"
-    this.ajax.post(url,{}, res => {
+    this.ajax.post(url, {}, res => {
       this.activityList = res.json();
-    })    
+    })
   }
 
   budge = () => {
     let url = "ia/int06101/budge"
-    this.ajax.post(url,{}, res => {
+    this.ajax.post(url, {}, res => {
       this.budgetList = res.json();
-    })  
+    })
   }
 
   budgeDropdown = () => {
     const URL = "ia/int06101/budged";
-    this.ajax.post(URL,{}, res => {
+    this.ajax.post(URL, {}, res => {
       this.budged = res.json();
       console.log(this.budged);
     });
@@ -242,10 +242,10 @@ export class Int06101Component implements OnInit {
 
   budgedOnchange = (e) => {
     $("#category").dropdown('restore defaults');
-    const URL = "ia/int06101/category";  
+    const URL = "ia/int06101/category";
     let params = e.target.value;
     if (params != "") {
-      this.ajax.post(URL,{budgetId : params}, res => {
+      this.ajax.post(URL, { budgetId: params }, res => {
         console.log("Id : ", res.json());
         this.category = res.json();
       });
@@ -257,7 +257,7 @@ export class Int06101Component implements OnInit {
     const URL = "ia/int06101/list";
     let params = e.target.value;
     if (params != "") {
-      this.ajax.post(URL, {categoryId :params }, res => {
+      this.ajax.post(URL, { categoryId: params }, res => {
         console.log("Id : ", res.json());
         this.list = res.json();
       });

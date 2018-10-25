@@ -12,6 +12,7 @@ import { ReceiveLineUserComponent } from './receive-line-user/receive-line-user.
 import { ChkStatusComponent } from './chk-status/chk-status.component';
 import { BreadcrumbModule } from '../../../../common/components';
 import { ApproveLineUserComponent } from './approve-line-user/approve-line-user.component';
+import { SummaryReportComponent } from './summary-report/summary-report.component';
 
 const routes: Routes = [
     { path: '', component: AddExternalDataComponent, canActivate: [AuthGuard] },
@@ -20,6 +21,7 @@ const routes: Routes = [
     { path: 'receive-plan-ws', component: ReceivePlanWsComponent, canActivate: [AuthGuard] },
     { path: 'receive-line-user', component: ReceiveLineUserComponent, canActivate: [AuthGuard] },
     { path: 'approve-line-user', component: ApproveLineUserComponent, canActivate: [AuthGuard] },
+    { path: 'summary-report', component: SummaryReportComponent, canActivate: [AuthGuard] },
     { path: 'chk-status', component: ChkStatusComponent, canActivate: [AuthGuard] }
 ];
 
@@ -37,7 +39,8 @@ const routes: Routes = [
         ReceivePlanWsComponent,
         ReceiveLineUserComponent,
         ChkStatusComponent,
-        ApproveLineUserComponent
+        ApproveLineUserComponent,
+        SummaryReportComponent
     ],
     exports: [RouterModule]
 })
