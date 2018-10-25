@@ -98,6 +98,7 @@
                 <th style="text-align: center !important">ลำดับ</th>
                 <th style="text-align: center !important">วันที่สั่งจ่าย</th>
                 <th style="text-align: center !important">เช็คเล่มที่</th>
+                <th style="text-align: center !important">ชื่อธนาคาร</th>
                 <th style="text-align: center !important">จำนวนเงินสั่งจ่ายในเช็ค</th>
                 <th style="text-align: center !important">ประเภทงบประมาณ</th>
                 <th style="text-align: center !important">รายการ</th>
@@ -105,4 +106,10 @@
             </tr>
         </thead>       
     </table>
+
+    <div class="ui grid">
+        <div class="sixteen wide center aligned column">
+            <button class="ui mini yellow button " (click)="exportFile()">ส่งออก</button>
+        </div>
+    </div>
 </div>

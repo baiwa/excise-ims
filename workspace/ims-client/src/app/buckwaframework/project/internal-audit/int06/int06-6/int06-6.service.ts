@@ -2,9 +2,13 @@ import { Injectable } from "@angular/core";
 import { AjaxService } from "services/ajax.service";
 import { MessageBarService } from "../../../../common/services";
 import { FormSearch } from "projects/internal-audit/int06/int06-6/form-search.model";
+import { Utils } from "helpers/utils";
+
 
 declare var $: any;
-
+const URL = {
+  export:"ia/int066/exportFile"
+}
 @Injectable()
 export class Int066Service {
   form: FormSearch = new FormSearch();
@@ -50,6 +54,24 @@ export class Int066Service {
     });
   }
 
+  
+  exportFile=()=>{
+    
+    let param = "";
+
+    param +="?sector=" +  this.form.sector;
+    param +="&area=" +  this.form.area;
+    param +="&branch=" + this.form.branch;
+    param +="&dateFrom=" + this.form.dateFrom;
+    param +="&dateTo=" + this.form.dateTo;
+    param +="&budgetType=" +$("#budgetType").val();
+    console.log(URL.export+param);
+    this.ajax.download(URL.export+param);
+
+    
+
+  }
+
   search = () => {
     this.form.searchFlag = "TRUE";
     $("#dataTable").DataTable().ajax.reload();
@@ -71,7 +93,7 @@ export class Int066Service {
       "ordering": false,
       "scrollX": true,
       "ajax": {
-        "url": '/ims-webapp/api/ia/int065/findAll',
+        "url": '/ims-webapp/api/ia/int066/findAll',
         "contentType": "application/json",
         "type": "POST",
         "data": (d) => {
@@ -101,8 +123,14 @@ export class Int066Service {
           "data": "refPayment",
           "className": "ui center aligned"
         }, {
+          "data": "bankName",
+          "className": "ui left aligned"
+        }, {
           "data": "amount",
-          "className": "ui center aligned"
+          "render": (data)=>{
+            return Utils.moneyFormatDecimal(data);
+          },
+          "className": "ui right aligned"
         }, {
           "data": "budgetType",
           "className": "ui center aligned"

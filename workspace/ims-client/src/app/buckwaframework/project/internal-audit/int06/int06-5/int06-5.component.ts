@@ -101,7 +101,7 @@ export class Int065Component implements OnInit, AfterViewInit {
     this.int065Service.exportFile();
   }
 
-  
+
   dataTable = () => {
     this.int065Service.dataTable();
   }

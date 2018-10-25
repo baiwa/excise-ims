@@ -80,6 +80,9 @@ export class Int065Service {
     param +="&budgetType=" +$("#budgetType").val();
     console.log(URL.export+param);
     this.ajax.download(URL.export+param);
+
+    
+
   }
 
   dataTable = () => {
@@ -118,16 +121,16 @@ export class Int065Service {
         "className": "ui center aligned"
       }, {
         "data": "refPayment",
-        "className": "ui left aligned"
+        "className": "ui center aligned"
       }, {
         "data": "bankName",
-        "className": "ui center aligned"
+        "className": "ui left aligned"
       }, {
         "data": "amount",
         "className": "ui right aligned",
-        "render": (data) => {
-          return Utils.moneyFormat(data);
-        }
+        "render": (data)=>{
+          return Utils.moneyFormatDecimal(data);
+        },
       }, {
         "data": "budgetType",
         "className": "ui left aligned"

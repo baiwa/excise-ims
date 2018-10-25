@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AjaxService } from 'services/ajax.service';
+
 import { Utils } from 'helpers/utils';
 import { MessageBarService } from 'services/message-bar.service';
+import { AjaxService } from 'services/ajax.service';
 
 
 declare var $: any;

@@ -177,27 +177,27 @@ export class Int1121Component implements OnInit {
 
   saveData() {
     if (!$('#exciseDepartment').val()) {
-      this.messageBarService.alert("กรุณาเลือกสรรพสามิตภาค", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณาเลือกสรรพสามิตภาค", "แจ้งเตือน");
       return;
     }
 
     if (!$('#exciseRegion').val()) {
-      this.messageBarService.alert("กรุณาเลือกสรรพสามิตพื้นที่", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณาเลือกสรรพสามิตพื้นที่", "แจ้งเตือน");
       return;
     }
 
     if (!$('#exciseDistrict').val()) {
-      this.messageBarService.alert("กรุณาเลือกสรรพสามิตสาขา", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณาเลือกสรรพสามิตสาขา", "แจ้งเตือน");
       return;
     }
 
     if (!$('#informRectorBnum').val()) {
-      this.messageBarService.alert("กรุณากรอกรายงานผลอธิบดีเลขหนังสือ", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกรายงานผลอธิบดีเลขหนังสือ", "แจ้งเตือน");
       return;
     }
 
     if (!$('#informRectorDate').val()) {
-      this.messageBarService.alert("กรุณากรอกรายงานผลอธิบดีวันที่", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกรายงานผลอธิบดีวันที่", "แจ้งเตือน");
       return;
     }
 
