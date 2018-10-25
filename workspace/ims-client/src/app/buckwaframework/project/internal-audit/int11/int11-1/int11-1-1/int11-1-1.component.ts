@@ -26,8 +26,8 @@ export class Int1111Component implements OnInit {
 
   constructor(
     private ajaxService: AjaxService,
-    private router: Router, 
-    
+    private router: Router,
+
     private authService: AuthService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
@@ -100,17 +100,17 @@ export class Int1111Component implements OnInit {
 
   saveData() {
     if (!$('#projectName').val()) {
-      this.messageBarService.alert("กรุณากรอกชื่อโครงการ", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกชื่อโครงการ", "แจ้งเตือน");
       return;
     }
 
     if (!$('#informRectorBnum').val()) {
-      this.messageBarService.alert("กรุณากรอกรายงานผลอธิบดีเลขหนังสือ", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกรายงานผลอธิบดีเลขหนังสือ", "แจ้งเตือน");
       return;
     }
 
     if (!$('#informRectorDate').val()) {
-      this.messageBarService.alert("กรุณากรอกรายงานผลอธิบดีวันที่", "แจ้งเดือน");
+      this.messageBarService.alert("กรุณากรอกรายงานผลอธิบดีวันที่", "แจ้งเตือน");
       return;
     }
 

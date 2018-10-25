@@ -8,6 +8,8 @@ import th.co.baiwa.excise.ta.persistence.entity.analysis.PlanWorksheetHeader;
 
 public interface PlanWorksheetHeaderRepository extends CommonJpaCrudRepository<PlanWorksheetHeader, Long> {
 
-	List<PlanWorksheetHeader> findByFlagNotIn(String flag);
+	public List<PlanWorksheetHeader> findByFlagNotIn(String flag);
+	
+	public PlanWorksheetHeader findByExciseIdAndAnalysNumber(String exciseId ,  String analysNumber);
 	
 }

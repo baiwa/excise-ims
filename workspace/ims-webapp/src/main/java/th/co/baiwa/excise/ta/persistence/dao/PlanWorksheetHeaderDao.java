@@ -107,14 +107,16 @@ public class PlanWorksheetHeaderDao {
 		objList.add(exciseId);
 		return jdbcTemplate.update(sql, objList.toArray());
 	}
-	public int updateForCenterApproveStep1(List<String> exciseList) {
+	public int updateForCenterApproveStep1(List<String> exciseList , String analysNum) {
 		
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" UPDATE TA_PLAN_WORK_SHEET_HEADER H ");
 		sql.append(" set H.VIEW_STATUS = 'S' ");
 		sql.append(" where H.FLAG = 'S' ");
+		sql.append(" and H.ANALYS_NUMBER = ? ");
 		sql.append(" and H.VIEW_STATUS = 'C' ");
+		objList.add(analysNum);
 		if(BeanUtils.isNotEmpty(exciseList)) {
 			sql.append(" And H.EXCISE_ID not in (");
 			for (int i = 0; i < exciseList.size(); i++) {
@@ -129,7 +131,7 @@ public class PlanWorksheetHeaderDao {
 		}
 		return 0;
 	}
-	public int updateForCenterApproveStep2(List<String> exciseList) {
+	public int updateForCenterApproveStep2(List<String> exciseList , String analysNum) {
 		
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
@@ -137,7 +139,9 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" set H.FLAG = 'F' ,  ");
 		sql.append("  H.CENTRAL = 'Y'   ");
 		sql.append(" where H.FLAG = 'S' ");
+		sql.append(" and H.ANALYS_NUMBER = ? ");
 		sql.append(" and H.VIEW_STATUS = 'C' ");
+		objList.add(analysNum);
 		if(BeanUtils.isNotEmpty(exciseList)) {
 			sql.append(" And H.EXCISE_ID in (");
 			for (int i = 0; i < exciseList.size(); i++) {
@@ -153,7 +157,7 @@ public class PlanWorksheetHeaderDao {
 		return 0;
 		
 	}
-	public int updateForSectorApprove(List<String> exciseList) {
+	public int updateForSectorApprove(List<String> exciseList , String analysNum) {
 		
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
@@ -161,7 +165,9 @@ public class PlanWorksheetHeaderDao {
 		sql.append(" set H.FLAG = 'F', ");
 		sql.append("  H.SECTOR = 'Y' ");
 		sql.append(" where H.FLAG = 'S' ");
+		sql.append(" and H.ANALYS_NUMBER = ? ");
 		sql.append(" and H.VIEW_STATUS = 'S' ");
+		objList.add(analysNum);
 		if(BeanUtils.isNotEmpty(exciseList)) {
 			sql.append(" And H.EXCISE_ID in (");
 			for (int i = 0; i < exciseList.size(); i++) {
@@ -708,6 +714,46 @@ public class PlanWorksheetHeaderDao {
 		});
 		return monthList;
 
+	}
+	
+	
+	public List<String> findSectorByNotInExciseAndAnalysNumber(String analysNumber, List<String> exciseIdList) {
+		List<Object> valueList = new ArrayList<Object>();
+		valueList.add(analysNumber);
+		StringBuilder sql = new StringBuilder(" select DISTINCT H.EXCISE_OWNER_AREA_1 from TA_PLAN_WORK_SHEET_HEADER H where H.ANALYS_NUMBER = ?  AND H.FLAG = 'S' and H.EXCISE_ID not in (");
+		for (int i = 0; i < exciseIdList.size(); i++) {
+			sql.append("?");
+			if (i != exciseIdList.size() - 1) {
+				sql.append(",");
+			}
+			valueList.add(exciseIdList.get(i));
+		}
+		sql.append(")");
+		List<String> result = jdbcTemplate.query(sql.toString(), valueList.toArray(), new RowMapper<String>() {
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
+		return result;
+	}
+	public List<String> findSectorByExciseAndAnalysNumber(String analysNumber, List<String> exciseIdList) {
+		List<Object> valueList = new ArrayList<Object>();
+		valueList.add(analysNumber);
+		StringBuilder sql = new StringBuilder(" select DISTINCT H.EXCISE_OWNER_AREA_1 from TA_PLAN_WORK_SHEET_HEADER H where H.ANALYS_NUMBER = ?  AND H.FLAG = 'S' and H.EXCISE_ID in (");
+		for (int i = 0; i < exciseIdList.size(); i++) {
+			sql.append("?");
+			if (i != exciseIdList.size() - 1) {
+				sql.append(",");
+			}
+			valueList.add(exciseIdList.get(i));
+		}
+		sql.append(")");
+		List<String> result = jdbcTemplate.query(sql.toString(), valueList.toArray(), new RowMapper<String>() {
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
+		return result;
 	}
 
 }

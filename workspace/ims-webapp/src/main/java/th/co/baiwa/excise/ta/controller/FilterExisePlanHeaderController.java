@@ -18,9 +18,12 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
+import th.co.baiwa.excise.ta.persistence.entity.SummaryReport;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
+import th.co.baiwa.excise.ta.service.SummaryReportService;
 
 @Controller
 @RequestMapping("api/filter/exise")
@@ -30,6 +33,9 @@ public class FilterExisePlanHeaderController {
 
 	@Autowired
 	private PlanWorksheetHeaderService planWorksheetHeaderService;
+	
+	@Autowired
+	private SummaryReportService summaryReportService;
 
 	@PostMapping("/list")
 	@ResponseBody
@@ -107,5 +113,19 @@ public class FilterExisePlanHeaderController {
 	public String getOfficeCodeByUserLogin(@ModelAttribute PlanWorksheetHeaderDetail vo) {
 		logger.info("getOfficeCodeByUserLogin : " + UserLoginUtils.getCurrentUserBean().getOfficeId());
 		return UserLoginUtils.getCurrentUserBean().getOfficeId();
+	}
+	
+	@PostMapping("/summaryReport")
+	@ResponseBody
+	public ResponseDataTable<SummaryReport> summaryReport(@ModelAttribute DataTableRequest dataTableRequest ,@ModelAttribute SummaryReport summaryReport ) {
+		logger.debug("analysNumber : " + summaryReport.getAnalysnumber());
+		List<SummaryReport> summaryReportList = summaryReportService.findByAnalysnumber(summaryReport.getAnalysnumber());
+		
+		ResponseDataTable<SummaryReport> responseDataTable = new ResponseDataTable<SummaryReport>();
+		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
+		responseDataTable.setData(summaryReportList);
+		responseDataTable.setRecordsTotal(summaryReportList.size());
+		responseDataTable.setRecordsFiltered(summaryReportList.size());
+		return responseDataTable;
 	}
 }

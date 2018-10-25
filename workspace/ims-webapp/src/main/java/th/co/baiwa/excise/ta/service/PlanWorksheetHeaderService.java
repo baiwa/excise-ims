@@ -51,6 +51,9 @@ public class PlanWorksheetHeaderService {
 
 	@Autowired
 	private ExciseTaxReceiveDao exciseTaxReceiveDao;
+	
+	@Autowired
+	private SummaryReportService summaryReportService;
 
 	public String insertPlanWorksheetHeaderService(MockupVo mockupVo, Date startBackDate, int month,
 			String productType) {
@@ -336,17 +339,23 @@ public class PlanWorksheetHeaderService {
 		for (String exice : vo.getExiceList()) {
 			count += planWorksheetHeaderDao.updatePlanWorksheetHeaderFlag(vo.getFlag(), vo.getAnalysNumber(), exice , vo.getViewStatus(),vo.getSector() , vo.getCentral() );
 		}
+		if(count != 0) {
+			summaryReportService.createSummaryReport(vo.getAnalysNumber());
+		}
 		return count;
 	}
+	
 	public Integer approveByExciseList(RequestFilterMapping vo) {
 		int count = 0;
 		String office = UserLoginUtils.getCurrentUserBean().getOfficeId();
 		boolean isCentral = "00".equals(office.substring(0, 2));
 		if(isCentral) {
-			count+=planWorksheetHeaderDao.updateForCenterApproveStep1(vo.getExiceList());
-			count+=planWorksheetHeaderDao.updateForCenterApproveStep2(vo.getExiceList());
+			summaryReportService.centralReceiveLine(vo.getAnalysNumber(), vo.getExiceList());
+			count+=planWorksheetHeaderDao.updateForCenterApproveStep1(vo.getExiceList() ,vo.getAnalysNumber());
+			count+=planWorksheetHeaderDao.updateForCenterApproveStep2(vo.getExiceList(),vo.getAnalysNumber());
 		}else {
-			count+=planWorksheetHeaderDao.updateForSectorApprove(vo.getExiceList());
+			summaryReportService.sectorReceiveLine(vo.getAnalysNumber(), vo.getExiceList());
+			count+=planWorksheetHeaderDao.updateForSectorApprove(vo.getExiceList(),vo.getAnalysNumber());
 		}
 		return count;
 	}
