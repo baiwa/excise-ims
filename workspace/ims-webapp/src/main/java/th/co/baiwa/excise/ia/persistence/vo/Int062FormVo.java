@@ -7,7 +7,7 @@ public class Int062FormVo {
 	
 	private MultipartFile fileExcel2;
 	
-	private String systemSort;
+	private Long sortSystem;
 	
 	public MultipartFile getFileExcel1() {
 		return fileExcel1;
@@ -21,10 +21,10 @@ public class Int062FormVo {
 	public void setFileExcel2(MultipartFile fileExcel2) {
 		this.fileExcel2 = fileExcel2;
 	}
-	public String getSystemSort() {
-		return systemSort;
+	public Long getSortSystem() {
+		return sortSystem;
 	}
-	public void setSystemSort(String systemSort) {
-		this.systemSort = systemSort;
+	public void setSortSystem(Long sortSystem) {
+		this.sortSystem = sortSystem;
 	}
 }

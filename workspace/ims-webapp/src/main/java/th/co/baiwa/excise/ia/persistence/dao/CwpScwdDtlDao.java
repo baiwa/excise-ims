@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,6 +14,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.buckwaframework.common.persistence.dao.BatchSetter;
+import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.CwpScwdDtl;
 import th.co.baiwa.excise.ia.persistence.vo.Int062CwpDtlVo;
@@ -23,44 +27,78 @@ public class CwpScwdDtlDao {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private CommonJdbcDao commonJdbcDao;
 
 	/*-- findByHDRId --*/
 	
-	public List<CwpScwdDtl> findByHDRId(long idFile1) {
+	public List<Int062CwpDtlVo> findByHDRId(long idFile1, Long sortSystemID) {
 		logger.info("findByHDRId idFile1: {}", idFile1);
 		
 		List<Object> valueList = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder(" SELECT DISTINCT C.BUDGET_CODE FROM IA_CWP_SCWD_DTL C WHERE C.CWP_SCWD_HDR_ID = ? ");
+		StringBuilder sql = new StringBuilder(" SELECT DISTINCT ");
+		if(sortSystemID == 1322) {
+			sql.append(" C.BUDGET_CODE BUDGET_CODE ");
+		}
+		if(sortSystemID == 1323) {
+			sql.append(" to_char(C.RECORD_DATE , 'yyyy/mm') RECORD_DATE  ");
+		}
+		sql.append(" FROM IA_CWP_SCWD_DTL C ");
+		sql.append(" WHERE C.CWP_SCWD_HDR_ID = ? ");
+		if(sortSystemID == 1322) {
+			sql.append(" ORDER BY C.BUDGET_CODE ");
+		}
+		if(sortSystemID == 1323) {
+			sql.append(" ORDER BY TO_CHAR(C.RECORD_DATE , 'yyyy/mm') ");
+		}
 		valueList.add(idFile1);
 
-		List<CwpScwdDtl> CwpScwdDtl = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingFindByHDRId);
-		return CwpScwdDtl;
+//		List<Int062CwpDtlVo> findByHDRId = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingFindByHDRId);
+		List<Int062CwpDtlVo> findByHDRId = jdbcTemplate.query(sql.toString(), valueList.toArray(), new RowMapper<Int062CwpDtlVo>() {
+			@Override
+			public Int062CwpDtlVo mapRow(ResultSet rs, int arg1) throws SQLException {
+				Int062CwpDtlVo dtlVo = new Int062CwpDtlVo();
+				if(sortSystemID == 1322) {
+					dtlVo.setBudgetCode(rs.getString("BUDGET_CODE"));
+				}
+				if(sortSystemID == 1323) {
+					dtlVo.setCalMonth(rs.getString("RECORD_DATE"));
+				}
+				return dtlVo;
+			}
+		});
+		return findByHDRId;
 	}
-
-	private RowMapper<CwpScwdDtl> fieldMappingFindByHDRId = new RowMapper<CwpScwdDtl>() {
-		@Override
-		public CwpScwdDtl mapRow(ResultSet rs, int arg1) throws SQLException {
-			CwpScwdDtl dtlVo = new CwpScwdDtl();
-			dtlVo.setBudgetCode(rs.getString("BUDGET_CODE"));
-			return dtlVo;
-		}
-	};
 	
 	/*-- findDivideMonth --*/
 	
-	public List<Int062CwpDtlVo> findDivideMonth(String budgetCode) {
-		logger.info("findDevideMonth budgetCode: {}", budgetCode);
+	public List<Int062CwpDtlVo> findDivideMonth(Int062CwpDtlVo cwp, Long sortSystemID) {
+		logger.info("findDevideMonth budgetCode: {} recdordDate: {}", cwp.getBudgetCode(), cwp.getRecordDate());
 		
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(" SELECT  C.BUDGET_CODE , to_char(C.RECORD_DATE , 'yyyy/mm') RECORD_DATE ");
 		sql.append(" FROM IA_CWP_SCWD_DTL C ");
 		sql.append(" WHERE C.BUDGET_CODE = ? ");
-		sql.append(" GROUP BY BUDGET_CODE , to_char(C.RECORD_DATE , 'yyyy/mm') ");
-		sql.append(" ORDER BY C.BUDGET_CODE ,to_char(C.RECORD_DATE , 'yyyy/mm') ");
-		valueList.add(budgetCode);
+		valueList.add(cwp.getBudgetCode());
+//		sql.append(" WHERE 1 = 1 ");
 		
-		List<Int062CwpDtlVo> Int062CwpDtlVo = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingDivideMonth);
-		return Int062CwpDtlVo;
+//		if(sortSystemID == 1322) {
+//			sql.append(" AND C.BUDGET_CODE = ? ");
+//			valueList.add(cwp.getBudgetCode());
+//		}
+//		if(sortSystemID == 1323) {
+		
+//			sql.append(" AND to_char(C.RECORD_DATE , 'yyyy/mm') = ? ");
+//			valueList.add(cwp.getCalMonth());
+//		}
+		
+		sql.append(" GROUP BY BUDGET_CODE , to_char(C.RECORD_DATE , 'yyyy/mm') ");
+		sql.append(" ORDER BY to_char(C.RECORD_DATE , 'yyyy/mm') ");
+		
+		
+		List<Int062CwpDtlVo> findDivideMonth = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingDivideMonth);
+		return findDivideMonth;
 	}
 	
 	private RowMapper<Int062CwpDtlVo> fieldMappingDivideMonth = new RowMapper<Int062CwpDtlVo>() {
@@ -75,15 +113,24 @@ public class CwpScwdDtlDao {
 	
 	/*-- findGroupMonth --*/
 	
-	public List<CwpScwdDtl> findGroupMonth(String budgetCode, String calMonth) {
-		logger.info("findGroupMonth budgetCode: {} | calMonth: {}", budgetCode, calMonth);
+	public List<CwpScwdDtl> findGroupMonth(Int062CwpDtlVo vo, Long sortSystemID) {
+		logger.info("findGroupMonth budgetCode: {} | calMonth: {}", vo.getBudgetCode(), vo.getCalMonth());
 		
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(" SELECT * FROM IA_CWP_SCWD_DTL C ");
-		sql.append(" WHERE C.BUDGET_CODE = ? ");
-		sql.append(" AND to_char(C.RECORD_DATE , 'yyyy/mm') = ? ");
-		valueList.add(budgetCode);
-		valueList.add(calMonth);
+		sql.append(" WHERE 1 = 1");
+		if(sortSystemID == 1322){
+			sql.append(" AND C.BUDGET_CODE = ? ");
+			valueList.add(vo.getBudgetCode());
+			sql.append(" AND to_char(C.RECORD_DATE , 'yyyy/mm') = ? ");
+			valueList.add(vo.getCalMonth());
+			sql.append(" ORDER BY C.BUDGET_CODE ");
+		}
+		if(sortSystemID == 1323){
+			sql.append(" AND to_char(C.RECORD_DATE , 'yyyy/mm') = ? ");
+			valueList.add(vo.getCalMonth());
+			sql.append(" ORDER BY C.RECORD_DATE ");
+		}
 		
 		List<CwpScwdDtl> CwpScwdDtl = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingFindGroupMonth);
 		return CwpScwdDtl;
@@ -152,6 +199,54 @@ public class CwpScwdDtlDao {
 		BigDecimal totalNetAmount = jdbcTemplate.queryForObject(sql.toString(), valueList.toArray(), BigDecimal.class);
 		return totalNetAmount;
 	}
+	
+	public int[][] cwpScwdDtlInsert(final List<CwpScwdDtl> detailList, int executeSize) throws SQLException {
+		String user = UserLoginUtils.getCurrentUsername();
+		Date date = new Date();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" INSERT INTO IA_CWP_SCWD_DTL (CWP_SCWD_DTL_ID, CWP_SCWD_HDR_ID, RECORD_DATE,POST_DATE, TYPE_CODE, DUCUMENT_NUMBER, SELLER, BANK_ACCOUNT, REFERENCE_NO, BUDGET_CODE, WITHDRAW_AMOUNT, WITHHOLDING_TAX, FINES, FEE, NET_AMOUNT, CREATED_BY, CREATED_DATE, UPDATED_BY, UPDATED_DATE, IS_DELETED, VERSION) ");
+		sql.append(" values(IA_CWP_SCWD_DTL_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
+		
+		return commonJdbcDao.executeBatch(sql.toString(), new BatchSetter<CwpScwdDtl>() {
+			@Override
+			public List<CwpScwdDtl> getBatchObjectList() {
+				return detailList;
+			}
+			
+			@Override
+			public Object[] toObjects(CwpScwdDtl obj) {
+				return new Object[] {
+					obj.getCwpScwdHdrId(),
+					obj.getRecordDate(),
+					obj.getPostDate(),
+					obj.getTypeCode(),
+					obj.getDucumentNumber(),
+					obj.getSeller(),
+					obj.getBankAccount(),
+					obj.getReferenceNo(),
+					obj.getBudgetCode(),
+					obj.getWithdrawAmount(),
+					obj.getWithholdingTax(),
+					obj.getFines(),
+					obj.getFee(),
+					obj.getNetAmount(),
+					user,
+					date,
+					obj.getUpdatedBy(),
+					obj.getUpdatedDate(),
+					"N",
+					1
+				};
+			}
+			
+			@Override
+			public int getExecuteSize() {
+				return executeSize;
+			}
+		});
+	}
+	
+	
 	
 
 }

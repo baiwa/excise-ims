@@ -3,6 +3,7 @@ package th.co.baiwa.excise.ia.service;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import th.co.baiwa.buckwaframework.common.util.ExcelUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.dao.CwpScwdDtlDao;
+import th.co.baiwa.excise.ia.persistence.dao.CwpTblDtlDao;
 import th.co.baiwa.excise.ia.persistence.entity.CwpScwdDtl;
 import th.co.baiwa.excise.ia.persistence.entity.CwpScwdHdr;
 import th.co.baiwa.excise.ia.persistence.entity.CwpTblDtl;
@@ -54,54 +56,87 @@ public class Int062Service {
 
 	@Autowired
 	private CwpTblDtlRepository cwpTblDtlRepository;
-	
+
 	@Autowired
 	private CwpScwdDtlDao cwpScwdDtlDao;
+	
+	@Autowired
+	private CwpTblDtlDao cwpTblDtlDao;
 
 	public List<Int062Vo> upload(Int062FormVo formVo)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
 		long idFile1 = 0L;
+		long idFile2 = 0L;
 		long fileUploadID = System.currentTimeMillis();
-		idFile1 = readExcel1(formVo.getFileExcel1(), fileUploadID);
-		// query *headerId*
 		List<Int062Vo> responseList = new ArrayList<Int062Vo>();
 		Int062Vo response = new Int062Vo();
-		/*         */
-		long idFile2 = 0L;
-		idFile2 = readExcel2(formVo.getFileExcel2(), fileUploadID);
-		
-		List<Int062CwpDtlVo> findDivideMonth;
-		List<CwpScwdDtl> findByHDRId = cwpScwdDtlDao.findByHDRId(idFile1);
-		for (int i = 0; i < findByHDRId.size(); i++) {
-			String budgetCode = findByHDRId.get(i).getBudgetCode();
-			findDivideMonth = new ArrayList<Int062CwpDtlVo>();
-			findDivideMonth = cwpScwdDtlDao.findDivideMonth(budgetCode);
-			
-			for (int j = 0; j < findDivideMonth.size(); j++) {
-				response = new Int062Vo();
-				CwpScwdDtl cwp = new CwpScwdDtl();
-				String calMonth = findDivideMonth.get(j).getCalMonth();
-				response.setCwpScwdDtlList(cwpScwdDtlDao.findGroupMonth(budgetCode, calMonth));
-				cwp = new CwpScwdDtl();
-				
-				for (CwpScwdDtl cwpScwdDtl : response.getCwpScwdDtlList()) {
-					cwp.setFee(cwp.getFee().add(cwpScwdDtl.getFee()));
-					cwp.setFines(cwp.getFines().add(cwpScwdDtl.getFines()));
-					cwp.setNetAmount(cwp.getNetAmount().add(cwpScwdDtl.getNetAmount()));
-					cwp.setWithdrawAmount(cwp.getWithdrawAmount().add(cwpScwdDtl.getWithdrawAmount()));
-					cwp.setWithholdingTax(cwp.getWithholdingTax().add(cwpScwdDtl.getWithholdingTax()));
-					
-					//set idExcel1
-					cwp.setCwpScwdHdrId(idFile1);
-					//set idExcel2
-					cwp.setIdExcel2(idFile2);
+		/* ----------------------------------------------------- */
+		try {
+			idFile1 = readExcel1(formVo.getFileExcel1(), fileUploadID);
+			idFile2 = readExcel2(formVo.getFileExcel2(), fileUploadID);
+			// order by 'budget code'
+			if (formVo.getSortSystem() == 1322) {
+				List<Int062CwpDtlVo> findDivideMonth;
+				List<Int062CwpDtlVo> findByHDRId = cwpScwdDtlDao.findByHDRId(idFile1, formVo.getSortSystem());
+				for (int i = 0; i < findByHDRId.size(); i++) {
+					findDivideMonth = new ArrayList<Int062CwpDtlVo>();
+					findDivideMonth = cwpScwdDtlDao.findDivideMonth(findByHDRId.get(i), formVo.getSortSystem());
+
+					for (int j = 0; j < findDivideMonth.size(); j++) {
+						response = new Int062Vo();
+						CwpScwdDtl cwp = new CwpScwdDtl();
+						response.setCwpScwdDtlList(
+								cwpScwdDtlDao.findGroupMonth(findDivideMonth.get(j), formVo.getSortSystem()));
+						cwp = new CwpScwdDtl();
+
+						for (CwpScwdDtl cwpScwdDtl : response.getCwpScwdDtlList()) {
+							cwp.setFee(cwp.getFee().add(cwpScwdDtl.getFee()));
+							cwp.setFines(cwp.getFines().add(cwpScwdDtl.getFines()));
+							cwp.setNetAmount(cwp.getNetAmount().add(cwpScwdDtl.getNetAmount()));
+							cwp.setWithdrawAmount(cwp.getWithdrawAmount().add(cwpScwdDtl.getWithdrawAmount()));
+							cwp.setWithholdingTax(cwp.getWithholdingTax().add(cwpScwdDtl.getWithholdingTax()));
+
+							// set idExcel1
+							cwp.setCwpScwdHdrId(idFile1);
+							// set idExcel2
+							cwp.setIdExcel2(idFile2);
+						}
+						// //add data to response
+						response.setCwpScwdDtl(cwp);
+						response.setFileUploadID(fileUploadID);
+						responseList.add(response);
+					}
 				}
-//				//add data to response
-				response.setCwpScwdDtl(cwp);
-				response.setFileUploadID(fileUploadID);
-				responseList.add(response);
+			} else {
+				// order by 'record date'
+				List<Int062CwpDtlVo> findByHDRId = cwpScwdDtlDao.findByHDRId(idFile1, formVo.getSortSystem());
+				for (int i = 0; i < findByHDRId.size(); i++) {
+					response = new Int062Vo();
+					CwpScwdDtl cwp = new CwpScwdDtl();
+					response.setCwpScwdDtlList(cwpScwdDtlDao.findGroupMonth(findByHDRId.get(i), formVo.getSortSystem()));
+					cwp = new CwpScwdDtl();
+
+					for (CwpScwdDtl cwpScwdDtl : response.getCwpScwdDtlList()) {
+						cwp.setFee(cwp.getFee().add(cwpScwdDtl.getFee()));
+						cwp.setFines(cwp.getFines().add(cwpScwdDtl.getFines()));
+						cwp.setNetAmount(cwp.getNetAmount().add(cwpScwdDtl.getNetAmount()));
+						cwp.setWithdrawAmount(cwp.getWithdrawAmount().add(cwpScwdDtl.getWithdrawAmount()));
+						cwp.setWithholdingTax(cwp.getWithholdingTax().add(cwpScwdDtl.getWithholdingTax()));
+
+						// set idExcel1
+						cwp.setCwpScwdHdrId(idFile1);
+						// set idExcel2
+						cwp.setIdExcel2(idFile2);
+					}
+					// //add data to response
+					response.setCwpScwdDtl(cwp);
+					response.setFileUploadID(fileUploadID);
+					responseList.add(response);
+					// }
+				}
 			}
-			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return responseList;
 	}
@@ -109,7 +144,7 @@ public class Int062Service {
 	// read file excel 1
 	@SuppressWarnings("unused")
 	private long readExcel1(MultipartFile file1, long fileUploadID)
-			throws IOException, EncryptedDocumentException, InvalidFormatException {
+			throws IOException, EncryptedDocumentException, InvalidFormatException, SQLException {
 		byte[] byt = file1.getBytes();
 		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(byt));
 		Sheet sheet = workbook.getSheetAt(0);
@@ -231,7 +266,7 @@ public class Int062Service {
 		return headerId;
 	}
 
-	public boolean addDataDetail(List<CwpScwdDtl> detailList, List<String> columns, long headerId) {
+	public boolean addDataDetail(List<CwpScwdDtl> detailList, List<String> columns, long headerId) throws SQLException {
 		CwpScwdDtl obj = new CwpScwdDtl();
 		boolean checkDetail = false;
 		if (columns.get(1) != "") {
@@ -267,7 +302,9 @@ public class Int062Service {
 				checkDetail = true;
 			}
 		} else {
-			cwpScwdDtlRepository.save(detailList);
+			//save detail
+			int executeSize = 1000;
+			cwpScwdDtlDao.cwpScwdDtlInsert(detailList, executeSize);
 		}
 		return checkDetail;
 	}
@@ -282,79 +319,85 @@ public class Int062Service {
 		long headerId = 0L;
 		ArrayList<String> dateStr = new ArrayList<String>(); // for save date-time
 
-		/* read file */
-		byte[] byt = file2.getBytes();
-		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(byt));
-		Sheet sheet = workbook.getSheetAt(0);
-		int totalRows = sheet.getLastRowNum();
-		Map<String, Integer> map = new HashMap<String, Integer>();
+		/* read file excel */
+		try {
+			byte[] byt = file2.getBytes();
+			Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(byt));
+			Sheet sheet = workbook.getSheetAt(0);
+			int totalRows = sheet.getLastRowNum();
+			Map<String, Integer> map = new HashMap<String, Integer>();
 
-		/* rows */
+			/* rows */
 
-		for (int r = 0; r <= totalRows; r++) {
+			for (int r = 0; r <= totalRows; r++) {
 
-			Row row = sheet.getRow(r);
-			if (row != null) {
-				short minColIx = row.getFirstCellNum();
-				short maxColIx = row.getLastCellNum();
+				Row row = sheet.getRow(r);
+				if (row != null) {
+					short minColIx = row.getFirstCellNum();
+					short maxColIx = row.getLastCellNum();
 
-				boolean header = true;
-				boolean detail = true;
+					boolean header = true;
+					boolean detail = true;
 
-				header = (minColIx == 0 && maxColIx == 12 ? false : true);
-				detail = (minColIx == 1 && maxColIx == 11 ? false : true);
+					header = (minColIx == 0 && maxColIx == 12 ? false : true);
+					detail = (minColIx == 1 && maxColIx == 11 ? false : true);
 
-				// check header
-				if (!header) {
+					// check header
+					if (!header) {
 
-					/* column */
-					List<String> columns = new ArrayList<String>();
-					for (short colIx = minColIx; colIx < maxColIx; colIx++) {
+						/* column */
+						List<String> columns = new ArrayList<String>();
+						for (short colIx = minColIx; colIx < maxColIx; colIx++) {
 
-						Cell cell = row.getCell(colIx);
-						if (cell != null) {
-							map.put(ExcelUtils.getCellValueAsString(cell), cell.getColumnIndex());
-							columns.add(ExcelUtils.getCellValueAsString(cell));
+							Cell cell = row.getCell(colIx);
+							if (cell != null) {
+								map.put(ExcelUtils.getCellValueAsString(cell), cell.getColumnIndex());
+								columns.add(ExcelUtils.getCellValueAsString(cell));
+							}
+						}
+						if (BeanUtils.isEmpty(objHeader.getDisbursementCode())
+								|| BeanUtils.isEmpty(objHeader.getDisbursementName())
+								|| BeanUtils.isEmpty(objHeader.getDepartment())
+								|| !BeanUtils.isNotEmpty(objHeader.getReportDate())) {
+							headerId = addDataHeader2(objHeader, columns, countHeader, dateStr, fileUploadID);
+							countHeader++;
 						}
 					}
-					if (BeanUtils.isEmpty(objHeader.getDisbursementCode())
-							|| BeanUtils.isEmpty(objHeader.getDisbursementName())
-							|| BeanUtils.isEmpty(objHeader.getDepartment())
-							|| !BeanUtils.isNotEmpty(objHeader.getReportDate())) {
-						headerId = addDataHeader2(objHeader, columns, countHeader, dateStr, fileUploadID);
-						countHeader++;
-					}
-				}
 
-				// check detail
-				if (!detail) {
+					// check detail
+					if (!detail) {
 
-					/* column */
-					List<String> columns = new ArrayList<String>();
-					for (short colIx = minColIx; colIx < maxColIx; colIx++) {
+						/* column */
+						List<String> columns = new ArrayList<String>();
+						for (short colIx = minColIx; colIx < maxColIx; colIx++) {
 
-						Cell cell = row.getCell(colIx);
-						if (cell != null) {
-							map.put(ExcelUtils.getCellValueAsString(cell), cell.getColumnIndex());
-							columns.add(ExcelUtils.getCellValueAsString(cell));
-						} else {
-							columns.add("");
+							Cell cell = row.getCell(colIx);
+							if (cell != null) {
+								map.put(ExcelUtils.getCellValueAsString(cell), cell.getColumnIndex());
+								columns.add(ExcelUtils.getCellValueAsString(cell));
+							} else {
+								columns.add("");
+							}
 						}
-					}
-					if (columns.get(2) != "") {
-						addDataDetail2(detailList, columns, headerId);
-					}
+						if (columns.get(2) != "") {
+							addDataDetail2(detailList, columns, headerId);
+						}
 
+					}
 				}
 			}
+			// save detail
+			int executeSize = 1000;
+			cwpTblDtlDao.cwpTblDtlInsert(detailList, executeSize);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		// save detail
-		cwpTblDtlRepository.save(detailList);
-
+		
 		return headerId;
 	}
 
-	public long addDataHeader2(CwpTblHdr objHeader, List<String> data, int countHeader, List<String> dateStr, long fileUploadID) {
+	public long addDataHeader2(CwpTblHdr objHeader, List<String> data, int countHeader, List<String> dateStr,
+			long fileUploadID) {
 		String hd1 = data.get(2);
 		String[] lineOne = hd1.split(" ");
 		String disbursementCode = lineOne[1];

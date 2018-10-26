@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.excise.ia.persistence.entity.CwpScwdDtl;
 import th.co.baiwa.excise.ia.persistence.vo.Int062FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int062Vo;
 import th.co.baiwa.excise.ia.service.Int062Service;
