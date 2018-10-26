@@ -51,6 +51,11 @@ export class Cop071Component implements OnInit {
   }
 
   clickSearch = function () {
+    if ($("#fiscalYear").val()=="") {
+      this.message.alert("กรุณาระบุ แผนการตรวจปฏิบัติการประจำปีงบประมาณ");
+      return false;
+    }
+
     $("#searchFlag").val("TRUE");
     this.setSum0();
     $('#tableData').DataTable().ajax.reload();
@@ -134,7 +139,10 @@ export class Cop071Component implements OnInit {
           id:data.id,
           fiscalYear:data.fiscalYear,
           asPlanNumber:data.asPlanNumber,
-          outsidePlanNumber:data.outsidePlanNumber
+          asPlanSuccess:data.asPlanSuccess,
+          outsidePlanNumber:data.outsidePlanNumber,
+          outsidePlanSuccess:data.outsidePlanSuccess
+
         }
       });
       console.log(data);

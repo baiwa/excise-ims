@@ -31,8 +31,8 @@ public class Cop071Service {
 		List<Cop071Vo> listReturn = new ArrayList<Cop071Vo>();
 		List<Cop071Vo> list = new ArrayList<Cop071Vo>();
 		
-		list = copCheckFiscalYearDao.findAll(formVo);
-		Long count = copCheckFiscalYearDao.count(formVo);
+		list = copCheckFiscalYearDao.findAllCop071(formVo);
+		Long count = copCheckFiscalYearDao.countCop071(formVo);
 
 		
 		for(int i=0;i<12;i++){
