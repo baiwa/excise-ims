@@ -74,9 +74,17 @@
             </div>
             <div class="ui simple dropdown item " *ngIf="authService.renderByPage('int05')">
                 <i class="dropdown icon "></i> ตรวจสอบพัสดุ
-                <div class="menu ">
-                    <a class="item " [routerLink]="[ '/int05/1/1'] " *ngIf="authService.renderByPage('int05/1/1')"
-                        routerLinkActive="active ">ตรวจสอบแสตมป์</a>
+                <div class="menu ">            
+
+                        <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('int05')">
+                            <i class="dropdown icon "></i> ตรวจสอบแสตมป์
+                            <div class="menu ">
+                                <a class="item "  [routerLink]="[ '/int05/1/1'] " *ngIf="authService.renderByPage('int05/1/1')" routerLinkActive="active ">ตรวจสอบแสตมป์</a>
+                                <a class="item "routerLinkActive="active ">งบเดือนการรับ-จ่ายแสตมป์</a>                               
+                                <a class="item "routerLinkActive="active ">บัญชีคุมการรับ-จ่ายแสตมป์</a>    
+                            </div>
+                        </div>
+
                     <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('int05-S1')">
                         <i class="dropdown icon "></i> ตรวจสอบสินทรัพย์
                         <div class="menu ">
@@ -84,17 +92,21 @@
                                 routerLinkActive="active ">ตรวจสอบสินทรัพย์แบบอัพโหลด</a>
                             <a class="item " [routerLink]="[ '/int05/3/1'] " *ngIf="authService.renderByPage('int05/3/1')"
                                 routerLinkActive="active ">ตรวจสอบสินทรัพย์แบบเพิ่มข้อมูล</a>
-                            <!-- <a class="item " [routerLink]="[ '/int05/3/2'] " *ngIf="authService.renderByPage('int05/3/2')"
-                                routerLinkActive="active ">ตรวจสอบข้อมูลสินทรัพย์</a> -->
+                     
                             <a class="item " [routerLink]="[ '/int05/3/3'] " *ngIf="authService.renderByPage('int05/3/3')"
                                 routerLinkActive="active ">บันทึกข้อมูลสินทรัพย์</a>
 
                         </div>
                     </div>
-                    <a class="item " [routerLink]="[ authService.renderByPage('admin') ? '/int05/4/admin' : '/int05/4']"
-                        *ngIf="authService.renderByPage('int05/4')" routerLinkActive="active ">ตรวจสอบผลการจัดซื้อจัดจ้าง</a>
-                    <a class="item " [routerLink]="[ '/int05/4']" *ngIf="authService.renderByPage('int05/4')"
-                        routerLinkActive="active ">บันทึกผลการจัดซื้อจัดจ้าง</a>
+                    <div class="ui dropdown item " routerLinkActive="active " >
+                        <i class="dropdown icon "></i> ตรวจสอบจัดซื้อจัดจ้าง
+                        <div class="menu ">
+                            <a class="item " [routerLink]="[ authService.renderByPage('admin') ? '/int05/4/admin' : '/int05/4']"
+                            *ngIf="authService.renderByPage('int05/4')" routerLinkActive="active ">ตรวจสอบผลการจัดซื้อจัดจ้าง</a>
+                        <a class="item " [routerLink]="[ '/int05/4']" *ngIf="authService.renderByPage('int05/4')"
+                            routerLinkActive="active ">บันทึกผลการจัดซื้อจัดจ้าง</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="ui simple dropdown item " *ngIf="authService.renderByPage('int07')">
@@ -140,23 +152,18 @@
                                 routerLinkActive="active "> ทะเบียนคุมเช็ค</a>
                             <a class="item " [routerLink]="[ '/int06/6'] " *ngIf="authService.renderByPage('int06/6')"
                                 routerLinkActive="active ">ทะเบียนคุม KTB - Coperate</a>
+                                <a class="item "routerLinkActive="active ">ทะเบียนคุมเงินนอกงบประมาณ</a>    
                             <a class="item " [routerLink]="[ '/int06/11'] " *ngIf="authService.renderByPage('int06/11')"
-                                routerLinkActive="active ">สร้างแบบขอเบิก</a>
+                                routerLinkActive="active ">ทะเบียนคุมเงินงบประมาณ</a>
                             <a class="item " [routerLink]="[ '/int06/12'] " *ngIf="authService.renderByPage('int06/12')"
                                 routerLinkActive="active ">รายงานสรุปการรับจ่ายเงิน</a>
                         </div>
                     </div>
                     <a class="item " [routerLink]="[ '/int06/3'] " *ngIf="authService.renderByPage('int06/3')"
                         routerLinkActive="active ">กระดาษทำการตรวจสอบวันปฏิบัติงาน</a>
-                    <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('int06-1')">
-                        <i class="dropdown icon "></i> ตรวจการเบิกค่าสาธารณูปโภค
-                        <div class="menu ">
-                            <a class="item " [routerLink]="[ '/int06/7'] " *ngIf="authService.renderByPage('int06/7')"
-                                routerLinkActive="active ">รายงานค่าสาธารณูปโภค</a>
-                            <a class="item " [routerLink]="[ '/int06/8'] " *ngIf="authService.renderByPage('int06/8')"
-                                routerLinkActive="active ">บันทึกข้อมูลการเบิกค่าสาธารณูปโภค</a>
-                        </div>
-                    </div>
+                        <a class="item " [routerLink]="[ '/int06/7'] "  *ngIf="authService.renderByPage('int06/3')"
+                        routerLinkActive="active ">ตรวจการเบิกค่าสารณูปโภค</a>
+                   
 
 
                 </div>
