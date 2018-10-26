@@ -1,973 +1,112 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
-  <div class="sixteen wide column">
-    <h2 class="ui header">ตรวจแสตมป์เปรียบเทียบรายสาขา</h2>
-
-
-    <div class="ui attached segment">
-      <div class="ui form">
-        <div class="inline fields">
-          <div class="eight wide field">
-            <label class="custom-label-w-25">สำนักงานสรรพสามิตภาค</label>
-            <select class="ui dropdown ai">
-              <option *ngFor="let item of zoneList; index as i;" value="{{i+1}}">{{item.value}}</option>
-            </select>
-          </div>
+    <div class="sixteen wide column">
+        
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+            <span>งบเดือนการรับ - จ่ายแสตมป์</span>
         </div>
 
-        <div class="inline fields">
-          <div class="eight wide field">
-            <label class="custom-label-w-25">สำนักงานสรรพสามิตพื้นที่</label>
-            <select class="ui dropdown ai">
-              <option *ngFor="let item of areaList; index as i;" value="{{i+1}}">{{item.value}}</option>
-            </select>
-          </div>
-        </div>
+        <div class="ui attached segment">
+            <form class="ui form">
+                <input type="hidden" id="searchFlag" name="searchFlag">
 
-        <div class="inline fields">
-          <div class="eight wide field">
-            <label class="custom-label-w-25">สำนัักงานสรรพสามิตพื้นที่สาขา</label>
-            <select class="ui dropdown ai">
-              <option *ngFor="let item of branchList; index as i;" value="{{i+1}}">{{item.value}}</option>
-            </select>
-          </div>
-        </div>
+                <!-- row 1 -->
+                <div class="inline fields  ui grid">
+                    <div class="three wide field ">
+                        <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
+                    </div>
+                    <div class="four wide field ">
+                        <select name="sector " id="sector" class="ui dropdown ai search full-width office" (change)="area($event)">
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let item of sectorList; index as i;" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+                        </select>
+                    </div>
+                    <div class="three wide field ">
+                        <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
+                    </div>
+                    <div class="four wide field ">
+                        <select name="area" id="area" class="ui dropdown ai search full-width office" (change)="branch($event)">
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let item of areaList" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- row 2 -->
+                <div class="inline fields  ui grid">
+                    <div class="three wide field ">
+                        <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่สาขา</label>
+                    </div>
+                    <div class="four wide field ">
+                        <select name="branch" id="branch" class="ui dropdown ai search full-width office">
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let item of branchList; index as i;" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+                        </select>
+                    </div>
+                 
+                </div>
+                <!-- row 3 -->
+                <div class="inline fields  ui grid">
+                    <div class="three wide field ">
+                        <label class="text-right full-width">วันที่เริ่มต้น</label>
+                    </div>
+                    <div class="four wide field ">
+                        <div class="ui calendar full-width" id="dateF">
+                            <div class="ui input left icon">
+                                <i class="clock icon"></i>
+                                <input name="dateFrom" type="text" id="dateFrom" autocomplete="off" [attr.readonly]="null"
+                                    placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="three wide field ">
+                        <label class="text-right full-width">วันที่สิ้นสุด</label>
+                    </div>
+                    <div class="four wide field ">
+                        <div class="ui input">
+                            <div class="ui calendar full-width" id="dateT">
+                                <div class="ui input left icon">
+                                    <i class="clock icon"></i>
+                                    <input name="dateTo" type="text" id="dateTo" autocomplete="off" [attr.readonly]="null"
+                                        placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="one wide field "></div>
+                </div><br>
+                <div class="ui stackable center aligned page grid">
+                    <button class="ui mini primary button" type="button" (click)="search()"><i class="search icon"></i>ค้นหา</button>
+                    <button class="ui mini gray button " type="button" (click)="clear()"><i class="refresh icon"></i>ล้างข้อมูล</button>
+                </div><br>
+            </form>
 
-        <div class="inline fields">
-          <div class="eight wide field">
-            <label class="custom-label-w-25">เลือกไฟล์</label>
-            <input type="file" />
-          </div>
         </div>
-        <div class="inline fields">
-          <div class="eight wide field">
-            <label class="custom-label-w-25">เลือกไฟล์</label>
-            <input type="file" />
-          </div>
-        </div>
-
-
-
-        <div class="ui center aligned grid">
-          <div class="eight wide column">
-            <button class="ui mini primary button " (click)="uploadData()">
-              <i class="upload icon"></i>
-              อัพโหลด
-            </button>
-            <button class="ui mini button " (click)="clearData()">
-              <i class="refresh icon"></i>
-              ล้างข้อมูล
-            </button>
-            <button class="ui mini primary button" routerLink="/int05/2/4">
-              <i class="add icon"></i>
-              เพิ่มข้อมูล
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
-    <br>
+</div>
 
-    <div *ngIf="showData">
-      <div class="ui tabular menu ">
-        <a class="item active" routerLink="/int05/2">
-          ตรวจแสตมป์รายเดือน
-        </a>
-        <a class="item" routerLink="/int05/2/1">
-          ตรวจแสตมป์รายปีงบประมาณ
-        </a>
-      </div>
+<div class="ui segment">
+    <table class="ui small celled table striped selectable display nowrap" style="width: 100%;">
+        <thead>
+            <tr>					
+              
+                <th style="text-align: center !important">ชนิดแสตมป์</th>
+                <th style="text-align: center !important">คงเหลือยกมา</th>
+                <th style="text-align: center !important">รับ</th>                      
+                <th style="text-align: center !important">จ่าย</th>     
+                <th style="text-align: center !important">ส่งคืน/ตัดบัญชี</th>
+                <th style="text-align: center !important">คงเหลือยกไป</th>
+                <th style="text-align: center !important">ภาษี(บาท)</th>
+               
+            </tr>
+        </thead>       
+    </table>
 
-
-      <div class="ui attached segment">
-        <div class="ui right aligned grid">
-          <div class="sixteen wide column">
-            <button class="ui mini primary button">
-              <i class="save icon"></i>
-              บันทึก
-            </button>
-            <div id="export" class="ui floating mini dropdown icon button primary">
-              ส่งออก
-              <i class="dropdown icon"></i>
-              <div class="menu">
-                <div class="item">
-                  <i class="file pdf outline icon"></i> PDF</div>
-                <div class="item">
-                  <i class="file excel outline icon"></i>Excel</div>
-              </div>
+    <div class="ui grid">
+            <div class="sixteen wide center aligned column">
+                <button class="ui mini yellow button" (click)="exportFile()" [disabled]="dataInTable.length == 0">
+                        <i class="print icon"></i>
+                    ส่งออก</button>
             </div>
-            <br>
-            <div class="ui grid center aligned">
-              <div class="sixteen wide column">
-                บันทึกการับ-จ่ายแสตมป์
-                <br>สำนักงานสรรพสามิตภาคที่ 5 พื้นที่ลำปาง สาขาเมืองลำปาง
-                <br> งบประมาณปี 2560
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-      <div style="overflow-x: scroll">
-        <table class="ui small celled table striped selectable" style="width: 180%;">
-          <thead>
-            <tr style="text-align: center;">
-              <th rowspan="2">ลำดับที่</th>
-              <th rowspan="2">เดือน</th>
-              <th rowspan="2">ว.ด.ป
-                <br>รับ-จ่าย</th>
-              <th rowspan="2">สถานะ
-                <br>การรับ-การจ่าย</th>
-              <th rowspan="2">รหัส
-                <br>ผู้ประกอบการ</th>
-              <th rowspan="2">หน่วยงาน/ผู้ประกอบการ</th>
-              <th rowspan="2">รหัส
-                <br>ชนิดแสตมป์</th>
-              <th rowspan="2">ชนิดสแตมป์
-                <br>ขนาดบรรจุ</th>
-              <th rowspan="2">จำนวน
-                <br>(เล่ม)</th>
-              <th rowspan="2">จำนวน
-                <br>(ดวง)</th>
-              <th rowspan="2">มูลค่าพิมพ์
-                <br>(บาทต่อดวง)</th>
-              <th rowspan="2">รวมค่าพิมพ์
-                <br>แสตมป์</th>
-              <th rowspan="2">ค่าภาษี
-                <br>(บาท)</th>
-              <th colspan="4">รหัสแสตมป์</th>
-              <th rowspan="2">หมายเหตุ</th>
-              <th rowspan="2">คงเหลือจริง</th>
-              <th rowspan="2">Action</th>
-            </tr>
-            <tr style="text-align: center;">
-              <th colspan="2" style="border-left: 1px solid rgba(34,36,38,.1);">รหัสแสตมป์(เริ่ม)
-              </th>
-              <th colspan="2">รหัสแสตมป์(ถึง)
-              </th>
 
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>ตุลาคม</td>
-              <td>10/10/2560</td>
-              <td>รับ</td>
-              <td>1</td>
-              <td>สำนักงานสรรพสามิตพื้นที่ลำปาง</td>
-              <td>1.11</td>
-              <td>เบียร์</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>1.25</td>
-              <td>12500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>ตุลาคม</td>
-              <td>10/10/2560</td>
-              <td>รับ</td>
-              <td>1</td>
-              <td>สำนักงานสรรพสามิตพื้นที่ลำปาง</td>
-              <td>2.11</td>
-              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>0.5</td>
-              <td>5000</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>ตุลาคม</td>
-              <td>10/10/2560</td>
-              <td>รับ</td>
-              <td>1</td>
-              <td>สำนักงานสรรพสามิตพื้นที่ลำปาง</td>
-              <td>3.11</td>
-              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>3.75</td>
-              <td>37500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>ตุลาคม</td>
-              <td>10/14/2560</td>
-              <td>จ่าย</td>
-              <td>2</td>
-              <td>นาย ก</td>
-              <td>1.11</td>
-              <td>เบียร์</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>1.25</td>
-              <td>12500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>ตุลาคม</td>
-              <td>10/14/2560</td>
-              <td>จ่าย</td>
-              <td>2</td>
-              <td>นาย ก</td>
-              <td>2.11</td>
-              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>0.5</td>
-              <td>5000</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>ตุลาคม</td>
-              <td>10/14/2560</td>
-              <td>จ่าย</td>
-              <td>2</td>
-              <td>นาย ก</td>
-              <td>3.11</td>
-              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>3.75</td>
-              <td>37500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>ตุลาคม</td>
-              <td>10/14/2560</td>
-              <td>จ่าย</td>
-              <td>3</td>
-              <td>นาย ข</td>
-              <td>1.11</td>
-              <td>เบียร์</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>1.25</td>
-              <td>12500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>ตุลาคม</td>
-              <td>10/14/2560</td>
-              <td>จ่าย</td>
-              <td>3</td>
-              <td>นาย ข</td>
-              <td>2.11</td>
-              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>0.5</td>
-              <td>5000</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>ตุลาคม</td>
-              <td>10/14/2560</td>
-              <td>จ่าย</td>
-              <td>3</td>
-              <td>นาย ข</td>
-              <td>3.11</td>
-              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>3.75</td>
-              <td>37500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>ตุลาคม</td>
-              <td>10/14/2560</td>
-              <td>จ่าย</td>
-              <td>4</td>
-              <td>นาย ค</td>
-              <td>1.11</td>
-              <td>เบียร์</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>1.25</td>
-              <td>12500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>11</td>
-              <td>ตุลาคม</td>
-              <td>10/14/2560</td>
-              <td>จ่าย</td>
-              <td>4</td>
-              <td>นาย ค</td>
-              <td>2.11</td>
-              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>0.5</td>
-              <td>5000</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>12</td>
-              <td>ตุลาคม</td>
-              <td>10/14/2560</td>
-              <td>จ่าย</td>
-              <td>4</td>
-              <td>นาย ค</td>
-              <td>3.11</td>
-              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>3.75</td>
-              <td>37500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>13</td>
-              <td>พฤศจิกายน</td>
-              <td>11/5/2560</td>
-              <td>รับ</td>
-              <td>1</td>
-              <td>สำนักงานสรรพสามิตพื้นที่ลำปาง</td>
-              <td>1.11</td>
-              <td>เบียร์</td>
-              <td>0.7</td>
-              <td>7000</td>
-              <td>1.25</td>
-              <td>8750</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>14</td>
-              <td>พฤศจิกายน</td>
-              <td>11/5/2560</td>
-              <td>รับ</td>
-              <td>1</td>
-              <td>สำนักงานสรรพสามิตพื้นที่ลำปาง</td>
-              <td>2.11</td>
-              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>0.5</td>
-              <td>5000</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>15</td>
-              <td>พฤศจิกายน</td>
-              <td>11/5/2560</td>
-              <td>รับ</td>
-              <td>1</td>
-              <td>สำนักงานสรรพสามิตพื้นที่ลำปาง</td>
-              <td>3.11</td>
-              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>3.75</td>
-              <td>37500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>16</td>
-              <td>พฤศจิกายน</td>
-              <td>11/7/2560</td>
-              <td>จ่าย</td>
-              <td>2</td>
-              <td>นาย ก</td>
-              <td>1.11</td>
-              <td>เบียร์</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>1.25</td>
-              <td>12500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>17</td>
-              <td>พฤศจิกายน</td>
-              <td>11/7/2560</td>
-              <td>จ่าย</td>
-              <td>2</td>
-              <td>นาย ก</td>
-              <td>2.11</td>
-              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>0.5</td>
-              <td>5000</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>18</td>
-              <td>พฤศจิกายน</td>
-              <td>11/7/2560</td>
-              <td>จ่าย</td>
-              <td>2</td>
-              <td>นาย ก</td>
-              <td>3.11</td>
-              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>3.75</td>
-              <td>37500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>19</td>
-              <td>พฤศจิกายน</td>
-              <td>11/7/2560</td>
-              <td>จ่าย</td>
-              <td>3</td>
-              <td>นาย ข</td>
-              <td>1.11</td>
-              <td>เบียร์</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>1.25</td>
-              <td>12500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>20</td>
-              <td>พฤศจิกายน</td>
-              <td>11/7/2560</td>
-              <td>จ่าย</td>
-              <td>3</td>
-              <td>นาย ข</td>
-              <td>2.11</td>
-              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>0.5</td>
-              <td>5000</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>21</td>
-              <td>พฤศจิกายน</td>
-              <td>11/7/2560</td>
-              <td>จ่าย</td>
-              <td>3</td>
-              <td>นาย ข</td>
-              <td>3.11</td>
-              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>3.75</td>
-              <td>37500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>22</td>
-              <td>พฤศจิกายน</td>
-              <td>11/7/2560</td>
-              <td>จ่าย</td>
-              <td>4</td>
-              <td>นาย ค</td>
-              <td>1.11</td>
-              <td>เบียร์</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>1.25</td>
-              <td>12500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>23</td>
-              <td>พฤศจิกายน</td>
-              <td>11/7/2560</td>
-              <td>จ่าย</td>
-              <td>4</td>
-              <td>นาย ค</td>
-              <td>2.11</td>
-              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>0.5</td>
-              <td>5000</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>24</td>
-              <td>พฤศจิกายน</td>
-              <td>11/7/2560</td>
-              <td>จ่าย</td>
-              <td>4</td>
-              <td>นาย ค</td>
-              <td>3.11</td>
-              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>3.75</td>
-              <td>37500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>25</td>
-              <td>ธันวาคม</td>
-              <td>12/6/2560</td>
-              <td>รับ</td>
-              <td>1</td>
-              <td>สำนักงานสรรพสามิตพื้นที่ลำปาง</td>
-              <td>1.11</td>
-              <td>เบียร์</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>1.25</td>
-              <td>12500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>26</td>
-              <td>ธันวาคม</td>
-              <td>12/6/2560</td>
-              <td>รับ</td>
-              <td>1</td>
-              <td>สำนักงานสรรพสามิตพื้นที่ลำปาง</td>
-              <td>2.11</td>
-              <td>สุรากลั่นชุมชน 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>0.9</td>
-              <td>9000</td>
-              <td>0.5</td>
-              <td>4500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>27</td>
-              <td>ธันวาคม</td>
-              <td>12/6/2560</td>
-              <td>รับ</td>
-              <td>1</td>
-              <td>สำนักงานสรรพสามิตพื้นที่ลำปาง</td>
-              <td>3.11</td>
-              <td>สุราผสม 40 ดีกรี ขนาด 0.330 ลิตร</td>
-              <td>1</td>
-              <td>10000</td>
-              <td>3.75</td>
-              <td>37500</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="text-align: center;">
-                <a class="update" routerLink="/int05/2/2">
-                  แก้ไข
-                </a>
-                <strong> / </strong>
-                <a class="delete" href="javascript:;">
-                  ลบ
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="ui center aligned grid">
-          <div class="sixteen wide column">
-            <button class="ui mini primary button " routerLink="/int05/1">
-              <i class="arrow left icon"></i>
-              กลับ
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
+</div>

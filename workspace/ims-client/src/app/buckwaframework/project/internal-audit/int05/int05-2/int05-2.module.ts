@@ -10,6 +10,10 @@ import { Int0522Component } from './int05-2-2/int05-2-2.component';
 import { Int0523Component } from './int05-2-3/int05-2-3.component';
 import { Int0524Component } from './int05-2-4/int05-2-4.component';
 
+import { BreadcrumbModule } from 'components/breadcrumb/breadcrumb.module';
+import { FormsModule } from '@angular/forms';
+
+
 const routes: Routes = [
     { path: '', component: Int052Component, canActivate: [AuthGuard] },
     { path: '1', component: Int0521Component, canActivate: [AuthGuard] },
@@ -21,7 +25,9 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    CommonModule
+    CommonModule,
+    FormsModule,
+    BreadcrumbModule
   ],
   declarations: [
     Int052Component,
