@@ -92,27 +92,27 @@ export class Opeo46Service {
         this.dataTable();
     }
 
-    save = () => {
-        let data = this.table.data();
-        let url = "ta/opo046/save";
+    save = async () => {
+        let data = await this.table.data();
+        let url = await "ta/opo046/save";
 
-        let list = [];
+        let list = await [];
         for (let i = 0; i < data.length; i++) {
-            let row = this.table.row(i).data();
-            console.log(row);
-            list.push(row);
+            let row = await this.table.row(i).data();
+            await console.log(row);
+            await list.push(row);
         }
-        console.log(list);
+        await console.log(list);
         if (data.length == 0) {
-            this.message.alert("ไม่มีข้อมูล");
+            await this.message.alert("ไม่มีข้อมูล");
             return;
         }
-        this.message.comfirm((res) => {
+        this.message.comfirm(async (res) => {
             if (res) {
-                this.ajax.post(url, list, res => {
-                    this.message.successModal("บันทึกรายการ");
-                }, err => {
-                    this.message.errorModal("บันทึกรายการไม่สำเร็จ");
+                return await this.ajax.post(url, list, async res => {
+                    await this.message.successModal("บันทึกรายการ");
+                }, async err => {
+                    await this.message.errorModal("บันทึกรายการไม่สำเร็จ");
                 });
             }
         }, "", "ยืนยันการลบ");
@@ -149,11 +149,17 @@ export class Opeo46Service {
                 },
                 {
                     "data": "taxAmount",
-                    "className": "ui right aligned"
+                    "className": "ui right aligned",
+                    "render" : (data)=>{
+                        return Utils.moneyFormatInt(data);
+                    }
                 },
                 {
-                    "data": "amount",
-                    "className": "ui right aligned"
+                    "data": "amount",                    
+                    "className": "ui right aligned",
+                    "render" : (data)=>{
+                        return Utils.moneyFormatInt(data);
+                    }
                 },
                 {
                     "data": "taxPerAmount",
@@ -168,11 +174,17 @@ export class Opeo46Service {
                 },
                 {
                     "data": "taxNumber",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render" : (data)=>{
+                        return Utils.moneyFormatInt(data);
+                    }
                 },
                 {
                     "data": "volume",
-                    "className": "ui center aligned"
+                    "className": "ui right aligned",
+                    "render" : (data)=>{
+                        return Utils.moneyFormatInt(data);
+                    }
                 },
                 {
                     "data": "unit",

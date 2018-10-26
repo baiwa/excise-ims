@@ -92,10 +92,13 @@ export class Ope046Component implements OnInit {
     }, 500);
   }
 
-  save = () => {
-    this.buttonDisabled = true;
-    this.opeo46Service.save();
-    this.buttonDisabled = false;
+  save = async () => {
+    this.buttonDisabled = await true;
+    await this.opeo46Service.save().then( async()=>{
+      setTimeout( async() => {
+        this.buttonDisabled = await false;
+      }, 500);
+    });    
   }
   calenda = () => {
     let date = new Date();
