@@ -400,9 +400,25 @@ export class Int112Component implements OnInit {
 
   clickCheckAll = event => {
     if (event.target.checked) {
-      $(".ui.checkbox.follow-dep-chkbox").checkbox("check");
+      var node = $("#dataTable")
+        .DataTable()
+        .rows()
+        .nodes();
+      $.each(node, function (index, value) {
+        $(this)
+          .find("input")
+          .prop("checked", true);
+      });
     } else {
-      $(".ui.checkbox.follow-dep-chkbox").checkbox("uncheck");
+      var node = $("#dataTable")
+        .DataTable()
+        .rows()
+        .nodes();
+      $.each(node, function (index, value) {
+        $(this)
+          .find("input")
+          .prop("checked", false);
+      });
     }
   }
 
