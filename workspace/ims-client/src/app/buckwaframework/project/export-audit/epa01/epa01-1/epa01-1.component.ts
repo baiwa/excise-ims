@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'services/auth.service';
 import { AjaxService } from '../../../../common/services/ajax.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 declare var $: any;
 
@@ -17,17 +17,22 @@ export class Epa011Component implements OnInit {
   $form: any;
   $page: any;
   exciseId: string = "";
+  exciseName: string = "";
   searchFlag: string = "FALSE";
 
   constructor(
     private authService: AuthService,
     private ajaxService: AjaxService,
     private ajax: AjaxService,
-    private router: Router,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('EXP-01100');
+    this.exciseId = this.route.snapshot.queryParams["exciseId"];
+    this.exciseName = this.route.snapshot.queryParams["exciseName"];
+    this.searchFlag = this.route.snapshot.queryParams["searchFlag"];
     this.$form = $('#exportForm');
   }
 
@@ -65,6 +70,7 @@ export class Epa011Component implements OnInit {
         data: (d) => {
           return JSON.stringify($.extend({}, d, {
             "exciseId": this.exciseId,
+            "exciseName": this.exciseName,
             "searchFlag": this.searchFlag
           }));
         }
@@ -99,7 +105,10 @@ export class Epa011Component implements OnInit {
         $("td > .checking-button", row).bind("click", () => {
           console.log("[Data]: ", data);
           this.router.navigate(["/epa01/2"], {
-            queryParams: { exciseId: data.exciseId }
+            queryParams: { 
+              exciseId: data.exciseId,
+              exciseName: data.exciseName
+            }
           });
         });
       },

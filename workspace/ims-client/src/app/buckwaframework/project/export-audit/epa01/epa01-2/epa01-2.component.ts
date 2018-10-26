@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'services/auth.service';
 import { AjaxService } from '../../../../common/services/ajax.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 declare var $: any;
 
@@ -14,19 +14,21 @@ export class Epa012Component implements OnInit {
 
   datatable: any;
   exciseId: string = "";
+  exciseName: string = "";
   searchFlag: string = "FALSE";
 
   constructor(
     private authService: AuthService,
     private ajaxService: AjaxService,
     private ajax: AjaxService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('EXP-01200');
     this.exciseId = this.route.snapshot.queryParams["exciseId"];
-    console.log(this.exciseId);
+    this.exciseName = this.route.snapshot.queryParams["exciseName"];
   }
 
   ngAfterViewInit(): void {
@@ -84,8 +86,32 @@ export class Epa012Component implements OnInit {
         }, {
           data: "tax",
           className: "ui center aligned",
-        },
-      ]
+        }, {
+          data: "tax",
+          className: "ui center aligned",
+          render: function (data, row) {
+            return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>ตรวจสอบ</button>';
+          }
+        }
+      ],
+      rowCallback: (row, data, index) => {
+        $("td > .checking-button", row).bind("click", () => {
+          console.log("[Data]: ", data);
+          
+          /* Modal Here */
+          $('#ModalCheck').modal('show');
+        });
+      }
+    });
+  };
+
+  onClickBack () {
+    this.router.navigate(["/epa01/1"], {
+      queryParams: { 
+        exciseId: this.exciseId,
+        exciseName: this.exciseName,
+        searchFlag: "TRUE"
+      }
     });
   };
 

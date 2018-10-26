@@ -1,19 +1,19 @@
 <app-breadcrumb [route]="breadcrumb" ></app-breadcrumb>
 
 
-<div class="ui grid">
-  <div class="sixteen wide column" *ngIf="view1;">
+<div class="ui grid ">
+  <div class="sixteen wide column" id="boxUpload">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>อัพโหลดไฟล์ตรวจสอบการนำส่งเงินบัญชีเจ้าหนี้ อปท.</span>
     </div>
 
-    <div class="ui attached segment">
+    <div class="ui attached segment ">
       <form id="upload-form" class="ui form" (submit)="onUpload($event)" ngNativeValidate>
         <div class="inline fields">
           <div class="four wide field"></div>
           <div class="two wide field"></div>
           <div class="five wide field">
-            <input id="fileExel" type="file" name="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="onChangeUpload($event)" required>
+            <input id="fileExel" type="file" name="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" (change)="onChangeUpload($event)" required>
           </div>
           <div class="two wide field"></div>
           <div class="three wide field"></div>
@@ -37,11 +37,11 @@
   </div>
   <!-- table upload -->
   
-  <div class="sixteen wide column" *ngIf="view1;">
-      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+  <div class="sixteen wide column " id="boxEdit">
+      <div class="ui top centered attached header segment " style="background: #1e83db;color: white">
           <span>* แสดงตัวอย่างไฟล์ที่อัพโหลด  และแก้ไขได้</span>
       </div>
-      <div class="ui attached segment">
+      <div class="ui attached segment {{loading? 'loading': ''}}">
         <table id="dataTable"  class="ui small celled table striped selectable" style="width: 100%;">
           <thead>
             <tr>
@@ -65,7 +65,7 @@
 
         <div class="ui six column centered grid" >
             <div class="column">
-              <button class="ui mini primary button"    (click)="checkData()" >
+              <button class="ui mini primary button" [disabled]="dataList.length==0" (click)="checkData()" >
                 <i class="check circle icon"></i>
                 เลือกตรวจสอบข้อมูล
               </button>
@@ -160,41 +160,13 @@
 
   </div>
      
-  <!-- table Ix -->
-  <div class="sixteen wide column" >
+  <!-- table datatableCheck -->
+  <div class="sixteen wide column" id="boxCheck">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>* ตรวจสอบข้อมูล ประเภทเอกสาร  IX</span>
+        <span>* ตรวจสอบข้อมูล </span>
     </div>
-    <div class="ui attached segment">
-      <table id="datatableIx"  class="ui small celled table striped selectable" style="width: 100%;">
-        <thead>
-          <tr>
-            <th  rowspan="2" style="text-align: center !important">วันที่ลงรายการ</th>
-            <th  rowspan="2" style="text-align: center !important" >เลขที่เอกสาร</th>
-            <th  rowspan="2" style="text-align: center !important" >ประเภทเอกสาร</th>
-            <th  rowspan="2" style="text-align: center !important" >เอกสารอ้างอิง</th>
-            <th  rowspan="2" style="text-align: center !important" >ผู้ทำแทน</th>
-            <th  rowspan="2" style="text-align: center !important" >การกำหนด</th>
-            <th  rowspan="2" style="text-align: center !important" >หน่วยเบิกจ่าย</th>
-            <th  colspan="2" style="text-align: center !important">ผ่านรายการ</th>
-            <th  rowspan="2" style="text-align: center !important" >ยกยอดไป</th>
-          </tr>
-          <tr>
-            <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">เดบิต</th>
-            <th style="text-align: center !important">เครดิต</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-  </div>
-
-  <!-- table J0 -->
-  <div class="sixteen wide column" >
-    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>* ตรวจสอบข้อมูล ประเภทเอกสาร  J0</span>
-    </div>
-    <div class="ui attached segment">
-      <table id="datatableJ0"  class="ui small celled table striped selectable" style="width: 100%;">
+    <div class="ui attached segment {{loading? 'loading': ''}}">
+      <table id="datatableCheck"  class="ui small celled table striped selectable" style="width: 100%;">
         <thead>
           <tr>
             <th  rowspan="2" style="text-align: center !important">วันที่ลงรายการ</th>
@@ -214,7 +186,7 @@
         </thead>
       </table>
 
-      <div class="ui six column centered grid" *ngIf="viewButton;">
+      <div class="ui six column centered grid">
         <div class="column">
           <button class="ui mini button"    (click)="backPage()" >
             <i class="arrow left icon"></i>
@@ -228,7 +200,9 @@
       </div>
 
     </div>
-  </div>
+  </div> 
+
+
 
 </div>
 

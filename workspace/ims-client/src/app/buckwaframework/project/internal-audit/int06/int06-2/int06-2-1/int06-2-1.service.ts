@@ -91,9 +91,12 @@ export class Int0621Service {
                 "<td style ='text-align: right'>" +
                 this.DF(dataCompare[i].cwpTblDtlList[j].carryForward) +
                 "</td>" +
-                "<td style ='text-align: right'>" +
-                this.DF(dataCompare[i].cwpTblDtlList[j].diff) +
-                "</td>";
+                "<td style ='text-align: right'>";
+              trData +=
+                dataCompare[i].cwpTblDtlList[j].diff == null
+                  ? "-"
+                  : this.DF(dataCompare[i].cwpTblDtlList[j].diff);
+              trData += "</td>";
               trData += "</tr>";
             }
           }

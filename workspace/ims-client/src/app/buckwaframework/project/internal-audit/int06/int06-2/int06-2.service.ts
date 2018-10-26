@@ -19,6 +19,7 @@ export class Int062Service {
   loading: boolean;
   fileExcel2: File[];
   dataExcel1: any = null;
+  TypeSort: string;
 
   constructor(
     private router: Router,
@@ -39,28 +40,35 @@ export class Int062Service {
     });
   };
 
-  onUpload = (): Promise<any> => {
+  onUpload = (comboBoxID: number): Promise<any> => {
+    /* SORT_BC = 1322 <--> SORT_DATE = 1323 */
+    comboBoxID == 1322
+      ? (this.TypeSort = "SORT_BC")
+      : (this.TypeSort = "SORT_DATE");
+
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
-
+    //Destroy tr
+    document.getElementById("tdDataUpload").innerHTML = "<tr>" + "" + "</tr>";
     return new Promise<any>((resovle, reject) => {
       this.ajax.upload(
         URL.UPLOAD_EXCEL,
         formBody,
         res => {
           this.dataExcel1 = res.json();
+          console.log("res.json(): ", res.json());
           //call table
           this.showUploadTable(res.json());
           resovle("Upload Success!!");
         },
-        err => {
-          reject("ERROR");
+        error => {
+          reject(error);
         }
       );
     });
   };
 
-  compareTR(comboBoxId: string) {
+  compareTR(comboBoxId: number) {
     let idExcel1 = this.dataExcel1[0].cwpScwdDtl.cwpScwdHdrId;
     let idExcel2 = this.dataExcel1[0].cwpScwdDtl.idExcel2;
     let fileUploadID = this.dataExcel1[0].fileUploadID;
@@ -86,30 +94,19 @@ export class Int062Service {
     let totalNetAmount = 0;
     data.forEach(arr1 => {
       //check to set value initial
-      if (count == 0) {
+      if (count == 0 && this.TypeSort == "SORT_BC") {
         budgetCodeBefore = arr1.cwpScwdDtlList[0].budgetCode;
       }
       //check budgetCodeBefore
       if (count > 0) {
-        if (budgetCodeBefore != arr1.cwpScwdDtlList[0].budgetCode) {
+        if (
+          budgetCodeBefore != arr1.cwpScwdDtlList[0].budgetCode &&
+          this.TypeSort == "SORT_BC"
+        ) {
           trData +=
             "<tr class='bg-row-purple-highlight' style ='text-align: right'>" +
-            "<td>" +
+            "<td colspan='8'>" +
             "รวมทั้งรหัสงบประมาณ" +
-            "</td>" +
-            "<td>" +
-            "</td>" +
-            "<td>" +
-            "</td>" +
-            "<td>" +
-            "</td>" +
-            "<td>" +
-            "</td>" +
-            "<td>" +
-            "</td>" +
-            "<td>" +
-            "</td>" +
-            "<td>" +
             "</td>" +
             "<td>" +
             this.DF(totalWithdrawAmount) +
@@ -138,6 +135,7 @@ export class Int062Service {
           totalNetAmount = 0;
         }
       }
+      //loop for cal table
       for (let i = 0; i < arr1.cwpScwdDtlList.length; i++) {
         //find total month
         totalWithdrawAmount += arr1.cwpScwdDtlList[i].withdrawAmount;
@@ -193,22 +191,8 @@ export class Int062Service {
       //set value in tr total month
       trData +=
         "<tr class='bg-row-blue-highlight' style ='text-align: right'>" +
-        "<td>" +
+        "<td colspan='8'>" +
         "รวมเดือน" +
-        "</td>" +
-        "<td>" +
-        "</td>" +
-        "<td>" +
-        "</td>" +
-        "<td>" +
-        "</td>" +
-        "<td>" +
-        "</td>" +
-        "<td>" +
-        "</td>" +
-        "<td>" +
-        "</td>" +
-        "<td>" +
         "</td>" +
         "<td>" +
         this.DF(arr1.cwpScwdDtl.withdrawAmount) +
@@ -227,26 +211,37 @@ export class Int062Service {
         "</td> " +
         "</tr>";
 
-      //last row
-      if (count == data.length - 1) {
+      //last row * this.TypeSort == "SORT_BC" *
+      if (count == data.length - 1 && this.TypeSort == "SORT_BC") {
         trData +=
           "<tr class='bg-row-purple-highlight' style ='text-align: right'>" +
-          "<td>" +
+          "<td colspan='8'>" +
           "รวมทั้งรหัสงบประมาณ" +
           "</td>" +
           "<td>" +
+          this.DF(totalWithdrawAmount) +
           "</td>" +
           "<td>" +
+          this.DF(totalWithholdingTax) +
           "</td>" +
           "<td>" +
+          this.DF(totalFines) +
           "</td>" +
           "<td>" +
+          this.DF(totalFee) +
           "</td>" +
           "<td>" +
-          "</td>" +
-          "<td>" +
-          "</td>" +
-          "<td>" +
+          this.DF(totalNetAmount) +
+          "</td> " +
+          "</tr>";
+      }
+
+      //result total month * this.TypeSort == "SORT_DATE" *
+      if (count == data.length - 1 && this.TypeSort == "SORT_DATE") {
+        trData +=
+          "<tr class='bg-row-purple-highlight' style ='text-align: right'>" +
+          "<td colspan='8'>" +
+          "รวมทั้งหมด" +
           "</td>" +
           "<td>" +
           this.DF(totalWithdrawAmount) +

@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { ComboBox } from "models/combobox";
 import { Router } from "@angular/router";
+import { MessageBarService } from "services/message-bar.service";
 
 declare var $: any;
 @Component({
@@ -20,12 +21,13 @@ export class Int062Component implements OnInit {
   loading: boolean = false;
   submitted: boolean = false;
   comboBox: Observable<ComboBox[]>;
-  comboBoxId: string = "";
+  comboBoxId: number = null;
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private selfService: Int062Service
+    private selfService: Int062Service,
+    private msg: MessageBarService
   ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
@@ -73,9 +75,15 @@ export class Int062Component implements OnInit {
     }
 
     this.loading = true;
-    this.selfService.onUpload().then(() => {
-      this.loading = false;
-    });
+    this.selfService
+      .onUpload(this.comboBoxId)
+      .then(() => {
+        this.loading = false;
+      })
+      .catch(err => {
+        this.msg.errorModal(err.statusText);
+        this.loading = false;
+      });
   }
 
   clearData() {
@@ -91,7 +99,6 @@ export class Int062Component implements OnInit {
     setTimeout(() => {
       this.loading = false;
     }, 500);
-    // this.selfService.onChangeUpload(e, this.getLoading);
   }
 
   onChangeUpload2(e: any) {
@@ -99,11 +106,9 @@ export class Int062Component implements OnInit {
     setTimeout(() => {
       this.loading = false;
     }, 500);
-    // this.selfService.onChangeUpload2(e, this.getLoading);
   }
 
   changeSortSystem(e) {
-    // console.log(e.target.value);
     this.comboBoxId = e.target.value;
     console.log(this.comboBoxId);
   }

@@ -56,7 +56,7 @@ export class Int0621Component implements OnInit {
       .catch(() => {
         setTimeout(() => {
           this.loadingInit = false;
-          this.msg.errorModal("เกิดข้อผิดพลาด", "ล้มเหลว");
+          this.msg.errorModal("เกิดข้อผิดพลาด");
         }, 100);
       });
     this.selfService.getDropdownT(idExcel2).then(dropdown => {
@@ -81,7 +81,7 @@ export class Int0621Component implements OnInit {
       .catch(() => {
         setTimeout(() => {
           this.loadingTable = false;
-          this.msg.errorModal("เกิดข้อผิดพลาด", "ล้มเหลว");
+          this.msg.errorModal("เกิดข้อผิดพลาด");
         }, 400);
       });
   }
