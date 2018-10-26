@@ -61,10 +61,7 @@ public class Int091Service {
 	}
 
 	public void delete(Long id) {
-		
-			iaTravelEstimatorDao.delete(id);
-
-		
+		iaTravelEstimatorDao.delete(id);
 	}
 
 }

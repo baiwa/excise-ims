@@ -9,7 +9,7 @@ const URL = {
 declare var $: any;
 
 @Injectable()
-export class Int065Service {
+export class Int052Service {
 
   form: FormSearch = new FormSearch();
   table: any;

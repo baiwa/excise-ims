@@ -1,223 +1,173 @@
-<div class="ui grid">
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+  <span>จัดการข้อมูลต้นทาง</span>
+</div>
+
+<div class="ui attached segment">
+  <div class="ui grid center aligned">
     <div class="sixteen wide column">
-      <h2 class="ui header">จัดการข้อมูลต้นทาง
-      </h2>
-  
-      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>จัดการข้อมูลต้นทาง</span>
-      </div>
-      <div class="ui attached segment">
-  
-        <div class="ui grid center aligned">
-          <div class="sixteen wide column">
-            <h3>เชื่อมโยงข้อมูลใบขน (ภส.05-01) </h3>
-          </div>
-        </div>
-        <hr>
-        <br>
-        <br>
-  
-        <div class="inline fields">
-          <div class="one wide field ">
-            <h4>ข้อมูลผู้ส่งออก</h4>
-          </div>
-        </div>
-        <br>
-  
-  
-        <div class="ui form">
-          <div class="inline fields">
-            <div class="four  wide field ">
-              <label>ชื่อ:
-              </label>
-            </div>
-            <div class="five wide field ">
-              <input type="text" placeholder="" value="Honda K Motor">
-            </div>
-            <div class="two  wide field ">
-              <label>ประเภท:
-              </label>
-            </div>
-            <div class="five wide field ">
-              <input type="text" placeholder="" value="ส่งออก">
-            </div>
-          </div>
-  
-  
-          <div class="inline fields">
-            <div class="four wide field ">
-              <label>เลขบัตรประชาชน/เลขทะเบียนนิติบุคคล
-              </label>
-            </div>
-            <div class="five wide field ">
-              <input type="text" placeholder="" value="1908499938043">
-            </div>
-  
-          </div>
-  
-          <div class="inline fields">
-            <div class="four wide field ">
-              <label>เลขที่สาขาภาษีมูลค่าเพิ่ม (ถ้ามี) </label>
-            </div>
-            <div class="five wide field ">
-              <input type="text" placeholder="" value="">
-            </div>
-          </div>
-  
-  
-          <div class="inline fields">
-            <div class="four  wide field ">
-              <label>ที่ตั้ง
-              </label>
-            </div>
-            <div class="five wide field ">
-              <input type="text" placeholder="" value="350 แขวง ถนน พญาไท เขต ราชเทวี กรุงเทพฯ 10400">
-  
-            </div>
-          </div>
-          <hr>
-  
-          <div class="inline fields">
-            <div class="four  wide field ">
-              <h4>ข้อมูลนำสินค้าออก</h4>
-            </div>
-          </div>
-  
-  
-          <div class="inline fields">
-            <div class="four  wide field ">
-              <label>ขอนำสินค้าออกจาก </label>
-            </div>
-            <div class="five wide field ">
-              <input type="text" placeholder="" value="คลังสินค้า Honda ประเทศไทย">
-            </div>
-            <div class="two wide field ">
-              <label>คลังสินค้าทัณฑ์บน
-              </label>
-            </div>
-            <div class="five wide field ">
-              <input type="text" placeholder="" value="1123123141">
-            </div>
-          </div>
-  
-          <div class="inline fields">
-            <div class="four wide field ">
-              <label>ทะเบียนสรรพสามิต
-              </label>
-            </div>
-            <div class="five wide field ">
-              <input type="text" placeholder="" value="190394893331">
-            </div>
-            <div class="two wide field ">
-              <label>เพื่อ
-              </label>
-            </div>
-            <div class="five wide field ">
-              <input type="text" placeholder="" value="">
-            </div>
-  
-          </div>
-  
-  
-          <div class="inline fields">
-            <div class="four  wide field ">
-              <label>สถานที่เก็บสินค้า </label>
-            </div>
-            <div class="twelve wide field ">
-              <input type="text" placeholder="" value="350 แขวง ถนน พญาไท เขต ราชเทวี กรุงเทพฯ 10400">
-            </div>
-          </div>
-  
-  
-  
-          <div class="inline fields">
-            <div class="four  wide field ">
-              <label>โดย</label>
-            </div>
-            <div class="five wide field ">
-              <input type="text" placeholder="" value=" Honda K Motor">
-            </div>
-          </div>
-  
-          <div class="inline fields">
-            <div class="four  wide field ">
-              <label>จำนวนเงิน (กรณีขอคืนภาษี)</label>
-            </div>
-            <div class="five wide field ">
-              <input type="text" placeholder="" value="">
-            </div>
-          </div>
-        </div>
-      </div>
+      <h3>เชื่อมโยงข้อมูลใบขน (ภส.05-01)</h3>
     </div>
   </div>
-  
-  <div class="ui grid">
-    <div class="sixteen wide column">
-      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>มีรายการดังนี้</span>
-      </div>
-      <div class="ui attached segment">
-        <div class="ui form">
-          <input type="hidden" [(ngModel)]="exciseId">
-          <table id= "dataTable" class="ui small celled table striped selectable">
-            <thead>
-              <tr style="text-align: center;">
-                <th>รายการ</th>
-                <th>ประเภท</th>
-                <th>ชื่อสินค้าและชนิด</th>
-                <th>แบบ/รุ่น</th>
-                <th>ขนาด</th>
-                <th>จำนวน</th>
-                <th>ราคาขายปลีกแนะนำ</th>
-                <th>ภาษีตามมูลค่าร้อยละ </th>
-                <th>ภาษีตามปริมาณ </th>
-                <th>จำนวนภาษี </th>
-  
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>รถยนต์</td>
-                <td>CRV-11023</td>
-                <td>2000-AVC-VVT</td>
-                <td>2000</td>
-                <td>2</td>
-                <td>2200000</td>
-                <td>50000</td>
-                <td>100000</td>
-                <td>130000</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>รถยนต์</td>
-                <td>CRV-11023</td>
-                <td>2200-AVC-VVT</td>
-                <td>2200</td>
-                <td>1</td>
-                <td>1900000</td>
-                <td>450000</td>
-                <td>90000</td>
-                <td>200000</td>
-              </tr>
-            </tbody>
-          </table>
-  
-          <br>
-          <div class="ui center aligned grid">
-            <div class="four wide column">
-              <button class="ui mini primary button" routerLink="/epa01/1/2" style="width: 100px;">
-                <i class="save icon"></i>
-                บันทึก
-              </button>
-              <button class="ui mini button" style="width: 100px;">
-                ยกเลิก
-              </button>
-            </div>
-          </div>
-  
-        </div>
-      </div>
+  <br>
+  <div class="inline fields">
+    <div class="four wide field ">
+      <h4>ข้อมูลผู้ส่งออก</h4>
     </div>
   </div>
+  <div class="ui form">
+    <div class="inline fields">
+      <div class="one wide field "></div>
+      <div class="three wide field ">
+        <label>ชื่อ :</label>
+      </div>
+      <div class="four wide field ">
+        <input type="text" placeholder="" [(ngModel)]="exciseName">
+      </div>
+      <div class="three wide field ">
+        <label>เลขบัตรประชาชน/เลขทะเบียนนิติบุคคล :</label>
+      </div>
+      <div class="four wide field ">
+        <input type="text" placeholder="">
+      </div>
+    </div>
+
+    <div class="inline fields">
+      <div class="one wide field"></div>
+      <div class="three wide field ">
+        <label>เลขที่สาขาภาษีมูลค่าเพิ่ม (ถ้ามี) :</label>
+      </div>
+      <div class="four wide field ">
+        <input type="text" placeholder="">
+      </div>
+    </div>
+
+    <br>
+    <div class="inline fields">
+      <div class="four wide field ">
+        <h4>ข้อมูลนำสินค้าออก</h4>
+      </div>
+    </div>
+    <div class="inline fields">
+      <div class="one wide field"></div>
+      <div class="three  wide field ">
+        <label>ขอนำสินค้าออกจาก :</label>
+      </div>
+      <div class="four wide field ">
+        <input type="text" placeholder="">
+      </div>
+      <div class="three wide field ">
+        <label>ทะเบียนสรรพสามิต :</label>
+      </div>
+      <div class="four wide field ">
+        <input type="text" placeholder="">
+      </div>
+    </div>
+
+    <div class="inline fields">
+      <div class="one wide field"></div>
+      <div class="three wide field ">
+        <label>เพื่อ :</label>
+      </div>
+      <div class="four wide field ">
+        <input type="text" placeholder="">
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ///// Datatable Segment ///// -->
+<div class="ui segment" style="width: 100%;">
+
+  <input type="hidden" [(ngModel)]="exciseId">
+  <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
+    <thead>
+      <tr style="text-align: center;">
+        <th>รายการ</th>
+        <th>ประเภท</th>
+        <th>ชื่อสินค้าและชนิด</th>
+        <th>แบบ/รุ่น</th>
+        <th>ขนาด</th>
+        <th>จำนวน</th>
+        <th>ราคาขายปลีกแนะนำ</th>
+        <th>ภาษีตามมูลค่าร้อยละ </th>
+        <th>ภาษีตามปริมาณ </th>
+        <th>จำนวนภาษี </th>
+        <th>ทำรายการ </th>
+      </tr>
+    </thead>
+  </table>
+
+  <br>
+  <div class="ui center aligned grid">
+    <div class="four wide column">
+      <button class="ui mini button" style="width: 100px;" (click)="onClickBack()">
+        ย้อนกลับ
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="ui modal" id="ModalCheck" style="width: 90%;">
+
+  <div class="header">
+    Hello Modal!
+  </div>
+
+  <div class="scrolling content" style="height: 600px !important;">
+    <div class="ui form">
+
+      <div class="ui grid">
+        <!-- column 1 -->
+        <div class="eight wide column">
+          <p>Column 1</p>
+        </div>
+
+        <!-- column 2 -->
+        <div class="eight wide column">
+          <p>Column 2</p>
+        </div>
+      </div>
+
+      <div class="ui grid">
+        <!-- column 1 -->
+        <div class="eight wide column">
+          <p>Column 1</p>
+        </div>
+
+        <!-- column 2 -->
+        <div class="eight wide column">
+          <p>Column 2</p>
+        </div>
+      </div>
+
+      <div class="ui grid">
+        <!-- column 1 -->
+        <div class="eight wide column">
+          <p>Column 1</p>
+        </div>
+
+        <!-- column 2 -->
+        <div class="eight wide column">
+          <p>Column 2</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="ui primary button">
+      <i class="save icon"></i>
+      บันทึก
+    </div>
+    <div class="ui icon deny button">
+      <i class="close icon"></i>
+      ยกเลิก
+    </div>
+  </div>
+
+</div>

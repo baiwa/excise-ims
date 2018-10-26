@@ -54,19 +54,23 @@ public class Int0621Service {
 		List<CwpTblDtl> TRList;
 		CwpTblDtl TRData;
 		try {
+			/* assign variable to count old condition */
+//			int countNumberThree = 0;
+//			int countNumberNine = 0;
+			/* --------------- */
 			for (int i = 0; i < formVo.size(); i++) {
 				int0621Vo = new Int0621Vo();
 				TRList = new ArrayList<CwpTblDtl>();
-				BigDecimal totalNetAmount = null;
+				BigDecimal totalNetAmount = new BigDecimal(0);
 				totalNetAmount = cwpScwdDtlDao.sumNetAmount(formVo.get(i).getCwpScwdHdrId(), formVo.get(i).getBudgetCode());
-				// set data
+				// set data budget code and net amount
 				int0621Vo.setBudgetCode(formVo.get(i).getBudgetCode());
 				int0621Vo.setNetAmount(totalNetAmount);
 
-				//check budget code
+				//check budget code condition
 				if (BeanUtils.isNotEmpty(int0621Vo.getBudgetCode())) {
+					char checkStr = int0621Vo.getBudgetCode().charAt(0);
 					if (int0621Vo.getBudgetCode().length() > 4) {
-						char checkStr = int0621Vo.getBudgetCode().charAt(0);
 						//index 0 == 3
 						if ("3".equals(String.valueOf(checkStr))) {
 							int0621Vo.setBudgetName("เงินงบประมาณ");
@@ -78,13 +82,22 @@ public class Int0621Service {
 						int0621Vo.setBudgetName("เงินนอกงบประมาณ");
 					}
 				}
-
+				BigDecimal totalCarryForward = new BigDecimal(0);
 				for (int j = 0; j < formVo.get(i).getCwpTblDtlId().size(); j++) {
 					TRData = new CwpTblDtl();
 					TRData = cwpTblDtlRepository.findOne(Long.valueOf(formVo.get(i).getCwpTblDtlId().get(j)));
-					
-					// set data
-					TRData.setDiff(int0621Vo.getNetAmount().subtract(TRData.getCarryForward()));
+					//check duplicate 'CarryForward' value
+					if(formVo.get(i).getCwpTblDtlId().size() > 1) {
+						totalCarryForward = totalCarryForward.add(TRData.getCarryForward());
+						int lastIndex = formVo.get(i).getCwpTblDtlId().size() - 1;
+						if(j == lastIndex) {
+							// set total data difference
+							TRData.setDiff(int0621Vo.getNetAmount().subtract(totalCarryForward));
+						}
+					}else {
+						// set data difference
+						TRData.setDiff(int0621Vo.getNetAmount().subtract(TRData.getCarryForward()));
+					}
 					TRList.add(TRData);
 				}
 				int0621Vo.setCwpTblDtlList(TRList);

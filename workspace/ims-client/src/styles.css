@@ -150,55 +150,81 @@ img.image-width-18 {
 
 /* bg-mon */
 .bg-m-01 {
-    background-color:#13ff0099 !important;
+    background-color:#f2711c38 !important;
+    font-weight: bold;
+    color: #F2711C;
 }
 
 .bg-m-02 {
-    background-color:#abe8e2 !important;
+    background-color:#fbbd0863 !important;
+    font-weight: bold;
+    color: #FBBD08;
 }
 
 .bg-m-03 {
-    background-color:#ff29a2b8 !important;
+    background-color:#b5cc1861 !important;
+    font-weight: bold;
+    color: #B5CC18;
 }
 
 .bg-m-04 {
-    background-color:#cc33ffb8 !important;
+    background-color:#21ba4559 !important;
+    font-weight: bold;
+    color: #21BA45;
 }
 
 .bg-m-05 {
-    background-color:#2a21d0b0!important;
+    background-color:#00b5ad4d !important;
+    font-weight: bold;
+    color: #00B5AD;
 }
 
 .bg-m-06 {
-    background-color:#cfff00de !important;
+    background-color:#2185d040 !important;
+    font-weight: bold;
+    color: #2185D0;
 }
 
 .bg-m-07 {
-    background-color:#fbbd08c2 !important;
+    background-color:#6435c942 !important;
+    font-weight: bold;
+    color: #6435C9;
 }
 
 .bg-m-08 {
-    background-color:#f2711c !important;
+    background-color:#e039974d !important;
+    font-weight: bold;
+    color: #E03997;
 }
 
 .bg-m-09 {
-    background-color:#a5673fa3 !important;
+    background-color:#8d583661 !important;
+    font-weight: bold;
+    color: #8D5836;
 }
 
 .bg-m-10 {
-    background-color:#d4d4d5 !important;
+    background-color:#a5673f6b !important;
+    font-weight: bold;
+    color: #A5673F;
 }
 
 .bg-m-11 {
-    background-color:#fdac7fb0 !important;
+    background-color:#5d673a3d !important;
+    font-weight: bold;
+    color: #5d673a;
 }
 
 .bg-m-12 {
-    background-color:#9c9393 !important;
+    background-color:#9c939338 !important;
+    font-weight: bold;
+    color: #9c9393;
 }
 
 .bg-m-red {
     background-color:#ef1410e3 !important;
+    font-weight: bold;
+
 }
 /* !bg-mon */
 

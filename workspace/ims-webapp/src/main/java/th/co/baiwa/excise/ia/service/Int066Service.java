@@ -122,8 +122,8 @@ public class Int066Service {
 		Cell cell = row.createCell(cellNum);
 		System.out.println("Creating excel");
 
-		String[] columns = {"ลำดับ", "วันที่สั่งจ่าย", "เช็คเล่มที่ ", "ชื่อธนาคาร", "จำนวนเงินสั่งจ่ายในเช็ค", "ประเภทงบประมาณ","รายการ","ผู้รับเงิน"};
-		
+		String[] columns = {"ลำดับที่", "ผู้รับเงิน", "เลขที่บัญชี ", "ประเภทค่าใช้จ่าย", "รายการ","จำนวนเงิน","วันที่โอน"};
+							
 		for (cellNum = 0; cellNum < columns.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(columns[cellNum]);
@@ -150,7 +150,7 @@ public class Int066Service {
 			cellNum++;
 			
 			cell = row.createCell(cellNum);
-			cell.setCellValue(item.getPaymentDate());
+			cell.setCellValue(item.getPayee());
 			cell.setCellStyle(excalService.cellLeft);
 			cellNum++;
 			
@@ -160,29 +160,26 @@ public class Int066Service {
 			cellNum++;
 			
 			cell = row.createCell(cellNum);
-			cell.setCellValue(item.getBankName());
-			cell.setCellStyle(excalService.cellLeft);
-			cellNum++;
-			
-			cell = row.createCell(cellNum);
-			cell.setCellValue(item.getAmount());
-			cell.setCellStyle(excalService.cellRight);
-			cellNum++;
-			
-			cell = row.createCell(cellNum);
 			cell.setCellValue(item.getBudgetType());
 			cell.setCellStyle(excalService.cellLeft);
 			cellNum++;
 			
 			cell = row.createCell(cellNum);
 			cell.setCellValue(item.getItemDesc());
+			cell.setCellStyle(excalService.cellRight);
+			cellNum++;
+		
+			cell = row.createCell(cellNum);
+			cell.setCellValue(item.getAmount());
+			cell.setCellStyle(excalService.cellRight);
+			cellNum++;
+			
+	
+			cell = row.createCell(cellNum);
+			cell.setCellValue(item.getPaymentDate());
 			cell.setCellStyle(excalService.cellLeft);
 			cellNum++;
 			
-			cell = row.createCell(cellNum);
-			cell.setCellValue(item.getPayee());
-			cell.setCellStyle(excalService.cellLeft);
-			cellNum++;
 			
 			
 			no++;

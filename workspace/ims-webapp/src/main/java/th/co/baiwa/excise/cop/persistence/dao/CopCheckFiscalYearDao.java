@@ -13,9 +13,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.cop.persistence.vo.Cop0711FormVo;
+import th.co.baiwa.excise.cop.persistence.vo.Cop0711Vo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop071FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop071Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int09TableDtlVo;
+import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
@@ -26,12 +30,13 @@ public class CopCheckFiscalYearDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private final String SQL_TRAVEL_ESTIMATOR_PROCESS = "SELECT * FROM COP_CHECK_FISCAL_YEAR WHERE 1=1 ";
+	private final String SQL_COP_CHECK_FISCAL_YEAR = " SELECT * FROM COP_CHECK_FISCAL_YEAR WHERE IS_DELETED='N' ";
+	private final String SQL_COP_CHECK_FISCAL_YEAR_DTL = " SELECT * FROM COP_CHECK_FISCAL_YEAR_DTL WHERE IS_DELETED='N' ";
 	
 	
-	public Long count(Cop071FormVo formVo) {
+	public Long countCop071(Cop071FormVo formVo) {
 		
-		StringBuilder sql = new StringBuilder(SQL_TRAVEL_ESTIMATOR_PROCESS);
+		StringBuilder sql = new StringBuilder(SQL_COP_CHECK_FISCAL_YEAR);
 		List<Object> params = new ArrayList<>();
 		
 
@@ -46,9 +51,9 @@ public class CopCheckFiscalYearDao {
         return count;
     }
 
-	public List<Cop071Vo> findAll(Cop071FormVo formVo) {
+	public List<Cop071Vo> findAllCop071(Cop071FormVo formVo) {
 		
-		StringBuilder sql = new StringBuilder(SQL_TRAVEL_ESTIMATOR_PROCESS);
+		StringBuilder sql = new StringBuilder(SQL_COP_CHECK_FISCAL_YEAR);
 		List<Object> params = new ArrayList<>();
 
 
@@ -57,7 +62,7 @@ public class CopCheckFiscalYearDao {
 			params.add(formVo.getFiscalYear());
 		}
 
-		
+		log.info("findAllCop071 sql : {}",sql);
         List<Cop071Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), cop071Rowmapper);
         return list;
     }
@@ -109,8 +114,10 @@ public class CopCheckFiscalYearDao {
 	    		    "AS_PLAN_WAIT," +
 	    		    "OUTSIDE_PLAN_NUMBER," +
 	    		    "OUTSIDE_PLAN_SUCCESS," +
-	    			"OUTSIDE_PLAN_WAIT "+ 
+	    			"OUTSIDE_PLAN_WAIT, "+ 
+	    			"IS_DELETED "+ 
 	    			")VALUES( " + 
+	    			"?, " + 
 	    			"?, " + 
 	    			"?, " + 
 	    			"?, " + 
@@ -126,12 +133,154 @@ public class CopCheckFiscalYearDao {
 	    		    		vo.getAsPlanWait(),
 	    		    		vo.getOutsidePlanNumber(),
 	    		    		0,
-	    		    		vo.getOutsidePlanWait()
-	    		    		});
+	    		    		vo.getOutsidePlanWait(),
+	    		    		"N"});
 	    	
 	    	return id;
 	}
-	
+	    
+	    public Long countCop0711(Cop0711FormVo formVo) {
+			
+			StringBuilder sql = new StringBuilder(SQL_COP_CHECK_FISCAL_YEAR_DTL);
+			List<Object> params = new ArrayList<>();
+			
 
+			if (!BeanUtils.isEmpty(formVo.getId())) {
+				sql.append(" AND  ID_MASTER = ? ");
+				params.add(formVo.getId());
+			}
+			if (!BeanUtils.isEmpty(formVo.getActionPlan())) {
+				sql.append(" AND  ACTION_PLAN = ? ");
+				params.add(formVo.getActionPlan());
+			}
+			
+
+			String countSql = OracleUtils.countForDatatable(sql);
+	        Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+	        return count;
+	    }
+
+		public List<Cop0711Vo> findAllCop0711(Cop0711FormVo formVo) {
+			
+			StringBuilder sql = new StringBuilder(SQL_COP_CHECK_FISCAL_YEAR_DTL);
+			List<Object> params = new ArrayList<>();
+
+
+			if (!BeanUtils.isEmpty(formVo.getId())) {
+				sql.append(" AND  ID_MASTER = ? ");
+				params.add(formVo.getId());
+			}
+			if (!BeanUtils.isEmpty(formVo.getActionPlan())) {
+				sql.append(" AND  ACTION_PLAN = ? ");
+				params.add(formVo.getActionPlan());
+			}
+			log.info("findAllCop0711 sql : {}",sql);
+			
+	        List<Cop0711Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), cop0711Rowmapper);
+	        return list;
+	    }
+		
+		 private RowMapper<Cop0711Vo> cop0711Rowmapper = new RowMapper<Cop0711Vo>() {
+		    	@Override
+		    	public Cop0711Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+		    		Cop0711Vo vo = new Cop0711Vo();
+		    
+		    	    vo.setId(rs.getLong("ID"));
+		    	    vo.setIdMaster(rs.getLong("ID_MASTER"));
+		    	    
+		    		vo.setFiscalyear(rs.getString("FISCALYEAR"));
+		    		vo.setEntrepreneurNo(rs.getString("ENTREPRENEUR_NO"));
+		    		vo.setEntrepreneurName(rs.getString("ENTREPRENEUR_NAME"));
+		    		vo.setEntrepreneurLoca(rs.getString("ENTREPRENEUR_LOCA"));
+		    		vo.setCheckDate(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("CHECK_DATE")));
+		    		vo.setActionPlan(rs.getString("ACTION_PLAN"));
+		    		vo.setStatus(rs.getString("STATUS"));
+		    	    	
+		    		return vo;
+		    	}
+		    };
+		    
+		    public Long saveDataCop0711 (Cop0711Vo vo) {
+		    	Long id = jdbcTemplate.queryForObject(" SELECT COP_CHECK_FISCAL_YEAR_DTL_SEQ.NEXTVAL FROM dual ",Long.class);
+
+		    	jdbcTemplate.update(" INSERT INTO COP_CHECK_FISCAL_YEAR_DTL( " + 
+		    			"ID, " + 
+		    			"ID_MASTER, " + 
+		    			"ENTREPRENEUR_NO, " +
+		    			"ENTREPRENEUR_NAME, " +
+		    			"ENTREPRENEUR_LOCA, " +
+		    			"CHECK_DATE, " +
+		    			"ACTION_PLAN, " + 
+		    			"STATUS, " + 
+		    			"IS_DELETED "+ 
+		    			")VALUES( " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?, " + 
+		    			"?) ",new Object[] {
+		    					id,
+		    					vo.getIdMaster(),
+		    					vo.getEntrepreneurNo(),
+		    					vo.getEntrepreneurName(),
+		    					vo.getEntrepreneurLoca(),
+		    					DateConstant.convertStrDDMMYYYYToDate(vo.getCheckDate()),
+		    					vo.getActionPlan(),
+		    					"1875",
+		    					"N"});
+		    	
+		    	return id;
+		}
+			public void editDataCop0711 (Cop0711Vo vo) {
+
+		    	jdbcTemplate.update(" UPDATE COP_CHECK_FISCAL_YEAR_DTL SET " + 
+		    			"ENTREPRENEUR_NO=?, " +
+		    			"ENTREPRENEUR_NAME=?, " +
+		    			"ENTREPRENEUR_LOCA=?, " +
+		    			"CHECK_DATE=?, " +
+		    			"ACTION_PLAN=? WHERE ID = ? ",new Object[] {
+		    					vo.getEntrepreneurNo(),
+		    					vo.getEntrepreneurName(),
+		    					vo.getEntrepreneurLoca(),
+		    					DateConstant.convertStrDDMMYYYYToDate(vo.getCheckDate()),
+		    					vo.getActionPlan(),
+		    					vo.getId()
+		    					});
+		    	
+		}
+		    public void deleteCop0711 (Long id) {
+		    	log.info(" deleteCop0711 ID : {}",id);
+		    	jdbcTemplate.update(" UPDATE COP_CHECK_FISCAL_YEAR_DTL SET IS_DELETED = 'Y' WHERE ID = ? ",new Object[] {id});
+		    }
+		    
+			public List<Cop0711Vo> getEntrepreneurCop0711(String entrepreneurNo) {
+				
+				StringBuilder sql = new StringBuilder(" SELECT * FROM TA_EXCISE_REGISTTION_NUMBER WHERE TA_EXCISE_ID = ? ");
+				List<Object> params = new ArrayList<>();
+
+				params.add(entrepreneurNo);
+		
+				log.info("getEntrepreneurCop0711 sql : {}",sql);
+				
+		        List<Cop0711Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), getEntrepreneurCop0711Rowmapper);
+		        return list;
+		    }
+			
+			 private RowMapper<Cop0711Vo> getEntrepreneurCop0711Rowmapper = new RowMapper<Cop0711Vo>() {
+			    	@Override
+			    	public Cop0711Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			    		Cop0711Vo vo = new Cop0711Vo();
+			    
+			    		vo.setEntrepreneurNo(rs.getString("TA_EXCISE_ID"));
+			    		vo.setEntrepreneurName(rs.getString("TA_EXCISE_OPERATOR_NAME"));
+			    		vo.setEntrepreneurLoca(rs.getString("TA_EXCISE_FAC_ADDRESS"));
+			    		
+			    		return vo;
+			    	}
+			    };
 	    
 }

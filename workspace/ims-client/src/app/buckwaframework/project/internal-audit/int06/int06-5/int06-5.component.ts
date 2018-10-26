@@ -38,6 +38,7 @@ export class Int065Component implements OnInit, AfterViewInit {
   areaList: any;
   branchList: any;
   budgetTypeList: any;
+  dataInTable: any = [];
 
   constructor(private int065Service: Int065Service,private authService: AuthService, private ajax: AjaxService,) {
   }
@@ -90,6 +91,20 @@ export class Int065Component implements OnInit, AfterViewInit {
   search = () => {
     $("#searchFlag").val("TRUE");
     this.int065Service.search();
+    let promise1 = new Promise((resolve, reject) => {
+      this.int065Service.search();
+      resolve();
+    });
+
+    promise1.then(() => {
+      console.log('resove success');
+      setTimeout(() => {
+        this.dataInTable = $('#dataTable').DataTable().data();
+      console.log( this.dataInTable);
+      console.log(this.dataInTable.length);
+      }, 500);
+      
+    });
   }
   clear = () => {
     this.int065Service.clear();
@@ -102,8 +117,18 @@ export class Int065Component implements OnInit, AfterViewInit {
   }
 
 
-  dataTable = () => {
-    this.int065Service.dataTable();
+   dataTable = () => {
+    let promise1 = new Promise((resolve, reject) => {
+      this.int065Service.dataTable();
+      resolve();
+    });
+
+    promise1.then(() => {
+      this.dataInTable = $('#dataTable').DataTable().data();
+    });
+    
+     
+     
   }
 
   calenda = () => {

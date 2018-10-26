@@ -1,59 +1,151 @@
 import { Component, OnInit } from "@angular/core";
 
+
+import { FormSearch } from "projects/internal-audit/int06/int06-5/from-search.model";
+import { BreadCrumb } from "models/breadcrumb";
+import { AuthService } from "services/auth.service";
+import { AjaxService } from "services/ajax.service";
+import { Utils } from "helpers/utils";
+import { TextDateTH, formatter } from "helpers/datepicker";
+import { Int052Service } from "./int05-2.service";
+
+
 declare var $: any;
 @Component({
   selector: "int05-2",
   templateUrl: "./int05-2.component.html",
-  styleUrls: ["./int05-2.component.css"]
+  styleUrls: ["./int05-2.component.css"]  ,
+  providers:[Int052Service]
 })
 export class Int052Component implements OnInit {
-  zoneList: any[];
-  areaList: any[];
-  branchList: any[];
+  
+  breadcrumb: BreadCrumb[] = [
+    { label: "ตรวจสอบภายใน", route: "#" },
+    { label: "ตรวจสอบพัสดุ", route: "#" },
+    { label: "ตรวจสอบแสตมป์", route: "#" },
+    { label: "งบเดือนการรับ - จ่ายแสตมป์", route: "#" }
+  ];
+  form: FormSearch = new FormSearch();
+  startDate: any = "";
+  endDate: any = "";
+  sectorList: any;
+  offcode: any;
+  yearMonthFrom: any;
+  yearMonthTo: any;
+  pageNo: any;
+  dataPerPage: any;
+  areaList: any;
+  branchList: any;
+  budgetTypeList: any;
+  dataInTable: any = [];
 
-  showData: boolean = false;
+  constructor(private int052Service: Int052Service ,private authService: AuthService, private ajax: AjaxService,) {
+  }
 
-  constructor() {}
+  ngAfterViewInit() {
+    this.calenda();
+
+  }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('INT-06500');
     $(".ui.dropdown").dropdown();
-    $(".ui.dropdown.ai").css("width", "100%");
-    this.zoneList = [
-      { value: "สำนักงานสรรพสามิตภาคที่ 1" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 2" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 3" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 4" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 5" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 6" },
-      { value: "สำนักงานสรรพสามิตภาคที่ 7" }
-    ];
-
-    this.areaList = [
-      { value: "สำนักงานสรรพสามิตพื้นที่สมุทรลำปาง" },
-      { value: "สำนักงานสรรพสามิตพื้นที่สมุทรสาคร" },
-      { value: "สำนักงานสรรพสามิตพื้นที่สมุทรปราการ" }
-    ];
-
-    this.branchList = [
-      { value: "สำนักงานสรรพสามิตพื้นที่ลำปางสาขาเมืองลำปาง" },
-      { value: "สำนักงานสรรพสามิตพื้นที่สมุทรสาครสาขาเมืองสมุทรสาคร" },
-      { value: "สำนักงานสรรพสามิตพื้นที่สมุทรปราการสาขาเมืองสมุทรปราการ" }
-    ];
+    this.sector();
+    this.dataTable();
+    this.budgetType();
   }
 
-  uploadData() {
-    this.showData = true;
+  sector = () => {
+    this.int052Service.sector().then((res) => {
+      this.sectorList = res;
+    });
+  }
+  area = (e) => {
+    $("#area").dropdown('restore defaults');
+    $("#branch").dropdown('restore defaults');
+    this.areaList = null;
+    this.branchList = null
+    if (Utils.isNotNull(e.target.value)) {
+      this.int052Service.area(e.target.value).then((res) => {
+        this.areaList = res;;
+      });
+    }
+  }
+  branch = (e) => {
+    this.branchList = null
+    $("#branch").dropdown('restore defaults');
+    if (Utils.isNotNull(e.target.value)) {
+      this.int052Service.branch(e.target.value).then((res) => {
+        this.branchList = res;
+      });
+    }
   }
 
-  clearData() {
-    this.showData = false;
+  budgetType = () => {
+    this.int052Service.budgetType().then((res)=>{
+      this.budgetTypeList = res;
+    });
   }
 
-  editData() {
-    $("#modalCheckStampBranch").modal("show");
+  search = () => {
+    $("#searchFlag").val("TRUE");
+    this.int052Service.search();
+    let promise1 = new Promise((resolve, reject) => {
+      this.int052Service.search();
+      resolve();
+    });
+
+    promise1.then(() => {
+      console.log('resove success');
+      setTimeout(() => {
+        this.dataInTable = $('#dataTable').DataTable().data();
+      console.log( this.dataInTable);
+      console.log(this.dataInTable.length);
+      }, 500);
+      
+    });
+  }
+  clear = () => {
+    this.int052Service.clear();
+
+
   }
 
-  closeModal() {
-    $("#modalCheckStampBranch").modal("hide");
+  exportFile=()=>{
+    this.int052Service.exportFile();
   }
+
+
+   dataTable = () => {
+    let promise1 = new Promise((resolve, reject) => {
+      this.int052Service.dataTable();
+      resolve();
+    });
+
+    promise1.then(() => {
+      this.dataInTable = $('#dataTable').DataTable().data();
+    });
+    
+     
+     
+  }
+
+  calenda = () => {
+    $("#dateF").calendar({
+      maxDate: new Date(),
+      endCalendar: $("#dateT"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+    $("#dateT").calendar({
+      maxDate: new Date(),
+      startCalendar: $("#dateF"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+  }
+
+
 }
