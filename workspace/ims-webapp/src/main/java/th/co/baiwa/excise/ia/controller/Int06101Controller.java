@@ -46,6 +46,18 @@ public class Int06101Controller {
 		return int06101Service.budge();
 	}
 	
+	@PostMapping("/title")
+	@ResponseBody
+	public List<Lov> title() {
+		return int06101Service.title();
+	}
+	
+	@PostMapping("/bank")
+	@ResponseBody
+	public List<Lov> bank() {
+		return int06101Service.bank();
+	}
+	
 	@PostMapping("/budged")
 	@ResponseBody
 	public List<BudgetList> budged() {

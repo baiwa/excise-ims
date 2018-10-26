@@ -34,8 +34,8 @@ export class Int06101Component implements OnInit {
   category: any;
   list: any;
   travelToDescription: any;
-
-
+  titleList: any;
+  bankList: any;
 
   constructor(
     private messageBarService: MessageBarService,
@@ -57,8 +57,6 @@ export class Int06101Component implements OnInit {
   ngOnInit() {
     $('.ui.calendar').calendar();
 
-
-
     $('.ui.calendar').calendar({
       maxDate: new Date(),
       type: "date",
@@ -71,16 +69,16 @@ export class Int06101Component implements OnInit {
     this.authService.reRenderVersionProgram('INT-06101');
     this.budgeDropdown();
     this.calenda();
-
     this.pmmethod();
     this.activity();
     this.budge();
+    this.title();
+    this.bank();
     this.numbers = [];
     this.numbers.push(this.numbers.length + 1);
   }
 
-
-
+  
   onAddField = () => {
     let num = this.numbers.length;
     if (num < 30) {
@@ -94,14 +92,19 @@ export class Int06101Component implements OnInit {
   };
 
   calenda = () => {
-
-
     $("#dateWithdraw").calendar({
       maxDate: new Date(),
       type: "date",
       text: TextDateTH,
       formatter: formatter()
     });
+    $("#datePersons").calendar({
+      maxDate: new Date(),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter()
+    });
+
   }
 
   saveData() {
@@ -209,8 +212,6 @@ export class Int06101Component implements OnInit {
     this.listButton.splice(index, 1);
   }
 
-
-
   pmmethod = () => {
     let url = "ia/int06101/pmmethod"
     this.ajax.post(url, {}, res => {
@@ -229,6 +230,20 @@ export class Int06101Component implements OnInit {
     let url = "ia/int06101/budge"
     this.ajax.post(url, {}, res => {
       this.budgetList = res.json();
+    })
+  }
+
+  title = () => {
+    let url = "ia/int06101/title"
+    this.ajax.post(url, {}, res => {
+      this.titleList = res.json();
+    })
+  }
+
+  bank = () => {
+    let url = "ia/int06101/bank"
+    this.ajax.post(url, {}, res => {
+      this.bankList = res.json();
     })
   }
 

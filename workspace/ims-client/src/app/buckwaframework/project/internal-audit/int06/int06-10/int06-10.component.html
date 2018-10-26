@@ -1,6 +1,6 @@
 <!-- breadcrumb -->
 <app-breadcrumb [route]="breadcrumb" ></app-breadcrumb>
-
+<br>
 <!-- form search -->
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>ค้นหารายการขอเบิก </span>
@@ -39,7 +39,7 @@
             <div class="ui calendar" id="dateForm" style="width:100%">
               <div class="ui input left icon">
                 <i class="calendar alter nate outline icon"></i>
-                <input type="text">
+                <input type="text" placeholder="วว/ดด/ปปปป">
               </div>
             </div>
           </div>
@@ -50,7 +50,7 @@
             <div class="ui calendar" id="dateTo" style="width:100%">
               <div class="ui input left icon">
                 <i class="calendar alter nate outline icon"></i>
-                <input type="text">
+                <input type="text" placeholder="วว/ดด/ปปปป">
               </div>
             </div>
           </div>
@@ -62,8 +62,8 @@
             <i class="search icon"></i> ค้นหา </button>
           <button class="ui mini button" type="button" (click)="onClear()">
             <i class="refresh  icon"></i> ล้างข้อมูล </button>
-          <button class="ui primary  mini button"  [routerLink]="[ '/int06/10/2'] ">
-            <i class="list ul icon"></i> รายการใบเบิก </button>
+          <!-- <button class="ui primary  mini button"  [routerLink]="[ '/int06/10/2'] ">
+            <i class="list ul icon"></i> รายการใบเบิก </button> -->
           <button class="ui green mini button" [routerLink]="[ '/int06/10/1'] ">
             <i class="add icon"></i> เพิ่มข้อมูล </button>
         </div>

@@ -44,6 +44,16 @@ public class Int06101Service {
 		return lovRepository.findByType("BUDGET_TYPE");
 	}
 	
+	public List<Lov> title() {
+		// TODO Auto-generated method stub
+		return lovRepository.findByType("TITLE");
+	}
+	
+	public List<Lov> bank() {
+		// TODO Auto-generated method stub
+		return lovRepository.findByType("BANK");
+	}
+	
 //	public List<BudgetList> budged() {
 //		// TODO Auto-generated method stub
 //		return budgetListRepository.findDistinctByBudgetId("");
