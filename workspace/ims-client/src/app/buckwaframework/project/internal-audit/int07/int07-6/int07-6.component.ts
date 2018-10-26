@@ -15,10 +15,11 @@ declare var $: any;
 export class Int076Component implements OnInit, AfterViewInit {
   breadcrumb: BreadCrumb[];
   fileExel: File[];
-  del: any;
+  // del: any;
+  // dataEdit: Data;
   //Data Upload
   dataList: Data[] = [];
-  dataEdit: Data;
+  
   dataCheckList: Data[] = [];
   // dataTable
   datatable: any;
@@ -46,7 +47,7 @@ export class Int076Component implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-07600');
-    this.dataEdit = new Data();
+    //this.dataEdit = new Data();
     $("#boxCheck").hide();
   }
 
@@ -69,7 +70,7 @@ export class Int076Component implements OnInit, AfterViewInit {
       url,
       formBody,
       res => {
-        console.log(res.json());
+       // console.log(res.json());
         res.json().forEach(element => {
           this.dataList.push(element);
         });
@@ -109,11 +110,11 @@ export class Int076Component implements OnInit, AfterViewInit {
     }
 
     this.datatable = $("#dataTable").DataTableTh({
-      lengthChange: false,
+      lengthChange: true,
       searching: false,
       loading:true,
       ordering: false,
-      pageLength: 100,
+      pageLength: 10,
       processing: true,
       serverSide: false,
       paging: true,
@@ -128,18 +129,18 @@ export class Int076Component implements OnInit, AfterViewInit {
         { data: "payUnit" },
         { data: "debit" },
         { data: "credit" },
-        { data: "liftUp" },
-        {
-          data: "id",
-          render: function () {
-            return '<button type="button" class="ui mini button primary edit"><i class="edit icon"></i> แก้ไข </button>'
-              + '<button type="button" class="ui mini button del"><i class="trash alternate icon"></i> ลบ</button>';
-          }
-        }
+        { data: "liftUp" }
+        // {
+        //   data: "id",
+        //   render: function () {
+        //     return '<button type="button" class="ui mini button primary edit"><i class="edit icon"></i> แก้ไข </button>'
+        //       + '<button type="button" class="ui mini button del"><i class="trash alternate icon"></i> ลบ</button>';
+        //   }
+        // }
       ],
       columnDefs: [
-        { targets: [2, 10], className: "center aligned" },
-        { targets: [0, 1, 3, 4, 5, 6, 7, 8, 9], className: "right aligned" },
+        { targets: [2], className: "center aligned" },
+        { targets: [0, 1, 3, 4, 5, 6, 7, 8,9], className: "right aligned" },
       ],
 
       createdRow: function (row, data, dataIndex) {
@@ -147,22 +148,22 @@ export class Int076Component implements OnInit, AfterViewInit {
       },
       rowCallback: (row, data, index) => {
 
-        $("td > .edit", row).bind("click", () => {
-          console.log(data);
-          console.log(row);
-          console.log(index);
-          this.dataEdit = data;
+        // $("td > .edit", row).bind("click", () => {
+        //   console.log(data);
+        //   console.log(row);
+        //   console.log(index);
+        //   this.dataEdit = data;
 
-          $('#editData').modal('show');
-        });
+        //   $('#editData').modal('show');
+        // });
 
-        $("td > .del", row).bind("click", () => {
-          console.log(data);
-          console.log(row);
-          console.log(index);
-          this.del = index;
-          $('#delData').modal('show');
-        });
+        // $("td > .del", row).bind("click", () => {
+        //   console.log(data);
+        //   console.log(row);
+        //   console.log(index);
+        //   this.del = index;
+        //   $('#delData').modal('show');
+        // });
 
       }
 
@@ -175,7 +176,7 @@ export class Int076Component implements OnInit, AfterViewInit {
       this.datatableCheck.destroy();
     }
     this.datatableCheck = $("#datatableCheck").DataTableTh({
-      lengthChange: false,
+      lengthChange: true,
       searching: false,
       ordering: false,
       pageLength: 100,
@@ -254,7 +255,6 @@ export class Int076Component implements OnInit, AfterViewInit {
             }
           }
         } else if (data.color == '4') {
-          console.log(this.tmp3[this.tmp3.length - 1]);
           if (data.credit == null || data.credit == undefined ||data.credit == ""){
             for (let i = 0; i <= 9; i++) {
               $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
@@ -412,30 +412,30 @@ export class Int076Component implements OnInit, AfterViewInit {
 
 
 
-  editData() {
-    this.loading = true;
-    this.dataList.forEach(element => {
-      if (this.dataEdit.id === element.id) {
-        element = this.dataEdit;
-        this.initDatatable();
-      }
-    });
+  // editData() {
+  //   this.loading = true;
+  //   this.dataList.forEach(element => {
+  //     if (this.dataEdit.id === element.id) {
+  //       element = this.dataEdit;
+  //       this.initDatatable();
+  //     }
+  //   });
 
-    setTimeout(() => {
-      this.loading = false;
-    }, 200);
-  }
+  //   setTimeout(() => {
+  //     this.loading = false;
+  //   }, 200);
+  // }
 
-  delData() {
-    this.loading = true;
-    console.log("ตำแหน่ง" + this.del);
-    this.dataList.splice(this.del, 1);
-    this.initDatatable();
+  // delData() {
+  //   this.loading = true;
+  //   console.log("ตำแหน่ง" + this.del);
+  //   this.dataList.splice(this.del, 1);
+  //   this.initDatatable();
 
-    setTimeout(() => {
-      this.loading = false;
-    }, 200);
-  }
+  //   setTimeout(() => {
+  //     this.loading = false;
+  //   }, 200);
+  // }
 
   backPage() {
     event.preventDefault();
