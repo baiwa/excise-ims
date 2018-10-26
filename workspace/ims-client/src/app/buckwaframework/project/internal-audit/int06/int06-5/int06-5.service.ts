@@ -84,7 +84,9 @@ export class Int065Service {
   }
 
   dataTable = () => {
+
     this.table = $("#dataTable").DataTableTh({
+     
       "serverSide": true,
       "searching": false,
       "ordering": false,
@@ -107,6 +109,9 @@ export class Int065Service {
             "budgetType" : $("#budgetType").val(),
           }));
         },
+
+        
+        
       },
       "columns": [{
         "data": "dateOfPay",
@@ -142,8 +147,8 @@ export class Int065Service {
       ]
     
     });
-  }
 
 
+}
 
 }

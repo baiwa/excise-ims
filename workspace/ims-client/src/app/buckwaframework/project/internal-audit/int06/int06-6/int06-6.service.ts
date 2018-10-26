@@ -91,16 +91,15 @@ export class Int066Service {
       "searching": false,
       "processing": true,
       "ordering": false,
-      "scrollX": true,
       "ajax": {
         "url": '/ims-webapp/api/ia/int066/findAll',
         "contentType": "application/json",
         "type": "POST",
         "data": (d) => {
           return JSON.stringify($.extend({}, d, {
-            "sector": $("#sector").val(),//($("#sector option:selected").text()=="กรุณาเลือก" ? "":$("#sector option:selected").text()),
-            "area": $("#area").val(),//($("#area option:selected").text()=="กรุณาเลือก" ? "":$("#area option:selected").text()),
-            "branch": $("#branch").val(),//($("#branch option:selected").text()=="กรุณาเลือก" ? "":$("#branch option:selected").text()),
+            "sector": $("#sector").val(),
+            "area": $("#area").val(),
+            "branch": $("#branch").val(),
             "dateFrom": $("#dateFrom").val(),
             "dateTo": $("#dateTo").val(),
             "searchFlag": this.form.searchFlag,
@@ -117,30 +116,27 @@ export class Int066Service {
           },
           "className": "ui center aligned"
         }, {
-          "data": "paymentDate",
+          "data": "payee",
           "className": "ui center aligned"
         }, {
           "data": "refPayment",
           "className": "ui center aligned"
         }, {
-          "data": "bankName",
+          "data": "budgetType",
           "className": "ui left aligned"
-        }, {
+        },  {
+          "data": "itemDesc",
+          "className": "ui center aligned"
+        },{
           "data": "amount",
           "render": (data)=>{
             return Utils.moneyFormatDecimal(data);
           },
           "className": "ui right aligned"
-        }, {
-          "data": "budgetType",
+        },{
+          "data": "paymentDate",
           "className": "ui center aligned"
-        }, {
-          "data": "itemDesc",
-          "className": "ui center aligned"
-        }, {
-          "data": "payee",
-          "className": "ui center aligned"
-        },
+        }
       ]
     });
   }

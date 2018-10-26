@@ -110,7 +110,7 @@
 
     <div class="ui grid">
             <div class="sixteen wide center aligned column">
-                <button class="ui mini yellow button" (click)="exportFile()">
+                <button class="ui mini yellow button" (click)="exportFile()" [disabled]="dataInTable.length == 0">
                         <i class="print icon"></i>
                     ส่งออก</button>
             </div>
