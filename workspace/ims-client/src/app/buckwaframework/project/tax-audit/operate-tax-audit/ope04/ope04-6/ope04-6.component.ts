@@ -26,7 +26,8 @@ export class Ope046Component implements OnInit {
   form: Ope046Form = new Ope046Form();
   exciseIdList: any;
   loading: boolean = false;
-  buttonDisabled : boolean = false;
+  buttonDisabled: boolean = false;
+  error: boolean = false;
   constructor(
     private authService: AuthService,
     private opeo46Service: Opeo46Service,
@@ -34,6 +35,7 @@ export class Ope046Component implements OnInit {
 
   ngOnInit() {
     // this.authService.reRenderVersionProgram('OPE-04600');
+    $("#Dtable").hide();
     this.findExciseId();
     this.callDropdown();
     this.calenda();
@@ -51,11 +53,21 @@ export class Ope046Component implements OnInit {
   }
 
   search = () => {
+    if (Utils.isNull(this.form.exciseId)) {
+      this.error = true;
+    } else {
+      this.error = false;
+    }
+    console.log($("exciseId").val());
     if (Utils.isNotNull(this.form.exciseId)) {
+      $("#Dtable").show();
       this.opeo46Service.search();
     }
   }
   claer = () => {
+    this.error = false;
+    $("form-exciseId").removeClass('error');
+    $("#Dtable").hide();
     this.opeo46Service.claer();
   }
   changeExciseId = (e) => {
@@ -80,10 +92,10 @@ export class Ope046Component implements OnInit {
     }, 500);
   }
 
-  save = async() => {
-    this.buttonDisabled = await true;
-    await this.opeo46Service.save();
-    this.buttonDisabled = await false;
+  save = () => {
+    this.buttonDisabled = true;
+    this.opeo46Service.save();
+    this.buttonDisabled = false;
   }
   calenda = () => {
     let date = new Date();

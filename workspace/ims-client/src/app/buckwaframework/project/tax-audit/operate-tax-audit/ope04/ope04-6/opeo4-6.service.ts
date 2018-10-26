@@ -19,7 +19,9 @@ export class Opeo46Service {
     constructor(
         private ajax: AjaxService,
         private message: MessageBarService
-    ) { }
+    ) {
+
+    }
 
     findExciseId = (): Promise<any> => {
         let url = "ta/opo046/exciseidList";
@@ -63,12 +65,13 @@ export class Opeo46Service {
             if (Utils.isNull(this.dataExcel)) {
                 this.message.errorModal('ไม่สามารถอัปโหลดไฟล์');
             }
+        }).then(() => {
+            this.table.ajax.reload();
         });
     }
 
     search = () => {
         this.searchFlag = "TRUE";
-
         if (this.table != null) {
             this.table.destroy();
         }
@@ -76,6 +79,7 @@ export class Opeo46Service {
         // $("#dataTable").DataTableTh().ajax.reload();
     }
     claer = () => {
+        $("#Dtable").hide()
         this.searchFlag = "FALSE";
         $("#exciseId").dropdown('restore defaults');
         $("#dataFrom").val('');
@@ -91,9 +95,9 @@ export class Opeo46Service {
     save = () => {
         let data = this.table.data();
         let url = "ta/opo046/save";
-        
+
         let list = [];
-        for(let i=0 ;i<data.length;i++) {  
+        for (let i = 0; i < data.length; i++) {
             let row = this.table.row(i).data();
             console.log(row);
             list.push(row);
@@ -105,10 +109,10 @@ export class Opeo46Service {
         }
         this.message.comfirm((res) => {
             if (res) {
-                 this.ajax.post(url, list, res => { 
-                    this.message.successModal("บันทึก");
-                },err=>{
-                    this.message.errorModal("บันทึกไม่สำเร็จ");
+                this.ajax.post(url, list, res => {
+                    this.message.successModal("บันทึกรายการ");
+                }, err => {
+                    this.message.errorModal("บันทึกรายการไม่สำเร็จ");
                 });
             }
         }, "", "ยืนยันการลบ");
@@ -183,12 +187,24 @@ export class Opeo46Service {
                     "render": (data, type, row, ) => {
                         if (Utils.isNotNull(row.unit)) {
                             let diff = row.taxPerAmount - row.unit;
-                            return Utils.moneyFormatDecimal(diff);
+
+                            if (diff != 0) {
+                                return '<span class="r-mark-tr">' + Utils.moneyFormatDecimal(diff) + '</span>';
+
+                            }
+                            return '<span class="g-mark-tr">' + Utils.moneyFormatDecimal(diff) + '</span>';
+                        } else {
+
                         }
                         return "";
                     }
                 },
-            ]
+            ],
+            "drawCallback": (settings) => {
+                $('.r-mark-tr').closest('td').addClass('background-color : red');
+                $('.g-mark-tr').closest('td').addClass('background-color : green');
+            }
+
         });
         // this.table.clear().draw();
         // this.table.rows.add(this.data); // Add new data

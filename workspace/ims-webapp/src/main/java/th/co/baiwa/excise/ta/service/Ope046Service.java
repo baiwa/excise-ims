@@ -72,6 +72,7 @@ public class Ope046Service {
 		for (Ope046ExcelVo excel : dataExcel) {
 			Ope046Vo vo =new Ope046Vo();
 			if ("N".equalsIgnoreCase(excel.getFlag())) {
+				vo.setTaExciseAcc0502DtlList(excel.getColumn2());
 				vo.setReceiptNumber(excel.getColumn3());
 				vo.setTaxNumber(excel.getColumn4());
 				vo.setVolume(excel.getColumn5());				
