@@ -5,7 +5,7 @@
             searching: false,
             scrollX: true,
             language: {
-                info: "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+                info: "แสดงจาก  _START_  ถึง  _END_  จากทั้งหมด  _TOTAL_  รายการ",
                 paginate: {
                   first: "หน้าแรก",
                   last: "หน้าสุดท้าย",
@@ -16,7 +16,7 @@
                 loadingRecords: "กำลังดาวน์โหลด...",
                 processing: "กำลังประมวลผล...",
                 search: "ค้นหาทั้งหมด",
-                infoEmpty: "แสดงจาก  0  ถึง  0  จากทั้งหมด  0  รายการ",
+                infoEmpty: "แสดงจาก 0  ถึง  0  จากทั้งหมด  0  รายการ",
                 emptyTable: "ไม่พบข้อมูล"
               }
         };

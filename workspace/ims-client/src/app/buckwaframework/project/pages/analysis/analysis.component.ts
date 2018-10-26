@@ -130,7 +130,7 @@ export class AnalysisPage implements OnInit {
 
   checkType(typeId) {
     switch (typeId) {
-      case "1": { return "สินค้น"; }
+      case "1": { return "สินค้า"; }
       case "2": { return "บริการ"; }
       case "3": { return "นำเข้า"; }
       default: { return ""; }
