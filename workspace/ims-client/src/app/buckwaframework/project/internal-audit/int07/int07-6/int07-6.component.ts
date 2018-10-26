@@ -125,7 +125,7 @@ export class Int076Component implements OnInit, AfterViewInit {
       this.datatable.destroy();
     }
 
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -190,7 +190,7 @@ export class Int076Component implements OnInit, AfterViewInit {
     if (this.datatableIx != null || this.datatableIx != undefined) {
       this.datatableIx.destroy();
     }
-    this.datatableIx = $("#datatableIx").DataTable({
+    this.datatableIx = $("#datatableIx").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -306,7 +306,7 @@ export class Int076Component implements OnInit, AfterViewInit {
     if (this.datatableJ0 != null || this.datatableJ0 != undefined) {
       this.datatableJ0.destroy();
     }
-    this.datatableJ0 = $("#datatableJ0").DataTable({
+    this.datatableJ0 = $("#datatableJ0").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,

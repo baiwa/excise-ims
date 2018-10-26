@@ -136,9 +136,9 @@ public class Int065Service {
 		formVo.setDateTo(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateTo()));
 		List<Int065Vo> list = iaWithdrawalDao.exportFile(formVo);
 
-		rowNum = 2;
+		rowNum = 0;
 		cellNum = 0;
-		int no = 1;
+		int no = 0;
 		
         // Create cells
         for(Int065Vo item : list) {

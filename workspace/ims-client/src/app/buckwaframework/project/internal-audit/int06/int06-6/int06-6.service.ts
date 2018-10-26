@@ -84,7 +84,7 @@ export class Int066Service {
   }
   dataTable = () => {
 
-    const table = $("#dataTable").DataTable({
+    const table = $("#dataTable").DataTableTh({
       "serverSide": true,
       "searching": false,
       "processing": true,

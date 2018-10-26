@@ -69,7 +69,7 @@ export class Int067Service {
       this.dataTable.destroy();
     }
 
-    this.dataTable = $("#dataTable").DataTable({
+    this.dataTable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
