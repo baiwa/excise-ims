@@ -35,4 +35,9 @@ export class Utils {
         return df.format(money);
     }
 
+    public static moneyFormatInt(money) {
+        var df = new DecimalFormat("###,###");
+        return df.format(money);
+    }
+
 }

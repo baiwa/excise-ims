@@ -69,6 +69,5 @@ public class Int066Controller {
 			} catch (Exception e) {
 				log.error("Error ! ==> exportFile method exportFile",e);
 			}
-			
 		}
 }
