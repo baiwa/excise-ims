@@ -65,9 +65,9 @@
 
         <div class="ui six column centered grid" >
             <div class="column">
-              <button class="ui mini primary button" [disabled]="dataList.length==0" (click)="checkData()" >
-                <i class="check circle icon"></i>
-                เลือกตรวจสอบข้อมูล
+              <button class="ui mini green button" [disabled]="dataList.length==0" (click)="checkData()" >
+                <i class="clipboard check icon"></i>
+                ตรวจสอบข้อมูล
               </button>
             </div>
         </div>
@@ -188,7 +188,7 @@
 
       <div class="ui six column centered grid">
         <div class="column">
-          <button class="ui mini primary button"  >
+          <button class="ui mini yellow button"  (click)="export()">
             <i class="print icon"></i>
             ส่งออก
           </button>
