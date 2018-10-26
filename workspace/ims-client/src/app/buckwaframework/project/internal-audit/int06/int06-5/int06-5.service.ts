@@ -68,10 +68,8 @@ export class Int065Service {
 
   }
 
-  exportFile=()=>{
-    
+  exportFile=()=>{    
     let param = "";
-
     param +="?sector=" +  this.form.sector;
     param +="&area=" +  this.form.area;
     param +="&branch=" + this.form.branch;

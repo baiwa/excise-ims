@@ -260,7 +260,8 @@ public class IaWithdrawalDao {
 	public List<Int065Vo> exportFile(Int065FormVo formVo) {
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
-		params.add(CHECK);
+		params.add(CHECK_KTB);
+        params.add(CHECK_KTB);
 		
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
 			sql.append(" AND OFFICE_CODE LIKE ?");
