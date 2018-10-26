@@ -94,7 +94,10 @@ export class Ope046Component implements OnInit {
 
   save = async () => {
     this.buttonDisabled = await true;
-    await this.opeo46Service.save().then( async()=>{
+    await this.opeo46Service.save().then( async(res)=>{
+      if("C" == res){
+        this.buttonDisabled = await false;
+      }
       setTimeout( async() => {
         this.buttonDisabled = await false;
       }, 500);

@@ -5,6 +5,7 @@ import { MessageBarService } from 'services/message-bar.service';
 import { AjaxService } from 'services/ajax.service';
 
 
+
 declare var $: any;
 
 @Injectable()
@@ -92,7 +93,8 @@ export class Opeo46Service {
         this.dataTable();
     }
 
-    save = async () => {
+    save = async (): Promise<any> => {
+        return new Promise(async(resolve, reject) => {
         let data = await this.table.data();
         let url = await "ta/opo046/save";
 
@@ -110,12 +112,16 @@ export class Opeo46Service {
         this.message.comfirm(async (res) => {
             if (res) {
                 return await this.ajax.post(url, list, async res => {
+                    await resolve(res.json());
                     await this.message.successModal("บันทึกรายการ");
                 }, async err => {
                     await this.message.errorModal("บันทึกรายการไม่สำเร็จ");
                 });
+            }else{
+                await resolve("C");
             }
         }, "", "ยืนยันการลบ");
+        });
     }
     dataTable = () => {
         this.table = $("#dataTable").DataTableTh({
