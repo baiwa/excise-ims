@@ -386,7 +386,6 @@ export class Int112Component implements OnInit {
           URL, res => {
             this.messageBarService.successModal("ลบข้อมูลสำเร็จ");
             this.searchData();
-            $('.check-all').checkbox("uncheck");
             this.$page.removeClass("loading");
           }, err => {
             let body: any = err.json();
