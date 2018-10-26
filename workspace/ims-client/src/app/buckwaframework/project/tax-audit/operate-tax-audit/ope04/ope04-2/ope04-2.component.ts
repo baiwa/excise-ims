@@ -51,7 +51,7 @@ export class Ope042Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.authService.reRenderVersionProgram('OPE-04200');
+    this.authService.reRenderVersionProgram("OPE-04200");
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ope04-1").css("width", "100%");
 
@@ -168,6 +168,21 @@ export class Ope042Component implements OnInit, AfterViewInit {
           this.showDt.destroy();
         }
 
+        //render check number is null or empty
+        let renderfn = function(data, type, row, meta) {
+          return $.trim(data) == ""
+            ? "-"
+            : $.fn.dataTable.render.number(",", ".", 0, "").display(data);
+        };
+        //render check string is null or empty
+        let renderStr = function(data, type, row, meta) {
+          return $.trim(data) == "" ||
+            $.trim(data) == null ||
+            $.trim(data) == "null"
+            ? "-"
+            : data;
+        };
+
         this.showDt = $("#showDt").DataTable({
           lengthChange: false,
           searching: false,
@@ -181,43 +196,41 @@ export class Ope042Component implements OnInit, AfterViewInit {
             {
               render: function(data, type, row, meta) {
                 return meta.row + meta.settings._iDisplayStart + 1;
-              },
-              className: "center"
+              }
             },
             {
               data: "product",
-              className: "center"
+              render: renderStr
             },
             {
               data: "taxInvoice",
-              render: $.fn.dataTable.render.number(",", ".", 0, ""),
-              className: "right"
+              render: renderfn
             },
             {
               data: "dayRecieve",
-              render: $.fn.dataTable.render.number(",", ".", 0, ""),
-              className: "right"
+              render: renderfn
             },
             {
               data: "monthRecieve",
-              render: $.fn.dataTable.render.number(",", ".", 0, ""),
-              className: "right"
+              render: renderfn
             },
             {
               data: "exd1",
-              render: $.fn.dataTable.render.number(",", ".", 0, ""),
-              className: "right"
+              render: renderfn
             },
             {
               data: "calMax",
-              render: $.fn.dataTable.render.number(",", ".", 0, ""),
-              className: "right"
+              render: renderfn
             },
             {
               data: "diff",
-              render: $.fn.dataTable.render.number(",", ".", 0, ""),
-              className: "right amount"
+              render: renderfn
             }
+          ],
+          columnDefs: [
+            { targets: [0, 1], className: "center" },
+            { targets: [2, 3, 4, 5, 6], className: "right" },
+            { targets: [7], className: "right amount" }
           ],
           fnDrawCallback: function(oSettings) {
             if ($(".amount").length > 0) {
@@ -234,6 +247,13 @@ export class Ope042Component implements OnInit, AfterViewInit {
                 if (this.innerHTML == null || this.innerHTML === "") {
                   this.className = "center amount null";
                   this.innerHTML = "-";
+                }
+                if ($(".right").length > 0) {
+                  $(".right").each(function() {
+                    // if (this.innerHTML === "-") {
+                    //   this.className = "center";
+                    // }
+                  });
                 }
               });
             }
@@ -293,6 +313,16 @@ export class Ope042Component implements OnInit, AfterViewInit {
   };
 
   initDatatable(): void {
+    //render check number is null or empty
+    let renderfn = function(data, type, row, meta) {
+      return $.trim(data) == ""
+        ? "-"
+        : $.fn.dataTable.render.number(",", ".", 0, "").display(data);
+    };
+    //render check string is null or empty
+    let renderStr = function(data, type, row, meta) {
+      return $.trim(data) == "" || $.trim(data) == null ? "-" : data;
+    };
     const URL = AjaxService.CONTEXT_PATH + "/ope041/excel";
     this.showDt = $("#showDt").DataTable({
       lengthChange: false,
@@ -316,43 +346,41 @@ export class Ope042Component implements OnInit, AfterViewInit {
         {
           render: function(data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
-          },
-          className: "center"
+          }
         },
         {
           data: "product",
-          className: "center"
+          render: renderStr
         },
         {
           data: "taxInvoice",
-          render: $.fn.dataTable.render.number(",", ".", 0, ""),
-          className: "right"
+          render: renderfn
         },
         {
           data: "dayRecieve",
-          render: $.fn.dataTable.render.number(",", ".", 0, ""),
-          className: "right"
+          render: renderfn
         },
         {
           data: "monthRecieve",
-          render: $.fn.dataTable.render.number(",", ".", 0, ""),
-          className: "right"
+          render: renderfn
         },
         {
           data: "exd1",
-          render: $.fn.dataTable.render.number(",", ".", 0, ""),
-          className: "right"
+          render: renderfn
         },
         {
           data: "calMax",
-          render: $.fn.dataTable.render.number(",", ".", 0, ""),
-          className: "right"
+          render: renderfn
         },
         {
           data: "diff",
-          render: $.fn.dataTable.render.number(",", ".", 0, ""),
-          className: "right amount"
+          render: renderfn
         }
+      ],
+      columnDefs: [
+        { targets: [0, 1], className: "center" },
+        { targets: [2, 3, 4, 5, 6], className: "right" },
+        { targets: [7], className: "right amount" }
       ],
       fnDrawCallback: function(oSettings) {
         if ($(".amount").length > 0) {
@@ -366,9 +394,20 @@ export class Ope042Component implements OnInit, AfterViewInit {
             ) {
               this.className = "right amount red";
             }
-            if (this.innerHTML == null || this.innerHTML === "") {
+            if (
+              this.innerHTML == null ||
+              this.innerHTML === "" ||
+              this.innerHTML == "-"
+            ) {
               this.className = "center amount null";
               this.innerHTML = "-";
+            }
+          });
+        }
+        if ($(".right").length > 0) {
+          $(".right").each(function() {
+            if (this.innerHTML === "-") {
+              this.className = "center";
             }
           });
         }

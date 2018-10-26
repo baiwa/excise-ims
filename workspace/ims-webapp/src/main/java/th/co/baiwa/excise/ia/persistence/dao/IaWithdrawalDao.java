@@ -48,7 +48,7 @@ public class IaWithdrawalDao {
 							"            ps.BANK_NAME BANK_NAME, " + 
 							"            ps.PAYEE PAYEE, "+
 							"            ps.AMOUNT AMOUNT" + 
-							"   FROM IA_WITHDRAWAL_PERSONS ps ) PS  " + 
+							"   FROM IA_WITHDRAWAL_PERSONS ps WHERE PAYMENT_METHOD = ? ) PS  " +
 							"   INNER JOIN  " + 
 							"   (SELECT WITHDRAWAL_ID,ITEM_DESC,BUDGET_TYPE " + 
 							"        FROM IA_WITHDRAWAL_LIST " + 
@@ -60,6 +60,7 @@ public class IaWithdrawalDao {
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
 		params.add(CHECK);
+        params.add(CHECK);
 		
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
 			sql.append(" AND OFFICE_CODE LIKE ?");
@@ -85,6 +86,7 @@ public class IaWithdrawalDao {
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
 		params.add(CHECK);
+        params.add(CHECK);
 		
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
 			sql.append(" AND OFFICE_CODE LIKE ?");
@@ -110,6 +112,7 @@ public class IaWithdrawalDao {
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
 		params.add(CHECK_KTB);
+        params.add(CHECK_KTB);
 		
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
 			sql.append(" AND OFFICE_CODE LIKE ?");
@@ -134,6 +137,7 @@ public class IaWithdrawalDao {
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
 		params.add(CHECK_KTB);
+        params.add(CHECK_KTB);
 		
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
 			sql.append(" AND OFFICE_CODE LIKE ?");

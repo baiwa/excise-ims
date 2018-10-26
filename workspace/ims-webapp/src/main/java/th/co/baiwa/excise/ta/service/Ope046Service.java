@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.dao.CreatePeperChrckerDao;
+import th.co.baiwa.excise.ta.persistence.entity.TaxReduceWsDtlS;
+import th.co.baiwa.excise.ta.persistence.repository.TaxReduceWsDtlRepository;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046ExcelVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046Vo;
@@ -32,6 +34,9 @@ public class Ope046Service {
 
 	@Autowired
 	private CreatePeperChrckerDao createPeperChrckerDao;
+	
+	@Autowired
+	private TaxReduceWsDtlRepository taxReduceWsDtlRepository;
 
 	public DataTableAjax<Ope046Vo> findAll(Ope046FormVo formVo) {
 
@@ -41,9 +46,9 @@ public class Ope046Service {
 			List<Ope046Vo> list = createPeperChrckerDao.findAll(formVo);
 			Long count = createPeperChrckerDao.count(formVo);
 
-//			if (!formVo.getDataExcel().isEmpty()) {
-//				mapData(list,formVo.getDataExcel());
-//			}
+			if (formVo.getDataExcel() != null) {
+				mapData(list,formVo.getDataExcel());
+			}
 			dataTableAjax.setRecordsTotal(count);
 			dataTableAjax.setRecordsFiltered(count);
 			dataTableAjax.setData(list);
@@ -53,16 +58,62 @@ public class Ope046Service {
 	}
 	public void mapData(List<Ope046Vo> list,List<Ope046ExcelVo> dataExcel) {
 		for (Ope046Vo vo : list) {
-			
 			for (Ope046ExcelVo excel : dataExcel) {
-				if (vo.getTaExciseAcc0502DtlList().equals(excel.getColumn2())) {
+				if (vo.getTaExciseAcc0502DtlList().equals(excel.getColumn2())) {					
 					vo.setReceiptNumber(excel.getColumn3());
 					vo.setTaxNumber(excel.getColumn4());
 					vo.setVolume(excel.getColumn5());
 					vo.setUnit(new BigDecimal(excel.getColumn6()));
+					excel.setFlag("Y");
 				}
 			}			
 		}
+		
+		for (Ope046ExcelVo excel : dataExcel) {
+			Ope046Vo vo =new Ope046Vo();
+			if ("N".equalsIgnoreCase(excel.getFlag())) {
+				vo.setReceiptNumber(excel.getColumn3());
+				vo.setTaxNumber(excel.getColumn4());
+				vo.setVolume(excel.getColumn5());				
+				try {
+					vo.setUnit(new BigDecimal(excel.getColumn6()));
+					list.add(vo);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
+			}
+		}
+	}
+	
+	public void save(List<Ope046Vo> vos) {
+		
+		List<TaxReduceWsDtlS> entityList = new ArrayList<>();
+		for (Ope046Vo vo : vos) {
+			TaxReduceWsDtlS entity = new TaxReduceWsDtlS();
+			
+			//check
+			vo.setTaxAmount((vo.getTaxAmount()!= null ? vo.getTaxAmount() : new BigDecimal(0)));
+			vo.setAmount(vo.getAmount()!= null ? vo.getAmount() : new BigDecimal(0));
+			vo.setTaxPerAmount(vo.getTaxPerAmount() != null ? vo.getTaxPerAmount() : new BigDecimal(0));
+			vo.setUnit(vo.getUnit() != null ? vo.getUnit() : new BigDecimal(0));
+			
+			entity.setList(vo.getTaExciseAcc0502DtlList());			
+			entity.setTotalTax(vo.getTaxAmount().toString());			
+			entity.setPdtAmount1(vo.getAmount().toString());
+			entity.setTaxPerPdt(vo.getTaxPerAmount().toString());
+			entity.setBillNo(vo.getReceiptNumber());
+			entity.setTaxAmount(vo.getTaxNumber());
+			entity.setPdtAmount2(vo.getVolume());
+			entity.setMaxValues(vo.getUnit().toString());
+			
+			BigDecimal result = vo.getTaxPerAmount().subtract(vo.getUnit());
+			entity.setResult(result.toString());
+			
+			
+			entityList.add(entity);
+		}
+		taxReduceWsDtlRepository.save(entityList);
 	}
 	
 	public List<LabelValueBean> findExciseId() {
@@ -76,7 +127,7 @@ public class Ope046Service {
 		if (!planWorksheetHeader.isEmpty()) {
 			data = planWorksheetHeader.get(0);
 		}
-		return data;
+		return data; 
 	}
 
 	public List<Ope046ExcelVo> readFileExcel(Ope046FormVo formVo)
@@ -90,7 +141,7 @@ public class Ope046Service {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 
 		/* rows */
-		for (int r = 0; r < totalRows; r++) {
+		for (int r = 0; r <= totalRows; r++) {
 			
 			Row row = sheet.getRow(r);
 			if (row != null) {
