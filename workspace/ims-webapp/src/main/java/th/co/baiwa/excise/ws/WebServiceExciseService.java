@@ -26,8 +26,10 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcOv3dDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcPenDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcRecDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssPerDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
+import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.entity.api.RequestServiceExcise;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.req.RequestData8000Req;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.IncFri8000Res;
@@ -37,6 +39,9 @@ import th.co.baiwa.excise.ws.entity.response.licfri6010.LicFri6010;
 import th.co.baiwa.excise.ws.entity.response.licfri6020.LicFri6020;
 import th.co.baiwa.excise.ws.entity.response.regfri4000.req.RequestDataReq;
 import th.co.baiwa.excise.ws.entity.response.regfri4000.res.Regfri4000Res;
+import th.co.baiwa.excise.ws.entity.response.systemError.Datum;
+import th.co.baiwa.excise.ws.entity.response.systemError.ErrorDetail;
+import th.co.baiwa.excise.ws.entity.response.systemError.SystemError;
 
 @Service
 public class WebServiceExciseService {
@@ -75,7 +80,10 @@ public class WebServiceExciseService {
 	
 	@Value("${ws.excise.get.assessment}")
 	private String endpointAssessment;
-
+	
+	@Value("${ws.excise.get.systemError}")
+	private String endpointSystemError;
+	
 	@Autowired
 	private LoginLdap loginLdapProxy;
 
@@ -208,6 +216,13 @@ public class WebServiceExciseService {
 		Assessment responseServiceExcise = gson.fromJson(responseData, Assessment.class);
 		return responseServiceExcise;
 	}
+	public SystemError systemError(String budgetYear) {
+		logger.info(" systemError restful API {} , {} " ,budgetYear);
+		String responseData = getRestful(endpointSystemError+"?year="+budgetYear);
+		Gson gson = new Gson();
+		SystemError responseServiceExcise = gson.fromJson(responseData, SystemError.class);
+		return responseServiceExcise;
+	}
 
 	
 	
@@ -239,189 +254,37 @@ public class WebServiceExciseService {
 		return riskAssRiskWsDtlList;
 	}
 
-	public List<RiskAssInfDtl> getRiskAssInfDtlList(RiskAssInfDtl riskAssInfDtl) {
+	public List<RiskAssInfDtl> getRiskAssInfDtlList(RiskAssInfHdr rAssInfHdr) {
 		List<RiskAssInfDtl> riskAssInfDtlList = new ArrayList<RiskAssInfDtl>();
+		SystemError systemError = systemError(rAssInfHdr.getBudgetYear());
+		if(BeanUtils.isNotEmpty(systemError) && BeanUtils.isNotEmpty(systemError.getData())) {
+			List<Datum> datumList = systemError.getData();
+			RiskAssInfDtl reAssInfDtl = new RiskAssInfDtl();
+			for (Datum datum : datumList) {
+				reAssInfDtl = new RiskAssInfDtl();
+				reAssInfDtl.setTotal(new BigDecimal(datum.getCountError()));
+				reAssInfDtl.setInfName(datum.getSystemName());
+				ErrorDetail errorDetail = datum.getErrorDetail();
+					reAssInfDtl.setJan(new BigDecimal(errorDetail.getError01()));
+					reAssInfDtl.setFeb(new BigDecimal(errorDetail.getError02()));
+					reAssInfDtl.setMar(new BigDecimal(errorDetail.getError03()));
+					reAssInfDtl.setApril(new BigDecimal(errorDetail.getError04()));
+					reAssInfDtl.setMay(new BigDecimal(errorDetail.getError05()));
+					reAssInfDtl.setJun(new BigDecimal(errorDetail.getError06()));
+					reAssInfDtl.setJul(new BigDecimal(errorDetail.getError07()));
+					reAssInfDtl.setAug(new BigDecimal(errorDetail.getError08()));
+					reAssInfDtl.setSep(new BigDecimal(errorDetail.getError09()));
+					reAssInfDtl.setOct(new BigDecimal(errorDetail.getError10()));
+					reAssInfDtl.setNov(new BigDecimal(errorDetail.getError11()));
+					reAssInfDtl.setDec(new BigDecimal(errorDetail.getError12()));
+				riskAssInfDtlList.add(reAssInfDtl);
+			}
+		}
+		
+		
+		
 
-		RiskAssInfDtl risk = new RiskAssInfDtl();
-		risk.setRiskAssInfDtlId(new Long(1));
-		risk.setInfName("ระบบงาน E-Services ยื่นแบบผ่านอินเตอร์เน็ต UAT https://edserver2-uat.excise.go.th/staesw");
-		risk.setJan(new BigDecimal(10));
-		risk.setFeb(new BigDecimal(12));
-		risk.setMar(new BigDecimal(13));
-		risk.setApril(new BigDecimal(7));
-		risk.setMay(new BigDecimal(22));
-		risk.setJun(new BigDecimal(28));
-		risk.setJul(new BigDecimal(16));
-		risk.setAug(new BigDecimal(0));
-		risk.setSep(new BigDecimal(20));
-		risk.setOct(new BigDecimal(18));
-		risk.setNov(new BigDecimal(7));
-		risk.setDec(new BigDecimal(9));
-		risk.setTotal(new BigDecimal(162));
-		riskAssInfDtlList.add(risk);
-
-		risk = new RiskAssInfDtl();
-		risk.setRiskAssInfDtlId(new Long(2));
-		risk.setInfName("เว็บไซต์กรมสรรพสามิต www.excise.go.th");
-		risk.setJan(new BigDecimal(15));
-		risk.setFeb(new BigDecimal(8));
-		risk.setMar(new BigDecimal(14));
-		risk.setApril(new BigDecimal(21));
-		risk.setMay(new BigDecimal(0));
-		risk.setJun(new BigDecimal(18));
-		risk.setJul(new BigDecimal(14));
-		risk.setAug(new BigDecimal(17));
-		risk.setSep(new BigDecimal(9));
-		risk.setOct(new BigDecimal(11));
-		risk.setNov(new BigDecimal(1));
-		risk.setDec(new BigDecimal(16));
-		risk.setTotal(new BigDecimal(144));
-		riskAssInfDtlList.add(risk);
-
-		risk = new RiskAssInfDtl();
-		risk.setRiskAssInfDtlId(new Long(3));
-		risk.setInfName("ระบบงานอีเมล์กรมสรรพสามิต http://mail.excise.go.th");
-		risk.setJan(new BigDecimal(8));
-		risk.setFeb(new BigDecimal(11));
-		risk.setMar(new BigDecimal(18));
-		risk.setApril(new BigDecimal(9));
-		risk.setMay(new BigDecimal(13));
-		risk.setJun(new BigDecimal(18));
-		risk.setJul(new BigDecimal(21));
-		risk.setAug(new BigDecimal(14));
-		risk.setSep(new BigDecimal(10));
-		risk.setOct(new BigDecimal(8));
-		risk.setNov(new BigDecimal(5));
-		risk.setDec(new BigDecimal(3));
-		risk.setTotal(new BigDecimal(138));
-		riskAssInfDtlList.add(risk);
-
-		risk = new RiskAssInfDtl();
-		risk.setRiskAssInfDtlId(new Long(4));
-		risk.setInfName("ระบบงานสารสนเทศหลัก http://Web.excise.go.th/EDINTRAWeb");
-		risk.setJan(new BigDecimal(9));
-		risk.setFeb(new BigDecimal(13));
-		risk.setMar(new BigDecimal(9));
-		risk.setApril(new BigDecimal(20));
-		risk.setMay(new BigDecimal(13));
-		risk.setJun(new BigDecimal(0));
-		risk.setJul(new BigDecimal(14));
-		risk.setAug(new BigDecimal(18));
-		risk.setSep(new BigDecimal(0));
-		risk.setOct(new BigDecimal(8));
-		risk.setNov(new BigDecimal(11));
-		risk.setDec(new BigDecimal(13));
-		risk.setTotal(new BigDecimal(128));
-		riskAssInfDtlList.add(risk);
-
-		risk = new RiskAssInfDtl();
-		risk.setRiskAssInfDtlId(new Long(5));
-		risk.setInfName("ระบบความปลอดภัยกลาง (SSO) http://authen.excise.go.th/oiddas");
-		risk.setJan(new BigDecimal(22));
-		risk.setFeb(new BigDecimal(0));
-		risk.setMar(new BigDecimal(12));
-		risk.setApril(new BigDecimal(8));
-		risk.setMay(new BigDecimal(11));
-		risk.setJun(new BigDecimal(9));
-		risk.setJul(new BigDecimal(2));
-		risk.setAug(new BigDecimal(4));
-		risk.setSep(new BigDecimal(3));
-		risk.setOct(new BigDecimal(7));
-		risk.setNov(new BigDecimal(0));
-		risk.setDec(new BigDecimal(9));
-		risk.setTotal(new BigDecimal(87));
-		riskAssInfDtlList.add(risk);
-
-		risk = new RiskAssInfDtl();
-		risk.setRiskAssInfDtlId(new Long(6));
-		risk.setInfName("ระบบงานกรมสรรพสามิต (Main Access)");
-		risk.setJan(new BigDecimal(7));
-		risk.setFeb(new BigDecimal(17));
-		risk.setMar(new BigDecimal(9));
-		risk.setApril(new BigDecimal(8));
-		risk.setMay(new BigDecimal(5));
-		risk.setJun(new BigDecimal(4));
-		risk.setJul(new BigDecimal(11));
-		risk.setAug(new BigDecimal(3));
-		risk.setSep(new BigDecimal(7));
-		risk.setOct(new BigDecimal(0));
-		risk.setNov(new BigDecimal(4));
-		risk.setDec(new BigDecimal(2));
-		risk.setTotal(new BigDecimal(77));
-		riskAssInfDtlList.add(risk);
-
-		risk = new RiskAssInfDtl();
-		risk.setRiskAssInfDtlId(new Long(7));
-		risk.setInfName("ระบบงานโครงการรถยนต์ใหม่คันแรก (อินเตอร์เน็ต) https://firstcar.excise.go.th");
-		risk.setJan(new BigDecimal(9));
-		risk.setFeb(new BigDecimal(4));
-		risk.setMar(new BigDecimal(12));
-		risk.setApril(new BigDecimal(8));
-		risk.setMay(new BigDecimal(9));
-		risk.setJun(new BigDecimal(4));
-		risk.setJul(new BigDecimal(7));
-		risk.setAug(new BigDecimal(3));
-		risk.setSep(new BigDecimal(0));
-		risk.setOct(new BigDecimal(6));
-		risk.setNov(new BigDecimal(2));
-		risk.setDec(new BigDecimal(1));
-		risk.setTotal(new BigDecimal(65));
-		riskAssInfDtlList.add(risk);
-
-		risk = new RiskAssInfDtl();
-		risk.setRiskAssInfDtlId(new Long(8));
-		risk.setInfName("ระบบงานโครงการรถยนต์ใหม่คันแรก (อินทราเน็ต) http://ed-firstcar.excise.go.th");
-		risk.setJan(new BigDecimal(2));
-		risk.setFeb(new BigDecimal(6));
-		risk.setMar(new BigDecimal(3));
-		risk.setApril(new BigDecimal(0));
-		risk.setMay(new BigDecimal(4));
-		risk.setJun(new BigDecimal(7));
-		risk.setJul(new BigDecimal(5));
-		risk.setAug(new BigDecimal(9));
-		risk.setSep(new BigDecimal(1));
-		risk.setOct(new BigDecimal(2));
-		risk.setNov(new BigDecimal(4));
-		risk.setDec(new BigDecimal(0));
-		risk.setTotal(new BigDecimal(43));
-		riskAssInfDtlList.add(risk);
-
-		risk = new RiskAssInfDtl();
-		risk.setRiskAssInfDtlId(new Long(9));
-		risk.setInfName("ระบบงานสารบรรณบูรณาการ http://192.168.3.123.8080/EDCSClient Web/pages/publile");
-		risk.setJan(new BigDecimal(0));
-		risk.setFeb(new BigDecimal(5));
-		risk.setMar(new BigDecimal(7));
-		risk.setApril(new BigDecimal(2));
-		risk.setMay(new BigDecimal(1));
-		risk.setJun(new BigDecimal(8));
-		risk.setJul(new BigDecimal(1));
-		risk.setAug(new BigDecimal(0));
-		risk.setSep(new BigDecimal(1));
-		risk.setOct(new BigDecimal(0));
-		risk.setNov(new BigDecimal(8));
-		risk.setDec(new BigDecimal(1));
-		risk.setTotal(new BigDecimal(34));
-		riskAssInfDtlList.add(risk);
-
-		risk = new RiskAssInfDtl();
-		risk.setRiskAssInfDtlId(new Long(10));
-		risk.setInfName("ระบบงานสารสนเทศกฏหมายภาษีสรรพสามิต http://law.excise.go.th/exciselaw");
-		risk.setJan(new BigDecimal(4));
-		risk.setFeb(new BigDecimal(2));
-		risk.setMar(new BigDecimal(1));
-		risk.setApril(new BigDecimal(0));
-		risk.setMay(new BigDecimal(2));
-		risk.setJun(new BigDecimal(2));
-		risk.setJul(new BigDecimal(3));
-		risk.setAug(new BigDecimal(2));
-		risk.setSep(new BigDecimal(3));
-		risk.setOct(new BigDecimal(4));
-		risk.setNov(new BigDecimal(1));
-		risk.setDec(new BigDecimal(2));
-		risk.setTotal(new BigDecimal(26));
-		riskAssInfDtlList.add(risk);
-
+		
 		return riskAssInfDtlList;
 	}
 

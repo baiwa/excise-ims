@@ -483,6 +483,19 @@ export class Int076Component implements OnInit, AfterViewInit {
 
   }
 
+
+  export(){
+
+    const URL = "ia/int076/export";
+    this.ajax.post(URL, this.dataCheckList, res => {
+      console.log(res.json());
+    }
+    );
+    
+    //this.ajax.download(URL);
+
+  }
+
 }
 
 class File {
