@@ -1,3 +1,4 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
   <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
@@ -71,7 +72,7 @@
         <div class="ui five column centered grid" *ngIf="riskFullYear">
           <div class="column">
             <button class="ui mini primary button" (click)="renderForm3()">
-              <i class="table icon"></i>
+              <i class="eye icon"></i>
               รายละเอียดปัจจัยเสี่ยงรวมประจำปี
             </button>
           </div>
@@ -182,13 +183,13 @@
         <div class="inline fields"></div>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
-            <button class="ui mini primary button" (click)="ExportInfWebService()">
+            <button class="ui mini yellow button" (click)="ExportInfWebService()">
               <i class="print icon"></i>
               ส่งออก
             </button>
             <button class="ui mini button " (click)="clearDataForm1()">
-              <i class="arrow left icon"></i>
-              กลับ
+              <i class="remove icon"></i>
+              ยกเลิก
             </button>
 
           </div>
@@ -282,13 +283,13 @@
         <div class="inline fields"></div>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
-            <button class="ui mini primary button" (click)="ExportInfOtherDtl()">
+            <button class="ui mini yellow button" (click)="ExportInfOtherDtl()">
               <i class="print icon"></i>
               ส่งออก
             </button>
             <button class="ui mini button " (click)="clearDataForm2() ">
-              <i class="arrow left icon"></i>
-              กลับ
+              <i class="remove icon"></i>
+              ยกเลิก
             </button>
 
           </div>
@@ -375,13 +376,13 @@
         <div class="inline fields"></div>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
-            <button class="ui mini primary button" (click)="ExportInfFull()">
+            <button class="ui mini yellow button" (click)="ExportInfFull()">
               <i class="print icon"></i>
               ส่งออก
             </button>
             <button class="ui mini button " (click)="clearDataForm3() ">
-              <i class="arrow left icon"></i>
-              กลับ
+              <i class="remove icon"></i>
+              ยกเลิก
             </button>
 
           </div>

@@ -5,6 +5,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { TextDateTH, formatter } from '../../../../../common/helper/datepicker';
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 
 declare var jQuery: any;
@@ -16,7 +17,8 @@ declare var $: any;
   styleUrls: ["./int08-2-1.component.css"]
 })
 export class Int0821Component implements OnInit {
-
+    // BreadCrumb
+  breadcrumb: BreadCrumb[];
   formatter: any;
 
   riskAssInfHdr: any;
@@ -57,7 +59,13 @@ export class Int0821Component implements OnInit {
     private messageBarService: MessageBarService,
     private _location: Location,
     private authService: AuthService
-  ) { }
+  ) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง", route: "#" },
+      { label: "ประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต", route: "#" },
+    ];
+   }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-08210');
@@ -157,7 +165,7 @@ export class Int0821Component implements OnInit {
     const URL = AjaxService.CONTEXT_PATH + "ia/int082/searchRisk";
     console.log(URL);
     console.log(this.budgetYear);
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -198,8 +206,8 @@ export class Int0821Component implements OnInit {
         {
           data: "riskAssInfHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button primary dtl" (click)="ExportOtherDtl()" ><i class="table icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button yellow export"><i class="print icon"></i> Export</button>';
+            return '<button type="button" class="ui mini button primary dtl" (click)="ExportOtherDtl()" ><i class="eye icon"></i> รายละเอียด</button>'
+              + '<button type="button" class="ui mini button yellow export"><i class="print icon"></i> ส่งออก</button>';
           }
         }
       ],
@@ -268,7 +276,7 @@ export class Int0821Component implements OnInit {
     }
     const URL = AjaxService.CONTEXT_PATH + "ia/int082/dataTableWebService";
     console.log(URL);
-    this.dataTableF1 = $("#dataTableF1").DataTable({
+    this.dataTableF1 = $("#dataTableF1").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -358,7 +366,7 @@ export class Int0821Component implements OnInit {
     }
     const URL = AjaxService.CONTEXT_PATH + "ia/int082/findRiskAssInfOtherDtlByHeaderId";
     console.log(URL);
-    this.dataTableF2 = $("#dataTableF2").DataTable({
+    this.dataTableF2 = $("#dataTableF2").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
