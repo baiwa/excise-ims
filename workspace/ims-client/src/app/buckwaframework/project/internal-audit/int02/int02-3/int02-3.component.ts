@@ -293,7 +293,7 @@ export class Int023Component implements OnInit {
 
   onScroll(e, option) {
     const { children, offsetHeight, scrollTop } = e.target;
-    if (scrollTop >= children[0].offsetHeight - offsetHeight) {
+    if (Math.round(scrollTop) + 1 >= Math.floor(children[0].offsetHeight - offsetHeight)) {
       this[`${option}`].start += 10;
       if (option === "option") {
         this._initialTable(true);
