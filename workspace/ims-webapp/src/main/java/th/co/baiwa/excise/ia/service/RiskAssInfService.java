@@ -62,6 +62,9 @@ public class RiskAssInfService {
 	private CellStyle topLeft;
 	private Font fontHeader;
 	
+	
+	
+	
 	private XSSFWorkbook setUpExcel() {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		
@@ -387,7 +390,8 @@ public class RiskAssInfService {
 	}
 
 	public List<RiskFullDataInt0802Vo> searchFullRiskByBudgetYear(String budgetYear,List<String> riskAssInfHdrNameList) {
-		   
+		DecimalFormat formatter = new DecimalFormat("#,##0.00");
+		
 		Long budgetYearL = Long.parseLong(budgetYear);
 			List<Condition> conditionList = conditionService.findConditionByParentId(budgetYearL,"ALL", "int08-2-5");
 		
@@ -422,8 +426,8 @@ public class RiskAssInfService {
 						rl.add("0");
 					}
 				}
-
-				String total = String.valueOf(sumRl);
+				
+				String total = String.valueOf(formatter.format(sumRl));
 
 				riskFullDataVo.setRl(rl);
 				riskFullDataVo.setSumRiskCost(total);
@@ -482,6 +486,7 @@ public class RiskAssInfService {
 		Row row = sheet.createRow(rowNum);
 		Cell cell = row.createCell(cellNum);
 		DecimalFormat formatter = new DecimalFormat("#,##0");
+
 		System.out.println("Creating excel");
 			
 		/*create data spreadsheet*/	
@@ -661,6 +666,7 @@ public class RiskAssInfService {
 		Row row = sheet.createRow(rowNum);
 		Cell cell = row.createCell(cellNum);
 		DecimalFormat formatter = new DecimalFormat("#,##0");
+		
 		System.out.println("Creating excel");
 				
 		/*create data spreadsheet*/	
@@ -897,6 +903,7 @@ public class RiskAssInfService {
 		Row row = sheet.createRow(rowNum);
 		Cell cell = row.createCell(cellNum);
 		DecimalFormat formatter = new DecimalFormat("#,##0");
+		DecimalFormat formatterCal = new DecimalFormat("#,##0.00");
 		System.out.println("Creating excel");
 		
 
@@ -1049,7 +1056,7 @@ public class RiskAssInfService {
 					rl.add("0");
 				}
 			}
-			String total = String.valueOf(sumRl);
+			String total = String.valueOf(formatterCal.format(sumRl));
 			riskFullDataVo.setRl(rl);
 			riskFullDataVo.setSumRiskCost(total);
 			for (Condition condition : conditionList) {
