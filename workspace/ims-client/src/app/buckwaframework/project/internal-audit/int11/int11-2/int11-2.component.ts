@@ -110,9 +110,15 @@ export class Int112Component implements OnInit {
             );
           }
         },
+        // {
+        //   data: "exciseDepartment",
+        //   className: "ui center aligned"
+        // },
         {
-          data: "exciseDepartment",
-          className: "ui center aligned"
+          render: function (data, type, row, meta) {
+            return row.exciseRegion+" "+row.exciseDistrict;
+          },
+          className: "center"
         },
         {
           data: "informRectorBnum",

@@ -23,7 +23,7 @@
 <div class="ui grid">
   <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>ค้นหาข้อมูลแสตมป์</span>
+      <span>เลือกข้อมูลตรวจสอบค่าใช้จ่าย</span>
     </div>
     <!-- form search -->
     <div class="ui attached segment">
@@ -35,7 +35,7 @@
           </div>
           <div class="four wide field ">
             <select class="ui dropdown full-width" [(ngModel)]="form.sector" name="sector" id="sector" (change)="changeSector($event)">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of sectorList" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
             </select>
           </div>
@@ -44,7 +44,7 @@
           </div>
           <div class="four wide field ">
             <select class="ui dropdown full-width" [(ngModel)]="form.area" name="area" id="area">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of araeList" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
             </select>
           </div>
@@ -55,7 +55,7 @@
           </div>
           <div class="four wide field ">
             <select class="ui dropdown full-width" [(ngModel)]="form.year" name="year" id="year">
-              <option value="">เลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of yearList" value="{{item.value}}">{{item.label}}</option>
             </select>
           </div>
@@ -76,7 +76,7 @@
       <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%">
         <thead>
           <tr style="text-align: center !important">
-            <th style="text-align: center !important" rowspan="2">ลำดับ</th>
+            <th style="text-align: center !important" rowspan="2">ลำดับที่</th>
             <th style="text-align: center !important" rowspan="2">รหัสบัญชี</th>
             <th style="text-align: center !important" rowspan="2">ชื่อบัญชี</th>
             <th style="text-align: center !important" colspan="3">กิจกรรม (รับโอนจากกรมฯ)</th>
@@ -84,9 +84,9 @@
             <th style="text-align: center !important" colspan="3">การเบิกจ่ายจริงแยกตามกิจกรรมตามทะเบียนคุม</th>
             <th style="text-align: center !important" rowspan="2">รวมรับ</th>
             <th style="text-align: center !important" rowspan="2">งบทดลอง</th>
-            <th style="text-align: center !important; background-color: teal" rowspan="2">ผลต่างงบทดลอง</th>
+            <th style="text-align: center !important; background-color: #fefbd8 " rowspan="2">ผลต่างงบทดลอง</th>
             <th style="text-align: center !important" rowspan="2">บัญชีแยกประเภท</th>
-            <th style="text-align: center !important; background-color: teal" rowspan="2">ผลต่างบัญชีแยกประเภท</th>
+            <th style="text-align: center !important; background-color: #fefbd8 " rowspan="2">ผลต่างบัญชีแยกประเภท</th>
             <th style="text-align: center !important" colspan="3">คงเหลือ</th>
             <th style="text-align: center !important" rowspan="2">คงเหลือรวม</th>
             <th style="text-align: center !important" colspan="4">ถัวจ่าย</th>
@@ -120,15 +120,14 @@
 
     <!-- modal detail -->
     <div class="ui modal" id="detail">
-      <i class="close icon"></i>
       <div class="header">
-        หมายเตุ
+        หมายเหตุ
       </div>
       <div class="content" id="des">
         
       </div>
       <div class="actions">
-        <div class="ui grey deny button">
+        <div class="ui deny button">
           ปิด
         </div>
       </div>

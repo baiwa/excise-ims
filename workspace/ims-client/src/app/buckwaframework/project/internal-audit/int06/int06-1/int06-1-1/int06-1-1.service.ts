@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AjaxService, MessageBarService } from '../../../../../common/services';
 import { File } from '../../../../../common/models';
 import { Int061Service } from 'projects/internal-audit/int06/int06-1/int06-1.service';
+import { Utils } from 'helpers/utils';
 
 declare var $: any;
 
@@ -89,16 +90,28 @@ export class Int0611Service {
           "className": "ui left aligned",
         }, {
           "data": "colum4",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": function (data) {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "colum7",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": function (data) {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "colum8",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": function (data) {
+            return Utils.moneyFormat(data);
+          }
         }, {
           "data": "colum9",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": function (data) {
+            return Utils.moneyFormat(data);
+          }
         }
       ]
     });    

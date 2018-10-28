@@ -4,6 +4,7 @@ import { AjaxService } from "services/ajax.service";
 import { ComboBox } from "models/combobox";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MessageBarService } from "services/message-bar.service";
+import { Utils } from "helpers/utils";
 
 const URL = {
   DROPDOWN: "combobox/controller/getDropByTypeAndParentId",
@@ -178,14 +179,14 @@ export class Int0691Service {
       this.datatable.destroy();
     }
 
-    this.datatable = $("#datatable").DataTable({
-      lengthChange: false,
+    this.datatable = $("#datatable").DataTableTh({
+      lengthChange: true,
       searching: false,
       ordering: false,
       pageLength: 10,
       processing: true,
       serverSide: false,
-      paging: false,
+      paging: true,
       data: this.showDatatable,
       columns: [
         {},
@@ -200,7 +201,12 @@ export class Int0691Service {
         { data: "ctgBudget" },
         { data: "subCtgBudget" },
         { data: "descriptionList" },
-        { data: "amount" },
+        { data: "amount",
+        "className": "ui right aligned",
+        "render": function (data) {
+          return Utils.moneyFormat(data);
+        }
+       },
         { data: "note" }
       ],
       columnDefs: [

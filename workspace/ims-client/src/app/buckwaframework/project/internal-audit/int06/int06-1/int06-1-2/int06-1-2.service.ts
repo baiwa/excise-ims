@@ -3,6 +3,7 @@ import { AjaxService } from "services/ajax.service";
 import { FormVo } from "projects/internal-audit/int06/int06-1/int06-1-2/form.model";
 import { MessageBarService } from "services/message-bar.service";
 import { Int061Service } from "projects/internal-audit/int06/int06-1/int06-1.service";
+import { Utils } from "helpers/utils";
 
 declare var $: any;
 
@@ -67,7 +68,7 @@ export class Int0612Service {
   }
 
   dataTable = () => {
-    this.table = $("#dataTable").DataTable({
+    this.table = $("#dataTable").DataTableTh({
       "serverSide": false,
       "searching": false,
       "ordering": false,
@@ -89,7 +90,10 @@ export class Int0612Service {
           "data": "accountName",          
         },{
           "data": "amount",
-          "className": "ui right aligned"          
+          "className": "ui right aligned",
+          "render": function (data) {
+            return Utils.moneyFormat(data);
+          }          
         }
       ]
     });

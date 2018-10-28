@@ -11,7 +11,7 @@
                     <div class="eight wide field ">
                         <label class="custom-label-w-25 text-right">รายการโอนเงิน</label>
                         <select class="ui search dropdown ai search" name="combo1" id="combo1" [(ngModel)]="combo1">
-                          <option value="">เลือก</option>
+                          <option value="">กรุณาเลือก</option>
                           <option *ngFor="let data of comboBox1 | async" value="{{data.value1}}">{{data.value1}}</option>
                         </select>
                     </div>
@@ -22,7 +22,7 @@
 
                     <div class="five wide field ">
                         <select class="ui search dropdown ai search" name="combo2" id="combo2" [(ngModel)]="combo2">
-                          <option value="">เลือก</option>
+                          <option value="">กรุณาเลือก</option>
                           <option *ngFor="let data of comboBox2 | async" value="{{data.value1}}">{{data.value1}}</option>
                       </select>
                     </div>
@@ -32,7 +32,7 @@
                     <div class="eight wide field text-right">
                         <label class="custom-label-w-25">กิจกรรม</label>
                         <select class="ui search dropdown ai search" name="combo3" id="combo3" [(ngModel)]="combo3">
-                          <option value="">เลือก</option>
+                          <option value="">กรุณาเลือก</option>
                           <option *ngFor="let data of comboBox3 | async" value="{{data.value1}}">{{data.value1}}</option>
                         </select>
                     </div>
@@ -45,7 +45,7 @@
                         <div class="ui calendar" id="calendar1" style="width:100%">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text">
+                                <input placeholder="วว/ดด/ปปปป" type="text">
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                         <div class="ui calendar" id="calendar2" style="width:100%">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text">
+                                <input placeholder="วว/ดด/ปปปป" type="text">
                             </div>
                         </div>
                     </div>
@@ -85,8 +85,8 @@
 </div>
 
 <div class="ui segment" id="int069">
-    <div style="overflow-x: scroll;">
-        <table class="ui small celled table striped selectable" style="width: 150%" id="datatable">
+    <div>
+        <table class="ui small celled table striped selectable" style="width: 160%" id="datatable">
             <thead>
                 <tr style="text-align: center;">
                     <th rowspan="2">ลำดับที่</th>
@@ -104,8 +104,8 @@
                     <th rowspan="2">จัดการ</th>
 
                 </tr>
-                <tr>
-                    <th>วันที่ กค</th>
+                <tr style="text-align: center;">
+                    <th>ที่ กค</th>
                     <th>เลขที่</th>
                     <th>ว.ด.ป</th>
                 </tr>
@@ -116,7 +116,7 @@
     <div class="ui center aligned grid">
         <div class="sixteen wide column">
 
-            <button class="ui mini primary button">
+            <button class="ui mini yellow button">
         <i class="print icon"></i>
         ส่งออก
       </button>

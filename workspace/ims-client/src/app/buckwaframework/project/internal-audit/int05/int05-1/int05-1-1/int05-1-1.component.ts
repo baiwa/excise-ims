@@ -264,7 +264,10 @@ export class Int0511Component implements OnInit {
           "className": "ui right aligned"
         }, {
           "data": "numberOfStamp",
-          "className": "ui right aligned"
+          "className": "ui right aligned",
+          "render": function (data) {
+            return Utils.moneyFormatInt(data);
+          }
         }, {
           "data": "valueOfStampPrinted",
           "className": "ui right aligned",

@@ -4,6 +4,7 @@ import { AjaxService } from "services/ajax.service";
 import { ComboBox } from "models/combobox";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MessageBarService } from "../../../../common/services";
+import { Utils } from "helpers/utils";
 
 const URL = {
   DROPDOWN: "combobox/controller/getDropByTypeAndParentId",
@@ -53,14 +54,14 @@ export class Int069Service {
       this.datatable.destroy();
     }
 
-    this.datatable = $("#datatable").DataTable({
-      lengthChange: false,
+    this.datatable = $("#datatable").DataTableTh({
+      lengthChange: true,
       searching: false,
       ordering: false,
       pageLength: 10,
       processing: true,
       serverSide: false,
-      paging: false,
+      paging: true,
       ajax: {
         type: "POST",
         url: URL.FILTER,
@@ -79,13 +80,18 @@ export class Int069Service {
         { data: "ctgBudget" },
         { data: "subCtgBudget" },
         { data: "descriptionList" },
-        { data: "amount" },
+        { data: "amount",
+        "className": "ui right aligned",
+        "render": function (data) {
+          return Utils.moneyFormat(data);
+        }
+       },
         { data: "note" },
         {
           render: function() {
             return (
-              '<button type="button" class="ui mini button orange edit"><i class="edit icon"></i> แก้ไข </button>' +
-              '<button type="button" class="ui mini button red del"><i class="trash alternate icon"></i> ลบ</button>'
+              '<button type="button" class="ui mini button yellow edit"><i class="edit icon"></i>แก้ไข</button>' +
+              '<button type="button" class="ui mini button red del"><i class="trash alternate icon"></i>ลบ</button>'
             );
           }
         }
@@ -94,6 +100,7 @@ export class Int069Service {
         {
           targets: [0, 14],
           className: "center aligned",
+        
           render: function(data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
