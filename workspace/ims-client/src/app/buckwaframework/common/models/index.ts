@@ -20,6 +20,7 @@ import { TaxReceipt } from "./taxReceipt";
 import { AssetBalance } from "./AssetBalance";
 import { AssetMaintenance } from "./AssetMaintenance";
 import { IntCtrlAss } from "./IntCtrlAss";
+import { RiskAssRiskWsHdr } from "./RiskAssRiskWsHdr";
 
 export {
   AlertMessage,
@@ -43,5 +44,6 @@ export {
   TaxReceipt,
   AssetBalance,
   AssetMaintenance,
-  IntCtrlAss
+  IntCtrlAss,
+  RiskAssRiskWsHdr
 };

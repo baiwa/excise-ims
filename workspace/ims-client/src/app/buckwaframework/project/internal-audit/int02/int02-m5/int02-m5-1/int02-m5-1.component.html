@@ -16,9 +16,10 @@
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                            <select class="ui dropdown ai selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)" [(ngModel)]="code1">
+                                            <select class="ui dropdown ai selection" style="width: 100%;" id="travelTo1"
+                                                (change)="travelTo2Dropdown($event)" [(ngModel)]="code1">
                                                 <option value="00">เลือก</option>
-                                                <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                                                <option *ngFor="let data of travelTo1List" value="{{data}}">{{data.subTypeDescription}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -27,7 +28,8 @@
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                            <select class="ui dropdown ai selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)" [(ngModel)]="code2">
+                                            <select class="ui dropdown ai selection" style="width: 100%;" id="travelTo2"
+                                                (change)="travelTo3Dropdown($event)" [(ngModel)]="code2">
                                                 <option value="00">เลือก</option>
                                                 <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                                             </select>
@@ -40,7 +42,8 @@
                                     </div>
                                     <div class="ten centered wide field">
                                         <div class="ui input">
-                                            <select class="ui dropdown ai selection" style="width: 100%;" id="travelTo3" [(ngModel)]="code3">
+                                            <select class="ui dropdown ai selection" style="width: 100%;" id="travelTo3"
+                                                [(ngModel)]="code3">
                                                 <option value="00">เลือก</option>
                                                 <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                                             </select>
@@ -69,7 +72,7 @@
                             <i class="search icon"></i>
                             ค้นหา
                         </button>
-                        <button class="ui mini green button"  (click)="searchWs()">
+                        <button class="ui mini green button" (click)="searchWs()">
                             <i class="add  icon"></i>
                             รายการใหม่</button>
                     </div>
