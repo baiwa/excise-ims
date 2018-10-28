@@ -113,11 +113,11 @@ export class Int111Component implements OnInit {
         },
         {
           "data": "projectName",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         },
         {
           "data": "informRectorBnum",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         },
         {
           "data": "informRectorDate",
@@ -125,7 +125,7 @@ export class Int111Component implements OnInit {
         },
         {
           "data": "followUp1Bnum",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         },
         {
           "data": "followUp1Date",
@@ -141,7 +141,7 @@ export class Int111Component implements OnInit {
         },
         {
           "data": "performance1Bnum",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         },
         {
           "data": "performance1Date",
@@ -149,7 +149,7 @@ export class Int111Component implements OnInit {
         },
         {
           "data": "trackResult1Bnum",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         },
         {
           "data": "trackResult1Date",
@@ -157,7 +157,7 @@ export class Int111Component implements OnInit {
         },
         {
           "data": "followUp2Bnum",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         },
         {
           "data": "followUp2Date",
@@ -169,7 +169,7 @@ export class Int111Component implements OnInit {
         },
         {
           "data": "performance2Bnum",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         },
         {
           "data": "performance2Date",
@@ -177,7 +177,7 @@ export class Int111Component implements OnInit {
         },
         {
           "data": "trackResult2Bnum",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         },
         {
           "data": "trackResult2Date",
@@ -185,7 +185,7 @@ export class Int111Component implements OnInit {
         },
         {
           "data": "followUp3Bnum",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         },
         {
           "data": "followUp3Date",
@@ -197,7 +197,7 @@ export class Int111Component implements OnInit {
         },
         {
           "data": "performance3Bnum",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         },
         {
           "data": "performance3Date",
@@ -205,7 +205,7 @@ export class Int111Component implements OnInit {
         },
         {
           "data": "trackResult3Bnum",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         },
         {
           "data": "trackResult3Date",
@@ -213,11 +213,11 @@ export class Int111Component implements OnInit {
         },
         {
           "data": "status",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         },
         {
           "data": "note",
-          "className": "ui center aligned",
+          "className": "ui left aligned",
         },
         {
           "data": "status",
