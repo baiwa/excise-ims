@@ -71,6 +71,13 @@ public class ComboboxController {
 		return li;
 	}
 	
+	@PostMapping("/getExciseIdCopCheckFiscalYearDtl")
+	@ResponseBody
+	public List<String> getExciseIdCopCheckFiscalYearDtl() {
+		List<String> li = planWorksheetHeaderService.getExciseIdCopCheckFiscalYearDtl();
+		return li;
+	}
+	
 	@PostMapping("/getExciseBaseControl")
 	@ResponseBody
 	public List<Lov> getExciseBaseControl() {

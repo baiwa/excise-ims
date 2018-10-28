@@ -24,10 +24,10 @@ export class Cop061Service {
 
     }
 
-    findExciseId = (): Promise<any> => {
+    findExciseId = (fiscalYear): Promise<any> => {
         let url = "cop/cop061/exciseidList";
         return new Promise((resolve, reject) => {
-            this.ajax.get(url, res => {
+            this.ajax.post(url,JSON.stringify(fiscalYear), res => {
                 resolve(res.json())
             })
         });
@@ -86,6 +86,7 @@ export class Cop061Service {
         $("#dataFrom").val('');
         $("#dateTo").val('');
         $("#fileName").val('');
+        $("#fiscalYear").val('');
         this.dataExcel = null;
         if (this.table != null) {
             this.table.destroy();

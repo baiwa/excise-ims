@@ -9,7 +9,21 @@
 
     <div class="ui attached segment {{loading ? 'loading' : ''}}">
       <form class="ui form" id="form">
-        <!-- row 1 -->
+
+        <div class="inline fields">
+          <div class="three wide field ">
+            <label class="text-right full-width">ประจำปีงบประมาณ</label>
+          </div>
+          <div class="four wide field column">
+            <div class="ui calendar" id="date" style="width: 100%;">
+              <div class="ui input left icon">
+                <i class="calendar alter nate outline icon"></i>
+                <input id="fiscalYear" type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="ปปปป" [attr.required]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="inline fields  ui grid">
           <div class="three wide field ">
             <label class="text-right full-width">ทะเบียนสรรพสามิต</label>
@@ -18,51 +32,34 @@
             <select name="exciseId " id="exciseId" class="ui dropdown ai search full-width office" (change)="changeExciseId($event)"
               [(ngModel)]="form.exciseId">
               <option value="">กรุณาเลือก</option>
-              <option *ngFor="let item of exciseIdList" value="{{item.value}}">{{item.label}}</option>
+              <option *ngFor="let item of exciseIdList" >{{item}}</option>
 
             </select>
           </div>
           <div class="three wide field ">
-            <label class="text-right full-width">เลขประจำตัวผู้เสียภาษี</label>
-          </div>
-          <div class="four wide field ">
-            <input type="text" class="custom-readonly" disabled [(ngModel)]="form.userNumber" name="userNumber">
-          </div>
-        </div>
-
-        <!-- row 2 -->
-        <div class="inline fields  ui grid">
-          <div class="three wide field ">
             <label class="text-right full-width">ผู้ประกอบการ</label>
           </div>
           <div class="four wide field ">
-            <input type="text" class="custom-readonly" disabled [(ngModel)]="form.entrepreneur" name="entrepreneur">
-          </div>
-          <div class="three wide field ">
-            <label class="text-right full-width">เลขที่วิเคราะห์</label>
-          </div>
-          <div class="four wide field ">
-            <input type="text" class="custom-readonly" disabled [(ngModel)]="form.anlysisNumber" name="anlysisNumber">
+            <input type="text" class="custom-readonly" disabled [(ngModel)]="form.exciseName" name="exciseName">
           </div>
         </div>
 
-        <!-- row 3 -->
+
         <div class="inline fields  ui grid">
           <div class="three wide field ">
             <label class="text-right full-width">ประเภท</label>
           </div>
           <div class="four wide field ">
-            <input type="text" class="custom-readonly" disabled [(ngModel)]="form.type" name="type">
+            <input type="text" class="custom-readonly" disabled [(ngModel)]="form.exciseType" name="exciseType">
           </div>
           <div class="three wide field ">
             <label class="text-right full-width">พิกัด</label>
           </div>
           <div class="four wide field ">
-            <input type="text" class="custom-readonly" disabled [(ngModel)]="form.coordinates" name="coordinates">
+            <input type="text" class="custom-readonly" disabled [(ngModel)]="form.productType" name="productType">
           </div>
         </div>
 
-        <!-- row 4 -->
         <div class="inline fields  ui grid">
           <div class="three wide field ">
             <label class="text-right full-width">รอบระยะเวลาการตรวจสอบ</label>
@@ -71,8 +68,7 @@
             <div class="ui calendar full-width" id="dateF">
               <div class="ui input left icon">
                 <i class="clock icon"></i>
-                <input name="dateFrom" type="text" id="dateFrom" autocomplete="off" [attr.readonly]="null" placeholder="ดด/ปปปป"
-                  [attr.required]="true">
+                <input name="dateFrom" type="text" id="dateFrom" autocomplete="off" [attr.readonly]="null" placeholder="ดด/ปปปป" [attr.required]="true">
               </div>
             </div>
           </div>
@@ -83,67 +79,70 @@
             <div class="ui calendar full-width" id="dateT">
               <div class="ui input left icon">
                 <i class="clock icon"></i>
-                <input name="dateTo" type="text" id="dateTo" autocomplete="off" [attr.readonly]="null" placeholder="ดด/ปปปป"
-                  [attr.required]="true">
+                <input name="dateTo" type="text" id="dateTo" autocomplete="off" [attr.readonly]="null" placeholder="ดด/ปปปป" [attr.required]="true">
               </div>
             </div>
           </div>
         </div>
-        <br><br>
+        <br>
+        <br>
         <div class="ui stackable center aligned page grid">
-          <button class="ui mini primary button" type="button" (click)="search()"><i class="file outline icon"></i>
+          <button class="ui mini primary button" type="button" (click)="search()">
+            <i class="file outline icon"></i>
             แสดงกระดาษทำการ</button>
-          <button class="ui mini gray button" type="button" (click)="claer()"><i class="sync icon"></i> ล้างข้อมูล</button>
-        </div><br>
+          <button class="ui mini gray button" type="button" (click)="claer()">
+            <i class="sync icon"></i> ล้างข้อมูล</button>
+        </div>
+        <br>
       </form>
     </div>
     <br>
-  <div id="Dtable">
-    <div class="ui top attached header segment" style="background: #1e83db;color: white">
+    <div id="Dtable">
+      <div class="ui top attached header segment" style="background: #1e83db;color: white">
         <span>รายละเอียดข้อมูลกระดาษทำการ</span>
       </div>
-    <div class="ui attached segment" >
-      <div class="ui grid center aligned">
-        <div class="sixteen wide column">
-          กระดาษทำการรับวัตถุดิบ<br>
-          {{form.entrepreneur}}<br>
-          เดือน {{form.dateFrom}} - {{form.dateTo}}
+      <div class="ui attached segment">
+        <div class="ui grid center aligned">
+          <div class="sixteen wide column">
+            กระดาษทำการรับวัตถุดิบ
+            <br> {{form.exciseName}}
+            <br> เดือน {{form.dateFrom}} - {{form.dateTo}}
+          </div>
         </div>
-      </div>
-      <br>
-      <table id="dataTable" class="ui small celled table striped selectable nowrap" style="width: 100%">
-        <thead>
-          <tr>
-            <th style="text-align: center !important;" rowspan="2">ลำดับ</th>
-            <th style="text-align: center !important;" rowspan="2">รายการ</th>
-            <th style="text-align: center !important;" colspan="3">ขอลดหย่อนภาษีตาม ภส.05-03</th>
-            <th style="text-align: center !important;" colspan="4">ใบเสร็จรับเงิน</th>
-            <th style="text-align: center !important;" rowspan="2">ผลต่าง</th>
-          </tr>
-          <tr>
-            <th style="text-align: center !important;">จำนวนภาษี</th>
-            <th style="text-align: center !important;">ปริมาณ</th>
-            <th style="text-align: center !important;">ภาษีต่อหน่วย</th>
+        <br>
+        <table id="dataTable" class="ui small celled table striped selectable nowrap" style="width: 100%">
+          <thead>
+            <tr>
+              <th style="text-align: center !important;" rowspan="2">ลำดับ</th>
+              <th style="text-align: center !important;" rowspan="2">รายการ</th>
+              <th style="text-align: center !important;" colspan="3">ขอลดหย่อนภาษีตาม ภส.05-03</th>
+              <th style="text-align: center !important;" colspan="4">ใบเสร็จรับเงิน</th>
+              <th style="text-align: center !important;" rowspan="2">ผลต่าง</th>
+            </tr>
+            <tr>
+              <th style="text-align: center !important;">จำนวนภาษี</th>
+              <th style="text-align: center !important;">ปริมาณ</th>
+              <th style="text-align: center !important;">ภาษีต่อหน่วย</th>
 
-            <th style="text-align: center !important;">เลขที่ใบเสร็จ</th>
-            <th style="text-align: center !important;">จำนวนภาษี</th>
-            <th style="text-align: center !important;">ปริมาณ</th>
-            <th style="text-align: center !important;">ภาษีต่อหน่วย</th>
-          </tr>
-        </thead>
+              <th style="text-align: center !important;">เลขที่ใบเสร็จ</th>
+              <th style="text-align: center !important;">จำนวนภาษี</th>
+              <th style="text-align: center !important;">ปริมาณ</th>
+              <th style="text-align: center !important;">ภาษีต่อหน่วย</th>
+            </tr>
+          </thead>
 
-      </table>
-      <br>
-      <div class="ui center aligned grid">
-        <div class="six wide column">
-          <button class="ui mini primary button" (click)="save()" [disabled]="buttonDisabled">
-            <i class="print icon"></i>
-            บันทึกข้อมูล
-          </button>
+        </table>
+        <br>
+        <div class="ui center aligned grid">
+          <div class="six wide column">
+            <button class="ui mini primary button" (click)="save()" [disabled]="buttonDisabled">
+              <i class="print icon"></i>
+              บันทึกข้อมูล
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
     <div class="ui top attached header segment" style="background: #1e83db;color: white">
       <span>อัปโหลดไฟล์ ข้อมูลกระดาษทำการ</span>
     </div>
@@ -159,7 +158,8 @@
               title="อัปโหลด Template ข้อมูลการตรวจสอบรายการวัตถุดิบที่ขอลดหย่อนภาษีที่ยื่นต่อกรมสรรพสามิต (ภส.05 - 02)">
           </div>
           <div class="three wide field ">
-            <button class="ui mini primary button" (click)="upload()"><i class="upload icon"></i>อัปโหลด</button>
+            <button class="ui mini primary button" (click)="upload()">
+              <i class="upload icon"></i>อัปโหลด</button>
           </div>
           <div class="four wide field ">
 

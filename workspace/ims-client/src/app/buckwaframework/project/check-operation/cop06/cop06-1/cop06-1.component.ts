@@ -23,7 +23,7 @@ export class Cop061Component implements OnInit {
 
   // === > params
   form: Cop061Form = new Cop061Form();
-  exciseIdList: any;
+  exciseIdList: any = [];
   loading: boolean = false;
   buttonDisabled: boolean = false;
   error: boolean = false;
@@ -33,17 +33,18 @@ export class Cop061Component implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.authService.reRenderVersionProgram('OPE-04600');
+    this.authService.reRenderVersionProgram('COP-06100');
     $("#Dtable").hide();
-    this.findExciseId();
     this.callDropdown();
     this.calenda();
     this.dataTable();
   }
 
-  findExciseId = () => {
-    this.cop061Service.findExciseId().then((res) => {
+  findExciseId = (fiscalYear) => {
+   
+    this.cop061Service.findExciseId(fiscalYear).then((res) => {
       this.exciseIdList = res;
+      console.log("this.exciseIdList",this.exciseIdList);
     });
   }
 
@@ -72,8 +73,9 @@ export class Cop061Component implements OnInit {
   changeExciseId = (e) => {
     let exciseId = e.target.value;
     this.cop061Service.findByExciseId(exciseId).then((res) => {
-      this.form.entrepreneur = res.exciseName;
-      this.form.coordinates = res.productType;
+      this.form.exciseName = res.exciseName;
+      this.form.productType = res.productType;
+      this.form.exciseType = res.exciseType;
       this.form.userNumber = res.taxFeeId;
     });
   }
@@ -132,6 +134,17 @@ export class Cop061Component implements OnInit {
         let month = TextDateTH.months[parseInt(_month)-1];
         console.log(month);
         this.form.dateTo = month + " " + _year;
+      }
+    });
+    $("#date").calendar({
+      type: "year",
+      text: TextDateTH,
+      formatter: formatter("ป"),   
+      onChange: (date, text) => {
+        this.form.fiscalYear = text;
+        console.log("fiscalYear",text);
+        $("#exciseId").dropdown('restore defaults');
+        this.findExciseId(text); 
       }
     });
   }

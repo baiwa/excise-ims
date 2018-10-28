@@ -20,33 +20,35 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.excise.cop.persistence.dao.CopCheckFiscalYearDao;
 import th.co.baiwa.excise.cop.persistence.dao.ReportCheckOperationDao;
 import th.co.baiwa.excise.cop.persistence.repository.OaTaxReduceWsDtlRepository;
-import th.co.baiwa.excise.cop.persistence.vo.Cop061ExcelVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop061FormVo;
-import th.co.baiwa.excise.cop.persistence.vo.Cop061Vo;
-import th.co.baiwa.excise.domain.LabelValueBean;
+import th.co.baiwa.excise.cop.persistence.vo.Cop064ExcelVo;
+import th.co.baiwa.excise.cop.persistence.vo.Cop064FormVo;
+import th.co.baiwa.excise.cop.persistence.vo.Cop064Vo;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.oa.persistence.entity.OaTaxReduceWsDtl;
-import th.co.baiwa.excise.ta.persistence.entity.TaxReduceWsDtlS;
-import th.co.baiwa.excise.ta.persistence.repository.TaxReduceWsDtlRepository;
 
 @Service
-public class Cop061Service {
+public class Cop064Service {
 
 	@Autowired
 	private ReportCheckOperationDao reportCheckOperationDao;
 	
 	@Autowired
+	private CopCheckFiscalYearDao copCheckFiscalYearDao;
+	
+	@Autowired
 	private OaTaxReduceWsDtlRepository oaTaxReduceWsDtlRepository;
 
-	public DataTableAjax<Cop061Vo> findAll(Cop061FormVo formVo) {
+	public DataTableAjax<Cop064Vo> findAll(Cop064FormVo formVo) {
 
-		DataTableAjax<Cop061Vo> dataTableAjax = new DataTableAjax<>();
+		DataTableAjax<Cop064Vo> dataTableAjax = new DataTableAjax<>();
 		if (StringUtils.isNotBlank(formVo.getExciseId())) {
 
-			List<Cop061Vo> list = reportCheckOperationDao.findAll(formVo);
-			Long count = reportCheckOperationDao.count(formVo);
+			List<Cop064Vo> list = reportCheckOperationDao.findAll064(formVo);
+			Long count = reportCheckOperationDao.count064(formVo);
 
 			if (formVo.getDataExcel() != null) {
 				mapData(list,formVo.getDataExcel());
@@ -58,9 +60,9 @@ public class Cop061Service {
 
 		return dataTableAjax;
 	}
-	public void mapData(List<Cop061Vo> list,List<Cop061ExcelVo> dataExcel) {
-		for (Cop061Vo vo : list) {
-			for (Cop061ExcelVo excel : dataExcel) {
+	public void mapData(List<Cop064Vo> list,List<Cop064ExcelVo> dataExcel) {
+		for (Cop064Vo vo : list) {
+			for (Cop064ExcelVo excel : dataExcel) {
 				if (vo.getTaExciseAcc0502DtlList().equals(excel.getColumn2())) {					
 					vo.setReceiptNumber(excel.getColumn3());
 					vo.setTaxNumber(excel.getColumn4());
@@ -71,8 +73,8 @@ public class Cop061Service {
 			}			
 		}
 		
-		for (Cop061ExcelVo excel : dataExcel) {
-			Cop061Vo vo =new Cop061Vo();
+		for (Cop064ExcelVo excel : dataExcel) {
+			Cop064Vo vo =new Cop064Vo();
 			if ("N".equalsIgnoreCase(excel.getFlag())) {
 				vo.setTaExciseAcc0502DtlList(excel.getColumn2());
 				vo.setReceiptNumber(excel.getColumn3());
@@ -89,10 +91,10 @@ public class Cop061Service {
 		}
 	}
 	
-	public void save(List<Cop061Vo> vos) {
+	public void save(Cop064FormVo formVo) {
 		
 		List<OaTaxReduceWsDtl> entityList = new ArrayList<>();
-		for (Cop061Vo vo : vos) {
+		for (Cop064Vo vo : formVo.getDataListVo()) {
 			OaTaxReduceWsDtl entity = new OaTaxReduceWsDtl();
 			
 			//check
@@ -117,6 +119,8 @@ public class Cop061Service {
 			entityList.add(entity);
 		}  
 		oaTaxReduceWsDtlRepository.save(entityList);
+		copCheckFiscalYearDao.updateStatusCopCheckFiscalYearDtl(formVo.getExciseId(),formVo.getFiscalYear());
+		
 	}
 	
 	public List<String> findExciseId(String fiscalYear) {
@@ -133,10 +137,10 @@ public class Cop061Service {
 		return data; 
 	}
 
-	public List<Cop061ExcelVo> readFileExcel(Cop061FormVo formVo)
+	public List<Cop064ExcelVo> readFileExcel(Cop064FormVo formVo)
 			throws IOException, EncryptedDocumentException, InvalidFormatException {
 
-		List<Cop061ExcelVo> excelVo = new ArrayList<>();
+		List<Cop064ExcelVo> excelVo = new ArrayList<>();
 		byte[] byt = formVo.getFileName().getBytes();
 		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(byt));
 		Sheet sheet = workbook.getSheetAt(0);
@@ -172,9 +176,9 @@ public class Cop061Service {
 		return excelVo;
 	}
 	
-	public void addData(List<Cop061ExcelVo> dataList,List<String> columns) {
+	public void addData(List<Cop064ExcelVo> dataList,List<String> columns) {
 		
-			Cop061ExcelVo vo = new Cop061ExcelVo();			
+			Cop064ExcelVo vo = new Cop064ExcelVo();			
 			vo.setColumn1(StringUtils.trim(columns.get(0)));
 			vo.setColumn2(StringUtils.trim(columns.get(1)));
 			vo.setColumn3(StringUtils.trim(columns.get(2)));

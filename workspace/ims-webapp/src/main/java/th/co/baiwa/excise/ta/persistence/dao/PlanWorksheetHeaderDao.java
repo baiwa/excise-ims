@@ -618,6 +618,16 @@ public class PlanWorksheetHeaderDao {
 		});
 		return exciseList;
 	}
+	
+	public List<String> getExciseIdCopCheckFiscalYearDtl() {
+		String sql = "select DISTINCT H.ENTREPRENEUR_NO from COP_CHECK_FISCAL_YEAR_DTL H ";
+		List<String> exciseList = jdbcTemplate.query(sql, new RowMapper<String>() {
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
+		return exciseList;
+	}
 
 	public List<Object> queryExciseIdFlagSDataList(String exciseId) {
 		String sql = "select * from TA_PLAN_WORK_SHEET_HEADER H where H.EXCISE_ID = ? and H.ANALYS_NUMBER is not null";

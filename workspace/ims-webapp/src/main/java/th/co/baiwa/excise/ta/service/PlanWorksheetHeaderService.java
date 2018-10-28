@@ -372,6 +372,10 @@ public class PlanWorksheetHeaderService {
 	public List<String> getExciseIdFlagSFromHeader() {
 		return planWorksheetHeaderDao.queryExciseIdFlagSFromHeader();
 	}
+	
+	public List<String> getExciseIdCopCheckFiscalYearDtl() {
+		return planWorksheetHeaderDao.getExciseIdCopCheckFiscalYearDtl();
+	}
 
 	public List<Object> queryExciseIdFlagSDataList(String exciseId) {
 		List<Object> valueList = planWorksheetHeaderDao.queryExciseIdFlagSDataList(exciseId);

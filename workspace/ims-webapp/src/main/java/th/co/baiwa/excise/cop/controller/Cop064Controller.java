@@ -7,57 +7,57 @@ import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.excise.cop.persistence.vo.Cop061ExcelVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop061FormVo;
-import th.co.baiwa.excise.cop.persistence.vo.Cop061Vo;
-import th.co.baiwa.excise.cop.service.Cop061Service;
-import th.co.baiwa.excise.domain.LabelValueBean;
+import th.co.baiwa.excise.cop.persistence.vo.Cop064ExcelVo;
+import th.co.baiwa.excise.cop.persistence.vo.Cop064FormVo;
+import th.co.baiwa.excise.cop.persistence.vo.Cop064Vo;
+import th.co.baiwa.excise.cop.service.Cop064Service;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 
 @Controller
-@RequestMapping("api/cop/cop061")
-public class Cop061Controller {
+@RequestMapping("api/cop/cop064")
+public class Cop064Controller {
 
 	@Autowired
-	private Cop061Service cop061Service;
+	private Cop064Service cop064Service;
 
 	@PostMapping("/findAll")
 	@ResponseBody
-	public DataTableAjax<Cop061Vo> findAll(@RequestBody Cop061FormVo formVo){
-		return cop061Service.findAll(formVo);
+	public DataTableAjax<Cop064Vo> findAll(@RequestBody Cop064FormVo formVo){
+		return cop064Service.findAll(formVo);
 	}
 
 	@PostMapping("/exciseidList")
 	@ResponseBody
 	public List<String> findExciseId(@RequestBody String fiscalYear) {
-		List<String> dataList = cop061Service.findExciseId(fiscalYear);
+		List<String> dataList = cop064Service.findExciseId(fiscalYear);
 		return dataList;
 	}
 
 	@PostMapping("/findByExciseId")
 	@ResponseBody
 	public Cop061FormVo findByExciseId(@RequestBody String exciseId) {
-		return cop061Service.findByExciseId(exciseId);
+		return cop064Service.findByExciseId(exciseId);
 	}
 	
 	@PostMapping("/upload")
 	@ResponseBody
-	public List<Cop061ExcelVo> upload(@ModelAttribute Cop061FormVo formVo) throws EncryptedDocumentException, InvalidFormatException, IOException {		
-		return cop061Service.readFileExcel(formVo);
+	public List<Cop064ExcelVo> upload(@ModelAttribute Cop064FormVo formVo) throws EncryptedDocumentException, InvalidFormatException, IOException {		
+		return cop064Service.readFileExcel(formVo);
 	}
 
     @PostMapping("/save")
     @ResponseBody
-    public List<Cop061Vo> save(@RequestBody List<Cop061Vo> vo)
+    public List<Cop064Vo> save(@RequestBody Cop064FormVo formVo)
     {
-         cop061Service.save(vo);
-         return vo;
+         cop064Service.save(formVo);
+         
+         return formVo.getDataListVo();
     }
 }

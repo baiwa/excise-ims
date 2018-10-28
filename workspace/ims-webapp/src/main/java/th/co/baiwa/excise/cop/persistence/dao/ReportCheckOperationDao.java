@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.cop.persistence.vo.Cop061FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop061Vo;
+import th.co.baiwa.excise.cop.persistence.vo.Cop064FormVo;
+import th.co.baiwa.excise.cop.persistence.vo.Cop064Vo;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.utils.OracleUtils;
 
@@ -21,24 +23,30 @@ public class ReportCheckOperationDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private final String SQL =        " SELECT * FROM OA_TAX_REDUCE_WS_HDR WHERE 1=1 ";
+	private final String SQL_TA_EXCISE_REGISTTION_NUMBER = " SELECT * FROM TA_EXCISE_REGISTTION_NUMBER WHERE 1=1 ";
+//	private final String SQL_COP_CHECK_FISCAL_YEAR_DTL =  " SELECT * FROM COP_CHECK_FISCAL_YEAR_DTL WHERE 1=1 ";
+	
+	private final String SQL_COP_CHECK_FISCAL_YEAR_DTL =  	" SELECT a.ENTREPRENEUR_NO FROM COP_CHECK_FISCAL_YEAR_DTL a " + 
+		  	" LEFT JOIN COP_CHECK_FISCAL_YEAR b ON a.ID_MASTER = b.ID WHERE a.IS_DELETED = 'N' AND a.STATUS != '1874' AND SUBSTR(b.FISCAL_YEAR,4,4) = ? ";
+	
 	private final String SQL_DETAIL = " SELECT * FROM OA_TAX_REDUCE_WS_DTL_MONEY WHERE 1=1 ";
 
-	public List<LabelValueBean> findExciseIdAll() {
-		List<LabelValueBean> list = jdbcTemplate.query(SQL, exciseIdRowmapper);
+	public List<String> findExciseIdAll(String fiscalYear) {
+		
+		List<String> list = jdbcTemplate.query(SQL_COP_CHECK_FISCAL_YEAR_DTL, new Object[] { fiscalYear }, exciseIdRowmapper);
 		return list;
 	}
 
-	private RowMapper<LabelValueBean> exciseIdRowmapper = new RowMapper<LabelValueBean>() {
+	private RowMapper<String> exciseIdRowmapper = new RowMapper<String>() {
 		@Override
-		public LabelValueBean mapRow(ResultSet rs, int arg1) throws SQLException {
-			return new LabelValueBean(rs.getString("EXCISE_ID"), rs.getString("EXCISE_ID"));
+		public String mapRow(ResultSet rs, int arg1) throws SQLException {
+			return rs.getString("ENTREPRENEUR_NO");
 		}
 	};
 
 	public List<Cop061FormVo> findByExciseId(String exciseId) {
-		StringBuilder sql = new StringBuilder(SQL);
-		sql.append("AND  EXCISE_ID = ? ");
+		StringBuilder sql = new StringBuilder(SQL_TA_EXCISE_REGISTTION_NUMBER);
+		sql.append("AND  TA_EXCISE_ID = ? ");
 		List<Cop061FormVo> list = jdbcTemplate.query(sql.toString(), new Object[] { exciseId }, createPeperRowmapper);
 		return list;
 	}
@@ -47,11 +55,24 @@ public class ReportCheckOperationDao {
 		@Override
 		public Cop061FormVo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Cop061FormVo vo = new Cop061FormVo();
-			vo.setTaExciseAcc0502Id(rs.getString("TAX_REDUCE_WS_HDR_ID"));
-			vo.setExciseId(rs.getString("EXCISE_ID"));
-			vo.setTaxFeeId(rs.getString("TAXATION_ID"));
-			vo.setExciseName(rs.getString("EXCISE_NAME"));
-			vo.setProductType(rs.getString("PRODUCT_TYPE"));
+			vo.setTaExciseAcc0502Id(rs.getString("TA_EXCISE_REGISTTION_NUMBER_ID"));
+			
+			vo.setExciseId(rs.getString("TA_EXCISE_ID"));
+			vo.setExciseName(rs.getString("TA_EXCISE_FAC_NAME"));
+			vo.setExciseAddress(rs.getString("TA_EXCISE_FAC_ADDRESS"));
+			
+			String type = rs.getString("TA_EXCISE_ID").split("-")[1];
+			String exciseType = "";
+			if("1".equals(type)) {
+				exciseType = "สินค้า";
+			}else if("2".equals(type)) {
+				exciseType = "บริการ";
+			}else if("3".equals(type)) {
+				exciseType = "สินค้านำเข้า";
+			}
+			vo.setExciseType(exciseType);
+			vo.setProductType(rs.getString("TA_EXCISE_PRODUCT_TYPE"));
+			
 			return vo;
 		}
 	};
@@ -91,6 +112,54 @@ public class ReportCheckOperationDao {
 		@Override
 		public Cop061Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Cop061Vo vo = new Cop061Vo();
+
+			vo.setTaExciseAcc0502DtlId(rs.getString("ID"));
+			vo.setExciseId(rs.getString("EXCISE_ID"));
+			vo.setTaExciseAcc0502DtlList(rs.getString("LIST"));
+			vo.setTaxAmount(rs.getBigDecimal("TAX_AMOUNT"));
+			vo.setAmount(rs.getBigDecimal("AMOUNT"));
+			vo.setTaxPerAmount(rs.getBigDecimal("TAX_PER_AMOUNT"));
+
+			return vo;
+		}
+	};
+	
+	
+	public Long count064(Cop064FormVo formVo) {
+
+		StringBuilder sql = new StringBuilder(SQL_DETAIL);
+		List<Object> params = new ArrayList<>();
+		if (StringUtils.isNotBlank(formVo.getExciseId())) {
+			
+			sql.append(" AND EXCISE_ID = ? ");
+			params.add(formVo.getExciseId());
+		}
+
+		String countSql = OracleUtils.countForDatatable(sql);
+		Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+		return count;
+	}
+	
+	public List<Cop064Vo> findAll064(Cop064FormVo formVo) {
+
+		StringBuilder sql = new StringBuilder(SQL_DETAIL);
+		List<Object> params = new ArrayList<>();
+
+		if (StringUtils.isNotBlank(formVo.getExciseId())) {
+			sql.append(" AND EXCISE_ID = ? ");
+			params.add(formVo.getExciseId());
+		}
+		sql.append(" ORDER BY LIST DESC ");
+		
+		List<Cop064Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), detail064Rowmapper);
+		return list;
+
+	}
+
+	private RowMapper<Cop064Vo> detail064Rowmapper = new RowMapper<Cop064Vo>() {
+		@Override
+		public Cop064Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Cop064Vo vo = new Cop064Vo();
 
 			vo.setTaExciseAcc0502DtlId(rs.getString("ID"));
 			vo.setExciseId(rs.getString("EXCISE_ID"));
