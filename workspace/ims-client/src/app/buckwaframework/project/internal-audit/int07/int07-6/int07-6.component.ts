@@ -49,6 +49,7 @@ export class Int076Component implements OnInit, AfterViewInit {
     this.authService.reRenderVersionProgram('INT-07600');
     //this.dataEdit = new Data();
     $("#boxCheck").hide();
+    //this.export();
   }
 
   ngAfterViewInit() {
@@ -139,8 +140,9 @@ export class Int076Component implements OnInit, AfterViewInit {
         // }
       ],
       columnDefs: [
-        { targets: [2], className: "center aligned" },
-        { targets: [0, 1, 3, 4, 5, 6, 7, 8,9], className: "right aligned" },
+        { targets: [0,1,2 ,3,5,6], className: "center aligned" },
+        { targets: [ 4], className: "left aligned" },
+        { targets: [7, 8,9], className: "right aligned" },
       ],
 
       createdRow: function (row, data, dataIndex) {
@@ -197,8 +199,9 @@ export class Int076Component implements OnInit, AfterViewInit {
         { data: "liftUp" },
       ],
       columnDefs: [
-        { targets: [2], className: "center aligned" },
-        { targets: [0, 1, 3, 4, 5, 6, 7, 8, 9], className: "right aligned" },
+        { targets: [0,1,2 ,3,5,6], className: "center aligned" },
+        { targets: [ 4], className: "left aligned" },
+        { targets: [7, 8,9], className: "right aligned" },
       ],
 
       createdRow: function (row, data, dataIndex) {
@@ -485,16 +488,11 @@ export class Int076Component implements OnInit, AfterViewInit {
 
 
   export(){
-
-    const URL = "ia/int076/export";
-    this.ajax.post(URL, this.dataCheckList, res => {
-      console.log(res.json());
-    }
-    );
-    
-    //this.ajax.download(URL);
+    const URL_DOWNLOAD = "ia/int076/export";
+    this.ajax.download(URL_DOWNLOAD);
 
   }
+
 
 }
 
