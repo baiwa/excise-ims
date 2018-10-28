@@ -69,7 +69,7 @@ public class Int076Controller {
 		List<Int076Vo> resultList = (List<Int076Vo>) httpServletRequest.getSession().getAttribute(SESSION_DATA);
 
 		/* set fileName */
-		String fileName = "TEST";
+		String fileName = "check_transfer_money_account_local_governmen";
 
 		/* write it as an excel attachment */
 		ByteArrayOutputStream outByteStream = int076Service.export(resultList);
