@@ -147,7 +147,7 @@ export class Int08310Component implements OnInit {
       }
     });
 
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,

@@ -146,7 +146,7 @@ export class Int08311Component implements OnInit {
       }
     });
 
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -169,7 +169,7 @@ export class Int08311Component implements OnInit {
         {
           data: "riskHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button del"><i class="pencil icon"></i> ลบ </button>';
+            return '<button type="button" class="ui mini button red del"><i class="trash alternate icon"></i> ลบ </button>';
           }
         }
       ],

@@ -51,7 +51,7 @@ export class Int0838Component implements OnInit {
   initDatatable(): void {
     const URL = AjaxService.CONTEXT_PATH + "ia/int083/dataTableWebService4";
     console.log(URL);
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,

@@ -33,7 +33,7 @@
           </div>
         </div>
 
-        <table id="dataTable" class="ui celled table striped selectable ">
+        <table id="dataTable" class="ui celled table striped selectable " style="width: 100%">
           <thead>
             <tr>
               <th rowspan="2" style="text-align: center !important">ลำดับ</th>
@@ -61,12 +61,15 @@
               บันทึก
             </button>
             <button class="ui mini primary button" (click)="modalConditionRL()">
+              <i class="setting icon"></i>
               กำหนดเงื่อนไขความเสี่ยง
             </button>
-            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+            <button class="ui mini yellow button" (click)="addRiskAssRiskWsHdr()">
+              <i class="print icon"></i>
               ส่งออก
             </button>
-            <button class="ui mini primary button" (click)="cancelFlow()">
+            <button class="ui mini  button" (click)="cancelFlow()">
+              <i class="remove icon"></i>
               ยกเลิก
             </button>
           </div>
