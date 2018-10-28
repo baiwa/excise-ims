@@ -41,7 +41,7 @@ export class Int05112Component implements OnInit {
   }
 
   dataTable = () => {
-    this.table = $("#dataTable").DataTable({
+    this.table = $("#dataTable").DataTableTh({
       "pageLength": 25,
       "serverSide": false,
       "searching": false,

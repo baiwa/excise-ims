@@ -296,7 +296,7 @@ export class Int0511Component implements OnInit {
           "data": "note",
           "render": function (data, type, row) {
             var btn = '';
-            btn += '<button class="ui mini blue button btn-detail"><i class="eye icon"></i>รายละเอียด</button>';
+            // btn += '<button class="ui mini blue button btn-detail"><i class="eye icon"></i>รายละเอียด</button>';
             btn += '<button class="ui mini yellow button btn-edit"><i class="edit icon"></i>แก้ไข</button>';
             btn += '<button class="ui mini red button btn-delete"><i class="trash alternate icon"></i>ลบ</button>';
             return btn;

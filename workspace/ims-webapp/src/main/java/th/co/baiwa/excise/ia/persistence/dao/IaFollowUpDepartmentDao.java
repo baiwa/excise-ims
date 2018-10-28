@@ -173,7 +173,7 @@ public class IaFollowUpDepartmentDao {
 	private RowMapper<LabelValueBean> regionRowmapper = new RowMapper<LabelValueBean>() {
 		@Override
 		public LabelValueBean mapRow(java.sql.ResultSet rs, int rowNum) throws SQLException {
-			return new LabelValueBean(rs.getString("VALUE1"), rs.getString("LOV_ID"));
+			return new LabelValueBean(rs.getString("SUB_TYPE_DESCRIPTION"), rs.getString("LOV_ID"));
 		}
 	};
 	

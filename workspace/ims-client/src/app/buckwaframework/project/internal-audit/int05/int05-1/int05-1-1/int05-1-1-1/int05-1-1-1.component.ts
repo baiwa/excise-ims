@@ -321,11 +321,11 @@ private authService: AuthService,
           });
 
       }
-    }, "", "ยืนยันการทำรายการ");
+    }, "คุณต้องการบันทึกใช่หรือไม่ ?");
   }
 
   dataTable = () => {
-    this.table = $("#dataTable").DataTable({
+    this.table = $("#dataTable").DataTableTh({
       "serverSide": false,
       "searching": false,
       "ordering": false,
