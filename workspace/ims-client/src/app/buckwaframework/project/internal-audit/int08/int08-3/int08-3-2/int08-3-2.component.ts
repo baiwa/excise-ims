@@ -79,7 +79,7 @@ export class Int0832Component implements OnInit {
   initDatatable(): void {
     const URL = AjaxService.CONTEXT_PATH + "ia/int083/searchRiskAssExcAreaHdr";
     console.log(URL);
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -126,8 +126,8 @@ export class Int0832Component implements OnInit {
         {
           data: "riskHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button primary dtl"><i class="pencil icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button del"><i class="pencil icon"></i> ลบ</button>';
+            return '<button type="button" class="ui mini button primary dtl"><i class="eye icon"></i> รายละเอียด</button>'
+              + '<button type="button" class="ui mini red button red del"><i class="trash icon"></i> ลบ</button>';
           }
         }
       ],

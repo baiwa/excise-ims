@@ -16,13 +16,13 @@
           </div>
 
           <div class="four wide field ">
-            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+            <button class="ui mini green button" (click)="addRiskAssRiskWsHdr()">
               <i class="add icon"></i>
               เพิ่ม
             </button>
           </div>
         </div>
-        <table id="dataTable" class="ui small celled table striped selectable">
+        <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
           <thead>
             <tr>
 
@@ -46,12 +46,15 @@
               บันทึก
             </button>
             <button class="ui mini primary button" (click)="configAllCondition()">
+              <i class="setting icon"></i>
               กำหนดเงื่อนไขปัจจัยเสี่ยงรวม
             </button>
             <button class="ui mini primary button" (click)="openConditioinRL()">
+              <i class="setting icon"></i>
               กำหนดเงื่อนไขปัจจัยเสี่ยงผลการปราบปราม
             </button>
-            <button class="ui mini primary button" (click)="cancelFlow()">
+            <button class="ui mini  button" (click)="cancelFlow()">
+              <i class="remove icon"></i>
               ยกเลิก
             </button>
           </div>

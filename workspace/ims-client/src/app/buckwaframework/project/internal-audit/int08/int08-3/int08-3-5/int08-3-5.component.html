@@ -19,13 +19,14 @@
         </div>
       </div>
 
-
-      <table id="dataTable" class="ui small celled table striped selectable">
+      <div style="overflow-x: scroll;overflow-y: hidden;padding-bottom: 14px;">
+      <table id="dataTable" class="ui small celled table striped selectable" style="width: 140%;">
         <thead id="trColumn">
         </thead>
         <tbody id="tbody">
         </tbody>
       </table>
+      </div>
 
       <BR />
       <div class="inline fields latest-inline">
@@ -33,15 +34,19 @@
           <div class="ui center aligned grid btn">
 
             <button class="ui mini primary button" (click)="modalConditionRL()">
+              <i class="setting icon"></i>
               กำหนดเงื่อนไขความเสี่ยง
             </button>
             <button class="ui mini primary button" (click)="modalpercent()">
+              <i class="setting icon"></i>
               กำหนดค่าร้อยละ
             </button>
-            <button class="ui mini primary button" (click)="addRiskAssRiskWsHdr()">
+            <button class="ui mini yellow button" (click)="addRiskAssRiskWsHdr()">
+              <i class="print icon"></i>
               ส่งออก
             </button>
-            <button class="ui mini primary button" (click)="cancelFlow()">
+            <button class="ui mini  button" (click)="cancelFlow()">
+              <i class="remove icon"></i>
               ยกเลิก
             </button>
           </div>
@@ -90,7 +95,8 @@
                 <i class="save icon"></i>
                 บันทึก
               </button>
-              <button class="ui mini primary button" (click)="closepercent()">
+              <button class="ui mini  button" (click)="closepercent()">
+                <i class="remove icon"></i>
                 ยกเลิก
               </button>
             </div>
