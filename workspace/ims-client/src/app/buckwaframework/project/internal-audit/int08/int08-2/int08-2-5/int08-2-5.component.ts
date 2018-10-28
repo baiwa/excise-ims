@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Alert } from "../../../../../../../../node_modules/@types/selenium-webdriver";
 import { log } from "util";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var $: any;
 declare var $: any;
@@ -16,7 +17,9 @@ declare var $: any;
   styleUrls: ['./int08-2-5.component.css']
 })
 export class Int0825Component implements OnInit {
-
+  // BreadCrumb
+  breadcrumb: BreadCrumb[];
+  
   riskInfPaperName: any;
   budgetYear: any;
   userCheck: any;
@@ -41,6 +44,12 @@ private authService: AuthService,
   ) {
     this.isConditionShow = false;
     this.ispercent = false;
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง", route: "#" },
+      { label: "ประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต", route: "#" },
+      { label: "กำหนดเงื่อนไขปัจจัยเสี่ยงรวม", route: "#" },
+    ];
   }
 
   ngOnInit() {

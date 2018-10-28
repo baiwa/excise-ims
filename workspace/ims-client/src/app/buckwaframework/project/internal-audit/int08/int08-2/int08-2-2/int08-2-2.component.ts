@@ -5,6 +5,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Alert } from "../../../../../../../../node_modules/@types/selenium-webdriver";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var jQuery: any;
 declare var $: any;
@@ -15,6 +16,8 @@ declare var $: any;
   styleUrls: ['./int08-2-2.component.css']
 })
 export class Int0822Component implements OnInit, AfterViewInit {
+  // BreadCrumb
+  breadcrumb: BreadCrumb[];
 
   riskAssInfHdrName: any;
   datatable: any;
@@ -32,7 +35,14 @@ export class Int0822Component implements OnInit, AfterViewInit {
     private ajax: AjaxService,
 
     private authService: AuthService,
-    private messageBarService: MessageBarService) { }
+    private messageBarService: MessageBarService) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง", route: "#" },
+      { label: "ประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต", route: "#" },
+      { label: "กำหนดปัจจัยเสี่ยงประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต", route: "#" },
+    ];
+  }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-08220');
@@ -82,7 +92,7 @@ export class Int0822Component implements OnInit, AfterViewInit {
     const URL = AjaxService.CONTEXT_PATH + "ia/int082/searchRiskInfHdr";
     // console.log(URL);
     // console.log(this.budgetYear);
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -129,8 +139,8 @@ export class Int0822Component implements OnInit, AfterViewInit {
         {
           data: "riskAssInfHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button primary dtl"><i class="table icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button del"><i class="trash alternate icon"></i> ลบ</button>';
+            return '<button type="button" class="ui mini button primary dtl"><i class="eye icon"></i> รายละเอียด</button>'
+              + '<button type="button" class="ui mini button red del"><i class="trash alternate icon"></i> ลบ</button>';
           }
         }
       ],
@@ -149,7 +159,7 @@ export class Int0822Component implements OnInit, AfterViewInit {
             });
           } else {
             this.router.navigate(["/int08/2/4"], {
-              queryParams: { id: data.riskAssInfHdrId }
+              queryParams: { id: data.riskAssInfHdrId, nameLable: data.riskAssInfHdrName }
             });
           }
         });

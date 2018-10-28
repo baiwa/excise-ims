@@ -34,7 +34,7 @@
             </div>
             <div class="ui simple dropdown item " *ngIf="authService.renderByPage('int08')">
                 <i class="dropdown icon "></i> การประเมินความเสี่ยง
-                <div class="menu " style="margin:20px; ">
+                <div class="menu " style="margin:20px; width:120%;">
                     <a class="item " [routerLink]="[ '/int08/1/1'] " *ngIf="authService.renderByPage('int08/1/1')"
                         routerLinkActive="active ">ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</a>
                     <a class="item " [routerLink]="[ '/int08/2/1'] " *ngIf="authService.renderByPage('int08/2/1')"
@@ -249,7 +249,7 @@
             <a class="item " *ngIf="authService.renderByPage('cop03/1/1')" [routerLink]="[ '/cop03/1/1'] "
                 routerLinkActive="active ">ค้นหาหนังสือขออนนุมัติเดินทางไปราชการ
             </a>
-            <a class="item " *ngIf="authService.renderByPage('cop06')" [routerLink]="[ '/cop06'] " routerLinkActive="active ">บันทึกรายงานการตรวจปฏิบัติการ
+            <a class="item " *ngIf="authService.renderByPage('cop06')" [routerLink]="[ '/cop06'] " routerLinkActive="active ">รายงานการตรวจปฏิบัติการ
             </a>
             <a class="item " *ngIf="authService.renderByPage('cop04/1')" [routerLink]="[ '/cop04/1'] " routerLinkActive="active ">บันทึกผลการตรวจปฏิบัติการ
             </a>

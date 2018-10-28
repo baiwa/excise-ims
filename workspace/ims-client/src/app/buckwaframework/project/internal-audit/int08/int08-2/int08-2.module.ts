@@ -12,7 +12,7 @@ import { Int0823Component } from './int08-2-3/int08-2-3.component';
 import { Int0824Component } from './int08-2-4/int08-2-4.component';
 import { Int0825Component } from './int08-2-5/int08-2-5.component';
 import { Int0826Component } from './int08-2-6/int08-2-6.component';
-import { ConditionModule } from '../../../../common/components';
+import { ConditionModule, BreadcrumbModule } from '../../../../common/components';
 
 const routes: Routes = [
     { path: '', component: Int082Component, canActivate: [AuthGuard] },
@@ -29,7 +29,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
-    ConditionModule
+    ConditionModule,
+    BreadcrumbModule
   ],
   declarations: [
     Int082Component,

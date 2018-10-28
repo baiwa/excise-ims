@@ -5,6 +5,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Alert } from "../../../../../../../../node_modules/@types/selenium-webdriver";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var jQuery: any;
 declare var $: any;
@@ -15,7 +16,9 @@ declare var $: any;
   styleUrls: ['./int08-2-3.component.css']
 })
 export class Int0823Component implements OnInit {
-
+  // BreadCrumb
+  breadcrumb: BreadCrumb[];
+  
   riskInfPaperName: any;
   budgetYear: any;
   
@@ -33,7 +36,14 @@ export class Int0823Component implements OnInit {
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
     private route: ActivatedRoute
-  ) { }
+  ) { 
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง", route: "#" },
+      { label: "ประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต", route: "#" },
+      { label: "ปัจจัยเสี่ยงจำนวนครั้งการใช้งานไม่ได้ของระบบ", route: "#" },
+    ];
+  }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-08230');
@@ -58,7 +68,7 @@ export class Int0823Component implements OnInit {
   initDatatable(): void {
     const URL = AjaxService.CONTEXT_PATH + "ia/int082/dataTableWebService";
     console.log(URL);
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,

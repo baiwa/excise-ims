@@ -21,9 +21,9 @@
 
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
-            <button class="ui mini primary button" type="submit">
+            <button class="ui mini yellow button" type="submit">
               <i class="upload icon"></i>
-              อัพโหลด
+              อัปโหลด
             </button>
             <button class="ui mini button" type="reset" (click)="clearData()" >
               <i class="refresh icon"></i>
@@ -39,7 +39,7 @@
   
   <div class="sixteen wide column " id="boxEdit">
       <div class="ui top centered attached header segment " style="background: #1e83db;color: white">
-          <span>* แสดงตัวอย่างไฟล์ที่อัพโหลด  และแก้ไขได้</span>
+          <span>ข้อมูลการอัปโหลด</span>
       </div>
       <div class="ui attached segment {{loading? 'loading': ''}}">
         <table id="dataTable"  class="ui small celled table striped selectable" style="width: 100%;">
@@ -54,7 +54,7 @@
               <th  rowspan="2" style="text-align: center !important" >หน่วยเบิกจ่าย</th>
               <th  colspan="2" style="text-align: center !important">ผ่านรายการ</th>
               <th  rowspan="2" style="text-align: center !important" >ยกยอดไป</th>
-              <th  rowspan="2" style="text-align: center !important">แก้ไข</th>
+              <!-- <th  rowspan="2" style="text-align: center !important">แก้ไข</th> -->
             </tr>
             <tr>
               <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">เดบิต</th>
@@ -65,15 +65,15 @@
 
         <div class="ui six column centered grid" >
             <div class="column">
-              <button class="ui mini primary button" [disabled]="dataList.length==0" (click)="checkData()" >
-                <i class="check circle icon"></i>
-                เลือกตรวจสอบข้อมูล
+              <button class="ui mini green button" [disabled]="dataList.length==0" (click)="checkData()" >
+                <i class="clipboard check icon"></i>
+                ตรวจสอบข้อมูล
               </button>
             </div>
         </div>
       </div>
       <!-- modal Edit -->
-      <div class="ui modal" id="editData" >
+      <!-- <div class="ui modal" id="editData" >
         <div class="header">แก้ไขข้อมูล</div>
         <div class="content">
           
@@ -139,10 +139,10 @@
                   <i class="checkmark icon"></i>
               </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- modal del -->
-      <div class="ui mini modal" id="delData" >
+      <!-- <div class="ui mini modal" id="delData" >
         <div class="header">ลบข้อมูล</div>
         <div class="content"> 
             <label>คุณต้องการลบข้อมูลหรือไม่ ?</label>
@@ -156,14 +156,14 @@
                 <i class="checkmark icon"></i>
             </div>
         </div>
-      </div>
+      </div> -->
 
   </div>
      
   <!-- table datatableCheck -->
   <div class="sixteen wide column" id="boxCheck">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>* ตรวจสอบข้อมูล </span>
+        <span>ตรวจสอบการนำส่งเงินบัญชีเจ้าหนี้ อปท.</span>
     </div>
     <div class="ui attached segment {{loading? 'loading': ''}}">
       <table id="datatableCheck"  class="ui small celled table striped selectable" style="width: 100%;">
@@ -188,13 +188,13 @@
 
       <div class="ui six column centered grid">
         <div class="column">
-          <button class="ui mini button"    (click)="backPage()" >
-            <i class="arrow left icon"></i>
-            กลับ
-          </button>
-          <button class="ui mini primary button"  >
+          <button class="ui mini yellow button"  (click)="export()">
             <i class="print icon"></i>
             ส่งออก
+          </button>
+          <button class="ui mini button"    (click)="backPage()" >
+            <i class="remove icon"></i>
+            ยกเลิก
           </button>
         </div>
       </div>

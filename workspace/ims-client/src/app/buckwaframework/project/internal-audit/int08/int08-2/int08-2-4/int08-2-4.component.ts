@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Alert } from "../../../../../../../../node_modules/@types/selenium-webdriver";
 import { log } from "util";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var $: any;
 declare var $: any;
@@ -16,7 +17,9 @@ declare var $: any;
   styleUrls: ['./int08-2-4.component.css']
 })
 export class Int0824Component implements OnInit {
-  
+  // BreadCrumb
+  breadcrumb: BreadCrumb[];
+
   riskAssRiskInfHdr: any;
   
   id: any;
@@ -49,6 +52,12 @@ export class Int0824Component implements OnInit {
     private route: ActivatedRoute
   ) {
     this.fileExel = new Array<File>(); // initial file array
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง", route: "#" },
+      { label: "ประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต", route: "#" },
+      { label: this.route.snapshot.queryParams["nameLable"], route: "#" },
+    ];
    }
 
   ngOnInit() {
@@ -58,6 +67,7 @@ export class Int0824Component implements OnInit {
     
     this.riskInfHrdData = new RiskInfHrdData();
     this.id = this.route.snapshot.queryParams["id"];
+    
     this.findRiskById();
 
     this.isConditionShow = false;
@@ -164,7 +174,7 @@ export class Int0824Component implements OnInit {
       }
     });
 
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -190,7 +200,7 @@ export class Int0824Component implements OnInit {
         {
           data: "riskAssInfHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button  del"><i class="trash alternate icon"></i> ลบ </button>';
+            return '<button type="button" class="ui mini button red del"><i class="trash alternate icon"></i> ลบ </button>';
           }
         }
       ],

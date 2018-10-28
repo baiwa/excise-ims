@@ -1,3 +1,4 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
   <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
@@ -69,8 +70,8 @@
           <div class="inline fields">
             <div class="sixteen wide field ">
               <div class="seven wide field "></div>
-              <button class="ui mini primary button" (click)="addObjRiskDtl() ">
-                <i class="save icon"></i>
+              <button class="ui mini green button" (click)="addObjRiskDtl() ">
+                <i class="plus icon"></i>
                 เพิ่ม
               </button>
             </div>
@@ -87,9 +88,9 @@
                     <div>
                       <input class="inputfile" type="file" name="fileExel" id="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                         (change)="onChangeUpload($event)" required>
-                      <label for="fileExel" class="ui mini blue butt-upload button">
+                      <!-- <label for="fileExel" class="ui mini blue  button">
                         <i class="ui fa-file-excel-o icon"></i> เลือกไฟล์
-                      </label>
+                      </label> -->
                     </div>
                   </div>
                 </div>
@@ -97,11 +98,11 @@
 
               <div class="ui center aligned grid">
                 <div class="four wide column">
-                  <button class="ui mini primary button" type="submit">
+                  <button class="ui mini yellow button" type="submit">
                     <i class="upload icon"></i>
-                    อัพโหลด
+                    อัปโหลด
                   </button>
-                  <button class="ui mini primary button" type="reset">
+                  <button class="ui mini red button" type="reset">
                     <i class="trash alternate icon"></i>
                     ลบไฟล์
                   </button>
@@ -139,11 +140,12 @@
               <i class="setting icon"></i>
               กำหนดเงื่อนไขความเสี่ยง
             </button>
-            <button class="ui mini primary button" (click)="ExportOtherDtl()">
+            <button class="ui mini yellow button" (click)="ExportOtherDtl()">
               <i class="print icon"></i>
               ส่งออก
             </button>
             <button class="ui mini button" (click)="cancelFlow()">
+              <i class="remove icon"></i>
               ยกเลิก
             </button>
           </div>

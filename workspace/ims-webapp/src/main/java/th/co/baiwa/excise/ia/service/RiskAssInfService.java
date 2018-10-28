@@ -280,7 +280,7 @@ public class RiskAssInfService {
 	
 	
 	public List<RiskAssInfDtl> findRiskAssInfDtlByWebService() {
-	return webServiceExciseService.getRiskAssInfDtlList(new RiskAssInfDtl());
+	return webServiceExciseService.getRiskAssInfDtlList(new RiskAssInfHdr());
 		
 	}
 	

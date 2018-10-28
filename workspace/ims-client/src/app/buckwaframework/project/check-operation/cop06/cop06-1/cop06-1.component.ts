@@ -1,100 +1,142 @@
 import { Component, OnInit } from '@angular/core';
-import { DecimalFormat } from 'helpers/decimalformat';
-import { TextDateTH, digit } from 'helpers/datepicker';
-import { AjaxService } from 'services/ajax.service';
-import { MessageBarService, AuthService } from '../../../../common/services';
-import { BreadCrumb } from 'models/breadcrumb';
+import { AuthService } from 'services/auth.service';
+import { BreadCrumb } from 'models/index';
+import { TextDateTH } from 'helpers/datepicker';
+import { formatter } from 'helpers/datepicker';
+import { Utils } from 'helpers/utils';
+import { Cop061Service } from 'projects/check-operation/cop06/cop06-1/cop06-1.service';
+import { Cop061Form } from 'projects/check-operation/cop06/cop06-1/cop06-1.modesl';
 declare var $: any;
 @Component({
-  selector: 'app-cop06-1',
+  selector: 'cop06-1',
   templateUrl: './cop06-1.component.html',
-  styleUrls: ['./cop06-1.component.css']
+  styleUrls: ['./cop06-1.component.css'],
+  providers: [Cop061Service]
 })
 export class Cop061Component implements OnInit {
 
-  breadcrumb: BreadCrumb[];
+  breadcrumb: BreadCrumb[] = [
+    { label: "ตรวจปฏิบัติการ", route: "#" },
+    { label: 'รายงานการตรวจปฏิบัติการ', route: '#' },
+    { label: 'รายงานการตรวจปฏิบัติการรับวัตถุดิบ', route: '#' },
+  ]
+
+  // === > params
+  form: Cop061Form = new Cop061Form();
+  exciseIdList: any;
+  loading: boolean = false;
+  buttonDisabled: boolean = false;
+  error: boolean = false;
   constructor(
     private authService: AuthService,
-    private ajax: AjaxService,
-    private messageBarService: MessageBarService
-  ) {
-    this.breadcrumb = [
-      { label: "รายงานการตรวจปฏิบัติการ", route: "#" },
-      { label: "รายงานการตรวจปฏิบัติการรับวัตถุดิบ", route: "#" },
-    ];
-
-
-  }
+    private cop061Service: Cop061Service,
+  ) { }
 
   ngOnInit() {
-    this.authService.reRenderVersionProgram('OPE-06100');
-    this.hidedata();
+    // this.authService.reRenderVersionProgram('OPE-04600');
+    $("#Dtable").hide();
+    this.findExciseId();
+    this.callDropdown();
+    this.calenda();
+    this.dataTable();
+  }
+
+  findExciseId = () => {
+    this.cop061Service.findExciseId().then((res) => {
+      this.exciseIdList = res;
+    });
+  }
+
+  callDropdown() {
     $(".ui.dropdown").dropdown();
-    $(".ui.dropdown.ope04-1").css("width", "100%");
-
-    $("#calendarFront").calendar({
-      endCalendar: $("#calendarLast"),
-      maxDate: new Date(),
-      type: "month",
-      text: TextDateTH,
-      formatter: {
-        header: function (date, mode, settings) {
-          //return a string to show on the header for the given 'date' and 'mode'
-          return date.getFullYear() + 543;
-        },
-        date: function (date, settings) {
-          if (!date) {
-            return "";
-          }
-          const month = date.getMonth();
-          const year = date.getFullYear() + 543;
-          return TextDateTH.months[month] + " " + year;
-        }
-      }
-    });
-
-    $("#calendarLast").calendar({
-      startCalendar: $("#calendarFront"),
-      maxDate: new Date(),
-      type: "month",
-      text: TextDateTH,
-      formatter: {
-        header: function (date, mode, settings) {
-          //return a string to show on the header for the given 'date' and 'mode'
-          return date.getFullYear() + 543;
-        },
-        date: function (date, settings) {
-          if (!date) {
-            return "";
-          }
-          const month = date.getMonth();
-          const year = date.getFullYear() + 543;
-          return TextDateTH.months[month] + " " + year;
-        }
-      }
-    });
-
-    // get exciseId in select option
-    const URL = "combobox/controller/getExciseId";
-    this.ajax.post(URL, {}, res => {
-
-
-      // get exciseId in input box
-      const URL =
-        AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdList";
-
-    });
   }
 
-
-  ngOnDestroy(): void { }
-
-
-  showdata() {
-    $("#showData").show();
+  search = () => {
+    if (Utils.isNull(this.form.exciseId)) {
+      this.error = true;
+    } else {
+      this.error = false;
+    }
+    console.log($("exciseId").val());
+    if (Utils.isNotNull(this.form.exciseId)) {
+      $("#Dtable").show();
+      this.cop061Service.search();
+    }
   }
-  hidedata() {
-    $("#showData").hide();
+  claer = () => {
+    this.error = false;
+    $("form-exciseId").removeClass('error');
+    $("#Dtable").hide();
+    this.cop061Service.claer();
+  }
+  changeExciseId = (e) => {
+    let exciseId = e.target.value;
+    this.cop061Service.findByExciseId(exciseId).then((res) => {
+      this.form.entrepreneur = res.exciseName;
+      this.form.coordinates = res.productType;
+      this.form.userNumber = res.taxFeeId;
+    });
+  }
+  onChangeUpload(file: any) {
+    this.cop061Service.onChangeUpload(file);
+  }
+
+  upload = () => {
+    this.loading = true;
+    const form = $("#upload-form")[0];
+    let formBody = new FormData(form);
+    this.cop061Service.upload(formBody);
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
+  }
+
+  save = async () => {
+    this.buttonDisabled = await true;
+    await this.cop061Service.save().then( async(res)=>{
+      if("C" == res){
+        this.buttonDisabled = await false;
+      }
+      setTimeout( async() => {
+        this.buttonDisabled = await false;
+      }, 500);
+    });    
+  }
+  calenda = () => {
+    let date = new Date();
+    $("#dateF").calendar({
+      maxDate: new Date(date.getFullYear() + "-" + (date.getMonth())),
+      endCalendar: $("#dateT"),
+      type: "month",
+      text: TextDateTH,
+      formatter: formatter('month-year'),
+      onChange: (date, text) => {
+        let array = text.split("/");
+        let _month = array[0];
+        let _year = array[1];
+        let month = TextDateTH.months[parseInt(_month)-1];
+        console.log(month);
+        this.form.dateFrom = month + " " + _year;
+      }
+    });
+    $("#dateT").calendar({
+      maxDate: new Date(date.getFullYear() + "-" + (date.getMonth())),
+      startCalendar: $("#dateF"),
+      type: "month",
+      text: TextDateTH,
+      formatter: formatter('month-year'),
+      onChange: (date, text) => {
+        let array = text.split("/");
+        let _month = array[0];
+        let _year = array[1];
+        let month = TextDateTH.months[parseInt(_month)-1];
+        console.log(month);
+        this.form.dateTo = month + " " + _year;
+      }
+    });
+  }
+  dataTable = () => {
+    this.cop061Service.dataTable();
   }
 }
 

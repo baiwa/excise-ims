@@ -50,6 +50,15 @@ public class OaTaxReduceWsDtl extends BaseEntity {
 	
 	@Column(name="TOTAL_TAX")
 	private BigDecimal totalTax;
+	
+	@Column(name = "MAX_VALUES")
+	private String maxValues;
+
+	@Column(name = "RESULT")
+	private String result;
+
+	@Column(name = "LIST")
+	private String list;
 
 	public Long getTaxReduceWsDtlId() {
 		return taxReduceWsDtlId;
@@ -129,6 +138,30 @@ public class OaTaxReduceWsDtl extends BaseEntity {
 
 	public void setTotalTax(BigDecimal totalTax) {
 		this.totalTax = totalTax;
+	}
+
+	public String getMaxValues() {
+		return maxValues;
+	}
+
+	public void setMaxValues(String maxValues) {
+		this.maxValues = maxValues;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public String getList() {
+		return list;
+	}
+
+	public void setList(String list) {
+		this.list = list;
 	}
 	
 	
