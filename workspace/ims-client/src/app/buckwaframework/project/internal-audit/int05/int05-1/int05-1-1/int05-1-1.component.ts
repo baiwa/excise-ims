@@ -174,13 +174,13 @@ export class Int0511Component implements OnInit {
         };
         this.ajax.post(URL, JSON.stringify(data),
           res => {
-            this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
+            this.message.successModal("ทำรายการสำเร็จ", "แจ้งเตือน");
             $("#dataTable").DataTable().ajax.reload();
           }, error => {
-            this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
+            this.message.errorModal("ทำรายการไม่สำเร็จ", "แจ้งเตือน");
           });
       }
-    }, "ยืนยันการทำรายการ");
+    }, "คุณต้องการแก้ไขข้อมูลใช่หรือไม่ ? ");
 
 
 
@@ -427,13 +427,13 @@ export class Int0511Component implements OnInit {
           console.log(Data);
           this.ajax.post(URL, JSON.stringify(Data),
             res => {
-              this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
+              this.message.successModal("ทำรายการสำเร็จ", "แจ้งเตือน");
               $("#dataTable").DataTable().ajax.reload();
             }, error => {
-              this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
+              this.message.errorModal("ทำรายการไม่สำเร็จ", "แจ้งเตือน");
             });
         }
-      }, "", "ยืนยันการลบ");
+      }, "คุณต้องการลบข้อมูลใช่หรือไม่ ? ");
 
     });
   }
