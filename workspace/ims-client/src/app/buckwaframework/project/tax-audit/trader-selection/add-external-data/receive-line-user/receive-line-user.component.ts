@@ -36,6 +36,7 @@ export class ReceiveLineUserComponent implements OnInit {
   sectorArr: any;
   role: string;
   loading: boolean = true;
+  jobTitle: String;
   constructor(
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
@@ -104,6 +105,15 @@ export class ReceiveLineUserComponent implements OnInit {
     this.month = month;
     this.analysNumber = analysNumber;
     this.workSheetNumber = workSheetNumber;
+  }
+
+  userDetail() {
+    this.ajax.get("restful/userDetail", res => {
+      console.log("userDetail", res.json());
+      let detail = res.json();
+      this.jobTitle = detail.title;
+
+    });
   }
 
   directAccess = (withOut?: any) => {
@@ -188,7 +198,7 @@ export class ReceiveLineUserComponent implements OnInit {
       processing: true,
       serverSide: true,
       scrollX: true,
-      paging: true,
+      paging: false,
       pagingType: "full_numbers",
 
       ajax: {

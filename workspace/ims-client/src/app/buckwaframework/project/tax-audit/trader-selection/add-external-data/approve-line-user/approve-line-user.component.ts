@@ -37,6 +37,7 @@ export class ApproveLineUserComponent implements OnInit {
   role: string;
   loading: boolean = true;
   sectorHeader: string = "";
+  jobTitle: any;
   constructor(
     private approveLineUserService: ApproveLineUserService,
     private ajax: AjaxService,
@@ -57,6 +58,15 @@ export class ApproveLineUserComponent implements OnInit {
         this.sector = 'ภาคที่ ' + (Number(officeCode.substr(0, 2)));
         console.log(this.sector);
       }
+    });
+    this.userDetail();
+  }
+  userDetail() {
+    this.ajax.get("restful/userDetail", res => {
+      console.log("userDetail", res.json());
+      let detail = res.json();
+      this.jobTitle = detail.title;
+
     });
   }
 

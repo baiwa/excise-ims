@@ -292,7 +292,8 @@ public class WebServiceExciseService {
 			RiskAssRiskWsDtl riskAssRiskWsDtl = new RiskAssRiskWsDtl();
 			for (ListPMProject project : pmProjectList) {
 				riskAssRiskWsDtl = new RiskAssRiskWsDtl();
-				riskAssRiskWsDtl.setProjectBase(project.getProjectName());
+				riskAssRiskWsDtl.setProjectId(project.getProjectId());
+				riskAssRiskWsDtl.setProjectBase(project.getProjectTypeName());
 				riskAssRiskWsDtl.setDepartmentName(project.getOwnerOfficeName());
 				riskAssRiskWsDtl.setBudget(new BigDecimal(project.expenseBudgetAmountM));
 				riskAssRiskWsDtl.setLocalBudget(new BigDecimal(project.expenseBudgetAmountX));

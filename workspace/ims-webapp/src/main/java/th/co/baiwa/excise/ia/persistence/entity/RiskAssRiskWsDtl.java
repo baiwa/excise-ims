@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
@@ -62,6 +63,9 @@ public class RiskAssRiskWsDtl extends BaseEntity{
 	
 	@Column(name="COLOR")
 	private String color;
+	
+	@Transient
+	private String projectId;
 	
 	
 
@@ -188,6 +192,16 @@ public class RiskAssRiskWsDtl extends BaseEntity{
 
 	public void setSumMoney(BigDecimal sumMoney) {
 		this.sumMoney = sumMoney;
+	}
+
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
 
 
