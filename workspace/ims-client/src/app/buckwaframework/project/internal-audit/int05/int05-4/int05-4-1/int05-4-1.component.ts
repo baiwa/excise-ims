@@ -41,6 +41,9 @@ export class Int0541Component implements OnInit {
   flag: any = "";
   head: any = "";
   supplyChoiceList: string[];
+  SupplyCategories: string[];
+  dataEdit: any;
+  procurementId: any;
 
   constructor(
     private ajax: AjaxService,
@@ -53,6 +56,7 @@ export class Int0541Component implements OnInit {
       { label: "ตรวจสอบพัสดุ", route: "#" },
       { label: "เพิ่มข้อมูลจัดซื้อจัดจ้าง", route: "#" }
     ];
+
     this.budgetTypeList = [
       "งบบุคลากร",
       "งบดำเนินงาน (โครงการ)",
@@ -63,15 +67,15 @@ export class Int0541Component implements OnInit {
     ];
 
     this.supplyChoiceList = [
-      "วิธีตกลงราคา",
+      "วิธีเฉพาะเจาะจง",
+      "วิธีคัดเลือก",
       "วิธีสอบราคา",
-      "วิธีประกวดราคา",
-      "วิธีพิเศษ",
-      "วิธีกรณีพิเศษ",
-      "วิธีประกวดราคาทางอิเลคทรอนิกส์",
-      "การจ้างที่ปรึกษา",
-      "การจ้างออกแบบ"
+      "วิธี E - Market",
+      "วิธี E - Bidding"
     ];
+
+    this.SupplyCategories = ["ซื้อ", "จ้าง", "เช่า"];
+
     this.flagValidate1_ = [];
     this.flagValidate2_ = [];
     this.flagValidate3_ = [];
@@ -85,41 +89,63 @@ export class Int0541Component implements OnInit {
     //get params no link "/int05/4"
     this.flag = this.route.snapshot.queryParams["status"];
     this.head = this.route.snapshot.queryParams["head"];
-    console.log(this.flag);
     if (
       this.route.snapshot.queryParams["procurementId"] != null ||
       this.route.snapshot.queryParams["procurementId"] != undefined
     ) {
       //get params no link "/int05/4"
-      let procurementId = this.route.snapshot.queryParams["procurementId"];
+      this.procurementId = this.route.snapshot.queryParams["procurementId"];
       this.flag = this.route.snapshot.queryParams["status"];
       this.head = this.route.snapshot.queryParams["head"];
-      console.log(this.flag);
 
       this.ajax.post(
         URL.UPDATE_FIND_BY_ID,
-        { procurementId: procurementId },
+        { procurementId: this.procurementId },
         res => {
-          // $("#myselect option[value=2]").attr("selected", "selected");
+          this.numbers = res.json();
+          this.numbers.splice(0, 1);
           const data = res.json();
-          console.log(data);
+          for (let i = 1; i < data.length; i++) {
+            setTimeout(() => {
+              $("#procurementList" + (i - 1)).val(data[i].procurementList);
+              $("#amount" + (i - 1)).val(data[i].amount);
+              $("#unit" + (i - 1)).val(data[i].unit);
+              $("#presetPrice" + (i - 1)).val(data[i].presetPrice);
+              $("#appraisalPrice" + (i - 1)).val(data[i].appraisalPrice);
+              $("#unitPrice" + (i - 1)).val(data[i].unitPrice);
+              $("#price" + (i - 1)).val(data[i].price);
+            }, 50);
+          }
+
           $("#calendar_data").val(data[0].budgetYear);
-          $("#budgetType").val(data[0].budgetType);
           $("#projectName").val(data[0].projectName);
           $("#projectCodeEgp").val(data[0].projectCodeEgp);
           $("#poNumber").val(data[0].poNumber);
-          // $("[name=supplyChoice] option")
-          //   .filter(function() {
-          //     return $(this).text() == "วิธีพิเศษ";
-          //   })
-          //   .prop("selected", true);
-          // $("#supplyChoice").dropdown(data[0].supplyChoice);
-          // $("#supplyChoice option[value='2']").attr("selected", "true");
-          // $("#supplyChoice option:selected").text() == "วิธีพิเศษ";
-          // console.log($("#supplyChoice").val());
-
-          // (<HTMLInputElement>document.getElementById("supplyChoice")).value =
-          //   data[0].supplyChoice;
+          setTimeout(() => {
+            $("#budgetType").dropdown("set selected", data[0].budgetType);
+            $("#supplyChoice").dropdown("set selected", data[0].supplyChoice);
+          }, 50);
+          this.tenderResults = data[0].tenderResults;
+          this.supplyType = data[0].supplyType;
+          setTimeout(() => {
+            $(
+              `input[name='jobDescription'][value='${data[0].jobDescription}']`
+            ).prop("checked", true);
+            $("#approveDatePlanData").val(data[0].approveDatePlan);
+            $("#contractDatePlanData").val(data[0].contractDatePlan);
+            $("#expireDatePlanData").val(data[0].expireDatePlan);
+            $("#disbursementFinalPlanData").val(data[0].disbursementFinalPlan);
+            $("#approveDateReportData").val(data[0].approveDateReport);
+            $("#contractDateReportData").val(data[0].contractDateReport);
+            $("#expireDateReportData").val(data[0].expireDateReport);
+            $("#disbursementFinalReportData").val(
+              data[0].disbursementFinalReport
+            );
+            $("#contractPartiesNum").val(data[0].contractPartiesNum);
+            $("#contractPartiesName").val(data[0].contractPartiesName);
+            $("#signedDatePlanData").val(data[0].signedDatePlan);
+            $("#signedDateReport").val(data[0].signedDateReportData);
+          }, 100);
         }
       );
     }
@@ -141,6 +167,8 @@ export class Int0541Component implements OnInit {
 
   onChangeChoice = () => {
     setTimeout(() => {
+      $(".ui.dropdown").dropdown();
+      $(".ui.dropdown.ai").css("width", "100%");
       $("#approveDatePlan").calendar({
         maxDate: new Date(),
         type: "date",
@@ -231,11 +259,12 @@ export class Int0541Component implements OnInit {
     //send form data
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
-    formBody.append("budgetYear", this.budgetYear);
+    formBody.append("procurementId", this.procurementId);
+    formBody.append("budgetYear", $("#calendar_data").val());
     formBody.append("budgetType", this.budgetType);
-    formBody.append("projectName", this.projectName);
-    formBody.append("projectCodeEgp", this.projectCodeEgp);
-    formBody.append("poNumber", this.poNumber);
+    formBody.append("projectName", $("#projectName").val());
+    formBody.append("projectCodeEgp", $("#projectCodeEgp").val());
+    formBody.append("poNumber", $("#poNumber").val());
     formBody.append("supplyChoice", this.supplyChoice);
     formBody.append("tenderResults", this.tenderResults);
     let jobDescription = $("input[name='jobDescription']:checked").val();
@@ -369,11 +398,10 @@ export class Int0541Component implements OnInit {
 
     //check flag save
     if (chkFlg === "F") {
-      this.msg.errorModal("กรุณากรอกข้อมูลให้ครบในช่องสีแดง", "เกิดข้อผิดพลาด");
+      this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ");
     } else {
       this.ajax.upload(URL.UPLOAD_Procurement, formBody, res => {
         let data = res.json();
-        console.log(data.data.procurementId);
         let procurementId = data.data.procurementId;
         let procurementList = [];
 
@@ -403,7 +431,6 @@ export class Int0541Component implements OnInit {
             )
           });
         }
-        console.log(procurementList);
         this.ajax.post(URL.SAVE_PcmList, procurementList, res => {
           const msg = res.json();
           if (msg.messageType == "C") {
@@ -423,11 +450,11 @@ export class Int0541Component implements OnInit {
     //send form data
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
-    formBody.append("budgetYear", this.budgetYear);
+    formBody.append("budgetYear", $("#calendar_data").val());
     formBody.append("budgetType", this.budgetType);
-    formBody.append("projectName", this.projectName);
-    formBody.append("projectCodeEgp", this.projectCodeEgp);
-    formBody.append("poNumber", this.poNumber);
+    formBody.append("projectName", $("#projectName").val());
+    formBody.append("projectCodeEgp", $("#projectCodeEgp").val());
+    formBody.append("poNumber", $("#poNumber").val());
     formBody.append("supplyChoice", this.supplyChoice);
     formBody.append("tenderResults", this.tenderResults);
     let jobDescription = $("input[name='jobDescription']:checked").val();
@@ -570,7 +597,6 @@ export class Int0541Component implements OnInit {
     } else {
       this.ajax.upload(URL.UPLOAD_Procurement, formBody, res => {
         let data = res.json();
-        console.log(data.data.procurementId);
         let procurementId = data.data.procurementId;
         let procurementList = [];
 
@@ -600,7 +626,6 @@ export class Int0541Component implements OnInit {
             )
           });
         }
-        console.log(procurementList);
         this.ajax.post(URL.SAVE_PcmList, procurementList, res => {
           const msg = res.json();
           if (msg.messageType == "C") {
@@ -620,11 +645,11 @@ export class Int0541Component implements OnInit {
     //send form data
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
-    formBody.append("budgetYear", this.budgetYear);
+    formBody.append("budgetYear", $("#calendar_data").val());
     formBody.append("budgetType", this.budgetType);
-    formBody.append("projectName", this.projectName);
-    formBody.append("projectCodeEgp", this.projectCodeEgp);
-    formBody.append("poNumber", this.poNumber);
+    formBody.append("projectName", $("#projectName").val());
+    formBody.append("projectCodeEgp", $("#projectCodeEgp").val());
+    formBody.append("poNumber", $("#poNumber").val());
     formBody.append("supplyChoice", this.supplyChoice);
     formBody.append("tenderResults", this.tenderResults);
     let jobDescription = $("input[name='jobDescription']:checked").val();
@@ -763,11 +788,10 @@ export class Int0541Component implements OnInit {
       }
     }
     if (chkFlg === "F") {
-      this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ", "เกิดข้อผิดพลาด");
+      this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ");
     } else {
       this.ajax.upload(URL.UPLOAD_Procurement, formBody, res => {
         let data = res.json();
-        console.log(data.data.procurementId);
         let procurementId = data.data.procurementId;
         let procurementList = [];
 
@@ -797,7 +821,6 @@ export class Int0541Component implements OnInit {
             )
           });
         }
-        console.log(procurementList);
         this.ajax.post(URL.SAVE_PcmList, procurementList, res => {
           const msg = res.json();
           if (msg.messageType == "C") {

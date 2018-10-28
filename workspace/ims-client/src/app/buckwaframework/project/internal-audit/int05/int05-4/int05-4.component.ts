@@ -1,8 +1,9 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { MessageBarService, AjaxService } from "../../../../common/services";
-import { TextDateTH, formatter } from "../../../../common/helper";
+import { TextDateTH, formatter, Utils } from "../../../../common/helper";
 import { BreadCrumb } from "models/breadcrumb";
+import { Int054Service } from "./int05-4.service";
 
 const URL = {
   INIT_DATATABLE: AjaxService.CONTEXT_PATH + "ia/int054/filterFindIaPcm",
@@ -13,7 +14,8 @@ declare var $: any;
 @Component({
   selector: "app-int05-4",
   templateUrl: "./int05-4.component.html",
-  styleUrls: ["./int05-4.component.css"]
+  styleUrls: ["./int05-4.component.css"],
+  providers: [Int054Service]
 })
 export class Int054Component implements OnInit, AfterViewInit {
   breadcrumb: BreadCrumb[] = [];
@@ -26,8 +28,12 @@ export class Int054Component implements OnInit, AfterViewInit {
   manageDataExternal: any;
   dataTable: any;
   idSelect: any;
+  sectorList: any;
+  areaList: any;
+  branchList: any;
 
   constructor(
+    private selfService: Int054Service,
     private ajax: AjaxService,
     private router: Router,
     private msg: MessageBarService
@@ -48,20 +54,19 @@ export class Int054Component implements OnInit, AfterViewInit {
     ];
 
     this.supplyChoiceList = [
-      "วิธีตกลงราคา",
+      "วิธีเฉพาะเจาะจง",
+      "วิธีคัดเลือก",
       "วิธีสอบราคา",
-      "วิธีประกวดราคา",
-      "วิธีพิเศษ",
-      "วิธีกรณีพิเศษ",
-      "วิธีประกวดราคาทางอิเลคทรอนิกส์",
-      "การจ้างที่ปรึกษา",
-      "การจ้างออกแบบ"
+      "วิธี E - Market",
+      "วิธี E - Bidding"
     ];
   }
 
   ngOnInit() {
+    $(".ui.checkbox").checkbox();
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
+    this.sectorL();
     $("#budgetYear")
       .calendar({
         maxDate: new Date(),
@@ -106,12 +111,40 @@ export class Int054Component implements OnInit, AfterViewInit {
   };
 
   clearFile = () => {
+    this.budgetYear = "";
     $("#showData").hide();
     $("#budgetYear").calendar("refresh");
     $("#supplyChoice").dropdown("restore defaults");
     $("#budgetType").dropdown("restore defaults");
+    $(".off").dropdown("restore defaults");
     if (this.dataTable != null || this.dataTable != undefined) {
       this.dataTable.clear().draw();
+    }
+  };
+
+  sectorL = () => {
+    this.selfService.sector().then(res => {
+      this.sectorList = res;
+    });
+  };
+  areaL = e => {
+    $("#area").dropdown("restore defaults");
+    $("#branch").dropdown("restore defaults");
+    this.areaList = null;
+    this.branchList = null;
+    if (Utils.isNotNull(e.target.value)) {
+      this.selfService.area(e.target.value).then(res => {
+        this.areaList = res;
+      });
+    }
+  };
+  branchL = e => {
+    this.branchList = null;
+    $("#branch").dropdown("restore defaults");
+    if (Utils.isNotNull(e.target.value)) {
+      this.selfService.branch(e.target.value).then(res => {
+        this.branchList = res;
+      });
     }
   };
 
@@ -129,7 +162,19 @@ export class Int054Component implements OnInit, AfterViewInit {
       this.dataTable.destroy();
     }
 
-    const data = {
+    let data = {
+      exciseDepartment:
+        $("#sector").dropdown("get text") == "กรุณาเลือก"
+          ? ""
+          : $("#sector").dropdown("get text"),
+      exciseDistrict:
+        $("#area").dropdown("get text") == "กรุณาเลือก"
+          ? ""
+          : $("#area").dropdown("get text"),
+      exciseRegion:
+        $("#branch").dropdown("get text") == "กรุณาเลือก"
+          ? ""
+          : $("#branch").dropdown("get text"),
       budgetYear: this.budgetYear,
       budgetType: this.budgetType,
       supplyChoice: this.supplyChoice
@@ -151,9 +196,9 @@ export class Int054Component implements OnInit, AfterViewInit {
       columns: [
         {
           render: function(data, type, full, meta) {
-            return `<input type="checkbox" name="chk-${meta.row}" id="chk-${
+            return `<input class="ui checkbox" type="checkbox" name="chk-${
               meta.row
-            }">`;
+            }" id="chk-${meta.row}">`;
           },
           className: "center"
         },
@@ -193,7 +238,7 @@ export class Int054Component implements OnInit, AfterViewInit {
         {
           className: "center",
           render: function(data, type, full, meta) {
-            return `<button class="ui mini blue button" type="button" <i class="eye icon"></i> รายละเอียด</button>`;
+            return `<button class="ui mini blue button" type="button"> <i class="eye icon"></i> รายละเอียด</button>`;
           }
         },
         {

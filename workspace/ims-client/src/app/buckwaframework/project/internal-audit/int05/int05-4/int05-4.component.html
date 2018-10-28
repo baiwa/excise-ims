@@ -9,71 +9,71 @@
         <div class="ui attached segment">
             <form>
                 <div class="ui form">
-                    <div class="inline fields">
+                    <!-- row 1 -->
+                    <div class="inline fields  ui grid">
+                        <div class="three wide field ">
+                            <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
+                        </div>
                         <div class="four wide field ">
-                            &nbsp;
+                            <select name="sector " id="sector" class="ui dropdown ai search full-width off" (change)="areaL($event)" [(ngModel)]="sector">
+                                <option value="">กรุณาเลือก</option>
+                                <option *ngFor="let item of sectorList; index as i;" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+                            </select>
                         </div>
-
-                        <div class="two wide field ">
-                            <label class="custom-label-w-20">ปีงบประมาณ</label>
+                        <div class="three wide field ">
+                            <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
                         </div>
-
-                        <div class="five wide field">
+                        <div class="four wide field ">
+                            <select name="area" id="area" class="ui dropdown ai search full-width off" (change)="branchL($event)" [(ngModel)]="area">
+                                <option value="">กรุณาเลือก</option>
+                                <option *ngFor="let item of areaList" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- row 2 -->
+                    <div class="inline fields ui grid">
+                        <div class="three wide field ">
+                            <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่สาขา</label>
+                        </div>
+                        <div class="four wide field ">
+                            <select name="branch" id="branch" class="ui dropdown ai search full-width off" [(ngModel)]="branch">
+                                <option value="">กรุณาเลือก</option>
+                                <option *ngFor="let item of branchList; index as i;" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+                            </select>
+                        </div>
+                        <div class="three wide field ">
+                            <label class="text-right full-width">ปีงบประมาณ: </label>
+                        </div>
+                        <div class="four centered wide field">
                             <div class="ui calendar" id="budgetYear">
                                 <div class="ui input left icon">
                                     <i class="calendar alter nate outline icon"></i>
-                                    <input type="text" readonly="" name="budgetYearData" id="budgetYearData">
+                                    <input type="text" readonly="" name="budgetYearData" id="budgetYearData" readonly>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="five wide field ">
-                            &nbsp;
-                        </div>
                     </div>
 
-                    <div class="inline fields">
+                    <div class="inline fields ui grid">
+                        <div class="three wide field ">
+                            <label class="text-right full-width">วิธีการจัดซื้อจัดจ้าง</label>
+                        </div>
                         <div class="four wide field ">
-                            &nbsp;
-                        </div>
-
-                        <div class="two wide field ">
-                            <label class="custom-label-w-20">วิธีการจัดซื้อจัดจ้าง</label>
-                        </div>
-
-                        <div class="five wide field">
                             <select class="ui search dropdown ai search" name="supplyChoice" id="supplyChoice" [(ngModel)]="supplyChoice">
-                            <option value=""></option>
-                            <option *ngFor="let item of supplyChoiceList" value="{{item}}">{{item}}</option>
-                        </select>
+                                <option value="">กรุณาเลือก</option>
+                                <option *ngFor="let item of supplyChoiceList" value="{{item}}">{{item}}</option>
+                            </select>
                         </div>
-
-                        <div class="five wide field ">
-                            &nbsp;
+                        <div class="three wide field ">
+                            <label class="text-right full-width">ประเภทงบรายจ่าย</label>
                         </div>
-                    </div>
-
-                    <div class="inline fields">
                         <div class="four wide field ">
-                            &nbsp;
-                        </div>
-
-                        <div class="two wide field ">
-                            <label class="custom-label-w-20">ประเภทงบรายจ่าย</label>
-                        </div>
-
-                        <div class="five wide field">
                             <select class="ui search dropdown ai search" name="budgetType" id="budgetType" [(ngModel)]="budgetType">
-                            <option value=""></option>
-                            <option *ngFor="let item of budgetTypeList" value="{{item}}">{{item}}</option>
-                          </select>
-                        </div>
-
-                        <div class="five wide field ">
-                            &nbsp;
+                            <option value="">กรุณาเลือก</option>
+                                <option *ngFor="let item of budgetTypeList" value="{{item}}">{{item}}</option>
+                            </select>
                         </div>
                     </div>
-
 
                     <div class="ui center aligned grid">
                         <div class="sixteen wide column">
@@ -97,7 +97,7 @@
                 <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
                     <thead>
                         <tr style="text-align: center">
-                            <th rowspan="2"><input type="checkbox" (change)="clickCheckAll($event)"></th>
+                            <th rowspan="2"><input class="ui checkbox" type="checkbox" (change)="clickCheckAll($event)"></th>
                             <th rowspan="2">ปีงบประมาณ</th>
                             <th rowspan="2">เลขทีหนังสืออนุมัติเบิกจ่าย</th>
                             <th rowspan="2">เลข EGP</th>

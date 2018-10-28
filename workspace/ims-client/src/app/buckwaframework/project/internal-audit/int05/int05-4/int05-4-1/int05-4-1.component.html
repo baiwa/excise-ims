@@ -26,10 +26,6 @@
                         </div>
                     </div>
 
-                    <!-- <div class="two wide field">
-                        &nbsp;
-                    </div> -->
-
                     <div class="two wide field">
                         <label class="custom-label-w-20" style="text-align: right;">ประเภทงบรายจ่าย</label>
                     </div>
@@ -168,12 +164,6 @@
 
                 <div class="inline fields">
                     <div class="four wide field">
-                        <!-- <select name="myselect" id="myselect">
-                                    <option value="1">Apple</option>
-                                    <option value="2">Pear</option>
-                                    <option value="3">Peach</option>
-                                    <option value="4">Orange</option>
-                        </select> -->
                         &nbsp;
                     </div>
 
@@ -198,8 +188,8 @@
     </div>
 </div>
 
-<!-- supplyChoice 1, 4, 5, 7, 8 -->
-<div class="ui segment" *ngIf=" supplyChoice === 'วิธีตกลงราคา' || supplyChoice === 'วิธีพิเศษ' || supplyChoice === 'วิธีกรณีพิเศษ' || supplyChoice === 'การจ้างที่ปรึกษา' || supplyChoice === 'การจ้างออกแบบ' ">
+<!-- supplyChoice 1, 2 -->
+<div class="ui segment" *ngIf=" supplyChoice === 'วิธีเฉพาะเจาะจง' || supplyChoice === 'วิธีคัดเลือก' ">
     <div class="ui form center aligned grid" style="margin-left: 0px;">
         <div class="fourteen wide column">
             <div class="inline fields">
@@ -234,7 +224,10 @@
                 </div>
 
                 <div class="five wide field ">
-                    <input type="text" name="supplyType" [(ngModel)]="supplyType">
+                    <select class="ui fluid search dropdown ai" name="supplyType" [(ngModel)]="supplyType">
+                        <option value="">กรุณาเลือก</option>
+                        <option *ngFor="let data of SupplyCategories" value="{{data}}">{{data}}</option>
+                    </select>
                 </div>
 
                 <div class="four wide field">
@@ -434,7 +427,7 @@
 
 </div>
 
-<!-- supplyChoice 2 -->
+<!-- supplyChoice 3 -->
 <div class="ui segment" *ngIf=" supplyChoice === 'วิธีสอบราคา' ">
     <div class="ui form center aligned grid" style="margin-left: 0px;">
         <div class="fourteen wide column">
@@ -699,8 +692,8 @@
     </div>
 </div>
 
-<!-- supplyChoice 3, 6 -->
-<div class="ui segment" *ngIf=" supplyChoice === 'วิธีประกวดราคา' || supplyChoice === 'วิธีประกวดราคาทางอิเลคทรอนิกส์' ">
+<!-- supplyChoice 4,5 -->
+<div class="ui segment" *ngIf=" supplyChoice === 'วิธี E - Market' || supplyChoice === 'วิธี E - Bidding' ">
     <div class="ui form center aligned grid" style="margin-left: 0px;">
         <div class="fourteen wide column">
             <div class="inline fields">

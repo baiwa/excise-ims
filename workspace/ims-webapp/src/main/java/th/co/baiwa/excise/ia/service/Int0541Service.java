@@ -55,9 +55,12 @@ public class Int0541Service {
 		IaProcurement data;
 		if(BeanUtils.isNotEmpty(vo)) {
 			pcm = new IaProcurement();
+			if(BeanUtils.isNotEmpty(vo.getProcurementId())) {
+				pcm = iaPcmRepository.findOne(vo.getProcurementId());
+			}
 			pcm.setExciseDepartment("สำนักงานสรรพสามิตภาคที่ 1");
-			pcm.setExciseRegion("ภาคที่ 3");
-			pcm.setExciseDistrict("พื้นที่นนทบุรี");
+			pcm.setExciseRegion("สาขาอยุธยา 1");
+			pcm.setExciseDistrict("สำนักงานสรรพสามิตพื้นที่อยุธยา");
 			pcm.setBudgetYear(vo.getBudgetYear());
 			pcm.setBudgetType(vo.getBudgetType());
 			pcm.setProjectName(vo.getProjectName());
@@ -79,8 +82,6 @@ public class Int0541Service {
 			pcm.setSignedDateReport(BeanUtils.isNotEmpty(vo.getSignedDateReport())? DateConstant.convertStringDDMMYYYYHHmmToDate(vo.getSignedDateReport()): null);
 			pcm.setContractPartiesNum(vo.getContractPartiesNum());
 			pcm.setContractPartiesName(vo.getContractPartiesName());
-			pcm.setUpdatedBy(user);
-			pcm.setUpdatedDate(date);
 			if(
 					BeanUtils.isNotEmpty(pcm.getApproveDateReport()) ||
 					BeanUtils.isNotEmpty(pcm.getContractDateReport()) ||
@@ -127,6 +128,9 @@ public class Int0541Service {
 			IaProcurementList pcmList;
 			for (Int0541Vo p : vo) {
 				pcmList = new IaProcurementList();
+				if(BeanUtils.isNotEmpty(p.getProcurementListId())) {
+					pcmList = iaPcmListRepository.findOne(p.getProcurementListId());
+				}
 				pcmList.setProcurementId(new BigDecimal(p.getProcurementId()));
 				pcmList.setProcurementList(p.getProcurementList());
 				pcmList.setAmount(p.getAmount());
@@ -143,8 +147,6 @@ public class Int0541Service {
 	}
 
 	public List<Int0541Vo> findByid(IaProcurement pcm) {
-//		Message msg;
-//		CommonMessage<Int0541Vo> response = new CommonMessage<>();
 		List<Int0541Vo> dataList = new ArrayList<Int0541Vo>();
 		Int0541Vo data;
 		
@@ -174,14 +176,15 @@ public class Int0541Service {
 			data.setDisbursementFinalReport(DateConstant.convertDateToStrDDMMYYYYHHmm(dataPcm.getDisbursementFinalReport()));
 			data.setSignedDatePlan(DateConstant.convertDateToStrDDMMYYYYHHmm(dataPcm.getSignedDatePlan()));
 			data.setSignedDateReport(DateConstant.convertDateToStrDDMMYYYYHHmm(dataPcm.getSignedDateReport()));
-			data.setContractPartiesNum(data.getContractPartiesNum());
-			data.setContractPartiesName(data.getContractPartiesName());
+			data.setContractPartiesNum(dataPcm.getContractPartiesNum());
+			data.setContractPartiesName(dataPcm.getContractPartiesName());
 			
 			dataList.add(data);
 			
 			List<IaProcurementList> dataPcmList = iaPcmListRepository.findByIdFilter(pcm.getProcurementId());
 			for (IaProcurementList b : dataPcmList) {
 				data = new Int0541Vo();
+				data.setProcurementListId(b.getProcurementListId());
 				data.setProcurementId((b.getProcurementId()).longValue());
 				data.setProcurementList(b.getProcurementList());
 				data.setAmount(b.getAmount());
@@ -195,8 +198,6 @@ public class Int0541Service {
 			}
 		}
 		
-//		response.setMsg(msg);
-//		response.setData(data);
 		return dataList;
 	}
 }

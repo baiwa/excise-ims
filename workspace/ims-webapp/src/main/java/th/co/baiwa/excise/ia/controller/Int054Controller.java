@@ -5,16 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.entity.IaProcurement;
 import th.co.baiwa.excise.ia.persistence.vo.Int0541Vo;
 import th.co.baiwa.excise.ia.service.Int054Service;
@@ -26,6 +23,7 @@ public class Int054Controller {
 	
 	@Autowired
 	private Int054Service int054Service;
+	
 	
 	@PostMapping("/filterFindIaPcm")
 	@ResponseBody

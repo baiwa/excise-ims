@@ -31,7 +31,7 @@ public class IaProcurement extends BaseEntity {
 	@SequenceGenerator(name="IA_PROCUREMENT_GEN", sequenceName="IA_PROCUREMENT_SEQ", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_PROCUREMENT_GEN")
 	@Column(name="PROCUREMENT_ID")
-	private long procurementId;
+	private Long procurementId;
 
 	@Column(name="APPROVE_DATE_PLAN")
 	private Date approveDatePlan;
@@ -107,14 +107,11 @@ public class IaProcurement extends BaseEntity {
 	@Column(name="TENDER_RESULTS")
 	private BigDecimal tenderResults;
 
-	public IaProcurement() {
+	public Long getProcurementId() {
+		return procurementId;
 	}
 
-	public long getProcurementId() {
-		return this.procurementId;
-	}
-
-	public void setProcurementId(long procurementId) {
+	public void setProcurementId(Long procurementId) {
 		this.procurementId = procurementId;
 	}
 
@@ -316,10 +313,6 @@ public class IaProcurement extends BaseEntity {
 
 	public void setTenderResults(BigDecimal tenderResults) {
 		this.tenderResults = tenderResults;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 }

@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class Int0541Vo {
 	
 	private MultipartFile file;
-	private long procurementId;
+	private Long procurementId;
 	private String approveDatePlan;
 	private String approveDateReport;
 	private String budgetType;
@@ -32,7 +32,7 @@ public class Int0541Vo {
 	private String supplyType;
 	private Long tenderResults;
 	
-	private long procurementListId;
+	private Long procurementListId;
 	private Long amount;
 	private Long appraisalPrice;
 	private Long presetPrice;
@@ -41,21 +41,20 @@ public class Int0541Vo {
 	private String unit;
 	private Long unitPrice;
 	private String updatedDate;
-	private long procurementIdMinor;
+	private Long procurementIdMinor;
 	
 	private String nameFile;
 	private String typeFile;
-	
 	public MultipartFile getFile() {
 		return file;
 	}
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-	public long getProcurementId() {
+	public Long getProcurementId() {
 		return procurementId;
 	}
-	public void setProcurementId(long procurementId) {
+	public void setProcurementId(Long procurementId) {
 		this.procurementId = procurementId;
 	}
 	public String getApproveDatePlan() {
@@ -208,10 +207,10 @@ public class Int0541Vo {
 	public void setTenderResults(Long tenderResults) {
 		this.tenderResults = tenderResults;
 	}
-	public long getProcurementListId() {
+	public Long getProcurementListId() {
 		return procurementListId;
 	}
-	public void setProcurementListId(long procurementListId) {
+	public void setProcurementListId(Long procurementListId) {
 		this.procurementListId = procurementListId;
 	}
 	public Long getAmount() {
@@ -262,10 +261,10 @@ public class Int0541Vo {
 	public void setUpdatedDate(String updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	public long getProcurementIdMinor() {
+	public Long getProcurementIdMinor() {
 		return procurementIdMinor;
 	}
-	public void setProcurementIdMinor(long procurementIdMinor) {
+	public void setProcurementIdMinor(Long procurementIdMinor) {
 		this.procurementIdMinor = procurementIdMinor;
 	}
 	public String getNameFile() {
@@ -280,5 +279,4 @@ public class Int0541Vo {
 	public void setTypeFile(String typeFile) {
 		this.typeFile = typeFile;
 	}
-
 }

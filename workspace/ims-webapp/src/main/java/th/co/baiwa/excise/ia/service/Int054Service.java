@@ -13,6 +13,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.ia.persistence.dao.ProcurementDao;
 import th.co.baiwa.excise.ia.persistence.entity.IaProcurement;
 import th.co.baiwa.excise.ia.persistence.entity.IaProcurementList;
 import th.co.baiwa.excise.ia.persistence.repository.IaProcurementListRepository;
@@ -29,12 +30,15 @@ public class Int054Service {
 	@Autowired
 	private IaProcurementListRepository iaPcmListRepository;
 	
+	@Autowired
+	private ProcurementDao procurementDao;
+	
 	public ResponseDataTable<Int0541Vo> oderByfilter(IaProcurement pcm) {
 		logger.info("oderByfilter {}", pcm);
 		ResponseDataTable<Int0541Vo> data = new ResponseDataTable<>();
 		List<IaProcurement> filterPcm = new ArrayList<IaProcurement>();
 		int count = (int) iaPcmRepository.count();
-		filterPcm = iaPcmRepository.oderByfilter(pcm.getBudgetYear(), pcm.getBudgetType(), pcm.getSupplyChoice());
+		filterPcm = procurementDao.oderByfilter(pcm);
 		
 		List<Int0541Vo> dataList = new ArrayList<Int0541Vo>();
 		Int0541Vo obj;
