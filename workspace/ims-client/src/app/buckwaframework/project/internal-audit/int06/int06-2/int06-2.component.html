@@ -28,7 +28,7 @@
                         <div class="three wide field"></div>
                         <div class="eight wide field" [ngClass]="{ 'error': submitted && f.sortSystem.errors }">
                             <label class="custom-label-w-25">รูปแบบการจัดเรียงข้อมูล</label>
-                            <select class="ui dropdown ai" name="sortSystem" formControlName="sortSystem" (change)="changeSortSystem($event)">
+                            <select class="ui dropdown ai" name="sortSystem" id="sortSystem" formControlName="sortSystem">
                                 <option value="">เลือก</option>
                                 <option *ngFor="let data of comboBox | async" value="{{data.lovId}}">{{data.typeDescription}}</option>
                             </select>
@@ -41,7 +41,7 @@
                                 <i class="upload icon"></i>
                                 อัพโหลด
                             </button>
-                            <button class="ui mini button" type="button" (click)="clearData()">
+                            <button class="ui mini button" type="reset" (click)="clearData()">
                                 <i class="refresh icon"></i>
                                 ล้างข้อมูล
                             </button>
@@ -53,24 +53,31 @@
 
 
         <div class="ui segment" id="showTable">
-            <div class="ui attached segment">
+            <div class="ui attached segment {{loading? 'loading': ''}}">
                 <div style="overflow-x: scroll;">
-                    <table id="tableData" class="ui small celled table striped selectable" style="width: 130%">
+                    <table id="dataTable" class="ui small celled table striped selectable" style="width: 200%">
                         <thead id="trDataUpload">
                             <tr style="text-align: center;">
                                 <th>วันบันทึก</th>
                                 <th>วันผ่านรายการ</th>
                                 <th>ประเภท</th>
                                 <th>เลขเอกสาร</th>
+                                <th *ngIf="comboBoxId ==1323">เลขที่ขอจ่าย</th>
                                 <th>ผู้ขาย</th>
+                                <th *ngIf="comboBoxId ==1323">รายการ</th>
                                 <th>บัญชีธนาคารที่รับเงิน</th>
                                 <th>การอ้างอิง</th>
                                 <th>รหัสงบประมาณ</th>
-                                <th>จำนวนเงินขอเบิก</th>
+                                <th>จำนวนเงินขอเบิก (GFMIS)</th>
+                                <th *ngIf="comboBoxId ==1323">จำนวนเงินขอเบิก (ระบบ)</th>
+                                <th *ngIf="comboBoxId ==1323">ผลต่างจำนวนเงินขอเบิก</th>
                                 <th>ภาษีหักณที่จ่าย</th>
                                 <th>ค่าปรับ</th>
                                 <th>ค่าธรรมเนียม</th>
                                 <th>จำนวนเงินสุทธิ</th>
+                                <th *ngIf="comboBoxId ==1323">จำนวนขอรับ</th>
+                                <th *ngIf="comboBoxId ==1323">ผลต่าง</th>
+                                <th *ngIf="comboBoxId ==1323">ข้อมูลการเงิน</th>
                             </tr>
                         </thead>
                         <tbody id="tdDataUpload">
@@ -81,12 +88,12 @@
                 <br>
                 <div class="ui center aligned grid">
                     <div class="sixteen wide column">
-                        <button class="ui mini primary button" (click)="compareTR()">
-                    <i class="save icon"></i> 
+                        <button class="ui mini green button" (click)="compareTR()">
+                    <i class="clipboard check icon"></i> 
                     เปรียบเทียบ TR
                   </button>
-                        <button class="ui mini primary button">
-                <i class="save icon"></i>
+                        <button class="ui mini yellow button">
+                <i class="print icon"></i>
                 ส่งออก
               </button>
                     </div>

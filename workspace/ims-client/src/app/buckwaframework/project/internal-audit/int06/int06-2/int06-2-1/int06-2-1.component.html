@@ -29,8 +29,8 @@
 
                 <div class="ui center aligned grid">
                     <div class="four wide column">
-                        <button class="ui mini primary button" type="submit">
-                          <i class="upload icon"></i>
+                        <button class="ui mini green button" type="submit">
+                          <i class="clipboard check icon"></i>
                           เปรียบเทียบ
                         </button>
 
@@ -46,41 +46,38 @@
 </div>
 
 <div class="ui segment {{loadingTable? 'loading': ''}}" id="Int0621">
-    <div class="ui center aligned grid">
-        <div class="sixteen wide column">
-            <label> ตารางแสดงผลการเปรียบเทียบสรุปรายการขอเบิกกับงบทดลอง</label>
+    <div class="ui centered grid">
+        <div class="center aligned fourteen wide column">
+            <label class="text-center full-width"> ตารางแสดงผลการเปรียบเทียบสรุปรายการขอเบิกกับงบทดลอง</label>
+        </div>
+        <div class="fourteen wide column">
+            <table id="tableData" class="ui small celled table striped selectable" style="width: 100%">
+                <thead>
+                    <tr style="text-align: center;">
+                        <th>รหัสงบประมาณ</th>
+                        <th>ชื่องบประมาณ</th>
+                        <th>ผลรวมตามรหัสงบประมาณ</th>
+                        <th>TR-งบทดลอง</th>
+                        <th>จำนวน TR-งบทดลอง</th>
+                        <th>ผลต่าง</th>
+                    </tr>
+                </thead>
+                <tbody id="tdDataCompare">
+                    <!-- tdDataCompare -->
+                </tbody>
+            </table>
         </div>
     </div>
-    <br>
-    <div>
-        <table id="tableData" class="ui small celled table striped selectable" style="width: 90%">
-            <thead>
-                <tr style="text-align: center;">
-                    <th>รหัสงบประมาณ</th>
-                    <th style="width: 180px;">ชื่องบประมาณ</th>
-                    <th style="width: 190px;">ผลรวมตามรหัสงบประมาณ</th>
-                    <th>TR-งบทดลอง</th>
-                    <th style="width: 200px;">จำนวน TR-งบทดลอง</th>
-                    <th>ผลต่าง</th>
-                </tr>
-            </thead>
-            <tbody id="tdDataCompare">
-                <!-- tdDataCompare -->
-            </tbody>
-        </table>
-    </div>
-    <br>
-    <div class="ui center aligned grid">
-        <div class="sixteen wide column">
-            <button class="ui mini primary button" routerLink='/int06/2'>
-          <i class="arrow circle left icon"></i>
-      กลับ
-        </button>
-            <button class="ui mini primary button">
-          <i class="print icon"></i>
-          ส่งออก
-        </button>
+    <div class="ui centered grid">
+        <div class="center aligned sixteen wide column">
+            <button class="ui mini yellow button">
+                <i class="print icon"></i>
+                ส่งออก
+            </button>
+            <button class="ui mini button" routerLink='/int06/2'>
+                <i class="remove icon"></i>
+                ยกเลิก
+            </button>
         </div>
     </div>
-
 </div>

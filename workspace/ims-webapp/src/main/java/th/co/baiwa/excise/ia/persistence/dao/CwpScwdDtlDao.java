@@ -19,6 +19,7 @@ import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.CwpScwdDtl;
+import th.co.baiwa.excise.ia.persistence.vo.Int062AddFieldVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int062CwpDtlVo;
 
 @Repository
@@ -54,7 +55,6 @@ public class CwpScwdDtlDao {
 		}
 		valueList.add(idFile1);
 
-//		List<Int062CwpDtlVo> findByHDRId = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingFindByHDRId);
 		List<Int062CwpDtlVo> findByHDRId = jdbcTemplate.query(sql.toString(), valueList.toArray(), new RowMapper<Int062CwpDtlVo>() {
 			@Override
 			public Int062CwpDtlVo mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -81,17 +81,6 @@ public class CwpScwdDtlDao {
 		sql.append(" FROM IA_CWP_SCWD_DTL C ");
 		sql.append(" WHERE C.BUDGET_CODE = ? ");
 		valueList.add(cwp.getBudgetCode());
-//		sql.append(" WHERE 1 = 1 ");
-		
-//		if(sortSystemID == 1322) {
-//			sql.append(" AND C.BUDGET_CODE = ? ");
-//			valueList.add(cwp.getBudgetCode());
-//		}
-//		if(sortSystemID == 1323) {
-		
-//			sql.append(" AND to_char(C.RECORD_DATE , 'yyyy/mm') = ? ");
-//			valueList.add(cwp.getCalMonth());
-//		}
 		
 		sql.append(" GROUP BY BUDGET_CODE , to_char(C.RECORD_DATE , 'yyyy/mm') ");
 		sql.append(" ORDER BY to_char(C.RECORD_DATE , 'yyyy/mm') ");
@@ -113,7 +102,7 @@ public class CwpScwdDtlDao {
 	
 	/*-- findGroupMonth --*/
 	
-	public List<CwpScwdDtl> findGroupMonth(Int062CwpDtlVo vo, Long sortSystemID) {
+	public List<Int062AddFieldVo> findGroupMonth(Int062CwpDtlVo vo, Long sortSystemID) {
 		logger.info("findGroupMonth budgetCode: {} | calMonth: {}", vo.getBudgetCode(), vo.getCalMonth());
 		
 		List<Object> valueList = new ArrayList<Object>();
@@ -132,14 +121,14 @@ public class CwpScwdDtlDao {
 			sql.append(" ORDER BY C.RECORD_DATE ");
 		}
 		
-		List<CwpScwdDtl> CwpScwdDtl = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingFindGroupMonth);
+		List<Int062AddFieldVo> CwpScwdDtl = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingFindGroupMonth);
 		return CwpScwdDtl;
 	}
 	
-	private RowMapper<CwpScwdDtl> fieldMappingFindGroupMonth = new RowMapper<CwpScwdDtl>() {
+	private RowMapper<Int062AddFieldVo> fieldMappingFindGroupMonth = new RowMapper<Int062AddFieldVo>() {
 		@Override
-		public CwpScwdDtl mapRow(ResultSet rs, int arg1) throws SQLException {
-			CwpScwdDtl dtlVo = new CwpScwdDtl();
+		public Int062AddFieldVo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int062AddFieldVo dtlVo = new Int062AddFieldVo();
 			dtlVo.setBudgetCode(rs.getString("BUDGET_CODE"));
 			dtlVo.setBankAccount(rs.getString("BANK_ACCOUNT"));
 			dtlVo.setCwpScwdHdrId(rs.getLong("CWP_SCWD_HDR_ID"));
@@ -245,6 +234,55 @@ public class CwpScwdDtlDao {
 			}
 		});
 	}
+
+	public List<Int062AddFieldVo> addField() {
+		List<Object> valueList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder(" SELECT C.* , WITHDRAWAL_ID, W.LIST_NAME , W.WITHDRAWAL_DOC_NUM, W.WITHDRAWAL_AMOUNT, W.RECEIVED_AMOUNT, W.REF_NUM ");
+			sql.append(" FROM IA_CWP_SCWD_DTL C ");
+			sql.append(" INNER JOIN IA_WITHDRAWAL_LIST W ");
+			sql.append(" ON C.DUCUMENT_NUMBER = W.WITHDRAWAL_DOC_NUM ");
+			
+		List<Int062AddFieldVo> addFieldList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingFindAddField);
+		return addFieldList;
+	}
+	
+	private RowMapper<Int062AddFieldVo> fieldMappingFindAddField = new RowMapper<Int062AddFieldVo>() {
+		@Override
+		public Int062AddFieldVo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int062AddFieldVo dtlVo = new Int062AddFieldVo();
+			dtlVo.setBudgetCode(rs.getString("BUDGET_CODE"));
+			dtlVo.setBankAccount(rs.getString("BANK_ACCOUNT"));
+			dtlVo.setCwpScwdHdrId(rs.getLong("CWP_SCWD_HDR_ID"));
+			dtlVo.setCwpScwdDtlId(rs.getLong("CWP_SCWD_DTL_ID"));
+			dtlVo.setDucumentNumber(rs.getString("DUCUMENT_NUMBER"));
+			dtlVo.setFee(rs.getBigDecimal("FEE"));
+			dtlVo.setFines(rs.getBigDecimal("FINES"));
+			dtlVo.setNetAmount(rs.getBigDecimal("NET_AMOUNT"));
+			dtlVo.setPostDate(rs.getDate("POST_DATE"));
+			dtlVo.setRecordDate(rs.getDate("RECORD_DATE"));
+			dtlVo.setReferenceNo(rs.getString("REFERENCE_NO"));
+			dtlVo.setSeller(rs.getString("SELLER"));
+			dtlVo.setTypeCode(rs.getString("TYPE_CODE"));
+			dtlVo.setWithdrawAmount(rs.getBigDecimal("WITHDRAW_AMOUNT"));
+			dtlVo.setWithholdingTax(rs.getBigDecimal("WITHHOLDING_TAX"));
+			
+			//change format date -> string
+			String recordDate = DateConstant.convertDateToStrDDMMYYYY(dtlVo.getRecordDate());
+			String postDate = DateConstant.convertDateToStrDDMMYYYY(dtlVo.getPostDate());
+			dtlVo.setRecordDateStr(recordDate);
+			dtlVo.setPostDateStr(postDate);
+			
+			//--- add field table *IA_WITHDRAWAL_LIST* ---
+			dtlVo.setWithdrawalId(rs.getLong("WITHDRAWAL_ID"));
+			dtlVo.setWithdrawalDocNum(rs.getString("WITHDRAWAL_DOC_NUM"));
+			dtlVo.setListName(rs.getString("LIST_NAME"));
+			dtlVo.setWithdrawalAmount(rs.getBigDecimal("WITHDRAWAL_AMOUNT"));
+			dtlVo.setReceivedAmount(rs.getBigDecimal("RECEIVED_AMOUNT"));
+			dtlVo.setRefNum(rs.getString("REF_NUM"));
+			
+			return dtlVo;
+		}
+	};
 	
 	
 	

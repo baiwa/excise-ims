@@ -73,7 +73,7 @@ export class Int062Component implements OnInit {
     if (this.checkListOfwithdraw.invalid) {
       return;
     }
-
+    this.comboBoxId = e.target["sortSystem"].value;
     this.loading = true;
     this.selfService
       .onUpload(this.comboBoxId)
@@ -88,6 +88,7 @@ export class Int062Component implements OnInit {
 
   clearData() {
     $("#showTable").hide();
+    $("#sortSystem").dropdown("restore defaults");
   }
 
   get f() {
@@ -108,10 +109,9 @@ export class Int062Component implements OnInit {
     }, 500);
   }
 
-  changeSortSystem(e) {
-    this.comboBoxId = e.target.value;
-    console.log(this.comboBoxId);
-  }
+  // changeSortSystem(e) {
+  //   this.comboBoxId = e.target.value;
+  // }
 
   compareTR() {
     this.selfService.compareTR(this.comboBoxId);

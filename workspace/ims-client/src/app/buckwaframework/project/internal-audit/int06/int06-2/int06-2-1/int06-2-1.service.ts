@@ -24,7 +24,6 @@ export class Int0621Service {
         { cwpScwdHdrId: id },
         res => {
           this.budgetCodeList = res.json();
-          console.log("budget: ", res.json());
           resovle(res.json());
         },
         error => {
@@ -40,7 +39,6 @@ export class Int0621Service {
         URL.DROPDOWN,
         { cwpTblHdrId: id },
         res => {
-          console.log("dropdown: ", res.json());
           resovle(res.json());
         },
         error => {
@@ -66,7 +64,6 @@ export class Int0621Service {
         URL.COMPARE_EXCEL,
         DATA,
         res => {
-          console.log("DATA: ", res.json());
           let dataCompare = res.json();
           $("#Int0621").show();
           let trData = "";
@@ -75,7 +72,7 @@ export class Int0621Service {
             for (let j = 0; j < dataCompare[i].cwpTblDtlList.length; j++) {
               //set value in tr
               trData += "<tr>";
-              trData += "<td style ='text-align: center'>";
+              trData += "<td style ='text-align: right'>";
               trData += j == 0 ? dataCompare[i].budgetCode : "";
               trData += "</td>";
               trData += "<td style ='text-align: left'>";

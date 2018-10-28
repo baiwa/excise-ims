@@ -28,6 +28,7 @@ import th.co.baiwa.buckwaframework.common.util.ExcelUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.dao.CwpScwdDtlDao;
 import th.co.baiwa.excise.ia.persistence.dao.CwpTblDtlDao;
+import th.co.baiwa.excise.ia.persistence.dao.WithdrawalPersonsDao;
 import th.co.baiwa.excise.ia.persistence.entity.CwpScwdDtl;
 import th.co.baiwa.excise.ia.persistence.entity.CwpScwdHdr;
 import th.co.baiwa.excise.ia.persistence.entity.CwpTblDtl;
@@ -36,9 +37,11 @@ import th.co.baiwa.excise.ia.persistence.repository.CwpScwdDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.CwpScwdHdrRepository;
 import th.co.baiwa.excise.ia.persistence.repository.CwpTblDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.CwpTblHdrRepository;
+import th.co.baiwa.excise.ia.persistence.vo.Int062AddFieldVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int062CwpDtlVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int062FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int062Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int062paymentInfoVo;
 import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
@@ -62,6 +65,9 @@ public class Int062Service {
 	
 	@Autowired
 	private CwpTblDtlDao cwpTblDtlDao;
+	
+	@Autowired
+	private WithdrawalPersonsDao withdrawalPersonsDao;
 
 	public List<Int062Vo> upload(Int062FormVo formVo)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
@@ -84,10 +90,10 @@ public class Int062Service {
 
 					for (int j = 0; j < findDivideMonth.size(); j++) {
 						response = new Int062Vo();
-						CwpScwdDtl cwp = new CwpScwdDtl();
+						Int062AddFieldVo cwp = new Int062AddFieldVo();
 						response.setCwpScwdDtlList(
 								cwpScwdDtlDao.findGroupMonth(findDivideMonth.get(j), formVo.getSortSystem()));
-						cwp = new CwpScwdDtl();
+						cwp = new Int062AddFieldVo();
 
 						for (CwpScwdDtl cwpScwdDtl : response.getCwpScwdDtlList()) {
 							cwp.setFee(cwp.getFee().add(cwpScwdDtl.getFee()));
@@ -109,27 +115,58 @@ public class Int062Service {
 				}
 			} else {
 				// order by 'record date'
+				List<Int062AddFieldVo> addFieldList;
 				List<Int062CwpDtlVo> findByHDRId = cwpScwdDtlDao.findByHDRId(idFile1, formVo.getSortSystem());
 				for (int i = 0; i < findByHDRId.size(); i++) {
 					response = new Int062Vo();
-					CwpScwdDtl cwp = new CwpScwdDtl();
+					addFieldList = new ArrayList<Int062AddFieldVo>();
+					Int062AddFieldVo totalMonthCal = new Int062AddFieldVo();
+					
 					response.setCwpScwdDtlList(cwpScwdDtlDao.findGroupMonth(findByHDRId.get(i), formVo.getSortSystem()));
-					cwp = new CwpScwdDtl();
+					//join table *IA_WITHDRAWAL_LIST*
+					addFieldList = cwpScwdDtlDao.addField();
+					totalMonthCal = new Int062AddFieldVo();
 
-					for (CwpScwdDtl cwpScwdDtl : response.getCwpScwdDtlList()) {
-						cwp.setFee(cwp.getFee().add(cwpScwdDtl.getFee()));
-						cwp.setFines(cwp.getFines().add(cwpScwdDtl.getFines()));
-						cwp.setNetAmount(cwp.getNetAmount().add(cwpScwdDtl.getNetAmount()));
-						cwp.setWithdrawAmount(cwp.getWithdrawAmount().add(cwpScwdDtl.getWithdrawAmount()));
-						cwp.setWithholdingTax(cwp.getWithholdingTax().add(cwpScwdDtl.getWithholdingTax()));
+					for (Int062AddFieldVo cwpScwdDtl : response.getCwpScwdDtlList()) {
+						if(BeanUtils.isNotEmpty(addFieldList)) {
+							for (Int062AddFieldVo obj : addFieldList) {
+								if(cwpScwdDtl.getDucumentNumber().equals(obj.getWithdrawalDocNum())) {
+									//set value from table *IA_WITHDRAWAL_LIST*
+									cwpScwdDtl.setListName(obj.getListName());
+									cwpScwdDtl.setWithdrawalAmount(obj.getWithdrawalAmount());
+									cwpScwdDtl.setWithdrawalDocNum(obj.getWithdrawalDocNum());
+									cwpScwdDtl.setReceivedAmount(obj.getReceivedAmount());
+									cwpScwdDtl.setRefNum(obj.getRefNum());								
+																		
+									//set PaymentInfoVoList from table *IA_WITHDRAWAL_PERSONS*
+									cwpScwdDtl.setPaymentInfoVoList(withdrawalPersonsDao.paymentInfo(obj.getWithdrawalId()));
+								}
+							}
+						}
+						//sum difference
+						cwpScwdDtl.setDiffReceived(cwpScwdDtl.getNetAmount().subtract(cwpScwdDtl.getReceivedAmount()));
+						cwpScwdDtl.setDiffWithdraw(cwpScwdDtl.getWithdrawAmount().subtract(cwpScwdDtl.getWithdrawalAmount()));
+						
+						//sum total month
+						totalMonthCal.setWithdrawalAmount(totalMonthCal.getWithdrawalAmount().add(cwpScwdDtl.getWithdrawalAmount()));
+						totalMonthCal.setReceivedAmount(totalMonthCal.getReceivedAmount().add(cwpScwdDtl.getReceivedAmount()));
+						totalMonthCal.setTotalDiffReceived(totalMonthCal.getTotalDiffReceived().add(cwpScwdDtl.getDiffReceived()));
+						totalMonthCal.setTotalDiffWithdraw(totalMonthCal.getTotalDiffWithdraw().add(cwpScwdDtl.getDiffWithdraw()));
+						
+						//sum total month
+						totalMonthCal.setFee(totalMonthCal.getFee().add(cwpScwdDtl.getFee()));
+						totalMonthCal.setFines(totalMonthCal.getFines().add(cwpScwdDtl.getFines()));
+						totalMonthCal.setNetAmount(totalMonthCal.getNetAmount().add(cwpScwdDtl.getNetAmount()));
+						totalMonthCal.setWithdrawAmount(totalMonthCal.getWithdrawAmount().add(cwpScwdDtl.getWithdrawAmount()));
+						totalMonthCal.setWithholdingTax(totalMonthCal.getWithholdingTax().add(cwpScwdDtl.getWithholdingTax()));
 
 						// set idExcel1
-						cwp.setCwpScwdHdrId(idFile1);
+						totalMonthCal.setCwpScwdHdrId(idFile1);
 						// set idExcel2
-						cwp.setIdExcel2(idFile2);
+						totalMonthCal.setIdExcel2(idFile2);
 					}
 					// //add data to response
-					response.setCwpScwdDtl(cwp);
+					response.setCwpScwdDtl(totalMonthCal);
 					response.setFileUploadID(fileUploadID);
 					responseList.add(response);
 					// }
