@@ -63,7 +63,7 @@ public class Int0511Controller {
 	
 	   @GetMapping("/exportFile")
 			@ResponseBody
-			public  void exportFile(@ModelAttribute Int065FormVo formVo, HttpServletResponse response) throws Exception {
+			public  void exportFile(@ModelAttribute Int0511FormVo formVo, HttpServletResponse response) throws Exception {
 				try {
 					int0511Service.exportFile(formVo, response);
 				} catch (Exception e) {
