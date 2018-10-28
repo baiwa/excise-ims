@@ -1,6 +1,10 @@
 package th.co.baiwa.excise.epa.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,4 +29,23 @@ public class Epa012Controller {
 		return epa012Service.search(epa012FormVo);
 	}
 	
+	@PostMapping("/getInformation")
+	@ResponseBody
+	public List<Epa012Vo> getInformation(@RequestBody Epa012FormVo epa012FormVo) {
+		return epa012Service.getInformation(epa012FormVo);
+	}
+	
+	@PostMapping("/saveTaxDatas")
+	@ResponseBody
+	public ResponseEntity<?> saveTaxDatas(@RequestBody Epa012FormVo epa012FormVo) {
+		epa012Service.saveTaxDatas(epa012FormVo);
+		return new ResponseEntity<Epa012FormVo>(epa012FormVo, HttpStatus.OK);	
+	}
+	
+	@PostMapping("/saveFactoryDatas")
+	@ResponseBody
+	public ResponseEntity<?> saveFactoryDatas(@RequestBody Epa012FormVo epa012FormVo) {
+		epa012Service.saveFactoryDatas(epa012FormVo);
+		return new ResponseEntity<Epa012FormVo>(epa012FormVo, HttpStatus.OK);	
+	}
 }

@@ -48,7 +48,7 @@ public class ExportCheckingDao {
 		
 		if (StringUtils.isNotBlank(epa011FormVo.getExciseId())) {
 			sql.append(" AND T1.EXCISE_ID = ? ");
-			params.add(epa011FormVo.getExciseId());
+			params.add(StringUtils.trim(epa011FormVo.getExciseId()));
 		}
 		
 		String sqlLimit = OracleUtils.limitForDataTable(sql, epa011FormVo.getStart(), epa011FormVo.getLength());

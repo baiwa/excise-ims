@@ -103,11 +103,11 @@ export class Epa011Component implements OnInit {
       ],
       rowCallback: (row, data, index) => {
         $("td > .checking-button", row).bind("click", () => {
-          console.log("[Data]: ", data);
           this.router.navigate(["/epa01/2"], {
-            queryParams: { 
+            queryParams: {
               exciseId: data.exciseId,
-              exciseName: data.exciseName
+              exciseName: data.exciseName,
+              searchFlag: "TRUE"
             }
           });
         });
