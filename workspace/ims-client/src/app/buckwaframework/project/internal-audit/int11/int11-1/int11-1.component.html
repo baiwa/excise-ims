@@ -11,20 +11,20 @@
 
       <input type="hidden" id="searchFlag" name="searchFlag">
       <div class="inline fields">
-          <div class="four wide field">
-              <label class="text-right full-width">ชื่อโครงการ</label>
-          </div>
+        <div class="four wide field">
+          <label class="text-right full-width">ชื่อโครงการ</label>
+        </div>
         <div class="four wide field ">
           <input type="text" id="projectName" name="projectName" [(ngModel)]="projectName">
         </div>
 
-          <div class="two wide field">
-            <label class="text-right full-width">สถานะการติดตาม</label>
-          </div>
+        <div class="two wide field">
+          <label class="text-right full-width">สถานะการติดตาม</label>
+        </div>
         <div class="three wide field ">
           <select class="ui search dropdown follow-project-dropdown" id="status" name="status" [(ngModel)]="status">
             <option value="">กรุณาเลือก </option>
-            <option *ngFor="let status of statusList; index as i;" value="{{status.value}}">{{status.label}}</option>
+            <option *ngFor="let status of statusList; index as i;" value="{{status.label}}">{{status.label}}</option>
           </select>
         </div>
       </div>
@@ -106,7 +106,8 @@
       </tr>
     </thead>
   </table>
-  <label style="font-size: 13px;"><b>หมายเหตุ:</b> ทำเครื่องหมายถูก <i class="check square outline icon"></i> ที่หน้ารายการ และกดปุ่ม "ลบ" หมายถึงต้องการลบรายการที่เลือก</label>
+  <label style="font-size: 13px;"><b>หมายเหตุ:</b> ทำเครื่องหมายถูก <i class="check square outline icon"></i>
+    ที่หน้ารายการ และกดปุ่ม "ลบ" หมายถึงต้องการลบรายการที่เลือก</label>
   <br />
   <br />
   <div class="ui center aligned grid">
