@@ -99,7 +99,7 @@ export class Int065Component implements OnInit, AfterViewInit {
     promise1.then(() => {
       console.log('resove success');
       setTimeout(() => {
-        this.dataInTable = $('#dataTable').DataTable().data();
+        this.dataInTable = $('#dataTable').DataTableTh().data();
       console.log( this.dataInTable);
       console.log(this.dataInTable.length);
       }, 500);
@@ -124,7 +124,7 @@ export class Int065Component implements OnInit, AfterViewInit {
     });
 
     promise1.then(() => {
-      this.dataInTable = $('#dataTable').DataTable().data();
+      this.dataInTable = $('#dataTable').DataTableTh().data();
     });
     
      

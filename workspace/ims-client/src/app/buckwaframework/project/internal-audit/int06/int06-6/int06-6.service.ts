@@ -117,7 +117,7 @@ export class Int066Service {
           "className": "ui center aligned"
         }, {
           "data": "payee",
-          "className": "ui center aligned"
+          "className": "ui left aligned"
         }, {
           "data": "refPayment",
           "className": "ui center aligned"

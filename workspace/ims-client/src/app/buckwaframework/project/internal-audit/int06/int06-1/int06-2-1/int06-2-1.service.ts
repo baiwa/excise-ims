@@ -37,17 +37,17 @@ export class Int0621Service {
   search(model: FormSearch) {
     this.model = model;
     this.model.searchFlag = "TRUE";
-    $("#dataTable").DataTable().ajax.reload();
+    $("#dataTable").DataTableTh().ajax.reload();
   }
   clear = () => {
     $("#year").dropdown('restore defaults');
     this.model.accountId = "";
     this.model.accountName = "";
     this.model.searchFlag = "FALSE";
-    $("#dataTable").DataTable().ajax.reload();
+    $("#dataTable").DataTableTh().ajax.reload();
   }
   dataTable = () => {
-    this.table = $("#dataTable").DataTable({
+    this.table = $("#dataTable").DataTableTh({
       "serverSide": true,
       "searching": false,
       "ordering": false,
@@ -191,8 +191,8 @@ export class Int0621Service {
           "data": "note",
           "render": function (data, type, row) {
             var btn = '';
-            btn += '<button class="ui mini yellow button btn-edit">แก้ไข</button>';
-            btn += '<button class="ui mini red button btn-delete">ลบ</button>';
+            btn += '<button class="ui mini yellow button btn-edit"><i class="edit icon"></i>แก้ไข</button>';
+            btn += '<button class="ui mini red button btn-delete"><i class="trash alternate icon"></i>ลบ</button>';
             return btn;
           },
           "className": "ui center aligned"
@@ -247,7 +247,7 @@ export class Int0621Service {
           this.ajax.post(url, JSON.stringify(data.id), res => {
             console.log(res.json());
             this.message.successModal(res.json());
-            $("#dataTable").DataTable().ajax.reload();
+            $("#dataTable").DataTableTh().ajax.reload();
           }, error => {
             console.log(error.json());
             this.message.errorModal(error.json());

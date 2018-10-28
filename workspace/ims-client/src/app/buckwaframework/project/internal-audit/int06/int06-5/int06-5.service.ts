@@ -57,14 +57,14 @@ export class Int065Service {
   }
   search = () => {
     this.form.searchFlag = "TRUE";
-    $("#dataTable").DataTable().ajax.reload();
+    $("#dataTable").DataTableTh().ajax.reload();
   }
   clear = () => {
     $("#searchFlag").val("FALSE");
     $(".office").dropdown('restore defaults');
     $("#dateFrom").val("");
     $("#dateTo").val("");
-    $("#dataTable").DataTable().ajax.reload();
+    $("#dataTable").DataTableTh().ajax.reload();
 
   }
 
