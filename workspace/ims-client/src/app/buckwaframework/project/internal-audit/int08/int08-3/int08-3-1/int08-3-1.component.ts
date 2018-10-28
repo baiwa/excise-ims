@@ -151,7 +151,7 @@ private authService: AuthService,
       this.datatable.destroy();
     }
     const URL = AjaxService.CONTEXT_PATH + "ia/int083/searchRiskAssExcAreaHdr";
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -196,8 +196,8 @@ private authService: AuthService,
           data: "riskHdrId",
           render: function () {
 
-            return '<button type="button" class="ui mini button primary dtl" ><i class="table icon"></i> รายละเอียด</button>'
-              + '<button type="button" class="ui mini button primary export"><i class="print icon"></i> Export</button>';
+            return '<button type="button" class="ui mini button primary dtl" ><i class="eye icon"></i> รายละเอียด</button>'
+              + '<button type="button" class="ui mini button yellow export"><i class="print icon"></i> ส่งออก</button>';
           }
         }
       ],
@@ -421,7 +421,7 @@ private authService: AuthService,
     }
     const URL = AjaxService.CONTEXT_PATH + "ia/int083/dataTableWebService1";
     //console.log(URL);
-    this.dataTableF1 = $("#dataTableF1").DataTable({
+    this.dataTableF1 = $("#dataTableF1").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -484,7 +484,7 @@ private authService: AuthService,
 
     const URL = AjaxService.CONTEXT_PATH + "ia/int083/dataTableWebService2";
     //console.log(URL);
-    this.dataTable_int08_3_6 = $("#dataTable_int08_3_6").DataTable({
+    this.dataTable_int08_3_6 = $("#dataTable_int08_3_6").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -549,7 +549,7 @@ private authService: AuthService,
 
     const URL = AjaxService.CONTEXT_PATH + "ia/int083/dataTableWebService3";
     //console.log(URL);
-    this.dataTable_int08_3_7 = $("#dataTable_int08_3_7").DataTable({
+    this.dataTable_int08_3_7 = $("#dataTable_int08_3_7").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -624,7 +624,7 @@ private authService: AuthService,
 
     const URL = AjaxService.CONTEXT_PATH + "ia/int083/dataTableWebService4";
     //console.log(URL);
-    this.dataTable_int08_3_8 = $("#dataTable_int08_3_8").DataTable({
+    this.dataTable_int08_3_8 = $("#dataTable_int08_3_8").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -694,7 +694,7 @@ private authService: AuthService,
       this.dataTable_int08_3_9.destroy();
     }
     //console.log(this.dataTableList);
-    this.dataTable_int08_3_9 = $("#dataTable_int08_3_9").DataTable({
+    this.dataTable_int08_3_9 = $("#dataTable_int08_3_9").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -741,7 +741,7 @@ private authService: AuthService,
       this.dataTable_int08_3_10.destroy();
     }
     //console.log(this.dataTableList);
-    this.dataTable_int08_3_10 = $("#dataTable_int08_3_10").DataTable({
+    this.dataTable_int08_3_10 = $("#dataTable_int08_3_10").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -787,7 +787,7 @@ private authService: AuthService,
       this.dataTable_int08_3_11.destroy();
     }
     //console.log(this.dataTableList);
-    this.dataTable_int08_3_11 = $("#dataTable_int08_3_11").DataTable({
+    this.dataTable_int08_3_11 = $("#dataTable_int08_3_11").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -869,7 +869,7 @@ private authService: AuthService,
 
     const URL = AjaxService.CONTEXT_PATH + "ia/int083/int080313DataTable";
     //console.log(URL);
-    this.dataTable_int08_3_13 = $("#dataTable_int08_3_13").DataTable({
+    this.dataTable_int08_3_13 = $("#dataTable_int08_3_13").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -941,7 +941,7 @@ private authService: AuthService,
     }
     const URL = AjaxService.CONTEXT_PATH + "ia/int083/findRiskAssExcOtherDtlByHeaderId";
     //console.log(URL);
-    this.dataTableF2 = $("#dataTableF2").DataTable({
+    this.dataTableF2 = $("#dataTableF2").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
