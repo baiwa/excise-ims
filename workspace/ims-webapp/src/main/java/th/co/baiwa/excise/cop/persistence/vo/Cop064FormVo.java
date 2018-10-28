@@ -5,9 +5,8 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
-import th.co.baiwa.excise.ta.persistence.vo.Ope046ExcelVo;
 
-public class Cop061FormVo extends DataTableRequest {
+public class Cop064FormVo extends DataTableRequest {
 
 	/**
 	 * 
@@ -23,8 +22,9 @@ public class Cop061FormVo extends DataTableRequest {
 	private String productType;
 
 	private MultipartFile fileName;
-	private List<Cop061ExcelVo> dataExcel;
-	private List<Cop061FormVo> dataList;
+	private List<Cop064ExcelVo> dataExcel;
+	private List<Cop064FormVo> dataList;
+	private List<Cop064Vo> dataListVo;
 
 	public String getTaExciseAcc0502Id() {
 		return taExciseAcc0502Id;
@@ -90,24 +90,34 @@ public class Cop061FormVo extends DataTableRequest {
 		this.fileName = fileName;
 	}
 
-	public List<Cop061ExcelVo> getDataExcel() {
+	public List<Cop064ExcelVo> getDataExcel() {
 		return dataExcel;
 	}
 
-	public void setDataExcel(List<Cop061ExcelVo> dataExcel) {
+	public void setDataExcel(List<Cop064ExcelVo> dataExcel) {
 		this.dataExcel = dataExcel;
 	}
 
-	public List<Cop061FormVo> getDataList() {
+	public List<Cop064FormVo> getDataList() {
 		return dataList;
 	}
 
-	public void setDataList(List<Cop061FormVo> dataList) {
+	public void setDataList(List<Cop064FormVo> dataList) {
 		this.dataList = dataList;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public List<Cop064Vo> getDataListVo() {
+		return dataListVo;
+	}
+
+	public void setDataListVo(List<Cop064Vo> dataListVo) {
+		this.dataListVo = dataListVo;
+	}
+	
+	
 
 }

@@ -33,7 +33,7 @@ export class Cop069Component implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.authService.reRenderVersionProgram('OPE-04600');
+    this.authService.reRenderVersionProgram('COP-06900');
     $("#Dtable").hide();
     this.findExciseId();
     this.callDropdown();

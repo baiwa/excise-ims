@@ -66,7 +66,7 @@ export class Cop0711Component implements OnInit, OnDestroy {
 
   
   ngOnInit() {
-    this.authService.reRenderVersionProgram('COP-07110');
+    this.authService.reRenderVersionProgram('COP-07101');
 
     this.id = this.route.snapshot.queryParams["id"];
     this.fiscalYear = this.route.snapshot.queryParams["fiscalYear"];
@@ -108,6 +108,7 @@ export class Cop0711Component implements OnInit, OnDestroy {
     const URL = "combobox/controller/getExciseId";
     this.ajax.post(URL, {}, res => {
       this.entrepreneurNoList = res.json();
+      // console.log("this.entrepreneurNoList : ",this.entrepreneurNoList);
     });
   }
 
@@ -235,9 +236,9 @@ export class Cop0711Component implements OnInit, OnDestroy {
         }, {
           "data": "entrepreneurNo","className": "ui center aligned"
         }, {
-          "data": "entrepreneurName","className": "ui center aligned"
+          "data": "entrepreneurName"
         }, {
-          "data": "entrepreneurLoca","className": "ui center aligned"
+          "data": "entrepreneurLoca"
         }, {
           "data": "checkDate","className": "ui center aligned"
         }, {
@@ -334,9 +335,9 @@ export class Cop0711Component implements OnInit, OnDestroy {
         }, {
           "data": "entrepreneurNo","className": "ui center aligned"
         }, {
-          "data": "entrepreneurName","className": "ui center aligned"
+          "data": "entrepreneurName"
         }, {
-          "data": "entrepreneurLoca","className": "ui center aligned"
+          "data": "entrepreneurLoca"
         }, {
           "data": "checkDate","className": "ui center aligned"
         }, {

@@ -206,6 +206,7 @@ public class CopCheckFiscalYearDao {
 		    	jdbcTemplate.update(" INSERT INTO COP_CHECK_FISCAL_YEAR_DTL( " + 
 		    			"ID, " + 
 		    			"ID_MASTER, " + 
+		    			"FISCALYEAR, " + 
 		    			"ENTREPRENEUR_NO, " +
 		    			"ENTREPRENEUR_NAME, " +
 		    			"ENTREPRENEUR_LOCA, " +
@@ -222,9 +223,11 @@ public class CopCheckFiscalYearDao {
 		    			"?, " + 
 		    			"?, " + 
 		    			"?, " + 
+		    			"?, " + 
 		    			"?) ",new Object[] {
 		    					id,
 		    					vo.getIdMaster(),
+		    					vo.getFiscalyear(),
 		    					vo.getEntrepreneurNo(),
 		    					vo.getEntrepreneurName(),
 		    					vo.getEntrepreneurLoca(),
@@ -282,5 +285,37 @@ public class CopCheckFiscalYearDao {
 			    		return vo;
 			    	}
 			    };
+			    
+			    public void updateStatusCopCheckFiscalYearDtl (String entrepreneurNo,String fiscalYear) {
+			    	log.info(" Update Status Entrepreneur No : {}",entrepreneurNo);
+			    	
+			    	jdbcTemplate.update(" UPDATE COP_CHECK_FISCAL_YEAR_DTL SET STATUS = '1874' WHERE ENTREPRENEUR_NO = ? AND SUBSTR(FISCALYEAR,4,4) = ? ",new Object[] {entrepreneurNo,fiscalYear});
+			    	
+			    	Long id = jdbcTemplate.queryForObject(" SELECT ID_MASTER FROM COP_CHECK_FISCAL_YEAR_DTL WHERE ENTREPRENEUR_NO = ? AND SUBSTR(FISCALYEAR,4,4) = ? ",new Object[] {entrepreneurNo,fiscalYear},Long.class);
+			    	
+			    	log.info(" Update ID_MASTER : {}  entrepreneurNo {}  fiscalYear {}",id,entrepreneurNo,fiscalYear);
+			    	
+			    	String actionPlan = jdbcTemplate.queryForObject(" SELECT ACTION_PLAN FROM COP_CHECK_FISCAL_YEAR_DTL WHERE ENTREPRENEUR_NO = ? AND SUBSTR(FISCALYEAR,4,4) = ? ",new Object[] {entrepreneurNo,fiscalYear},String.class);
+			    	
+			    	if("1871".equals(actionPlan)) {
+			    		
+			    		jdbcTemplate.update(" UPDATE COP_CHECK_FISCAL_YEAR SET "
+			    				+ "AS_PLAN_SUCCESS = (SELECT AS_PLAN_SUCCESS FROM COP_CHECK_FISCAL_YEAR WHERE ID = ? )+1,"
+			    				+ "AS_PLAN_WAIT = (SELECT AS_PLAN_WAIT FROM COP_CHECK_FISCAL_YEAR WHERE ID = ? )-1 "
+			    				+ "WHERE ID =  ? ",new Object[] {id,id,id});
+			    		
+			    	}else if("1872".equals(actionPlan)) {
+			    		
+			    		jdbcTemplate.update(" UPDATE COP_CHECK_FISCAL_YEAR SET "
+			    				+ "OUTSIDE_PLAN_SUCCESS = (SELECT OUTSIDE_PLAN_SUCCESS FROM COP_CHECK_FISCAL_YEAR WHERE ID = ? )+1,"
+			    				+ "OUTSIDE_PLAN_WAIT = (SELECT OUTSIDE_PLAN_WAIT FROM COP_CHECK_FISCAL_YEAR WHERE ID = ? )-1 "
+			    				+ "WHERE ID =  ? ",new Object[] {id,id,id});
+			    		
+			    	}
+			    	
+			    	
+			    }
+			    
+			 
 	    
 }

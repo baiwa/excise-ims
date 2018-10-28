@@ -4,9 +4,9 @@ import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
 public class Cop0711FormVo extends DataTableRequest {
 
+	private String searchFlag;
 	private Long id;
 	private String fiscalYear;
-	private String searchFlag;
 
 	private String actionPlan;
 	

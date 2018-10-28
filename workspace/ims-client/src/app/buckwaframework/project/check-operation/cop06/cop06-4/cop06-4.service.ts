@@ -24,17 +24,17 @@ export class Cop064Service {
 
     }
 
-    findExciseId = (): Promise<any> => {
-        let url = "cop/cop061/exciseidList";
+    findExciseId = (fiscalYear): Promise<any> => {
+        let url = "cop/cop064/exciseidList";
         return new Promise((resolve, reject) => {
-            this.ajax.get(url, res => {
+            this.ajax.post(url,JSON.stringify(fiscalYear), res => {
                 resolve(res.json())
             })
         });
     }
 
     findByExciseId = (exciseId): Promise<any> => {
-        let url = "cop/cop061/findByExciseId";
+        let url = "cop/cop064/findByExciseId";
         return new Promise((resolve, reject) => {
             this.ajax.post(url, JSON.stringify(exciseId), res => {
                 resolve(res.json())
@@ -60,7 +60,7 @@ export class Cop064Service {
     };
 
     upload = (form: any) => {
-        let url = "cop/cop061/upload";
+        let url = "cop/cop064/upload";
         this.ajax.upload(url, form, success => {
             this.dataExcel = success.json();
             if (Utils.isNull(this.dataExcel)) {
@@ -86,6 +86,7 @@ export class Cop064Service {
         $("#dataFrom").val('');
         $("#dateTo").val('');
         $("#fileName").val('');
+        $("#fiscalYear").val('');
         this.dataExcel = null;
         if (this.table != null) {
             this.table.destroy();
@@ -96,7 +97,7 @@ export class Cop064Service {
     save = async (): Promise<any> => {
         return new Promise(async(resolve, reject) => {
         let data = await this.table.data();
-        let url = await "cop/cop061/save";
+        let url = await "cop/cop064/save";
 
         let list = await [];
         for (let i = 0; i < data.length; i++) {
@@ -111,7 +112,7 @@ export class Cop064Service {
         }
         this.message.comfirm(async (res) => {
             if (res) {
-                return await this.ajax.post(url, list, async res => {
+                return await this.ajax.post(url, {exciseId:$("#exciseId").val(),fiscalYear:$("#fiscalYear").val(),dataListVo:list}, async res => {
                     await resolve(res.json());
                     await this.message.successModal("บันทึกรายการ");
                 }, async err => {
@@ -130,7 +131,7 @@ export class Cop064Service {
             "scrollX": true,
             "paging": true,
             "ajax": {
-                "url": '/ims-webapp/api/cop/cop061/findAll',
+                "url": '/ims-webapp/api/cop/cop064/findAll',
                 "contentType": "application/json",
                 "type": "POST",
                 "data": (d) => {
