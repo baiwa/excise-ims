@@ -26,17 +26,17 @@ public class ConditionService {
 		Message msg = ApplicationCache.getMessage("MSG_00003");
 		List<Condition> cond = new ArrayList<>();
 		Condition con = new Condition();
-		for (Condition co : condition.getCondition()) {
-			if (BeanUtils.isEmpty(co.getConditionId())) {
-				cond.add(co);
-			}
-			else {
-				con = new Condition();
-				con = conditionRepository.findOne(co.getConditionId());
-				cond.add(con);
-			}
-		}
-		conditionRepository.save(cond);
+//		for (Condition co : condition.getCondition()) {
+//			if (BeanUtils.isEmpty(co.getConditionId())) {
+//				cond.add(co);
+//			}
+//			else {
+//				con = new Condition();
+//				con = conditionRepository.findOne(co.getConditionId());
+//				cond.add(con);
+//			}
+//		}
+		conditionRepository.save(condition.getCondition());
 		msg = ApplicationCache.getMessage("MSG_00002");
 		return msg;
 	}
