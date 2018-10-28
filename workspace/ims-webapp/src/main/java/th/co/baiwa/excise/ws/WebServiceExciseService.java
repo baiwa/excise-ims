@@ -862,12 +862,6 @@ public class WebServiceExciseService {
 		List<RiskAssPerDtl> riskAssPerDtlList = new ArrayList<RiskAssPerDtl>();
 		logger.info("restful API : pmGetListProject");
 		
-		
-		
-		
-		
-		
-		
 		RequestPmGetDetailProject requestData = new RequestPmGetDetailProject();
 		requestData.setProjectId(projectId);
 		String responseData = postRestfulFormat2(endpointPmGetDetailProject, requestData);
@@ -891,7 +885,6 @@ public class WebServiceExciseService {
 							logger.error("parseDouble {}", kpi.getKpiExpenseActualAmount() );
 						}
 						try {
-							
 							kpiTargetAmount = Double.parseDouble(kpi.getKpiTargetAmount());
 							
 						} catch (Exception e) {
@@ -902,7 +895,6 @@ public class WebServiceExciseService {
 				riskAssPerDtl.setRiskCost(new BigDecimal(riskCost - kpiTargetAmount));
 				riskAssPerDtlList.add(riskAssPerDtl);
 			}
-			
 		}
 		return riskAssPerDtlList;
 	}
