@@ -52,12 +52,12 @@ export class Int0835Component implements OnInit {
         this.percentList.push(0);
       }
 
-      var trHTML = '<tr><th rowspan="2">ลำดับ</th><th rowspan="2">หน่วยงาน</th>';
+      var trHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th><th rowspan="2" style="text-align: center !important">หน่วยงาน</th>';
       this.columnList.forEach(element => {
         console.log(element);
-        trHTML += '<th rowspan="2">' + element + '</th>';
+        trHTML += '<th rowspan="2" style="text-align: center !important">' + element + '</th>';
       });
-      trHTML += '<th rowspan="2"  >รวม</th><th colspan="2">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th>แปลค่า</th></tr>';
+      trHTML += '<th rowspan="2"  style="text-align: center !important">รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th style="text-align: center !important">แปลค่า</th></tr>';
       $("#trColumn").html(trHTML);
       this.initDatatable();
     }, errRes => {
@@ -74,13 +74,13 @@ export class Int0835Component implements OnInit {
 
       res.json().forEach(element => {
         console.log(element);
-        hrmlTr += "<tr>";
-        hrmlTr += "<td>" + element.id + "</td>";
-        hrmlTr += "<td>" + element.departmentName + "</td>";
+        hrmlTr += "<tr style='text-align: center !important'>";
+        hrmlTr += "<td >" + element.id + "</td>";
+        hrmlTr += "<td style='text-align: left !important'>" + element.departmentName + "</td>";
         element.rl.forEach(rl => {
-          hrmlTr += "<td>" + rl + "</td>";
+          hrmlTr += "<td style='text-align: right !important'>" + rl + "</td>";
         });
-        hrmlTr += "<td>" + element.sumRiskCost + "</td>";
+        hrmlTr += "<td style='text-align: right !important'>" + element.sumRiskCost + "</td>";
         hrmlTr += "<td>" + element.rlAll + "</td>";
         hrmlTr += "<td>" + element.valueTranslation + "</td>";
         hrmlTr += "</tr>";
