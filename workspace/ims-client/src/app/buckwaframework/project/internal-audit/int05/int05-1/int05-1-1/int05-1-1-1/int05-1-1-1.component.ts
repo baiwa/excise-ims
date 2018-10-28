@@ -275,7 +275,7 @@ private authService: AuthService,
     this.table.clear().draw();
     this.table.rows.add(this.data); // Add new data
     this.table.columns.adjust().draw(); // Redraw the DataTable
-    //this.message.successModal("ทำรายสำเร็จ", "แจ้งเตือน");
+    //this.message.successModal("ทำรายการสำเร็จ", "แจ้งเตือน");
     this.formModal = new FormModal();
     this.formModal.dateOfPay = "";
     this.formModal.dateDeliverStamp = "";
@@ -316,7 +316,7 @@ private authService: AuthService,
             }).modal('show');
 
           }, error => {
-            this.message.errorModal("ทำรายไม่สำเร็จ", "แจ้งเตือน");
+            this.message.errorModal("ทำรายการไม่สำเร็จ", "แจ้งเตือน");
             this.loading = false;
           });
 
@@ -512,7 +512,7 @@ private authService: AuthService,
           this.table.rows.add(this.data); // Add new data
           this.table.columns.adjust().draw(); // Redraw the DataTable
         }
-      }, "", "ยืนยันการลบ");
+      },"คุณต้องการลบข้อมูลใช่หรือไม่ ? ");
 
     });
   }

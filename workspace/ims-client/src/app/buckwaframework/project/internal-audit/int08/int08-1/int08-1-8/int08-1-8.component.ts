@@ -35,9 +35,9 @@ export class Int0818Component implements OnInit {
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
-    private messageBarService: MessageBarService ,
-    
-private authService: AuthService
+    private messageBarService: MessageBarService,
+
+    private authService: AuthService
   ) {
     this.fileExel = new Array<File>(); // initial file array
     this.breadcrumb = [
@@ -73,7 +73,7 @@ private authService: AuthService
 
 
 
-  findRiskById= () => {
+  findRiskById = () => {
     let url = "ia/int08/findRiskById"
     this.ajax.post(url, { riskHrdId: this.id }, res => {
 
@@ -90,7 +90,7 @@ private authService: AuthService
       this.riskHrdData.budgetYear = this.budgetYear;
 
       url = "ia/int08/queryRiskAssPerDtlByHrdId";
-      this.ajax.post(url, { riskHrdId: this.id }, res => {
+      this.ajax.post(url, { riskHrdId: this.id, riskHdrName: 'โครงการตามยุทธศาตร์' }, res => {
         // this.riskDataList
         var jsonObjList = res.json();
         for (let index = 0; index < jsonObjList.length; index++) {
@@ -110,7 +110,7 @@ private authService: AuthService
         }
         this.initDatatable();
       }, errRes => {
-        console.log("66666", errRes);
+
       });
     });
   }

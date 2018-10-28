@@ -63,7 +63,7 @@ public class IaFollowUpDepartmentDao {
     	
     	if (StringUtils.isNotBlank(formVo.getExciseDepartment())) {
     		sql.append(" AND EXCISE_DEPARTMENT = ? ");
-    		params.add(queryValue1SysLov(formVo.getExciseDepartment()));
+    		params.add(queryValue3SysLov(formVo.getExciseDepartment()));
     	}
     	
     	if (StringUtils.isNotBlank(formVo.getExciseRegion())) {
@@ -191,6 +191,19 @@ public class IaFollowUpDepartmentDao {
 	
 	public String queryValue1SysLov(String id) {
 		String SQL = "SELECT VALUE1 FROM SYS_LOV WHERE LOV_ID=? AND TYPE='SECTOR_VALUE' ";
+		String value1 = "";
+		value1 = jdbcTemplate.queryForObject(SQL, new Object[] { id }, String.class);
+		return value1;
+	}
+	public String queryValue2SysLov(String id) {
+		String SQL = "SELECT VALUE2 FROM SYS_LOV WHERE LOV_ID=? AND TYPE='SECTOR_VALUE' ";
+		String value1 = "";
+		value1 = jdbcTemplate.queryForObject(SQL, new Object[] { id }, String.class);
+		return value1;
+	}
+	
+	public String queryValue3SysLov(String id) {
+		String SQL = "SELECT VALUE3 FROM SYS_LOV WHERE LOV_ID=? AND TYPE='SECTOR_VALUE' ";
 		String value1 = "";
 		value1 = jdbcTemplate.queryForObject(SQL, new Object[] { id }, String.class);
 		return value1;

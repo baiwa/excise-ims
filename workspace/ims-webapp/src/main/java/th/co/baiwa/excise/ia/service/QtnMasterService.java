@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -22,9 +23,12 @@ import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.QtnHdrConditionVo;
 import th.co.baiwa.excise.domain.QtnMasterVo;
+import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.excise.ia.persistence.dao.QtnReportMasterDao;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
 import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnMaster;
 import th.co.baiwa.excise.ia.persistence.repository.qtn.rep.QtnMasterRepository;
+import th.co.baiwa.excise.ia.persistence.vo.Int021Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 
@@ -35,6 +39,9 @@ public class QtnMasterService {
 
 	@Autowired
 	private QtnMasterRepository qtnMasterRepository;
+	
+	@Autowired
+	private QtnReportMasterDao masterDao;
 
 	@Autowired
 	private ConditionService conditionService;
@@ -48,6 +55,20 @@ public class QtnMasterService {
 		data.setData(qtnMasterRepository.findAll());
 		data.setDraw(count);
 		data.setLength(count);
+		return data;
+	}
+	
+	public DataTableAjax<QtnMaster> findByCreteria(Int021Vo req) {
+		DataTableAjax<QtnMaster> data = new DataTableAjax<>();
+		List<QtnMaster> dt = new ArrayList<>();
+		long count = masterDao.count(req);
+		if (FLAG.N_FLAG.equalsIgnoreCase(req.getIsInit())) {
+			dt = masterDao.findByCreteria(req);
+			data.setDraw(req.getDraw());
+			data.setRecordsTotal(count);
+			data.setRecordsFiltered(count);
+		}
+		data.setData(dt);
 		return data;
 	}
 

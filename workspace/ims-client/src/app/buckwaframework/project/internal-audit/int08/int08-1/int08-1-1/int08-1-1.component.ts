@@ -305,14 +305,11 @@ export class Int0811Component implements OnInit {
         { data: "localBudget", render: $.fn.dataTable.render.number(',', '.', 2, '') },
         { data: "otherMoney", render: $.fn.dataTable.render.number(',', '.', 2, '') },
         { data: "approveBudget", render: $.fn.dataTable.render.number(',', '.', 2, '') },
-        { data: "sumMonth", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "sumMoney", render: $.fn.dataTable.render.number(',', '.', 2, '') },
         { data: "rl" },
         { data: "valueTranslation" }
 
       ], createdRow: function (row, data, dataIndex) {
-        //console.log("row");
-        //console.log("data", data.valueTranslation);
-        //console.log("dataIndex", dataIndex);
         if (data.color == 'แดง') {
           $(row).find('td:eq(8)').addClass('bg-c-red');
           $(row).find('td:eq(7)').addClass('bg-c-red');

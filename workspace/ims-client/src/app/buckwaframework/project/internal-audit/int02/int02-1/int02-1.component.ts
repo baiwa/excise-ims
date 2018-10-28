@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { formatter, TextDateTH, toDateLocale } from 'helpers/index';
+import { formatter, TextDateTH, toDateLocale, digit } from 'helpers/index';
 import { AjaxService, IaService, AuthService } from 'services/index';
 import { BreadCrumb } from 'models/index';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Int02Service } from '../int02.service';
 
 declare var $: any;
@@ -22,51 +22,63 @@ const URL = {
 export class Int021Component implements OnInit {
 
   @ViewChild('f') form: NgForm;
+  formGroups: FormGroup;
   datatable: any;
-  sectors: any[] = [];
-  areas: any[] = [];
-  qtnName: string;
-  qtnYear: string;
+  dateTime: Date = new Date();
   breadcrumb: BreadCrumb[];
-  constructor(private ajax: AjaxService, private router: Router, private iaService: IaService, private int02: Int02Service,
-    private authService: AuthService) {
-    this.qtnName = null;
-    this.qtnYear = null;
+  isInit: string = "Y";
+  submitted: boolean = false;
+  constructor(
+    private ajax: AjaxService,
+    private router: Router,
+    private iaService: IaService,
+    private int02: Int02Service,
+    private authService: AuthService,
+    private formBuilder: FormBuilder
+  ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "แบบสอบถามระบบการควบคุมภายใน", route: "#" },
       { label: "สร้างแบบสอบทานระบบการควบคุมภายใน", route: "#" }
     ];
+    this.formGroups = this.formBuilder.group({
+      qtnFrom: [''],
+      qtnTo: [''],
+    });
   }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-02100');
-    this.ajax.post(URL.LOV_SECTOR, { type: "SECTOR_VALUE" }, res => { // SECTOR
-      this.sectors = res.json();
-    });
 
     $(".ui.dropdown.ai").dropdown().css("width", "100%");
 
-    this.datatable = $("#datatable").DataTable({
-      lengthChange: false,
-      scrollX: true,
-      searching: false,
-      select: true,
-      ordering: false,
-      pageLength: 10,
-      processing: true,
-      serverSide: false,
-      paging: true
+    this.initDatatable();
+
+    $("#qtnFromCalendar").calendar({
+      type: "date",
+      endCalendar: $("#qtnToCalendar"),
+      text: TextDateTH,
+      formatter: formatter("date"),
+      onChange: (date, text, mode) => {
+        this.formGroups.get('qtnFrom').setValue(text);
+        this.formGroups.get('qtnTo').setValidators([Validators.required]);
+        this.formGroups.get('qtnFrom').setValidators([Validators.required]);
+        this.formGroups.get('qtnTo').updateValueAndValidity();
+        this.formGroups.get('qtnFrom').updateValueAndValidity();
+      }
     });
 
-    $("#calendar").calendar({
-      maxDate: new Date(),
-      type: "year",
+    $("#qtnToCalendar").calendar({
+      type: "date",
+      startCalendar: $("#qtnFromCalendar"),
       text: TextDateTH,
-      formatter: formatter("year"),
+      formatter: formatter("date"),
       onChange: (date, text, mode) => {
-        let _year = toDateLocale(date)[0].split("/")[2];
-        this.form.value.calendar_data = _year;
+        this.formGroups.get('qtnTo').setValue(text);
+        this.formGroups.get('qtnTo').setValidators([Validators.required]);
+        this.formGroups.get('qtnFrom').setValidators([Validators.required]);
+        this.formGroups.get('qtnTo').updateValueAndValidity();
+        this.formGroups.get('qtnFrom').updateValueAndValidity();
       }
     });
 
@@ -89,17 +101,17 @@ export class Int021Component implements OnInit {
       lengthChange: false,
       scrollX: true,
       searching: false,
-      select: true,
       ordering: false,
-      pageLength: 10,
       processing: true,
-      serverSide: false,
-      paging: true,
-      pagingType: "full_numbers",
+      serverSide: true,
       ajax: {
         type: "POST",
         url: URL.DATATABLE,
-        data: {}
+        data: (d) => {
+          d.qtnFrom = this.formGroups.value.qtnFrom
+          d.qtnTo = this.formGroups.value.qtnTo
+          d.isInit = this.isInit
+        }
       },
       columns: [
         {
@@ -107,7 +119,9 @@ export class Int021Component implements OnInit {
           className: "center"
         },
         {
-          data: "qtnName",
+          render: (data, type, full, meta) => {
+            return this.dateString(new Date(full.createdDate));
+          },
           className: "center"
         },
         {
@@ -115,7 +129,31 @@ export class Int021Component implements OnInit {
           className: "center"
         },
         {
+          render: (data, type, full, meta) => {
+            return this.dateString(new Date(full.updatedDate));
+          },
+          className: "center"
+        },
+        {
+          render: (data, type, full, meta) => {
+            return full.updatedBy;
+          },
+          className: "center"
+        },
+        {
           data: "qtnYear",
+          className: "center"
+        },
+        {
+          render: (data, type, full, meta) => { // data : "qtnFinished"
+            let str = "";
+            if (full.qtnFinished == "Y") {
+              str = "ดำเนินการเสร็จสิ้น";
+            } else {
+              str = "รอดำเนินการ";
+            }
+            return str;
+          },
           className: "center"
         },
         {
@@ -134,35 +172,33 @@ export class Int021Component implements OnInit {
     });
   }
 
-  reDatatable = () => {
-    this.datatable.destroy();
-    this.initDatatable();
-  }
-
-  onSubmit = (form: NgForm) => {
-    const { calendar_data, sector, area } = form.value;
-    this.reDatatable();
-  }
-
-  checkValid(name, f: NgForm) {
-    return f.value[name] == '' && !f.valid && f.submitted;
-  }
-
-  onSectorChange(e) {
-    e.preventDefault();
-    let id = e.target.value;
-    if (id != "") {
-      this.ajax.post(URL.LOV_SECTOR, { type: "SECTOR_VALUE", lovIdMaster: id }, async res => {
-        await $("#area").dropdown('restore defaults');
-        this.areas = res.json();
-      });
+  onSubmit = event => {
+    event.preventDefault();
+    this.submitted = true;
+    if (this.formGroups.valid) {
+      this.datatable.destroy();
+      this.isInit = "N";
+      this.initDatatable();
     }
   }
 
   clear() {
-    $("#sector").dropdown('restore defaults');
-    $("#area").dropdown('restore defaults');
-    $("#calendar").calendar('refresh');
+    $("#qtnFromCalendar").calendar('refresh');
+    $("#qtnToCalendar").calendar('refresh');
+    this.formGroups.get('qtnTo').clearValidators();
+    this.formGroups.get('qtnFrom').clearValidators();
+    this.formGroups.get('qtnTo').updateValueAndValidity();
+    this.formGroups.get('qtnFrom').updateValueAndValidity();
   }
+
+  dateString(value: Date) {
+    let day = value.getDate();
+    let _month = toDateLocale(value)[0].split("/")[1];
+    let _year = toDateLocale(value)[0].split("/")[2];
+    return digit(day) + "/" + digit(_month) + "/" + _year.toString();
+  }
+
+  get invalidFrom() { return this.submitted && this.formGroups.get('qtnFrom').invalid }
+  get invalidTo() { return this.submitted && this.formGroups.get('qtnTo').invalid }
 
 }

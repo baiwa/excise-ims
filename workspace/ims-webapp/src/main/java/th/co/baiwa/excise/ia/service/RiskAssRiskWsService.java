@@ -573,8 +573,17 @@ public class RiskAssRiskWsService {
 		logger.info("findRiskAssPerDtlByRiskHrdId id : " + riskHrd.getRiskHrdId());
 		List<RiskAssPerDtl> list = riskAssPerDtlRepository.findByRiskHrdId(riskHrd.getRiskHrdId());
 		if(BeanUtils.isEmpty(list)) {
-			
-			list = webServiceExciseService.pmGetDetailProject("6100002");
+			List<RiskAssRiskWsDtl> riskAssRiskWsDtlList = webServiceExciseService.pmGetListProject(riskHrd);
+			list = new ArrayList<RiskAssPerDtl>();
+			if(BeanUtils.isNotEmpty(riskAssRiskWsDtlList)) {
+				for (RiskAssRiskWsDtl riskAssRiskWsDtl : riskAssRiskWsDtlList) {
+					logger.info("ProjectName " + riskAssRiskWsDtl.getProjectBase() +" eq "+ riskHrd.getRiskHdrName());
+					if(BeanUtils.isNotEmpty(riskAssRiskWsDtl.getProjectBase()) && riskAssRiskWsDtl.getProjectBase().equals(riskHrd.getRiskHdrName())) {
+						list.addAll(webServiceExciseService.pmGetDetailProject(riskAssRiskWsDtl.getProjectId()));
+					}
+				}
+				
+			}
 		}
 		return list;
 	}

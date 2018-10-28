@@ -7,47 +7,38 @@
     </div>
 
     <div class="ui bottom attached segment">
-      <form class="ui form" (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <form class="ui form" [formGroup]="formGroups" (submit)="onSubmit($event)">
         <div class="ui center aligned grid">
           <div class="column fourteen wide">
-            <div class="inline fields">
-              <div class="three wide field">
-                <label>สรรพสามิตภาค</label>
+            
+            <div class="ui centered inline fields grid" style="margin:0 !important;">
+              <div class="one wide field" [ngClass]="{ 'error': invalidFrom }">
+                <label>วันที่</label>
               </div>
-              <div class="five wide field {{ checkValid('sector', f) ? 'error' : ''  }} ">
+              <div class="four wide field" [ngClass]="{ 'error': invalidFrom }">
                 <div class="ui input">
-                  <select class="ui selection dropdown ai" id="sector" name="sector" (change)="onSectorChange($event)"
-                    ngModel>
-                    <option value="">เลือกภาค</option>
-                    <option value="{{sector.lovId}}" *ngFor="let sector of sectors">{{sector.subTypeDescription}}</option>
-                  </select>
+                  <div class="ui calendar" id="qtnFromCalendar">
+                    <div class="ui input left icon">
+                      <i class="calendar alter ante outline icon"></i>
+                      <input type="calendar" readonly="" formControlName="qtnFrom" placeholder="วว/ดด/ปปปป" id="qtnFrom"
+                        name="qtnFrom" autocomplete="off">
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="three wide field">
-                <label>สรรพสามิตพื้นที่</label>
+              <div class="one wide field">
+                <label class="full-width text-center">ถึง</label>
               </div>
-              <div class="five wide field">
+              <div class="one wide field" [ngClass]="{ 'error': invalidTo }">
+                <label>วันที่</label>
+              </div>
+              <div class="four wide field" [ngClass]="{ 'error': invalidTo }">
                 <div class="ui input">
-                  <select class="ui selection dropdown ai" id="area" name="area" ngModel>
-                    <option value="">เลือกพื้นที่</option>
-                    <option value="{{area.lovId}}" *ngFor="let area of areas">{{area.subTypeDescription}}</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="inline fields">
-              <div class="three wide field">
-                <label>ปีงบประมาณ</label>
-              </div>
-              <div class="five wide field {{ checkValid('calendar_data', f) ? 'error' : ''  }} ">
-                <div class="ui input">
-                  <div class="ui calendar" id="calendar">
-                    <div class="ui input {{ checkValid('calendar_data', f) ? 'error' : ''  }} ">
-                      <div class="ui input left icon">
-                        <i class="calendar alter nate outline icon"></i>
-                        <input type="calendar" readonly="" placeholder="ปี" id="calendar_data" name="calendar_data"
-                          autocomplete="off" ngModel>
-                      </div>
+                  <div class="ui calendar" id="qtnToCalendar">
+                    <div class="ui input left icon">
+                      <i class="calendar alter ante outline icon"></i>
+                      <input type="calendar" readonly="" formControlName="qtnTo" placeholder="วว/ดด/ปปปป" id="qtnTo"
+                        name="qtnTo" autocomplete="off">
                     </div>
                   </div>
                 </div>
@@ -76,13 +67,15 @@
             <thead>
               <tr style="text-align: center !important;">
                 <th>ลำดับ</th>
-                <th>สรรพสามิตภาค/พื้นที่</th>
+                <th>วันที่สร้างแบบสอบถาม</th>
                 <th>ผู้สร้างแบบสอบถาม</th>
+                <th>วันที่แก้ไขแบบสอบถามล่าสุด</th>
+                <th>ผู้แก้ไขแบบสอบถามล่าสุด</th>
                 <th>ปีงบประมาณ</th>
+                <th>สถานะ</th>
                 <th style="width: 40px">จัดการ</th>
               </tr>
             </thead>
-            <tbody></tbody>
           </table>
         </div>
       </div>

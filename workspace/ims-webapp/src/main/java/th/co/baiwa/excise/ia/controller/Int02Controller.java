@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.CommonManageReq;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.DataTableRequest;
+import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.domain.ia.Int023MappingVO;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMinor;
@@ -25,6 +27,7 @@ import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnMaster;
 import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportDetail;
 import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportHeader;
 import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportMain;
+import th.co.baiwa.excise.ia.persistence.vo.Int021Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int022Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int023FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int023Vo;
@@ -66,9 +69,9 @@ public class Int02Controller {
 	
 	@PostMapping("/qtn_master/datatable")
 	@ResponseBody
-	public ResponseDataTable<QtnMaster> qtnMaster(DataTableRequest dataTableRequest) {
+	public DataTableAjax<QtnMaster> qtnMaster(@ModelAttribute Int021Vo req) {
 		logger.info("Query qtnMaster");
-		return qtnMasterService.findAllQtnMaster();
+		return qtnMasterService.findByCreteria(req);
 	}
 	
 	@PostMapping("/save_qtn_master")
