@@ -13,7 +13,7 @@ export class Int0144Component implements OnInit {
   actionsModal: string;
 
   constructor(private messageBarService: MessageBarService,
-    private authService: AuthService) {}
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-01440');

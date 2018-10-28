@@ -1,6 +1,7 @@
 package th.co.baiwa.excise.ws;
 
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,14 +31,24 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssPerDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
+import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.entity.api.RequestServiceExcise;
+import th.co.baiwa.excise.ws.entity.api.RequestServiceExciseFromSubmit;
+import th.co.baiwa.excise.ws.entity.api.ResponseServiceExciseFromSubmit;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.req.RequestData8000Req;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.IncFri8000Res;
 import th.co.baiwa.excise.ws.entity.response.assessment.Assessment;
 import th.co.baiwa.excise.ws.entity.response.incfri8020.IncFri8020;
 import th.co.baiwa.excise.ws.entity.response.licfri6010.LicFri6010;
 import th.co.baiwa.excise.ws.entity.response.licfri6020.LicFri6020;
+import th.co.baiwa.excise.ws.entity.response.pmgetdetailproject.KpiDetail;
+import th.co.baiwa.excise.ws.entity.response.pmgetdetailproject.RequestPmGetDetailProject;
+import th.co.baiwa.excise.ws.entity.response.pmgetdetailproject.ResponsePmGetDetailProject;
+import th.co.baiwa.excise.ws.entity.response.pmgetdetailproject.TaskDetail;
+import th.co.baiwa.excise.ws.entity.response.projectbase.ListPMProject;
+import th.co.baiwa.excise.ws.entity.response.projectbase.RequestData;
+import th.co.baiwa.excise.ws.entity.response.projectbase.RequestHeader;
 import th.co.baiwa.excise.ws.entity.response.regfri4000.req.RequestDataReq;
 import th.co.baiwa.excise.ws.entity.response.regfri4000.res.Regfri4000Res;
 import th.co.baiwa.excise.ws.entity.response.systemError.Datum;
@@ -56,9 +68,21 @@ public class WebServiceExciseService {
 
 	@Value("${ws.excise.password}")
 	private String password;
-
+	
 	@Value("${ws.excise.systemid}")
 	private String systemId;
+
+	@Value("${ws.excise.sourceSystem}")
+	private String sourceSystem;
+	
+	@Value("${ws.excise.destinationSystem}")
+	private String destinationSystem;
+	
+	@Value("${ws.excise.options}")
+	private String options;
+	
+	@Value("${ws.excise.ipaddress}")
+	private String ipaddress;
 
 	@Value("${ws.excise.endpointIncFri8020}")
 	private String endpointIncFri8020;
@@ -81,25 +105,25 @@ public class WebServiceExciseService {
 	@Value("${ws.excise.get.assessment}")
 	private String endpointAssessment;
 	
+
 	@Value("${ws.excise.get.systemError}")
 	private String endpointSystemError;
 	
+
+	@Value("${ws.excise.pmGetListProject}")
+	private String endpointPmGetListProject;
+	
+	
+	@Value("${ws.excise.pmGetDetailProject}")
+	private String endpointPmGetDetailProject;
+
+
 	@Autowired
 	private LoginLdap loginLdapProxy;
-
-//	@Autowired
-//	private LDPAGAuthenAndGetUserRolePortType ldapgAuthenAndGetUserRolePortTypeProxy;
-
-//	public AuthenAndGetUserRoleResponse ldpagAuthenAndGetUserRoleServiceProxy(String user, String pass) {
-//		logger.info("Excise ldpagAuthenAndGetUserRoleServiceProxy : {} ", user);
-//		AuthenAndGetUserRoleRequest wsLdap = new AuthenAndGetUserRoleRequest();
-//		wsLdap.setUserId(user);
-//		wsLdap.setPassword(pass);
-//		wsLdap.setApplicationId(applicationId);
-//		AuthenAndGetUserRoleResponse response = ldapgAuthenAndGetUserRolePortTypeProxy.ldpagAuthenAndGetUserRoleOperation(wsLdap);
-//		return response;
-//	}
-
+	
+	public static String RESPONSE_CODE = "OK";
+	
+	
 	public Response webServiceLdap(String user, String pass) {
 		logger.info("Baiwa webServiceLdap : {} ", user);
 		Response response = loginLdapProxy.login(user, pass);
@@ -118,6 +142,30 @@ public class WebServiceExciseService {
 		String json = gson.toJson(requestRestful);
 		logger.info("Body Service request : " + json);
 		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> entity = new HttpEntity<String>(json, headers);
+		ResponseEntity<String> response = restTemplate.exchange(endPoint, HttpMethod.POST, entity, String.class);
+		logger.info("Body Service response: " + response.getBody());
+		return response.getBody();
+	}
+	
+	
+	private String postRestfulFormat2(String endPoint, Object object) {
+		RequestServiceExciseFromSubmit requestPmGetListProject= new RequestServiceExciseFromSubmit();
+		RequestHeader requestHeader = new RequestHeader();
+		requestHeader.setDestinationSystem(destinationSystem);
+		requestHeader.setIpaddress(ipaddress);
+		requestHeader.setOptions(options);
+		requestHeader.setSourceSystem(sourceSystem);
+		requestPmGetListProject.setRequestHeader(requestHeader);
+		requestPmGetListProject.setRequestData(object);
+		Gson gson = new Gson();
+		String json = gson.toJson(requestPmGetListProject);
+		logger.info("Body Service request : " + json);
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<String> entity = new HttpEntity<String>(json, headers);
@@ -227,32 +275,35 @@ public class WebServiceExciseService {
 	
 	
 	
-	public List<RiskAssRiskWsDtl> getRiskAssRiskWsDtlList(RiskAssRiskWsDtl riskAssRiskWsDtl) {
+	public List<RiskAssRiskWsDtl> pmGetListProject(RiskAssRiskWsHdr riskAssRiskWsHdr) {
 		List<RiskAssRiskWsDtl> riskAssRiskWsDtlList = new ArrayList<RiskAssRiskWsDtl>();
-		RiskAssRiskWsDtl risk = new RiskAssRiskWsDtl();
-		risk.setRiskAssRiskDtlId(new Long(1));
-		risk.setProjectBase("โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ กรมสรรพสามิต (Network and Security System)");
-		risk.setDepartmentName("ศทส.");
-		risk.setBudget(new BigDecimal(55000000));
-		risk.setLocalBudget(new BigDecimal(0));
-		risk.setOtherMoney(new BigDecimal(0));
-		risk.setSumMonth(new BigDecimal(55000000));
-		risk.setApproveBudget(new BigDecimal(55000000));
-		riskAssRiskWsDtlList.add(risk);
-
-		risk = new RiskAssRiskWsDtl();
-		risk.setRiskAssRiskDtlId(new Long(2));
-		risk.setProjectBase("โครงการจัดหาเครื่องไมโครคอมพิวเตอร์ เครื่องคอมพิวเตอร์แบบพกพา และอุปกรณ์เพื่อทดแทนเครื่องเดิมและเพิ่มเติมเพื่อใช้ในการปฏิบัติงาน");
-		risk.setDepartmentName("ศทส.");
-		risk.setBudget(new BigDecimal(40800000));
-		risk.setLocalBudget(new BigDecimal(0));
-		risk.setOtherMoney(new BigDecimal(3000000));
-		risk.setSumMonth(new BigDecimal(43800000));
-		risk.setApproveBudget(new BigDecimal(46800000));
-		riskAssRiskWsDtlList.add(risk);
-
+		logger.info("restful API : pmGetListProject");
+		
+		RequestData requestData = new RequestData();
+		requestData.setProjectTypeCode("A");
+		requestData.setProjectYear(riskAssRiskWsHdr.getBudgetYear());
+		
+		
+		String responseData = postRestfulFormat2(endpointPmGetListProject, requestData);
+		Gson gson = new Gson();
+		ResponseServiceExciseFromSubmit responseServiceExcise = gson.fromJson(responseData, ResponseServiceExciseFromSubmit.class);
+		if(BeanUtils.isNotEmpty(responseServiceExcise) && BeanUtils.isNotEmpty(responseServiceExcise.getResponseData()) && BeanUtils.isNotEmpty(responseServiceExcise.getResponseData().getListPMProject())) {
+			List<ListPMProject> pmProjectList = responseServiceExcise.getResponseData().getListPMProject();
+			RiskAssRiskWsDtl riskAssRiskWsDtl = new RiskAssRiskWsDtl();
+			for (ListPMProject project : pmProjectList) {
+				riskAssRiskWsDtl = new RiskAssRiskWsDtl();
+				riskAssRiskWsDtl.setProjectBase(project.getProjectName());
+				riskAssRiskWsDtl.setDepartmentName(project.getOwnerOfficeName());
+				riskAssRiskWsDtl.setBudget(new BigDecimal(project.expenseBudgetAmountM));
+				riskAssRiskWsDtl.setLocalBudget(new BigDecimal(project.expenseBudgetAmountX));
+				riskAssRiskWsDtl.setOtherMoney(new BigDecimal(project.expenseBudgetAmountA));
+				riskAssRiskWsDtl.setSumMoney(riskAssRiskWsDtl.getBudget().add(riskAssRiskWsDtl.getLocalBudget()).add(riskAssRiskWsDtl.getOtherMoney()));
+				riskAssRiskWsDtl.setApproveBudget(new BigDecimal(project.approvedBudgetAmount));
+				riskAssRiskWsDtlList.add(riskAssRiskWsDtl);
+			}
+		}
 		return riskAssRiskWsDtlList;
-	}
+		}
 
 	public List<RiskAssInfDtl> getRiskAssInfDtlList(RiskAssInfHdr rAssInfHdr) {
 		List<RiskAssInfDtl> riskAssInfDtlList = new ArrayList<RiskAssInfDtl>();
@@ -807,69 +858,53 @@ public class WebServiceExciseService {
 		return list;
 	}
 
-	public List<RiskAssPerDtl> riskAssPerDtllWS() {
-		List<RiskAssPerDtl> list = new ArrayList<RiskAssPerDtl>();
-		RiskAssPerDtl riskAssPerDtl = new RiskAssPerDtl();
-		riskAssPerDtl.setProjectBase("โครงการจัดหาอุปกรณ์เครือข่ายสื่อสารและระบบความปลอดภัยเครือข่ายสำหรับอาคารศูนย์สำรองระบบเทคโนโลยีสารสนเทศ กรมสรรพสามิต (Network and Security System)");
-		riskAssPerDtl.setDepartmentName("ศทส.");
-		riskAssPerDtl.setRiskCost(new BigDecimal(720));
-		list.add(riskAssPerDtl);
-
-		riskAssPerDtl = new RiskAssPerDtl();
-		riskAssPerDtl.setProjectBase("โครงการจัดหาเครื่องไมโครคอมพิวเตอร์ เครื่องคอมพิวเตอร์แบบพกพา และอุปกรณ์เพื่อทดแทนเครื่องเดิมและเพิ่มเติมเพื่อใช้ในการปฏิบัติงาน");
-		riskAssPerDtl.setDepartmentName("ศทส.");
-		riskAssPerDtl.setRiskCost(new BigDecimal(622));
-		list.add(riskAssPerDtl);
-
-		riskAssPerDtl = new RiskAssPerDtl();
-		riskAssPerDtl.setProjectBase("โครงการติดตั้งมาตรวัดและคอมพิวเตอร์สื่อสารทางไกลมาใช้ในการบริหารจัดเก็บภาษีเครื่องดื่ม");
-		riskAssPerDtl.setDepartmentName("สมฐ.1");
-		riskAssPerDtl.setRiskCost(new BigDecimal(622));
-		list.add(riskAssPerDtl);
-
-		riskAssPerDtl = new RiskAssPerDtl();
-		riskAssPerDtl.setProjectBase("โครงการจัดหาระบบบริหารจัดการทรัพยากร ICT");
-		riskAssPerDtl.setDepartmentName("ศทส.");
-		riskAssPerDtl.setRiskCost(new BigDecimal(511));
-		list.add(riskAssPerDtl);
-
-		riskAssPerDtl = new RiskAssPerDtl();
-		riskAssPerDtl.setProjectBase("โครงการสำรวจราคาขายปลีกและจัดทำฐานข้อมูลราคาขายปลีกสำหรับสินค้าสุรา ยาสูบ และเครื่องดื่ม");
-		riskAssPerDtl.setDepartmentName("สผษ.");
-		riskAssPerDtl.setRiskCost(new BigDecimal(430));
-		list.add(riskAssPerDtl);
-
-		riskAssPerDtl = new RiskAssPerDtl();
-		riskAssPerDtl.setProjectBase("โครงการจัดซื้อพร้อมติดตั้งจำนวนผู้ใช้งาน(Concurrent User License) เพิ่มเติมระบบการจัดการข้อมูลของห้องปฏิบัติการทางวิทยาศาสตร์ (Laboratory Information Management System: LIMS)");
-		riskAssPerDtl.setDepartmentName("กวข.");
-		riskAssPerDtl.setRiskCost(new BigDecimal(222));
-		list.add(riskAssPerDtl);
-
-		riskAssPerDtl = new RiskAssPerDtl();
-		riskAssPerDtl.setProjectBase("ติดตั้งสื่อประชาสัมพันธ์ข้อมูลข่าวสาร กรมสรรพสามิต ระยะที่ 2");
-		riskAssPerDtl.setDepartmentName("ศทส.");
-		riskAssPerDtl.setRiskCost(new BigDecimal(212));
-		list.add(riskAssPerDtl);
-
-		riskAssPerDtl = new RiskAssPerDtl();
-		riskAssPerDtl.setProjectBase("โครงการ Excise Innovation Award ครั้งที่ 7");
-		riskAssPerDtl.setDepartmentName("สบค.");
-		riskAssPerDtl.setRiskCost(new BigDecimal(98));
-		list.add(riskAssPerDtl);
-
-		riskAssPerDtl = new RiskAssPerDtl();
-		riskAssPerDtl.setProjectBase("โครงการสร้างความรู้ความเข้าใจแก่ประชาชนอย่างมีประสิทธิภาพ");
-		riskAssPerDtl.setDepartmentName("สลก.");
-		riskAssPerDtl.setRiskCost(new BigDecimal(77));
-		list.add(riskAssPerDtl);
-
-		riskAssPerDtl = new RiskAssPerDtl();
-		riskAssPerDtl.setProjectBase("โครงการสัมมนาหลักสูตรวิธีปฏิบัติราชการทางปกครองและการติดตามเงินคืนกรณีโครงการรถยนต์คันแรก");
-		riskAssPerDtl.setDepartmentName("สกม.");
-		riskAssPerDtl.setRiskCost(new BigDecimal(54));
-		list.add(riskAssPerDtl);
-
-		return list;
+	public List<RiskAssPerDtl> pmGetDetailProject(String projectId) {
+		List<RiskAssPerDtl> riskAssPerDtlList = new ArrayList<RiskAssPerDtl>();
+		logger.info("restful API : pmGetListProject");
+		
+		
+		
+		
+		
+		
+		
+		RequestPmGetDetailProject requestData = new RequestPmGetDetailProject();
+		requestData.setProjectId(projectId);
+		String responseData = postRestfulFormat2(endpointPmGetDetailProject, requestData);
+		Gson gson = new Gson();
+		ResponsePmGetDetailProject responseServiceExcise = gson.fromJson(responseData, ResponsePmGetDetailProject.class);
+		if(RESPONSE_CODE.equals(responseServiceExcise.getResponseHeader().getResponseCode())) {
+			RiskAssPerDtl riskAssPerDtl = null;
+			if(BeanUtils.isNotEmpty(responseServiceExcise.getResponseData())) {
+				double riskCost = 0;
+				double kpiTargetAmount = 0;
+				for (TaskDetail taskDetail : responseServiceExcise.getResponseData().getTaskDetail()) {
+					riskAssPerDtl = new RiskAssPerDtl();
+					riskAssPerDtl.setProjectBase(taskDetail.getTaskDescriptionText());
+					riskAssPerDtl.setDepartmentName(responseServiceExcise.getResponseData().getOwnerOfficeName());
+					
+					for (KpiDetail kpi : taskDetail.getKpiDetail()) {
+						try {
+							riskCost = Double.parseDouble(kpi.getKpiExpenseActualAmount());
+							
+						} catch (Exception e) {
+							logger.error("parseDouble {}", kpi.getKpiExpenseActualAmount() );
+						}
+						try {
+							
+							kpiTargetAmount = Double.parseDouble(kpi.getKpiTargetAmount());
+							
+						} catch (Exception e) {
+							logger.error("parseDouble {}", kpi.getKpiTargetAmount() );
+						}
+					}
+				}
+				riskAssPerDtl.setRiskCost(new BigDecimal(riskCost - kpiTargetAmount));
+				riskAssPerDtlList.add(riskAssPerDtl);
+			}
+			
+		}
+		return riskAssPerDtlList;
 	}
 
 }

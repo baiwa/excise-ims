@@ -10,7 +10,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 
 public interface RiskAssRiskWsDtlRepository extends CommonJpaCrudRepository<RiskAssRiskWsDtl, Long> {
 	
-	@Query("select r from RiskAssRiskWsDtl r where r.isDeleted = '" + FLAG.N_FLAG + "' and r.riskHrdId = ?1")
+	@Query("select r from RiskAssRiskWsDtl r where r.isDeleted = '" + FLAG.N_FLAG + "' and r.riskHrdId = ?1 order by sumMoney")
 	public List<RiskAssRiskWsDtl> findByGroupRiskHrdId(Long riskHrdId);
 	
 }

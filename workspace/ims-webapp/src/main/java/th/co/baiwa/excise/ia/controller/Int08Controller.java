@@ -102,7 +102,7 @@ public class Int08Controller {
 		httpServletRequest.getSession().setAttribute(WS_SESSION_DATA , null);
 		riskAssRiskWsHdrList = riskAssRiskWsHdrService.findByGroupRiskHrdId(riskAssRiskWsHdr.getRiskHrdId());
 		if(BeanUtils.isEmpty(riskAssRiskWsHdrList)) {
-			riskAssRiskWsHdrList = riskAssRiskWsHdrService.findRiskAssRiskDtlByWebService();
+			riskAssRiskWsHdrList = riskAssRiskWsHdrService.findRiskAssRiskDtlByWebService(riskAssRiskWsHdr);
 		}
 		ResponseDataTable<RiskAssRiskWsDtl> responseDataTable = new ResponseDataTable<RiskAssRiskWsDtl>();
 		httpServletRequest.getSession().setAttribute(WS_SESSION_DATA , riskAssRiskWsHdrList);
@@ -318,7 +318,7 @@ public class Int08Controller {
 	@ResponseBody
 	public List<RiskAssPerDtl> queryRiskAssPerDtlByHrdId(@RequestBody RiskAssRiskWsHdr riskAssRiskWsHdr) {
 		logger.info("queryRiskAssPerDtlByHrdId id :" + riskAssRiskWsHdr.getRiskHrdId());
-		return riskAssRiskWsHdrService.findRiskAssPerDtlByRiskHrdId(riskAssRiskWsHdr.getRiskHrdId());
+		return riskAssRiskWsHdrService.findRiskAssPerDtlByRiskHrdId(riskAssRiskWsHdr);
 	
 	}
 	

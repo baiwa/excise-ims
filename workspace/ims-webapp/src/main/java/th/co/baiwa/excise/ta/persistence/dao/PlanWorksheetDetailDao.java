@@ -24,7 +24,6 @@ public class PlanWorksheetDetailDao{
 	private JdbcTemplate jdbcTemplate;
 
 	
-	
 	public List<PlanWorksheetDetail> queryPlanWorksheetDetailCriteria(PlanWorksheetDetail criteria) {
 		logger.info("PlanWorksheetDetailDao.queryPlanWorksheetDetailCriteria");
 		List<Object> valueList = new ArrayList<Object>();

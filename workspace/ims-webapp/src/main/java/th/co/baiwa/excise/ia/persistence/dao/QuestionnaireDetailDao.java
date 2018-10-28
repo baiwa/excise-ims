@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-
+import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.utils.OracleUtils;
@@ -20,6 +20,10 @@ public class QuestionnaireDetailDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private CommonJdbcDao commonJdbcDao;
+	
 	private String sqlTemplate = " SELECT * FROM IA_QUESTIONNAIRE_DETAIL H WHERE 1 = 1 ";
 
 	public List<QuestionnaireDetail> findByCriteria(QuestionnaireDetail questionnaireDetail) {
@@ -42,10 +46,8 @@ public class QuestionnaireDetailDao {
 			sql.append("AND H.QTN_MAIN_DETAIL = ? ");
 			paramList.add(questionnaireDetail.getQtnMainDetail());
 		}
-		List<QuestionnaireDetail> questionnaireDetailsList = jdbcTemplate.query(sql.toString(), paramList.toArray(),
-				rowMapper);
-		;
-
+		List<QuestionnaireDetail> questionnaireDetailsList = jdbcTemplate.query(sql.toString(), paramList.toArray(),rowMapper);
+		
 		return questionnaireDetailsList;
 	}
 

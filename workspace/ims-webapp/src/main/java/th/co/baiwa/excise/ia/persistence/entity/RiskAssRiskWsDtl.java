@@ -51,8 +51,8 @@ public class RiskAssRiskWsDtl extends BaseEntity{
 	@Column(name="APPROVE_BUDGET")
 	private BigDecimal approveBudget;
 	
-	@Column(name="SUM_MONTH")
-	private BigDecimal sumMonth;
+	@Column(name="SUM_MONEY")
+	private BigDecimal sumMoney;
 	
 	@Column(name="RL")
 	private String rl;
@@ -139,15 +139,7 @@ public class RiskAssRiskWsDtl extends BaseEntity{
 	}
 
 
-	public BigDecimal getSumMonth() {
-		return sumMonth;
-	}
-
-
-	public void setSumMonth(BigDecimal sumMonth) {
-		this.sumMonth = sumMonth;
-	}
-
+	
 
 	public String getRl() {
 		return rl;
@@ -186,6 +178,16 @@ public class RiskAssRiskWsDtl extends BaseEntity{
 
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+
+	public BigDecimal getSumMoney() {
+		return sumMoney;
+	}
+
+
+	public void setSumMoney(BigDecimal sumMoney) {
+		this.sumMoney = sumMoney;
 	}
 
 

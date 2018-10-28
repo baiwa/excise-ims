@@ -27,14 +27,14 @@ export class Int0815Component implements OnInit {
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
     private route: ActivatedRoute,
-    private authService: AuthService) { 
-      this.breadcrumb = [
-        { label: "ตรวจสอบภายใน", route: "#" },
-        { label: "การประเมินความเสี่ยง ", route: "#" },
-        { label: "ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต", route: "#" },
-        { label: "รายละเอียดปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ", route: "#" },
-      ];
-    }
+    private authService: AuthService) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง ", route: "#" },
+      { label: "ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต", route: "#" },
+      { label: "รายละเอียดปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ", route: "#" },
+    ];
+  }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-08150');
@@ -42,7 +42,7 @@ export class Int0815Component implements OnInit {
     $(".ui.dropdown.ai").css("width", "100%");
     this.id = this.route.snapshot.queryParams["id"];
     this.findRiskById();
-    this.initDatatable();
+
   }
 
   findRiskById() {
@@ -54,6 +54,7 @@ export class Int0815Component implements OnInit {
       this.riskHrdPaperName = this.riskAssRiskWsHdr.riskHrdPaperName;
       this.budgetYear = this.riskAssRiskWsHdr.budgetYear;
       this.userCheck = this.riskAssRiskWsHdr.userCheck;
+      this.initDatatable();
     });
   }
 
@@ -67,12 +68,12 @@ export class Int0815Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: true,
-     
+
       paging: true,
       ajax: {
         type: "POST",
         url: URL,
-        data: { riskHrdId: this.id }
+        data: { riskHrdId: this.id, budgetYear: Number(this.budgetYear) - 543 }
       },
       columns: [
 
@@ -88,11 +89,11 @@ export class Int0815Component implements OnInit {
         { data: "localBudget", render: $.fn.dataTable.render.number(',', '.', 2, '') },
         { data: "otherMoney", render: $.fn.dataTable.render.number(',', '.', 2, '') },
         { data: "approveBudget", render: $.fn.dataTable.render.number(',', '.', 2, '') },
-        { data: "sumMonth", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+        { data: "sumMoney", render: $.fn.dataTable.render.number(',', '.', 2, '') },
         { data: "rl" },
         { data: "valueTranslation" }
 
-      ],createdRow: function (row, data, dataIndex) {
+      ], createdRow: function (row, data, dataIndex) {
         console.log("row");
         console.log("data", data.valueTranslation);
         console.log("dataIndex", dataIndex);
@@ -109,8 +110,8 @@ export class Int0815Component implements OnInit {
 
       },
       columnDefs: [
-        { targets: [0, 1,2,8,9], className: "center aligned" },
-        { targets: [3, 4, 5, 6,7], className: "right aligned" },
+        { targets: [0, 2, 8, 9], className: "center aligned" },
+        { targets: [3, 4, 5, 6, 7], className: "right aligned" },
         { targets: [1], className: "left aligned" }
       ]
 

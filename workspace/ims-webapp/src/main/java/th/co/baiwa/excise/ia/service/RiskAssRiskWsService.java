@@ -101,8 +101,8 @@ public class RiskAssRiskWsService {
 		return riskAssRiskWsHdrRepository.findByBudgetYear(year);
 	}
 
-	public List<RiskAssRiskWsDtl> findRiskAssRiskDtlByWebService() {
-		return webServiceExciseService.getRiskAssRiskWsDtlList(new RiskAssRiskWsDtl());
+	public List<RiskAssRiskWsDtl> findRiskAssRiskDtlByWebService(RiskAssRiskWsHdr riskAssRiskWsHdr) {
+		return webServiceExciseService.pmGetListProject(riskAssRiskWsHdr);
 
 	}
 
@@ -569,11 +569,12 @@ public class RiskAssRiskWsService {
 //		
 //	}
 	
-	public List<RiskAssPerDtl> findRiskAssPerDtlByRiskHrdId(Long riskHrdId) {
-		logger.info("findRiskAssPerDtlByRiskHrdId id : " + riskHrdId);
-		List<RiskAssPerDtl> list = riskAssPerDtlRepository.findByRiskHrdId(riskHrdId);
+	public List<RiskAssPerDtl> findRiskAssPerDtlByRiskHrdId(RiskAssRiskWsHdr riskHrd) {
+		logger.info("findRiskAssPerDtlByRiskHrdId id : " + riskHrd.getRiskHrdId());
+		List<RiskAssPerDtl> list = riskAssPerDtlRepository.findByRiskHrdId(riskHrd.getRiskHrdId());
 		if(BeanUtils.isEmpty(list)) {
-			list = webServiceExciseService.riskAssPerDtllWS();
+			
+			list = webServiceExciseService.pmGetDetailProject("6100002");
 		}
 		return list;
 	}
