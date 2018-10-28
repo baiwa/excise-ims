@@ -4,14 +4,20 @@ import { TextDateTH, Utils } from 'app/buckwaframework/common/helper';
 import { formatter } from 'app/buckwaframework/common/helper/datepicker';
 import { BreadCrumb } from 'models/breadcrumb';
 import { async } from '@angular/core/testing';
+import { FormSearch } from 'projects/internal-audit/int06/int06-6/form-search.model';
 declare var $: any;
+const URL = {
+  export:"ia/int065/exportFile"
+}
 @Component({
   selector: 'app-int05-1-1',
   templateUrl: './int05-1-1.component.html',
   styleUrls: ['./int05-1-1.component.css']
 })
-export class Int0511Component implements OnInit {
 
+
+export class Int0511Component implements OnInit {
+  form: FormSearch = new FormSearch();
   sector: any;
   area: any;
   branch: any;
@@ -79,6 +85,22 @@ export class Int0511Component implements OnInit {
     this.ajax.get(url, res => {
       this.statusList = res.json();
     })    
+  }
+
+
+  exportFile=()=>{    
+    let param = "";
+    param +="?sector=" +  this.form.sector;
+    param +="&area=" +  this.form.area;
+    param +="&branch=" + this.form.branch;
+    param +="&dateFrom=" + this.form.dateFrom;
+    param +="&dateTo=" + this.form.dateTo;
+    param +="&budgetType=" +$("#budgetType").val();
+    console.log(URL.export+param);
+    this.ajax.download(URL.export+param);
+
+    
+
   }
 
   onClear = () => {
@@ -165,7 +187,7 @@ export class Int0511Component implements OnInit {
   }
 
   table = () => {
-    const table = $("#dataTable").DataTable({
+    const table = $("#dataTable").DataTableTh({
       "serverSide": true,
       "searching": false,
       "processing": true,

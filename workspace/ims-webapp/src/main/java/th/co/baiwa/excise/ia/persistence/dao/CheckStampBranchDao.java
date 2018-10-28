@@ -29,19 +29,19 @@ public class CheckStampBranchDao {
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
 
-		if(StringUtils.isNotBlank(formVo.getOfficeCode())){
-            sql.append(" AND OFFICE_CODE LIKE ? ");
-            params.add(StringUtils.trim(formVo.getOfficeCode()+"%"));
-        }
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			sql.append(" AND OFFICE_CODE LIKE ? ");
+			params.add(StringUtils.trim(formVo.getOfficeCode() + "%"));
+		}
 		if (StringUtils.isNotBlank(formVo.getStatus())) {
 			sql.append(" AND STATUS = ? ");
-            params.add(StringUtils.trim(formVo.getStatus()));
+			params.add(StringUtils.trim(formVo.getStatus()));
 		}
-        if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())){
-            sql.append(" AND TO_CHAR(DATE_OF_PAY,'YYYYMMDD') BETWEEN ? AND ?");
-            params.add(formVo.getDateForm());
-            params.add(formVo.getDateTo());
-        }        
+		if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())) {
+			sql.append(" AND TO_CHAR(DATE_OF_PAY,'YYYYMMDD') BETWEEN ? AND ?");
+			params.add(formVo.getDateForm());
+			params.add(formVo.getDateTo());
+		}
 
 		String countSql = OracleUtils.countForDatatable(sql);
 		Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
@@ -52,22 +52,22 @@ public class CheckStampBranchDao {
 
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
-        if(StringUtils.isNotBlank(formVo.getOfficeCode())){
-            sql.append(" AND OFFICE_CODE LIKE ? ");
-            params.add(StringUtils.trim(formVo.getOfficeCode()+"%"));
-        }
-        if (StringUtils.isNotBlank(formVo.getStatus())) {
-			sql.append(" AND STATUS = ? ");
-            params.add(StringUtils.trim(formVo.getStatus()));
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			sql.append(" AND OFFICE_CODE LIKE ? ");
+			params.add(StringUtils.trim(formVo.getOfficeCode() + "%"));
 		}
-        if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())){
-            sql.append(" AND TO_CHAR(DATE_OF_PAY,'YYYYMMDD') BETWEEN ? AND ?");
-            params.add(formVo.getDateForm());
-            params.add(formVo.getDateTo());
-        }
-        sql.append(" ORDER BY DATE_OF_PAY DESC ");
-        
-        String limitsql = OracleUtils.limitForDataTable(sql.toString(), formVo.getStart(), formVo.getLength());
+		if (StringUtils.isNotBlank(formVo.getStatus())) {
+			sql.append(" AND STATUS = ? ");
+			params.add(StringUtils.trim(formVo.getStatus()));
+		}
+		if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())) {
+			sql.append(" AND TO_CHAR(DATE_OF_PAY,'YYYYMMDD') BETWEEN ? AND ?");
+			params.add(formVo.getDateForm());
+			params.add(formVo.getDateTo());
+		}
+		sql.append(" ORDER BY DATE_OF_PAY DESC ");
+
+		String limitsql = OracleUtils.limitForDataTable(sql.toString(), formVo.getStart(), formVo.getLength());
 		List<Int05111Vo> list = jdbcTemplate.query(limitsql, params.toArray(), stamRowmapper);
 		return list;
 
@@ -97,13 +97,13 @@ public class CheckStampBranchDao {
 			vo.setNumberOfStamp(rs.getInt("NUMBER_OF_STAMP"));
 			vo.setValueOfStampPrinted(rs.getBigDecimal("VALUE_OF_STAMP_PRINTED"));
 			vo.setSumOfValue(rs.getBigDecimal("SUM_OF_VALUE"));
-			vo.setNote(rs.getString("NOTE"));			
-			vo.setWorkSheetDetailId(rs.getString("WORK_SHEET_DETAIL_ID"));			
+			vo.setNote(rs.getString("NOTE"));
+			vo.setWorkSheetDetailId(rs.getString("WORK_SHEET_DETAIL_ID"));
 			vo.setStampType(rs.getString("STAMP_TYPE"));
 			vo.setTaxStamp(rs.getBigDecimal("TAX_STAMP"));
 			vo.setStampCodeStart(rs.getString("STAMP_CODE_START"));
 			vo.setStampCodeEnd(rs.getString("STAMP_CODE_END"));
-			
+
 			return vo;
 		}
 	};
@@ -131,4 +131,30 @@ public class CheckStampBranchDao {
 			return new LabelValueBean(rs.getString("SUB_TYPE_DESCRIPTION"), rs.getString("LOV_ID"));
 		}
 	};
+
+	public List<Int05111Vo> exportFile(Int05111FormVo formVo) {
+		
+		StringBuilder sql = new StringBuilder(SQL);
+		List<Object> params = new ArrayList<>();
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			sql.append(" AND OFFICE_CODE LIKE ? ");
+			params.add(StringUtils.trim(formVo.getOfficeCode() + "%"));
+		}
+		if (StringUtils.isNotBlank(formVo.getStatus())) {
+			sql.append(" AND STATUS = ? ");
+			params.add(StringUtils.trim(formVo.getStatus()));
+		}
+		if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())) {
+			sql.append(" AND TO_CHAR(DATE_OF_PAY,'YYYYMMDD') BETWEEN ? AND ?");
+			params.add(formVo.getDateForm());
+			params.add(formVo.getDateTo());
+		}
+		sql.append(" ORDER BY DATE_OF_PAY DESC ");
+
+		String limitsql = OracleUtils.limitForDataTable(sql.toString(), formVo.getStart(), formVo.getLength());
+		List<Int05111Vo> list = jdbcTemplate.query(limitsql, params.toArray(), stamRowmapper);
+		return list;
+
+	}
+
 }

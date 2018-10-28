@@ -1,8 +1,18 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +30,15 @@ import th.co.baiwa.excise.ia.persistence.repository.IaStamDetailRepository;
 import th.co.baiwa.excise.ia.persistence.repository.IaStampFileRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511Vo;
+import th.co.baiwa.excise.upload.service.ExcalService;
 
 @Service
 public class Int0511Service {
 
+	
+	@Autowired
+	private ExcalService excalService;
+	
 	@Autowired
 	private CheckStampAreaDao checkStampAreaDao;
 
@@ -117,4 +132,112 @@ public class Int0511Service {
 		}
 		return fileName;
 	}
+	
+	public String mappingOfficeCode(Int0511FormVo formVo) {
+		Lov sectors = new Lov();
+		Lov areas = new Lov();
+		Lov branchs = new Lov();
+
+		if (StringUtils.isNotBlank(formVo.getSector())) {
+			sectors = lovRepository.findByLovId(Long.valueOf(formVo.getSector()));
+
+			if (StringUtils.isNotBlank(formVo.getArea())) {
+				areas = lovRepository.findByLovId(Long.valueOf(formVo.getArea()));
+
+				if (StringUtils.isNotBlank(formVo.getBranch())) {
+					branchs = lovRepository.findByLovId(Long.valueOf(formVo.getBranch()));
+				}
+			}
+		}
+
+		StringBuilder officeCode = new StringBuilder("");
+
+		if (sectors != null) {
+			if (StringUtils.isNoneBlank(sectors.getSubType())) {
+				officeCode.append(sectors.getSubType());
+			}
+		}
+		if (areas != null) {
+			if (StringUtils.isNoneBlank(areas.getSubType())) {
+				officeCode.append(areas.getSubType());
+			}
+		}
+		if (branchs != null) {
+			if (StringUtils.isNoneBlank(branchs.getSubType())) {
+				officeCode.append(branchs.getSubType());
+			}
+		}
+
+		return officeCode.toString();
+	}
+	
+	
+public void exportFile(Int0511FormVo formVo, HttpServletResponse response) throws IOException {
+		
+		/* create spreadsheet */
+		XSSFWorkbook workbook = excalService.setUpExcel();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		System.out.println("Creating excel");
+		
+		String[] columns = {"ลำดับ", "วันที่ การรับ-จ่าย-ส่งคืน	", "สถานะ การรับ-จ่าย ", "หน่วยงาน/ผู้ประกอบการที่รับ-จ่ายแสตมป์", "หนังสือขอเบิกแสตมป์", "หนังสือส่งแสตมป์","เลขที่ใบ 5 ตอน","ลงวันวันที่"};
+		
+		for (cellNum = 0; cellNum < columns.length; cellNum++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(columns[cellNum]);
+			cell.setCellStyle(excalService.thStyle);
+		}
+		
+	
+		formVo.setDateForm(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateForm()));
+		formVo.setDateTo(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateTo()));
+		List<Int0511Vo> list = checkStampAreaDao.exportFile(formVo);
+
+		rowNum = 2;
+		cellNum = 0;
+		int no = 1;
+		
+        // Create cells
+        for(Int0511Vo item : list) {
+        	row = sheet.createRow(rowNum);
+			// No.
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(excalService.cellCenter);
+			cellNum++;
+			
+		
+			no++;
+			rowNum++;
+			cellNum = 0;
+        }
+        
+        for (int i = 0; i < columns.length; i++) {
+        	   sheet.autoSizeColumn(i);
+        	  }
+
+		/*set	fileName*/		
+		String fileName ="Checklist";
+		System.out.println(fileName);
+		
+		/* write it as an excel attachment */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+		byte [] outArray = outByteStream.toByteArray();
+		response.setContentType("application/vnd.ms-excel");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename="+fileName+".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outArray);
+		outStream.flush();
+		outStream.close();
+		
+		System.out.println("Done");
+
+	}
+
 }

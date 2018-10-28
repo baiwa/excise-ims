@@ -2,6 +2,8 @@ package th.co.baiwa.excise.ia.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,8 @@ import th.co.baiwa.excise.ia.service.Int05111Service;
 @Controller
 @RequestMapping("api/ia/int05111")
 public class Int05111Controller {
+	
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private Int05111Service int05111Service;
 
@@ -76,4 +80,6 @@ public class Int05111Controller {
 		List<Lov> status = int05111Service.status();
 		return status;
 	}
+	
+	
 }

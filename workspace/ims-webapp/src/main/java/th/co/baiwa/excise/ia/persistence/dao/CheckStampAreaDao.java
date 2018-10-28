@@ -9,6 +9,8 @@ import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int065FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int065Vo;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 import java.sql.ResultSet;
@@ -79,6 +81,34 @@ public class CheckStampAreaDao {
 		return list;
 
 	}
+	public List<Int0511Vo> exportFile(Int0511FormVo formVo) {
+		StringBuilder sql = new StringBuilder(SQL);
+		List<Object> params = new ArrayList<>();
+        if(StringUtils.isNotBlank(formVo.getSector())){
+            sql.append(" AND EXCISE_DEPARTMENT=? ");
+            params.add(StringUtils.trim(formVo.getSector()));
+        }
+        if (StringUtils.isNotBlank(formVo.getArea())){
+            sql.append(" AND EXCISE_REGION=? ");
+            params.add(StringUtils.trim(formVo.getArea()));
+        }
+        if (StringUtils.isNotBlank(formVo.getBranch())){
+            sql.append(" AND EXCISE_DISTRICT=? ");
+            params.add(StringUtils.trim(formVo.getBranch()));
+        }
+        if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())){
+            sql.append(" AND TO_CHAR(DATE_OF_PAY,'YYYYMMDD') BETWEEN ? AND ?");
+            params.add(formVo.getDateForm());
+            params.add(formVo.getDateTo());
+        }
+        sql.append(" ORDER BY CREATED_DATE DESC ");
+		List<Int0511Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), stamRowmapper);
+		return list;
+
+	}
+	
+	
+	
 
 	private RowMapper<Int0511Vo> stamRowmapper = new RowMapper<Int0511Vo>() {
 		@Override

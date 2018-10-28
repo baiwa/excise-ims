@@ -26,6 +26,7 @@ public class Int0511Vo {
 	private BigDecimal taxStamp;
 	private String stampCodeStart;
 	private String stampCodeEnd;
+	
 	private String note;
 	private String createdDate;
 	private String fileName;
