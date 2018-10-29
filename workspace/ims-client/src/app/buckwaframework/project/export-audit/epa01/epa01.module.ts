@@ -7,11 +7,13 @@ import { AuthGuard } from '../../../common/services';
 import { Epa011Component } from './epa01-1/epa01-1.component';
 import { Epa012Component } from './epa01-2/epa01-2.component';
 import { Epa013Component } from './epa01-3/epa01-3.component';
+import { Epa014Component } from './epa01-4/epa01-4.component';
 
 const routes: Routes = [
   { path: "1", component: Epa011Component, canActivate: [AuthGuard] },
   { path: "2", component: Epa012Component, canActivate: [AuthGuard] },
   { path: "3", component: Epa013Component, canActivate: [AuthGuard] },
+  { path: "4", component: Epa014Component, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
@@ -24,7 +26,8 @@ const routes: Routes = [
   declarations: [
     Epa011Component,
     Epa012Component,
-    Epa013Component
+    Epa013Component,
+    Epa014Component
   ],
   exports: [
     RouterModule

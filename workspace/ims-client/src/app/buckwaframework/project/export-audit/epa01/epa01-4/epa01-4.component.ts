@@ -2,15 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'services/auth.service';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ExportCheckingModel } from 'models/exportCheckingModel';
 
 declare var $: any;
 
 @Component({
-  selector: 'app-epa01-3',
-  templateUrl: './epa01-3.component.html',
-  styleUrls: ['./epa01-3.component.css']
+  selector: 'app-epa01-4',
+  templateUrl: './epa01-4.component.html',
+  styleUrls: ['./epa01-4.component.css']
 })
-export class Epa013Component implements OnInit {
+export class Epa014Component implements OnInit {
 
   datatable: any;
   $form: any;
@@ -18,6 +19,11 @@ export class Epa013Component implements OnInit {
   exciseId: string = "";
   exciseName: string = "";
   searchFlag: string = "FALSE";
+  taxStampNo = [""];
+  factoryStampNo = [""];
+  datas: ExportCheckingModel = new ExportCheckingModel();
+  saveDatas: ExportCheckingModel = new ExportCheckingModel();
+  exportType: string = "";
 
   constructor(
     private authService: AuthService,
@@ -28,15 +34,11 @@ export class Epa013Component implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.reRenderVersionProgram('EXP-01300');
-  }
-
-  ngAfterViewInit(): void {
     this.initDatatable();
   }
 
   initDatatable = () => {
-    const URL = AjaxService.CONTEXT_PATH + "epa/epa013/search";
+    const URL = AjaxService.CONTEXT_PATH + "epa/epa014/search";
     this.datatable = $("#dataTable").DataTableTh({
       serverSide: true,
       searching: false,
@@ -61,50 +63,44 @@ export class Epa013Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "exciseName",
+          data: "typeList2",
           className: "ui center aligned",
         }, {
-          data: "destination",
+          data: "productName2",
           className: "ui center aligned",
         }, {
-          data: "dateDestination",
+          data: "model2",
           className: "ui center aligned",
         }, {
-          data: "dateDestination",
+          data: "size12",
           className: "ui center aligned",
         }, {
-          data: "dateDestination",
+          data: "amount2",
+          className: "ui center aligned",
+        }, {
+          data: "price2",
+          className: "ui center aligned",
+        }, {
+          data: "pricePer2",
+          className: "ui center aligned",
+        }, {
+          data: "amountPer2",
+          className: "ui center aligned",
+        }, {
+          data: "tax2",
+          className: "ui center aligned",
+        }, {
+          data: "tax2",
+          className: "ui center aligned",
+        }, {
+          data: "tax2",
           className: "ui center aligned",
           render: function (data, row) {
             return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>รายงานการตรวจสอบ</button>';
           }
         }
-      ],
-      rowCallback: (row, data, index) => {
-        $("td > .checking-button", row).bind("click", () => {
-          this.router.navigate(["/epa01/4"], {
-            queryParams: {
-              exciseId: data.exciseId,
-              exciseName: data.exciseName,
-              searchFlag: "TRUE"
-            }
-          });
-        });
-      }
+      ]
     });
-
-
   }
-
-  onClickClear() {
-    this.exciseId = "";
-    this.searchFlag = "FALSE";
-    this.datatable.ajax.reload();
-  };
-
-  onClickSearch() {
-    this.searchFlag = "TRUE";
-    this.datatable.ajax.reload();
-  };
 
 }

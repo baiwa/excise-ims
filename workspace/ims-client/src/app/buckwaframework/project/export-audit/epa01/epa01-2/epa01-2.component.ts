@@ -188,21 +188,25 @@ export class Epa012Component implements OnInit {
   onClickSave() {
     $('#ModalCheck').modal('hide');
     setTimeout(() => {
-      let url = "epa/epa012/saveTaxDatas";
-      this.ajaxService.post(url, this.datas, res => { });
 
-      let url2 = "epa/epa012/saveFactoryDatas";
-      this.saveDatas.result = this.datas.result;
-      this.saveDatas.remark = this.datas.remark;
-      this.ajaxService.post(url2, this.saveDatas, res => { });
+      if (this.datas.remark != "") {
+        let url = "epa/epa012/saveTaxDatas";
+        this.ajaxService.post(url, this.datas, res => { });
 
-      this.router.navigate(["/epa01/3"], {
-        queryParams: {
-          exciseId: this.exciseId,
-          taxReNumber2: this.datas.taxReNumber2,
-          searchFlag: "TRUE"
-        }
-      });
+        let url2 = "epa/epa012/saveFactoryDatas";
+        this.saveDatas.result = this.datas.result;
+        this.saveDatas.remark = this.datas.remark;
+        this.ajaxService.post(url2, this.saveDatas, res => { });
+
+        this.router.navigate(["/epa01/3"], {
+          queryParams: {
+            exciseId: this.exciseId,
+            eaReInventoryNo: this.datas.eaReInventoryNo,
+            searchFlag: "TRUE"
+          }
+        });
+      }
+
     }, 300);
   }
 

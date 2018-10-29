@@ -161,6 +161,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: "epa04",
+    loadChildren: "projects/export-audit/epa04/epa04.module#Epa04Module",
+    canActivate: [AuthGuard]
+  },
+  {
     path: "mgcontrol",
     loadChildren: "projects/management-control/mgcontrol/mgcontrol.module#MgcontrolComponentModule",
     canActivate: [AuthGuard]
@@ -170,7 +175,6 @@ const routes: Routes = [
     loadChildren: "projects/management-control/mgc02/mgReportResult.module#MgReportResultComponentModule",
     canActivate: [AuthGuard]
   },
-
   {
     path: "cop01",
     loadChildren: "projects/check-operation/cop01/cop01.module#Cop01Module",
