@@ -153,7 +153,7 @@ export class Int0811Component implements OnInit {
     // const URL = AjaxService.CONTEXT_PATH + "ia/int08/searchRiskAssRiskWsHdr";
     const URL = AjaxService.CONTEXT_PATH + "ia/int08/searchRisk";
     //console.log(URL);
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -276,7 +276,7 @@ export class Int0811Component implements OnInit {
     }
     const URL = AjaxService.CONTEXT_PATH + "ia/int08/dataTableWebService1";
     //console.log(URL);
-    this.dataTableF1 = $("#dataTableF1").DataTable({
+    this.dataTableF1 = $("#dataTableF1").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -355,7 +355,7 @@ export class Int0811Component implements OnInit {
 
       }
 
-      this.dataTableF3 = $("#dataTableF3").DataTable({
+      this.dataTableF3 = $("#dataTableF3").DataTableTh({
         lengthChange: false,
         searching: false,
         ordering: false,
@@ -415,7 +415,7 @@ export class Int0811Component implements OnInit {
     }
     const URL = AjaxService.CONTEXT_PATH + "ia/int08/findRiskAssOtherDtlByHeaderId";
     //console.log(URL);
-    this.dataTableF2 = $("#dataTableF2").DataTable({
+    this.dataTableF2 = $("#dataTableF2").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -539,7 +539,7 @@ export class Int0811Component implements OnInit {
         this.percentList.push(0);
       }
 
-      var trHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> <th rowspan="2" style="text-align: center !important">โครงการตามยุทธศาสตร์</th><th rowspan="2" style="text-align: center !important">หน่วยงาน</th>';
+      var trHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับที่</th> <th rowspan="2" style="text-align: center !important">โครงการตามยุทธศาสตร์</th><th rowspan="2" style="text-align: center !important">หน่วยงาน</th>';
       this.columnList.forEach(element => {
         //console.log(element);
         trHTML += '<th rowspan="2" style="text-align: center !important;">' + element + '</th>';

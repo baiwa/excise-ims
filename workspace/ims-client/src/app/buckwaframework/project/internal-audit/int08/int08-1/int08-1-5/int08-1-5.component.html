@@ -37,7 +37,7 @@
           <div class="two wide field ">
             <div class="ui input">
               <select class="ui dropdown ai selection" style="width: 100%;" id="createUserTitle" [(ngModel)]="riskAssRiskWsHdr.createUserTitle">
-                <option value="00">เลือก</option>
+                <option value="00">กรุณาเลือก</option>
                 <option *ngFor="let data of titleList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
               </select>
             </div>
@@ -69,7 +69,7 @@
           <div class="two wide field ">
             <div class="ui input">
               <select class="ui dropdown ai selection" style="width: 100%;" id="checkUserTitle" [(ngModel)]="riskAssRiskWsHdr.checkUserTitle">
-                <option value="00">เลือก</option>
+                <option value="00">กรุณาเลือก</option>
                 <option *ngFor="let data of titleList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
               </select>
             </div>

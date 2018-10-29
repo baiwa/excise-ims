@@ -29,7 +29,7 @@
                         <div class="eight wide field" [ngClass]="{ 'error': submitted && f.sortSystem.errors }">
                             <label class="custom-label-w-25">รูปแบบการจัดเรียงข้อมูล</label>
                             <select class="ui dropdown ai" name="sortSystem" id="sortSystem" formControlName="sortSystem">
-                                <option value="">เลือก</option>
+                                <option value="">กรุณาเลือก</option>
                                 <option *ngFor="let data of comboBox | async" value="{{data.lovId}}">{{data.typeDescription}}</option>
                             </select>
                         </div>

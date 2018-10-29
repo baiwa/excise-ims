@@ -1,64 +1,72 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
 <div class="ui grid">
     <div class="sixteen wide column">
-
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>อัพโหลดไฟล์ตรวจสอบข้อมูลบัญชี </span>
         </div>
 
         <form id="upload-form" class="ui attached {{loading? 'loading': ''}} segment" (submit)="uplodFile($event)" ngNativeValidate>
             <div class="ui form">
-                <div class="inline fields">
-                    <div class="five wide field"></div>
-                    <div class="one wide field">
-                        <label>เลือกไฟล์</label>
+                <div class="inline fields ui centered grid">
+                    <div class="one wide field"></div>
+                    <div class="three wide field required">
+                        <label  class="text-right full-width">รายงานงบทดลอง</label>
                     </div>
-                    <div class="four wide field">
-                        <input id="fileExcel" type="file" name="fileExcel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="changeUpload($event)" required>
+                    <div class="five wide field">
+                        <input id="fileExcel" type="file" name="fileExcel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                            (change)="changeUpload($event)" required>
                     </div>
+                    <div class="three wide field"></div>
                 </div>
             </div>
             <br>
             <div class="ui center aligned grid">
                 <div class="eight wide column">
                     <button class="ui mini yellow button" type="submit">
-            <i class="upload icon"></i>
-            อัพโหลด
-          </button>
+                        <i class="upload icon"></i>
+                        อัพโหลด
+                    </button>
                     <button class="ui mini button" type="reset" (click)="hideData()">
-            <i class="sync alternate icon"></i>
-            ล้างข้อมูล
-          </button>
+                        <i class="sync alternate icon"></i>
+                        ล้างข้อมูล
+                    </button>
+                    <button class="ui mini {{!checkSave? 'disabled': ''}} green button width-100" (click)="onCheck()">
+                        <i class="clipboard check icon"></i>
+                        ตรวจสอบ
+                    </button>
                 </div>
             </div>
         </form>
     </div>
-</div>
-<br>
-<div class="ui attached {{loadingTable? 'loading': ''}} segment" id="dataTable">
-    <table class="ui  small celled table" id="dataTableExcel">
-        <thead>
-            <tr>
-                <th style="text-align: center;">เลขที่บัญชีแยกประเภท</th>
-                <th style="text-align: center;">ชื่อบัญชีแยกประเภท</th>
-                <th style="text-align: center;">ยอดยกมา</th>
-                <th style="text-align: center;">เดบิต</th>
-                <th style="text-align: center;">เครดิต</th>
-                <th style="text-align: center;">ยอดยกไป</th>
-            </tr>
-        </thead>
-    </table>
-    <div class="ui center aligned grid">
+
+    <br>
+
+    <div class="sixteen wide column ">
+        <div class="ui top centered attached header segment " style="background: #1e83db;color: white">
+            <span>ข้อมูลการอัปโหลด</span>
+        </div>
+        <div class="ui attached {{loadingTable? 'loading': ''}} segment" id="dataTable">
+            <table class="ui  small celled table striped selectable" id="dataTableExcel">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">เลขที่บัญชีแยกประเภท</th>
+                        <th style="text-align: center;">ชื่อบัญชีแยกประเภท</th>
+                        <th style="text-align: center;">ยอดยกมา</th>
+                        <th style="text-align: center;">เดบิต</th>
+                        <th style="text-align: center;">เครดิต</th>
+                        <th style="text-align: center;">ยอดยกไป</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <!-- <div class="ui center aligned grid">
         <div class="eight wide column">
             <button class="ui mini primary button width-100" (click)="onSave()">
         <i class="save  icon"></i>
         บันทึก
       </button>
-            <button class="ui mini {{!checkSave? 'disabled': ''}} green button width-100" (click)="onCheck()">
-        <i class="clipboard check icon"></i>
-        ตรวจสอบ
-      </button>
         </div>
+    </div> -->
     </div>
-
 </div>

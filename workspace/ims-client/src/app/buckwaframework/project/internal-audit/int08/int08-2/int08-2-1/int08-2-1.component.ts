@@ -449,12 +449,12 @@ export class Int0821Component implements OnInit {
         this.columnList.push(element.riskAssInfHdrName);
         this.percentList.push(0);
       }
-      var trHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> <th rowspan="2" style="text-align: center !important">ระบบสารสนเทศฯ ของกรมสรรพสามิต</th>';
+      var trHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับที่</th> <th rowspan="2" style="text-align: center !important">ระบบสารสนเทศฯ ของกรมสรรพสามิต</th>';
       this.columnList.forEach(element => {
         console.log(element);
         trHTML += '<th rowspan="2" style="text-align: center !important; width:14%;">' + element + '</th>';
       });
-      trHTML += '<th rowspan="2"  style="text-align: center !important;width:10%;">รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th style="text-align: center !important">แปลค่า</th></tr>';
+      trHTML += '<th rowspan="2"  style="text-align: center !important;width:10%;">รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th><th style="text-align: center !important">แปลค่าความเสี่ยง</th></tr>';
       $("#trColumn").html(trHTML);
 
       const URL = "ia/condition/findConditionByParentId";
