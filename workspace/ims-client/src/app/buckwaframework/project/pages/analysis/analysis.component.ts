@@ -78,6 +78,7 @@ export class AnalysisPage implements OnInit {
   }
 
   clear=()=>{
+    this.submitted = false;
     this.analysisService.clear();
   }
 

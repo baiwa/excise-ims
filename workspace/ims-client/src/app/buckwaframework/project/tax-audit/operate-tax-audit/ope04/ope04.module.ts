@@ -14,7 +14,7 @@ import { Ope047Component } from "./ope04-7/ope04-7.component";
 import { Ope048Component } from "./ope04-8/ope04-8.component";
 import { Ope049Component } from "./ope04-9/ope04-9.component";
 import { Ope0410Component } from "./ope04-10/ope04-10.component";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BreadcrumbModule } from '../../../../common/components';
 
 
@@ -38,6 +38,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes), CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     BreadcrumbModule
     ],
   declarations: [

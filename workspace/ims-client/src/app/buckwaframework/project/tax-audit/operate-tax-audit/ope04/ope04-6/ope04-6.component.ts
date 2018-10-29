@@ -115,7 +115,7 @@ export class Ope046Component implements OnInit {
         let array = text.split("/");
         let _month = array[0];
         let _year = array[1];
-        let month = TextDateTH.months[parseInt(_month)];
+        let month = TextDateTH.months[parseInt(_month)-1];
         console.log(month);
         this.form.dateFrom = month + " " + _year;
       }
@@ -130,7 +130,7 @@ export class Ope046Component implements OnInit {
         let array = text.split("/");
         let _month = array[0];
         let _year = array[1];
-        let month = TextDateTH.months[parseInt(_month)];
+        let month = TextDateTH.months[parseInt(_month)-1];
         console.log(month);
         this.form.dateTo = month + " " + _year;
       }
