@@ -4,21 +4,23 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { AuthService } from "services/auth.service";
 import { BreadCrumb } from "models/breadcrumb";
+import { RiskAssRiskWsHdr } from "models/RiskAssRiskWsHdr";
 
 
 declare var jQuery: any;
 declare var $: any;
+const URL = {
+  DROPDOWN: "combobox/controller/getDropByTypeAndParentId"
+};
 @Component({
   selector: 'app-int08-1-6',
   templateUrl: './int08-1-6.component.html',
   styleUrls: ['./int08-1-6.component.css']
 })
 export class Int0816Component implements OnInit {
-  riskAssRiskWsHdr: any;
+  riskAssRiskWsHdr: RiskAssRiskWsHdr;
   id: any;
-  riskHrdPaperName: any;
-  budgetYear: any;
-  userCheck: any;
+
   projectBase: any = '';
   departmentName: any = '';
   riskCost: any = '';
@@ -28,16 +30,15 @@ export class Int0816Component implements OnInit {
   dataTableList: RiskData[] = [];
   riskHrdData: RiskHrdData;
   isConditionShow: any;
-
   fileExel: File[];
-  breadcrumb: BreadCrumb[]
-
+  breadcrumb: BreadCrumb[];
+  titleList: any[] = [];
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
-    
-private authService: AuthService
+
+    private authService: AuthService
   ) {
     this.fileExel = new Array<File>(); // initial file array
     this.breadcrumb = [
@@ -47,19 +48,20 @@ private authService: AuthService
       { label: "รายละเอียดปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ", route: "#" },
     ];
   }
-  
+
   ngOnInit() {
+    this.riskAssRiskWsHdr = new RiskAssRiskWsHdr();
+    this.riskAssRiskWsHdr.checkPosition = 'ผู้อำนวยการกลุ่มตรวจสอบภายใน';
     this.authService.reRenderVersionProgram('INT-08160');
-    //$(".ui.dropdown").dropdown();
-    $('.menu .item').tab()
+    $('.menu .item').tab();
     this.riskHrdData = new RiskHrdData();
     this.id = this.route.snapshot.queryParams["id"];
     this.findRiskById();
-
     this.isConditionShow = false;
-    // $("#ConditionRL").modal("show");
-    //$("#ConditionRL").modal("hide");
+    this.ajax.post(URL.DROPDOWN, { type: 'TITLE' }, res => {
+      this.titleList = res.json();
 
+    });
   }
 
   ngAfterViewInit() {
@@ -78,16 +80,11 @@ private authService: AuthService
     this.ajax.post(url, { riskHrdId: this.id }, res => {
 
       this.riskAssRiskWsHdr = res.json();
-      console.log(this.riskAssRiskWsHdr);
-      this.riskHrdPaperName = this.riskAssRiskWsHdr.riskHrdPaperName;
-      this.budgetYear = this.riskAssRiskWsHdr.budgetYear;
-      this.userCheck = this.riskAssRiskWsHdr.userCheck;
+      this.riskAssRiskWsHdr.checkPosition = 'ผู้อำนวยการกลุ่มตรวจสอบภายใน';
 
 
       this.riskHrdData.riskHrdId = this.riskAssRiskWsHdr.riskHrdId;
-      this.riskHrdData.riskHrdPaperName = this.riskHrdPaperName;
-      this.riskHrdData.userCheck = this.userCheck;
-      this.riskHrdData.budgetYear = this.budgetYear;
+
 
       url = "ia/int08/findRiskOtherDtlByRiskHrdId";
       this.ajax.post(url, { riskHrdId: this.id }, res => {
@@ -106,7 +103,6 @@ private authService: AuthService
           riskData.color = element.color;
           riskData.isDeleted = 'N';
           this.riskDataList.push(riskData);
-
         }
         this.initDatatable();
       }, errRes => {
@@ -275,19 +271,32 @@ private authService: AuthService
       this.messageBarService.errorModal("กรุณาเพิ่มความ โครงการตามยุทธศาสตร์ อย่างน้อยหนึ่งโครงการ");
       return;
     }
-    this.riskAssRiskWsHdr.riskHrdPaperName = this.riskHrdPaperName;
-    this.riskAssRiskWsHdr.userCheck = this.userCheck;
-    this.riskAssRiskWsHdr.budgetYear = this.budgetYear;
-    //console.log(this.riskHrdData)
-
-
-    if (this.userCheck == null || this.userCheck == undefined || this.userCheck == "") {
-      msgMessage = "กรุณากรอก \"ผู้ตรวจ\" ";
+    if (this.riskAssRiskWsHdr.checkLastName == null || this.riskAssRiskWsHdr.checkLastName == undefined || this.riskAssRiskWsHdr.checkLastName == "") {
+      msgMessage = "กรุณากรอก \"นามสกุลผู้ตรวจ\" ";
     }
-
-    if (this.riskHrdPaperName == null || this.riskHrdPaperName == undefined || this.riskHrdPaperName == "") {
+    if (this.riskAssRiskWsHdr.checkUserName == null || this.riskAssRiskWsHdr.checkUserName == undefined || this.riskAssRiskWsHdr.checkUserName == "") {
+      msgMessage = "กรุณากรอก \"ชื่อผู้ตรวจ\" ";
+    }
+    if (this.riskAssRiskWsHdr.checkUserTitle == null || this.riskAssRiskWsHdr.checkUserTitle == undefined || this.riskAssRiskWsHdr.checkUserTitle == "") {
+      msgMessage = "กรุณากรอก \"คำนำหน้าชื่อผู้ตรวจ\" ";
+    }
+    if (this.riskAssRiskWsHdr.createPosition == null || this.riskAssRiskWsHdr.createPosition == undefined || this.riskAssRiskWsHdr.createPosition == "") {
+      msgMessage = "กรุณากรอก \"ตำแหน่งผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskWsHdr.createLastName == null || this.riskAssRiskWsHdr.createLastName == undefined || this.riskAssRiskWsHdr.createLastName == "") {
+      msgMessage = "กรุณากรอก \"นามสกุลผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskWsHdr.createUserName == null || this.riskAssRiskWsHdr.createUserName == undefined || this.riskAssRiskWsHdr.createUserName == "") {
+      msgMessage = "กรุณากรอก \"ชื่อผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskWsHdr.createUserTitle == null || this.riskAssRiskWsHdr.createUserTitle == undefined || this.riskAssRiskWsHdr.createUserTitle == "") {
+      msgMessage = "กรุณากรอก \"คำนำหน้าชื่อผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskWsHdr.riskHrdPaperName == null || this.riskAssRiskWsHdr.riskHrdPaperName == undefined || this.riskAssRiskWsHdr.riskHrdPaperName == "") {
       msgMessage = "กรุณากรอก \"ชื่อกระดาษทำการ\" ";
     }
+
+
 
     if (msgMessage == "") {
       var url = "ia/int08/saveRiskAssOther";
@@ -312,7 +321,7 @@ private authService: AuthService
 
           this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
           this.router.navigate(["/int08/1/4"], {
-            queryParams: { budgetYear: this.budgetYear }
+            queryParams: { budgetYear: this.riskAssRiskWsHdr.budgetYear }
           });
 
         }
@@ -348,7 +357,7 @@ private authService: AuthService
       // let msg = "";
       if (foo) {
         this.router.navigate(["/int08/1/4"], {
-          queryParams: { budgetYear: this.budgetYear }
+          queryParams: { budgetYear: this.riskAssRiskWsHdr.budgetYear }
         });
       }
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");

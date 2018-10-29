@@ -21,6 +21,7 @@ import { AssetBalance } from "./AssetBalance";
 import { AssetMaintenance } from "./AssetMaintenance";
 import { IntCtrlAss } from "./IntCtrlAss";
 import { RiskAssRiskWsHdr } from "./RiskAssRiskWsHdr";
+import { RiskAssInfHdr } from "./RiskAssInfHdr";
 
 export {
   AlertMessage,
@@ -45,5 +46,6 @@ export {
   AssetBalance,
   AssetMaintenance,
   IntCtrlAss,
-  RiskAssRiskWsHdr
+  RiskAssRiskWsHdr,
+  RiskAssInfHdr
 };

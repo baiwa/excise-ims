@@ -35,18 +35,37 @@ public class RiskAssInfHdr extends BaseEntity {
 	@Column(name = "BUDGET_YEAR")
 	private String budgetYear;
 
-	@Column(name = "USER_CHECK")
-	private String userCheck;
-
 	@Column(name = "ACTIVE")
 	private String active;
 	
 	@Column(name = "PERCENT")
 	private BigDecimal percent;
 	
+//	###################### new Field ########################
 	
+	@Column(name = "CHECK_USER_TITLE")
+	private String checkUserTitle;
 	
+	@Column(name = "CHECK_USER_NAME")
+	private String checkUserName;
 	
+	@Column(name = "CHECK_POSITION")
+	private String checkPosition;
+	
+	@Column(name = "CREATE_USER_TITLE")
+	private String createUserTitle;
+	
+	@Column(name = "CREATE_USER_NAME")
+	private String createUserName;
+	
+	@Column(name = "CREATE_POSITIONN")
+	private String createPosition;
+	
+	@Column(name = "CREATE_LAST_NAME")
+	private String createLastName;
+	
+	@Column(name = "CHECK_LAST_NAME")
+	private String checkLastName;
 
 	public String getBudgetYear() {
 		return budgetYear;
@@ -54,14 +73,6 @@ public class RiskAssInfHdr extends BaseEntity {
 
 	public void setBudgetYear(String budgetYear) {
 		this.budgetYear = budgetYear;
-	}
-
-	public String getUserCheck() {
-		return userCheck;
-	}
-
-	public void setUserCheck(String userCheck) {
-		this.userCheck = userCheck;
 	}
 
 	public Long getRiskAssInfHdrId() {
@@ -102,6 +113,70 @@ public class RiskAssInfHdr extends BaseEntity {
 
 	public void setPercent(BigDecimal percent) {
 		this.percent = percent;
+	}
+
+	public String getCheckUserTitle() {
+		return checkUserTitle;
+	}
+
+	public void setCheckUserTitle(String checkUserTitle) {
+		this.checkUserTitle = checkUserTitle;
+	}
+
+	public String getCheckUserName() {
+		return checkUserName;
+	}
+
+	public void setCheckUserName(String checkUserName) {
+		this.checkUserName = checkUserName;
+	}
+
+	public String getCheckPosition() {
+		return checkPosition;
+	}
+
+	public void setCheckPosition(String checkPosition) {
+		this.checkPosition = checkPosition;
+	}
+
+	public String getCreateUserTitle() {
+		return createUserTitle;
+	}
+
+	public void setCreateUserTitle(String createUserTitle) {
+		this.createUserTitle = createUserTitle;
+	}
+
+	public String getCreateUserName() {
+		return createUserName;
+	}
+
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
+	}
+
+	public String getCreatePosition() {
+		return createPosition;
+	}
+
+	public void setCreatePosition(String createPosition) {
+		this.createPosition = createPosition;
+	}
+
+	public String getCreateLastName() {
+		return createLastName;
+	}
+
+	public void setCreateLastName(String createLastName) {
+		this.createLastName = createLastName;
+	}
+
+	public String getCheckLastName() {
+		return checkLastName;
+	}
+
+	public void setCheckLastName(String checkLastName) {
+		this.checkLastName = checkLastName;
 	}
 	
 }

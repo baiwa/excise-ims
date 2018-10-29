@@ -6,21 +6,22 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Utils } from "../../../../../common/helper";
 import { AuthService } from "services/auth.service";
 import { BreadCrumb } from "models/breadcrumb";
+import { RiskAssRiskWsHdr } from "models/RiskAssRiskWsHdr";
 
 
 declare var jQuery: any;
 declare var $: any;
+const URL = {
+  DROPDOWN: "combobox/controller/getDropByTypeAndParentId"
+};
 @Component({
   selector: 'app-int08-1-8',
   templateUrl: './int08-1-8.component.html',
   styleUrls: ['./int08-1-8.component.css']
 })
 export class Int0818Component implements OnInit {
-  riskAssRiskWsHdr: any;
   id: any;
-  riskHrdPaperName: any;
-  budgetYear: any;
-  userCheck: any;
+
   projectBase: any = '';
   departmentName: any = '';
   riskCost: any = '';
@@ -31,7 +32,10 @@ export class Int0818Component implements OnInit {
   riskHrdData: RiskHrdData;
   isConditionShow: any;
   fileExel: File[];
-  breadcrumb: BreadCrumb[]
+  breadcrumb: BreadCrumb[];
+  riskAssRiskWsHdr: RiskAssRiskWsHdr;
+  titleList: any[] = [];
+
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
@@ -47,8 +51,9 @@ export class Int0818Component implements OnInit {
       { label: "รายละเอียดปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ", route: "#" },
     ];
   }
-  uu
   ngOnInit() {
+    this.riskAssRiskWsHdr = new RiskAssRiskWsHdr();
+    this.riskAssRiskWsHdr.checkPosition = 'ผู้อำนวยการกลุ่มตรวจสอบภายใน';
     this.authService.reRenderVersionProgram('INT-08118');
     $('.menu .item').tab()
     this.riskHrdData = new RiskHrdData();
@@ -57,8 +62,10 @@ export class Int0818Component implements OnInit {
     this.findRiskById();
 
     this.isConditionShow = false;
-    // $("#ConditionRL").modal("show");
-    //$("#ConditionRL").modal("hide");
+    this.ajax.post(URL.DROPDOWN, { type: 'TITLE' }, res => {
+      this.titleList = res.json();
+      this.riskAssRiskWsHdr.checkPosition = 'ผู้อำนวยการกลุ่มตรวจสอบภายใน';
+    });
 
   }
 
@@ -78,20 +85,18 @@ export class Int0818Component implements OnInit {
     this.ajax.post(url, { riskHrdId: this.id }, res => {
 
       this.riskAssRiskWsHdr = res.json();
+      this.riskAssRiskWsHdr.checkPosition = 'ผู้อำนวยการกลุ่มตรวจสอบภายใน';
       console.log(this.riskAssRiskWsHdr);
-      this.riskHrdPaperName = this.riskAssRiskWsHdr.riskHrdPaperName;
-      this.budgetYear = this.riskAssRiskWsHdr.budgetYear;
-      this.userCheck = this.riskAssRiskWsHdr.userCheck;
+
+
 
 
       this.riskHrdData.riskHrdId = this.riskAssRiskWsHdr.riskHrdId;
-      this.riskHrdData.riskHrdPaperName = this.riskHrdPaperName;
-      this.riskHrdData.userCheck = this.userCheck;
-      this.riskHrdData.budgetYear = this.budgetYear;
+      this.riskHrdData.riskHrdPaperName = this.riskAssRiskWsHdr.riskHrdPaperName;
+      this.riskHrdData.budgetYear = this.riskAssRiskWsHdr.budgetYear;
 
       url = "ia/int08/queryRiskAssPerDtlByHrdId";
       this.ajax.post(url, { riskHrdId: this.id, riskHdrName: 'โครงการตามยุทธศาตร์' }, res => {
-        // this.riskDataList
         var jsonObjList = res.json();
         for (let index = 0; index < jsonObjList.length; index++) {
           var element = jsonObjList[index];
@@ -176,12 +181,7 @@ export class Int0818Component implements OnInit {
         { data: "riskCost" },
         { data: "rl" },
         { data: "valueTranslation" }
-        // {
-        //   data: "riskHdrId",
-        //   render: function () {
-        //     return '<button type="button" class="ui mini button del"><i class="trash alternate icon"></i> ลบ </button>';
-        //   }
-        // }
+
       ],
       columnDefs: [
         { targets: [0, 2, 4, 5], className: "center aligned" },
@@ -275,19 +275,33 @@ export class Int0818Component implements OnInit {
       this.messageBarService.errorModal("กรุณาเพิ่มความ โครงการตามยุทธศาสตร์ อย่างน้อยหนึ่งโครงการ");
       return;
     }
-    this.riskAssRiskWsHdr.riskHrdPaperName = this.riskHrdPaperName;
-    this.riskAssRiskWsHdr.userCheck = this.userCheck;
-    this.riskAssRiskWsHdr.budgetYear = this.budgetYear;
-    //console.log(this.riskHrdData)
 
-
-    if (Utils.isNull(this.userCheck)) {
-      msgMessage = "กรุณากรอก \"ผู้ตรวจ\" ";
+    if (this.riskAssRiskWsHdr.checkLastName == null || this.riskAssRiskWsHdr.checkLastName == undefined || this.riskAssRiskWsHdr.checkLastName == "") {
+      msgMessage = "กรุณากรอก \"นามสกุลผู้ตรวจ\" ";
     }
-
-    if (Utils.isNull(this.riskHrdPaperName)) {
+    if (this.riskAssRiskWsHdr.checkUserName == null || this.riskAssRiskWsHdr.checkUserName == undefined || this.riskAssRiskWsHdr.checkUserName == "") {
+      msgMessage = "กรุณากรอก \"ชื่อผู้ตรวจ\" ";
+    }
+    if (this.riskAssRiskWsHdr.checkUserTitle == null || this.riskAssRiskWsHdr.checkUserTitle == undefined || this.riskAssRiskWsHdr.checkUserTitle == "") {
+      msgMessage = "กรุณากรอก \"คำนำหน้าชื่อผู้ตรวจ\" ";
+    }
+    if (this.riskAssRiskWsHdr.createPosition == null || this.riskAssRiskWsHdr.createPosition == undefined || this.riskAssRiskWsHdr.createPosition == "") {
+      msgMessage = "กรุณากรอก \"ตำแหน่งผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskWsHdr.createLastName == null || this.riskAssRiskWsHdr.createLastName == undefined || this.riskAssRiskWsHdr.createLastName == "") {
+      msgMessage = "กรุณากรอก \"นามสกุลผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskWsHdr.createUserName == null || this.riskAssRiskWsHdr.createUserName == undefined || this.riskAssRiskWsHdr.createUserName == "") {
+      msgMessage = "กรุณากรอก \"ชื่อผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskWsHdr.createUserTitle == null || this.riskAssRiskWsHdr.createUserTitle == undefined || this.riskAssRiskWsHdr.createUserTitle == "") {
+      msgMessage = "กรุณากรอก \"คำนำหน้าชื่อผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskWsHdr.riskHrdPaperName == null || this.riskAssRiskWsHdr.riskHrdPaperName == undefined || this.riskAssRiskWsHdr.riskHrdPaperName == "") {
       msgMessage = "กรุณากรอก \"ชื่อกระดาษทำการ\" ";
     }
+
+
 
     if (msgMessage == "") {
       var url = "ia/int08/saveRiskAssOther";
@@ -312,7 +326,7 @@ export class Int0818Component implements OnInit {
 
           this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
           this.router.navigate(["/int08/1/4"], {
-            queryParams: { budgetYear: this.budgetYear }
+            queryParams: { budgetYear: this.riskAssRiskWsHdr.budgetYear }
           });
 
         }
@@ -348,7 +362,7 @@ export class Int0818Component implements OnInit {
       // let msg = "";
       if (foo) {
         this.router.navigate(["/int08/1/4"], {
-          queryParams: { budgetYear: this.budgetYear }
+          queryParams: { budgetYear: this.riskAssRiskWsHdr.budgetYear }
         });
       }
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");

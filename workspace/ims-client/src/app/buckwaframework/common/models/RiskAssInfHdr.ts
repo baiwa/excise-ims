@@ -1,10 +1,8 @@
-export class RiskAssRiskWsHdr {
-    riskHrdId: any;
-    riskHdrName: any = '';
-    active: any;
-    riskHrdPaperName: any;
+export class RiskAssInfHdr {
+    riskAssInfHdrId: any;
+    riskAssInfHdrName: any;
+    riskInfPaperName: any;
     budgetYear: any;
-    percent: any;
     checkUserTitle: any;
     checkUserName: any;
     checkPosition: any;
@@ -13,6 +11,5 @@ export class RiskAssRiskWsHdr {
     createPosition: any;
     createLastName: any;
     checkLastName: any;
-    riskType: any;
 
 }
