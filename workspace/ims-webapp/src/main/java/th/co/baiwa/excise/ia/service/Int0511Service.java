@@ -9,10 +9,20 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +40,8 @@ import th.co.baiwa.excise.ia.persistence.repository.IaStamDetailRepository;
 import th.co.baiwa.excise.ia.persistence.repository.IaStampFileRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int111FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int111Vo;
 import th.co.baiwa.excise.upload.service.ExcalService;
 
 @Service
@@ -51,6 +63,99 @@ public class Int0511Service {
 	@Autowired
 	private LovRepository lovRepository;
 
+	
+	private CellStyle thStyle;
+	private CellStyle cellCenter;
+	private CellStyle cellRight;
+	private CellStyle cellLeft;
+	private CellStyle bgRed;
+	private CellStyle bgYellow;
+	private CellStyle bgGreen;
+	private CellStyle topCenter;
+	private CellStyle topRight;
+	private CellStyle topLeft;
+	private Font fontHeader;
+	
+	private XSSFWorkbook setUpExcel() {
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		
+		thStyle = workbook.createCellStyle();
+		thStyle.setAlignment(HorizontalAlignment.CENTER);
+		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+		thStyle.setBorderBottom(BorderStyle.THIN);
+		thStyle.setBorderLeft(BorderStyle.THIN);
+		thStyle.setBorderRight(BorderStyle.THIN);
+		thStyle.setBorderTop(BorderStyle.THIN);
+		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		cellCenter = workbook.createCellStyle();
+		cellCenter.setAlignment(HorizontalAlignment.CENTER);
+		cellCenter.setBorderBottom(BorderStyle.THIN);
+		cellCenter.setBorderLeft(BorderStyle.THIN);
+		cellCenter.setBorderRight(BorderStyle.THIN);
+		cellCenter.setBorderTop(BorderStyle.THIN);
+
+		cellRight = workbook.createCellStyle();
+		cellRight.setAlignment(HorizontalAlignment.RIGHT);
+		cellRight.setBorderBottom(BorderStyle.THIN);
+		cellRight.setBorderLeft(BorderStyle.THIN);
+		cellRight.setBorderRight(BorderStyle.THIN);
+		cellRight.setBorderTop(BorderStyle.THIN);
+
+		cellLeft = workbook.createCellStyle();
+		cellLeft.setAlignment(HorizontalAlignment.LEFT);
+		cellLeft.setBorderBottom(BorderStyle.THIN);
+		cellLeft.setBorderLeft(BorderStyle.THIN);
+		cellLeft.setBorderRight(BorderStyle.THIN);
+		cellLeft.setBorderTop(BorderStyle.THIN);
+
+		bgRed = workbook.createCellStyle();
+		bgRed.setAlignment(HorizontalAlignment.CENTER);
+		bgRed.setBorderBottom(BorderStyle.THIN);
+		bgRed.setBorderLeft(BorderStyle.THIN);
+		bgRed.setBorderRight(BorderStyle.THIN);
+		bgRed.setBorderTop(BorderStyle.THIN);
+		bgRed.setFillForegroundColor(IndexedColors.RED.getIndex());
+		bgRed.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		bgYellow = workbook.createCellStyle();
+		bgYellow.setAlignment(HorizontalAlignment.CENTER);
+		bgYellow.setBorderBottom(BorderStyle.THIN);
+		bgYellow.setBorderLeft(BorderStyle.THIN);
+		bgYellow.setBorderRight(BorderStyle.THIN);
+		bgYellow.setBorderTop(BorderStyle.THIN);
+		bgYellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		bgYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		bgGreen = workbook.createCellStyle();
+		bgGreen.setAlignment(HorizontalAlignment.CENTER);
+		bgGreen.setBorderBottom(BorderStyle.THIN);
+		bgGreen.setBorderLeft(BorderStyle.THIN);
+		bgGreen.setBorderRight(BorderStyle.THIN);
+		bgGreen.setBorderTop(BorderStyle.THIN);
+		bgGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+		bgGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		fontHeader = workbook.createFont();
+		fontHeader.setBold(true);
+
+		topCenter = workbook.createCellStyle();
+		topCenter.setAlignment(HorizontalAlignment.CENTER);
+		topCenter.setFont(fontHeader);
+
+		topRight = workbook.createCellStyle();
+		topRight.setAlignment(HorizontalAlignment.RIGHT);
+
+		topLeft = workbook.createCellStyle();
+		topLeft.setAlignment(HorizontalAlignment.LEFT);
+		return workbook;
+	}
+
+	
+	private Logger log = LoggerFactory.getLogger(IaFollowUpProjectService.class);
+	
+	
 	public DataTableAjax<Int0511Vo> findAll(Int0511FormVo formVo) {
 	    
 		DataTableAjax<Int0511Vo> dataTableAjax = new DataTableAjax<>();		
@@ -171,11 +276,10 @@ public class Int0511Service {
 		return officeCode.toString();
 	}
 	
-	
 public void exportFile(Int0511FormVo formVo, HttpServletResponse response) throws IOException {
 		
 		/* create spreadsheet */
-		XSSFWorkbook workbook = excalService.setUpExcel();
+		XSSFWorkbook workbook = setUpExcel();
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
 		int cellNum = 0;
@@ -183,45 +287,171 @@ public void exportFile(Int0511FormVo formVo, HttpServletResponse response) throw
 		Cell cell = row.createCell(cellNum);
 		System.out.println("Creating excel");
 		
-		String[] columns = {"ลำดับ", "วันที่ การรับ-จ่าย-ส่งคืน	", "สถานะ การรับ-จ่าย ", "หน่วยงาน/ผู้ประกอบการที่รับ-จ่ายแสตมป์", "หนังสือขอเบิกแสตมป์", "หนังสือส่งแสตมป์","เลขที่ใบ 5 ตอน","ลงวันวันที่","วันที่ตรวจนับ","ผู้ตรวจนับ (1)","ผู้ตรวจนับ (2)","ผู้ตรวจนับ (3)","ชนิดแสตมป์/ขนาดบรรจุ","จำนวน (เล่ม)","จำนวน (ดวง)","มูลค่าที่พิมพ์ (บาทต่อดวง)","รวมค่าพิมพ์ (บาท)","ค่าภาษี (บาท)	รหัสแสตมป์	หมายเหตุ	จัดการ\r\n" + 
-				"เลขที่หนังสือ	ลงวันที่	เลขที่หนังสือ	ลงวันที่	"};
 		
-		for (cellNum = 0; cellNum < columns.length; cellNum++) {
+		/* create data spreadsheet */
+		
+		/* Header */
+		String[] tbTH1 = { "ลำดับ", "โครงการ","วันที่ การรับ-จ่าย-ส่งคืน",
+				           "สถานะ การรับ-จ่าย","หน่วยงาน/ผู้ประกอบการที่รับ-จ่ายแสตมป์","หนังสือขอเบิกแสตมป์",
+				           "","หนังสือส่งแสตมป์","","เลขที่ใบ 5 ตอน","	ลงวันวันที่","วันที่ตรวจนับ","ผู้ตรวจนับ (1)",
+				           "ผู้ตรวจนับ (2)", "ผู้ตรวจนับ (3)", "ชนิดแสตมป์/ขนาดบรรจุ	จำนวน (เล่ม)", "จำนวน (ดวง)", "มูลค่าที่พิมพ์ (บาทต่อดวง)", 
+				           "รวมค่าพิมพ์ (บาท)", "ค่าภาษี (บาท)", "รหัสแสตมป์", "", "	หมายเหตุ", "จัดการ", 
+				};
+		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
-			cell.setCellValue(columns[cellNum]);
-			cell.setCellStyle(excalService.thStyle);
-		}
-		
-	
-		formVo.setDateForm(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateForm()));
-		formVo.setDateTo(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateTo()));
-		List<Int0511Vo> list = checkStampAreaDao.exportFile(formVo);
+			cell.setCellValue(tbTH1[cellNum]);
+			cell.setCellStyle(thStyle);
+		};
 
+		String[] tbTH2 = { "เลขที่หนังสือ", "ลงวันที่", "เลขที่หนังสือ", "ลงวันที่","รหัสแสตมป์ (เริ่ม)","รหัสแสตมป์ (ถึง)" };
+		row = sheet.createRow(1);
+		int cellNumtbTH2 = 2;
+		for (int i = 0; i < tbTH2.length; i++) {
+			cell = row.createCell(cellNumtbTH2);
+			cell.setCellValue(tbTH2[i]);
+			cell.setCellStyle(thStyle);
+			cellNumtbTH2++;
+		};
+		
+		cell = row.createCell(0);cell.setCellStyle(thStyle);
+		cell = row.createCell(1);cell.setCellStyle(thStyle);
+		cell = row.createCell(26);cell.setCellStyle(thStyle);
+		cell = row.createCell(27);cell.setCellStyle(thStyle);
+
+		/* set sheet */
+		// setColumnWidth
+		for (int i = 1; i <= 27; i++) {
+			if (i == 1) {
+				// วันครบกำหนดครั้งที่2
+				sheet.setColumnWidth(i, 76 * 255);
+			} else if (i == 27) {
+				// โครงการ => รายงานการติดตามครั้งที่ 2
+				sheet.setColumnWidth(i, 76 * 80);
+			} else if (i != 1 && i != 27)
+				// การติดตาม
+				sheet.setColumnWidth(i, 76 * 70);
+		}
+
+		// merge(firstRow, lastRow, firstCol, lastCol)
+		int firstCol = 2;
+		while (firstCol < 12) {
+			for (int lastCol = 3; lastCol <= 13; lastCol += 2) {
+				sheet.addMergedRegion(new CellRangeAddress(0, 0, firstCol, lastCol));
+				firstCol += 2;
+			}
+		}
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 16));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 18));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 20));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 23));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 25));
+		
+		sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+		sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
+		sheet.addMergedRegion(new CellRangeAddress(0, 1, 26,26));
+		sheet.addMergedRegion(new CellRangeAddress(0, 1, 27,27));
+		/* End set sheet */
+		
+		
+		/* Detail */
+		List<Int0511Vo> exportDataList = null;
+//		if( StringUtils.isNotBlank(formVo.getProjectName())||StringUtils.isNotBlank(formVo.getStatus())) {
+//			exportDataList = checkStampAreaDao.exportFile(formVo);
+//		}else if(StringUtils.isBlank(formVo.getProjectName()) && StringUtils.isBlank(formVo.getStatus())) {
+//			exportDataList = checkStampAreaDao.exportFile(formVo);
+//		}
+//		
 		rowNum = 2;
 		cellNum = 0;
 		int no = 1;
-		
-        // Create cells
-        for(Int0511Vo item : list) {
-        	row = sheet.createRow(rowNum);
+		for (Int0511Vo detail : exportDataList) {
+			row = sheet.createRow(rowNum);
 			// No.
 			cell = row.createCell(cellNum);
 			cell.setCellValue(no);
-			cell.setCellStyle(excalService.cellCenter);
+			cell.setCellStyle(cellCenter);
 			cellNum++;
 			
-		
+			cell = row.createCell(cellNum);
+			cell.setCellValue(detail.getWorkSheetDetailId());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getDateOfPay())) {
+				cell.setCellValue(detail.getDateOfPay());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getStatus())) {
+				cell.setCellValue(detail.getStatus());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+	
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getStatus())) {
+				cell.setCellValue(detail.getStatus());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getOfficeDesc())) {
+				cell.setCellValue(detail.getOfficeDesc());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getOfficeCode())) {
+				cell.setCellValue(detail.getOfficeCode());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getBookNumberWithdrawStamp())) {
+				cell.setCellValue(detail.getBookNumberWithdrawStamp());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getBookNumberWithdrawStamp())) {
+				cell.setCellValue(detail.getBookNumberWithdrawStamp());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
 			no++;
 			rowNum++;
 			cellNum = 0;
-        }
-        
-        for (int i = 0; i < columns.length; i++) {
-        	   sheet.autoSizeColumn(i);
-        	  }
-
+		}
+		
+		
 		/*set	fileName*/		
-		String fileName ="Checklist";
+		String fileName ="FollowUpProject";
 		System.out.println(fileName);
 		
 		/* write it as an excel attachment */
@@ -238,7 +468,7 @@ public void exportFile(Int0511FormVo formVo, HttpServletResponse response) throw
 		outStream.close();
 		
 		System.out.println("Done");
-
 	}
+
 
 }

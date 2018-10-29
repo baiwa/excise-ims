@@ -1,22 +1,21 @@
 package th.co.baiwa.excise.ia.persistence.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511Vo;
-import th.co.baiwa.excise.ia.persistence.vo.Int065FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int065Vo;
 import th.co.baiwa.excise.utils.OracleUtils;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public class CheckStampAreaDao {
@@ -59,6 +58,8 @@ public class CheckStampAreaDao {
 
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
+		params.add(SQL);
+        params.add(SQL);
         if(StringUtils.isNotBlank(formVo.getSector())){
             sql.append(" AND EXCISE_DEPARTMENT=? ");
             params.add(StringUtils.trim(formVo.getSector()));
@@ -84,6 +85,8 @@ public class CheckStampAreaDao {
 	public List<Int0511Vo> exportFile(Int0511FormVo formVo) {
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
+		params.add(SQL);
+        params.add(SQL);
         if(StringUtils.isNotBlank(formVo.getSector())){
             sql.append(" AND EXCISE_DEPARTMENT=? ");
             params.add(StringUtils.trim(formVo.getSector()));
@@ -105,10 +108,7 @@ public class CheckStampAreaDao {
 		List<Int0511Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), stamRowmapper);
 		return list;
 
-	}
-	
-	
-	
+	}	
 
 	private RowMapper<Int0511Vo> stamRowmapper = new RowMapper<Int0511Vo>() {
 		@Override

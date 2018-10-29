@@ -7,7 +7,7 @@ import { async } from '@angular/core/testing';
 import { FormSearch } from 'projects/internal-audit/int06/int06-6/form-search.model';
 declare var $: any;
 const URL = {
-  export:"ia/int065/exportFile"
+  export: "ia/int0511/exportFile"
 }
 @Component({
   selector: 'app-int05-1-1',
@@ -84,22 +84,22 @@ export class Int0511Component implements OnInit {
     let url = "ia/int05111/status"
     this.ajax.get(url, res => {
       this.statusList = res.json();
-    })    
+    })
   }
 
 
-  exportFile=()=>{    
+  exportFile = () => {
     let param = "";
-    param +="?sector=" +  this.form.sector;
-    param +="&area=" +  this.form.area;
-    param +="&branch=" + this.form.branch;
-    param +="&dateFrom=" + this.form.dateFrom;
-    param +="&dateTo=" + this.form.dateTo;
-    param +="&budgetType=" +$("#budgetType").val();
-    console.log(URL.export+param);
-    this.ajax.download(URL.export+param);
+    param += "?sector=" + this.form.sector;
+    param += "&area=" + this.form.area;
+    param += "&branch=" + this.form.branch;
+    param += "&dateFrom=" + this.form.dateFrom;
+    param += "&dateTo=" + this.form.dateTo;
+    param += "&budgetType=" + $("#budgetType").val();
+    console.log(URL.export + param);
+    this.ajax.download(URL.export + param);
 
-    
+
 
   }
 
@@ -205,7 +205,7 @@ export class Int0511Component implements OnInit {
             "dateForm": $("#dateForm").val(),
             "dateTo": $("#dateTo").val(),
             "searchFlag": $("#searchFlag").val(),
-            "status" : $("#status").val()
+            "status": $("#status").val()
           }));
         },
       },
@@ -374,44 +374,44 @@ export class Int0511Component implements OnInit {
           this.formModal = new FormModal();
           this.loading = false;
         },
-        onShow: async() => {
-          
-            console.log("FormModal : ", data);
-            this.calenda();
-            this.formModal.dateOfPay = await data.dateOfPay;
-            this.formModal.bookNumberDeliverStamp =  await data.bookNumberDeliverStamp;
-            this.formModal.bookNumberWithdrawStamp = await data.bookNumberWithdrawStamp;
-            this.formModal.createdDate = await data.createdDate;
-            this.formModal.dateDeliverStamp = await data.dateDeliverStamp;
-            this.formModal.dateWithdrawStamp = await data.dateWithdrawStamp;
-            this.formModal.departmentName = await data.departmentName;
-            this.formModal.exciseDepartment = await data.exciseDepartment;
-            this.formModal.exciseDistrict = await data.exciseDistrict;
-            this.formModal.exciseRegion = await data.exciseRegion;
-            this.formModal.fivePartDate = await data.fivePartDate;
-            this.formModal.fivePartNumber = await data.fivePartNumber;
-            this.formModal.note = await data.note;
-            this.formModal.numberOfBook = await data.numberOfBook;
-            this.formModal.numberOfStamp = await data.numberOfStamp;
-            this.formModal.serialNumber = await data.serialNumber;
-            this.formModal.stampBrand = await data.stampBrand;
-            this.formModal.stampCheckDate = await data.stampCheckDate;
-            this.formModal.stampChecker = await data.stampChecker;
-            this.formModal.stampChecker2 = await data.stampChecker2;
-            this.formModal.stampChecker3 = await data.stampChecker3;
-            this.formModal.stampCodeEnd = await data.stampCodeEnd;
-            this.formModal.stampCodeStart = await data.stampCodeStart;
-            this.formModal.stampType = await data.stampType;
-            this.formModal.status = await data.status;
-            this.formModal.sumOfValue = await data.sumOfValue;
-            this.formModal.taxStamp = await data.taxStamp;
-            this.formModal.valueOfStampPrinted = await data.valueOfStampPrinted;
-            this.formModal.workSheetDetailId = await data.workSheetDetailId;
-            this.formModal.fileName = await data.fileName;
-            this.formModal.dateOfPay = await data.dateOfPay;
+        onShow: async () => {
 
-            await $("#status").dropdown('set selected', this.formModal.status);            
-         
+          console.log("FormModal : ", data);
+          this.calenda();
+          this.formModal.dateOfPay = await data.dateOfPay;
+          this.formModal.bookNumberDeliverStamp = await data.bookNumberDeliverStamp;
+          this.formModal.bookNumberWithdrawStamp = await data.bookNumberWithdrawStamp;
+          this.formModal.createdDate = await data.createdDate;
+          this.formModal.dateDeliverStamp = await data.dateDeliverStamp;
+          this.formModal.dateWithdrawStamp = await data.dateWithdrawStamp;
+          this.formModal.departmentName = await data.departmentName;
+          this.formModal.exciseDepartment = await data.exciseDepartment;
+          this.formModal.exciseDistrict = await data.exciseDistrict;
+          this.formModal.exciseRegion = await data.exciseRegion;
+          this.formModal.fivePartDate = await data.fivePartDate;
+          this.formModal.fivePartNumber = await data.fivePartNumber;
+          this.formModal.note = await data.note;
+          this.formModal.numberOfBook = await data.numberOfBook;
+          this.formModal.numberOfStamp = await data.numberOfStamp;
+          this.formModal.serialNumber = await data.serialNumber;
+          this.formModal.stampBrand = await data.stampBrand;
+          this.formModal.stampCheckDate = await data.stampCheckDate;
+          this.formModal.stampChecker = await data.stampChecker;
+          this.formModal.stampChecker2 = await data.stampChecker2;
+          this.formModal.stampChecker3 = await data.stampChecker3;
+          this.formModal.stampCodeEnd = await data.stampCodeEnd;
+          this.formModal.stampCodeStart = await data.stampCodeStart;
+          this.formModal.stampType = await data.stampType;
+          this.formModal.status = await data.status;
+          this.formModal.sumOfValue = await data.sumOfValue;
+          this.formModal.taxStamp = await data.taxStamp;
+          this.formModal.valueOfStampPrinted = await data.valueOfStampPrinted;
+          this.formModal.workSheetDetailId = await data.workSheetDetailId;
+          this.formModal.fileName = await data.fileName;
+          this.formModal.dateOfPay = await data.dateOfPay;
+
+          await $("#status").dropdown('set selected', this.formModal.status);
+
         },
       }).modal('show');
     });
