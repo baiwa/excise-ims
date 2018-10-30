@@ -1,6 +1,8 @@
-<app-breadcrumb [route]="breadcrumb" ></app-breadcrumb>
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 
 <div class="ui grid">
+
+  <!-- form 1 -->
   <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>กำหนดปัจจัยเสี่ยงประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
@@ -10,13 +12,11 @@
         <div class="inline fields">
           <div class="four wide field "></div>
           <div class="two wide field ">
-            <label>ปัจจัยเสี่ยง</label>
+            <label class="text-right full-width">ปัจจัยเสี่ยง</label>
           </div>
           <div class="four wide field ">
-            <input type="text" placeholder="ปัจจัยเสี่ยง" class="custom" name="riskHdrName" id="riskHdrName"
-              [(ngModel)]="riskHdrName">
+            <input type="text" placeholder="ปัจจัยเสี่ยง" class="custom" name="riskHdrName" id="riskHdrName" [(ngModel)]="riskHdrName">
           </div>
-
           <div class="four wide field ">
             <button class="ui mini green button" (click)="addRiskAssRiskWsHdr()">
               <i class="add icon"></i>
@@ -24,10 +24,11 @@
             </button>
           </div>
         </div>
+
+        <!-- table -->
         <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%">
           <thead>
             <tr>
-
               <th style="text-align: center !important">ลำดับที่</th>
               <th style="text-align: center !important">ปัจจัยเสี่ยง</th>
               <th style="text-align: center !important">ปีงบประมาณ</th>
@@ -55,14 +56,8 @@
               ยกเลิก
             </button>
           </div>
-
         </div>
       </div>
-
-
-
-
-
     </div>
   </div>
 </div>

@@ -9,7 +9,7 @@ import { AuthService } from "services/auth.service";
 import { BreadCrumb } from "models/breadcrumb";
 import { RiskAssInfHdr } from "models/RiskAssInfHdr";
 
-declare var $: any;
+declare var jQuery: any;
 declare var $: any;
 const URL = {
   DROPDOWN: "combobox/controller/getDropByTypeAndParentId"
@@ -22,27 +22,18 @@ const URL = {
 export class Int0824Component implements OnInit {
   // BreadCrumb
   breadcrumb: BreadCrumb[];
-
   riskAssRiskInfHdr: RiskAssInfHdr;
-
-  id: any;
   riskAssInfHdr: RiskAssInfHdr;
-
+  id: any;
   infName: any = '';
   riskCost: any = '';
-
   datatable: any;
-
-
   //Data
   riskOtherData: RiskOtherData;
   riskOtherDataList: RiskOtherData[] = [];
   dataTableList: RiskOtherData[] = [];
-
   riskInfHrdData: RiskInfHrdData;
-
   fileExel: File[];
-
   isConditionShow: any;
   titleList: any;
 
@@ -58,29 +49,23 @@ export class Int0824Component implements OnInit {
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "การประเมินความเสี่ยง", route: "#" },
       { label: "ประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต", route: "#" },
-      { label: this.route.snapshot.queryParams["nameLable"], route: "#" },
+      { label: "รายละเอียด"+this.route.snapshot.queryParams["nameLable"], route: "#" },
     ];
   }
 
   ngOnInit() {
     this.riskAssRiskInfHdr = new RiskAssInfHdr();
     this.authService.reRenderVersionProgram('INT-08240');
-
     $('.menu .item').tab();
-
     this.riskInfHrdData = new RiskInfHrdData();
     this.id = this.route.snapshot.queryParams["id"];
     this.ajax.post(URL.DROPDOWN, { type: 'TITLE' }, res => {
       this.titleList = res.json();
-
     });
     this.findRiskById();
-
     this.isConditionShow = false;
-
   }
   ngAfterViewInit() {
-
   }
 
   findRiskById() {

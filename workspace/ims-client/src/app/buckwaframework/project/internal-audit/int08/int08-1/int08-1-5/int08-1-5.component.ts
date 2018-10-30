@@ -23,7 +23,6 @@ export class Int0815Component implements OnInit {
   riskAssRiskWsHdr: RiskAssRiskWsHdr;
   isConditionShow: any;
   breadcrumb: BreadCrumb[];
-
   titleList: any[] = [];
 
   constructor(private router: Router,
@@ -78,8 +77,7 @@ export class Int0815Component implements OnInit {
       ordering: false,
       pageLength: 10,
       processing: true,
-      serverSide: true,
-
+      serverSide: false,
       paging: true,
       ajax: {
         type: "POST",

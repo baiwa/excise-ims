@@ -19,8 +19,8 @@ const URL = {
 })
 export class Int0816Component implements OnInit {
   riskAssRiskWsHdr: RiskAssRiskWsHdr;
+  riskAsskWsHdr: RiskAssRiskWsHdr;
   id: any;
-
   projectBase: any = '';
   departmentName: any = '';
   riskCost: any = '';
@@ -37,7 +37,6 @@ export class Int0816Component implements OnInit {
     private route: ActivatedRoute,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
-
     private authService: AuthService
   ) {
     this.fileExel = new Array<File>(); // initial file array
@@ -45,7 +44,7 @@ export class Int0816Component implements OnInit {
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "การประเมินความเสี่ยง ", route: "#" },
       { label: "ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต", route: "#" },
-      { label: "รายละเอียดปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ", route: "#" },
+      { label: "รายละเอียด"+this.route.snapshot.queryParams["nameLable"], route: "#" },
     ];
   }
 
@@ -66,7 +65,6 @@ export class Int0816Component implements OnInit {
 
   ngAfterViewInit() {
 
-
   }
 
   getConditionShow() {
@@ -76,12 +74,13 @@ export class Int0816Component implements OnInit {
 
 
   findRiskById() {
+    this.riskAsskWsHdr = new RiskAssRiskWsHdr();
     let url = "ia/int08/findRiskById"
     this.ajax.post(url, { riskHrdId: this.id }, res => {
 
       this.riskAssRiskWsHdr = res.json();
       this.riskAssRiskWsHdr.checkPosition = 'ผู้อำนวยการกลุ่มตรวจสอบภายใน';
-
+      console.log(this.riskAssRiskWsHdr);
 
       this.riskHrdData.riskHrdId = this.riskAssRiskWsHdr.riskHrdId;
 
@@ -151,7 +150,7 @@ export class Int0816Component implements OnInit {
       }
     });
 
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -180,9 +179,9 @@ export class Int0816Component implements OnInit {
         }
       ],
       columnDefs: [
-        { targets: [0, 2, 4, 5, 6], className: "center aligned" },
+        { targets: [0, 4, 5, 6], className: "center aligned" },
         { targets: [3], className: "right aligned" },
-        { targets: [1], className: "left aligned" }
+        { targets: [1, 2], className: "left aligned" }
       ],
       createdRow: function (row, data, dataIndex) {
         console.log("row");

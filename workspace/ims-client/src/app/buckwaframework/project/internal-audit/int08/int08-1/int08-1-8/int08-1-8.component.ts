@@ -20,8 +20,8 @@ const URL = {
   styleUrls: ['./int08-1-8.component.css']
 })
 export class Int0818Component implements OnInit {
-  id: any;
 
+  id: any;
   projectBase: any = '';
   departmentName: any = '';
   riskCost: any = '';
@@ -160,7 +160,7 @@ export class Int0818Component implements OnInit {
       }
     });
 
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,

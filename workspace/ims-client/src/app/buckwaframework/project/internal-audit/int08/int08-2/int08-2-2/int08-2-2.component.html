@@ -1,64 +1,63 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
-  <div class="ui grid">
-      <div class="sixteen wide column">
-          <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-            <span>กำหนดปัจจัยเสี่ยงประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต</span>
+
+<div class="ui grid">
+
+  <!-- form 1 -->
+  <div class="sixteen wide column">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดปัจจัยเสี่ยงประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต</span>
+    </div>
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="four wide field "></div>
+          <div class="two wide field ">
+            <label class="text-right full-width">ปัจจัยเสี่ยง</label>
           </div>
-
-          <div class="ui attached segment">
-              <div class="ui form">
-                  <div class="inline fields">
-                      <div class="four wide field "></div>
-                      <div class="two wide field ">
-                        <label class="text-right full-width">ปัจจัยเสี่ยง</label>
-                      </div>
-                      <div class="four wide field ">
-                        <input type="text" placeholder="ปัจจัยเสี่ยง" maxlength="100" name="riskAssInfHdrName" id="riskAssInfHdrName" [(ngModel)]="riskAssInfHdrName" >
-                      </div>
-                      <div class="four wide field ">
-                        <button class="ui mini green button" (click)="addRiskAssInfHdr()" >
-                          <i class="add icon"></i>
-                          เพิ่ม
-                        </button>
-                      </div>
-                  </div>
-                  
-                  <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%;">
-                    <thead>
-                      <tr>
-                        <th style="text-align: center !important">ลำดับที่</th>
-                        <th style="text-align: center !important" >ปัจจัยเสี่ยง</th>
-                        <th style="text-align: center !important">ปีงบประมาณ</th>
-                        <th style="text-align: center !important">วันที่สร้าง</th>
-                        <th style="text-align: center !important">ผู้สร้าง</th>
-                        <th style="text-align: center !important">สถานะการใช้งาน</th>
-                        <th style="text-align: center !important">จัดการ</th>
-                      </tr>
-                    </thead>
-                  </table>
-
-                  <div class="inline fields"></div>
-                  <div class="inline fields ">
-                    <div class="sixteen wide field ">
-                      <div class="six wide field "></div>
-                      <button class="ui mini primary button" >
-                        <i class="save icon"></i>
-                        บันทึก
-                      </button>
-                      <button class="ui mini primary button" (click)="configAllCondition()">
-                        <i class="setting icon"></i>
-                        กำหนดเงื่อนไขปัจจัยเสี่ยงรวม
-                      </button>
-                      <button class="ui mini  button" (click)="cancelFlow()">
-                          <i class="remove icon"></i>
-                          ยกเลิก
-                      </button>
-                    </div>
-          
-                  </div>
-
-              </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="ปัจจัยเสี่ยง" maxlength="100" name="riskAssInfHdrName" id="riskAssInfHdrName" [(ngModel)]="riskAssInfHdrName">
           </div>
-          
+          <div class="four wide field ">
+            <button class="ui mini green button" (click)="addRiskAssInfHdr()">
+              <i class="add icon"></i>
+              เพิ่ม
+            </button>
+          </div>
+        </div>
+
+        <!-- table -->
+        <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%;">
+          <thead>
+            <tr>
+              <th style="text-align: center !important">ลำดับที่</th>
+              <th style="text-align: center !important">ปัจจัยเสี่ยง</th>
+              <th style="text-align: center !important">ปีงบประมาณ</th>
+              <th style="text-align: center !important">วันที่สร้าง</th>
+              <th style="text-align: center !important">ผู้สร้าง</th>
+              <th style="text-align: center !important">สถานะการใช้งาน</th>
+              <th style="text-align: center !important">จัดการ</th>
+            </tr>
+          </thead>
+        </table>
+        <div class="inline fields"></div>
+        <div class="inline fields ">
+          <div class="sixteen wide field ">
+            <div class="six wide field "></div>
+            <button class="ui mini primary button">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <button class="ui mini primary button" (click)="configAllCondition()">
+              <i class="setting icon"></i>
+              กำหนดเงื่อนไขปัจจัยเสี่ยงรวม
+            </button>
+            <button class="ui mini  button" (click)="cancelFlow()">
+              <i class="remove icon"></i>
+              ยกเลิก
+            </button>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
+</div>

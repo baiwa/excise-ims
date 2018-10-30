@@ -1,12 +1,12 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
 <div class="ui grid">
 
+  <!-- form 1 -->
   <div class="sixteen wide column">
-
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
     </div>
-
     <div class="ui attached segment">
       <div class="ui form">
         <div class="inline fields">
@@ -17,14 +17,14 @@
           <div class="four wide field ">
             <div class="ui calendar" style="width:100%" id="year">
               <div class="ui input left icon">
-               <i class="calendar alter nate outline icon"></i>
+                <i class="calendar alter nate outline icon"></i>
                 <input type="calendar" id="budgetYear" placeholder="ปปปป" maxlength="4" name="budgetYear" [(ngModel)]="budgetYear" readonly=""
                   autocomplete="off">
               </div>
             </div>
           </div>
           <div class="two wide field ">
-            <label>ปัจจัยเสี่ยง</label>
+            <label class="text-right full-width">ปัจจัยเสี่ยง</label>
           </div>
           <div class="four wide field ">
             <select class="ui search dropdown ai" id="riskType" name="riskType" [(ngModel)]="riskType">
@@ -35,7 +35,6 @@
         </div>
       </div>
       <br>
-
       <div class="ui center aligned grid">
         <div class="sixteen wide column">
           <button class="ui mini primary button" (click)="searchDataTable()">
@@ -52,10 +51,11 @@
           </button>
         </div>
       </div>
+
+      <!-- table -->
       <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
         <thead>
           <tr>
-            <!-- <th></th> -->
             <th style="text-align: center !important">ลำดับที่</th>
             <th style="text-align: center !important" class="four wide field ">ชื่อกระดาษทำการ</th>
             <th style="text-align: center !important" class="four wide field ">ปัจจัยเสี่ยง</th>
@@ -66,7 +66,6 @@
           </tr>
         </thead>
       </table>
-
       <div class="ui five column centered grid" *ngIf="buttonFullYear">
         <div class="column">
           <button class="ui mini primary button" (click)="renderForm4()">
@@ -76,8 +75,9 @@
         </div>
       </div>
     </div>
-    <BR>
+    <br>
 
+    <!-- form 2 -->
     <div class="sixteen wide column" *ngIf="showForm==1">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
@@ -96,7 +96,7 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-        <!-- row 1 -->
+        <!-- row condition -->
         <div *ngFor="let con of condition; let i=index">
           <div class="ui form">
             <div class="inline fields">
@@ -134,8 +134,7 @@
             </div>
           </div>
         </div>
-
-
+        <!-- table condition -->
         <div class="inline fields">
           <table id="dataTableF1" class="ui small celled table nowrap striped selectable" style="width: 100%;">
             <thead>
@@ -168,28 +167,23 @@
               <i class="close  icon"></i>
               ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
 
-
-
+    <!-- form 3 -->
     <div class="sixteen wide column" *ngIf="showForm==2">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{riskAssRiskWsHdr.budgetYear}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr.riskHdrName}}</label>
           </div>
@@ -197,11 +191,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row condition 2 -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -237,10 +228,8 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
+        <!-- table condition 2 -->
         <div class="inline fields">
           <table id="dataTableF2" class="ui small celled table nowrap striped selectable" style="width: 100%;">
             <thead>
@@ -257,7 +246,6 @@
               </tr>
             </thead>
           </table>
-
         </div>
         <br>
         <div class="ui center aligned grid">
@@ -270,26 +258,23 @@
               <i class="close icon"></i>
               ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
 
+    <!-- form 4 -->
     <div class="sixteen wide column" *ngIf="showForm==3">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{riskAssRiskWsHdr != null ?riskAssRiskWsHdr.budgetYear : ''}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง :{{riskAssRiskWsHdr != null ?riskAssRiskWsHdr.riskHdrName : ''}} </label>
           </div>
@@ -297,11 +282,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row condition 3 -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -337,10 +319,8 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
+        <!-- table condition 3 -->
         <div class="inline fields">
           <table id="dataTableF3" class="ui small celled table nowrap striped selectable" style="width: 100%;">
             <thead>
@@ -355,11 +335,8 @@
                 <th style="text-align: center !important ;border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th>
                 <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
               </tr>
-
-
             </thead>
           </table>
-
         </div>
         <br>
         <div class="ui center aligned grid">
@@ -372,28 +349,23 @@
               <i class=" close icon"></i>
               ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
 
-
-
+    <!-- form 5 -->
     <div class="sixteen wide column" *ngIf="showForm==4">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{budgetYear}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง : โครงการยุทธศาสตร์ของกรมสรรพสามิต</label>
           </div>
@@ -401,11 +373,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row condition 4 -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -441,10 +410,8 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
+        <!-- table condition 4 -->
         <div class="inline fields">
           <table id="dataTableF3" class="ui small celled table nowrap striped selectable" style="width: 100%;">
             <thead id="trColumn">
@@ -452,7 +419,6 @@
             <tbody id="tbody">
             </tbody>
           </table>
-
         </div>
         <br>
         <div class="ui center aligned grid">
@@ -465,14 +431,9 @@
               <i class="close icon"></i>
               ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
-
-
-
-
   </div>
 </div>

@@ -19,13 +19,9 @@ const URL = {
 export class Int0823Component implements OnInit {
   // BreadCrumb
   breadcrumb: BreadCrumb[];
-
-
   id: any;
   riskAssInfHdr: RiskAssInfHdr;
-
   isConditionShow: any;
-
   datatable: any;
   titleList: any[];
 
@@ -41,11 +37,12 @@ export class Int0823Component implements OnInit {
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "การประเมินความเสี่ยง", route: "#" },
       { label: "ประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต", route: "#" },
-      { label: "ปัจจัยเสี่ยงจำนวนครั้งการใช้งานไม่ได้ของระบบ", route: "#" },
+      { label: "รายละเอียดปัจจัยเสี่ยงจำนวนครั้งการใช้งานไม่ได้ของระบบ", route: "#" },
     ];
   }
 
   ngOnInit() {
+    this.riskAssInfHdr = new RiskAssInfHdr();
     this.riskAssInfHdr.checkPosition = 'ผู้อำนวยการกลุ่มตรวจสอบภายใน';
     this.authService.reRenderVersionProgram('INT-08230');
     this.id = this.route.snapshot.queryParams["id"];
@@ -78,7 +75,7 @@ export class Int0823Component implements OnInit {
       ordering: false,
       pageLength: 10,
       processing: true,
-      serverSide: true,
+      serverSide: false,
       scrollY: true,
       scrollX: true,
       scrollCollapse: true,

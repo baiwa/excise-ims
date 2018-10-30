@@ -84,7 +84,6 @@ public class Int082Controller {
 		logger.info("BuggetYear : " + riskAssInfHdr.getBudgetYear());
 		logger.info("Active : " + riskAssInfHdr.getActive());
 		return riskAssInfService.searchRiskCriteriaForDatatable(riskAssInfHdr, dataTableRequest);
-	
 	}
 	
 	

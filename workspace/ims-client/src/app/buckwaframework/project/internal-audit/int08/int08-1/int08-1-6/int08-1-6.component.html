@@ -1,6 +1,7 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 
 <div class="ui grid">
+
   <!-- form 1 -->
   <div class="sixteen wide column" *ngIf="!getConditionShow()">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
@@ -9,7 +10,6 @@
     <div class="ui attached segment">
       <div class="ui form">
         <div class="inline fields">
-          <div class="two wide field "></div>
           <div class="two wide field required">
             <label class="text-right full-width">ชื่อกระดาษทำการ</label>
           </div>
@@ -17,10 +17,7 @@
             <input type="text" placeholder="ชื่อกระดาษทำการ" maxlength="100" class="custom" name="riskHrdPaperName" id="riskHrdPaperName"
               [(ngModel)]="riskAssRiskWsHdr.riskHrdPaperName">
           </div>
-        </div>
-        <div class="inline fields">
-          <div class="two wide field "></div>
-          <div class="two wide field required">
+          <div class="one wide field required">
             <label class="text-right full-width">ปีงบประมาณ</label>
           </div>
           <div class="four wide field ">
@@ -29,212 +26,201 @@
           </div>
         </div>
         <div class="inline fields">
-          <div class="two wide field "></div>
           <div class="two wide field required">
             <label class="text-right full-width">ผู้จัดทำ : ชื่อ </label>
           </div>
           <div class="two wide field ">
             <div class="ui input">
               <select class="ui dropdown ai selection" style="width: 100%;" id="createUserTitle" [(ngModel)]="riskAssRiskWsHdr.createUserTitle">
-                <option value="00">เลือก</option>
+                <option value="00">กรุณาเลือก</option>
                 <option *ngFor="let data of titleList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
               </select>
             </div>
           </div>
-          <div class="two wide field ">
-            <input type="text" placeholder="ชื่อผู้จัดทำ" class="custom" name="createUserName" id="createUserName"
-              [(ngModel)]="riskAssRiskWsHdr.createUserName">
+          <div class="three wide field ">
+            <input type="text" placeholder="ชื่อผู้จัดทำ" class="custom" name="createUserName" id="createUserName" [(ngModel)]="riskAssRiskWsHdr.createUserName">
           </div>
           <div class="one wide field required">
             <label class="text-right full-width">นามสกุล</label>
           </div>
-          <div class="two wide field ">
-            <input type="text" placeholder="นามสกุล" class="custom" name="createLastName" id="createLastName"
-              [(ngModel)]="riskAssRiskWsHdr.createLastName">
+          <div class="three wide field ">
+            <input type="text" placeholder="นามสกุล" class="custom" name="createLastName" id="createLastName" [(ngModel)]="riskAssRiskWsHdr.createLastName">
           </div>
           <div class="one wide field required">
             <label class="text-right full-width">ตำแหน่ง</label>
           </div>
-          <div class="two wide field ">
-            <input type="text" placeholder="ตำแหน่ง" class="custom" name="createPosition" id="createPosition"
-              [(ngModel)]="riskAssRiskWsHdr.createPosition">
+          <div class="four wide field ">
+            <input type="text" placeholder="ตำแหน่ง" class="custom" name="createPosition" id="createPosition" [(ngModel)]="riskAssRiskWsHdr.createPosition">
           </div>
         </div>
         <div class="inline fields">
-          <div class="two wide field "></div>
           <div class="two wide field required">
             <label class="text-right full-width">ผู้ตรวจ : ชื่อ </label>
           </div>
           <div class="two wide field ">
             <div class="ui input">
               <select class="ui dropdown ai selection" style="width: 100%;" id="checkUserTitle" [(ngModel)]="riskAssRiskWsHdr.checkUserTitle">
-                <option value="00">เลือก</option>
+                <option value="00">กรุณาเลือก</option>
                 <option *ngFor="let data of titleList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
               </select>
             </div>
           </div>
-          <div class="two wide field ">
-            <input type="text" placeholder="ชื่อผู้ตรวจ" class="custom" name="checkUserName" id="checkUserName"
-              [(ngModel)]="riskAssRiskWsHdr.checkUserName">
+          <div class="three wide field ">
+            <input type="text" placeholder="ชื่อผู้ตรวจ" class="custom" name="checkUserName" id="checkUserName" [(ngModel)]="riskAssRiskWsHdr.checkUserName">
           </div>
           <div class="one wide field required">
             <label class="text-right full-width">นามสกุล</label>
           </div>
-          <div class="two wide field ">
+          <div class="three wide field ">
             <input type="text" placeholder="นามสกุล" class="custom" name="checkLastName" id="checkLastName" [(ngModel)]="riskAssRiskWsHdr.checkLastName">
           </div>
           <div class="one wide field required">
             <label class="text-right full-width">ตำแหน่ง</label>
           </div>
-          <div class="two wide field ">
-            <input type="text" placeholder="ตำแหน่ง" class="custom" name="checkPosition" id="checkPosition" disabled
-              [(ngModel)]="riskAssRiskWsHdr.checkPosition">
+          <div class="four wide field ">
+            <input type="text" placeholder="ตำแหน่ง" class="custom" name="checkPosition" id="checkPosition" disabled [(ngModel)]="riskAssRiskWsHdr.checkPosition">
           </div>
         </div>
-        <div class="inline fields"></div>
       </div>
     </div>
   </div>
+</div>
+<br/>
+<!-- form 2 -->
+<div class="sixteen wide column ">
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>เพิ่มข้อมูลกระดาษทำการ{{riskAssRiskWsHdr.riskHdrName}}</span>
+  </div>
+  <div class="ui attached segment">
+    <div class="ui form">
+      <div class="ui top attached tabular menu">
+        <a class="active item" data-tab="first">เพิ่มข้อมูล</a>
+        <a class="item" data-tab="second">เพิ่มข้อมูล Excel File</a>
+      </div>
 
-  <!-- form 2 -->
-  <div class="sixteen wide column ">
-    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>เพิ่มข้อมูลกระดาษทำการ{{riskAssRiskWsHdr.riskHdrName}}</span>
-    </div>
-    <div class="ui attached segment">
-      <div class="ui form">
-        <div class="ui top attached tabular menu">
-          <a class="active item" data-tab="first">เพิ่มข้อมูล</a>
-          <a class="item" data-tab="second">เพิ่มข้อมูล Excel File</a>
-        </div>
-
-        <!-- insert form 1 -->
-        <div class="ui bottom attached active tab segment" data-tab="first">
-          <div class="inline fields">
-            <div class="two wide field "></div>
-            <div class="two wide field required">
-              <label class="text-right full-width">ชื่อโครงการ</label>
-            </div>
-            <div class="ten wide field ">
-              <input type="text" placeholder="ชื่อโครงการ" maxlength="100" class="custom" name="projectBase" id="projectBase"
-                [(ngModel)]="projectBase">
-            </div>
+<!-- insert form 1 -->
+      <div class="ui bottom attached active tab segment" data-tab="first">
+        <div class="inline fields">
+          <div class="two wide field "></div>
+          <div class="two wide field required">
+            <label class="text-right full-width">ชื่อโครงการ</label>
           </div>
-          <div class="inline fields">
-            <div class="two wide field required"></div>
-            <div class="two wide field">
-              <label class="text-right full-width">ชื่อหน่วยงาน</label>
-            </div>
-            <div class="four wide field ">
-              <input type="text" placeholder="ชื่อหน่วยงาน" class="custom" name="departmentName" id="departmentName"
-                [(ngModel)]="departmentName">
-            </div>
-            <div class="two wide field required">
-              <label class="text-right full-width">ค่าความเสี่ยง</label>
-            </div>
-            <div class="four wide field ">
-              <input type="text" placeholder="ค่าความเสี่ยง" class="custom" name="riskCost" id="riskCost" [(ngModel)]="riskCost">
-            </div>
-          </div>
-          <br>
-          <div class="ui center aligned grid">
-            <div class="four wide column">
-              <button class="ui mini green button" (click)="addObjRiskDtl() ">
-                <i class="plus icon"></i>
-                เพิ่ม
-              </button>
-            </div>
+          <div class="ten wide field ">
+            <input type="text" placeholder="ชื่อโครงการ" maxlength="100" class="custom" name="projectBase" id="projectBase" [(ngModel)]="projectBase">
           </div>
         </div>
+        <div class="inline fields">
+          <div class="two wide field required"></div>
+          <div class="two wide field">
+            <label class="text-right full-width">ชื่อหน่วยงาน</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="ชื่อหน่วยงาน" class="custom" name="departmentName" id="departmentName" [(ngModel)]="departmentName">
+          </div>
+          <div class="two wide field required">
+            <label class="text-right full-width">ค่าความเสี่ยง</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" placeholder="ค่าความเสี่ยง" class="custom" name="riskCost" id="riskCost" [(ngModel)]="riskCost">
+          </div>
+        </div>
+        <br>
+        <div class="ui center aligned grid">
+          <div class="four wide column">
+            <button class="ui mini green button" (click)="addObjRiskDtl() ">
+              <i class="plus icon"></i>
+              เพิ่ม
+            </button>
+          </div>
+        </div>
+      </div>
 
-        <!-- insert form 1 -->
-        <div class="ui bottom attached tab segment" data-tab="second">
-          <form id="upload-form" ngNativeValidate (submit)="onUpload($event)">
-            <div class="ui attached segment">
-              <div class="ui form">
-                <div class="inline fields">
-                  <div class="eight wide field ">
-                    <label class="custom-label-w-15">เลือกไฟล์ Template ข้อมูล</label>
-                    <div>
-                      <input class="inputfile" type="file" name="fileExel" id="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        (change)="onChangeUpload($event)" required>
-                      <label for="fileExel" class="ui mini blue butt-upload button">
-                        <i class="ui fa-file-excel-o icon"></i> เลือกไฟล์
-                      </label>
-                    </div>
+<!-- insert form 2 -->
+      <div class="ui bottom attached tab segment" data-tab="second">
+        <form id="upload-form" ngNativeValidate (submit)="onUpload($event)">
+          <div class="ui attached segment">
+            <div class="ui form">
+              <div class="inline fields">
+                <div class="eight wide field ">
+                  <label class="custom-label-w-15">เลือกไฟล์ Template ข้อมูล</label>
+                  <div>
+                    <input class="inputfile" type="file" name="fileExel" id="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                      (change)="onChangeUpload($event)" required>
+                    <!-- <label for="fileExel" class="ui mini blue butt-upload button">
+                      <i class="ui fa-file-excel-o icon"></i> เลือกไฟล์
+                    </label> -->
                   </div>
                 </div>
               </div>
-              <div class="ui center aligned grid">
-                <div class="four wide column">
-                  <button class="ui mini yellow button" type="submit">
-                    <i class="upload icon"></i>
-                    อัพโหลด
-                  </button>
-                  <button class="ui mini red button" type="reset">
-                    <i class="trash alternate icon"></i>
-                    ลบไฟล์
-                  </button>
-                </div>
+            </div>
+            <div class="ui center aligned grid">
+              <div class="four wide column">
+                <button class="ui mini yellow button" type="submit">
+                  <i class="upload icon"></i>
+                  อัพโหลด
+                </button>
+                <button class="ui mini red button" type="reset">
+                  <i class="trash alternate icon"></i>
+                  ลบไฟล์
+                </button>
               </div>
             </div>
-          </form>
-        </div>
-        <!-- table -->
-        <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%">
-          <thead>
-            <tr>
-              <th rowspan="2" style="text-align: center !important">ลำดับ</th>
-              <th rowspan="2" style="text-align: center !important" class="eight wide field ">โครงการตามยุทธศาสตร์</th>
-              <th rowspan="2" style="text-align: center !important" class="two wide field ">หน่วยงาน</th>
-              <th rowspan="2" style="text-align: center !important" class="two wide field ">ค่าความเสี่ยง</th>
-              <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-              <th rowspan="2" style="text-align: center !important">ลบ</th>
-            </tr>
-            <tr>
-              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important" class="one wide field ">อัตราความเสี่ยง</th>
-              <th style="text-align: center !important" class="one wide field ">แปลค่าความเสี่ยง</th>
-            </tr>
-          </thead>
-        </table>
-
-        <div class="inline fields "></div>
-        <div class="inline fields ">
-          <div class="sixteen wide field ">
-            <div class="six wide field "></div>
-            <button class="ui mini primary button" (click)="saveRiskAssRiskWsDtl()">
-              <i class="save icon"></i>
-              บันทึก
-            </button>
-            <button class="ui mini primary button" (click)="modalConditionRL()">
-              <i class="setting icon"></i>
-              กำหนดเงื่อนไขความเสี่ยง
-            </button>
-            <button class="ui mini yellow button" (click)="ExportOtherDtl()">
-              <i class="print icon"></i>
-              ส่งออก
-            </button>
-            <button class="ui mini button" (click)="cancelFlow()">
-              <i class="close icon"></i>
-              ยกเลิก
-            </button>
           </div>
+        </form>
+      </div>
+  <!-- table -->
+      <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%">
+        <thead>
+          <tr>
+            <th rowspan="2" style="text-align: center !important">ลำดับที่</th>
+            <th rowspan="2" style="text-align: center !important" class="eight wide field ">โครงการตามยุทธศาสตร์</th>
+            <th rowspan="2" style="text-align: center !important" class="two wide field ">หน่วยงาน</th>
+            <th rowspan="2" style="text-align: center !important" class="two wide field ">ค่าความเสี่ยง</th>
+            <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
+            <!-- <th rowspan="2" style="text-align: center !important">ลบ</th> -->
+          </tr>
+          <tr>
+            <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important" class="one wide field ">อัตราความเสี่ยง</th>
+            <th style="text-align: center !important" class="one wide field ">แปลค่าความเสี่ยง</th>
+          </tr>
+        </thead>
+      </table>
+
+      <div class="inline fields "></div>
+      <div class="inline fields ">
+        <div class="sixteen wide field ">
+          <div class="six wide field "></div>
+          <button class="ui mini primary button" (click)="saveRiskAssRiskWsDtl()">
+            <i class="save icon"></i>
+            บันทึก
+          </button>
+          <button class="ui mini primary button" (click)="modalConditionRL()">
+            <i class="setting icon"></i>
+            กำหนดเงื่อนไขความเสี่ยง
+          </button>
+          <button class="ui mini yellow button" (click)="ExportOtherDtl()">
+            <i class="print icon"></i>
+            ส่งออก
+          </button>
+          <button class="ui mini button" (click)="cancelFlow()">
+            <i class="close icon"></i>
+            ยกเลิก
+          </button>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- form condition -->
-  <div class="sixteen wide column" *ngIf="getConditionShow()">
-    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>กำหนดเงื่อนไขความเสี่ยง{{riskAssRiskWsHdr.riskHdrName}}</span>
-    </div>
-    <div class="ui attached segment">
-      <div class="ui form">
-        <condition [riskId]="id" [riskType]="'OTHER'" [page]="'int08-1-6'" (out)="closeConditionRL($event)"></condition>
-      </div>
-      <br />
-    </div>
+<!-- form condition -->
+<div class="sixteen wide column" *ngIf="getConditionShow()">
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>กำหนดเงื่อนไขความเสี่ยง{{riskAssRiskWsHdr.riskHdrName}}</span>
   </div>
-
+  <div class="ui attached segment">
+    <div class="ui form">
+      <condition [riskId]="id" [riskType]="'OTHER'" [page]="'int08-1-6'" (out)="closeConditionRL($event)"></condition>
+    </div>
+    <br />
+  </div>
 </div>

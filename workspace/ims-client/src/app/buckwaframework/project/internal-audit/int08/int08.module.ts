@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 
 import { FormsModule } from "@angular/forms";
 import { Routes, RouterModule } from "@angular/router";
+import { BreadcrumbModule } from "../../../common/components";
 
 const routes: Routes = [
   { path: "1", loadChildren: "./int08-1/int08-1.module#Int081Module" },
@@ -11,7 +12,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule, FormsModule],
+  imports: [
+    RouterModule.forChild(routes), 
+    CommonModule, 
+    FormsModule,
+  BreadcrumbModule
+],
   exports: [RouterModule]
 })
 export class Int08Module { }
