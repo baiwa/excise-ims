@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.ia.persistence.entity.qtn;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
-import th.co.baiwa.buckwaframework.common.util.ThaiNumberUtils;
 
 @Entity
 @Table(name = "IA_QTN_MASTER")
@@ -35,6 +36,24 @@ public class QtnMaster extends BaseEntity {
 	@Column(name = "QTN_SECTOR")
 	private String qtnSector;
 	
+	@Column(name = "QTN_START")
+	private Date qtnStart;
+	
+	@Column(name = "QTN_END")
+	private Date qtnEnd;
+	
+	public Date getQtnStart() {
+		return qtnStart;
+	}
+	public void setQtnStart(Date qtnStart) {
+		this.qtnStart = qtnStart;
+	}
+	public Date getQtnEnd() {
+		return qtnEnd;
+	}
+	public void setQtnEnd(Date qtnEnd) {
+		this.qtnEnd = qtnEnd;
+	}
 	public String getQtnSector() {
 		return qtnSector;
 	}

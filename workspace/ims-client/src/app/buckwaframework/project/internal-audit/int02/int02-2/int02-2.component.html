@@ -125,3 +125,132 @@
     </div>
   </div>
 </div>
+
+<ui-modal [id]="'saved'" size="small" type="custom">
+  <div class="ui header">
+    หน่วยรับตรวจ
+  </div>
+  <div class="content">
+    <div class="ui centered grid">
+      <div class="fifteen wide column">
+        <div class="ui form" [formGroup]="formGroup">
+          <div class="inline fields">
+            <div class="two wide field">
+              <label class="full-width text-center">วันที่</label>
+            </div>
+            <div class="six wide field" [ngClass]="{'error': controlValid('from') }">
+              <div class="ui input">
+                <div class="ui calendar" id="fromCalendar">
+                  <div class="ui input left icon">
+                    <i class="calendar alter ante outline icon"></i>
+                    <input type="calendar" formControlName="from" readonly="" placeholder="วว/ดด/ปปปป" #from id="from" name="from"
+                      autocomplete="off">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="two wide field">
+              <label class="full-width text-center">ถึง</label>
+            </div>
+            <div class="six wide field" [ngClass]="{'error': controlValid('to') }">
+              <div class="ui input">
+                <div class="ui calendar" id="toCalendar">
+                  <div class="ui input left icon">
+                    <i class="calendar alter ante outline icon"></i>
+                    <input type="calendar" formControlName="to" readonly="" placeholder="วว/ดด/ปปปป" #to id="to" name="to" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="inline fields">
+            <div class="two wide field">
+              <label class="full-width text-center">รอบที่ 1</label>
+            </div>
+            <div class="six wide field">
+              <div class="ui input" [ngClass]="{'disabled': !formGroup.get('chk1').value }">
+                <div class="ui calendar" id="r1Calendar">
+                  <div class="ui input left icon">
+                    <i class="calendar alter ante outline icon"></i>
+                    <input type="calendar" readonly="" formControlName="cal1" placeholder="วว/ดด/ปปปป" #r id="r1" name="r1" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="one wide field">
+              <div class="ui input" [ngClass]="{ 'disabled': noDateFromTo }">
+                <div class="ui checkbox">
+                  <input type="checkbox" name="chk1" id="chk1" (click)="toggleChk(1,$event)" formControlName="chk1" #chk>
+                  <label></label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="inline fields">
+            <div class="two wide field">
+              <label class="full-width text-center">รอบที่ 2</label>
+            </div>
+            <div class="six wide field">
+              <div class="ui input" [ngClass]="{'disabled': !formGroup.get('chk2').value }">
+                <div class="ui calendar" id="r2Calendar">
+                  <div class="ui input left icon">
+                    <i class="calendar alter ante outline icon"></i>
+                    <input type="calendar" readonly="" formControlName="cal2" placeholder="วว/ดด/ปปปป" #r id="r2" name="r2" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="one wide field">
+              <div class="ui input" [ngClass]="{ 'disabled': noDateFromTo }">
+                <div class="ui checkbox">
+                  <input type="checkbox" name="chk2" id="chk2" (click)="toggleChk(2,$event)" formControlName="chk2" #chk>
+                  <label></label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="inline fields">
+            <div class="two wide field">
+              <label class="full-width text-center">รอบที่ 3</label>
+            </div>
+            <div class="six wide field">
+              <div class="ui input" [ngClass]="{'disabled': !formGroup.get('chk3').value }">
+                <div class="ui calendar" id="r3Calendar">
+                  <div class="ui input left icon">
+                    <i class="calendar alter ante outline icon"></i>
+                    <input type="calendar" readonly="" formControlName="cal3" placeholder="วว/ดด/ปปปป" #r id="r3" name="r3" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="one wide field">
+              <div class="ui input" [ngClass]="{ 'disabled': noDateFromTo }">
+                <div class="ui checkbox">
+                  <input type="checkbox" name="chk3" id="chk3" (click)="toggleChk(3,$event)" formControlName="chk3" #chk>
+                  <label></label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="inline field">
+            <label style="font-weight: thin !important"><b>หมายเหตุ: </b>กรุณาทำเครื่องหมายถูกที่หลังหากต้องการแก้ไข</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui sixteen wide grid">
+      <div class="center aligned column">
+        <div class="ui button" (click)="saveToFinish()" [ngClass]="{'positive': submitted && formGroup.valid}">
+          <i class="check icon"></i>
+          ยืนยัน
+        </div>
+        <div class="ui negative button">
+          <i class="remove icon"></i>
+          ยกเลิก
+        </div>
+      </div>
+    </div>
+  </div>
+</ui-modal>

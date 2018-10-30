@@ -1,11 +1,14 @@
 import { Router, ActivatedRoute } from "@angular/router";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, QueryList, ViewChildren, AfterViewInit } from "@angular/core";
 import { Headers } from "@angular/http";
 import { Observable } from "rxjs";
 
 import { DialogService, IaService, MessageBarService, AjaxService, AuthService } from "services/index";
 import { BaseModel, ManageReq, TableReq, BreadCrumb } from "models/index";
-import { toFormData } from "helpers/index";
+import { toFormData, TextDateTH, formatter } from "helpers/index";
+import { QtnMaster, Int022FormVo } from "../int02.models";
+import { stringToDate, toDateLocale, digit } from "helpers/datepicker";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 declare var $: any;
 
@@ -26,9 +29,13 @@ const URL = {
   templateUrl: "./int02-2.component.html",
   styleUrls: ["./int02-2.component.css"]
 })
-export class Int022Component implements OnInit {
+export class Int022Component implements OnInit, AfterViewInit {
   RISK_TYPE: string = "QTN_MASTER";
   PAGE: string = "int02-2";
+  @ViewChildren('r') r: QueryList<ElementRef>;
+  @ViewChild('to') to: ElementRef;
+  @ViewChild('from') from: ElementRef;
+  formGroup: FormGroup;
 
   departmentNameArr: any = "";
   departmentNameNew: any = "";
@@ -38,7 +45,7 @@ export class Int022Component implements OnInit {
   datas: Condition[] = [];
   chk: Datatable[] = [];
   chkDel: Datatable[] = [];
-  qtnMaster: any;
+  qtnMaster: QtnMaster;
   qtnMasterId: any;
   table: TableReq = new TableReq();
   id: any;
@@ -46,6 +53,7 @@ export class Int022Component implements OnInit {
   private unsave: boolean = false;
   private rl: boolean = false;
   private finished: boolean = false;
+  private submitted: boolean = false;
   breadcrumb: BreadCrumb[];
   toggleRL: boolean = false;
   rlLen: number = 0;
@@ -58,8 +66,20 @@ export class Int022Component implements OnInit {
     private dialog: DialogService,
     private iaService: IaService,
     private auth: AuthService,
-    private authService: AuthService
+    private authService: AuthService,
+    private formBuilder: FormBuilder
   ) {
+
+    this.formGroup = formBuilder.group({
+      to: ['', Validators.required],
+      from: ['', Validators.required],
+      cal1: [{ value: '', disabled: true }],
+      cal2: [{ value: '', disabled: true }],
+      cal3: [{ value: '', disabled: true }],
+      chk1: [{ value: false, disabled: true }],
+      chk2: [{ value: false, disabled: true }],
+      chk3: [{ value: false, disabled: true }]
+    })
 
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
@@ -91,6 +111,9 @@ export class Int022Component implements OnInit {
     this.init();
   }
 
+  ngAfterViewInit(): void {
+  }
+
   canDeactivate(): Observable<boolean> | boolean {
     if (this.unsave) {
       let confirm: any = this.dialog.confirm("ต้องการออกจากที่นี่หรือไม่?");
@@ -111,7 +134,7 @@ export class Int022Component implements OnInit {
     if (this.qtnMasterId !== "") {
       this.ajax.get(`${URL.FIND_MASTER}/${this.qtnMasterId}`, res => {
         this.finished = true; // can click saved() `send questionaire`
-        this.qtnMaster = res.json();
+        this.qtnMaster = res.json() as QtnMaster;
         var url = "ia/condition/findConditionByParentId";
         this.ajax.post(url, { parentId: this.qtnMasterId, riskType: this.RISK_TYPE, page: this.PAGE }, res => {
           var data = res.json();
@@ -125,7 +148,8 @@ export class Int022Component implements OnInit {
       });
     } else {
       this.unsave = true;
-      const data = {
+      const data: QtnMaster = {
+        qtnMasterId: 0,
         qtnName: "สสส",
         qtnSector: "01",
         qtnYear: "2561"
@@ -191,7 +215,7 @@ export class Int022Component implements OnInit {
       this.ajax.post(URL.SAVE_MASTER, this.qtnMaster, res => {
         this.finished = true; // can click saved() `send questionaire`
         const id = res.json().data.qtnMasterId;
-        this.qtnMaster = res.json().data;
+        this.qtnMaster = res.json().data as QtnMaster;
         this.qtnMasterId = id;
         if (this.datatable != []) {
           this.datatable.forEach(each => {
@@ -256,21 +280,170 @@ export class Int022Component implements OnInit {
   }
 
   onSaved(): void {
-    this.message.comfirm(foo => {
-      if (foo) {
-        this.qtnMaster.qtnFinished = "Y";
-        this.ajax.post(`${URL.UPDATE_MASTER}/${this.qtnMasterId}`, this.qtnMaster, res => {
-          const response = res.json();
-          const { messageTh, messageType } = response.msg;
-          if (messageType == "C") {
-            this.message.successModal(messageTh);
-            this.router.navigate(['/int02/1']);
+    this.formGroup.get('to').setValue("");
+    this.formGroup.get('from').setValue("");
+    this.formGroup.get('cal1').setValue("");
+    this.formGroup.get('cal2').setValue("");
+    this.formGroup.get('cal3').setValue("");
+    $('#saved').modal('show');
+    $("#fromCalendar").calendar({
+      type: "date",
+      minDate: new Date(),
+      endCalendar: $("#toCalendar"),
+      text: TextDateTH,
+      formatter: formatter("date"),
+      onChange: (date, text, mode) => {
+        $('#from').val(text);
+        this.formGroup.get('from').patchValue(text);
+        if ($('#to').val()) {
+          const day = this.datediff(date, stringToDate($('#to').val()));
+          const from = stringToDate($('#from').val());
+          const _date = new Date();
+          let _dates;
+          if (day > 3) {
+            _dates = {
+              date1: this.nextDate(from, Math.floor(day / 3)),
+              date2: this.nextDate(from, Math.floor(day / 2)),
+              date3: this.nextDate(from, Math.floor(day / 1)),
+            }
           } else {
-            this.message.errorModal(messageTh);
+            if (day == 2) {
+              _dates = {
+                date1: this.nextDate(from, 1),
+                date2: this.nextDate(from, 2),
+                date3: ""
+              }
+            } else {
+              _dates = {
+                date1: this.nextDate(from, 1),
+                date2: this.nextDate(from, 2),
+                date3: this.nextDate(from, 3),
+              }
+            }
           }
-        });
+          $("#r1Calendar").calendar(this.propertyCalendar(date, stringToDate($('#to').val()), 1));
+          $("#r2Calendar").calendar(this.propertyCalendar(date, stringToDate($('#to').val()), 2));
+          $("#r3Calendar").calendar(this.propertyCalendar(date, stringToDate($('#to').val()), 3));
+          this.formGroup.get('cal1').setValue(_dates.date1);
+          this.formGroup.get('cal2').setValue(_dates.date2);
+          this.formGroup.get('cal3').setValue(_dates.date3);
+          this.formGroup.get('chk1').enable();
+          this.formGroup.get('chk2').enable();
+          this.formGroup.get('chk3').enable();
+        }
       }
-    }, "ต้องส่งแบบสอบถามหรือไม่ ? ");
+    });
+    $("#toCalendar").calendar({
+      type: "date",
+      minDate: new Date(),
+      startCalendar: $("#fromCalendar"),
+      text: TextDateTH,
+      formatter: formatter("date"),
+      onChange: (date, text, mode) => {
+        $('#to').val(text);
+        this.formGroup.get('to').patchValue(text);
+        if ($('#from').val()) {
+          const day = this.datediff(stringToDate($('#from').val()), date);
+          const from = stringToDate($('#from').val());
+          let _dates;
+          if (day > 3) {
+            _dates = {
+              date1: this.nextDate(from, Math.floor(day / 3)),
+              date2: this.nextDate(from, Math.floor(day / 2)),
+              date3: this.nextDate(from, Math.floor(day / 1)),
+            }
+          } else {
+            if (day == 2) {
+              _dates = {
+                date1: this.nextDate(from, 1),
+                date2: this.nextDate(from, 2),
+                date3: ""
+              }
+            } else {
+              _dates = {
+                date1: this.nextDate(from, 1),
+                date2: this.nextDate(from, 2),
+                date3: this.nextDate(from, 3),
+              }
+            }
+          }
+          $("#r1Calendar").calendar(this.propertyCalendar(from, date, 1));
+          $("#r2Calendar").calendar(this.propertyCalendar(from, date, 2));
+          $("#r3Calendar").calendar(this.propertyCalendar(from, date, 3));
+          this.formGroup.get('cal1').setValue(_dates.date1);
+          this.formGroup.get('cal2').setValue(_dates.date2);
+          this.formGroup.get('cal3').setValue(_dates.date3);
+          this.formGroup.get('chk1').enable();
+          this.formGroup.get('chk2').enable();
+          this.formGroup.get('chk3').enable();
+        }
+      }
+    });
+  }
+
+  saveToFinish() {
+    this.submitted = true;
+    this.formGroup.get('cal1').enable();
+    this.formGroup.get('cal2').enable();
+    this.formGroup.get('cal3').enable();
+    if (this.formGroup.valid) {
+      const { to, from, cal1, cal2, cal3 } = this.formGroup.value;
+      console.log(this.formGroup.value);
+      const { qtnMasterId, qtnName, qtnSector, qtnYear } = this.qtnMaster;
+      const dataRequest: Int022FormVo = {
+        alerts: [
+          { qtnAlertId: null, qtnAlertTime: stringToDate(cal1), qtnMasterId: qtnMasterId, qtnTimes: 1, status: "N" },
+          { qtnAlertId: null, qtnAlertTime: stringToDate(cal2), qtnMasterId: qtnMasterId, qtnTimes: 2, status: "N" },
+          { qtnAlertId: null, qtnAlertTime: stringToDate(cal3), qtnMasterId: qtnMasterId, qtnTimes: 3, status: "N" },
+        ],
+        qtnMasterId: qtnMasterId,
+        qtnName: qtnName,
+        qtnSector: qtnSector,
+        qtnYear: qtnYear,
+        qtnStart: stringToDate(from),
+        qtnEnd: stringToDate(to),
+      }
+      this.ajax.post(`${URL.UPDATE_MASTER}/${this.qtnMasterId}`, dataRequest, res => {
+        const response = res.json();
+        const { messageTh, messageType } = response.msg;
+        if (messageType == "C") {
+          this.message.successModal(messageTh);
+          this.router.navigate(['/int02/1']);
+        } else {
+          this.message.errorModal(messageTh);
+        }
+      }, err => {
+        console.error(err);
+        this.message.errorModal("มันพังอ่าาา");
+      });
+    }
+  }
+
+  dateToStrddMMyyyy = (date) => {
+    let day = date.getDate();
+    let _month = toDateLocale(date)[0].split("/")[1];
+    let _year = toDateLocale(date)[0].split("/")[2];
+    return digit(day) + "/" + digit(_month) + "/" + _year.toString();
+  }
+
+  nextDate(_date: Date, num: number) {
+    let date = new Date();
+    date.setDate(_date.getDate() + num);
+    return this.dateToStrddMMyyyy(date);
+  }
+
+  datediff(first, second) {
+    return Math.round((second - first) / (1000 * 60 * 60 * 24));
+  }
+
+  propertyCalendar(min: Date, max: Date, index: number) {
+    return {
+      type: "date",
+      minDate: min,
+      maxDate: max,
+      text: TextDateTH,
+      formatter: formatter()
+    };
   }
 
   onCancel(): void {
@@ -278,7 +451,7 @@ export class Int022Component implements OnInit {
   }
 
   loadTable(): void {
-    this.ajax.post(`${URL.DATATABLE}/${this.qtnMasterId}`, toFormData(this.table),async res => {
+    this.ajax.post(`${URL.DATATABLE}/${this.qtnMasterId}`, toFormData(this.table), async res => {
       let len: number = await parseInt(res.json().recordsTotal) / 5;
       this.table.recordsTotal = await Math.ceil(len);
       this.datatable = await res.json().data;
@@ -369,11 +542,31 @@ export class Int022Component implements OnInit {
     });
   }
 
+  toggleChk(i, e) {
+    if (e.target.checked == true) {
+      this.formGroup.get(`cal${i}`).enable();
+    } else {
+      this.formGroup.get(`cal${i}`).disable();
+    }
+  }
+
   pageChange(e) {
     // Change Table Object
     this.table.start = e - 5;
     // Loading Table
     this.loadTable();
+  }
+
+  controlValid(control) {
+    return this.formGroup.get(control).invalid && this.submitted;
+  }
+
+  get noDateFromTo() {
+    if (this.formGroup.get('to').value == '' || this.formGroup.get('from').value == '') {
+      return true;
+    } else {
+      return null;
+    }
   }
 
 }

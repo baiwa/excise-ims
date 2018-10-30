@@ -113,6 +113,8 @@ public class QtnReportMasterDao {
 			vo.setUpdatedDate(rs.getDate("UPDATED_DATE"));
 			vo.setIsDeleted(rs.getString("IS_DELETED"));
 			vo.setVersion(rs.getInt("VERSION"));
+			vo.setQtnStart(rs.getTimestamp("QTN_START"));
+			vo.setQtnEnd(rs.getTimestamp("QTN_END"));
 			return vo;
 		}
 

@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
@@ -27,8 +26,10 @@ import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.QtnReportMasterDao;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
 import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnMaster;
+import th.co.baiwa.excise.ia.persistence.repository.qtn.alt.QtnTimeAlertRepository;
 import th.co.baiwa.excise.ia.persistence.repository.qtn.rep.QtnMasterRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int021Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int022FormVo;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 
@@ -37,6 +38,9 @@ public class QtnMasterService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	@Autowired
+	private QtnTimeAlertRepository qtnTimeAlertRep;
+	
 	@Autowired
 	private QtnMasterRepository qtnMasterRepository;
 	
@@ -76,7 +80,7 @@ public class QtnMasterService {
 		return qtnMasterRepository.findOne(Long.parseLong(id));
 	}
 
-	public CommonMessage<QtnMaster> updateQtnMaster(String id, @RequestBody QtnMaster qtnMaster) {
+	public CommonMessage<QtnMaster> updateQtnMaster(String id, Int022FormVo qtnMaster) {
 		Message msg;
 		CommonMessage<QtnMaster> response = new CommonMessage<>();
 
@@ -84,12 +88,16 @@ public class QtnMasterService {
 		QtnMaster qtnMasterOne = qtnMasterRepository.findOne(Long.parseLong(id));
 		qtnMasterOne.setQtnFinished(qtnMaster.getQtnFinished());
 		qtnMasterOne.setIsDeleted(qtnMaster.getIsDeleted());
-
+		qtnMasterOne.setQtnStart(qtnMaster.getQtnStart());
+		qtnMasterOne.setQtnEnd(qtnMaster.getQtnEnd());
 		QtnMaster data = qtnMasterRepository.save(qtnMasterOne);
 		if (data != null) {
 			response.setData(data);
-			if ("Y".equals(data.getQtnFinished()))
+			if ("Y".equals(data.getQtnFinished())) {
 				msg = ApplicationCache.getMessage("MSG_00007");
+				// Time Alerts
+				qtnTimeAlertRep.save(qtnMaster.getAlerts());
+			}
 			else
 				msg = ApplicationCache.getMessage("MSG_00002");
 		} else {

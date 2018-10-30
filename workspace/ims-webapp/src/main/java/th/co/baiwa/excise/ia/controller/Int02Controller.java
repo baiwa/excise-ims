@@ -28,6 +28,7 @@ import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportDetail;
 import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportHeader;
 import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportMain;
 import th.co.baiwa.excise.ia.persistence.vo.Int021Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int022FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int022Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int023FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int023Vo;
@@ -83,7 +84,7 @@ public class Int02Controller {
 	
 	@PostMapping("/update_qtn_master/{id}")
 	@ResponseBody
-	public CommonMessage<QtnMaster> updateQtnMaster(@PathVariable("id") String id, @RequestBody QtnMaster qtnMaster) {
+	public CommonMessage<QtnMaster> updateQtnMaster(@PathVariable("id") String id, @RequestBody Int022FormVo qtnMaster) {
 		logger.info("Saved to updateQtnMaster {}", id);
 		return qtnMasterService.updateQtnMaster(id, qtnMaster);
 	}
