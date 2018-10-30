@@ -56,20 +56,20 @@ public class Int06112Service {
                 if (cell != null) {
                     if (IaConstant.IA_FILE_EXCEL.REVIEW_COST_DATA.ACCOUNT_TEXT.equals(StringUtils.trim(getStringValue(cell)))) {
                         vo.setId(id++);
-                        vo.setAccountId(StringUtils.trim(getStringValue(row.getCell(minColIx + 5))));
+                        vo.setAccountId(StringUtils.trim(getStringValue(row.getCell(minColIx + 3))));
 
                         String accountId = vo.getAccountId();
                         String result = accountId.substring(0, 1);
                         if ("5".equals(result)) {
                             addData = true;
                         }
-                        vo.setAccountName(StringUtils.trim(getStringValue(row.getCell(minColIx + 7))));
+                        vo.setAccountName(StringUtils.trim(getStringValue(row.getCell(minColIx + 6))));
 
                         continue;
                     }
                     if (IaConstant.IA_FILE_EXCEL.REVIEW_COST_DATA.BALANCE.equals(StringUtils.trim(getStringValue(cell)))) {
 
-                        BigDecimal amount = new BigDecimal(StringUtils.trim(getStringValue(row.getCell(minColIx + 14))));
+                        BigDecimal amount = new BigDecimal(StringUtils.trim(getStringValue(row.getCell(minColIx + 15))));
                         vo.setAmount(amount);
                         if (addData) {
                             voList.add(vo);
