@@ -60,7 +60,7 @@ export class Int0817Component implements OnInit {
         this.percentList.push(0);
       }
 
-      var trHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th> <th rowspan="2" style="text-align: center !important">โครงการตามยุทธศาสตร์</th><th rowspan="2" style="text-align: center !important">หน่วยงาน</th>';
+      var trHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับที่</th> <th rowspan="2" style="text-align: center !important">โครงการตามยุทธศาสตร์</th><th rowspan="2" style="text-align: center !important">หน่วยงาน</th>';
       this.columnList.forEach(element => {
         console.log(element);
         trHTML += '<th rowspan="2" style="text-align: center !important;">' + element + '</th>';
@@ -84,7 +84,7 @@ export class Int0817Component implements OnInit {
         hrmlTr += "<tr style='text-align: center !important'>";
         hrmlTr += "<td>" + element.id + "</td>";
         hrmlTr += "<td style='text-align: left !important'>" + element.projectBase + "</td>";
-        hrmlTr += "<td style='text-align: center !important'>" + element.departmentName + "</td>";
+        hrmlTr += "<td style='text-align: left !important'>" + element.departmentName + "</td>";
         element.rl.forEach(rl => {
           hrmlTr += "<td style='text-align: right !important' >" + rl + "</td>";
         });
@@ -151,13 +151,13 @@ export class Int0817Component implements OnInit {
       sumpercen += element.percent;
     });
     if (sumpercen != 100) {
-      this.messageBarService.errorModal("น้ำหนักต้องรวมกันแล้วเป็น 100 %");
+      this.messageBarService.errorModal("ค่าร้อยละความเสี่ยงต้องรวมกันแล้วเป็น 100 %");
       return "";
     }
     var url = 'ia/int08/updateRiskPercent';
     this.ajax.post(url, { riskAssRiskWsHdrList: this.riskAssRiskWsHdrList }, res => {
       this.riskAssRiskWsHdrList = res.json();
-      this.messageBarService.successModal("บันทึกน้ำหนักความเสี่ยงสำเร็จ");
+      this.messageBarService.successModal("บันทึกค่าร้อยละความเสี่ยงสำเร็จ");
       this.ispercent = false;
 
     });

@@ -1,26 +1,24 @@
-<app-breadcrumb [route]="breadcrumb" ></app-breadcrumb>
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 
 <div class="ui grid">
+
   <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>รายละเอียดประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
     </div>
     <div class="ui attached segment">
       <div class="ui form">
-
         <div class="inline fields">
           <div class="two wide field "></div>
           <div class="two wide field">
-            <label>ปีงบประมาณ</label>
+            <label class="text-right full-width">ปีงบประมาณ</label>
           </div>
           <div class="ten wide field ">
             <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear" disabled="disabled"
               readonly>
           </div>
-
         </div>
       </div>
-
       <div style="overflow-x: scroll; white-space:nowrap;">
         <table id="dataTable" class="ui small celled table striped selectable">
           <thead id="trColumn">
@@ -42,7 +40,8 @@
               กำหนดเงื่อนไขความเสี่ยง
             </button>
             <button class="ui mini primary button" (click)="modalpercent()">
-              กำหนดค่าร้อยละ
+              <i class="setting icon"></i>
+              กำหนดค่าร้อยละความเสี่ยง
             </button>
             <button class="ui mini yellow button" (click)="addRiskAssRiskWsHdr()">
               <i class="print icon"></i>
@@ -53,31 +52,29 @@
               ยกเลิก
             </button>
           </div>
-
         </div>
       </div>
       <BR/>
     </div>
     <BR/>
+
     <div class="sixteen wide column" *ngIf="getConditionShow()">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กำหนดเงื่อนไขความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
       </div>
-
       <div class="ui attached segment">
         <div class="ui form">
           <condition [riskId]="budgetYear" [riskType]="'ALL'" [page]="'int08-1-7'" (out)="closeConditionRL($event)"></condition>
         </div>
         <br/>
-
       </div>
     </div>
     <BR/>
+
     <div class="sixteen wide column" *ngIf="getpercent()">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>กำหนดค่าน้ำหนัก (%) โครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
+        <span>กำหนดค่าร้อยละความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
       </div>
-
       <div class="ui attached segment">
         <div class="ui form">
           <div class="inline fields" *ngFor="let risk of riskAssRiskWsHdrList; index as i;">
@@ -86,7 +83,7 @@
               <label>{{risk.riskHdrName}}</label>
             </div>
             <div class="two wide field">
-              <input type="number" placeholder="น้ำหนักของ{{risk.riskHdrName}}" class="custom" [(ngModel)]="risk.percent">&nbsp;&nbsp;%
+              <input type="number" placeholder="ค่าร้อยละของ{{risk.riskHdrName}}" class="custom" [(ngModel)]="risk.percent">&nbsp;&nbsp;%
             </div>
           </div>
         </div>
@@ -99,11 +96,10 @@
                 บันทึก
               </button>
               <button class="ui mini button" (click)="closepercent()">
-                  <i class="close icon"></i>
+                <i class="close icon"></i>
                 ยกเลิก
               </button>
             </div>
-
           </div>
         </div>
         <BR/>

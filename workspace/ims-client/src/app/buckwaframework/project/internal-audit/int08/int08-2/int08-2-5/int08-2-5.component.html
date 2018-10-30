@@ -1,8 +1,10 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
 <div class="ui grid">
+
   <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>รายละเอียดหัวกระดาษทำการ</span>
+      <span>รายละเอียดประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต</span>
     </div>
     <div class="ui attached segment">
       <div class="ui form">
@@ -15,99 +17,90 @@
             <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear" disabled="disabled"
               readonly>
           </div>
-
         </div>
         <div style="overflow-x: scroll; white-space:nowrap;">
-        <table id="dataTable" class="ui small celled table striped selectable">
-          <thead id="trColumn" >
-          </thead>
-          <tbody id="tbody">
-          </tbody>
-        </table>
+          <table id="dataTable" class="ui small celled table striped selectable">
+            <thead id="trColumn">
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+          </table>
         </div>
         <div class="inline fields"></div>
         <div class="inline fields ">
-          <div class="sixteen wide field " >
-             <div class="five wide field "></div> 
-              
-              <button class="ui mini primary button" (click)="saveRiskAssRiskWsDtl()">
-                <i class="save icon"></i>
-                บันทึก
-              </button>
-              <button class="ui mini primary button" (click)="modalConditionRL()">
-                <i class="setting icon"></i>
-                กำหนดเงื่อนไขความเสี่ยง
-              </button>
-              <button class="ui mini primary button" (click)="modalpercent()">
-                <i class="setting icon"></i>
-                กำหนดค่าร้อยละ
-              </button>
-              <button class="ui mini yellow button" (click)="ExportInfFull()">
-                <i class="print icon"></i>
-                ส่งออก
-              </button>
-              <button class="ui mini  button" (click)="cancelFlow()">
-                <i class="remove icon"></i>
-                ยกเลิก
-              </button>
-           
+          <div class="sixteen wide field ">
+            <div class="five wide field "></div>
+            <button class="ui mini primary button" (click)="saveRiskAssRiskWsDtl()">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <button class="ui mini primary button" (click)="modalConditionRL()">
+              <i class="setting icon"></i>
+              กำหนดเงื่อนไขความเสี่ยง
+            </button>
+            <button class="ui mini primary button" (click)="modalpercent()">
+              <i class="setting icon"></i>
+              กำหนดค่าร้อยละความเสี่ยง
+            </button>
+            <button class="ui mini yellow button" (click)="ExportInfFull()">
+              <i class="print icon"></i>
+              ส่งออก
+            </button>
+            <button class="ui mini  button" (click)="cancelFlow()">
+              <i class="remove icon"></i>
+              ยกเลิก
+            </button>
           </div>
-
         </div>
       </div>
     </div>
   </div>
 
   <div class="sixteen wide column" *ngIf="getConditionShow()">
-      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>กำหนดเงื่อนไขความเสี่ยง ปัจจัยเสี่ยงอื่นๆ</span>
-      </div>
-
-      <div class="ui attached segment">
-        <div class="ui form">
-          <condition [riskId]="budgetYear" [riskType]="'ALL'" [page]="'int08-2-5'" (out)="closeConditionRL($event)"></condition>
-        </div>
-        <br/>
-
-      </div>
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดเงื่อนไขความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต</span>
     </div>
-
-    <BR/>
-    
-    <div class="sixteen wide column" *ngIf="getpercent()">
-      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>กำหนดค่าน้ำหนัก (%) โครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
+    <div class="ui attached segment">
+      <div class="ui form">
+        <condition [riskId]="budgetYear" [riskType]="'ALL'" [page]="'int08-2-5'" (out)="closeConditionRL($event)"></condition>
       </div>
+      <br/>
+    </div>
+  </div>
+  <BR/>
 
-      <div class="ui attached segment">
-        <div class="ui form">
-          <div class="inline fields" *ngFor="let risk of riskAssInfHdrList; index as i;">
-            <div class="two wide field "></div>
-            <div class="six wide field">
-              <label>{{risk.riskAssInfHdrName}}</label>
-            </div>
-            <div class="two wide field">
-              <input type="number" placeholder="น้ำหนักของ{{risk.riskAssInfHdrName}}" class="custom" [(ngModel)]="risk.percent">&nbsp;&nbsp;%
-            </div>
+  <div class="sixteen wide column" *ngIf="getpercent()">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดค่าร้อยละความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต</span>
+    </div>
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields" *ngFor="let risk of riskAssInfHdrList; index as i;">
+          <div class="two wide field "></div>
+          <div class="six wide field">
+            <label>{{risk.riskAssInfHdrName}}</label>
+          </div>
+          <div class="two wide field">
+            <input type="number" placeholder="ค่าร้อยละของ{{risk.riskAssInfHdrName}}" class="custom" [(ngModel)]="risk.percent">&nbsp;&nbsp;%
           </div>
         </div>
-        <br/>
-        <div class="inline fields latest-inline">
-          <div class="sixteen wide field">
-            <div class="ui center aligned grid btn">
-              <button class="ui mini primary button" (click)="savePercent()">
-                <i class="save icon"></i>
-                บันทึก
-              </button>
-              <button class="ui mini primary button" (click)="closepercent()">
-                ยกเลิก
-              </button>
-            </div>
-
+      </div>
+      <br/>
+      <div class="inline fields latest-inline">
+        <div class="sixteen wide field">
+          <div class="ui center aligned grid btn">
+            <button class="ui mini primary button" (click)="savePercent()">
+              <i class="save icon"></i>
+              บันทึก
+            </button>
+            <button class="ui mini button" (click)="closepercent()">
+              <i class="remove icon"></i>
+              ยกเลิก
+            </button>
           </div>
         </div>
-        <BR/>
       </div>
+      <BR/>
     </div>
+  </div>
 </div>
-
