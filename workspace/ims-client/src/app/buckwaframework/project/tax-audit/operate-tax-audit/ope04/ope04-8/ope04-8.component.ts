@@ -48,10 +48,10 @@ export class Ope048Component implements OnInit, AfterViewInit {
       dateFrom: ["", Validators.required],
       dateTo: ["", Validators.required],
       exciseId: ["", Validators.required],
-      entrepreneur: [""],
-      anlysisNumber: [""],
-      type: [""],
-      coordinates: [""],
+      entrepreneur: [{value : "",disabled: true}],
+      anlysisNumber: [{value : "",disabled: true}],
+      type: [{value : "",disabled: true}],
+      coordinates: [{value : "",disabled: true}],
       uploadFlag: [""],
       userNumber: [""],
       fileUpload: [""],
@@ -80,6 +80,7 @@ export class Ope048Component implements OnInit, AfterViewInit {
       this.formControl.controls.entrepreneur.setValue(res.exciseName);
       this.formControl.controls.coordinates.setValue(res.productType);
       this.formControl.controls.userNumber.setValue(res.taxFeeId);
+      this.formControl.controls.type.setValue(this.checkTypeExciseId(exciseId));
       this.form.entrepreneur = res.exciseName;
       // this.form.coordinates = res.productType;
       // this.form.userNumber = res.taxFeeId;
@@ -164,7 +165,20 @@ export class Ope048Component implements OnInit, AfterViewInit {
       }
     });
   }
-
+  checkTypeExciseId(exciseId) {
+    let type = exciseId.substring(14, 15);
+    let result = "";
+    if (type == 1) {
+      result = "สินค้า";
+    }
+    else if (type == 2) {
+      result = "บริการ";
+    }
+    else {
+      result = "สินค้านำเข้า";
+    }
+    return result;
+  }
   dataTable = () => {
     this.ope048Service.dataTable();
   }

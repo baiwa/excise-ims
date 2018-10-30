@@ -48,7 +48,7 @@ export class Ope046Component implements OnInit {
     this.dataTable();
   }
 
-  newForm(){
+  newForm() {
     this.formControl = this.formBuilder.group({
       dateFrom: ["", Validators.required],
       dateTo: ["", Validators.required],
@@ -87,7 +87,7 @@ export class Ope046Component implements OnInit {
     }
     this.loading = true;
     $("#Dtable").show();
-    this.opeo46Service.search().then(res=>{
+    this.opeo46Service.search().then(res => {
       setTimeout(() => {
         this.loading = false;
       }, 300);
@@ -105,12 +105,13 @@ export class Ope046Component implements OnInit {
   }
   changeExciseId = (e) => {
     let exciseId = e.target.value;
+    
     this.opeo46Service.findByExciseId(exciseId).then((res) => {
 
       this.formControl.controls.entrepreneur.setValue(res.exciseName);
       this.formControl.controls.coordinates.setValue(res.productType);
       this.formControl.controls.userNumber.setValue(res.taxFeeId);
-
+      this.formControl.controls.type.setValue(this.checkTypeExciseId(exciseId));
       this.form.entrepreneur = res.exciseName;
       // this.form.coordinates = res.productType;
       // this.form.userNumber = res.taxFeeId;
@@ -182,6 +183,22 @@ export class Ope046Component implements OnInit {
       }
     });
   }
+
+  checkTypeExciseId(exciseId) {
+    let type = exciseId.substring(14, 15);
+    let result = "";
+    if (type == 1) {
+      result = "สินค้า";
+    }
+    else if (type == 2) {
+      result = "บริการ";
+    }
+    else {
+      result = "สินค้านำเข้า";
+    }
+    return result;
+  }
+
   dataTable = () => {
     this.opeo46Service.dataTable();
   }
