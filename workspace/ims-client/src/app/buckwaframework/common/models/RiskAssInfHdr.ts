@@ -11,5 +11,5 @@ export class RiskAssInfHdr {
     createPosition: any;
     createLastName: any;
     checkLastName: any;
-
+    riskType: any;
 }

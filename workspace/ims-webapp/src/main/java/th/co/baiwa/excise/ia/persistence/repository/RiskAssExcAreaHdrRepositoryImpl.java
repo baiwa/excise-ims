@@ -61,13 +61,21 @@ public class RiskAssExcAreaHdrRepositoryImpl implements RiskAssExcAreaHdrReposit
 			riskAssRiskWsHdr.setRiskHrdId(rs.getLong("RISK_HRD_ID"));
 			riskAssRiskWsHdr.setRiskHdrName(rs.getString("RISK_HDR_NAME"));
 			riskAssRiskWsHdr.setBudgetYear(rs.getString("BUDGET_YEAR"));
-			riskAssRiskWsHdr.setUserCheck(rs.getString("USER_CHECK"));
 			riskAssRiskWsHdr.setIsDeleted(rs.getString("IS_DELETED"));
 			riskAssRiskWsHdr.setActive(rs.getString("ACTIVE"));
 			riskAssRiskWsHdr.setCreatedBy(rs.getString("CREATED_BY"));
 			riskAssRiskWsHdr.setCreatedDate(rs.getDate("CREATED_DATE"));
 			riskAssRiskWsHdr.setUpdatedBy(rs.getString("UPDATED_BY"));
 			riskAssRiskWsHdr.setUpdatedDate(rs.getDate("UPDATED_DATE"));
+			
+			riskAssRiskWsHdr.setCheckLastName(rs.getString("CHECK_LAST_NAME"));
+			riskAssRiskWsHdr.setCheckPosition(rs.getString("CHECK_POSITION"));
+			riskAssRiskWsHdr.setCheckUserName(rs.getString("CHECK_USER_NAME"));
+			riskAssRiskWsHdr.setCheckUserTitle(rs.getString("CHECK_USER_TITLE"));
+			riskAssRiskWsHdr.setCreateLastName(rs.getString("CREATE_LAST_NAME"));
+			riskAssRiskWsHdr.setCreatePosition(rs.getString("CREATE_POSITIONN"));
+			riskAssRiskWsHdr.setCreateUserName(rs.getString("CREATE_USER_NAME"));
+			riskAssRiskWsHdr.setCreateUserTitle(rs.getString("CREATE_USER_TITLE"));
 			return riskAssRiskWsHdr;
 
 		}
@@ -282,10 +290,7 @@ public class RiskAssExcAreaHdrRepositoryImpl implements RiskAssExcAreaHdrReposit
 			sql.append(" AND ACTIVE = ? ");
 			params.add(riskAssExcAreaHdr.getActive());
 		}
-		if(BeanUtils.isNotEmpty(riskAssExcAreaHdr.getUserCheck())) {
-			sql.append(" AND USER_CHECK = ? ");
-			params.add(riskAssExcAreaHdr.getUserCheck());
-		}
+		
 		if(BeanUtils.isNotEmpty(riskAssExcAreaHdr.getRiskHrdPaperName())) {
 			sql.append(" AND RISK_HDR_PAPER_NAME = ? ");
 			params.add(riskAssExcAreaHdr.getRiskHrdPaperName());
@@ -303,7 +308,6 @@ public class RiskAssExcAreaHdrRepositoryImpl implements RiskAssExcAreaHdrReposit
 			riskAssExcAreaHdr.setActive(rs.getString("ACTIVE"));
 			riskAssExcAreaHdr.setRiskHrdPaperName(rs.getString("RISK_HDR_PAPER_NAME"));
 			riskAssExcAreaHdr.setBudgetYear(rs.getString("BUDGET_YEAR"));
-			riskAssExcAreaHdr.setUserCheck(rs.getString("USER_CHECK"));
 			riskAssExcAreaHdr.setPercent(rs.getBigDecimal("PERCENT"));
 			riskAssExcAreaHdr.setIsDeleted(rs.getString("IS_DELETED"));
 			riskAssExcAreaHdr.setVersion(rs.getInt("VERSION"));
@@ -311,6 +315,14 @@ public class RiskAssExcAreaHdrRepositoryImpl implements RiskAssExcAreaHdrReposit
 			riskAssExcAreaHdr.setCreatedDate(rs.getDate("CREATED_DATE"));
 			riskAssExcAreaHdr.setUpdatedBy(rs.getString("UPDATED_BY"));
 			riskAssExcAreaHdr.setUpdatedDate(rs.getDate("UPDATED_DATE"));
+			riskAssExcAreaHdr.setCheckLastName(rs.getString("CHECK_LAST_NAME"));
+			riskAssExcAreaHdr.setCheckPosition(rs.getString("CHECK_POSITION"));
+			riskAssExcAreaHdr.setCheckUserName(rs.getString("CHECK_USER_NAME"));
+			riskAssExcAreaHdr.setCheckUserTitle(rs.getString("CHECK_USER_TITLE"));
+			riskAssExcAreaHdr.setCreateLastName(rs.getString("CREATE_LAST_NAME"));
+			riskAssExcAreaHdr.setCreatePosition(rs.getString("CREATE_POSITIONN"));
+			riskAssExcAreaHdr.setCreateUserName(rs.getString("CREATE_USER_NAME"));
+			riskAssExcAreaHdr.setCreateUserTitle(rs.getString("CREATE_USER_TITLE"));
 			return riskAssExcAreaHdr;
 
 		}

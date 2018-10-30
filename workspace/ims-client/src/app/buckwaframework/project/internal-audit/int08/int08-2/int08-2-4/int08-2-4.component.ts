@@ -7,10 +7,13 @@ import { Alert } from "../../../../../../../../node_modules/@types/selenium-webd
 import { log } from "util";
 import { AuthService } from "services/auth.service";
 import { BreadCrumb } from "models/breadcrumb";
+import { RiskAssInfHdr } from "models/RiskAssInfHdr";
 
 declare var $: any;
 declare var $: any;
-
+const URL = {
+  DROPDOWN: "combobox/controller/getDropByTypeAndParentId"
+};
 @Component({
   selector: 'app-int08-2-4',
   templateUrl: './int08-2-4.component.html',
@@ -20,12 +23,10 @@ export class Int0824Component implements OnInit {
   // BreadCrumb
   breadcrumb: BreadCrumb[];
 
-  riskAssRiskInfHdr: any;
-  
+  riskAssRiskInfHdr: RiskAssInfHdr;
+
   id: any;
-  riskInfPaperName: any;
-  budgetYear: any;
-  userCheck: any;
+  riskAssInfHdr: RiskAssInfHdr;
 
   infName: any = '';
   riskCost: any = '';
@@ -43,6 +44,7 @@ export class Int0824Component implements OnInit {
   fileExel: File[];
 
   isConditionShow: any;
+  titleList: any;
 
   constructor(
     private authService: AuthService,
@@ -58,40 +60,41 @@ export class Int0824Component implements OnInit {
       { label: "ประเมินความเสี่ยงระบบสารสนเทศฯ ของกรมสรรพสามิต", route: "#" },
       { label: this.route.snapshot.queryParams["nameLable"], route: "#" },
     ];
-   }
+  }
 
   ngOnInit() {
+    this.riskAssRiskInfHdr = new RiskAssInfHdr();
     this.authService.reRenderVersionProgram('INT-08240');
 
     $('.menu .item').tab();
-    
+
     this.riskInfHrdData = new RiskInfHrdData();
     this.id = this.route.snapshot.queryParams["id"];
-    
+    this.ajax.post(URL.DROPDOWN, { type: 'TITLE' }, res => {
+      this.titleList = res.json();
+
+    });
     this.findRiskById();
 
     this.isConditionShow = false;
-    
+
   }
   ngAfterViewInit() {
-   
+
   }
 
   findRiskById() {
+    this.riskAssInfHdr = new RiskAssInfHdr();
     let url = "ia/int082/findRiskById"
     this.ajax.post(url, { riskAssInfHdrId: this.id }, res => {
-      
+
       this.riskAssRiskInfHdr = res.json();
-      console.log("ดาต้านะจ๊ะ",this.riskAssRiskInfHdr);
-      this.riskInfPaperName = this.riskAssRiskInfHdr.riskInfPaperName;
-      this.budgetYear = this.riskAssRiskInfHdr.budgetYear;
-      this.userCheck = this.riskAssRiskInfHdr.userCheck;
-  
+      this.riskAssRiskInfHdr.checkPosition = 'ผู้อำนวยการกลุ่มตรวจสอบภายใน';
+      console.log(this.riskAssRiskInfHdr);
+
       this.riskInfHrdData.riskAssInfHdrId = this.riskAssRiskInfHdr.riskAssInfHdrId;
-      this.riskInfHrdData.riskInfPaperName = this.riskInfPaperName;
-      this.riskInfHrdData.userCheck = this.userCheck;
-      this.riskInfHrdData.budgetYear = this.budgetYear;
-      
+
+
       url = "ia/int082/findRiskAssInfOtherDtlByRiskHrdId";
       this.ajax.post(url, { riskInfHrdId: this.id }, res => {
         // this.riskDataList
@@ -109,7 +112,7 @@ export class Int0824Component implements OnInit {
           riskOtherData.color = element.color;
           riskOtherData.isDeleted = 'N';
           this.riskOtherDataList.push(riskOtherData);
-        
+
         }
         this.initDatatable();
       }, errRes => {
@@ -132,12 +135,12 @@ export class Int0824Component implements OnInit {
         console.log(res.json());
 
         res.json().forEach(element => {
-          
+
           element.isDeleted = 'N';
 
           element.riskInfHrdId = this.id;
           this.riskOtherDataList.push(element);
-  
+
         });
         this.initDatatable();
 
@@ -181,7 +184,7 @@ export class Int0824Component implements OnInit {
       pageLength: 10,
       processing: true,
       serverSide: false,
-      scrollY:true,
+      scrollY: true,
       scrollX: true,
       scrollCollapse: true,
       paging: true,
@@ -196,7 +199,7 @@ export class Int0824Component implements OnInit {
         { data: "infName" },
         { data: "riskCost" },
         { data: "rl" },
-        { data: "valueTranslation"},
+        { data: "valueTranslation" },
         {
           data: "riskAssInfHdrId",
           render: function () {
@@ -205,7 +208,7 @@ export class Int0824Component implements OnInit {
         }
       ],
       columnDefs: [
-        { targets: [0,3,4,5], className: "center aligned" },
+        { targets: [0, 3, 4, 5], className: "center aligned" },
         { targets: [2], className: "right aligned" },
         { targets: [1], className: "left aligned" }
       ],
@@ -292,17 +295,30 @@ export class Int0824Component implements OnInit {
       this.messageBarService.errorModal("กรุณาเพิ่มความ ระบบสารสนเทศ อย่างน้อยหนึ่งโครงการ");
       return;
     }
-    this.riskAssRiskInfHdr.riskInfPaperName = this.riskInfPaperName;
-    this.riskAssRiskInfHdr.userCheck = this.userCheck;
-    this.riskAssRiskInfHdr.budgetYear = this.budgetYear;
-    //console.log(this.riskHrdData)
-
-
-    if (this.userCheck == null || this.userCheck == undefined || this.userCheck == "") {
-      msgMessage = "กรุณากรอก \"ผู้ตรวจ\" ";
+    //console.log(this.datatable.data());
+    var msgMessage = "";
+    if (this.riskAssRiskInfHdr.checkLastName == null || this.riskAssRiskInfHdr.checkLastName == undefined || this.riskAssRiskInfHdr.checkLastName == "") {
+      msgMessage = "กรุณากรอก \"นามสกุลผู้ตรวจ\" ";
     }
-
-    if (this.riskInfPaperName == null || this.riskInfPaperName == undefined || this.riskInfPaperName == "") {
+    if (this.riskAssRiskInfHdr.checkUserName == null || this.riskAssRiskInfHdr.checkUserName == undefined || this.riskAssRiskInfHdr.checkUserName == "") {
+      msgMessage = "กรุณากรอก \"ชื่อผู้ตรวจ\" ";
+    }
+    if (this.riskAssRiskInfHdr.checkUserTitle == null || this.riskAssRiskInfHdr.checkUserTitle == undefined || this.riskAssRiskInfHdr.checkUserTitle == "") {
+      msgMessage = "กรุณากรอก \"คำนำหน้าชื่อผู้ตรวจ\" ";
+    }
+    if (this.riskAssRiskInfHdr.createPosition == null || this.riskAssRiskInfHdr.createPosition == undefined || this.riskAssRiskInfHdr.createPosition == "") {
+      msgMessage = "กรุณากรอก \"ตำแหน่งผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskInfHdr.createLastName == null || this.riskAssRiskInfHdr.createLastName == undefined || this.riskAssRiskInfHdr.createLastName == "") {
+      msgMessage = "กรุณากรอก \"นามสกุลผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskInfHdr.createUserName == null || this.riskAssRiskInfHdr.createUserName == undefined || this.riskAssRiskInfHdr.createUserName == "") {
+      msgMessage = "กรุณากรอก \"ชื่อผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskInfHdr.createUserTitle == null || this.riskAssRiskInfHdr.createUserTitle == undefined || this.riskAssRiskInfHdr.createUserTitle == "") {
+      msgMessage = "กรุณากรอก \"คำนำหน้าชื่อผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskInfHdr.riskInfPaperName == null || this.riskAssRiskInfHdr.riskInfPaperName == undefined || this.riskAssRiskInfHdr.riskInfPaperName == "") {
       msgMessage = "กรุณากรอก \"ชื่อกระดาษทำการ\" ";
     }
 
@@ -310,7 +326,7 @@ export class Int0824Component implements OnInit {
       var url = "ia/int082/saveRiskInfPaperName";
       var urlDtl = "ia/int082/saveRiskAssInfOther";
       this.riskAssRiskInfHdr.riskType = 'OTHER';
-      
+
       this.ajax.post(url, this.riskAssRiskInfHdr, res => {
         var message = res.json();
         //console.log(message.messageType);
@@ -326,10 +342,10 @@ export class Int0824Component implements OnInit {
             console.log(message);
           });
 
-          
+
           this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
           this.router.navigate(["/int08/2/2"], {
-            queryParams: { budgetYear: this.budgetYear }
+            queryParams: { budgetYear: this.riskAssRiskInfHdr.budgetYear }
           });
 
         }
@@ -351,7 +367,7 @@ export class Int0824Component implements OnInit {
       // let msg = "";
       if (foo) {
         this.router.navigate(["/int08/2/2"], {
-          queryParams: { budgetYear: this.budgetYear }
+          queryParams: { budgetYear: this.riskAssRiskInfHdr.budgetYear }
         });
       }
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");
@@ -374,7 +390,7 @@ export class Int0824Component implements OnInit {
     const URL = "ia/int082/exportInfOtherDtl?riskAssInfHdrId=" + this.id;
     console.log("id", this.id);
     this.ajax.download(URL);
- 
+
   }
 
 }

@@ -8,57 +8,116 @@
       <div class="ui form">
         <div class="inline fields">
           <div class="two wide field "></div>
-          <div class="two wide field ">
-            <label class="ui right ">ชื่อกระดาษทำการ</label>
+          <div class="two wide field required">
+            <label class="text-right full-width">ชื่อกระดาษทำการ</label>
           </div>
           <div class="ten wide field ">
-            <input type="text" placeholder="ชื่อกระดาษทำการ" class="custom" name="riskInfPaperName" id="riskInfPaperName" [(ngModel)]="riskInfPaperName">
+            <input type="text" placeholder="ชื่อกระดาษทำการ" class="custom" name="riskInfPaperName" id="riskInfPaperName"
+              [(ngModel)]="riskAssInfHdr.riskInfPaperName">
           </div>
 
         </div>
         <div class="inline fields">
           <div class="two wide field "></div>
-          <div class="two wide field">
-            <label >ปีงบประมาณ</label>
+          <div class="two wide field required">
+            <label class="text-right full-width">ปีงบประมาณ</label>
           </div>
           <div class="four wide field ">
-            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="budgetYear" disabled="disabled">
-          </div>
-          <div class="two wide field ">
-            <label class="text-right full-width">ผู้ตรวจ</label>
-          </div>
-          <div class="four wide field ">
-            <input type="text" placeholder="ผู้ตรวจ" class="custom" name="userCheck" id="userCheck" [(ngModel)]="userCheck">
+            <input type="text" placeholder="ปีงบประมาณ" class="custom" name="budgetYear" id="budgetYear" [(ngModel)]="riskAssInfHdr.budgetYear"
+              disabled="disabled">
           </div>
         </div>
-        
-          <table id="dataTable"  class="ui small celled table striped selectable" style="width: 140%;">
-            <thead>
-              <tr>
-                <th rowspan="2" style="text-align: center !important">ลำดับ</th>
-                <th rowspan="2" style="text-align: center !important" class="four wide field ">ระบบสารสนเทศฯ ของกรมสรรพสามิต</th>
-                <th rowspan="2" style="text-align: center !important">ม.ค.</th>
-                <th rowspan="2" style="text-align: center !important">ก.พ.</th>
-                <th rowspan="2" style="text-align: center !important">มี.ค.</th>
-                <th rowspan="2" style="text-align: center !important">เม.ย.</th>
-                <th rowspan="2" style="text-align: center !important">พ.ค.</th>
-                <th rowspan="2" style="text-align: center !important">มิ.ย.</th>
-                <th rowspan="2" style="text-align: center !important">ก.ค.</th>
-                <th rowspan="2" style="text-align: center !important">ส.ค.</th>
-                <th rowspan="2" style="text-align: center !important">ก.ย.</th>
-                <th rowspan="2" style="text-align: center !important">ต.ค.</th>
-                <th rowspan="2" style="text-align: center !important">พ.ย.</th>
-                <th rowspan="2" style="text-align: center !important">ธ.ค.</th>
-                <th rowspan="2" style="text-align: center !important">รวม</th>
-                <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-              </tr>
-              <tr>
-                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-                <th style="text-align: center !important">แปลค่า</th>
-              </tr>
-            </thead>
-          </table>
-       
+        <div class="inline fields">
+          <div class="two wide field "></div>
+          <div class="two wide field required">
+            <label class="text-right full-width">ผู้จัดทำ : ชื่อ </label>
+          </div>
+          <div class="two wide field ">
+            <div class="ui input">
+              <select class="ui dropdown ai selection" style="width: 100%;" id="createUserTitle" [(ngModel)]="riskAssInfHdr.createUserTitle">
+                <option value="00">เลือก</option>
+                <option *ngFor="let data of titleList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="two wide field ">
+            <input type="text" placeholder="ชื่อผู้จัดทำ" class="custom" name="createUserName" id="createUserName"
+              [(ngModel)]="riskAssInfHdr.createUserName">
+          </div>
+          <div class="one wide field required">
+            <label class="text-right full-width">นามสกุล</label>
+          </div>
+          <div class="two wide field ">
+            <input type="text" placeholder="นามสกุล" class="custom" name="createLastName" id="createLastName"
+              [(ngModel)]="riskAssInfHdr.createLastName">
+          </div>
+          <div class="one wide field required">
+            <label class="text-right full-width">ตำแหน่ง</label>
+          </div>
+          <div class="two wide field ">
+            <input type="text" placeholder="ตำแหน่ง" class="custom" name="createPosition" id="createPosition"
+              [(ngModel)]="riskAssInfHdr.createPosition">
+          </div>
+        </div>
+        <div class="inline fields">
+          <div class="two wide field "></div>
+          <div class="two wide field required">
+            <label class="text-right full-width">ผู้ตรวจ : ชื่อ </label>
+          </div>
+          <div class="two wide field ">
+            <div class="ui input">
+              <select class="ui dropdown ai selection" style="width: 100%;" id="checkUserTitle" [(ngModel)]="riskAssInfHdr.checkUserTitle">
+                <option value="00">เลือก</option>
+                <option *ngFor="let data of titleList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="two wide field ">
+            <input type="text" placeholder="ชื่อผู้ตรวจ" class="custom" name="checkUserName" id="checkUserName"
+              [(ngModel)]="riskAssInfHdr.checkUserName">
+          </div>
+          <div class="one wide field required">
+            <label class="text-right full-width">นามสกุล</label>
+          </div>
+          <div class="two wide field ">
+            <input type="text" placeholder="นามสกุล" class="custom" name="checkLastName" id="checkLastName" [(ngModel)]="riskAssInfHdr.checkLastName">
+          </div>
+          <div class="one wide field required">
+            <label class="text-right full-width">ตำแหน่ง</label>
+          </div>
+          <div class="two wide field ">
+            <input type="text" placeholder="ตำแหน่ง" class="custom" name="checkPosition" id="checkPosition" disabled
+              [(ngModel)]="riskAssInfHdr.checkPosition">
+          </div>
+        </div>
+        <table id="dataTable" class="ui small celled table striped selectable" style="width: 140%;">
+          <thead>
+            <tr>
+              <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+              <th rowspan="2" style="text-align: center !important" class="four wide field ">ระบบสารสนเทศฯ
+                ของกรมสรรพสามิต</th>
+              <th rowspan="2" style="text-align: center !important">ม.ค.</th>
+              <th rowspan="2" style="text-align: center !important">ก.พ.</th>
+              <th rowspan="2" style="text-align: center !important">มี.ค.</th>
+              <th rowspan="2" style="text-align: center !important">เม.ย.</th>
+              <th rowspan="2" style="text-align: center !important">พ.ค.</th>
+              <th rowspan="2" style="text-align: center !important">มิ.ย.</th>
+              <th rowspan="2" style="text-align: center !important">ก.ค.</th>
+              <th rowspan="2" style="text-align: center !important">ส.ค.</th>
+              <th rowspan="2" style="text-align: center !important">ก.ย.</th>
+              <th rowspan="2" style="text-align: center !important">ต.ค.</th>
+              <th rowspan="2" style="text-align: center !important">พ.ย.</th>
+              <th rowspan="2" style="text-align: center !important">ธ.ค.</th>
+              <th rowspan="2" style="text-align: center !important">รวม</th>
+              <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
+            </tr>
+            <tr>
+              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
+              <th style="text-align: center !important">แปลค่า</th>
+            </tr>
+          </thead>
+        </table>
+
         <div class="inline fields"></div>
         <div class="inline fields ">
           <div class="sixteen wide field ">
@@ -71,7 +130,7 @@
               <i class="setting icon"></i>
               กำหนดเงื่อนไขความเสี่ยง
             </button>
-            <button class="ui mini yellow button" (click)="ExportWebService()" >
+            <button class="ui mini yellow button" (click)="ExportWebService()">
               <i class="print icon"></i>
               ส่งออก
             </button>
@@ -95,7 +154,7 @@
       <div class="ui form">
         <condition [riskId]="id" [riskType]="'MAIN'" [page]="'int08-2-3'" (out)="closeConditionRL($event)"></condition>
       </div>
-      <br/>
+      <br />
 
     </div>
   </div>

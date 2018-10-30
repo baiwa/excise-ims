@@ -3,24 +3,27 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AuthService } from "services/auth.service";
+import { RiskAssRiskWsHdr } from "models/RiskAssRiskWsHdr";
 
 declare var jQuery: any;
 declare var $: any;
+const URL = {
+  DROPDOWN: "combobox/controller/getDropByTypeAndParentId"
+};
 @Component({
   selector: 'int08-3-3',
   templateUrl: './int08-3-3.component.html',
   styleUrls: ['./int08-3-3.component.css']
 })
 export class Int0833Component implements OnInit {
-  riskHrdPaperName: any;
-  budgetYear: any;
+
   datatable: any;
   id: any;
-  riskAssRiskWsHdr: any;
+  riskAssRiskWsHdr: RiskAssRiskWsHdr;
 
-  userCheck: any;
 
   isConditionShow: any;
+  titleList: any[] = [];
   constructor(private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
@@ -28,11 +31,16 @@ export class Int0833Component implements OnInit {
     private authService: AuthService) { }
 
   ngOnInit() {
+    this.ajax.post(URL.DROPDOWN, { type: 'TITLE' }, res => {
+      this.titleList = res.json();
+      this.findRiskById();
+    });
+    this.riskAssRiskWsHdr = new RiskAssRiskWsHdr();
     this.authService.reRenderVersionProgram('INT-08330');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     this.id = this.route.snapshot.queryParams["id"];
-    this.findRiskById();
+
     this.initDatatable();
   }
 
@@ -41,10 +49,8 @@ export class Int0833Component implements OnInit {
     this.ajax.post(url, { riskHrdId: this.id }, res => {
 
       this.riskAssRiskWsHdr = res.json();
-      console.log(this.riskAssRiskWsHdr);
-      this.riskHrdPaperName = this.riskAssRiskWsHdr.riskHrdPaperName;
-      this.budgetYear = this.riskAssRiskWsHdr.budgetYear;
-      this.userCheck = this.riskAssRiskWsHdr.userCheck;
+      this.riskAssRiskWsHdr.checkPosition = 'ผู้อำนวยการกลุ่มตรวจสอบภายใน';
+
     });
   }
 
@@ -107,16 +113,32 @@ export class Int0833Component implements OnInit {
 
 
   saveRiskAssRiskWsDtl(): void {
-    this.riskAssRiskWsHdr.riskHrdPaperName = this.riskHrdPaperName;
-    this.riskAssRiskWsHdr.userCheck = this.userCheck;
+
     console.log(this.datatable.data());
     var msgMessage = "";
 
-    if (this.userCheck == null || this.userCheck == undefined || this.userCheck == "") {
-      msgMessage = "กรุณากรอก \"ผู้ตรวจ\" ";
+    if (this.riskAssRiskWsHdr.checkLastName == null || this.riskAssRiskWsHdr.checkLastName == undefined || this.riskAssRiskWsHdr.checkLastName == "") {
+      msgMessage = "กรุณากรอก \"นามสกุลผู้ตรวจ\" ";
     }
-
-    if (this.riskHrdPaperName == null || this.riskHrdPaperName == undefined || this.riskHrdPaperName == "") {
+    if (this.riskAssRiskWsHdr.checkUserName == null || this.riskAssRiskWsHdr.checkUserName == undefined || this.riskAssRiskWsHdr.checkUserName == "") {
+      msgMessage = "กรุณากรอก \"ชื่อผู้ตรวจ\" ";
+    }
+    if (this.riskAssRiskWsHdr.checkUserTitle == null || this.riskAssRiskWsHdr.checkUserTitle == undefined || this.riskAssRiskWsHdr.checkUserTitle == "") {
+      msgMessage = "กรุณากรอก \"คำนำหน้าชื่อผู้ตรวจ\" ";
+    }
+    if (this.riskAssRiskWsHdr.createPosition == null || this.riskAssRiskWsHdr.createPosition == undefined || this.riskAssRiskWsHdr.createPosition == "") {
+      msgMessage = "กรุณากรอก \"ตำแหน่งผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskWsHdr.createLastName == null || this.riskAssRiskWsHdr.createLastName == undefined || this.riskAssRiskWsHdr.createLastName == "") {
+      msgMessage = "กรุณากรอก \"นามสกุลผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskWsHdr.createUserName == null || this.riskAssRiskWsHdr.createUserName == undefined || this.riskAssRiskWsHdr.createUserName == "") {
+      msgMessage = "กรุณากรอก \"ชื่อผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskWsHdr.createUserTitle == null || this.riskAssRiskWsHdr.createUserTitle == undefined || this.riskAssRiskWsHdr.createUserTitle == "") {
+      msgMessage = "กรุณากรอก \"คำนำหน้าชื่อผู้จัดทำ\" ";
+    }
+    if (this.riskAssRiskWsHdr.riskHrdPaperName == null || this.riskAssRiskWsHdr.riskHrdPaperName == undefined || this.riskAssRiskWsHdr.riskHrdPaperName == "") {
       msgMessage = "กรุณากรอก \"ชื่อกระดาษทำการ\" ";
     }
 
@@ -138,7 +160,7 @@ export class Int0833Component implements OnInit {
           } else {
             this.messageBarService.successModal(message.messageTh, 'บันทึกข้อมูลสำเร็จ');
             this.router.navigate(["/int08/3/2"], {
-              queryParams: { budgetYear: this.budgetYear }
+              queryParams: { budgetYear: this.riskAssRiskWsHdr.budgetYear }
             });
           }
 
@@ -162,7 +184,7 @@ export class Int0833Component implements OnInit {
       // let msg = "";
       if (foo) {
         this.router.navigate(["/int08/3/2"], {
-          queryParams: { budgetYear: this.budgetYear }
+          queryParams: { budgetYear: this.riskAssRiskWsHdr.budgetYear }
         });
       }
     }, "คุณต้องการยกเลิกการทำงานใช่หรือไม่ ? ");

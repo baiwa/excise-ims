@@ -112,8 +112,8 @@
         <div class="ui bottom attached active tab segment" data-tab="first">
           <div class="inline fields">
             <div class="two wide field "></div>
-            <div class="two wide field ">
-              <label class="ui right ">ชื่อโครงการ</label>
+            <div class="two wide field required">
+              <label class="text-right full-width">ชื่อโครงการ</label>
             </div>
             <div class="ten wide field ">
               <input type="text" placeholder="ชื่อโครงการ" maxlength="100" class="custom" name="projectBase" id="projectBase"
@@ -121,7 +121,7 @@
             </div>
           </div>
           <div class="inline fields">
-            <div class="two wide field "></div>
+            <div class="two wide field required"></div>
             <div class="two wide field">
               <label class="text-right full-width">ชื่อหน่วยงาน</label>
             </div>
@@ -129,7 +129,7 @@
               <input type="text" placeholder="ชื่อหน่วยงาน" class="custom" name="departmentName" id="departmentName"
                 [(ngModel)]="departmentName">
             </div>
-            <div class="two wide field ">
+            <div class="two wide field required">
               <label class="text-right full-width">ค่าความเสี่ยง</label>
             </div>
             <div class="four wide field ">
