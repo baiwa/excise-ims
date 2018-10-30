@@ -161,11 +161,6 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: "epa04",
-    loadChildren: "projects/export-audit/epa04/epa04.module#Epa04Module",
-    canActivate: [AuthGuard]
-  },
-  {
     path: "mgcontrol",
     loadChildren: "projects/management-control/mgcontrol/mgcontrol.module#MgcontrolComponentModule",
     canActivate: [AuthGuard]
@@ -175,6 +170,7 @@ const routes: Routes = [
     loadChildren: "projects/management-control/mgc02/mgReportResult.module#MgReportResultComponentModule",
     canActivate: [AuthGuard]
   },
+
   {
     path: "cop01",
     loadChildren: "projects/check-operation/cop01/cop01.module#Cop01Module",
@@ -210,7 +206,16 @@ const routes: Routes = [
     loadChildren: "projects/check-operation/cop07/cop07.module#Cop07Module",
     canActivate: [AuthGuard]
   },
-
+  {
+    path: "cop08",
+    loadChildren: "projects/check-operation/cop08/cop08.module#Cop08Module",
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "cop09",
+    loadChildren: "projects/check-operation/cop09/cop09.module#Cop09Module",
+    canActivate: [AuthGuard]
+  },
 
   {
     path: "int01",
