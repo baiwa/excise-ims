@@ -124,7 +124,7 @@ public class Int076Service {
 	// !Set property Style Excel
 
 	private String tmpDatePosted = "";
-	private Logger logger = LoggerFactory.getLogger(ExciseDetailService.class);
+	private Logger logger = LoggerFactory.getLogger(Int076Service.class);
 	DecimalFormat formatter = new DecimalFormat("#,###.00");
 
 	public List<Int076Vo> readFileExcel(Int076FormVo formVo)
