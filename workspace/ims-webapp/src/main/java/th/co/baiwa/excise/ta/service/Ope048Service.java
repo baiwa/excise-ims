@@ -61,56 +61,25 @@ public class Ope048Service {
 					vo.setExcelPriceout(new BigDecimal(excel.getColumn5()));
 					excel.setFlag("Y");
 				}
-			}			
+			}
 		}
 		
-		/*for (Ope048ExcelVo excel : dataExcel) {
+		for (Ope048ExcelVo excel : dataExcel) {
 			Ope048Vo vo =new Ope048Vo();
 			if ("N".equalsIgnoreCase(excel.getFlag())) {
-				vo.setTaExciseAcc0502DtlList(excel.getColumn2());
-				vo.setReceiptNumber(excel.getColumn3());
-				vo.setTaxNumber(excel.getColumn4());
-				vo.setVolume(excel.getColumn5());				
+				vo.setTaExciseAcc0307List(excel.getColumn3());
+						
 				try {
-					vo.setUnit(new BigDecimal(excel.getColumn6()));
+					vo.setExcelPriceout(new BigDecimal(excel.getColumn5()));
 					list.add(vo);
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
 				
 			}
-		}*/
+		}
 	}
 	
-	/*public void save(List<Ope046Vo> vos) {
-		
-		List<TaxReduceWsDtlS> entityList = new ArrayList<>();
-		for (Ope046Vo vo : vos) {
-			TaxReduceWsDtlS entity = new TaxReduceWsDtlS();
-			
-			//check
-			vo.setTaxAmount((vo.getTaxAmount()!= null ? vo.getTaxAmount() : new BigDecimal(0)));
-			vo.setAmount(vo.getAmount()!= null ? vo.getAmount() : new BigDecimal(0));
-			vo.setTaxPerAmount(vo.getTaxPerAmount() != null ? vo.getTaxPerAmount() : new BigDecimal(0));
-			vo.setUnit(vo.getUnit() != null ? vo.getUnit() : new BigDecimal(0));
-			
-			entity.setList(vo.getTaExciseAcc0502DtlList());			
-			entity.setTotalTax(vo.getTaxAmount().toString());			
-			entity.setPdtAmount1(vo.getAmount().toString());
-			entity.setTaxPerPdt(vo.getTaxPerAmount().toString());
-			entity.setBillNo(vo.getReceiptNumber());
-			entity.setTaxAmount(vo.getTaxNumber());
-			entity.setPdtAmount2(vo.getVolume());
-			entity.setMaxValues(vo.getUnit().toString());
-			
-			BigDecimal result = vo.getTaxPerAmount().subtract(vo.getUnit());
-			entity.setResult(result.toString());
-			
-			
-			entityList.add(entity);
-		}
-		taxReduceWsDtlRepository.save(entityList);
-	}*/
 	
 	public List<LabelValueBean> findExciseId() {
 		List<LabelValueBean> dataList = priceChrckerDao.findExciseIdAll();
