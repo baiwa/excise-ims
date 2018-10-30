@@ -396,6 +396,8 @@ export class Int022Component implements OnInit, AfterViewInit {
           { qtnAlertId: null, qtnAlertTime: stringToDate(cal2), qtnMasterId: qtnMasterId, qtnTimes: 2, status: "N" },
           { qtnAlertId: null, qtnAlertTime: stringToDate(cal3), qtnMasterId: qtnMasterId, qtnTimes: 3, status: "N" },
         ],
+        isDeleted: "N",
+        qtnFinished: "Y",
         qtnMasterId: qtnMasterId,
         qtnName: qtnName,
         qtnSector: qtnSector,

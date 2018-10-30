@@ -6,6 +6,7 @@ export interface QtnMaster {
     qtnSector: string;
     qtnStart?: Date;
     qtnEnd?: Date;
+    isDeleted?: string;
 }
 
 export interface QtnTimeAlert {
