@@ -80,7 +80,7 @@ export class Ope048Component implements OnInit, AfterViewInit {
       this.formControl.controls.entrepreneur.setValue(res.exciseName);
       this.formControl.controls.coordinates.setValue(res.productType);
       this.formControl.controls.userNumber.setValue(res.taxFeeId);
-      // this.form.entrepreneur = res.exciseName;
+      this.form.entrepreneur = res.exciseName;
       // this.form.coordinates = res.productType;
       // this.form.userNumber = res.taxFeeId;
     });

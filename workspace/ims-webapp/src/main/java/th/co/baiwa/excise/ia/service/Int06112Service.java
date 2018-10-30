@@ -59,12 +59,14 @@ public class Int06112Service {
                         vo.setAccountId(StringUtils.trim(getStringValue(row.getCell(minColIx + 3))));
 
                         String accountId = vo.getAccountId();
-                        String result = accountId.substring(0, 1);
-                        if ("5".equals(result)) {
-                            addData = true;
-                        }
-                        vo.setAccountName(StringUtils.trim(getStringValue(row.getCell(minColIx + 6))));
-
+                        if (StringUtils.isNotBlank(accountId)) {
+                        	String result = accountId.substring(0, 1);
+                            if ("5".equals(result)) {
+                                addData = true;
+                            }
+                            vo.setAccountName(StringUtils.trim(getStringValue(row.getCell(minColIx + 6))));
+						}
+                        
                         continue;
                     }
                     if (IaConstant.IA_FILE_EXCEL.REVIEW_COST_DATA.BALANCE.equals(StringUtils.trim(getStringValue(cell)))) {

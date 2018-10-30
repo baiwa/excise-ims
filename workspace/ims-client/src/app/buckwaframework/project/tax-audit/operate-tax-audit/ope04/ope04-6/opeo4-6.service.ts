@@ -101,7 +101,7 @@ export class Opeo46Service {
         this.dataTable();
     }
 
-    save = async (): Promise<any> => {
+    save = async (form : any): Promise<any> => {
         return new Promise(async(resolve, reject) => {
         let data = await this.table.data();
         let url = await "ta/opo046/save";
@@ -109,7 +109,6 @@ export class Opeo46Service {
         let list = await [];
         for (let i = 0; i < data.length; i++) {
             let row = await this.table.row(i).data();
-            await console.log(row);
             await list.push(row);
         }
         await console.log(list);
@@ -117,9 +116,14 @@ export class Opeo46Service {
             await this.message.alert("ไม่มีข้อมูล");
             return;
         }
+        let d = {
+            "voList" : list,
+            "form" :form
+        }
+
         this.message.comfirm(async (res) => {
             if (res) {
-                return await this.ajax.post(url, list, async res => {
+                return await this.ajax.post(url,d, async res => {
                     await resolve(res.json());
                     await this.message.successModal("บันทึกรายการ");
                 }, async err => {

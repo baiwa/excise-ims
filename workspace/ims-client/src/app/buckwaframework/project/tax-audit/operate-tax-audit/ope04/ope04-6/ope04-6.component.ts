@@ -52,6 +52,8 @@ export class Ope046Component implements OnInit {
     this.formControl = this.formBuilder.group({
       dateFrom: ["", Validators.required],
       dateTo: ["", Validators.required],
+      dateFromDesc: [""],
+      dateToDesc: [""],
       exciseId: ["", Validators.required],
       entrepreneur: [""],
       anlysisNumber: [""],
@@ -109,7 +111,7 @@ export class Ope046Component implements OnInit {
       this.formControl.controls.coordinates.setValue(res.productType);
       this.formControl.controls.userNumber.setValue(res.taxFeeId);
 
-      // this.form.entrepreneur = res.exciseName;
+      this.form.entrepreneur = res.exciseName;
       // this.form.coordinates = res.productType;
       // this.form.userNumber = res.taxFeeId;
     });
@@ -132,7 +134,7 @@ export class Ope046Component implements OnInit {
 
   save = async () => {
     this.buttonDisabled = await true;
-    await this.opeo46Service.save().then(async (res) => {
+    await this.opeo46Service.save(this.formControl.value).then(async (res) => {
       if ("C" == res) {
         this.buttonDisabled = await false;
       }
@@ -156,7 +158,9 @@ export class Ope046Component implements OnInit {
         let month = TextDateTH.months[parseInt(_month) - 1];
         console.log(month);
         this.form.dateFrom = month + " " + _year;
-        this.formControl.controls.dateFrom.setValue(month + " " + _year);
+        this.form.dateFromDesc = month + " " + _year;
+        this.formControl.controls.dateFrom.setValue(text);
+        this.formControl.controls.dateFromDesc.setValue(month + " " + _year);
       }
     });
     $("#dateT").calendar({
@@ -172,7 +176,9 @@ export class Ope046Component implements OnInit {
         let month = TextDateTH.months[parseInt(_month) - 1];
         console.log(month);
         this.form.dateTo = month + " " + _year;
-        this.formControl.controls.dateTo.setValue(month + " " + _year);
+        this.form.dateToDesc = month + " " + _year;
+        this.formControl.controls.dateTo.setValue(text);
+        this.formControl.controls.dateToDesc.setValue(month + " " + _year);
       }
     });
   }

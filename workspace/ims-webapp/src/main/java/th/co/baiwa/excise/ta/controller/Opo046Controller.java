@@ -18,6 +18,7 @@ import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046ExcelVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046FormVo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope046SumVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046Vo;
 import th.co.baiwa.excise.ta.service.Ope046Service;
 
@@ -55,9 +56,9 @@ public class Opo046Controller {
 
     @PostMapping("/save")
     @ResponseBody
-    public List<Ope046Vo> save(@RequestBody List<Ope046Vo> vo)
+    public Ope046SumVo save(@RequestBody Ope046SumVo sumVo)
     {
-         ope046Service.save(vo);
-         return vo;
+         ope046Service.save(sumVo);
+         return sumVo;
     }
 }

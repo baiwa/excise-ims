@@ -1,6 +1,8 @@
 export class Ope046Form {
     dateFrom: string = "";
     dateTo: string = "";
+    dateFromDesc: string = "";
+    dateToDesc: string = "";
     exciseId: string = "";
     entrepreneur: string = "";
     anlysisNumber: string = "";

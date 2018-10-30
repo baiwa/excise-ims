@@ -24,9 +24,12 @@ import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.dao.CreatePeperChrckerDao;
 import th.co.baiwa.excise.ta.persistence.entity.TaxReduceWsDtlS;
+import th.co.baiwa.excise.ta.persistence.entity.TaxReduceWsHdr;
 import th.co.baiwa.excise.ta.persistence.repository.TaxReduceWsDtlRepository;
+import th.co.baiwa.excise.ta.persistence.repository.TaxReduceWsHdrRepository;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046ExcelVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046FormVo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope046SumVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046Vo;
 
 @Service
@@ -37,6 +40,9 @@ public class Ope046Service {
 	
 	@Autowired
 	private TaxReduceWsDtlRepository taxReduceWsDtlRepository;
+	
+	@Autowired
+	private TaxReduceWsHdrRepository taxReduceWsHdrRepository;
 
 	public DataTableAjax<Ope046Vo> findAll(Ope046FormVo formVo) {
 
@@ -87,9 +93,25 @@ public class Ope046Service {
 		}
 	}
 	
-	public void save(List<Ope046Vo> vos) {
+	public void save(Ope046SumVo sumVo) {
 		
 		List<TaxReduceWsDtlS> entityList = new ArrayList<>();
+		
+		/*save header*/
+		Ope046FormVo form = sumVo.getForm();
+		TaxReduceWsHdr header = new TaxReduceWsHdr();
+		header.setExciseId(form.getExciseId());
+		header.setTaAnalysisId(form.getAnlysisNumber());
+		header.setTaxationId(form.getUserNumber());
+		header.setStartDate(form.getDateFrom());
+		header.setEndDate(form.getDateTo());
+		//header.setPdtType(pdtType);
+		header.setSubPdtType(form.getCoordinates());
+		TaxReduceWsHdr headerId = taxReduceWsHdrRepository.save(header);
+	
+		
+		/*save details*/
+		List<Ope046Vo> vos = sumVo.getVoList();
 		for (Ope046Vo vo : vos) {
 			TaxReduceWsDtlS entity = new TaxReduceWsDtlS();
 			
@@ -107,6 +129,7 @@ public class Ope046Service {
 			entity.setTaxAmount(vo.getTaxNumber());
 			entity.setPdtAmount2(vo.getVolume());
 			entity.setMaxValues(vo.getUnit().toString());
+			entity.setTaTaxReduceWsHeaderId(headerId.getTaTaxReduceWsHdrId());
 			
 			BigDecimal result = vo.getTaxPerAmount().subtract(vo.getUnit());
 			entity.setResult(result.toString());
