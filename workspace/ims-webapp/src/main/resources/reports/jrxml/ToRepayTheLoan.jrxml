@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ToRepayTheLoan" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0bf6b0a5-0866-4cc2-8de4-088f1f7226f9">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="801" splitType="Stretch">
+			<textField>
+				<reportElement x="222" y="10" width="147" height="43" uuid="3801f35b-3d8b-4544-907f-b2b618a8c58e"/>
+				<textElement>
+					<font fontName="TH Sarabun New" size="26" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["บันทึกข้อความ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="70" width="41" height="26" uuid="a65a7523-3e7d-4620-9245-bde6b6cfd7e1"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="TH Sarabun New" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ส่วน"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="81" y="75" width="336" height="19" uuid="03483c43-a2b6-4c5d-9abf-7f8059ffd785"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="TH Sarabun New" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["กลุ่มตรวจสอบภายใน โทร. 51111-51117 "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="41" y="125" width="25" height="25" uuid="60809a46-8522-4c31-8b01-3eaa8b44de71"/>
+				<textElement>
+					<font fontName="TH Sarabun New" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ที่"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="89" y="118" width="149" height="23" uuid="8739ef7a-fa25-4037-8175-4fb59c42fa6f"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font fontName="TH Sarabun New" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["กค 0621/"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="91" y="153" width="421" height="19" uuid="f39a6ab4-1dd6-404c-9b4c-9b3e06fea48d"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font fontName="TH Sarabun New" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" ขอส่งใบเบิกค่ำใช้จ่ำยเดินทำงไปรำชกำรเพื่อชดใช้เงินยืม"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="156" width="57" height="30" uuid="ddcfb94d-152f-451e-9965-1e5528167db2"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="TH Sarabun New" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["เรื่อง"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="239" y="125" width="30" height="25" uuid="9990ad2e-1d3f-491a-acef-f3f26d69219e"/>
+				<textElement>
+					<font fontName="TH Sarabun New" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["วันที่"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="265" y="123" width="245" height="18" uuid="a8e4e567-3451-4cea-bb39-9cd871c2040f"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font fontName="TH Sarabun New" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="41" y="187" width="40" height="22" uuid="9330ccd7-40eb-4596-a212-5a02191942a5"/>
+				<textElement>
+					<font fontName="TH Sarabun New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["เรียน"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="89" y="188" width="221" height="22" uuid="4810efb3-92e1-4d28-90b5-76ddb566bf9c"/>
+				<textElement>
+					<font fontName="TH Sarabun New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ผู้อำนวยการสำนักบริหารการคลังและรายได้  "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="95" width="49" height="26" uuid="e16dff93-55e9-490c-91c7-1a7f8f18d933"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="TH Sarabun New" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ราชการ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="96" width="418" height="17" uuid="80f22d1e-d595-4e88-b15c-77811555d7e1"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font fontName="TH Sarabun New" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="242" width="186" height="22" uuid="af926109-f129-4716-9b96-f5b16385b3a8"/>
+				<textElement>
+					<font fontName="TH Sarabun New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ตามหนังสือกลุ่มตรวจสอบภายใน ที่ กค  "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="264" width="357" height="22" uuid="5a7ed0eb-22bf-4554-8049-4d8c933a758c"/>
+				<textElement>
+					<font fontName="TH Sarabun New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["กรมสรรพสามิตอนุมัติให้กลุ่มตรวจสอบภายใน เดินทางไปตรวจสอบการปฏิบัติงาน  "]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>
