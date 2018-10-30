@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Utils } from 'helpers/utils';
 import { MessageBarService } from 'services/message-bar.service';
 import { AjaxService } from 'services/ajax.service';
+import { resolve, reject } from 'q';
 
 
 
@@ -16,7 +17,7 @@ export class Opeo46Service {
     dataRespon: any;
     searchFlag: String = "FALSE";
     fileName: any;
-    dataExcel: any = null;
+    dataExcel: any = null;   
     constructor(
         private ajax: AjaxService,
         private message: MessageBarService
@@ -43,20 +44,24 @@ export class Opeo46Service {
         });
     }
 
-    onChangeUpload = async (event: any) => {
-        if (event.target.files && event.target.files.length > 0) {
-            let reader = new FileReader();
-            reader.onload = (e: any) => {
-                const f = {
-                    name: event.target.files[0].name,
-                    type: event.target.files[0].type,
-                    value: e.target.result
+    onChangeUpload = async (event: any): Promise<any>=> {
+
+        return new Promise((resolve,reject)=>{
+            if (event.target.files && event.target.files.length > 0) {
+                let reader = new FileReader();
+                reader.onload = (e: any) => {
+                    const f = {
+                        name: event.target.files[0].name,
+                        type: event.target.files[0].type,
+                        value: e.target.result
+                    };
+                    this.fileName = [f];
+                    console.log(this.fileName);
                 };
-                this.fileName = [f];
-                console.log(this.fileName);
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
+                reader.readAsDataURL(event.target.files[0]);
+            }            
+            resolve();
+        });        
     };
 
     upload = (form: any) => {
@@ -71,12 +76,15 @@ export class Opeo46Service {
         });
     }
 
-    search = () => {
-        this.searchFlag = "TRUE";
-        if (this.table != null) {
-            this.table.destroy();
-        }
-        this.dataTable();
+    search = ():Promise<any> => {
+        return new Promise((resolve,reject)=>{
+            this.searchFlag = "TRUE";
+            if (this.table != null) {
+                this.table.destroy();
+            }
+            this.dataTable();
+            resolve();
+        });        
         // $("#dataTable").DataTableTh().ajax.reload();
     }
     claer = () => {
@@ -120,7 +128,7 @@ export class Opeo46Service {
             }else{
                 await resolve("C");
             }
-        }, "", "ยืนยันการลบ");
+        }, "บันทึกรายการ");
         });
     }
     dataTable = () => {

@@ -32,11 +32,13 @@ export class Utils {
         return (op == "-" ? op + result : result);
     }
     public static moneyFormatDecimal(money) {
+        if(money == null || money == "") money = 0;
         var df = new DecimalFormat("###,###.00");
         return df.format(money);
     }
 
     public static moneyFormatInt(money) {
+        if(money == null || money == "") money = 0;
         var df = new DecimalFormat("###,###");
         return df.format(money);
     }

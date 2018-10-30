@@ -6,6 +6,7 @@ import { Ope046Form } from './ope04-6.modesl';
 import { TextDateTH } from 'helpers/datepicker';
 import { formatter } from 'helpers/datepicker';
 import { Utils } from 'helpers/utils';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 declare var $: any;
 @Component({
   selector: 'ope04-6',
@@ -23,23 +24,48 @@ export class Ope046Component implements OnInit {
   ]
 
   // === > params
+  submitted: boolean = false;
   form: Ope046Form = new Ope046Form();
   exciseIdList: any;
   loading: boolean = false;
   buttonDisabled: boolean = false;
   error: boolean = false;
+  uploadDisabled: boolean = true;
+  formControl: FormGroup;
   constructor(
     private authService: AuthService,
     private opeo46Service: Opeo46Service,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
+    this.newForm();
     // this.authService.reRenderVersionProgram('OPE-04600');
     $("#Dtable").hide();
     this.findExciseId();
     this.callDropdown();
     this.calenda();
     this.dataTable();
+  }
+
+  newForm(){
+    this.formControl = this.formBuilder.group({
+      dateFrom: ["", Validators.required],
+      dateTo: ["", Validators.required],
+      exciseId: ["", Validators.required],
+      entrepreneur: [""],
+      anlysisNumber: [""],
+      type: [""],
+      coordinates: [""],
+      uploadFlag: [""],
+      userNumber: [""],
+      fileUpload: [""],
+      searchFlag: [""],
+    });
+  }
+
+  get f() {
+    return this.formControl.controls;
   }
 
   findExciseId = () => {
@@ -53,33 +79,45 @@ export class Ope046Component implements OnInit {
   }
 
   search = () => {
-    if (Utils.isNull(this.form.exciseId)) {
-      this.error = true;
-    } else {
-      this.error = false;
+    this.submitted = true;
+    if (this.formControl.invalid) {
+      return;
     }
-    console.log($("exciseId").val());
-    if (Utils.isNotNull(this.form.exciseId)) {
-      $("#Dtable").show();
-      this.opeo46Service.search();
-    }
+    this.loading = true;
+    $("#Dtable").show();
+    this.opeo46Service.search().then(res=>{
+      setTimeout(() => {
+        this.loading = false;
+      }, 300);
+    });
+
   }
+
   claer = () => {
     this.error = false;
     $("form-exciseId").removeClass('error');
     $("#Dtable").hide();
+    this.newForm();
+    this.uploadDisabled = true;
     this.opeo46Service.claer();
   }
   changeExciseId = (e) => {
     let exciseId = e.target.value;
     this.opeo46Service.findByExciseId(exciseId).then((res) => {
-      this.form.entrepreneur = res.exciseName;
-      this.form.coordinates = res.productType;
-      this.form.userNumber = res.taxFeeId;
+
+      this.formControl.controls.entrepreneur.setValue(res.exciseName);
+      this.formControl.controls.coordinates.setValue(res.productType);
+      this.formControl.controls.userNumber.setValue(res.taxFeeId);
+
+      // this.form.entrepreneur = res.exciseName;
+      // this.form.coordinates = res.productType;
+      // this.form.userNumber = res.taxFeeId;
     });
   }
   onChangeUpload(file: any) {
-    this.opeo46Service.onChangeUpload(file);
+    this.opeo46Service.onChangeUpload(file).then(res => {
+      this.uploadDisabled = false;
+    });
   }
 
   upload = () => {
@@ -94,14 +132,14 @@ export class Ope046Component implements OnInit {
 
   save = async () => {
     this.buttonDisabled = await true;
-    await this.opeo46Service.save().then( async(res)=>{
-      if("C" == res){
+    await this.opeo46Service.save().then(async (res) => {
+      if ("C" == res) {
         this.buttonDisabled = await false;
       }
-      setTimeout( async() => {
+      setTimeout(async () => {
         this.buttonDisabled = await false;
       }, 500);
-    });    
+    });
   }
   calenda = () => {
     let date = new Date();
@@ -115,9 +153,10 @@ export class Ope046Component implements OnInit {
         let array = text.split("/");
         let _month = array[0];
         let _year = array[1];
-        let month = TextDateTH.months[parseInt(_month)-1];
+        let month = TextDateTH.months[parseInt(_month) - 1];
         console.log(month);
         this.form.dateFrom = month + " " + _year;
+        this.formControl.controls.dateFrom.setValue(month + " " + _year);
       }
     });
     $("#dateT").calendar({
@@ -130,9 +169,10 @@ export class Ope046Component implements OnInit {
         let array = text.split("/");
         let _month = array[0];
         let _year = array[1];
-        let month = TextDateTH.months[parseInt(_month)-1];
+        let month = TextDateTH.months[parseInt(_month) - 1];
         console.log(month);
         this.form.dateTo = month + " " + _year;
+        this.formControl.controls.dateTo.setValue(month + " " + _year);
       }
     });
   }

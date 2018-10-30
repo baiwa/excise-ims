@@ -120,20 +120,6 @@
           </tr>
         </thead>
       </table>
-
-      <br>
-      <div class="ui center aligned grid">
-        <div class="six wide column">
-          <button class="ui mini primary button">
-            <i class="print icon"></i>
-            บันทึกข้อมูล
-          </button>
-          <button class="ui mini button" (click)="clearData()">
-            <i class="refresh icon"></i>
-            ล้างข้อมูล
-          </button>
-        </div>
-      </div>
     </div>
 
     <br>
@@ -152,7 +138,7 @@
               title="อัปโหลด Template ข้อมูลการตรวจสอบรายการวัตถุดิบที่ขอลดหย่อนภาษีที่ยื่นต่อกรมสรรพสามิต (ภส.05 - 02)">
           </div>
           <div class="three wide field ">
-            <button class="ui mini primary button" (click)="upload()"><i class="upload icon"></i>อัปโหลด</button>
+            <button class="ui mini primary button" (click)="upload()" [disabled]="uploadDisabled"><i class="upload icon"></i>อัปโหลด</button>
           </div>
           <div class="four wide field ">
 

@@ -29,6 +29,7 @@ export class Ope048Component implements OnInit, AfterViewInit {
   loading: boolean = false;
   error: boolean = false;
   formControl: FormGroup;
+  uploadDisabled : boolean = true;
   constructor(
     private authService: AuthService,
     private ope048Service: Ope048Service,
@@ -37,6 +38,12 @@ export class Ope048Component implements OnInit, AfterViewInit {
 
   ngOnInit() {
     $("#Dtable").hide();
+    this.newForm();
+    
+    //this.authService.reRenderVersionProgram('OPE-04800');
+  }
+
+  newForm(){
     this.formControl = this.formBuilder.group({
       dateFrom: ["", Validators.required],
       dateTo: ["", Validators.required],
@@ -50,9 +57,7 @@ export class Ope048Component implements OnInit, AfterViewInit {
       fileUpload: [""],
       searchFlag: [""],
     });
-    //this.authService.reRenderVersionProgram('OPE-04800');
   }
-
   ngAfterViewInit() {
     this.calenda();
     this.callDropdown();
@@ -83,30 +88,44 @@ export class Ope048Component implements OnInit, AfterViewInit {
   callDropdown() {
     $(".ui.dropdown").dropdown();
   }
-  search = () => {
-
-    console.log(this.formControl.value);
-    console.log(this.formControl.controls.exciseId.value);
+  search = () => {    
     this.submitted = true;
     if (this.formControl.invalid) {
       return;
     }
-
-    // if (Utils.isNull(this.form.exciseId)) {
-    //   this.error = true;
-    // } else {
-    //   this.error = false;
-    // }    
+    this.loading = true;
     $("#Dtable").show();
-    this.ope048Service.search();
+    this.ope048Service.search().then(res=>{
+      setTimeout(() => {
+        this.loading = false;
+      }, 300);
+    });
   }
+
+  onChangeUpload(file: any) {
+    this.ope048Service.onChangeUpload(file).then(res=>{
+        this.uploadDisabled = false;
+    });
+  }
+
+  upload = () => {
+    this.loading = true;
+    const form = $("#upload-form")[0];
+    let formBody = new FormData(form);
+    this.ope048Service.upload(formBody);
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
+  }
+
 
   claer = () => {
     this.error = false;
+    this.uploadDisabled = true;
     $("form-exciseId").removeClass('error');
     $("#Dtable").hide();
     this.form = new Ope048Form();
-    this.formControl.removeControl;
+    this.newForm();
     this.ope048Service.claer();
 
   }
