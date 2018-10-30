@@ -89,6 +89,7 @@ export class Int0511Component implements OnInit {
 
 
   exportFile = () => {
+    
     let param = "";
     param += "?sector=" + this.form.sector;
     param += "&area=" + this.form.area;
@@ -98,8 +99,6 @@ export class Int0511Component implements OnInit {
     param += "&budgetType=" + $("#budgetType").val();
     console.log(URL.export + param);
     this.ajax.download(URL.export + param);
-
-
 
   }
 

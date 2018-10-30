@@ -29,7 +29,8 @@ public class CheckStampAreaDao {
 
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
-
+		params.add(SQL);
+        params.add(SQL);
         if(StringUtils.isNotBlank(formVo.getSector())){
             sql.append(" AND EXCISE_DEPARTMENT=? ");
             params.add(StringUtils.trim(formVo.getSector()));
@@ -55,7 +56,7 @@ public class CheckStampAreaDao {
 	}
 
 	public List<Int0511Vo> findAll(Int0511FormVo formVo) {
-
+         
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
 		params.add(SQL);

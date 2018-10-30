@@ -40,8 +40,7 @@ import th.co.baiwa.excise.ia.persistence.repository.IaStamDetailRepository;
 import th.co.baiwa.excise.ia.persistence.repository.IaStampFileRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511Vo;
-import th.co.baiwa.excise.ia.persistence.vo.Int111FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int111Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int065Vo;
 import th.co.baiwa.excise.upload.service.ExcalService;
 
 @Service
@@ -354,7 +353,8 @@ public void exportFile(Int0511FormVo formVo, HttpServletResponse response) throw
 		
 		
 		/* Detail */
-		List<Int0511Vo> exportDataList = null;
+		List<Int0511Vo> exportDataList = checkStampAreaDao.exportFile(formVo);
+
 //		if( StringUtils.isNotBlank(formVo.getProjectName())||StringUtils.isNotBlank(formVo.getStatus())) {
 //			exportDataList = checkStampAreaDao.exportFile(formVo);
 //		}else if(StringUtils.isBlank(formVo.getProjectName()) && StringUtils.isBlank(formVo.getStatus())) {
@@ -442,7 +442,107 @@ public void exportFile(Int0511FormVo formVo, HttpServletResponse response) throw
 				cell.setCellValue("-");
 			}
 			cell.setCellStyle(cellCenter);
+			cellNum++;		
+			
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getDateWithdrawStamp())) {
+				cell.setCellValue(detail.getDateWithdrawStamp());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
 			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getBookNumberDeliverStamp())) {
+				cell.setCellValue(detail.getBookNumberDeliverStamp());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getDateDeliverStamp())) {
+				cell.setCellValue(detail.getDateDeliverStamp());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			
+
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getFivePartNumber())) {
+				cell.setCellValue(detail.getFivePartNumber());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getFivePartDate())) {
+				cell.setCellValue(detail.getFivePartDate());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getStampCheckDate())) {
+				cell.setCellValue(detail.getStampCheckDate());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getStampChecker())) {
+				cell.setCellValue(detail.getStampChecker());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getStampType())) {
+				cell.setCellValue(detail.getStampType());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getStampBrand())) {
+				cell.setCellValue(detail.getStampBrand());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(StringUtils.isNotBlank(detail.getStampBrand())) {
+				cell.setCellValue(detail.getStampBrand());
+			}else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+		
+			
 			
 			no++;
 			rowNum++;
