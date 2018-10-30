@@ -83,7 +83,7 @@ export class Int0122Component implements OnInit {
             this.datatable.destroy();
         }
 
-        this.datatable = $("#dataTable").DataTable({
+        this.datatable = $("#dataTable").DataTableTh({
             lengthChange: false,
             searching: false,
             ordering: false,

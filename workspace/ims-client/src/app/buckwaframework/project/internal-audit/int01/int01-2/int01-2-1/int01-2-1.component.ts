@@ -119,18 +119,18 @@ export class Int0121Component implements OnInit {
     console.log("startDate : " + this.startDate);
     console.log("endDate : " + this.endDate);
     if (ofCode == '000000') {
-      this.messageBarService.errorModal('กรุณาเลือกภาคพื่นที่ที่ตรวจสอบใบอนุญาติ', 'แจ้งเตือน');
+      this.messageBarService.errorModal('กรุณาเลือกภาคพื่นที่ที่ตรวจสอบใบอนุญาต', 'แจ้งเตือน');
       return;
 
     }
 
     if (this.startDate == null || this.startDate == undefined || this.startDate == '') {
-      this.messageBarService.errorModal('กรุณากำหนดช่วงเวลาเริ่มต้นตรวจสอบใบอนุญาติ', 'แจ้งเตือน');
+      this.messageBarService.errorModal('กรุณากำหนดช่วงเวลาเริ่มต้นตรวจสอบใบอนุญาต', 'แจ้งเตือน');
       return;
     }
 
     if (this.endDate == null || this.endDate == undefined || this.endDate == '') {
-      this.messageBarService.errorModal('กรุณากำหนดช่วงเวลาสิ้นสุดตรวจสอบใบอนุญาติ', 'แจ้งเตือน');
+      this.messageBarService.errorModal('กรุณากำหนดช่วงเวลาสิ้นสุดตรวจสอบใบอนุญาต', 'แจ้งเตือน');
       return;
     }
 

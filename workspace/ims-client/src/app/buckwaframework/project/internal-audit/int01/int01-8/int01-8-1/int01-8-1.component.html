@@ -1,86 +1,79 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
   <div class="sixteen wide column">
-
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>ค้นหาข้อมูลการนำส่งเงินเกิน 3 ครั้ง</span>
     </div>
-    <div class="ui attached segment">
-      <form>
-        <div class="ui form">
-          <div class="inline fields">
-            <div class="two wide field"></div>
-            <div class="two wide field">
-              <label>สรรพสามิตภาค</label>
-            </div>
-            <div class="four wide field">
-              <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)"
-                [(ngModel)]="sector">
-                <option value="00">เลือก</option>
-                <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
-              </select>
-            </div>
-            <div class="two wide field">
-              <label>สรรพสามิตพื้นที่</label>
-            </div>
-            <div class="four wide field">
-              <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)"
-                [(ngModel)]="area">
-                <option value="00">เลือก</option>
-                <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
-              </select>
-            </div>
+    <div class="ui bottom attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="three wide field">
+            <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
           </div>
-          <div class="inline fields">
-            <div class="two wide field"></div>
-            <div class="two wide field">
-              <label>สรรพสามิตสาขา</label>
-            </div>
-            <div class="four wide field">
-              <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3" [(ngModel)]="local">
-                <option value="00">เลือก</option>
-                <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
-              </select>
-            </div>
-            <div class="two wide field ">
-              <label>วันที่
-              </label>
-            </div>
-            <div class="two wide field">
-              <div class="ui calendar" id="calendar1" style="width:100%">
-                <div class="ui input left icon">
-                  <i class="calendar alter nate outline icon"></i>
-                  <input type="text" name="endDate" id="endDate" readonly>
-                </div>
-              </div>
-            </div>
-            <label>ถึง</label>
-            <div class="two wide field">
-              <div class="ui calendar" id="calendar2" style="width:100%">
-                <div class="ui input left icon">
-                  <i class="calendar alter nate outline icon"></i>
-                  <input type="text" name="endDate" id="endDate" readonly>
-                </div>
-              </div>
-            </div>
+          <div class="five wide field">
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)" [(ngModel)]="sector">
+              <option value="00">กรุณาเลือก</option>
+              <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            </select>
           </div>
-          <br>
-          <div class="ui center aligned grid">
-            <div class="eight wide column">
-              <button class="ui mini primary button width-100" (click)="showData()">
-                <i class="search icon"></i>
-                ค้นหา
-              </button>
-              <button class="ui mini  button width-100" type="reset" (click)="hideData()">
-                <i class="trash alternate icon"></i>
-                ล้างข้อมูล
-              </button>
-            </div>
+          <div class="two wide field">
+            <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
           </div>
-
-
+          <div class="five wide field">
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)" [(ngModel)]="area">
+              <option value="00">กรุณาเลือก</option>
+              <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            </select>
+          </div>
         </div>
-      </form>
+        <div class="inline fields">
+          <div class="three wide field">
+            <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่สาขา</label>
+          </div>
+          <div class="five wide field">
+            <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3" [(ngModel)]="local">
+              <option value="00">กรุณาเลือก</option>
+              <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+            </select>
+          </div>
+          <div class="two wide field ">
+            <label class="text-right full-width">วันที่
+            </label>
+          </div>
+          <div class="two wide field">
+            <div class="ui calendar" id="calendar1" style="width:100%">
+              <div class="ui input left icon">
+                <i class="calendar alter nate outline icon"></i>
+                <input type="text" placeholder="วว/ดด/ปปปป" name="endDate" id="endDate" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="one wide field">
+            <label class="text-center full-width">ถึง</label>
+          </div>
+          <div class="two wide field">
+            <div class="ui calendar" id="calendar2" style="width:100%">
+              <div class="ui input left icon">
+                <i class="calendar alter nate outline icon"></i>
+                <input type="text" placeholder="วว/ดด/ปปปป" name="endDate" id="endDate" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="ui center aligned grid">
+          <div class="eight wide column">
+            <button class="ui mini primary button width-100" (click)="showData()">
+              <i class="search icon"></i>
+              ค้นหา
+            </button>
+            <button class="ui mini  button width-100" type="reset" (click)="hideData()">
+              <i class="refresh icon"></i>
+              ล้างข้อมูล
+            </button>
+          </div>
+        </div>
+      </div>
       <br />
       <br />
       <div id="Int0181">
@@ -95,17 +88,15 @@
               <th>จำนวนเงินที่ฝากคลัง</th>
             </tr>
           </thead>
-
         </table>
-
         <div class="eight wide center aligned column">
-          <button class="ui mini primary button width-100" [routerLink]="[ '/home'] ">
-            <i class="save  icon"></i>
-            ยกเลิก
-          </button>
-          <button class="ui mini primary button width-100" [routerLink]="[ '/int07/2'] ">
-            <i class="clipboard check icon"></i>
+          <button class="ui mini yellow button" [routerLink]="[ '/int07/2'] ">
+            <i class="print icon"></i>
             ส่งออก
+          </button>
+          <button class="ui mini button" [routerLink]="[ '/home'] ">
+            <i class="close  icon"></i>
+            ยกเลิก
           </button>
         </div>
       </div>

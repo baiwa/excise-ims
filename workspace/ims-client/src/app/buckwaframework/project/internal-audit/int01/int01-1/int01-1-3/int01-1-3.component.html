@@ -1,15 +1,13 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
     <div class="sixteen wide column">
-        <h2 class="ui header">ตรวจสอบงบสรุปยอดภาษี</h2>
-
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>รายงานการใช้ใบเสร็จรับเงินภาษีสรรพสามิต
             </span>
         </div>
 
-
         <div class="ui attached segment">
-            <table class="ui small celled table striped selectable" id="datatableTax">
+            <table class="ui small celled table striped selectable" id="datatableTax" style="width: 100%;">
                 <thead>
                     <tr style="text-align: center;">
                         <th>ลำดับที่</th>
@@ -29,10 +27,6 @@
                         <th>นำส่ง</th>
                     </tr>
                 </thead>
-                <tbody>
-
-
-                </tbody>
                 <tfoot>
                     <tr class="text-right">
                         <th colspan="2" style="text-align: right">รวม</th>
@@ -45,19 +39,16 @@
                         <th>{{df(sumTax.stampAmount)}}</th>
                         <th>{{df(sumTax.olderFundAmount)}}</th>
                         <th>{{df(sumTax.sendAmount)}}</th>
-
                     </tr>
                 </tfoot>
-
             </table>
         </div>
-
+<br>
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>เงินกองทุน อบจ. เงินบำรุงองค์การ</span>
         </div>
-
         <div class="ui attached segment">
-            <table id="datatableMaintain" class="ui small celled table striped selectable">
+            <table id="datatableMaintain" class="ui small celled table striped selectable"  style="width: 100%;">
                 <thead>
                     <tr style="text-align: center;">
                         <th>ลำดับที่</th>
@@ -77,9 +68,6 @@
                         <th>นำส่ง</th>
                     </tr>
                 </thead>
-                <tbody>
-
-                </tbody>
                 <tfoot>
                     <tr class="text-right">
                         <th colspan="2" style="text-align: right">รวม</th>
@@ -102,7 +90,7 @@
             <div class="ui center aligned grid">
                 <div class="eight wide column">
                     <button class="ui mini button" routerLink="/int01/1/2">
-                        กลับ
+                        <i class="close icon"></i>ยกเลิก
                     </button>
                 </div>
             </div>

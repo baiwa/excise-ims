@@ -2,8 +2,6 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
     <div class="sixteen wide column">
-
-
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>เพิ่มเลขแบบพิมพ์</span>
         </div>
@@ -27,7 +25,7 @@
                         <label class="text-right full-width">จำนวนเงิน : </label>
                     </div>
                     <div class="three wide  field">
-                        <input type="text" [(ngModel)]="lic.licAmount">
+                        <input type="number" [(ngModel)]="lic.licAmount">
                     </div>
                     <div class="one wide  field">
                         <button class="ui mini primary button width-100" (click)="editDataInlist()">
@@ -42,56 +40,53 @@
 
     <div class="sixteen wide column">
         <div class="ui segment">
-            <br>
-            <div style="overflow-x: scroll;">
-                <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
-                    <thead>
-                        <tr class="center aligned">
-                            <th style="text-align: center;">ลำดับที่</th>
-                            <th style="text-align: center;">วันที่ออกใบอนุญาต</th>
-                            <th style="text-align: center;">วันที่นำส่งเงิน<br>(ระบบรายได้)</th>
-                            <th style="text-align: center;">ประเภทใบอนุญาต</th>
-                            <th style="text-align: center;">เลขที่แบบพิมพ์</th>
-                            <th style="text-align: center;">เลขที่ใบอนุญาต</th>
-                            <th style="text-align: center;">จำนวนเงินจากระบบ</th>
-                            <th style="text-align: center;">จำนวนเงินจากสำเนาใบอนุญาต</th>
-                            <th style="text-align: center;">จำนวนเงินค่าธรรมเนียม<br>อปท. 10%</th>
-                            <th style="text-align: center;">จำนวนเงินค่ามหาดไทย<br>10%</th>
-                            <th style="text-align: center;">รวม</th>
-                            <th style="text-align: center;">วันที่ใบอนุญาตมีผล</th>
-                            <th style="text-align: center;">วันที่หมดอายุใบอนุญาต</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
+            <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
+                <thead>
+                    <tr class="center aligned">
+                        <th style="text-align: center;">ลำดับที่</th>
+                        <th style="text-align: center;">วันที่ออกใบอนุญาต</th>
+                        <th style="text-align: center;">วันที่นำส่งเงิน
+                            <br>(ระบบรายได้)</th>
+                        <th style="text-align: center;">ประเภทใบอนุญาต</th>
+                        <th style="text-align: center;">เลขที่แบบพิมพ์</th>
+                        <th style="text-align: center;">เลขที่ใบอนุญาต</th>
+                        <th style="text-align: center;">จำนวนเงินจากระบบ</th>
+                        <th style="text-align: center;">จำนวนเงินจากสำเนาใบอนุญาต</th>
+                        <th style="text-align: center;">จำนวนเงินค่าธรรมเนียม
+                            <br>อปท. 10%</th>
+                        <th style="text-align: center;">จำนวนเงินค่ามหาดไทย
+                            <br>10%</th>
+                        <th style="text-align: center;">รวม</th>
+                        <th style="text-align: center;">วันที่ใบอนุญาตมีผล</th>
+                        <th style="text-align: center;">วันที่หมดอายุใบอนุญาต</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
         <div class="ui attached segment">
-            <div class="ui form">
                 <div class="ui center aligned grid">
                     <div class="eight wide column">
-                        <a class="ui mini  button widtd-100" routerLink='/int01/2/1'>
-                            <i class="arrow left icon"></i>กลับ
-                        </a>
-                        <a class="ui mini primary button widtd-100">
+                        <a class="ui mini yellow button widtd-100">
                             <i class="print icon"></i>
                             ส่งออก
                         </a>
                         <a id="btnSave" class="ui mini primary button widtd-100" (click)="saveAllData()">
-                            <i class="arrow save icon"></i>
+                            <i class="save icon"></i>
                             บันทึก
                         </a>
                         <a class="ui mini primary button widtd-100" (click)="nextPage()">
                             <i class="file alternate icon"></i>
                             รายงานใบอนุญาต
                         </a>
+                        <a class="ui mini  button widtd-100" routerLink='/int01/2/1'>
+                            <i class="close icon"></i>ยกเลิก
+                        </a>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </div>
+
 
 <div id="modalInt062" class="ui modal hidden transition">
     <i class="close icon"></i>

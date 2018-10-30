@@ -178,7 +178,7 @@ export class Int0181Component implements OnInit {
       this.datatable.destroy();
     }
     console.log(this.listWs8020List[0]);
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: true,
       searching: false,
       ordering: false,

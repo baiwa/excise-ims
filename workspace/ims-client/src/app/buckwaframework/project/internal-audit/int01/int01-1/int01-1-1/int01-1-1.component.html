@@ -2,7 +2,7 @@
 <div class="ui grid">
   <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <h3>ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต</h3>
+        <span>ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต</span>
     </div>
     <div class="ui bottom attached segment">
       <form class="ui sixteen wide grid" (submit)="onSubmit(f)" #f="ngForm">
@@ -10,31 +10,31 @@
           <div class="ui form">
             <div class="inline fields">
               <div class="three wide field">
-                <label class="text-right full-width">สรรพสามิตภาค</label>
+                <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
               </div>
               <div class="five wide field {{ f.submitted && f.controls.travelTo1.invalid ? 'error' : '' }}">
                 <select class="ui dropdown search selection" id="travelTo1" name="travelTo1" ngModel (change)="dropdown($event, 'comboBox2')">
-                  <option value="">เลือก</option>
+                  <option value="">กรุณาเลือก</option>
                   <option *ngFor="let data of comboBox1 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                 </select>
               </div>
               <div class="two wide field">
-                <label class="text-right full-width">สรรพสามิตพื้นที่</label>
+                <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
               </div>
               <div class="five wide field">
                 <select class="ui dropdown search selection" id="travelTo2" name="travelTo2" ngModel (change)="dropdown($event, 'comboBox3')">
-                  <option value="">เลือก</option>
+                  <option value="">กรุณาเลือก</option>
                   <option *ngFor="let data of comboBox2 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                 </select>
               </div>
             </div>
             <div class="inline fields">
               <div class="three wide field">
-                <label class="text-right full-width">สรรพสามิตสาขา</label>
+                <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่สาขา</label>
               </div>
               <div class="five wide field">
                 <select class="ui dropdown search selection" id="travelTo3" name="travelTo3" ngModel>
-                  <option value="">เลือก</option>
+                  <option value="">กรุณาเลือก</option>
                   <option *ngFor="let data of comboBox3 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                 </select>
               </div>
@@ -45,7 +45,7 @@
                 <div class="ui calendar full-width" id="calendar1">
                   <div class="ui input left icon">
                     <i class="calendar alter nate outline icon"></i>
-                    <input type="text" placeholder="วัน/เดือน/ปี" name="startDate" id="startDate" autocomplete="off"
+                    <input type="text" placeholder="วว/ดด/ปปปป" name="startDate" id="startDate" autocomplete="off"
                       ngModel required>
                   </div>
                 </div>
@@ -57,7 +57,7 @@
                 <div class="ui calendar full-width" id="calendar2">
                   <div class="ui input left icon">
                     <i class="calendar alter nate outline icon"></i>
-                    <input type="text" placeholder="วัน/เดือน/ปี" name="endDate" id="endDate" autocomplete="off"
+                    <input type="text" placeholder="วว/ดด/ปปปป" name="endDate" id="endDate" autocomplete="off"
                       ngModel required>
                   </div>
                 </div>

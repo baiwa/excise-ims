@@ -214,7 +214,7 @@ export class Int0112Service {
         if (this.table) {
             this.table.destroy();
         }
-        this.table = $("#table").DataTable({
+        this.table = $("#table").DataTableTh({
             scrollY: "410px",
             scrollCollapse: true,
             scrollX: true,

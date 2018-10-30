@@ -71,7 +71,7 @@ export class Int0123Component implements OnInit {
       this.table1.destroy();
     }
     console.log(this.dataTable1);
-    this.table1 = $("#table1").DataTable({
+    this.table1 = $("#table1").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -116,7 +116,7 @@ export class Int0123Component implements OnInit {
       this.table2.destroy();
     }
     console.log(this.dataTable2);
-    this.table2 = $("#table2").DataTable({
+    this.table2 = $("#table2").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -161,7 +161,7 @@ export class Int0123Component implements OnInit {
       this.table3.destroy();
     }
     console.log(this.dataTable3);
-    this.table3 = $("#table3").DataTable({
+    this.table3 = $("#table3").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,

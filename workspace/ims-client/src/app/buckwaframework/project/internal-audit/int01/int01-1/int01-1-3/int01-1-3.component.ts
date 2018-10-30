@@ -5,7 +5,7 @@ import { NgForm } from "@angular/forms";
 import { Int011Service } from "../int01-1.services";
 import { Int0112Service } from "../int01-1-2/int01-1-2.service";
 import { AjaxService } from "services/ajax.service";
-import { DecimalFormat } from "helpers/index";
+import { DecimalFormat, Utils } from "helpers/index";
 import { Observable } from "rxjs";
 import { MessageBarService } from "services/message-bar.service";
 import { async } from "q";
@@ -32,10 +32,21 @@ export class Int0113Component implements OnInit {
   private sumTax: TaxReceipt;
   private receiptMaintain: any[];
   private sumMaintain: TaxReceipt;
+  
+  breadcrumb: BreadCrumb[]; // Breadcrump navs
 
-
-  constructor(private ajax: AjaxService, private main: Int011Service, private msg: MessageBarService,private authService: AuthService) {
+  constructor(
+    private ajax: AjaxService, 
+    private main: Int011Service, 
+    private msg: MessageBarService,
+    private authService: AuthService) {
     this.getlov();
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบรายได้", route: "#" },
+      { label: "ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต", route: "#" },
+      { label: "รายงานการใช้ใบเสร็จรับเงินภาษีสรรพสามิต", route: "#" }
+    ];
   }
 
   async ngOnInit() {
@@ -149,7 +160,7 @@ export class Int0113Component implements OnInit {
       this.datatableTax.destroy();
     }
 
-    this.datatableTax = $("#datatableTax").DataTable({
+    this.datatableTax = $("#datatableTax").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -169,14 +180,46 @@ export class Int0113Component implements OnInit {
         //  { data: "incomeCode" },
         { data: "incomeName" },
         { data: "count" },
-        { data: "netTaxAmount" },
-        { data: "netLocAmount" },
-        { data: "locOthAmount" },
-        { data: "locExpAmount" },
-        { data: "customAmount" },
-        { data: "stampAmount" },
-        { data: "olderFundAmount" },
-        { data: "sendAmount" }
+        { data: "netTaxAmount",
+        "render": function (data) {
+          return Utils.moneyFormat(data);
+        }
+       },
+        { data: "netLocAmount",
+        "render": function (data) {
+          return Utils.moneyFormat(data);
+        }
+       },
+        { data: "locOthAmount",
+        "render": function (data) {
+          return Utils.moneyFormat(data);
+        }
+       },
+        { data: "locExpAmount",
+        "render": function (data) {
+          return Utils.moneyFormat(data);
+        }
+       },
+        { data: "customAmount",
+        "render": function (data) {
+          return Utils.moneyFormat(data);
+        }
+       },
+        { data: "stampAmount",
+        "render": function (data) {
+          return Utils.moneyFormat(data);
+        }
+       },
+        { data: "olderFundAmount",
+        "render": function (data) {
+          return Utils.moneyFormat(data);
+        }
+       },
+        { data: "sendAmount",
+        "render": function (data) {
+          return Utils.moneyFormat(data);
+        }
+      }
 
 
 
@@ -198,7 +241,7 @@ export class Int0113Component implements OnInit {
       this.datatableMaintain.destroy();
     }
 
-    this.datatableMaintain = $("#datatableMaintain").DataTable({
+    this.datatableMaintain = $("#datatableMaintain").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,

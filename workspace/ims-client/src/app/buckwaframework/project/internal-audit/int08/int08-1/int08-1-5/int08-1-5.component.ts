@@ -119,9 +119,9 @@ export class Int0815Component implements OnInit {
 
       },
       columnDefs: [
-        { targets: [0, 2, 8, 9], className: "center aligned" },
+        { targets: [0, 8, 9], className: "center aligned" },
         { targets: [3, 4, 5, 6, 7], className: "right aligned" },
-        { targets: [1], className: "left aligned" }
+        { targets: [1, 2], className: "left aligned" }
       ]
 
     });

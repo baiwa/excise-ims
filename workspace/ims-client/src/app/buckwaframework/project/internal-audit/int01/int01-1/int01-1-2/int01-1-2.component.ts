@@ -45,7 +45,7 @@ private authService: AuthService,
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบรายได้", route: "#" },
-      { label: "ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต", route: "int01/1/1" },
+      { label: "ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต", route: "#" },
       { label: "เพิ่มเลขแบบพิมพ์", route: "#" }
     ];
   }
