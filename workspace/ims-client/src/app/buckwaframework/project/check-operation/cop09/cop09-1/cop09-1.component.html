@@ -1,0 +1,130 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<br>
+<div class="sixteen wide column">
+  <h2 class="ui header">แผนการตรวจปฏิบัติการประจำปีงบประมาณ</h2>
+
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>ระบุเงื่อนไขในการค้นหา</span>
+  </div>
+  <div class="ui form center aligned" id="COP09-1" ngNativeValidate>
+    <div class="ui attached  segment">
+      <input type="hidden" id="searchFlag">
+      <input type="hidden" id="id">
+
+      <div class="inline fields">
+
+        <div class="three wide field"></div>
+        <div class="three wide field">
+          <label>แผนการตรวจปฏิบัติการประจำปีงบประมาณ</label>
+        </div>
+        <div class="four wide field column">
+          <div class="ui calendar" id="date" style="width: 100%;">
+            <div class="ui input left icon">
+              <i class="calendar alter nate outline icon"></i>
+              <input id="fiscalYear" type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="ปปปป" [attr.required]="true">
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="ui center aligned grid">
+        <div class="eight wide column">
+          <button class="ui mini primary button" type="button" (click)="clickSearch()">
+            <i class="search icon"></i>ค้นหา</button>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+  <br>
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>ผลการค้นหา</span>
+  </div>
+  <div class="ui attached  segment">
+    <br>
+    <table id="tableData" class="ui small celled table nowrap striped selectable" style="width: 100%">
+      <thead>
+
+        <tr>
+          <th rowspan="2" style="text-align: center !important;">เดือน</th>
+          <th rowspan="1" colspan="3" style="text-align: center !important;">ตามแผนปฏิบัติการ</th>
+          <th rowspan="1" colspan="3" style="text-align: center !important;">นอกแผนปฏิบัติการ</th>
+          <th rowspan="2" style="text-align: center !important;width:180px !important">จัดการ</th>
+        </tr>
+        <tr>
+          <th style="text-align: center !important;">จำนวน</th>
+          <th style="text-align: center !important;">เสร็จสิ้น</th>
+          <th style="text-align: center !important;">รอการดำเนินการ</th>
+          <th style="text-align: center !important;">จำนวน</th>
+          <th style="text-align: center !important;">เสร็จสิ้น</th>
+          <th style="text-align: center !important;">รอการดำเนินการ</th>
+        </tr>
+
+      </thead>
+      <tfoot>
+          <tr> 
+            <th style="text-align: center !important;"> รวม </th>
+            <th rowspan="1" style="text-align: right !important;">{{totalAsPlanNumber}}</th>
+            <th rowspan="1" style="text-align: right !important;">{{totalAsPlanSuccess}}</th>
+            <th rowspan="1" style="text-align: right !important;">{{totalAsPlanWait}}</th>
+            <th rowspan="1" style="text-align: right !important;">{{totalOutsidePlanNumber}}</th>
+            <th rowspan="1" style="text-align: right !important;">{{totalOutsidePlanSuccess}}</th>
+            <th rowspan="1" style="text-align: right !important;">{{totalOutsidePlanWait}}</th>
+            <th style="text-align: center !important;"></th>
+          </tr>
+    
+        </tfoot>
+    </table>
+  </div>
+</div>
+
+<!-- Edit modal -->
+<div class="ui small modal transition hidden" id='modalEdit'>
+  <div class="header" style="text-align: center !important;">
+      แก้ไขจำนวนแผนปฏิบัติการ เดือน
+  </div>
+
+  <div class="scrolling content">
+    <form id="addModal-form" ngNativeValidate>
+      <div class="ui form center aligned">
+
+        <input type="hidden" id="id">
+        <input type="hidden" id="asPlanSuccess">
+        <input type="hidden" id="outsidePlanSuccess">
+        <input type="hidden" id="fiscalYearEdit">
+
+        <div class="inline fields">
+            <div class="three wide field"></div>
+          <div class="five wide field right aligned">
+            <label>ตามแผนปฏิบัติการ  จำนวน</label>
+          </div>
+          <div class="three wide field">
+            <input id="asPlanNumber" type="number">
+          </div>
+          <div class="one wide field right aligned">
+            <label>ราย</label>
+          </div>
+        </div>
+        <div class="inline fields">
+            <div class="three wide field"></div>
+          <div class="five wide field right aligned">
+            <label>นอกแผนปฏิบัติการ  จำนวน</label>
+          </div>
+          <div class="three wide field">
+            <input id="outsidePlanNumber" type="number">
+          </div>
+          <div class="one wide field right aligned">
+            <label>ราย</label>
+          </div>
+        </div>
+        <br>
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <div class="ui mini yellow button" (click)="editData()"><i class="edit icon"></i>ดำเนินการแก้ไข</div>
+    <div class="ui mini deny button"><i class="close icon"></i>ยกเลิก</div>
+  </div>
+</div>
+<!--End Edit modal -->

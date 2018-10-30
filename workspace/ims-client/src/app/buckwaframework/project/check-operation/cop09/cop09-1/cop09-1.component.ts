@@ -10,11 +10,11 @@ import { BreadCrumb } from 'models/index';
 
 declare var $: any;
 @Component({
-  selector: "app-cop07-1",
-  templateUrl: "./cop07-1.component.html",
-  styleUrls: ["./cop07-1.component.css"]
+  selector: "app-cop09-1",
+  templateUrl: "./cop09-1.component.html",
+  styleUrls: ["./cop09-1.component.css"]
 })
-export class Cop071Component implements OnInit {
+export class Cop091Component implements OnInit {
 
   searchFlag: String;
   breadcrumb: BreadCrumb[];
@@ -226,7 +226,7 @@ modalEdit=(data)=> {
   }
 
   ngOnInit() {
-    this.authService.reRenderVersionProgram('OPE-07100');
+    this.authService.reRenderVersionProgram('COP-09100');
     
     this.dataTable();
     this.calenda(); 

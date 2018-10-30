@@ -77,6 +77,9 @@ export class Cop064Component implements OnInit {
       this.form.productType = res.productType;
       this.form.exciseType = res.exciseType;
       this.form.userNumber = res.taxFeeId;
+
+      $("#exciseName").val(res.exciseName);
+      $("#productType").val(res.productType);
     });
   }
   onChangeUpload(file: any) {
@@ -95,7 +98,7 @@ export class Cop064Component implements OnInit {
 
   save = async () => {
     this.buttonDisabled = await true;
-    await this.cop064Service.save().then( async(res)=>{
+    await this.cop064Service.save(this.form).then( async(res)=>{
       if("C" == res){
         this.buttonDisabled = await false;
       }

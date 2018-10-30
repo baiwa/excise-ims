@@ -410,7 +410,11 @@ export class Cop0711Component implements OnInit, OnDestroy {
   }
 
   clickBack(){
-    this.router.navigate(['/cop07/1']);
+    this.router.navigate(['/cop07/1'], {
+      queryParams: {
+        fiscalYear:this.fiscalYear.split("/")[1]
+      }
+    });
   }
 
   getHead = () =>{

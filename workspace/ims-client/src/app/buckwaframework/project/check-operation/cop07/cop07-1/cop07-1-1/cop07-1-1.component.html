@@ -14,7 +14,8 @@
   <div class="inline fields" style="text-align: center !important;">
     <!-- <button class="mini ui yellow button">
       <i class="edit icon"></i>แก้ไขจำนวนแผนปฏิบัติการ</button> -->
-      <button class="ui mini green button" type="button" (click)="modalAdd()"><i class="plus icon"></i>เพิ่มข้อมูล</button>
+    <button class="ui mini green button" type="button" (click)="modalAdd()">
+      <i class="plus icon"></i>เพิ่มข้อมูล</button>
   </div>
 </div>
 <br>
@@ -69,53 +70,53 @@
     </div>
     <div class="ui form center aligned grid">
       <button class="ui mini button" type="button" (click)="clickBack()">
-        <i class="close icon"></i>ยกเลิก</button>
+        <i class="arrow left icon"></i>กลับ
+      </button>
     </div>
     <br>
     <br>
   </div>
-<!-- add modal -->
-<div class="ui large modal transition hidden" id='modalAdd'>
-  <div class="header" style="text-align: center !important;background: #1e83db;color: white">
-    ระบุรายละเอียด
-  </div>
+  <!-- add modal -->
+  <div class="ui large modal transition hidden" id='modalAdd'>
+    <div class="header" style="text-align: center !important;background: #1e83db;color: white">
+      ระบุรายละเอียด
+    </div>
 
-  <div class="scrolling content">
-    <form id="addModal-form" ngNativeValidate>
-      <div class="ui form center aligned">
+    <div class="scrolling content">
+      <form id="addModal-form" ngNativeValidate>
+        <div class="ui form center aligned">
 
-        <input type="hidden" id="id">
-        <input type="hidden" id="idMaster">
-        <input type="hidden" id="fiscalyear">
+          <input type="hidden" id="id">
+          <input type="hidden" id="idMaster">
+          <input type="hidden" id="fiscalyear">
 
-        <div class="inline fields">
-          <div class="two wide field"></div>
-          <div class="three wide field right aligned">
-            <label>เลขที่ผู้ประกอบการ</label>
-          </div>
-          <div class="three wide field">
-            <select class="ui dropdown" id="entrepreneurNo" name="entrepreneurNo" style="width: 100%">
-              <option value="">กรุณาเลือก</option>
-              <option *ngFor="let data of entrepreneurNoList">{{data}}</option>
-            </select>
-          </div>
+          <div class="inline fields">
+            <div class="two wide field"></div>
+            <div class="three wide field right aligned">
+              <label>เลขที่ผู้ประกอบการ</label>
+            </div>
+            <div class="three wide field">
+              <select class="ui dropdown" id="entrepreneurNo" name="entrepreneurNo" style="width: 100%">
+                <option value="">กรุณาเลือก</option>
+                <option *ngFor="let data of entrepreneurNoList">{{data}}</option>
+              </select>
+            </div>
 
-          <div class="three wide field ui right aligned">
-            <label>วันที่ตรวจ</label>
-          </div>
-          <div class="three wide field">
-            <div class="ui calendar" id="modalDate1" style="width: 100%">
-              <div class="ui input left icon">
-                <i class="calendar alter nate outline icon"></i>
-                <input type="text" name="date-raw" id="checkDate" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป"
-                  [attr.required]="true">
+            <div class="three wide field ui right aligned">
+              <label>วันที่ตรวจ</label>
+            </div>
+            <div class="three wide field">
+              <div class="ui calendar" id="modalDate1" style="width: 100%">
+                <div class="ui input left icon">
+                  <i class="calendar alter nate outline icon"></i>
+                  <input type="text" name="date-raw" id="checkDate" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                </div>
               </div>
             </div>
+
           </div>
 
-        </div>
-
-        <div class="inline fields">
+          <div class="inline fields">
             <div class="two wide field"></div>
             <div class="three wide field right aligned">
               <label>แผนปฏิบัติการ</label>
@@ -126,18 +127,21 @@
                 <option *ngFor="let data of actionPlanList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
               </select>
             </div>
-  
+
           </div>
 
-        <br>
-      </div>
-    </form>
-  </div>
+          <br>
+        </div>
+      </form>
+    </div>
 
-  <div class="actions">
-    <div class="ui mini primary button" *ngIf=" btnModal=='S' " (click)="saveData()"><i class="save icon"></i>บันทึก</div>
-    <div class="ui mini deny button"><i class="close icon"></i>ยกเลิก</div>
-    <div class="ui mini yellow button" *ngIf=" btnModal=='E' " (click)="editData()"><i class="edit icon"></i>ดำเนินการแก้ไข</div>
+    <div class="actions">
+      <div class="ui mini primary button" *ngIf=" btnModal=='S' " (click)="saveData()">
+        <i class="save icon"></i>บันทึก</div>
+      <div class="ui mini deny button">
+        <i class="close icon"></i>ยกเลิก</div>
+      <div class="ui mini yellow button" *ngIf=" btnModal=='E' " (click)="editData()">
+        <i class="edit icon"></i>ดำเนินการแก้ไข</div>
+    </div>
   </div>
-</div>
-<!--End add modal -->
+  <!--End add modal -->

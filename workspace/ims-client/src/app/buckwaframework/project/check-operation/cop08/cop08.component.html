@@ -1,0 +1,51 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<form class="ui grid" (submit)="onSubmit($event)" ngNativeValidate>
+  <div class="sixteen wide column">
+    <h2 class="ui header">วิเคราะห์แนวโน้มการชำระภาษีของผู้ประกอบการ</h2>
+
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>ระบุรายละเอียดวิเคราะห์แนวโน้มการชำระภาษีของผู้ประกอบการ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui form">
+        <div class="inline fields">
+            <div class="three wide field"></div>
+          <div class="two wide required field">
+            <label>ระยะเวลาที่ตรวจสอบ</label>
+          </div>
+          <div class="three wide field ui calendar" id="calendar">
+            <div class="ui input left icon">
+              <i class="calendar alter nate outline icon"></i>
+              <input type="calendar" readonly="" id="calendarraw" name="calendarraw" [attr.required]="true"
+                autocomplete="off" placeholder="ดด/ปปปป">
+            </div>
+          </div>
+          <div class="one wide field">
+            <label>ถึง</label>
+          </div>
+          <div class="three wide field ui calendar" id="calendar1">
+            <div class="ui input left icon">
+              <i class="calendar alter nate outline icon"></i>
+              <input type="calendar" readonly="" id="calendar1raw" name="calendar1raw" [attr.required]="true"
+                autocomplete="off" placeholder="ดด/ปปปป">
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="ui center aligned grid">
+          <div class="eight wide column">
+            <button type="submit" class="ui mini primary button">
+              <i class="search icon"></i>
+              วิเคราะห์ข้อมูลเบื้องต้น
+            </button>
+            <button type="reset" class="ui mini button">
+              <i class="refresh icon"></i>
+              ล้างข้อมูล
+            </button>
+          </div>
+        </div><br>
+      </div>
+    </div>
+  </div>
+</form>

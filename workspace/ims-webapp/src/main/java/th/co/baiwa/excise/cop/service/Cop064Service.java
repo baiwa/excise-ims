@@ -94,15 +94,20 @@ public class Cop064Service {
 	public void save(Cop064FormVo formVo) {
 		
 		List<OaTaxReduceWsDtl> entityList = new ArrayList<>();
+
+		Long idHead = reportCheckOperationDao.saveHeadCop064(formVo);
+		
 		for (Cop064Vo vo : formVo.getDataListVo()) {
 			OaTaxReduceWsDtl entity = new OaTaxReduceWsDtl();
 			
 			//check
+			
 			vo.setTaxAmount((vo.getTaxAmount()!= null ? vo.getTaxAmount() : new BigDecimal(0)));
 			vo.setAmount(vo.getAmount()!= null ? vo.getAmount() : new BigDecimal(0));
 			vo.setTaxPerAmount(vo.getTaxPerAmount() != null ? vo.getTaxPerAmount() : new BigDecimal(0));
 			vo.setUnit(vo.getUnit() != null ? vo.getUnit() : new BigDecimal(0));
 			
+			entity.setTaxReduceWsHdrId(idHead);
 			entity.setList(vo.getTaExciseAcc0502DtlList());			
 			entity.setTotalTax(vo.getTaxAmount());			
 			entity.setProductAmount1(vo.getAmount().longValue());

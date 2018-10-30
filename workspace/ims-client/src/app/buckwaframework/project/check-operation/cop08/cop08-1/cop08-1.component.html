@@ -1,0 +1,111 @@
+<app-breadcrumb [route]="breadcrumb">
+</app-breadcrumb>
+
+<div class="ui grid">
+    <div class="sixteen wide column">
+        <h2 class="ui header">วิเคราะห์ข้อมูลเบื้องต้น {{month}} เดือนย้อนหลังของผู้ประกอบการ</h2>
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+            <span>รายะเอียดการวิเคราห์รายได้ของผู้ประกอบการที่มีการชำระภาษีสรรพสามิต</span>
+        </div>
+        <div class="ui attached segment">
+            <div class="ui active inverted dimmer" *ngIf="loading">
+                <div class="ui text loader">กำลังโหลด</div>
+            </div>
+            <div class="ui form">
+
+                <div class="inline fields">
+                    <div class="three wide field"></div>
+                    <div class="one wide field">
+                        <label>ระหว่างวันที่ </label>
+                    </div>
+                    <div class="four wide field required">
+                        <div class=" ui action input">
+                            <input type="text" placeholder="ดด/ปปปป" value="{{before}}" readonly="" class="custom-readonly">
+                            <button class="ui icon button">
+                                <i class="add to calendar icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="one wide field">
+                        <label>ถึง </label>
+                    </div>
+                    <div class="four wide field required">
+                        <div class="ui action input">
+                            <input type="text" placeholder="ดด/ปปปป" value="{{last}}" class="custom-readonly" [readonly]="true">
+
+                            <button class="ui icon button">
+                                <i class="add to calendar icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+            <span>ข้อมูลการวิเคราห์รายได้ของผู้ประกอบการที่มีการชำระภาษีสรรพสามิต</span>
+        </div>
+        <div class="ui attached segment">
+            <div class="ui form">
+                <div class="inline fields">
+                    <div class="five wide field "></div>
+                    <div class="one  wide field ">
+                        <label>คำค้นหา</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input type="text" [(ngModel)]="formSearch" name="formSearch" id="formSearch">
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="three wide field ">
+                        <button class="ui mini primary button" (click)="search()">
+                            <i class="search icon"></i>ค้นหา
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="ui grid">
+                <div class="sixteen wide column">
+                    <div id="divDataTable">
+                        <div class="ui active inverted dimmer" *ngIf="onLoading">
+                            <div class="ui medium text loader">กำลังโหลด...</div>
+                        </div>
+                        <div>
+                            <table id="userManagementDt" class="ui small celled table aligned hover nowrap" style="width: 100%">
+                                <thead id="trDrinamic">
+                                    <!-- table -->
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui grid">
+                <div class="three wide column"></div>
+                <div class="thirteen wide column"> - จำนวนรายทั้งหมด :
+                    <span>{{summary.totalNumber}}</span> ราย</div>
+            </div>
+            <div class="ui grid">
+                <div class="three wide column"></div>
+                <div class="five wide column"> - รายที่มีการชำระภาษี :
+                    <span>{{countPay}}</span> ราย</div>
+
+            </div>
+            <div class="ui grid">
+                <div class="three wide column"></div>
+                <div class="thirteen wide column"> - รายที่ไม่ชำระภาษี :
+                    <span>{{countNonPay}}</span> ราย</div>
+            </div> 
+            <br> 
+            <div class="ui form center aligned grid">
+                    <button class="ui mini button" type="button" (click)="clickBack()">
+                      <i class="arrow left icon"></i>กลับ
+                    </button>
+            </div>
+            <br> 
+        </div>
+    </div>
+</div>

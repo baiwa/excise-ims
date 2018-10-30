@@ -11,10 +11,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.cop.persistence.vo.Cop061FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop061Vo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop064FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop064Vo;
+import th.co.baiwa.excise.cop.persistence.vo.Cop0711Vo;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.utils.OracleUtils;
 
@@ -24,10 +26,10 @@ public class ReportCheckOperationDao {
 	private JdbcTemplate jdbcTemplate;
 
 	private final String SQL_TA_EXCISE_REGISTTION_NUMBER = " SELECT * FROM TA_EXCISE_REGISTTION_NUMBER WHERE 1=1 ";
-//	private final String SQL_COP_CHECK_FISCAL_YEAR_DTL =  " SELECT * FROM COP_CHECK_FISCAL_YEAR_DTL WHERE 1=1 ";
 	
-	private final String SQL_COP_CHECK_FISCAL_YEAR_DTL =  	" SELECT a.ENTREPRENEUR_NO FROM COP_CHECK_FISCAL_YEAR_DTL a " + 
-		  	" LEFT JOIN COP_CHECK_FISCAL_YEAR b ON a.ID_MASTER = b.ID WHERE a.IS_DELETED = 'N' AND a.STATUS != '1874' AND SUBSTR(b.FISCAL_YEAR,4,4) = ? ";
+	private final String SQL_COP_CHECK_FISCAL_YEAR_DTL = " SELECT a.ENTREPRENEUR_NO FROM COP_CHECK_FISCAL_YEAR_DTL a " + 
+		  												 " LEFT JOIN COP_CHECK_FISCAL_YEAR b ON a.ID_MASTER = b.ID " + 
+		  												 " WHERE a.IS_DELETED = 'N' AND a.STATUS != '1874' AND SUBSTR(b.FISCAL_YEAR,4,4) = ? ";
 	
 	private final String SQL_DETAIL = " SELECT * FROM OA_TAX_REDUCE_WS_DTL_MONEY WHERE 1=1 ";
 
@@ -171,5 +173,39 @@ public class ReportCheckOperationDao {
 			return vo;
 		}
 	};
+	
+    public Long saveHeadCop064 (Cop064FormVo vo) {
+    	Long id = jdbcTemplate.queryForObject(" SELECT OA_TAX_REDUCE_WS_HDR_SEQ.NEXTVAL FROM dual ",Long.class);
+
+    	jdbcTemplate.update(" INSERT INTO OA_TAX_REDUCE_WS_HDR( " + 
+    			"TAX_REDUCE_WS_HDR_ID, " + 
+    			"EXCISE_ID, " + 
+    			"EXCISE_NAME, " + 
+    			"PRODUCT_TYPE, " + 
+    			"START_DATE, " + 
+    			"END_DATE, " + 
+    			"IS_DELETED, " + 
+    			"VERSION " + 
+    			" ) VALUES ( " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"? " + 
+    			" ) ",new Object[] {
+    					id,
+    					vo.getExciseId(),
+    					vo.getExciseName(),
+    					vo.getProductType(),
+    					vo.getDateFrom(),
+    					vo.getDateTo(),
+    					"N",
+    					1});
+    	
+    	return id;
+}
 
 }

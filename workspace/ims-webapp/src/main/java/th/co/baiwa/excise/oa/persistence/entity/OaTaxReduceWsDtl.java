@@ -23,6 +23,7 @@ public class OaTaxReduceWsDtl extends BaseEntity {
 	@SequenceGenerator(name = "OA_TAX_REDUCE_WS_DTL_GEN", sequenceName = "OA_TAX_REDUCE_WS_DTL_SEQ", allocationSize = 1)
 	@Column(name="TAX_REDUCE_WS_DTL_ID")
 	private Long taxReduceWsDtlId;
+
 	
 	@Column(name="BILL_NO")
 	private String billNo;

@@ -94,7 +94,7 @@ export class Cop064Service {
         this.dataTable();
     }
 
-    save = async (): Promise<any> => {
+    save = async (from): Promise<any> => {
         return new Promise(async(resolve, reject) => {
         let data = await this.table.data();
         let url = await "cop/cop064/save";
@@ -110,9 +110,19 @@ export class Cop064Service {
             await this.message.alert("ไม่มีข้อมูล");
             return;
         }
+        
         this.message.comfirm(async (res) => {
             if (res) {
-                return await this.ajax.post(url, {exciseId:$("#exciseId").val(),fiscalYear:$("#fiscalYear").val(),dataListVo:list}, async res => {
+                return await this.ajax.post(url, {
+                    exciseId:$("#exciseId").val(),
+                    exciseName:from.exciseName,
+                    exciseType:from.exciseType,
+                    productType:from.productType,
+                    dateFrom:$("#dateFrom").val(),
+                    dateTo:$("#dateTo").val(),
+                    fiscalYear:$("#fiscalYear").val(),
+                    dataListVo:list
+                }, async res => {
                     await resolve(res.json());
                     await this.message.successModal("บันทึกรายการ");
                 }, async err => {

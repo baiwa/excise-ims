@@ -20,7 +20,10 @@ public class Cop064FormVo extends DataTableRequest {
 	private String exciseAddress;
 	private String exciseType;
 	private String productType;
-
+	
+	private String dateFrom ;
+	private String dateTo;
+	
 	private MultipartFile fileName;
 	private List<Cop064ExcelVo> dataExcel;
 	private List<Cop064FormVo> dataList;
@@ -117,6 +120,23 @@ public class Cop064FormVo extends DataTableRequest {
 	public void setDataListVo(List<Cop064Vo> dataListVo) {
 		this.dataListVo = dataListVo;
 	}
+
+	public String getDateFrom() {
+		return dateFrom;
+	}
+
+	public void setDateFrom(String dateFrom) {
+		this.dateFrom = dateFrom;
+	}
+
+	public String getDateTo() {
+		return dateTo;
+	}
+
+	public void setDateTo(String dateTo) {
+		this.dateTo = dateTo;
+	}
+	
 	
 	
 
