@@ -15,13 +15,13 @@
           <div class="three wide field required">
             <label class="text-right full-width">เลขที่เอกสารอ้างอิง</label>
           </div>
-          <div class="four wide field">
+          <div class="four wide field" [ngClass]="{'error': invalidFormGroup('refnum')}">
             <input type="text" id="refnum" formControlName="refnum" name="refnum">
           </div>
           <div class="three wide field required">
             <label class="text-right full-width">วันที่ขอเบิก</label>
           </div>
-          <div class="four wide field required">
+          <div class="four wide field required" [ngClass]="{'error': invalidFormGroup('withdrawal')}">
             <div class="ui calendar" id="dateWithdraw" style="width:100%">
               <div class="ui input left icon">
                 <i class="calendar alter nate outline icon"></i>
@@ -36,7 +36,7 @@
           <div class="three wide field required">
             <label class="text-right full-width">กิจกรรม</label>
           </div>
-          <div class="four wide field required">
+          <div class="four wide field required" [ngClass]="{'error': invalidFormGroup('activity')}">
             <select name="activity" id="activity" formControlName="activity" class="ui dropdown ai search full-width">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of activityList" value="{{item.value1}}">{{item.value1}}</option>
@@ -45,8 +45,9 @@
           <div class="three wide field required">
             <label class="text-right full-width">งบ</label>
           </div>
-          <div class="four wide field required">
-            <select name="budged" id="budged" formControlName="budged" class="ui dropdown ai search full-width" (change)="budgedOnchange($event)">
+          <div class="four wide field required" [ngClass]="{'error': invalidFormGroup('budged')}">
+            <select name="budged" id="budged" formControlName="budged" class="ui dropdown ai search full-width"
+              (change)="budgedOnchange($event)">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of budged; index as i;" value="{{item.budgetId}}">{{item.budgetName}}</option>
             </select>
@@ -58,8 +59,9 @@
           <div class="three wide field required">
             <label class="text-right full-width">หมวด</label>
           </div>
-          <div class="four wide field required">
-            <select name="category" id="category" formControlName="category" class="ui dropdown ai search full-width" (change)="categoryOnchange($event)">
+          <div class="four wide field required" [ngClass]="{'error': invalidFormGroup('category')}">
+            <select name="category" id="category" formControlName="category" class="ui dropdown ai search full-width"
+              (change)="categoryOnchange($event)">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of category" value="{{item.categoryId}}">{{item.categoryName}}</option>
             </select>
@@ -67,7 +69,7 @@
           <div class="three wide field required">
             <label class="text-right full-width">หมวดย่อย</label>
           </div>
-          <div class="four wide field required">
+          <div class="four wide field required" [ngClass]="{'error': invalidFormGroup('list')}">
             <select name="list" id="list" formControlName="list" class="ui dropdown ai search full-width">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of list" value="{{item.listId}}">{{item.listName}}</option>
@@ -80,7 +82,7 @@
           <div class="three wide field ">
             <label class="text-right full-width">ประเภทงบประมาณ</label>
           </div>
-          <div class="four wide field required">
+          <div class="four wide field required" [ngClass]="{'error': invalidFormGroup('budget')}">
             <select name="budget" id="budget" formControlName="budget" class="ui dropdown ai search full-width">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of budgetList" value="{{item.value1}}">{{item.value1}}</option>
@@ -89,7 +91,7 @@
           <div class="three wide field required">
             <label class="text-right full-width">จำนวนเงินขอเบิก</label>
           </div>
-          <div class="four wide field">
+          <div class="four wide field" [ngClass]="{'error': invalidFormGroup('amountOfMoney')}">
             <input type="number" id="amountOfMoney" formControlName="amountOfMoney" name="amountOfMoney">
           </div>
         </div>
@@ -99,13 +101,13 @@
           <div class="three wide field ">
             <label class="text-right full-width">หักประกันสังคม</label>
           </div>
-          <div class="four wide field">
+          <div class="four wide field" [ngClass]="{'error': invalidFormGroup('deductSocial')}">
             <input type="number" id="deductSocial" formControlName="deductSocial" name="deductSocial">
           </div>
           <div class="three wide field ">
             <label class="text-right full-width">ภาษีหัก ณ ที่จ่าย</label>
           </div>
-          <div class="four wide field">
+          <div class="four wide field" [ngClass]="{'error': invalidFormGroup('withholding')}">
             <input type="number" id="withholding" formControlName="withholding" name="withholding">
           </div>
         </div>
@@ -115,20 +117,20 @@
           <div class="three wide field ">
             <label class="text-right full-width">อื่น ๆ</label>
           </div>
-          <div class="four wide field">
+          <div class="four wide field" [ngClass]="{'error': invalidFormGroup('other')}">
             <input type="number" id="other" formControlName="other" name="other">
           </div>
           <div class="three wide field ">
             <label class="text-right full-width">จำนวนเงินขอรับ</label>
           </div>
-          <div class="four wide field">
+          <div class="four wide field" [ngClass]="{'error': invalidFormGroup('amountOfMoney1')}">
             <input type="number" id="amountOfMoney1" formControlName="amountOfMoney1" name="amountOfMoney1">
           </div>
         </div>
 
         <!-- Form row 7 -->
         <div class="inline fields">
-          <div class="three wide field ">
+          <div class="three wide field">
             <label class="text-right full-width">เลขที่เอกสารขอเบิก</label>
           </div>
           <div class="four wide field">
@@ -175,12 +177,11 @@
               <ng-container formArrayName="persons" *ngFor="let person of persons.controls; let i = index;">
                 <div class="sixteen wide field">
                   <h4 class="ui horizontal divider header" style="margin-top: 2em;">
-                    <i class="edit outline icon"></i>
                     รายการที่ {{ i+1 }}
                   </h4>
                 </div>
                 <div class="fields">
-                  <div class="three wide field required" [formGroupName]="i">
+                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'paymentMethod')}" [formGroupName]="i">
                     <label>วิธีการจ่าย</label>
                     <div class="ui input">
                       <select name="pmmethod{{i}}" id="pmmethod{{i}}" formControlName="paymentMethod" class="ui dropdown ai">
@@ -189,11 +190,11 @@
                       </select>
                     </div>
                   </div>
-                  <div class="four wide field required" [formGroupName]="i">
+                  <div class="four wide field required" [ngClass]="{'error': invalidFormArray(i,'refPayment')}" [formGroupName]="i">
                     <label>เลขที่อ้างอิงการจ่าย</label>
-                    <input type="text" id="referenceNumber{{i}}" formControlName="refPayment" name="referenceNumber{{i}}">
+                    <input type="text" id="referenceNumber{{i}}" maxlength="50" formControlName="refPayment" name="referenceNumber{{i}}">
                   </div>
-                  <div class="three wide field" [formGroupName]="i">
+                  <div class="three wide field" [ngClass]="{'error': invalidFormArray(i,'bankName')}" [formGroupName]="i">
                     <label>ชื่อธนาคาร</label>
                     <div class="ui input">
                       <select name="bank{{i}}" id="bank{{i}}" formControlName="bankName" class="ui dropdown ai">
@@ -202,22 +203,23 @@
                       </select>
                     </div>
                   </div>
-                  <div class="three wide field required" [formGroupName]="i">
+                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'paymentDate')}" [formGroupName]="i">
                     <label>วันที่สั่งจ่าย</label>
                     <div class="frame ui calendar" id="datePersons{{i}}" style="width:100%">
                       <div class="ui input left icon">
                         <i class="calendar alter nate outline icon"></i>
-                        <input type="text" formControlName="paymentDate" placeholder="วว/ดด/ปปปป" id="datePersons1{{i}}" name="datePersons1{{i}}">
+                        <input type="text" formControlName="paymentDate" placeholder="วว/ดด/ปปปป" id="datePersons1{{i}}"
+                          name="datePersons1{{i}}">
                       </div>
                     </div>
                   </div>
-                  <div class="three wide field required" [formGroupName]="i">
+                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'amount')}" [formGroupName]="i">
                     <label>จำนวนเงินที่จ่าย</label>
-                    <input type="number" formControlName="amount" id="amountPaid{{i}}" name="amountPaid{{i}}">
+                    <input type="number" formControlName="amount" maxlength="7" id="amountPaid{{i}}" name="amountPaid{{i}}">
                   </div>
                 </div>
                 <div class="fields">
-                  <div class="three wide field required" [formGroupName]="i">
+                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'title')}" [formGroupName]="i">
                     <label>ผู้รับเงิน</label>
                     <div class="ui input">
                       <select name="title{{i}}" id="title{{i}}" formControlName="title" class="ui dropdown ai">
@@ -226,19 +228,20 @@
                       </select>
                     </div>
                   </div>
-                  <div class="three wide field required" [formGroupName]="i">
+                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'payeeFirst')}" [formGroupName]="i">
                     <label></label>
-                    <input type="text" id="payee{{i}}" formControlName="payeeFirst" name="payee{{i}}" placeholder="ชื่อ">
+                    <input type="text" id="payee{{i}}" maxlength="80" formControlName="payeeFirst" name="payee{{i}}" placeholder="ชื่อ">
                   </div>
-                  <div class="three wide field required" [formGroupName]="i">
+                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'payeeLast')}" [formGroupName]="i">
                     <label></label>
-                    <input type="text" id="lastname{{i}}" formControlName="payeeLast" name="lastname{{i}}" placeholder="นามสกุล">
+                    <input type="text" id="lastname{{i}}" maxlength="80" formControlName="payeeLast" name="lastname{{i}}" placeholder="นามสกุล">
                   </div>
                   <div class="two wide field" [formGroupName]="i">
                     <label>&nbsp;</label>
                     <div class="ui input" *ngIf="(i === persons.controls.length-1 || i === 29); then thenBlock; else elseBlock"></div>
                     <ng-template #thenBlock>
-                      <button class="ui green mini button btn-custom" type="button" id="addFile" (click)="addPerson()" [disabled]="statusSendBackFile">
+                      <button class="ui green mini button btn-custom" type="button" id="addFile" (click)="addPerson()"
+                        [disabled]="statusSendBackFile">
                         <i class="add icon"></i>
                         เพิ่ม
                       </button>
