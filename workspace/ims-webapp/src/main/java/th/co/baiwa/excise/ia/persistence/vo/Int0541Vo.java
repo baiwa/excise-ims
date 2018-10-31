@@ -1,6 +1,12 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
+
+import th.co.baiwa.excise.ia.persistence.entity.IaProcurementList;
 
 public class Int0541Vo {
 	
@@ -31,6 +37,11 @@ public class Int0541Vo {
 	private String supplyChoice;
 	private String supplyType;
 	private Long tenderResults;
+	private String installmentjob;
+	private String operationend;
+	private String operationstart;
+	private BigDecimal budget;
+	private String respondepartment;
 	
 	private Long procurementListId;
 	private Long amount;
@@ -42,9 +53,11 @@ public class Int0541Vo {
 	private Long unitPrice;
 	private String updatedDate;
 	private Long procurementIdMinor;
+	private List<IaProcurementList> pcmList;
 	
 	private String nameFile;
 	private String typeFile;
+	
 	public MultipartFile getFile() {
 		return file;
 	}
@@ -267,6 +280,12 @@ public class Int0541Vo {
 	public void setProcurementIdMinor(Long procurementIdMinor) {
 		this.procurementIdMinor = procurementIdMinor;
 	}
+	public List<IaProcurementList> getPcmList() {
+		return pcmList;
+	}
+	public void setPcmList(List<IaProcurementList> pcmList) {
+		this.pcmList = pcmList;
+	}
 	public String getNameFile() {
 		return nameFile;
 	}
@@ -279,4 +298,37 @@ public class Int0541Vo {
 	public void setTypeFile(String typeFile) {
 		this.typeFile = typeFile;
 	}
+	public String getInstallmentjob() {
+		return installmentjob;
+	}
+	public void setInstallmentjob(String installmentjob) {
+		this.installmentjob = installmentjob;
+	}
+	public String getOperationend() {
+		return operationend;
+	}
+	public void setOperationend(String operationend) {
+		this.operationend = operationend;
+	}
+	public String getOperationstart() {
+		return operationstart;
+	}
+	public void setOperationstart(String operationstart) {
+		this.operationstart = operationstart;
+	}
+	public BigDecimal getBudget() {
+		return budget;
+	}
+	public void setBudget(BigDecimal budget) {
+		this.budget = budget;
+	}
+	public String getRespondepartment() {
+		return respondepartment;
+	}
+	public void setRespondepartment(String respondepartment) {
+		this.respondepartment = respondepartment;
+	}
+	
+	
+
 }

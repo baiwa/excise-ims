@@ -3,17 +3,17 @@
     <div class="sixteen wide column">
 
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-            <span>รายละเอียดโครงการ</span>
+            <span>เพิ่มข้อมูลจัดซื้อจัดจ้าง</span>
         </div>
 
         <div class="ui attached segment">
             <div class="ui form">
                 <div class="inline fields">
-                    <div class="two wide field">
+                    <div class="one wide field">
                         &nbsp;
                     </div>
 
-                    <div class="two wide field">
+                    <div class="three wide field">
                         <label class="custom-label-w-20" style="text-align: right;">ปีงบประมาณ</label>
                     </div>
 
@@ -21,40 +21,111 @@
                         <div class="ui calendar" id="calendar">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="calendar" autocomplete="off" id="calendar_data" name="calendar_data" autocomplete="off" ngModel>
+                                <input type="calendar" autocomplete="off" id="calendar_data" name="calendar_data" placeholder="ปปปป" autocomplete="off" ngModel readonly>
                             </div>
                         </div>
                     </div>
 
-                    <div class="two wide field">
+                    <div class="three wide field">
                         <label class="custom-label-w-20" style="text-align: right;">ประเภทงบรายจ่าย</label>
                     </div>
 
                     <div class="four wide field">
                         <select class="ui search dropdown ai search" name="budgetType" id="budgetType" [(ngModel)]="budgetType" style="width: 100% !important">
-                            <option *ngFor="let item of budgetTypeList" value="{{item}}">{{item}}</option>
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let item of budgetTypeList | async" value="{{item.value1}}">{{item.value1}}</option>
                         </select>
                     </div>
 
-                    <div class="two wide field">
+                    <div class="one wide field">
                         &nbsp;
                     </div>
                 </div>
 
                 <div class="inline fields">
-                    <div class="two wide field">
+                    <div class="one wide field">
                         &nbsp;
                     </div>
 
-                    <div class="two wide field">
+                    <div class="three wide field">
                         <label class="custom-label-w-20" style="text-align: right;">ชื่อโครงการ</label>
                     </div>
 
-                    <div class="ten wide field ">
+                    <div class="four wide field ">
                         <input type="text" name="projectName" id="projectName" [(ngModel)]="projectName">
                     </div>
 
-                    <div class="two wide field">
+                    <div class="three wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">หน่วยงานที่รับผิดชอบโครงการ</label>
+                    </div>
+
+                    <div class="four wide field ">
+                        <input type="text" name="respondepartment" id="respondepartment" [(ngModel)]="respondepartment">
+                    </div>
+
+                    <div class="one wide field">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="one wide field">
+                        &nbsp;
+                    </div>
+
+                    <div class="three wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">งบประมาณ</label>
+                    </div>
+
+                    <div class="four wide field ">
+                        <input type="number" name="budget" id="budget" [(ngModel)]="budget">
+                    </div>
+
+                    <div class="three wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">งวดงานงวดเงิน</label>
+                    </div>
+
+                    <div class="four wide field ">
+                        <input type="number" name="installmentjob" id="installmentjob" [(ngModel)]="installmentjob">
+                    </div>
+
+                    <div class="one wide field">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="one wide field">
+                        &nbsp;
+                    </div>
+
+                    <div class="three wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">ระยะเวลาในการดำเนินงานเริ่มต้น</label>
+                    </div>
+
+                    <div class="four wide field ">
+                        <div class="ui calendar" id="operationstartCal">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="calendar" autocomplete="off" name="operationstart" id="operationstart" placeholder="วว/ดด/ปปปป" autocomplete="off" ngModel readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="three wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">ระยะเวลาในการดำเนินงานสิ้นสุด</label>
+                    </div>
+
+                    <div class="four wide field ">
+                        <div class="ui calendar" id="operationendCal">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="calendar" autocomplete="off" name="operationend" id="operationend" placeholder="วว/ดด/ปปปป" autocomplete="off" ngModel readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="one wide field">
                         &nbsp;
                     </div>
                 </div>
@@ -111,7 +182,7 @@
                                         </div>
                                     </td>
                                     <td style="text-align: center;">
-                                        <a *ngIf="numbers.length > 1" (click)="onDelField(i)" style="cursor: pointer;color: red">
+                                        <a *ngIf="numbers.length > 0" (click)="onDelField(i)" style="cursor: pointer;color: red">
                                             <i class="minus icon"></i>
                                         </a>
                                     </td>
@@ -173,8 +244,8 @@
 
                     <div class="six wide field ">
                         <select class="ui search dropdown ai search" name="supplyChoice" id="supplyChoice" [(ngModel)]="supplyChoice" (change)="onChangeChoice()">
-                            <!-- <option value=""></option>   -->
-                            <option *ngFor="let item of supplyChoiceList" value="{{item}}">{{item}}</option>                                
+                            <option value="">กรุณาเลือก</option>  
+                            <option *ngFor="let item of supplyChoiceList | async" value="{{item.value1}}">{{item.value1}}</option>                                
                         </select>
                     </div>
 
@@ -224,9 +295,9 @@
                 </div>
 
                 <div class="five wide field ">
-                    <select class="ui fluid search dropdown ai" name="supplyType" [(ngModel)]="supplyType">
+                    <select class="ui search dropdown ai search" name="supplyType" [(ngModel)]="supplyType">
                         <option value="">กรุณาเลือก</option>
-                        <option *ngFor="let data of SupplyCategories" value="{{data}}">{{data}}</option>
+                        <option *ngFor="let item of SupplyCategories | async" value="{{item.value1}}">{{item.value1}}</option>
                     </select>
                 </div>
 
@@ -259,7 +330,7 @@
                         <div class="ui calendar" id="approveDatePlan">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" name="approveDatePlanData" id="approveDatePlanData" autocomplete="off">
+                                <input type="text" name="approveDatePlanData" id="approveDatePlanData" placeholder="วว/ดด/ปปปป" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -274,7 +345,7 @@
                         <div class="ui calendar" id="contractDatePlan">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" name="contractDatePlanData" id="contractDatePlanData" autocomplete="off">
+                                <input type="text" name="contractDatePlanData" id="contractDatePlanData" placeholder="วว/ดด/ปปปป" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -289,7 +360,7 @@
                         <div class="ui calendar" id="expireDatePlan">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="expireDatePlanData" id="expireDatePlanData">
+                                <input type="text" name="expireDatePlanData" id="expireDatePlanData" placeholder="วว/ดด/ปปปป" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -304,7 +375,7 @@
                         <div class="ui calendar" id="disbursementFinalPlan">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="disbursementFinalPlanData" id="disbursementFinalPlanData">
+                                <input type="text" name="disbursementFinalPlanData" id="disbursementFinalPlanData" placeholder="วว/ดด/ปปปป" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -326,7 +397,7 @@
                         <div class="ui calendar" id="approveDateReport">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData">
+                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -341,7 +412,7 @@
                         <div class="ui calendar" id="contractDateReport">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="contractDateReportData" id="contractDateReportData">
+                                <input type="text" autocomplete="off" name="contractDateReportData" id="contractDateReportData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -356,7 +427,7 @@
                         <div class="ui calendar" id="expireDateReport">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="expireDateReportData" id="expireDateReportData">
+                                <input type="text" autocomplete="off" name="expireDateReportData" id="expireDateReportData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -371,7 +442,7 @@
                         <div class="ui calendar" id="disbursementFinalReport">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="disbursementFinalReportData" id="disbursementFinalReportData">
+                                <input type="text" autocomplete="off" name="disbursementFinalReportData" id="disbursementFinalReportData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -409,7 +480,7 @@
                         <label class="custom-label-w-20" style="text-align: right;">แนบไฟล์</label>
                     </div>
 
-                    <div class="five wide field ">
+                    <div class="five wide field {{loading? 'loading': ''}}">
                         <input type="file" name="file" id="file" (change)="onChangeUpload($event)">
                     </div>
 
@@ -428,7 +499,8 @@
 </div>
 
 <!-- supplyChoice 3 -->
-<div class="ui segment" *ngIf=" supplyChoice === 'วิธีสอบราคา' ">
+<!-- supplyChoice 4,5 -->
+<div class="ui segment" *ngIf=" supplyChoice === 'วิธีสอบราคา' || supplyChoice === 'วิธี E - Market' || supplyChoice === 'วิธี E - Bidding' ">
     <div class="ui form center aligned grid" style="margin-left: 0px;">
         <div class="fourteen wide column">
             <div class="inline fields">
@@ -463,7 +535,10 @@
                 </div>
 
                 <div class="five wide field ">
-                    <input type="text" name="supplyType" [(ngModel)]="supplyType">
+                    <select class="ui search dropdown ai search" name="supplyType" [(ngModel)]="supplyType">
+                        <option value="">กรุณาเลือก</option>
+                        <option *ngFor="let item of SupplyCategories | async" value="{{item.value1}}">{{item.value1}}</option>
+                    </select>
                 </div>
 
                 <div class="four wide field">
@@ -481,7 +556,7 @@
         </div>
 
 
-        <div class="eight wide column">
+        <div class="eight wide column" *ngIf="supplyChoice === 'วิธีสอบราคา'">
             <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
                 <span>ขั้นตอนการบันทึกแผน</span>
             </div>
@@ -495,7 +570,7 @@
                         <div class="ui calendar" id="signedDatePlan">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="signedDatePlanData" id="signedDatePlanData">
+                                <input type="text" autocomplete="off" name="signedDatePlanData" id="signedDatePlanData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -510,7 +585,7 @@
                         <div class="ui calendar" id="approveDatePlan">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="approveDatePlanData" id="approveDatePlanData">
+                                <input type="text" autocomplete="off" name="approveDatePlanData" id="approveDatePlanData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -525,7 +600,7 @@
                         <div class="ui calendar" id="contractDatePlan">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="contractDatePlanData" id="contractDatePlanData">
+                                <input type="text" autocomplete="off" name="contractDatePlanData" id="contractDatePlanData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -540,7 +615,7 @@
                         <div class="ui calendar" id="expireDatePlan">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="expireDatePlanData" id="expireDatePlanData">
+                                <input type="text" autocomplete="off" name="expireDatePlanData" id="expireDatePlanData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -555,7 +630,7 @@
                         <div class="ui calendar" id="disbursementFinalPlan">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="disbursementFinalPlanData" id="disbursementFinalPlanData">
+                                <input type="text" autocomplete="off" name="disbursementFinalPlanData" id="disbursementFinalPlanData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -563,7 +638,89 @@
             </div>
         </div>
 
-        <div class="eight wide column">
+        <div class="eight wide column" *ngIf=" supplyChoice === 'วิธี E - Market' || supplyChoice === 'วิธี E - Bidding' ">
+            <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+                <span>ขั้นตอนการบันทึกแผน</span>
+            </div>
+            <div class="ui attached segment">
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่จัดทำประกาศเผยแพร่ในระบบ e-GP</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <div class="ui calendar" id="signedDatePlan">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="text" autocomplete="off" name="signedDatePlanData" id="signedDatePlanData" placeholder="วว/ดด/ปปปป">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่อนุมัติให้จัดซื้อ/จ้าง/เช่า</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <div class="ui calendar" id="approveDatePlan">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="text" autocomplete="off" name="approveDatePlanData" id="approveDatePlanData" placeholder="วว/ดด/ปปปป">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ลงนามในสัญญา/ใบสั่ง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <div class="ui calendar" id="contractDatePlan">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="text" autocomplete="off" name="contractDatePlanData" id="contractDatePlanData" placeholder="วว/ดด/ปปปป">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ครบกำหนดส่งมอบงวดสุดท้าย</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <div class="ui calendar" id="expireDatePlan">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="text" autocomplete="off" name="expireDatePlanData" id="expireDatePlanData" placeholder="วว/ดด/ปปปป">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่เบิกจ่ายงวดสุดท้าย</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <div class="ui calendar" id="disbursementFinalPlan">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="text" autocomplete="off" name="disbursementFinalPlanData" id="disbursementFinalPlanData" placeholder="วว/ดด/ปปปป">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="eight wide column" *ngIf="supplyChoice === 'วิธีสอบราคา'">
             <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
                 <span>ขั้นตอนรายงานผล</span>
             </div>
@@ -577,7 +734,7 @@
                         <div class="ui calendar" id="signedDateReport">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="signedDateReportData" id="signedDateReportData">
+                                <input type="text" autocomplete="off" name="signedDateReportData" id="signedDateReportData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -592,7 +749,7 @@
                         <div class="ui calendar" id="approveDateReport">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData">
+                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -607,7 +764,7 @@
                         <div class="ui calendar" id="contractDateReport">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="contractDateReportData" id="contractDateReportData">
+                                <input type="text" autocomplete="off" name="contractDateReportData" id="contractDateReportData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -622,7 +779,7 @@
                         <div class="ui calendar" id="expireDateReport">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="expireDateReportData" id="expireDateReportData">
+                                <input type="text" autocomplete="off" name="expireDateReportData" id="expireDateReportData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -637,7 +794,90 @@
                         <div class="ui calendar" id="disbursementFinalReport">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="disbursementFinalReportData" id="disbursementFinalReportData">
+                                <input type="text" autocomplete="off" name="disbursementFinalReportData" id="disbursementFinalReportData" placeholder="วว/ดด/ปปปป">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="eight wide column" *ngIf=" supplyChoice === 'วิธี E - Market' || supplyChoice === 'วิธี E - Bidding' ">
+            <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+                <span>ขั้นตอนรายงานผล</span>
+            </div>
+            <div class="ui attached segment">
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่จัดทำประกาศเผยแพร่ในระบบ e-GP</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <div class="ui calendar" id="signedDateReport">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="text" autocomplete="off" name="signedDateReportData" id="signedDateReportData" placeholder="วว/ดด/ปปปป">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่อนุมัติให้จัดซื้อ/จ้าง/เช่า</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <div class="ui calendar" id="approveDateReport">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData" placeholder="วว/ดด/ปปปป">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ในสัญญา/ใบสั่ง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <div class="ui calendar" id="contractDateReport">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="text" autocomplete="off" name="contractDateReportData" id="contractDateReportData" placeholder="วว/ดด/ปปปป">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่ส่งมอบงวดสุดท้ายจริง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <div class="ui calendar" id="expireDateReport">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="text" autocomplete="off" name="expireDateReportData" id="expireDateReportData" placeholder="วว/ดด/ปปปป">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="six wide field">
+                        <label class="custom-label-w-20" style="text-align: right;">วันที่เบิกจ่ายงวดสุดท้ายจริง</label>
+                    </div>
+
+                    <div class="ten wide field ">
+                        <div class="ui calendar" id="disbursementFinalReport">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="text" autocomplete="off" name="disbursementFinalReportData" id="disbursementFinalReportData" placeholder="วว/ดด/ปปปป">
                             </div>
                         </div>
                     </div>
@@ -670,271 +910,6 @@
             </div>
 
             <form id="upload-form" ngNativeValidate (submit)="onSaveForm2($event)">
-                <div class="inline fields">
-                    <div class="two wide field">
-                        <label class="custom-label-w-20" style="text-align: right;">แนบไฟล์</label>
-                    </div>
-
-                    <div class="five wide field ">
-                        <input type="file" name="file" id="file" (change)="onChangeUpload($event)">
-                    </div>
-
-                    <div class="nine wide field">
-                        &nbsp;
-                    </div>
-                </div>
-
-                <button class="ui mini tiny primary button" type="submit">
-                    <i class="save icon"></i> บันทึก
-            </button>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- supplyChoice 4,5 -->
-<div class="ui segment" *ngIf=" supplyChoice === 'วิธี E - Market' || supplyChoice === 'วิธี E - Bidding' ">
-    <div class="ui form center aligned grid" style="margin-left: 0px;">
-        <div class="fourteen wide column">
-            <div class="inline fields">
-                <div class="two wide field">
-                    <label class="custom-label-w-20" style="text-align: right;">ผลสอบราคา</label>
-                </div>
-
-                <div class="five wide field ">
-                    <input type="text" name="tenderResults" [(ngModel)]="tenderResults">
-                </div>
-
-                <div class="two wide field">
-                    &nbsp;
-                </div>
-
-                <div class="two wide field">
-                    <label class="custom-label-w-20" style="text-align: right;">ลักษณะงาน</label>
-                </div>
-
-                <div class="five wide field">
-                    <div class="ui checkbox">
-                        <input type="radio" name="jobDescription" id="jobDescription" value="งานที่เสร็จภายในปี">
-                        <label></label>
-                    </div>
-                    <label class="custom-label-w-20" style="text-align: left;">งานที่เสร็จภายในปี</label>
-                </div>
-            </div>
-
-            <div class="inline fields">
-                <div class="two wide field">
-                    <label class="custom-label-w-20" style="text-align: right;">ประเภทการจัดหา</label>
-                </div>
-
-                <div class="five wide field ">
-                    <input type="text" name="supplyType" [(ngModel)]="supplyType">
-                </div>
-
-                <div class="four wide field">
-                    &nbsp;
-                </div>
-
-                <div class="five wide field">
-                    <div class="ui checkbox">
-                        <input type="radio" name="jobDescription" id="jobDescription" value="งานต่อเนื่องที่ผูกพันปีงบประมาณถัดไป">
-                        <label></label>
-                    </div>
-                    <label class="custom-label-w-20" style="text-align: left;">งานต่อเนื่องที่ผูกพันปีงบประมาณถัดไป</label>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="eight wide column">
-            <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-                <span>ขั้นตอนการบันทึกแผน</span>
-            </div>
-            <div class="ui attached segment">
-                <div class="inline fields">
-                    <div class="six wide field">
-                        <label class="custom-label-w-20" style="text-align: right;">วันที่ลงนามในประกาศประกวดราคา</label>
-                    </div>
-
-                    <div class="ten wide field ">
-                        <div class="ui calendar" id="approveDateReport">
-                            <div class="ui input left icon">
-                                <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="six wide field">
-                        <label class="custom-label-w-20" style="text-align: right;">วันที่อนุมัติให้จัดซื้อ/จ้าง/เช่า</label>
-                    </div>
-
-                    <div class="ten wide field ">
-                        <div class="ui calendar" id="approveDateReport">
-                            <div class="ui input left icon">
-                                <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="six wide field">
-                        <label class="custom-label-w-20" style="text-align: right;">วันที่ลงนามในสัญญา/ใบสั่ง</label>
-                    </div>
-
-                    <div class="ten wide field ">
-                        <div class="ui calendar" id="approveDateReport">
-                            <div class="ui input left icon">
-                                <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="six wide field">
-                        <label class="custom-label-w-20" style="text-align: right;">วันที่ครบกำหนดส่งมอบงวดสุดท้าย</label>
-                    </div>
-
-                    <div class="ten wide field ">
-                        <div class="ui calendar" id="approveDateReport">
-                            <div class="ui input left icon">
-                                <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="six wide field">
-                        <label class="custom-label-w-20" style="text-align: right;">วันที่เบิกจ่ายงวดสุดท้าย</label>
-                    </div>
-
-                    <div class="ten wide field ">
-                        <div class="ui calendar" id="approveDateReport">
-                            <div class="ui input left icon">
-                                <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="eight wide column">
-            <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-                <span>ขั้นตอนรายงานผล</span>
-            </div>
-            <div class="ui attached segment">
-                <div class="inline fields">
-                    <div class="six wide field">
-                        <label class="custom-label-w-20" style="text-align: right;">วันที่ลงนามในประกาศประกวดราคาจริง</label>
-                    </div>
-
-                    <div class="ten wide field ">
-                        <div class="ui calendar" id="approveDateReport">
-                            <div class="ui input left icon">
-                                <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="six wide field">
-                        <label class="custom-label-w-20" style="text-align: right;">วันที่อนุมัติให้จัดซื้อ/จ้าง/เช่า</label>
-                    </div>
-
-                    <div class="ten wide field ">
-                        <div class="ui calendar" id="approveDateReport">
-                            <div class="ui input left icon">
-                                <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="six wide field">
-                        <label class="custom-label-w-20" style="text-align: right;">วันที่ในสัญญา/ใบสั่ง</label>
-                    </div>
-
-                    <div class="ten wide field ">
-                        <div class="ui calendar" id="approveDateReport">
-                            <div class="ui input left icon">
-                                <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="six wide field">
-                        <label class="custom-label-w-20" style="text-align: right;">วันที่ส่งมอบงวดสุดท้ายจริง</label>
-                    </div>
-
-                    <div class="ten wide field ">
-                        <div class="ui calendar" id="approveDateReport">
-                            <div class="ui input left icon">
-                                <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="inline fields">
-                    <div class="six wide field">
-                        <label class="custom-label-w-20" style="text-align: right;">วันที่เบิกจ่ายงวดสุดท้ายจริง</label>
-                    </div>
-
-                    <div class="ten wide field ">
-                        <div class="ui calendar" id="approveDateReport">
-                            <div class="ui input left icon">
-                                <i class="calendar alter nate outline icon"></i>
-                                <input type="text" autocomplete="off" name="approveDateReportData" id="approveDateReportData">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="fourteen wide column">
-            <div class="inline fields">
-                <div class="two wide field">
-                    <label class="custom-label-w-20" style="text-align: right;">เลขที่คู่สัญญา</label>
-                </div>
-
-                <div class="five wide field ">
-                    <input type="text" name="contractPartiesNum" id="contractPartiesNum">
-                </div>
-
-                <div class="two wide field">
-                    &nbsp;
-                </div>
-
-                <div class="two wide field">
-                    <label class="custom-label-w-20" style="text-align: right;">ชื่อคู่สัญญา</label>
-                </div>
-
-                <div class="five wide field ">
-                    <input type="text" name="contractPartiesName" id="contractPartiesName">
-                </div>
-            </div>
-
-            <form id="upload-form" ngNativeValidate (submit)="onSaveForm3($event)">
                 <div class="inline fields">
                     <div class="two wide field">
                         <label class="custom-label-w-20" style="text-align: right;">แนบไฟล์</label>

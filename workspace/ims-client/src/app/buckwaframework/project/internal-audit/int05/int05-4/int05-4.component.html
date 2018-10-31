@@ -8,25 +8,25 @@
 
         <div class="ui attached segment">
             <form>
-                <div class="ui form">
+                <div class="ui form ">
                     <!-- row 1 -->
                     <div class="inline fields  ui grid">
                         <div class="three wide field ">
                             <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
                         </div>
                         <div class="four wide field ">
-                            <select name="sector " id="sector" class="ui dropdown ai search full-width off" (change)="areaL($event)" [(ngModel)]="sector">
+                            <select class="ui search dropdown ai search full-width off" name="combo1" id="combo1" (change)="dropdown($event, 'comboBox2')">
                                 <option value="">กรุณาเลือก</option>
-                                <option *ngFor="let item of sectorList; index as i;" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+                                <option *ngFor="let data of comboBox1 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                             </select>
                         </div>
                         <div class="three wide field ">
                             <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
                         </div>
                         <div class="four wide field ">
-                            <select name="area" id="area" class="ui dropdown ai search full-width off" (change)="branchL($event)" [(ngModel)]="area">
+                            <select class="ui search dropdown ai search full-width off" name="combo2" id="combo2" (change)="dropdown($event, 'comboBox3')">
                                 <option value="">กรุณาเลือก</option>
-                                <option *ngFor="let item of areaList" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+                                <option *ngFor="let data of comboBox2 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                             </select>
                         </div>
                     </div>
@@ -36,9 +36,9 @@
                             <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่สาขา</label>
                         </div>
                         <div class="four wide field ">
-                            <select name="branch" id="branch" class="ui dropdown ai search full-width off" [(ngModel)]="branch">
+                            <select class="ui search dropdown ai search full-width off" name="combo3" id="combo3">
                                 <option value="">กรุณาเลือก</option>
-                                <option *ngFor="let item of branchList; index as i;" value="{{item.lovId}}">{{item.subTypeDescription}}</option>
+                                <option *ngFor="let data of comboBox3 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                             </select>
                         </div>
                         <div class="three wide field ">
@@ -48,7 +48,7 @@
                             <div class="ui calendar" id="budgetYear">
                                 <div class="ui input left icon">
                                     <i class="calendar alter nate outline icon"></i>
-                                    <input type="text" readonly="" name="budgetYearData" id="budgetYearData" readonly>
+                                    <input type="text" readonly="" name="budgetYearData" id="budgetYearData" placeholder="ปปปป" readonly>
                                 </div>
                             </div>
                         </div>
@@ -58,26 +58,26 @@
                         <div class="three wide field ">
                             <label class="text-right full-width">วิธีการจัดซื้อจัดจ้าง</label>
                         </div>
-                        <div class="four wide field ">
-                            <select class="ui search dropdown ai search" name="supplyChoice" id="supplyChoice" [(ngModel)]="supplyChoice">
+                        <div class="four wide field">
+                            <select class="ui search dropdown ai search full-width" name="supplyChoice" id="supplyChoice" [(ngModel)]="supplyChoice">
                                 <option value="">กรุณาเลือก</option>
-                                <option *ngFor="let item of supplyChoiceList" value="{{item}}">{{item}}</option>
+                                <option *ngFor="let item of supplyChoiceList | async" value="{{item.lovId}}">{{item.value1}}</option>
                             </select>
                         </div>
                         <div class="three wide field ">
                             <label class="text-right full-width">ประเภทงบรายจ่าย</label>
                         </div>
                         <div class="four wide field ">
-                            <select class="ui search dropdown ai search" name="budgetType" id="budgetType" [(ngModel)]="budgetType">
+                            <select class="ui search dropdown ai search full-width" name="budgetType" id="budgetType">
                             <option value="">กรุณาเลือก</option>
-                                <option *ngFor="let item of budgetTypeList" value="{{item}}">{{item}}</option>
+                                <option *ngFor="let item of budgetTypeList | async" value="{{item.lovId}}">{{item.value1}}</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="ui center aligned grid">
                         <div class="sixteen wide column">
-                            <button class="ui mini primary button" (click)="uploadFile()">
+                            <button class="ui mini primary button" (click)="onSearch()">
                           <i class="search icon"></i> ค้นหา
                         </button>
 
@@ -92,36 +92,37 @@
                     </div>
                 </div>
             </form>
+        </div>
 
-            <div class="ui segment" id="showData">
-                <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
-                    <thead>
-                        <tr style="text-align: center">
-                            <th rowspan="2"><input class="ui checkbox" type="checkbox" (change)="clickCheckAll($event)"></th>
-                            <th rowspan="2">ปีงบประมาณ</th>
-                            <th rowspan="2">เลขทีหนังสืออนุมัติเบิกจ่าย</th>
-                            <th rowspan="2">เลข EGP</th>
-                            <th rowspan="2">ชื่อโครงการ</th>
-                            <th rowspan="2">จำนวนเงิน ซื้อ/จ้าง/เช่า</th>
-                            <th rowspan="2">สถานะ</th>
-                            <th rowspan="2">อัพเดท</th>
-                            <th rowspan="1" colspan="2">จัดการ</th>
-                        </tr>
-                        <tr style="display:none">
-                            <td>ลบ</td>
-                            <td>เพิ่ม</td>
-                        </tr>
-                    </thead>
-                </table>
-                <div class="ui center aligned grid">
-                    <div class="sixteen wide column">
-                        <!-- <button *ngIf="dataTable.length > 0" class="ui disabled small red button" (click)="onDelete()">
-                          <i class="trash icon"></i> ลบ
-                        </button> -->
-                        <button class="ui mini red button" (click)="onDelete()">
-                            <i class="trash alternate icon"></i> ลบ
-                          </button>
-                    </div>
+        <div class="ui segment" id="showData">
+            <table class="ui small celled table striped selectable" id="dataTable" style="width: 100%;">
+                <thead>
+                    <tr style="text-align: center">
+                        <th rowspan="2"><input class="ui checkbox" type="checkbox" (change)="clickCheckAll($event)"></th>
+                        <th rowspan="2">ปีงบประมาณ</th>
+                        <th rowspan="2">เลขทีหนังสืออนุมัติเบิกจ่าย</th>
+                        <th rowspan="2">เลข EGP</th>
+                        <th rowspan="2">ชื่อโครงการ</th>
+                        <th rowspan="2">จำนวนเงิน ซื้อ/จ้าง/เช่า</th>
+                        <th rowspan="2">สถานะ</th>
+                        <th rowspan="2">อัพเดท</th>
+                        <th rowspan="1" colspan="2">จัดการ</th>
+                    </tr>
+                    <tr style="display:none">
+                        <td>ลบ</td>
+                        <td>เพิ่ม</td>
+                    </tr>
+                </thead>
+            </table>
+            <br>
+            <label style="font-size: 13px;"><b>หมายเหตุ:</b> ทำเครื่องหมายถูก <i class="check square outline icon"></i>
+                ที่หน้ารายการ และกดปุ่ม "ลบ" หมายถึงต้องการลบรายการที่เลือก</label>
+            <br>
+            <div class="ui center aligned grid">
+                <div class="sixteen wide column">
+                    <button class="ui mini red button" (click)="onDelete()">
+                        <i class="trash alternate icon"></i> ลบ
+                    </button>
                 </div>
             </div>
         </div>

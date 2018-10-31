@@ -4,6 +4,9 @@ import { MessageBarService, AjaxService } from "../../../../common/services";
 import { TextDateTH, formatter, Utils } from "../../../../common/helper";
 import { BreadCrumb } from "models/breadcrumb";
 import { Int054Service } from "./int05-4.service";
+import { Observable } from "rxjs";
+import { ComboBox } from "models/combobox";
+import { promise } from "protractor";
 
 const URL = {
   INIT_DATATABLE: AjaxService.CONTEXT_PATH + "ia/int054/filterFindIaPcm",
@@ -21,16 +24,12 @@ export class Int054Component implements OnInit, AfterViewInit {
   breadcrumb: BreadCrumb[] = [];
   showData: boolean = false;
   budgetYear: string = "";
-  budgetType: string = "";
-  supplyChoice: string = "";
-  budgetTypeList: string[];
-  supplyChoiceList: string[];
+  budgetTypeList: Observable<ComboBox[]>;
+  supplyChoiceList: Observable<ComboBox[]>;
   manageDataExternal: any;
   dataTable: any;
   idSelect: any;
-  sectorList: any;
-  areaList: any;
-  branchList: any;
+  comboBox1: Observable<ComboBox[]>;
 
   constructor(
     private selfService: Int054Service,
@@ -41,32 +40,30 @@ export class Int054Component implements OnInit, AfterViewInit {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบพัสดุ", route: "#" },
-      { label: "บันทึกผลการจัดซื้อจัดจ้าง", route: "#" }
-    ];
-
-    this.budgetTypeList = [
-      "งบบุคลากร",
-      "งบดำเนินงาน (โครงการ)",
-      "งบดำเนินงาน (ขั้นต่ำ/ประจำ)",
-      "งบลงทุน",
-      "งบอุดหนุน",
-      "งบรายจ่ายอื่น"
-    ];
-
-    this.supplyChoiceList = [
-      "วิธีเฉพาะเจาะจง",
-      "วิธีคัดเลือก",
-      "วิธีสอบราคา",
-      "วิธี E - Market",
-      "วิธี E - Bidding"
+      { label: "ค้นหาข้อมูลการจัดซื้อจัดจ้าง", route: "#" }
     ];
   }
 
+  ngAfterViewInit() {
+    $("#export .dropdown").dropdown({
+      transition: "drop"
+    });
+    $("#showData").hide();
+  }
+
   ngOnInit() {
+    this.comboBox1 = this.selfService.pullComboBox("SECTOR_VALUE", "comboBox1");
+    this.budgetTypeList = this.selfService.pullComboBox(
+      "TYPE_OF_EXPENSE",
+      "budgetType"
+    );
+    this.supplyChoiceList = this.selfService.pullComboBox(
+      "SUPPLY_CHOICE",
+      "supplyChoice"
+    );
     $(".ui.checkbox").checkbox();
     $(".ui.dropdown").dropdown();
-    $(".ui.dropdown.ai").css("width", "100%");
-    this.sectorL();
+    // this.sectorL();
     $("#budgetYear")
       .calendar({
         maxDate: new Date(),
@@ -80,14 +77,16 @@ export class Int054Component implements OnInit, AfterViewInit {
       .css("width", "100%");
   }
 
-  ngAfterViewInit() {
-    $("#export .dropdown").dropdown({
-      transition: "drop"
-    });
-    $("#showData").hide();
+  dropdown(e, combo: string) {
+    e.preventDefault();
+    this[combo] = this.selfService.pullComboBox(
+      "SECTOR_VALUE",
+      combo,
+      e.target.value
+    );
   }
 
-  uploadFile = () => {
+  onSearch = () => {
     $("#showData").show();
     this.DATATABLE();
 
@@ -122,32 +121,6 @@ export class Int054Component implements OnInit, AfterViewInit {
     }
   };
 
-  sectorL = () => {
-    this.selfService.sector().then(res => {
-      this.sectorList = res;
-    });
-  };
-  areaL = e => {
-    $("#area").dropdown("restore defaults");
-    $("#branch").dropdown("restore defaults");
-    this.areaList = null;
-    this.branchList = null;
-    if (Utils.isNotNull(e.target.value)) {
-      this.selfService.area(e.target.value).then(res => {
-        this.areaList = res;
-      });
-    }
-  };
-  branchL = e => {
-    this.branchList = null;
-    $("#branch").dropdown("restore defaults");
-    if (Utils.isNotNull(e.target.value)) {
-      this.selfService.branch(e.target.value).then(res => {
-        this.branchList = res;
-      });
-    }
-  };
-
   addData = () => {
     this.router.navigate(["/int05/4-1"], {
       queryParams: {
@@ -164,23 +137,29 @@ export class Int054Component implements OnInit, AfterViewInit {
 
     let data = {
       exciseDepartment:
-        $("#sector").dropdown("get text") == "กรุณาเลือก"
+        $("#combo1").dropdown("get text") == "กรุณาเลือก"
           ? ""
-          : $("#sector").dropdown("get text"),
+          : $("#combo1").dropdown("get text"),
       exciseDistrict:
-        $("#area").dropdown("get text") == "กรุณาเลือก"
+        $("#combo2").dropdown("get text") == "กรุณาเลือก"
           ? ""
-          : $("#area").dropdown("get text"),
+          : $("#combo2").dropdown("get text"),
       exciseRegion:
-        $("#branch").dropdown("get text") == "กรุณาเลือก"
+        $("#combo3").dropdown("get text") == "กรุณาเลือก"
           ? ""
-          : $("#branch").dropdown("get text"),
+          : $("#combo3").dropdown("get text"),
       budgetYear: this.budgetYear,
-      budgetType: this.budgetType,
-      supplyChoice: this.supplyChoice
+      budgetType:
+        $("#budgetType").dropdown("get text") == "กรุณาเลือก"
+          ? ""
+          : $("#budgetType").dropdown("get text"),
+      supplyChoice:
+        $("#supplyChoice").dropdown("get text") == "กรุณาเลือก"
+          ? ""
+          : $("#supplyChoice").dropdown("get text")
     };
 
-    this.dataTable = $("#dataTable").DataTable({
+    this.dataTable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
