@@ -332,23 +332,23 @@ public void exportFile(Int0511FormVo formVo, HttpServletResponse response) throw
 		}
 
 		// merge(firstRow, lastRow, firstCol, lastCol)
-		int firstCol = 2;
-		while (firstCol < 12) {
-			for (int lastCol = 3; lastCol <= 13; lastCol += 2) {
-				sheet.addMergedRegion(new CellRangeAddress(0, 0, firstCol, lastCol));
-				firstCol += 2;
-			}
-		}
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 16));
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 18));
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 20));
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 23));
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 25));
-		
-		sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-		sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
-		sheet.addMergedRegion(new CellRangeAddress(0, 1, 26,26));
-		sheet.addMergedRegion(new CellRangeAddress(0, 1, 27,27));
+//		int firstCol = 2;
+//		while (firstCol < 12) {
+//			for (int lastCol = 3; lastCol <= 13; lastCol += 2) {
+//				sheet.addMergedRegion(new CellRangeAddress(0, 0, firstCol, lastCol));
+//				firstCol += 2;
+//			}
+//		}
+//		sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 16));
+//		sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 18));
+//		sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 20));
+//		sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 23));
+//		sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 25));
+//		
+//		sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+//		sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
+//		sheet.addMergedRegion(new CellRangeAddress(0, 1, 26,26));
+//		sheet.addMergedRegion(new CellRangeAddress(0, 1, 27,27));
 		/* End set sheet */
 		
 		
@@ -364,190 +364,190 @@ public void exportFile(Int0511FormVo formVo, HttpServletResponse response) throw
 		rowNum = 2;
 		cellNum = 0;
 		int no = 1;
-		for (Int0511Vo detail : exportDataList) {
-			row = sheet.createRow(rowNum);
-			// No.
-			cell = row.createCell(cellNum);
-			cell.setCellValue(no);
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getWorkSheetDetailId());
-			cell.setCellStyle(cellLeft);
-			cellNum++;
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getDateOfPay())) {
-				cell.setCellValue(detail.getDateOfPay());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getStatus())) {
-				cell.setCellValue(detail.getStatus());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-	
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getStatus())) {
-				cell.setCellValue(detail.getStatus());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getOfficeDesc())) {
-				cell.setCellValue(detail.getOfficeDesc());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getOfficeCode())) {
-				cell.setCellValue(detail.getOfficeCode());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getBookNumberWithdrawStamp())) {
-				cell.setCellValue(detail.getBookNumberWithdrawStamp());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getBookNumberWithdrawStamp())) {
-				cell.setCellValue(detail.getBookNumberWithdrawStamp());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;		
-			
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getDateWithdrawStamp())) {
-				cell.setCellValue(detail.getDateWithdrawStamp());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getBookNumberDeliverStamp())) {
-				cell.setCellValue(detail.getBookNumberDeliverStamp());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getDateDeliverStamp())) {
-				cell.setCellValue(detail.getDateDeliverStamp());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			
-
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getFivePartNumber())) {
-				cell.setCellValue(detail.getFivePartNumber());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getFivePartDate())) {
-				cell.setCellValue(detail.getFivePartDate());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getStampCheckDate())) {
-				cell.setCellValue(detail.getStampCheckDate());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getStampChecker())) {
-				cell.setCellValue(detail.getStampChecker());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getStampType())) {
-				cell.setCellValue(detail.getStampType());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getStampBrand())) {
-				cell.setCellValue(detail.getStampBrand());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(detail.getStampBrand())) {
-				cell.setCellValue(detail.getStampBrand());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-		
-			
-			
-			no++;
-			rowNum++;
-			cellNum = 0;
-		}
+//		for (Int0511Vo detail : exportDataList) {
+//			row = sheet.createRow(rowNum);
+//			// No.
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(no);
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(detail.getWorkSheetDetailId());
+//			cell.setCellStyle(cellLeft);
+//			cellNum++;
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getDateOfPay())) {
+//				cell.setCellValue(detail.getDateOfPay());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getStatus())) {
+//				cell.setCellValue(detail.getStatus());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//	
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getStatus())) {
+//				cell.setCellValue(detail.getStatus());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getOfficeDesc())) {
+//				cell.setCellValue(detail.getOfficeDesc());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getOfficeCode())) {
+//				cell.setCellValue(detail.getOfficeCode());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getBookNumberWithdrawStamp())) {
+//				cell.setCellValue(detail.getBookNumberWithdrawStamp());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getBookNumberWithdrawStamp())) {
+//				cell.setCellValue(detail.getBookNumberWithdrawStamp());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;		
+//			
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getDateWithdrawStamp())) {
+//				cell.setCellValue(detail.getDateWithdrawStamp());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getBookNumberDeliverStamp())) {
+//				cell.setCellValue(detail.getBookNumberDeliverStamp());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getDateDeliverStamp())) {
+//				cell.setCellValue(detail.getDateDeliverStamp());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			
+//
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getFivePartNumber())) {
+//				cell.setCellValue(detail.getFivePartNumber());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getFivePartDate())) {
+//				cell.setCellValue(detail.getFivePartDate());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getStampCheckDate())) {
+//				cell.setCellValue(detail.getStampCheckDate());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getStampChecker())) {
+//				cell.setCellValue(detail.getStampChecker());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getStampType())) {
+//				cell.setCellValue(detail.getStampType());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getStampBrand())) {
+//				cell.setCellValue(detail.getStampBrand());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//			cell = row.createCell(cellNum);
+//			if(StringUtils.isNotBlank(detail.getStampBrand())) {
+//				cell.setCellValue(detail.getStampBrand());
+//			}else {
+//				cell.setCellValue("-");
+//			}
+//			cell.setCellStyle(cellCenter);
+//			cellNum++;
+//			
+//		
+//			
+//			
+//			no++;
+//			rowNum++;
+//			cellNum = 0;
+//		}
 		
 		
 		/*set	fileName*/		
