@@ -1,12 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'services/auth.service';
 import { BreadCrumb } from 'models/breadcrumb';
-import { formatter, TextDateTH } from 'helpers/datepicker';
+import { formatter, TextDateTH, stringToDate } from 'helpers/datepicker';
 import { AjaxService } from 'services/ajax.service';
 import { MessageBarService } from 'services/message-bar.service';
 import { IaFollowUpProject } from 'models/IaFollowUpProject';
 import { ActivatedRoute } from '@angular/router';
+import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Int06101, Person } from './int06-10-1.model';
 
+
+const ALERT_MSG = {
+  refnum: "กรุณากรอกเลขที่เอกสารอ้างอิง",
+  withdrawal: "กรุณากรอกวันที่ขอเบิก",
+  activity: "กรุณากรอกกิจกรรม",
+  budged: "กรุณากรอกงบ",
+  category: "กรุณากรอกหมวดย่อย",
+  budget: "กรุณากรอกประเภทงบประมาณ",
+  amountOfMoney: "กรุณากรอกจำนวนเงินขอเบิก",
+  persons: {
+    pmmethod: "กรุณากรอกวิธีการจ่าย",
+    datePersons: "กรุณากรอกวันที่สั่งจ่าย",
+    amountPaid: "กรุณากรอกจำนวนเงินที่จ่าย",
+    payee: "กรุณากรอกผู้รับเงิน",
+  }
+}
 
 declare var $: any;
 @Component({
@@ -37,12 +55,16 @@ export class Int06101Component implements OnInit {
   titleList: any;
   bankList: any;
 
+  formGroup: FormGroup = new FormGroup({});
+  persons: FormArray = new FormArray([]);
+
   constructor(
     private messageBarService: MessageBarService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private ajaxService: AjaxService,
-    private ajax: AjaxService, ) {
+    private ajax: AjaxService,
+    private formBuilder: FormBuilder
+  ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
@@ -50,166 +72,153 @@ export class Int06101Component implements OnInit {
       { label: "บันทึกรายการขอเบิก", route: "#" },
 
     ];
-    this.listButton = [];
-    this.numberButton = 1;
+    this.formGroup = this.formBuilder.group({
+      list: [''],
+      note: [''],
+      deductSocial: [''],
+      withholding: [''],
+      other: [''],
+      amountOfMoney1: [''],
+      numberRequested: [''],
+      documentNumber: [''],
+      itemDescription: [''],
+      refnum: ['', Validators.required],
+      withdrawal: ['', Validators.required],
+      activity: ['', Validators.required],
+      budged: ['', Validators.required],
+      category: ['', Validators.required],
+      budget: ['', Validators.required],
+      amountOfMoney: ['', Validators.required],
+      persons: this.formBuilder.array([])
+    });
+    this.addPerson();
   }
 
   ngOnInit() {
-    $('.ui.calendar').calendar();
-
-    $('.ui.calendar').calendar({
+    $("#dateWithdraw").calendar({
       maxDate: new Date(),
       type: "date",
       text: TextDateTH,
-      formatter: formatter()
+      formatter: formatter(),
+      onChange: (date, text) => {
+        this.formGroup.get('withdrawal').patchValue(text);
+      }
     });
-
     $(".ui.dropdown.ai").dropdown().css('width', '100%');
-    this.listButton.push(this.numberButton);
     this.authService.reRenderVersionProgram('INT-06101');
     this.budgeDropdown();
-    this.calenda();
     this.pmmethod();
     this.activity();
     this.budge();
     this.title();
     this.bank();
-    this.numbers = [];
-    this.numbers.push(this.numbers.length + 1);
   }
 
-  
-  onAddField = () => {
-    let num = this.numbers.length;
-    if (num < 30) {
-      this.numbers.push(num + 1);
-    } else {
-      this.messageBarService.errorModal(
-        "ไม่สามารถทำรายการได้",
-        "เกิดข้อผิดพลาด"
-      );
+  createPerson(): FormGroup {
+    const data = {
+      amount: ['', Validators.required],
+      title: ['', Validators.required],
+      payeeFirst: ['', Validators.required],
+      payeeLast: ['', Validators.required],
+      paymentDate: ['', Validators.required],
+      paymentMethod: ['', Validators.required],
+      refPayment: ['', Validators.required],
+      bankName: ['']
     }
-  };
+    return this.formBuilder.group(data);
+  }
 
-  calenda = () => {
-    $("#dateWithdraw").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    });
-    $("#datePersons").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    });
+  addPerson(): void {
+    const index = this.persons.length;
+    this.persons = this.formGroup.get('persons') as FormArray;
+    this.persons.push(this.createPerson());
+    setTimeout(() => {
+      $(".ui.dropdown.ai").dropdown().css('width', '100%');
+      $("#datePersons" + index).calendar({
+        maxDate: new Date(),
+        type: "date",
+        text: TextDateTH,
+        formatter: formatter(),
+        onChange: (date, text) => {
+          this.persons.at(index).get('paymentDate').patchValue(text);
+        }
+      });
+    }, 50);
+  }
 
+  delPerson(index: number): void {
+    this.persons = this.formGroup.get('persons') as FormArray;
+    this.persons.removeAt(index);
   }
 
   saveData() {
-    if (!$('#refnum').val()) {
-      this.messageBarService.alert("กรุณากรอกเลขที่เอกสารอ้างอิง", "แจ้งเตือน");
-      return;
-    }
 
-    if (!$('#withdrawal').val()) {
-      this.messageBarService.alert("กรุณากรอกวันที่ขอเบิก", "แจ้งเตือน");
-      return;
-    }
-
-    if (!$('#activity').val()) {
-      this.messageBarService.alert("กรุณากรอกกิจกรรม", "แจ้งเตือน");
-      return;
-    }
-    if (!$('#budged').val()) {
-      this.messageBarService.alert("กรุณากรอกงบ", "แจ้งเตือน");
-      return;
-    }
-    if (!$('#category').val()) {
-      this.messageBarService.alert("กรุณากรอกหมวดย่อย", "แจ้งเตือน");
-      return;
-    }
-    if (!$('#budget').val()) {
-      this.messageBarService.alert("กรุณากรอกประเภทงบประมาณ", "แจ้งเตือน");
-      return;
-    }
-    if (!$('#amountOfMoney').val()) {
-      this.messageBarService.alert("กรุณากรอกจำนวนเงินขอเบิก", "แจ้งเตือน");
-      return;
-    }
-    if (!$('#pmmethod').val()) {
-      this.messageBarService.alert("กรุณากรอกวิธีการจ่าย", "แจ้งเตือน");
-      return;
-    }
-    if (!$('#datePersons').val()) {
-      this.messageBarService.alert("กรุณากรอกวันที่สั่งจ่าย", "แจ้งเตือน");
-      return;
-    }
-    if (!$('#amountPaid').val()) {
-      this.messageBarService.alert("กรุณากรอกจำนวนเงินที่จ่าย", "แจ้งเตือน");
-      return;
-    }
-    if (!$('#payee').val()) {
-      this.messageBarService.alert("กรุณากรอกผู้รับเงิน", "แจ้งเตือน");
-      return;
-    }
-
-    const URL = "ia/int06101/add";
-    this.ajax.post(URL, {
-      refnum: $("#refnum").val(),
-      withdrawal: $("#withdrawal").val(),
-      activity: $("#activity").val(),
-      budged: $("#budged").val(),
-      category: $("#category").val(),
-      list: $("#list").val(),
-      budget: $("#budget").val(),
-      amountOfMoney: $("#amountOfMoney").val(),
-      deductSocial: $("#deductSocial").val(),
-      withholding: $("#withholding").val(),
-      other: $("#other").val(),
-      amountOfMoney1: $("#amountOfMoney1").val(),
-      numberRequested: $("#numberRequested").val(),
-      documentNumber: $("#documentNumber").val(),
-      itemDescription: $("#itemDescription").val(),
-      note: $("#note").val(),
-
-    }, res => {
-      const msg = res.json();
-
-      if (msg.messageType == "C") {
-        this.messageBarService.successModal(msg.messageTh);
-      } else {
-        this.messageBarService.errorModal(msg.messageTh);
+    for (let j in ALERT_MSG) {
+      for (let i in this.formGroup.controls) {
+        // console.log(i, j);
+        // if (i == "persons") {
+        //   console.log(this.persons.value);
+        // }
+        if (j == i && this.formGroup.get(i).invalid) {
+          this.messageBarService.alert(ALERT_MSG[j], "แจ้งเตือน");
+          return;
+        }
       }
-      $("#searchFlag").val("TRUE");
-      $('#tableData').DataTable().ajax.reload();
-    });
-  }
+    }
 
+    if (this.formGroup.valid) {
+      const URL = "ia/int06101/add";
+      const { list, note, deductSocial, withholding,
+        other, amountOfMoney1, numberRequested, documentNumber,
+        itemDescription, refnum, withdrawal, activity,
+        budged, category, budget, amountOfMoney, persons } = this.formGroup.value;
+      let _persons: Person[] = [];
+      for(let key in persons) {
+        const { amount, paymentMethod, refPayment, paymentDate,
+          title, payeeFirst, payeeLast, bankName } = persons[key];
+        _persons.push({
+          amount: parseFloat(amount),
+          paymentMethod: paymentMethod,
+          refPayment: refPayment,
+          paymentDate: stringToDate(paymentDate),
+          payee: `${title}${payeeFirst} ${payeeLast}`,
+          bankName: bankName,
+        })
+      }
+      const data: Int06101 = {
+        refnum: refnum,
+        withdrawal: withdrawal,
+        activity: activity,
+        budged: budged,
+        budget: budget,
+        category: category,
+        list: list,
+        amountOfMoney: amountOfMoney,
+        deductSocial: deductSocial,
+        withholding: withholding,
+        other: other,
+        amountOfMoney1: amountOfMoney1,
+        numberRequested: numberRequested,
+        documentNumber: documentNumber,
+        itemDescription: itemDescription,
+        note: note,
+        budgetName: this.budged.find(obj => obj.budgetId == budged).budgetName,
+        listName: this.list.find(obj => obj.listId == list).listName,
+        categoryName: this.category.find(obj => obj.categoryId == category).categoryName,
+        persons: _persons
+      };
+      this.ajax.post(URL, data, res => {
+        const msg = res.json();
 
-
-  onAddButton = () => {
-    console.log("Add Button");
-    this.listButton.push(++this.numberButton);
-    console.log(this.listButton);
-
-    $(".frame").calendar({
-      maxDate: new Date(),
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter()
-    });
-
-  }
-
-  deleteButton = (e) => {
-    console.log("Delete Button : ", e);
-    let id = "#" + e;
-    let idButton = "#delete" + e;
-    $(id).remove();
-    let index = this.listButton.findIndex(obj => obj == e);
-    this.listButton.splice(index, 1);
+        if (msg.messageType == "C") {
+          this.messageBarService.successModal(msg.messageTh);
+        } else {
+          this.messageBarService.errorModal(msg.messageTh);
+        }
+        $("#searchFlag").val("TRUE");
+        $('#tableData').DataTable().ajax.reload();
+      });
+    }
   }
 
   pmmethod = () => {
@@ -278,7 +287,5 @@ export class Int06101Component implements OnInit {
       });
     }
   }
-
-
 
 }
