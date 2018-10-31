@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.dao.CreatePeperChrckerDao;
-import th.co.baiwa.excise.ta.persistence.dao.DisplayCreatePeperChrckerDao;
+import th.co.baiwa.excise.ta.persistence.dao.DisplayCreatePeperChrckerDetailDao;
 import th.co.baiwa.excise.ta.persistence.repository.TaxReduceWsDtlRepository;
 import th.co.baiwa.excise.ta.persistence.repository.TaxReduceWsHdrRepository;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0461Vo;
@@ -42,7 +42,7 @@ public class Ope0461Service {
 	private TaxReduceWsHdrRepository taxReduceWsHdrRepository;
 
 	@Autowired
-	private DisplayCreatePeperChrckerDao displayCreatePeperChrckerDao;
+	private DisplayCreatePeperChrckerDetailDao displayCreatePeperChrckerDao;
 
 	public DataTableAjax<Ope0461Vo> findAll(Ope046FormVo formVo) {
 

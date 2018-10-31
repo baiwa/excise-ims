@@ -16,7 +16,7 @@ import th.co.baiwa.excise.ta.persistence.vo.Ope046FormVo;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
-public class DisplayCreatePeperChrckerDao {
+public class DisplayCreatePeperChrckerDetailDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 

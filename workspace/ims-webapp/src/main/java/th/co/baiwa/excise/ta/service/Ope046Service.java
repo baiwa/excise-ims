@@ -105,7 +105,7 @@ public class Ope046Service {
 		header.setTaxationId(form.getUserNumber());
 		header.setStartDate(form.getDateFrom());
 		header.setEndDate(form.getDateTo());
-		//header.setPdtType(pdtType);
+		header.setPdtType(form.getType());
 		header.setSubPdtType(form.getCoordinates());
 		TaxReduceWsHdr headerId = taxReduceWsHdrRepository.save(header);
 	
