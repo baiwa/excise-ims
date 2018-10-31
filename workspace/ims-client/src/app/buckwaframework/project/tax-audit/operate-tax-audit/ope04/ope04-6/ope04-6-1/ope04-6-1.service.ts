@@ -5,14 +5,15 @@ declare var $: any;
 export class Ope0461Service {
 
     //==> params
-    table : any;    
+    table: any;
     constructor() { }
 
-    datatable = () => {
+    datatable = (taTaxReduceWsHdrId : any) => {
         this.table = $("#dataTable").DataTableTh({
             "serverSide": false,
             "processing": true,
             "scrollX": true,
+            "searching": true,
             "paging": true,
             "ajax": {
                 "url": '/ims-webapp/api/ta/opo0461/findAll',
@@ -20,7 +21,7 @@ export class Ope0461Service {
                 "type": "POST",
                 "data": (d) => {
                     return JSON.stringify($.extend({}, d, {
-                        // "exciseId": $("#exciseId").val(),
+                        "taTaxReduceWsHdrId": taTaxReduceWsHdrId,
                         // "searchFlag": this.searchFlag,
                         // "dataExcel": this.dataExcel
                     }));
@@ -41,14 +42,14 @@ export class Ope0461Service {
                 {
                     "data": "totalTax",
                     "className": "ui right aligned",
-                    "render" : (data)=>{
+                    "render": (data) => {
                         return Utils.moneyFormatInt(data);
                     }
                 },
                 {
-                    "data": "pdtAmount1",                    
+                    "data": "pdtAmount1",
                     "className": "ui right aligned",
-                    "render" : (data)=>{
+                    "render": (data) => {
                         return Utils.moneyFormatInt(data);
                     }
                 },
@@ -66,14 +67,14 @@ export class Ope0461Service {
                 {
                     "data": "taxAmount",
                     "className": "ui right aligned",
-                    "render" : (data)=>{
+                    "render": (data) => {
                         return Utils.moneyFormatInt(data);
                     }
                 },
                 {
                     "data": "pdtSAmount2",
                     "className": "ui right aligned",
-                    "render" : (data)=>{
+                    "render": (data) => {
                         return Utils.moneyFormatInt(data);
                     }
                 },
@@ -90,7 +91,7 @@ export class Ope0461Service {
                     "render": (data) => {
                         return Utils.moneyFormatDecimal(data);
                     }
-                    
+
                 },
             ],
             // "drawCallback": (settings) => {

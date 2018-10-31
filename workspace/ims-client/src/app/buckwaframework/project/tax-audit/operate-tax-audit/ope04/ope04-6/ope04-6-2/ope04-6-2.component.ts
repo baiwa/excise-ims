@@ -3,6 +3,7 @@ import { Ope0462Service } from './ope04-6-2.service';
 import { BreadCrumb } from 'models/breadcrumb';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { TextDateTH, formatter } from 'helpers/datepicker';
+import { AjaxService } from 'services/ajax.service';
 declare var $: any;
 @Component({
   selector: 'app-ope04-6-2',
@@ -27,9 +28,10 @@ export class Ope0462Component implements OnInit {
   constructor(
     private ope0461Service: Ope0462Service,
     private formBuilder: FormBuilder,
+    private ajax : AjaxService
   ) { }
 
-  ngOnInit() {
+  ngOnInit() {   
     this.findExciseId();
     this.callDropdown();
     this.newFormControl();

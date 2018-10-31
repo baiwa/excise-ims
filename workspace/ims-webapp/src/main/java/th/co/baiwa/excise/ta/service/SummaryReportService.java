@@ -21,6 +21,7 @@ import th.co.baiwa.excise.ta.persistence.repository.SummaryReportRepository;
 public class SummaryReportService {
 	private Logger logger = LoggerFactory.getLogger(SummaryReportService.class);
 	private final String SECTOR_VALUE = "SECTOR_VALUE";
+	private final String SECTOR_LIST = "SECTOR_LIST";
 	
 	@Autowired
 	private SummaryReportRepository summaryReportRepository;
@@ -50,7 +51,7 @@ public class SummaryReportService {
 		
 		SummaryReport summaryReport = null;
 		Date currenDate = new Date();
-		List<Lov> lovList = ApplicationCache.getListOfValueByValueType(SECTOR_VALUE, "11");
+		List<Lov> lovList = ApplicationCache.getListOfValueByValueType(SECTOR_LIST, "000000");
 		summaryReport = summaryReportRepository.findByAnalysnumberAndSector(analysNumber, lovList.get(0).getValue1());
 		summaryReport.setReceiveDate(currenDate);
 		summaryReportRepository.save(summaryReport);

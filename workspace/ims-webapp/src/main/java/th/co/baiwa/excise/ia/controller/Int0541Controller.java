@@ -17,6 +17,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.ia.persistence.entity.IaProcurement;
+import th.co.baiwa.excise.ia.persistence.entity.IaProcurementList;
 import th.co.baiwa.excise.ia.persistence.vo.Int0541Vo;
 import th.co.baiwa.excise.ia.service.Int0541Service;
 
@@ -38,7 +39,7 @@ public class Int0541Controller {
 	
 	@PostMapping("/savePcmList")
 	@ResponseBody
-	public Message saveProcurement(@RequestBody List<Int0541Vo> vo) {
+		public Message saveProcurement(@RequestBody List<IaProcurementList> vo) {
 		logger.info("Saved to saveProcurement");
 		try {
 			int0541Service.savePcmList(vo);
@@ -50,7 +51,7 @@ public class Int0541Controller {
 	
 	@PostMapping("/findByid")
 	@ResponseBody
-	public List<Int0541Vo> findByid(@RequestBody IaProcurement pcm){
+	public Int0541Vo findByid(@RequestBody IaProcurement pcm){
 		logger.info("findByid {}",pcm.getProcurementId());
 		return int0541Service.findByid(pcm);
 	}

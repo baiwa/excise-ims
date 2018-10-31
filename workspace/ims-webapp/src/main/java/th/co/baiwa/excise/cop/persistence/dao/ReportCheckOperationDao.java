@@ -18,6 +18,7 @@ import th.co.baiwa.excise.cop.persistence.vo.Cop064FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop064Vo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop0711Vo;
 import th.co.baiwa.excise.domain.LabelValueBean;
+import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
@@ -173,7 +174,6 @@ public class ReportCheckOperationDao {
 			return vo;
 		}
 	};
-	
     public Long saveHeadCop064 (Cop064FormVo vo) {
     	Long id = jdbcTemplate.queryForObject(" SELECT OA_TAX_REDUCE_WS_HDR_SEQ.NEXTVAL FROM dual ",Long.class);
 
@@ -207,5 +207,71 @@ public class ReportCheckOperationDao {
     	
     	return id;
 }
+	
+    public Long saveHeadCop0611 (Ope041DataTable vo) {
+    	Long id = jdbcTemplate.queryForObject(" SELECT OA_DISB_RMAT_WS_HDR_SEQ.NEXTVAL FROM dual ",Long.class);
+
+    	jdbcTemplate.update(" INSERT INTO OA_DISB_RMAT_WS_HDR( " + 
+    			"OA_DISB_RMAT_WS_HDR_ID, " + 
+    			"EXCISE_ID, " +
+    			"YEAR, " +
+    			"START_DATE, " + 
+    			"END_DATE " + 
+    			" ) VALUES ( " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"? " + 
+    			" ) ",new Object[] {
+    					id,
+    					vo.getExciseId(),
+    					vo.getFiscalYear(),
+    					vo.getStartDate(),
+    					vo.getEndDate()
+    					});
+    	
+    	return id;
+    }
+    public Long saveDtlCop0611 (Ope041DataTable vo,Long idHead) {
+    	Long id = jdbcTemplate.queryForObject(" SELECT OA_DISB_RMAT_WS_DTL_SEQ.NEXTVAL FROM dual ",Long.class);
+
+    	jdbcTemplate.update(" INSERT INTO OA_DISB_RMAT_WS_DTL( " + 
+    			"OA_DISB_RMAT_WS_DTL_ID, " + 
+    			"OA_DISB_RMAT_WS_HDR_ID, " + 
+    			"DISBURSE_RAW_MAT_DTL_NO, " + 
+    			"DISBURSE_RAW_MAT_DTL_ORDE, " + 
+    			"RAW_MAT_REQUISITION, " + 
+    			"DAY_BOOK_07_01, " + 
+    			"MONTH_BOOK_07_04, " + 
+    			"MONTHLY_REPORT, " + 
+    			"MAX_VALUES, " + 
+    			"RESULT " + 
+    			") VALUES( " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"?, " + 
+    			"? " + 
+    			" ) ",new Object[] {
+    					id,
+    					idHead,
+    					vo.getNo(),
+    				    vo.getProduct(),
+    					vo.getTaxInvoice(),
+    					vo.getDayRecieve(),
+    					vo.getMonthRecieve(),
+    					vo.getExd1(),
+    					vo.getCalMax(),
+    					vo.getDiff()
+    					});
+    	
+    	return id;
+    }
 
 }

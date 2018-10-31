@@ -1,7 +1,7 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <br>
 <div class="sixteen wide column">
-  <h2 class="ui header">แผนการตรวจปฏิบัติการประจำปีงบประมาณ</h2>
+  <h2 class="ui header">สรุปผลการตรวจปฏิบัติการ</h2>
 
   <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
     <span>ระบุเงื่อนไขในการค้นหา</span>
@@ -15,7 +15,7 @@
 
         <div class="three wide field"></div>
         <div class="three wide field">
-          <label>แผนการตรวจปฏิบัติการประจำปีงบประมาณ</label>
+          <label>สรุปผลการตรวจปฏิบัติการประจำปีงบประมาณ</label>
         </div>
         <div class="four wide field column">
           <div class="ui calendar" id="date" style="width: 100%;">
@@ -38,93 +38,50 @@
   </div>
   <br>
   <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-    <span>ผลการค้นหา</span>
-  </div>
-  <div class="ui attached  segment">
-    <br>
-    <table id="tableData" class="ui small celled table nowrap striped selectable" style="width: 100%">
-      <thead>
-
-        <tr>
-          <th rowspan="2" style="text-align: center !important;">เดือน</th>
-          <th rowspan="1" colspan="3" style="text-align: center !important;">ตามแผนปฏิบัติการ</th>
-          <th rowspan="1" colspan="3" style="text-align: center !important;">นอกแผนปฏิบัติการ</th>
-          <th rowspan="2" style="text-align: center !important;width:180px !important">จัดการ</th>
-        </tr>
-        <tr>
-          <th style="text-align: center !important;">จำนวน</th>
-          <th style="text-align: center !important;">เสร็จสิ้น</th>
-          <th style="text-align: center !important;">รอการดำเนินการ</th>
-          <th style="text-align: center !important;">จำนวน</th>
-          <th style="text-align: center !important;">เสร็จสิ้น</th>
-          <th style="text-align: center !important;">รอการดำเนินการ</th>
-        </tr>
-
-      </thead>
-      <tfoot>
-          <tr> 
-            <th style="text-align: center !important;"> รวม </th>
-            <th rowspan="1" style="text-align: right !important;">{{totalAsPlanNumber}}</th>
-            <th rowspan="1" style="text-align: right !important;">{{totalAsPlanSuccess}}</th>
-            <th rowspan="1" style="text-align: right !important;">{{totalAsPlanWait}}</th>
-            <th rowspan="1" style="text-align: right !important;">{{totalOutsidePlanNumber}}</th>
-            <th rowspan="1" style="text-align: right !important;">{{totalOutsidePlanSuccess}}</th>
-            <th rowspan="1" style="text-align: right !important;">{{totalOutsidePlanWait}}</th>
-            <th style="text-align: center !important;"></th>
-          </tr>
+      <span>รายละเอียดตามแผนปฏิบัติการ</span>
+    </div>
+      <div class="ui attached  segment">
     
-        </tfoot>
-    </table>
-  </div>
-</div>
-
-<!-- Edit modal -->
-<div class="ui small modal transition hidden" id='modalEdit'>
-  <div class="header" style="text-align: center !important;">
-      แก้ไขจำนวนแผนปฏิบัติการ เดือน
-  </div>
-
-  <div class="scrolling content">
-    <form id="addModal-form" ngNativeValidate>
-      <div class="ui form center aligned">
-
-        <input type="hidden" id="id">
-        <input type="hidden" id="asPlanSuccess">
-        <input type="hidden" id="outsidePlanSuccess">
-        <input type="hidden" id="fiscalYearEdit">
-
-        <div class="inline fields">
-            <div class="three wide field"></div>
-          <div class="five wide field right aligned">
-            <label>ตามแผนปฏิบัติการ  จำนวน</label>
-          </div>
-          <div class="three wide field">
-            <input id="asPlanNumber" type="number">
-          </div>
-          <div class="one wide field right aligned">
-            <label>ราย</label>
-          </div>
-        </div>
-        <div class="inline fields">
-            <div class="three wide field"></div>
-          <div class="five wide field right aligned">
-            <label>นอกแผนปฏิบัติการ  จำนวน</label>
-          </div>
-          <div class="three wide field">
-            <input id="outsidePlanNumber" type="number">
-          </div>
-          <div class="one wide field right aligned">
-            <label>ราย</label>
-          </div>
-        </div>
-        <br>
+        <table id="tableData" class="ui small celled table nowrap striped selectable" style="width: 100%">
+          <thead>
+    
+            <tr>
+              <th style="text-align: center !important;">ลำดับ</th>
+              <th style="text-align: center !important;">เลขที่ผู้ประกอบการ</th>
+              <th style="text-align: center !important;">ชื่อผู้ประกอบการ</th>
+              <th style="text-align: center !important;">สถานที่ตั้งของผู้ประกอบการ</th>
+              <th style="text-align: center !important;">วันที่ตรวจ</th>
+              <th style="text-align: center !important;">แผนปฏิบัติการ</th>
+              <th style="text-align: center !important;">สถานะ</th>
+            </tr>
+    
+          </thead>
+        </table>
+    
       </div>
-    </form>
-  </div>
-
-  <div class="actions">
-    <div class="ui mini yellow button" (click)="editData()"><i class="edit icon"></i>ดำเนินการแก้ไข</div>
-    <div class="ui mini deny button"><i class="close icon"></i>ยกเลิก</div>
-  </div>
+      <br>
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>รายละเอียดนอกแผนปฏิบัติการ</span>
+      </div>
+      <div class="ui attached  segment">
+        <div class="ui form center aligned" ngNativeValidate>
+    
+          <br>
+          <table id="tableData2" class="ui small celled table nowrap striped selectable" style="width: 100%">
+            <thead>
+    
+              <tr>
+                <th style="text-align: center !important;">ลำดับ</th>
+                <th style="text-align: center !important;">เลขที่ผู้ประกอบการ</th>
+                <th style="text-align: center !important;">ชื่อผู้ประกอบการ</th>
+                <th style="text-align: center !important;">สถานที่ตั้งของผู้ประกอบการ</th>
+                <th style="text-align: center !important;">วันที่ตรวจ</th>
+                <th style="text-align: center !important;">แผนปฏิบัติการ</th>
+                <th style="text-align: center !important;">สถานะ</th>
+              </tr>
+    
+            </thead>
+          </table>
+        </div>
+      </div>
 </div>
-<!--End Edit modal -->

@@ -1,6 +1,7 @@
 package th.co.baiwa.excise.ia.persistence.entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
@@ -47,6 +49,9 @@ public class IaProcurementList extends BaseEntity  {
 
 	@Column(name="PROCUREMENT_LIST")
 	private String procurementList;
+	
+	@Transient
+	private List<Long> ids;
 
 	private String unit;
 
@@ -123,6 +128,14 @@ public class IaProcurementList extends BaseEntity  {
 
 	public void setUnitPrice(Long unitPrice) {
 		this.unitPrice = unitPrice;
+	}
+
+	public List<Long> getIds() {
+		return ids;
+	}
+
+	public void setIds(List<Long> ids) {
+		this.ids = ids;
 	}
 
 }

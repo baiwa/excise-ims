@@ -43,11 +43,6 @@ public class Ope041Controller {
 		List<Ope041DataTable> result = new ArrayList<Ope041DataTable>();
 		if((BeanUtils.isNotEmpty(vo.getStartDate())) && (BeanUtils.isNotEmpty(vo.getEndDate()))) {
 			result = planWorksheetHeaderService.queryExciseIdFromAccDTL(vo.getExciseId(), vo.getType(),vo.getStartDate(), vo.getEndDate());
-			System.out.println("####################### : "+ result.size());
-			System.out.println("####################### : "+ result.size());
-			System.out.println("####################### : "+ result.size());
-			System.out.println("####################### : "+ result.size());
-			System.out.println("####################### : "+ result.size());
 		}
 		
 		if(vo.getFileExel() != null) {
@@ -74,11 +69,6 @@ public class Ope041Controller {
 					fuList.add(fu);
 				}
 			result = planWorksheetHeaderService.sumData(fuList, vo);
-		}
-		for (Ope041DataTable ope041DataTable : result) {
-			System.out.println("##############################################################################################");
-			System.out.println(ope041DataTable.toString());
-			System.out.println("##############################################################################################");
 		}
 		
 		DataTableAjax<Ope041DataTable> dataTableAjax = new DataTableAjax<>();
