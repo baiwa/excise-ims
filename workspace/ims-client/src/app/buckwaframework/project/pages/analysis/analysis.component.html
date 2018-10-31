@@ -15,7 +15,7 @@
             <div class="three wide field " [ngClass]="{ 'error': submitted && f.exciseId.invalid }">
               <select class="ui dropdown search selection  full-width" formControlName="exciseId" name="exciseId" id="exciseId"
                 (change)="changeExciseId($event)" required>
-                <option value="">เลือก</option>
+                <option value="">กรุณาเลือก</option>
                 <option *ngFor="let item of exciseIdList" value="{{item.label}}">{{item.label}}</option>
               </select>
             </div>
