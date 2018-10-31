@@ -9,45 +9,131 @@ public class Datum {
 
     @SerializedName("summary")
     @Expose
-    public String summary;
+    private String summary;
     @SerializedName("updateDate")
     @Expose
-    public String updateDate;
+    private String updateDate;
     @SerializedName("offCode")
     @Expose
-    public String offCode;
+    private String offCode;
     @SerializedName("formCode")
     @Expose
-    public String formCode;
+    private String formCode;
     @SerializedName("formRound")
     @Expose
-    public String formRound;
+    private String formRound;
     @SerializedName("processPosition")
     @Expose
-    public String processPosition;
+    private String processPosition;
     @SerializedName("formName")
     @Expose
-    public String formName;
+    private String formName;
     @SerializedName("processDate")
     @Expose
-    public String processDate;
+    private String processDate;
     @SerializedName("formStatus")
     @Expose
-    public String formStatus;
+    private String formStatus;
     @SerializedName("processBy")
     @Expose
-    public String processBy;
+    private String processBy;
     @SerializedName("formStatusDesc")
     @Expose
-    public String formStatusDesc;
+    private String formStatusDesc;
     @SerializedName("topicDetail")
     @Expose
-    public List<TopicDetail> topicDetail = null;
+    private List<TopicDetail> topicDetail = null;
     @SerializedName("offName")
     @Expose
-    public String offName;
+    private String offName;
     @SerializedName("formYear")
     @Expose
-    public String formYear;
+    private String formYear;
+	public String getSummary() {
+		return summary;
+	}
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+	public String getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
+	}
+	public String getOffCode() {
+		return offCode;
+	}
+	public void setOffCode(String offCode) {
+		this.offCode = offCode;
+	}
+	public String getFormCode() {
+		return formCode;
+	}
+	public void setFormCode(String formCode) {
+		this.formCode = formCode;
+	}
+	public String getFormRound() {
+		return formRound;
+	}
+	public void setFormRound(String formRound) {
+		this.formRound = formRound;
+	}
+	public String getProcessPosition() {
+		return processPosition;
+	}
+	public void setProcessPosition(String processPosition) {
+		this.processPosition = processPosition;
+	}
+	public String getFormName() {
+		return formName;
+	}
+	public void setFormName(String formName) {
+		this.formName = formName;
+	}
+	public String getProcessDate() {
+		return processDate;
+	}
+	public void setProcessDate(String processDate) {
+		this.processDate = processDate;
+	}
+	public String getFormStatus() {
+		return formStatus;
+	}
+	public void setFormStatus(String formStatus) {
+		this.formStatus = formStatus;
+	}
+	public String getProcessBy() {
+		return processBy;
+	}
+	public void setProcessBy(String processBy) {
+		this.processBy = processBy;
+	}
+	public String getFormStatusDesc() {
+		return formStatusDesc;
+	}
+	public void setFormStatusDesc(String formStatusDesc) {
+		this.formStatusDesc = formStatusDesc;
+	}
+	public List<TopicDetail> getTopicDetail() {
+		return topicDetail;
+	}
+	public void setTopicDetail(List<TopicDetail> topicDetail) {
+		this.topicDetail = topicDetail;
+	}
+	public String getOffName() {
+		return offName;
+	}
+	public void setOffName(String offName) {
+		this.offName = offName;
+	}
+	public String getFormYear() {
+		return formYear;
+	}
+	public void setFormYear(String formYear) {
+		this.formYear = formYear;
+	}
+    
+    
 
 }
