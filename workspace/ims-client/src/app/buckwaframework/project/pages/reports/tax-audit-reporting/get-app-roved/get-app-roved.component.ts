@@ -26,6 +26,8 @@ export class GetAppRovedComponent implements OnInit {
     // ... Don't change or delete this
     this.discard.emit(false);
   };
+
+  
   calenda = () => {
     $("#date1").calendar({
       endCalendar: $("#date1"),
