@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.excise.ta.persistence.vo.Ope0461FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0461Vo;
-import th.co.baiwa.excise.ta.persistence.vo.Ope046FormVo;
 import th.co.baiwa.excise.ta.service.Ope0461Service;
 
 @Controller
@@ -21,7 +21,7 @@ public class Opo0461Controller {
 
 	@PostMapping("/findAll")
 	@ResponseBody
-	public DataTableAjax<Ope0461Vo> findAll(@RequestBody Ope046FormVo formVo){
+	public DataTableAjax<Ope0461Vo> findAll(@RequestBody Ope0461FormVo formVo){
 		return ope0461Service.findAll(formVo);
 	}
 

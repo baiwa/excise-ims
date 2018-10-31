@@ -11,8 +11,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.excise.ta.persistence.vo.Ope0461FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0461Vo;
-import th.co.baiwa.excise.ta.persistence.vo.Ope046FormVo;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
@@ -23,14 +23,14 @@ public class DisplayCreatePeperChrckerDetailDao {
 	private final String SQL = "SELECT * FROM TA_TAX_REDUCE_WS_DTL WHERE 1=1 ";
 
 
-	public Long count(Ope046FormVo formVo) {
+	public Long count(Ope0461FormVo formVo) {
 
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
-		if (StringUtils.isNotBlank(formVo.getExciseId())) {
+		if (StringUtils.isNotBlank(formVo.getTaTaxReduceWsHdrId())) {
 			
-			sql.append(" AND EXCISE_ID = ? ");
-			params.add(formVo.getExciseId());
+			sql.append(" AND TA_TAX_REDUCE_WS_HEADER_ID = ? ");
+			params.add(formVo.getTaTaxReduceWsHdrId());
 		}
 
 		String countSql = OracleUtils.countForDatatable(sql);
@@ -38,18 +38,17 @@ public class DisplayCreatePeperChrckerDetailDao {
 		return count;
 	}
 
-	public List<Ope0461Vo> findAll(Ope046FormVo formVo) {
+	public List<Ope0461Vo> findAll(Ope0461FormVo formVo) {
 
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
 
-		if (StringUtils.isNotBlank(formVo.getExciseId())) {
-			sql.append(" AND EXCISE_ID = ? ");
-			params.add(formVo.getExciseId());
+		if (StringUtils.isNotBlank(formVo.getTaTaxReduceWsHdrId())) {
+			sql.append(" AND TA_TAX_REDUCE_WS_HEADER_ID = ? ");
+			params.add(formVo.getTaTaxReduceWsHdrId());
 		}
 		sql.append(" ORDER BY CREATED_DATE DESC ");
 		
-		//String listSql = OracleUtils.limit(sql.toString(), formVo.getStart(), formVo.getLength());
 		List<Ope0461Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), detailRowmapper);
 		return list;
 
