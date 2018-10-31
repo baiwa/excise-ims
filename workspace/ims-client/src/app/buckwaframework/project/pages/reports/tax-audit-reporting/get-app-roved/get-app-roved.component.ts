@@ -1,5 +1,7 @@
 import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { TextDateTH, formatter } from 'helpers/datepicker';
+import { AjaxService } from 'services/ajax.service';
+import { ActivatedRoute } from '@angular/router';
 
 declare var $: any;
 @Component({
@@ -9,7 +11,12 @@ declare var $: any;
 })
 export class GetAppRovedComponent implements OnInit {
   @Output() discard = new EventEmitter<any>();
-  constructor() { }
+
+  obj: getAdd;
+  constructor(    private route: ActivatedRoute,
+    private ajax: AjaxService) { 
+      this.obj = new getAdd();
+    }
 
   ngOnInit() {
     this.calenda();
@@ -42,8 +49,9 @@ export class GetAppRovedComponent implements OnInit {
 
     });
   }
+}
 
-
+class getAdd {
   governmentService : string;
   date : string;   
   subject : string;

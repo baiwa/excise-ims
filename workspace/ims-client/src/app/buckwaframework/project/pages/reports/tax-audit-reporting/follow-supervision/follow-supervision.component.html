@@ -13,7 +13,7 @@
               <label>ส่วนราชการ</label>
             </div>
             <div class="four wide field">
-              <input type="text" name="sendTo">
+              <input type="text" name="governmentService" [(ngModel)]="obj.governmentService" >
             </div>
             <div class="one wide field"></div>
             <div class="one wide field">
@@ -22,7 +22,7 @@
             <div class="four wide field ui calendar" id="date1">
               <div class="ui input left icon">
                 <i class="calendar alter nate outline icon"></i>
-                <input type="calendar">
+                <input type="calendar" id="date" [(ngModel)]="obj.date" >
               </div>
             </div>
           </div>
@@ -40,7 +40,7 @@
               </label>
             </div>
             <div class="four wide field">
-              <input type="text">
+              <input type="text"  id="study" [(ngModel)]="obj.study" >
             </div>
           </div>
 
@@ -50,12 +50,13 @@
               <label>ตรวจปฏิบัติการแนะนำกำกัลดูแล สถานประกอบการ / โรงอุตสาหกรรม</label>
             </div>
             <div class="four wide field">
-              <input type="text">
+              <input type="text" id="actionMonitoring" [(ngModel)]="obj.actionMonitoring">
             </div>
           </div>
 
           <div class="inline fields">
-              <div class="three wide field"></div>
+              <div class="three wide field"></div> 
+              
               <div class="eight wide field">
                 <label>มีผลการตรวจ ดังนี้</label>
               </div>    
@@ -64,7 +65,7 @@
             <div class="inline fields">
                 <div class="three wide field"></div>
                 <div class="twelve wide field">
-                <textarea role="8" cols="10"></textarea>
+                <textarea role="8" cols="10" [(ngModel)]="obj.resultsAre" id="resultsAre"></textarea>
                 </div>    
               </div>
               <div class="inline fields">
@@ -76,7 +77,7 @@
               <div class="inline fields">
                   <div class="three wide field"></div>
                   <div class="twelve wide field">
-                  <textarea role="8" cols="10"></textarea>
+                  <textarea role="8" cols="10" [(ngModel)]="obj.fromOperation"  id="fromOperation"></textarea>
                   </div>    
                 </div>
         </div>
