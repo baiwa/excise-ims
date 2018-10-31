@@ -20,8 +20,7 @@
                             </div>
                             <div class="three wide field {{f.submitted && f.controls.permit_no.invalid ? 'error' : ''}}">
                                 <div class="ui input">
-                                    <input type="text" id="keyC" name="permit_no" class="full-width" required
-                                        [(ngModel)]='keyC' (keydown)="keyDownC()">
+                                    <input type="text" id="keyC" name="permit_no" class="full-width" required [(ngModel)]='keyC' (keydown)="keyDownC()">
                                 </div>
                             </div>
                             <div class="two wide field">
@@ -58,18 +57,15 @@
                             </div>
                             <div class="three wide field {{f.submitted && f.controls.permit_no.invalid ? 'error' : ''}}">
                                 <div class="ui input">
-                                    <input type="text" id="keyN" name="permit_no" class="full-width" ngModel required
-                                        (keydown)="keyDownN()">
+                                    <input type="text" id="keyN" name="permit_no" class="full-width" ngModel required (keydown)="keyDownN()">
                                 </div>
                             </div>
-
                         </div>
                     </form>
                 </div>
             </div>
         </div>
         <!-- form add print no -->
-
         <div class="ui {{ (loading | async) ? 'loading' : '' }} top attached segment">
             <div class="ui grid">
                 <div class="sixteen wide column">
@@ -103,17 +99,11 @@
                                 <td class="text-center">{{ data.depositDate ? dateFormat(data.depositDate) : '-' }}</td>
                                 <td class="text-center">{{ data.sendDate ? data.sendDate : '-' }}</td>
                                 <td class="text-left">{{ data.incomeName ? data.incomeName : '-' }}</td>
-                                <td class="text-center">{{ data.taxPrintNo && data.taxPrintNo != null ? data.taxPrintNo
-                                    : '-' }}</td>
-                                <td class="text-center {{ data.portal != '' ? 'red' : '' }}" data-position="left center">{{
-                                    data.receiptNo
-                                    ? data.receiptNo :
-                                    '-' }}</td>
+                                <td class="text-center">{{ data.taxPrintNo && data.taxPrintNo != null ? data.taxPrintNo : '-' }}</td>
+                                <td class="text-center {{ data.portal != '' ? 'red' : '' }}" data-position="left center">{{ data.receiptNo ? data.receiptNo : '-' }}</td>
 
-                                <td class="text-right {{ data.status == 'diff' ? 'red' : '' }}">{{round(data.netTaxAmount
-                                    || 0.0) }}</td>
-                                <td class="text-right {{ data.status == 'diff' ? 'red' : '' }}">{{round(data.checkedAmount
-                                    || 0.0) }}</td>
+                                <td class="text-right {{ data.status == 'diff' ? 'red' : '' }}">{{round(data.netTaxAmount || 0.0) }}</td>
+                                <td class="text-right {{ data.status == 'diff' ? 'red' : '' }}">{{round(data.checkedAmount || 0.0) }}</td>
                                 <td class="text-right">{{ round(data.netLocAmount || 0.0) }}</td>
                                 <td class="text-right">{{ round(data.locOthAmount || 0.0) }}</td>
                                 <td class="text-right">{{ round(data.locExpAmount || 0.0) }}</td>
@@ -158,15 +148,14 @@
                     </a>
                     <!-- export -->
                     <button class="ui mini yellow button widtd-100">
-                            <i class="print icon"></i>ส่งออก
-                        </button>
+                        <i class="print icon"></i>ส่งออก
+                    </button>
                     <a class="ui mini button widtd-100" routerLink='/int01/1/1'>
                         <i class="times left icon"></i>ยกเลิก
                     </a>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 <!-- content -->
