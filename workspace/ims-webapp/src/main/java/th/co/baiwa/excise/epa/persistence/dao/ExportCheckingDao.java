@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.epa.persistence.vo.Epa011FormVo;
 import th.co.baiwa.excise.epa.persistence.vo.Epa011Vo;
+import th.co.baiwa.excise.epa.persistence.vo.Epa013FormVo;
+import th.co.baiwa.excise.epa.persistence.vo.Epa013Vo;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
@@ -60,6 +62,46 @@ public class ExportCheckingDao {
 		@Override
 		public Epa011Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Epa011Vo vo = new Epa011Vo();
+			vo.setExciseId(rs.getString("EXCISE_ID"));
+			vo.setExciseName(rs.getString("EXCISE_NAME"));
+			vo.setDestination(rs.getString("DESTINATION"));
+			vo.setDateDestination(rs.getString("DATE_DESTINATION"));
+			return vo;
+		}
+	};
+	
+	public long countForReport(Epa013FormVo epa013FormVo) {
+		StringBuilder sql = new StringBuilder(SQL_SEARCH_DATA);
+		List<Object> params = new ArrayList<>();
+		
+		if (StringUtils.isNotBlank(epa013FormVo.getExciseId())) {
+			sql.append(" AND T1.EXCISE_ID = ? ");
+			params.add(epa013FormVo.getExciseId());
+		}
+		
+		String countSql = OracleUtils.countForDatatable(sql);
+		Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+		return count;
+	}
+
+	public List<Epa013Vo> searchForReport(Epa013FormVo epa013FormVo) {
+		StringBuilder sql = new StringBuilder(SQL_SEARCH_DATA);
+		List<Object> params = new ArrayList<>();
+		
+		if (StringUtils.isNotBlank(epa013FormVo.getExciseId())) {
+			sql.append(" AND T1.EXCISE_ID = ? ");
+			params.add(StringUtils.trim(epa013FormVo.getExciseId()));
+		}
+		
+		String sqlLimit = OracleUtils.limitForDataTable(sql, epa013FormVo.getStart(), epa013FormVo.getLength());
+		List<Epa013Vo> list = jdbcTemplate.query(sqlLimit, params.toArray(), ReportExportCheckingRowMapper);
+		return list;
+	}
+	
+	private RowMapper<Epa013Vo> ReportExportCheckingRowMapper = new RowMapper<Epa013Vo>() {
+		@Override
+		public Epa013Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Epa013Vo vo = new Epa013Vo();
 			vo.setExciseId(rs.getString("EXCISE_ID"));
 			vo.setExciseName(rs.getString("EXCISE_NAME"));
 			vo.setDestination(rs.getString("DESTINATION"));

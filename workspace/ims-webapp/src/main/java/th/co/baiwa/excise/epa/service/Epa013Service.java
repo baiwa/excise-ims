@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.epa.persistence.dao.ReportExportCheckingDao;
+import th.co.baiwa.excise.epa.persistence.dao.ExportCheckingDao;
 import th.co.baiwa.excise.epa.persistence.vo.Epa013FormVo;
 import th.co.baiwa.excise.epa.persistence.vo.Epa013Vo;
 
@@ -15,19 +15,20 @@ import th.co.baiwa.excise.epa.persistence.vo.Epa013Vo;
 public class Epa013Service {
 
 	@Autowired
-	private ReportExportCheckingDao reportExportCheckingDao;
+	private ExportCheckingDao exportCheckingDao;
 	
 	public DataTableAjax<Epa013Vo> search(Epa013FormVo epa013FormVo) {
 		DataTableAjax<Epa013Vo> dataTableAjax = new DataTableAjax<>();
 		
-//		if (ExciseConstants.SEARCH_FLAG.TRUE.equalsIgnoreCase(epa013FormVo.getSearchFlag())) {
-//			List<Epa013Vo> list = reportExportCheckingDao.search(epa013FormVo);
-//		
-//			dataTableAjax.setDraw(epa013FormVo.getDraw() + 1);
-////			dataTableAjax.setRecordsTotal(count);
-////			dataTableAjax.setRecordsFiltered(count);
-//			dataTableAjax.setData(list);
-//		}
+		if (ExciseConstants.SEARCH_FLAG.TRUE.equalsIgnoreCase(epa013FormVo.getSearchFlag())) {
+			List<Epa013Vo> list = exportCheckingDao.searchForReport(epa013FormVo);
+			long count = exportCheckingDao.countForReport(epa013FormVo);
+			
+			dataTableAjax.setDraw(epa013FormVo.getDraw() + 1);
+			dataTableAjax.setRecordsTotal(count);
+			dataTableAjax.setRecordsFiltered(count);
+			dataTableAjax.setData(list);
+		}
 		
 		return dataTableAjax;
 	}

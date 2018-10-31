@@ -22,10 +22,11 @@ public class Epa012Service {
 		
 		if (ExciseConstants.SEARCH_FLAG.TRUE.equalsIgnoreCase(epa012FormVo.getSearchFlag())) {
 			List<Epa012Vo> list = exportCheckingConnectDao.search(epa012FormVo);
+			long count = exportCheckingConnectDao.count(epa012FormVo);
 			
 			dataTableAjax.setDraw(epa012FormVo.getDraw() + 1);
-//			dataTableAjax.setRecordsTotal(count);
-//			dataTableAjax.setRecordsFiltered(count);
+			dataTableAjax.setRecordsTotal(count);
+			dataTableAjax.setRecordsFiltered(count);
 			dataTableAjax.setData(list);
 		}
 	

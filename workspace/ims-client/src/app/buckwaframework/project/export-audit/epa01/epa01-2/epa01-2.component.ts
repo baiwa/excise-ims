@@ -124,7 +124,8 @@ export class Epa012Component implements OnInit {
     this.datatable.on('click', 'tbody tr button.checking-button', (e) => {
       var closestRow = $(e.target).closest('tr');
       var data = this.datatable.row(closestRow).data();
-
+      
+      this.datas.exciseId = data.exciseId;
       this.datas.taxReNumber2 = data.taxReNumber2;
       this.datas.exciseName = data.exciseName;
       this.datas.officeArea = data.officeArea;
@@ -132,7 +133,9 @@ export class Epa012Component implements OnInit {
       this.datas.dateOut2 = data.dateOut2;
       this.datas.productName2 = data.productName2;
       this.datas.quantity = data.quantity;
+      this.datas.remark = "";
 
+      this.saveDatas.exciseId2 = data.exciseId2;
       this.saveDatas.taxReNumber2 = data.taxReNumber2;
       this.saveDatas.exciseName2 = data.exciseName2;
       this.saveDatas.officeArea = data.officeArea;
@@ -140,19 +143,13 @@ export class Epa012Component implements OnInit {
       this.saveDatas.dateOut2 = data.dateOut2;
       this.saveDatas.productName2 = data.productName2;
       this.saveDatas.quantity = data.quantity;
+      this.saveDatas.result = "1";
 
       /* Modal Here */
       // console.log("[data] : ", data);
       $('#ModalCheck').modal('show');
     });
 
-  };
-
-  onClickClear() {
-    this.exciseId = "";
-    this.exciseName = "";
-    this.searchFlag = "FALSE";
-    this.datatable.ajax.reload();
   };
 
   onClickBack() {
@@ -190,6 +187,7 @@ export class Epa012Component implements OnInit {
     setTimeout(() => {
 
       if (this.datas.remark != "") {
+
         let url = "epa/epa012/saveTaxDatas";
         this.ajaxService.post(url, this.datas, res => { });
 
@@ -201,13 +199,21 @@ export class Epa012Component implements OnInit {
         this.router.navigate(["/epa01/3"], {
           queryParams: {
             exciseId: this.exciseId,
-            eaReInventoryNo: this.datas.eaReInventoryNo,
             searchFlag: "TRUE"
           }
         });
+
+      } else {
+        $('#ModalAlert').modal('show');
       }
 
     }, 300);
+  }
+
+  onClickClose() {
+    console.log("You've clicked close!");
+    $('#ModalAlert').modal('hide');
+    $('#ModalCheck').modal('show');
   }
 
 }

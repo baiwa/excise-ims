@@ -65,6 +65,20 @@ public class ExportCheckingConnectDao {
 		return list;
 	}
 	
+	public long count(Epa012FormVo epa012FormVo) {
+		StringBuilder sql = new StringBuilder(SQL_SEARCH_DATA);
+		List<Object> params = new ArrayList<>();
+		
+		if (StringUtils.isNotBlank(epa012FormVo.getExciseId())) {
+			sql.append(" AND T1.EXCISE_ID = ? ");
+			params.add(epa012FormVo.getExciseId());
+		}
+		
+		String countSql = OracleUtils.countForDatatable(sql);
+		Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+		return count;
+	}
+	
 	private RowMapper<Epa012Vo> ExportCheckingConnectRowMapper = new RowMapper<Epa012Vo>() {
 		@Override
 		public Epa012Vo mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -163,9 +177,10 @@ public class ExportCheckingConnectDao {
 			"  PRODUCT_AMOUNT,  " + 
 			"  VEHICLE_NUMBER,  " + 
 			"  LOGISTIC_WAY,  " + 
-			"  EA_DATA_TYPE  " + 
+			"  EA_DATA_TYPE,  " + 
+			"  EXCISE_ID  " + 
 			")  " + 
-			"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+			"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 	
 	private String SQL_INSERT_DTL = " INSERT INTO EA_RE_INVENTORY_DTL (  " + 
 			"  EA_RE_INVENTORY_DTL_ID,  " + 
@@ -193,7 +208,8 @@ public class ExportCheckingConnectDao {
 				epa012FormVo.getQuantity(),
 				"",
 				"",
-				"1"
+				"1",
+				epa012FormVo.getExciseId()
 		});
 		log.info("Updated saveTaxDatas HDR: {} records", records);
 		int records2 = jdbcTemplate.update(SQL_INSERT_DTL, new Object[] {
@@ -222,7 +238,8 @@ public class ExportCheckingConnectDao {
 				epa012FormVo.getQuantity(),
 				epa012FormVo.getVehicleNo(),
 				epa012FormVo.getLogisticWay(),
-				"2"
+				"2",
+				epa012FormVo.getExciseId2()
 		});
 		log.info("Updated saveFactoryDatas HDR: {} records", records);
 		int records2 = jdbcTemplate.update(SQL_INSERT_DTL, new Object[] {

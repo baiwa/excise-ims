@@ -13,10 +13,7 @@ declare var $: any;
 export class Epa013Component implements OnInit {
 
   datatable: any;
-  $form: any;
-  $page: any;
   exciseId: string = "";
-  exciseName: string = "";
   searchFlag: string = "FALSE";
 
   constructor(
@@ -29,6 +26,8 @@ export class Epa013Component implements OnInit {
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('EXP-01300');
+    this.exciseId = this.route.snapshot.queryParams["exciseId"];
+    this.searchFlag = this.route.snapshot.queryParams["searchFlag"];
   }
 
   ngAfterViewInit(): void {
@@ -76,7 +75,7 @@ export class Epa013Component implements OnInit {
           data: "dateDestination",
           className: "ui center aligned",
           render: function (data, row) {
-            return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>รายงานการตรวจสอบ</button>';
+            return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>ตรวจสอบ</button>';
           }
         }
       ],
@@ -85,7 +84,6 @@ export class Epa013Component implements OnInit {
           this.router.navigate(["/epa01/4"], {
             queryParams: {
               exciseId: data.exciseId,
-              exciseName: data.exciseName,
               searchFlag: "TRUE"
             }
           });
@@ -96,14 +94,14 @@ export class Epa013Component implements OnInit {
 
   }
 
-  onClickClear() {
-    this.exciseId = "";
-    this.searchFlag = "FALSE";
+  onClickSearch() {
+    this.searchFlag = "TRUE";
     this.datatable.ajax.reload();
   };
 
-  onClickSearch() {
-    this.searchFlag = "TRUE";
+  onClickClear() {
+    this.exciseId = "";
+    this.searchFlag = "FALSE";
     this.datatable.ajax.reload();
   };
 

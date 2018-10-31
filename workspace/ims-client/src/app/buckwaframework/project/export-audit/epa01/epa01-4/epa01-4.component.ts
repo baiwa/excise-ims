@@ -3,6 +3,7 @@ import { AuthService } from 'services/auth.service';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExportCheckingModel } from 'models/exportCheckingModel';
+import { ExportCheckingReportModel } from 'models/exportCheckingReportModel';
 
 declare var $: any;
 
@@ -14,8 +15,6 @@ declare var $: any;
 export class Epa014Component implements OnInit {
 
   datatable: any;
-  $form: any;
-  $page: any;
   exciseId: string = "";
   exciseName: string = "";
   searchFlag: string = "FALSE";
@@ -24,7 +23,8 @@ export class Epa014Component implements OnInit {
   datas: ExportCheckingModel = new ExportCheckingModel();
   saveDatas: ExportCheckingModel = new ExportCheckingModel();
   exportType: string = "";
-
+  reportDatas: ExportCheckingReportModel = new ExportCheckingReportModel();
+  
   constructor(
     private authService: AuthService,
     private ajaxService: AjaxService,
@@ -34,6 +34,12 @@ export class Epa014Component implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram('EXP-01400');
+    this.exciseId = this.route.snapshot.queryParams["exciseId"];
+    this.searchFlag = this.route.snapshot.queryParams["searchFlag"];
+  }
+
+  ngAfterViewInit(): void {
     this.initDatatable();
   }
 
@@ -63,7 +69,7 @@ export class Epa014Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "typeList2",
+          data: "eaReInventoryNumber",
           className: "ui center aligned",
         }, {
           data: "productName2",
@@ -101,6 +107,23 @@ export class Epa014Component implements OnInit {
         }
       ]
     });
+
+    this.datatable.on('click', 'tbody tr button.checking-button', (e) => {
+      let closestRow = $(e.target).closest('tr');
+      let data = this.datatable.row(closestRow).data();
+
+      $('#ModalCheck').modal('show');
+    });
+
   }
+
+  onClickBack() {
+    this.router.navigate(["/epa01/3"], {
+      queryParams: {
+        exciseId: this.exciseId,
+        searchFlag: "TRUE"
+      }
+    });
+  };
 
 }

@@ -37,7 +37,7 @@
       <div class="three wide field ">
         <label>เลขที่สาขาภาษีมูลค่าเพิ่ม (ถ้ามี) :</label>
       </div>
-      <div class="four wide field">
+      <div class="four wide field disabled input">
         <input type="text">
       </div>
     </div>
@@ -103,9 +103,6 @@
   <br>
   <div class="ui center aligned grid">
     <div class="four wide column">
-      <button class="ui mini button" (click)="onClickClear()">
-        ล้างผลการค้นหาทั้งหมด
-      </button>
       <button class="ui mini button" style="width: 100px;" (click)="onClickBack()">
         ย้อนกลับ
       </button>
@@ -114,7 +111,7 @@
 
 </div>
 
-
+<!-- Modal Save -->
 <div class="ui modal" id="ModalCheck" style="width: 90%;">
 
   <div class="header" style="background: #1e83db;color: white">
@@ -385,6 +382,7 @@
 
       <!-- Comment Box -->
       <div class="ui grid center aligned">
+        <label>หมายเหตุ:</label>
         <div class="fields">
           <textarea rows="5" cols="100" [(ngModel)]="datas.remark"></textarea>
         </div>
@@ -401,6 +399,22 @@
     <div class="ui icon deny button">
       <i class="close icon"></i>
       ยกเลิกการบันทึกข้อมูล
+    </div>
+  </div>
+
+  <!-- Modal Alert -->
+  <div class="ui modal" id="ModalAlert" style="width: 30%;">
+    <div class="header">
+      แจ้งเตือน
+    </div>
+    <div class="content" style="height: 100px !important;">
+      <p>กรุณากรอกข้อมูลหมายเหตุ</p>
+    </div>
+    <hr>
+    <div>
+      <button class="ui right floated red mini cancel inverted button" style="margin-bottom: 10px; margin-right: 10px;" (click)="onClickClose()">
+        <i class="remove icon"></i> ปิด
+      </button>
     </div>
   </div>
 
