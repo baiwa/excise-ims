@@ -211,7 +211,6 @@ export class Epa012Component implements OnInit {
   }
 
   onClickClose() {
-    console.log("You've clicked close!");
     $('#ModalAlert').modal('hide');
     $('#ModalCheck').modal('show');
   }

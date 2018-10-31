@@ -23,29 +23,61 @@ public class ExportCheckingReportDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private String SQL_SEARCH_DATA = " SELECT  " + 
-			"  T1.TAX_RE_05_02_ID TAX_RE_05_02_ID,  " + 
-			"  T1.EXCISE_ID EXCISE_ID_2,  " + 
-			"  T1.EXCISE_NAME EXCISE_NAME_2,  " + 
-			"  T1.PRODUCT_LIST PRODUCT_LIST_2,  " + 
-			"  T1.TYPE_LIST TYPE_LIST_2,  " + 
-			"  T1.PRODUCT_NAME PRODUCT_NAME_2,  " + 
-			"  T1.MODEL MODEL_2,  " + 
-			"  T1.SIZE1 SIZE1_2,  " + 
-			"  T1.AMOUNT AMOUNT_2,  " + 
-			"  T1.PRICE PRICE_2,  " + 
-			"  T1.PRICE_PER PRICE_PER_2,  " + 
-			"  T1.AMOUNT_PER AMOUNT_PER_2,  " + 
-			"  T1.TAX TAX_2,  " + 
-			"  T1.DESTINATION DESTINATION_2,  " + 
-			"  T1.DATE_DESTINATION DATE_DESTINATION_2,  " + 
-			"  T1.TAX_RE_NUMBER TAX_RE_NUMBER_2,  " + 
-			"  T1.OFFICE_AREA OFFICE_AREA_2,  " + 
-			"  T1.DATE_OUT DATE_OUT_2,  " + 
-			"  T2.EA_RE_INVENTORY_NUMBER  " + 
-			"FROM TAX_RE_05_01_2 T1  " + 
-			"JOIN EA_RE_INVENTORY_HDR T2  " + 
-			"ON T1.EXCISE_ID = T2.EXCISE_ID WHERE 1=1 ";
+	private String SQL_SEARCH_DATA = " SELECT T1.*,  " + 
+			"      T2.TAX_RE_05_02_ID TAX_RE_05_02_ID,  " + 
+			"      T2.EXCISE_ID EXCISE_ID_2,  " + 
+			"      T2.EXCISE_NAME EXCISE_NAME_2,  " + 
+			"      T2.PRODUCT_LIST PRODUCT_LIST_2,  " + 
+			"      T2.TYPE_LIST TYPE_LIST_2,  " + 
+			"      T2.PRODUCT_NAME PRODUCT_NAME_2,  " + 
+			"      T2.MODEL MODEL_2,  " + 
+			"      T2.SIZE1 SIZE1_2,  " + 
+			"      T2.AMOUNT AMOUNT_2,  " + 
+			"      T2.PRICE PRICE_2,  " + 
+			"      T2.PRICE_PER PRICE_PER_2,  " + 
+			"      T2.AMOUNT_PER AMOUNT_PER_2,  " + 
+			"      T2.TAX TAX_2,  " + 
+			"      T2.DESTINATION DESTINATION_2,  " + 
+			"      T2.DATE_DESTINATION DATE_DESTINATION_2,  " + 
+			"      T2.TAX_RE_NUMBER TAX_RE_NUMBER_2,  " + 
+			"      T2.OFFICE_AREA OFFICE_AREA_2,  " + 
+			"      T2.DATE_OUT DATE_OUT_2,  " + 
+			"      T3.EA_RE_INVENTORY_HDR_ID EA_RE_INVENTORY_HDR_ID_3,  " + 
+			"      T3.EA_RE_INVENTORY_NUMBER EA_RE_INVENTORY_NUMBER_3,  " + 
+			"      T3.EA_05_01_NUMBER EA_05_01_NUMBER_3,  " + 
+			"      T3.EXPORT_NAME EXPORT_NAME_3,  " + 
+			"      T3.EXCISE_OFFICE_SOURCE EXCISE_OFFICE_SOURCE_3,  " + 
+			"      T3.CHECK_POINT_DEST CHECK_POINT_DEST_3,  " + 
+			"      T3.EXCISE_OFFICE_DEST EXCISE_OFFICE_DEST_3,  " + 
+			"      T3.DATE_OUT DATE_OUT_3,  " + 
+			"      T3.PRODUCT_TYPE PRODUCT_TYPE_3,  " + 
+			"      T3.PRODUCT_AMOUNT PRODUCT_AMOUNT_3,  " + 
+			"      T3.VEHICLE_NUMBER VEHICLE_NUMBER_3,  " + 
+			"      T3.LOGISTIC_WAY LOGISTIC_WAY_3,  " + 
+			"      T3.CREATED_BY CREATED_BY_3,  " + 
+			"      T3.CREATED_DATE CREATED_DATE_3,  " + 
+			"      T3.UPDATED_BY UPDATED_BY_3,  " + 
+			"      T3.UPDATED_DATE UPDATED_DATE_3,  " + 
+			"      T3.IS_DELETED IS_DELETED_3,  " + 
+			"      T3.VERSION VERSION_3,  " + 
+			"      T3.EA_DATA_TYPE EA_DATA_TYPE_3,  " + 
+			"      T3.MARKER MARKER_3,  " + 
+			"      T3.RESULT RESULT_3,  " + 
+			"      T3.COMMENT_1 COMMENT_1_3,  " + 
+			"      T3.DATE_IN DATE_IN_3,  " + 
+			"      T3.EXCISE_ID EXCISE_ID_3,  " + 
+			"      T4.STAMP_NO STAMP_NO_4,  " + 
+			"      T4.STAMP_NAME STAMP_NAME_4,  " + 
+			"      T4.RESULT RESULT_4,  " + 
+			"      T4.COMMENT_1 COMMENT_1_4  " + 
+			"    FROM TAX_RE_05_01_1 T1  " + 
+			"    JOIN TAX_RE_05_01_2 T2  " + 
+			"    ON T1.EXCISE_ID = T2.EXCISE_ID  " + 
+			"    JOIN EA_RE_INVENTORY_HDR T3  " + 
+			"    ON T1.EXCISE_ID  = T3.EXCISE_ID  " + 
+			"    JOIN EA_RE_INVENTORY_DTL T4  " + 
+			"    ON T3.EA_RE_INVENTORY_HDR_ID = T4.EA_RE_INVENTORY_HDR_ID  " + 
+			"    WHERE 1          =1 ";
 	
 	public List<Epa014Vo> search(Epa014FormVo epa014FormVo) {
 		StringBuilder sql = new StringBuilder(SQL_SEARCH_DATA);
@@ -61,46 +93,61 @@ public class ExportCheckingReportDao {
 		return list;
 	}
 	
+	public long count(Epa014FormVo epa014FormVo) {
+		StringBuilder sql = new StringBuilder(SQL_SEARCH_DATA);
+		List<Object> params = new ArrayList<>();
+		
+		if (StringUtils.isNotBlank(epa014FormVo.getExciseId())) {
+			sql.append(" AND T1.EXCISE_ID = ? ");
+			params.add(StringUtils.trim(epa014FormVo.getExciseId()));
+		}
+		
+		String countSql = OracleUtils.countForDatatable(sql);
+		Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+		return count;
+	}
+	
 	private RowMapper<Epa014Vo> ExportCheckingReportRowMapper = new RowMapper<Epa014Vo>() {
 		@Override
 		public Epa014Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Epa014Vo vo = new Epa014Vo();
-//			vo.setEaReInventoryHdrId(rs.getString("EA_RE_INVENTORY_HDR_ID"));
-			vo.setEaReInventoryNumber(rs.getString("EA_RE_INVENTORY_NUMBER"));
-//			vo.setEa0501Number(rs.getString("EA_05_01_NUMBER"));
-//			vo.setExportName(rs.getString("EXPORT_NAME"));
-//			vo.setExciseOfficeSource(rs.getString("EXCISE_OFFICE_SOURCE"));
-//			vo.setCheckPointDest(rs.getString("CHECK_POINT_DEST"));
-//			vo.setExciseOfficeDest(rs.getString("EXCISE_OFFICE_DEST"));
-//			vo.setDateOut(rs.getString("DATE_OUT"));
-//			vo.setProductType(rs.getString("PRODUCT_TYPE"));
-//			vo.setProductAmount(rs.getString("PRODUCT_AMOUNT"));
-//			vo.setVehicleNumber(rs.getString("VEHICLE_NUMBER"));
-//			vo.setLogisticWay(rs.getString("LOGISTIC_WAY"));
-//			vo.setCreatedBy(rs.getString("CREATED_BY"));
-//			vo.setCreatedDate(rs.getString("CREATED_DATE"));
-//			vo.setUpdatedBy(rs.getString("UPDATED_BY"));
-//			vo.setUpdatedDate(rs.getString("UPDATED_DATE"));
-//			vo.setIsDeleted(rs.getString("IS_DELETED"));
-//			vo.setVersion(rs.getString("VERSION"));
-//			vo.setEaDataType(rs.getString("EA_DATA_TYPE"));
-//			vo.setMarker(rs.getString("MARKER"));
-//			vo.setResult(rs.getString("RESULT"));
-//			vo.setComment1(rs.getString("COMMENT_1"));
-//			vo.setDateIn(rs.getString("DATE_IN"));
-//			vo.setExciseId(rs.getString("EXCISE_ID"));
+			vo.setEaReInventoryHdrId(rs.getString("EA_RE_INVENTORY_HDR_ID_3"));
+			vo.setEaReInventoryNumber(rs.getString("EA_RE_INVENTORY_NUMBER_3"));
+			vo.setEa0501Number(rs.getString("EA_05_01_NUMBER_3"));
+			vo.setExportName(rs.getString("EXPORT_NAME_3"));
+			vo.setExciseOfficeSource(rs.getString("EXCISE_OFFICE_SOURCE_3"));
+			vo.setCheckPointDest(rs.getString("CHECK_POINT_DEST_3"));
+			vo.setExciseOfficeDest(rs.getString("EXCISE_OFFICE_DEST_3"));
+			vo.setDateOut(rs.getString("DATE_OUT_3"));
+			vo.setProductType(rs.getString("PRODUCT_TYPE_3"));
+			vo.setProductAmount(rs.getString("PRODUCT_AMOUNT_3"));
+			vo.setVehicleNumber(rs.getString("VEHICLE_NUMBER_3"));
+			vo.setLogisticWay(rs.getString("LOGISTIC_WAY_3"));
+			vo.setCreatedBy(rs.getString("CREATED_BY_3"));
+			vo.setCreatedDate(rs.getString("CREATED_DATE_3"));
+			vo.setUpdatedBy(rs.getString("UPDATED_BY_3"));
+			vo.setUpdatedDate(rs.getString("UPDATED_DATE_3"));
+			vo.setIsDeleted(rs.getString("IS_DELETED_3"));
+			vo.setVersion(rs.getString("VERSION_3"));
+			vo.setEaDataType(rs.getString("EA_DATA_TYPE_3"));
+			vo.setMarker(rs.getString("MARKER_3"));
+			vo.setResult(rs.getString("RESULT_3"));
+			vo.setComment1(rs.getString("COMMENT_1_3"));
+			vo.setDateIn(rs.getString("DATE_IN_3"));
+			vo.setExciseId(rs.getString("EXCISE_ID_3"));
 			
-//			vo.setTaxReType(rs.getString("TAX_RE_TYPE"));
-//			vo.setExciseId(rs.getString("EXCISE_ID"));
-//			vo.setExciseName(rs.getString("EXCISE_NAME"));
-//			vo.setTaxPlusNo(rs.getString("TAX_PLUS_NO"));
-//			vo.setExciseNo1(rs.getString("EXCISE_NO_1"));
-//			vo.setExciseNo1Name(rs.getString("EXCISE_NO_1_NAME"));
-//			vo.setKodangName(rs.getString("KODANG_NAME"));
-//			vo.setExportType(rs.getString("EXPORT_TYPE"));
-//			vo.setExportTypeBy(rs.getString("EXPORT_TYPE_BY"));
-//			vo.setOfficeArea(rs.getString("OFFICE_AREA"));
-//			vo.setOfficeSubArea(rs.getString("OFFICE_SUB_AREA"));
+			vo.setTaxRe0501Id(rs.getString("TAX_RE_05_01_ID"));
+			vo.setTaxReType(rs.getString("TAX_RE_TYPE"));
+			vo.setExciseId(rs.getString("EXCISE_ID"));
+			vo.setExciseName(rs.getString("EXCISE_NAME"));
+			vo.setTaxPlusNo(rs.getString("TAX_PLUS_NO"));
+			vo.setExciseNo1(rs.getString("EXCISE_NO_1"));
+			vo.setExciseNo1Name(rs.getString("EXCISE_NO_1_NAME"));
+			vo.setKodangName(rs.getString("KODANG_NAME"));
+			vo.setExportType(rs.getString("EXPORT_TYPE"));
+			vo.setExportTypeBy(rs.getString("EXPORT_TYPE_BY"));
+			vo.setOfficeArea(rs.getString("OFFICE_AREA"));
+			vo.setOfficeSubArea(rs.getString("OFFICE_SUB_AREA"));
 			
 			vo.setTaxRe0502Id(rs.getString("TAX_RE_05_02_ID"));
 			vo.setExciseId2(rs.getString("EXCISE_ID_2"));
@@ -130,8 +177,47 @@ public class ExportCheckingReportDao {
 			vo.setDateOut2(rs.getString("DATE_OUT_2"));
 			BigDecimal quantity = sizeValue.multiply(amountValue);
 			vo.setQuantity(String.valueOf(quantity));
+			
+			vo.setStampNo(rs.getString("STAMP_NO_4"));
+			vo.setStampName(rs.getString("STAMP_NAME_4"));
+			vo.setResultDtl(rs.getString("RESULT_4"));
+			vo.setComment1Dtl(rs.getString("COMMENT_1_4"));
 			return vo;
 		}
 	};
+	
+	private String SQL_GET_INFO = " SELECT T1.EXCISE_NAME EXCISE_NAME,  " + 
+			"  T1.EXPORT_TYPE EXPORT_TYPE,  " + 
+			"  T2.EXCISE_NAME EXCISE_NAME_2,  " + 
+			"  T2.EXCISE_ID EXCISE_ID_2  " + 
+			"FROM TAX_RE_05_01_1 T1  " + 
+			"JOIN TAX_RE_05_01_2 T2  " + 
+			"ON T1.EXCISE_ID = T2.EXCISE_ID  " + 
+			"WHERE 1         =1 ";
 
+	public List<Epa014Vo> getInformation(Epa014FormVo epa014FormVo) {
+		StringBuilder sql = new StringBuilder(SQL_GET_INFO);
+		List<Object> params = new ArrayList<>();
+		
+		if (StringUtils.isNotBlank(epa014FormVo.getExciseId())) {
+			sql.append(" AND T1.EXCISE_ID = ? ");
+			params.add(epa014FormVo.getExciseId());
+		}
+		
+		List<Epa014Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), GetInformationRowMapper);
+		return list;
+	}
+
+	private RowMapper<Epa014Vo> GetInformationRowMapper = new RowMapper<Epa014Vo>() {
+		@Override
+		public Epa014Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Epa014Vo vo = new Epa014Vo();
+			vo.setExciseName(rs.getString("EXCISE_NAME"));
+			vo.setExportType(rs.getString("EXPORT_TYPE"));
+			vo.setExciseName2(rs.getString("EXCISE_NAME_2"));
+			vo.setExciseId2(rs.getString("EXCISE_ID_2"));
+			return vo;
+		}
+	};
+	
 }
