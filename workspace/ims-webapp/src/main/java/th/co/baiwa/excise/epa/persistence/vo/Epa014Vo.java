@@ -60,6 +60,11 @@ public class Epa014Vo {
 
 	private String quantity;
 
+	private String stampNo;
+	private String stampName;
+	private String resultDtl;
+	private String comment1Dtl;
+
 	public String getEaReInventoryHdrId() {
 		return eaReInventoryHdrId;
 	}
@@ -276,6 +281,22 @@ public class Epa014Vo {
 		return quantity;
 	}
 
+	public String getStampNo() {
+		return stampNo;
+	}
+
+	public String getStampName() {
+		return stampName;
+	}
+
+	public String getResultDtl() {
+		return resultDtl;
+	}
+
+	public String getComment1Dtl() {
+		return comment1Dtl;
+	}
+
 	public void setEaReInventoryHdrId(String eaReInventoryHdrId) {
 		this.eaReInventoryHdrId = eaReInventoryHdrId;
 	}
@@ -490,6 +511,22 @@ public class Epa014Vo {
 
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
+	}
+
+	public void setStampNo(String stampNo) {
+		this.stampNo = stampNo;
+	}
+
+	public void setStampName(String stampName) {
+		this.stampName = stampName;
+	}
+
+	public void setResultDtl(String resultDtl) {
+		this.resultDtl = resultDtl;
+	}
+
+	public void setComment1Dtl(String comment1Dtl) {
+		this.comment1Dtl = comment1Dtl;
 	}
 
 }

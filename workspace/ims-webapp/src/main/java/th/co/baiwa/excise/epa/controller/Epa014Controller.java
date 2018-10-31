@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.epa.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,11 @@ public class Epa014Controller {
 	@PostMapping("/search")
 	@ResponseBody DataTableAjax<Epa014Vo> search(@RequestBody Epa014FormVo epa014FormVo) {
 		return epa014Service.search(epa014FormVo);
+	}
+	
+	@PostMapping("/getInformation")
+	@ResponseBody List<Epa014Vo> getInformation(@RequestBody Epa014FormVo epa014FormVo) {
+		return epa014Service.getInformation(epa014FormVo);
 	}
 	
 }

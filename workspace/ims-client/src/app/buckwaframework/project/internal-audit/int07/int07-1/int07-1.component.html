@@ -11,11 +11,10 @@
                 <div class="inline fields ui centered grid">
                     <div class="one wide field"></div>
                     <div class="three wide field required">
-                        <label  class="text-right full-width">รายงานงบทดลอง</label>
+                        <label class="text-right full-width">รายงานงบทดลอง</label>
                     </div>
                     <div class="five wide field">
-                        <input id="fileExcel" type="file" name="fileExcel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                            (change)="changeUpload($event)" required>
+                        <input id="fileExcel" type="file" name="fileExcel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="changeUpload($event)" required>
                     </div>
                     <div class="three wide field"></div>
                 </div>
@@ -31,7 +30,8 @@
                         <i class="sync alternate icon"></i>
                         ล้างข้อมูล
                     </button>
-                    <button class="ui mini {{!checkSave? 'disabled': ''}} green button width-100" (click)="onCheck()">
+
+                    <button class="ui mini  green button width-100 {{!checkSave? 'disabled': ''}}" (click)="onCheck()">
                         <i class="clipboard check icon"></i>
                         ตรวจสอบ
                     </button>
@@ -42,12 +42,12 @@
 
     <br>
 
-    <div class="sixteen wide column ">
+    <div class="sixteen wide column " id="dataTable">
         <div class="ui top centered attached header segment " style="background: #1e83db;color: white">
             <span>ข้อมูลการอัปโหลด</span>
         </div>
-        <div class="ui attached {{loadingTable? 'loading': ''}} segment" id="dataTable">
-            <table class="ui  small celled table striped selectable" id="dataTableExcel">
+        <div class="ui attached {{loadingTable? 'loading': ''}} segment">
+            <table class="ui  small celled table striped selectable" id="dataTableExcel" width="100%">
                 <thead>
                     <tr>
                         <th style="text-align: center;">เลขที่บัญชีแยกประเภท</th>
@@ -59,14 +59,14 @@
                     </tr>
                 </thead>
             </table>
+            <div class="ui center aligned grid">
+                <div class="eight wide column">
+                    <button class="ui mini primary button width-100" (click)="onSave()">
+                        <i class="save  icon"></i>
+                        บันทึก
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="ui center aligned grid">
-        <div class="eight wide column">
-            <button class="ui mini primary button width-100" (click)="onSave()">
-        <i class="save  icon"></i>
-        บันทึก
-      </button>
-        </div>
-    </div>
     </div>
 </div>

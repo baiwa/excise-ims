@@ -14,6 +14,7 @@ export class Epa013Component implements OnInit {
 
   datatable: any;
   exciseId: string = "";
+  exciseName: string = "";
   searchFlag: string = "FALSE";
 
   constructor(
@@ -84,13 +85,13 @@ export class Epa013Component implements OnInit {
           this.router.navigate(["/epa01/4"], {
             queryParams: {
               exciseId: data.exciseId,
+              exciseName: data.exciseName,
               searchFlag: "TRUE"
             }
           });
         });
       }
     });
-
 
   }
 
@@ -101,6 +102,7 @@ export class Epa013Component implements OnInit {
 
   onClickClear() {
     this.exciseId = "";
+    this.exciseName = "";
     this.searchFlag = "FALSE";
     this.datatable.ajax.reload();
   };

@@ -24,7 +24,7 @@ export class Int0613Component implements OnInit {
   breadcrumb: BreadCrumb[] = [
     { label: "ตรวจสอบภายใน", route: "#" },
     { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-    { label: "ตรวจสอบค่าใช้จ่าย", route: "/int06/1/1" },
+    { label: "ตรวจสอบค่าใช้จ่าย", route: "#" },
   ];
   constructor(
     private int0613Servicen: Int0613Service,

@@ -36,5 +36,6 @@ export class ExportCheckingModel {
     stampName: string;
     result: string;
     remark: string;
-    eaReInventoryNo: string;
+    resultDtl: string;
+    comment1Dtl: string;
 }

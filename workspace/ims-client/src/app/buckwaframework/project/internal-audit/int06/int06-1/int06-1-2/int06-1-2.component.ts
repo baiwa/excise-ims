@@ -17,7 +17,7 @@ export class Int0612Component implements OnInit, AfterViewInit {
   breadcrumb: BreadCrumb[] = [
     { label: "ตรวจสอบภายใน", route: "#" },
     { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-    { label: "ตรวจสอบค่าใช้จ่าย", route: "/int06/1/1" },
+    { label: "ตรวจสอบค่าใช้จ่าย", route: "#" },
   ];
   show: boolean = true;
   loading: boolean = false;

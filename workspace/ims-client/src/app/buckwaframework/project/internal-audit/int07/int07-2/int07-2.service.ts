@@ -67,7 +67,7 @@ export class Int072Service {
         this.checkLastRow.credit += obj.credit;
       });
 
-      this.datatable = $("#dataTable").DataTable({
+      this.datatable = $("#dataTable").DataTableTh({
         lengthChange: false,
         searching: false,
         ordering: false,
