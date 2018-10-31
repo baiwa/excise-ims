@@ -19,7 +19,6 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +39,6 @@ import th.co.baiwa.excise.ia.persistence.repository.IaStamDetailRepository;
 import th.co.baiwa.excise.ia.persistence.repository.IaStampFileRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0511Vo;
-import th.co.baiwa.excise.ia.persistence.vo.Int065Vo;
 import th.co.baiwa.excise.upload.service.ExcalService;
 
 @Service
@@ -237,44 +235,7 @@ public class Int0511Service {
 		return fileName;
 	}
 	
-	public String mappingOfficeCode(Int0511FormVo formVo) {
-		Lov sectors = new Lov();
-		Lov areas = new Lov();
-		Lov branchs = new Lov();
 
-		if (StringUtils.isNotBlank(formVo.getSector())) {
-			sectors = lovRepository.findByLovId(Long.valueOf(formVo.getSector()));
-
-			if (StringUtils.isNotBlank(formVo.getArea())) {
-				areas = lovRepository.findByLovId(Long.valueOf(formVo.getArea()));
-
-				if (StringUtils.isNotBlank(formVo.getBranch())) {
-					branchs = lovRepository.findByLovId(Long.valueOf(formVo.getBranch()));
-				}
-			}
-		}
-
-		StringBuilder officeCode = new StringBuilder("");
-
-		if (sectors != null) {
-			if (StringUtils.isNoneBlank(sectors.getSubType())) {
-				officeCode.append(sectors.getSubType());
-			}
-		}
-		if (areas != null) {
-			if (StringUtils.isNoneBlank(areas.getSubType())) {
-				officeCode.append(areas.getSubType());
-			}
-		}
-		if (branchs != null) {
-			if (StringUtils.isNoneBlank(branchs.getSubType())) {
-				officeCode.append(branchs.getSubType());
-			}
-		}
-
-		return officeCode.toString();
-	}
-	
 public void exportFile(Int0511FormVo formVo, HttpServletResponse response) throws IOException {
 		
 		/* create spreadsheet */
@@ -312,24 +273,24 @@ public void exportFile(Int0511FormVo formVo, HttpServletResponse response) throw
 			cellNumtbTH2++;
 		};
 		
-		cell = row.createCell(0);cell.setCellStyle(thStyle);
-		cell = row.createCell(1);cell.setCellStyle(thStyle);
-		cell = row.createCell(26);cell.setCellStyle(thStyle);
-		cell = row.createCell(27);cell.setCellStyle(thStyle);
+//		cell = row.createCell(0);cell.setCellStyle(thStyle);
+//		cell = row.createCell(1);cell.setCellStyle(thStyle);
+//		cell = row.createCell(26);cell.setCellStyle(thStyle);
+//		cell = row.createCell(27);cell.setCellStyle(thStyle);
 
 		/* set sheet */
 		// setColumnWidth
-		for (int i = 1; i <= 27; i++) {
-			if (i == 1) {
-				// วันครบกำหนดครั้งที่2
-				sheet.setColumnWidth(i, 76 * 255);
-			} else if (i == 27) {
-				// โครงการ => รายงานการติดตามครั้งที่ 2
-				sheet.setColumnWidth(i, 76 * 80);
-			} else if (i != 1 && i != 27)
-				// การติดตาม
-				sheet.setColumnWidth(i, 76 * 70);
-		}
+//		for (int i = 1; i <= 27; i++) {
+//			if (i == 1) {
+//				// วันครบกำหนดครั้งที่2
+//				sheet.setColumnWidth(i, 76 * 255);
+//			} else if (i == 27) {
+//				// โครงการ => รายงานการติดตามครั้งที่ 2
+//				sheet.setColumnWidth(i, 76 * 80);
+//			} else if (i != 1 && i != 27)
+//				// การติดตาม
+//				sheet.setColumnWidth(i, 76 * 70);
+//		}
 
 		// merge(firstRow, lastRow, firstCol, lastCol)
 //		int firstCol = 2;
@@ -353,7 +314,7 @@ public void exportFile(Int0511FormVo formVo, HttpServletResponse response) throw
 		
 		
 		/* Detail */
-		List<Int0511Vo> exportDataList = checkStampAreaDao.exportFile(formVo);
+//		List<Int0511Vo> exportDataList = checkStampAreaDao.exportFile(formVo);
 
 //		if( StringUtils.isNotBlank(formVo.getProjectName())||StringUtils.isNotBlank(formVo.getStatus())) {
 //			exportDataList = checkStampAreaDao.exportFile(formVo);

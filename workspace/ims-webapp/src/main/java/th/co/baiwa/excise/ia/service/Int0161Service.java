@@ -113,8 +113,7 @@ public class Int0161Service {
 					index++;
 			}
 			
-		}
-		
+		}		
 		
 		
 		return licenseList6010ListYear;

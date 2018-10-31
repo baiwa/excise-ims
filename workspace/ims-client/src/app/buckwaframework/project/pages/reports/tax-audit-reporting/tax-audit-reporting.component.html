@@ -41,7 +41,7 @@
                         สร้างเอกสาร
                     </button>
                     <button class="ui mini red button" (click)="onDiscard(false)" type="reset">
-                        <i class="times icon"></i>
+                        <i class=" close icon"></i>
                         ยกเลิก
                     </button>
                 </div>
@@ -104,4 +104,9 @@
     <app-ts01-19 *ngIf="sent && selectedTop == 'ตส. 01-19'" (discard)="onDiscard($event)" class="sixteen wide column segments">
     </app-ts01-19>
 
+    <app-get-app-roved *ngIf="sent && selectedTop == 'ขออนุมัติเดินทางไปปฏิบัติราชการ'" (discard)="onDiscard($event)" class="sixteen wide column segments">
+    </app-get-app-roved>
+
+    <app-follow-supervision *ngIf="sent && selectedTop == 'รายงานผลการตรวจติดตามแนะกำกับดูแล'" (discard)="onDiscard($event)" class="sixteen wide column segments">
+        </app-follow-supervision>
 </form>

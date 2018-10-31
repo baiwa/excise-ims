@@ -15,10 +15,11 @@ import { AuthService } from "services/auth.service";
   styleUrls: [],
   providers: [createTraderSerivce]
 })
+
 export class CreateTraderComponent implements OnInit {
   month: any;
   formatter1: any;
-  formatter2: any;
+  formatter2: any; 
   selectedStartMonth: any;
   selectedSEndMonth: any;
   selectStartDateObj: any;
@@ -49,6 +50,7 @@ export class CreateTraderComponent implements OnInit {
         cell[0].className = "link disabled";
         return;
       }
+
 
       if (this.selectedStartMonth % 2 === 0) {
         if ((date.getMonth() % 2) === 1) {
@@ -114,6 +116,9 @@ export class CreateTraderComponent implements OnInit {
       queryParams: { from: date_str, month: this.monthDiff(this.selectStartDateObj, this.selectEndDateObj) + 1 }
     });
   };
+
+
+
 
   callFn() {
     this.ajax.get(

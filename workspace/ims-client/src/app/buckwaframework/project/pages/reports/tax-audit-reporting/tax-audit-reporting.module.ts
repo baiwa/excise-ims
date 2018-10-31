@@ -23,6 +23,8 @@ import { Ts0116Component } from './ts01-16/ts01-16.component';
 import { Ts0117Component } from './ts01-17/ts01-17.component';
 import { Ts0119Component } from './ts01-19/ts01-19.component';
 import { FormsModule } from '../../../../../../../node_modules/@angular/forms';
+import { GetAppRovedComponent } from './get-app-roved/get-app-roved.component';
+import { FollowSupervisionComponent } from './follow-supervision/follow-supervision.component';
 
 const routes: Routes = [
     { path: '', component: TaxAuditReportingComponent, canActivate: [AuthGuard] }
@@ -49,7 +51,9 @@ const routes: Routes = [
     Ts0115Component,
     Ts0116Component,
     Ts0117Component,
-    Ts0119Component
+    Ts0119Component,
+    GetAppRovedComponent,
+    FollowSupervisionComponent
   ],
   exports: [RouterModule]
 })
