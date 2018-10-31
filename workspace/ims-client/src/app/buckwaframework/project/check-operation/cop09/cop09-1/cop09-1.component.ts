@@ -37,7 +37,7 @@ export class Cop091Component implements OnInit {
   ) {
     this.breadcrumb = [
       { label: "ตรวจปฏิบัติการ", route: "#" },
-      { label: "แผนการตรวจปฏิบัติการประจำปีงบประมาณ", route: "#" }
+      { label: "สรุปผลการตรวจปฏิบัติการ", route: "#" }
     ];
     
    }
@@ -48,6 +48,7 @@ export class Cop091Component implements OnInit {
       text: TextDateTH,
       formatter: formatter("ป")
     });
+
   }
 
   clickSearch = function () {
@@ -57,184 +58,143 @@ export class Cop091Component implements OnInit {
     }
 
     $("#searchFlag").val("TRUE");
-    this.setSum0();
     $('#tableData').DataTable().ajax.reload();
+    $('#tableData2').DataTable().ajax.reload();
   }
 
-  dataTable = function () {
+  dataTable = function(){
     var table = $('#tableData').DataTable({
-      "lengthChange": false,
-      "paging": false,
-      "info": false,
-      "serverSide": true,
+      "lengthChange":true,
+      "serverSide": false,
       "searching": false,
       "ordering": false,
       "processing": true,
-      "scrollX": true,
-      "ajax": {
-        "url": '/ims-webapp/api/cop/cop071/list',
+      "scrollX": true,      
+      "ajax" : {
+        "url" : '/ims-webapp/api/cop/cop091/list',
         "contentType": "application/json",
-        "type": "POST",
-        "data": (d) => {
+        "type" : "POST",
+        "data" : (d) => {
           return JSON.stringify($.extend({}, d, {
-            "searchFlag": $("#searchFlag").val(),
-            "fiscalYear": $("#fiscalYear").val()
+            "searchFlag" : $("#searchFlag").val(),
+            "fiscalYear" : $("#fiscalYear").val()
           }));
-        },
+        },  
       },
-
       "columns": [
         {
-          "data": "fiscalYearText"
-        }, {
-          "data": "asPlanNumber","className":"right",
-          "render": function (data, type, row) {
-            return (data==null)?'-':data;
+          "data": "id",
+          "className": "ui center aligned",
+          "render": function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          "data": "asPlanSuccess","className":"right",
-          "render": function (data, type, row) {
-            return (data==null)?'-':data;
+          "data": "entrepreneurNo","className": "ui center aligned"
+        }, {
+          "data": "entrepreneurName"
+        }, {
+          "data": "entrepreneurLoca"
+        }, {
+          "data": "checkDate","className": "ui center aligned"
+        }, {
+          "data": "actionPlan","className": "ui center aligned",
+          "render": function (data, type, row, meta) {
+            let s = '';
+            if(data=='1871'){
+              s = 'ตามแผนปฏิบัติการ';
+            }else{
+              s = 'นอกแผนปฏิบัติการ';
+            }
+            return s;
           }
         }, {
-          "data": "asPlanWait","className":"right",
-          "render": function (data, type, row) {
-            return (data==null)?'-':data;
-          }
-        }, {
-          "data": "outsidePlanNumber","className":"right",
-          "render": function (data, type, row) {
-            return (data==null)?'-':data;
-          }
-        }, {
-          "data": "outsidePlanSuccess","className":"right",
-          "render": function (data, type, row) {
-            return (data==null)?'-':data;
-          }
-        }, {
-          "data": "outsidePlanWait","className":"right",
-          "render": function (data, type, row) {
-            return (data==null)?'-':data;
-          }
-        }, {
-          "data": "fiscalYear",
-          "render": function (data, type, row) {
-            var btn = '';
-            btn += '<button class="mini ui yellow button btn-edit"><i class="edit icon"></i>แก้ไข</button>';
-            btn += '<button class="mini ui primary button btn-description"><i class="eye icon"></i>รายละเอียด</button>';
-           
-            return btn;
+          "data": "status","className": "ui center aligned",
+          "render": function (data, type, row, meta) {
+            let s = '';
+            if(data=='1874'){
+              s = 'เสร็จสิ้น';
+            }else{
+              s = 'รอการดำเนินการ';
+            }
+            return s;
           }
         }
-      ],
-      "rowCallback": this.sum
+      ]
     });
+  }
 
-    //button description>
-    table.on('click', 'tbody tr button.btn-description', (e) => {
-      var closestRow = $(e.target).closest('tr');
-      var data = table.row(closestRow).data();
-      if (!data.id) {
-        this.message.alert("กรุณาระบุ จำนวนแผนการตรวจปฏิบัติ");
-        return false;
-      }
-      this.router.navigate(['/cop07/1/1'], {
-        queryParams: {
-          id:data.id,
-          fiscalYear:data.fiscalYear,
-          asPlanNumber:data.asPlanNumber,
-          asPlanSuccess:data.asPlanSuccess,
-          outsidePlanNumber:data.outsidePlanNumber,
-          outsidePlanSuccess:data.outsidePlanSuccess
-
+  dataTable2 = function(){
+    var table2 = $('#tableData2').DataTable({
+      "lengthChange":true,
+      "serverSide": false,
+      "searching": false,
+      "ordering": false,
+      "processing": true,
+      "scrollX": true,      
+      "ajax" : {
+        "url" : '/ims-webapp/api/cop/cop091/list2',
+        "contentType": "application/json",
+        "type" : "POST",
+        "data" : (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "searchFlag" : $("#searchFlag").val(),
+            "fiscalYear" : $("#fiscalYear").val()
+          }));
+        },  
+      },
+      "columns": [
+        {
+          "data": "id",
+          "className": "ui center aligned",
+          "render": function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        }, {
+          "data": "entrepreneurNo","className": "ui center aligned"
+        }, {
+          "data": "entrepreneurName"
+        }, {
+          "data": "entrepreneurLoca"
+        }, {
+          "data": "checkDate","className": "ui center aligned"
+        }, {
+          "data": "actionPlan","className": "ui center aligned",
+          "render": function (data, type, row, meta) {
+            let s = '';
+            if(data=='1871'){
+              s = 'ตามแผนปฏิบัติการ';
+            }else{
+              s = 'นอกแผนปฏิบัติการ';
+            }
+            return s;
+          }
+        }, {
+          "data": "status","className": "ui center aligned",
+          "render": function (data, type, row, meta) {
+            let s = '';
+            if(data=='1874'){
+              s = 'เสร็จสิ้น';
+            }else{
+              s = 'รอการดำเนินการ';
+            }
+            return s;
+          }
         }
-      });
-      console.log(data);
-    });
-
-    table.on('click', 'tbody tr button.btn-edit',(e)=> {
-      var closestRow = $(e.target).closest('tr');
-      var data = table.row(closestRow).data();
-      this.modalEdit(data);
-    });
-
-  }
-  sum = ( row, data ) => {
-    console.log("data : ",data);
-    this.totalAsPlanNumber+=data.asPlanNumber;
-    this.totalAsPlanSuccess+=data.asPlanSuccess;
-    this.totalAsPlanWait+=data.asPlanWait;
-    this.totalOutsidePlanNumber+=data.outsidePlanNumber;
-    this.totalOutsidePlanSuccess+=data.outsidePlanSuccess;
-    this.totalOutsidePlanWait+=data.outsidePlanWait;
-  
-  }
-
-  setSum0 = () =>{
-    this.totalAsPlanNumber=0;
-    this.totalAsPlanSuccess=0;
-    this.totalAsPlanWait=0;
-    this.totalOutsidePlanNumber=0;
-    this.totalOutsidePlanSuccess=0;
-    this.totalOutsidePlanWait=0;
-  }
-
-modalEdit=(data)=> {
-    console.log("data edit : ",data);
-   
-    $('#modalEdit').modal({
-      onShow: ()=>{
-         this.calenda();
-         $("#id").val(data.id);
-         $("#fiscalYearEdit").val(data.fiscalYear);
-         $("#asPlanNumber").val(data.asPlanNumber);
-         $("#asPlanSuccess").val(data.asPlanSuccess);
-         $("#outsidePlanNumber").val(data.outsidePlanNumber);
-         $("#outsidePlanSuccess").val(data.outsidePlanSuccess);
-
-      }
-    }).modal('show');
-   
-  }
-
-  editData() {
-    console.log("Edit");
-    $('modalEdit').modal('hide');
-    const URL = "cop/cop071/edit";
-    this.ajax.post(URL, { 
-      cop071Vo:{
-        id:(!$("#id").val())?0:$("#id").val(),
-        fiscalYear:$("#fiscalYearEdit").val(),
-        asPlanNumber:$("#asPlanNumber").val(),
-        asPlanSuccess:(!$("#asPlanSuccess").val())?0:$("#asPlanSuccess").val(),
-        outsidePlanNumber:$("#outsidePlanNumber").val(),
-        outsidePlanSuccess:(!$("#outsidePlanSuccess").val())?0:$("#outsidePlanSuccess").val()
-      }
-     
-    },res => {
-      const commonMessage = res.json();
-      
-    if (commonMessage.msg.messageType == "C") {
-      this.msg.successModal(commonMessage.msg.messageTh);
-    } else {
-      this.msg.errorModal(commonMessage.msg.messageTh);
-    }
-    $("#searchFlag").val("TRUE");
-    this.setSum0();
-    $('#tableData').DataTable().ajax.reload();
-    });
+      ]
+    });    
   }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('COP-09100');
     
     this.dataTable();
+    this.dataTable2();
     this.calenda(); 
 
-    if(this.route.snapshot.queryParams["fiscalYear"]){
-      $("#fiscalYear").val(this.route.snapshot.queryParams["fiscalYear"]);
-      this.clickSearch();
-    }
+    // if(this.route.snapshot.queryParams["fiscalYear"]){
+    //   $("#fiscalYear").val(this.route.snapshot.queryParams["fiscalYear"]);
+    //   this.clickSearch();
+    // }
     
   }
 

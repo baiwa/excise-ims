@@ -18,7 +18,8 @@ import th.co.baiwa.excise.cop.persistence.vo.Cop0711FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop0711Vo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop071FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop071Vo;
-import th.co.baiwa.excise.ia.persistence.vo.Int09TableDtlVo;
+import th.co.baiwa.excise.cop.persistence.vo.Cop091FormVo;
+import th.co.baiwa.excise.cop.persistence.vo.Cop091Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.utils.OracleUtils;
 
@@ -315,6 +316,70 @@ public class CopCheckFiscalYearDao {
 			    	
 			    	
 			    }
+			    
+			    public Long countCop091(Cop091FormVo formVo) {
+					
+					StringBuilder sql = new StringBuilder(SQL_COP_CHECK_FISCAL_YEAR_DTL);
+					List<Object> params = new ArrayList<>();
+					
+
+					if (!BeanUtils.isEmpty(formVo.getFiscalYear())) {
+						sql.append(" AND  SUBSTR(FISCALYEAR,4,4)=? ");
+						params.add(formVo.getFiscalYear());
+					}
+					
+					if (!BeanUtils.isEmpty(formVo.getActionPlan())) {
+						sql.append(" AND  ACTION_PLAN = ? ");
+						params.add(formVo.getActionPlan());
+					}
+					
+
+					String countSql = OracleUtils.countForDatatable(sql);
+			        Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+			        return count;
+			    }
+			    
+			    public List<Cop091Vo> findAllCop091(Cop091FormVo formVo) {
+					
+					StringBuilder sql = new StringBuilder(SQL_COP_CHECK_FISCAL_YEAR_DTL);
+					List<Object> params = new ArrayList<>();
+
+
+					if (!BeanUtils.isEmpty(formVo.getFiscalYear())) {
+						sql.append(" AND  SUBSTR(FISCALYEAR,4,4)=? ");
+						params.add(formVo.getFiscalYear());
+					}
+					if (!BeanUtils.isEmpty(formVo.getActionPlan())) {
+						sql.append(" AND  ACTION_PLAN = ? ");
+						params.add(formVo.getActionPlan());
+					}
+					sql.append(" ORDER BY CHECK_DATE asc ");
+					
+					log.info("findAllCop091 sql : {}",sql);
+					
+			        List<Cop091Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), cop091Rowmapper);
+			        return list;
+			    }
+				
+				 private RowMapper<Cop091Vo> cop091Rowmapper = new RowMapper<Cop091Vo>() {
+				    	@Override
+				    	public Cop091Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+				    		Cop091Vo vo = new Cop091Vo();
+				    
+				    	    vo.setId(rs.getLong("ID"));
+				    	    vo.setIdMaster(rs.getLong("ID_MASTER"));
+				    	    
+				    		vo.setFiscalyear(rs.getString("FISCALYEAR"));
+				    		vo.setEntrepreneurNo(rs.getString("ENTREPRENEUR_NO"));
+				    		vo.setEntrepreneurName(rs.getString("ENTREPRENEUR_NAME"));
+				    		vo.setEntrepreneurLoca(rs.getString("ENTREPRENEUR_LOCA"));
+				    		vo.setCheckDate(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("CHECK_DATE")));
+				    		vo.setActionPlan(rs.getString("ACTION_PLAN"));
+				    		vo.setStatus(rs.getString("STATUS"));
+				    	    	
+				    		return vo;
+				    	}
+				    };
 			    
 			 
 	    

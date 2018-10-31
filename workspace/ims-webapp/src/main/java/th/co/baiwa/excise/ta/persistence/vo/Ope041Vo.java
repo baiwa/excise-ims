@@ -33,6 +33,9 @@ public class Ope041Vo {
 	private String column4;
 	private String column5;
 	private String column6;
+	
+	private String fiscalYear;
+	
 	public String getId() {
 		return id;
 	}
@@ -195,5 +198,12 @@ public class Ope041Vo {
 	public void setColumn6(String column6) {
 		this.column6 = column6;
 	}
+	public String getFiscalYear() {
+		return fiscalYear;
+	}
+	public void setFiscalYear(String fiscalYear) {
+		this.fiscalYear = fiscalYear;
+	}
+	
 	
 }

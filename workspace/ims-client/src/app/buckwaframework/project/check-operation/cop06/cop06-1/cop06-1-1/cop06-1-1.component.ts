@@ -142,6 +142,16 @@ export class Cop0611Component implements OnInit, AfterViewInit {
     this.exciseId = (<HTMLInputElement>(
       document.getElementById("exciseId")
     )).value;
+    let type = this.exciseId.split("-")[1];
+    let exciseType = "";
+			if("1"==type) {
+				exciseType = "สินค้า";
+			}else if("2"==type) {
+				exciseType = "บริการ";
+			}else if("3"==type) {
+				exciseType = "สินค้านำเข้า";
+      }
+    $("#exciseType").val(exciseType);
     const URL = AjaxService.CONTEXT_PATH + "/filter/exise/getDataExciseIdList";
     $.post(URL, { exciseId: this.exciseId }, res => {
       this.obj = res[0];
@@ -440,6 +450,7 @@ export class Cop0611Component implements OnInit, AfterViewInit {
     //push data Criteria header
     this.dataTB.push({
       exciseId: this.exciseId,
+      fiscalYear: $("#fiscalYear").val(),
       analysNumber: this.obj.analysNumber,
       startDate: this.startDateSplit,
       endDate: this.endDateSplit
