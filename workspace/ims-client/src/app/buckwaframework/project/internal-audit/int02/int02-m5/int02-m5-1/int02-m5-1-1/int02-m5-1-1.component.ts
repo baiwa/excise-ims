@@ -39,7 +39,6 @@ export class Int02M511Component implements OnInit {
     ngOnInit() {
         this.officeCode = this.route.snapshot.queryParams["officeCode"];
         this.budgetYear = this.route.snapshot.queryParams["budgetYear"];
-        // this.ajax.post(URL.getAssessmentForm1, { officeCode: this.officeCode, budgetYear: this.budgetYear }, res => {
 
         this.ajax.post(URL.getAssessmentForm1, { officeCode: this.officeCode, budgetYear: this.budgetYear }, res => {
             this.assessment = res.json();
@@ -49,34 +48,27 @@ export class Int02M511Component implements OnInit {
     initDatatable(): any {
         console.log(this.assessment.data); let index = 1;
         let trData = "";
-        this.assessment.data.forEach(element => {
-            for (let i = 0; i < element.topicDetail.length; i++) {
-                const content = element.topicDetail[i];
+        // this.assessment.data.forEach(element => {
+        //     for (let i = 0; i < element.topicDetail.length; i++) {
+        //         const content = element.topicDetail[i];
 
-                //console.log(content.topicLevel);
-                if (content.topicLevel == 1) {
-                    trData += '<tr><td>' + index + '.' + content.topicName.trim() + '</td><td></td><td></td></tr>';
-                    index++;
-                } else if (content.topicLevel == 2) {
-                    trData += '<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;' + content.topicName.trim() + '</td><td>' + element.topicDetail[++i].topicName.trim() + '</td><td></td></tr>';
-                }
-            };
-        });
-        this.datatable = $("#dataTable").DataTable({
-            lengthChange: false,
-            searching: false,
-            ordering: false,
-            pageLength: 10,
-            processing: true,
-            serverSide: false,
-            paging: true,
-            language: {
-                processing: "encours....veuillez patienter"
-            }
-        });
-
-
+        //         //console.log(content.topicLevel);
+        //         if (content.topicLevel == 1) {
+        //             trData += '<tr><td>' + index + '.' + content.topicName.trim() + '</td><td></td><td></td></tr>';
+        //             index++;
+        //         } else if (content.topicLevel == 2) {
+        //             trData += '<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;' + content.topicName.trim() + '</td><td>' + element.topicDetail[++i].topicName.trim() + '</td><td></td></tr>';
+        //         }
+        //     };
+        // });
         $("#tr").html(trData);
+        this.datatable = $("#dataTable").DataTable({
+            ordering: false,
+            searching: false
+        });
+
+
+
     }
 
     save() {

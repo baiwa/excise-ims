@@ -55,7 +55,7 @@ export class Int02M512Component implements OnInit {
   initDatatable(): void {
 
     console.log(this.intCtrlAss);
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -86,7 +86,7 @@ export class Int02M512Component implements OnInit {
       ],
       rowCallback: (row, data, index) => {
         $("td > .dtl", row).bind("click", () => {
-          this.router.navigate(["/int02/m5/1/1"], {
+          this.router.navigate(["/int02/m5/1/3"], {
             queryParams: {
               officeCode: this.officeCode,
               budgetyear: this.budgetYear

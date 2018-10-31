@@ -19,7 +19,7 @@
                                             <select class="ui dropdown ai selection" style="width: 100%;" id="travelTo1"
                                                 (change)="travelTo2Dropdown($event)" [(ngModel)]="code1">
                                                 <option value="00">เลือก</option>
-                                                <option *ngFor="let data of travelTo1List" value="{{data}}">{{data.subTypeDescription}}</option>
+                                                <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                                             </select>
                                         </div>
                                     </div>

@@ -38,19 +38,22 @@
             </div>
           </div>
           <div class="three wide field ">
-            <input type="text" placeholder="ชื่อผู้จัดทำ" class="custom" name="createUserName" id="createUserName" [(ngModel)]="riskAssRiskWsHdr.createUserName">
+            <input type="text" placeholder="ชื่อผู้จัดทำ" class="custom" name="createUserName" id="createUserName"
+              [(ngModel)]="riskAssRiskWsHdr.createUserName">
           </div>
           <div class="one wide field required">
             <label class="text-right full-width">นามสกุล</label>
           </div>
           <div class="three wide field ">
-            <input type="text" placeholder="นามสกุล" class="custom" name="createLastName" id="createLastName" [(ngModel)]="riskAssRiskWsHdr.createLastName">
+            <input type="text" placeholder="นามสกุล" class="custom" name="createLastName" id="createLastName"
+              [(ngModel)]="riskAssRiskWsHdr.createLastName">
           </div>
           <div class="one wide field required">
             <label class="text-right full-width">ตำแหน่ง</label>
           </div>
           <div class="four wide field ">
-            <input type="text" placeholder="ตำแหน่ง" class="custom" name="createPosition" id="createPosition" [(ngModel)]="riskAssRiskWsHdr.createPosition">
+            <input type="text" placeholder="ตำแหน่ง" class="custom" name="createPosition" id="createPosition"
+              [(ngModel)]="riskAssRiskWsHdr.createPosition">
           </div>
         </div>
         <div class="inline fields">
@@ -66,7 +69,8 @@
             </div>
           </div>
           <div class="three wide field ">
-            <input type="text" placeholder="ชื่อผู้ตรวจ" class="custom" name="checkUserName" id="checkUserName" [(ngModel)]="riskAssRiskWsHdr.checkUserName">
+            <input type="text" placeholder="ชื่อผู้ตรวจ" class="custom" name="checkUserName" id="checkUserName"
+              [(ngModel)]="riskAssRiskWsHdr.checkUserName">
           </div>
           <div class="one wide field required">
             <label class="text-right full-width">นามสกุล</label>
@@ -78,14 +82,15 @@
             <label class="text-right full-width">ตำแหน่ง</label>
           </div>
           <div class="four wide field ">
-            <input type="text" placeholder="ตำแหน่ง" class="custom" name="checkPosition" id="checkPosition" disabled [(ngModel)]="riskAssRiskWsHdr.checkPosition">
+            <input type="text" placeholder="ตำแหน่ง" class="custom" name="checkPosition" id="checkPosition" disabled
+              [(ngModel)]="riskAssRiskWsHdr.checkPosition">
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<br/>
+<br />
 <!-- form 2 -->
 <div class="sixteen wide column ">
   <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
@@ -98,7 +103,7 @@
         <a class="item" data-tab="second">เพิ่มข้อมูล Excel File</a>
       </div>
 
-<!-- insert form 1 -->
+      <!-- insert form 1 -->
       <div class="ui bottom attached active tab segment" data-tab="first">
         <div class="inline fields">
           <div class="one wide field "></div>
@@ -106,7 +111,8 @@
             <label class="text-right full-width">ชื่อโครงการ</label>
           </div>
           <div class="ten wide field ">
-            <input type="text" placeholder="ชื่อโครงการ" maxlength="100" class="custom" name="projectBase" id="projectBase" [(ngModel)]="projectBase">
+            <input type="text" placeholder="ชื่อโครงการ" maxlength="100" class="custom" name="projectBase" id="projectBase"
+              [(ngModel)]="projectBase">
           </div>
         </div>
         <div class="inline fields">
@@ -115,7 +121,8 @@
             <label class="text-right full-width">ชื่อหน่วยงาน</label>
           </div>
           <div class="four wide field ">
-            <input type="text" placeholder="ชื่อหน่วยงาน" class="custom" name="departmentName" id="departmentName" [(ngModel)]="departmentName">
+            <input type="text" placeholder="ชื่อหน่วยงาน" class="custom" name="departmentName" id="departmentName"
+              [(ngModel)]="departmentName">
           </div>
           <div class="two wide field required">
             <label class="text-right full-width">ค่าความเสี่ยง</label>
@@ -135,7 +142,7 @@
         </div>
       </div>
 
-<!-- insert form 2 -->
+      <!-- insert form 2 -->
       <div class="ui bottom attached tab segment" data-tab="second">
         <form id="upload-form" ngNativeValidate (submit)="onUpload($event)">
           <div class="ui attached segment">
@@ -168,7 +175,7 @@
           </div>
         </form>
       </div>
-  <!-- table -->
+      <!-- table -->
       <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%">
         <thead>
           <tr>

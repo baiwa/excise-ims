@@ -680,6 +680,55 @@ public class PlanWorksheetHeaderDao {
 		});
 		return address;
 	}
+	public Integer getCountByAnalysNumberAndStatus(PlanWorksheetHeader planWorksheetHeader) {
+		List<Object> objList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT COUNT(1) "); 
+		sql.append(" FROM TA_PLAN_WORK_SHEET_HEADER H ");
+		sql.append(" WHERE H.ANALYS_NUMBER = ? ");
+		sql.append(" AND H.IS_DELETED = 'N' ");
+		objList.add(planWorksheetHeader.getAnalysNumber());
+			
+		if(BeanUtils.isNotEmpty(planWorksheetHeader.getFlag())) {
+			sql.append(" AND H.FLAG = ? ");
+			objList.add(planWorksheetHeader.getFlag());
+		}
+		
+		if(BeanUtils.isNotEmpty(planWorksheetHeader.getExciseOwnerArea1())) {
+			sql.append(" AND H.EXCISE_OWNER_AREA_1 = ? ");
+			objList.add(planWorksheetHeader.getExciseOwnerArea1());
+		}
+		if(BeanUtils.isNotEmpty(planWorksheetHeader.getCentral())) {
+			sql.append(" AND H.CENTRAL = ? ");
+			objList.add(planWorksheetHeader.getCentral());
+		}
+		if(BeanUtils.isNotEmpty(planWorksheetHeader.getSector())) {
+			sql.append(" AND H.SECTOR = ? ");
+			objList.add(planWorksheetHeader.getSector());
+		}
+		
+		
+		List<Integer> count = jdbcTemplate.query(sql.toString(), objList.toArray(), new RowMapper<Integer>() {
+			public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getInt(1);
+			}
+		});
+		return BeanUtils.isNotEmpty(count) ? count.get(0) : new Integer(0) ;
+	}
+	public String queryNewAnalysNumber() {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT H.ANALYS_NUMBER FROM TA_PLAN_WORK_SHEET_HEADER H ");
+		sql.append(" WHERE H.IS_DELETED = 'N' ");
+		sql.append(" AND H.FLAG = 'F' ");
+		sql.append(" ORDER BY H.WORK_SHEET_HEADER_ID DESC ");
+		
+		List<String> AnalysNumber = jdbcTemplate.query(sql.toString(), new RowMapper<String>() {
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
+		return BeanUtils.isNotEmpty(AnalysNumber) ? AnalysNumber.get(0) : "" ;
+	}
 
 	private RowMapper<Ope041Vo> fieldMappingAccMonthVo = new RowMapper<Ope041Vo>() {
 		@Override

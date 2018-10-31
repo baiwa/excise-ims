@@ -15,10 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.annotation.JsonFormat.Value;
-
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.CommonAddress;
 import th.co.baiwa.excise.domain.MockupVo;
@@ -34,6 +34,8 @@ import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
+import th.co.baiwa.excise.ta.persistence.vo.ResVo;
+import th.co.baiwa.excise.ta.persistence.vo.SectorMapValue;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.utils.NumberUtils;
 
@@ -173,6 +175,70 @@ public class PlanWorksheetHeaderService {
 
 	public List<String> queryAnalysNumberFromHeader() {
 		return planWorksheetHeaderDao.queryAnalysNumberFromHeader();
+	}
+	public ResVo reportSendLineStatus() {
+		String analysNumber = planWorksheetHeaderDao.queryNewAnalysNumber();
+		PlanWorksheetHeader planWorksheetHeader = new PlanWorksheetHeader();
+		planWorksheetHeader.setAnalysNumber(analysNumber);
+		planWorksheetHeader.setFlag("F");
+		ResVo resVo = new ResVo();
+		resVo.setSendAll(planWorksheetHeaderDao.getCountByAnalysNumberAndStatus(planWorksheetHeader));
+		
+		planWorksheetHeader = new PlanWorksheetHeader();
+		planWorksheetHeader.setAnalysNumber(analysNumber);
+		planWorksheetHeader.setFlag("F");
+		planWorksheetHeader.setCentral("Y");
+		resVo.setCentral(planWorksheetHeaderDao.getCountByAnalysNumberAndStatus(planWorksheetHeader));
+		
+		planWorksheetHeader = new PlanWorksheetHeader();
+		planWorksheetHeader.setAnalysNumber(analysNumber);
+		planWorksheetHeader.setFlag("F");
+		planWorksheetHeader.setSector("Y");
+		resVo.setSector(planWorksheetHeaderDao.getCountByAnalysNumberAndStatus(planWorksheetHeader));
+		
+		return resVo;
+	}
+	
+	
+	public ResVo summaryInvestigateFull() {
+		ResVo resVo = new ResVo();
+		String analysNumber = planWorksheetHeaderDao.queryNewAnalysNumber();
+		List<Lov> lovList = ApplicationCache.getListOfValueByTypeParentId("SECTOR_VALUE", null);
+		
+		PlanWorksheetHeader planWorksheetHeader = new PlanWorksheetHeader();
+		planWorksheetHeader = new PlanWorksheetHeader();
+		planWorksheetHeader.setAnalysNumber(analysNumber);
+		planWorksheetHeader.setFlag("F");
+		resVo.setSendAll(planWorksheetHeaderDao.getCountByAnalysNumberAndStatus(planWorksheetHeader));
+		
+		planWorksheetHeader = new PlanWorksheetHeader();
+		planWorksheetHeader.setAnalysNumber(analysNumber);
+		planWorksheetHeader.setFlag("F");
+		planWorksheetHeader.setCentral("Y");
+		resVo.setCentral(planWorksheetHeaderDao.getCountByAnalysNumberAndStatus(planWorksheetHeader));
+		
+		planWorksheetHeader = new PlanWorksheetHeader();
+		planWorksheetHeader.setAnalysNumber(analysNumber);
+		planWorksheetHeader.setFlag("F");
+		planWorksheetHeader.setSector("Y");
+		resVo.setSector(planWorksheetHeaderDao.getCountByAnalysNumberAndStatus(planWorksheetHeader));
+		SectorMapValue sectorMapValue = new SectorMapValue();
+		List<SectorMapValue> detailData = new ArrayList<>();
+		if(BeanUtils.isNotEmpty(lovList)) {
+			for (Lov lov : lovList) {
+				sectorMapValue = new SectorMapValue();
+				planWorksheetHeader = new PlanWorksheetHeader();
+				planWorksheetHeader.setAnalysNumber(analysNumber);
+				planWorksheetHeader.setFlag("F");
+				planWorksheetHeader.setSector("Y");
+				planWorksheetHeader.setExciseOwnerArea1(lov.getValue1());
+				sectorMapValue.setSectorName(lov.getValue1());
+				sectorMapValue.setSendLineAmount(planWorksheetHeaderDao.getCountByAnalysNumberAndStatus(planWorksheetHeader));
+				detailData.add(sectorMapValue);
+			}
+		}
+		resVo.setDetailData(detailData);
+		return resVo;
 	}
 
 	public ResponseDataTable<PlanWorksheetHeaderDetail> queryPlanWorksheetHeaderDetil(RequestFilterMapping vo) {
