@@ -5,6 +5,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Alert } from "../../../../../../../../node_modules/@types/selenium-webdriver";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var jQuery: any;
 declare var $: any;
@@ -22,13 +23,22 @@ export class Int0832Component implements OnInit {
   wsRiskList: any[];
   pageList: any[];
   isConditionShow: any = false;
+  breadcrumb: BreadCrumb[]
+
 
   constructor(private router: Router,
     private route: ActivatedRoute,
     private ajax: AjaxService,
     private authService: AuthService,
     private messageBarService: MessageBarService
-  ) { }
+  ) {
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง ", route: "#" },
+      { label: "ประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่", route: "#" },
+      { label: "กำหนดปัจจัยเสี่ยงประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่", route: "#" },
+    ];
+   }
   1
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-08320');
@@ -132,7 +142,7 @@ export class Int0832Component implements OnInit {
         }
       ],
       columnDefs: [
-        { targets: [0, 2, 3, 4, 5], className: "center aligned" },
+        { targets: [0, 2, 3, 4, 5, 6], className: "center aligned" },
         { targets: [1], className: "left aligned" }
 
       ],

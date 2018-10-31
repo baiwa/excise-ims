@@ -17,7 +17,7 @@
                     <div class="six wide field ">
                         <label class="custom-label-w-20">สำนักงานสรรพสามิตภาค</label>
                         <select class="ui search dropdown ai search" style="width: 100% !important" name="combo1" id="combo1" (change)="dropdown($event, 'comboBox2')">
-                        <option value="">เลือก</option>
+                        <option value="">กรุณาเลือก</option>
                         <option *ngFor="let data of comboBox1 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                       </select>
                     </div>
@@ -29,7 +29,7 @@
                     <div class="six wide field">
                         <label class="custom-label-w-20">สำนักงานสรรพสามิตพื้นที่</label>
                         <select class="ui search dropdown ai search" style="width: 100% !important" name="combo2" id="combo2" (change)="dropdown($event, 'comboBox3')">
-                        <option value="">เลือก</option>
+                        <option value="">กรุณาเลือก</option>
                         <option *ngFor="let data of comboBox2 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                       </select>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="six wide field ">
                         <label class="custom-label-w-20">สำนักงานสรรพสามิตพื้นที่สาขา</label>
                         <select class="ui search dropdown ai search" style="width: 100% !important" name="combo3" id="combo3">
-                            <option value="">เลือก</option>
+                            <option value="">กรุณาเลือก</option>
                             <option *ngFor="let data of comboBox3 | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                       </select>
                     </div>
@@ -97,7 +97,7 @@
     <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
         <thead>
             <tr style="text-align: center">
-                <th>ลำดับ</th>
+                <th>ลำดับที่</th>
                 <th>ประเภทค่าสาธารณูปโภค</th>
                 <th>ใบแจ้งหนี้เดือน</th>
                 <th>เลขที่ใบแจ้งหนี้</th>

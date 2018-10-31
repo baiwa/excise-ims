@@ -96,7 +96,7 @@ export class ConditionComponent implements OnInit {
         data.push(element);
       });
       this.ajax.post(url, { condition: data }, res => {
-        this.messageBarService.successModal("ดำเนินการเพิ่มเงือนใขสำเร็จ");
+        this.messageBarService.successModal("ดำเนินการเพิ่มเงื่อนไขสำเร็จ");
         this.has.emit(true);
         this.out.emit(this.riskId);
       });

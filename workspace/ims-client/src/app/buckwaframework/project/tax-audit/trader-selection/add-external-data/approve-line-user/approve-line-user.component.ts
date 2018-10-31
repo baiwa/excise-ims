@@ -145,7 +145,7 @@ export class ApproveLineUserComponent implements OnInit {
 
       document.getElementById("trDrinamic").innerHTML =
 
-        '<th rowspan="2" style="text-align: center !important">ลำดับ</th>' +
+        '<th rowspan="2" style="text-align: center !important">ลำดับที่</th>' +
         '<th rowspan="2" style="text-align: center !important">ทะเบียนสรรพสามิต เดิม/ใหม่</th> ' +
         '<th rowspan="2" style="text-align: center !important">ชื่อผู้ประกอบการ</th> ' +
         '<th rowspan="2" style="text-align: center !important">ชื่อโรงอุตสาหกรรม/สถานบริการ</th> ' +

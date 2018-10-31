@@ -1,40 +1,39 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
 <div class="ui grid">
 
+  <!-- form 1 -->
   <div class="sixteen wide column">
-
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <span>สร้างกระดาษทำการประเมินความเสี่ยงโครงการด้านงบประมาณ</span>
+      <span>สร้างกระดาษทำการประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่</span>
     </div>
-
     <div class="ui attached segment">
       <div class="ui form">
         <div class="inline fields">
           <div class="two wide field "></div>
           <div class="two wide field ">
-            <label>ปีงบประมาณ</label>
+            <label class="text-right full-width">ปีงบประมาณ</label>
           </div>
           <div class="four wide field ">
             <div class="ui calendar" style="width:100%" id="year">
               <div class="ui input left icon">
-               <i class="calendar alternate outline icon"></i>
-                <input type="calendar" id="budgetYear" placeholder="ปี" maxlength="4" name="budgetYear" [(ngModel)]="budgetYear">
+                <i class="calendar alter nate outline icon"></i>
+                <input type="calendar" id="budgetYear" placeholder="ปปปป" maxlength="4" name="budgetYear" [(ngModel)]="budgetYear">
               </div>
             </div>
           </div>
           <div class="two wide field ">
-            <label>ปัจจัยเสี่ยง</label>
+            <label class="text-right full-width">ปัจจัยเสี่ยง</label>
           </div>
           <div class="four wide field ">
             <select class="ui search dropdown ai" [(ngModel)]="selectRiskSearch">
-              <option value="0">ปัจจัยเสี่ยงงบประมาณ </option>
+              <option value="0">ปัจจัยเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่ทั้งหมด </option>
               <option *ngFor="let risk of riskList; index as i;" value="{{risk.value}}">{{risk.description}}</option>
-
             </select>
           </div>
         </div>
       </div>
       <br>
-
       <div class="ui center aligned grid">
         <div class="sixteen wide column">
           <button class="ui mini primary button" (click)="searchDataTable()">
@@ -51,54 +50,50 @@
           </button>
         </div>
       </div>
+
+      <!-- table -->
       <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
         <thead>
           <tr>
-            <th>ที่</th>
-            <th>ชื่อกระดาษทำการ</th>
-            <th>ปัจจัยเสี่ยง</th>
-            <th>ปีงบประมาณ</th>
-            <th>วันที่สร้าง</th>
-            <th>ผู้สร้าง</th>
-            <th>Action</th>
+            <th style="text-align: center !important">ลำดับที่</th>
+            <th style="text-align: center !important">ชื่อกระดาษทำการ</th>
+            <th style="text-align: center !important">ปัจจัยเสี่ยง</th>
+            <th style="text-align: center !important">ปีงบประมาณ</th>
+            <th style="text-align: center !important">วันที่สร้าง</th>
+            <th style="text-align: center !important">ผู้สร้าง</th>
+            <th style="text-align: center !important">จัดการ</th>
           </tr>
         </thead>
       </table>
-      <BR /> <BR />
       <div class="ui center aligned grid">
-        <div class="inline fields "></div>
-        <div class="inline fields ">
-          <div class="sixteen wide field ">
-            <div class="five wide field "></div>
-            <button class="ui mini primary button" (click)="queryColumnNameListAndSetColumn()">
-              <i class="eye icon"></i>
-              รายละเอียดปัจจัยเสี่ยงรวมประจำปี
-            </button>
-            <button class="ui mini primary button" (click)="queryTableInt080313()">
-              <i class="eye icon"></i>
-              รายละเอียดผลการปราบปรามประจำปี
-            </button>
-
-          </div>
+        <div class="sixteen wide column">
+          <div class="inline field">
+          <button class="ui mini primary button" (click)="queryColumnNameListAndSetColumn()">
+            <i class="table icon"></i>
+            รายละเอียดปัจจัยเสี่ยงรวมประจำปี
+          </button>
+          <button class="ui mini primary button" (click)="queryTableInt080313()">
+            <i class="table icon"></i>
+            รายละเอียดผลการปราบปรามประจำปี
+          </button>
         </div>
-        <BR /> <BR />
+        </div>
       </div>
     </div>
-    <BR />
+    <br>
+
+    <!-- form 2 -->
     <div class="sixteen wide column" *ngIf="pageShowPageIndex == 'int08-3-3'">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่</span>
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{riskAssRiskWsHdr != null ?riskAssRiskWsHdr.budgetYear : ''}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr != null ? riskAssRiskWsHdr.riskHdrName : ''}}</label>
           </div>
@@ -106,11 +101,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row condition -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -119,7 +111,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -145,33 +138,27 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
+        <!-- table condition -->
         <div class="inline fields">
           <table id="dataTableF1" class="ui small celled table striped selectable" style="width: 100%;">
             <thead>
               <tr>
-
-                <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+                <th rowspan="2" style="text-align: center !important">ลำดับที่</th>
                 <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
                 <th rowspan="2" style="text-align: center !important">วันที่ออกตรวจ</th>
                 <th rowspan="2" style="text-align: center !important">วันที่ปิดตรวจ</th>
                 <th rowspan="2" style="text-align: center !important">จำนวนปี</th>
                 <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-
               </tr>
               <tr>
-                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-                <th style="text-align: center !important">แปลค่า</th>
+                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
               </tr>
-
-
             </thead>
           </table>
-
         </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
             <button class="ui mini yellow button">
@@ -182,28 +169,23 @@
               <i class=" remove icon "></i>
               ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
 
-
-
+    <!-- form 3 -->
     <div class="sixteen wide column" *ngIf="pageShowPageIndex == 'int08-3-4'">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต</span>
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{riskAssRiskWsHdr != null ? riskAssRiskWsHdr.budgetYear : ''}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr != null ? riskAssRiskWsHdr.riskHdrName : ''}}</label>
           </div>
@@ -211,11 +193,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row condition 2 -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -224,7 +203,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -250,29 +230,25 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
+        <!-- table condition 2 -->
         <div class="inline fields">
           <table id="dataTableF2" class="ui small celled table striped selectable" style="width: 100%;">
             <thead>
               <tr>
-                <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+                <th rowspan="2" style="text-align: center !important">ลำดับที่</th>
                 <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
                 <th rowspan="2" style="text-align: center !important">ค่าความเสี่ยง</th>
                 <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
               </tr>
               <tr>
-                <th style="text-align: center !important ;border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-                <th style="text-align: center !important">แปลค่า</th>
+                <th style="text-align: center !important ;border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
               </tr>
-
-
             </thead>
           </table>
-
         </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
             <button class="ui mini yellow button">
@@ -281,27 +257,25 @@
             </button>
             <button class="ui mini button " (click)="clearData() ">
               <i class=" remove icon "></i>
-              กลับ
+              ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
+
+    <!-- form 4 -->
     <div class="sixteen wide column" *ngIf="pageShowPageIndex == 'int08-3-6'">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่</span>
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{riskAssRiskWsHdr != null ?riskAssRiskWsHdr.budgetYear : ''}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr != null ? riskAssRiskWsHdr.riskHdrName : ''}}</label>
           </div>
@@ -309,11 +283,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row condition 5 -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -322,7 +293,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -348,34 +320,28 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
+        <!-- table condition 5 -->
         <div class="inline fields">
           <table id="dataTable_int08_3_6" class="ui small celled table striped selectable" style="width: 100%;">
             <thead>
               <tr>
-
-                <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+                <th rowspan="2" style="text-align: center !important">ลำดับที่</th>
                 <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
                 <th rowspan="2" style="text-align: center !important">ผลการจัดเก็บรายได้</th>
                 <th rowspan="2" style="text-align: center !important">ประมาณการรายได้</th>
                 <th rowspan="2" style="text-align: center !important">ผลต่าง</th>
                 <th rowspan="2" style="text-align: center !important">อัตราสูงต่ำ</th>
                 <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-
               </tr>
               <tr>
-                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-                <th style="text-align: center !important">แปลค่า</th>
+                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
               </tr>
-
-
             </thead>
           </table>
-
         </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
             <button class="ui mini yellow button">
@@ -384,28 +350,25 @@
             </button>
             <button class="ui mini button " (click)="clearData() ">
               <i class=" remove icon "></i>
-              กลับ
+              ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
 
+    <!-- form 5 -->
     <div class="sixteen wide column" *ngIf="pageShowPageIndex == 'int08-3-7'">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่</span>
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{riskAssRiskWsHdr != null ?riskAssRiskWsHdr.budgetYear : ''}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr != null ? riskAssRiskWsHdr.riskHdrName : ''}}</label>
           </div>
@@ -413,11 +376,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row condition 6 -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -426,7 +386,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -452,34 +413,28 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
+        <!-- table condition 6 -->
         <div class="inline fields">
           <table id="dataTable_int08_3_7" class="ui small celled table striped selectable" style="width: 100%;">
             <thead>
               <tr>
-
-                <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+                <th rowspan="2" style="text-align: center !important">ลำดับที่</th>
                 <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
                 <th rowspan="2" style="text-align: center !important">ผลการจัดเก็บรายได้</th>
                 <th rowspan="2" style="text-align: center !important">ประมาณการรายได้</th>
                 <th rowspan="2" style="text-align: center !important">ผลต่าง</th>
                 <th rowspan="2" style="text-align: center !important">อัตราสูงต่ำ</th>
                 <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-
               </tr>
               <tr>
-                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-                <th style="text-align: center !important">แปลค่า</th>
+                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
               </tr>
-
-
             </thead>
           </table>
-
         </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
             <button class="ui mini yellow button">
@@ -488,29 +443,25 @@
             </button>
             <button class="ui mini button " (click)="clearData() ">
               <i class=" remove icon "></i>
-              กลับ
+              ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
 
-
+    <!-- form 6 -->
     <div class="sixteen wide column" *ngIf="pageShowPageIndex == 'int08-3-8'">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่</span>
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{riskAssRiskWsHdr != null ?riskAssRiskWsHdr.budgetYear : ''}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr != null ? riskAssRiskWsHdr.riskHdrName : ''}}</label>
           </div>
@@ -518,11 +469,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row condition 7 -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -531,7 +479,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -557,34 +506,28 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
+        <!-- table condition 7 -->
         <div class="inline fields">
           <table id="dataTable_int08_3_8" class="ui small celled table striped selectable" style="width: 100%;">
             <thead>
               <tr>
-
-                <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+                <th rowspan="2" style="text-align: center !important">ลำดับที่</th>
                 <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
                 <th rowspan="2" style="text-align: center !important">ผลการจัดเก็บรายได้</th>
                 <th rowspan="2" style="text-align: center !important">ประมาณการรายได้</th>
                 <th rowspan="2" style="text-align: center !important">ผลต่าง</th>
                 <th rowspan="2" style="text-align: center !important">อัตราสูงต่ำ</th>
                 <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-
               </tr>
               <tr>
-                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-                <th style="text-align: center !important">แปลค่า</th>
+                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
               </tr>
-
-
             </thead>
           </table>
-
         </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
             <button class="ui mini yellow button">
@@ -593,28 +536,25 @@
             </button>
             <button class="ui mini button " (click)="clearData() ">
               <i class=" remove icon "></i>
-              กลับ
+              ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
 
+    <!-- form 7 -->
     <div class="sixteen wide column" *ngIf="pageShowPageIndex == 'int08-3-9'">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่</span>
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{riskAssRiskWsHdr != null ?riskAssRiskWsHdr.budgetYear : ''}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr != null ? riskAssRiskWsHdr.riskHdrName : ''}}</label>
           </div>
@@ -622,11 +562,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row condition 8 -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -635,7 +572,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -661,31 +599,25 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
+        <!-- table condition 8 -->
         <div class="inline fields">
           <table id="dataTable_int08_3_9" class="ui small celled table striped selectable" style="width: 100%;">
             <thead>
               <tr>
-
-                <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+                <th rowspan="2" style="text-align: center !important">ลำดับที่</th>
                 <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
                 <th rowspan="2" style="text-align: center !important">จำนวนครั้งที่ส่งเงินเกิน 3 วัน</th>
                 <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-
               </tr>
               <tr>
-                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-                <th style="text-align: center !important">แปลค่า</th>
+                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
               </tr>
-
-
             </thead>
           </table>
-
         </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
             <button class="ui mini yellow button">
@@ -694,28 +626,25 @@
             </button>
             <button class="ui mini button " (click)="clearData() ">
               <i class=" remove icon "></i>
-              กลับ
+              ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
 
+    <!-- form 8 -->
     <div class="sixteen wide column" *ngIf="pageShowPageIndex == 'int08-3-10'">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่</span>
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{riskAssRiskWsHdr != null ?riskAssRiskWsHdr.budgetYear : ''}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr != null ? riskAssRiskWsHdr.riskHdrName : ''}}</label>
           </div>
@@ -723,11 +652,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row condition 9 -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -736,7 +662,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -762,31 +689,25 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
+        <!-- table condition 9 -->
         <div class="inline fields">
           <table id="dataTable_int08_3_10" class="ui small celled table striped selectable" style="width: 100%;">
             <thead>
               <tr>
-
-                <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+                <th rowspan="2" style="text-align: center !important">ลำดับที่</th>
                 <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
                 <th rowspan="2" style="text-align: center !important">แบบสอบถามระบบการควบคุมภายใน</th>
                 <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-
               </tr>
               <tr>
-                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-                <th style="text-align: center !important">แปลค่า</th>
+                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
               </tr>
-
-
             </thead>
           </table>
-
         </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
             <button class="ui mini yellow button">
@@ -795,29 +716,25 @@
             </button>
             <button class="ui mini button " (click)="clearData() ">
               <i class=" remove icon "></i>
-              กลับ
+              ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
 
-
+    <!-- form 9 -->
     <div class="sixteen wide column" *ngIf="pageShowPageIndex == 'int08-3-11'">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่</span>
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{riskAssRiskWsHdr != null ?riskAssRiskWsHdr.budgetYear : ''}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง : {{riskAssRiskWsHdr != null ? riskAssRiskWsHdr.riskHdrName : ''}}</label>
           </div>
@@ -825,11 +742,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row condition 10 -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -838,7 +752,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -864,31 +779,25 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
+        <!-- table condition 10 -->
         <div class="inline fields">
           <table id="dataTable_int08_3_11" class="ui small celled table striped selectable" style="width: 100%;">
             <thead>
               <tr>
-
-                <th rowspan="2" style="text-align: center !important">ลำดับ</th>
+                <th rowspan="2" style="text-align: center !important">ลำดับที่</th>
                 <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
                 <th rowspan="2" style="text-align: center !important">จำนวนครั้งที่ส่งเงินเกิน 3 วัน</th>
                 <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-
               </tr>
               <tr>
-                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-                <th style="text-align: center !important">แปลค่า</th>
+                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
               </tr>
-
-
             </thead>
           </table>
-
         </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
             <button class="ui mini yellow button">
@@ -897,28 +806,25 @@
             </button>
             <button class="ui mini button " (click)="clearData() ">
               <i class=" remove icon "></i>
-              กลับ
+              ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
 
+    <!-- form 10 -->
     <div class="sixteen wide column" *ngIf="pageShowPageIndex == 'int08-3-12'">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่</span>
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{riskAssRiskWsHdr != null ?riskAssRiskWsHdr.budgetYear : ''}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง : สำนักงานสรรพสามิตภาคพื้นที่</label>
           </div>
@@ -926,11 +832,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row condition 11 -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -939,7 +842,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -965,10 +869,8 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
+        <!-- table condition 11 -->
         <div class="inline fields">
           <table id="dataTable_int08_3_12" class="ui small celled table striped selectable" style="width: 100%;">
             <thead id="trColumn">
@@ -976,8 +878,8 @@
             <tbody id="tbody">
             </tbody>
           </table>
-
         </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
             <button class="ui mini yellow button">
@@ -986,28 +888,25 @@
             </button>
             <button class="ui mini button " (click)="clearData() ">
               <i class=" remove icon "></i>
-              กลับ
+              ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
 
+    <!-- form 11 -->
     <div class="sixteen wide column" *ngIf="pageShowPageIndex == 'int08-3-13'">
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
         <span>กระดาษทำการประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่</span>
       </div>
       <div class="ui attached segment">
         <div class="ui form">
-
           <div class="ui center aligned grid">
             <div class="sixteen wide column">
               <label>ปีงบประมาณ {{riskAssRiskWsHdr != null ?riskAssRiskWsHdr.budgetYear : ''}}</label>
             </div>
           </div>
-
-
           <div class="inline fields">
             <label>ปัจจัยเสี่ยง : ผลการปราบปราม</label>
           </div>
@@ -1015,11 +914,8 @@
             <label>เงื่อนไขความเสี่ยง :</label>
           </div>
         </div>
-
-
-
+        <!-- row condition 12 -->
         <div *ngFor="let con of condition; let i=index">
-
           <div class="ui form">
             <div class="inline fields">
               <div class="two wide field "></div>
@@ -1028,7 +924,8 @@
               </div>
               <div class="one wide field ">
                 <label>
-                  {{con.condition == '<>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
+                  {{con.condition == '
+                  <>' ? 'ระหว่าง' : con.condition == '>' ? 'มากกว่า':'น้อยกว่า'}}
                 </label>
               </div>
               <div class="one wide field ">
@@ -1054,33 +951,31 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
-
-        <table id="dataTable_int08_3_13" class="ui small celled table striped selectable" style="width: 100%;">
-          <thead>
-            <tr>
-              <th rowspan="2" style="text-align: center !important">ลำดับ</th>
-              <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
-              <th colspan="2" style="text-align: center !important">1.ค่าปรับคดี</th>
-              <th colspan="2" style="text-align: center !important">2.จำนวนคดี</th>
-              <th rowspan="2" style="text-align: center !important">ค่าความเสี่ยงเฉลี่ย</th>
-              <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-            </tr>
-            <tr>
-              <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th>
-              <th style="text-align: center !important">แปลค่า</th>
-              <th style="text-align: center !important">RL</th>
-              <th style="text-align: center !important">แปลค่า</th>
-              <th style="text-align: center !important">RL</th>
-              <th style="text-align: center !important">แปลค่า</th>
-            </tr>
-          </thead>
-        </table>
-
-
+        <!-- table condition 12 -->
+        <div class="inline fields">
+          <table id="dataTable_int08_3_13" class="ui small celled table striped selectable" style="width: 100%;">
+            <thead>
+              <tr>
+                <th rowspan="2" style="text-align: center !important">ลำดับที่</th>
+                <th rowspan="2" style="text-align: center !important">หน่วยงาน</th>
+                <th colspan="2" style="text-align: center !important">1.ค่าปรับคดี</th>
+                <th colspan="2" style="text-align: center !important">2.จำนวนคดี</th>
+                <th rowspan="2" style="text-align: center !important">ค่าความเสี่ยงเฉลี่ย</th>
+                <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
+              </tr>
+              <tr>
+                <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
+                <th style="text-align: center !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
+                <th style="text-align: center !important">อัตราความเสี่ยง</th>
+                <th style="text-align: center !important">แปลค่าความเสี่ยง</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <br>
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
             <button class="ui mini yellow button">
@@ -1089,15 +984,12 @@
             </button>
             <button class="ui mini button " (click)="clearData() ">
               <i class=" remove icon "></i>
-              กลับ
+              ยกเลิก
             </button>
-
           </div>
         </div>
       </div>
     </div>
-
-
 
   </div>
 </div>

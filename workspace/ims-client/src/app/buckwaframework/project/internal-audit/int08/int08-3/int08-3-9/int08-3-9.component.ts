@@ -4,6 +4,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { AuthService } from "services/auth.service";
 import { RiskAssRiskWsHdr } from "models/RiskAssRiskWsHdr";
+import { BreadCrumb } from "models/breadcrumb";
 
 
 
@@ -37,6 +38,8 @@ export class Int0839Component implements OnInit {
   exciseAreaList: any[] = [];
   exciseBranchList: any[] = [];
   departmentName: any;
+  breadcrumb: BreadCrumb[];
+
   constructor(private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
@@ -44,6 +47,12 @@ export class Int0839Component implements OnInit {
     private messageBarService: MessageBarService
   ) {
     this.fileExel = new Array<File>(); // initial file array
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง", route: "#" },
+      { label: "ประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่", route: "#" },
+      { label: "รายละเอียดปัจจัยเสี่ยงการเงินและบัญชี" , route: "#" },
+    ];
   }
 
   ngOnInit() {
@@ -173,9 +182,9 @@ export class Int0839Component implements OnInit {
         { data: "color", className: "center" },
         { data: "valueTranslation", className: "center" },
         {
-          data: "riskHdrId",
+          data: "riskHdrId", className: "center aligned",
           render: function () {
-            return '<button type="button" class="ui mini button del"><i class="pencil icon"></i> ลบ </button>';
+            return '<button type="button" class="ui mini red button del"><i class="trash alternate icon"></i> ลบ </button>';
           }
         }
       ],

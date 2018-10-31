@@ -187,7 +187,7 @@ export class Int1121Component implements OnInit {
     }
 
     if (!$('#exciseDistrict').val()) {
-      this.messageBarService.alert("กรุณาเลือกสรรพสามิตสาขา", "แจ้งเตือน");
+      this.messageBarService.alert("กรุณาเลือกสรรพสามิตพื้นที่สาขา", "แจ้งเตือน");
       return;
     }
 

@@ -65,13 +65,13 @@ export class Int067Component implements OnInit, AfterViewInit {
     let combo2 = $("#combo2 option:selected").text();
     let combo3 = $("#combo3 option:selected").text();
 
-    if (combo1 === "เลือก") {
+    if (combo1 === "กรุณาเลือก") {
       combo1 = "";
     }
-    if (combo2 === "เลือก") {
+    if (combo2 === "กรุณาเลือก") {
       combo2 = "";
     }
-    if (combo3 === "เลือก") {
+    if (combo3 === "กรุณาเลือก") {
       combo3 = "";
     }
     this.int067Service.findByFilter(combo1, combo2, combo3, this.budgetYear);

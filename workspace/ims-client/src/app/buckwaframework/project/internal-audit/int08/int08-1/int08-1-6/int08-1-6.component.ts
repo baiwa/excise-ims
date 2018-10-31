@@ -44,7 +44,7 @@ export class Int0816Component implements OnInit {
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "การประเมินความเสี่ยง ", route: "#" },
       { label: "ประเมินความเสี่ยงโครงการยุทธศาสตร์ของกรมสรรพสามิต", route: "#" },
-      { label: "รายละเอียด"+this.route.snapshot.queryParams["nameLable"], route: "#" },
+      { label: "รายละเอียด" + this.route.snapshot.queryParams["nameLable"], route: "#" },
     ];
   }
 
@@ -105,7 +105,7 @@ export class Int0816Component implements OnInit {
         }
         this.initDatatable();
       }, errRes => {
-        console.log("66666", errRes);
+        console.log("errRes : ", errRes);
       });
     });
   }
@@ -174,7 +174,7 @@ export class Int0816Component implements OnInit {
         {
           data: "riskHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button del"><i class="trash alternate icon"></i> ลบ </button>';
+            return '<button type="button" class="ui mini red button del"><i class="trash alternate icon"></i> ลบ </button>';
           }
         }
       ],
