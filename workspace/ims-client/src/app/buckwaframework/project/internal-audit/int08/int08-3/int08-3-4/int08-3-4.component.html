@@ -104,7 +104,7 @@
             <label>สำนักงานสรรพสามิตภาค</label>
           </div>
           <div class="four wide field ">
-            <!-- <input type="text" placeholder="สรรพสามิตภาค" class="custom" name="exciseSetor" id="exciseSetor" [(ngModel)]="exciseSetor"> -->
+            <!-- <input type="text" placeholder="สำนักงานสรรพสามิตภาค" class="custom" name="exciseSetor" id="exciseSetor" [(ngModel)]="exciseSetor"> -->
             <select class="ui search dropdown" id="exciseSetor" [(ngModel)]="exciseSetor" (change)="sectorChange()">
               <option value="00">กรุณาเลือก</option>
               <option *ngFor="let sector of exciseSetorList; index as i;" value="{{sector.lovId}}">{{sector.value3}}</option>
@@ -114,7 +114,7 @@
             <label>สำนักงานสรรพสามิตพื้นที่</label>
           </div>
           <div class="four wide field ">
-            <!-- <input type="text" placeholder="สรรพสามิตพื้นที่" class="custom" name="exciseArea" id="exciseArea" [(ngModel)]="exciseArea"> -->
+            <!-- <input type="text" placeholder="สำนักงานสรรพสามิตพื้นที่" class="custom" name="exciseArea" id="exciseArea" [(ngModel)]="exciseArea"> -->
             <select class="ui search dropdown" id="exciseArea" [(ngModel)]="exciseArea" (change)="areaChange()">
               <option value="00">กรุณาเลือก</option>
               <option *ngFor="let area of exciseAreaList; index as i;" value="{{area.lovId}}">{{area.subTypeDescription}}</option>
@@ -127,7 +127,7 @@
             <label>สำนักงานสรรพสามิตพื้นที่สาขา</label>
           </div>
           <div class="four wide field ">
-            <!-- <input type="text" placeholder="สรรพสามิตสาขา" class="custom" name="exciseBranch" id="exciseBranch" [(ngModel)]="exciseBranch"> -->
+            <!-- <input type="text" placeholder="สำนักงานสรรพสามิตสาขา" class="custom" name="exciseBranch" id="exciseBranch" [(ngModel)]="exciseBranch"> -->
             <select class="ui search dropdown" id="exciseBranch" [(ngModel)]="exciseBranch" (change)="branchChange()">
               <option value="00">กรุณาเลือก</option>
               <option *ngFor="let branch of exciseBranchList; index as i;" value="{{branch.lovId}}">{{branch.subTypeDescription}}</option>
