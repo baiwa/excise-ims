@@ -4,6 +4,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { AuthService } from "services/auth.service";
 import { RiskAssRiskWsHdr } from "models/RiskAssRiskWsHdr";
+import { BreadCrumb } from "models/breadcrumb";
 
 
 
@@ -31,6 +32,7 @@ export class Int08311Component implements OnInit {
   dataTableList: RiskData[] = [];
   riskHrdData: RiskHrdData;
   isConditionShow: any;
+  breadcrumb: BreadCrumb[];
 
   fileExel: File[];
   exciseSetorList: any[] = [];
@@ -45,6 +47,12 @@ export class Int08311Component implements OnInit {
     private messageBarService: MessageBarService
   ) {
     this.fileExel = new Array<File>(); // initial file array
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง", route: "#" },
+      { label: "ประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่", route: "#" },
+      { label: "รายละเอียดปัจจัยเสี่ยงการส่งเงินเกิน 3 วัน" , route: "#" },
+    ];
   }
 
   ngOnInit() {
@@ -168,13 +176,13 @@ export class Int08311Component implements OnInit {
         { data: "departmentName" },
         { data: "riskCost", className: "right" },
         { data: "rl", className: "center" },
-        { data: "valueTranslation", className: "center" },
-        {
-          data: "riskHdrId",
-          render: function () {
-            return '<button type="button" class="ui mini button red del"><i class="trash alternate icon"></i> ลบ </button>';
-          }
-        }
+        { data: "valueTranslation", className: "center" }
+        // {
+        //   data: "riskHdrId",
+        //   render: function () {
+        //     return '<button type="button" class="ui mini button red del"><i class="trash alternate icon"></i> ลบ </button>';
+        //   }
+        // }
       ],
       rowCallback: (row, data, index) => {
 
