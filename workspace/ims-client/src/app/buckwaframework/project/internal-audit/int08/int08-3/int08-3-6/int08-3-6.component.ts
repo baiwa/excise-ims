@@ -4,6 +4,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute } from "@angular/router";
 import { AuthService } from "services/auth.service";
 import { RiskAssRiskWsHdr } from "models/RiskAssRiskWsHdr";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var jQuery: any;
 declare var $: any;
@@ -20,6 +21,7 @@ export class Int0836Component implements OnInit {
   datatable: any;
   id: any;
   riskAssRiskWsHdr: RiskAssRiskWsHdr;
+  breadcrumb: BreadCrumb[];
 
 
   titleList: any[] = [];
@@ -28,7 +30,14 @@ export class Int0836Component implements OnInit {
     private ajax: AjaxService,
     private authService: AuthService,
     private messageBarService: MessageBarService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute) {
+      this.breadcrumb = [
+        { label: "ตรวจสอบภายใน", route: "#" },
+        { label: "การประเมินความเสี่ยง", route: "#" },
+        { label: "ประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่", route: "#" },
+        { label: "รายละเอียดปัจจัยเสี่ยงผลการจัดเก็บรายได้" , route: "#" },
+      ];
+     }
 
   ngOnInit() {
     this.riskAssRiskWsHdr = new RiskAssRiskWsHdr();

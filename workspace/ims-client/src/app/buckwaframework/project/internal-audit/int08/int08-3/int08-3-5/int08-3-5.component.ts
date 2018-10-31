@@ -3,6 +3,7 @@ import { AjaxService } from "../../../../../common/services/ajax.service";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 declare var $: any;
 @Component({
   selector: "int08-3-5",
@@ -20,6 +21,7 @@ export class Int0835Component implements OnInit {
   isConditionShow: any;
   ispercent: any;
   riskAssRiskWsHdrList: any;
+  breadcrumb: BreadCrumb[]
   constructor(private router: Router,
     private ajax: AjaxService,
     private authService: AuthService,
@@ -27,6 +29,12 @@ export class Int0835Component implements OnInit {
     private route: ActivatedRoute) {
     this.isConditionShow = false;
     this.ispercent = false;
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "การประเมินความเสี่ยง ", route: "#" },
+      { label: "ประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่", route: "#" },
+      { label: "รายละเอียดประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่", route: "#" },
+    ];
   }
 
   ngOnInit() {
@@ -52,12 +60,12 @@ export class Int0835Component implements OnInit {
         this.percentList.push(0);
       }
 
-      var trHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับ</th><th rowspan="2" style="text-align: center !important">หน่วยงาน</th>';
+      var trHTML = '<tr><th rowspan="2" style="text-align: center !important">ลำดับที่</th><th rowspan="2" style="text-align: center !important">หน่วยงาน</th>';
       this.columnList.forEach(element => {
         console.log(element);
         trHTML += '<th rowspan="2" style="text-align: center !important">' + element + '</th>';
       });
-      trHTML += '<th rowspan="2"  style="text-align: center !important">รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">RL</th><th style="text-align: center !important">แปลค่า</th></tr>';
+      trHTML += '<th rowspan="2"  style="text-align: center !important">รวม</th><th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th></tr><tr><th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">อัตราความเสี่ยง</th><th style="text-align: center !important">แปลค่าความเสี่ยง</th></tr>';
       $("#trColumn").html(trHTML);
       this.initDatatable();
     }, errRes => {
@@ -87,7 +95,7 @@ export class Int0835Component implements OnInit {
       });
 
       $("#tbody").html(hrmlTr);
-      $('#dataTable_int08_3_12').DataTable({
+      $('#dataTable_int08_3_12').DataTableTh({
         scrollX: true
       });
     }, errRes => {

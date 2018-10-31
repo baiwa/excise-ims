@@ -174,7 +174,7 @@ export class Int0816Component implements OnInit {
         {
           data: "riskHdrId",
           render: function () {
-            return '<button type="button" class="ui mini button del"><i class="trash alternate icon"></i> ลบ </button>';
+            return '<button type="button" class="ui mini red button del"><i class="trash alternate icon"></i> ลบ </button>';
           }
         }
       ],

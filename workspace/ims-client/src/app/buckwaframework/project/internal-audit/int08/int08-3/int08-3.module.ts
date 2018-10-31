@@ -12,7 +12,7 @@ import { Int0834Component } from './int08-3-4/int08-3-4.component';
 import { Int0835Component } from './int08-3-5/int08-3-5.component';
 import { Int0836Component } from './int08-3-6/int08-3-6.component';
 import { FormsModule } from '../../../../../../../node_modules/@angular/forms';
-import { ConditionModule } from '../../../../common/components';
+import { ConditionModule, BreadcrumbModule } from '../../../../common/components';
 import { Int0837Component } from './int08-3-7/int08-3-7.component';
 import { Int0838Component } from './int08-3-8/int08-3-8.component';
 import { Int0839Component } from './int08-3-9/int08-3-9.component';
@@ -38,7 +38,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
-    ConditionModule
+    ConditionModule,
+    BreadcrumbModule
   ],
   declarations: [
     Int083Component,

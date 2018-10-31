@@ -173,9 +173,9 @@ export class Int0839Component implements OnInit {
         { data: "color", className: "center" },
         { data: "valueTranslation", className: "center" },
         {
-          data: "riskHdrId",
+          data: "riskHdrId", className: "center aligned",
           render: function () {
-            return '<button type="button" class="ui mini button del"><i class="pencil icon"></i> ลบ </button>';
+            return '<button type="button" class="ui mini red button del"><i class="trash alternate icon"></i> ลบ </button>';
           }
         }
       ],

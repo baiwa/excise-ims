@@ -4,6 +4,7 @@ import { MessageBarService } from "../../../../../common/services/message-bar.se
 import { Router, ActivatedRoute } from "@angular/router";
 import { AuthService } from "services/auth.service";
 import { RiskAssRiskWsHdr } from "models/RiskAssRiskWsHdr";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var jQuery: any;
 declare var $: any;
@@ -21,14 +22,21 @@ export class Int0833Component implements OnInit {
   id: any;
   riskAssRiskWsHdr: RiskAssRiskWsHdr;
 
-
+  breadcrumb: BreadCrumb[];
   isConditionShow: any;
   titleList: any[] = [];
   constructor(private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService,
     private route: ActivatedRoute,
-    private authService: AuthService) { }
+    private authService: AuthService) {
+      this.breadcrumb = [
+        { label: "ตรวจสอบภายใน", route: "#" },
+        { label: "การประเมินความเสี่ยง", route: "#" },
+        { label: "ประเมินความเสี่ยงสำนักงานสรรพสามิตภาคพื้นที่", route: "#" },
+        { label: "รายละเอียดปัจจัยเสี่ยงความถี่การเข้าตรวจสอบ" , route: "#" },
+      ];
+     }
 
   ngOnInit() {
     this.ajax.post(URL.DROPDOWN, { type: 'TITLE' }, res => {
@@ -40,14 +48,12 @@ export class Int0833Component implements OnInit {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
     this.id = this.route.snapshot.queryParams["id"];
-
     this.initDatatable();
   }
 
   findRiskById() {
     let url = "ia/int083/findRiskById"
     this.ajax.post(url, { riskHrdId: this.id }, res => {
-
       this.riskAssRiskWsHdr = res.json();
       this.riskAssRiskWsHdr.checkPosition = 'ผู้อำนวยการกลุ่มตรวจสอบภายใน';
 

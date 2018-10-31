@@ -59,7 +59,7 @@
           </div>
           <div class="two wide field ">
             <div class="ui input">
-              <select class="ui dropdown ai selection" style="width: 100%;" id="checkUserTitle" [(ngModel)]="riskAssRiskWsHdr.checkUserTitle">
+              <select class="ui dropdown ai selection" aria-placeholder="iiiiii" style="width: 100%;" id="checkUserTitle" [(ngModel)]="riskAssRiskWsHdr.checkUserTitle">
                 <option value="00">กรุณาเลือก</option>
                 <option *ngFor="let data of titleList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
               </select>
@@ -101,7 +101,7 @@
 <!-- insert form 1 -->
       <div class="ui bottom attached active tab segment" data-tab="first">
         <div class="inline fields">
-          <div class="two wide field "></div>
+          <div class="one wide field "></div>
           <div class="two wide field required">
             <label class="text-right full-width">ชื่อโครงการ</label>
           </div>
@@ -110,7 +110,7 @@
           </div>
         </div>
         <div class="inline fields">
-          <div class="two wide field required"></div>
+          <div class="one wide field required"></div>
           <div class="two wide field">
             <label class="text-right full-width">ชื่อหน่วยงาน</label>
           </div>
@@ -177,7 +177,7 @@
             <th rowspan="2" style="text-align: center !important" class="two wide field ">หน่วยงาน</th>
             <th rowspan="2" style="text-align: center !important" class="two wide field ">ค่าความเสี่ยง</th>
             <th colspan="2" style="text-align: center !important">ประเมินความเสี่ยง</th>
-            <!-- <th rowspan="2" style="text-align: center !important">ลบ</th> -->
+            <th rowspan="2" style="text-align: center !important">ลบ</th>
           </tr>
           <tr>
             <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important" class="one wide field ">อัตราความเสี่ยง</th>
