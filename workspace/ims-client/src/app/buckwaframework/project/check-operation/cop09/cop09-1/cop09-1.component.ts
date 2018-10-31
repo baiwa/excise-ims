@@ -58,12 +58,13 @@ export class Cop091Component implements OnInit {
     }
 
     $("#searchFlag").val("TRUE");
-    $('#tableData').DataTable().ajax.reload();
-    $('#tableData2').DataTable().ajax.reload();
+   this.dataTable();
+   this.dataTable2();
   }
 
   dataTable = function(){
-    var table = $('#tableData').DataTable({
+    if ($('#tableData').DataTable() != null) {$('#tableData').DataTable().destroy();};
+    var table = $('#tableData').DataTableTh({
       "lengthChange":true,
       "serverSide": false,
       "searching": false,
@@ -124,7 +125,8 @@ export class Cop091Component implements OnInit {
   }
 
   dataTable2 = function(){
-    var table2 = $('#tableData2').DataTable({
+    if ($('#tableData2').DataTable() != null) {$('#tableData2').DataTable().destroy();};
+    var table2 = $('#tableData2').DataTableTh({
       "lengthChange":true,
       "serverSide": false,
       "searching": false,

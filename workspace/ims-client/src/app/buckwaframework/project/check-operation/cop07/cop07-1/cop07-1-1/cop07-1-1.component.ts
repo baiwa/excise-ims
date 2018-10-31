@@ -158,12 +158,12 @@ export class Cop0711Component implements OnInit, OnDestroy {
   }
 
   saveData() {
-    if ($("#actionPlan").val()=='1871'&&$('#tableData').DataTable().column(0).data().length>=this.asPlanNumber) {
+    if ($("#actionPlan").val()=='1871'&&$('#tableData').DataTableTh().column(0).data().length>=this.asPlanNumber) {
       this.message.alert("ไม่สามารถเพิ่มจำนวน ตามแผนปฏิบัติการ   เกิน "+this.asPlanNumber+" ราย");
       return false;
     }
 
-    if ($("#actionPlan").val()=='1872'&&$('#tableData2').DataTable().column(0).data().length>=this.outsidePlanNumber) {
+    if ($("#actionPlan").val()=='1872'&&$('#tableData2').DataTableTh().column(0).data().length>=this.outsidePlanNumber) {
       this.message.alert("ไม่สามารถเพิ่มจำนวน นอกแผนปฏิบัติการ   เกิน "+this.outsidePlanNumber+" ราย");
       return false;
     }
@@ -188,8 +188,8 @@ export class Cop0711Component implements OnInit, OnDestroy {
       this.message.errorModal(commonMessage.msg.messageTh);
     }
     $("#searchFlag").val("TRUE");
-    $('#tableData').DataTable().ajax.reload();
-    $('#tableData2').DataTable().ajax.reload();
+    $('#tableData').DataTableTh().ajax.reload();
+    $('#tableData2').DataTableTh().ajax.reload();
     });
   }
 
@@ -213,13 +213,14 @@ export class Cop0711Component implements OnInit, OnDestroy {
       this.message.errorModal(commonMessage.msg.messageTh);
     }
     $("#searchFlag").val("TRUE");
-    $('#tableData').DataTable().ajax.reload();
-    $('#tableData2').DataTable().ajax.reload();
+    $('#tableData').DataTableTh().ajax.reload();
+    $('#tableData2').DataTableTh().ajax.reload();
     });
   }
 
   dataTable = function(){
-    var table = $('#tableData').DataTable({
+    if ($('#tableData').DataTable() != null) {$('#tableData').DataTable().destroy();};
+    var table = $('#tableData').DataTableTh({
       "lengthChange":true,
       "serverSide": false,
       "searching": false,
@@ -309,7 +310,7 @@ export class Cop0711Component implements OnInit, OnDestroy {
         this.message.errorModal(msg.messageTh);
       }
       $("#searchFlag").val("TRUE");
-      $('#tableData').DataTable().ajax.reload();
+      $('#tableData').DataTableTh().ajax.reload();
       });
      }
     },"ลบรายการ");
@@ -318,7 +319,8 @@ export class Cop0711Component implements OnInit, OnDestroy {
   }
 
   dataTable2 = function(){
-    var table2 = $('#tableData2').DataTable({
+    if ($('#tableData2').DataTable() != null) {$('#tableData2').DataTable().destroy();};
+    var table2 = $('#tableData2').DataTableTh({
       "lengthChange":true,
       "serverSide": false,
       "searching": false,
@@ -408,7 +410,7 @@ export class Cop0711Component implements OnInit, OnDestroy {
         this.message.errorModal(msg.messageTh);
       }
       $("#searchFlag").val("TRUE");
-      $('#tableData2').DataTable().ajax.reload();
+      $('#tableData2').DataTableTh().ajax.reload();
       });
      }
     },"ลบรายการ");
