@@ -206,7 +206,7 @@ export class ApproveLineUserComponent implements OnInit {
       processing: true,
       serverSide: true,
       scrollX: true,
-      paging: true,
+      paging: false,
       pagingType: "full_numbers",
 
       ajax: {

@@ -13,15 +13,12 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetHeaderDao;
 import th.co.baiwa.excise.ta.persistence.entity.SummaryReport;
-import th.co.baiwa.excise.ta.persistence.entity.analysis.PlanWorksheetHeader;
-import th.co.baiwa.excise.ta.persistence.repository.PlanWorksheetHeaderRepository;
 import th.co.baiwa.excise.ta.persistence.repository.SummaryReportRepository;
 
 @Service
 public class SummaryReportService {
 	private Logger logger = LoggerFactory.getLogger(SummaryReportService.class);
-	private final String SECTOR_VALUE = "SECTOR_VALUE";
-	private final String SECTOR_LIST = "SECTOR_LIST";
+	private final String ALL_SECTOR_CONFIG = "ALL_SECTOR_CONFIG";
 	
 	@Autowired
 	private SummaryReportRepository summaryReportRepository;
@@ -31,7 +28,7 @@ public class SummaryReportService {
 	
 	public void createSummaryReport(String analysnumber) {
 		logger.info("createSummaryReport analysnumber : {}" , analysnumber);
-		List<Lov> lovList = ApplicationCache.getListOfValueByTypeParentId(SECTOR_VALUE, null);
+		List<Lov> lovList = ApplicationCache.getListOfValueByTypeParentId(ALL_SECTOR_CONFIG, null);
 		List<SummaryReport> summaryReportList = new ArrayList<SummaryReport>();
 		SummaryReport summaryReport = null;
 		for (Lov lov : lovList) {
@@ -49,9 +46,9 @@ public class SummaryReportService {
 	
 	public void centralReceiveLine(String analysNumber,List<String> exciseIdList) {
 		
-		SummaryReport summaryReport = null;
+		SummaryReport summaryReport = new SummaryReport();
 		Date currenDate = new Date();
-		List<Lov> lovList = ApplicationCache.getListOfValueByValueType(SECTOR_LIST, "000000");
+		List<Lov> lovList = ApplicationCache.getListOfValueByValueType(ALL_SECTOR_CONFIG, "11");
 		summaryReport = summaryReportRepository.findByAnalysnumberAndSector(analysNumber, lovList.get(0).getValue1());
 		summaryReport.setReceiveDate(currenDate);
 		summaryReportRepository.save(summaryReport);

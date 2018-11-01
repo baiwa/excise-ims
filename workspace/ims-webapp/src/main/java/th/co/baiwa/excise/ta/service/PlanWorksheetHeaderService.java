@@ -350,7 +350,14 @@ public class PlanWorksheetHeaderService {
 		}
 		
 		ResponseDataTable<PlanWorksheetHeaderDetail> responseDataTable = new ResponseDataTable<PlanWorksheetHeaderDetail>();
-		long count = planWorksheetHeaderDao.queryCountByPlanWorksheetHeader(vo);
+		long count = 0;
+		if (BeanUtils.isEmpty(vo.getPaging()) || new Boolean(vo.getPaging())) {
+			count = planWorksheetHeaderDao.queryCountByPlanWorksheetHeader(vo);
+		}else {
+			count = PlanWorksheetHeaderDetailList.size();
+		
+		}
+		
 		responseDataTable.setDraw(vo.getDraw().intValue() + 1);
 		responseDataTable.setData(PlanWorksheetHeaderDetailList);
 		responseDataTable.setRecordsTotal((int) count);
