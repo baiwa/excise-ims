@@ -440,20 +440,41 @@ public class PlanWorksheetHeaderDao {
 			sql.append(" AND H.PRODUCT_TYPE = ? ");
 			valueList.add(vo.getProductType());
 		}
-		
+
+		if (BeanUtils.isNotEmpty(vo.getSector())) {
+			sql.append(" AND H.EXCISE_OWNER_AREA_1 = ? ");
+			valueList.add(vo.getSector());
+		}
 		if (BeanUtils.isNotEmpty(vo.getViewStatus())) {
 			sql.append(" AND H.VIEW_STATUS = ? ");
 			valueList.add(vo.getViewStatus());
 		}
-		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag()) && !"NOT N S".equals(vo.getFlag())) {
+
+		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag())) {
 			sql.append(" AND H.FLAG = ? ");
 			valueList.add(vo.getFlag());
-		} else if ("NOT N".equals(vo.getFlag())) {
+		} else {
 			sql.append(" AND H.FLAG != 'N' ");
-		} else if ("NOT N S".equals(vo.getFlag())) {
-			sql.append(" AND H.FLAG != 'N' ");
-			sql.append(" AND H.FLAG != 's' ");
 		}
+//		
+//		if (BeanUtils.isNotEmpty(vo.getProductType())) {
+//			sql.append(" AND H.PRODUCT_TYPE = ? ");
+//			valueList.add(vo.getProductType());
+//		}
+//		
+//		if (BeanUtils.isNotEmpty(vo.getViewStatus())) {
+//			sql.append(" AND H.VIEW_STATUS = ? ");
+//			valueList.add(vo.getViewStatus());
+//		}
+//		if (BeanUtils.isNotEmpty(vo.getFlag()) && !"NOT N".equals(vo.getFlag()) && !"NOT N S".equals(vo.getFlag())) {
+//			sql.append(" AND H.FLAG = ? ");
+//			valueList.add(vo.getFlag());
+//		} else if ("NOT N".equals(vo.getFlag())) {
+//			sql.append(" AND H.FLAG != 'N' ");
+//		} else if ("NOT N S".equals(vo.getFlag())) {
+//			sql.append(" AND H.FLAG != 'N' ");
+//			sql.append(" AND H.FLAG != 's' ");
+//		}
 		if (BeanUtils.isNotEmpty(vo.getNum1()) && BeanUtils.isNotEmpty(vo.getNum2()) && BeanUtils.isNotEmpty(vo.getPercent1()) && BeanUtils.isNotEmpty(vo.getPercent2())) {
 			String[] monthFrom = vo.getNum1().split(",");
 			String[] monthTo = vo.getNum2().split(",");

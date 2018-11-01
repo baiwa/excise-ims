@@ -13,6 +13,8 @@ export class Ope048Service {
     dataExcel: any = null;
     searchFlag: String = "FALSE";
     table: any;
+    uploadFlag: boolean = false;
+
     constructor(
         private ajax: AjaxService,
         private message: MessageBarService
@@ -36,8 +38,8 @@ export class Ope048Service {
         });
     }
 
-    onChangeUpload = async (event: any):Promise<any> => {
-        return new Promise((resolve,reject)=>{
+    onChangeUpload = async (event: any): Promise<any> => {
+        return new Promise((resolve, reject) => {
             if (event.target.files && event.target.files.length > 0) {
                 let reader = new FileReader();
                 reader.onload = (e: any) => {
@@ -52,32 +54,33 @@ export class Ope048Service {
                 reader.readAsDataURL(event.target.files[0]);
                 resolve(this.fileName);
             }
-        });        
+        });
     };
 
     upload = (form: any) => {
         let url = "ta/opo048/upload";
-        if(Utils.isNotNull){
+        if (Utils.isNotNull) {
             this.ajax.upload(url, form, success => {
                 this.dataExcel = success.json();
+                this.uploadFlag = true;
                 if (Utils.isNull(this.dataExcel)) {
                     this.message.errorModal('ไม่สามารถอัปโหลดไฟล์');
                 }
             }).then(() => {
                 this.table.ajax.reload();
             });
-        }        
+        }
     }
 
-    search = ():Promise<any> => {
-        return new Promise((resolve,reject)=>{
+    search = (): Promise<any> => {
+        return new Promise((resolve, reject) => {
             this.searchFlag = "TRUE";
             if (this.table != null) {
                 this.table.destroy();
             }
             this.dataTable();
             resolve();
-        });        
+        });
         // $("#dataTable").DataTableTh().ajax.reload();
     }
 
@@ -88,6 +91,7 @@ export class Ope048Service {
         $("#dateFrom").val('');
         $("#dateTo").val('');
         $("#fileName").val('');
+        this.uploadFlag = false;
         this.dataExcel = null;
         if (this.table != null) {
             this.table.destroy();
@@ -95,9 +99,9 @@ export class Ope048Service {
         this.dataTable();
     }
     sort(value1, value2, value3) {
-        (Utils.isNull(value1)? 0 : value1) ;
-        (Utils.isNull(value2)? 0 : value2) ;
-        (Utils.isNull(value3)? 0 : value3) ;
+        (Utils.isNull(value1) ? 0 : value1);
+        (Utils.isNull(value2) ? 0 : value2);
+        (Utils.isNull(value3) ? 0 : value3);
         let temp = value1;
         if (temp < value2) temp = value2;
         if (temp < value3) temp = value3;
@@ -118,7 +122,7 @@ export class Ope048Service {
                     return JSON.stringify($.extend({}, d, {
                         "exciseId": $("#exciseId").val(),
                         "searchFlag": this.searchFlag,
-                         "dataExcel": this.dataExcel
+                        "dataExcel": this.dataExcel
                     }));
 
                 },
@@ -154,7 +158,7 @@ export class Ope048Service {
                 }, {
                     "data": "taExciseAcc0307Price",
                     "className": "ui right aligned",
-                    "render": (data, type, row, meta) => {                        
+                    "render": (data, type, row, meta) => {
                         let result = this.sort(row.taExcisePrice, row.excelPriceout, row.taExciseAcc0307Price);
                         return Utils.moneyFormatDecimal(result);
                     }
@@ -170,11 +174,14 @@ export class Ope048Service {
                     "render": (data, type, row, meta) => {
                         let result = this.sort(row.taExcisePrice, row.excelPriceout, row.taExciseAcc0307Price);
                         let diff = result - data;
-                        if(diff != 0){
-                            return  '<span class="r-mark-tr">' + Utils.moneyFormatDecimal(diff) +'</span>';
-                           //
-                        }                       
-                        return '<span class="g-mark-tr">' + Utils.moneyFormatDecimal(diff)+'</span>';
+                        if(this.uploadFlag){
+                            if (diff != 0) {
+                                return '<span class="r-mark-tr">' + Utils.moneyFormatDecimal(diff) + '</span>';
+                                //
+                            }
+                            return '<span class="g-mark-tr">' + Utils.moneyFormatDecimal(diff) + '</span>';
+                        }
+                       return "";
                     }
                 },
             ],
