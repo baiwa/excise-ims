@@ -1,10 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-
 import { Routes, RouterModule } from "@angular/router";
-import { Int0612Component } from './int06-12/int06-12.component';
-
-
 
 const routes: Routes = [
   { path: "1", loadChildren: "./int06-1/int06-1.module#Int061Module" },

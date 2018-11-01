@@ -49,6 +49,17 @@ public class IaWithdrawalPersons extends BaseEntity {
 
 	@Column(name = "PAYEE")
 	private String payee;
+	
+	@Column(name = "BANK_NAME")
+	private String bankName;
+
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
 
 	public Long getWithdrawalPersonsId() {
 		return withdrawalPersonsId;

@@ -68,19 +68,19 @@ public class WebServiceExciseService {
 
 	@Value("${ws.excise.password}")
 	private String password;
-	
+
 	@Value("${ws.excise.systemid}")
 	private String systemId;
 
 	@Value("${ws.excise.sourceSystem}")
 	private String sourceSystem;
-	
+
 	@Value("${ws.excise.destinationSystem}")
 	private String destinationSystem;
-	
+
 	@Value("${ws.excise.options}")
 	private String options;
-	
+
 	@Value("${ws.excise.ipaddress}")
 	private String ipaddress;
 
@@ -94,36 +94,31 @@ public class WebServiceExciseService {
 	private String endpointLicFri6020;
 
 	@Value("${ws.excise.endpointIncFri8000}")
-    private String endpointIncFri8000;
+	private String endpointIncFri8000;
 
-    @Value("${ws.excise.endpointRegFri4000}")
-    private String endpointRegFri4000;
+	@Value("${ws.excise.endpointRegFri4000}")
+	private String endpointRegFri4000;
 
 	@Value("${os.excise.applicationId}")
 	private String applicationId;
-	
+
 	@Value("${ws.excise.get.assessment}")
 	private String endpointAssessment;
-	
 
 	@Value("${ws.excise.get.systemError}")
 	private String endpointSystemError;
-	
 
 	@Value("${ws.excise.pmGetListProject}")
 	private String endpointPmGetListProject;
-	
-	
+
 	@Value("${ws.excise.pmGetDetailProject}")
 	private String endpointPmGetDetailProject;
 
-
 	@Autowired
 	private LoginLdap loginLdapProxy;
-	
+
 	public static String RESPONSE_CODE = "OK";
-	
-	
+
 	public Response webServiceLdap(String user, String pass) {
 		logger.info("Baiwa webServiceLdap : {} ", user);
 		Response response = loginLdapProxy.login(user, pass);
@@ -150,10 +145,9 @@ public class WebServiceExciseService {
 		logger.info("Body Service response: " + response.getBody());
 		return response.getBody();
 	}
-	
-	
+
 	private String postRestfulFormat2(String endPoint, Object object) {
-		RequestServiceExciseFromSubmit requestPmGetListProject= new RequestServiceExciseFromSubmit();
+		RequestServiceExciseFromSubmit requestPmGetListProject = new RequestServiceExciseFromSubmit();
 		RequestHeader requestHeader = new RequestHeader();
 		requestHeader.setDestinationSystem(destinationSystem);
 		requestHeader.setIpaddress(ipaddress);
@@ -173,6 +167,7 @@ public class WebServiceExciseService {
 		logger.info("Body Service response: " + response.getBody());
 		return response.getBody();
 	}
+
 	private String getRestful(String endPoint) {
 		logger.info("Restful HTTP GET : to" + endPoint);
 		RestTemplate restTemplate = new RestTemplate();
@@ -198,6 +193,7 @@ public class WebServiceExciseService {
 		IncFri8020 responseServiceExcise = gson.fromJson(responseData, IncFri8020.class);
 		return responseServiceExcise;
 	}
+
 	public Regfri4000Res IncFri4000(String type, String active, String pageNo, String dataPerPage) {
 		logger.info("restful API : IncFri4000");
 		RequestDataReq regfri4000Req = new RequestDataReq();
@@ -208,12 +204,13 @@ public class WebServiceExciseService {
 		regfri4000Req.setActive(active);
 		regfri4000Req.setPageNo(pageNo);
 		regfri4000Req.setDataPerPage(dataPerPage);
-		
+
 		String responseData = postRestful(endpointRegFri4000, regfri4000Req);
 		Gson gson = new Gson();
 		Regfri4000Res responseServiceExcise = gson.fromJson(responseData, Regfri4000Res.class);
 		return responseServiceExcise;
 	}
+
 	public IncFri8000Res IncFri8000(String yearMonthFrom, String yearMonthTo, String dateType, String pageNo, String dataPerPage) {
 		logger.info("restful API : IncFri8000Res");
 		RequestData8000Req rFri8000Req = new RequestData8000Req();
@@ -222,7 +219,7 @@ public class WebServiceExciseService {
 		rFri8000Req.setDateType(dateType);
 		rFri8000Req.setPageNo(pageNo);
 		rFri8000Req.setDataPerPage(dataPerPage);
-		
+
 		String responseData = postRestful(endpointIncFri8000, rFri8000Req);
 		Gson gson = new Gson();
 		IncFri8000Res responseServiceExcise = gson.fromJson(responseData, IncFri8000Res.class);
@@ -256,38 +253,35 @@ public class WebServiceExciseService {
 		LicFri6020 responseServiceExcise = gson.fromJson(responseData, LicFri6020.class);
 		return responseServiceExcise;
 	}
-	
-	public Assessment assessmentForm1(String budgetYear ,String oCode ) {
-		logger.info(" assessment restful API {} , {} " ,budgetYear,oCode);
+
+	public Assessment assessmentForm1(String budgetYear, String oCode) {
+		logger.info(" assessment restful API {} , {} ", budgetYear, oCode);
 		String responseData = getRestful(endpointAssessment).replaceAll("\\\\n", "<br/>");
 		Gson gson = new Gson();
 		Assessment responseServiceExcise = gson.fromJson(responseData, Assessment.class);
 		return responseServiceExcise;
 	}
+
 	public SystemError systemError(String budgetYear) {
-		logger.info(" systemError restful API {} , {} " ,budgetYear);
-		String responseData = getRestful(endpointSystemError+"?year="+budgetYear);
+		logger.info(" systemError restful API {} , {} ", budgetYear);
+		String responseData = getRestful(endpointSystemError + "?year=" + budgetYear);
 		Gson gson = new Gson();
 		SystemError responseServiceExcise = gson.fromJson(responseData, SystemError.class);
 		return responseServiceExcise;
 	}
 
-	
-	
-	
 	public List<RiskAssRiskWsDtl> pmGetListProject(RiskAssRiskWsHdr riskAssRiskWsHdr) {
 		List<RiskAssRiskWsDtl> riskAssRiskWsDtlList = new ArrayList<RiskAssRiskWsDtl>();
 		logger.info("restful API : pmGetListProject");
-		
+
 		RequestData requestData = new RequestData();
 		requestData.setProjectTypeCode("A");
 		requestData.setProjectYear(riskAssRiskWsHdr.getBudgetYear());
-		
-		
+
 		String responseData = postRestfulFormat2(endpointPmGetListProject, requestData);
 		Gson gson = new Gson();
 		ResponseServiceExciseFromSubmit responseServiceExcise = gson.fromJson(responseData, ResponseServiceExciseFromSubmit.class);
-		if(BeanUtils.isNotEmpty(responseServiceExcise) && BeanUtils.isNotEmpty(responseServiceExcise.getResponseData()) && BeanUtils.isNotEmpty(responseServiceExcise.getResponseData().getListPMProject())) {
+		if (BeanUtils.isNotEmpty(responseServiceExcise) && BeanUtils.isNotEmpty(responseServiceExcise.getResponseData()) && BeanUtils.isNotEmpty(responseServiceExcise.getResponseData().getListPMProject())) {
 			List<ListPMProject> pmProjectList = responseServiceExcise.getResponseData().getListPMProject();
 			RiskAssRiskWsDtl riskAssRiskWsDtl = new RiskAssRiskWsDtl();
 			for (ListPMProject project : pmProjectList) {
@@ -303,13 +297,15 @@ public class WebServiceExciseService {
 				riskAssRiskWsDtlList.add(riskAssRiskWsDtl);
 			}
 		}
+		
+		
 		return riskAssRiskWsDtlList;
-		}
+	}
 
 	public List<RiskAssInfDtl> getRiskAssInfDtlList(RiskAssInfHdr rAssInfHdr) {
 		List<RiskAssInfDtl> riskAssInfDtlList = new ArrayList<RiskAssInfDtl>();
 		SystemError systemError = systemError(rAssInfHdr.getBudgetYear());
-		if(BeanUtils.isNotEmpty(systemError) && BeanUtils.isNotEmpty(systemError.getData())) {
+		if (BeanUtils.isNotEmpty(systemError) && BeanUtils.isNotEmpty(systemError.getData())) {
 			List<Datum> datumList = systemError.getData();
 			RiskAssInfDtl reAssInfDtl = new RiskAssInfDtl();
 			for (Datum datum : datumList) {
@@ -317,26 +313,22 @@ public class WebServiceExciseService {
 				reAssInfDtl.setTotal(new BigDecimal(datum.getCountError()));
 				reAssInfDtl.setInfName(datum.getSystemName());
 				ErrorDetail errorDetail = datum.getErrorDetail();
-					reAssInfDtl.setJan(new BigDecimal(errorDetail.getError01()));
-					reAssInfDtl.setFeb(new BigDecimal(errorDetail.getError02()));
-					reAssInfDtl.setMar(new BigDecimal(errorDetail.getError03()));
-					reAssInfDtl.setApril(new BigDecimal(errorDetail.getError04()));
-					reAssInfDtl.setMay(new BigDecimal(errorDetail.getError05()));
-					reAssInfDtl.setJun(new BigDecimal(errorDetail.getError06()));
-					reAssInfDtl.setJul(new BigDecimal(errorDetail.getError07()));
-					reAssInfDtl.setAug(new BigDecimal(errorDetail.getError08()));
-					reAssInfDtl.setSep(new BigDecimal(errorDetail.getError09()));
-					reAssInfDtl.setOct(new BigDecimal(errorDetail.getError10()));
-					reAssInfDtl.setNov(new BigDecimal(errorDetail.getError11()));
-					reAssInfDtl.setDec(new BigDecimal(errorDetail.getError12()));
+				reAssInfDtl.setJan(new BigDecimal(errorDetail.getError01()));
+				reAssInfDtl.setFeb(new BigDecimal(errorDetail.getError02()));
+				reAssInfDtl.setMar(new BigDecimal(errorDetail.getError03()));
+				reAssInfDtl.setApril(new BigDecimal(errorDetail.getError04()));
+				reAssInfDtl.setMay(new BigDecimal(errorDetail.getError05()));
+				reAssInfDtl.setJun(new BigDecimal(errorDetail.getError06()));
+				reAssInfDtl.setJul(new BigDecimal(errorDetail.getError07()));
+				reAssInfDtl.setAug(new BigDecimal(errorDetail.getError08()));
+				reAssInfDtl.setSep(new BigDecimal(errorDetail.getError09()));
+				reAssInfDtl.setOct(new BigDecimal(errorDetail.getError10()));
+				reAssInfDtl.setNov(new BigDecimal(errorDetail.getError11()));
+				reAssInfDtl.setDec(new BigDecimal(errorDetail.getError12()));
 				riskAssInfDtlList.add(reAssInfDtl);
 			}
 		}
-		
-		
-		
 
-		
 		return riskAssInfDtlList;
 	}
 
@@ -862,34 +854,34 @@ public class WebServiceExciseService {
 	public List<RiskAssPerDtl> pmGetDetailProject(String projectId) {
 		List<RiskAssPerDtl> riskAssPerDtlList = new ArrayList<RiskAssPerDtl>();
 		logger.info("restful API : pmGetListProject");
-		
+
 		RequestPmGetDetailProject requestData = new RequestPmGetDetailProject();
 		requestData.setProjectId(projectId);
 		String responseData = postRestfulFormat2(endpointPmGetDetailProject, requestData);
 		Gson gson = new Gson();
 		ResponsePmGetDetailProject responseServiceExcise = gson.fromJson(responseData, ResponsePmGetDetailProject.class);
-		if(RESPONSE_CODE.equals(responseServiceExcise.getResponseHeader().getResponseCode())) {
+		if (RESPONSE_CODE.equals(responseServiceExcise.getResponseHeader().getResponseCode())) {
 			RiskAssPerDtl riskAssPerDtl = null;
-			if(BeanUtils.isNotEmpty(responseServiceExcise.getResponseData())) {
+			if (BeanUtils.isNotEmpty(responseServiceExcise.getResponseData())) {
 				double riskCost = 0;
 				double kpiTargetAmount = 0;
 				for (TaskDetail taskDetail : responseServiceExcise.getResponseData().getTaskDetail()) {
 					riskAssPerDtl = new RiskAssPerDtl();
 					riskAssPerDtl.setProjectBase(taskDetail.getTaskDescriptionText());
 					riskAssPerDtl.setDepartmentName(responseServiceExcise.getResponseData().getOwnerOfficeName());
-					
+
 					for (KpiDetail kpi : taskDetail.getKpiDetail()) {
 						try {
 							riskCost = Double.parseDouble(kpi.getKpiExpenseActualAmount());
-							
+
 						} catch (Exception e) {
-							logger.error("parseDouble {}", kpi.getKpiExpenseActualAmount() );
+							logger.error("parseDouble {}", kpi.getKpiExpenseActualAmount());
 						}
 						try {
 							kpiTargetAmount = Double.parseDouble(kpi.getKpiTargetAmount());
-							
+
 						} catch (Exception e) {
-							logger.error("parseDouble {}", kpi.getKpiTargetAmount() );
+							logger.error("parseDouble {}", kpi.getKpiTargetAmount());
 						}
 					}
 				}

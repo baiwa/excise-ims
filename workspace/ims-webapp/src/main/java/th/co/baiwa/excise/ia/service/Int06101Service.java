@@ -2,6 +2,7 @@ package th.co.baiwa.excise.ia.service;
 
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +12,15 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.dao.BudgetListDao;
 import th.co.baiwa.excise.ia.persistence.entity.BudgetList;
+import th.co.baiwa.excise.ia.persistence.entity.IaWithdrawalList;
+import th.co.baiwa.excise.ia.persistence.entity.IaWithdrawalPersons;
 import th.co.baiwa.excise.ia.persistence.repository.BudgetListRepository;
+import th.co.baiwa.excise.ia.persistence.repository.IaWithdrawalListRepository;
+import th.co.baiwa.excise.ia.persistence.repository.IaWithdrawalPersonsRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int06101FormVo;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -25,6 +32,12 @@ public class Int06101Service {
 	
 	@Autowired
 	private LovRepository lovRepository;
+	
+	@Autowired
+	private IaWithdrawalPersonsRepository personsRep;
+	
+	@Autowired
+	private IaWithdrawalListRepository listRep;
 	
 	@Autowired
 	private BudgetListRepository budgetListRepository;
@@ -80,10 +93,49 @@ public class Int06101Service {
 		}
 		return data;
 	}
+	
+	private BigDecimal stringToDecimal(String str) {
+		return BigDecimal.valueOf(Double.parseDouble(str));
+	}
 
 	public void add(Int06101FormVo formVo) {
 
-		budgetListDao.add06101(formVo);
+		try {
+			String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeId();
+			String officeDesc = ApplicationCache.getListOfValueByValueType("SECTOR_LIST", officeCode).get(0).getTypeDescription();
+			IaWithdrawalList data = new IaWithdrawalList();
+			data.setOfficeCode(officeCode);
+			data.setOFFICEDesc(officeDesc);
+			data.setWithdrawalDate(DateConstant.convertStrDDMMYYYYToDate(formVo.getWithdrawal()));
+			data.setActivities(formVo.getActivity());
+			data.setBudgetName(formVo.getBudgetName());
+			data.setRefNum(formVo.getRefnum());
+			data.setBudgetId(formVo.getBudged());
+			data.setBudgetType(formVo.getBudget());
+			data.setCategoryId(formVo.getCategory());
+			data.setWithdrawalAmount(stringToDecimal(formVo.getAmountOfMoney()));
+			data.setSocialSecurity(stringToDecimal(formVo.getDeductSocial()));
+			data.setWithholdingTax(stringToDecimal(formVo.getWithholding()));
+			data.setAnotherAmount(stringToDecimal(formVo.getOther()));
+			data.setReceivedAmount(stringToDecimal(formVo.getAmountOfMoney1()));
+			data.setWithdrawalDocNum(formVo.getNumberRequested());
+			data.setPaymentDocNum(formVo.getDocumentNumber());
+			data.setItemDesc(formVo.getItemDescription());
+			data.setNote(formVo.getNote());
+			data.setListId(formVo.getList());
+			Long id = listRep.save(data).getWithdrawalId();
+			if (formVo.getPersons().size() > 0) {
+				for(IaWithdrawalPersons vo : formVo.getPersons()) {
+					vo.setWithdrawalId(id);
+					vo.setOfficeCode(officeCode);
+					vo.setOFFICEDesc(officeDesc);
+				}
+				personsRep.save(formVo.getPersons());
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

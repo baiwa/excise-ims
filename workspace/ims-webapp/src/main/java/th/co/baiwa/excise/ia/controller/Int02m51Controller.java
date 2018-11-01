@@ -18,6 +18,9 @@ import th.co.baiwa.excise.ia.persistence.entity.IntCtrlAss;
 import th.co.baiwa.excise.ia.service.Int02m51Service;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.entity.response.assessment.Assessment;
+import th.co.baiwa.excise.ws.entity.response.assessment.AssessmentVo;
+import th.co.baiwa.excise.ws.entity.response.assessment.Datum;
+import th.co.baiwa.excise.ws.entity.response.assessment.TopicDetail;
 
 @Controller
 @RequestMapping("api/ia/int02m51")
@@ -66,10 +69,33 @@ public class Int02m51Controller {
 	}
 	@PostMapping("/getAssessmentForm1")
 	@ResponseBody
-	public Assessment getAssessmentForm1(@RequestBody IntCtrlAss intput){
+	public List<AssessmentVo> getAssessmentForm1(@RequestBody IntCtrlAss intput){
 		logger.info("getAssessmentForm1 officeCode {} year {}" ,intput.getOfficeCode() , intput.getBudgetYear() );
+		List<AssessmentVo> assessmentVoList = new ArrayList<AssessmentVo>();
+		Assessment assessment = int02m51Service.assessmentForm1(intput);
+		if(BeanUtils.isNotEmpty(assessment) && BeanUtils.isNotEmpty(assessment.getData())) {
+			List<Datum> datumList = assessment.getData();
+			Datum datum = new Datum();
+			for (int i = 0; i < datumList.size(); i++) {
+				datum = new Datum();
+				datum = datumList.get(i);
+				if(BeanUtils.isNotEmpty(datum.getTopicDetail())) {
+					for (TopicDetail topic : datum.getTopicDetail()) {
+						AssessmentVo assessmentVo = new AssessmentVo();
+						if("1".equals(topic.getTopicLevel()) || "2".equals(topic.getTopicLevel())) {
+							assessmentVo.setColumn1(topic.getTopicAnswer());
+							
+						}else if("3".equals(topic.getTopicLevel())) {
+							assessmentVo.setColumn2(topic.getTopicAnswer());
+							assessmentVoList.add(assessmentVo);
+						}
+						
+					}
+				}
+			}
+		}
 		
-		return int02m51Service.assessmentForm1(intput);
+		return assessmentVoList;
 	}
 	
 	
