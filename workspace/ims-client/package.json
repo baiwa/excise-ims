@@ -31,6 +31,7 @@
         "rxjs": "^5.1.0",
         "semantic-ui": "^2.2.13",
         "semantic-ui-calendar": "0.0.8",
+        "thai-baht-text": "^1.0.7",
         "zone.js": "^0.8.4"
     },
     "devDependencies": {

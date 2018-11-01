@@ -42,9 +42,19 @@ export class Utils {
     return df.format(money);
   }
 
-  //type number (1, 2, 3, 4, 5, 6, 7, 8, 9, 0, -)
+  //type number (1, 2, 3, 4, 5, 6, 7, 8, 9, 0, - , . )
   // ** must use (keypress) on html **
   public static onlyNumber(e) {
-    return e.charCode == 45 || (e.charCode >= 48 && e.charCode <= 57);
+    return (
+      e.charCode == 45 ||
+      e.charCode == 46 ||
+      (e.charCode >= 48 && e.charCode <= 57)
+    );
+  }
+
+  //number to thai text
+  public static thaiBaht(money) {
+    const ThaiBaht = require("thai-baht-text"); // for ES5
+    return ThaiBaht(money);
   }
 }
