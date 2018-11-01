@@ -151,7 +151,7 @@ export class Epa014Component implements OnInit {
       this.saveDatas.productName2 = data.productName2;
       this.saveDatas.quantity = data.quantity;
 
-      $('#ModalCheck').modal('show');
+      $('#ModalShow').modal('show');
     });
 
   }
