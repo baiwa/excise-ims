@@ -4,6 +4,7 @@ import { TextDateTH, digit } from "../../../../../common/helper/datepicker";
 import { DecimalFormat } from "../../../../../common/helper";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var $: any;
 
@@ -13,6 +14,16 @@ declare var $: any;
   styleUrls: ["./ope04-1.component.css"]
 })
 export class Ope041Component implements OnInit, AfterViewInit {
+
+  breadcrumb: BreadCrumb[] = [    
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การตรวจสอบภาษี', route: '#' },
+    { label: 'กระดาษทำการตรวจสอบด้านราคา', route: '#' },
+    { label: 'กระดาษทำการรับ-จ่ายวัตถุดิบ', route: '#' },
+    { label: 'สร้างกระดาษทำการรับวัตถุดิบ', route: '#' },
+    
+  ];
+  
   obj: Data;
   exciseId: any;
   exciseIdArr: any;
@@ -132,6 +143,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
 
   clearAll = () => {
     $("#showData").hide();
+    $("#fileExel").val('');
     // this.showDt.fnClearTable();
     this.showDt.clear().draw();
   };
@@ -169,7 +181,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
           this.showDt.destroy();
         }
 
-        this.showDt = $("#showDt").DataTable({
+        this.showDt = $("#showDt").DataTableTh({
           lengthChange: false,
           searching: false,
           ordering: false,
@@ -187,7 +199,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
             },
             {
               data: "product",
-              className: "center"
+              className: "left"
             },
             {
               data: "taxInvoice",
