@@ -21,6 +21,17 @@ export class GetAppRovedComponent implements OnInit {
   ngOnInit() {
     this.calenda();
   }
+
+  onSubmit = e => {
+    console.log(this.obj);
+    const url = "report/pdf/ts/ApprovedToGoToWork";   
+    this.ajax.post(url,`'${JSON.stringify(this.obj).toString()}'`, res => {
+      if (res.status == 200 && res.statusText == "OK") {
+        window.open("/ims-webapp/api/report/pdf/ApprovedToGoToWork/file");
+      }
+    });
+  };
+
   onDiscard = () => {
     // on click this view hide them
     // ... Don't change or delete this
@@ -33,21 +44,21 @@ export class GetAppRovedComponent implements OnInit {
       endCalendar: $("#date1"),
       type: "date",
       text: TextDateTH,
-      formatter: formatter('ดป')
+      formatter: formatter('วดป')
 
     });
     $("#date2").calendar({
       startCalendar: $("#date1"),
       type: "date",
       text: TextDateTH,
-      formatter: formatter('ดป')
+      formatter: formatter('วดป')
 
     });
-    $("#date2").calendar({
+    $("#date3").calendar({
       startCalendar: $("#date3"),
       type: "date",
       text: TextDateTH,
-      formatter: formatter('ดป')
+      formatter: formatter('วดป')
 
     });
   }
@@ -64,11 +75,12 @@ class getAdd {
   travelToWork3 : string;
   travelToWork4 : string;
   travelToWork5 : string;
-  accordingToPlan : string;
   accordingToPlan1 : string;
+  accordingToPlan2 : string;
   companyAccount1 : string;
   companyAccount2 : string;
   companyAccount3 : string;
   companyAccount4 : string;
   companyAccount5 : string;
+  budget : string;
 }

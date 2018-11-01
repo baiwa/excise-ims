@@ -29,7 +29,7 @@ export class FollowSupervisionComponent implements OnInit {
       endCalendar: $("#date1"),
       type: "date",
       text: TextDateTH,
-      formatter: formatter('ดป')
+      formatter: formatter('วดป')
 
     });
    
