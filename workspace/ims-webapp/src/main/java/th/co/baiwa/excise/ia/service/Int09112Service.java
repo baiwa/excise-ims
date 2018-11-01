@@ -20,7 +20,7 @@ public class Int09112Service {
 		formVo.setCreatedBy(UserLoginUtils.getCurrentUsername());
 		formVo.setDocumentType("สัญญาการยืมเงิน"); 		 		
 		formVo.setSubject("สัญญาการยืมเงิน");
-		iaTravelEstimatorDao.addDocument(formVo.getIdProcess(),formVo.getCreatedBy(),formVo.getDocumentType(),formVo.getSubject());
+//		iaTravelEstimatorDao.addDocument(formVo.getIdProcess(),formVo.getCreatedBy(),formVo.getDocumentType(),formVo.getSubject());
 	}
 	
 }

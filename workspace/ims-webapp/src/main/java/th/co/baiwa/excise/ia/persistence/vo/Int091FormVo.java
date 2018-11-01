@@ -24,6 +24,10 @@ public class Int091FormVo extends DataTableRequest {
 	private String dateFrom;
 	private String dateTo;
 	private String searchFlag;
+	
+	private String documentType;
+	private String subject;
+	
 	public Long getId() {
 		return id;
 	}
@@ -111,6 +115,19 @@ public class Int091FormVo extends DataTableRequest {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	public String getDocumentType() {
+		return documentType;
+	}
+	public void setDocumentType(String documentType) {
+		this.documentType = documentType;
+	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
 
+	
 	
 }

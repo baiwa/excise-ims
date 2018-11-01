@@ -11,6 +11,9 @@ public class Int09112FormVo extends DataTableRequest {
 	private String documentType;
 	private String subject;
 	private String searchFlag;
+	
+	
+	
 
 	public Long getId() {
 		return id;

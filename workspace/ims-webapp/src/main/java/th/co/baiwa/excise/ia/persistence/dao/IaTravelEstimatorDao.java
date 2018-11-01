@@ -263,6 +263,16 @@ public class IaTravelEstimatorDao {
 			List<Object> params = new ArrayList<>();
 			
 			params.add(formVo.getIdProcess());
+			
+			if (StringUtils.isNotBlank(formVo.getPickedType())) {
+				sql.append(" AND PICKED_TYPE = ?");
+				params.add(formVo.getPickedType());
+			}
+			
+			if (StringUtils.isNotBlank(formVo.getBudgetType())) {
+				sql.append(" AND BUDGET_TYPE = ?");
+				params.add(formVo.getBudgetType());
+			}
 				
 			String countSql = OracleUtils.countForDatatable(sql);
 	        Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
@@ -274,8 +284,18 @@ public class IaTravelEstimatorDao {
 			List<Object> params = new ArrayList<>();
 
 			params.add(formVo.getIdProcess());
+			
+			if (StringUtils.isNotBlank(formVo.getPickedType())) {
+				sql.append(" AND PICKED_TYPE = ?");
+				params.add(formVo.getPickedType());
+			}
+			
+			if (StringUtils.isNotBlank(formVo.getBudgetType())) {
+				sql.append(" AND BUDGET_TYPE = ?");
+				params.add(formVo.getBudgetType());
+			}
 
-			sql.append(" ORDER BY CREATED_DATE desc ");
+			sql.append(" ORDER BY ID asc ");
 	        List<Int0911Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), travelEstimatorDocumentRowmapper);
 	        return list;
 	    }
@@ -290,6 +310,8 @@ public class IaTravelEstimatorDao {
 		    	    vo.setCreatedBy(rs.getString("CREATED_BY"));
 		    	    vo.setDocumentType(rs.getString("DOCUMENT_TYPE"));
 		    	    vo.setSubject(rs.getString("SUBJECT"));
+		    	    vo.setPickedType(rs.getString("PICKED_TYPE"));
+		    	    vo.setBudgetType(rs.getString("BUDGET_TYPE"));
 		    	    vo.setStatus(rs.getString("STATUS"));
 		    	    vo.setIsDeleted(rs.getString("IS_DELETED"));
 		    	    vo.setErrorMsg(rs.getString("ERROR_MSG"));
@@ -462,8 +484,9 @@ public class IaTravelEstimatorDao {
 		    		return idDtl;
 		    	}
 			  };
+			  
 
-		    public Long addDocument (Long idProcess,String createdBy,String documentType,String subject) {
+		    public Long addDocument (Long idProcess,String createdBy,String documentType,String subject,String pickedType,String budgetType) {
 		    	Long id = jdbcTemplate.queryForObject(" SELECT TRAVEL_ESTIMATOR_DOCUMENT_SEQ.NEXTVAL FROM dual ",Long.class);
 	
 		    	jdbcTemplate.update(" INSERT INTO TRAVEL_ESTIMATOR_DOCUMENT( " + 
@@ -475,11 +498,15 @@ public class IaTravelEstimatorDao {
 		    			"SUBJECT,"+ 
 		    			"STATUS,"+ 
 		    			"IS_DELETED, "+ 
-		    			"ERROR_MSG "+ 
+		    			"ERROR_MSG, "+ 
+		    			"PICKED_TYPE, "+ 
+		    			"BUDGET_TYPE "+ 
 		    			")VALUES( " + 
 		    			"?, " + 
 		    			"?, " + 
 		    			"sysdate, " + 
+		    			"?, " + 
+		    			"?, " + 
 		    			"?, " + 
 		    			"?, " + 
 		    			"?, " + 
@@ -491,9 +518,11 @@ public class IaTravelEstimatorDao {
 		    					createdBy,
 		    					documentType,
 		    					subject,
-		    					"1194",
+		    					"1884",
 		    					"N",
-		    					"NO"});
+		    					"NO",
+		    					pickedType,
+		    					budgetType});
 		    	return id;
 		}
 		    

@@ -67,7 +67,7 @@ public class Int09113Service {
 		formVo.setDocumentType("หลักฐานการจ่ายเงิน");				
 		formVo.setSubject("หลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ");
 		// เพิ่มเอกสาร
-		iaTravelEstimatorDao.addDocument(formVo.getIdProcess(), formVo.getCreatedBy(), formVo.getDocumentType(),formVo.getSubject());
+//		iaTravelEstimatorDao.addDocument(formVo.getIdProcess(), formVo.getCreatedBy(), formVo.getDocumentType(),formVo.getSubject());
 		// ล้างข้อมูล
 		iaTravelEstimatorDao.deleteTravelEstimatorDtl(formVo.getIdProcess(),"113");
 		
