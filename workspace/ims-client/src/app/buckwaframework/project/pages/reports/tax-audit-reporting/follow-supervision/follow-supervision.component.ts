@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TextDateTH, formatter } from 'helpers/datepicker';
+import { ActivatedRoute } from '@angular/router';
+import { AjaxService } from 'services/ajax.service';
 declare var $: any;
 @Component({
   selector: 'app-follow-supervision',
@@ -8,7 +10,14 @@ declare var $: any;
 })
 export class FollowSupervisionComponent implements OnInit {
   @Output() discard = new EventEmitter<any>();
-  constructor() { }
+  obj: followSupervision;
+  
+  constructor(    private route: ActivatedRoute,
+    private ajax: AjaxService) {
+      this.obj = new followSupervision();
+
+     }
+
 
   ngOnInit() {
     this.calenda();
@@ -20,7 +29,7 @@ export class FollowSupervisionComponent implements OnInit {
       endCalendar: $("#date1"),
       type: "date",
       text: TextDateTH,
-      formatter: formatter('ดป')
+      formatter: formatter('วดป')
 
     });
    
@@ -30,4 +39,13 @@ export class FollowSupervisionComponent implements OnInit {
     // ... Don't change or delete this
     this.discard.emit(false);
   };
+}
+class followSupervision{
+  governmentService : string;
+  date : string;   
+  subject : string;
+  study : string;
+  actionMonitoring : string;
+  resultsAre : string;
+  fromOperation : string;
 }

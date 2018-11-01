@@ -9,9 +9,25 @@ public class Assessment {
 
     @SerializedName("data")
     @Expose
-    public List<Datum> data = null;
+    private List<Datum> data;
+    
     @SerializedName("status")
     @Expose
-    public String status;
+    private String status;
+    
+	public List<Datum> getData() {
+		return data;
+	}
+	public void setData(List<Datum> data) {
+		this.data = data;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+    
+    
 
 }

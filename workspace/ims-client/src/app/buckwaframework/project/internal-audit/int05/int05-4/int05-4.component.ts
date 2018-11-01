@@ -187,15 +187,15 @@ export class Int054Component implements OnInit, AfterViewInit {
         },
         {
           data: "poNumber",
-          className: "right"
+          className: "left"
         },
         {
           data: "projectCodeEgp",
-          className: "right"
+          className: "left"
         },
         {
           data: "projectName",
-          className: "center"
+          className: "left"
         },
         {
           data: "price",
@@ -212,7 +212,7 @@ export class Int054Component implements OnInit, AfterViewInit {
         },
         {
           data: "updatedDate",
-          className: "right"
+          className: "center"
         },
         {
           className: "center",

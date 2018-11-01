@@ -19,7 +19,7 @@ export class Ope048Component implements OnInit, AfterViewInit {
     { label: 'หน้าแรก', route: '#' },
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การตรวจสอบภาษี', route: '#' },
-    { label: 'สร้างกระดาษทำการตรวจสอบด้านราคา', route: '#' },
+    { label: 'กระดาษทำการตรวจสอบด้านราคา', route: '#' },
   ];
 
   // ==> params
@@ -119,8 +119,8 @@ export class Ope048Component implements OnInit, AfterViewInit {
     }, 500);
   }
 
-
   claer = () => {
+    this.submitted = false;
     this.error = false;
     this.uploadDisabled = true;
     $("form-exciseId").removeClass('error');

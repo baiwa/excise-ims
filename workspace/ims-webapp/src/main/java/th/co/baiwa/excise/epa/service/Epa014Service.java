@@ -22,14 +22,20 @@ public class Epa014Service {
 		
 		if (ExciseConstants.SEARCH_FLAG.TRUE.equalsIgnoreCase(epa014FormVo.getSearchFlag())) {
 			List<Epa014Vo> list = exportCheckingReportDao.search(epa014FormVo);
+			long count = exportCheckingReportDao.count(epa014FormVo);
 			
 			dataTableAjax.setDraw(epa014FormVo.getDraw() + 1);
-//			dataTableAjax.setRecordsTotal(count);
-//			dataTableAjax.setRecordsFiltered(count);
+			dataTableAjax.setRecordsTotal(count);
+			dataTableAjax.setRecordsFiltered(count);
 			dataTableAjax.setData(list);
 		}
 		
 		return dataTableAjax;
+	}
+
+	public List<Epa014Vo> getInformation(Epa014FormVo epa014FormVo) {
+		List<Epa014Vo> list = exportCheckingReportDao.getInformation(epa014FormVo);
+		return list;
 	}
 
 }

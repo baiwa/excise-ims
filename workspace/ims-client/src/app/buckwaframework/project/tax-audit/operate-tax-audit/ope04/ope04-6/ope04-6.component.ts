@@ -20,7 +20,7 @@ export class Ope046Component implements OnInit {
     { label: 'หน้าแรก', route: '#' },
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การตรวจสอบภาษี', route: '#' },
-    { label: 'สร้างกระดาษทำการตรวจสอบภาษี', route: '#' },
+    { label: 'กระดาษทำการตรวจสอบภาษี', route: '#' },
   ]
 
   // === > params

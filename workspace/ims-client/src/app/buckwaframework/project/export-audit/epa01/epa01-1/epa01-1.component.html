@@ -14,7 +14,7 @@
 
   <div id="exportForm" class="ui form">
     <div class="inline fields">
-        <input type="hidden" id="searchFlag" name="searchFlag">
+      <input type="hidden" id="searchFlag" name="searchFlag">
       <div class="two wide field "></div>
       <div class="two wide field ">
         <label>เลขทะเบียนสรรพสามิต :
@@ -28,7 +28,12 @@
         </label>
       </div>
       <div class="four wide field ">
-        <input type="text" placeholder="" value="">
+        <div class="ui calendar full-width" id="date">
+          <div class="ui input left icon">
+            <i class="clock icon"></i>
+            <input name="startDate" type="text" id="startDate" autocomplete="off" [readonly]="true" placeholder="วว/ดด/ปปปป">
+          </div>
+        </div>
       </div>
       <div class="two wide field "></div>
     </div>
@@ -41,7 +46,7 @@
           ค้นหา
         </button>
         <button class="ui mini button" (click)="onClickClear()">
-            ล้างผลการค้นหาทั้งหมด
+          ล้างผลการค้นหาทั้งหมด
         </button>
       </div>
     </div>

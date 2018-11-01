@@ -37,7 +37,7 @@
       <div class="three wide field ">
         <label>เลขที่สาขาภาษีมูลค่าเพิ่ม (ถ้ามี) :</label>
       </div>
-      <div class="four wide field">
+      <div class="four wide field disabled input">
         <input type="text">
       </div>
     </div>
@@ -112,8 +112,8 @@
 
 </div>
 
-
-<div class="ui modal" id="ModalCheck" style="width: 90%;">
+<!-- Modal Show -->
+<div class="ui modal" id="ModalShow" style="width: 90%;">
 
   <div class="header" style="background: #1e83db;color: white">
     การตรวจปล่อยสินค้า
@@ -368,13 +368,13 @@
           <label>ผลการตรวจ:</label>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" name="result" [(ngModel)]="datas.result" value="1">
+              <input type="radio" name="result" [(ngModel)]="datas.resultDtl" value="1">
               <label>ผ่าน</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" name="result" [(ngModel)]="datas.result" value="0">
+              <input type="radio" name="result" [(ngModel)]="datas.resultDtl" value="0">
               <label>ไม่ผ่าน</label>
             </div>
           </div>
@@ -384,7 +384,7 @@
       <!-- Comment Box -->
       <div class="ui grid center aligned">
         <div class="fields">
-          <textarea rows="5" cols="100" [(ngModel)]="datas.remark"></textarea>
+          <textarea rows="5" cols="100" [(ngModel)]="datas.comment1Dtl"></textarea>
         </div>
       </div>
 
@@ -392,13 +392,9 @@
   </div>
 
   <div class="actions">
-    <div class="ui primary button" (click)="onClickSave()">
-      <i class="save icon"></i>
-      บันทึกข้อมูลการตรวจ
-    </div>
     <div class="ui icon deny button">
       <i class="close icon"></i>
-      ยกเลิกการบันทึกข้อมูล
+      ปิด
     </div>
   </div>
 

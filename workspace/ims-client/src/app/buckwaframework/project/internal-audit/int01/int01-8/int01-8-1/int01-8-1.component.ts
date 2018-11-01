@@ -251,7 +251,7 @@ export class Int0181Component implements OnInit {
       ],
       columnDefs: [
         { targets: [0], className: "center aligned" },
-        { targets: [2], className: "right aligned" }
+        { targets: [2, 5], className: "right aligned" }
       ], rowCallback: (row, data, index) => {
 
         // $("td > .licNo", row).bind("click", () => {

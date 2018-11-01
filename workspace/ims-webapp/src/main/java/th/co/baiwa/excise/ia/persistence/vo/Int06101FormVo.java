@@ -1,5 +1,9 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
+import java.util.List;
+
+import th.co.baiwa.excise.ia.persistence.entity.IaWithdrawalPersons;
+
 public class Int06101FormVo {
 
 	private String activity;
@@ -26,6 +30,42 @@ public class Int06101FormVo {
 	private String documentNumber;
 	private String itemDescription;
 	private String note;
+	private String budgetName;
+	private String listName;
+	private String categoryName;
+	public String getListName() {
+		return listName;
+	}
+
+	public void setListName(String listName) {
+		this.listName = listName;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	private List<IaWithdrawalPersons> persons;
+	
+	public String getBudgetName() {
+		return budgetName;
+	}
+
+	public void setBudgetName(String budgetName) {
+		this.budgetName = budgetName;
+	}
+
+	public List<IaWithdrawalPersons> getPersons() {
+		return persons;
+	}
+
+	public void setPersons(List<IaWithdrawalPersons> persons) {
+		this.persons = persons;
+	}
 
 	public String getActivity() {
 		return activity;

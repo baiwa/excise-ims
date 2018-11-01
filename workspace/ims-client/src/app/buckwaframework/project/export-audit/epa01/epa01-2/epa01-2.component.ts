@@ -124,7 +124,7 @@ export class Epa012Component implements OnInit {
     this.datatable.on('click', 'tbody tr button.checking-button', (e) => {
       var closestRow = $(e.target).closest('tr');
       var data = this.datatable.row(closestRow).data();
-      
+
       this.datas.exciseId = data.exciseId;
       this.datas.taxReNumber2 = data.taxReNumber2;
       this.datas.exciseName = data.exciseName;
@@ -162,14 +162,17 @@ export class Epa012Component implements OnInit {
     });
   };
 
-  addTaxField() {
+  addTaxField(index) {
     this.taxStampNo.push("");
+    // console.log(this.datas.stampName);
   }
 
   delTaxField(index) {
-    if (this.taxStampNo.length != 1) {
+    if (this.taxStampNo.length !== 1) {
       this.taxStampNo.splice(index, 1);
+      this.datas.stampName.splice(index, 1);
     }
+    // console.log(this.datas.stampName);
   }
 
   addFactoryField() {
@@ -177,8 +180,9 @@ export class Epa012Component implements OnInit {
   }
 
   delFactoryField(index) {
-    if (this.factoryStampNo.length != 1) {
+    if (this.factoryStampNo.length !== 1) {
       this.factoryStampNo.splice(index, 1);
+      this.saveDatas.stampName.splice(index, 1);
     }
   }
 
@@ -187,7 +191,7 @@ export class Epa012Component implements OnInit {
     setTimeout(() => {
 
       if (this.datas.remark != "") {
-
+        console.log(this.datas);
         let url = "epa/epa012/saveTaxDatas";
         this.ajaxService.post(url, this.datas, res => { });
 
@@ -211,7 +215,6 @@ export class Epa012Component implements OnInit {
   }
 
   onClickClose() {
-    console.log("You've clicked close!");
     $('#ModalAlert').modal('hide');
     $('#ModalCheck').modal('show');
   }

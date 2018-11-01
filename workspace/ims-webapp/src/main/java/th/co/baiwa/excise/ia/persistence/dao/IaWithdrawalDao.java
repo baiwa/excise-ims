@@ -177,7 +177,7 @@ public class IaWithdrawalDao {
 	
 	public Long counwith(Int0610FormVo formVo) {
 
-		StringBuilder sql = new StringBuilder(SQL);
+		StringBuilder sql = new StringBuilder(SQL_SEARCH_CRITERIA);
 		List<Object> param = new ArrayList<>();
 		
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
@@ -235,7 +235,7 @@ public class IaWithdrawalDao {
 			@Override
 			public Int0610Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 				Int0610Vo vo = new Int0610Vo();
-				Date date = DateConstant.convertStrToDate(rs.getString("WITHDRAWAL_DATE"), ExciseConstants.FORMAT_DATE.YYYYMMDD,ExciseConstants.LOCALE.EN);
+				Date date = rs.getDate("WITHDRAWAL_DATE");
 				String dateStr = DateConstant.convertDateToStr(date, ExciseConstants.FORMAT_DATE.DDMMYYYY,ExciseConstants.LOCALE.TH);
 				vo.setWithdrawaldate(dateStr);
 				vo.setWithdrawalid(rs.getString("WITHDRAWAL_ID"));

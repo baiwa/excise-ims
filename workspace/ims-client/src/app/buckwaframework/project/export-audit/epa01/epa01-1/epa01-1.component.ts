@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'services/auth.service';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { TextDateTH, formatter } from 'helpers/datepicker';
 
 declare var $: any;
 
@@ -18,6 +19,7 @@ export class Epa011Component implements OnInit {
   $page: any;
   exciseId: string = "";
   exciseName: string = "";
+  startDate: string = "";
   searchFlag: string = "FALSE";
 
   constructor(
@@ -34,10 +36,23 @@ export class Epa011Component implements OnInit {
     this.exciseName = this.route.snapshot.queryParams["exciseName"];
     this.searchFlag = this.route.snapshot.queryParams["searchFlag"];
     this.$form = $('#exportForm');
+    this.calenda();
   }
 
   ngAfterViewInit(): void {
     this.initDatatable();
+  }
+
+  calenda = () => {
+    let date = new Date();
+    $("#date").calendar({
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('day-month-year'),
+      onChange: (date, text) => {
+        this.startDate = text;
+      }
+    });
   }
 
   initDatatable = () => {

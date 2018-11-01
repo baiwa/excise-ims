@@ -1,89 +1,95 @@
-<br>
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
+<!-- content -->
 <div class="ui grid">
+
     <div class="sixteen wide column">
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>เพิ่มเลขแบบพิมพ์</span>
         </div>
 
-        <div class="ui attached segment">
-            <div class="ui form">
-                <div class="inline fields">
-                    <div class="two wide  field">
-                        <label class="text-right full-width">เลขที่ใบอนุญาต : </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" [(ngModel)]="lic.licNo">
-                    </div>
-                    <div class="two wide  field">
-                        <label class="text-right full-width">เลขที่แบบพิมพ์ : </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="text" [(ngModel)]="lic.printCode">
-                    </div>
-                    <div class="two wide  field">
-                        <label class="text-right full-width">จำนวนเงิน : </label>
-                    </div>
-                    <div class="three wide  field">
-                        <input type="number" [(ngModel)]="lic.licAmount">
-                    </div>
-                    <div class="one wide  field">
-                        <button class="ui mini primary button width-100" (click)="editDataInlist()">
-                            <i class="add icon"></i>
-                            เพิ่ม
-                        </button>
-                    </div>
+        <!-- form add print no -->
+        <div class="ui bottom attached segment">
+            <div class="ui centered grid">
+                <div class="fourteen wide column">
+                    <form class="ui form" (submit)="addPrint($event)" #f="ngForm">
+                        <div class="inline fields">
+                            <div class="two wide  field">
+                                <label class="text-right full-width">เลขที่ใบอนุญาต : </label>
+                            </div>
+                            <div class="three wide  field">
+                                <input type="text" [(ngModel)]="lic.licNo">
+                            </div>
+                            <div class="two wide  field">
+                                <label class="text-right full-width">เลขที่แบบพิมพ์ : </label>
+                            </div>
+                            <div class="three wide  field">
+                                <input type="text" [(ngModel)]="lic.printCode">
+                            </div>
+                            <div class="two wide  field">
+                                <label class="text-right full-width">จำนวนเงิน : </label>
+                            </div>
+                            <div class="three wide  field">
+                                <input type="number" [(ngModel)]="lic.licAmount">
+                            </div>
+                            <div class="one wide  field">
+                                <button class="ui mini primary button width-100" (click)="editDataInlist()">
+                                    <i class="add icon"></i>
+                                    เพิ่ม
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="sixteen wide column">
-        <div class="ui segment">
-            <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
-                <thead>
-                    <tr class="center aligned">
-                        <th style="text-align: center;">ลำดับที่</th>
-                        <th style="text-align: center;">วันที่ออกใบอนุญาต</th>
-                        <th style="text-align: center;">วันที่นำส่งเงิน
-                            <br>(ระบบรายได้)</th>
-                        <th style="text-align: center;">ประเภทใบอนุญาต</th>
-                        <th style="text-align: center;">เลขที่แบบพิมพ์</th>
-                        <th style="text-align: center;">เลขที่ใบอนุญาต</th>
-                        <th style="text-align: center;">จำนวนเงินจากระบบ</th>
-                        <th style="text-align: center;">จำนวนเงินจากสำเนาใบอนุญาต</th>
-                        <th style="text-align: center;">จำนวนเงินค่าธรรมเนียม
-                            <br>อปท. 10%</th>
-                        <th style="text-align: center;">จำนวนเงินค่ามหาดไทย
-                            <br>10%</th>
-                        <th style="text-align: center;">รวม</th>
-                        <th style="text-align: center;">วันที่ใบอนุญาตมีผล</th>
-                        <th style="text-align: center;">วันที่หมดอายุใบอนุญาต</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-        <div class="ui attached segment">
-                <div class="ui center aligned grid">
-                    <div class="eight wide column">
-                        <a class="ui mini yellow button widtd-100">
-                            <i class="print icon"></i>
-                            ส่งออก
-                        </a>
-                        <a id="btnSave" class="ui mini primary button widtd-100" (click)="saveAllData()">
-                            <i class="save icon"></i>
-                            บันทึก
-                        </a>
-                        <a class="ui mini primary button widtd-100" (click)="nextPage()">
-                            <i class="file alternate icon"></i>
-                            รายงานใบอนุญาต
-                        </a>
-                        <a class="ui mini  button widtd-100" routerLink='/int01/2/1'>
-                            <i class="close icon"></i>ยกเลิก
-                        </a>
-                    </div>
+        <!-- form add print no -->
+        <div class="ui {{ (loading | async) ? 'loading' : '' }} top attached segment">
+            <div class="ui grid">
+                <div class="sixteen wide column">
+                    <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
+                        <thead>
+                            <tr class="center aligned">
+                                <th style="text-align: center;">ลำดับที่</th>
+                                <th style="text-align: center;">วันที่ออกใบอนุญาต</th>
+                                <th style="text-align: center;">วันที่นำส่งเงิน
+                                    <br>(ระบบรายได้)</th>
+                                <th style="text-align: center;">ประเภทใบอนุญาต</th>
+                                <th style="text-align: center;">เลขที่แบบพิมพ์</th>
+                                <th style="text-align: center;">เลขที่ใบอนุญาต</th>
+                                <th style="text-align: center;">จำนวนเงินจากระบบ</th>
+                                <th style="text-align: center;">จำนวนเงินจากสำเนาใบอนุญาต</th>
+                                <th style="text-align: center;">จำนวนเงินค่าธรรมเนียม
+                                    <br>อปท. 10%</th>
+                                <th style="text-align: center;">จำนวนเงินค่ามหาดไทย
+                                    <br>10%</th>
+                                <th style="text-align: center;">รวม</th>
+                                <th style="text-align: center;">วันที่ใบอนุญาตมีผล</th>
+                                <th style="text-align: center;">วันที่หมดอายุใบอนุญาต</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="sixteen wide center aligned column">
+                    <a id="btnSave" class="ui mini primary button widtd-100" (click)="saveAllData()">
+                        <i class="save icon"></i>
+                        บันทึก
+                    </a>
+                    <a class="ui mini primary button widtd-100" (click)="nextPage()">
+                        <i class="file alternate icon"></i>
+                        รายงานใบอนุญาต
+                    </a>
+                    <a class="ui mini yellow button widtd-100">
+                        <i class="print icon"></i>
+                        ส่งออก
+                    </a>
+                    <a class="ui mini  button widtd-100" routerLink='/int01/2/1'>
+                        <i class="close icon"></i>ยกเลิก
+                    </a>
                 </div>
             </div>
+        </div>
     </div>
 </div>
 

@@ -88,7 +88,7 @@
                 <br>
                 <div class="ui center aligned grid">
                     <div class="sixteen wide column">
-                        <button class="ui mini green button" (click)="compareTR()">
+                        <button *ngIf="comboBoxId === '1322'" class="ui mini green button" (click)="compareTR()">
                     <i class="clipboard check icon"></i> 
                     เปรียบเทียบ TR
                   </button>

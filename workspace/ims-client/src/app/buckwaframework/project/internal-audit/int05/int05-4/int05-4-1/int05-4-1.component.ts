@@ -184,6 +184,10 @@ export class Int0541Component implements OnInit {
     });
   }
 
+  onlyNumber(e) {
+    return Utils.onlyNumber(e);
+  }
+
   onChangeChoice = () => {
     setTimeout(() => {
       $(".ui.dropdown").dropdown();

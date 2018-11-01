@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { TextDateTH, formatter } from "../../../common/helper";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var $: any;
 @Component({
@@ -11,6 +12,13 @@ declare var $: any;
 export class MgcontrolComponent implements OnInit {
   public topic: string;
 
+  breadcrumb: BreadCrumb[] = [
+    { label: 'หน้าแรก', route: '#' },
+    { label: 'ระบบบริหารและควบคุม', route: '#' },
+    { label: 'ข้อมูลทางสารสนเทศ', route: '#' }    
+  ]
+
+  
   constructor(private authService: AuthService) {
     this.topic = "";
   }

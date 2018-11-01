@@ -32,9 +32,10 @@ export class ExportCheckingModel {
     quantity: string;
     vehicleNo: string;
     logisticWay: string;
-    stampNo: string;
-    stampName: string;
+    stampNo: string[] = new Array<string>();
+    stampName: string[] = new Array<string>();
     result: string;
     remark: string;
-    eaReInventoryNo: string;
+    resultDtl: string;
+    comment1Dtl: string;
 }

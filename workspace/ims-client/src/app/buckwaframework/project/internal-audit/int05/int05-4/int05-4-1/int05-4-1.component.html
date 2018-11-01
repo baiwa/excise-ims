@@ -78,7 +78,7 @@
                     </div>
 
                     <div class="four wide field ">
-                        <input type="number" name="budget" id="budget" [(ngModel)]="budget">
+                        <input type="text" name="budget" id="budget" (keypress)="onlyNumber($event)" [(ngModel)]="budget">
                     </div>
 
                     <div class="three wide field">
@@ -135,9 +135,9 @@
                         <table id="table1" class="ui small celled table striped selectable" style="width: 100%;">
                             <thead>
                                 <tr style="text-align: center;">
-                                    <th rowspan="2">รายการจัดซื้อจัดจ้าง</th>
+                                    <th rowspan="2">รายการจัดซื้อจัดจ้าง <span style="color: red">*</span></th>
                                     <th rowspan="2">จำนวน</th>
-                                    <th rowspan="2">หน่วยนับ</th>
+                                    <th rowspan="2">หน่วยนับ <span style="color: red">*</span></th>
                                     <th rowspan="2">ราคาที่ตั้งไว้ต่อหน่วย</th>
                                     <th rowspan="2">ราคากลางต่อหน่วย</th>
                                     <th rowspan="2">ราคาซื้อ/จ้าง/เช่า ต่อหน่วย</th>
@@ -146,7 +146,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let min of numbers; let i = index">
+                                <tr *ngFor="let min of numbers; let i = index" style="text-align: center">
                                     <td>
                                         <div class="field full-padding {{flagValidate1_[i] == false? 'error': ''}}">
                                             <input type="text" name="procurementList{{i}}" id="procurementList{{i}}">
@@ -154,7 +154,7 @@
                                     </td>
                                     <td>
                                         <div class="field full-padding {{flagValidate2_[i] == false? 'error': ''}}">
-                                            <input type="number" name="amount{{i}}" id="amount{{i}}" [attr.min]="0" value="0">
+                                            <input style="text-align: right" type="number" name="amount{{i}}" id="amount{{i}}" [attr.min]="0" value="0">
                                         </div>
                                     </td>
                                     <td>
@@ -164,21 +164,22 @@
                                     </td>
                                     <td>
                                         <div class="field full-padding {{flagValidate4_[i] == false? 'error': ''}}">
-                                            <input type="number" name="presetPrice{{i}}" id="presetPrice{{i}}" [attr.min]="0" value="0">
+                                            <input style="text-align: right" type="number" name="presetPrice{{i}}" id="presetPrice{{i}}" [attr.min]="0" value="0">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="field full-padding {{flagValidate5_[i] == false? 'error': ''}}">
-                                            <input type="number" name="appraisalPrice{{i}}" id="appraisalPrice{{i}}" [attr.min]="0" value="0">
+                                            <input style="text-align: right" type="number" name="appraisalPrice{{i}}" id="appraisalPrice{{i}}" [attr.min]="0" value="0">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="field full-padding {{flagValidate6_[i] == false? 'error': ''}}">
-                                            <input type="number" name="unitPrice{{i}}" id="unitPrice{{i}}" [attr.min]="0" value="0">
+                                            <input style="text-align: right" type="number" name="unitPrice{{i}}" id="unitPrice{{i}}" [attr.min]="0" value="0">
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="field full-padding {{flagValidate7_[i] == false? 'error': ''}}"><input type="number" name="price{{i}}" id="price{{i}}" [attr.min]="0" value="0">
+                                        <div class="field full-padding {{flagValidate7_[i] == false? 'error': ''}}">
+                                            <input type="number" name="price{{i}}" id="price{{i}}" [attr.min]="0" value="0">
                                         </div>
                                     </td>
                                     <td style="text-align: center;">
@@ -244,8 +245,8 @@
 
                     <div class="six wide field ">
                         <select class="ui search dropdown ai search" name="supplyChoice" id="supplyChoice" [(ngModel)]="supplyChoice" (change)="onChangeChoice()">
-                            <option value="">กรุณาเลือก</option>  
-                            <option *ngFor="let item of supplyChoiceList | async" value="{{item.value1}}">{{item.value1}}</option>                                
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let item of supplyChoiceList | async" value="{{item.value1}}">{{item.value1}}</option>
                         </select>
                     </div>
 
@@ -269,7 +270,7 @@
                 </div>
 
                 <div class="five wide field ">
-                    <input type="number" name="tenderResults" [(ngModel)]="tenderResults">
+                    <input type="text" name="tenderResults" (keypress)="onlyNumber($event)" [(ngModel)]="tenderResults">
                 </div>
 
                 <div class="two wide field">
@@ -491,7 +492,7 @@
 
                 <button class="ui mini tiny primary button" type="submit">
                     <i class="save icon"></i> บันทึก
-            </button>
+                </button>
             </form>
         </div>
     </div>
@@ -926,7 +927,7 @@
 
                 <button class="ui mini tiny primary button" type="submit">
                     <i class="save icon"></i> บันทึก
-            </button>
+                </button>
             </form>
         </div>
     </div>

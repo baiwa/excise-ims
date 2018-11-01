@@ -212,14 +212,19 @@ public class ExportCheckingConnectDao {
 				epa012FormVo.getExciseId()
 		});
 		log.info("Updated saveTaxDatas HDR: {} records", records);
-		int records2 = jdbcTemplate.update(SQL_INSERT_DTL, new Object[] {
+		
+		int records2 = 0;
+		for (int i=0; i<epa012FormVo.getStampName().size(); i++) {
+			records2 = jdbcTemplate.update(SQL_INSERT_DTL, new Object[] {
 				id,
 				epa012FormVo.getTaxReNumber2(),
-				epa012FormVo.getStampNo(),
-				epa012FormVo.getStampName(),
+				i+1,
+				epa012FormVo.getStampName().get(i),
 				epa012FormVo.getResult(),
 				epa012FormVo.getRemark()
-		});
+			});
+		}
+		 
 		log.info("Updated saveTaxDatas DTL: {} records", records2);
 	}
 
@@ -242,14 +247,18 @@ public class ExportCheckingConnectDao {
 				epa012FormVo.getExciseId2()
 		});
 		log.info("Updated saveFactoryDatas HDR: {} records", records);
-		int records2 = jdbcTemplate.update(SQL_INSERT_DTL, new Object[] {
+		
+		int records2 = 0;
+		for (int i=0; i<epa012FormVo.getStampName().size(); i++) {
+			records2 = jdbcTemplate.update(SQL_INSERT_DTL, new Object[] {
 				id,
 				epa012FormVo.getTaxReNumber2(),
-				epa012FormVo.getStampNo(),
-				epa012FormVo.getStampName(),
+				i+1,
+				epa012FormVo.getStampName().get(i),
 				epa012FormVo.getResult(),
 				epa012FormVo.getRemark()
-		});
+			});
+		}
 		log.info("Updated saveTaxDatas DTL: {} records", records2);
 	}
 	
