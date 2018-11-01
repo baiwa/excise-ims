@@ -65,6 +65,7 @@ export class GetAppRovedComponent implements OnInit {
 }
 
 class getAdd {
+  logo: string = "logo.jpg";
   governmentService : string;
   date : string;   
   subject : string;
