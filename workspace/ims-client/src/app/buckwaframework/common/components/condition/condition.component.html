@@ -40,7 +40,7 @@
 
           <td class="aligned center">
             <div class="ui input">
-              <input type="text" name="valueRl{{i}}" [(ngModel)]="datas[i].valueRl" id="valueRl{{i}}" required>
+              <input type="number" name="valueRl{{i}}" min="0" max="9" style="width: 100%;" [(ngModel)]="datas[i].valueRl" id="valueRl{{i}}" required>
             </div>
           </td>
           <td class="aligned center">
