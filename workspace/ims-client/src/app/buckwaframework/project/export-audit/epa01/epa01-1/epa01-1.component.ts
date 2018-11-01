@@ -4,7 +4,6 @@ import { AjaxService } from '../../../../common/services/ajax.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TextDateTH, formatter } from 'helpers/datepicker';
 
-
 declare var $: any;
 
 @Component({

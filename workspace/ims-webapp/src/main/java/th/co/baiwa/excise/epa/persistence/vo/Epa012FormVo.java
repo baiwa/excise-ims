@@ -1,5 +1,8 @@
 package th.co.baiwa.excise.epa.persistence.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
 public class Epa012FormVo extends DataTableRequest {
@@ -21,8 +24,8 @@ public class Epa012FormVo extends DataTableRequest {
 	private String taxReNumber2;
 	private String vehicleNo;
 	private String logisticWay;
-	private String stampNo;
-	private String stampName;
+	private List<String> stampNo = new ArrayList<>();
+	private List<String> stampName = new ArrayList<>();
 	private String result;
 	private String remark;
 	private String searchFlag;
@@ -79,11 +82,11 @@ public class Epa012FormVo extends DataTableRequest {
 		return logisticWay;
 	}
 
-	public String getStampNo() {
+	public List<String> getStampNo() {
 		return stampNo;
 	}
 
-	public String getStampName() {
+	public List<String> getStampName() {
 		return stampName;
 	}
 
@@ -151,11 +154,11 @@ public class Epa012FormVo extends DataTableRequest {
 		this.logisticWay = logisticWay;
 	}
 
-	public void setStampNo(String stampNo) {
+	public void setStampNo(List<String> stampNo) {
 		this.stampNo = stampNo;
 	}
 
-	public void setStampName(String stampName) {
+	public void setStampName(List<String> stampName) {
 		this.stampName = stampName;
 	}
 

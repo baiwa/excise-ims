@@ -319,10 +319,10 @@
                 <p>ดวงที่ {{i+1}}</p>
               </div>
               <div class="eight wide field">
-                <input type="text" [(ngModel)]="datas.stampName">
+                <input type="text" [(ngModel)]="datas.stampName[i]">
               </div>
               <div class="four wide field">
-                <button class="ui mini green button" (click)="addTaxField()">
+                <button class="ui mini green button" (click)="addTaxField(i)">
                   <i class="plus icon"></i>
                   เพิ่ม
                 </button>
@@ -342,7 +342,7 @@
                 <p>ดวงที่ {{i+1}}</p>
               </div>
               <div class="eight wide field">
-                <input type="text" [(ngModel)]="saveDatas.stampName">
+                <input type="text" [(ngModel)]="saveDatas.stampName[i]">
               </div>
               <div class="four wide field">
                 <button class="ui mini green button" (click)="addFactoryField()">
