@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { DecimalFormat, TextDateTH, digit } from "../../../../../common/helper";
 import { AjaxService, AuthService } from "../../../../../common/services";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var $: any;
 @Component({
@@ -10,6 +11,14 @@ declare var $: any;
   styleUrls: ["./ope04-3.component.css"]
 })
 export class Ope043Component implements OnInit, AfterViewInit {
+
+  breadcrumb: BreadCrumb[] = [
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การตรวจสอบภาษี', route: '#' },
+    { label: 'กระดาษทำการตรวจสอบด้านราคา', route: '#' },
+    { label: 'กระดาษทำการรับ-จ่ายวัตถุดิบ', route: '#' },
+    { label: 'สร้างกระดาษทำการตรวจนับวัตถุดิบคงเหลือ', route: '#' },
+  ];
   obj: Data;
   exciseId: any;
   exciseIdArr: any;
@@ -31,8 +40,7 @@ export class Ope043Component implements OnInit, AfterViewInit {
   columnExcel2: any;
 
   constructor(
-    
-private authService: AuthService,
+    private authService: AuthService,
     private ajax: AjaxService,
     private messageBarService: MessageBarService
   ) {
@@ -62,11 +70,11 @@ private authService: AuthService,
       type: "month",
       text: TextDateTH,
       formatter: {
-        header: function(date, mode, settings) {
+        header: function (date, mode, settings) {
           //return a string to show on the header for the given 'date' and 'mode'
           return date.getFullYear() + 543;
         },
-        date: function(date, settings) {
+        date: function (date, settings) {
           if (!date) {
             return "";
           }
@@ -83,11 +91,11 @@ private authService: AuthService,
       type: "month",
       text: TextDateTH,
       formatter: {
-        header: function(date, mode, settings) {
+        header: function (date, mode, settings) {
           //return a string to show on the header for the given 'date' and 'mode'
           return date.getFullYear() + 543;
         },
-        date: function(date, settings) {
+        date: function (date, settings) {
           if (!date) {
             return "";
           }
@@ -118,7 +126,7 @@ private authService: AuthService,
     $("#showData").hide();
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   changeExiseId = () => {
     this.exciseId = (<HTMLInputElement>(
@@ -131,6 +139,8 @@ private authService: AuthService,
   };
 
   clearAll = () => {
+    $("#exciseId").dropdown('restore defaults');
+    $("#fileExel").val('');
     $("#showData").hide();
     // this.showDt.fnClearTable();
     this.showDt.clear().draw();
@@ -169,25 +179,25 @@ private authService: AuthService,
           this.showDt.destroy();
         }
 
-        this.showDt = $("#showDt").DataTable({
+        this.showDt = $("#showDt").DataTableTh({
           lengthChange: false,
           searching: false,
           ordering: false,
-          pageLength: 10,
+          //pageLength: 10,
           processing: true,
           serverSide: false,
-          paging: false,
+          paging: true,
           data: this.allData,
           columns: [
             {
-              render: function(data, type, row, meta) {
+              render: function (data, type, row, meta) {
                 return meta.row + meta.settings._iDisplayStart + 1;
               },
               className: "center"
             },
             {
               data: "order",
-              className: "center"
+              className: "left"
             },
             {
               data: "ex1",
@@ -215,9 +225,9 @@ private authService: AuthService,
               className: "right amount"
             }
           ],
-          fnDrawCallback: function(oSettings) {
+          fnDrawCallback: function (oSettings) {
             if ($(".amount").length > 0) {
-              $(".amount").each(function() {
+              $(".amount").each(function () {
                 if (this.innerHTML === "0") {
                   this.className = "right amount green";
                 }
@@ -310,14 +320,14 @@ private authService: AuthService,
       },
       columns: [
         {
-          render: function(data, type, row, meta) {
+          render: function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           },
           className: "center"
         },
         {
           data: "order",
-          className: "center"
+          className: "left"
         },
         {
           data: "ex1",
@@ -345,9 +355,9 @@ private authService: AuthService,
           className: "right amount"
         }
       ],
-      fnDrawCallback: function(oSettings) {
+      fnDrawCallback: function (oSettings) {
         if ($(".amount").length > 0) {
-          $(".amount").each(function() {
+          $(".amount").each(function () {
             if (this.innerHTML === "0") {
               this.className = "right amount green";
             }
@@ -368,34 +378,40 @@ private authService: AuthService,
   }
 
   saveTable = () => {
-    this.dataTB = [];
-    //push data Criteria header
-    this.dataTB.push({
-      exciseId: this.exciseId,
-      analysNumber: this.obj.analysNumber,
-      startDate: this.startDateSplit,
-      endDate: this.endDateSplit
-    });
 
-    //push datatable #showDt
-    for (var i = 0; i < this.showDt.data().length; i++) {
-      this.dataTB.push(this.showDt.data()[i]);
-    }
+    this.messageBarService.comfirm((res) => {
+      if (res) {
+        this.dataTB = [];
+        //push data Criteria header
+        this.dataTB.push({
+          exciseId: this.exciseId,
+          analysNumber: this.obj.analysNumber,
+          startDate: this.startDateSplit,
+          endDate: this.endDateSplit
+        });
 
-    const URL = "/ope043/saveTable";
-    this.ajax.post(
-      URL,
-      JSON.stringify(this.dataTB),
-      res => {
-        this.messageBarService.successModal("บันทึกข้อมูลสำเร็จ", "สำเร็จ");
-      },
-      err => {
-        this.messageBarService.errorModal(
-          "ไม่สามารถบันทึกข้อมูลได้",
-          "เกิดข้อผิดพลาด"
+        //push datatable #showDt
+        for (var i = 0; i < this.showDt.data().length; i++) {
+          this.dataTB.push(this.showDt.data()[i]);
+        }
+
+        const URL = "/ope043/saveTable";
+        this.ajax.post(
+          URL,
+          JSON.stringify(this.dataTB),
+          res => {
+            this.messageBarService.successModal("บันทึกข้อมูลสำเร็จ", "สำเร็จ");
+          },
+          err => {
+            this.messageBarService.errorModal(
+              "ไม่สามารถบันทึกข้อมูลได้",
+              "เกิดข้อผิดพลาด"
+            );
+          }
         );
       }
-    );
+    }, "", "บันทึกข้อมูล");
+
   };
 
   DF(what) {

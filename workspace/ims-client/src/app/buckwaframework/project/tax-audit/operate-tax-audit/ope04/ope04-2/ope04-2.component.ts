@@ -4,6 +4,7 @@ import { TextDateTH, digit } from "../../../../../common/helper/datepicker";
 import { DecimalFormat } from "../../../../../common/helper";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { AuthService } from "services/auth.service";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var $: any;
 @Component({
@@ -12,6 +13,15 @@ declare var $: any;
   styleUrls: ["./ope04-2.component.css"]
 })
 export class Ope042Component implements OnInit, AfterViewInit {
+
+  breadcrumb: BreadCrumb[] = [
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การตรวจสอบภาษี', route: '#' },
+    { label: 'กระดาษทำการตรวจสอบด้านราคา', route: '#' },
+    { label: 'กระดาษทำการรับ-จ่ายวัตถุดิบ', route: '#' },
+    { label: 'สร้างกระดาษทำการจ่ายวัตถุดิบ', route: '#' },
+  ];
+
   obj: Data;
   exciseId: any;
   exciseIdArr: any;
@@ -61,11 +71,11 @@ export class Ope042Component implements OnInit, AfterViewInit {
       type: "month",
       text: TextDateTH,
       formatter: {
-        header: function(date, mode, settings) {
+        header: function (date, mode, settings) {
           //return a string to show on the header for the given 'date' and 'mode'
           return date.getFullYear() + 543;
         },
-        date: function(date, settings) {
+        date: function (date, settings) {
           if (!date) {
             return "";
           }
@@ -82,11 +92,11 @@ export class Ope042Component implements OnInit, AfterViewInit {
       type: "month",
       text: TextDateTH,
       formatter: {
-        header: function(date, mode, settings) {
+        header: function (date, mode, settings) {
           //return a string to show on the header for the given 'date' and 'mode'
           return date.getFullYear() + 543;
         },
-        date: function(date, settings) {
+        date: function (date, settings) {
           if (!date) {
             return "";
           }
@@ -117,7 +127,7 @@ export class Ope042Component implements OnInit, AfterViewInit {
     $("#showData").hide();
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   changeExiseId = () => {
     this.exciseId = (<HTMLInputElement>(
@@ -130,6 +140,8 @@ export class Ope042Component implements OnInit, AfterViewInit {
   };
 
   clearAll = () => {
+    $("#exciseId").dropdown('restore defaults');
+    $("#fileExel").val('');
     $("#showData").hide();
     // this.showDt.fnClearTable();
     this.showDt.clear().draw();
@@ -169,13 +181,13 @@ export class Ope042Component implements OnInit, AfterViewInit {
         }
 
         //render check number is null or empty
-        let renderfn = function(data, type, row, meta) {
+        let renderfn = function (data, type, row, meta) {
           return $.trim(data) == ""
             ? "-"
             : $.fn.dataTable.render.number(",", ".", 0, "").display(data);
         };
         //render check string is null or empty
-        let renderStr = function(data, type, row, meta) {
+        let renderStr = function (data, type, row, meta) {
           return $.trim(data) == "" ||
             $.trim(data) == null ||
             $.trim(data) == "null"
@@ -187,20 +199,21 @@ export class Ope042Component implements OnInit, AfterViewInit {
           lengthChange: false,
           searching: false,
           ordering: false,
-          pageLength: 10,
+          //pageLength: 10,
           processing: true,
           serverSide: false,
-          paging: false,
+          paging: true,
           data: this.allData,
           columns: [
             {
-              render: function(data, type, row, meta) {
+              render: function (data, type, row, meta) {
                 return meta.row + meta.settings._iDisplayStart + 1;
               }
             },
             {
               data: "product",
-              render: renderStr
+              render: renderStr,
+              className: "left"
             },
             {
               data: "taxInvoice",
@@ -228,13 +241,13 @@ export class Ope042Component implements OnInit, AfterViewInit {
             }
           ],
           columnDefs: [
-            { targets: [0, 1], className: "center" },
+            { targets: [0, 1], className: "left" },
             { targets: [2, 3, 4, 5, 6], className: "right" },
             { targets: [7], className: "right amount" }
           ],
-          fnDrawCallback: function(oSettings) {
+          fnDrawCallback: function (oSettings) {
             if ($(".amount").length > 0) {
-              $(".amount").each(function() {
+              $(".amount").each(function () {
                 if (this.innerHTML === "0") {
                   this.className = "right amount green";
                 }
@@ -249,7 +262,7 @@ export class Ope042Component implements OnInit, AfterViewInit {
                   this.innerHTML = "-";
                 }
                 if ($(".right").length > 0) {
-                  $(".right").each(function() {
+                  $(".right").each(function () {
                     // if (this.innerHTML === "-") {
                     //   this.className = "center";
                     // }
@@ -314,17 +327,17 @@ export class Ope042Component implements OnInit, AfterViewInit {
 
   initDatatable(): void {
     //render check number is null or empty
-    let renderfn = function(data, type, row, meta) {
+    let renderfn = function (data, type, row, meta) {
       return $.trim(data) == ""
         ? "-"
         : $.fn.dataTable.render.number(",", ".", 0, "").display(data);
     };
     //render check string is null or empty
-    let renderStr = function(data, type, row, meta) {
+    let renderStr = function (data, type, row, meta) {
       return $.trim(data) == "" || $.trim(data) == null ? "-" : data;
     };
     const URL = AjaxService.CONTEXT_PATH + "/ope041/excel";
-    this.showDt = $("#showDt").DataTable({
+    this.showDt = $("#showDt").DataTableTh({
       lengthChange: false,
       searching: false,
       ordering: false,
@@ -344,13 +357,14 @@ export class Ope042Component implements OnInit, AfterViewInit {
       },
       columns: [
         {
-          render: function(data, type, row, meta) {
+          render: function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         },
         {
           data: "product",
-          render: renderStr
+          render: renderStr,
+          className: "left"
         },
         {
           data: "taxInvoice",
@@ -378,13 +392,13 @@ export class Ope042Component implements OnInit, AfterViewInit {
         }
       ],
       columnDefs: [
-        { targets: [0, 1], className: "center" },
+        { targets: [0, 1], className: "left" },
         { targets: [2, 3, 4, 5, 6], className: "right" },
         { targets: [7], className: "right amount" }
       ],
-      fnDrawCallback: function(oSettings) {
+      fnDrawCallback: function (oSettings) {
         if ($(".amount").length > 0) {
-          $(".amount").each(function() {
+          $(".amount").each(function () {
             if (this.innerHTML === "0") {
               this.className = "right amount green";
             }
@@ -405,7 +419,7 @@ export class Ope042Component implements OnInit, AfterViewInit {
           });
         }
         if ($(".right").length > 0) {
-          $(".right").each(function() {
+          $(".right").each(function () {
             if (this.innerHTML === "-") {
               this.className = "center";
             }
@@ -416,34 +430,38 @@ export class Ope042Component implements OnInit, AfterViewInit {
   }
 
   saveTable = () => {
-    this.dataTB = [];
-    //push data Criteria header
-    this.dataTB.push({
-      exciseId: this.exciseId,
-      analysNumber: this.obj.analysNumber,
-      startDate: this.startDateSplit,
-      endDate: this.endDateSplit
-    });
+    this.messageBarService.comfirm((res) => {
+      if (res) {
+        this.dataTB = [];
+        //push data Criteria header
+        this.dataTB.push({
+          exciseId: this.exciseId,
+          analysNumber: this.obj.analysNumber,
+          startDate: this.startDateSplit,
+          endDate: this.endDateSplit
+        });
 
-    //push datatable #showDt
-    for (var i = 0; i < this.showDt.data().length; i++) {
-      this.dataTB.push(this.showDt.data()[i]);
-    }
+        //push datatable #showDt
+        for (var i = 0; i < this.showDt.data().length; i++) {
+          this.dataTB.push(this.showDt.data()[i]);
+        }
 
-    const URL = "/ope042/saveTable";
-    this.ajax.post(
-      URL,
-      JSON.stringify(this.dataTB),
-      res => {
-        this.messageBarService.successModal("บันทึกข้อมูลสำเร็จ", "สำเร็จ");
-      },
-      err => {
-        this.messageBarService.errorModal(
-          "ไม่สามารถบันทึกข้อมูลได้",
-          "เกิดข้อผิดพลาด"
+        const URL = "/ope042/saveTable";
+        this.ajax.post(
+          URL,
+          JSON.stringify(this.dataTB),
+          res => {
+            this.messageBarService.successModal("บันทึกข้อมูลสำเร็จ", "สำเร็จ");
+          },
+          err => {
+            this.messageBarService.errorModal(
+              "ไม่สามารถบันทึกข้อมูลได้",
+              "เกิดข้อผิดพลาด"
+            );
+          }
         );
       }
-    );
+    }, "", "บันทึกข้อมูล");
   };
 
   DF(what) {

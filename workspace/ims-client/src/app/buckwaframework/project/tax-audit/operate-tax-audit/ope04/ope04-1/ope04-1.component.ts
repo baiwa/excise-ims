@@ -20,8 +20,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
     { label: 'การตรวจสอบภาษี', route: '#' },
     { label: 'กระดาษทำการตรวจสอบด้านราคา', route: '#' },
     { label: 'กระดาษทำการรับ-จ่ายวัตถุดิบ', route: '#' },
-    { label: 'สร้างกระดาษทำการรับวัตถุดิบ', route: '#' },
-    
+    { label: 'สร้างกระดาษทำการรับวัตถุดิบ', route: '#' },    
   ];
   
   obj: Data;
@@ -142,6 +141,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
   };
 
   clearAll = () => {
+    $("#exciseId").dropdown('restore defaults');
     $("#showData").hide();
     $("#fileExel").val('');
     // this.showDt.fnClearTable();
@@ -391,34 +391,38 @@ export class Ope041Component implements OnInit, AfterViewInit {
   }
 
   saveTable = () => {
-    this.dataTB = [];
-    //push data Criteria header
-    this.dataTB.push({
-      exciseId: this.exciseId,
-      analysNumber: this.obj.analysNumber,
-      startDate: this.startDateSplit,
-      endDate: this.endDateSplit
-    });
-
-    //push datatable #showDt
-    for (var i = 0; i < this.showDt.data().length; i++) {
-      this.dataTB.push(this.showDt.data()[i]);
-    }
-
-    const URL = "/ope041/saveTable";
-    this.ajax.post(
-      URL,
-      JSON.stringify(this.dataTB),
-      res => {
-        this.messageBarService.successModal("บันทึกข้อมูลสำเร็จ", "สำเร็จ");
-      },
-      err => {
-        this.messageBarService.errorModal(
-          "ไม่สามารถบันทึกข้อมูลได้",
-          "เกิดข้อผิดพลาด"
+    this.messageBarService.comfirm((res) => {
+      if (res) {
+        this.dataTB = [];
+        //push data Criteria header
+        this.dataTB.push({
+          exciseId: this.exciseId,
+          analysNumber: this.obj.analysNumber,
+          startDate: this.startDateSplit,
+          endDate: this.endDateSplit
+        });
+    
+        //push datatable #showDt
+        for (var i = 0; i < this.showDt.data().length; i++) {
+          this.dataTB.push(this.showDt.data()[i]);
+        }
+    
+        const URL = "/ope041/saveTable";
+        this.ajax.post(
+          URL,
+          JSON.stringify(this.dataTB),
+          res => {
+            this.messageBarService.successModal("บันทึกข้อมูลสำเร็จ", "สำเร็จ");
+          },
+          err => {
+            this.messageBarService.errorModal(
+              "ไม่สามารถบันทึกข้อมูลได้",
+              "เกิดข้อผิดพลาด"
+            );
+          }
         );
       }
-    );
+    }, "", "บันทึกข้อมูล");   
   };
 
   DF(what) {
