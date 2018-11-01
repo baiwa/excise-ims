@@ -16,6 +16,7 @@
 	<parameter name="companyAccount1" class="java.lang.String"/>
 	<parameter name="companyAccount2" class="java.lang.String"/>
 	<parameter name="companyAccount3" class="java.lang.String"/>
+	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="companyAccount4" class="java.lang.String"/>
 	<parameter name="companyAccount5" class="java.lang.String"/>
 	<parameter name="study" class="java.lang.String"/>
@@ -35,6 +36,10 @@
 				</textElement>
 				<textFieldExpression><![CDATA["บันทึกข้อความ"]]></textFieldExpression>
 			</textField>
+			<image hAlign="Center" vAlign="Middle" isUsingCache="false">
+				<reportElement isPrintRepeatedValues="false" x="39" y="0" width="80" height="69" uuid="9f19e5d3-7072-46f2-8454-6b0bc55dac0d"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
 			<textField>
 				<reportElement x="40" y="70" width="67" height="26" uuid="066b3a82-e60f-4982-9a5f-f35cdab04a9c"/>
 				<textElement verticalAlignment="Bottom">
@@ -43,14 +48,14 @@
 				<textFieldExpression><![CDATA["ส่วนราชการ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="41" y="97" width="20" height="25" uuid="ac1d8adf-7737-4391-a893-d6f6f137fffb"/>
+				<reportElement x="41" y="96" width="20" height="25" uuid="ac1d8adf-7737-4391-a893-d6f6f137fffb"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="18" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["ที่"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="87" width="190" height="23" uuid="e935f73b-205e-43c6-9c0c-b484cb762090"/>
+				<reportElement x="56" y="94" width="185" height="23" uuid="e935f73b-205e-43c6-9c0c-b484cb762090"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -84,7 +89,7 @@
 				<textFieldExpression><![CDATA["วันที่"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="263" y="88" width="247" height="23" uuid="2d38a3e3-3964-4340-a45c-d77e755a43e7"/>
+				<reportElement stretchType="RelativeToTallestObject" x="263" y="89" width="247" height="23" uuid="2d38a3e3-3964-4340-a45c-d77e755a43e7"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
