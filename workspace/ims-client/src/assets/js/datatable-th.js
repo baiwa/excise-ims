@@ -17,7 +17,9 @@
                 processing: "กำลังประมวลผล...",
                 search: "ค้นหาทั้งหมด",
                 infoEmpty: "แสดงจาก 0  ถึง  0  จากทั้งหมด  0  รายการ",
-                emptyTable: "ไม่พบข้อมูล"
+                emptyTable: "ไม่พบข้อมูล",
+                zeroRecords: "ไม่พบข้อมูล",
+                infoFiltered: "(ค้นหาจากทั้งหมด  _MAX_  รายการ)",
               }
         };
         var settings = $.extend( opt ,options);
