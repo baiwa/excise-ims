@@ -28,7 +28,12 @@
         </label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="">
+        <div class="ui calendar full-width" id="date">
+          <div class="ui input left icon">
+            <i class="clock icon"></i>
+            <input name="startDate" type="text" id="startDate" autocomplete="off" [readonly]="true" placeholder="วว/ดด/ปปปป">
+          </div>
+        </div>
       </div>
       <div class="two wide field "></div>
     </div>
