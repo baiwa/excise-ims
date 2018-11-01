@@ -20,7 +20,7 @@ public class Int09114Service {
 		formVo.setCreatedBy(UserLoginUtils.getCurrentUsername());
 		formVo.setDocumentType("ใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ");		 		
 		formVo.setSubject("ใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ");
-		iaTravelEstimatorDao.addDocument(formVo.getIdProcess(),formVo.getCreatedBy(),formVo.getDocumentType(),formVo.getSubject());
+//		iaTravelEstimatorDao.addDocument(formVo.getIdProcess(),formVo.getCreatedBy(),formVo.getDocumentType(),formVo.getSubject());
 	}
 	
 }

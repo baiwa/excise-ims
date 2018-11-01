@@ -18,6 +18,7 @@ import { TravelService } from "../../../../../common/services/travel.service";
 import { Headers } from "@angular/http/src/headers";
 import { File } from "app/buckwaframework/common/models/file";
 import { BreadCrumb } from 'models/index';
+import { setTimeout } from "timers";
 
 declare var $: any;
 @Component({
@@ -67,8 +68,14 @@ export class Int0911Component implements OnInit, OnDestroy {
     console.log("idProcess : ",this.idProcess);
     this.getHead();
     this.documentTypeDropdown();
+    setTimeout(() => {
     this.dataTable();
     this.dataTable2();
+    this.dataTable3();
+    this.dataTable4();
+    this.dataTable5();
+    }, 500);
+    
   }
 
   ngOnDestroy() {
@@ -85,12 +92,14 @@ export class Int0911Component implements OnInit, OnDestroy {
 
   dataTable = function(){
     var table = $('#tableData').DataTable({
-      "lengthChange":true,
-      "serverSide": false,
+      "lengthChange": false,
+      "paging": false,
+      "info": false,
+      "serverSide": true,
       "searching": false,
       "ordering": false,
       "processing": true,
-      "scrollX": true,      
+      "scrollX": true,
       "ajax" : {
         "url" : '/ims-webapp/api/ia/int0911/list',
         "contentType": "application/json",
@@ -98,7 +107,10 @@ export class Int0911Component implements OnInit, OnDestroy {
         "data" : (d) => {
           return JSON.stringify($.extend({}, d, {
             "searchFlag" : "TRUE",
-            "idProcess" : this.idProcess
+            "idProcess" : this.idProcess,
+            "pickedType":"1162",
+            "budgetType":"1907"
+          
           }));
         },  
       },
@@ -119,6 +131,28 @@ export class Int0911Component implements OnInit, OnDestroy {
         }, {
           "data": "subject"
         }, {
+          "data": "pickedType",
+          "render": function (data, type, row) {
+            var s = '';
+            if (data == 1162) {
+              s = 'ก่อนเดินทางไปราชการ';
+            } else {
+              s = 'หลังเดินทางไปราชการ';
+            }
+            return s;
+          }
+        }, {
+          "data": "budgetType",
+          "render": function (data, type, row) {
+            var s = '';
+            if (data == '1907') {
+              s = 'เงินงบประมาณ';
+            } else {
+              s = 'เงินนอกงบประมาณ';
+            }
+            return s;
+          }
+        }, {
           "data": "status",
           "className": "ui center aligned",
           "render": function (data, type, row) {
@@ -128,8 +162,10 @@ export class Int0911Component implements OnInit, OnDestroy {
               s = 'ไม่อนุมัติ';
             } else if (data == 1195) {
               s = 'อนุมัติ';
-            }else {
+            }else if (data == 1194){
               s = 'รออนุมัติ';
+            }else{
+              s = 'ยังไม่ได้สร้างเอกสาร';
             }
             return s;
           }
@@ -204,6 +240,510 @@ export class Int0911Component implements OnInit, OnDestroy {
     table.on('click', 'tbody tr button.btn-unapproved', (e) => {
       var closestRow = $(e.target).closest('tr');
       var data = table.row(closestRow).data();
+      const URL = "ia/int0911/approve";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id,approve:"1196"}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+     }
+    },"ไม่อนุมัติ");
+    });
+  }
+  dataTable3 = function(){
+    var table3 = $('#tableData3').DataTable({
+      "lengthChange": false,
+      "paging": false,
+      "info": false,
+      "serverSide": true,
+      "searching": false,
+      "ordering": false,
+      "processing": true,
+      "scrollX": true,
+      "ajax" : {
+        "url" : '/ims-webapp/api/ia/int0911/list',
+        "contentType": "application/json",
+        "type" : "POST",
+        "data" : (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "searchFlag" : "TRUE",
+            "idProcess" : this.idProcess,
+            "pickedType":"1162",
+            "budgetType":"1908"
+          
+          }));
+        },  
+      },
+      "columns": [
+        {
+          "data": "id",
+          "className": "ui center aligned",
+          "render": function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        }, {
+          "data": "createdDate",
+          "className": "ui center aligned"
+        }, {
+          "data": "createdBy"
+        }, {
+          "data": "documentType"
+        }, {
+          "data": "subject"
+        }, {
+          "data": "pickedType",
+          "render": function (data, type, row) {
+            var s = '';
+            if (data == 1162) {
+              s = 'ก่อนเดินทางไปราชการ';
+            } else {
+              s = 'หลังเดินทางไปราชการ';
+            }
+            return s;
+          }
+        }, {
+          "data": "budgetType",
+          "render": function (data, type, row) {
+            var s = '';
+            if (data == '1907') {
+              s = 'เงินงบประมาณ';
+            } else {
+              s = 'เงินนอกงบประมาณ';
+            }
+            return s;
+          }
+        }, {
+          "data": "status",
+          "className": "ui center aligned",
+          "render": function (data, type, row) {
+            var s = '';
+
+            if (data == 1196) {
+              s = 'ไม่อนุมัติ';
+            } else if (data == 1195) {
+              s = 'อนุมัติ';
+            }else if (data == 1194){
+              s = 'รออนุมัติ';
+            }else{
+              s = 'ยังไม่ได้สร้างเอกสาร';
+            }
+            return s;
+          }
+        },{
+          "data": "id",
+          "className": "ui center aligned",
+          "render" : function(data,type,row){
+            var btn = '';
+            btn +='<button class="mini ui yellow button btn-download"><i class="download icon"></i>ดาวน์โหลด</button>';
+            btn +='<button class="mini ui red button btn-delete"><i class="trash alternate icon"></i>ลบ</button>';
+            btn +='<button class="mini ui green button btn-approve"><i class="check icon"></i>อนุมัติ</button>';
+            btn +='<button class="mini ui orange button btn-unapproved"><i class="minus circle icon"></i>ไม่อนุมัติ</button>';
+              return btn;
+          }
+        }
+      ]
+    });
+
+    //button download>
+    table3.on('click', 'tbody tr button.btn-download', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table3.row(closestRow).data();
+      this.router.navigate(['/int09/1/1'], {
+        queryParams: {idProcess:data.id}
+      });
+      console.log(data);
+    });
+    //button delete>
+    table3.on('click', 'tbody tr button.btn-delete', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table3.row(closestRow).data();
+     
+      const URL = "ia/int0911/delete";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+     }
+    },"ลบรายการ");
+      
+    });
+
+    table3.on('click', 'tbody tr button.btn-approve', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table3.row(closestRow).data();
+      const URL = "ia/int0911/approve";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id,approve:"1195"}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+     }
+    },"อนุมัติ");
+    });
+    table3.on('click', 'tbody tr button.btn-unapproved', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table3.row(closestRow).data();
+      const URL = "ia/int0911/approve";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id,approve:"1196"}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+     }
+    },"ไม่อนุมัติ");
+    });
+  }
+  dataTable4 = function(){
+    var table4 = $('#tableData4').DataTable({
+      "lengthChange": false,
+      "paging": false,
+      "info": false,
+      "serverSide": true,
+      "searching": false,
+      "ordering": false,
+      "processing": true,
+      "scrollX": true,
+      "ajax" : {
+        "url" : '/ims-webapp/api/ia/int0911/list',
+        "contentType": "application/json",
+        "type" : "POST",
+        "data" : (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "searchFlag" : "TRUE",
+            "idProcess" : this.idProcess,
+            "pickedType":"1163",
+            "budgetType":"1907"
+          
+          }));
+        },  
+      },
+      "columns": [
+        {
+          "data": "id",
+          "className": "ui center aligned",
+          "render": function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        }, {
+          "data": "createdDate",
+          "className": "ui center aligned"
+        }, {
+          "data": "createdBy"
+        }, {
+          "data": "documentType"
+        }, {
+          "data": "subject"
+        }, {
+          "data": "pickedType",
+          "render": function (data, type, row) {
+            var s = '';
+            if (data == 1162) {
+              s = 'ก่อนเดินทางไปราชการ';
+            } else {
+              s = 'หลังเดินทางไปราชการ';
+            }
+            return s;
+          }
+        }, {
+          "data": "budgetType",
+          "render": function (data, type, row) {
+            var s = '';
+            if (data == '1907') {
+              s = 'เงินงบประมาณ';
+            } else {
+              s = 'เงินนอกงบประมาณ';
+            }
+            return s;
+          }
+        }, {
+          "data": "status",
+          "className": "ui center aligned",
+          "render": function (data, type, row) {
+            var s = '';
+
+            if (data == 1196) {
+              s = 'ไม่อนุมัติ';
+            } else if (data == 1195) {
+              s = 'อนุมัติ';
+            }else if (data == 1194){
+              s = 'รออนุมัติ';
+            }else{
+              s = 'ยังไม่ได้สร้างเอกสาร';
+            }
+            return s;
+          }
+        },{
+          "data": "id",
+          "className": "ui center aligned",
+          "render" : function(data,type,row){
+            var btn = '';
+            btn +='<button class="mini ui yellow button btn-download"><i class="download icon"></i>ดาวน์โหลด</button>';
+            btn +='<button class="mini ui red button btn-delete"><i class="trash alternate icon"></i>ลบ</button>';
+            btn +='<button class="mini ui green button btn-approve"><i class="check icon"></i>อนุมัติ</button>';
+            btn +='<button class="mini ui orange button btn-unapproved"><i class="minus circle icon"></i>ไม่อนุมัติ</button>';
+              return btn;
+          }
+        }
+      ]
+    });
+
+    //button download>
+    table4.on('click', 'tbody tr button.btn-download', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table4.row(closestRow).data();
+      this.router.navigate(['/int09/1/1'], {
+        queryParams: {idProcess:data.id}
+      });
+      console.log(data);
+    });
+    //button delete>
+    table4.on('click', 'tbody tr button.btn-delete', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table4.row(closestRow).data();
+     
+      const URL = "ia/int0911/delete";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+     }
+    },"ลบรายการ");
+      
+    });
+
+    table4.on('click', 'tbody tr button.btn-approve', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table4.row(closestRow).data();
+      const URL = "ia/int0911/approve";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id,approve:"1195"}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+     }
+    },"อนุมัติ");
+    });
+    table4.on('click', 'tbody tr button.btn-unapproved', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table4.row(closestRow).data();
+      const URL = "ia/int0911/approve";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id,approve:"1196"}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+     }
+    },"ไม่อนุมัติ");
+    });
+  }
+  dataTable5 = function(){
+    var table5 = $('#tableData5').DataTable({
+      "lengthChange": false,
+      "paging": false,
+      "info": false,
+      "serverSide": true,
+      "searching": false,
+      "ordering": false,
+      "processing": true,
+      "scrollX": true,
+      "ajax" : {
+        "url" : '/ims-webapp/api/ia/int0911/list',
+        "contentType": "application/json",
+        "type" : "POST",
+        "data" : (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "searchFlag" : "TRUE",
+            "idProcess" : this.idProcess,
+            "pickedType":"1163",
+            "budgetType":"1908"
+          
+          }));
+        },  
+      },
+      "columns": [
+        {
+          "data": "id",
+          "className": "ui center aligned",
+          "render": function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        }, {
+          "data": "createdDate",
+          "className": "ui center aligned"
+        }, {
+          "data": "createdBy"
+        }, {
+          "data": "documentType"
+        }, {
+          "data": "subject"
+        }, {
+          "data": "pickedType",
+          "render": function (data, type, row) {
+            var s = '';
+            if (data == 1162) {
+              s = 'ก่อนเดินทางไปราชการ';
+            } else {
+              s = 'หลังเดินทางไปราชการ';
+            }
+            return s;
+          }
+        }, {
+          "data": "budgetType",
+          "render": function (data, type, row) {
+            var s = '';
+            if (data == '1907') {
+              s = 'เงินงบประมาณ';
+            } else {
+              s = 'เงินนอกงบประมาณ';
+            }
+            return s;
+          }
+        }, {
+          "data": "status",
+          "className": "ui center aligned",
+          "render": function (data, type, row) {
+            var s = '';
+
+            if (data == 1196) {
+              s = 'ไม่อนุมัติ';
+            } else if (data == 1195) {
+              s = 'อนุมัติ';
+            }else if (data == 1194){
+              s = 'รออนุมัติ';
+            }else{
+              s = 'ยังไม่ได้สร้างเอกสาร';
+            }
+            return s;
+          }
+        },{
+          "data": "id",
+          "className": "ui center aligned",
+          "render" : function(data,type,row){
+            var btn = '';
+            btn +='<button class="mini ui yellow button btn-download"><i class="download icon"></i>ดาวน์โหลด</button>';
+            btn +='<button class="mini ui red button btn-delete"><i class="trash alternate icon"></i>ลบ</button>';
+            btn +='<button class="mini ui green button btn-approve"><i class="check icon"></i>อนุมัติ</button>';
+            btn +='<button class="mini ui orange button btn-unapproved"><i class="minus circle icon"></i>ไม่อนุมัติ</button>';
+              return btn;
+          }
+        }
+      ]
+    });
+
+    //button download>
+    table5.on('click', 'tbody tr button.btn-download', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table5.row(closestRow).data();
+      this.router.navigate(['/int09/1/1'], {
+        queryParams: {idProcess:data.id}
+      });
+      console.log(data);
+    });
+    //button delete>
+    table5.on('click', 'tbody tr button.btn-delete', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table5.row(closestRow).data();
+     
+      const URL = "ia/int0911/delete";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+     }
+    },"ลบรายการ");
+      
+    });
+
+    table5.on('click', 'tbody tr button.btn-approve', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table5.row(closestRow).data();
+      const URL = "ia/int0911/approve";
+      this.message.comfirm((res) => {
+        if(res){
+      
+      this.ajax.post(URL, {id:data.id,approve:"1195"}, res => {        
+        const msg = res.json();
+      if (msg.messageType == "C") {
+        this.message.successModal(msg.messageTh);
+      } else {
+        this.message.errorModal(msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#tableData').DataTable().ajax.reload();
+      });
+     }
+    },"อนุมัติ");
+    });
+    table5.on('click', 'tbody tr button.btn-unapproved', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = table5.row(closestRow).data();
       const URL = "ia/int0911/approve";
       this.message.comfirm((res) => {
         if(res){
@@ -387,7 +927,7 @@ export class Int0911Component implements OnInit, OnDestroy {
       this.head = res.json();
       console.log("Head : ",this.head);
 
-      this.pickedType = (this.head.pickedType==1162)?'ก่อนเดินทางไปราชการ':'หลังเดินทางไปราชการ';
+      this.pickedType = this.head.pickedType;
       this.fiscalYear = this.head.fiscalYear;
       this.departureDate = parseInt(this.head.departureDate.split("/")[0])+" "+TextDateTH.months[parseInt(this.head.departureDate.split("/")[1]) - 1]+" "+this.head.departureDate.split("/")[2];
       this.returnDate = parseInt(this.head.returnDate.split("/")[0])+" "+TextDateTH.months[parseInt(this.head.returnDate.split("/")[1]) - 1]+" "+this.head.returnDate.split("/")[2];;

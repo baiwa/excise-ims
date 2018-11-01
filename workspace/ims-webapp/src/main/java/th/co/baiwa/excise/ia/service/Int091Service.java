@@ -43,7 +43,35 @@ public class Int091Service {
 
 	public void add(Int091FormVo formVo) {
 		formVo.setCreatedBy(UserLoginUtils.getCurrentUsername());
-		iaTravelEstimatorDao.add091(formVo);
+		Long id = iaTravelEstimatorDao.add091(formVo);
+		
+		formVo.setCreatedBy(UserLoginUtils.getCurrentUsername());
+		if("1162".equals(formVo.getPickedType())) {
+			// เพิ่มเอกสาร  ***ก่อนเดินทาง ***เงินงบ 
+			iaTravelEstimatorDao.addDocument(id, formVo.getCreatedBy(),"ประมาณการค่าใช้จ่าย","ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ","1162","1907");
+			iaTravelEstimatorDao.addDocument(id, formVo.getCreatedBy(),"บันทึกข้อความ","ขออนุมัติเดินทางไปราชการ","1162","1907");
+			iaTravelEstimatorDao.addDocument(id, formVo.getCreatedBy(),"บันทึกข้อความ","ขอกันเงินงบประมาณ","1162","1907");
+			iaTravelEstimatorDao.addDocument(id, formVo.getCreatedBy(),"สัญญาการยืมเงิน","สัญญาการยืมเงิน","1162","1907");
+			iaTravelEstimatorDao.addDocument(id, formVo.getCreatedBy(),"บันทึกข้อความ","ขอใช้รถยนต์ส่วนกลางในการใช้ไปราชการต่างจังหวัด","1162","1907");
+			
+			// เพิ่มเอกสาร  ***ก่อนเดินทาง ***เงินนอกงบ
+			iaTravelEstimatorDao.addDocument(id, formVo.getCreatedBy(),"ประมาณการค่าใช้จ่าย","ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ","1162","1908");
+			iaTravelEstimatorDao.addDocument(id, formVo.getCreatedBy(),"บันทึกข้อความ","ขอกันเงินฝากค่าใช้จ่ายภาษีท้องถิ่น","1162","1908");
+			iaTravelEstimatorDao.addDocument(id, formVo.getCreatedBy(),"บันทึกข้อความ","ขอยืมเงินฝากค่าใช้จ่ายเก็บภาษีท้องถิ่น","1162","1908");
+		}
+		
+		// เพิ่มเอกสาร  ***หลังเดินทาง ***เงินงบ
+		iaTravelEstimatorDao.addDocument(id, formVo.getCreatedBy(),"หลักฐานการจ่ายเงิน","หลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ","1163","1907");
+		iaTravelEstimatorDao.addDocument(id, formVo.getCreatedBy(),"ใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ","ใบเบิกค่าใช้จ่ายในการเดินทางไปราชการ","1163","1907");
+		iaTravelEstimatorDao.addDocument(id, formVo.getCreatedBy(),"ขอส่งใบเบิกค่าใช้จ่ายเดินทางไปราชการเพื่อชดใช้เงินยืม","ขอส่งใบเบิกค่าใช้จ่ายเดินทางไปราชการเพื่อชดใช้เงินยืม","1163","1907");
+		
+		// เพิ่มเอกสาร  ***หลังเดินทาง ***เงินนอกงบ
+		iaTravelEstimatorDao.addDocument(id, formVo.getCreatedBy(),"หลักฐานการจ่ายเงิน","หลักฐานการจ่ายเงินค่าใช้จ่ายในการเดินทางไปราชการ","1163","1908");
+		iaTravelEstimatorDao.addDocument(id, formVo.getCreatedBy(),"ขอส่งใบเบิกค่าใช้จ่ายเดินทางไปราชการเพื่อชดใช้เงินยืม","ขอส่งใบเบิกค่าใช้จ่ายเดินทางไปราชการเพื่อชดใช้เงินยืม","1163","1908");
+		
+		
+		
+		
 	}
 
 	// department dropdown

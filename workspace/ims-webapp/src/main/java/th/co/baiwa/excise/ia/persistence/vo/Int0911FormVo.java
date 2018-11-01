@@ -31,6 +31,8 @@ public class Int0911FormVo extends DataTableRequest {
 	private String documentName;
 	private String documantSize;
 	private MultipartFile fileUpload;
+	
+	private String budgetType;
 
 	public Long getId() {
 		return id;
@@ -207,5 +209,15 @@ public class Int0911FormVo extends DataTableRequest {
 	public void setFileUpload(MultipartFile fileUpload) {
 		this.fileUpload = fileUpload;
 	}
+
+	public String getBudgetType() {
+		return budgetType;
+	}
+
+	public void setBudgetType(String budgetType) {
+		this.budgetType = budgetType;
+	}
+	
+	
 
 }

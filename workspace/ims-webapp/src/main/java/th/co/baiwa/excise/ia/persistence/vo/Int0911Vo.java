@@ -17,6 +17,9 @@ public class Int0911Vo extends DataTableRequest {
 	private String dateFrom;
 	private String dateTo;
 	private String searchFlag;
+	
+	private String pickedType;
+	private String budgetType;
 
 	public Long getId() {
 		return id;
@@ -113,5 +116,23 @@ public class Int0911Vo extends DataTableRequest {
 	public void setSearchFlag(String searchFlag) {
 		this.searchFlag = searchFlag;
 	}
+
+	public String getPickedType() {
+		return pickedType;
+	}
+
+	public void setPickedType(String pickedType) {
+		this.pickedType = pickedType;
+	}
+
+	public String getBudgetType() {
+		return budgetType;
+	}
+
+	public void setBudgetType(String budgetType) {
+		this.budgetType = budgetType;
+	}
+	
+	
 	
 }

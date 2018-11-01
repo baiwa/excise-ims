@@ -71,7 +71,7 @@ public class Int09111Service {
 		formVo.setDocumentType("ประมาณการค่าใช้จ่าย");
 		formVo.setSubject("ประมาณการค่าใช้จ่ายในการเดินทางไปราชการ");
 		// เพิ่มเอกสาร
-		iaTravelEstimatorDao.addDocument(formVo.getIdProcess(), formVo.getCreatedBy(),formVo.getDocumentType(),formVo.getSubject());
+//		iaTravelEstimatorDao.addDocument(formVo.getIdProcess(), formVo.getCreatedBy(),formVo.getDocumentType(),formVo.getSubject());
 		// ล้างข้อมูล
 		iaTravelEstimatorDao.deleteTravelEstimatorDtl(formVo.getIdProcess(),"111");
 	}
