@@ -1,0 +1,40 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">ผลการตรวจสอบรายการวัตถุดิบที่ขอลดหย่อนภาษีที่ยื่นต่อกรมสรรพสามิต (ภส.05 - 02) </h2>
+
+    <div class="ui top attached header segment" style="background: #1e83db;color: white">
+      <span>ระบุรายละเอียดกระดาษทำการ</span>
+    </div>
+    <div class="ui attached segment">
+      <table id="dataTable" class="ui small celled table striped selectable nowrap" style="width: 100%">
+        <thead>
+          <tr>
+            <th style="text-align: center !important;" rowspan="2">ลำดับที่</th>
+            <th style="text-align: center !important;" rowspan="2">รายการ</th>
+            <th style="text-align: center !important;" colspan="3">ขอลดหย่อนภาษีตาม ภส.05-03</th>
+            <th style="text-align: center !important;" colspan="4">ใบเสร็จรับเงิน</th>
+            <th style="text-align: center !important;" rowspan="2">ผลต่าง</th>
+          </tr>
+          <tr>
+            <th style="text-align: center !important;">จำนวนภาษี</th>
+            <th style="text-align: center !important;">ปริมาณ</th>
+            <th style="text-align: center !important;">ภาษีต่อหน่วย</th>
+
+            <th style="text-align: center !important;">เลขที่ใบเสร็จ</th>
+            <th style="text-align: center !important;">จำนวนภาษี</th>
+            <th style="text-align: center !important;">ปริมาณ</th>
+            <th style="text-align: center !important;">ภาษีต่อหน่วย</th>
+          </tr>
+        </thead>
+
+      </table>
+      <div class="ui stackable center aligned page grid">
+        <button class="mini button ui" type="button" (click)="back()"><i class="reply icon"></i>กลับ</button>
+      </div>
+      <br>
+    </div>
+
+  </div>
+</div>

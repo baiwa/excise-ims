@@ -8,6 +8,7 @@ import { MessageBarService } from "../../../common/services/message-bar.service"
 import { Message } from "../../../common/models/message";
 import { AjaxService } from "../../../common/services";
 import { TextDateTH } from "../../../common/helper";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var jQuery: any;
 declare var $: any;
@@ -18,6 +19,12 @@ declare var $: any;
   styleUrls: ["select-form.component.css"]
 })
 export class SelectFormComponent implements OnInit {
+  breadcrumb: BreadCrumb[] = [    
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การตรวจสอบภาษี', route: '#' },
+    { label: 'สร้างกระดาษทำการตรวจสอบภาษี', route: '#' },
+  ]
+
   private showSubMenuMat: boolean = false;
   private showSubMenuIns: boolean = false;
   private showSubMenuTax: boolean = false;

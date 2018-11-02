@@ -18,12 +18,16 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BreadcrumbModule } from '../../../../common/components';
 import { Ope0461Component } from './ope04-6/ope04-6-1/ope04-6-1.component';
 import { Ope0462Component } from './ope04-6/ope04-6-2/ope04-6-2.component';
+import { Ope0411Component } from './ope04-1/ope04-1-1/ope04-1-1.component';
+import { Ope0412Component } from './ope04-1/ope04-1-2/ope04-1-2.component';
 
 
 
 
 const routes: Routes = [
   { path: "1", component: Ope041Component, canActivate: [AuthGuard] },
+  { path: "1-1", component: Ope0411Component, canActivate: [AuthGuard] },
+  { path: "1-2", component: Ope0412Component, canActivate: [AuthGuard] },
   { path: "2", component: Ope042Component, canActivate: [AuthGuard] },
   { path: "3", component: Ope043Component, canActivate: [AuthGuard] },
   { path: "4", component: Ope044Component, canActivate: [AuthGuard] },
@@ -58,7 +62,9 @@ const routes: Routes = [
     Ope049Component,
     Ope0410Component,
     Ope0461Component,
-    Ope0462Component
+    Ope0462Component,
+    Ope0411Component,
+    Ope0412Component
   ],
   exports: [RouterModule]
 })

@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { Ope0462Service } from './ope04-6-2.service';
 import { BreadCrumb } from 'models/breadcrumb';
+import { Ope0411Service } from './ope04-1-1.service';
+import { AjaxService } from 'services/ajax.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { TextDateTH, formatter } from 'helpers/datepicker';
-import { AjaxService } from 'services/ajax.service';
 declare var $: any;
 @Component({
-  selector: 'app-ope04-6-2',
-  templateUrl: './ope04-6-2.component.html',
-  styleUrls: ['./ope04-6-2.component.css'],
-  providers: [Ope0462Service]
+  selector: 'app-ope04-1-1',
+  templateUrl: './ope04-1-1.component.html',
+  styleUrls: ['./ope04-1-1.component.css'],
+  providers:[Ope0411Service]
 })
-export class Ope0462Component implements OnInit {
+export class Ope0411Component implements OnInit {
 
   breadcrumb: BreadCrumb[] = [
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การตรวจสอบภาษี', route: '#' },
     { label: 'ผลการตรวจสอบภาษี', route: '#' },
-    { label: 'ผลการตรวจสอบรายการวัตถุดิบที่ขอลดหย่อนภาษี', route: '#' },
+    { label: 'ผลการตรวจสอบกระดาษทำการรับวัตถุดิบ', route: '#' },
   ]
 
   // ==> params
@@ -26,7 +26,7 @@ export class Ope0462Component implements OnInit {
   submitted: boolean = false;
   
   constructor(
-    private ope0461Service: Ope0462Service,
+    private ope0411Service: Ope0411Service,
     private formBuilder: FormBuilder,
     private ajax : AjaxService
   ) { }
@@ -36,7 +36,7 @@ export class Ope0462Component implements OnInit {
     this.callDropdown();
     this.newFormControl();
     this.calenda();
-    this.ope0461Service.datatable();
+    this.ope0411Service.datatable();
   }
 
   newFormControl = () => {
@@ -53,7 +53,7 @@ export class Ope0462Component implements OnInit {
   claer = () => {
     this.submitted = false;
     this.newFormControl();
-    this.ope0461Service.claer(this.formControl.value);
+    this.ope0411Service.claer(this.formControl.value);
   }
 
   search = () => {
@@ -62,14 +62,14 @@ export class Ope0462Component implements OnInit {
     if (this.formControl.invalid) {
       return;
     }
-    this.ope0461Service.search(this.formControl.value);
+    this.ope0411Service.search(this.formControl.value);
   }
   datatable = () => {
-    this.ope0461Service.datatable();
+    this.ope0411Service.datatable();
   }
 
   findExciseId = () => {
-    this.ope0461Service.findExciseId().then(res => {
+    this.ope0411Service.findExciseId().then(res => {
       this.exciseIdList = res;
     })
   }
