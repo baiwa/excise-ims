@@ -1,0 +1,54 @@
+
+
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<br>
+<div class="sixteen wide column">
+  <h2 class="ui header">กราฟแผนการตรวจปฏิบัติการประจำปีงบประมาณ</h2>
+
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>ระบุเงื่อนไขในการค้นหา</span>
+  </div>
+  <div class="ui form center aligned" id="COP07-1" ngNativeValidate>
+    <div class="ui attached  segment">
+      <input type="hidden" id="searchFlag">
+      <input type="hidden" id="id">
+
+      <div class="inline fields">
+
+        <div class="three wide field"></div>
+        <div class="three wide field">
+          <label>แผนการตรวจปฏิบัติการประจำปีงบประมาณ</label>
+        </div>
+        <div class="four wide field column">
+          <div class="ui calendar" id="date" style="width: 100%;">
+            <div class="ui input left icon">
+              <i class="calendar alter nate outline icon"></i>
+              <input id="fiscalYear" type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="ปปปป" [attr.required]="true">
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="ui center aligned grid">
+        <div class="eight wide column">
+          <button class="ui mini primary button" type="button" (click)="clickSearch()">
+            <i class="search icon"></i>ค้นหา</button>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+  <br>
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>กราฟแผนการตรวจปฏิบัติการประจำปีงบประมาณ</span>
+  </div>
+  <div class="ui attached segment">
+    <br>
+    <div class="ui grid">
+        <div class="sixteen centered wide column" >
+            <canvas id="myChart2" width="1500" height="400"></canvas>
+        </div>
+    </div>
+    <br>
+  </div>
+</div>
