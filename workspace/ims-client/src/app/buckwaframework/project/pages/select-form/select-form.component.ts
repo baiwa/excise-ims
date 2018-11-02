@@ -14,7 +14,7 @@ declare var $: any;
 
 @Component({
   selector: "select-form",
-  templateUrl: "select-form.component.html",
+  templateUrl: "select-from-2.component.html",
   styleUrls: ["select-form.component.css"]
 })
 export class SelectFormComponent implements OnInit {
