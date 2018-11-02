@@ -8,15 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.cop.persistence.dao.ReportCheckOperationDao;
-import th.co.baiwa.excise.ta.persistence.entity.DisbRmatWorksheetDetail;
-import th.co.baiwa.excise.ta.persistence.entity.DisbRmatWorksheetHeader;
+import th.co.baiwa.excise.cop.persistence.entity.OaMaterialsWorksheetDetail;
+import th.co.baiwa.excise.cop.persistence.entity.OaMaterialsWorksheetHeader;
+import th.co.baiwa.excise.cop.persistence.repository.OaMaterialsWsDetailRepository;
+import th.co.baiwa.excise.cop.persistence.repository.OaMaterialsWsHeaderRepository;
 import th.co.baiwa.excise.ta.persistence.entity.MaterialsWorksheetDetail;
 import th.co.baiwa.excise.ta.persistence.entity.MaterialsWorksheetHeader;
-import th.co.baiwa.excise.ta.persistence.repository.DisbRmatWsDetailRepository;
-import th.co.baiwa.excise.ta.persistence.repository.DisbRmatWsHeaderRepository;
-import th.co.baiwa.excise.ta.persistence.repository.MaterialsWsDetailRepository;
-import th.co.baiwa.excise.ta.persistence.repository.MaterialsWsHeaderRepository;
-import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
 import th.co.baiwa.excise.ta.persistence.vo.Ope043DataTable;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -25,35 +22,32 @@ public class Cop0612Service {
 	private Logger logger = LoggerFactory.getLogger(Cop0612Service.class);
 	
 	@Autowired
-	private ReportCheckOperationDao reportCheckOperationDao;
+	private OaMaterialsWsHeaderRepository oaMaterialsWsHeaderRepository;
 	
 	@Autowired
-	private MaterialsWsHeaderRepository materialsWsHeaderRepository;
-	
-	@Autowired
-	private MaterialsWsDetailRepository materialsWsDetailRepository;
+	private OaMaterialsWsDetailRepository oaMaterialsWsDetailRepository;
 	
 	public void cop0612Service(List<Ope043DataTable> allData) {
 			logger.info("Save Ope043");
 			Long hdr = 0L;
-			MaterialsWorksheetHeader materialsWorksheetHeader = null;
-			MaterialsWorksheetDetail dtl = new MaterialsWorksheetDetail();
-			MaterialsWorksheetHeader hd = new MaterialsWorksheetHeader();
+			OaMaterialsWorksheetHeader oaMaterialsWorksheetHeader = null;
+			OaMaterialsWorksheetDetail dtl = new OaMaterialsWorksheetDetail();
+			OaMaterialsWorksheetHeader hd = new OaMaterialsWorksheetHeader();
 			for (Ope043DataTable value : allData) {
 
 				if (BeanUtils.isNotEmpty(value.getExciseId())) {
-					hd = new MaterialsWorksheetHeader();
+					hd = new OaMaterialsWorksheetHeader();
 					hd.setExciseId(value.getExciseId());
-					hd.setTaAnalysisId(value.getAnalysNumber());
+					hd.setOaAnalysisId(value.getAnalysNumber());
 					hd.setStartDate(value.getStartDate());
 					hd.setEndDate(value.getEndDate());
-					materialsWorksheetHeader = materialsWsHeaderRepository.save(hd);
-					hdr = materialsWorksheetHeader.getTaMaterialsWsHeaderId();
+					oaMaterialsWorksheetHeader = oaMaterialsWsHeaderRepository.save(hd);
+					hdr = oaMaterialsWorksheetHeader.getOaMaterialsWsHeaderId();
 				}
 
 				if (BeanUtils.isEmpty(value.getExciseId())) {
-					dtl = new MaterialsWorksheetDetail();
-					dtl.setTaMaterialsWsHeaderId(hdr);
+					dtl = new OaMaterialsWorksheetDetail();
+					dtl.setOaMaterialsWsHeaderId(hdr);
 					dtl.setMaterialsWsDtlNo(value.getNo());
 					dtl.setMaterialsWsDtlOrder(value.getOrder());
 					dtl.setMaterialsWsDtlBalance(value.getEx1());
@@ -61,7 +55,7 @@ public class Cop0612Service {
 					dtl.setMaterialsWsDtlCounting(value.getCounting());
 					dtl.setResult(value.getResult1());
 					dtl.setResult1(value.getResult2());
-					materialsWsDetailRepository.save(dtl);
+					oaMaterialsWsDetailRepository.save(dtl);
 				}
 			}
 		

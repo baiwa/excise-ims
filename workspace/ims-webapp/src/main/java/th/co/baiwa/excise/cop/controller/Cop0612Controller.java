@@ -20,9 +20,6 @@ import th.co.baiwa.excise.ta.service.MaterialsWsService;
 public class Cop0612Controller {
 	
 	@Autowired
-	private MaterialsWsService materialsWsService;
-	
-	@Autowired
 	private Cop0612Service cop0612Service;
 	
 	
