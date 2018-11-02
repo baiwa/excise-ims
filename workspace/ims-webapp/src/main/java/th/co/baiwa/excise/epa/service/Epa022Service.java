@@ -7,23 +7,22 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.epa.persistence.vo.Epa021FormVo;
-import th.co.baiwa.excise.epa.persistence.vo.Epa021Vo;
+import th.co.baiwa.excise.epa.persistence.vo.Epa022FormVo;
+import th.co.baiwa.excise.epa.persistence.vo.Epa022Vo;
 
 @Service
-public class Epa021Service {
+public class Epa022Service {
 
-	public DataTableAjax<Epa021Vo> search(Epa021FormVo epa021FormVo) {
-		DataTableAjax<Epa021Vo> dataTableAjax = new DataTableAjax<Epa021Vo>();
-		List<Epa021Vo> list = new ArrayList<>();
+	public DataTableAjax<Epa022Vo> search(Epa022FormVo epa022FormVo) {
+		DataTableAjax<Epa022Vo> dataTableAjax = new DataTableAjax<Epa022Vo>();
+		List<Epa022Vo> list = new ArrayList<>();
 		
-		if (ExciseConstants.SEARCH_FLAG.TRUE.equalsIgnoreCase(epa021FormVo.getSearchFlag())) {
+		if (ExciseConstants.SEARCH_FLAG.TRUE.equalsIgnoreCase(epa022FormVo.getSearchFlag())) {
 			
 			for (int i = 0; i < 4; i++) {
-				Epa021Vo vo = new Epa021Vo();
+				Epa022Vo vo = new Epa022Vo();
+				vo.setExciseId("id");
 				vo.setExciseName("name");
-				vo.setDestination("destination");
-				vo.setDateDestination("date destination");
 				list.add(vo);
 			}
 			
@@ -35,5 +34,5 @@ public class Epa021Service {
 		
 		return dataTableAjax;
 	}
-
+	
 }

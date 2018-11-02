@@ -14,7 +14,8 @@ declare var $: any;
 export class Epa021Component implements OnInit {
 
   datatable: any;
-  startDate: string = "";
+  exciseId: string = "";
+  startDate: string = "test";
   searchFlag: string = "FALSE";
 
   constructor(
@@ -27,11 +28,25 @@ export class Epa021Component implements OnInit {
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('EXP-02100');
+    this.exciseId = this.route.snapshot.queryParams["exciseId"];
+    this.searchFlag = this.route.snapshot.queryParams["searchFlag"];
     this.calenda();
   }
 
   ngAfterViewInit() {
     this.initDatatable();
+  }
+
+  calenda = () => {
+    let date = new Date();
+    $("#date").calendar({
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('day-month-year'),
+      onChange: (date, text) => {
+        this.startDate = text;
+      }
+    });
   }
 
   initDatatable = () => {
@@ -59,19 +74,19 @@ export class Epa021Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "startDate",
+          data: "exciseId",
           className: "ui center aligned",
         }, {
-          data: "startDate",
+          data: "exciseName",
           className: "ui center aligned",
         }, {
-          data: "startDate",
+          data: "destination",
           className: "ui center aligned",
         }, {
-          data: "startDate",
+          data: "dateDestination",
           className: "ui center aligned",
         }, {
-          data: "startDate",
+          data: "dateDestination",
           className: "ui center aligned",
           render: function (data, row) {
             return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>ตรวจสอบ</button>';
@@ -79,26 +94,30 @@ export class Epa021Component implements OnInit {
         },
       ]
     });
-  }
 
-  calenda = () => {
-    let date = new Date();
-    $("#date").calendar({
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter('day-month-year'),
-      onChange: (date, text) => {
-        this.startDate = text;
-      }
+    this.datatable.on('click', 'tbody tr button.checking-button', (e) => {
+      var closestRow = $(e.target).closest('tr');
+      var data = this.datatable.row(closestRow).data();
+
+      this.router.navigate(["/epa02/2"], {
+        queryParams: {
+          exciseId: data.exciseId,
+          exciseName: data.exciseName,
+          searchFlag: "TRUE"
+        }
+      });
     });
   }
 
   onClickSearch() {
-    alert("You've clicked search!");
+    this.searchFlag = "TRUE";
+    this.datatable.ajax.reload();
   }
 
   onClickClear() {
-    alert("You've clicked clear!");
+    this.exciseId = "";
+    this.searchFlag = "FALSE";
+    this.datatable.ajax.reload();
   }
 
 }
