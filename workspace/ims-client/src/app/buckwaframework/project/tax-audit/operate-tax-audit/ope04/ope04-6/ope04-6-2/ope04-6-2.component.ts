@@ -14,7 +14,6 @@ declare var $: any;
 export class Ope0462Component implements OnInit {
 
   breadcrumb: BreadCrumb[] = [
-    { label: 'หน้าแรก', route: '#' },
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การตรวจสอบภาษี', route: '#' },
     { label: 'ผลการตรวจสอบรายการวัตถุดิบที่ขอลดหย่อนภาษี', route: '#' },

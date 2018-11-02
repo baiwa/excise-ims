@@ -15,8 +15,7 @@ export class Ope043Component implements OnInit, AfterViewInit {
   breadcrumb: BreadCrumb[] = [
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การตรวจสอบภาษี', route: '#' },
-    { label: 'กระดาษทำการตรวจสอบด้านราคา', route: '#' },
-    { label: 'กระดาษทำการรับ-จ่ายวัตถุดิบ', route: '#' },
+    { label: 'สร้างกระดาษทำการตรวจสอบภาษี', route: '#' },
     { label: 'สร้างกระดาษทำการตรวจนับวัตถุดิบคงเหลือ', route: '#' },
   ];
   obj: Data;

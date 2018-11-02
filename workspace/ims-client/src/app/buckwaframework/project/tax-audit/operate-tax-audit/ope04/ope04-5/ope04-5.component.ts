@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { TextDateTH, DecimalFormat, digit } from '../../../../../common/helper';
 import { AjaxService, MessageBarService, AuthService } from '../../../../../common/services';
+import { BreadCrumb } from 'models/breadcrumb';
 declare var $: any;
 @Component({
   selector: 'ope04-5',
@@ -8,6 +9,14 @@ declare var $: any;
   styleUrls: ['./ope04-5.component.css']
 })
 export class Ope045Component implements OnInit, AfterViewInit {
+
+  breadcrumb: BreadCrumb[] = [    
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การตรวจสอบภาษี', route: '#' },
+    { label: 'สร้างกระดาษทำการตรวจสอบภาษี', route: '#' },
+    { label: 'กระดาษทำการจ่ายสินค้าสำเร็จรูป', route: '#' },
+  ];
+
   obj: Data;
   exciseId: any;
   exciseIdArr: any;

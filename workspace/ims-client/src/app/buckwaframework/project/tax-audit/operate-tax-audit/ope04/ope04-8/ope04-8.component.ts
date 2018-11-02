@@ -15,10 +15,10 @@ declare var $: any;
 })
 export class Ope048Component implements OnInit, AfterViewInit {
 
-  breadcrumb: BreadCrumb[] = [
-    { label: 'หน้าแรก', route: '#' },
+  breadcrumb: BreadCrumb[] = [    
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การตรวจสอบภาษี', route: '#' },
+    { label: 'สร้างกระดาษทำการตรวจสอบภาษี', route: '#' },
     { label: 'กระดาษทำการตรวจสอบด้านราคา', route: '#' },
   ];
 

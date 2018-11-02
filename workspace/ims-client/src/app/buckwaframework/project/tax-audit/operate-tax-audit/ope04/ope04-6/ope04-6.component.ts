@@ -16,11 +16,11 @@ declare var $: any;
 })
 export class Ope046Component implements OnInit {
 
-  breadcrumb: BreadCrumb[] = [
-    { label: 'หน้าแรก', route: '#' },
+  breadcrumb: BreadCrumb[] = [    
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การตรวจสอบภาษี', route: '#' },
-    { label: 'กระดาษทำการตรวจสอบภาษี', route: '#' },
+    { label: 'สร้างกระดาษทำการตรวจสอบภาษี', route: '#' },
+    { label: 'กระดาษทำการตรวจสอบรายการวัตถุดิบที่ขอลดหย่อนภาษีที่ยื่นต่อกรมสรรพสามิต (ภส.05 - 02)', route: '#' }
   ]
 
   // === > params
@@ -105,7 +105,7 @@ export class Ope046Component implements OnInit {
   }
   changeExciseId = (e) => {
     let exciseId = e.target.value;
-    
+
     this.opeo46Service.findByExciseId(exciseId).then((res) => {
 
       this.formControl.controls.entrepreneur.setValue(res.exciseName);

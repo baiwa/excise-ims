@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'services/auth.service';
+import { BreadCrumb } from 'models/breadcrumb';
 
 @Component({
   selector: 'ope04-4-1',
@@ -9,7 +10,12 @@ import { AuthService } from 'services/auth.service';
 export class Ope0441Component implements OnInit {
 
   public showData: boolean = false;
-
+  breadcrumb: BreadCrumb[] = [    
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การตรวจสอบภาษี', route: '#' },
+    { label: 'สร้างกระดาษทำการตรวจสอบภาษี', route: '#' },
+    { label: 'สร้างกระดาษทำการสัมพันธ์การเบิกใช้วัตถุดิบกับการรับสินค้าสำเร็จรูป', route: '#' },    
+  ];
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
