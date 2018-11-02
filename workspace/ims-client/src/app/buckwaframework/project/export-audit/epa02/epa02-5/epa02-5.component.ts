@@ -92,7 +92,7 @@ export class Epa025Component implements OnInit {
           data: "exciseName",
           className: "ui center aligned",
           render: function (data, row) {
-            return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>ตรวจสอบ</button>';
+            return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>รายงานการตรวจสอบ</button>';
           }
         }
       ]
