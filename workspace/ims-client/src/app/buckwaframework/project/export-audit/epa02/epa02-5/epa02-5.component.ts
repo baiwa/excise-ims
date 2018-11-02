@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'services/auth.service';
-import { TextDateTH, formatter } from 'helpers/datepicker';
-import { AjaxService } from 'services/ajax.service';
+import { AjaxService } from '../../../../common/services/ajax.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 declare var $: any;
 
 @Component({
-  selector: 'app-epa02-4',
-  templateUrl: './epa02-4.component.html',
-  styleUrls: ['./epa02-4.component.css']
+  selector: 'app-epa02-5',
+  templateUrl: './epa02-5.component.html',
+  styleUrls: ['./epa02-5.component.css']
 })
-export class Epa024Component implements OnInit {
+export class Epa025Component implements OnInit {
 
   datatable: any;
   exciseId: string = "";
-  startDate: string = "test";
+  exciseName: string = "";
   searchFlag: string = "FALSE";
 
   constructor(
@@ -27,30 +26,18 @@ export class Epa024Component implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.reRenderVersionProgram('EXP-02400');
+    this.authService.reRenderVersionProgram('EXP-02500');
     this.exciseId = this.route.snapshot.queryParams["exciseId"];
+    this.exciseName = this.route.snapshot.queryParams["exciseName"];
     this.searchFlag = this.route.snapshot.queryParams["searchFlag"];
-    this.calenda();
   }
 
   ngAfterViewInit() {
     this.initDatatable();
   }
 
-  calenda = () => {
-    let date = new Date();
-    $("#date").calendar({
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter('day-month-year'),
-      onChange: (date, text) => {
-        this.startDate = text;
-      }
-    });
-  }
-
   initDatatable = () => {
-    const URL = AjaxService.CONTEXT_PATH + "epa/epa024/search";
+    const URL = AjaxService.CONTEXT_PATH + "epa/epa025/search";
     this.datatable = $("#dataTable").DataTableTh({
       serverSide: true,
       searching: false,
@@ -63,6 +50,7 @@ export class Epa024Component implements OnInit {
         contentType: "application/json",
         data: (d) => {
           return JSON.stringify($.extend({}, d, {
+            "exciseId": this.exciseId,
             "searchFlag": this.searchFlag
           }));
         }
@@ -80,18 +68,33 @@ export class Epa024Component implements OnInit {
           data: "exciseName",
           className: "ui center aligned",
         }, {
-          data: "destination",
+          data: "exciseName",
           className: "ui center aligned",
         }, {
-          data: "dateDestination",
+          data: "exciseName",
           className: "ui center aligned",
         }, {
-          data: "dateDestination",
+          data: "exciseName",
+          className: "ui center aligned",
+        }, {
+          data: "exciseName",
+          className: "ui center aligned",
+        }, {
+          data: "exciseName",
+          className: "ui center aligned",
+        }, {
+          data: "exciseName",
+          className: "ui center aligned",
+        }, {
+          data: "exciseName",
+          className: "ui center aligned",
+        }, {
+          data: "exciseName",
           className: "ui center aligned",
           render: function (data, row) {
             return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>ตรวจสอบ</button>';
           }
-        },
+        }
       ]
     });
 
@@ -99,7 +102,7 @@ export class Epa024Component implements OnInit {
       var closestRow = $(e.target).closest('tr');
       var data = this.datatable.row(closestRow).data();
 
-      this.router.navigate(["/epa02/5"], {
+      this.router.navigate(["/epa02/6"], {
         queryParams: {
           exciseId: data.exciseId,
           exciseName: data.exciseName,
@@ -109,15 +112,14 @@ export class Epa024Component implements OnInit {
     });
   }
 
-  onClickSearch() {
-    this.searchFlag = "TRUE";
-    this.datatable.ajax.reload();
-  }
-
-  onClickClear() {
-    this.exciseId = "";
-    this.searchFlag = "FALSE";
-    this.datatable.ajax.reload();
+  onClickBack() {
+    this.router.navigate(["/epa02/4"], {
+      queryParams: {
+        exciseId: this.exciseId,
+        exciseName: this.exciseName,
+        searchFlag: "TRUE"
+      }
+    });
   }
 
 }
