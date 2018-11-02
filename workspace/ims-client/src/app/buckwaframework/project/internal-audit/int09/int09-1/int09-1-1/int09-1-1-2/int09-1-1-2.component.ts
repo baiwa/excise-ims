@@ -1,15 +1,8 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import {
-  TravelCostHeader,
-  TravelCostDetail,
-  Contract
-} from "../../../../../../common/models";
-import {
-  AjaxService,
   MessageBarService,
   AuthService
 } from "../../../../../../common/services";
-import { Prices } from "../../../../../../common/helper/travel";
 import { Router, ActivatedRoute } from "@angular/router";
 import { TravelService } from "../../../../../../common/services/travel.service";
 import { BreadCrumb } from "models/index";
