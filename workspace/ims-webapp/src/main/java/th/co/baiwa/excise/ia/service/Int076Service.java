@@ -36,7 +36,6 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.ExcelUtils;
 import th.co.baiwa.excise.ia.persistence.vo.Int076FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int076Vo;
-import th.co.baiwa.excise.ta.service.ExciseDetailService;
 import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
@@ -867,8 +866,14 @@ public class Int076Service {
 		Cell cell = row.createCell(cellNum);
 
 		System.out.println("Creating excel");
-
+		
+		
 		// Header
+		cell = row.createCell(cellNum);
+		cell.setCellValue("ตรวจสอบการนำส่งเงินบัญชีเจ้าหนี้ อปท.");
+		cell.setCellStyle(topCenter);
+		rowNum = 2;
+		row = sheet.createRow(rowNum);
 		String[] tbTH1 = { "วันที่ลงรายการ", "เลขที่เอกสาร", "ประเภทเอกสาร", "เอกสารอ้างอิง", "ผู้ทำแทน", "การกำหนด",
 				"หน่วยเบิกจ่าย", "ผ่านรายการ", "", "ยกยอดไป" };
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
@@ -877,10 +882,10 @@ public class Int076Service {
 			cell.setCellStyle(thStyle);
 		}
 		;
-
+		
 		Row rowTH2 = null;
 		Cell cellTH2 = null;
-		rowTH2 = sheet.createRow(1);
+		rowTH2 = sheet.createRow(3);
 		int cellTH2Num = 7;
 		cellTH2 = rowTH2.createCell(cellTH2Num);
 		cellTH2.setCellValue("เดบิต");
@@ -915,15 +920,15 @@ public class Int076Service {
 		sheet.setColumnWidth(9, 76 * 60);
 
 		// merge(firstRow, lastRow, firstCol, lastCol)
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 8));
-
+		sheet.addMergedRegion(new CellRangeAddress(2, 2, 7, 8));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 9));
 		for (int i = 0; i <= 6; i++) {
-			sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
+			sheet.addMergedRegion(new CellRangeAddress(2, 3, i, i));
 		}
-		sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
+		sheet.addMergedRegion(new CellRangeAddress(2, 3, 9, 9));
 
 		/* Detail */
-		rowNum = 2;
+		rowNum = 4;
 		cellNum = 0;
 
 		for (Int076Vo detail : dataList) {

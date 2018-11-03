@@ -3,6 +3,7 @@ package th.co.baiwa.excise.ia.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,8 +71,7 @@ public class Int076Controller {
 		List<Int076Vo> resultList = (List<Int076Vo>) httpServletRequest.getSession().getAttribute(SESSION_DATA);
 
 		/* set fileName */
-		String fileName = "check_transfer_money_account_local_governmen";
-
+		String fileName = URLEncoder.encode("ตรวจสอบการนำส่งเงินบัญชีเจ้าหนี้_อปท","UTF-8") ;
 		/* write it as an excel attachment */
 		ByteArrayOutputStream outByteStream = int076Service.export(resultList);
 		byte[] outArray = outByteStream.toByteArray();
