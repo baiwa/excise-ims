@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'services/auth.service';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageBarService } from '../../../../common/services/';
 
 declare var $: any;
 
@@ -22,7 +23,8 @@ export class Epa023Component implements OnInit {
     private ajaxService: AjaxService,
     private ajax: AjaxService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private messagebar: MessageBarService
   ) { }
 
   ngOnInit() {
@@ -71,16 +73,17 @@ export class Epa023Component implements OnInit {
       let data = res.json();
       console.log(data);
 
-      this.leftformVo.exportName = data.hdrVo.exportName;
-      this.leftformVo.exciseSrc = data.hdrVo.checkPointDest;
-      this.leftformVo.checkPointDest = data.hdrVo.checkPointDest;
-      this.leftformVo.exciseDest = data.hdrVo.checkPointDest;
-      this.leftformVo.dateOut = data.hdrVo.dateOutDisplay;
+      this.leftformVo.refNo = data.leftFrom.refNo;
+      this.leftformVo.exportName = data.leftFrom.exportName;
+      this.leftformVo.exciseSrc = data.leftFrom.checkPointDest;
+      this.leftformVo.checkPointDest = data.leftFrom.checkPointDest;
+      this.leftformVo.exciseDest = data.leftFrom.checkPointDest;
+      this.leftformVo.dateOut = data.leftFrom.dateOut;
 
-      this.leftformVo.productName = data.dtlVo.productName;
-      this.leftformVo.goodsNum = data.dtlVo.goodsNum;
-      this.leftformVo.transportName = data.hdrVo.transportName;
-      this.leftformVo.route = data.hdrVo.route;
+      this.leftformVo.productName = data.leftFrom.productName;
+      this.leftformVo.goodsNum = data.leftFrom.goodsNum;
+      this.leftformVo.transportName = data.leftFrom.transportName;
+      this.leftformVo.route = data.leftFrom.route;
 
 
       this.rightformVo = Object.assign({}, this.leftformVo);
@@ -96,16 +99,32 @@ export class Epa023Component implements OnInit {
   }
 
 
-  onClickSave(){
-     let p = {
+ onClickSave() {
+    let p = {
       hdrId: this.hdrId, dtlId: this.dtlId,
 
-      "leftformVo" : this.leftformVo,
-      "rightformVo" : this.rightformVo
+      "leftFrom": this.leftformVo,
+      "rightForm": this.rightformVo
 
-     };
+    };
+
+    this.messagebar.comfirm((isOk) => {
+      if (isOk) {
+        this.ajax.post("epa/epa021/saveInv", p, (res) => {
+          this.messagebar.successModal("บันทึกข้อมูลทำเสร็จ");
+          this.onClickBack();
+        }, (error) => {
+          this.messagebar.errorModal("ทำรายการไม่สำเร็จ");
+        });
+      }
+    }, "ยืนยันการทำรายการ");
+
   }
 
+  onClickBack(){
+    // /epa01/2;viewId=1
+    this.router.navigate(["/epa02/2", {viewId: this.hdrId }])
+  }
 
 }
 

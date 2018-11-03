@@ -67,23 +67,37 @@ export class Epa026Component implements OnInit {
       transportName: ""
     }
 
-    this.ajax.post("epa/epa024/getInvDetail", { hdrId: this.hdrId, dtlId: this.dtlId }, (res) => {
+    this.ajax.post("epa/epa021/getInvDetailReport", { hdrId: this.hdrId, dtlId: this.dtlId }, (res) => {
       let data = res.json();
       console.log(data);
 
-      this.leftformVo.exportName = data.hdrVo.exportName;
-      this.leftformVo.exciseSrc = data.hdrVo.checkPointDest;
-      this.leftformVo.checkPointDest = data.hdrVo.checkPointDest;
-      this.leftformVo.exciseDest = data.hdrVo.checkPointDest;
-      this.leftformVo.dateOut = data.hdrVo.dateOutDisplay;
+     
+      this.leftformVo.exportName = data.leftFrom.exportName;
+      this.leftformVo.exciseSrc = data.leftFrom.checkPointDest;
+      this.leftformVo.checkPointDest = data.leftFrom.checkPointDest;
+      this.leftformVo.exciseDest = data.leftFrom.checkPointDest;
+      this.leftformVo.dateOut = data.leftFrom.dateOut;
 
-      this.leftformVo.productName = data.dtlVo.productName;
-      this.leftformVo.goodsNum = data.dtlVo.goodsNum;
-      this.leftformVo.transportName = data.hdrVo.transportName;
-      this.leftformVo.route = data.hdrVo.route;
+      this.leftformVo.productName = data.leftFrom.productName;
+      this.leftformVo.goodsNum = data.leftFrom.goodsNum;
+      this.leftformVo.transportName = data.leftFrom.transportName;
+      this.leftformVo.route = data.leftFrom.route;
 
 
-      this.rightformVo = Object.assign({}, this.leftformVo);
+      this.rightformVo.exportName = data.rightForm.exportName;
+      this.rightformVo.exciseSrc = data.rightForm.checkPointDest;
+      this.rightformVo.checkPointDest = data.rightForm.checkPointDest;
+      this.rightformVo.exciseDest = data.rightForm.checkPointDest;
+      this.rightformVo.dateOut = data.rightForm.dateOut;
+
+      this.rightformVo.productName = data.rightForm.productName;
+      this.rightformVo.goodsNum = data.rightForm.goodsNum;
+      this.rightformVo.transportName = data.rightForm.transportName;
+      this.rightformVo.route = data.rightForm.route;
+
+      this.leftformVo.remark = data.rightForm.remark;
+      this.leftformVo.checkingResult = data.rightForm.checkingResult;
+
 
 
     });
@@ -96,14 +110,9 @@ export class Epa026Component implements OnInit {
   }
 
 
-  onClickSave(){
-     let p = {
-      hdrId: this.hdrId, dtlId: this.dtlId,
-
-      "leftformVo" : this.leftformVo,
-      "rightformVo" : this.rightformVo
-
-     };
+  onClickBack(){
+    // /epa01/2;viewId=1
+    this.router.navigate(["/epa02/5", {viewId: this.hdrId }])
   }
 
 
