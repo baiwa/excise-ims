@@ -88,7 +88,7 @@ export class Int0610Component implements OnInit, AfterViewInit {
   }
 
   dataTable = () => {
-    this._dataTable = $("#dataTable").DataTable({
+    this._dataTable = $("#dataTable").DataTableTh({
       serverSide: true,
       searching: false,
       processing: true,

@@ -18,6 +18,8 @@ const ALERT_MSG = {
   category: "กรุณากรอกหมวดย่อย",
   budget: "กรุณากรอกประเภทงบประมาณ",
   amountOfMoney: "กรุณากรอกจำนวนเงินขอเบิก",
+  pmmethodPersonType: "กรุณากรอกวิธีการจ่ายเงิน",
+  refpersonType: "กรุณากรอกเลขอ้างอิงการจ่ายเงิน",
   persons: {
     pmmethod: "กรุณากรอกวิธีการจ่าย",
     datePersons: "กรุณากรอกวันที่สั่งจ่าย",
@@ -33,6 +35,8 @@ const ALERT_MSG = {
 })
 export class Int06101Component implements OnInit {
 
+  checkRadio1: boolean = false;
+  checkRadio2: boolean = false;
   id: any;
   breadcrumb: BreadCrumb[];
 
@@ -42,9 +46,12 @@ export class Int06101Component implements OnInit {
   category: any[] = [];
   bankList: any[] = [];
   titleList: any[] = [];
+  persontitleList: any[] = [];
   budgetList: any[] = [];
   pmmethodList: any[] = [];
   activityList: any[] = [];
+  pmmethodPersonTypeList: any[] = [];
+  
 
   // Forms
   formGroup: FormGroup = new FormGroup({});
@@ -89,6 +96,14 @@ export class Int06101Component implements OnInit {
       category: ['', [Validators.required, Validators.maxLength(100)]],
       budget: ['', [Validators.required, Validators.maxLength(200)]],
       amountOfMoney: ['', [Validators.required, Validators.maxLength(7)]],
+      personType: ['', [Validators.required, Validators.maxLength(50)]],
+      refpersonType: ['', [Validators.required, Validators.maxLength(50)]],
+      pmmethodPersonType: ['', [Validators.required, Validators.maxLength(50)]],
+      persontitle: ['', [Validators.required, Validators.maxLength(40)]],
+      firstnamePerson: ['', [Validators.required, Validators.maxLength(80)]],
+      lastnamePerson: ['', [Validators.required, Validators.maxLength(80)]],
+      payeeCorporate: ['', [Validators.required, Validators.maxLength(100)]],
+      
       persons: this.formBuilder.array([])
     });
 
@@ -211,9 +226,13 @@ export class Int06101Component implements OnInit {
     if (this.formGroup.valid) {
       const URL = "ia/int06101/add";
       const { list, note, deductSocial, withholding, // destruct data from `this.formGroup`
-        other, amountOfMoney1, numberRequested, documentNumber,
+        other, amountOfMoney1, numberRequested, documentNumber, 
         itemDescription, refnum, withdrawal, activity,
-        budged, category, budget, amountOfMoney, persons } = this.formGroup.value;
+        budged, category, budget, amountOfMoney, 
+        pmmethodPersonType,  refpersonType,
+        persontitle, firstnamePerson, lastnamePerson,
+        payeeCorporate,
+        persons } = this.formGroup.value;
       let _persons: Person[] = []; // Person Array
       for (let key in persons) {
         const { amount, paymentMethod, refPayment, paymentDate,
@@ -227,6 +246,7 @@ export class Int06101Component implements OnInit {
           bankName: bankName,
         })
       }
+
       const data: Int06101 = { // Binding Data
         refnum: refnum, withdrawal: withdrawal, activity: activity,
         budged: budged, budget: budget, category: category,
@@ -237,7 +257,10 @@ export class Int06101Component implements OnInit {
         budgetName: this.budged.find(obj => obj.budgetId == budged).budgetName,
         listName: this.list.find(obj => obj.listId == list).listName,
         categoryName: this.category.find(obj => obj.categoryId == category).categoryName,
-        persons: _persons
+        persons: _persons,
+        pmmethodPersonType: pmmethodPersonType,  refpersonType: refpersonType,
+        persontitle: persontitle, firstnamePerson: firstnamePerson, lastnamePerson: lastnamePerson,
+        payeeCorporate: payeeCorporate,
       };
       this.ajax.post(URL, data, res => {
         const msg = res.json();
@@ -261,6 +284,19 @@ export class Int06101Component implements OnInit {
     this.budge();
     this.title();
     this.bank();
+    this.persontitle();
+    this.pmmethodPersonType();
+  }
+
+  radioChange(flag: string) {
+    this.checkRadio1 = false;
+    this.checkRadio2 = false;
+    if (flag === 'one') {
+      this.checkRadio1 = true;
+    } else {
+      this.checkRadio2 = true;
+    }
+
   }
 
   // Ajax Dropdown
@@ -268,6 +304,14 @@ export class Int06101Component implements OnInit {
     let url = "ia/int06101/pmmethod"
     this.ajax.post(url, {}, res => {
       this.pmmethodList = res.json();
+    })
+  }
+
+  // Ajax Dropdown
+  pmmethodPersonType = () => {
+    let url = "ia/int06101/pmmethodPersonType"
+    this.ajax.post(url, {}, res => {
+      this.pmmethodPersonTypeList = res.json();
     })
   }
 
@@ -292,6 +336,14 @@ export class Int06101Component implements OnInit {
     let url = "ia/int06101/title"
     this.ajax.post(url, {}, res => {
       this.titleList = res.json();
+    })
+  }
+
+  // Ajax Dropdown
+  persontitle = () => {
+    let url = "ia/int06101/persontitle"
+    this.ajax.post(url, {}, res => {
+      this.persontitleList = res.json();
     })
   }
 

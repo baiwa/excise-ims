@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
+import java.math.BigDecimal;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class Int073Vo {
@@ -7,20 +9,21 @@ public class Int073Vo {
 	private Long id;
 	private String accountNumber;
 	private String accountName;
-	private String SummitTest;
-	private String debitTest;
-	private String creditTest;
-	private String liftUpTest;
+	private BigDecimal summitTest;
+	private BigDecimal debitTest;
+	private BigDecimal creditTest;
+	private BigDecimal liftUpTest;
 
-	private String debitType;
-	private String creditType;
-	private String liftUpType;
+	private BigDecimal debitType;
+	private BigDecimal creditType;
+	private BigDecimal liftUpType;
 
-	private String difference;
+	private BigDecimal difference;
+
 	private String checkData;
-	
+
 	private MultipartFile fileExel;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -45,67 +48,67 @@ public class Int073Vo {
 		this.accountName = accountName;
 	}
 
-	public String getSummitTest() {
-		return SummitTest;
+	public BigDecimal getSummitTest() {
+		return summitTest;
 	}
 
-	public void setSummitTest(String summitTest) {
-		SummitTest = summitTest;
+	public void setSummitTest(BigDecimal summitTest) {
+		this.summitTest = summitTest;
 	}
 
-	public String getDebitTest() {
+	public BigDecimal getDebitTest() {
 		return debitTest;
 	}
 
-	public void setDebitTest(String debitTest) {
+	public void setDebitTest(BigDecimal debitTest) {
 		this.debitTest = debitTest;
 	}
 
-	public String getCreditTest() {
+	public BigDecimal getCreditTest() {
 		return creditTest;
 	}
 
-	public void setCreditTest(String creditTest) {
+	public void setCreditTest(BigDecimal creditTest) {
 		this.creditTest = creditTest;
 	}
 
-	public String getLiftUpTest() {
+	public BigDecimal getLiftUpTest() {
 		return liftUpTest;
 	}
 
-	public void setLiftUpTest(String liftUpTest) {
+	public void setLiftUpTest(BigDecimal liftUpTest) {
 		this.liftUpTest = liftUpTest;
 	}
 
-	public String getDebitType() {
+	public BigDecimal getDebitType() {
 		return debitType;
 	}
 
-	public void setDebitType(String debitType) {
+	public void setDebitType(BigDecimal debitType) {
 		this.debitType = debitType;
 	}
 
-	public String getCreditType() {
+	public BigDecimal getCreditType() {
 		return creditType;
 	}
 
-	public void setCreditType(String creditType) {
+	public void setCreditType(BigDecimal creditType) {
 		this.creditType = creditType;
 	}
 
-	public String getLiftUpType() {
+	public BigDecimal getLiftUpType() {
 		return liftUpType;
 	}
 
-	public void setLiftUpType(String liftUpType) {
+	public void setLiftUpType(BigDecimal liftUpType) {
 		this.liftUpType = liftUpType;
 	}
 
-	public String getDifference() {
+	public BigDecimal getDifference() {
 		return difference;
 	}
 
-	public void setDifference(String difference) {
+	public void setDifference(BigDecimal difference) {
 		this.difference = difference;
 	}
 
@@ -125,5 +128,4 @@ public class Int073Vo {
 		this.fileExel = fileExel;
 	}
 
-	
 }

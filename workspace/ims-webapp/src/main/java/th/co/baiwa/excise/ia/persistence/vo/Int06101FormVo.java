@@ -33,6 +33,36 @@ public class Int06101FormVo {
 	private String budgetName;
 	private String listName;
 	private String categoryName;
+	private String pmmethodPersonType;
+	private String refpersonType;
+	private String payeepersonType;
+
+	
+	
+	public String getPayeepersonType() {
+		return payeepersonType;
+	}
+
+	public void setPayeepersonType(String payeepersonType) {
+		this.payeepersonType = payeepersonType;
+	}
+
+	public String getRefpersonType() {
+		return refpersonType;
+	}
+
+	public void setRefpersonType(String refpersonType) {
+		this.refpersonType = refpersonType;
+	}
+
+	public String getPmmethodPersonType() {
+		return pmmethodPersonType;
+	}
+
+	public void setPmmethodPersonType(String pmmethodPersonType) {
+		this.pmmethodPersonType = pmmethodPersonType;
+	}
+
 	public String getListName() {
 		return listName;
 	}
