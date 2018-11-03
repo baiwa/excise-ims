@@ -3,36 +3,51 @@ package th.co.baiwa.excise.epa.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.excise.epa.persistence.dao.ExportCheckingConnectDao;
+import th.co.baiwa.excise.epa.persistence.vo.Epa012FormVo;
+import th.co.baiwa.excise.epa.persistence.vo.Epa012Vo;
 import th.co.baiwa.excise.epa.persistence.vo.Epa022FormVo;
 import th.co.baiwa.excise.epa.persistence.vo.Epa022Vo;
 
 @Service
 public class Epa022Service {
 
-	public DataTableAjax<Epa022Vo> search(Epa022FormVo epa022FormVo) {
-		DataTableAjax<Epa022Vo> dataTableAjax = new DataTableAjax<Epa022Vo>();
-		List<Epa022Vo> list = new ArrayList<>();
+	@Autowired
+	private ExportCheckingConnectDao exportCheckingConnectDao;
+
+	public DataTableAjax<Epa012Vo> search(Epa012FormVo epa012FormVo) {
+		DataTableAjax<Epa012Vo> dataTableAjax = new DataTableAjax<>();
 		
-		if (ExciseConstants.SEARCH_FLAG.TRUE.equalsIgnoreCase(epa022FormVo.getSearchFlag())) {
+		if (ExciseConstants.SEARCH_FLAG.TRUE.equalsIgnoreCase(epa012FormVo.getSearchFlag())) {
+			List<Epa012Vo> list = exportCheckingConnectDao.search(epa012FormVo);
+			long count = exportCheckingConnectDao.count(epa012FormVo);
 			
-			for (int i = 0; i < 4; i++) {
-				Epa022Vo vo = new Epa022Vo();
-				vo.setExciseId("id");
-				vo.setExciseName("name");
-				list.add(vo);
-			}
-			
-//			dataTableAjax.setDraw(epa021FormVo.getDraw() + 1);
-//			dataTableAjax.setRecordsTotal(count);
-//			dataTableAjax.setRecordsFiltered(count);
+			dataTableAjax.setDraw(epa012FormVo.getDraw() + 1);
+			dataTableAjax.setRecordsTotal(count);
+			dataTableAjax.setRecordsFiltered(count);
 			dataTableAjax.setData(list);
 		}
-		
+	
 		return dataTableAjax;
 	}
+
+	public List<Epa012Vo> getInformation(Epa012FormVo epa012FormVo) {
+		List<Epa012Vo> list = exportCheckingConnectDao.getInformation(epa012FormVo);
+		return list;
+	}
+
+	public void saveTaxDatas(Epa012FormVo epa012FormVo) {
+		exportCheckingConnectDao.saveTaxDatas(epa012FormVo);
+	}
+
+	public void saveFactoryDatas(Epa012FormVo epa012FormVo) {
+		exportCheckingConnectDao.saveFactoryDatas(epa012FormVo);
+	}
+
 	
 }
