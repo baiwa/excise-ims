@@ -117,15 +117,11 @@ public class FilterExisePlanHeaderController {
 	
 	@PostMapping("/summaryReport")
 	@ResponseBody
-	public ResponseDataTable<SummaryReport> summaryReport(@ModelAttribute DataTableRequest dataTableRequest ,@ModelAttribute SummaryReport summaryReport ) {
+	public List<SummaryReport> summaryReport(@RequestBody SummaryReport summaryReport ) {
 		logger.debug("analysNumber : " + summaryReport.getAnalysnumber());
 		List<SummaryReport> summaryReportList = summaryReportService.findByAnalysnumber(summaryReport.getAnalysnumber());
 		
-		ResponseDataTable<SummaryReport> responseDataTable = new ResponseDataTable<SummaryReport>();
-		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
-		responseDataTable.setData(summaryReportList);
-		responseDataTable.setRecordsTotal(summaryReportList.size());
-		responseDataTable.setRecordsFiltered(summaryReportList.size());
-		return responseDataTable;
+		
+		return summaryReportList;
 	}
 }
