@@ -7,10 +7,10 @@ import { MessageBarService } from '../../../../common/services/';
 declare var $: any;
 
 @Component({
-  selector: 'app-epa01-2-1',
-  templateUrl: './epa01-2-1.component.html'
+  selector: 'app-epa01-4-1',
+  templateUrl: './epa01-4-1.component.html'
 })
-export class Epa0121Component implements OnInit {
+export class Epa0141Component implements OnInit {
 
   private hdrId: string;
   private dtlId: string;
@@ -69,7 +69,7 @@ export class Epa0121Component implements OnInit {
       transportName: ""
     }
 
-    this.ajax.post("epa/epa011/getInvDetail", { hdrId: this.hdrId, dtlId: this.dtlId }, (res) => {
+    this.ajax.post("epa/epa014/getInvDetailALL", { hdrId: this.hdrId, dtlId: this.dtlId }, (res) => {
       let data = res.json();
       console.log(data);
 
@@ -85,11 +85,21 @@ export class Epa0121Component implements OnInit {
       this.leftformVo.route = data.hdrVo.route;
 
 
-      this.rightformVo = Object.assign({}, this.leftformVo);
+      this.rightformVo.exportName = data.rightForm.exportName;
+      this.rightformVo.exciseSrc = data.rightForm.checkPointDest;
+      this.rightformVo.checkPointDest = data.rightForm.checkPointDest;
+      this.rightformVo.exciseDest = data.rightForm.checkPointDest;
+      this.rightformVo.dateOut = data.rightForm.dateOut;
 
+      this.rightformVo.productName = data.rightForm.productName;
+      this.rightformVo.goodsNum = data.rightForm.goodsNum;
+      this.rightformVo.transportName = data.rightForm.transportName;
+      this.rightformVo.route = data.rightForm.route;
+
+      this.leftformVo.remark = data.rightForm.remark;
+      this.leftformVo.checkingResult = data.rightForm.checkingResult;
 
     });
-
 
 
   }
@@ -98,31 +108,31 @@ export class Epa0121Component implements OnInit {
   }
 
 
-  onClickSave() {
-    let p = {
-      hdrId: this.hdrId, dtlId: this.dtlId,
+  // onClickSave() {
+  //   let p = {
+  //     hdrId: this.hdrId, dtlId: this.dtlId,
 
-      "leftFrom": this.leftformVo,
-      "rightForm": this.rightformVo
+  //     "leftFrom": this.leftformVo,
+  //     "rightForm": this.rightformVo
 
-    };
+  //   };
 
-    this.messagebar.comfirm((isOk) => {
-      if (isOk) {
-        this.ajax.post("epa/epa011/saveInv", p, (res) => {
-          this.messagebar.successModal("บันทึกข้อมูลทำเสร็จ");
-          this.onback();
-        }, (error) => {
-          this.messagebar.errorModal("ทำรายการไม่สำเร็จ");
-        });
-      }
-    }, "ยืนยันการทำรายการ");
+  //   this.messagebar.comfirm((isOk) => {
+  //     if (isOk) {
+  //       this.ajax.post("epa/epa011/saveInv", p, (res) => {
+  //         this.messagebar.successModal("บันทึกข้อมูลทำเสร็จ");
+  //         // this.onback();
+  //       }, (error) => {
+  //         this.messagebar.errorModal("ทำรายการไม่สำเร็จ");
+  //       });
+  //     }
+  //   }, "ยืนยันการทำรายการ");
 
-  }
+  // }
 
-  onback(){
+  onClickBack(){
     // /epa01/2;viewId=1
-    this.router.navigate(["/epa01/2", {viewId: this.hdrId }])
+    this.router.navigate(["/epa01/4", {viewId: this.hdrId }])
   }
 
 }

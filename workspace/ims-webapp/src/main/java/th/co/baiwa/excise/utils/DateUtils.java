@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 public class DateUtils {
@@ -280,10 +281,20 @@ public class DateUtils {
 		return Calendar.getInstance(DATE_UTILS_CONFIGURER.getDefaultLocale()).get(Calendar.MONTH) + 1;
 	}
 	
-	public static String parseDateToDDMMYYYY(Date date){
+	public static String formatDateToDDMMYYYY(Date date){
 		if(date == null) return null;
 		return DateFormatUtils.format(date, "dd/MM/yyyy");
 		
+	}
+	
+	public static Date parseDateToDDMMYYYY(String date){
+		if(StringUtils.isEmpty(date)) return null;
+		try {
+			return org.apache.commons.lang3.time.DateUtils.parseDate(date,"dd/MM/yyyy");
+		} catch (ParseException e) {
+			//SKIP
+		}
+		return null;
 	}
 
 }

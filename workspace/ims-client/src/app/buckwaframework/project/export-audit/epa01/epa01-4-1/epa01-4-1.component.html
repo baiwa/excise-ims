@@ -33,7 +33,7 @@
                     <p>ชื่อผุ้ส่งออก :</p>
                 </div>
                 <div class="four wide field">
-                    <input type="text" [(ngModel)]="rightformVo.exportName">
+                    <input type="text" [(ngModel)]="rightformVo.exportName" readonly>
                 </div>
             </div>
 
@@ -253,13 +253,13 @@
                     <label>ผลการตรวจ:</label>
                     <div class="field">
                         <div class="ui radio checkbox">
-                            <input type="radio" name="result" value="Y" [(ngModel)]="leftformVo.checkingResult" >
+                            <input type="radio" name="result" value="Y" [(ngModel)]="leftformVo.checkingResult" disabled>
                             <label>ผ่าน</label>
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui radio checkbox">
-                            <input type="radio" name="result" value="N"  [(ngModel)]="leftformVo.checkingResult" >
+                            <input type="radio" name="result" value="N"  [(ngModel)]="leftformVo.checkingResult" disabled>
                             <label>ไม่ผ่าน</label>
                         </div>
                     </div>
@@ -270,7 +270,7 @@
             <div class="ui grid center aligned">
                 <label>หมายเหตุ:</label>
                 <div class="fields">
-                    <textarea rows="5" cols="100" [(ngModel)]="leftformVo.remark"></textarea>
+                    <textarea rows="5" cols="100" [(ngModel)]="leftformVo.remark" disabled></textarea>
                 </div>
             </div>
 
@@ -280,14 +280,19 @@
 
     <div class="ui grid">
         <div class="sixteen wide column center aligned ">
-            <div class="ui primary button" (click)="onClickSave()">
+            <!-- <div class="ui primary button" (click)="onClickSave()">
                 <i class="save icon"></i>
                 บันทึกข้อมูลการตรวจ
             </div>
             <div class="ui icon deny button" (click)="onback()">
                 <i class="close icon"></i>
                 ยกเลิกการบันทึกข้อมูล
-            </div>
+            </div> -->
+
+            <button class="ui mini button" style="width: 100px;" (click)="onClickBack()">
+                    ย้อนกลับ
+            </button>
+
         </div>
     </div>
 

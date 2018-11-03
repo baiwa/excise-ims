@@ -46,10 +46,10 @@ public class Epa024Controller {
 		 return epa024Service.getInvDetail(InvhdrFormVo);
 	}
 	
-	@PostMapping("/saveInv")
-	@ResponseBody
-	public InvhdrFormVo saveInv(@RequestBody InvhdrFormVo invhdrFormVo) {
-		epa024Service.saveInv(invhdrFormVo);
-		return invhdrFormVo;
-	}
+//	@PostMapping("/saveInv")
+//	@ResponseBody
+//	public InvhdrFormVo saveInv(@RequestBody InvhdrFormVo invhdrFormVo) {
+//		epa024Service.saveInv(invhdrFormVo);
+//		return invhdrFormVo;
+//	}
 }

@@ -36,7 +36,7 @@ public class Epa011Service {
 	}
 
 	public Epa011Vo getDetail(Epa011FormVo epa011FormVo) {
-		return exportCheckingDao.getDetail(epa011FormVo.getViewId());
+		return exportCheckingDao.getHDR(epa011FormVo.getViewId());
 	}
 
 	public DataTableAjax<Epa011DtlVo> searchDetail(Epa011FormVo epa011FormVo) {
@@ -57,17 +57,19 @@ public class Epa011Service {
 
 	public InvhdrFormVo getInvDetail(InvhdrFormVo invhdrFormVo) {
 
-		Epa011Vo taxhdr = exportCheckingDao.getDetail(invhdrFormVo.getHdrId());
+		Epa011Vo taxhdr = exportCheckingDao.getHDR(invhdrFormVo.getHdrId());
 		invhdrFormVo.setHdrVo(taxhdr);
 		
-		Epa011DtlVo taxdtl = exportCheckingDao.getInvHdr(invhdrFormVo.getDtlId());
+		Epa011DtlVo taxdtl = exportCheckingDao.getDTL(invhdrFormVo.getDtlId());
 		invhdrFormVo.setDtlVo(taxdtl);
 		
 		return invhdrFormVo;
 	}
 
 	public void saveInv(InvhdrFormVo invhdrFormVo) {
-		// TODO Auto-generated method stub
+
+		exportCheckingDao.clear(invhdrFormVo.getDtlId(),"1");
+		exportCheckingDao.insertInvHDR(invhdrFormVo,"1");
 		
 	}
 

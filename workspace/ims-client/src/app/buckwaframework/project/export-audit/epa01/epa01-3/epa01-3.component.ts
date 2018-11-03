@@ -105,7 +105,7 @@ export class Epa013Component implements OnInit {
     this.datatable.on("click", "td > .checking-button", (event) => {
       var data = this.datatable.row($(event.currentTarget).closest("tr")).data();
       // console.log(data);
-      this.router.navigate(["/epa01/2", { viewId : data.id }]);
+      this.router.navigate(["/epa01/4", { viewId : data.id }]);
     });
   }
 
