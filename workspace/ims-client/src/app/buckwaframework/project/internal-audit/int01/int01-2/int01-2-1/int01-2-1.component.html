@@ -14,7 +14,7 @@
           </div>
           <div class="five wide field">
             <select class="ui dropdown search selection" style="width: 100%;" id="travelTo1" (change)="travelTo2Dropdown($event)" [(ngModel)]="code1">
-              <option value="00">กรุณาเลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>
 
@@ -24,7 +24,7 @@
           </div>
           <div class="five wide field">
             <select class="ui dropdown search selection" style="width: 100%;" id="travelTo2" (change)="travelTo3Dropdown($event)" [(ngModel)]="code2">
-              <option value="00">กรุณาเลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>
           </div>
@@ -35,7 +35,7 @@
           </div>
           <div class="five wide field">
             <select class="ui dropdown search selection" style="width: 100%;" id="travelTo3" [(ngModel)]="code3">
-              <option value="00">กรุณาเลือก</option>
+              <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of travelTo3List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>
           </div>
