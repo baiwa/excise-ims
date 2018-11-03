@@ -282,9 +282,11 @@ public class RiskAssExcAreaHdrRepositoryImpl implements RiskAssExcAreaHdrReposit
 			sql.append(" AND RISK_HDR_NAME = ? ");
 			params.add(riskAssExcAreaHdr.getRiskHdrName());
 		}
+		sql.append(" AND BUDGET_YEAR = ? ");
 		if(BeanUtils.isNotEmpty(riskAssExcAreaHdr.getBudgetYear())) {
-			sql.append(" AND BUDGET_YEAR = ? ");
 			params.add(riskAssExcAreaHdr.getBudgetYear());
+		}else {
+		params.add("");
 		}
 		if(BeanUtils.isNotEmpty(riskAssExcAreaHdr.getActive())) {
 			sql.append(" AND ACTIVE = ? ");
