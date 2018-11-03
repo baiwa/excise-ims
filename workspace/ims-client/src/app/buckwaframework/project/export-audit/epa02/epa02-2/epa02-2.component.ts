@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'services/auth.service';
 import { AjaxService } from '../../../../common/services/ajax.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ExportCheckingModel } from 'models/exportCheckingModel';
 
 declare var $: any;
 
@@ -12,10 +13,9 @@ declare var $: any;
 })
 export class Epa022Component implements OnInit {
 
-  datatable: any;
-  exciseId: string = "";
-  exciseName: string = "";
-  searchFlag: string = "FALSE";
+  formVo: Epa022Form;
+  private viewId: string;
+  private datatable: any;
 
   constructor(
     private authService: AuthService,
@@ -27,17 +27,43 @@ export class Epa022Component implements OnInit {
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('EXP-02200');
-    this.exciseId = this.route.snapshot.queryParams["exciseId"];
-    this.exciseName = this.route.snapshot.queryParams["exciseName"];
-    this.searchFlag = this.route.snapshot.queryParams["searchFlag"];
+
+    this.route.paramMap.subscribe(v => {
+      console.log("viewId", v.get("viewId"));
+      this.viewId = v.get("viewId");
+    });
+
+    this.formVo = {
+      checkPointDest: "",
+      cusName: "",
+      cusNewRegid: "",
+      dateInDisplay: "",
+      dateOutDisplay: "",
+      exciseId: "",
+      exportName: "",
+      facname: "1234",
+      id: 1,
+      remark: "",
+      route: "",
+      tin: "",
+      transportName: "",
+      vatNo: ""
+    };
+
+    this.ajax.post("epa/epa021/getDetail", { viewId: this.viewId }, (res) => {
+      let data: Epa022Form = res.json();
+      this.formVo = data;
+    });
+
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.initDatatable();
   }
 
+
   initDatatable = () => {
-    const URL = AjaxService.CONTEXT_PATH + "epa/epa022/search";
+    const URL = AjaxService.CONTEXT_PATH + "epa/epa021/searchDetail";
     this.datatable = $("#dataTable").DataTableTh({
       serverSide: true,
       searching: false,
@@ -50,8 +76,7 @@ export class Epa022Component implements OnInit {
         contentType: "application/json",
         data: (d) => {
           return JSON.stringify($.extend({}, d, {
-            "exciseId": this.exciseId,
-            "searchFlag": this.searchFlag
+            "viewId": this.viewId,
           }));
         }
       },
@@ -62,34 +87,34 @@ export class Epa022Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "exciseId",
+          data: "brandName",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "productName",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "modelName",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "goodsSize",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "goodsNum",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "retailPrice",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "taxvalUnit",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "taxqtyUnit",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "taxAmount",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "id",
           className: "ui center aligned",
           render: function (data, row) {
             return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>ตรวจสอบ</button>';
@@ -98,28 +123,38 @@ export class Epa022Component implements OnInit {
       ]
     });
 
-    this.datatable.on('click', 'tbody tr button.checking-button', (e) => {
-      var closestRow = $(e.target).closest('tr');
-      var data = this.datatable.row(closestRow).data();
-
-      this.router.navigate(["/epa02/3"], {
-        queryParams: {
-          exciseId: data.exciseId,
-          exciseName: data.exciseName,
-          searchFlag: "TRUE"
-        }
-      });
+    this.datatable.on("click", "td > button.checking-button", (event) => {
+      var data = this.datatable.row($(event.currentTarget).closest("tr")).data();
+      console.log(data);
+      let param = {
+          hdrId: data.hdrId,
+          dtlId: data.id
+      };
+      this.router.navigate(["/epa02/3", param]);
     });
+
   }
+
 
   onClickBack() {
-    this.router.navigate(["/epa02/1"], {
-      queryParams: {
-        exciseId: this.exciseId,
-        exciseName: this.exciseName,
-        searchFlag: "TRUE"
-      }
-    });
-  }
+    this.router.navigate(["/epa02/1"]);
+  };
 
+}
+
+interface Epa022Form {
+  id: number,
+  exportName: String
+  checkPointDest: String,
+  exciseId: String,
+  cusName: String,
+  tin: String,
+  vatNo: String,
+  facname: String,
+  cusNewRegid: String,
+  remark: String,
+  route: String,
+  transportName: String,
+  dateOutDisplay: String,
+  dateInDisplay: String,
 }

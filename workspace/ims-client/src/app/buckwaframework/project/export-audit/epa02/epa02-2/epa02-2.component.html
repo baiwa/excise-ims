@@ -3,6 +3,7 @@
 </div>
 
 <div class="ui attached segment">
+  
   <div class="ui grid center aligned">
     <div class="sixteen wide column">
       <h3>การตรวจส่งออกสินค้า ณ ด่านส่งออกสินค้า</h3>
@@ -22,13 +23,13 @@
         <label>ชื่อ :</label>
       </div>
       <div class="four wide field">
-        <input type="text">
+        <input type="text" [value]="formVo.cusName" >
       </div>
       <div class="three wide field ">
         <label>เลขบัตรประชาชน/เลขทะเบียนนิติบุคคล :</label>
       </div>
       <div class="four wide field disabled input">
-        <input type="text">
+        <input type="text" [value]="formVo.tin"  >
       </div>
     </div>
 
@@ -38,7 +39,7 @@
         <label>เลขที่สาขาภาษีมูลค่าเพิ่ม (ถ้ามี) :</label>
       </div>
       <div class="four wide field disabled input">
-        <input type="text">
+        <input type="text"  [value]="formVo.vatNo" >
       </div>
     </div>
 
@@ -54,13 +55,13 @@
         <label>ขอนำสินค้าออกจาก :</label>
       </div>
       <div class="four wide field">
-        <input type="text">
+        <input type="text"  [value]="formVo.facname" >
       </div>
       <div class="three wide field ">
         <label>ทะเบียนสรรพสามิต :</label>
       </div>
       <div class="four wide field">
-        <input type="text">
+        <input type="text"  [value]="formVo.cusNewRegid" >
       </div>
     </div>
 
@@ -70,7 +71,7 @@
         <label>เพื่อ :</label>
       </div>
       <div class="four wide field">
-        <input type="text">
+        <input type="text"  [value]="formVo.remark"  >
       </div>
     </div>
 
@@ -110,3 +111,4 @@
   </div>
 
 </div>
+
