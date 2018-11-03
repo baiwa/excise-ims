@@ -1,6 +1,7 @@
 package th.co.baiwa.excise.ia.service;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -12,11 +13,22 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -27,6 +39,29 @@ import th.co.baiwa.excise.ia.persistence.vo.Int073Vo;
 
 @Service
 public class Int073Service {
+	
+	// Set property Style Excel
+	/* Set Color1 */
+	private XSSFCellStyle CenterColor1;
+	private XSSFCellStyle LeftColor1;
+	private XSSFCellStyle RightColor1;
+
+	/* Set ColorError */
+	private XSSFCellStyle CenterColorError;
+	private XSSFCellStyle LeftColorError;
+	private XSSFCellStyle RightColorError;
+	
+	private CellStyle thStyle;
+	private CellStyle cellCenter;
+	private CellStyle cellRight;
+	private CellStyle cellLeft;
+
+	private CellStyle topCenter;
+	private CellStyle topRight;
+	private CellStyle topLeft;
+	private Font fontHeader;
+	
+	
 	/* readFileExcelLedgerSheet */
 	public static final String ACCOUNT_TEXT = "เลขที่บัญชี G/L";
 	public static final String END_DATA = "*";
@@ -45,7 +80,7 @@ public class Int073Service {
 	// public static final int NUMBER_TEST = 15;
 
 	private Logger logger = LoggerFactory.getLogger(Int073Service.class);
-	DecimalFormat formatter = new DecimalFormat("#,###.00");
+	DecimalFormat formatter = new DecimalFormat("#,##0.00");
 
 	public List<Int073Vo> readFileExcelTrialBalanceSheet(Int073Vo formVo)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
@@ -436,6 +471,331 @@ public class Int073Service {
 			return checkData.getDataTrialBalanceSheet();
 		}
 
+	}
+	
+	
+	private XSSFWorkbook setUpExcel() {
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		
+		/* Color1 */
+		CenterColor1 = workbook.createCellStyle();
+		CenterColor1.setFillForegroundColor(new XSSFColor(new java.awt.Color(188, 223, 245)));
+		CenterColor1.setAlignment(HorizontalAlignment.CENTER);
+		CenterColor1.setVerticalAlignment(VerticalAlignment.CENTER);
+		CenterColor1.setBorderBottom(BorderStyle.THIN);
+		CenterColor1.setBorderLeft(BorderStyle.THIN);
+		CenterColor1.setBorderRight(BorderStyle.THIN);
+		CenterColor1.setBorderTop(BorderStyle.THIN);
+		CenterColor1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		LeftColor1 = workbook.createCellStyle();
+		LeftColor1.setFillForegroundColor(new XSSFColor(new java.awt.Color(188, 223, 245)));
+		LeftColor1.setAlignment(HorizontalAlignment.LEFT);
+		LeftColor1.setVerticalAlignment(VerticalAlignment.CENTER);
+		LeftColor1.setBorderBottom(BorderStyle.THIN);
+		LeftColor1.setBorderLeft(BorderStyle.THIN);
+		LeftColor1.setBorderRight(BorderStyle.THIN);
+		LeftColor1.setBorderTop(BorderStyle.THIN);
+		LeftColor1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		RightColor1 = workbook.createCellStyle();
+		RightColor1.setFillForegroundColor(new XSSFColor(new java.awt.Color(188, 223, 245)));
+		RightColor1.setAlignment(HorizontalAlignment.RIGHT);
+		RightColor1.setVerticalAlignment(VerticalAlignment.CENTER);
+		RightColor1.setBorderBottom(BorderStyle.THIN);
+		RightColor1.setBorderLeft(BorderStyle.THIN);
+		RightColor1.setBorderRight(BorderStyle.THIN);
+		RightColor1.setBorderTop(BorderStyle.THIN);
+		RightColor1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		
+		/* ColorError */
+		CenterColorError = workbook.createCellStyle();
+		CenterColorError.setFillForegroundColor(new XSSFColor(new java.awt.Color(238, 43, 40)));
+		CenterColorError.setAlignment(HorizontalAlignment.CENTER);
+		CenterColorError.setVerticalAlignment(VerticalAlignment.CENTER);
+		CenterColorError.setBorderBottom(BorderStyle.THIN);
+		CenterColorError.setBorderLeft(BorderStyle.THIN);
+		CenterColorError.setBorderRight(BorderStyle.THIN);
+		CenterColorError.setBorderTop(BorderStyle.THIN);
+		CenterColorError.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		LeftColorError = workbook.createCellStyle();
+		LeftColorError.setFillForegroundColor(new XSSFColor(new java.awt.Color(238, 43, 40)));
+		LeftColorError.setAlignment(HorizontalAlignment.LEFT);
+		LeftColorError.setVerticalAlignment(VerticalAlignment.CENTER);
+		LeftColorError.setBorderBottom(BorderStyle.THIN);
+		LeftColorError.setBorderLeft(BorderStyle.THIN);
+		LeftColorError.setBorderRight(BorderStyle.THIN);
+		LeftColorError.setBorderTop(BorderStyle.THIN);
+		LeftColorError.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		RightColorError = workbook.createCellStyle();
+		RightColorError.setFillForegroundColor(new XSSFColor(new java.awt.Color(238, 43, 40)));
+		RightColorError.setAlignment(HorizontalAlignment.RIGHT);
+		RightColorError.setVerticalAlignment(VerticalAlignment.CENTER);
+		RightColorError.setBorderBottom(BorderStyle.THIN);
+		RightColorError.setBorderLeft(BorderStyle.THIN);
+		RightColorError.setBorderRight(BorderStyle.THIN);
+		RightColorError.setBorderTop(BorderStyle.THIN);
+		RightColorError.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		
+		
+		thStyle = workbook.createCellStyle();
+		thStyle.setAlignment(HorizontalAlignment.CENTER);
+		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+		thStyle.setBorderBottom(BorderStyle.THIN);
+		thStyle.setBorderLeft(BorderStyle.THIN);
+		thStyle.setBorderRight(BorderStyle.THIN);
+		thStyle.setBorderTop(BorderStyle.THIN);
+		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		cellCenter = workbook.createCellStyle();
+		cellCenter.setAlignment(HorizontalAlignment.CENTER);
+		cellCenter.setBorderBottom(BorderStyle.THIN);
+		cellCenter.setBorderLeft(BorderStyle.THIN);
+		cellCenter.setBorderRight(BorderStyle.THIN);
+		cellCenter.setBorderTop(BorderStyle.THIN);
+
+		cellRight = workbook.createCellStyle();
+		cellRight.setAlignment(HorizontalAlignment.RIGHT);
+		cellRight.setBorderBottom(BorderStyle.THIN);
+		cellRight.setBorderLeft(BorderStyle.THIN);
+		cellRight.setBorderRight(BorderStyle.THIN);
+		cellRight.setBorderTop(BorderStyle.THIN);
+
+		cellLeft = workbook.createCellStyle();
+		cellLeft.setAlignment(HorizontalAlignment.LEFT);
+		cellLeft.setBorderBottom(BorderStyle.THIN);
+		cellLeft.setBorderLeft(BorderStyle.THIN);
+		cellLeft.setBorderRight(BorderStyle.THIN);
+		cellLeft.setBorderTop(BorderStyle.THIN);
+
+
+		fontHeader = workbook.createFont();
+		fontHeader.setBold(true);
+
+		topCenter = workbook.createCellStyle();
+		topCenter.setAlignment(HorizontalAlignment.CENTER);
+		topCenter.setFont(fontHeader);
+
+		topRight = workbook.createCellStyle();
+		topRight.setAlignment(HorizontalAlignment.RIGHT);
+
+		topLeft = workbook.createCellStyle();
+		topLeft.setAlignment(HorizontalAlignment.LEFT);
+		return workbook;
+	}
+	
+	public ByteArrayOutputStream export(List<Int073Vo> dataList) throws IOException {
+		/* create spreadsheet */
+		XSSFWorkbook workbook = setUpExcel();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		System.out.println("Creating excel");
+		row = sheet.createRow(0);
+		
+		/* Header */
+		cell = row.createCell(cellNum);
+		cell.setCellValue("ตรวจสอบงบทดลองกระทบยอด เดบิต เครดิต บัญชีแยกประเภท");
+		cell.setCellStyle(topCenter);
+		rowNum = 2;
+		row = sheet.createRow(rowNum);
+		String[] tbTH1 = { "เลขที่บัญชีแยกประเภท", "ชื่อบัญชีแยกประเภท", "ยอดยกมา", "เดบิต", "เครดิต", "ยอดยกไป",
+				"แยกประเภท", "", "", "ผลต่าง" };
+		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH1[cellNum]);
+			cell.setCellStyle(thStyle);
+		};
+		rowNum = 3;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(6);
+		cell.setCellValue("เดบิต");
+		cell.setCellStyle(thStyle);
+		cell = row.createCell(7);
+		cell.setCellValue("เครดิต");
+		cell.setCellStyle(thStyle);
+		cell = row.createCell(8);
+		cell.setCellValue("ยอดยกไป");
+		cell.setCellStyle(thStyle);
+		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
+			if (cellNum != 6 && cellNum != 7 && cellNum != 8) {
+				cell = row.createCell(cellNum);
+				cell.setCellStyle(thStyle);
+			}
+		};
+		
+		/* set sheet */
+		for (int i = 0; i <= 9; i++) {
+			if (i != 1) {
+				sheet.setColumnWidth(i, 76 * 76);
+			}
+		}
+		sheet.setColumnWidth(1, 76 * 180);
+		// merge(firstRow, lastRow, firstCol, lastCol)
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 9));
+		for (int i = 0; i <= 9; i++) {
+			if (i != 6 && i != 7 && i != 8) {
+				sheet.addMergedRegion(new CellRangeAddress(2, 3, i, i));
+			}
+
+		}
+		sheet.addMergedRegion(new CellRangeAddress(2, 2, 6, 8));
+		
+		
+		
+		/* Detail */
+		rowNum = 4;
+		cellNum = 0;
+		for(Int073Vo data :dataList) {
+			row = sheet.createRow(rowNum);
+			
+			//AccountNumber	
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getAccountNumber());
+			if("Y".equals(data.getCheckData())) {
+				cell.setCellStyle(CenterColorError);
+			}else if("T".equals(data.getCheckData())) {
+				cell.setCellStyle(CenterColor1);
+			}else {
+				cell.setCellStyle(cellCenter);
+			}
+			cellNum++;
+			
+			//AccountName
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getAccountName());
+			if("Y".equals(data.getCheckData())) {
+				cell.setCellStyle(LeftColorError);
+			}else if("T".equals(data.getCheckData())) {
+				cell.setCellStyle(LeftColor1);
+			}else {
+				cell.setCellStyle(cellLeft);
+			}
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(formatter.format(data.getSummitTest()));
+			if("Y".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColorError);
+			}else if("T".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColor1);
+			}else {
+				cell.setCellStyle(cellRight);
+			}
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(formatter.format(data.getDebitTest()));
+			if("Y".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColorError);
+			}else if("T".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColor1);
+			}else {
+				cell.setCellStyle(cellRight);
+			}
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(formatter.format(data.getCreditTest()));
+			if("Y".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColorError);
+			}else if("T".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColor1);
+			}else {
+				cell.setCellStyle(cellRight);
+			}
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(formatter.format(data.getLiftUpTest()));
+			if("Y".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColorError);
+			}else if("T".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColor1);
+			}else {
+				cell.setCellStyle(cellRight);
+			}
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(data.getDebitType()!=null) {
+				cell.setCellValue(formatter.format(data.getDebitType()));
+			}else {
+				cell.setCellValue("");
+			}
+			if("Y".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColorError);
+			}else if("T".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColor1);
+			}else {
+				cell.setCellStyle(cellRight);
+			}
+			cellNum++;
+			
+			
+			cell = row.createCell(cellNum);
+			if(data.getCreditType()!=null) {
+				cell.setCellValue(formatter.format(data.getCreditType()));
+			}else {
+				cell.setCellValue("");
+			}
+			if("Y".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColorError);
+			}else if("T".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColor1);
+			}else {
+				cell.setCellStyle(cellRight);
+			}
+			cellNum++;
+			
+			
+		    cell = row.createCell(cellNum);
+			if(data.getLiftUpType()!=null) {
+				cell.setCellValue(formatter.format(data.getLiftUpType()));
+			}else {
+				cell.setCellValue("");
+			}
+			if("Y".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColorError);
+			}else if("T".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColor1);
+			}else {
+				cell.setCellStyle(cellRight);
+			}
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			if(data.getDifference()!=null) {
+				cell.setCellValue(formatter.format(data.getDifference()));
+			}else {
+				cell.setCellValue("");
+			}
+			if("Y".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColorError);
+			}else if("T".equals(data.getCheckData())) {
+				cell.setCellStyle(RightColor1);
+			}else {
+				cell.setCellStyle(cellRight);
+			}
+			cellNum++;
+			
+			rowNum++;
+			cellNum = 0;
+		}
+		/* EndDetail */
+		
+		/* set write */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+		
+		return outByteStream;
 	}
 
 }

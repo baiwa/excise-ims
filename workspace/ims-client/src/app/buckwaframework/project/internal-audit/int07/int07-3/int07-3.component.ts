@@ -315,7 +315,8 @@ export class Int073Component implements OnInit, AfterViewInit {
   }
 
   export() {
-
+    const URL_DOWNLOAD = "ia/int073/export";
+    this.ajax.download(URL_DOWNLOAD);
   }
 
 }
