@@ -49,13 +49,13 @@ public class SummaryReportService {
 		SummaryReport summaryReport = new SummaryReport();
 		Date currenDate = new Date();
 		List<Lov> lovList = ApplicationCache.getListOfValueByValueType(ALL_SECTOR_CONFIG, "11");
-		summaryReport = summaryReportRepository.findByAnalysnumberAndSector(analysNumber, lovList.get(0).getValue1());
+		summaryReport = summaryReportRepository.findByAnalysnumberAndSectorOrderById(analysNumber, lovList.get(0).getValue1());
 		summaryReport.setReceiveDate(currenDate);
 		summaryReportRepository.save(summaryReport);
 		List<String> sectorNameList = planWorksheetHeaderDao.findSectorByNotInExciseAndAnalysNumber(analysNumber, exciseIdList);
 		for (String sector : sectorNameList) {
 			summaryReport = new SummaryReport();
-			summaryReport = summaryReportRepository.findByAnalysnumberAndSector(analysNumber, sector);
+			summaryReport = summaryReportRepository.findByAnalysnumberAndSectorOrderById(analysNumber, sector);
 			summaryReport.setSendDate(currenDate);
 			summaryReportRepository.save(summaryReport);
 	
@@ -68,13 +68,13 @@ public class SummaryReportService {
 		List<String> sectorNameList = planWorksheetHeaderDao.findSectorByExciseAndAnalysNumber(analysNumber, exciseIdList);
 		for (String sector : sectorNameList) {
 			summaryReport = new SummaryReport();
-			summaryReport = summaryReportRepository.findByAnalysnumberAndSector(analysNumber, sector);
+			summaryReport = summaryReportRepository.findByAnalysnumberAndSectorOrderById(analysNumber, sector);
 			summaryReport.setReceiveDate(currenDate);
 			summaryReportRepository.save(summaryReport);
 		}
 	}
 	
 	public List<SummaryReport> findByAnalysnumber(String analysnumber){
-		return summaryReportRepository.findByAnalysnumber(analysnumber);
+		return summaryReportRepository.findByAnalysnumberOrderById(analysnumber);
 	}
 }

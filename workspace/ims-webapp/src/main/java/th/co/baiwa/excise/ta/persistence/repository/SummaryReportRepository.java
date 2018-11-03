@@ -8,9 +8,9 @@ import th.co.baiwa.excise.ta.persistence.entity.SummaryReport;
 public interface SummaryReportRepository extends CommonJpaCrudRepository<SummaryReport, Long>{
 
 	
-	public List<SummaryReport> findByAnalysnumber(String analysnumber);
+	public List<SummaryReport> findByAnalysnumberOrderById(String analysnumber);
 	
-	public SummaryReport findByAnalysnumberAndSector(String analysnumber , String sector);
+	public SummaryReport findByAnalysnumberAndSectorOrderById(String analysnumber , String sector);
 	
 
 }
