@@ -96,13 +96,13 @@ export class Int06101Component implements OnInit {
       category: ['', [Validators.required, Validators.maxLength(100)]],
       budget: ['', [Validators.required, Validators.maxLength(200)]],
       amountOfMoney: ['', [Validators.required, Validators.maxLength(7)]],
-      personType: ['', [Validators.required, Validators.maxLength(7)]],
+      personType: ['', [Validators.required, Validators.maxLength(50)]],
       refpersonType: ['', [Validators.required, Validators.maxLength(50)]],
       pmmethodPersonType: ['', [Validators.required, Validators.maxLength(50)]],
-      persontitle: ['', [Validators.required, Validators.maxLength(7)]],
-      firstnamePerson: ['', [Validators.required, Validators.maxLength(7)]],
-      lastnamePerson: ['', [Validators.required, Validators.maxLength(7)]],
-      payeeCorporate: ['', [Validators.required, Validators.maxLength(7)]],
+      persontitle: ['', [Validators.required, Validators.maxLength(40)]],
+      firstnamePerson: ['', [Validators.required, Validators.maxLength(80)]],
+      lastnamePerson: ['', [Validators.required, Validators.maxLength(80)]],
+      payeeCorporate: ['', [Validators.required, Validators.maxLength(100)]],
       
       persons: this.formBuilder.array([])
     });
