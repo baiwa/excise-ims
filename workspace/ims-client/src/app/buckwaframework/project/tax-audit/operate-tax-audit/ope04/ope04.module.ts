@@ -20,6 +20,10 @@ import { Ope0461Component } from './ope04-6/ope04-6-1/ope04-6-1.component';
 import { Ope0462Component } from './ope04-6/ope04-6-2/ope04-6-2.component';
 import { Ope0411Component } from './ope04-1/ope04-1-1/ope04-1-1.component';
 import { Ope0412Component } from './ope04-1/ope04-1-2/ope04-1-2.component';
+import { Ope0421Component } from './ope04-2/ope04-2-1/ope04-2-1.component';
+import { Ope0422Component } from './ope04-2/ope04-2-2/ope04-2-2.component';
+import { Ope0431Component } from './ope04-3/ope04-3-1/ope04-3-1.component';
+import { Ope0432Component } from './ope04-3/ope04-3-2/ope04-3-2.component';
 
 
 
@@ -29,6 +33,10 @@ const routes: Routes = [
   { path: "1-1", component: Ope0411Component, canActivate: [AuthGuard] },
   { path: "1-2", component: Ope0412Component, canActivate: [AuthGuard] },
   { path: "2", component: Ope042Component, canActivate: [AuthGuard] },
+  { path: "2-1", component: Ope0421Component, canActivate: [AuthGuard] },
+  { path: "2-2", component: Ope0422Component, canActivate: [AuthGuard] },
+  { path: "3-1", component: Ope0431Component, canActivate: [AuthGuard] },
+  { path: "3-2", component: Ope0432Component, canActivate: [AuthGuard] },
   { path: "3", component: Ope043Component, canActivate: [AuthGuard] },
   { path: "4", component: Ope044Component, canActivate: [AuthGuard] },
   { path: "4/1", component: Ope0441Component, canActivate: [AuthGuard] },
@@ -64,7 +72,11 @@ const routes: Routes = [
     Ope0461Component,
     Ope0462Component,
     Ope0411Component,
-    Ope0412Component
+    Ope0412Component,
+    Ope0421Component,
+    Ope0422Component,
+    Ope0431Component,
+    Ope0432Component
   ],
   exports: [RouterModule]
 })
