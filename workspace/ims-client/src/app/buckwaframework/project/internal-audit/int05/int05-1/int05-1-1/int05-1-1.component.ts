@@ -54,10 +54,12 @@ export class Int0511Component implements OnInit {
   sectorDropdown = () => {
     const URL = "ia/int05111/sector";
     this.ajax.get(URL, res => {
-      this.sector = res.json();
+      this.sector = res.json();      
     });
   }
   sectorOnchange = (e) => {
+    this.area = null;
+    this.branch = null;
     $("#area").dropdown('restore defaults');
     const URL = "ia/int05111/area";
     let params = e.target.value;
@@ -69,6 +71,7 @@ export class Int0511Component implements OnInit {
     }
   }
   areaOnchange = (e) => {
+    this.branch = null;
     $("#branch").dropdown('restore defaults');
     const URL = "ia/int05111/branch";
     let params = e.target.value;

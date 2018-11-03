@@ -37,14 +37,22 @@ export class Int0621Service {
   search(model: FormSearch) {
     this.model = model;
     this.model.searchFlag = "TRUE";
-    $("#dataTable").DataTableTh().ajax.reload();
+    if(this.table != null){
+      this.table.destroy();
+    }    
+    this.dataTable();
+    //$("#dataTable").DataTableTh().ajax.reload();
   }
   clear = () => {
     $("#year").dropdown('restore defaults');
     this.model.accountId = "";
     this.model.accountName = "";
     this.model.searchFlag = "FALSE";
-    $("#dataTable").DataTableTh().ajax.reload();
+    if(this.table != null){
+      this.table.destroy();
+    }    
+    this.dataTable();
+    //$("#dataTable").DataTableTh().ajax.reload();
   }
   dataTable = () => {
     this.table = $("#dataTable").DataTableTh({
