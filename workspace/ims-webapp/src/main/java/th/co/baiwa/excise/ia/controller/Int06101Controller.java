@@ -33,6 +33,12 @@ public class Int06101Controller {
 		return int06101Service.pmmethod();
 	}
 
+	@PostMapping("/pmmethodPersonType")
+	@ResponseBody
+	public List<Lov> pmmethodPersonType() {
+		return int06101Service.pmmethodPersonType();
+	}
+
 	@PostMapping("/activity")
 	@ResponseBody
 	public List<Lov> activity() {
@@ -49,6 +55,12 @@ public class Int06101Controller {
 	@ResponseBody
 	public List<Lov> title() {
 		return int06101Service.title();
+	}
+	
+	@PostMapping("/persontitle")
+	@ResponseBody
+	public List<Lov> persontitle() {
+		return int06101Service.persontitle();
 	}
 
 	@PostMapping("/bank")

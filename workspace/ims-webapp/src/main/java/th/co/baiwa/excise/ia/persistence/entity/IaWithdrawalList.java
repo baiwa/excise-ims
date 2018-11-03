@@ -88,6 +88,52 @@ public class IaWithdrawalList extends BaseEntity {
 
 	@Column(name = "LIST_NAME")
 	private String listName;
+	
+	@Column(name = "PAYMENT_METHOD")
+	private String pmmethodPersonType;
+	
+	@Column(name = "REF_PAYMENT")
+	private String refpersonType;
+	
+	@Column(name = "PAYEE")
+	private String payeepersonType;
+	
+	@Column(name = "PERSON_TYPE")
+	private String personType;
+
+	
+	public String getPayeepersonType() {
+		return payeepersonType;
+	}
+
+	public void setPayeepersonType(String payeepersonType) {
+		this.payeepersonType = payeepersonType;
+	}
+
+	public String getPersonType() {
+		return personType;
+	}
+
+	public void setPersonType(String personType) {
+		this.personType = personType;
+	}
+
+	public String getPmmethodPersonType() {
+		return pmmethodPersonType;
+	}
+
+	public void setPmmethodPersonType(String pmmethodPersonType) {
+		this.pmmethodPersonType = pmmethodPersonType;
+	}
+
+	public String getRefpersonType() {
+		return refpersonType;
+	}
+
+	public void setRefpersonType(String refpersonType) {
+		this.refpersonType = refpersonType;
+	}
+
 
 	public String getBudgetId() {
 		return budgetId;

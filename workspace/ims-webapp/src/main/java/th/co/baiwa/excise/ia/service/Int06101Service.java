@@ -47,6 +47,11 @@ public class Int06101Service {
 		return lovRepository.findByType("PAYMENT_METHOD");
 	}
 	
+	public List<Lov> pmmethodPersonType() {
+		// TODO Auto-generated method stub
+		return lovRepository.findByType("PAYMENT_METHOD");
+	}
+	
 	public List<Lov> activity() {
 		// TODO Auto-generated method stub
 		return lovRepository.findByType("ACTIVITY");
@@ -58,6 +63,11 @@ public class Int06101Service {
 	}
 	
 	public List<Lov> title() {
+		// TODO Auto-generated method stub
+		return lovRepository.findByType("TITLE");
+	}
+	
+	public List<Lov> persontitle() {
 		// TODO Auto-generated method stub
 		return lovRepository.findByType("TITLE");
 	}
@@ -123,6 +133,9 @@ public class Int06101Service {
 			data.setItemDesc(formVo.getItemDescription());
 			data.setNote(formVo.getNote());
 			data.setListId(formVo.getList());
+			data.setPayeepersonType(formVo.getPayeepersonType());
+			data.setPmmethodPersonType(formVo.getPmmethodPersonType());
+			data.setRefpersonType(formVo.getRefpersonType());
 			Long id = listRep.save(data).getWithdrawalId();
 			if (formVo.getPersons().size() > 0) {
 				for(IaWithdrawalPersons vo : formVo.getPersons()) {
