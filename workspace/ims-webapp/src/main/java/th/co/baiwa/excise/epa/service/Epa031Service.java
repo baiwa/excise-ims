@@ -19,17 +19,17 @@ public class Epa031Service {
 		
 		if (ExciseConstants.SEARCH_FLAG.TRUE.equalsIgnoreCase(epa031FormVo.getSearchFlag())) {
 			
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 1; i++) {
 				Epa031Vo vo = new Epa031Vo();
-				vo.setExciseName("name");
-				vo.setDestination("destination");
-				vo.setDateDestination("date destination");
+				vo.setExciseName("บริษัท สยามแก๊ส แอนด์ ปิโตรเคมีคัลส์ จำกัด (มหาชน)");
+				vo.setDestination("แม่สอด");
+				vo.setDateDestination("30/11/2018");
 				list.add(vo);
 			}
 			
-//			dataTableAjax.setDraw(epa021FormVo.getDraw() + 1);
-//			dataTableAjax.setRecordsTotal(count);
-//			dataTableAjax.setRecordsFiltered(count);
+//			dataTableAjax.setDraw(epa031FormVo.getDraw() + 1);
+			dataTableAjax.setRecordsTotal(1l);
+			dataTableAjax.setRecordsFiltered(1l);
 			dataTableAjax.setData(list);
 		}
 		

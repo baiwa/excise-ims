@@ -26,7 +26,7 @@ export class Epa032Component implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.reRenderVersionProgram('EXP-02200');
+    this.authService.reRenderVersionProgram('EXP-03200');
     this.exciseId = this.route.snapshot.queryParams["exciseId"];
     this.exciseName = this.route.snapshot.queryParams["exciseName"];
     this.searchFlag = this.route.snapshot.queryParams["searchFlag"];
@@ -62,34 +62,34 @@ export class Epa032Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "exciseId",
+          data: "typeList",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "productName",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "model",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "size",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "amount",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "price",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "pricePerTax",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "amountPer",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "tax",
           className: "ui center aligned",
         }, {
-          data: "exciseName",
+          data: "tax",
           className: "ui center aligned",
           render: function (data, row) {
             return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>ตรวจสอบ</button>';
@@ -101,14 +101,24 @@ export class Epa032Component implements OnInit {
     this.datatable.on('click', 'tbody tr button.checking-button', (e) => {
       var closestRow = $(e.target).closest('tr');
       var data = this.datatable.row(closestRow).data();
+      console.log(data);
 
-      this.router.navigate(["/epa03/3"], {
-        queryParams: {
-          exciseId: data.exciseId,
-          exciseName: data.exciseName,
-          searchFlag: "TRUE"
-        }
-      });
+      if (data.size == "30000") {
+        this.router.navigate(["/epa03/3"], {
+          queryParams: {
+            searchFlag: "TRUE"
+          }
+        });
+      }
+
+      if (data.size == "90000") {
+        this.router.navigate(["/epa03/3"], {
+          queryParams: {
+            // searchFlag: "FALSE"
+          }
+        });
+      }
+
     });
   }
 

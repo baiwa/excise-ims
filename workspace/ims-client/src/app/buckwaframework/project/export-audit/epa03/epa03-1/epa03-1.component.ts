@@ -74,13 +74,13 @@ export class Epa031Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "exciseId",
-          className: "ui center aligned",
-        }, {
           data: "exciseName",
           className: "ui center aligned",
         }, {
           data: "destination",
+          className: "ui center aligned",
+        }, {
+          data: "dateDestination",
           className: "ui center aligned",
         }, {
           data: "dateDestination",
