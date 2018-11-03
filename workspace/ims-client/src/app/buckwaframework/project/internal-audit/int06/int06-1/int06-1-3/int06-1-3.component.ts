@@ -54,6 +54,7 @@ export class Int0613Component implements OnInit {
   }
 
   changeSector = (e) => {
+    this.araeList = null;
     if (e.target.value != null && e.target.value != "") {
       $("#arae").dropdown('restore defaults');
       let idMaster = e.target.value;
