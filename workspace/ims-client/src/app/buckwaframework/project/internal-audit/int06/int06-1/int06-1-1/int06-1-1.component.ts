@@ -20,44 +20,53 @@ export class Int0611Component implements OnInit {
     { label: "ตรวจสอบค่าใช้จ่าย", route: "#" },
   ];
   loading: boolean;
-  tableLoading : boolean;
-  show : boolean = true;
-  
+  tableLoading: boolean;
+  show: boolean = true;
+
   constructor(
     private authService: AuthService,
-    private int0611Service : Int0611Service,
-    private int061Service : Int061Service
+    private int0611Service: Int0611Service,
+    private int061Service: Int061Service
   ) {
     this.loading = false;
-    this.tableLoading = false; 
+    this.tableLoading = false;
     this.int061Service.setDataBudget(null);
   }
 
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-06110');
-  } 
+  }
   ngAfterViewInit() {
     this.dataTable();
   }
 
-  async onSubmit(f: any) { 
+  onSubmit(f: any) {
+
+    this.tableLoading = true;
     
-    this.tableLoading = await true; 
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
-    this.int0611Service.onSubmit(formBody,this.int061Service).then(()=>{
-      this.tableLoading = false; 
-      if(this.int061Service.getDataBudget() == 0){
-        this.show = true; 
-      }else{
-        this.show = false;
+    this.int0611Service.onSubmit(formBody, this.int061Service).then((res) => {
+      this.tableLoading = false;
+      this.show = false;
+      if (res == 0) {
+        this.show = true;
+      } else {        
+        if (this.int061Service.getDataBudget() == 0) {
+          this.show = true;
+        } else {
+          this.show = false;
+        }
       }
-      
+    }).catch(() => {
+      this.show = true;
+      this.tableLoading = false;
+      this.int0611Service.dataTable();
     });
   }
 
-  async onChangeUpload(file:any){  
+  async onChangeUpload(file: any) {
     this.loading = await true;
     await this.int0611Service.onChangeUpload(file);
     setTimeout(() => {
@@ -65,12 +74,12 @@ export class Int0611Component implements OnInit {
     }, 300);
   }
 
-  dataTable(){
+  dataTable() {
     this.int0611Service.dataTable();
   }
 
 
-  claer=()=>{
+  claer = () => {
     this.show = true;
     this.int0611Service.claer(this.int061Service);
   }
