@@ -30,7 +30,8 @@ import th.co.baiwa.excise.ia.service.Int076Service;
 public class Int076Controller {
 
 	private final String SESSION_DATA = "SESSION_DATA_INT076";
-
+	
+	
 	private Logger logger = LoggerFactory.getLogger(Int076Controller.class);
 
 	@Autowired
