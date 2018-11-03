@@ -59,6 +59,18 @@ public class IncomeList {
 	@SerializedName("TrnDate")
 	@Expose
 	private String trnDate;
+	
+	@SerializedName("OfficeReceive")
+	@Expose
+	private String OfficeReceive;
+
+	public String getOfficeReceive() {
+		return OfficeReceive;
+	}
+
+	public void setOfficeReceive(String officeReceive) {
+		OfficeReceive = officeReceive;
+	}
 
 	private List<String> dataGruop;
 

@@ -57,27 +57,12 @@ export class Epa011Component implements OnInit {
 
   initDatatable = () => {
     const URL = AjaxService.CONTEXT_PATH + "epa/epa011/search";
-    this.datatable = $("#dataTable").DataTable({
+    this.datatable = $("#dataTable").DataTableTh({
       serverSide: true,
       searching: false,
       processing: true,
       ordering: false,
       scrollX: true,
-      language: {
-        info: "แสดงจาก_START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
-        paginate: {
-          first: "หน้าแรก",
-          last: "หน้าสุดท้าย",
-          next: "ถัดไป",
-          previous: "ก่อนหน้า"
-        },
-        lengthMenu: "แสดง _MENU_ รายการ",
-        loadingRecords: "กำลังดาวน์โหลด...",
-        processing: "กำลังประมวลผล...",
-        search: "ค้นหาทั้งหมด",
-        infoEmpty: "แสดงจาก 0 ถึง 0 จากทั้งหมด 0 รายการ",
-        emptyTable: "ไม่พบข้อมูล",
-      },
       ajax: {
         type: "POST",
         url: URL,
@@ -97,37 +82,35 @@ export class Epa011Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "exciseName",
+          data: "cusName",
           className: "ui center aligned",
         }, {
-          data: "destination",
+          data: "checkPointDest",
           className: "ui center aligned",
         }, {
-          data: "dateDestination",
+          data: "dateOutDisplay",
           className: "ui center aligned",
         }, {
-          data: "dateDestination",
+          data: "dateInDisplay",
           className: "ui center aligned",
         }, {
-          data: "dateDestination",
+          data: "id",
           className: "ui center aligned",
           render: function (data, row) {
             return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>ตรวจสอบ</button>';
           }
         },
       ],
-      rowCallback: (row, data, index) => {
-        $("td > .checking-button", row).bind("click", () => {
-          this.router.navigate(["/epa01/2"], {
-            queryParams: {
-              exciseId: data.exciseId,
-              exciseName: data.exciseName,
-              searchFlag: "TRUE"
-            }
-          });
-        });
-      },
     });
+
+
+
+    this.datatable.on("click", "td > .checking-button", (event) => {
+      var data = this.datatable.row($(event.currentTarget).closest("tr")).data();
+      // console.log(data);
+      this.router.navigate(["/epa01/2", { viewId : data.id }]);
+    });
+
   };
 
   onClickSearch() {

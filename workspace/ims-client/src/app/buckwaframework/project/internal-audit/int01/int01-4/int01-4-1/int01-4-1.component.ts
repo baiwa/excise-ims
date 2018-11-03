@@ -12,60 +12,46 @@ declare var $: any;
   styleUrls: ['./int01-4-1.component.css']
 })
 export class Int0141Component implements OnInit {
-
+  loading: boolean = false;
   private selectZone: any[];
   private selectArea: any[];
   private SECTOR_VALUE: string = 'SECTOR_VALUE';
   sector: any[] = [];
   area: any[] = [];
+  uploadlist: any[] = [];
 
-  fileExel: File[];
+  breadcrumb: BreadCrumb[] = [
+    { label: 'ตรวจสอบภายใน', route: '#' },
+    { label: 'การตรวจสอบรายได้', route: '#' },
+    { label: 'ตรวจสอบงบสรุปยอดเงินค่าภาษีกับงบทดลอง', route: '#' },
+  ];
+
+  isSearch:boolean = false;
+
   constructor(
-    private router: Router,
-    
-private authService: AuthService,
+    private authService: AuthService,
     private route: ActivatedRoute,
+    private router: Router,
     private ajax: AjaxService,
     private messageBarService: MessageBarService
   ) {
 
-    this.fileExel = new Array<File>(); // initial file array
   }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-01410');
-
   }
 
   ngAfterViewInit() {
-    //$("#selectZone").dropdown();
-    //$("#selectArea").dropdown();
-  }
 
-  sectorCombobox = (lovIdMaster) => {
-
-    const URL = "combobox/controller/getDropByTypeAndParentId";
-    this.ajax.post(URL, { type: this.SECTOR_VALUE, lovIdMaster: lovIdMaster }, res => {
-      this.sector = res.json();
-      console.log(this.sector);
-    });
 
   }
 
-  areaCombobox = (lovIdMaster) => {
-
-    const URL = "combobox/controller/getDropByTypeAndParentId";
-    this.ajax.post(URL, { type: this.SECTOR_VALUE, lovIdMaster: lovIdMaster }, res => {
-      this.area = res.json();
-      //console.log(this.sector);
-    });
-
-  }
-
-
-  onUpload = (event: any) => {
+   onUpload = (event: any) => {
     event.preventDefault();
 
+    this.loading = true;
+    this.isSearch = true;
 
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
@@ -75,34 +61,32 @@ private authService: AuthService,
       url,
       formBody,
       res => {
-        //console.log(res.json());
+        let resbody = res.json();
+        console.log();
+        this.loading = false;
 
+        if (resbody.status == "0") {
+          this.uploadlist = resbody.data.lines;
+        } else {
+          this.messageBarService.error("เกิดข้อผิดผลาดไม่สามารถอัพโหลดไฟล์ได้.");
+        }
 
-
+      },
+      error => {
+        this.loading = false;
       }
     );
   };
 
-  onChangeUpload = (event: any) => {
-    if (event.target.files && event.target.files.length > 0) {
-      let reader = new FileReader();
 
-      reader.onload = (e: any) => {
-        const f = {
-          name: event.target.files[0].name,
-          type: event.target.files[0].type,
-          value: e.target.result
-        };
-        this.fileExel = [f];
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  };
+  gotoChecking(){
+    this.router.navigate(['/int01/4/2',{ uploadid : '1' }]);
+  }
+
+  onclear(){
+    this.uploadlist = [];
+  }
+
 
 }
-class File {
-  [x: string]: any;
-  name: string;
-  type: string;
-  value: any;
-}
+
