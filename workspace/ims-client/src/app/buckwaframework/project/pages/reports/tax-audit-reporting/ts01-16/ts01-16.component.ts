@@ -13,12 +13,12 @@ export class Ts0116Component implements OnInit {
   obj: Ts0116;
   @Output() discard = new EventEmitter<any>();
 
-  numbers:number[];
-  numbers2:number[];
+  numbers: number[];
+  numbers2: number[];
 
   constructor(private ajax: AjaxService) {
-    this.numbers = [1,2,3];
-    this.numbers2 = [1,2,3];
+    this.numbers = [1, 2, 3];
+    this.numbers2 = [1, 2, 3];
     this.obj = new Ts0116();
   }
 
@@ -32,28 +32,28 @@ export class Ts0116Component implements OnInit {
   };
 
   onAddField = () => {
-    let num = this.numbers[this.numbers.length-1];
-    this.numbers.push(num+1);
+    let num = this.numbers[this.numbers.length - 1];
+    this.numbers.push(num + 1);
     this.numbers.sort();
   };
-  
+
   onDelField = index => {
     this.numbers.splice(index, 1);
     this.numbers.sort();
   };
 
   onAddField2 = () => {
-    let num = this.numbers2[this.numbers2.length-1];
-    this.numbers2.push(num+1);
+    let num = this.numbers2[this.numbers2.length - 1];
+    this.numbers2.push(num + 1);
     this.numbers2.sort();
   };
-  
+
   onDelField2 = index => {
     this.numbers2.splice(index, 1);
     this.numbers2.sort();
   };
 
-  
+
   optionAddress = () => {
     const optionURL = "excise/detail/objectAddressByExciseId";
     this.ajax.post(optionURL, {
@@ -61,7 +61,7 @@ export class Ts0116Component implements OnInit {
     }, res => {
       console.log(res.json());
       var dat = res.json();
-   
+
     });
   };
 
@@ -75,10 +75,22 @@ export class Ts0116Component implements OnInit {
       }
     });
   };
-  
+
 }
 class Ts0116 {
   logo: string = "logo.jpg";
   [x: string]: any;
-
+  account: string;
+  study: string;
+  factory: string;
+  brothel: string;
+  entrepreneurialImporter: string;
+  exciseTaxNumber: string;
+  filingDate : string;
+  month : string;
+  buddhist : string;
+  knife : string;
+  reduceRequest : string;
+  fine : string;
+  extraMoney : string;
 }

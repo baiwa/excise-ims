@@ -125,8 +125,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{owner} && $P{owner} != null)? "\u2611" : "\u2610"
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{owner} && $P{owner} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="15" y="317" width="39" height="23" uuid="a2702bb3-6ed4-4870-aa8c-a935a6fc65c3"/>
@@ -138,8 +137,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{director}&& $P{director} != null)? "\u2611" : "\u2610"
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{director}&& $P{director} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="71" y="317" width="87" height="23" uuid="8eb4d30d-b2e3-49ec-a607-582ef92d64dd"/>
@@ -858,7 +856,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA[$F{list}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["      "+$F{list}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" stretchType="ContainerHeight" x="369" y="0" width="71" height="23" uuid="db00e748-aa2c-4731-9e0c-2b1ef3e79f0c"/>

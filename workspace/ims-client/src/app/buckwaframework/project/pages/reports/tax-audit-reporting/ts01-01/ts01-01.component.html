@@ -59,17 +59,24 @@
                 ขอบระยะเวลาที่ทำการวิเคราะห์ตั้งแต่ :
               </label>
             </div>
-            <div class="three wide field">
-              <input type="text" name="from" [(ngModel)]="obj.from" required>
-            </div>
+            <div class="three wide field ui calendar" id="date1">
+                <div class="ui input left icon">
+                  <i class="calendar alter nate outline icon"></i>
+                  <input type="calendar" id="from" name="from" [(ngModel)]="obj.from" required > 
+                </div>
+              </div>         
             <div class="one wide field">
               <label>
                 ถึง :
               </label>
             </div>
-            <div class="four  wide field">
-              <input type="text" name="to" [(ngModel)]="obj.to" required>
-            </div>
+            <div class="four wide field ui calendar" id="date2">
+                <div class="ui input left icon">
+                  <i class="calendar alter nate outline icon"></i>
+                  <input type="calendar" name="to" id="to" [(ngModel)]="obj.to" required>
+                </div>
+              </div>
+          
           </div>
 
           <div class="inline fields">
@@ -81,15 +88,15 @@
 
           <div class="inline fields" *ngFor="let num of numbers; let i = index" [attr.data-index]="i">
             <div class="two wide field"></div>
-            <div class="fourteen wide field">
+            <div class="twelve wide field">
               <label class="custom-label-w-18">
                 {{i+1}}.
               </label>
               <input type="text" name="analys{{i+1}}" [(ngModel)]="obj['analys' + (i+1)]" required> &nbsp;&nbsp;
-              <a disabled *ngIf="i<=2" style="width:16%;box-shadow: none; cursor: default; color: transparent !important; box-shadow: 0 0 0 1px transparent inset!important;">
-                <i class="times icon"></i> ลบ
-              </a>
-              <a *ngIf="i>2" class="red" (click)="onDelField(i)" style="width:16%;box-shadow: none; color: red !important; box-shadow: 0 0 0 1px transparent inset!important;cursor:pointer">
+
+            </div>
+            <div class="one wide field">
+              <a *ngIf="i>2" (click)="onDelField(i)" style="color: red;">
                 <i class="times icon"></i> ลบ
               </a>
             </div>
@@ -99,7 +106,7 @@
             <div class="two wide field"></div>
             <div class="fourteen wide field">
               <i class="plus icon"></i>
-              <a style="cursor: pointer" class="{{ numbers.length == 5 && 'disabled'}} red" (click)="onAddField()">
+              <a style="cursor: pointer" class="{{ numbers.length == 5 && 'disabled'}} " (click)="onAddField()">
                 เพิ่ม
               </a>
             </div>
@@ -127,7 +134,8 @@
           <div class="inline fields">
             <div class="two wide field"></div>
             <div class="thirteen wide field">
-              <textarea rows="2" style="resize: none;" maxLength="200" name="reasonTxt" [(ngModel)]="obj.reasonTxt" required></textarea>
+              <textarea rows="2" style="resize: none;" maxLength="200" name="reasonTxt" [(ngModel)]="obj.reasonTxt"
+                required></textarea>
             </div>
           </div>
 
@@ -188,7 +196,7 @@
           พิมพ์เอกสาร
         </button>
         <button class="ui mini red button" type="button" (click)="onDiscard()">
-          <i class="times icon"></i>
+          <i class="close icon"></i>
           ยกเลิก
         </button>
       </div>

@@ -16,7 +16,7 @@
 	<parameter name="companyAccount1" class="java.lang.String"/>
 	<parameter name="companyAccount2" class="java.lang.String"/>
 	<parameter name="companyAccount3" class="java.lang.String"/>
-	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="logo1" class="java.io.InputStream"/>
 	<parameter name="companyAccount4" class="java.lang.String"/>
 	<parameter name="companyAccount5" class="java.lang.String"/>
 	<parameter name="study" class="java.lang.String"/>
@@ -38,7 +38,7 @@
 			</textField>
 			<image hAlign="Center" vAlign="Middle" isUsingCache="false">
 				<reportElement isPrintRepeatedValues="false" x="39" y="0" width="80" height="69" uuid="9f19e5d3-7072-46f2-8454-6b0bc55dac0d"/>
-				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+				<imageExpression><![CDATA[$P{logo1}]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="40" y="70" width="67" height="26" uuid="066b3a82-e60f-4982-9a5f-f35cdab04a9c"/>
@@ -55,7 +55,7 @@
 				<textFieldExpression><![CDATA["ที่"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="56" y="94" width="185" height="23" uuid="e935f73b-205e-43c6-9c0c-b484cb762090"/>
+				<reportElement x="50" y="89" width="189" height="23" uuid="e935f73b-205e-43c6-9c0c-b484cb762090"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -106,8 +106,9 @@
 				<textFieldExpression><![CDATA["เรียน"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="101" y="67" width="407" height="22" uuid="0a74275c-81ed-4560-97bd-d5563b6e8b16"/>
-				<box>
+				<reportElement stretchType="RelativeToBandHeight" x="101" y="67" width="407" height="22" uuid="0a74275c-81ed-4560-97bd-d5563b6e8b16"/>
+				<box topPadding="3" leftPadding="0" rightPadding="0">
+					<pen lineWidth="0.0"/>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
 				<textElement verticalAlignment="Bottom">
