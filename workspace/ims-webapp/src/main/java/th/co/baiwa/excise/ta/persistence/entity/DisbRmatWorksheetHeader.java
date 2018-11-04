@@ -50,6 +50,9 @@ public class DisbRmatWorksheetHeader extends BaseEntity  {
 
 	@Column(name="TAXATION_ID")
 	private String taxationId;
+	
+	@Column(name="PATH_FILE")
+	private String pathFile;
 
 	public long getTaDisburseRmatHeaderId() {
 		return taDisburseRmatHeaderId;
@@ -121,6 +124,14 @@ public class DisbRmatWorksheetHeader extends BaseEntity  {
 
 	public void setTaxationId(String taxationId) {
 		this.taxationId = taxationId;
+	}
+
+	public String getPathFile() {
+		return pathFile;
+	}
+
+	public void setPathFile(String pathFile) {
+		this.pathFile = pathFile;
 	}
 
 	

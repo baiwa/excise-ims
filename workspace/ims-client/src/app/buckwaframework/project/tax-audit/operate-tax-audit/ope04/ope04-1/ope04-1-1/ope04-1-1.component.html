@@ -1,0 +1,101 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">ผลการตรวจสอบกระดาษทำการรับวัตถุดิบ</h2>
+
+    <div class="ui top attached header segment" style="background: #1e83db;color: white">
+      <span>ระบุรายละเอียดกระดาษทำการ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <form class="ui form" id="form" [formGroup]="formControl" (submit)="search()">
+        <!-- row 1 -->
+        <div class="inline fields  ui grid">
+          <div class="three wide field required">
+            <label class="text-right full-width">ทะเบียนสรรพสามิต</label>
+          </div>
+          <div class="four wide field" [ngClass]="{ 'error': submitted && f.exciseId.invalid }">
+            <select name="exciseId" id="exciseId" formControlName="exciseId" class="ui dropdown ai search full-width office">
+              <option value="">กรุณาเลือก</option>
+              <option *ngFor="let item of exciseIdList" value="{{item.value}}">{{item.label}}</option>
+            </select>
+          </div>
+          <div class="three wide field ">
+
+          </div>
+          <div class="four wide field ">
+
+          </div>
+        </div>
+
+        <!-- row 2 -->
+        <div class="inline fields  ui grid">
+          <div class="three wide field">
+            <label class="text-right full-width">รอบระยะเวลาการตรวจสอบ</label>
+          </div>
+          <div class="four wide field">
+            <div class="ui calendar full-width" id="dateF">
+              <div class="ui input left icon">
+                <i class="clock icon"></i>
+                <input name="startDate" type="text" id="startDate" formControlName="startDate" autocomplete="off"
+                  [attr.readonly]="null" placeholder="ดด/ปปปป" [attr.required]="true">
+              </div>
+            </div>
+          </div>
+          <div class="three wide field">
+            <label class="text-right full-width">ถึง</label>
+          </div>
+          <div class="four wide field">
+            <div class="ui calendar full-width" id="dateT">
+              <div class="ui input left icon">
+                <i class="clock icon"></i>
+                <input name="endDate" type="text" id="endDate" formControlName="endDate" autocomplete="off"
+                  [attr.readonly]="null" placeholder="ดด/ปปปป" [attr.required]="true">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br><br>
+        <div class="ui stackable center aligned page grid">
+          <button class="ui mini primary button" type="submit"><i class="search icon"></i>
+            ค้นหา</button>
+          <button class="ui mini gray button" type="button" (click)="claer()"><i class="sync icon"></i> ล้างข้อมูล</button>
+        </div><br>
+      </form>
+    </div>
+
+    <div class="ui segment">
+      <table id="dataTable" class="ui small celled table striped selectable nowrap" style="width: 100%">
+        <thead>
+          <tr>
+            <th style="text-align: center !important;" rowspan="2">ลำดับที่</th>
+            <th style="text-align: center !important;" rowspan="2">ทะเบียนสรรพสามิต</th>
+            <th style="text-align: center !important;" rowspan="2">เลขประจำตัวผู้เสียภาษี</th>
+
+            <th style="text-align: center !important;" rowspan="2">ประเภท</th>
+            <th style="text-align: center !important;" rowspan="2">พิกัด</th>
+            <th style="text-align: center !important;" colspan="2">รอบระยะเวลาการตรวจสอบ</th>
+            <th style="text-align: center !important;" rowspan="2"></th>
+          </tr>
+          <tr>
+            <th style="text-align: center !important;">เริ่มต้น</th>
+            <th style="text-align: center !important;">สิ้นสุด</th>
+          </tr>
+        </thead>
+
+      </table>
+      <br>
+    </div>
+    <br>
+    <div class="ui grid center aligned">
+      <div class="sixteen wide column">
+        <button class="ui mini button" routerLink="/select-form/rs001">
+          <i class="reply icon"></i>
+          ย้อนกลับ
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

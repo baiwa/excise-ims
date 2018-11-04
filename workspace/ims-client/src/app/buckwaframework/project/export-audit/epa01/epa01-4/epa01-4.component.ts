@@ -14,17 +14,10 @@ declare var $: any;
 })
 export class Epa014Component implements OnInit {
 
-  datatable: any;
-  exciseId: string = "";
-  exciseName: string = "";
-  searchFlag: string = "FALSE";
-  taxStampNo = [""];
-  factoryStampNo = [""];
-  datas: ExportCheckingModel = new ExportCheckingModel();
-  saveDatas: ExportCheckingModel = new ExportCheckingModel();
-  reportDatas: ExportCheckingReportModel = new ExportCheckingReportModel();
-  exportType: string = "";
-  
+  formVo: Epa012Form;
+  private viewId: string;
+  private datatable: any;
+
   constructor(
     private authService: AuthService,
     private ajaxService: AjaxService,
@@ -34,35 +27,44 @@ export class Epa014Component implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.reRenderVersionProgram('EXP-01400');
-    this.exciseId = this.route.snapshot.queryParams["exciseId"];
-    this.exciseName = this.route.snapshot.queryParams["exciseName"];
-    this.searchFlag = this.route.snapshot.queryParams["searchFlag"];
+    this.authService.reRenderVersionProgram('EXP-01200');
+
+    this.route.paramMap.subscribe(v => {
+      console.log("viewId", v.get("viewId"));
+      this.viewId = v.get("viewId");
+    });
+
+    this.formVo = {
+      checkPointDest: "",
+      cusName: "",
+      cusNewRegid: "",
+      dateInDisplay: "",
+      dateOutDisplay: "",
+      exciseId: "",
+      exportName: "",
+      facname: "1234",
+      id: 1,
+      remark: "",
+      route: "",
+      tin: "",
+      transportName: "",
+      vatNo: ""
+    };
+
+    this.ajax.post("epa/epa014/getDetail", { viewId: this.viewId }, (res) => {
+      let data: Epa012Form = res.json();
+      this.formVo = data;
+    });
+
   }
 
   ngAfterViewInit(): void {
-    this.getInformation();
     this.initDatatable();
   }
 
-  getInformation() {
-    let url = "epa/epa014/getInformation";
-    this.ajaxService.post(url, { exciseId: this.exciseId }, res => {
-      this.datas.exciseName = res.json()[0].exciseName;
-      this.datas.exportType = res.json()[0].exportType;
-      if ('1' == this.datas.exportType) {
-        this.exportType = "ส่งออกนอกราชอาณาจักร";
-      }
-      if ('2' == this.datas.exportType) {
-        this.exportType = "นําเข้าไปในเขตปลอดอากร";
-      }
-      this.datas.exciseName2 = res.json()[0].exciseName2;
-      this.datas.exciseId2 = res.json()[0].exciseId2;
-    });
-  }
 
   initDatatable = () => {
-    const URL = AjaxService.CONTEXT_PATH + "epa/epa014/search";
+    const URL = AjaxService.CONTEXT_PATH + "epa/epa014/searchDetail";
     this.datatable = $("#dataTable").DataTableTh({
       serverSide: true,
       searching: false,
@@ -75,8 +77,7 @@ export class Epa014Component implements OnInit {
         contentType: "application/json",
         data: (d) => {
           return JSON.stringify($.extend({}, d, {
-            "exciseId": this.exciseId,
-            "searchFlag": this.searchFlag
+            "viewId": this.viewId,
           }));
         }
       },
@@ -87,83 +88,74 @@ export class Epa014Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "eaReInventoryNumber",
+          data: "brandName",
           className: "ui center aligned",
         }, {
-          data: "productName2",
+          data: "productName",
           className: "ui center aligned",
         }, {
-          data: "model2",
+          data: "modelName",
           className: "ui center aligned",
         }, {
-          data: "size12",
+          data: "goodsSize",
           className: "ui center aligned",
         }, {
-          data: "amount2",
+          data: "goodsNum",
           className: "ui center aligned",
         }, {
-          data: "price2",
+          data: "retailPrice",
           className: "ui center aligned",
         }, {
-          data: "pricePer2",
+          data: "taxvalUnit",
           className: "ui center aligned",
         }, {
-          data: "amountPer2",
+          data: "taxqtyUnit",
           className: "ui center aligned",
         }, {
-          data: "tax2",
+          data: "taxAmount",
           className: "ui center aligned",
         }, {
-          data: "tax2",
-          className: "ui center aligned",
-        }, {
-          data: "tax2",
+          data: "id",
           className: "ui center aligned",
           render: function (data, row) {
-            return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>รายงานการตรวจสอบ</button>';
+            return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>ตรวจสอบ</button>';
           }
         }
       ]
     });
 
-    this.datatable.on('click', 'tbody tr button.checking-button', (e) => {
-      let closestRow = $(e.target).closest('tr');
-      let data = this.datatable.row(closestRow).data();
-
-      console.log("[data]: ", data);
-      this.datas.exciseId = data.exciseId;
-      this.datas.taxReNumber2 = data.taxReNumber2;
-      this.datas.exciseName = data.exciseName;
-      this.datas.officeArea = data.officeArea;
-      this.datas.destination2 = data.destination2;
-      this.datas.dateOut2 = data.dateOut2;
-      this.datas.productName2 = data.productName2;
-      this.datas.quantity = data.quantity;
-      this.datas.resultDtl = data.resultDtl;
-      this.datas.comment1Dtl = data.comment1Dtl;
-
-      this.saveDatas.exciseId2 = data.exciseId2;
-      this.saveDatas.taxReNumber2 = data.taxReNumber2;
-      this.saveDatas.exciseName2 = data.exciseName2;
-      this.saveDatas.officeArea = data.officeArea;
-      this.saveDatas.destination2 = data.destination2;
-      this.saveDatas.dateOut2 = data.dateOut2;
-      this.saveDatas.productName2 = data.productName2;
-      this.saveDatas.quantity = data.quantity;
-
-      $('#ModalShow').modal('show');
+    this.datatable.on("click", "td > button.checking-button", (event) => {
+      var data = this.datatable.row($(event.currentTarget).closest("tr")).data();
+      console.log(data);
+      let param = {
+          hdrId: data.hdrId,
+          dtlId: data.id
+      };
+      this.router.navigate(["/epa01/41", param]);
     });
 
   }
 
+
   onClickBack() {
-    this.router.navigate(["/epa01/3"], {
-      queryParams: {
-        exciseId: this.exciseId,
-        exciseName: this.exciseName,
-        searchFlag: "TRUE"
-      }
-    });
+    this.router.navigate(["/epa01/3"]);
   };
 
+}
+
+interface Epa012Form {
+  id: number,
+  exportName: String
+  checkPointDest: String,
+  exciseId: String,
+  cusName: String,
+  tin: String,
+  vatNo: String,
+  facname: String,
+  cusNewRegid: String,
+  remark: String,
+  route: String,
+  transportName: String,
+  dateOutDisplay: String,
+  dateInDisplay: String,
 }

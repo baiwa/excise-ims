@@ -1,8 +1,8 @@
 package th.co.baiwa.excise.upload.service;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,20 +11,17 @@ import java.util.Map;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.util.ExcelUtils;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.ia.persistence.vo.Int0611ExcelVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int0611FormVo;
 import th.co.baiwa.excise.ta.service.ExciseDetailService;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -32,6 +29,10 @@ import th.co.baiwa.excise.utils.BeanUtils;
 public class UploadFileExciseService {
 
 	private Logger logger = LoggerFactory.getLogger(ExciseDetailService.class);
+	
+	
+	@Value("${app.datasource.path.upload}")
+	private String appPath;
 
 	public List<String[]> readFileExcel(MultipartFile fileExel) throws IOException, EncryptedDocumentException, InvalidFormatException {
 		logger.info("UploadFileExciseService.readFileExcel");
@@ -137,6 +138,23 @@ public class UploadFileExciseService {
 		
 		
 		return excelRowList;
+	}
+	
+	
+	public String uploadFileService(MultipartFile file , String pathFile) throws IllegalStateException, IOException{
+		logger.info("UploadFileExciseService.uploadFileService {}" , pathFile);
+		String pathUpload = appPath+pathFile+"/";
+        if(! new File(pathUpload).exists())
+        {
+            new File(pathUpload).mkdir();
+        }
+        logger.info("realPathtoUploads = {}", pathUpload);
+        String orgName = file.getOriginalFilename();
+        String filePath = pathUpload + orgName;
+        File dest = new File(filePath);
+        file.transferTo(dest);
+		
+		return pathFile;
 	}
 	
 	

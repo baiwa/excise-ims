@@ -9,7 +9,7 @@ declare var $: any;
   templateUrl: './int07-3.component.html',
   styleUrls: ['./int07-3.component.css']
 })
-export class Int073Component implements OnInit , AfterViewInit{
+export class Int073Component implements OnInit, AfterViewInit {
 
   breadcrumb: BreadCrumb[] = [
     { label: "ตรวจสอบภายใน", route: "#" },
@@ -20,53 +20,95 @@ export class Int073Component implements OnInit , AfterViewInit{
   loading: boolean = false;
   fileExel: File[];
   dataTrialBalanceSheet: Data[] = [];
-  // dataTable
-  datatable: any;
+  dataLedgerSheet: Data[] = [];
+  dataSheet: Data[] = [];
 
+  // dataTable
+  datatable1: any;
+  datatable2: any;
+  datatable3: any;
   // processList
-  processList:Number;
-  
+  processList: Number;
+
+
+
   constructor(
     private authService: AuthService,
     private ajax: AjaxService,
-    
+
   ) { }
 
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-07300');
-    this.processList= 1;
+    this.processList = 1;
+    $("#tb2").hide();
+    $("#tb3").hide();
   }
 
 
   ngAfterViewInit() {
-    this.initDatatable();
+    this.initDatatable1();
   }
 
 
 
   onUpload = (event: any) => {
     this.loading = true;
-    this.dataTrialBalanceSheet = [];
     console.log("อัพโหลด Excel");
-    const form = $("#upload-form")[0];
-    let formBody = new FormData(form);
+    if (this.processList == 1) {
+      this.dataTrialBalanceSheet = [];
+      const form = $("#upload-form")[0];
+      let formBody = new FormData(form);
+      let url = "ia/int073/readFileExcelTrialBalanceSheet";
 
-    let url = "ia/int073/readFileExcelTrialBalanceSheet";
-    this.ajax.upload(
-      url,
-      formBody,
-      res => {
-        console.log(res.json());
-        res.json().forEach(element => {
-          this.dataTrialBalanceSheet.push(element);
-        });
-        this.initDatatable();
-        setTimeout(() => {
-          this.loading = false;
-        }, 1000);
-      }
-    )
+      this.ajax.upload(
+        url,
+        formBody,
+        res => {
+          console.log(res.json());
+          res.json().forEach(element => {
+            this.dataTrialBalanceSheet.push(element);
+          });
+          this.initDatatable1();
+          setTimeout(() => {
+            this.loading = false;
+          }, 1000);
+        }
+      )
+
+    } else if (this.processList == 2) {
+     
+      this.dataLedgerSheet = [];
+      const form = $("#upload-form")[0];
+      let formBody = new FormData(form);
+      let url = "ia/int073/readFileExcelLedgerSheet";
+
+      this.ajax.upload(
+        url,
+        formBody,
+        res => {
+          console.log(res.json());
+          res.json().forEach(element => {
+
+            this.dataLedgerSheet.push(element);
+          });
+          this.initDatatable2();
+          if(this.dataLedgerSheet.length == 0){
+            this.processList = 2;
+          }else{
+            this.processList = 3;
+          }
+          setTimeout(() => {
+            this.loading = false;
+          }, 1000);
+        }
+      )
+
+
+    }
+
+
   };
 
   onChangeUpload = (event: any) => {
@@ -85,58 +127,197 @@ export class Int073Component implements OnInit , AfterViewInit{
   };
 
 
-    // dataTable upload
-    initDatatable(): void {
-    
-      if (this.datatable != null || this.datatable != undefined) {
-        this.datatable.destroy();
+  // dataTable upload
+  initDatatable1(): void {
+
+    if (this.datatable1 != null || this.datatable1 != undefined) {
+      this.datatable1.destroy();
+    }
+
+    this.datatable1 = $("#dataTable1").DataTableTh({
+      lengthChange: true,
+      searching: false,
+      loading: true,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: false,
+      paging: true,
+      data: this.dataTrialBalanceSheet,
+      columns: [
+        { data: "accountNumber" },
+        { data: "accountName" },
+        { data: "summitTest", render: $.fn.dataTable.render.number(",", ".", 2, "") },
+        { data: "debitTest", render: $.fn.dataTable.render.number(",", ".", 2, "") },
+        { data: "creditTest", render: $.fn.dataTable.render.number(",", ".", 2, "") },
+        { data: "liftUpTest", render: $.fn.dataTable.render.number(",", ".", 2, "") }
+
+      ],
+      columnDefs: [
+        { targets: [1], className: "left aligned" },
+        { targets: [0], className: "center aligned" },
+        { targets: [2, 3, 4, 5], className: "right aligned" },
+      ],
+
+      createdRow: function (row, data, dataIndex) {
+      },
+      rowCallback: (row, data, index) => {
+
       }
-  
-      this.datatable = $("#dataTable").DataTableTh({
-        lengthChange: true,
-        searching: false,
-        loading:true,
-        ordering: false,
-        pageLength: 10,
-        processing: true,
-        serverSide: false,
-        paging: true,
-        data: this.dataTrialBalanceSheet,
-        columns: [
-          { data: "accountNumber" },
-          { data: "accountName" },
-          { data: "SummitTest" },
-          { data: "debitTest" },
-          { data: "creditTest" },
-          { data: "liftUpTest" }
 
-        ],
-        columnDefs: [
-          { targets: [1], className: "left aligned" },
-          { targets: [0,2,3,4,5], className: "right aligned" },
-        ],
+    });
+  }
 
-        createdRow: function (row, data, dataIndex) {
-        },
-        rowCallback: (row, data, index) => {
-  
+
+  // dataTable upload
+  initDatatable2(): void {
+
+    if (this.datatable2 != null || this.datatable2 != undefined) {
+      this.datatable2.destroy();
+    }
+
+    this.datatable2 = $("#dataTable2").DataTableTh({
+      lengthChange: true,
+      searching: false,
+      loading: true,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: false,
+      paging: true,
+      data: this.dataLedgerSheet,
+      columns: [
+        { data: "accountNumber" },
+        { data: "accountName" },
+        { data: "debitType", render: $.fn.dataTable.render.number(",", ".", 2, "") },
+        { data: "creditType", render: $.fn.dataTable.render.number(",", ".", 2, "") },
+        { data: "liftUpType", render: $.fn.dataTable.render.number(",", ".", 2, "") }
+      ],
+      columnDefs: [
+        { targets: [1], className: "left aligned" },
+        { targets: [0], className: "center aligned" },
+        { targets: [2, 3, 4], className: "right aligned" },
+      ],
+
+      createdRow: function (row, data, dataIndex) {
+      },
+      rowCallback: (row, data, index) => {
+
+      }
+
+    });
+  }
+
+  // dataTable upload
+  initDatatable3(): void {
+
+    if (this.datatable3 != null || this.datatable3 != undefined) {
+      this.datatable3.destroy();
+    }
+
+    this.datatable3 = $("#dataTable3").DataTableTh({
+      lengthChange: true,
+      searching: false,
+      loading: true,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: false,
+      paging: true,
+      data: this.dataSheet,
+      columns: [
+        { data: "accountNumber" },
+        { data: "accountName" },
+        { data: "summitTest", render: $.fn.dataTable.render.number(",", ".", 2, "") },
+        { data: "debitTest", render: $.fn.dataTable.render.number(",", ".", 2, "") },
+        { data: "creditTest", render: $.fn.dataTable.render.number(",", ".", 2, "") },
+        { data: "liftUpTest", render: $.fn.dataTable.render.number(",", ".", 2, "") },
+        { data: "debitType", render: $.fn.dataTable.render.number(",", ".", 2, "") },
+        { data: "creditType", render: $.fn.dataTable.render.number(",", ".", 2, "") },
+        { data: "liftUpType", render: $.fn.dataTable.render.number(",", ".", 2, "") },
+        { data: "difference", render: $.fn.dataTable.render.number(",", ".", 2, "") }
+      ],
+      columnDefs: [
+        { targets: [1], className: "left aligned" },
+        { targets: [0], className: "center aligned" },
+        { targets: [2, 3, 4, 5, 6, 7, 8,9], className: "right aligned" },
+      ],
+
+      createdRow: function (row, data, dataIndex) {
+
+        if(data.checkData =='Y'){
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
+          }
+        }else if(data.checkData =='T'){
+          for (let i = 0; i <= 9; i++) {
+            $(row).find('td:eq(' + i + ')').addClass('bg-m-blue');
+          }
         }
-  
-      });
-    }
+      },
+      rowCallback: (row, data, index) => {
 
-    clearData() {
+      }
+
+    });
+  }
+
+  clearData() {
+    if (this.processList == 1) {
       this.dataTrialBalanceSheet = [];
-      this.initDatatable();
-  
+      this.initDatatable1();
+    } else if (this.processList == 2) {
+      this.dataLedgerSheet = [];
+      this.initDatatable2();
+    }
+  }
+
+  nextData() {
+    this.processList = 2;
+    $("#upload-form").val("");
+    $("#fileExel").val("");
+    this.fileExel = [];
+    $("#tb1").hide();
+    $("#tb2").show();
+    this.initDatatable2();
+    console.log("Step ::" + this.processList);
+  }
+
+  checkData() {
+    this.dataSheet = [];
+    this.loading = true;
+   
+    $("#tb2").hide();
+    $("#tbUpload").hide();
+    $("#tb3").show();
+    console.log("Step ::" + this.processList);
+
+    let data = {
+      "dataTrialBalanceSheet": this.dataTrialBalanceSheet,
+      "dataLedgerSheet": this.dataLedgerSheet
     }
 
-    nextData() {
-      this.processList= 2;
-      $("#upload-form").val("");
-      $("#fileExel").val("");
-      this.fileExel = [];
+    const URL = "ia/int073/checkData";
+    this.ajax.post(URL, data, res => {
+      console.log(res.json());
+     
+      res.json().forEach(element => {
+        this.dataSheet.push(element);
+      });
+      this.initDatatable3();
+      this.processList = 4;
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
     }
+    );
+
+  }
+
+  export() {
+    const URL_DOWNLOAD = "ia/int073/export";
+    this.ajax.download(URL_DOWNLOAD);
+  }
 
 }
 
@@ -151,7 +332,7 @@ class Data {
   id: any = 0;
   accountNumber: any = '';
   accountName: any = '';
-  SummitTest: any = '';
+  summitTest: any = '';
   debitTest: any = '';
   creditTest: any = '';
   liftUpTest: any = '';
@@ -162,3 +343,4 @@ class Data {
   difference: any = '';
   checkData: any = '';
 }
+

@@ -25,7 +25,7 @@ export class SummaryReportComponent implements OnInit {
   last: any;
   month: any;
   from: any;
-  analysNumber: any;
+  analysNumber: any = '';
   exciseProductType: any;
   flag: any;
   coordinates: any;
@@ -37,6 +37,7 @@ export class SummaryReportComponent implements OnInit {
   role: string;
   loading: boolean = true;
   dataTable: any;
+  summaryReport: any[];
   constructor(
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
@@ -67,9 +68,16 @@ export class SummaryReportComponent implements OnInit {
 
     const analysUrl = "combobox/controller/getAnalysNumber";
     this.ajax.post(analysUrl, {}, res => {
+      console.log(res.json()[0]);
       this.analysNumber = res.json()[0];
-      this.initDatatable();
+      this.ajax.post("filter/exise/summaryReport", { analysnumber: res.json()[0] }, res => {
+        this.summaryReport = res.json();
+        this.initDatatable();
+      });
+
     });
+
+
 
 
 
@@ -81,38 +89,86 @@ export class SummaryReportComponent implements OnInit {
 
   ngAfterViewInit() { }
 
+  // initDatatable(): void {
+  //   console.log("analysNumber : ", this.analysNumber);
+  //   const URL = AjaxService.CONTEXT_PATH + "filter/exise/summaryReport";
+  //   var dataTable = $("#dataTable").DataTable({
+  //     lengthChange: false,
+  //     searching: false,
+  //     ordering: false,
+  //     processing: true,
+  //     serverSide: true,
+
+  //     paging: true,
+  //     pagingType: "full_numbers",
+
+  //     ajax: {
+  //       type: "POST",
+  //       url: URL,
+  //       data: {
+  //         analysNumber: this.analysNumber
+
+  //       }
+  //     },
+  //     columns: [
+
+
+  //       { data: "sector", className: "center" },
+  //       { data: "sendDate", className: "center" },
+  //       { data: "receiveDate", className: "center" }
+
+  //     ]
+  //   });
+
+
+  // }
+
   initDatatable(): void {
-    const URL = AjaxService.CONTEXT_PATH + "/filter/exise/summaryReport";
-    var dataTable = (this.sendLineUser = $("#dataTable").DataTableTh({
+    if (this.dataTable != null) {
+      this.dataTable.destroy();
+    }
+
+    console.log(this.summaryReport);
+    this.dataTable = $("#dataTable").DataTable({
       lengthChange: false,
       searching: false,
       ordering: false,
       processing: true,
-      serverSide: true,
-      scrollX: true,
-      paging: true,
-      pagingType: "full_numbers",
-
-      ajax: {
-        type: "POST",
-        url: URL,
-        data: {
-          analysNumber: this.analysNumber,
-
-        }
-      },
+      serverSide: false,
+      paging: false,
+      data: this.summaryReport,
       columns: [
 
 
         { data: "sector", className: "center" },
-        { data: "sendDate", className: "center" },
-        { data: "receiveDate", className: "center" },
+        {
+          render: function (data, type, row, meta) {
+            //console.log("data :", row.createdDate)
+            if (row.sendDate != null && row.sendDate != undefined && row.sendDate != '') {
+              var dateTime = new Date(row.sendDate).toLocaleString("th-TH");
+              return dateTime.split(' ')[0];
+            } else {
+              return "-";
+            }
+          }, className: "center"
+        },
+        {
+          render: function (data, type, row, meta) {
+            //console.log("data :", row.createdDate)
+            if (row.receiveDate != null && row.receiveDate != undefined && row.receiveDate != '') {
+              var dateTime = new Date(row.receiveDate).toLocaleString("th-TH");
+              return dateTime.split(' ')[0];
+            } else {
+              return "-";
+            }
+          }, className: "center"
+        }
 
       ]
-    }));
-
-
+    });
   }
+
+
 
 
 

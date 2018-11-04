@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.epa.persistence.vo;
 
+import java.math.BigDecimal;
+
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
 public class Epa011FormVo extends DataTableRequest {
@@ -11,6 +13,7 @@ public class Epa011FormVo extends DataTableRequest {
 	private String exciseId;
 	private String exportDate;
 	private String searchFlag;
+	private BigDecimal viewId;
 
 	public String getExciseId() {
 		return exciseId;
@@ -34,6 +37,14 @@ public class Epa011FormVo extends DataTableRequest {
 
 	public void setSearchFlag(String searchFlag) {
 		this.searchFlag = searchFlag;
+	}
+
+	public BigDecimal getViewId() {
+		return viewId;
+	}
+
+	public void setViewId(BigDecimal viewId) {
+		this.viewId = viewId;
 	}
 
 }

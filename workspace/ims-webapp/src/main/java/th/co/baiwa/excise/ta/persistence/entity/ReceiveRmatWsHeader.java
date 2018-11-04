@@ -55,6 +55,9 @@ public class ReceiveRmatWsHeader extends BaseEntity  {
 
 	@Column(name="TAXATION_ID")
 	private String taxationId;
+	
+	@Column(name="PATH_FILE")
+	private String pathFile;
 
 	public long getTaReceiveRmatHeaderId() {
 		return taReceiveRmatHeaderId;

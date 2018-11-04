@@ -46,8 +46,8 @@ export class Int0831Component implements OnInit {
   breadcrumb: BreadCrumb[];
   constructor(private router: Router,
     private ajax: AjaxService,
-    
-private authService: AuthService,
+
+    private authService: AuthService,
     private route: ActivatedRoute,
     private messageBarService: MessageBarService,
     private _location: Location) {
@@ -1020,6 +1020,9 @@ private authService: AuthService,
 
   clearData() {
     this.pageShowPageIndex = undefined;
+    this.budgetYear = "";
+    this.buttonFullYear = false;
+    this.initDatatable();
   }
 
   changebudgetYear = event => {
@@ -1041,6 +1044,8 @@ private authService: AuthService,
     $("#select3").hide();
     $("#modalInt0811").modal("hide");
   }
+
+
 
 
 }

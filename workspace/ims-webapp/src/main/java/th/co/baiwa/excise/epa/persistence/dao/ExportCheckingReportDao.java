@@ -13,6 +13,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.excise.epa.persistence.vo.Epa011DtlVo;
+import th.co.baiwa.excise.epa.persistence.vo.Epa011FormVo;
+import th.co.baiwa.excise.epa.persistence.vo.Epa011Vo;
 import th.co.baiwa.excise.epa.persistence.vo.Epa014FormVo;
 import th.co.baiwa.excise.epa.persistence.vo.Epa014Vo;
 import th.co.baiwa.excise.utils.OracleUtils;
@@ -20,6 +23,9 @@ import th.co.baiwa.excise.utils.OracleUtils;
 @Repository
 public class ExportCheckingReportDao {
 
+	private final String HDR_SQL = "select * from EA_RE_05_01_HDR where 1=1 ";
+	private final String DTL_SQL = "select * from EA_RE_05_01_DTL where 1=1 ";
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -219,5 +225,5 @@ public class ExportCheckingReportDao {
 			return vo;
 		}
 	};
-	
+
 }

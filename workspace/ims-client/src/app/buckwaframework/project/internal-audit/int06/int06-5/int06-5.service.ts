@@ -57,14 +57,16 @@ export class Int065Service {
   }
   search = () => {
     this.form.searchFlag = "TRUE";
-    $("#dataTable").DataTableTh().ajax.reload();
+    
+    this.table.ajax.reload();
   }
   clear = () => {
     $("#searchFlag").val("FALSE");
     $(".office").dropdown('restore defaults');
     $("#dateFrom").val("");
     $("#dateTo").val("");
-    $("#dataTable").DataTableTh().ajax.reload();
+    
+    this.table.ajax.reload();
 
   }
 
@@ -78,13 +80,9 @@ export class Int065Service {
     param +="&budgetType=" +$("#budgetType").val();
     console.log(URL.export+param);
     this.ajax.download(URL.export+param);
-
-    
-
   }
-
   dataTable = () => {
-
+    console.log("My datatable");
     this.table = $("#dataTable").DataTableTh({
      
       "serverSide": true,

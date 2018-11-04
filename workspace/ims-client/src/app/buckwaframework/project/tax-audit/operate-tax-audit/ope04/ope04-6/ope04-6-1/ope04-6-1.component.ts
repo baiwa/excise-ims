@@ -19,6 +19,7 @@ export class Ope0461Component implements OnInit {
   breadcrumb: BreadCrumb[] = [
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การตรวจสอบภาษี', route: '#' },
+    { label: 'ผลการตรวจสอบภาษี', route: '#' },
     { label: 'ผลการตรวจสอบรายการวัตถุดิบที่ขอลดหย่อนภาษี', route: '#' },
   ]
 

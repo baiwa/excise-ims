@@ -3,6 +3,7 @@
 </div>
 
 <div class="ui attached segment">
+  
   <div class="ui grid center aligned">
     <div class="sixteen wide column">
       <h3>เชื่อมโยงข้อมูลใบขน (ภส.05-01)</h3>
@@ -22,13 +23,13 @@
         <label>ชื่อ :</label>
       </div>
       <div class="four wide field">
-        <input type="text" value="{{datas.exciseName}}">
+        <input type="text" [value]="formVo.cusName" >
       </div>
       <div class="three wide field ">
         <label>เลขบัตรประชาชน/เลขทะเบียนนิติบุคคล :</label>
       </div>
       <div class="four wide field disabled input">
-        <input type="text">
+        <input type="text" [value]="formVo.tin"  >
       </div>
     </div>
 
@@ -38,7 +39,7 @@
         <label>เลขที่สาขาภาษีมูลค่าเพิ่ม (ถ้ามี) :</label>
       </div>
       <div class="four wide field disabled input">
-        <input type="text">
+        <input type="text"  [value]="formVo.vatNo" >
       </div>
     </div>
 
@@ -54,13 +55,13 @@
         <label>ขอนำสินค้าออกจาก :</label>
       </div>
       <div class="four wide field">
-        <input type="text" value="{{datas.exciseName2}}">
+        <input type="text"  [value]="formVo.facname" >
       </div>
       <div class="three wide field ">
         <label>ทะเบียนสรรพสามิต :</label>
       </div>
       <div class="four wide field">
-        <input type="text" value="{{datas.exciseId2}}">
+        <input type="text"  [value]="formVo.cusNewRegid" >
       </div>
     </div>
 
@@ -70,7 +71,7 @@
         <label>เพื่อ :</label>
       </div>
       <div class="four wide field">
-        <input type="text" value="{{exportType}}">
+        <input type="text"  [value]="formVo.remark"  >
       </div>
     </div>
 
@@ -111,311 +112,3 @@
 
 </div>
 
-<!-- Modal Save -->
-<div class="ui modal" id="ModalCheck" style="width: 90%;">
-
-  <div class="header" style="background: #1e83db;color: white">
-    การตรวจปล่อยสินค้า
-  </div>
-
-  <div class="scrolling content" style="height: 600px !important;">
-
-    <div class="ui form">
-      <div class="ui grid">
-        <!-- column 1 -->
-        <div class="eight wide field" style="text-align: center;">
-          <label>ข้อมูลการตามแบบคำขอยกเว้นหรือคืนภาษี (แบบเลขที่ {{datas.taxReNumber2}} ) :</label>
-        </div>
-        <!-- column 2 -->
-        <div class="eight wide field" style="text-align: center;">
-          <label>ข้อมูลการนำสินค้าออกจากโรงอุตสาหกรรม :</label>
-        </div>
-      </div>
-      <hr><br>
-
-      <div class="inline fields">
-        <!-- column 1 -->
-        <div class="three wide field">
-          <p>ชื่อผุ้ส่งออก :</p>
-        </div>
-        <div class="four wide field">
-          <label>{{datas.exciseName}}</label>
-        </div>
-        <div class="two wide field"></div>
-        <!-- column 2 -->
-        <div class="three wide field">
-          <p>ชื่อผุ้ส่งออก :</p>
-        </div>
-        <div class="four wide field">
-          <input type="text" [(ngModel)]="saveDatas.exciseName2">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <!-- column 1 -->
-        <div class="three wide field">
-          <p>สำนักงานสรรพสามิตต้นทาง :</p>
-        </div>
-        <div class="four wide field">
-          <label>{{datas.officeArea}}</label>
-        </div>
-        <div class="two wide field"></div>
-        <!-- column 2 -->
-        <div class="three wide field">
-          <p>สำนักงานสรรพสามิตต้นทาง :</p>
-        </div>
-        <div class="four wide field">
-          <input type="text" [(ngModel)]="saveDatas.officeArea">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <!-- column 1 -->
-        <div class="three wide field">
-          <p>ด่านส่งออกสินค้าปลายทาง :</p>
-        </div>
-        <div class="four wide field">
-          <label>สำนักงานสรรพสามิต {{datas.destination2}}</label>
-        </div>
-        <div class="two wide field"></div>
-        <!-- column 2 -->
-        <div class="three wide field">
-          <p>ด่านส่งออกสินค้าปลายทาง :</p>
-        </div>
-        <div class="four wide field">
-          <input type="text" [(ngModel)]="saveDatas.destination2">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <!-- column 1 -->
-        <div class="three wide field">
-          <p>สำนักงานสรรพสามิตปลายทาง :</p>
-        </div>
-        <div class="four wide field">
-          <label>สำนักงานสรรพสามิต {{datas.destination2}}</label>
-        </div>
-        <div class="two wide field"></div>
-        <!-- column 2 -->
-        <div class="three wide field">
-          <p>สำนักงานสรรพสามิตปลายทาง :</p>
-        </div>
-        <div class="four wide field">
-          <input type="text" [(ngModel)]="saveDatas.destination2">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <!-- column 1 -->
-        <div class="three wide field">
-          <p>วันที่นำสินค้าออก :</p>
-        </div>
-        <div class="four wide field">
-          <label>{{datas.dateOut2}}</label>
-        </div>
-        <div class="two wide field"></div>
-        <!-- column 2 -->
-        <div class="three wide field">
-          <p>วันที่นำสินค้าออก :</p>
-        </div>
-        <div class="four wide field">
-          <input type="text" [(ngModel)]="saveDatas.dateOut2">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <!-- column 1 -->
-        <div class="three wide field">
-          <p>ชนิดของสินค้า :</p>
-        </div>
-        <div class="four wide field">
-          <label>{{datas.productName2}}</label>
-        </div>
-        <div class="two wide field"></div>
-        <!-- column 2 -->
-        <div class="three wide field">
-          <p>ชนิดของสินค้า :</p>
-        </div>
-        <div class="four wide field">
-          <input type="text" [(ngModel)]="saveDatas.productName2">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <!-- column 1 -->
-        <div class="three wide field">
-          <p>ปริมาณของสินค้า :</p>
-        </div>
-        <div class="four wide field">
-          <label>{{datas.quantity}}</label>
-        </div>
-        <div class="two wide field"></div>
-        <!-- column 2 -->
-        <div class="three wide field">
-          <p>ปริมาณของสินค้า :</p>
-        </div>
-        <div class="four wide field">
-          <input type="text" [(ngModel)]="saveDatas.quantity">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <!-- column 1 -->
-        <div class="three wide field">
-          <p>ชื่อหรือเลขทะเบียนพาหนะ :</p>
-        </div>
-        <div class="four wide field">
-          <label>-</label>
-        </div>
-        <div class="two wide field"></div>
-        <!-- column 2 -->
-        <div class="three wide field">
-          <p>ชื่อหรือเลขทะเบียนพาหนะ :</p>
-        </div>
-        <div class="four wide field">
-          <input type="text" [(ngModel)]="saveDatas.vehicleNo">
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <!-- column 1 -->
-        <div class="three wide field">
-          <p>เส้นทางการขนส่ง :</p>
-        </div>
-        <div class="four wide field">
-          <label>-</label>
-        </div>
-        <div class="two wide field"></div>
-        <!-- column 2 -->
-        <div class="three wide field">
-          <p>เส้นทางการขนส่ง :</p>
-        </div>
-        <div class="four wide field">
-          <input type="text" [(ngModel)]="saveDatas.logisticWay">
-        </div>
-      </div>
-      <hr>
-      <br>
-
-      <div class="ui grid">
-        <!-- column 1 -->
-        <div class="eight wide field" style="text-align: center;">
-          <label>จำนวนและหมายเลขดวงตรากรมสรรพสามิต :</label>
-        </div>
-        <!-- column 2 -->
-        <div class="eight wide field" style="text-align: center;">
-          <label>จำนวนและหมายเลขดวงตรากรมสรรพสามิต :</label>
-        </div>
-      </div>
-      <br>
-
-      <div class="ui grid">
-        <div class="two column row">
-          <!-- column 1 Tax Stamp -->
-          <div class="column">
-
-            <div class="inline fields" *ngFor="let item of taxStampNo; let i = index">
-              <div class="two wide field">
-                <p>ดวงที่ {{i+1}}</p>
-              </div>
-              <div class="eight wide field">
-                <input type="text" [(ngModel)]="datas.stampName[i]">
-              </div>
-              <div class="four wide field">
-                <button class="ui mini green button" (click)="addTaxField(i)">
-                  <i class="plus icon"></i>
-                  เพิ่ม
-                </button>
-                <button class="ui mini red button" (click)="delTaxField(i)">
-                  ลบ
-                </button>
-              </div>
-            </div>
-
-          </div>
-          <!-- column 2 Factory Stamp -->
-          <div class="column">
-
-            <div class="inline fields" *ngFor="let item of factoryStampNo; let i = index">
-              <div class="two wide field"></div>
-              <div class="two wide field">
-                <p>ดวงที่ {{i+1}}</p>
-              </div>
-              <div class="eight wide field">
-                <input type="text" [(ngModel)]="saveDatas.stampName[i]">
-              </div>
-              <div class="four wide field">
-                <button class="ui mini green button" (click)="addFactoryField()">
-                  <i class="plus icon"></i>
-                  เพิ่ม
-                </button>
-                <button class="ui mini red button" (click)="delFactoryField(i)">
-                  ลบ
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-      <hr>
-      <br>
-
-      <!-- Radio Box -->
-      <div class="ui grid center aligned">
-        <div class="inline fields">
-          <label>ผลการตรวจ:</label>
-          <div class="field">
-            <div class="ui radio checkbox">
-              <input type="radio" name="result" [(ngModel)]="datas.result" value="1">
-              <label>ผ่าน</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui radio checkbox">
-              <input type="radio" name="result" [(ngModel)]="datas.result" value="0">
-              <label>ไม่ผ่าน</label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Comment Box -->
-      <div class="ui grid center aligned">
-        <label>หมายเหตุ:</label>
-        <div class="fields">
-          <textarea rows="5" cols="100" [(ngModel)]="datas.remark"></textarea>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="actions">
-    <div class="ui primary button" (click)="onClickSave()">
-      <i class="save icon"></i>
-      บันทึกข้อมูลการตรวจ
-    </div>
-    <div class="ui icon deny button">
-      <i class="close icon"></i>
-      ยกเลิกการบันทึกข้อมูล
-    </div>
-  </div>
-
-  <!-- Modal Alert -->
-  <div class="ui modal" id="ModalAlert" style="width: 30%;">
-    <div class="header">
-      แจ้งเตือน
-    </div>
-    <div class="content" style="height: 100px !important;">
-      <p>กรุณากรอกข้อมูลหมายเหตุ</p>
-    </div>
-    <hr>
-    <div>
-      <button class="ui right floated red mini cancel inverted button" style="margin-bottom: 10px; margin-right: 10px;" (click)="onClickClose()">
-        <i class="remove icon"></i> ปิด
-      </button>
-    </div>
-  </div>
-
-</div>

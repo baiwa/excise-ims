@@ -14,6 +14,8 @@ declare var $: any;
 export class Epa013Component implements OnInit {
 
   datatable: any;
+  $form: any;
+  $page: any;
   exciseId: string = "";
   exciseName: string = "";
   startDate: string = "";
@@ -30,7 +32,9 @@ export class Epa013Component implements OnInit {
   ngOnInit() {
     this.authService.reRenderVersionProgram('EXP-01300');
     this.exciseId = this.route.snapshot.queryParams["exciseId"];
+    this.exciseName = this.route.snapshot.queryParams["exciseName"];
     this.searchFlag = this.route.snapshot.queryParams["searchFlag"];
+    this.$form = $('#exportForm');
     this.calenda();
   }
 
@@ -65,6 +69,7 @@ export class Epa013Component implements OnInit {
         data: (d) => {
           return JSON.stringify($.extend({}, d, {
             "exciseId": this.exciseId,
+            "exciseName": this.exciseName,
             "searchFlag": this.searchFlag
           }));
         }
@@ -76,38 +81,32 @@ export class Epa013Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "exciseName",
+          data: "cusName",
           className: "ui center aligned",
         }, {
-          data: "destination",
+          data: "checkPointDest",
           className: "ui center aligned",
         }, {
-          data: "dateDestination",
+          data: "dateOutDisplay",
           className: "ui center aligned",
         }, {
-          data: "dateDestination",
+          data: "dateInDisplay",
           className: "ui center aligned",
         }, {
-          data: "dateDestination",
+          data: "id",
           className: "ui center aligned",
           render: function (data, row) {
             return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>ตรวจสอบ</button>';
           }
-        }
+        },
       ],
-      rowCallback: (row, data, index) => {
-        $("td > .checking-button", row).bind("click", () => {
-          this.router.navigate(["/epa01/4"], {
-            queryParams: {
-              exciseId: data.exciseId,
-              exciseName: data.exciseName,
-              searchFlag: "TRUE"
-            }
-          });
-        });
-      }
     });
 
+    this.datatable.on("click", "td > .checking-button", (event) => {
+      var data = this.datatable.row($(event.currentTarget).closest("tr")).data();
+      // console.log(data);
+      this.router.navigate(["/epa01/4", { viewId : data.id }]);
+    });
   }
 
   onClickSearch() {
@@ -117,9 +116,9 @@ export class Epa013Component implements OnInit {
 
   onClickClear() {
     this.exciseId = "";
-    this.exciseName = "";
     this.searchFlag = "FALSE";
     this.datatable.ajax.reload();
   };
+
 
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'services/auth.service';
+import { AjaxService } from '../../../../common/services/ajax.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TextDateTH, formatter } from 'helpers/datepicker';
-import { AjaxService } from 'services/ajax.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 declare var $: any;
 
@@ -14,6 +14,10 @@ declare var $: any;
 export class Epa021Component implements OnInit {
 
   datatable: any;
+  $form: any;
+  $page: any;
+  exciseId: string = "";
+  exciseName: string = "";
   startDate: string = "";
   searchFlag: string = "FALSE";
 
@@ -27,11 +31,27 @@ export class Epa021Component implements OnInit {
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('EXP-02100');
+    this.exciseId = this.route.snapshot.queryParams["exciseId"];
+    this.exciseName = this.route.snapshot.queryParams["exciseName"];
+    this.searchFlag = this.route.snapshot.queryParams["searchFlag"];
+    this.$form = $('#exportForm');
     this.calenda();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.initDatatable();
+  }
+
+  calenda = () => {
+    let date = new Date();
+    $("#date").calendar({
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('day-month-year'),
+      onChange: (date, text) => {
+        this.startDate = text;
+      }
+    });
   }
 
   initDatatable = () => {
@@ -48,6 +68,8 @@ export class Epa021Component implements OnInit {
         contentType: "application/json",
         data: (d) => {
           return JSON.stringify($.extend({}, d, {
+            "exciseId": this.exciseId,
+            "exciseName": this.exciseName,
             "searchFlag": this.searchFlag
           }));
         }
@@ -59,46 +81,46 @@ export class Epa021Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "startDate",
+          data: "cusName",
           className: "ui center aligned",
         }, {
-          data: "startDate",
+          data: "checkPointDest",
           className: "ui center aligned",
         }, {
-          data: "startDate",
+          data: "dateOutDisplay",
           className: "ui center aligned",
         }, {
-          data: "startDate",
+          data: "dateInDisplay",
           className: "ui center aligned",
         }, {
-          data: "startDate",
+          data: "id",
           className: "ui center aligned",
           render: function (data, row) {
             return '<button type="button" class="ui mini primary button checking-button"><i class="edit icon"></i>ตรวจสอบ</button>';
           }
         },
-      ]
+      ],
     });
-  }
 
-  calenda = () => {
-    let date = new Date();
-    $("#date").calendar({
-      type: "date",
-      text: TextDateTH,
-      formatter: formatter('day-month-year'),
-      onChange: (date, text) => {
-        this.startDate = text;
-      }
+
+
+    this.datatable.on("click", "td > .checking-button", (event) => {
+      var data = this.datatable.row($(event.currentTarget).closest("tr")).data();
+      // console.log(data);
+      this.router.navigate(["/epa02/2", { viewId : data.id }]);
     });
-  }
+
+  };
 
   onClickSearch() {
-    alert("You've clicked search!");
-  }
+    this.searchFlag = "TRUE";
+    this.datatable.ajax.reload();
+  };
 
   onClickClear() {
-    alert("You've clicked clear!");
-  }
+    this.exciseId = "";
+    this.searchFlag = "FALSE";
+    this.datatable.ajax.reload();
+  };
 
 }

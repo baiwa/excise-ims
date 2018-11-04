@@ -46,6 +46,9 @@ public class TaxReduceWsHdr extends BaseEntity {
 
 	@Column(name = "SUB_PDT_TYPE")
 	private String subPdtType;
+	
+	@Column(name="PATH_FILE")
+	private String pathFile;
 
 	public Long getTaTaxReduceWsHdrId() {
 		return taTaxReduceWsHdrId;

@@ -1,6 +1,5 @@
 package th.co.baiwa.excise.ta.persistence.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -56,6 +55,9 @@ public class MaterialsWorksheetHeader extends BaseEntity {
 
 	@Column(name="TAXATION_ID")
 	private String taxationId;
+	
+	@Column(name="PATH_FILE")
+	private String pathFile;
 
 	public MaterialsWorksheetHeader() {
 	}

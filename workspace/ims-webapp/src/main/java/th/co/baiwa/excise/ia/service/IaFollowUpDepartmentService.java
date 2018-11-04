@@ -237,8 +237,8 @@ public class IaFollowUpDepartmentService {
 		
 		Int112Vo vo = new Int112Vo();
 		vo.setFollowUpDepartmentId(iaFollowUpDepartment.getFollowUpDepartmentId().toString());
-		vo.setExciseDepartment(iaFollowUpDepartmentDao.queryLovIdSysLovByValue1(iaFollowUpDepartment.getExciseDepartment()));
-		vo.setExciseRegion(iaFollowUpDepartmentDao.queryLovIdSysLovByValue1(iaFollowUpDepartment.getExciseRegion()));
+		vo.setExciseDepartment(iaFollowUpDepartmentDao.queryLovIdSysLovByValue3(iaFollowUpDepartment.getExciseDepartment()));
+		vo.setExciseRegion(iaFollowUpDepartmentDao.queryLovIdSysLovBySubTypeDescription(iaFollowUpDepartment.getExciseRegion()));
 		vo.setExciseDistrict(iaFollowUpDepartmentDao.queryLovIdSysLov(iaFollowUpDepartment.getExciseDistrict()));
 		vo.setInformRectorBnum(iaFollowUpDepartment.getInformRectorBnum());
 		vo.setInformRectorDate(DateConstant.convertDateToStrDDMMYYYY(iaFollowUpDepartment.getInformRectorDate()));

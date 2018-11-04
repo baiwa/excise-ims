@@ -16,16 +16,16 @@
             <label class="text-right full-width">ทะเบียนสรรพสามิต</label>
           </div>
           <div class="four wide field" [ngClass]="{ 'error': submitted && f.exciseId.invalid }">
-            <select name="exciseId" id="exciseId"  formControlName="exciseId" class="ui dropdown ai search full-width office">
+            <select name="exciseId" id="exciseId" formControlName="exciseId" class="ui dropdown ai search full-width office">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of exciseIdList" value="{{item.value}}">{{item.label}}</option>
             </select>
           </div>
           <div class="three wide field ">
-            
+
           </div>
           <div class="four wide field ">
-            
+
           </div>
         </div>
 
@@ -68,7 +68,7 @@
 
     <div class="ui segment">
       <table id="dataTable" class="ui small celled table striped selectable nowrap" style="width: 100%">
-        <thead>         
+        <thead>
           <tr>
             <th style="text-align: center !important;" rowspan="2">ลำดับที่</th>
             <th style="text-align: center !important;" rowspan="2">ทะเบียนสรรพสามิต</th>
@@ -77,17 +77,25 @@
             <th style="text-align: center !important;" rowspan="2">ประเภท</th>
             <th style="text-align: center !important;" rowspan="2">พิกัด</th>
             <th style="text-align: center !important;" colspan="2">รอบระยะเวลาการตรวจสอบ</th>
-            <th style="text-align: center !important;" rowspan="2"></th>           
+            <th style="text-align: center !important;" rowspan="2"></th>
           </tr>
           <tr>
             <th style="text-align: center !important;">เริ่มต้น</th>
-            <th style="text-align: center !important;">สิ้นสุด</th>          
+            <th style="text-align: center !important;">สิ้นสุด</th>
           </tr>
         </thead>
 
       </table>
       <br>
     </div>
-
+    <br>
+    <div class="ui grid center aligned">
+      <div class="sixteen wide column">
+        <button class="ui mini button" routerLink="/select-form/rs001">
+          <i class="reply icon"></i>
+          ย้อนกลับ
+        </button>
+      </div>
+    </div>
   </div>
 </div>

@@ -49,10 +49,10 @@ public class IaWithdrawalDao {
 							"            ps.PAYEE PAYEE, "+
 							"            ps.AMOUNT AMOUNT" + 
 							"   FROM IA_WITHDRAWAL_PERSONS ps WHERE PAYMENT_METHOD = ? ) PS  " +
-							"   INNER JOIN  " + 
+							"   LEFT JOIN  " +
 							"   (SELECT WITHDRAWAL_ID,ITEM_DESC,BUDGET_TYPE " + 
 							"        FROM IA_WITHDRAWAL_LIST " + 
-							"        WHERE WITHDRAWAL_ID= (SELECT WITHDRAWAL_ID FROM IA_WITHDRAWAL_PERSONS WHERE PAYMENT_METHOD = ? GROUP BY WITHDRAWAL_ID  " + 
+							"        WHERE WITHDRAWAL_ID in (SELECT WITHDRAWAL_ID FROM IA_WITHDRAWAL_PERSONS WHERE PAYMENT_METHOD = ? GROUP BY WITHDRAWAL_ID  " +
 							"    )) LS " + 
 							"    ON  LS.WITHDRAWAL_ID=ps.WITHDRAWAL_ID WHERE 1=1";	
 	public Long count(Int065FormVo formVo) {

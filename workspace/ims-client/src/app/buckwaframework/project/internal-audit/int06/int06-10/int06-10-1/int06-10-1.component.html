@@ -46,8 +46,7 @@
             <label class="text-right full-width">งบ</label>
           </div>
           <div class="four wide field required" [ngClass]="{'error': invalidFormGroup('budged')}">
-            <select name="budged" id="budged" formControlName="budged" class="ui dropdown ai search full-width"
-              (change)="budgedOnchange($event)">
+            <select name="budged" id="budged" formControlName="budged" class="ui dropdown ai search full-width" (change)="budgedOnchange($event)">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of budged; index as i;" value="{{item.budgetId}}">{{item.budgetName}}</option>
             </select>
@@ -60,8 +59,7 @@
             <label class="text-right full-width">หมวด</label>
           </div>
           <div class="four wide field required" [ngClass]="{'error': invalidFormGroup('category')}">
-            <select name="category" id="category" formControlName="category" class="ui dropdown ai search full-width"
-              (change)="categoryOnchange($event)">
+            <select name="category" id="category" formControlName="category" class="ui dropdown ai search full-width" (change)="categoryOnchange($event)">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of category" value="{{item.categoryId}}">{{item.categoryName}}</option>
             </select>
@@ -146,6 +144,67 @@
 
         <!-- Form row 8 -->
         <div class="inline fields">
+          <div class="three wide field required">
+            <label class="text-right full-width">วิธีการจ่าย</label>
+          </div>
+          <div class="four wide field" [ngClass]="{'error': invalidFormGroup('pmmethodPersonType')}">
+              <select name="pmmethodPersonType" id="pmmethodPersonType" formControlName="pmmethodPersonType" class="ui dropdown ai">
+                <option value="">กรุณาเลือก</option>
+                <option *ngFor="let item of pmmethodPersonTypeList" value="{{item.value1}}">{{item.value1}}</option>
+              </select>
+          </div>
+          <div class="three wide field required">
+            <label class="text-right full-width">เลขที่อ้างอิงการจ่าย</label>
+          </div>
+          <div class="four wide field">
+            <input type="text" id="refpersonType" maxlength="50" formControlName="refpersonType" name="refpersonType">
+          </div>
+        </div>
+
+        <!-- Form row 9 -->
+        <div class="inline fields">
+          <div class="three wide field required">
+            <label class="text-right full-width">ผู้รับเงิน</label>
+          </div>
+          <div class="two wide field">
+            <div class="ui radio checkbox">
+              <input type="radio" formControlName="personType" id="personType" name="personType" (change)="radioChange('one')" value="บุคคลธรรมดา">
+              <label>บุคคลธรรมดา</label>
+            </div>
+          </div>
+          <div class="two wide field {{!checkRadio1? 'disabled': ''}}">
+            <select name="persontitle" id="persontitle" formControlName="persontitle" class="ui dropdown ai">
+              <option value="">กรุณาเลือก</option>
+              <option *ngFor="let item of persontitleList" value="{{item.subTypeDescription}}">{{item.subTypeDescription}}</option>
+            </select>
+          </div>
+          <div class="three wide field {{!checkRadio1? 'disabled': ''}}">
+            <label></label>
+            <input type="text" id="firstnamePerson" maxlength="80" formControlName="firstnamePerson" name="firstnamePerson" placeholder="ชื่อ">
+          </div>
+          <div class="three wide field {{!checkRadio1? 'disabled': ''}}">
+            <label></label>
+            <input type="text" id="lastnamePerson" maxlength="80" formControlName="lastnamePerson" name="lastnamePerson" placeholder="นามสกุล">
+          </div>
+        </div>
+
+        <!-- Form row 10 -->
+        <div class="inline fields">
+          <div class="three wide field ">
+          </div>
+          <div class="two wide field ">
+            <div class="ui radio checkbox">
+              <input type="radio" formControlName="personType" id="personType" name="personType" (change)="radioChange('two')" value="นิติบุคคล">
+              <label>นิติบุคคล</label>
+            </div>
+          </div>
+          <div class="five wide field {{!checkRadio2? 'disabled': ''}}">
+            <input type="text" id="payeeCorporate" maxlength="80" formControlName="payeeCorporate" name="payeeCorporate" placeholder="ชื่อ">
+          </div>
+        </div>
+
+        <!-- Form row 11 -->
+        <div class="inline fields">
           <div class="three wide field ">
             <label class="text-right full-width">คำอธิบายรายการ</label>
           </div>
@@ -153,7 +212,8 @@
             <input type="text" id="itemDescription" formControlName="itemDescription" name="itemDescription">
           </div>
         </div>
-        <!-- Form row 9 -->
+
+        <!-- Form row 12 -->
         <div class="inline fields">
           <div class="three wide field ">
             <label class="text-right full-width">หมายเหตุ</label>
@@ -208,8 +268,7 @@
                     <div class="frame ui calendar" id="datePersons{{i}}" style="width:100%">
                       <div class="ui input left icon">
                         <i class="calendar alter nate outline icon"></i>
-                        <input type="text" formControlName="paymentDate" placeholder="วว/ดด/ปปปป" id="datePersons1{{i}}"
-                          name="datePersons1{{i}}">
+                        <input type="text" formControlName="paymentDate" placeholder="วว/ดด/ปปปป" id="datePersons1{{i}}" name="datePersons1{{i}}">
                       </div>
                     </div>
                   </div>
@@ -240,8 +299,7 @@
                     <label>&nbsp;</label>
                     <div class="ui input" *ngIf="(i === persons.controls.length-1 || i === 29); then thenBlock; else elseBlock"></div>
                     <ng-template #thenBlock>
-                      <button class="ui green mini button btn-custom" type="button" id="addFile" (click)="addPerson()"
-                        [disabled]="statusSendBackFile">
+                      <button class="ui green mini button btn-custom" type="button" id="addFile" (click)="addPerson()" [disabled]="statusSendBackFile">
                         <i class="add icon"></i>
                         เพิ่ม
                       </button>

@@ -1,12 +1,15 @@
 <div class="ui grid">
   <div class="sixteen wide column">
 
-    <h2 class="ui header">อัพโหลดงบทดลอง</h2>
+    <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
+    <br>
+
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>อัพโหลดงบทดลอง </span>
     </div>
     <form id="upload-form" ngNativeValidate (submit)="onUpload($event)">
-      <div class="ui attached segment">
+      <div class="ui attached segment" [ngClass]="{'loading': loading}">
         <div class="ui form">
           <div class="inline fields">
             <div class="four wide field "></div>
@@ -15,8 +18,7 @@
             </div>
             <div class="five wide field">
               <input class="inputfile" type="file" name="fileExel" id="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                (change)="onChangeUpload($event)" required>
-
+               required>
             </div>
           </div>
         </div>
@@ -27,13 +29,61 @@
               <i class="upload icon"></i>
               อัพโหลด
             </button>
-            <button class="ui mini button">
+            <button class="ui mini button" type="reset" (click)="onclear()">
               <i class="trash outline icon"></i>
               ลบไฟล์
             </button>
           </div>
         </div>
+
+
       </div>
     </form>
+
+
+    <div class="ui segments" [hidden]="!isSearch">
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">ผลการอัพโหลด</div>
+      <div class="ui bottom segment">
+
+        <table class="ui small celled table striped selectable" style="width: 100%;" >
+          <thead>
+            <tr>
+              <th style="text-align: center;"  colspan="2" >บัญชีแยกประเภท </th>
+              <th style="text-align: center;" >ยอดยกมา</th>
+              <th style="text-align: center;" >เดบิต</th>
+              <th style="text-align: center;" >เครดิต</th>
+              <th style="text-align: center;" >ยอดยกไป</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let item of uploadlist">
+              <td> {{item.accountNo}}</td>
+              <td> {{item.accountDes}}</td>
+              <td  style="text-align: right;" > {{item.bringForwardAmount}}</td>
+              <td  style="text-align: right;" > {{item.debit}}</td>
+              <td  style="text-align: right;" > {{item.credit}}</td>
+              <td  style="text-align: right;" > {{item.carryForwardAmount}}</td>
+            </tr>
+
+          </tbody>
+        </table>
+
+
+        
+        <div class="ui center aligned grid">
+          <div class="four wide column">
+            <button class="ui mini primary button" type="button" (click)="gotoChecking()">
+              <i class="checkmark box icon"></i>
+              ถัดไป
+            </button>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+
   </div>
 </div>

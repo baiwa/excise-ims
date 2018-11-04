@@ -45,15 +45,15 @@ export class Int065Component implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.calenda();
-
-  }
-
-  ngOnInit() {
     this.authService.reRenderVersionProgram('INT-06500');
     $(".ui.dropdown").dropdown();
     this.sector();
     this.dataTable();
     this.budgetType();
+  }
+
+  ngOnInit() {
+   
   }
 
   sector = () => {
@@ -91,25 +91,23 @@ export class Int065Component implements OnInit, AfterViewInit {
   search = () => {
     $("#searchFlag").val("TRUE");
     this.int065Service.search();
-    let promise1 = new Promise((resolve, reject) => {
-      this.int065Service.search();
-      resolve();
-    });
+    // let promise1 = new Promise((resolve, reject) => {
+    //   this.int065Service.search();
+    //   resolve();
+    // });
 
-    promise1.then(() => {
-      console.log('resove success');
-      setTimeout(() => {
-        this.dataInTable = $('#dataTable').DataTableTh().data();
-      console.log( this.dataInTable);
-      console.log(this.dataInTable.length);
-      }, 500);
+    // promise1.then(() => {
+    //   console.log('resove success');
+    //   setTimeout(() => {
+    //     this.dataInTable = $('#dataTable').DataTableTh().data();
+    //   console.log( this.dataInTable);
+    //   console.log(this.dataInTable.length);
+    //   }, 500);
       
-    });
+    // });
   }
   clear = () => {
     this.int065Service.clear();
-
-
   }
 
   exportFile=()=>{
@@ -118,14 +116,14 @@ export class Int065Component implements OnInit, AfterViewInit {
 
 
    dataTable = () => {
-    let promise1 = new Promise((resolve, reject) => {
+   // let promise1 = new Promise((resolve, reject) => {
       this.int065Service.dataTable();
-      resolve();
-    });
+    //  resolve();
+   // });
 
-    promise1.then(() => {
-      this.dataInTable = $('#dataTable').DataTableTh().data();
-    });
+    // promise1.then(() => {
+    //   this.dataInTable = $('#dataTable').DataTableTh().data();
+    // });
     
      
      

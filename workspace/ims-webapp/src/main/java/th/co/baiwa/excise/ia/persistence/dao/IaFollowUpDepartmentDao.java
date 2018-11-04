@@ -215,6 +215,18 @@ public class IaFollowUpDepartmentDao {
 		lovId = jdbcTemplate.queryForObject(SQL, new Object[] { value1 }, String.class);
 		return lovId;
 	}
+	public String queryLovIdSysLovBySubTypeDescription(String subTypeDescription) {
+		String SQL = "SELECT LOV_ID FROM SYS_LOV WHERE SUB_TYPE_DESCRIPTION=? AND TYPE='SECTOR_VALUE' ";
+		String lovId = "";
+		lovId = jdbcTemplate.queryForObject(SQL, new Object[] { subTypeDescription }, String.class);
+		return lovId;
+	}
+	public String queryLovIdSysLovByValue3(String value3) {
+		String SQL = "SELECT LOV_ID FROM SYS_LOV WHERE VALUE3=? AND TYPE='SECTOR_VALUE' ";
+		String lovId = "";
+		lovId = jdbcTemplate.queryForObject(SQL, new Object[] { value3 }, String.class);
+		return lovId;
+	}
 	
 	public String queryDescSysLov(String id) {
 		String SQL = "SELECT SUB_TYPE_DESCRIPTION FROM SYS_LOV WHERE LOV_ID=? AND TYPE='SECTOR_VALUE' ";

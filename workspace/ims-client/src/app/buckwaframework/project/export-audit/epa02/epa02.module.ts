@@ -8,12 +8,16 @@ import { Epa021Component } from './epa02-1/epa02-1.component';
 import { Epa022Component } from './epa02-2/epa02-2.component';
 import { Epa023Component } from './epa02-3/epa02-3.component';
 import { Epa024Component } from './epa02-4/epa02-4.component';
+import { Epa025Component } from './epa02-5/epa02-5.component';
+import { Epa026Component } from './epa02-6/epa02-6.component';
 
 const routes: Routes = [
   { path: '1', component: Epa021Component, canActivate: [AuthGuard] },
   { path: '2', component: Epa022Component, canActivate: [AuthGuard] },
   { path: '3', component: Epa023Component, canActivate: [AuthGuard] },
   { path: '4', component: Epa024Component, canActivate: [AuthGuard] },
+  { path: '5', component: Epa025Component, canActivate: [AuthGuard] },
+  { path: '6', component: Epa026Component, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
@@ -30,7 +34,9 @@ const routes: Routes = [
     Epa021Component,
     Epa022Component, 
     Epa023Component, 
-    Epa024Component
+    Epa024Component, 
+    Epa025Component, 
+    Epa026Component
   ]
 })
 export class Epa02Module {}

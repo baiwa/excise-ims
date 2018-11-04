@@ -222,7 +222,13 @@ img.image-width-18 {
 }
 
 .bg-m-red {
-    background-color:#ef1410e3 !important;
+    background-color:#ef1410b5 !important;
+    font-weight: bold;
+
+}
+
+.bg-m-blue {
+    background-color:#87cefa80 !important;
     font-weight: bold;
 
 }

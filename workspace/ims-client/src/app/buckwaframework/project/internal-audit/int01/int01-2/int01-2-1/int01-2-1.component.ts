@@ -49,6 +49,7 @@ export class Int0121Component implements OnInit {
     $("#calendar1").calendar({
       maxDate: new Date(),
       type: "date",
+      endCalendar: $("#calendar2"),
       text: TextDateTH,
       formatter: formatter(),
       onChange: (date, text) => {
@@ -65,6 +66,7 @@ export class Int0121Component implements OnInit {
 
     $("#calendar2").calendar({
       maxDate: new Date(),
+      startCalendar: $("#calendar1"),
       type: "date",
       text: TextDateTH,
       formatter: formatter(),
@@ -81,6 +83,12 @@ export class Int0121Component implements OnInit {
     $(".ui.dropdown.search").css("width", "100%");
 
     this.travelTo1Dropdown();
+  }
+
+  reset(){
+    $(".ui.dropdown").dropdown('restore defaults');
+    $("#startDate").val('');
+    $("#endDate").val('');
   }
 
   travelTo1Dropdown = () => {

@@ -25,7 +25,13 @@ public class Int06111Controller {
 
 	@PostMapping("/upload")
 	@ResponseBody
-	public DataTableAjax<Int0611ExcelVo> upload(@ModelAttribute Int0611FormVo formVo) throws EncryptedDocumentException, InvalidFormatException, IOException {		
-		return int0611Service.readFileExcel(formVo);
+	public DataTableAjax<Int0611ExcelVo> upload(@ModelAttribute Int0611FormVo formVo) throws EncryptedDocumentException, InvalidFormatException, IOException {
+		DataTableAjax<Int0611ExcelVo> data = new DataTableAjax<>();
+		try {
+			data = int0611Service.readFileExcel(formVo);
+		}catch (Exception e){
+			data = new DataTableAjax<>();
+		}
+		return data;
 	}
 }

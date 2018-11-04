@@ -17,7 +17,7 @@ export class CreateWorkingPaperTraderComponent implements OnInit {
   breadcrumb: BreadCrumb[] = [
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การคัดเลือกราย', route: '#' },
-    { label: 'สร้างกระดาษทำการคัดเลือกราย', route: '#' },
+    { label: 'กำหนดเงื่อนไขเพื่อวิเคราะห์ความเสี่ยง', route: '#' },
   ]
   private count: number = 1;
   numbers: number[];

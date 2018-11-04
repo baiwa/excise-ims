@@ -1,117 +1,60 @@
-<div class="ui grid">
-  <div class="sixteen wide column">
-    <h2 class="ui header">จับคู่รหัสภาษี</h2>
+<div class="ui segments">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">ตั้งค่าจับคู่รหัสภาษี</div>
+    <div class="ui bottom segment">
 
-    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-      <div class="ui grid">
-        <div class="three column row">
-          <div class="column">
-          </div>
+        <table class="ui small celled table striped selectable" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="text-align: center;" colspan="2"> บัญชีแยกประเภท </th>
+                    <th style="text-align: center;" colspan="2"> งบสรุปยอดเงินภาษี </th>
+                    <th style="text-align: center;" rowspan="2"> จัดการ </th>
+                </tr>
+                <tr>
+                    <th style="text-align: center;"> เลขที่บัญชีแยกประเภท </th>
+                    <th style="text-align: center;"> ชื่อบัญชีแยกประเภท </th>
+                    <th style="text-align: center;"> รหัสภาษี </th>
+                    <th style="text-align: center;"> รายการ </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of listConfig">
+                    <td> {{item.accountNo}} </td>
+                    <td> {{item.accountDes}} </td>
+                    <td> {{item.taxCode}} </td>
+                    <td> {{item.taxDes}} </td>
+                    <td>
 
-          <div class="center aligned column">
-          </div>
+                        <button class="ui mini yellow button">
+                            <i class="edit icon"></i>
+                            แก้ไข
+                        </button>
 
-          <div class="right aligned column">
-            <div class="ui mini primary button" (click)="onAddClick()">
-              <i class="add icon"></i>เพิ่ม
+                        <button class="ui mini red button">
+                                <i class="trash alternate icon"></i>
+                                ลบ
+                        </button>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <div class="ui center aligned grid">
+            <div class="four wide column">
+                <!-- routerLink="/int01/4/2" -->
+                <button class="ui mini button" routerLink="/int01/4/2">
+                    <i class="arrow circle left icon"></i>
+                    ย้อนกลับ
+                </button>
+
+                <button class="ui mini green button">
+                    <i class="plus icon"></i>
+                    เพิ่ม
+                </button>
+
             </div>
-          </div>
         </div>
-      </div>
+
     </div>
-
-    <div class="ui attached segment">
-      <table id="table1" class="ui small celled table striped selectable">
-        <thead>
-          <tr style="text-align: center">
-            <th colspan="2">งบทดลอง</th>
-            <th colspan="3">งบสรุปยอดเงินภาษี</th>
-          </tr>
-          <tr style="text-align: center;">
-            <th rowspan="2" colspan="2">บัญชีแยกประเภท</th>
-            <th colspan="2">หมวดภาษี</th>
-            <th rowspan="2">Action</th>
-          </tr>
-          <tr style="text-align: center;">
-            <th style="border-left: 1px solid rgba(34,36,38,.1);">รหัสภาษี</th>
-            <th>รายการ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of listData;">
-            <td>{{item[0]}}</td>
-            <td>{{item[1]}}</td>
-            <td>{{item[2]}}</td>
-            <td>{{item[3]}}</td>
-            <td style="text-align: center;">
-              <a class="update" href="javascript:;" (click)="onEditClick()">
-                แก้ไข
-              </a>
-              <strong> / </strong>
-              <a class="delete" href="javascript:;">
-                ลบ
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-
-<div id="modalMappingIncCode" class="ui small modal hidden transition">
-  <i class="close icon"></i>
-  <div class="header">
-    {{actionsModal}} คู่รหัสภาษี
-  </div>
-
-  <div class="content">
-    <div class="ui form">
-      <div class="inline fields">
-        <div class="sixteen wide field">
-          <div class="four wide field">
-            <label>บัญชีแยกประเภท</label>
-          </div>
-          <div class="ten wide field">
-            <select name="selectCatagory" id="selectCatagory" class="ui dropdown ai">
-              <option value="0">4102020103 : รายได้ภาษีสุรา</option>
-              <option value="1">4102020109 : รายได้ภาษีรถยนต์</option>
-              <option value="2">4201010199 : ร/ดอนุญาตอื่น</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="inline fields">
-        <div class="sixteen wide field">
-          <div class="four wide field">
-            <label>หมวดภาษี</label>
-          </div>
-          <div class="ten wide field">
-            <select name="selectTax" id="selectTax" class="ui dropdown ai">
-              <option value="1">203010 : ภาษีสุรา</option>
-              <option value="2">250010 : ภาษีแบตเตอรี่</option>
-              <option value="3">804203 : ค่าปรับเปรียบเทียบคดีสุรา</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="actions">
-    <div class="ui center aligned grid">
-      <div class="six wide column">
-        <button class="ui primary button">
-          <i class="save icon"></i>
-          บันทึก
-        </button>
-        <button class="ui button" (click)="closeModal()">
-          <i class="close icon"></i>
-          ปิด
-        </button>
-      </div>
-    </div>
-  </div>
 </div>
