@@ -25,7 +25,7 @@ export class GetAppRovedComponent implements OnInit {
   onSubmit = e => {
     console.log(this.obj);
     this.obj.date =   $("#date").val();
-    const url = "report/pdf/ts/ApprovedToGoToWork";   
+    const url = "report/pdf/ts/AppGetApp";   
     this.ajax.post(url,`'${JSON.stringify(this.obj).toString()}'`, res => {
       if (res.status == 200 && res.statusText == "OK") {
         window.open("/ims-webapp/api/report/pdf/ApprovedToGoToWork/file");

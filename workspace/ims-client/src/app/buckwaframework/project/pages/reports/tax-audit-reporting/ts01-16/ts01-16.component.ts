@@ -93,4 +93,5 @@ class Ts0116 {
   reduceRequest : string;
   fine : string;
   extraMoney : string;
+  
 }

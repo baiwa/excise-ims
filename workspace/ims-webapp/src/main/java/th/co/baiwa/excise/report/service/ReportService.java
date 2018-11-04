@@ -103,6 +103,7 @@ public class ReportService {
 			params.remove("logo");
 			params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, logo));
 		}
+		params.put("logo1", ReportUtils.getResourceFile(PATH.IMAGE_PATH, "logo1.jpg"));
 
 		if (BeanUtils.isEmpty(bean)) {
 			dataSource = new JREmptyDataSource();
@@ -134,6 +135,7 @@ public class ReportService {
 			params.remove("logo");
 			params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, logo));
 		}
+		params.put("logo1", ReportUtils.getResourceFile(PATH.IMAGE_PATH, "logo1.jpg"));
 
 		if (BeanUtils.isEmpty(bean)) {
 			dataSource = new JREmptyDataSource();
