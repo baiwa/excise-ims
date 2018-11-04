@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AjaxService, MessageBarService } from '../../../../../common/services';
 import { ActivatedRoute } from '@angular/router';
+import { TextDateTH, formatter } from 'helpers/datepicker';
 declare var jQuery: any;
 declare var $: any;
 
@@ -30,7 +31,52 @@ export class Ts0113Component implements OnInit {
   }
 
   ngOnInit() {
+    this.calenda();
   }
+
+  
+  calenda = () => {
+    $("#date1").calendar({
+      endCalendar: $("#date1"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('ว'),
+      onChanges: (date , text)=>{
+       $("#from").val(text);
+      }
+
+    });
+    $("#date2").calendar({
+      startCalendar: $("#date1"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('วดป'),
+      onChanges: (date , text)=>{
+       $("#to").val(text);
+      }
+    });
+    $("#date3").calendar({
+      startCalendar: $("#date3"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('วดป'),
+      onChanges: (date , text)=>{
+       $("#to").val(text);
+      }      
+
+    });
+    $("#time1").calendar({
+      type: "time",
+      text: TextDateTH,
+      formatter: formatter('เวลา')
+    });
+    $("#time2").calendar({
+      type: "time",
+      text: TextDateTH,
+      formatter: formatter('เวลา')
+    });
+  }
+
 
   onDiscard = () => {
     // on click this view hide them

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AjaxService, MessageBarService } from '../../../../../common/services';
-
+import { TextDateTH, formatter } from 'helpers/datepicker';
+declare var $: any;
 @Component({
   selector: 'app-ts01-04',
   templateUrl: './ts01-04.component.html',
@@ -21,6 +22,7 @@ export class Ts0104Component implements OnInit {
   }
 
   ngOnInit() {
+    this.calenda();
   }
 
   onDiscard = () => {
@@ -41,6 +43,38 @@ export class Ts0104Component implements OnInit {
     }
   };
 
+  calenda = () => {
+    $("#date1").calendar({
+      endCalendar: $("#date1"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('ว'),
+      onChanges: (date , text)=>{
+       $("#from").val(text);
+      }
+
+    });
+    $("#date2").calendar({
+      startCalendar: $("#date1"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('วดป'),
+      onChanges: (date , text)=>{
+       $("#to").val(text);
+      }
+    });
+    $("#date3").calendar({
+      startCalendar: $("#date3"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('วดป'),
+      onChanges: (date , text)=>{
+       $("#to").val(text);
+      }
+
+    });
+  }
+
   onDelField = index => {
     this.obj["analys" + (index + 1)] = "";
     this.numbers.splice(index, 1);
@@ -50,7 +84,7 @@ export class Ts0104Component implements OnInit {
   onSubmit = e => {
     e.preventDefault();
     const url = "report/pdf/ts/mis_t_s_01_04";
-  
+    this.obj.date1 =   $("#date1").val();
     this.ajax.post(url, `'${JSON.stringify(this.obj).toString()}'`, res => {
       if (res.status == 200 && res.statusText == "OK") {
         // var byteArray = new Uint8Array(res.json());

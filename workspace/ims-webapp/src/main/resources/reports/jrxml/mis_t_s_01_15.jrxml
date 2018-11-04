@@ -20,6 +20,18 @@
 		</box>
 	</style>
 	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="office" class="java.lang.String"/>
+	<parameter name="date" class="java.lang.String"/>
+	<parameter name="month" class="java.lang.String"/>
+	<parameter name="year" class="java.lang.String"/>
+	<parameter name="ourself" class="java.lang.String"/>
+	<parameter name="account" class="java.lang.String"/>
+	<parameter name="exciseRegistration" class="java.lang.String"/>
+	<parameter name="addressNumber" class="java.lang.String"/>
+	<parameter name="consentor" class="java.lang.String"/>
+	<parameter name="inspector" class="java.lang.String"/>
+	<parameter name="witness1" class="java.lang.String"/>
+	<parameter name="witness2" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -54,6 +66,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" positionType="FixRelativeToBottom" x="269" y="118" width="28" height="22" uuid="8fe2a634-eae6-4263-9a7d-11cfa4cf1baf"/>
@@ -70,6 +83,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{month}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" positionType="FixRelativeToBottom" x="375" y="118" width="27" height="22" uuid="7116c8cd-e2e0-4ad9-a058-b053251b6b7b"/>
@@ -86,6 +100,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" positionType="FixRelativeToBottom" x="48" y="136" width="39" height="22" uuid="ef3cf906-565d-49b4-a655-e9629fc2d376"/>
@@ -107,6 +122,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{office}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" positionType="FixRelativeToBottom" x="-6" y="188" width="108" height="22" uuid="a0f68f79-c717-4cf8-a4a0-38fb9f2bd550"/>
@@ -213,6 +229,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{ourself}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" positionType="FixRelativeToBottom" x="413" y="136" width="37" height="22" uuid="193e4d1b-9e61-4a9c-b32b-222ab93eb06c"/>
@@ -234,6 +251,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{account}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" positionType="FixRelativeToBottom" x="25" y="382" width="422" height="22" uuid="beb984eb-ae6d-4a90-9e7a-8dbea4256962"/>
@@ -466,6 +484,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{exciseRegistration}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" positionType="FixRelativeToBottom" x="33" y="199" width="60" height="22" uuid="b77c3bd6-ffaa-48b8-a483-cb89b265c9e3"/>

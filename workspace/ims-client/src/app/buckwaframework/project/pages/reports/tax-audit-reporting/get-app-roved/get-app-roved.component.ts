@@ -24,6 +24,7 @@ export class GetAppRovedComponent implements OnInit {
 
   onSubmit = e => {
     console.log(this.obj);
+    this.obj.date =   $("#date").val();
     const url = "report/pdf/ts/ApprovedToGoToWork";   
     this.ajax.post(url,`'${JSON.stringify(this.obj).toString()}'`, res => {
       if (res.status == 200 && res.statusText == "OK") {
@@ -44,7 +45,10 @@ export class GetAppRovedComponent implements OnInit {
       endCalendar: $("#date1"),
       type: "date",
       text: TextDateTH,
-      formatter: formatter('วดป')
+      formatter: formatter('วดป'),
+      onChanges: (date , text)=>{
+       $("#date").val(text);
+      }
 
     });
     $("#date2").calendar({
@@ -65,7 +69,7 @@ export class GetAppRovedComponent implements OnInit {
 }
 
 class getAdd {
-  logo: string = "logo.jpg";
+  logo: string = "logo1.jpg";
   governmentService : string;
   date : string;   
   subject : string;
@@ -84,4 +88,4 @@ class getAdd {
   companyAccount4 : string;
   companyAccount5 : string;
   budget : string;
-}
+} 

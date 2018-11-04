@@ -1,8 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { AjaxService } from "../../../../../common/services";
-import { ThaiNumber } from "../../../../../common/helper";
+import { ThaiNumber, TextDateTH, formatter } from "../../../../../common/helper";
 
+declare var $: any;
 @Component({
   selector: "app-ts01-01",
   templateUrl: "./ts01-01.component.html",
@@ -22,7 +23,9 @@ export class Ts0101Component implements OnInit {
     this.obj = new Ts0101();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.calenda();
+  }
 
   onDiscard = () => {
     // on click this view hide them
@@ -41,7 +44,34 @@ export class Ts0101Component implements OnInit {
       );
     }
   };
+  calenda = () => {
+    $("#date1").calendar({
+      endCalendar: $("#date1"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('วดป'),
+      onChanges: (date , text)=>{
+       $("#from").val(text);
+      }
 
+    });
+    $("#date2").calendar({
+      startCalendar: $("#date1"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('วดป'),
+      onChanges: (date , text)=>{
+       $("#to").val(text);
+      }
+    });
+    $("#date3").calendar({
+      startCalendar: $("#date3"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('วดป')
+
+    });
+  }
   onDelField = index => {
     this.obj["analys" + (index + 1)] = "";
     this.numbers.splice(index, 1);
@@ -49,6 +79,8 @@ export class Ts0101Component implements OnInit {
 
   onSubmit = e => {
     e.preventDefault();
+    this.obj.date =   $("#from").val();
+    this.obj.date =   $("#to").val();
     const url = "report/pdf/ts/mis_t_s_01_01";
     if (this.obj.agreeBox == "accept") {
       this.obj.accept = true;

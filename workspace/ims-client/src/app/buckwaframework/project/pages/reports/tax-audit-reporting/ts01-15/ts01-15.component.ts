@@ -13,11 +13,11 @@ export class Ts0115Component implements OnInit {
   obj: Ts0115;
   @Output() discard = new EventEmitter<any>();
 
-  numbers:number[];
+  numbers: number[];
   beans: Bean[];
 
   constructor(private ajax: AjaxService) {
-    this.numbers = [1,2,3];
+    this.numbers = [1, 2, 3];
     this.beans = [new Bean()];
     this.obj = new Ts0115();
   }
@@ -32,11 +32,11 @@ export class Ts0115Component implements OnInit {
   };
 
   onAddField = () => {
-    let num = this.numbers[this.numbers.length-1];
-    this.numbers.push(num+1);
+    let num = this.numbers[this.numbers.length - 1];
+    this.numbers.push(num + 1);
     this.numbers.sort();
   };
-  
+
   onDelField = index => {
     this.numbers.splice(index, 1);
     this.numbers.sort();
@@ -49,7 +49,7 @@ export class Ts0115Component implements OnInit {
     }, res => {
       console.log(res.json());
       var dat = res.json();
-   
+
     });
   };
 
@@ -65,7 +65,7 @@ export class Ts0115Component implements OnInit {
   };
 
 
-  
+
 }
 class Ts0115 {
   logo: string = "logo.jpg";
@@ -74,5 +74,16 @@ class Ts0115 {
 }
 
 class Bean {
-
+  office: string;
+  date: string;
+  month: string;
+  year: string;
+  ourself: string;
+  account: string;
+  exciseRegistration : string;
+  addressNumber: string;
+  consentor: string;
+  inspector: string;
+  witness1 : string;
+  witness2 : string;
 }
