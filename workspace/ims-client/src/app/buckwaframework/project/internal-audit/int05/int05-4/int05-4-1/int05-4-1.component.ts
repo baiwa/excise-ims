@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { TextDateTH, formatter, Utils } from "../../../../../common/helper";
 import { MessageBarService, AjaxService } from "../../../../../common/services";
 import { Router, ActivatedRoute } from "@angular/router";
@@ -21,7 +21,8 @@ declare var $: any;
   styleUrls: ["./int05-4-1.component.css"],
   providers: [Int0541Service]
 })
-export class Int0541Component implements OnInit {
+export class Int0541Component implements OnInit,AfterViewInit {
+
   breadcrumb: BreadCrumb[] = [];
   supplyChoice: boolean = false;
   numbers: any[] = [""];
@@ -82,7 +83,71 @@ export class Int0541Component implements OnInit {
     this.flagValidate6_ = [];
     this.flagValidate7_ = [];
   }
+  ngAfterViewInit(): void {
+    //if == EDIT
+if (
+  this.route.snapshot.queryParams["procurementId"] != null ||
+  this.route.snapshot.queryParams["procurementId"] != undefined
+) {
+  //get params no link "/int05/4"
+  this.procurementId = this.route.snapshot.queryParams["procurementId"];
+  this.flag = this.route.snapshot.queryParams["status"];
+  this.head = this.route.snapshot.queryParams["head"];
+  this.ajax.post(
+    URL.UPDATE_FIND_BY_ID,
+    { procurementId: this.procurementId },
+    res => {
+      this.numbers = res.json().pcmList;
+      const data = res.json();
+      // this.onChangeChoice();
+      for (let i = 0; i < this.numbers.length; i++) {
+        setTimeout(() => {
+          $("#procurementList" + i).val(this.numbers[i].procurementList);
+          $("#amount" + i).val(this.numbers[i].amount);
+          $("#unit" + i).val(this.numbers[i].unit);
+          $("#presetPrice" + i).val(this.numbers[i].presetPrice);
+          $("#appraisalPrice" + i).val(this.numbers[i].appraisalPrice);
+          $("#unitPrice" + i).val(this.numbers[i].unitPrice);
+          $("#price" + i).val(this.numbers[i].price);
+        }, 50);
+      }
 
+      $("#calendar_data").val(data.budgetYear);
+      $("#projectName").val(data.projectName);
+      $("#projectCodeEgp").val(data.projectCodeEgp);
+      $("#poNumber").val(data.poNumber);
+      $("#respondepartment").val(data.respondepartment);
+      $("#budget").val(data.budget);
+      $("#installmentjob").val(data.installmentjob);
+      $("#operationstart").val(data.operationstart);
+      $("#operationend").val(data.operationend);
+      setTimeout(() => {
+        $("#budgetType").dropdown("set selected", data.budgetType);
+        $("#supplyChoice").dropdown("set selected", data.supplyChoice);
+      }, 200);
+      this.tenderResults = data.tenderResults;
+      this.supplyType = data.supplyType;
+      setTimeout(() => {
+        $(
+          `input[name='jobDescription'][value='${data.jobDescription}']`
+        ).prop("checked", true);
+        $("#approveDatePlanData").val(data.approveDatePlan);
+        $("#contractDatePlanData").val(data.contractDatePlan);
+        $("#expireDatePlanData").val(data.expireDatePlan);
+        $("#disbursementFinalPlanData").val(data.disbursementFinalPlan);
+        $("#approveDateReportData").val(data.approveDateReport);
+        $("#contractDateReportData").val(data.contractDateReport);
+        $("#expireDateReportData").val(data.expireDateReport);
+        $("#disbursementFinalReportData").val(data.disbursementFinalReport);
+        $("#contractPartiesNum").val(data.contractPartiesNum);
+        $("#contractPartiesName").val(data.contractPartiesName);
+        $("#signedDatePlanData").val(data.signedDatePlan);
+        $("#signedDateReportData").val(data.signedDateReport);
+      }, 400);
+    }
+  );
+}
+  }
   ngOnInit() {
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ai").css("width", "100%");
@@ -90,69 +155,7 @@ export class Int0541Component implements OnInit {
     //get params no link "/int05/4"
     this.flag = this.route.snapshot.queryParams["status"];
     this.head = this.route.snapshot.queryParams["head"];
-    //if == EDIT
-    if (
-      this.route.snapshot.queryParams["procurementId"] != null ||
-      this.route.snapshot.queryParams["procurementId"] != undefined
-    ) {
-      //get params no link "/int05/4"
-      this.procurementId = this.route.snapshot.queryParams["procurementId"];
-      this.flag = this.route.snapshot.queryParams["status"];
-      this.head = this.route.snapshot.queryParams["head"];
-      this.ajax.post(
-        URL.UPDATE_FIND_BY_ID,
-        { procurementId: this.procurementId },
-        res => {
-          this.numbers = res.json().pcmList;
-          const data = res.json();
-          // this.onChangeChoice();
-          for (let i = 0; i < this.numbers.length; i++) {
-            setTimeout(() => {
-              $("#procurementList" + i).val(this.numbers[i].procurementList);
-              $("#amount" + i).val(this.numbers[i].amount);
-              $("#unit" + i).val(this.numbers[i].unit);
-              $("#presetPrice" + i).val(this.numbers[i].presetPrice);
-              $("#appraisalPrice" + i).val(this.numbers[i].appraisalPrice);
-              $("#unitPrice" + i).val(this.numbers[i].unitPrice);
-              $("#price" + i).val(this.numbers[i].price);
-            }, 50);
-          }
-
-          $("#calendar_data").val(data.budgetYear);
-          $("#projectName").val(data.projectName);
-          $("#projectCodeEgp").val(data.projectCodeEgp);
-          $("#poNumber").val(data.poNumber);
-          $("#respondepartment").val(data.respondepartment);
-          $("#budget").val(data.budget);
-          $("#installmentjob").val(data.installmentjob);
-          $("#operationstart").val(data.operationstart);
-          $("#operationend").val(data.operationend);
-          setTimeout(() => {
-            $("#budgetType").dropdown("set selected", data.budgetType);
-            $("#supplyChoice").dropdown("set selected", data.supplyChoice);
-          }, 200);
-          this.tenderResults = data.tenderResults;
-          this.supplyType = data.supplyType;
-          setTimeout(() => {
-            $(
-              `input[name='jobDescription'][value='${data.jobDescription}']`
-            ).prop("checked", true);
-            $("#approveDatePlanData").val(data.approveDatePlan);
-            $("#contractDatePlanData").val(data.contractDatePlan);
-            $("#expireDatePlanData").val(data.expireDatePlan);
-            $("#disbursementFinalPlanData").val(data.disbursementFinalPlan);
-            $("#approveDateReportData").val(data.approveDateReport);
-            $("#contractDateReportData").val(data.contractDateReport);
-            $("#expireDateReportData").val(data.expireDateReport);
-            $("#disbursementFinalReportData").val(data.disbursementFinalReport);
-            $("#contractPartiesNum").val(data.contractPartiesNum);
-            $("#contractPartiesName").val(data.contractPartiesName);
-            $("#signedDatePlanData").val(data.signedDatePlan);
-            $("#signedDateReportData").val(data.signedDateReport);
-          }, 400);
-        }
-      );
-    }
+    
 
     $("#calendar").calendar({
       maxDate: new Date(),
