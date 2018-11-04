@@ -128,9 +128,9 @@ export class Int076Component implements OnInit, AfterViewInit {
         { data: "actor" },
         { data: "determination" },
         { data: "payUnit" },
-        { data: "debit" },
-        { data: "credit" },
-        { data: "liftUp" }
+        { data: "debit" , render: $.fn.dataTable.render.number(",", ".", 2, "")},
+        { data: "credit" , render: $.fn.dataTable.render.number(",", ".", 2, "")},
+        { data: "liftUp" , render: $.fn.dataTable.render.number(",", ".", 2, "")}
         // {
         //   data: "id",
         //   render: function () {
@@ -194,9 +194,9 @@ export class Int076Component implements OnInit, AfterViewInit {
         { data: "actor" },
         { data: "determination" },
         { data: "payUnit" },
-        { data: "debit" },
-        { data: "credit" },
-        { data: "liftUp" },
+        { data: "debit" , render: $.fn.dataTable.render.number(",", ".", 2, "")},
+        { data: "credit" , render: $.fn.dataTable.render.number(",", ".", 2, "")},
+        { data: "liftUp" , render: $.fn.dataTable.render.number(",", ".", 2, "")},
       ],
       columnDefs: [
         { targets: [0,1,2 ,3,5,6], className: "center aligned" },
@@ -210,7 +210,7 @@ export class Int076Component implements OnInit, AfterViewInit {
         // console.log("dataIndex", dataIndex);
 
         if (data.color == '1') {
-          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+          if (data.credit === null || data.credit === undefined ||data.credit === ""){
             for (let i = 0; i <= 9; i++) {
               $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
             }
@@ -226,7 +226,7 @@ export class Int076Component implements OnInit, AfterViewInit {
             }
           }
         } else if (data.color == '2') {
-          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+          if (data.credit === null || data.credit === undefined ||data.credit === ""){
             for (let i = 0; i <= 9; i++) {
               $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
             }
@@ -242,7 +242,7 @@ export class Int076Component implements OnInit, AfterViewInit {
             }
           }
         } else if (data.color == '3') {
-          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+          if (data.credit === null || data.credit === undefined ||data.credit === ""){
             for (let i = 0; i <= 9; i++) {
               $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
             }
@@ -258,7 +258,7 @@ export class Int076Component implements OnInit, AfterViewInit {
             }
           }
         } else if (data.color == '4') {
-          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+          if (data.credit === null || data.credit === undefined ||data.credit === ""){
             for (let i = 0; i <= 9; i++) {
               $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
             }
@@ -274,7 +274,7 @@ export class Int076Component implements OnInit, AfterViewInit {
             }
           }
         } else if (data.color == '5') {
-          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+          if (data.credit === null || data.credit === undefined ||data.credit === ""){
             for (let i = 0; i <= 9; i++) {
               $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
             }
@@ -290,7 +290,7 @@ export class Int076Component implements OnInit, AfterViewInit {
             }
           }
         } else if (data.color == '6') {
-          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+          if (data.credit === null || data.credit === undefined ||data.credit === ""){
             for (let i = 0; i <= 9; i++) {
               $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
             }
@@ -306,7 +306,7 @@ export class Int076Component implements OnInit, AfterViewInit {
             }
           }
         } else if (data.color == '7') {
-          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+          if (data.credit === null || data.credit === undefined ||data.credit === ""){
             for (let i = 0; i <= 9; i++) {
               $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
             }
@@ -322,7 +322,7 @@ export class Int076Component implements OnInit, AfterViewInit {
             }
           }
         } else if (data.color == '8') {
-          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+          if (data.credit === null || data.credit === undefined ||data.credit === ""){
             for (let i = 0; i <= 9; i++) {
               $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
             }
@@ -338,7 +338,7 @@ export class Int076Component implements OnInit, AfterViewInit {
             }
           }
         } else if (data.color == '9') {
-          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+          if (data.credit === null || data.credit === undefined ||data.credit === ""){
             for (let i = 0; i <= 9; i++) {
               $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
             }
@@ -354,7 +354,7 @@ export class Int076Component implements OnInit, AfterViewInit {
             }
           }
         } else if (data.color == '10') {
-          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+          if (data.credit === null || data.credit === undefined ||data.credit === ""){
             for (let i = 0; i <= 9; i++) {
               $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
             }
@@ -370,7 +370,7 @@ export class Int076Component implements OnInit, AfterViewInit {
             }
           }
         } else if (data.color == '11') {
-          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+          if (data.credit === null || data.credit === undefined ||data.credit === ""){
             for (let i = 0; i <= 9; i++) {
               $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
             }
@@ -386,7 +386,7 @@ export class Int076Component implements OnInit, AfterViewInit {
             }
           }
         } else if (data.color == '12') {
-          if (data.credit == null || data.credit == undefined ||data.credit == ""){
+          if (data.credit === null || data.credit === undefined ||data.credit === ""){
             for (let i = 0; i <= 9; i++) {
               $(row).find('td:eq(' + i + ')').addClass('bg-m-red');
             }

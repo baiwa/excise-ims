@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.excise.ia.persistence.vo.Int076FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int076Vo;
 import th.co.baiwa.excise.ia.service.Int076Service;
 
@@ -31,8 +30,7 @@ import th.co.baiwa.excise.ia.service.Int076Service;
 public class Int076Controller {
 
 	private final String SESSION_DATA = "SESSION_DATA_INT076";
-	
-	
+
 	private Logger logger = LoggerFactory.getLogger(Int076Controller.class);
 
 	@Autowired
@@ -40,12 +38,12 @@ public class Int076Controller {
 
 	@PostMapping("/readFileExcel")
 	@ResponseBody
-	public List<Int076Vo> readFileExcel(@ModelAttribute Int076FormVo formVo, HttpServletRequest httpServletRequest)
+	public List<Int076Vo> readFileExcel(@ModelAttribute Int076Vo formVo, HttpServletRequest httpServletRequest)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
 		logger.info("INT076 readFileExcel!!");
 		httpServletRequest.getSession().removeAttribute(SESSION_DATA);
 
-		return int076Service.readFileExcel(formVo);
+		return int076Service.readFileExcelOPT(formVo);
 	}
 
 	@PostMapping("/checkData")
@@ -71,7 +69,7 @@ public class Int076Controller {
 		List<Int076Vo> resultList = (List<Int076Vo>) httpServletRequest.getSession().getAttribute(SESSION_DATA);
 
 		/* set fileName */
-		String fileName = URLEncoder.encode("ตรวจสอบการนำส่งเงินบัญชีเจ้าหนี้_อปท","UTF-8") ;
+		String fileName = URLEncoder.encode("ตรวจสอบการนำส่งเงินบัญชีเจ้าหนี้_อปท", "UTF-8");
 		/* write it as an excel attachment */
 		ByteArrayOutputStream outByteStream = int076Service.export(resultList);
 		byte[] outArray = outByteStream.toByteArray();

@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ExcelUtils;
-import th.co.baiwa.excise.ia.persistence.vo.Int076FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int076Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -122,97 +121,108 @@ public class Int076Service {
 
 	// !Set property Style Excel
 
-	private String tmpDatePosted = "";
 	private Logger logger = LoggerFactory.getLogger(Int076Service.class);
-	DecimalFormat formatter = new DecimalFormat("#,###.00");
 
-	public List<Int076Vo> readFileExcel(Int076FormVo formVo)
+	DecimalFormat formatter = new DecimalFormat("#,##0.00");
+	private String tmpDatePosted = "";
+
+	public static final String START_DATA = "บัญชีเงินฝาก : 10778 ภาษีบำรุงองค์กรปกครองส่วนท้องถิ่นเพื่อรอจัดสรร";
+	public static final String END_DATA = "รายงานแสดงการเคลื่อนไหวเงินฝากกระทรวงการคลัง";
+	public static final String END_SHEET = "***** รวมบัญชีเงินฝาก : 10778 ภาษีบำรุงองค์กรปกครองส่วนท้องถิ่นเพื่อรอ";
+
+	public List<Int076Vo> readFileExcelOPT(Int076Vo formVo)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
-		List<Int076Vo> excelList = new ArrayList<>();
+
+		List<Int076Vo> optList = new ArrayList<>();
+
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		logger.info("readFileExcel");
+		logger.info("readFileExcelOPT");
 		System.out.println(formVo.getFileExel().getOriginalFilename());
 		System.out.println(formVo.getFileExel().getContentType());
 		byte[] byt = formVo.getFileExel().getBytes();
+
 		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(byt));
 		Sheet sheet = workbook.getSheetAt(0);
 		int totalRows = sheet.getLastRowNum();
 
+		int tmpRow = 0;
 		boolean header = false;
-		boolean detail = false;
 
-		/* loop header row */
+		/* loop check header */
 		for (int r = 0; r <= totalRows; r++) {
 			Row row = sheet.getRow(r);
+			/* check header */
 			if (row != null) {
-				/* check header */
 				short startCellHeader = row.getFirstCellNum();
 				Cell cellHeader = row.getCell(startCellHeader);
-				header = ("บัญชีเงินฝาก : 10778 ภาษีบำรุงองค์กรปกครองส่วนท้องถิ่นเพื่อรอจัดสรร"
-						.equals(StringUtils.trim(ExcelUtils.getCellValueAsString(cellHeader))) ? true : false);
-			}
-			/* when header is true give start check detail */
-			detail = (header ? true : false);
 
-			if (detail) {
-				r++; // start next one row
-
-				/* loop detail row */
-				for (int rowCheckDetail = r; rowCheckDetail <= totalRows; rowCheckDetail++) {
-					Row rowDetail = sheet.getRow(rowCheckDetail);
-					boolean checkEndDetail = false;
-					boolean checkEndDoc = false;
-					List<String> culumns = new ArrayList<>();
-					if (rowDetail != null) {
-						/* loop detail column */
-						for (short col = 1; col < 19; col++) {
-							/* cell is read data */
-							Cell cell = rowDetail.getCell(col);
-
-							/* cellCheck is read cell !null */
-							short startCellDetail = rowDetail.getFirstCellNum();
-							Cell cellCheck = rowDetail.getCell(startCellDetail);
-
-							checkEndDetail = ("รายงานแสดงการเคลื่อนไหวเงินฝากกระทรวงการคลัง".equals(
-									StringUtils.trim(ExcelUtils.getCellValueAsString(cellCheck))) ? true : false);
-							checkEndDoc = ("***** รวมบัญชีเงินฝาก : 10778 ภาษีบำรุงองค์กรปกครองส่วนท้องถิ่นเพื่อรอ"
-									.equals(StringUtils.trim(ExcelUtils.getCellValueAsString(cellCheck))) ? true
-											: false);
-
-							if (checkEndDetail) {
-								rowCheckDetail += 10;
-								break;
-							} else if (checkEndDoc) {
-								break;
-							}
-
-							String value = ExcelUtils.getCellValueAsString(cell);
-							// System.out.println(value + " col::" + col + " row::" + rowCheckDetail);
-
-							if (value != null) {
-								map.put(ExcelUtils.getCellValueAsString(cell), cell.getColumnIndex());
-								culumns.add(ExcelUtils.getCellValueAsString(cell));
-							} else {
-								culumns.add("");
-							}
-
-						}
-						addData(excelList, culumns, rowCheckDetail);
-
-					}
-					if (checkEndDoc) {
-						break;
-					}
+				if (START_DATA.equals(StringUtils.trim(ExcelUtils.getCellValueAsString(cellHeader)))) {
+					header = true;
+					tmpRow = r;
+					break;
 				}
 			}
 
 		}
+		/* loop check Check Data */
+		if (header) {
+			tmpRow++; // start next one row
+			/* loop row data */
+			for (int rowDetail = tmpRow; rowDetail <= totalRows; rowDetail++) {
+				Row rowData = sheet.getRow(rowDetail);
 
-		return excelList;
+				boolean endData = false;
+				boolean endSheet = false;
+				List<String> columns = new ArrayList<>();
 
+				if (rowData != null) {
+					/* loop column data */
+					for (short col = 1; col < 19; col++) {
+						Cell cell = rowData.getCell(col);
+
+						/* cellCheck is read cell !null */
+						short startData = rowData.getFirstCellNum();
+						Cell cellCheck = rowData.getCell(startData);
+
+						endData = (END_DATA.equals(StringUtils.trim(ExcelUtils.getCellValueAsString(cellCheck))) ? true
+								: false);
+						endSheet = (END_SHEET.equals(StringUtils.trim(ExcelUtils.getCellValueAsString(cellCheck)))
+								? true
+								: false);
+						/* END_DATA */
+						if (endData) {
+							rowDetail += 10;
+							break;
+							/* END_SHEET */
+						} else if (endSheet) {
+							break;
+							/* READ_DATA */
+						} else {
+/*							String value = ExcelUtils.getCellValueAsString(cell);
+							System.out.println(value + " col::" + col + " row::" + rowDetail);*/
+
+							if (StringUtils.isNotBlank(ExcelUtils.getCellValueAsString(cell))) {
+								map.put(ExcelUtils.getCellValueAsString(cell), cell.getColumnIndex());
+								columns.add(ExcelUtils.getCellValueAsString(cell));
+							} else {
+								columns.add("");
+							}
+
+						}
+
+					}
+					addData(optList, columns, rowDetail);
+				}
+				if (endSheet) {
+					break;
+				}
+			}
+		}
+
+		return optList;
 	}
 
-	public void addData(List<Int076Vo> excelList, List<String> data, int rowId) {
+	public void addData(List<Int076Vo> optList, List<String> data, int rowId) {
 
 		boolean checkData;
 		checkData = (data.isEmpty() ? false : true);
@@ -286,32 +296,64 @@ public class Int076Service {
 				if (StringUtils.isNotBlank(data.get(0))) {
 					tmpDatePosted = data.get(0);
 				}
-				vo.setDocNumber(StringUtils.trim(data.get(3)));
-				vo.setDocType(StringUtils.trim(data.get(5)));
-				vo.setDocRefer(StringUtils.trim(data.get(6)));
-				vo.setActor(StringUtils.trim(data.get(7)));
-				vo.setDetermination(StringUtils.trim(data.get(10)));
-				vo.setPayUnit(StringUtils.trim(data.get(13)));
+				// DocNumber
+				if (StringUtils.isNotBlank(data.get(3))) {
+					vo.setDocNumber(StringUtils.trim(data.get(3)));
+				} else {
+					vo.setDocNumber("");
+				}
+				// DocType
+				if (StringUtils.isNotBlank(data.get(5))) {
+					vo.setDocType(StringUtils.trim(data.get(5)));
+				} else {
+					vo.setDocType("");
+				}
+				// DocRefer
+				if (StringUtils.isNotBlank(data.get(6))) {
+					vo.setDocRefer(StringUtils.trim(data.get(6)));
+				} else {
+					vo.setDocRefer("");
+				}
+				// Actor
+				if (StringUtils.isNotBlank(data.get(7))) {
+					vo.setActor(StringUtils.trim(data.get(7)));
+				} else {
+					vo.setActor("");
+				}
+				// Determination
+				if (StringUtils.isNotBlank(data.get(10))) {
+					vo.setDetermination(StringUtils.trim(data.get(10)));
+				} else {
+					vo.setDetermination("");
+				}
+				// PayUnit
+				if (StringUtils.isNotBlank(data.get(13))) {
+					vo.setPayUnit(StringUtils.trim(data.get(13)));
+				} else {
+					vo.setPayUnit("");
+				}
+				// Debit
+				if (StringUtils.isNotBlank(data.get(14))) {
+					vo.setDebit(new BigDecimal(data.get(14)));
+				} else {
+					vo.setDebit(BigDecimal.ZERO);
+				}
+				// Credit
+				if (StringUtils.isNotBlank(data.get(15))) {
+					vo.setCredit(new BigDecimal(data.get(15)));
+				} else {
+					vo.setCredit(BigDecimal.ZERO);
+				}
 
-				if ("0".equals(data.get(14))) {
-					vo.setDebit(StringUtils.trim(data.get(14)));
+				if (StringUtils.isNotBlank(data.get(17))) {
+					vo.setLiftUp(new BigDecimal(data.get(17)));
 				} else {
-					vo.setDebit(formatter.format(new BigDecimal(data.get(14))));
-				}
-				if ("0".equals(data.get(15))) {
-					vo.setCredit(StringUtils.trim(data.get(15)));
-				} else {
-					vo.setCredit(formatter.format(new BigDecimal(data.get(15))));
-				}
-				if ("0".equals(data.get(17))) {
-					vo.setLiftUp(StringUtils.trim(data.get(17)));
-				} else {
-					vo.setLiftUp(formatter.format(new BigDecimal(data.get(17))));
+					vo.setLiftUp(new BigDecimal(""));
 				}
 
-				excelList.add(vo);
+				optList.add(vo);
 			} catch (Exception e) {
-				excelList.add(vo);
+				optList.add(vo);
 
 			}
 		}
@@ -324,7 +366,7 @@ public class Int076Service {
 		int yearJ0;
 		String dateJ0 = "";
 
-		ArrayList<String> liftUpList = new ArrayList<String>();
+		ArrayList<BigDecimal> liftUpList = new ArrayList<BigDecimal>();
 
 		for (Int076Vo dataJ0 : dataList) {
 
@@ -352,14 +394,14 @@ public class Int076Service {
 				for (Int076Vo dataIX : dataList) {
 					/* check dateIX */
 					if ("IX".equals(dataIX.getDocType()) && dateJ0.equals(dataIX.getDatePosted().substring(3, 10))
-							&& StringUtils.isNotBlank(dataIX.getLiftUp())) {
+							&& BeanUtils.isNotEmpty(dataIX.getLiftUp())) {
 
 						liftUpList.add(dataIX.getLiftUp());
 
 					}
 
 				}
-				/* check liftUp IX == Credit */
+				/* check liftUp IX == Credit :: CheckData=Y */
 				if (BeanUtils.isNotEmpty(liftUpList)
 						&& liftUpList.get(liftUpList.size() - 1).equals(dataJ0.getCredit())) {
 					dataJ0.setCheckData("Y");
@@ -367,7 +409,7 @@ public class Int076Service {
 					dataJ0.setCheckData("N");
 				}
 
-				liftUpList = new ArrayList<String>();
+				liftUpList = new ArrayList<BigDecimal>();
 
 			}
 
@@ -866,8 +908,7 @@ public class Int076Service {
 		Cell cell = row.createCell(cellNum);
 
 		System.out.println("Creating excel");
-		
-		
+
 		// Header
 		cell = row.createCell(cellNum);
 		cell.setCellValue("ตรวจสอบการนำส่งเงินบัญชีเจ้าหนี้ อปท.");
@@ -882,7 +923,7 @@ public class Int076Service {
 			cell.setCellStyle(thStyle);
 		}
 		;
-		
+
 		Row rowTH2 = null;
 		Cell cellTH2 = null;
 		rowTH2 = sheet.createRow(3);
@@ -1137,7 +1178,7 @@ public class Int076Service {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getDebit());
+			cell.setCellValue(formatter.format(detail.getDebit()));
 			if ("1".equals(detail.getColor())) {
 				cell.setCellStyle(RightColor1);
 			} else if ("2".equals(detail.getColor())) {
@@ -1166,7 +1207,7 @@ public class Int076Service {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getCredit());
+			cell.setCellValue(formatter.format(detail.getCredit()));
 			if ("1".equals(detail.getColor()) && StringUtils.isBlank(detail.getCheckData())) {
 				cell.setCellStyle(RightColor1);
 			} else if ("2".equals(detail.getColor()) && StringUtils.isBlank(detail.getCheckData())) {
@@ -1198,7 +1239,12 @@ public class Int076Service {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getLiftUp());
+
+			if (detail.getLiftUp() != null) {
+				cell.setCellValue(formatter.format(detail.getLiftUp()));
+			} else {
+				cell.setCellValue("");
+			}
 			if ("1".equals(detail.getColor())) {
 				cell.setCellStyle(RightColor1);
 			} else if ("2".equals(detail.getColor())) {

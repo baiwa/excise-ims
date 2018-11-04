@@ -1,5 +1,9 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
+import java.math.BigDecimal;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class Int076Vo {
 	private Long id;
 	private String datePosted;
@@ -9,11 +13,13 @@ public class Int076Vo {
 	private String actor;
 	private String determination;
 	private String payUnit;
-	private String debit;
-	private String credit;
-	private String liftUp;
+	private BigDecimal debit;
+	private BigDecimal credit;
+	private BigDecimal liftUp;
 	private String color;
 	private String checkData;
+
+	private MultipartFile fileExel;
 
 	public Long getId() {
 		return id;
@@ -79,27 +85,27 @@ public class Int076Vo {
 		this.payUnit = payUnit;
 	}
 
-	public String getDebit() {
+	public BigDecimal getDebit() {
 		return debit;
 	}
 
-	public void setDebit(String debit) {
+	public void setDebit(BigDecimal debit) {
 		this.debit = debit;
 	}
 
-	public String getCredit() {
+	public BigDecimal getCredit() {
 		return credit;
 	}
 
-	public void setCredit(String credit) {
+	public void setCredit(BigDecimal credit) {
 		this.credit = credit;
 	}
 
-	public String getLiftUp() {
+	public BigDecimal getLiftUp() {
 		return liftUp;
 	}
 
-	public void setLiftUp(String liftUp) {
+	public void setLiftUp(BigDecimal liftUp) {
 		this.liftUp = liftUp;
 	}
 
@@ -117,6 +123,14 @@ public class Int076Vo {
 
 	public void setCheckData(String checkData) {
 		this.checkData = checkData;
+	}
+
+	public MultipartFile getFileExel() {
+		return fileExel;
+	}
+
+	public void setFileExel(MultipartFile fileExel) {
+		this.fileExel = fileExel;
 	}
 
 }

@@ -257,12 +257,10 @@ public class Int073Service {
 
 										break;
 									} else {
-										if (DEBIT_NO.equals(StringUtils.trim(
-												ExcelUtils.getCellValueAsString(rowFormat1.getCell(startCol + 15))))) {
+										if (DEBIT_NO.equals(StringUtils.trim(ExcelUtils.getCellValueAsString(rowFormat1.getCell(startCol + 15))))) {
 											debit = debit.add(new BigDecimal(StringUtils.trim(ExcelUtils
 													.getCellValueAsString(rowFormat1.getCell(startCol + 16)))));
-										} else if (CREDIT_NO.equals(StringUtils.trim(
-												ExcelUtils.getCellValueAsString(rowFormat1.getCell(startCol + 15))))) {
+										} else if (CREDIT_NO.equals(StringUtils.trim(ExcelUtils.getCellValueAsString(rowFormat1.getCell(startCol + 15))))) {
 											credit = credit.add(new BigDecimal(StringUtils.trim(ExcelUtils
 													.getCellValueAsString(rowFormat1.getCell(startCol + 16)))));
 										}
