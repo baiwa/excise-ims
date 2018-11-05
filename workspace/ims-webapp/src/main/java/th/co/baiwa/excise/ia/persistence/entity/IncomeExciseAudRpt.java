@@ -2,18 +2,23 @@ package th.co.baiwa.excise.ia.persistence.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_INCOME_EXCISE_AUD_RPT")
-public class IncomeExciseAudHdr extends BaseEntity {
+public class IncomeExciseAudRpt extends BaseEntity {
 
 	private static final long serialVersionUID = 229504010338469300L;
 
 	@Id
+	@SequenceGenerator(name="IA_INCOME_EXCISE_AUD_RPT_GEN", sequenceName="IA_INCOME_EXCISE_AUD_RPT_SEQ" , allocationSize = 1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_INCOME_EXCISE_AUD_RPT_GEN")
 	@Column(name="IA_INCOME_EXCISE_AUD_RPT_ID")
 	private Long iaIncomeExciseAudRptId;
 
@@ -31,6 +36,20 @@ public class IncomeExciseAudHdr extends BaseEntity {
 
 	@Column(name="RISK_SCORE")
 	private String riskScore;
+	
+	@Column(name="ASSIGN_TO")
+	private String assignTo;
+	
+	@Column(name="IA_INCOME_EXCISE_AUD_ID")
+	private Long iaIncomeExciseAudId;
+	
+	@Column(name="STATUS")
+	private String status;
+	
+	@Column(name="STAFFTYPE")
+	private String staffType;
+	
+	
 
 	
 

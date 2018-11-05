@@ -4,15 +4,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAud;
 import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAudDtl;
+import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAudRpt;
 import th.co.baiwa.excise.ia.persistence.repository.IncomeExciseAudDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.IncomeExciseAudRepository;
+import th.co.baiwa.excise.ia.persistence.repository.IncomeExciseAudRptRepository;
+import th.co.baiwa.excise.ia.persistence.vo.Data;
+import th.co.baiwa.excise.ia.persistence.vo.ResponseMobileCheckIncomeExciseAudit;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 import th.co.baiwa.excise.ws.entity.response.incfri8020.IncFri8020;
@@ -28,6 +35,9 @@ public class IncomeExciseAudService {
 	
 	@Autowired
 	private IncomeExciseAudDtlRepository incomeExciseAudDtlRepository;
+	
+	@Autowired
+	private IncomeExciseAudRptRepository inExciseAudRptRepository;
 	
 	@Autowired
 	private WebServiceExciseService webServiceExciseService;
@@ -73,6 +83,30 @@ public class IncomeExciseAudService {
 		}while(BeanUtils.isNotEmpty(incomeLists) && incomeLists.size() == pageSize);
 		
 		return incomeExciseAud;
+	}
+	
+	public ResponseMobileCheckIncomeExciseAudit findbyAssignToAndStatus(User user){
+		ResponseMobileCheckIncomeExciseAudit responseMobileCheckIncomeExciseAudit = new ResponseMobileCheckIncomeExciseAudit();
+		List<IncomeExciseAudRpt> incomeExciseAudRptList = inExciseAudRptRepository.findbyAssignToAndStatus(user.getUsername(), FLAG.N_FLAG);
+		if(BeanUtils.isNotEmpty(incomeExciseAudRptList)) {
+			Data data = new Data();
+			responseMobileCheckIncomeExciseAudit.setAssignTo(user.getUsername());
+			responseMobileCheckIncomeExciseAudit.setCreateBy(incomeExciseAudRptList.get(0).getCreatedBy());
+			for (IncomeExciseAudRpt incomeExciseAudRpt : incomeExciseAudRptList) {
+				data = new Data();
+				data.setCheckId(incomeExciseAudRpt.getIaIncomeExciseAudRptId());
+//				String incomeExciseAudRpt.get
+//				data.setSectorName();
+//				data.set
+//				data.set
+//				data.set
+//				data.set
+//				data.set
+//				data.set
+			}
+			
+		}
+		return responseMobileCheckIncomeExciseAudit;
 	}
 	
 	
