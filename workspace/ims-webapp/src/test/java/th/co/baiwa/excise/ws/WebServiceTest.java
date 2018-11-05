@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAud;
+import th.co.baiwa.excise.ia.service.IncomeExciseAudService;
+import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.IncFri8000Res;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.IncomeList8000Res;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.ResponseData8000Res;
@@ -25,14 +27,23 @@ public class WebServiceTest {
 	@Autowired
 	private WebServiceExciseService webServiceExciseService;
 
-	// @Test
-//	public void IncFri8020() {
-//		IncFri8020 re = webServiceExciseService.IncFri8020("000300", "201802", "201808", "Income", "0", "0");
-//		ResponseData xxx = re.getResponseData();
-//		for (IncomeList incFri8020Income : xxx.getIncomeList()) {
-//			System.out.println(incFri8020Income.getIncomeName());
-//		}
-//	}
+	@Autowired
+	IncomeExciseAudService incomeExciseAudService;
+
+	@Test
+	public void IncFri8020() {
+		IncomeExciseAud incomeExciseAud = new IncomeExciseAud();
+		incomeExciseAud.setStartMonth("201801");
+		incomeExciseAud.setEndMonth("201810");
+		incomeExciseAud = incomeExciseAudService.createIncomeExciseAud(incomeExciseAud);
+		if(BeanUtils.isNotEmpty(incomeExciseAud)) {
+			System.out.println(incomeExciseAud.getIaIncomeExciseAudId());
+		}else {
+			System.out.println("insert Fail.");
+		}
+
+	}
+
 	// @Test
 	public void LicFri6010() {
 		LicFri6020 re = webServiceExciseService.licFri6020("0105555155742", "", "1", "1000");
@@ -42,7 +53,7 @@ public class WebServiceTest {
 		}
 	}
 
-	//@Test
+	// @Test
 	public void regfri4000() {
 		Regfri4000Res re = webServiceExciseService.IncFri4000("1", "1", "1", "100");
 		ResponseDataRes xxx = re.getResponseData();
@@ -51,7 +62,7 @@ public class WebServiceTest {
 		}
 	}
 
-	//@Test
+	// @Test
 	public void regfri8000() {
 		IncFri8000Res re = webServiceExciseService.IncFri8000("201802", "201808", "Income", "1", "10");
 		ResponseData8000Res xxx = re.getResponseData();
@@ -60,9 +71,10 @@ public class WebServiceTest {
 		}
 	}
 	// @Test
-//	public void webServiceLdap() {
-//		Response response = webServiceExciseService.webServiceLdap("kek1", "password");
-//		Gson gson = new Gson();
-//		System.out.println(gson.toJson(response));
-//	}
+	// public void webServiceLdap() {
+	// Response response = webServiceExciseService.webServiceLdap("kek1",
+	// "password");
+	// Gson gson = new Gson();
+	// System.out.println(gson.toJson(response));
+	// }
 }

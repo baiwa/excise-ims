@@ -63,6 +63,14 @@ public class IncomeList {
 	@SerializedName("OfficeReceive")
 	@Expose
 	private String OfficeReceive;
+	
+	@SerializedName("PinNidId")
+	@Expose
+	private String pinNidId;
+	
+	@SerializedName("ReceiptStatus")
+	@Expose
+	private String receiptStatus;
 
 	public String getOfficeReceive() {
 		return OfficeReceive;
@@ -208,6 +216,22 @@ public class IncomeList {
 
 	public void setTrnDate(String trnDate) {
 		this.trnDate = trnDate;
+	}
+
+	public String getPinNidId() {
+		return pinNidId;
+	}
+
+	public void setPinNidId(String pinNidId) {
+		this.pinNidId = pinNidId;
+	}
+
+	public String getReceiptStatus() {
+		return receiptStatus;
+	}
+
+	public void setReceiptStatus(String receiptStatus) {
+		this.receiptStatus = receiptStatus;
 	}
 
 }

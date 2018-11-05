@@ -179,7 +179,7 @@ public class WebServiceExciseService {
 		return response.getBody();
 	}
 
-	public IncFri8020 IncFri8020(String officeCode, String yearMonthFrom, String yearMonthTo, String dateType, String pageNo, String dataPerPage) {
+	public IncFri8020 IncFri8020(String officeCode, String yearMonthFrom, String yearMonthTo, String dateType, Integer pageNo, Integer dataPerPage) {
 		logger.info("restful API : IncFri8020");
 		IncFri8020 incFri8020 = new IncFri8020();
 		incFri8020.setOfficeCode(officeCode);

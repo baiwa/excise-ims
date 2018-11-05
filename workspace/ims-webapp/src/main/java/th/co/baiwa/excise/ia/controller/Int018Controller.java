@@ -33,7 +33,7 @@ public class Int018Controller {
 	public List<IncomeList> exciseWebService8020(@RequestBody Int018Vo int018Vo) {
 		logger.info("exciseWebService8020");
 		List<IncomeList> wsData = new ArrayList<IncomeList>();
-			IncFri8020 incFri8020  = webServiceExciseService.IncFri8020(int018Vo.getOfficeCode(), int018Vo.getYearMonthFrom().substring(0, 6), int018Vo.getYearMonthTo().substring(0, 6), int018Vo.getDateType(), int018Vo.getPageNo(), "1000");
+			IncFri8020 incFri8020  = webServiceExciseService.IncFri8020(int018Vo.getOfficeCode(), int018Vo.getYearMonthFrom().substring(0, 6), int018Vo.getYearMonthTo().substring(0, 6), int018Vo.getDateType(),Integer.parseInt( int018Vo.getPageNo()), 1000);
 			if (RESPONSE_CODE_SUCCESS.equals(incFri8020.getResponseCode())) {
 				if (BeanUtils.isNotEmpty(incFri8020.getResponseData()) && BeanUtils.isNotEmpty(incFri8020.getResponseData().getIncomeList())) {
 					wsData = incFri8020.getResponseData().getIncomeList();

@@ -79,7 +79,7 @@ public class Int014Service {
 		
 		Assert.notNull(sessionUpload, "File upload in session is null");
 		
-		IncFri8020 resp = webServiceExciseService.IncFri8020(officeCode, yearMonthFrom, yearMonthTo, dateType, "0", "0");
+		IncFri8020 resp = webServiceExciseService.IncFri8020(officeCode, yearMonthFrom, yearMonthTo, dateType, 0, 0);
 		
 		logger.info("IncFri8020 : {}", resp.getResponseCode());
 		

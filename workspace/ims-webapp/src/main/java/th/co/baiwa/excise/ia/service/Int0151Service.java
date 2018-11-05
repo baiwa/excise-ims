@@ -47,7 +47,7 @@ public class Int0151Service {
 		List<IncomeList> licenseList8020ListReturn = new ArrayList<IncomeList>();
 		ResponseData responseData8020 = new ResponseData();
 	
-		dataLicFri8020 = webServiceExciseService.IncFri8020(formVo.getOfficeCode(),formVo.getYearMonthFrom(),formVo.getYearMonthTo(),formVo.getDateType(),formVo.getPageNo(),formVo.getDataPerPage());
+		dataLicFri8020 = webServiceExciseService.IncFri8020(formVo.getOfficeCode(),formVo.getYearMonthFrom(),formVo.getYearMonthTo(),formVo.getDateType(),Integer.parseInt(formVo.getPageNo()),Integer.parseInt(formVo.getDataPerPage()));
 		
 		responseData8020 = dataLicFri8020.getResponseData();
 		

@@ -36,11 +36,11 @@ public class IncFri8020 {
 
 	@SerializedName("PageNo")
 	@Expose
-	private String pageNo;
+	private Integer pageNo;
 
 	@SerializedName("DataPerPage")
 	@Expose
-	private String dataPerPage;
+	private Integer dataPerPage;
 
 	public String getResponseCode() {
 		return responseCode;
@@ -98,20 +98,22 @@ public class IncFri8020 {
 		this.dateType = dateType;
 	}
 
-	public String getPageNo() {
+	public Integer getPageNo() {
 		return pageNo;
 	}
 
-	public void setPageNo(String pageNo) {
+	public void setPageNo(Integer pageNo) {
 		this.pageNo = pageNo;
 	}
 
-	public String getDataPerPage() {
+	public Integer getDataPerPage() {
 		return dataPerPage;
 	}
 
-	public void setDataPerPage(String dataPerPage) {
+	public void setDataPerPage(Integer dataPerPage) {
 		this.dataPerPage = dataPerPage;
 	}
+
+
 
 }
