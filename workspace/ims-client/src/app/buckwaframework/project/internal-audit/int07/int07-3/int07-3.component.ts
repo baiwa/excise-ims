@@ -41,7 +41,7 @@ export class Int073Component implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-07300');
-    this.processList = 1;
+    this.processList = 0;
     $("#tb2").hide();
     $("#tb3").hide();
   }
@@ -56,7 +56,7 @@ export class Int073Component implements OnInit, AfterViewInit {
   onUpload = (event: any) => {
     this.loading = true;
     console.log("อัพโหลด Excel");
-    if (this.processList == 1) {
+    if (this.processList == 0 ||this.processList == 1) {
       this.dataTrialBalanceSheet = [];
       const form = $("#upload-form")[0];
       let formBody = new FormData(form);
@@ -71,13 +71,20 @@ export class Int073Component implements OnInit, AfterViewInit {
             this.dataTrialBalanceSheet.push(element);
           });
           this.initDatatable1();
+
           setTimeout(() => {
             this.loading = false;
           }, 1000);
+
+          if(this.dataTrialBalanceSheet.length == 0){
+            this.processList = 0;
+          }else{
+            this.processList = 1;
+          }
         }
       )
 
-    } else if (this.processList == 2) {
+    } else if (this.processList == 2 || this.processList == 3) {
      
       this.dataLedgerSheet = [];
       const form = $("#upload-form")[0];
@@ -94,14 +101,16 @@ export class Int073Component implements OnInit, AfterViewInit {
             this.dataLedgerSheet.push(element);
           });
           this.initDatatable2();
+
+          setTimeout(() => {
+            this.loading = false;
+          }, 1000);
+
           if(this.dataLedgerSheet.length == 0){
             this.processList = 2;
           }else{
             this.processList = 3;
           }
-          setTimeout(() => {
-            this.loading = false;
-          }, 1000);
         }
       )
 
@@ -263,10 +272,10 @@ export class Int073Component implements OnInit, AfterViewInit {
   }
 
   clearData() {
-    if (this.processList == 1) {
+    if (this.processList == 0 ||this.processList == 1) {
       this.dataTrialBalanceSheet = [];
       this.initDatatable1();
-    } else if (this.processList == 2) {
+    } else if (this.processList == 2 ||this.processList == 3) {
       this.dataLedgerSheet = [];
       this.initDatatable2();
     }
@@ -286,7 +295,8 @@ export class Int073Component implements OnInit, AfterViewInit {
   checkData() {
     this.dataSheet = [];
     this.loading = true;
-   
+    this.processList = 4;
+
     $("#tb2").hide();
     $("#tbUpload").hide();
     $("#tb3").show();
@@ -305,13 +315,36 @@ export class Int073Component implements OnInit, AfterViewInit {
         this.dataSheet.push(element);
       });
       this.initDatatable3();
-      this.processList = 4;
+      
       setTimeout(() => {
         this.loading = false;
       }, 1000);
+      
     }
     );
 
+  }
+
+  backPage() {
+    event.preventDefault();
+    this.processList = 0;
+
+    
+    $("#tbUpload").show();
+    $("#tb1").show();
+    $("#tb3").hide();
+    
+    $("#upload-form").val("");
+    $("#fileExel").val("");
+    
+    this.dataTrialBalanceSheet = [];
+    this.initDatatable1();
+    this.dataLedgerSheet= [];
+    this.initDatatable2();
+    this.dataSheet= [];
+    this.initDatatable3();
+
+    console.log("กลับหน้าอัปโหลด");
   }
 
   export() {

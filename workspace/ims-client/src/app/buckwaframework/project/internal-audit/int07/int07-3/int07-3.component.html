@@ -1,22 +1,22 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 
 <div class="ui ordered steps full-width">
-   <div class=" {{processList==1?  'active': 'completed'}} step">
+   <div class=" {{processList==0?  'active': 'completed'}} step">
     <div class="content">
       <div class="title">งบทดลอง</div>
-      <div class="description">{{processList==1?  'กำลังดำเนินการ': 'อัปโหลดสำเร็จ'}}</div>
+      <div class="description">{{processList==0?  'กำลังดำเนินการ': 'อัปโหลดสำเร็จ'}}</div>
     </div>
   </div>
-  <div class="{{processList==1?  'disabled': processList==2?  'active': 'completed'}} step">
+  <div class="{{processList==0 || processList==1?  'disabled': processList==2?  'active': 'completed'}} step">
     <div class="content">
       <div class="title">บัญชีแยกประเภท</div>
-      <div class="description">{{processList==1?  'รอดำเนินการ': processList==2?  'กำลังดำเนินการ': 'อัปโหลดสำเร็จ'}}</div>
+      <div class="description">{{processList==0 || processList==1?  'รอดำเนินการ': processList==2?  'กำลังดำเนินการ': 'อัปโหลดสำเร็จ'}}</div>
     </div>
   </div>
-  <div class=" {{processList==1?  'disabled': processList==2?  'active': processList==3?  'active': 'completed'}} step">
+  <div class=" {{processList==0||processList==1?  'disabled': processList==2?  'disabled': processList==3?  'active': 'completed'}} step">
     <div class="content">
-      <div class="title">ตรวจสอบค่าใช้จ่าย</div>
-      <div class="description">{{processList==1?  'รอดำเนินการ': processList==2?  'รอดำเนินการ': processList==3?  'รอดำเนินการ': 'ดำเนินการสำเร็จ'}}</div>
+      <div class="title">ตรวจสอบงบทดลองกระทบยอด เดบิต เครดิต บัญชีแยกประเภท</div>
+      <div class="description">{{processList==0 || processList==1?  'รอดำเนินการ': processList==2?  'รอดำเนินการ': processList==3?  'รอดำเนินการ': 'ดำเนินการสำเร็จ'}}</div>
     </div>
   </div>
 </div>
@@ -33,7 +33,7 @@
               <div class="inline fields ui centered grid">
                   <div class="one wide field "></div>
                   <div class="three wide field required">
-                      <label class="text-right full-width">{{processList==1?  'รายงานงบทดลอง': 'รายงานบัญชีแยกประเภท'}}</label>
+                      <label class="text-right full-width">{{processList==0 || processList==1?  'รายงานงบทดลอง': 'รายงานบัญชีแยกประเภท'}}</label>
                   </div>
                   <div class="six wide field ">
                     <input id="fileExel" type="file" name="fileExel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" (change)="onChangeUpload($event)" required>
@@ -43,8 +43,8 @@
               <div class="ui stackable center aligned page grid">
                   <button class="ui mini yellow button" type="submit"><i class="upload icon"></i> อัปโหลด</button>
                   <button class="ui mini gray button" type="reset" (click)="clearData()"><i class="sync icon"></i> ล้างข้อมูล</button>
-                  <button class="ui mini primary button"  type="button" [disabled]="dataTrialBalanceSheet.length==0" (click)="nextData()" *ngIf="processList === 1 "><i class="share icon"></i>ถัดไป</button>
-                  <button class="ui mini green button"  (click)="checkData()" [disabled]="dataLedgerSheet.length==0" *ngIf="processList === 3 "><i class="clipboard check icon"></i>ตรวจสอบข้อมูล</button>
+                  <button class="ui mini primary button"  type="button" [disabled]="dataTrialBalanceSheet.length==0" (click)="nextData()" *ngIf="processList === 0 || processList === 1 "><i class="share icon"></i>ถัดไป</button>
+                  <button class="ui mini green button"  (click)="checkData()" [disabled]="dataLedgerSheet.length==0" *ngIf="processList === 2 || processList === 3 "><i class="clipboard check icon"></i>ตรวจสอบข้อมูล</button>
             </div><br>
           </form>
  
@@ -136,6 +136,10 @@
                 <i class="print icon"></i>
                 ส่งออก
                 </button>
+                <button class="ui mini button"    (click)="backPage()" >
+                    <i class="remove icon"></i>
+                    ยกเลิก
+                  </button>
             </div>
             </div>
         </div>
