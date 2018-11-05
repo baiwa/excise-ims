@@ -5,12 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
-import th.co.baiwa.excise.ia.service.IncomeExciseAudService;
 import th.co.baiwa.excise.ta.persistence.vo.ResVo;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 
@@ -23,8 +20,7 @@ public class RestfulNonAuthenController {
 	@Autowired
 	private PlanWorksheetHeaderService planWorksheetHeaderService;
 	
-	@Autowired
-	private IncomeExciseAudService incomeExciseAudService;
+	
 
 	@GetMapping("/summaryInvestigate")
 	@ResponseBody
@@ -43,12 +39,5 @@ public class RestfulNonAuthenController {
 		return resVo;
 	}
 	
-	@GetMapping("/mobileCheckIncomeExicse")
-	@ResponseBody
-	public ResVo mobileCheckIncomeExicse(@RequestBody User user) {
-		logger.info("mobileCheckIncomeExicse : {}" , user.getUsername());
-		ResVo resVo = planWorksheetHeaderService.summaryInvestigateFull();
-		logger.info("resVo : "+ resVo.toString());
-		return resVo;
-	}
+	
 }

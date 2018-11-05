@@ -4,21 +4,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAud;
 import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAudDtl;
 import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAudRpt;
 import th.co.baiwa.excise.ia.persistence.repository.IncomeExciseAudDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.IncomeExciseAudRepository;
 import th.co.baiwa.excise.ia.persistence.repository.IncomeExciseAudRptRepository;
+import th.co.baiwa.excise.ia.persistence.vo.CheckList;
 import th.co.baiwa.excise.ia.persistence.vo.Data;
+import th.co.baiwa.excise.ia.persistence.vo.InputIncomeExciseAudit;
 import th.co.baiwa.excise.ia.persistence.vo.ResponseMobileCheckIncomeExciseAudit;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
@@ -85,25 +87,40 @@ public class IncomeExciseAudService {
 		return incomeExciseAud;
 	}
 	
-	public ResponseMobileCheckIncomeExciseAudit findbyAssignToAndStatus(User user){
+	public ResponseMobileCheckIncomeExciseAudit findbyAssignToAndStatus(InputIncomeExciseAudit user){
 		ResponseMobileCheckIncomeExciseAudit responseMobileCheckIncomeExciseAudit = new ResponseMobileCheckIncomeExciseAudit();
 		List<IncomeExciseAudRpt> incomeExciseAudRptList = inExciseAudRptRepository.findbyAssignToAndStatus(user.getUsername(), FLAG.N_FLAG);
+		
 		if(BeanUtils.isNotEmpty(incomeExciseAudRptList)) {
 			Data data = new Data();
+			List<Data> datas = new ArrayList<Data>();
 			responseMobileCheckIncomeExciseAudit.setAssignTo(user.getUsername());
 			responseMobileCheckIncomeExciseAudit.setCreateBy(incomeExciseAudRptList.get(0).getCreatedBy());
 			for (IncomeExciseAudRpt incomeExciseAudRpt : incomeExciseAudRptList) {
 				data = new Data();
 				data.setCheckId(incomeExciseAudRpt.getIaIncomeExciseAudRptId());
-//				String incomeExciseAudRpt.get
-//				data.setSectorName();
-//				data.set
-//				data.set
-//				data.set
-//				data.set
-//				data.set
-//				data.set
+				String secterCode = incomeExciseAudRpt.getOfficeCode().substring(0, 2)+"0000";
+				List<Lov> sectorList = ApplicationCache.getListOfValueByValueType("SECTOR_LIST", secterCode);
+				if(BeanUtils.isNotEmpty(sectorList)) {
+					data.setSectorName(sectorList.get(0).getSubTypeDescription());
+					data.setSectorCode("secterCode");
+				}
+				if(!"0000".equals(incomeExciseAudRpt.getOfficeCode().substring(2))) {
+					data.setBranchCode(incomeExciseAudRpt.getOfficeCode());
+					List<Lov> branchList = ApplicationCache.getListOfValueByValueType("SECTOR_LIST", incomeExciseAudRpt.getOfficeCode());
+					if(BeanUtils.isNotEmpty(branchList)) {
+						data.setBranchCode(incomeExciseAudRpt.getOfficeCode());
+						data.setBranchName(branchList.get(0).getSubTypeDescription());
+					}
+				}
+				
+				data.setChecked("N");
+				List<CheckList> checkLists = new ArrayList<CheckList>();
+				checkLists.add(new CheckList(1, "ตรวจสอบรายได้", "01"));
+				data.setCheckList(checkLists);
+				datas.add(data);
 			}
+			responseMobileCheckIncomeExciseAudit.setDatas(datas);
 			
 		}
 		return responseMobileCheckIncomeExciseAudit;

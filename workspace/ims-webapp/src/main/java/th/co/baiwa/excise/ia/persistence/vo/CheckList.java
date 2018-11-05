@@ -6,38 +6,44 @@ import com.google.gson.annotations.SerializedName;
 
 public class CheckList {
 
-    @SerializedName("seq")
-    @Expose
-    private Integer seq;
-    @SerializedName("desc")
-    @Expose
-    private String desc;
-    @SerializedName("code")
-    @Expose
-    private String code;
+	@SerializedName("seq")
+	@Expose
+	private Integer seq;
+	@SerializedName("desc")
+	@Expose
+	private String desc;
+	@SerializedName("code")
+	@Expose
+	private String code;
 
-    public Integer getSeq() {
-        return seq;
-    }
+	public CheckList(Integer seq, String desc, String code) {
+		this.seq = seq;
+		this.desc = desc;
+		this.code = code;
+	}
 
-    public void setSeq(Integer seq) {
-        this.seq = seq;
-    }
+	public Integer getSeq() {
+		return seq;
+	}
 
-    public String getDesc() {
-        return desc;
-    }
+	public void setSeq(Integer seq) {
+		this.seq = seq;
+	}
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
+	public String getDesc() {
+		return desc;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 
 }
