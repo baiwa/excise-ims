@@ -27,7 +27,7 @@ export class AuthService {
     private http: Http,
     private ajaxService: AjaxService,
     private router: Router
-  ) { }
+  ) {}
 
   login(userBean: User): Promise<any> {
     let body = `username=${userBean.username}&password=${userBean.password}`;
@@ -66,21 +66,50 @@ export class AuthService {
     this.ajaxService.get("restful/userDetail", res => {
       console.log("userDetail", res.json());
       let detail = res.json();
-      $("#userDetail").html('HOME' + '<BR/>' + detail.fullName + '<BR/>' + detail.title + '<BR/>' + detail.position);
-      $("#versionProgram").html('@สงวนลิขสิทธิ์ 2560 กรมสรรพสามิต / เลขที่ 1488 ถนน นครไชยศรี เขตดุสิต กรุงเทพมหานคร 10300    V.' + detail.versionProgram);
+      $("#userDetail").html(
+        "HOME" +
+          "<BR/>" +
+          detail.fullName +
+          "<BR/>" +
+          detail.title +
+          "<BR/>" +
+          detail.position
+      );
+      $("#versionProgram").html(
+        "@สงวนลิขสิทธิ์ 2560 กรมสรรพสามิต / เลขที่ 1488 ถนน นครไชยศรี เขตดุสิต กรุงเทพมหานคร 10300    V." +
+          detail.versionProgram
+      );
     });
   }
 
   reRenderVersionProgram(pageCode) {
-    this.ajaxService.get("restful/versionProgramByPageCode?pageCode=" + pageCode, res => {
-      console.log("versionProgramByPageCode", res.json());
-      let detail = res.json();
-      $("#userDetail").html(pageCode + '<BR/>' + detail.fullName + '<BR/>' + detail.title + '<BR/>' + detail.position);
-      $("#versionProgram").html('@สงวนลิขสิทธิ์ 2560 กรมสรรพสามิต / เลขที่ 1488 ถนน นครไชยศรี เขตดุสิต กรุงเทพมหานคร 10300    V.' + detail.versionProgram);
+    return new Promise<any>((resolve, reject) => {
+      this.ajaxService.get(
+        "restful/versionProgramByPageCode?pageCode=" + pageCode,
+        res => {
+          console.log("versionProgramByPageCode", res.json());
+          let detail = res.json();
+          $("#userDetail").html(
+            pageCode +
+              "<BR/>" +
+              detail.fullName +
+              "<BR/>" +
+              detail.title +
+              "<BR/>" +
+              detail.position
+          );
+          $("#versionProgram").html(
+            "@สงวนลิขสิทธิ์ 2560 กรมสรรพสามิต / เลขที่ 1488 ถนน นครไชยศรี เขตดุสิต กรุงเทพมหานคร 10300    V." +
+              detail.versionProgram
+          );
+          resolve(detail);
+        }
+      ),
+        error => {
+          reject(error);
+        };
     });
   }
-
-
 
   authState(): Observable<User> {
     return this.userSubject.asObservable();
@@ -102,8 +131,12 @@ export class AuthService {
   renderByPage(pages) {
     //console.log(this.user);
     var countInpage = 0;
-    if (this.authenPages != null && this.authenPages != undefined && this.authenPages.length > 0) {
-      var pageList = pages.split(',');
+    if (
+      this.authenPages != null &&
+      this.authenPages != undefined &&
+      this.authenPages.length > 0
+    ) {
+      var pageList = pages.split(",");
       //console.log(pageList);
       //console.log(this.authenPages);
       pageList.forEach(element => {
@@ -117,8 +150,6 @@ export class AuthService {
     //console.log(this.isLoggedIn && countInpage > 0);
     return this.isLoggedIn && countInpage > 0;
   }
-
-
 
   getUserProfile(): Promise<boolean> {
     const usrProfile = "access-control/user-profile";
