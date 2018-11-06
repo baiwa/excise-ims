@@ -1,0 +1,84 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<br>
+<div class="sixteen wide column">
+  <h2 class="ui header">ประเมินความเสี่ยงทั้งหมด</h2>
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>ระบุความเสี่ยง</span>
+  </div>
+  <div class="ui attached segment">
+    <div class="ui form">
+      <input type="hidden" id="searchFlag">
+      <input type="hidden" id="id">
+
+      <div class="inline fields">
+        <div class="three wide field"></div>
+        <div class="two wide required field">
+          <label>ระยะเวลาที่ตรวจสอบ</label>
+        </div>
+        <div class="three wide field ui calendar" id="calendar">
+          <div class="ui input left icon">
+            <i class="calendar alter nate outline icon"></i>
+            <input type="calendar" readonly="" id="startDate" name="startDate" [attr.required]="true" autocomplete="off" placeholder="ดด/ปปปป">
+          </div>
+        </div>
+        <div class="one wide field">
+          <label>ถึง</label>
+        </div>
+        <div class="three wide field ui calendar" id="calendar1">
+          <div class="ui input left icon">
+            <i class="calendar alter nate outline icon"></i>
+            <input type="calendar" readonly="" id="endDate" name="endDate" [attr.required]="true" autocomplete="off" placeholder="ดด/ปปปป">
+          </div>
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="three wide field"></div>
+        <div class="two wide required field">
+          <label>จำนวนใบเสร็จเสียเกิน</label>
+        </div>
+        <div class="two wide field">
+          <input id="billLost" type="number" [attr.step]="1" required>
+        </div>
+        <div class="one wide field ui right aligned">
+          <label>%</label>
+        </div>
+      </div>
+      <br>
+      <div class="ui center aligned grid">
+        <div class="eight wide column">
+          <button class="ui mini primary button" type="button" (click)="clickSearch()">
+            <i class="search icon"></i>วิเคราะห์ข้อมูลเบื้องต้น</button>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+  <br>
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>ผลการค้นหา</span>
+  </div>
+  <div class="ui attached  segment">
+
+    <table id="tableData" class="ui small celled table nowrap striped selectable" style="width: 100%">
+      <thead>
+        <tr>
+          <th style="text-align: center !important;">รหัสสำนักงานสรรพสามิต</th>
+          <th style="text-align: center !important;">ชื่อสำนักงานสรรพสามิต</th>
+          <th style="text-align: center !important;">ช่วงเดือนที่</th>
+          <th style="text-align: center !important;">ถึงเดือนที่</th>
+          <th style="text-align: center !important;">จำนวนความเสี่ยง</th>
+          <th style="text-align: center !important;">รายละเอียดความเสี่ยง</th>
+        </tr>
+      </thead>
+    </table>
+    <br>
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button" (click)="exportFile()">
+          <i class="file excel outline icon"></i>ส่งออก</button>
+      </div>
+    </div>
+    <br>
+  </div>
+
+</div>

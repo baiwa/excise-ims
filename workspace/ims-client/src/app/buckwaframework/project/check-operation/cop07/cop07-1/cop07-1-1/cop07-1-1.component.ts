@@ -99,7 +99,7 @@ export class Cop0711Component implements OnInit, OnDestroy {
         maxDate.setMonth(maxDate.getMonth()+1);
         maxDate.setDate(maxDate.getDate()-1);
 
-        let minDate = new Date((parseInt(this.fiscalYear.split("/")[1])-543) + "-" + parseInt(this.fiscalYear.split("/")[0]));
+        let minDate = new Date((parseInt(this.fiscalYear.split("/")[1])-543) + "-" + (parseInt(this.fiscalYear.split("/")[0])));
 
         console.log("maxDate : ",maxDate+" minDate : "+minDate);
 
