@@ -13,6 +13,7 @@ import { Int06112Component } from './int06-11-2/int06-11-2.component';
 import { Int06113Component } from './int06-11-3/int06-11-3.component';
 import { Int06114Component } from './int06-11-4/int06-11-4.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Int0611301Component } from './int06-11-3/int06-11-3-01/int06-11-3-01.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
     { path: '1', component: Int06111Component, canActivate: [AuthGuard] },
     { path: '2', component: Int06112Component, canActivate: [AuthGuard] },
     { path: '3', component: Int06113Component, canActivate: [AuthGuard] },
+    { path: '3-1', component: Int0611301Component, canActivate: [AuthGuard] },
     { path: '4', component: Int06114Component, canActivate: [AuthGuard] },
 ];
 
@@ -36,6 +38,7 @@ const routes: Routes = [
     Int06112Component,
     Int06113Component,
     Int06114Component,
+    Int0611301Component,
    
   ],
   exports: [RouterModule]

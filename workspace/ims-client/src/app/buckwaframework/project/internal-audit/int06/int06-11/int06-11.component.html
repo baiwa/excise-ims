@@ -16,17 +16,18 @@
                             <label class="full-width text-right">แบบขอเบิก</label>
                         </div>
                         <div class="six wide field" [ngClass]="{ 'error': invalid('bill', ngForm).error }">
-                            <select id="bill" name="bill" class="ui fluid dropdown" (change)="handleBill($event)" formControlName="bill">
-                <option value="">กรุณาเลือก</option>
-                <option *ngFor="let bill of bills; let i = index" [value]="bill.value">
-                  {{ bill.label }}
-                </option>
-              </select>
+                            <select id="bill" name="bill" class="ui fluid dropdown" (change)="handleBill($event)"
+                                formControlName="bill">
+                                <option value="">กรุณาเลือก</option>
+                                <option *ngFor="let bill of bills; let i = index" [value]="bill.value">
+                                    {{ bill.label }}
+                                </option>
+                            </select>
                         </div>
 
                     </div>
 
-                    <div class="ui centered inline fields grid">
+                    <!-- <div class="ui centered inline fields grid">
                         <div class="inline fifteen wide field" *ngIf="{ 'hidden': hidden(['2']).hidden }">
                             <div style="width: 100%" class="ui divider"></div>
                         </div>
@@ -39,10 +40,10 @@
                         </div>
                         <div class="four wide field" [ngClass]="{ 'error': invalid('type', ngForm).error }">
                             <select id="type" name="type" class="ui fluid dropdown" formControlName="type" (change)="comboTypeChange($event, 'levels')">
-                              <option value="">กรุณาเลือก</option>
-                              <option *ngFor="let type of types | async;" [value]="type.lovId">
-                                {{ type.typeDescription }}
-                              </option>
+                                <option value="">กรุณาเลือก</option>
+                                <option *ngFor="let type of types | async;" [value]="type.lovId">
+                                    {{ type.typeDescription }}
+                                </option>
                             </select>
                         </div>
                         <div class="one wide field" [ngClass]="{ 'error': required('level').required }">
@@ -50,10 +51,10 @@
                         </div>
                         <div class="four wide field" [ngClass]="{ 'error': invalid('level', ngForm).error }">
                             <select id="level" name="level" class="ui fluid dropdown" formControlName="level" (change)="comboTypeChange($event, 'salarys')">
-                              <option value="">กรุณาเลือก</option>
-                              <option *ngFor="let level of levels | async" [value]="level.lovId">
-                                {{ level.typeDescription }}
-                              </option>
+                                <option value="">กรุณาเลือก</option>
+                                <option *ngFor="let level of levels | async" [value]="level.lovId">
+                                    {{ level.typeDescription }}
+                                </option>
                             </select>
                         </div>
 
@@ -62,11 +63,11 @@
                         </div>
                         <div class="four wide field" [ngClass]="{ 'error': invalid('salary', ngForm).error }">
                             <select id="salary" name="salary" class="ui fluid dropdown" formControlName="salary">
-                            <option value="">กรุณาเลือก</option>
-                            <option *ngFor="let salary of salarys | async" [value]="salary.lovId">
-                              {{ salary.typeDescription }}
-                            </option>
-                          </select>
+                                <option value="">กรุณาเลือก</option>
+                                <option *ngFor="let salary of salarys | async" [value]="salary.lovId">
+                                    {{ salary.typeDescription }}
+                                </option>
+                            </select>
                         </div>
 
 
@@ -76,7 +77,8 @@
                         <div class="ui centered inline fields grid" [ngClass]="{ 'hidden': hidden(['1','2','4']).hidden }">
                             <div class="one wide field" [ngClass]="{ 'required': required('chkChild'+i).required }">
                                 <div class="ui checkbox">
-                                    <input type="checkbox" (change)="handleChkChild($event, i)" formControlName="chkChild{{i}}" name="chkChild{{i}}">
+                                    <input type="checkbox" (change)="handleChkChild($event, i)" formControlName="chkChild{{i}}"
+                                        name="chkChild{{i}}">
                                     <label></label>
                                 </div>
                             </div>
@@ -97,31 +99,36 @@
                                     <div class="inline fields">
                                         <div class="four wide field" [ngClass]="{ 'error': invalid('typeChild'+i, ngForm).error }">
                                             <div class="ui checkbox" [ngClass]="{'disabled': !disabled('chkChild'+i).disabled}">
-                                                <input type="radio" name="typeChild{{i}}" value="สถานศึกษาของทางราชการ" formControlName="typeChild{{i}}">
+                                                <input type="radio" name="typeChild{{i}}" value="สถานศึกษาของทางราชการ"
+                                                    formControlName="typeChild{{i}}">
                                                 <label>สถานศึกษาของทางราชการ</label>
                                             </div>
                                         </div>
                                         <div class="six wide field" [ngClass]="{ 'error': invalid('typeEduChild'+i, ngForm).error }">
-                                            <select id="typeEduChild{{i}}" name="typeEduChild{{i}}" class="ui fluid dropdown" [attr.disabled]="disabled('chkChild'+i).disabled" formControlName="typeEduChild{{i}}">
-                        <option value="">กรุณาเลือก</option>
-                        <option *ngFor="let typeEduChild of typeEduChilds; let j = index" [value]="typeEduChild.value">
-                          {{ typeEduChild.label }}
-                        </option>
-                      </select>
+                                            <select id="typeEduChild{{i}}" name="typeEduChild{{i}}" class="ui fluid dropdown"
+                                                [attr.disabled]="disabled('chkChild'+i).disabled" formControlName="typeEduChild{{i}}">
+                                                <option value="">กรุณาเลือก</option>
+                                                <option *ngFor="let typeEduChild of typeEduChilds; let j = index"
+                                                    [value]="typeEduChild.value">
+                                                    {{ typeEduChild.label }}
+                                                </option>
+                                            </select>
                                         </div>
                                         <div class="six wide field" [ngClass]="{ 'error': invalid('majorChild'+i, ngForm).error }">
-                                            <select id="majorChild{{i}}" name="majorChild{{i}}" class="ui fluid dropdown" [attr.disabled]="disabled('chkChild'+i).disabled" formControlName="majorChild{{i}}">
-                        <option value="">กรุณาเลือก</option>
-                        <option *ngFor="let majorChild of majorChilds; let j = index" [value]="majorChild.value">
-                          {{ majorChild.label }}
-                        </option>
-                      </select>
+                                            <select id="majorChild{{i}}" name="majorChild{{i}}" class="ui fluid dropdown"
+                                                [attr.disabled]="disabled('chkChild'+i).disabled" formControlName="majorChild{{i}}">
+                                                <option value="">กรุณาเลือก</option>
+                                                <option *ngFor="let majorChild of majorChilds; let j = index" [value]="majorChild.value">
+                                                    {{ majorChild.label }}
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="inline fields">
                                         <div class="four wide field" [ngClass]="{ 'error': invalid('typeChild'+i, ngForm).error }">
                                             <div class="ui checkbox" [ngClass]="{'disabled': !disabled('chkChild'+i).disabled}">
-                                                <input type="radio" name="typeChild{{i}}" value="สถานศึกษาของเอกชน" formControlName="typeChild{{i}}">
+                                                <input type="radio" name="typeChild{{i}}" value="สถานศึกษาของเอกชน"
+                                                    formControlName="typeChild{{i}}">
                                                 <label>สถานศึกษาของเอกชน</label>
                                             </div>
                                         </div>
@@ -132,12 +139,13 @@
                                     <div class="inline fields">
                                         <div class="four wide field"></div>
                                         <div class="six wide field" [ngClass]="{ 'error': invalid('levelChild'+i, ngForm).error }">
-                                            <select id="levelChild{{i}}" name="levelChild{{i}}" class="ui fluid dropdown" [attr.disabled]="disabled('chkChild'+i).disabled" formControlName="levelChild{{i}}">
-                        <option value="">กรุณาเลือก</option>
-                        <option *ngFor="let levelChild of levelChilds; let j = index" [value]="levelChild.value">
-                          {{ levelChild.label }}
-                        </option>
-                      </select>
+                                            <select id="levelChild{{i}}" name="levelChild{{i}}" class="ui fluid dropdown"
+                                                [attr.disabled]="disabled('chkChild'+i).disabled" formControlName="levelChild{{i}}">
+                                                <option value="">กรุณาเลือก</option>
+                                                <option *ngFor="let levelChild of levelChilds; let j = index" [value]="levelChild.value">
+                                                    {{ levelChild.label }}
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -154,14 +162,15 @@
                         <div class="inline fifteen wide field" *ngIf="{ 'hidden': hidden(['2']).hidden }">
                             <div style="width: 100%" class="ui divider"></div>
                         </div>
-                    </div>
-
+                    </div> -->
+                    <br>
+                    <br>
                     <div class="ui centered inline fields grid">
                         <div class="field">
                             <button class="ui primary button" [disabled]="form.controls.bill.value == ''" type="submit">
-                <i class="plus icon"></i>
-                รายการใหม่
-              </button>
+                                <i class="plus icon"></i>
+                                ทำรายการ
+                            </button>
                         </div>
                     </div>
 

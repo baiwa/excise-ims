@@ -87,6 +87,12 @@ export class Int0611Component implements OnInit, AfterViewInit {
    */
   handleSubmit(e: any) {
     e.preventDefault(); // prevent refresh to post form
+    if ("2" == this.form.controls.bill.value) {
+      this.router.navigate(['int06/11/2']);
+    }
+    if ("3" == this.form.controls.bill.value) {
+      this.router.navigate(['/int06/11/3-1']);
+    }
     for (let key in this.form.controls) {
       if (this.form.controls[key].invalid) {
         console.log(key);
@@ -106,14 +112,14 @@ export class Int0611Component implements OnInit, AfterViewInit {
         }
         break;
       case "2":
-        this.router.navigate(['int06/11/2']);
+
         break;
       case "3":
-        this.clearControls("type"); // Type Clear Validators
-        this.clearControls("level"); // Level Clear Validators
-        for (let i = 0; i < 3; i++) {
-          this.setControls(`chkChild${i}`);
-        }
+        // this.clearControls("type"); // Type Clear Validators
+        // this.clearControls("level"); // Level Clear Validators
+        // for (let i = 0; i < 3; i++) {
+        //   this.setControls(`chkChild${i}`);
+        // }
         break;
       case "4":
         this.setControls("type"); // Type Set Validators
@@ -256,7 +262,7 @@ export class Int0611Component implements OnInit, AfterViewInit {
     if (bill.value == '1') {
       page = "int06/11/1";
     } else if (bill.value == '2') {
-      
+
     } else if (bill.value == '3') {
       page = "int06/11/3";
     } else if (bill.value == '4') {
