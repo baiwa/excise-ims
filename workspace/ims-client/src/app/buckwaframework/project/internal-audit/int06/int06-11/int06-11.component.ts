@@ -106,12 +106,7 @@ export class Int0611Component implements OnInit, AfterViewInit {
         }
         break;
       case "2":
-        // this.clearControls("type"); // Type Clear Validators
-        // this.clearControls("level"); // Level Clear Validators
-        // for (let i = 0; i < 3; i++) {
-        //   this.setControls(`chkChild${i}`);
-        // }
-        this.router.navigate(['int06-11/2']);
+        this.router.navigate(['int06/11/2']);
         break;
       case "3":
         this.clearControls("type"); // Type Clear Validators
@@ -258,16 +253,16 @@ export class Int0611Component implements OnInit, AfterViewInit {
   changepage() {
     const bill = this.form.controls.bill;
     let page = "";
-    if (bill.value == "1") {
+    if (bill.value == '1') {
       page = "int06/11/1";
-    } else if (bill.value == "2") {
-      page = "int06/11/2";
-    } else if (bill.value == "3") {
+    } else if (bill.value == '2') {
+      
+    } else if (bill.value == '3') {
       page = "int06/11/3";
-    } else if (bill.value == "4") {
+    } else if (bill.value == '4') {
       page = "int06/11/4";
     }
 
-    this.router.navigate([page], { queryParams: { id: "1234" } });
+    this.router.navigate([page, { queryParams: { id: "1234" } }]);
   }
 }
