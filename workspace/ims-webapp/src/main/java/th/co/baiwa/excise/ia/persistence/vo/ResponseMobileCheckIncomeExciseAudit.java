@@ -17,7 +17,7 @@ public class ResponseMobileCheckIncomeExciseAudit {
     
     @SerializedName("datas")
     @Expose
-    private List<Data> datas = null;
+    private List<DataQuery> datas = null;
     
 
     public String getCreateBy() {
@@ -36,11 +36,11 @@ public class ResponseMobileCheckIncomeExciseAudit {
         this.assignTo = assignTo;
     }
 
-    public List<Data> getDatas() {
+    public List<DataQuery> getDatas() {
         return datas;
     }
 
-    public void setDatas(List<Data> datas) {
+    public void setDatas(List<DataQuery> datas) {
         this.datas = datas;
     }
 

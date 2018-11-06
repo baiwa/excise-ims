@@ -19,7 +19,7 @@ import th.co.baiwa.excise.ia.persistence.repository.IncomeExciseAudDtlRepository
 import th.co.baiwa.excise.ia.persistence.repository.IncomeExciseAudRepository;
 import th.co.baiwa.excise.ia.persistence.repository.IncomeExciseAudRptRepository;
 import th.co.baiwa.excise.ia.persistence.vo.CheckList;
-import th.co.baiwa.excise.ia.persistence.vo.Data;
+import th.co.baiwa.excise.ia.persistence.vo.DataQuery;
 import th.co.baiwa.excise.ia.persistence.vo.InputIncomeExciseAudit;
 import th.co.baiwa.excise.ia.persistence.vo.ResponseMobileCheckIncomeExciseAudit;
 import th.co.baiwa.excise.utils.BeanUtils;
@@ -92,12 +92,12 @@ public class IncomeExciseAudService {
 		List<IncomeExciseAudRpt> incomeExciseAudRptList = inExciseAudRptRepository.findbyAssignToAndStatus(user.getUsername(), FLAG.N_FLAG);
 		
 		if(BeanUtils.isNotEmpty(incomeExciseAudRptList)) {
-			Data data = new Data();
-			List<Data> datas = new ArrayList<Data>();
+			DataQuery data = new DataQuery();
+			List<DataQuery> datas = new ArrayList<DataQuery>();
 			responseMobileCheckIncomeExciseAudit.setAssignTo(user.getUsername());
 			responseMobileCheckIncomeExciseAudit.setCreateBy(incomeExciseAudRptList.get(0).getCreatedBy());
 			for (IncomeExciseAudRpt incomeExciseAudRpt : incomeExciseAudRptList) {
-				data = new Data();
+				data = new DataQuery();
 				data.setCheckId(incomeExciseAudRpt.getIaIncomeExciseAudRptId());
 				String secterCode = incomeExciseAudRpt.getOfficeCode().substring(0, 2)+"0000";
 				List<Lov> sectorList = ApplicationCache.getListOfValueByValueType("SECTOR_LIST", secterCode);
