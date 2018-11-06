@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: "10", loadChildren: "./int06-10/int06-10.module#Int0610Module" },
   { path: "11", loadChildren: "./int06-11/int06-11.module#Int0611Module" },
   { path: "12", loadChildren: "./int06-12/int06-12.module#Int0612Module" },
-
+  { path: "13", loadChildren: "./int06-13/int06-13.module#Int0613Module" },
 ];
 
 @NgModule({

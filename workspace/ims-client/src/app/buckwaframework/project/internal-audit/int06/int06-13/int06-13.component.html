@@ -1,0 +1,86 @@
+<!-- breadcrumb -->
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<br>
+
+<div class="ui grid">
+  <div class="sixteen wide column">
+
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+      <span>กำหนดค่าเช่าบ้านข้าราชการ</span>
+    </div>
+
+    <div class="ui attached segment">
+      <div class="ui grid center aligned">
+        <div class="sixteen wide column">
+          <h4> บัญชีอัตราค่าเช่าบ้านข้าราชการหมายเลข ๗
+            <br> สำหรับข้าราชการพลเรือน
+          </h4>
+        </div>
+      </div>
+
+     
+      <form class="ui form"  ngNativeValidate >
+        <!-- ตำแหน่งประเภทบริหาร -->
+        <div style="width: 100%" class="ui divider"></div>
+        <h3>ตำแหน่งประเภทบริหาร</h3>
+        <br>
+        <div class="inline fields">
+              <div class="one wide field">
+              </div>
+              <div class="five wide field">
+                  <label><h4>ระดับ</h4></label>
+              </div>
+              <div class="six wide field">
+                  <label><h4>เงินเดือน / บาท</h4></label>
+              </div>
+              <div class="four wide field">
+                  <label><h4>ค่าเช่าบ้านไม่เกินเดือนละ / บาท</h4></label>
+              </div> 
+        </div>
+        <div class="inline fields">
+            <div class="one wide field">
+            </div>
+            <div class="five wide field">
+                <label>ระดับต้น</label>
+            </div>
+            <div class="six wide field">
+                <label>ตั้งแต่......แต่ไม่ถึง.....</label>
+            </div>
+            <div class="four wide field">
+                <label><h4>.....</h4></label>
+            </div> 
+      </div>
+        <!-- ตำแหน่งประเภทอำนวยการ -->
+        <div style="width: 100%" class="ui divider"></div>
+        <h3>ตำแหน่งประเภทอำนวยการ</h3>
+        <br>
+
+      </form>
+
+      <table class="ui celled table">
+        <thead>
+            <tr>
+                <th style="text-align: center !important">ระดับ</th>
+                <th style="text-align: center !important">เงินเดือน / บาท</th>
+                <th style="text-align: center !important">ค่าเช่าบ้านไม่เกินเดือนละ / บาท</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Name">James</td>
+            <td data-label="Age">24</td>
+            <td data-label="Job">Engineer</td>
+          </tr>
+          <tr>
+            <td data-label="Name">Jill</td>
+            <td data-label="Age">26</td>
+            <td data-label="Job">Engineer</td>
+          </tr>
+        </tbody>
+      </table>
+      
+
+    </div>
+
+  </div>
+</div>
