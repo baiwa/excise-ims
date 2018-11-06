@@ -12,12 +12,11 @@
 
                     <div class="ui centered inline fields grid">
 
-                        <div class="two wide field" [ngClass]="{ 'required': required('bill').required }">
+                        <div class="two wide field">
                             <label class="full-width text-right">แบบขอเบิก</label>
                         </div>
-                        <div class="six wide field" [ngClass]="{ 'error': invalid('bill', ngForm).error }">
-                            <select id="bill" name="bill" class="ui fluid dropdown" (change)="handleBill($event)"
-                                formControlName="bill">
+                        <div class="six wide field">
+                            <select id="bill" name="bill" class="ui fluid dropdown" formControlName="bill">
                                 <option value="">กรุณาเลือก</option>
                                 <option *ngFor="let bill of bills; let i = index" [value]="bill.value">
                                     {{ bill.label }}

@@ -88,55 +88,54 @@ export class Int0611Component implements OnInit, AfterViewInit {
   handleSubmit(e: any) {
     e.preventDefault(); // prevent refresh to post form
     if ("2" == this.form.controls.bill.value) {
-      this.router.navigate(['int06/11/2']);
+      this.router.navigate(["int06/11/2"]);
     }
     if ("3" == this.form.controls.bill.value) {
-      this.router.navigate(['/int06/11/3-1']);
+      this.router.navigate(["/int06/11/3-1"]);
     }
-    for (let key in this.form.controls) {
-      if (this.form.controls[key].invalid) {
-        console.log(key);
-      }
-    }
-    if (this.form.valid) {
-      this.changepage();
-    }
+    // for (let key in this.form.controls) {
+    //   if (this.form.controls[key].invalid) {
+    //     console.log(key);
+    //   }
+    // }
+    // if (this.form.valid) {
+    this.changepage();
+    // }
   }
-  handleBill(control) {
-    switch (control.target.value) {
-      case "1":
-        this.setControls("type"); // Type Set Validators
-        this.setControls("level"); // Level Set Validators
-        for (let i = 0; i < 3; i++) {
-          this.clearControls(`chkChild${i}`);
-        }
-        break;
-      case "2":
-
-        break;
-      case "3":
-        // this.clearControls("type"); // Type Clear Validators
-        // this.clearControls("level"); // Level Clear Validators
-        // for (let i = 0; i < 3; i++) {
-        //   this.setControls(`chkChild${i}`);
-        // }
-        break;
-      case "4":
-        this.setControls("type"); // Type Set Validators
-        this.setControls("level"); // Level Set Validators
-        for (let i = 0; i < 3; i++) {
-          this.clearControls(`chkChild${i}`);
-        }
-        break;
-      default:
-        this.setControls("type"); // Type Set Validators
-        this.setControls("level"); // Level Set Validators
-        for (let i = 0; i < 3; i++) {
-          this.setControls(`chkChild${i}`);
-        }
-        break;
-    }
-  }
+  // handleBill(control) {
+  //   switch (control.target.value) {
+  //     case "1":
+  //       this.setControls("type"); // Type Set Validators
+  //       this.setControls("level"); // Level Set Validators
+  //       for (let i = 0; i < 3; i++) {
+  //         this.clearControls(`chkChild${i}`);
+  //       }
+  //       break;
+  //     case "2":
+  //       break;
+  //     case "3":
+  //       // this.clearControls("type"); // Type Clear Validators
+  //       // this.clearControls("level"); // Level Clear Validators
+  //       // for (let i = 0; i < 3; i++) {
+  //       //   this.setControls(`chkChild${i}`);
+  //       // }
+  //       break;
+  //     case "4":
+  //       this.setControls("type"); // Type Set Validators
+  //       this.setControls("level"); // Level Set Validators
+  //       for (let i = 0; i < 3; i++) {
+  //         this.clearControls(`chkChild${i}`);
+  //       }
+  //       break;
+  //     default:
+  //       this.setControls("type"); // Type Set Validators
+  //       this.setControls("level"); // Level Set Validators
+  //       for (let i = 0; i < 3; i++) {
+  //         this.setControls(`chkChild${i}`);
+  //       }
+  //       break;
+  //   }
+  // }
   handleChkChild(control, i) {
     if (control.target.checked) {
       $(`#levelChild${i}`)
@@ -259,16 +258,16 @@ export class Int0611Component implements OnInit, AfterViewInit {
   changepage() {
     const bill = this.form.controls.bill;
     let page = "";
-    if (bill.value == '1') {
+    if (bill.value == "1") {
       page = "int06/11/1";
-    } else if (bill.value == '2') {
-
-    } else if (bill.value == '3') {
+    } else if (bill.value == "2") {
+      page = "int06/11/2";
+    } else if (bill.value == "3") {
       page = "int06/11/3";
-    } else if (bill.value == '4') {
+    } else if (bill.value == "4") {
       page = "int06/11/4";
     }
 
-    this.router.navigate([page, { queryParams: { id: "1234" } }]);
+    this.router.navigate([page]);
   }
 }
