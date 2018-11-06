@@ -106,11 +106,12 @@ export class Int0611Component implements OnInit, AfterViewInit {
         }
         break;
       case "2":
-        this.clearControls("type"); // Type Clear Validators
-        this.clearControls("level"); // Level Clear Validators
-        for (let i = 0; i < 3; i++) {
-          this.setControls(`chkChild${i}`);
-        }
+        // this.clearControls("type"); // Type Clear Validators
+        // this.clearControls("level"); // Level Clear Validators
+        // for (let i = 0; i < 3; i++) {
+        //   this.setControls(`chkChild${i}`);
+        // }
+        this.router.navigate(['int06-11/2']);
         break;
       case "3":
         this.clearControls("type"); // Type Clear Validators
