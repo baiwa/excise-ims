@@ -14,6 +14,8 @@ import { Int06113Component } from './int06-11-3/int06-11-3.component';
 import { Int06114Component } from './int06-11-4/int06-11-4.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Int0611301Component } from './int06-11-3/int06-11-3-01/int06-11-3-01.component';
+import { BreadcrumbModule } from 'components/breadcrumb/breadcrumb.module';
+
 
 
 const routes: Routes = [
@@ -30,7 +32,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BreadcrumbModule 
   ],
   declarations: [
     Int0611Component,
