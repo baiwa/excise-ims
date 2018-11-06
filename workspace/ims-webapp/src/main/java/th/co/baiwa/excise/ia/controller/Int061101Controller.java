@@ -1,0 +1,66 @@
+package th.co.baiwa.excise.ia.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.security.domain.UserBean;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.ia.persistence.vo.Int061101FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int061101GetUserLogin;
+import th.co.baiwa.excise.ia.service.Int061101Service;
+
+@Controller
+@RequestMapping("api/ia/int061101")
+public class Int061101Controller {
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Autowired
+	private Int061101Service int061101Service;
+	
+	@PostMapping("/getAuthLogin")
+	@ResponseBody
+	public Int061101GetUserLogin get() {
+		logger.info("get info user-login Int061101");
+		UserBean pf = null;
+		
+		Int061101GetUserLogin userLogin = new Int061101GetUserLogin();
+		pf = UserLoginUtils.getCurrentUserBean();
+		userLogin.setGetAccessAttr(pf.getAccessAttr());
+		userLogin.setGetCnName(pf.getCnName());
+		userLogin.setGetOfficeId(pf.getOfficeId());
+		userLogin.setGetTelephoneNo(pf.getTelephoneNo());
+		userLogin.setGetUserEngName(pf.getUserEngName());
+		userLogin.setGetUserEngSurname(pf.getUserEngSurname());
+		userLogin.setGetUserId(pf.getUserId());
+		userLogin.setGetUsername(pf.getUsername());
+		userLogin.setGetTitle(pf.getTitle());
+		userLogin.setGetUserThaiId(pf.getUserThaiId());
+		userLogin.setGetUserThaiName(pf.getUserThaiName());
+		userLogin.setGetUserThaiSurname(pf.getUserThaiSurname());
+		return userLogin;
+	
+	}
+	
+	@PostMapping("/save")
+	@ResponseBody
+	public Message save(@RequestBody Int061101FormVo formVo) {
+		logger.info("save Int061101");
+		Message msg;
+		msg = ApplicationCache.getMessage("MSG_00003");
+		try {
+			int061101Service.save(formVo);
+			msg = ApplicationCache.getMessage("MSG_00002");
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		return msg;
+	}
+
+}
