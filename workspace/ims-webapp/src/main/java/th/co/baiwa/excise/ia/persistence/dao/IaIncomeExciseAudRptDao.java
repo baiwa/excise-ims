@@ -62,7 +62,7 @@ public class IaIncomeExciseAudRptDao {
 //			sql.append(" AND  SUBSTR(FISCAL_YEAR,4,4)=?");
 //			params.add(formVo.getFiscalYear());
 //		}
-
+		sql.append(" ORDER BY OFFICE_CODE asc");
 		log.info("findAllCop071 sql : {}",sql);
         List<Int084Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), int084Rowmapper);
         return list;
@@ -111,7 +111,7 @@ public class IaIncomeExciseAudRptDao {
 //				sql.append(" AND  SUBSTR(FISCAL_YEAR,4,4)=?");
 //				params.add(formVo.getFiscalYear());
 //			}
-
+			sql.append(" ORDER BY OFFICE_CODE asc");
 			log.info("findAllCop071 sql : {}",sql);
 	        List<Int085Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), int085Rowmapper);
 	        return list;
