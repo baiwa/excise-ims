@@ -3,7 +3,9 @@ import { AuthService } from 'services/auth.service';
 import { BreadCrumb } from 'models/breadcrumb';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Int06113Service } from './int06-11-3.service';
-
+import { Router } from '@angular/router';
+import { TextDateTH, formatter } from 'helpers/datepicker';
+declare var $: any;
 @Component({
   selector: 'app-int06-11-3',
   templateUrl: './int06-11-3.component.html',
@@ -20,7 +22,10 @@ export class Int06113Component implements OnInit, AfterViewInit {
   
   // ===> params
   formControl: FormGroup;
+  formControlChild: FormGroup;
   items : any = [];
+  loading : boolean = false;
+  submitted : boolean = false;
 
   valueRadio : any = {
     mateDescription1 : "ไม่เป็นข้าราชการประจำหรือลูกจ้างประจำ",
@@ -46,72 +51,89 @@ export class Int06113Component implements OnInit, AfterViewInit {
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private myService: Int06113Service
+    private myService: Int06113Service,
+    private router : Router
   ) {}
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-06113');
     this.newFormControl();
     this.items = this.formControl.get('items') as FormArray;
-    // this.items.push(this.createChlidItem());
+    this.items.push(this.createChlidItem());
+    
     // this.items.push(this.createChlidItem());
   }
   ngAfterViewInit() {
+    this.calenda();
   }
   newFormControl = () => {
     this.formControl = this.formBuilder.group({
       //==> 1
-      name: [""],
-      pition: [""],
-      belong: [""],
+      name: ["", Validators.required],
+      pition: ["", Validators.required],
+      belong: ["", Validators.required],
       //==> 2
       mate: [""],
-      mateDescription: [""],
+      mateDescription: ["1"],
       pitionMate: [""],
       belongMate: [""],
       //==> 3
-      status: [""],
+      status: ["1"],
       //==> 4
-      type: [""],
-      typeRecive: [""],
-      typeReciveAmount: [""],
-      offer: [""],
-      offerType: [""],
-      sumAmount : [""],
+      type: ["1"],
+      typeRecive: ["1"],
+      typeReciveAmount: ["", Validators.required],
+      offer: ["", Validators.required],
+      offerType: ["1"],
+      sumAmount : ["", Validators.required],
 
       items: this.formBuilder.array([this.createChlidItem()])
     });
   }
   createChlidItem(): FormGroup {
-    return this.formBuilder.group({
-      name: '',
-      birth: '',
-      orderFather: '',
-      orderMather: '',
+    return this.formControlChild =  this.formBuilder.group({
+      name: ["", Validators.required],
+      birth: ["", Validators.required],
+      orderFather: ["", Validators.required],
+      orderMather: ["", Validators.required],
       orderReplace: '',
       nameReplace: '',
       birthReplace: '',
       dateDeadReplace: '',
-      education: '',
-      educationProvince: '',
-      educationDistrict: '',
-      educationClass: '',
-      amount: ''
+      education: ["", Validators.required],
+      educationProvince: ["", Validators.required],
+      educationDistrict: ["", Validators.required],
+      educationClass: ["", Validators.required],
+      amount: ["", Validators.required]
     });
   }
   get f() {
     return this.formControl.controls;
   }
 
-  save(event: any) {    
-    event.preventDefault();
+  get c() {
+    return this.formControlChild.controls;
+  }
+
+  save(event: any) { 
+    event.preventDefault();   
+    this.submitted = true;
+    if (this.formControl.invalid) {
+      return;
+    }
+    this.loading = true;
     this.checkMateDescription(this.formControl.controls.mateDescription.value);
     this.checkStatus(this.formControl.controls.status.value);
     this.checkType(this.formControl.controls.type.value);
     this.checkTypeRecive(this.formControl.controls.typeRecive.value);
     this.checkOfferType(this.formControl.controls.offerType.value);
     
-    this.myService.save(this.formControl.value);
+    this.myService.save(this.formControl.value).then(res=>{      
+      this.loading = false;
+      this.router.navigate(['/int06/11']);
+    }).catch(rej=>{
+      this.router.navigate(['/int06/11']);
+    });
   }
 
   checkMateDescription(checkMateDescription){
@@ -183,4 +205,36 @@ export class Int06113Component implements OnInit, AfterViewInit {
     }
   }
 
+  calenda = () => {
+    $("#birth1").calendar({
+      maxDate: new Date(),
+     // endCalendar: $("#dateT"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter(),
+      onChange: (date, text) => {
+        this.formControlChild.controls.birth.setValue(text);
+      }
+    });
+    $("#birth2").calendar({
+      maxDate: new Date(),
+     // endCalendar: $("#dateT"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter(),
+      onChange: (date, text) => {
+        this.formControlChild.controls.birth.setValue(text);
+      }
+    });
+    $("#birth3").calendar({
+      maxDate: new Date(),
+     // endCalendar: $("#dateT"),
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter(),
+      onChange: (date, text) => {
+        this.formControlChild.controls.birth.setValue(text);
+      }
+    });
+  }
 }

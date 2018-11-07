@@ -20,6 +20,7 @@ public class Int061103Controlleer {
 	 @PostMapping("/save")
 	 @ResponseBody
 	 public Int061103Vo save(@RequestBody Int061103Vo tuitionFee){
+		 int061103Service.save(tuitionFee);
 		 return tuitionFee;
 	 }
 }

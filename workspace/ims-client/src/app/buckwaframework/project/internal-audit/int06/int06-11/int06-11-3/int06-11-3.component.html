@@ -3,7 +3,7 @@
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
   <span>รายละเอียดใบเบิกเงินสวัสดิการเกี่ยวกับการศึกษาบุตร (แบบ 7223)</span>
 </div>
-<div class="ui attached  segment">
+<div class="ui attached  segment {{loading ? 'loading' : ''}}">
   <br>
   <div class="inline fields" style="text-align: center !important;">
     <h2>ใบเบิกเงินสวัสดิการเกี่ยวกับการศึกษาบุตรโปรดทำเครื่องหมาย
@@ -24,26 +24,26 @@
         <div class="one wide field">
           <label>1.</label>
         </div>
-        <div class="two wide field">
+        <div class="two wide field required">
           <label>ข้าพเจ้า</label>
         </div>
-        <div class="four wide field">
+        <div class="four wide field" [ngClass]="{ 'error': submitted && f.name.invalid }">
           <input type="text" formControlName="name" name="name" id="name" value="นางสาวปริษา  ยังมีสุข ">
         </div>
-        <div class="two wide field">
+        <div class="two wide field required">
           <label>ตำแหน่ง</label>
         </div>
-        <div class="four wide field">
+        <div class="four wide field" [ngClass]="{ 'error': submitted && f.pition.invalid }">
           <input type="text" formControlName="pition" name="pition" id="pition" value="นักวิชาการตรวจสอบภายในชำนาญการพิเศษ">
         </div>
       </div>
       <!-- row 2 -->
       <div class="inline fields ">
         <div class="two wide field"></div>
-        <div class="two wide field">
+        <div class="two wide field required">
           <label>สังกัด</label>
         </div>
-        <div class="four wide field">
+        <div class="four wide field" [ngClass]="{ 'error': submitted && f.belong.invalid }">
           <input type="text" formControlName="belong" name="belong" id="belong" value="กลุ่มตรวจสอบภายใน">
         </div>
       </div>
@@ -73,25 +73,25 @@
           <div class="grouped fields">
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" formControlName="mateDescription" name="mateDescription"  value="1" checked="checked">
+                <input type="radio" formControlName="mateDescription" name="mateDescription" value="1" checked="checked">
                 <label>ไม่เป็นข้าราชการประจำหรือลูกจ้างประจำ</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" formControlName="mateDescription" name="mateDescription" value="2" >
+                <input type="radio" formControlName="mateDescription" name="mateDescription" value="2">
                 <label>เป็นข้าราชการ</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" formControlName="mateDescription" name="mateDescription" value="3" >
+                <input type="radio" formControlName="mateDescription" name="mateDescription" value="3">
                 <label>ลูกจ้างประจำ</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" formControlName="mateDescription"  name="mateDescription" value="4" >
+                <input type="radio" formControlName="mateDescription" name="mateDescription" value="4">
                 <label>ป็นพนักงานหรือลูกจ้างใน รัฐวิสาหกิจ/หน่วยงานของทางราชการ ราชการส่วนท้องถิ่น กรุงเทพมหานคร
                   องค์กรอิสระ</label>
               </div>
@@ -135,7 +135,7 @@
           <div class="grouped fields">
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" formControlName="status" name="status" checked="checked" value="1">
+                <input type="radio" formControlName="status" name="status" checked="" value="1">
                 <label>เป็นบิดาขอบด้วยกฎหมาย</label>
               </div>
             </div>
@@ -189,33 +189,40 @@
         <div [formGroupName]="i">
           <div class="inline fields ">
             <div class="two wide field"></div>
-            <div class="two wide field">
+            <div class="two wide field required">
               <label>{{i+1}}) บุตรชื่อ </label>
             </div>
-            <div class="three wide field">
+            <div class="three wide field" [ngClass]="{ 'error': submitted && c.name.invalid }">
               <input type="text" formControlName="name" name="name" id="name">
             </div>
-            <div class="two wide field">
+            <div class="two wide field required">
               <label> เกิดเมื่อ </label>
             </div>
-            <div class="three wide field">
-              <input type="text" formControlName="birth" name="birth" id="birth">
+            <div class="three wide field" [ngClass]="{ 'error': submitted && c.birth.invalid }">
+              <div class="ui calendar full-width" id="birth{{i+1}}">
+                <div class="ui input left icon">
+                  <i class="calendar alter nate outline icon"></i>
+                  <input type="text" formControlName="birth" name="birth" id="birth" autocomplete="off" [attr.readonly]="null"
+                    placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                </div>
+              </div>
+              <!-- <input type="text" formControlName="birth" name="birth" id="birth"> -->
             </div>
           </div>
           <div class="inline fields ">
             <div class="two wide field"></div>
-            <div class="two wide field">
+            <div class="two wide field required">
               <label> เป็นบุตรลำดับที่
                 <br>(ของบิดา) </label>
             </div>
-            <div class="three wide field">
+            <div class="three wide field" [ngClass]="{ 'error': submitted && c.orderFather.invalid }">
               <input type="number" formControlName="orderFather" name="orderFather" id="orderFather">
             </div>
-            <div class="two wide field">
+            <div class="two wide field required">
               <label> เป็นบุตรลำดับที่
                 <br>(ของมารดา) </label>
             </div>
-            <div class="three wide field">
+            <div class="three wide field" [ngClass]="{ 'error': submitted && c.orderMather.invalid }">
               <input type="number" formControlName="orderMather" name="orderMather" id="orderMather">
             </div>
           </div>
@@ -252,48 +259,51 @@
             <div class="three wide field">
               <input type="text" formControlName="dateDeadReplace" name="dateDeadReplace" id="dateDeadReplace">
             </div>
-            <div class="two wide field">
-              <label> สถานศึกษา </label>
+          </div>
+          <div class="inline fields ">
+            <div class="two wide field"></div>
+            <div class="two wide field required">
+              <label>สถานศึกษา </label>
             </div>
-            <div class="three wide field">
+            <div class="three wide field" [ngClass]="{ 'error': submitted && c.education.invalid }">
               <input type="text" formControlName="education" name="education" id="education">
             </div>
           </div>
           <div class="inline fields ">
             <div class="two wide field"></div>
-            <div class="two wide field">
+            <div class="two wide field required">
               <label>อำเภอ </label>
             </div>
-            <div class="three wide field">
+            <div class="three wide field" [ngClass]="{ 'error': submitted && c.educationDistrict.invalid }">
               <input type="text" formControlName="educationDistrict" name="educationDistrict" id="educationDistrict">
             </div>
-            <div class="two wide field">
+            <div class="two wide field required">
               <label> จังหวัด </label>
             </div>
-            <div class="three wide field">
+            <div class="three wide field" [ngClass]="{ 'error': submitted && c.educationProvince.invalid }">
               <input type="text" formControlName="educationProvince" name="educationProvince" id="educationProvince">
             </div>
           </div>
           <div class="inline fields ">
             <div class="two wide field"></div>
-            <div class="two wide field">
+            <div class="two wide field required">
               <label>ชั้นที่ศึกษา </label>
             </div>
-            <div class="three wide field">
+            <div class="three wide field" [ngClass]="{ 'error': submitted && c.educationClass.invalid }">
               <input type="text" formControlName="educationClass" name="educationClass" id="educationClass">
             </div>
-            <div class="two wide field">
+            <div class="two wide field required">
               <label>จำนวน</label>
             </div>
-            <div class="three wide field">
+            <div class="three wide field" [ngClass]="{ 'error': submitted && c.amount.invalid }">
               <input type="number" formControlName="amount" name="amount" id="amount">
             </div>
             <div class="two wide field">
               <label>บาท</label>
             </div>
           </div>
-
-          <br><br>
+          <br>
+          <br>
         </div>
 
         <!-- Chosen name: {{ orderForm.controls.items.controls[i].controls.name.value }} -->
@@ -337,10 +347,10 @@
 
       <div class="inline fields ">
         <div class="two wide field"></div>
-        <div class="three wide field">
+        <div class="three wide field required">
           <label>เฉพาะส่วนที่ยังขาดจากสิทธิ เป็นเงิน</label>
         </div>
-        <div class="three wide field">
+        <div class="three wide field" [ngClass]="{ 'error': submitted && f.typeReciveAmount.invalid }">
           <input type="text" formControlName="typeReciveAmount" name="typeReciveAmount" id="typeReciveAmount">
         </div>
       </div>
@@ -352,10 +362,10 @@
         <div class="one wide field">
           <label>6.</label>
         </div>
-        <div class="two wide field">
+        <div class="two wide field required">
           <label>เสนอ</label>
         </div>
-        <div class="four wide field">
+        <div class="four wide field" [ngClass]="{ 'error': submitted && f.offer.invalid }">
           <input type="text" formControlName="offer" name="offer" id="offer">
         </div>
       </div>
@@ -399,11 +409,11 @@
 
       <div class="inline fields ">
         <div class="two wide field"></div>
-        <div class="one wide field">
+        <div class="one wide field required">
           <label>จำนวน</label>
         </div>
-        <div class="four wide field">
-          <input type="text" formControlName="sumAmount" name="sumAmount" id="sumAmount" >
+        <div class="four wide field" [ngClass]="{ 'error': submitted && f.sumAmount.invalid }">
+          <input type="text" formControlName="sumAmount" name="sumAmount" id="sumAmount">
         </div>
         <div class="one wide field">
           <label>บาท</label>

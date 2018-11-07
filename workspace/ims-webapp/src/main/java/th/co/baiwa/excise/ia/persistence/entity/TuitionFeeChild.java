@@ -37,13 +37,13 @@ public class TuitionFeeChild extends BaseEntity {
 	private Date birth;
 
 	@Column(name = "ORDER_FATHER")
-	private Integer orderFather;
+	private BigDecimal orderFather;
 
 	@Column(name = "ORDER_MATHER")
-	private Integer orderMather;
+	private BigDecimal orderMather;
 
 	@Column(name = "ORDER_REPLACE")
-	private Integer orderReplace;
+	private BigDecimal orderReplace;
 
 	@Column(name = "NAME_REPLACE")
 	private String nameReplace;
@@ -101,27 +101,27 @@ public class TuitionFeeChild extends BaseEntity {
 		this.birth = birth;
 	}
 
-	public Integer getOrderFather() {
+	public BigDecimal getOrderFather() {
 		return orderFather;
 	}
 
-	public void setOrderFather(Integer orderFather) {
+	public void setOrderFather(BigDecimal orderFather) {
 		this.orderFather = orderFather;
 	}
 
-	public Integer getOrderMather() {
+	public BigDecimal getOrderMather() {
 		return orderMather;
 	}
 
-	public void setOrderMather(Integer orderMather) {
+	public void setOrderMather(BigDecimal orderMather) {
 		this.orderMather = orderMather;
 	}
 
-	public Integer getOrderReplace() {
+	public BigDecimal getOrderReplace() {
 		return orderReplace;
 	}
 
-	public void setOrderReplace(Integer orderReplace) {
+	public void setOrderReplace(BigDecimal orderReplace) {
 		this.orderReplace = orderReplace;
 	}
 
