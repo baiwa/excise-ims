@@ -4,6 +4,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.HealthCareWelFareEntity;
 import th.co.baiwa.excise.ia.persistence.repository.HealthCareWelFareRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int061102FormVo;
@@ -18,7 +19,7 @@ public class Int061102Service {
 		HealthCareWelFareEntity vo = new HealthCareWelFareEntity();
 		vo.setFullName(int061102FormVo.getFullName());
 		vo.setGender(int061102FormVo.getGender());
-//		vo.setBirthDate(int061102FormVo.getBirthDate());
+		vo.setBirthDate(DateConstant.convertStrToDate(int061102FormVo.getBirthDate(), DateConstant.DD_MM_YYYY, DateConstant.LOCAL_TH));
 		vo.setSiblingsOrder(NumberUtils.toInt(int061102FormVo.getSiblingsOrder()));
 		vo.setPosition(int061102FormVo.getPosition());
 		vo.setAffiliation(int061102FormVo.getAffiliation());
@@ -27,8 +28,8 @@ public class Int061102Service {
 		vo.setDisease(int061102FormVo.getDisease());
 		vo.setHospitalName(int061102FormVo.getHospitalName());
 		vo.setHospitalOwner(int061102FormVo.getHospitalOwner());
-//		vo.setTreatedDateFrom(int061102FormVo.getTreatedDateFrom());
-//		vo.setTreatedDateTo(int061102FormVo.getTreatedDateTo());
+		vo.setTreatedDateFrom(DateConstant.convertStrToDate(int061102FormVo.getTreatedDateFrom(), DateConstant.DD_MM_YYYY, DateConstant.LOCAL_TH));
+		vo.setTreatedDateTo(DateConstant.convertStrToDate(int061102FormVo.getTreatedDateTo(), DateConstant.DD_MM_YYYY, DateConstant.LOCAL_TH));
 		vo.setTotalMoney(int061102FormVo.getTotalMoney());
 		vo.setReceiptQt(int061102FormVo.getReceiptQt());
 		vo.setClaimStatus(int061102FormVo.getClaimStatus());

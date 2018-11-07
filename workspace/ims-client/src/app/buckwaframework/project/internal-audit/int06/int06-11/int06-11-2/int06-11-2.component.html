@@ -163,7 +163,12 @@
             <label>เกิดเมื่อ</label>
           </div>
           <div class="four wide field">
-            <input type="text" formControlName="birthDate">
+            <div class="ui calendar full-width" id="dateBirth">
+              <div class="ui input left icon">
+                <i class="clock icon"></i>
+                <input type="text" formControlName="birthDate" autocomplete="off" [readonly]="true" placeholder="วว/ดด/ปปปป">
+              </div>
+            </div>
           </div>
           <div class="two wide field">
             <label>เป็นบุตรลำดับที่</label>
@@ -230,13 +235,23 @@
             <label>ตั้งแต่วันที่</label>
           </div>
           <div class="four wide field">
-            <input type="text" formControlName="treatedDateFrom">
+            <div class="ui calendar full-width" id="dateFrom">
+              <div class="ui input left icon">
+                <i class="clock icon"></i>
+                <input type="text" formControlName="treatedDateFrom" autocomplete="off" [readonly]="true" placeholder="วว/ดด/ปปปป">
+              </div>
+            </div>
           </div>
           <div class="two wide field">
             <label>ถึงวันที่</label>
           </div>
           <div class="four wide field">
-            <input type="text" formControlName="treatedDateTo">
+            <div class="ui calendar full-width" id="dateTo">
+              <div class="ui input left icon">
+                <i class="clock icon"></i>
+                <input type="text" formControlName="treatedDateTo" autocomplete="off" [readonly]="true" placeholder="วว/ดด/ปปปป">
+              </div>
+            </div>
           </div>
         </div>
         <div class="inline fields">

@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'services/auth.service';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { AjaxService } from 'services/ajax.service';
 import { MessageBarService } from 'services/message-bar.service';
+import { TextDateTH, formatter } from 'helpers/datepicker';
 
 declare var $: any;
 
@@ -59,6 +60,35 @@ export class Int06112Component implements OnInit {
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-06112');
+    this.calenda();
+  }
+
+  calenda = () => {
+    let date = new Date();
+    $("#dateFrom").calendar({
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('day-month-year'),
+      onChange: (date, text) => {
+        this.medicalWelfareForm.get('treatedDateFrom').setValue(text);
+      }
+    });
+    $("#dateTo").calendar({
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('day-month-year'),
+      onChange: (date, text) => {
+        this.medicalWelfareForm.get('treatedDateTo').setValue(text);
+      }
+    });
+    $("#dateBirth").calendar({
+      type: "date",
+      text: TextDateTH,
+      formatter: formatter('day-month-year'),
+      onChange: (date, text) => {
+        this.medicalWelfareForm.get('birthDate').setValue(text);
+      }
+    });
   }
 
   onFilesAdded() {
