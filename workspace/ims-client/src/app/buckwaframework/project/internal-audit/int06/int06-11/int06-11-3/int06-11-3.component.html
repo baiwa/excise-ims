@@ -64,79 +64,55 @@
         </div>
       </div>
       <br>
-      <div class="inline fields ">
-        <div class="three wide field"></div>
-        <div class="one wide field">
-          <input type="checkbox" name="" id="">
-        </div>
-        <div class="four wide field">
-          <label>ไม่เป็นข้าราชการประจำหรือลูกจ้างประจำ</label>
-        </div>
-      </div>
+      <!-- radio -->
 
+      <!-- radio -->
       <div class="inline fields ">
-        <div class="three wide field"></div>
-        <div class="one wide field">
-          <input type="checkbox" name="" id="">
-        </div>
-        <div class="two wide field">
-          <label>เป็นข้าราชการ</label>
-        </div>
-        <div class="one wide field">
-          <input type="checkbox" name="" id="">
-        </div>
-        <div class="two wide field">
-          <label>ลูกจ้างประจำ</label>
-        </div>
-        <div class="one wide field">
-          <label>ตำแหน่ง</label>
-        </div>
-        <div class="three wide field">
-          <input type="text" name="pitionMate1" id="pitionMate1">
-        </div>
-      </div>
-
-      <div class="inline fields ">
-        <div class="nine wide field"></div>
-
-        <div class="one wide field">
-          <label>สังกัด</label>
-        </div>
-        <div class="three wide field">
-          <input type="text" name="belongMate1" id="belongMate1">
-        </div>
-      </div>
-
-      <div class="inline fields ">
-        <div class="three wide field"></div>
-        <div class="one wide field">
-          <input type="checkbox" name="" id="">
-        </div>
+        <div class="two wide field"></div>
         <div class="ten wide field">
-          <label>เป็นพนักงานหรือลูกจ้างใน รัฐวิสาหกิจ/หน่วยงานของทางราชการ ราชการส่วนท้องถิ่น กรุงเทพมหานคร องค์กรอิสระ
-          </label>
+          <div class="grouped fields">
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="mateDescription" name="mateDescription"  value="1" checked="checked">
+                <label>ไม่เป็นข้าราชการประจำหรือลูกจ้างประจำ</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="mateDescription" name="mateDescription" value="2" >
+                <label>เป็นข้าราชการ</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="mateDescription" name="mateDescription" value="3" >
+                <label>ลูกจ้างประจำ</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="mateDescription"  name="mateDescription" value="4" >
+                <label>ป็นพนักงานหรือลูกจ้างใน รัฐวิสาหกิจ/หน่วยงานของทางราชการ ราชการส่วนท้องถิ่น กรุงเทพมหานคร
+                  องค์กรอิสระ</label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="inline fields ">
-        <div class="four wide field"></div>
-
-        <div class="ten wide field">
-          <label>องค์กรมหาชน หรือหน่วยงานอื่นใด</label>
-        </div>
-      </div>
+      <br>
       <div class="inline fields ">
         <div class="two wide field"></div>
         <div class="two wide field">
           <label>ตำแหน่ง</label>
         </div>
         <div class="four wide field">
-          <input type="text"  name="pitionMate2" id="pitionMate2">
+          <input type="text" formControlName="pitionMate" name="pitionMate" id="pitionMate">
         </div>
         <div class="two wide field">
           <label>สังกัด</label>
         </div>
         <div class="four wide field">
-          <input type="text" name="belongMate2" id="belongMate2">
+          <input type="text" formControlName="belongMate" name="belongMate" id="belongMate">
         </div>
       </div>
     </div>
@@ -152,24 +128,27 @@
         </div>
       </div>
       <br>
+      <!-- radio -->
       <div class="inline fields ">
-        <div class="three wide field"></div>
-        <div class="one wide field">
-          <input type="checkbox" name="" id="">
+        <div class="two wide field"></div>
+        <div class="ten wide field">
+          <div class="grouped fields">
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="status" name="status" checked="checked" value="1">
+                <label>เป็นบิดาขอบด้วยกฎหมาย</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="status" name="status" value="2">
+                <label>เป็นมารดา</label>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="four wide field">
-          <label>เป็นบิดาขอบด้วยกฎหมาย</label>
-        </div>
-      </div>
-      <div class="inline fields ">
-        <div class="three wide field"></div>
-        <div class="one wide field">
-          <input type="checkbox" name="" id="">
-        </div>
-        <div class="four wide field">
-          <label>เป็นมารดา</label>
-        </div>
-      </div>
+      </div><!-- radio -->
+      <br>
     </div>
     <!-- segment 4  -->
     <div class="ui attached  segment">
@@ -183,16 +162,27 @@
         </div>
       </div>
       <br>
+      <!-- radio -->
       <div class="inline fields ">
-        <div class="four wide field"></div>
-        <div class="four wide field">
-          <label>(1) เงินบำรุงการศึกษา</label>
-        </div>
-        <div class="one wide field"></div>
-        <div class="four wide field">
-          <label> (2) เงินค่าเล่าเรียน</label>
+        <div class="two wide field"></div>
+        <div class="ten wide field">
+          <div class="grouped fields">
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="type" name="type" value="1" checked="checked">
+                <label>(1) เงินบำรุงการศึกษา</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="type" name="type" value="2">
+                <label>(2) เงินค่าเล่าเรียน</label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      <!-- radio -->
 
       <!-- form array -->
       <div formArrayName="items" *ngFor="let item of formControl.get('items').controls; let i = index;">
@@ -281,7 +271,7 @@
               <label> จังหวัด </label>
             </div>
             <div class="three wide field">
-              <input type="text"  formControlName="educationProvince" name="educationProvince" id="educationProvince">
+              <input type="text" formControlName="educationProvince" name="educationProvince" id="educationProvince">
             </div>
           </div>
           <div class="inline fields ">
@@ -311,7 +301,7 @@
       <!-- end form array -->
     </div>
 
-  <!-- segment 5  -->
+    <!-- segment 5  -->
     <div class="ui attached  segment">
       <div class="inline fields ">
         <div class="one wide field"></div>
@@ -323,33 +313,35 @@
         </div>
       </div>
       <br>
+      <!-- radio -->
       <div class="inline fields ">
-        <div class="three wide field"></div>
-        <div class="one wide field">
-          <input type="checkbox" name="" id="">
+        <div class="two wide field"></div>
+        <div class="ten wide field">
+          <div class="grouped fields">
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="typeRecive" name="typeRecive" value="1" checked="checked">
+                <label>ตามสิทธิ</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="typeRecive" name="typeRecive" value="2">
+                <label>เฉพาะส่วนที่ยังขาดจากสิทธิ เป็นเงิน</label>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="one wide field">
-          <label>ตามสิทธิ</label>
-        </div>
-        <div class="one wide field">
-          <input type="checkbox" name="" id="">
-        </div>
+      </div>
+      <!-- radio -->
+
+      <div class="inline fields ">
+        <div class="two wide field"></div>
         <div class="three wide field">
           <label>เฉพาะส่วนที่ยังขาดจากสิทธิ เป็นเงิน</label>
         </div>
         <div class="three wide field">
-          <input type="text" value="12000.00">
-        </div>
-      </div>
-      <div class="inline fields ">
-        <div class="two wide field"></div>
-        <div class="three wide field">
-          <label>( หนึ่งหมื่นสองพันบาทถ้วน )</label>
-        </div>
-        <div class="one wide field">
-          <table border="1">
-            <tr>&nbsp;ก&nbsp;</tr>
-          </table>
+          <input type="text" formControlName="typeReciveAmount" name="typeReciveAmount" id="typeReciveAmount">
         </div>
       </div>
     </div>
@@ -364,63 +356,54 @@
           <label>เสนอ</label>
         </div>
         <div class="four wide field">
-          <input type="text">
-        </div>
-        <div class="one wide field">
-          <table border="1">
-            <tr>&nbsp;ข&nbsp;</tr>
-          </table>
+          <input type="text" formControlName="offer" name="offer" id="offer">
         </div>
       </div>
       <br>
+      <!-- radio -->
+      <div class="inline fields ">
+        <div class="two wide field"></div>
+        <div class="ten wide field">
+          <div class="grouped fields">
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="offerType" name="offerType" value="1" checked="checked">
+                <label>ข้าพเจ้ามีสิทธิได้รับเงินช่วยเหลือตามพระราชกฤษฎีกาเงินสวัสดิการเกี่ยวกับการศึกษาของบุตรและข้อความที่ระบุข้างต้นเป็นความจริง</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="offerType" name="offerType" value="2">
+                <label>บุตรของข้าพเจ้าอยู่ในข่ายได้รับการช่วยเหลือตามพระราชกฤษฎีกาเงินสวัสดิการเกี่ยวกับการศึกษาของบุตร</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="offerType" name="offerType" value="3">
+                <label>เป็นผู้ใช้สิทธิเบิกเงินช่วยเหลือตามพระราชกฤษฎีกาเงินสวัสดิการเกี่ยวกับการศึกษาของบุตร
+                  แต่เพียงฝ่ายเดียว</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" formControlName="offerType" name="offerType" value="4">
+                <label>คู่สมรสของข้าพเจ้าได้รับการช่วยเหลือจากรัฐวิสาหกิจ หน่วยงานของทางราชการ
+                  ราชการท้องถิ่นกรุงเทพมหานครองค์กรอิสระ
+                  <br> องค์การมหาชน หรือหน่วยงานอื่นใด ต่า กว่าจา นวนที่ได้รับจากทางราชการ</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- radio -->
 
-      <div class="inline fields ">
-        <div class="four wide field"></div>
-        <div class="one wide field">
-          <input type="checkbox" name="" id="" checked>
-        </div>
-        <div class="ten wide field">
-          <label>ข้าพเจ้ามีสิทธิได้รับเงินช่วยเหลือตามพระราชกฤษฎีกาเงินสวัสดิการเกี่ยวกับการศึกษาของบุตรและข้อความที่ระบุข้างต้นเป็นความจริง</label>
-        </div>
-
-      </div>
-      <div class="inline fields ">
-        <div class="four wide field"></div>
-        <div class="one wide field">
-          <input type="checkbox" name="" id="">
-        </div>
-        <div class="ten wide field">
-          <label>บุตรของข้าพเจ้าอยู่ในข่ายได้รับการช่วยเหลือตามพระราชกฤษฎีกาเงินสวัสดิการเกี่ยวกับการศึกษาของบุตร</label>
-        </div>
-      </div>
-      <div class="inline fields ">
-        <div class="four wide field"></div>
-        <div class="one wide field">
-          <input type="checkbox" name="" id="">
-        </div>
-        <div class="ten wide field">
-          <label>เป็นผู้ใช้สิทธิเบิกเงินช่วยเหลือตามพระราชกฤษฎีกาเงินสวัสดิการเกี่ยวกับการศึกษาของบุตร แต่เพียงฝ่
-            ายเดียว</label>
-        </div>
-      </div>
-      <div class="inline fields ">
-        <div class="four wide field"></div>
-        <div class="one wide field">
-          <input type="checkbox" name="" id="">
-        </div>
-        <div class="ten wide field">
-          <label>คู่สมรสของข้าพเจ้าได้รับการช่วยเหลือจากรัฐวิสาหกิจ หน่วยงานของทางราชการ ราชการท้องถิ่นกรุงเทพมหานคร
-            องค์กรอิสระ
-            <br> องค์การมหาชน หรือหน่วยงานอื่นใด ต่า กว่าจา นวนที่ได้รับจากทางราชการ </label>
-        </div>
-      </div>
       <div class="inline fields ">
         <div class="two wide field"></div>
         <div class="one wide field">
           <label>จำนวน</label>
         </div>
         <div class="four wide field">
-          <input type="text" value="12000.00">
+          <input type="text" formControlName="sumAmount" name="sumAmount" id="sumAmount" >
         </div>
         <div class="one wide field">
           <label>บาท</label>

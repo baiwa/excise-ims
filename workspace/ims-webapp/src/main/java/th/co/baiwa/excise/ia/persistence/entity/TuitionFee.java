@@ -54,6 +54,16 @@ public class TuitionFee extends BaseEntity {
 	private String offer;
 	@Column(name = "OFFER_TYPE")
 	private String offerType;
+	@Column(name = "SUM_AMOUNT")
+	private BigDecimal sumAmount;	
+
+	public BigDecimal getSumAmount() {
+		return sumAmount;
+	}
+
+	public void setSumAmount(BigDecimal sumAmount) {
+		this.sumAmount = sumAmount;
+	}
 
 	public Long getId() {
 		return id;
