@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'services/auth.service';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { AjaxService } from 'services/ajax.service';
+import { MessageBarService } from 'services/message-bar.service';
 
 declare var $: any;
 
@@ -10,6 +12,9 @@ declare var $: any;
   styleUrls: ['./int06-11-2.component.css']
 })
 export class Int06112Component implements OnInit {
+
+  @ViewChild('file') file;
+  public files: Set<File> = new Set();
 
   medicalWelfareForm = this.fb.group({
     fullName: [''],
@@ -42,18 +47,34 @@ export class Int06112Component implements OnInit {
     fileName: ['']
   });
 
+  datatable: any;
   payLoad = '';
 
   constructor(
     private authService: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private ajaxService: AjaxService,
+    private message: MessageBarService
   ) { }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-06112');
   }
 
+  onFilesAdded() {
+    const files: { [key: string]: File } = this.file.nativeElement.files;
+    for (let key in files) {
+      if (!isNaN(parseInt(key))) {
+        this.files.add(files[key]);
+      }
+    }
+  }
+
   onSubmit() {
     console.warn(this.medicalWelfareForm.value);
+    var url = "ia/int061102/save";
+    this.ajaxService.post(url, JSON.stringify(this.medicalWelfareForm.value), res => {
+      this.message.successModal('ทำรายการสำเร็จ');
+    });
   }
 }
