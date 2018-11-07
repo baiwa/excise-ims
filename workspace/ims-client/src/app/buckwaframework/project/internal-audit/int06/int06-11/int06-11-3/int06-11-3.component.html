@@ -190,20 +190,20 @@
           <div class="inline fields ">
             <div class="two wide field"></div>
             <div class="two wide field required">
-              <label>{{i+1}}) บุตรชื่อ </label>
+              <label class="text-right full-width">{{i+1}}) บุตรชื่อ </label>
             </div>
             <div class="three wide field" [ngClass]="{ 'error': submitted && c.name.invalid }">
               <input type="text" formControlName="name" name="name" id="name">
             </div>
-            <div class="two wide field required">
+            <div class="two wide field">
               <label> เกิดเมื่อ </label>
             </div>
-            <div class="three wide field" [ngClass]="{ 'error': submitted && c.birth.invalid }">
-              <div class="ui calendar full-width" id="birth{{i+1}}">
+            <div class="three wide field">
+              <div class="ui calendar full-width birth" id="birth{{i+1}}">
                 <div class="ui input left icon">
                   <i class="calendar alter nate outline icon"></i>
                   <input type="text" formControlName="birth" name="birth" id="birth" autocomplete="off" [attr.readonly]="null"
-                    placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                    placeholder="วว/ดด/ปปปป" [attr.required]="true" >
                 </div>
               </div>
               <!-- <input type="text" formControlName="birth" name="birth" id="birth"> -->
@@ -212,15 +212,13 @@
           <div class="inline fields ">
             <div class="two wide field"></div>
             <div class="two wide field required">
-              <label> เป็นบุตรลำดับที่
-                <br>(ของบิดา) </label>
+              <label> เป็นบุตรลำดับที่ (ของบิดา) </label>
             </div>
             <div class="three wide field" [ngClass]="{ 'error': submitted && c.orderFather.invalid }">
               <input type="number" formControlName="orderFather" name="orderFather" id="orderFather">
             </div>
             <div class="two wide field required">
-              <label> เป็นบุตรลำดับที่
-                <br>(ของมารดา) </label>
+              <label> เป็นบุตรลำดับที่ (ของมารดา) </label>
             </div>
             <div class="three wide field" [ngClass]="{ 'error': submitted && c.orderMather.invalid }">
               <input type="number" formControlName="orderMather" name="orderMather" id="orderMather">
@@ -230,7 +228,7 @@
             <div class="two wide field"></div>
             <div class="two wide field"></div>
             <div class="five wide field">
-              <label>(กรณีเป็นบุตรแทนที่บุตรซึ่งถึงแก่กรรมแล้ว) &nbsp; &nbsp; แทนที่บุตรลำดับที่ </label>
+              <label class="text-right full-width">(กรณีเป็นบุตรแทนที่บุตรซึ่งถึงแก่กรรมแล้ว) &nbsp; &nbsp; แทนที่บุตรลำดับที่ </label>
             </div>
             <div class="three wide field">
               <input type="number" formControlName="orderReplace" name="orderReplace" id="orderReplace">
@@ -248,7 +246,13 @@
               <label> เกิดเมื่อ </label>
             </div>
             <div class="three wide field">
-              <input type="text" formControlName="birthReplace" name="birthReplace" id="birthReplace">
+              <div class="ui calendar full-width birthReplace" id="birthReplace{{i+1}}">
+                <div class="ui input left icon">
+                  <i class="calendar alter nate outline icon"></i>
+                  <input type="text" formControlName="birthReplace" name="birthReplace" id="birthReplace" autocomplete="off"
+                    [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true" >
+                </div>
+              </div>
             </div>
           </div>
           <div class="inline fields ">
@@ -257,7 +261,13 @@
               <label>ถึงแก่กรรมเมื่อ </label>
             </div>
             <div class="three wide field">
-              <input type="text" formControlName="dateDeadReplace" name="dateDeadReplace" id="dateDeadReplace">
+              <div class="ui calendar full-width dateDeadReplace" id="dateDeadReplace{{i+1}}">
+                <div class="ui input left icon">
+                  <i class="calendar alter nate outline icon"></i>
+                  <input type="text" formControlName="dateDeadReplace" name="dateDeadReplace" id="dateDeadReplace"
+                    autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true" >
+                </div>
+              </div>
             </div>
           </div>
           <div class="inline fields ">

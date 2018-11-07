@@ -47,6 +47,7 @@ export class Int06113Component implements OnInit, AfterViewInit {
     offerType3 : "เป็นผู้ใช้สิทธิเบิกเงินช่วยเหลือตามพระราชกฤษฎีกาเงินสวัสดิการเกี่ยวกับการศึกษาของบุตร แต่เพียงฝ่ายเดียว",
     offerType4 : "คู่สมรสของข้าพเจ้าได้รับการช่วยเหลือจากรัฐวิสาหกิจ หน่วยงานของทางราชการ ราชการท้องถิ่นกรุงเทพมหานครองค์กรอิสระ องค์การมหาชน หรือหน่วยงานอื่นใด ต่า กว่าจา นวนที่ได้รับจากทางราชการ"
   }
+  userDetails : any;
 
   constructor(
     private authService: AuthService,
@@ -56,14 +57,21 @@ export class Int06113Component implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.authService.reRenderVersionProgram('INT-06113');
     this.newFormControl();
+    this.authService.reRenderVersionProgram('INT-06113').then(res=>{
+      this.userDetails = res;      
+      this.formControl.controls.name.setValue(this.userDetails.fullName);
+      this.formControl.controls.pition.setValue(this.userDetails.title);
+      this.formControl.controls.belong.setValue(this.userDetails.position);
+    });
+    
     this.items = this.formControl.get('items') as FormArray;
     this.items.push(this.createChlidItem());
     
     // this.items.push(this.createChlidItem());
   }
   ngAfterViewInit() {
+    
     this.calenda();
   }
   newFormControl = () => {
@@ -93,7 +101,7 @@ export class Int06113Component implements OnInit, AfterViewInit {
   createChlidItem(): FormGroup {
     return this.formControlChild =  this.formBuilder.group({
       name: ["", Validators.required],
-      birth: ["", Validators.required],
+      birth: [""],
       orderFather: ["", Validators.required],
       orderMather: ["", Validators.required],
       orderReplace: '',
@@ -127,6 +135,8 @@ export class Int06113Component implements OnInit, AfterViewInit {
     this.checkType(this.formControl.controls.type.value);
     this.checkTypeRecive(this.formControl.controls.typeRecive.value);
     this.checkOfferType(this.formControl.controls.offerType.value);
+    
+    this.dateChange();
     
     this.myService.save(this.formControl.value).then(res=>{      
       this.loading = false;
@@ -206,35 +216,54 @@ export class Int06113Component implements OnInit, AfterViewInit {
   }
 
   calenda = () => {
-    $("#birth1").calendar({
+    $(".birth").calendar({
       maxDate: new Date(),
-     // endCalendar: $("#dateT"),
       type: "date",
       text: TextDateTH,
       formatter: formatter(),
       onChange: (date, text) => {
-        this.formControlChild.controls.birth.setValue(text);
+        this.dateChange();
       }
     });
-    $("#birth2").calendar({
-      maxDate: new Date(),
-     // endCalendar: $("#dateT"),
+
+    $(".birthReplace").calendar({
+      maxDate: new Date(),     
       type: "date",
       text: TextDateTH,
       formatter: formatter(),
       onChange: (date, text) => {
-        this.formControlChild.controls.birth.setValue(text);
-      }
+        this.dateChange();
+      }  
     });
-    $("#birth3").calendar({
-      maxDate: new Date(),
-     // endCalendar: $("#dateT"),
+
+    $(".dateDeadReplace").calendar({
+      maxDate: new Date(),     
       type: "date",
       text: TextDateTH,
-      formatter: formatter(),
+      formatter: formatter(),    
       onChange: (date, text) => {
-        this.formControlChild.controls.birth.setValue(text);
+        this.dateChange();
       }
     });
+  }
+
+  dateChange=()=>{
+    console.log("dateChange");
+    let birth = $(".birth input"); 
+    let birthReplace = $(".birthReplace input");
+    let dateDeadReplace = $(".dateDeadReplace input");
+    for(let i =0; i<birth.length; i++){
+      
+      let _birth = $(birth[i]).val();
+      let d1= this.items.value[i].birth = _birth;
+
+      let _birthReplace = $(birthReplace[i]).val();
+      let d2= this.items.value[i].birthReplace = _birthReplace;
+
+      let _dateDeadReplace = $(dateDeadReplace[i]).val();
+      let d3= this.items.value[i].dateDeadReplace = _dateDeadReplace;
+      
+      console.log(d1,d2,d3);
+    }
   }
 }
