@@ -1,6 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { int0611301Service } from './int06-11-3-01.service';
 import { BreadCrumb } from 'models/breadcrumb';
+import { IaService } from 'services/ia.service';
+import { Route, Router } from '@angular/router';
+import { async } from 'q';
+import { Utils } from 'helpers/utils';
+
 
 
 declare var $: any;
@@ -58,11 +63,19 @@ export class Int0611301Component implements OnInit, AfterViewInit {
   loading: boolean = false;
 
 
-  money1 : any;
-  money2 : any;
-  money3 : any;
+  money1: any;
+  money2: any;
+  money3: any;
+
+  objMoney: any = {
+    "money1": this.money1,
+    "money2": this.money2,
+    "money3": this.money3,
+  }
   constructor(
     private myService: int0611301Service,
+    private iaService: IaService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -78,20 +91,20 @@ export class Int0611301Component implements OnInit, AfterViewInit {
 
   }
   ngAfterViewInit() {
-    
+
   }
 
   showForm = (e) => {
     let number = e.target.value;
 
-    if(number == 1){
+    if (number == 1) {
       $(".number1").show()
     }
-    if(number == 2){
+    if (number == 2) {
       $(".number1").show();
       $(".number2").show();
     }
-    if(number == 3){
+    if (number == 3) {
       $(".number1").show();
       $(".number2").show();
       $(".number3").show();
@@ -99,24 +112,23 @@ export class Int0611301Component implements OnInit, AfterViewInit {
 
   }
 
-  onSubmit=(e)=>{    
-    this.checkMoneyForm1(this.form1);
-    this.checkMoneyForm2(this.form2);
-    this.checkMoneyForm3(this.form3);
+  onSubmit = (e) => {
+    this.myService.checkMoney(this.form1, this.form2, this.form3).then((res) => {
+      console.log("res : ", res);
+      this.iaService.setData(res);
+      this.router.navigate(['/int06/11/3']);
+    });
+    
   }
-  claer=()=>{
+
+
+  claer = () => {
     $(".number1").hide();
     $(".number2").hide();
     $(".number3").hide();
     $('.ui.dropdown').dropdown('restore defaults');
   }
   /// ==> form1
-  checkMoneyForm1=(form)=>{
-    this.myService.checkMoneyForm(form).then(res=>{
-      this.money1 = res.value1;
-      console.log(this.money1);
-    });
-  }
 
   typeEducation = () => {
     this.loading = true;
@@ -164,7 +176,7 @@ export class Int0611301Component implements OnInit, AfterViewInit {
     let idMaster = event.target.value;
     this.myService.typeSubject(idMaster).then((resolve) => {
       this.typeSubjectList = resolve;
-      this.typeSubjectDis1 = (this.typeSubjectList.length == 0  ? true : false);      
+      this.typeSubjectDis1 = (this.typeSubjectList.length == 0 ? true : false);
       this.loading = false;
     });
   }
@@ -173,18 +185,12 @@ export class Int0611301Component implements OnInit, AfterViewInit {
     let idMaster = event.target.value;
     this.myService.bursary(idMaster).then((resolve) => {
       this.bursaryList = resolve;
-      this.bursaryDis1 = (this.bursaryList.length == 0  ? true : false);      
+      this.bursaryDis1 = (this.bursaryList.length == 0 ? true : false);
       this.loading = false;
     });
   }
   /// ==> End form1
   /// ==> form2
-  checkMoneyForm2=(form)=>{
-    this.myService.checkMoneyForm(form).then(res=>{
-      this.money2 = res.value1;
-      console.log(this.money2);
-    });
-  }
 
   typeEducation2 = () => {
     this.loading = true;
@@ -232,7 +238,7 @@ export class Int0611301Component implements OnInit, AfterViewInit {
     let idMaster = event.target.value;
     this.myService.typeSubject(idMaster).then((resolve) => {
       this.typeSubjectList2 = resolve;
-      this.typeSubjectDis2 = (this.typeSubjectList2.length == 0  ? true : false);      
+      this.typeSubjectDis2 = (this.typeSubjectList2.length == 0 ? true : false);
       this.loading = false;
     });
   }
@@ -241,19 +247,13 @@ export class Int0611301Component implements OnInit, AfterViewInit {
     let idMaster = event.target.value;
     this.myService.bursary(idMaster).then((resolve) => {
       this.bursaryList2 = resolve;
-      this.bursaryDis2 = (this.bursaryList2.length == 0  ? true : false);      
+      this.bursaryDis2 = (this.bursaryList2.length == 0 ? true : false);
       this.loading = false;
     });
   }
   /// ==> End form2
 
-   /// ==> form3
-   checkMoneyForm3=(form)=>{
-    this.myService.checkMoneyForm(form).then(res=>{
-      this.money3 = res.value1;
-      console.log(this.money3);
-    });
-  }
+  /// ==> form3
 
   typeEducation3 = () => {
     this.loading = true;
@@ -301,7 +301,7 @@ export class Int0611301Component implements OnInit, AfterViewInit {
     let idMaster = event.target.value;
     this.myService.typeSubject(idMaster).then((resolve) => {
       this.typeSubjectList3 = resolve;
-      this.typeSubjectDis3 = (this.typeSubjectList3.length == 0  ? true : false);      
+      this.typeSubjectDis3 = (this.typeSubjectList3.length == 0 ? true : false);
       this.loading = false;
     });
   }
@@ -310,7 +310,7 @@ export class Int0611301Component implements OnInit, AfterViewInit {
     let idMaster = event.target.value;
     this.myService.bursary(idMaster).then((resolve) => {
       this.bursaryList3 = resolve;
-      this.bursaryDis3 = (this.bursaryList3.length == 0  ? true : false);      
+      this.bursaryDis3 = (this.bursaryList3.length == 0 ? true : false);
       this.loading = false;
     });
   }
