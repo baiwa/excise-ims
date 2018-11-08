@@ -1,6 +1,158 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
   <div class="sixteen wide column">
+    <div class="ui segments">
+
+      <!-- ORIGINAL TEEMPLATE -->
+      <div class="ui top attached segment">
+        <h3 class="ui header"> แบบสอบทานเก่า </h3>
+      </div>
+      <div class="ui attached segment">
+        <table class="ui tablet stackable celled table">
+          <thead>
+            <tr>
+              <th class="th-checkbox">
+                <div class="ui fitted checkbox">
+                  <input type="checkbox"><label></label>
+                </div>
+              </th>
+              <th class="text-center" colspan="2"> รายละเอียดแบบสอบทาน </th>
+            </tr>
+          </thead>
+        </table>
+        <div class="ui active inverted dimmer" *ngIf="loading.tableOrigins">
+          <div class="ui text text-center loader" colspan="3">กำลังโหลด..</div>
+        </div>
+        <div class="scrollable" [ngClass]="{'minHeight': loading.tableOrigins}">
+          <table class="ui tablet stackable celled table">
+            <tbody>
+              <ng-container *ngIf="!loading.tableOrigins">
+                <tr *ngIf="origins.length == 0">
+                  <td class="text-center" colspan="3">ไม่พบข้อมูล</td>
+                </tr>
+                <ng-container *ngFor="let origin of origins">
+                  <tr>
+                    <td class="td-checkbox">
+                      <div class="ui fitted checkbox">
+                        <input type="checkbox"><label></label>
+                      </div>
+                    </td>
+                    <td colspan="2"> {{ origin.qtnMainDetail }} </td>
+                  </tr>
+                  <ng-container *ngIf="origin.detail.length > 0">
+                    <tr *ngFor="let detail of origin.detail">
+                      <td class="td-checkbox"></td>
+                      <td class="td-checkbox">
+                        <div class="ui fitted checkbox">
+                          <input type="checkbox"><label></label>
+                        </div>
+                      </td>
+                      <td> {{ detail.qtnMinorDetail }} </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="ui bottom attached segment grid">
+        <div class="sixteen wide center aligned column">
+          <button type="button" class="ui mini green button">
+            <i class="plus icon"></i>
+            เพิ่ม
+          </button>
+        </div>
+      </div>
+      <!-- ORIGINAL TEEMPLATE -->
+
+      <!-- NEW QUESTIONAIRE -->
+      <div class="ui top attached segment">
+        <h3 class="ui header"> แบบสอบทานใหม่ </h3>
+      </div>
+      <div class="ui attached segment">
+        <table class="ui tablet stackable celled table" style="width: 100%">
+          <thead>
+            <tr>
+              <th class="th-checkbox">
+                <div class="ui fitted checkbox">
+                  <input type="checkbox"><label></label>
+                </div>
+              </th>
+              <th class="text-center" colspan="2"> รายละเอียดแบบสอบทาน </th>
+            </tr>
+          </thead>
+        </table>
+        <div class="ui active inverted dimmer" *ngIf="loading.tableNewers">
+          <div class="ui text text-center loader" colspan="3">กำลังโหลด..</div>
+        </div>
+        <div class="scrollable" [ngClass]="{'minHeight': loading.tableNewers}">
+          <table class="ui tablet stackable celled table">
+            <tbody>
+              <ng-container *ngIf="!loading.tableNewers">
+                <tr *ngIf="newers.length == 0">
+                  <td class="text-center" colspan="3">ไม่พบข้อมูล</td>
+                </tr>
+                <ng-container *ngFor="let newer of newers">
+                  <tr>
+                    <td class="td-checkbox">
+                      <div class="ui fitted checkbox">
+                        <input type="checkbox"><label></label>
+                      </div>
+                    </td>
+                    <td colspan="2"> {{ newer.qtnMainDetail }} </td>
+                  </tr>
+                  <ng-container *ngIf="newer.detail.length > 0">
+                    <tr *ngFor="let detail of newer.detail">
+                      <td class="td-checkbox"></td>
+                      <td class="td-checkbox">
+                        <div class="ui fitted checkbox">
+                          <input type="checkbox"><label></label>
+                        </div>
+                      </td>
+                      <td> {{ detail.qtnMainDetail }} </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="ui bottom attached segment grid">
+        <div class="sixteen wide center aligned column">
+          <button type="button" class="ui mini primary button">
+            <i class="save icon"></i>
+            บันทึก
+          </button>
+          <button type="button" class="ui mini red button">
+            <i class="trash icon"></i>
+            ลบ
+          </button>
+          <button type="button" (click)="back()" class="ui mini button">
+            <i class="arrow left icon"></i>
+            ยกเลิก
+          </button>
+        </div>
+      </div>
+      <!-- NEW QUESTIONAIRE -->
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- 
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<div class="ui grid">
+  <div class="sixteen wide column">
     <div class="ui segment">
       <div class="ui grid">
         <div class="sixteen wide column">
@@ -178,7 +330,6 @@
             บันทึก
           </button>
           <button type="button" (click)="setRL(0)" class="ui mini primary button">
-            <!-- {{rl && rlLen > 0 ? 'disabled' : ''}} -->
             <i class="setting icon"></i>
             กำหนดเงื่อนไขความเสี่ยง
           </button>
@@ -240,4 +391,4 @@
       </div>
     </form>
   </div>
-</ui-modal>
+</ui-modal> -->

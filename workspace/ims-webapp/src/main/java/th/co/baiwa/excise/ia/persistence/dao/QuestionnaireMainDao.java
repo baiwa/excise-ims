@@ -51,12 +51,12 @@ public class QuestionnaireMainDao {
 		return mainList;
 	}
 	
-	public List<QuestionnaireMain> findForInt023(long start, long length) {
+	public List<QuestionnaireMain> findForInt023(String code, long start, long length) {
 		List<Object> paramList = new ArrayList<Object>();
 		String template = " SELECT H.* FROM IA_QUESTIONNAIRE_MAIN_DETAIL H LEFT JOIN IA_QUESTIONNAIRE_MINOR_DETAIL M ";
 		StringBuffer sql = new StringBuffer(template);
-		sql.append("ON M.MAIN_ID = H.IA_QTN_MAIN_DETAIL_ID WHERE 1=1 ORDER BY H.IA_QTN_MAIN_DETAIL_ID ASC ");
-		
+		sql.append("ON M.MAIN_ID = H.IA_QTN_MAIN_DETAIL_ID WHERE H.HEADER_CODE=? ORDER BY H.IA_QTN_MAIN_DETAIL_ID ASC ");
+		paramList.add(code);
 		String query = "";
 		if (BeanUtils.isNotEmpty(start)&&BeanUtils.isNotEmpty(length)&&length!=0) {
 			query = OracleUtils.limitForDataTable(sql.toString(), start, length);

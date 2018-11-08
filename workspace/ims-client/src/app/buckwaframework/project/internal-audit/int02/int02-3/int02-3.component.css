@@ -1,4 +1,32 @@
-.grid.btn {
+.th-checkbox, .td-checkbox {
+    width: 42px !important;
+}
+.tr.active {
+    background: rgba(255,255,255,.85) !important;
+}
+.table {
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+.scrollable {
+    overflow-x: auto;
+    max-height: 300px;
+    border-bottom: 1px solid rgba(34,36,38,.1) !important;
+}
+.ui.segments {
+    border: 0px !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+}
+
+.minHeight {
+    min-height: 300px;
+}
+
+
+
+
+/* .grid.btn {
     width: 100%;
 }
 .topic {
@@ -7,4 +35,4 @@
 .topic label {
     width: 100% !important;
     text-align: right;
-}
+} */

@@ -22,30 +22,35 @@ import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMain;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMinor;
 import th.co.baiwa.excise.ia.persistence.vo.Int023Vo;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class QuestionnaireDetailService {
 	private Logger logger = LoggerFactory.getLogger(QuestionnaireDetailService.class);
-	
+
 	@Autowired
 	private QuestionnaireDetailDao questionnaireDetailDao;
-	
+
 	@Autowired
 	private QuestionnaireMainDao qtnMainDao;
-	
+
 	@Autowired
 	private QuestionnaireMinorDao qtnMinorDao;
 
 	@Autowired
 	private SEQDao seqDao;
-	
+
 	public ResponseDataTable<Int023Vo<QuestionnaireMinor>> findByCriteria(DataTableRequest req) {
 		ResponseDataTable<Int023Vo<QuestionnaireMinor>> resp = new ResponseDataTable<Int023Vo<QuestionnaireMinor>>();
 		List<Int023Vo<QuestionnaireMinor>> int023 = new ArrayList<>();
-		List<QuestionnaireMain> main = qtnMainDao.findForInt023(req.getStart(), req.getLength());
+		if (BeanUtils.isEmpty(req.getHeaderCode())) {
+			resp.setData(int023);
+			return resp;
+		}
+		List<QuestionnaireMain> main = qtnMainDao.findForInt023(req.getHeaderCode(), req.getStart(), req.getLength());
 		logger.info(" start: {} length: {} mainSize: {}", req.getStart(), req.getLength(), main.size());
 		Long oldId = 0L;
-		for(QuestionnaireMain ma: main) {
+		for (QuestionnaireMain ma : main) {
 			if (ma.getQtnMainDetailId() != oldId) {
 				logger.info("{}", oldId);
 				oldId = ma.getQtnMainDetailId();
@@ -76,7 +81,7 @@ public class QuestionnaireDetailService {
 		List<QuestionnaireDetail> questionnaireDetailList = new ArrayList<QuestionnaireDetail>();
 		QuestionnaireDetail questionnaireDetail = new QuestionnaireDetail();
 		BigDecimal detailId = seqDao.autoNumberRunningBySeqName("IA_QTN_DETAIL_SEQ");
-		logger.info("Questionnaire Id : "+ detailId);
+		logger.info("Questionnaire Id : " + detailId);
 
 		questionnaireDetail.setQtnDetailId(detailId);
 		questionnaireDetail.setHeaderCode("H001");
@@ -104,14 +109,15 @@ public class QuestionnaireDetailService {
 			questionnaireDetailList.add(questionnaireDetail);
 		}
 		countInsert = questionnaireDetailDao.createQuestionnaireDetail(questionnaireDetailList);
-		logger.info(" countInsert : "+ countInsert);
+		logger.info(" countInsert : " + countInsert);
 		return countInsert;
 	}
 
-	
-	public ResponseDataTable<QuestionnaireDetail> findByCriteriaForDatatable(QuestionnaireDetail questionnaireDetail , DataTableRequest dataTableRequest) {
+	public ResponseDataTable<QuestionnaireDetail> findByCriteriaForDatatable(QuestionnaireDetail questionnaireDetail,
+			DataTableRequest dataTableRequest) {
 		ResponseDataTable<QuestionnaireDetail> responseDataTable = new ResponseDataTable<QuestionnaireDetail>();
-		List<QuestionnaireDetail> questionnaireDetailList = questionnaireDetailDao.findByCriteriaDataTable(questionnaireDetail, dataTableRequest.getStart().intValue(), dataTableRequest.getLength().intValue());
+		List<QuestionnaireDetail> questionnaireDetailList = questionnaireDetailDao.findByCriteriaDataTable(
+				questionnaireDetail, dataTableRequest.getStart().intValue(), dataTableRequest.getLength().intValue());
 		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
 		long count = questionnaireDetailDao.countQuestionnaireDetail(questionnaireDetail);
 		responseDataTable.setData(questionnaireDetailList);

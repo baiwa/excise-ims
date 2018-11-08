@@ -25,7 +25,7 @@ public class QtnReportMainDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public List<Int023Vo<QtnReportDetail>> findQtnReport(QtnReportMain qtn, int start, int length) {
@@ -37,9 +37,13 @@ public class QtnReportMainDao {
 			sql.append("AND M.QTN_REPORT_HDR_ID = ? ");
 			paramList.add(qtn.getQtnReportHdrId());
 		}
-
-		List<Int023Vo<QtnReportDetail>> qtnReportDetail = jdbcTemplate.query(OracleUtils.limitForDataTable(sql, start, length),
-				paramList.toArray(), rowMapper);
+		String str = "";
+		if (start == 0 && length == 0) {
+			str = sql.toString();
+		} else {
+			str = OracleUtils.limitForDataTable(sql, start, length);
+		}
+		List<Int023Vo<QtnReportDetail>> qtnReportDetail = jdbcTemplate.query(str, paramList.toArray(), rowMapper);
 
 		return qtnReportDetail;
 	}

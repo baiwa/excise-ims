@@ -3,6 +3,7 @@ import { AjaxService, MessageBarService, AuthService } from 'app/buckwaframework
 import { TextDateTH, formatter } from 'helpers/datepicker';
 import { Utils } from "helpers/utils";
 import { BreadCrumb } from 'models/breadcrumb';
+import { Router } from "@angular/router";
 
 declare var $: any;
 @Component({
@@ -22,6 +23,8 @@ export class Int0610Component implements OnInit, AfterViewInit {
   constructor(
     private authService: AuthService,
     private ajax: AjaxService,
+    private router: Router,
+    private message: MessageBarService
   ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
@@ -41,7 +44,18 @@ export class Int0610Component implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
+    // Edited or Added ???
+    $("#dataTable tbody").on("click", "button", e => {
+      const { id } = e.currentTarget;
+      this._dataTable.row($(e).parents("tr")).data();
+      if ("edit" == id.split("-")[0]) {
+        this.router.navigate(["/int06/10/1"], {
+          queryParams: { id: id.split("-")[1] }
+        });
+      } else if ("show" == id.split("-")[0]) {
+        this.message.alert("ระบบยังไม่เปิดบริการฟีเจอร์นี้.. กรุณารอสักกำนึง");
+      }
+    });
   }
 
   onSearch = () => {
@@ -197,8 +211,14 @@ export class Int0610Component implements OnInit, AfterViewInit {
           className: "ui center aligned"
         },
         { // Column 18
-          data: "note",
-          className: "ui center aligned"
+          data: "withdrawalid",
+          className: "ui center aligned",
+          render: (data, type, full, meta) => {
+            return `
+            <button class="ui mini primary button" id="show-${full.withdrawalid}" value="show-${full.withdrawalid}"><i class="search icon"></i>ดู</button>
+            <button class="ui mini yellow button" id="edit-${full.withdrawalid}" value="edit-${full.withdrawalid}"><i class="edit icon"></i>แก้ไข</button>
+            `;
+          }
         }
       ]
     });

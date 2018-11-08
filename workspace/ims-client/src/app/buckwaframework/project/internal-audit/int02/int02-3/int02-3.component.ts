@@ -1,3 +1,118 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { Location } from '@angular/common';
+import { Observable } from 'rxjs';
+
+import { BreadCrumb } from 'models/index';
+import { DialogService } from 'services/index';
+import { QuestionaireMinor, Int023Vo, QtnReportDetail, Int023Service } from './int02-3.service';
+
+const RISK_TYPE: string = "QTN_MAIN";
+const PAGE: string = "int02-3";
+
+@Component({
+  selector: "app-int02-3",
+  templateUrl: "./int02-3.component.html",
+  styleUrls: ["./int02-3.component.css"]
+})
+export class Int023Component implements OnInit {
+
+  // BreadCrumb
+  breadcrumb: BreadCrumb[];
+
+  // Initial Variable
+  headerId: string = "";
+  headerCode: string = "";
+  origins: Int023Vo<QuestionaireMinor>[] = [];
+  newers: Int023Vo<QtnReportDetail>[] = [];
+
+  // State
+  loading = {
+    tableOrigins: true,
+    tableNewers: true,
+  }
+
+  constructor(
+    private route: ActivatedRoute,
+    private dialog: DialogService,
+    private _location: Location,
+    private service: Int023Service
+  ) {
+    // BreadCrumb Data
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "แบบสอบถามระบบการควบคุมภายใน", route: "#" },
+      { label: "สร้างแบบสอบถามระบบการควบคุมภายใน", route: "#" },
+      { label: "เพิ่ม/แก้ไข ด้านแบบสอบถาม", route: "#" },
+      { label: "เพิ่ม/แก้ไข รายละเอียดแบบสอบถาม", route: "#" },
+    ];
+  }
+
+  ngOnInit() {
+    // ID from url
+    this.headerId = this.route.snapshot.queryParams["id"] || "";
+    this.headerCode = this.route.snapshot.queryParams["code"] || "";
+
+    // Load Data from service [backend]
+    this.service.getOrigins(this.headerCode).then((data: Int023Vo<QuestionaireMinor>[]) => {
+      this.origins = data;
+      this.loading.tableOrigins = false; // stop `tableOrigins` loading
+    });
+    this.service.getNewers(this.headerId).then((data: Int023Vo<QtnReportDetail>[]) => {
+      this.newers = data;
+      this.loading.tableNewers = false; // stop `tableNewers` loading
+    });
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.unsave()) {
+      let confirm: any = this.dialog.confirm("ต้องการออกจากที่นี่หรือไม่?");
+      if (confirm.value) {
+        console.log("ออกจาก int02/3 แล้ว...");
+      }
+      return confirm;
+    }
+    return true;
+  }
+
+  unsave() {
+    return 0;
+  }
+
+  back() {
+    this._location.back();
+  }
+
+}
+
+class Condition {
+  [x: string]: any;
+  seq: any;
+  operator: any;
+  value1: any;
+  value2: any;
+  risk: any;
+  score: any;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common';
@@ -528,3 +643,5 @@ class Condition {
   risk: any;
   score: any;
 }
+
+*/

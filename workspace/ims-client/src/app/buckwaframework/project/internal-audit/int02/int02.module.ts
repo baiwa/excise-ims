@@ -23,6 +23,7 @@ import { Int02Service } from "./int02.service";
 import { Int02M512Component } from './int02-m5/int02-m5-1/int02-m5-1-2/int02-m5-1-2.component';
 import { PipeModule } from "app/buckwaframework/common/pipes/pipe.module";
 import { Int02M513Component } from './int02-m5/int02-m5-1/int02-m5-1-3/int02-m5-1-3.component';
+import { Int023Service } from "./int02-3/int02-3.service";
 
 const routes: Routes = [
   { path: "1", component: Int021Component },
@@ -84,7 +85,7 @@ const routes: Routes = [
     Int02M512Component,
     Int02M513Component
   ],
-  providers: [Int02Service],
+  providers: [Int02Service, Int023Service],
   exports: [RouterModule]
 })
 export class Int02Module { }
