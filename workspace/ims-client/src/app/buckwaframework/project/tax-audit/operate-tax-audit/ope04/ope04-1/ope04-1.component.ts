@@ -22,6 +22,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
     { label: 'สร้างกระดาษทำการรับวัตถุดิบ', route: '#' },    
   ];
   
+  objectExport : any;
   obj: Data;
   exciseId: any;
   exciseIdArr: any;
@@ -192,6 +193,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
           columns: [
             {
               render: function(data, type, row, meta) {
+               
                 return meta.row + meta.settings._iDisplayStart + 1;
               },
               className: "center"
@@ -447,6 +449,17 @@ export class Ope041Component implements OnInit, AfterViewInit {
     }
     return x;
   }
+
+  export(){
+   // console.log($("#showDt").DataTable().rows().data());
+   if(this.showDt.data().count()==0){
+    this.messageBarService.alert("ไม่่พบข้อมูล");
+    return false;
+   }
+   const URL_DOWNLOAD = "ope041/export";
+   this.ajax.download(URL_DOWNLOAD);
+  }
+
 }
 
 class File {
