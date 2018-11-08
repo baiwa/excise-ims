@@ -75,7 +75,7 @@ public List<TransferList> queryByFilter(Int069FormVo vo) {
 			en.setRefDate(rs.getDate("REF_DATE"));
 			en.setRefNum(rs.getString("REF_NUM"));
 			en.setSubCtgBudget(rs.getString("SUB_CTG_BUDGET"));
-			en.setTransferId(rs.getInt("TRANSFER_ID"));
+			en.setTransferId(rs.getBigDecimal("TRANSFER_ID"));
 			en.setTransferList(rs.getString("TRANSFER_LIST"));
 			
 			return en;

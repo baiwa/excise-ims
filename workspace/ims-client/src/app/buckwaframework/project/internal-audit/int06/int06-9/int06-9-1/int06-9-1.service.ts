@@ -201,12 +201,13 @@ export class Int0691Service {
         { data: "ctgBudget" },
         { data: "subCtgBudget" },
         { data: "descriptionList" },
-        { data: "amount",
-        "className": "ui right aligned",
-        "render": function (data) {
-          return Utils.moneyFormat(data);
-        }
-       },
+        {
+          data: "amount",
+          className: "ui right aligned",
+          render: function(data) {
+            return Utils.moneyFormat(data);
+          }
+        },
         { data: "note" }
       ],
       columnDefs: [
@@ -229,7 +230,7 @@ export class Int0691Service {
 }
 
 class TRANSFER {
-  transferId: number = null;
+  transferId: number;
   mofNum: string = null;
   refNum: string = null;
   refDateStr: any = null;

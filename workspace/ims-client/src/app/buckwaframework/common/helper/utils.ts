@@ -10,7 +10,7 @@ export class Utils {
   }
 
   public static moneyFormat(money) {
-    console.log(money);
+    // console.log(money);
     money == null || money == "" || money == "null" ? 0 : money;
     var op = "";
     var moneyP = parseFloat(money);

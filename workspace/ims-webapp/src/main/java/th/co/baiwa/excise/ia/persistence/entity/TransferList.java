@@ -36,7 +36,7 @@ public class TransferList extends BaseEntity {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_TRANSFER_LIST_GEN")
 	@SequenceGenerator(name="IA_TRANSFER_LIST_GEN", sequenceName="IA_TRANSFER_LIST_SEQ", allocationSize  = 1)
 	@Column(name="TRANSFER_ID")
-	private long transferId;
+	private BigDecimal transferId;
 
 	private String activities;
 
@@ -82,19 +82,16 @@ public class TransferList extends BaseEntity {
 	@Transient
 	private String refDateStr;
 
-	public TransferList() {
+	public BigDecimal getTransferId() {
+		return transferId;
 	}
 
-	public long getTransferId() {
-		return this.transferId;
-	}
-
-	public void setTransferId(long transferId) {
+	public void setTransferId(BigDecimal transferId) {
 		this.transferId = transferId;
 	}
 
 	public String getActivities() {
-		return this.activities;
+		return activities;
 	}
 
 	public void setActivities(String activities) {
@@ -102,7 +99,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public BigDecimal getAmount() {
-		return this.amount;
+		return amount;
 	}
 
 	public void setAmount(BigDecimal amount) {
@@ -110,7 +107,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public String getBudget() {
-		return this.budget;
+		return budget;
 	}
 
 	public void setBudget(String budget) {
@@ -118,7 +115,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public String getBudgetCode() {
-		return this.budgetCode;
+		return budgetCode;
 	}
 
 	public void setBudgetCode(String budgetCode) {
@@ -126,7 +123,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public String getBudgetType() {
-		return this.budgetType;
+		return budgetType;
 	}
 
 	public void setBudgetType(String budgetType) {
@@ -134,7 +131,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public String getCtgBudget() {
-		return this.ctgBudget;
+		return ctgBudget;
 	}
 
 	public void setCtgBudget(String ctgBudget) {
@@ -142,7 +139,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public String getDescriptionList() {
-		return this.descriptionList;
+		return descriptionList;
 	}
 
 	public void setDescriptionList(String descriptionList) {
@@ -150,7 +147,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public String getMofNum() {
-		return this.mofNum;
+		return mofNum;
 	}
 
 	public void setMofNum(String mofNum) {
@@ -158,7 +155,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public String getNote() {
-		return this.note;
+		return note;
 	}
 
 	public void setNote(String note) {
@@ -166,7 +163,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public String getOfficeCode() {
-		return this.officeCode;
+		return officeCode;
 	}
 
 	public void setOfficeCode(String officeCode) {
@@ -174,7 +171,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public String getOfficeDesc() {
-		return this.officeDesc;
+		return officeDesc;
 	}
 
 	public void setOfficeDesc(String officeDesc) {
@@ -182,7 +179,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public Date getRefDate() {
-		return this.refDate;
+		return refDate;
 	}
 
 	public void setRefDate(Date refDate) {
@@ -190,7 +187,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public String getRefNum() {
-		return this.refNum;
+		return refNum;
 	}
 
 	public void setRefNum(String refNum) {
@@ -198,7 +195,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public String getSubCtgBudget() {
-		return this.subCtgBudget;
+		return subCtgBudget;
 	}
 
 	public void setSubCtgBudget(String subCtgBudget) {
@@ -206,7 +203,7 @@ public class TransferList extends BaseEntity {
 	}
 
 	public String getTransferList() {
-		return this.transferList;
+		return transferList;
 	}
 
 	public void setTransferList(String transferList) {

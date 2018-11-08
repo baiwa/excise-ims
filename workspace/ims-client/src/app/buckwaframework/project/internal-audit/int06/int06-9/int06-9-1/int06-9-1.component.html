@@ -23,7 +23,7 @@
                             <label class="custom-label-w-25 text-right">เลขที่</label>
                         </div>
                         <div class="three wide field " [ngClass]="{ 'error': submitted && f.refNum.errors }">
-                            <input type="number" formControlName="refNum">
+                            <input type="text" (keypress)="typeNumber($event)" formControlName="refNum" autocomplete="off">
                         </div>
                         <div class="two wide field required text-right">
                             <label class="custom-label-w-25 text-right">วันที่เอกสาร</label>
@@ -107,11 +107,11 @@
 
                     <div class="inline fields">
                         <div class="one wide field "></div>
-                            <div class="two wide field required">
-                                <label>จำนวนเงิน</label>
-                            </div>
-                            <div class="four wide field " [ngClass]="{ 'error': submitted && f.amount.errors }">
-                                <input type="number" formControlName="amount" id="amount">
+                        <div class="two wide field required">
+                            <label>จำนวนเงิน</label>
+                        </div>
+                        <div class="four wide field " [ngClass]="{ 'error': submitted && f.amount.errors }">
+                            <input type="text" (keypress)="typeNumber($event)" formControlName="amount" id="amount" autocomplete="off">
                         </div>
                     </div>
 
@@ -121,7 +121,7 @@
                             <label>คำอธิบายรายการ</label>
                         </div>
                         <div class="nine wide field " [ngClass]="{ 'error': submitted && f.descriptionList.errors }">
-                            <input type="text" formControlName="descriptionList" id="descriptionList">
+                            <input type="text" formControlName="descriptionList" id="descriptionList" autocomplete="off">
                         </div>
                     </div>
 
@@ -152,45 +152,45 @@
                     </div>
                 </div>
             </form>
-            </div>
+        </div>
 
-            <div class="ui segment" id="int0621">
-                <div>
-                    <table id="datatable" class="ui small celled table striped selectable" style="width: 150%">
-                        <thead>
-                            <tr style="text-align: center;">
-                                <th rowspan="2">ลำดับที่</th>
-                                <th colspan="3">เอกสารอ้างอิง</th>
-                                <th rowspan="2">รายการโอนเงิน</th>
-                                <th rowspan="2">ประเภทเงิน</th>
-                                <th rowspan="2">รหัส</th>
-                                <th rowspan="2">กิจกรรม</th>
-                                <th rowspan="2">งบ</th>
-                                <th rowspan="2">หมวด</th>
-                                <th rowspan="2">หมวดย่อย</th>
-                                <th rowspan="2">รายการ</th>
-                                <th rowspan="2">จำนวนเงิน</th>
-                                <th rowspan="2">หมายเหตุ</th>
-                            </tr>
-                            <tr style="text-align: center;">
-                                <th>ที่ กค</th>
-                                <th>เลขที่</th>
-                                <th>ว.ด.ป</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-                <br>
-                <div class="ui center aligned grid">
-                    <div class="sixteen wide column">
-                        <button class="ui mini green button" (click)="onSave()"> 
+        <div class="ui segment" id="int0621">
+            <div>
+                <table id="datatable" class="ui small celled table striped selectable" style="width: 150%">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th rowspan="2">ลำดับที่</th>
+                            <th colspan="3">เอกสารอ้างอิง</th>
+                            <th rowspan="2">รายการโอนเงิน</th>
+                            <th rowspan="2">ประเภทเงิน</th>
+                            <th rowspan="2">รหัส</th>
+                            <th rowspan="2">กิจกรรม</th>
+                            <th rowspan="2">งบ</th>
+                            <th rowspan="2">หมวด</th>
+                            <th rowspan="2">หมวดย่อย</th>
+                            <th rowspan="2">รายการ</th>
+                            <th rowspan="2">จำนวนเงิน</th>
+                            <th rowspan="2">หมายเหตุ</th>
+                        </tr>
+                        <tr style="text-align: center;">
+                            <th>ที่ กค</th>
+                            <th>เลขที่</th>
+                            <th>ว.ด.ป</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <br>
+            <div class="ui center aligned grid">
+                <div class="sixteen wide column">
+                    <button class="ui mini green button" (click)="onSave()"> 
                             <i class="save icon"></i> บันทึก
                         </button>
-                        <button class="ui mini  button" (click)="hidedata()">
+                    <button class="ui mini  button" (click)="hidedata()">
                             <i class="close icon"></i> ยกเลิก
                         </button>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
 </div>

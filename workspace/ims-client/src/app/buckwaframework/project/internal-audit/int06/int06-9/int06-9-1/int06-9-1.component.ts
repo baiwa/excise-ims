@@ -8,6 +8,7 @@ import { TextDateTH, formatter } from "helpers/datepicker";
 import { ActivatedRoute } from "@angular/router";
 import { async } from "@angular/core/testing";
 import { AuthService } from "../../../../../common/services";
+import { Utils } from "helpers/utils";
 
 declare var $: any;
 @Component({
@@ -56,7 +57,7 @@ export class Int0691Component implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.reRenderVersionProgram('INT-06910');
+    this.authService.reRenderVersionProgram("INT-06910");
     this.transferForm = this.formBuilder.group({
       mofNum: ["", Validators.required],
       refNum: ["", Validators.required],
@@ -69,7 +70,7 @@ export class Int0691Component implements OnInit {
       activities: ["", Validators.required],
       descriptionList: ["", Validators.required],
       amount: ["", Validators.required],
-      note: ["", Validators.required]
+      note: [""]
     });
 
     //call combobox
@@ -133,6 +134,10 @@ export class Int0691Component implements OnInit {
 
   get f() {
     return this.transferForm.controls;
+  }
+
+  typeNumber(e) {
+    return Utils.onlyNumber(e);
   }
 
   addData() {

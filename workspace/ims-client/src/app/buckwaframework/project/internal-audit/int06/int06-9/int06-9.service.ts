@@ -37,14 +37,12 @@ export class Int069Service {
         .post(URL.DROPDOWN, DATA, res => {
           // const response = res.json();
           this[type] = res.json();
-          console.log("service: ", this[type]);
         })
         .then(() => obs.next(this[type]));
     });
   };
 
   filterDropdrown(DATA) {
-    console.log(DATA);
     this.dataFilter = DATA;
     this.DATATABLE();
   }
@@ -80,12 +78,13 @@ export class Int069Service {
         { data: "ctgBudget" },
         { data: "subCtgBudget" },
         { data: "descriptionList" },
-        { data: "amount",
-        "className": "ui right aligned",
-        "render": function (data) {
-          return Utils.moneyFormat(data);
-        }
-       },
+        {
+          data: "amount",
+          className: "ui right aligned",
+          render: function(data) {
+            return Utils.moneyFormat(data);
+          }
+        },
         { data: "note" },
         {
           render: function() {
@@ -100,7 +99,7 @@ export class Int069Service {
         {
           targets: [0, 14],
           className: "center aligned",
-        
+
           render: function(data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
@@ -114,10 +113,6 @@ export class Int069Service {
       ],
       rowCallback: (row, data, index) => {
         $("td > .edit", row).bind("click", () => {
-          console.log(data);
-          console.log(row);
-          console.log(index);
-
           this.router.navigate(["int06/9/1"], {
             queryParams: {
               transferId: data.transferId,
@@ -127,11 +122,8 @@ export class Int069Service {
         });
 
         $("td > .del", row).bind("click", () => {
-          console.log(data);
-
           this.ajax.post(URL.DELETE, { transferId: data.transferId }, res => {
             let msg = res.json();
-            console.log("msg: ", msg);
           });
 
           this.DATATABLE();

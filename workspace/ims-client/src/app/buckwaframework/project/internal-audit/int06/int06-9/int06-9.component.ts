@@ -43,7 +43,7 @@ export class Int069Component implements OnInit {
   }
 
   async ngOnInit() {
-    this.authService.reRenderVersionProgram('INT-06900');
+    this.authService.reRenderVersionProgram("INT-06900");
     this.comboBox1 = await this.selfService.dropdown("TRANSFER");
     this.comboBox2 = await this.selfService.dropdown("BUDGET_TYPE");
     this.comboBox3 = await this.selfService.dropdown("ACTIVITY");
@@ -60,7 +60,6 @@ export class Int069Component implements OnInit {
       formatter: formatter(),
       onChange: (a, b) => {
         this.startDate = b;
-        console.log(this.startDate);
       }
     });
     $("#calendar2").calendar({
@@ -70,15 +69,11 @@ export class Int069Component implements OnInit {
       formatter: formatter(),
       onChange: (a, b) => {
         this.endDate = b;
-        console.log(this.endDate);
       }
     });
   }
   onFilter = () => {
     $("#int069").show();
-    console.log("combo1: ", this.combo1);
-    console.log("combo2: ", this.combo2);
-    console.log("combo3: ", this.combo3);
     let DATA = {
       transferList: this.combo1,
       budgetType: this.combo2,
