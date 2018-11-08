@@ -328,6 +328,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
       columns: [
         {
           render: function(data, type, row, meta) {
+            console.log("product : ", row.product);
             return meta.row + meta.settings._iDisplayStart + 1;
           },
           className: "center"

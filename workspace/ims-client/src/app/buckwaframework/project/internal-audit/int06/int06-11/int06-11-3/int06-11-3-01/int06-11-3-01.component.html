@@ -1,3 +1,106 @@
-<p>
-  int06-11-3-01 works!
-</p>
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <div class="ui top  attached header segment" style="background: #1e83db;color: white">
+      <span>ใบเบิกเงินสวัสดิการเกี่ยวกับการศึกษาบุตร</span>
+    </div>
+    <!-- form upload -->
+    <div class="ui attached center {{loading ? 'loading' : ''}} segment">
+      <form class="ui form" id="upload-form" (submit)="onSubmit($event)" ngNativeValidate>
+        <div class="inline fields ui centered grid">
+          <div class="two wide field">
+            <label class="text-right full-width">จำนวนบุตร</label>
+          </div>
+          <div class="three wide field ">
+            <select id="number" name="number" class="ui dropdown ai full-width" (change)="showForm($event)">
+              <option value="">กรุณาเลือก</option>
+              <option *ngFor="let item of number; index as i;" value="{{item}}">{{item}} คน</option>
+            </select>
+          </div>
+        </div>
+        <div class="number1">
+          <!-- form row 0 -->
+          <div class="inline fields ui centered grid ">
+            <div class="two wide field">
+              <label class="text-right full-width"><u>บุตรคนที่ 1</u></label>
+            </div>
+            <div class="four wide field "></div>
+            <div class="two wide field"></div>
+            <div class="four wide field "></div>
+          </div>
+          <!-- form row 1 -->
+          <div class="inline fields ui centered grid ">
+            <div class="two wide field ">
+              <label class="text-right full-width">ประเภทสถานศึกษา</label>
+            </div>
+            <div class="four wide field ">
+              <select [(ngModel)]="form1.typeEducation" id="typeEducation" name="typeEducation" class="ui dropdown ai full-width" (change)="subTypeEducation($event)" >
+                <option value="">กรุณาเลือก</option>
+                <option *ngFor="let item of typeEducationList; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+              </select>
+            </div>
+            <div class="two wide field ">
+              <label class="text-right full-width">ประเภทการศึกษา</label>
+            </div>
+            <div class="four wide field ">
+              <select [(ngModel)]="form1.subTypeEducation"  id="subTypeEducation" name="subTypeEducation" class="ui dropdown ai full-width" (change)="levelEducation($event)">
+                <option value="">กรุณาเลือก</option>
+                <option *ngFor="let item of subTypeEducationList; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+              </select>
+            </div>
+          </div>
+          <!-- form row 2 -->
+          <div class="inline fields ui centered grid">
+            <div class="two wide field  ">
+              <label class="text-right full-width">ระดับศึกษา</label>
+            </div>
+            <div class="four wide field " [ngClass]="{'disabled': levelEducationDis1}">
+              <select [(ngModel)]="form1.levelEducation"  id="levelEducation" name="levelEducation" class="ui dropdown ai full-width" (change)="typeSubject($event)">
+                <option value="">กรุณาเลือก</option>
+                <option *ngFor="let item of levelEducationList; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+              </select>
+            </div>
+            <div class="two wide field ">
+              <label class="text-right full-width">ประเภทวิชา/สาขา</label>
+            </div>
+            <div class="four wide field "  [ngClass]="{'disabled': typeSubjectDis1}">
+              <select id="typeSubject" name="typeSubject" class="ui dropdown ai full-width" (change)="bursary($event)" [disabled]="typeSubjectDis1">
+                <option value="">กรุณาเลือก</option>
+                <option *ngFor="let item of typeSubjectList; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+              </select>
+            </div>
+          </div>
+          <!-- form row 3 -->
+          <div class="inline fields ui centered grid">
+            <div class="two wide field">
+              <label class="text-right full-width">เงินอุดหนุน</label>
+            </div>
+            <div class="four wide field "  [ngClass]="{'disabled': bursaryDis1}">
+              <select [(ngModel)]="form1.bursary" id="bursary" name="bursary" class="ui dropdown ai full-width" [disabled]="bursaryDis1">
+                <option value="">กรุณาเลือก</option>
+                <option *ngFor="let item of bursaryList; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+              </select>
+            </div>
+            <div class="two wide field ">
+              <!-- <label class="text-right full-width">ประเภทวิชา/สาขา</label> -->
+            </div>
+            <div class="four wide field ">
+              <!-- <select id="selectCoordinate" class="ui dropdown ai" (change)="levelEducation($event)">
+                  <option value="">กรุณาเลือก</option>
+                  <option *ngFor="let item of typeSubjectList; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+                </select> -->
+            </div>
+          </div>
+        </div>
+        
+        <br>
+        <br>
+        <div class="ui stackable center aligned page grid">
+          <button class="ui mini primary button" type="submit"> ถัดไป</button>
+          <button class="ui mini gray button" type="button" (click)="claer()"><i class="sync icon"></i> ล้างข้อมูล</button>
+          <button class="ui mini gray button" routerLink="/int06/11" type="button"><i class="share icon"></i>กลับ</button>
+        </div><br>
+      </form>
+    </div>
+  </div>
+</div>

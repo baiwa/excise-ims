@@ -73,9 +73,7 @@ public class Int061103Service {
 			childs.add(child);
 			
 		}
-		childRepository.save(childs);
-		
-		
+		childRepository.save(childs);				
 	}
 
 }

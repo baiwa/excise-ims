@@ -15,4 +15,5 @@ public interface LovRepository extends CommonJpaCrudRepository<Lov, Long>, LovRe
         List<Lov> findByLovIdMasterOrderBySubType(Long idMaster);
         List<Lov> findByType(String type);
         Lov findBySubType(String officeCode);
+        List<Lov> findByTypeAndLovIdMaster(String type, Long idMaster);
 }
