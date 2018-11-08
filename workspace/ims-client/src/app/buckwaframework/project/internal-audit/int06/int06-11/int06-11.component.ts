@@ -271,7 +271,7 @@ export class Int0611Component implements OnInit, AfterViewInit {
     } else if (bill.value == "2") {
       page = "int06/11/2";
     } else if (bill.value == "3") {
-      page = "int06/11/3";
+      page = "int06/11/3-1";
     } else if (bill.value == "4") {
       page = "int06/11/4";
     }
