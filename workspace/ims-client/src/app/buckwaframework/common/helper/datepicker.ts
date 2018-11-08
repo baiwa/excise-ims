@@ -161,6 +161,21 @@ export var formatter = (what: string = "") => {
           return _month;
         }
       };
+    case "monthOnly":
+      return {
+        header: function(date, mode, settings) {
+          settings.className.nextIcon = "";
+          settings.className.prevIcon = "";
+          settings.className.link = "";
+          return "เดือน";
+        },
+        date: function(date, settings) {
+          //return a string to show on the header for the given 'date' and 'mode'
+          let _date = toDateLocale(date);
+          let _month = TextDateTH.months[parseInt(_date[0].split("/")[1]) - 1];
+          return _month;
+        }
+      };
     case "year":
       return {
         cell: function(cell, date, cellOptions) {
@@ -199,7 +214,7 @@ export var formatter = (what: string = "") => {
         date: function(date, settings) {
           let _month = toDateLocale(date)[0].split("/")[1];
           let _year = toDateLocale(date)[0].split("/")[2];
-          return digit(_month)+"/"+_year;
+          return digit(_month) + "/" + _year;
         }
       };
 
