@@ -25,31 +25,7 @@ public class Int061101Controller {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private Int061101Service int061101Service;
-	
-	@PostMapping("/getAuthLogin")
-	@ResponseBody
-	public Int061101GetUserLogin get() {
-		logger.info("get info user-login Int061101");
-		UserBean pf = null;
-		
-		Int061101GetUserLogin userLogin = new Int061101GetUserLogin();
-		pf = UserLoginUtils.getCurrentUserBean();
-		userLogin.setGetAccessAttr(pf.getAccessAttr());
-		userLogin.setGetCnName(pf.getCnName());
-		userLogin.setGetOfficeId(pf.getOfficeId());
-		userLogin.setGetTelephoneNo(pf.getTelephoneNo());
-		userLogin.setGetUserEngName(pf.getUserEngName());
-		userLogin.setGetUserEngSurname(pf.getUserEngSurname());
-		userLogin.setGetUserId(pf.getUserId());
-		userLogin.setGetUsername(pf.getUsername());
-		userLogin.setGetTitle(pf.getTitle());
-		userLogin.setGetUserThaiId(pf.getUserThaiId());
-		userLogin.setGetUserThaiName(pf.getUserThaiName());
-		userLogin.setGetUserThaiSurname(pf.getUserThaiSurname());
-		return userLogin;
-	
-	}
-	
+
 	@PostMapping("/save")
 	@ResponseBody
 	public RentHouse save(@RequestBody RentHouse en) {
@@ -62,7 +38,7 @@ public class Int061101Controller {
 		}
 		return data;
 	}
-	
+
 	@PostMapping("/upload")
 	@ResponseBody
 	public Message uploadList(@ModelAttribute Int061101FormVo uploadList) {
@@ -77,5 +53,29 @@ public class Int061101Controller {
 		}
 		return msg;
 	}
+
+	// @PostMapping("/getAuthLogin")
+	// @ResponseBody
+	// public Int061101GetUserLogin get() {
+	// logger.info("get info user-login Int061101");
+	// UserBean pf = null;
+	//
+	// Int061101GetUserLogin userLogin = new Int061101GetUserLogin();
+	// pf = UserLoginUtils.getCurrentUserBean();
+	// userLogin.setGetAccessAttr(pf.getAccessAttr());
+	// userLogin.setGetCnName(pf.getCnName());
+	// userLogin.setGetOfficeId(pf.getOfficeId());
+	// userLogin.setGetTelephoneNo(pf.getTelephoneNo());
+	// userLogin.setGetUserEngName(pf.getUserEngName());
+	// userLogin.setGetUserEngSurname(pf.getUserEngSurname());
+	// userLogin.setGetUserId(pf.getUserId());
+	// userLogin.setGetUsername(pf.getUsername());
+	// userLogin.setGetTitle(pf.getTitle());
+	// userLogin.setGetUserThaiId(pf.getUserThaiId());
+	// userLogin.setGetUserThaiName(pf.getUserThaiName());
+	// userLogin.setGetUserThaiSurname(pf.getUserThaiSurname());
+	// return userLogin;
+	//
+	// }
 
 }

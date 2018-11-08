@@ -22,7 +22,8 @@ export class Int06111Component implements OnInit {
   titles: Observable<ComboBox>;
   auth: any;
   loadingUL: boolean = false;
-  tableUpload: any;
+  tableUpload: any = [];
+  flgOnLoad: boolean = true;
 
   constructor(
     private selfService: Int061101Service,
@@ -40,7 +41,7 @@ export class Int06111Component implements OnInit {
       this.rentHouseForm.patchValue({
         name: obj.fullName,
         position: obj.title,
-        affiliation: obj.position
+        affiliation: "-"
       });
     });
     // this.titles = this.selfService.dropdown("TITLE", null);
@@ -50,7 +51,6 @@ export class Int06111Component implements OnInit {
 
   setVariable() {
     this.rentHouseForm = this.fb.group({
-      // title: ["", Validators.required],
       name: ["", Validators.required],
       position: ["", Validators.required],
       affiliation: ["", Validators.required],
@@ -71,10 +71,10 @@ export class Int06111Component implements OnInit {
 
   calendar = function() {
     $("#periodCld").calendar({
-      minDate: new Date(),
+      // minDate: new Date(),
       type: "month",
       text: TextDateTH,
-      formatter: formatter("month"),
+      formatter: formatter("monthOnly"),
       onChange: (date, ddmmyyyy) => {
         this.rentHouseForm.patchValue({ period: ddmmyyyy });
       }
@@ -84,7 +84,7 @@ export class Int06111Component implements OnInit {
       minDate: new Date(),
       type: "month",
       text: TextDateTH,
-      formatter: formatter("month"),
+      formatter: formatter("monthOnly"),
       onChange: (date, ddmmyyyy) => {
         this.rentHouseForm.patchValue({ periodWithdraw: ddmmyyyy });
       }
@@ -96,39 +96,51 @@ export class Int06111Component implements OnInit {
     return this.submitted && this.rentHouseForm.get(value).errors;
   }
 
+  cbLoading = param => {
+    this.loadingUL = param;
+  };
+
   save(e) {
     e.preventDefault();
-    this.submitted = true;
-    console.log(this.rentHouseForm.value);
-    // stop here if form is invalid
-    if (this.rentHouseForm.invalid) {
-      this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ");
-      return;
-    }
-    this.selfService.save(this.rentHouseForm.value);
+    this.msg.comfirm(confirm => {
+      if (confirm) {
+        this.loadingUL = true;
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.rentHouseForm.invalid) {
+          this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ");
+          return;
+        }
+        this.selfService.save(this.rentHouseForm.value, this.cbLoading);
+      }
+    }, "ยืนยันการบันทึกข้อมูล");
   }
 
   typeNumber(e) {
     return Utils.onlyNumber(e);
   }
 
-  // onChangeUpload(e) {
-  //   this.loadingUL = true;
-  //   this.selfService.onChangeUpload(e).then(() => {
-  //     setTimeout(() => {
-  //       this.loadingUL = false;
-  //     }, 1000);
-  //   });
-  // }
-
   onUpload(e) {
     e.preventDefault();
-    this.selfService.onUpload().then(data => {
-      this.tableUpload = data;
-    });
+    if ($("#files").val() === "") {
+      this.msg.errorModal("กรุณาเลือกไฟล์อัปโหลด");
+    } else {
+      this.selfService.onUpload().then(data => {
+        this.tableUpload = data;
+      });
+    }
+  }
+
+  onChangeFile() {
+    this.flgOnLoad = false;
+    console.log(this.flgOnLoad);
   }
 
   onDel(index: number) {
+    this.loadingUL = true;
     this.selfService.onDel(index);
+    setTimeout(() => {
+      this.loadingUL = false;
+    }, 300);
   }
 }

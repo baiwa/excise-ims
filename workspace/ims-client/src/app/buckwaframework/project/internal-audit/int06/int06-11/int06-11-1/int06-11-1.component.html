@@ -23,60 +23,29 @@
                     <div class="two wide field">
                     </div>
 
-                    <!-- <div class="one wide field">
-                        <label>คำนำหน้า</label>
-                    </div>
-                    <div class="two wide field" [ngClass]="{ 'error': validateField('title') }">
-                        <select class="ui fluid dropdown ai search" formControlName="title">
-                          <option value="">กรุณาเลือก</option>
-                          <option *ngFor="let title of titles | async;" [value]="title.lovId">
-                            {{ title.value1 }}
-                          </option>
-                        </select>
-                    </div> -->
-
                     <div class="one wide field">
                         <label>ข้าพเจ้า</label>
                     </div>
                     <div class="four wide field" [ngClass]="{ 'error': validateField('name') }">
-                        <input type="text" formControlName="name">
+                        <input type="text" class="custom-readonly disabled" formControlName="name">
                     </div>
                     <div class="one wide field">
                         <label>ตำแหน่ง</label>
                     </div>
                     <div class="three wide field" [ngClass]="{ 'error': validateField('position') }">
-                        <input type="text" formControlName="position">
+                        <input type="text" class="custom-readonly disabled" formControlName="position">
                     </div>
 
                     <div class="one wide field">
                         <label>สังกัด</label>
                     </div>
                     <div class="three wide field" [ngClass]="{ 'error': validateField('affiliation') }">
-                        <input type="text" formControlName="affiliation">
+                        <input type="text" class="custom-readonly disabled" formControlName="affiliation">
                     </div>
 
                 </div>
 
                 <br>
-
-                <!-- <div class="inline fields">
-                    <div class="two wide field">
-                    </div>
-
-                    <div class="one wide field">
-                        <label>ตำแหน่ง</label>
-                    </div>
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('position') }">
-                        <input type="text" formControlName="position">
-                    </div>
-
-                    <div class="one wide field">
-                        <label>สังกัด</label>
-                    </div>
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('affiliation') }">
-                        <input type="text" formControlName="affiliation">
-                    </div>
-                </div> -->
 
                 <div class="inline fields hd">
                     <div class="two wide field"></div>
@@ -254,70 +223,78 @@
                         <label>ฉบับ</label>
                     </div>
                     <div class="two wide field">
-                        <!-- <label>มาด้วยแล้ว</label> -->
+                        <label>มาด้วยแล้ว</label>
                     </div>
                 </div>
-                <!-- <div class="inline fields">
-                <div class="two wide field"></div>
-                <div class="ten wide field">
-                    <label>๒.ข้าพเจ้าขอรับรองว่าข้อความที่ให้ไว้ข้างต้นเป็นความจริงทุกประการ และข้าพเจ้ามีสิทธิได้รับเงินค่าเช่าบ้านตามพระราชกฤษฎีกา
+                <div class="inline fields">
+                    <div class="two wide field"></div>
+                    <div class="ten wide field">
+                        <label>๒.ข้าพเจ้าขอรับรองว่าข้อความที่ให้ไว้ข้างต้นเป็นความจริงทุกประการ และข้าพเจ้ามีสิทธิได้รับเงินค่าเช่าบ้านตามพระราชกฤษฎีกา
             <br> ค่าเช่าบ้านข้าราชการ พ.ศ.2547 และได้ดำเนินการถูกต้องตามระเบียบทุกประการแล้ว</label>
+                    </div>
                 </div>
-            </div> -->
             </div>
         </div>
     </div>
+    <br>
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white;">
+        <span>เอกสารหลักฐานประกอบคำเบิก</span>
+    </div>
+    <div class="ui form">
+        <div class="ui attached segment" [ngClass]="{ 'loading': loadingUL }">
+            <div class="inline fields ">
+                <div class="two wide field">
 
-    <div class="ui segment">
-        <div class="ui top centered attached header segment" style="background: #1e83db;color: white;">
-            <span>เอกสารหลักฐานประกอบคำเบิก</span>
-        </div>
-        <div class="ui form">
-            <div class="ui attached segment" [ngClass]="{ 'loading': loadingUL }">
-                <div class="inline fields ">
-                    <div class="two wide field">
-
-                    </div>
-                    <div class="three wide field">
-                        <label>หลักฐานประกอบคำเบิก</label>
-                    </div>
-                    <div class="six wide field upload-panel">
-                        <input type="file" name="files" accept=".pdf, image/*, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
-                    application/vnd.ms-excel,.doc,.docx">
-                    </div>
-                    <div class="three wide field">
-                        <button class="ui mini yellow button" type="button" (click)="onUpload($event)"><i class="upload icon"></i>อัพโหลด</button>
-                    </div>
                 </div>
+                <div class="ten wide field">
+                    <label style="color:red">*รับรองไฟล์นามสกุล &nbsp;&nbsp;เอกสาร xls, xlsx, doc, docx, ppt, pptx &nbsp;&nbsp;รูป gif, jpeg, jpg, png, bmp &nbsp;&nbsp;ขนาดไม่เกิน 25 MB</label>
+                </div>
+            </div>
+            <div class="inline fields ">
+                <div class="two wide field">
 
-                <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
-                    <thead>
-                        <tr style="text-align: center">
-                            <th>ลำดับที่</th>
-                            <th>วันที่</th>
-                            <th>ชื่อเอกสาร</th>
-                            <th>ขนาด (MB)</th>
-                            <th>จัดการ</th>
-                        </tr>
-                        <tr *ngFor="let ul of tableUpload; let i = index">
-                            <td class="text-center">{{i+1}}</td>
-                            <td class="text-center">{{ul.date}}</td>
-                            <td class="text-center">{{ul.name}}</td>
-                            <td class="text-right">{{ul.size}}</td>
-                            <td class="text-center">
-                                <button class="ui mini red button" type="button" (click)="onDel(i)"><i class="trash icon"></i>ลบ</button>
-                            </td>
+                </div>
+                <div class="three wide field">
+                    <label>หลักฐานประกอบคำเบิก</label>
+                </div>
+                <div class="six wide field upload-panel">
+                    <input type="file" name="files" id="files" accept=".pdf, image/*, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+                    application/vnd.ms-excel,.doc,.docx" (change)="onChangeFile()">
+                </div>
+                <div class="three wide field">
+                    <button class="ui mini yellow button" type="button" (click)="onUpload($event)" [ngClass]="{ 'disabled': flgOnLoad }"><i class="upload icon"></i>อัพโหลด</button>
+                </div>
+            </div>
 
-                        </tr>
-                    </thead>
-                </table>
+            <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
+                <thead>
+                    <tr style="text-align: center">
+                        <th>ลำดับที่</th>
+                        <th>วันที่</th>
+                        <th>ชื่อเอกสาร</th>
+                        <!-- <th>ขนาด (MB)</th> -->
+                        <th>จัดการ</th>
+                    </tr>
+                    <tr *ngIf="tableUpload.length < 1">
+                        <td colspan="5" class="text-center">ไม่มีข้อมูล</td>
+                    </tr>
+                    <tr *ngFor="let ul of tableUpload; let i = index">
+                        <td class="text-center">{{i+1}}</td>
+                        <td class="text-center">{{ul.date}}</td>
+                        <td class="text-center">{{ul.name}}</td>
+                        <!-- <td class="text-right">{{ul.size}}</td> -->
+                        <td class="text-center">
+                            <button class="ui mini red button" type="button" (click)="onDel(i)"><i class="trash icon"></i>ลบ</button>
+                        </td>
+                    </tr>
+                </thead>
+            </table>
 
-                <div class="ui center aligned grid">
-                    <div class="sixteen wide column">
-                        <button class="ui mini primary button" type="submit"><i class="save icon"></i>บันทึก</button>
-                        <button class="ui mini yellow button" type="button"><i class="print icon"></i>ส่งออก</button>
-                        <button class="ui mini button" type="button" routerLink='/int06/11'><i class="close icon"></i>ยกเลิก</button>
-                    </div>
+            <div class="ui center aligned grid">
+                <div class="sixteen wide column">
+                    <button class="ui mini primary button" type="submit" [ngClass]="{ 'disabled': tableUpload.length < 1 }"><i class="save icon"></i>บันทึก</button>
+                    <button class="ui mini yellow button" type="button"><i class="print icon"></i>ส่งออก</button>
+                    <button class="ui mini button" type="button" routerLink='/int06/11'><i class="close icon"></i>ยกเลิก</button>
                 </div>
             </div>
         </div>

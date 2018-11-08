@@ -18,7 +18,7 @@ const URL = {
 @Injectable()
 export class Int061101Service {
   fileUpload: any = [];
-  listExcel: any = [];
+  readDtl: any = [];
 
   constructor(
     private ajax: AjaxService,
@@ -50,19 +50,18 @@ export class Int061101Service {
     });
   };
 
-  save(formData: any) {
-    let promise = new Promise<any>((resolve, reject) => {
+  save(formData: any, cbLoading: Function) {
+    let promise1 = new Promise<any>((resolve, reject) => {
       this.ajax.post(URL.SAVE, formData, res => {
-        console.log("res.json(): ", res.json());
         resolve(res.json());
       }),
         error => {
           reject(this.msg.errorModal("ไม่สามารถบันทึกได้"));
+          cbLoading(false);
         };
     });
 
-    promise.then(returnForm => {
-      console.log("returnForm: ", returnForm);
+    promise1.then(returnForm => {
       if (Utils.isNotNull(returnForm.rentHouseId)) {
         let execelFiles = new FormData();
         execelFiles.append("type", "RH");
@@ -71,62 +70,42 @@ export class Int061101Service {
          * loop get file
          */
         this.fileUpload.forEach(file => {
-          console.log(file.inputFIle.files[0]);
-          console.log(file.name);
           execelFiles.append("files", file.inputFIle.files[0]);
         });
 
         this.ajax.upload(URL.UPLOAD, execelFiles, res => {
           console.log(res.json());
-        });
+          this.msg.successModal(res.json().messageTh);
+          cbLoading(false);
+          this.router.navigate(["/int06/11"]);
+        }),
+          error => {
+            this.msg.errorModal("ไม่สามารถบันทึกได้");
+            cbLoading(false);
+          };
       }
     });
   }
 
-  // onChangeUpload = (event: any) => {
-  //   if (event.target.files && event.target.files.length > 0) {
-  //     let reader = new FileReader();
-  //     return new Promise<any>((resolve, reject) => {
-  //       reader.onload = (e: any) => {
-  //         console.log(event.target.files);
-  //         const f = {
-  //           name: event.target.files[0].name,
-  //           type: event.target.files[0].type,
-  //           size: event.target.files[0].size / 1000000,
-  //           value: e.target.result
-  //         };
-  //         this.fileExel = [f];
-  //         console.log(this.fileExel);
-  //         // this.fileUpload.push(this.fileExel);
-  //         // console.log(this.fileUpload);
-  //       };
-  //       reader.readAsDataURL(event.target.files[0]);
-
-  //       resolve();
-  //     });
-  //   }
-  // };
-
   onUpload() {
-    let inputTypeFile = `<input type="file" name="files" accept=".pdf, image/*, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+    let inputTypeFile = `<input type="file" name="files" id="files" accept=".pdf, image/*, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
                     application/vnd.ms-excel,.doc,.docx">`;
 
     let f = $(".upload-panel > input")[0];
-    console.log(f);
-    $(".upload-panel").html(inputTypeFile);
+    $(".upload-panel").html(inputTypeFile); //add to html
 
     let lastText = f.value.split("\\").length;
-    console.log(lastText);
     let u = {
       name: f.value.split("\\")[lastText - 1],
-      type: f.type,
-      size: f.size,
-      value: f.value,
-      date: new Date(),
+      // type: f.type,
+      // size: f.size,
+      // value: f.value,
+      date: new Date().toLocaleDateString(),
       typePage: "RH",
       inputFIle: f
     };
     this.fileUpload.push(u);
+    console.log(this.fileUpload);
 
     return new Promise<any>((resolve, reject) => {
       resolve(this.fileUpload);
