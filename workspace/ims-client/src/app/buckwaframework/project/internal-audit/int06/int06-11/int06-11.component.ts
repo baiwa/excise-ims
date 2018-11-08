@@ -5,6 +5,7 @@ import { Int0611Service, Lov } from "./int06-11.service";
 import { AuthService } from "services/auth.service";
 import { Observable } from "rxjs";
 import { ComboBox } from "models/combobox";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var $: any;
 
@@ -15,6 +16,7 @@ declare var $: any;
   providers: [Int0611Service]
 })
 export class Int0611Component implements OnInit, AfterViewInit {
+  breadcrumb: BreadCrumb[];
   form: FormGroup = new FormGroup({
     bill: new FormControl("", Validators.required),
     type: new FormControl("", Validators.required),
@@ -56,12 +58,18 @@ export class Int0611Component implements OnInit, AfterViewInit {
   types: Observable<ComboBox>;
   // levels: Observable<ComboBox>;
   // salarys: Observable<ComboBox>;
+
   constructor(
     private router: Router,
     private service: Int0611Service,
     private authService: AuthService
   ) {
     this.initDropdowns();
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบเบิกจ่าย", route: "#" },
+      { label: "บันทึกคำขอเบิก", route: "#" }
+    ];
   }
 
   ngOnInit() {

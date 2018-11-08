@@ -74,7 +74,6 @@ export class Int061101Service {
         });
 
         this.ajax.upload(URL.UPLOAD, execelFiles, res => {
-          console.log(res.json());
           this.msg.successModal(res.json().messageTh);
           cbLoading(false);
           this.router.navigate(["/int06/11"]);
@@ -105,7 +104,6 @@ export class Int061101Service {
       inputFIle: f
     };
     this.fileUpload.push(u);
-    console.log(this.fileUpload);
 
     return new Promise<any>((resolve, reject) => {
       resolve(this.fileUpload);

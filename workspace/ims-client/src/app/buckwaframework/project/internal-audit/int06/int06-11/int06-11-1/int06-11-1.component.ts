@@ -8,6 +8,7 @@ import { Observable } from "rxjs";
 import { ComboBox } from "models/combobox";
 import { TextDateTH, formatter } from "helpers/datepicker";
 import { Utils } from "helpers/utils";
+import { BreadCrumb } from "models/breadcrumb";
 
 declare var $: any;
 @Component({
@@ -18,6 +19,7 @@ declare var $: any;
 })
 export class Int06111Component implements OnInit {
   rentHouseForm: FormGroup;
+  breadcrumb: BreadCrumb[];
   submitted: boolean = false;
   titles: Observable<ComboBox>;
   auth: any;
@@ -33,6 +35,12 @@ export class Int06111Component implements OnInit {
     private route: ActivatedRoute
   ) {
     this.setVariable();
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบเบิกจ่าย", route: "#" },
+      { label: "บันทึกคำขอเบิก", route: "#" },
+      { label: "รายละเอียดแบบขอเบิกเงินค่าเช่าบ้าน", route: "#" }
+    ];
   }
 
   ngOnInit() {
@@ -133,7 +141,6 @@ export class Int06111Component implements OnInit {
 
   onChangeFile() {
     this.flgOnLoad = false;
-    console.log(this.flgOnLoad);
   }
 
   onDel(index: number) {
