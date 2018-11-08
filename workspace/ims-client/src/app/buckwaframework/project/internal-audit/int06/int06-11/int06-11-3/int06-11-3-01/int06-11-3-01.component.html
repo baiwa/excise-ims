@@ -34,7 +34,8 @@
               <label class="text-right full-width">ประเภทสถานศึกษา</label>
             </div>
             <div class="four wide field ">
-              <select [(ngModel)]="form1.typeEducation" id="typeEducation" name="typeEducation" class="ui dropdown ai full-width" (change)="subTypeEducation($event)" >
+              <select [(ngModel)]="form1.typeEducation" id="typeEducation" name="typeEducation" class="ui dropdown ai full-width"
+                (change)="subTypeEducation($event)">
                 <option value="">กรุณาเลือก</option>
                 <option *ngFor="let item of typeEducationList; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
               </select>
@@ -43,7 +44,8 @@
               <label class="text-right full-width">ประเภทการศึกษา</label>
             </div>
             <div class="four wide field ">
-              <select [(ngModel)]="form1.subTypeEducation"  id="subTypeEducation" name="subTypeEducation" class="ui dropdown ai full-width" (change)="levelEducation($event)">
+              <select [(ngModel)]="form1.subTypeEducation" id="subTypeEducation" name="subTypeEducation" class="ui dropdown ai full-width"
+                (change)="levelEducation($event)">
                 <option value="">กรุณาเลือก</option>
                 <option *ngFor="let item of subTypeEducationList; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
               </select>
@@ -55,7 +57,8 @@
               <label class="text-right full-width">ระดับศึกษา</label>
             </div>
             <div class="four wide field " [ngClass]="{'disabled': levelEducationDis1}">
-              <select [(ngModel)]="form1.levelEducation"  id="levelEducation" name="levelEducation" class="ui dropdown ai full-width" (change)="typeSubject($event)">
+              <select [(ngModel)]="form1.levelEducation" id="levelEducation" name="levelEducation" class="ui dropdown ai full-width"
+                (change)="typeSubject($event)">
                 <option value="">กรุณาเลือก</option>
                 <option *ngFor="let item of levelEducationList; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
               </select>
@@ -63,8 +66,9 @@
             <div class="two wide field ">
               <label class="text-right full-width">ประเภทวิชา/สาขา</label>
             </div>
-            <div class="four wide field "  [ngClass]="{'disabled': typeSubjectDis1}">
-              <select id="typeSubject" name="typeSubject" class="ui dropdown ai full-width" (change)="bursary($event)" [disabled]="typeSubjectDis1">
+            <div class="four wide field " [ngClass]="{'disabled': typeSubjectDis1}">
+              <select [(ngModel)]="form1.typeSubject" id="typeSubject" name="typeSubject" class="ui dropdown ai full-width"
+                (change)="bursary($event)" [disabled]="typeSubjectDis1">
                 <option value="">กรุณาเลือก</option>
                 <option *ngFor="let item of typeSubjectList; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
               </select>
@@ -75,8 +79,9 @@
             <div class="two wide field">
               <label class="text-right full-width">เงินอุดหนุน</label>
             </div>
-            <div class="four wide field "  [ngClass]="{'disabled': bursaryDis1}">
-              <select [(ngModel)]="form1.bursary" id="bursary" name="bursary" class="ui dropdown ai full-width" [disabled]="bursaryDis1">
+            <div class="four wide field " [ngClass]="{'disabled': bursaryDis1}">
+              <select [(ngModel)]="form1.bursary" id="bursary" name="bursary" class="ui dropdown ai full-width"
+                [disabled]="bursaryDis1">
                 <option value="">กรุณาเลือก</option>
                 <option *ngFor="let item of bursaryList; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
               </select>
@@ -92,7 +97,164 @@
             </div>
           </div>
         </div>
-        
+
+        <div class="number2">
+          <!-- form row 0 -->
+          <div class="inline fields ui centered grid ">
+            <div class="two wide field">
+              <label class="text-right full-width"><u>บุตรคนที่ 2</u></label>
+            </div>
+            <div class="four wide field "></div>
+            <div class="two wide field"></div>
+            <div class="four wide field "></div>
+          </div>
+          <!-- form row 1 -->
+          <div class="inline fields ui centered grid ">
+            <div class="two wide field ">
+              <label class="text-right full-width">ประเภทสถานศึกษา</label>
+            </div>
+            <div class="four wide field ">
+              <select [(ngModel)]="form2.typeEducation" id="typeEducation2" name="typeEducation2" class="ui dropdown ai full-width"
+                (change)="subTypeEducation2($event)">
+                <option value="">กรุณาเลือก</option>
+                <option *ngFor="let item of typeEducationList2; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+              </select>
+            </div>
+            <div class="two wide field ">
+              <label class="text-right full-width">ประเภทการศึกษา</label>
+            </div>
+            <div class="four wide field ">
+              <select [(ngModel)]="form2.subTypeEducation" id="subTypeEducation2" name="subTypeEducation2" class="ui dropdown ai full-width"
+                (change)="levelEducation2($event)">
+                <option value="">กรุณาเลือก</option>
+                <option *ngFor="let item of subTypeEducationList2; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+              </select>
+            </div>
+          </div>
+          <!-- form row 2 -->
+          <div class="inline fields ui centered grid">
+            <div class="two wide field  ">
+              <label class="text-right full-width">ระดับศึกษา</label>
+            </div>
+            <div class="four wide field " [ngClass]="{'disabled': levelEducationDis2}">
+              <select [(ngModel)]="form2.levelEducation" id="levelEducation2" name="levelEducation2" class="ui dropdown ai full-width"
+                (change)="typeSubject2($event)">
+                <option value="">กรุณาเลือก</option>
+                <option *ngFor="let item of levelEducationList2; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+              </select>
+            </div>
+            <div class="two wide field ">
+              <label class="text-right full-width">ประเภทวิชา/สาขา</label>
+            </div>
+            <div class="four wide field " [ngClass]="{'disabled': typeSubjectDis2}">
+              <select [(ngModel)]="form2.typeSubject" id="typeSubject2" name="typeSubject2" class="ui dropdown ai full-width"
+                (change)="bursary2($event)">
+                <option value="">กรุณาเลือก</option>
+                <option *ngFor="let item of typeSubjectList2; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+              </select>
+            </div>
+          </div>
+          <!-- form row 3 -->
+          <div class="inline fields ui centered grid">
+            <div class="two wide field">
+              <label class="text-right full-width">เงินอุดหนุน</label>
+            </div>
+            <div class="four wide field " [ngClass]="{'disabled': bursaryDis2}">
+              <select [(ngModel)]="form2.bursary" id="bursary2" name="bursary2" class="ui dropdown ai full-width">
+                <option value="">กรุณาเลือก</option>
+                <option *ngFor="let item of bursaryList2; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+              </select>
+            </div>
+            <div class="two wide field ">
+              <!-- <label class="text-right full-width">ประเภทวิชา/สาขา</label> -->
+            </div>
+            <div class="four wide field ">
+              <!-- <select id="selectCoordinate" class="ui dropdown ai" (change)="levelEducation($event)">
+                    <option value="">กรุณาเลือก</option>
+                    <option *ngFor="let item of typeSubjectList; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+                  </select> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="number3">
+            <!-- form row 0 -->
+            <div class="inline fields ui centered grid ">
+              <div class="two wide field">
+                <label class="text-right full-width"><u>บุตรคนที่ 3</u></label>
+              </div>
+              <div class="four wide field "></div>
+              <div class="two wide field"></div>
+              <div class="four wide field "></div>
+            </div>
+            <!-- form row 1 -->
+            <div class="inline fields ui centered grid ">
+              <div class="two wide field ">
+                <label class="text-right full-width">ประเภทสถานศึกษา</label>
+              </div>
+              <div class="four wide field ">
+                <select [(ngModel)]="form3.typeEducation" id="typeEducation3" name="typeEducation3" class="ui dropdown ai full-width"
+                  (change)="subTypeEducation3($event)">
+                  <option value="">กรุณาเลือก</option>
+                  <option *ngFor="let item of typeEducationList3; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+                </select>
+              </div>
+              <div class="two wide field ">
+                <label class="text-right full-width">ประเภทการศึกษา</label>
+              </div>
+              <div class="four wide field ">
+                <select [(ngModel)]="form3.subTypeEducation" id="subTypeEducation3" name="subTypeEducation3" class="ui dropdown ai full-width"
+                  (change)="levelEducation3($event)">
+                  <option value="">กรุณาเลือก</option>
+                  <option *ngFor="let item of subTypeEducationList3; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+                </select>
+              </div>
+            </div>
+            <!-- form row 2 -->
+            <div class="inline fields ui centered grid">
+              <div class="two wide field  ">
+                <label class="text-right full-width">ระดับศึกษา</label>
+              </div>
+              <div class="four wide field " [ngClass]="{'disabled': levelEducationDis3}">
+                <select [(ngModel)]="form3.levelEducation" id="levelEducation3" name="levelEducation3" class="ui dropdown ai full-width"
+                  (change)="typeSubject3($event)">
+                  <option value="">กรุณาเลือก</option>
+                  <option *ngFor="let item of levelEducationList3; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+                </select>
+              </div>
+              <div class="two wide field ">
+                <label class="text-right full-width">ประเภทวิชา/สาขา</label>
+              </div>
+              <div class="four wide field " [ngClass]="{'disabled': typeSubjectDis3}">
+                <select [(ngModel)]="form3.typeSubject" id="typeSubject3" name="typeSubject3" class="ui dropdown ai full-width"
+                  (change)="bursary3($event)">
+                  <option value="">กรุณาเลือก</option>
+                  <option *ngFor="let item of typeSubjectList3; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+                </select>
+              </div>
+            </div>
+            <!-- form row 3 -->
+            <div class="inline fields ui centered grid">
+              <div class="two wide field">
+                <label class="text-right full-width">เงินอุดหนุน</label>
+              </div>
+              <div class="four wide field " [ngClass]="{'disabled': bursaryDis3}">
+                <select [(ngModel)]="form3.bursary" id="bursary3" name="bursary3" class="ui dropdown ai full-width">
+                  <option value="">กรุณาเลือก</option>
+                  <option *ngFor="let item of bursaryList3; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+                </select>
+              </div>
+              <div class="two wide field ">
+                <!-- <label class="text-right full-width">ประเภทวิชา/สาขา</label> -->
+              </div>
+              <div class="four wide field ">
+                <!-- <select id="selectCoordinate" class="ui dropdown ai" (change)="levelEducation($event)">
+                      <option value="">กรุณาเลือก</option>
+                      <option *ngFor="let item of typeSubjectList; index as i;" value="{{item.lovId}}">{{item.typeDescription}}</option>
+                    </select> -->
+              </div>
+            </div>
+          </div>
         <br>
         <br>
         <div class="ui stackable center aligned page grid">

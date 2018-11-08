@@ -5,6 +5,8 @@ import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Int06113Service } from './int06-11-3.service';
 import { Router } from '@angular/router';
 import { TextDateTH, formatter } from 'helpers/datepicker';
+import { IaService } from 'services/ia.service';
+import { Utils } from 'helpers/utils';
 declare var $: any;
 @Component({
   selector: 'app-int06-11-3',
@@ -47,20 +49,27 @@ export class Int06113Component implements OnInit, AfterViewInit {
     offerType4: "คู่สมรสของข้าพเจ้าได้รับการช่วยเหลือจากรัฐวิสาหกิจ หน่วยงานของทางราชการ ราชการท้องถิ่นกรุงเทพมหานครองค์กรอิสระ องค์การมหาชน หรือหน่วยงานอื่นใด ต่า กว่าจา นวนที่ได้รับจากทางราชการ"
   }
   userDetails: any;
-
+  money: any;
+  countFrom: number = 0;
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private myService: Int06113Service,
-    private router: Router
+    private router: Router,
+    private iaService: IaService
   ) {
     this.newFormControl();
     this.items = this.formControl.get('items') as FormArray;
-    this.items.push(this.createChlidItem());
-    this.items.push(this.createChlidItem());
+    // this.items.push(this.createChlidItem());
+    // this.items.push(this.createChlidItem());
+
+    this.money = this.iaService.getData();
+    if (Utils.isNull(this.money)) { this.router.navigate(['/int06/11/3-1']) }
   }
 
   ngOnInit() {
+    console.log("money : ", this.money);
+    this.checkMoney(this.money);
     this.authService.reRenderVersionProgram('INT-06113').then(res => {
       this.userDetails = res;
       this.formControl.controls.name.setValue(this.userDetails.fullName);
@@ -72,6 +81,16 @@ export class Int06113Component implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     this.calenda();
+  }
+  checkMoney(money) {
+    this.countFrom = Utils.isNotNull(money.money1) ? this.countFrom+=1 : this.countFrom+=0;
+    this.countFrom = Utils.isNotNull(money.money2) ? this.countFrom+=1 : this.countFrom+=0;
+    this.countFrom = Utils.isNotNull(money.money3) ? this.countFrom+=1 : this.countFrom+=0;
+    console.log("countFrom : ", this.countFrom);
+
+    for(let i=0;i<this.countFrom;i++){
+      this.items.push(this.createChlidItem());   
+    }
   }
   newFormControl = () => {
     this.formControl = this.formBuilder.group({
@@ -144,10 +163,10 @@ export class Int06113Component implements OnInit, AfterViewInit {
       console.log("item controls : ", this.items.controls[i]);
       console.log(_birth);
       console.log("item value:", this.items.controls[i].patchValue({
-        birth : _birth
-      }));  
-      console.log("value : ",this.items.controls[i].value);  
-      console.log("---------------------------------------------------")              
+        birth: _birth
+      }));
+      console.log("value : ", this.items.controls[i].value);
+      console.log("---------------------------------------------------")
     }
 
     event.preventDefault();
