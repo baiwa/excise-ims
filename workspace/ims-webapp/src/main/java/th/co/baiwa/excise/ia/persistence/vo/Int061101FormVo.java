@@ -1,30 +1,38 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
-import th.co.baiwa.excise.ia.persistence.entity.RentHouse;
+import java.math.BigDecimal;
 
-public class Int061101FormVo extends RentHouse {
+import org.springframework.web.multipart.MultipartFile;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4598720827083625068L;
-	
-	private String title;
-//	private String name;
-	private String lastname;
-	
-	public String getTitle() {
-		return title;
+public class Int061101FormVo {
+
+	// private List<WithdrawFileUpload> listExcel;
+	private MultipartFile[] files;
+	private BigDecimal rentHouseId;
+	private String type;
+
+	public MultipartFile[] getFiles() {
+		return files;
 	}
-	public void setTitle(String title) {
-		this.title = title;
-	}	
-	public String getLastname() {
-		return lastname;
+
+	public void setFiles(MultipartFile[] files) {
+		this.files = files;
 	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+
+	public BigDecimal getRentHouseId() {
+		return rentHouseId;
 	}
-	
+
+	public void setRentHouseId(BigDecimal rentHouseId) {
+		this.rentHouseId = rentHouseId;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

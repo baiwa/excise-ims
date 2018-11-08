@@ -2,6 +2,8 @@ package th.co.baiwa.excise.ia.persistence.entity;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,9 +17,9 @@ public class WithdrawFileUpload extends BaseEntity {
 	@SequenceGenerator(name = "IA_WITHDRAW_FILE_UPLOAD_GEN", sequenceName = "IA_WITHDRAW_FILE_UPLOAD_SEQ", allocationSize = 1)
 
 	@Column(name = "ID")
-	private Long id;
+	private BigDecimal id;
 	@Column(name = "ID_MASTER")
-	private Long idMaster;
+	private BigDecimal idMaster;
 	@Column(name = "TYPE")
 	private String type;
 	@Column(name = "FILENAME")
@@ -29,19 +31,19 @@ public class WithdrawFileUpload extends BaseEntity {
 	@Column(name = "VALUE_2")
 	private String value2;
 
-	public Long getId() {
+	public BigDecimal getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(BigDecimal id) {
 		this.id = id;
 	}
 
-	public Long getIdMaster() {
+	public BigDecimal getIdMaster() {
 		return idMaster;
 	}
 
-	public void setIdMaster(Long idMaster) {
+	public void setIdMaster(BigDecimal idMaster) {
 		this.idMaster = idMaster;
 	}
 

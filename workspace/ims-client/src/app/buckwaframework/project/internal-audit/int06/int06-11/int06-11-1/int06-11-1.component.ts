@@ -21,6 +21,8 @@ export class Int06111Component implements OnInit {
   submitted: boolean = false;
   titles: Observable<ComboBox>;
   auth: any;
+  loadingUL: boolean = false;
+  tableUpload: any;
 
   constructor(
     private selfService: Int061101Service,
@@ -35,7 +37,6 @@ export class Int06111Component implements OnInit {
   ngOnInit() {
     this.calendar();
     this.authService.reRenderVersionProgram("INT-06111").then(obj => {
-      console.log("data: ", obj);
       this.rentHouseForm.patchValue({
         name: obj.fullName,
         position: obj.title,
@@ -95,7 +96,8 @@ export class Int06111Component implements OnInit {
     return this.submitted && this.rentHouseForm.get(value).errors;
   }
 
-  save() {
+  save(e) {
+    e.preventDefault();
     this.submitted = true;
     console.log(this.rentHouseForm.value);
     // stop here if form is invalid
@@ -108,5 +110,25 @@ export class Int06111Component implements OnInit {
 
   typeNumber(e) {
     return Utils.onlyNumber(e);
+  }
+
+  // onChangeUpload(e) {
+  //   this.loadingUL = true;
+  //   this.selfService.onChangeUpload(e).then(() => {
+  //     setTimeout(() => {
+  //       this.loadingUL = false;
+  //     }, 1000);
+  //   });
+  // }
+
+  onUpload(e) {
+    e.preventDefault();
+    this.selfService.onUpload().then(data => {
+      this.tableUpload = data;
+    });
+  }
+
+  onDel(index: number) {
+    this.selfService.onDel(index);
   }
 }

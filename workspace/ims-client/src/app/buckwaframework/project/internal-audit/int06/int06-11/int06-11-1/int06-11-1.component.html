@@ -1,13 +1,14 @@
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
     <span>รายละเอียดแบบขอเบิกเงินค่าเช่าบ้าน (แบบ 6006)</span>
 </div>
-<div class="ui attached  segment">
-    <br>
-    <div class="inline fields" style="text-align: center !important;">
-        <h1>แบบขอเบิกเงินค่าเช่าบ้าน (แบบ ๖๐๐๖)</h1>
-    </div>
-    <br>
-    <form [formGroup]="rentHouseForm" (submit)="save()">
+<form [formGroup]="rentHouseForm" (submit)="save($event)" id="upload-form">
+    <div class="ui attached  segment">
+        <br>
+        <div class="inline fields" style="text-align: center !important;">
+            <h1>แบบขอเบิกเงินค่าเช่าบ้าน (แบบ ๖๐๐๖)</h1>
+        </div>
+        <br>
+
         <div class="ui form">
             <div class="ui attached  segment">
                 <div class="inline fields hd">
@@ -262,173 +263,63 @@
                     <label>๒.ข้าพเจ้าขอรับรองว่าข้อความที่ให้ไว้ข้างต้นเป็นความจริงทุกประการ และข้าพเจ้ามีสิทธิได้รับเงินค่าเช่าบ้านตามพระราชกฤษฎีกา
             <br> ค่าเช่าบ้านข้าราชการ พ.ศ.2547 และได้ดำเนินการถูกต้องตามระเบียบทุกประการแล้ว</label>
                 </div>
-            </div>
-            <div class="inline fields">
-                <div class="ten wide field"></div>
-                <div class="four wide field">
-                    <label>(ลงชื่อ)...................................................................ผู้ขอเบิก
-
-          </label>
-                </div>
-            </div>
-            <div class="inline fields">
-                <div class="ten wide field"></div>
-                <div class=" ic four wide field ">
-                    <label>(......................................................................)</label>
-                </div>
-            </div>
-
-            <div class="inline fields">
-                <div class="ten wide field"></div>
-                <div class="iy four wide field">
-                    <label>ตำแหน่ง..........................................................................................
-          </label>
-                </div>
-            </div>
-            <div class="inline fields">
-                <div class="eight wide field"></div>
-                <div class="ir six wide field ">
-                    <label>วันที่..............................เดือน............................................พ.ศ. ...................................
-          </label>
-                </div>
             </div> -->
             </div>
-            <!-- <div class="ui attached  segment">
-            <div class="inline fields hd">
-                <div class="one wide field"></div>
-                <div class="four wide field">
-                    <h4>๒. การอนุมัติ</h4>
-                </div>
-            </div>
-        </div> -->
-            <!-- <div class="ui attached  segment">
-            <div class="inline fields">
-                <div class="one wide field"></div>
-                <div class="six wide field">
-                    <label>อนุมัติให้เบิกจ่ายเงินค่าเช่าบ้านได้ตามสิทธิ</label>
-                </div>
-            </div>
-            <br>
-            <div class="inline fields">
-                <div class="two wide field"></div>
-                <div class="ten wide field">
-                    <label>ตั้งแต่วันที่...............................เดือน......................................................พ.ศ. ............................................</label>
-                </div>
-            </div>
-            <div class="inline fields">
-                <div class="ten wide field"></div>
-                <div class="four wide field">
-                    <label>(ลงชื่อ)..........................................................................
+        </div>
+    </div>
 
-          </label>
-                </div>
-            </div>
-            <div class="inline fields">
-                <div class="ten wide field"></div>
-                <div class=" ic four wide field ">
-                    <label>(......................................................................)</label>
-                </div>
-            </div>
-            <div class="inline fields">
-                <div class="ten wide field"></div>
-                <div class="iy four wide field">
-                    <label>ตำแหน่ง..........................................................................................
-          </label>
-                </div>
-            </div>
-            <div class="inline fields">
-                <div class="eight wide field"></div>
-                <div class="ir six wide field ">
-                    <label>วันที่..............................เดือน............................................พ.ศ. ...................................
-          </label>
-                </div>
-            </div>
-        </div> -->
-            <!-- <div class="ui attached  segment">
-            <div class="inline fields hd">
-                <div class="one wide field"></div>
-                <div class="four wide field">
-                    <h4>๓. การรับเงิน</h4>
-                </div>
-            </div>
-        </div> -->
-            <!-- <div class="ui attached  segment">
-            <br>
-            <div class="inline fields">
-                <div class="one wide field"></div>
-                <div class="ten wide field">
-                    <label>ได้รับเงินค่าเช่าบ้าน จำนวน.........................................................................บาท (...........................................................................................................)
-            ไว้ถูกต้องแล้ว</label>
-                </div>
-            </div>
+    <div class="ui segment">
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white;">
+            <span>เอกสารหลักฐานประกอบคำเบิก</span>
+        </div>
+        <div class="ui form">
+            <div class="ui attached segment" [ngClass]="{ 'loading': loadingUL }">
+                <div class="inline fields ">
+                    <div class="two wide field">
 
-            <div class="inline fields">
-                <div class="ten wide field"></div>
-                <div class="four wide field">
-                    <label>(ลงชื่อ)...................................................................ผู้รับเงิน
+                    </div>
+                    <div class="three wide field">
+                        <label>หลักฐานประกอบคำเบิก</label>
+                    </div>
+                    <div class="six wide field upload-panel">
+                        <input type="file" name="files" accept=".pdf, image/*, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+                    application/vnd.ms-excel,.doc,.docx">
+                    </div>
+                    <div class="three wide field">
+                        <button class="ui mini yellow button" type="button" (click)="onUpload($event)"><i class="upload icon"></i>อัพโหลด</button>
+                    </div>
+                </div>
 
-          </label>
-                </div>
-            </div>
-            <div class="inline fields">
-                <div class="ten wide field"></div>
-                <div class=" ic four wide field ">
-                    <label>(......................................................................)</label>
-                </div>
-            </div>
+                <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
+                    <thead>
+                        <tr style="text-align: center">
+                            <th>ลำดับที่</th>
+                            <th>วันที่</th>
+                            <th>ชื่อเอกสาร</th>
+                            <th>ขนาด (MB)</th>
+                            <th>จัดการ</th>
+                        </tr>
+                        <tr *ngFor="let ul of tableUpload; let i = index">
+                            <td class="text-center">{{i+1}}</td>
+                            <td class="text-center">{{ul.date}}</td>
+                            <td class="text-center">{{ul.name}}</td>
+                            <td class="text-right">{{ul.size}}</td>
+                            <td class="text-center">
+                                <button class="ui mini red button" type="button" (click)="onDel(i)"><i class="trash icon"></i>ลบ</button>
+                            </td>
 
-            <div class="inline fields">
-                <div class="ten wide field"></div>
-                <div class="iy four wide field">
-                    <label>ตำแหน่ง..........................................................................................
-          </label>
-                </div>
-            </div>
-            <div class="inline fields">
-                <div class="eight wide field"></div>
-                <div class="ir six wide field ">
-                    <label>วันที่..............................เดือน............................................พ.ศ. ...................................
-          </label>
-                </div>
-            </div>
-            <div class="inline fields">
-                <div class="ten wide field"></div>
-                <div class="four wide field">
-                    <label>(ลงชื่อ)...................................................................ผู้จ่ายเงิน
-  
-            </label>
-                </div>
-            </div>
-            <div class="inline fields">
-                <div class="ten wide field"></div>
-                <div class=" ic four wide field ">
-                    <label>(......................................................................)</label>
-                </div>
-            </div>
+                        </tr>
+                    </thead>
+                </table>
 
-            <div class="inline fields">
-                <div class="ten wide field"></div>
-                <div class="iy four wide field">
-                    <label>ตำแหน่ง..........................................................................................
-            </label>
-                </div>
-            </div>
-            <div class="inline fields">
-                <div class="eight wide field"></div>
-                <div class="ir six wide field ">
-                    <label>วันที่..............................เดือน............................................พ.ศ. ...................................
-            </label>
-                </div>
-            </div>
-        </div> -->
-            <br>
-            <div class="ui center aligned grid">
-                <div class="sixteen wide column">
-                    <button class="ui  primary button" type="submit"><i class="save icon"></i>บันทึก</button>
-                    <button class="ui yellow button" type="button"><i class="print icon"></i>ส่งออก</button>
-                    <button class="ui button" type="button" routerLink='/int06/11'><i class="close icon"></i>ยกเลิก</button>
+                <div class="ui center aligned grid">
+                    <div class="sixteen wide column">
+                        <button class="ui mini primary button" type="submit"><i class="save icon"></i>บันทึก</button>
+                        <button class="ui mini yellow button" type="button"><i class="print icon"></i>ส่งออก</button>
+                        <button class="ui mini button" type="button" routerLink='/int06/11'><i class="close icon"></i>ยกเลิก</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </form>
-</div>
+    </div>
+</form>

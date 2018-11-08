@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.domain.UserBean;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.ia.persistence.entity.RentHouse;
 import th.co.baiwa.excise.ia.persistence.vo.Int061101FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int061101GetUserLogin;
 import th.co.baiwa.excise.ia.service.Int061101Service;
@@ -50,12 +52,25 @@ public class Int061101Controller {
 	
 	@PostMapping("/save")
 	@ResponseBody
-	public Message save(@RequestBody Int061101FormVo formVo) {
+	public RentHouse save(@RequestBody RentHouse en) {
 		logger.info("save Int061101");
+		RentHouse data = new RentHouse();
+		try {
+			data = int061101Service.save(en);
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		return data;
+	}
+	
+	@PostMapping("/upload")
+	@ResponseBody
+	public Message uploadList(@ModelAttribute Int061101FormVo uploadList) {
+		logger.info("upload Int061101");
 		Message msg;
 		msg = ApplicationCache.getMessage("MSG_00003");
 		try {
-			int061101Service.save(formVo);
+			int061101Service.uploadList(uploadList);
 			msg = ApplicationCache.getMessage("MSG_00002");
 		} catch (Exception e) {
 			e.getStackTrace();

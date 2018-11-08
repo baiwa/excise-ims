@@ -12,13 +12,12 @@ import javax.persistence.Table;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
-
 /**
  * The persistent class for the IA_RENT_HOUSE database table.
  * 
  */
 @Entity
-@Table(name="IA_RENT_HOUSE")
+@Table(name = "IA_RENT_HOUSE")
 public class RentHouse extends BaseEntity {
 
 	/**
@@ -27,56 +26,56 @@ public class RentHouse extends BaseEntity {
 	private static final long serialVersionUID = -5421459708607851543L;
 
 	@Id
-	@SequenceGenerator(name="IA_RENT_HOUSE_GEN", sequenceName="IA_RENT_HOUSE_SEQ", allocationSize = 1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_RENT_HOUSE_GEN")
-	@Column(name="RENT_HOUSE_ID")
-	private Long rentHouseId;
+	@SequenceGenerator(name = "IA_RENT_HOUSE_GEN", sequenceName = "IA_RENT_HOUSE_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RENT_HOUSE_GEN")
+	@Column(name = "RENT_HOUSE_ID")
+	private BigDecimal rentHouseId;
 
 	private String affiliation;
 
-	@Column(name="BILL_AMOUNT")
+	@Column(name = "BILL_AMOUNT")
 	private BigDecimal billAmount;
 
 	private String name;
 
-	@Column(name="NOT_OVER")
+	@Column(name = "NOT_OVER")
 	private BigDecimal notOver;
 
-	@Column(name="PAYMENT_COST")
+	@Column(name = "PAYMENT_COST")
 	private String paymentCost;
 
-	@Column(name="PAYMENT_FOR")
+	@Column(name = "PAYMENT_FOR")
 	private String paymentFor;
 
 	private String period;
 
-	@Column(name="PERIOD_WITHDRAW")
+	@Column(name = "PERIOD_WITHDRAW")
 	private String periodWithdraw;
 
-	@Column(name="\"POSITION\"")
+	@Column(name = "\"POSITION\"")
 	private String position;
 
 	private String receipts;
 
-	@Column(name="REF_RECEIPTS")
+	@Column(name = "REF_RECEIPTS")
 	private BigDecimal refReceipts;
 
-	@Column(name="REQUEST_NO")
+	@Column(name = "REQUEST_NO")
 	private String requestNo;
 
 	private BigDecimal salary;
 
-	@Column(name="TOTAL_MONTH")
+	@Column(name = "TOTAL_MONTH")
 	private BigDecimal totalMonth;
 
-	@Column(name="TOTAL_WITHDRAW")
+	@Column(name = "TOTAL_WITHDRAW")
 	private BigDecimal totalWithdraw;
 
-	public Long getRentHouseId() {
+	public BigDecimal getRentHouseId() {
 		return rentHouseId;
 	}
 
-	public void setRentHouseId(Long rentHouseId) {
+	public void setRentHouseId(BigDecimal rentHouseId) {
 		this.rentHouseId = rentHouseId;
 	}
 
