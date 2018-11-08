@@ -34,9 +34,8 @@ export interface List {
     categoryName: string;
     listId: string;
     listName: string;
-    pmmethodPersonType: String;
-    refpersonType: String;
-    payeepersonType: String;
+    personType: String;
+    payee: String;
 }
 
 export interface Int06101 {
@@ -68,10 +67,6 @@ export interface Int06101 {
     budgetName: string;
     categoryName: string;
     listName: string;
-    pmmethodPersonType: String;
-    refpersonType: String;
-    persontitle: String;
-    firstnamePerson: String;
-    lastnamePerson: String;
-    payeeCorporate: String;
+    personType: String;
+    payee: String;
 }

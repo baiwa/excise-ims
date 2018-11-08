@@ -1,8 +1,13 @@
 <!-- breadcrumb -->
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 
+<div class="ui active inverted dimmer" *ngIf="loading">
+  <div class="ui text loader">กำลังโหลด...</div>
+</div>
+
 <div class="ui grid">
   <div class="sixteen wide column" [formGroup]="formGroup">
+
     <!-- Form Header Name -->
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
       <span>บันทึกรายการขอเบิก </span>
@@ -46,7 +51,8 @@
             <label class="text-right full-width">งบ</label>
           </div>
           <div class="four wide field required" [ngClass]="{'error': invalidFormGroup('budged')}">
-            <select name="budged" id="budged" formControlName="budged" class="ui dropdown ai search full-width" (change)="budgedOnchange($event)">
+            <select name="budged" id="budged" formControlName="budged" class="ui dropdown ai search full-width"
+              (change)="budgedOnchange($event)">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of budged; index as i;" value="{{item.budgetId}}">{{item.budgetName}}</option>
             </select>
@@ -59,7 +65,8 @@
             <label class="text-right full-width">หมวด</label>
           </div>
           <div class="four wide field required" [ngClass]="{'error': invalidFormGroup('category')}">
-            <select name="category" id="category" formControlName="category" class="ui dropdown ai search full-width" (change)="categoryOnchange($event)">
+            <select name="category" id="category" formControlName="category" class="ui dropdown ai search full-width"
+              (change)="categoryOnchange($event)">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of category" value="{{item.categoryId}}">{{item.categoryName}}</option>
             </select>
@@ -145,65 +152,51 @@
         <!-- Form row 8 -->
         <div class="inline fields">
           <div class="three wide field required">
-            <label class="text-right full-width">วิธีการจ่าย</label>
-          </div>
-          <div class="four wide field" [ngClass]="{'error': invalidFormGroup('pmmethodPersonType')}">
-              <select name="pmmethodPersonType" id="pmmethodPersonType" formControlName="pmmethodPersonType" class="ui dropdown ai">
-                <option value="">กรุณาเลือก</option>
-                <option *ngFor="let item of pmmethodPersonTypeList" value="{{item.value1}}">{{item.value1}}</option>
-              </select>
-          </div>
-          <div class="three wide field required">
-            <label class="text-right full-width">เลขที่อ้างอิงการจ่าย</label>
-          </div>
-          <div class="four wide field">
-            <input type="text" id="refpersonType" maxlength="50" formControlName="refpersonType" name="refpersonType">
-          </div>
-        </div>
-
-        <!-- Form row 9 -->
-        <div class="inline fields">
-          <div class="three wide field required">
             <label class="text-right full-width">ผู้รับเงิน</label>
           </div>
-          <div class="two wide field">
+          <div class="two wide field" [ngClass]="{'error': invalidFormGroup('personType') }">
             <div class="ui radio checkbox">
-              <input type="radio" formControlName="personType" id="personType" name="personType" (change)="radioChange('one')" value="บุคคลธรรมดา">
+              <input type="radio" formControlName="personType" id="personType" name="personType" (change)="radioChange('one')"
+                value="บุคคลธรรมดา">
               <label>บุคคลธรรมดา</label>
             </div>
           </div>
-          <div class="two wide field {{!checkRadio1? 'disabled': ''}}">
+          <div class="three wide field" [ngClass]="{'error': invalidFormGroup('persontitle'), 'disabled': !checkRadio1 }">
             <select name="persontitle" id="persontitle" formControlName="persontitle" class="ui dropdown ai">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let item of persontitleList" value="{{item.subTypeDescription}}">{{item.subTypeDescription}}</option>
             </select>
           </div>
-          <div class="three wide field {{!checkRadio1? 'disabled': ''}}">
+          <div class="three wide field" [ngClass]="{'error': invalidFormGroup('firstnamePerson'), 'disabled': !checkRadio1 }">
             <label></label>
-            <input type="text" id="firstnamePerson" maxlength="80" formControlName="firstnamePerson" name="firstnamePerson" placeholder="ชื่อ">
+            <input type="text" id="firstnamePerson" maxlength="80" formControlName="firstnamePerson" name="firstnamePerson"
+              placeholder="ชื่อ">
           </div>
-          <div class="three wide field {{!checkRadio1? 'disabled': ''}}">
+          <div class="three wide field" [ngClass]="{'error': invalidFormGroup('lastnamePerson'), 'disabled': !checkRadio1 }">
             <label></label>
-            <input type="text" id="lastnamePerson" maxlength="80" formControlName="lastnamePerson" name="lastnamePerson" placeholder="นามสกุล">
+            <input type="text" id="lastnamePerson" maxlength="80" formControlName="lastnamePerson" name="lastnamePerson"
+              placeholder="นามสกุล">
+          </div>
+        </div>
+
+        <!-- Form row 9 -->
+        <div class="inline fields">
+          <div class="three wide field ">
+          </div>
+          <div class="two wide field" [ngClass]="{'error': invalidFormGroup('personType') }">
+            <div class="ui radio checkbox">
+              <input type="radio" formControlName="personType" id="personType" name="personType" (change)="radioChange('two')"
+                value="นิติบุคคล">
+              <label>นิติบุคคล</label>
+            </div>
+          </div>
+          <div class="five wide field" [ngClass]="{'error': invalidFormGroup('payeeCorporate'), 'disabled': !checkRadio2}">
+            <input type="text" id="payeeCorporate" maxlength="80" formControlName="payeeCorporate" name="payeeCorporate"
+              placeholder="ชื่อ">
           </div>
         </div>
 
         <!-- Form row 10 -->
-        <div class="inline fields">
-          <div class="three wide field ">
-          </div>
-          <div class="two wide field ">
-            <div class="ui radio checkbox">
-              <input type="radio" formControlName="personType" id="personType" name="personType" (change)="radioChange('two')" value="นิติบุคคล">
-              <label>นิติบุคคล</label>
-            </div>
-          </div>
-          <div class="five wide field {{!checkRadio2? 'disabled': ''}}">
-            <input type="text" id="payeeCorporate" maxlength="80" formControlName="payeeCorporate" name="payeeCorporate" placeholder="ชื่อ">
-          </div>
-        </div>
-
-        <!-- Form row 11 -->
         <div class="inline fields">
           <div class="three wide field ">
             <label class="text-right full-width">คำอธิบายรายการ</label>
@@ -213,7 +206,7 @@
           </div>
         </div>
 
-        <!-- Form row 12 -->
+        <!-- Form row 11 -->
         <div class="inline fields">
           <div class="three wide field ">
             <label class="text-right full-width">หมายเหตุ</label>
@@ -241,7 +234,8 @@
                   </h4>
                 </div>
                 <div class="fields">
-                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'paymentMethod')}" [formGroupName]="i">
+                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'paymentMethod')}"
+                    [formGroupName]="i">
                     <label>วิธีการจ่าย</label>
                     <div class="ui input">
                       <select name="pmmethod{{i}}" id="pmmethod{{i}}" formControlName="paymentMethod" class="ui dropdown ai">
@@ -250,7 +244,8 @@
                       </select>
                     </div>
                   </div>
-                  <div class="four wide field required" [ngClass]="{'error': invalidFormArray(i,'refPayment')}" [formGroupName]="i">
+                  <div class="four wide field required" [ngClass]="{'error': invalidFormArray(i,'refPayment')}"
+                    [formGroupName]="i">
                     <label>เลขที่อ้างอิงการจ่าย</label>
                     <input type="text" id="referenceNumber{{i}}" maxlength="50" formControlName="refPayment" name="referenceNumber{{i}}">
                   </div>
@@ -263,22 +258,26 @@
                       </select>
                     </div>
                   </div>
-                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'paymentDate')}" [formGroupName]="i">
+                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'paymentDate')}"
+                    [formGroupName]="i">
                     <label>วันที่สั่งจ่าย</label>
                     <div class="frame ui calendar" id="datePersons{{i}}" style="width:100%">
                       <div class="ui input left icon">
                         <i class="calendar alter nate outline icon"></i>
-                        <input type="text" formControlName="paymentDate" placeholder="วว/ดด/ปปปป" id="datePersons1{{i}}" name="datePersons1{{i}}">
+                        <input type="text" formControlName="paymentDate" placeholder="วว/ดด/ปปปป" id="datePersons1{{i}}"
+                          name="datePersons1{{i}}">
                       </div>
                     </div>
                   </div>
-                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'amount')}" [formGroupName]="i">
+                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'amount')}"
+                    [formGroupName]="i">
                     <label>จำนวนเงินที่จ่าย</label>
                     <input type="number" formControlName="amount" maxlength="7" id="amountPaid{{i}}" name="amountPaid{{i}}">
                   </div>
                 </div>
                 <div class="fields">
-                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'title')}" [formGroupName]="i">
+                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'title')}"
+                    [formGroupName]="i">
                     <label>ผู้รับเงิน</label>
                     <div class="ui input">
                       <select name="title{{i}}" id="title{{i}}" formControlName="title" class="ui dropdown ai">
@@ -287,19 +286,24 @@
                       </select>
                     </div>
                   </div>
-                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'payeeFirst')}" [formGroupName]="i">
+                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'payeeFirst')}"
+                    [formGroupName]="i">
                     <label></label>
-                    <input type="text" id="payee{{i}}" maxlength="80" formControlName="payeeFirst" name="payee{{i}}" placeholder="ชื่อ">
+                    <input type="text" id="payee{{i}}" maxlength="80" formControlName="payeeFirst" name="payee{{i}}"
+                      placeholder="ชื่อ">
                   </div>
-                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'payeeLast')}" [formGroupName]="i">
+                  <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'payeeLast')}"
+                    [formGroupName]="i">
                     <label></label>
-                    <input type="text" id="lastname{{i}}" maxlength="80" formControlName="payeeLast" name="lastname{{i}}" placeholder="นามสกุล">
+                    <input type="text" id="lastname{{i}}" maxlength="80" formControlName="payeeLast" name="lastname{{i}}"
+                      placeholder="นามสกุล">
                   </div>
                   <div class="two wide field" [formGroupName]="i">
                     <label>&nbsp;</label>
                     <div class="ui input" *ngIf="(i === persons.controls.length-1 || i === 29); then thenBlock; else elseBlock"></div>
                     <ng-template #thenBlock>
-                      <button class="ui green mini button btn-custom" type="button" id="addFile" (click)="addPerson()" [disabled]="statusSendBackFile">
+                      <button class="ui green mini button btn-custom" type="button" id="addFile" (click)="addPerson()"
+                        [disabled]="statusSendBackFile">
                         <i class="add icon"></i>
                         เพิ่ม
                       </button>
@@ -321,7 +325,11 @@
       <!-- Button -->
       <div class="ui center aligned grid">
         <div class="sixteen wide column">
-          <button class="ui mini primary button" (click)="saveData()">
+          <button type="button" class="ui mini primary button" *ngIf="id == ''" (click)="saveData()">
+            <i class="save icon"></i>
+            บันทึก
+          </button>
+          <button type="button" class="ui mini primary button" *ngIf="id != ''" (click)="updateData()">
             <i class="save icon"></i>
             บันทึก
           </button>
@@ -333,5 +341,6 @@
       </div>
 
     </div>
+
   </div>
 </div>

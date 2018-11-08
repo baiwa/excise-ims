@@ -5,8 +5,9 @@ import { Observable } from 'rxjs';
 import { AjaxService, AuthService, DialogService, MessageBarService } from 'services/index';
 import { formatter, TextDateTH, stringToDate } from 'helpers/datepicker';
 import { BreadCrumb } from 'models/breadcrumb';
-import { Int06101, Person } from './int06-10-1.model';
-import { Router } from '@angular/router';
+import { Int06101, Person, List } from './int06-10-1.model';
+import { Router, ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 
 declare var $: any;
 
@@ -28,6 +29,11 @@ const ALERT_MSG = {
   }
 }
 
+const URL = {
+  GET_LIST: "ia/int06101/withdraw/list",
+  GET_PERSON: "ia/int06101/withdraw/person"
+}
+
 @Component({
   selector: 'app-int06-10-1',
   templateUrl: './int06-10-1.component.html',
@@ -37,7 +43,7 @@ export class Int06101Component implements OnInit {
 
   checkRadio1: boolean = false;
   checkRadio2: boolean = false;
-  id: any;
+  id: string = "";
   breadcrumb: BreadCrumb[];
 
   // Dropdown Arrays
@@ -51,7 +57,6 @@ export class Int06101Component implements OnInit {
   pmmethodList: any[] = [];
   activityList: any[] = [];
   pmmethodPersonTypeList: any[] = [];
-  
 
   // Forms
   formGroup: FormGroup = new FormGroup({});
@@ -60,6 +65,7 @@ export class Int06101Component implements OnInit {
   // State
   private submitted: boolean = false;
   private unsave: boolean = true;
+  private loading: boolean = false;
 
   constructor(
     private messageBarService: MessageBarService,
@@ -67,7 +73,8 @@ export class Int06101Component implements OnInit {
     private ajax: AjaxService,
     private formBuilder: FormBuilder,
     private dialog: DialogService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
 
     // Initial Breadcrumb
@@ -97,13 +104,11 @@ export class Int06101Component implements OnInit {
       budget: ['', [Validators.required, Validators.maxLength(200)]],
       amountOfMoney: ['', [Validators.required, Validators.maxLength(7)]],
       personType: ['', [Validators.required, Validators.maxLength(50)]],
-      refpersonType: ['', [Validators.required, Validators.maxLength(50)]],
-      pmmethodPersonType: ['', [Validators.required, Validators.maxLength(50)]],
       persontitle: ['', [Validators.required, Validators.maxLength(40)]],
       firstnamePerson: ['', [Validators.required, Validators.maxLength(80)]],
       lastnamePerson: ['', [Validators.required, Validators.maxLength(80)]],
       payeeCorporate: ['', [Validators.required, Validators.maxLength(100)]],
-      
+
       persons: this.formBuilder.array([])
     });
 
@@ -121,6 +126,65 @@ export class Int06101Component implements OnInit {
   }
 
   ngOnInit() {
+    // Get Id on url parameter
+    this.id = this.route.snapshot.queryParams['id'] || "";
+    if (this.id != "") {
+      this.loading = true;
+      this.getList().then((data: List) => {
+        const {
+          note, deductSocial, withholding, other, amountOfMoney1,
+          numberRequested, documentNumber, itemDescription, list, refnum,
+          withdrawal, activity, budged, category, budget, amountOfMoney,
+          personType, persontitle, firstnamePerson, lastnamePerson,
+          payeeCorporate
+        } = this.formGroup.controls;
+        note.setValue(data.note);
+        deductSocial.setValue(data.socialSecurity);
+        withholding.setValue(data.withholdingTax);
+        other.setValue(data.anotherAmount);
+        amountOfMoney1.setValue(data.receivedAmount);
+        numberRequested.setValue(data.withdrawalDocNum);
+        documentNumber.setValue(data.paymentDocNum);
+        itemDescription.setValue(data.itemDesc);
+        refnum.setValue(data.refNum);
+
+        withdrawal.setValue(moment(data.withdrawalDate).format('DD/MM/YYYY')); // Calendar
+        $('#dateWithdraw').calendar('set date', data.withdrawalDate); // Calendar
+
+        activity.setValue(data.activities); // Dropdown
+
+        budged.setValue(data.budgetId); // Dropdown
+        this.budgedOnchange({ target: { value: data.budgetId } }); // Dropdown
+
+        category.setValue(data.categoryId); // Dropdown
+        this.categoryOnchange({ target: { value: data.categoryId } }); // Dropdown
+
+        list.setValue(data.listId); // Dropdown
+        budget.setValue(data.budgetType); // Dropdown
+        amountOfMoney.setValue(data.withdrawalAmount);
+
+        personType.setValue(data.personType); // RadioButton
+        if (data.personType == "บุคคลธรรมดา") {
+          this.radioChange('one');
+          persontitle.setValue(data.payee.split(' ')[0]);
+          firstnamePerson.setValue(data.payee.split(' ')[1]);
+          lastnamePerson.setValue(data.payee.split(' ')[2]);
+        } else {
+          this.radioChange('two');
+          payeeCorporate.setValue(data.payee);
+        }
+
+        // Loading person
+        this.getPerson().then(data => {
+          this.loading = false;
+        }).catch(() => {
+          this.loading = false;
+        });
+
+      }).catch(() => {
+        this.loading = false;
+      });
+    }
 
     // Initial Calendar
     $("#dateWithdraw").calendar({
@@ -219,20 +283,22 @@ export class Int06101Component implements OnInit {
             return;
           }
         }
+        if (this.formGroup.get(i).invalid) {
+          console.log(i);
+        }
       }
     }
 
     // Check Validators 2nd
     if (this.formGroup.valid) {
+      this.loading = true;
       const URL = "ia/int06101/add";
       const { list, note, deductSocial, withholding, // destruct data from `this.formGroup`
-        other, amountOfMoney1, numberRequested, documentNumber, 
+        other, amountOfMoney1, numberRequested, documentNumber,
         itemDescription, refnum, withdrawal, activity,
-        budged, category, budget, amountOfMoney, 
-        pmmethodPersonType,  refpersonType,
+        budged, category, budget, amountOfMoney, payee,
         persontitle, firstnamePerson, lastnamePerson,
-        payeeCorporate,
-        persons } = this.formGroup.value;
+        personType, persons, payeeCorporate } = this.formGroup.value;
       let _persons: Person[] = []; // Person Array
       for (let key in persons) {
         const { amount, paymentMethod, refPayment, paymentDate,
@@ -242,11 +308,26 @@ export class Int06101Component implements OnInit {
           paymentMethod: paymentMethod,
           refPayment: refPayment,
           paymentDate: stringToDate(paymentDate),
-          payee: `${title}${payeeFirst} ${payeeLast}`,
+          payee: `${title} ${payeeFirst} ${payeeLast}`,
           bankName: bankName,
         })
       }
-
+      const payeeCorporat = this.formGroup.get('payeeCorporate');
+      const persontitl = this.formGroup.get('persontitle');
+      const firstnamePerso = this.formGroup.get('firstnamePerson');
+      const lastnamePerso = this.formGroup.get('lastnamePerson');
+      if (this.checkRadio1) { // clear validate payeeCorporate
+        payeeCorporat.clearValidators(); payeeCorporat.updateValueAndValidity();
+        persontitl.setValidators([Validators.required, Validators.maxLength(40)]); persontitl.updateValueAndValidity();
+        firstnamePerso.setValidators([Validators.required, Validators.maxLength(80)]); firstnamePerso.updateValueAndValidity();
+        lastnamePerso.setValidators([Validators.required, Validators.maxLength(80)]); lastnamePerso.updateValueAndValidity();
+      } else if (this.checkRadio2) { // clear validate persontitle, firstnamePerson, lastnamePerson
+        this.checkRadio2 = true;
+        payeeCorporat.setValidators([Validators.required, Validators.maxLength(100)]); payeeCorporat.updateValueAndValidity();
+        persontitl.clearValidators(); persontitl.updateValueAndValidity();
+        firstnamePerso.clearValidators(); firstnamePerso.updateValueAndValidity();
+        lastnamePerso.clearValidators(); lastnamePerso.updateValueAndValidity();
+      }
       const data: Int06101 = { // Binding Data
         refnum: refnum, withdrawal: withdrawal, activity: activity,
         budged: budged, budget: budget, category: category,
@@ -257,10 +338,8 @@ export class Int06101Component implements OnInit {
         budgetName: this.budged.find(obj => obj.budgetId == budged).budgetName,
         listName: this.list.find(obj => obj.listId == list).listName,
         categoryName: this.category.find(obj => obj.categoryId == category).categoryName,
-        persons: _persons,
-        pmmethodPersonType: pmmethodPersonType,  refpersonType: refpersonType,
-        persontitle: persontitle, firstnamePerson: firstnamePerson, lastnamePerson: lastnamePerson,
-        payeeCorporate: payeeCorporate,
+        payee: this.checkRadio1 ? `${persontitle} ${firstnamePerson} ${lastnamePerson}` : payeeCorporate,
+        persons: _persons, personType: personType,
       };
       this.ajax.post(URL, data, res => {
         const msg = res.json();
@@ -268,13 +347,32 @@ export class Int06101Component implements OnInit {
           this.messageBarService.successModal(msg.messageTh);
           this.unsave = false;
           this.router.navigate(['/int06/10']);
+          this.loading = false;
         } else {
           this.messageBarService.errorModal(msg.messageTh);
+          this.loading = false;
         }
+      }).catch(() => {
+        this.loading = false;
       });
     }
   }
 
+  getList(): Promise<List> {
+    return this.ajax.get(`${URL.GET_LIST}/${this.id}`, response => {
+      const data = response.json() as List;
+      // console.log("LIST =>", data);
+      return data;
+    });
+  }
+
+  getPerson(): Promise<Person> {
+    return this.ajax.get(`${URL.GET_LIST}/${this.id}`, response => {
+      const data = response.json() as Person;
+      // console.log("PERSONS =>", data);
+      return data;
+    });
+  }
 
   // Call All Ajax Dropdown
   callAllDropdown = () => {
@@ -291,12 +389,24 @@ export class Int06101Component implements OnInit {
   radioChange(flag: string) {
     this.checkRadio1 = false;
     this.checkRadio2 = false;
+    const payeeCorp = this.formGroup.get('payeeCorporate');
+    const persontitle = this.formGroup.get('persontitle');
+    const firstnamePerson = this.formGroup.get('firstnamePerson');
+    const lastnamePerson = this.formGroup.get('lastnamePerson');
     if (flag === 'one') {
       this.checkRadio1 = true;
+      payeeCorp.clearValidators(); payeeCorp.updateValueAndValidity();
+      persontitle.setValidators([Validators.required, Validators.maxLength(40)]); persontitle.updateValueAndValidity();
+      firstnamePerson.setValidators([Validators.required, Validators.maxLength(80)]); firstnamePerson.updateValueAndValidity();
+      lastnamePerson.setValidators([Validators.required, Validators.maxLength(80)]); lastnamePerson.updateValueAndValidity();
     } else {
       this.checkRadio2 = true;
+      payeeCorp.setValidators([Validators.required, Validators.maxLength(100)]); payeeCorp.updateValueAndValidity();
+      persontitle.clearValidators(); persontitle.updateValueAndValidity();
+      firstnamePerson.clearValidators(); firstnamePerson.updateValueAndValidity();
+      lastnamePerson.clearValidators(); lastnamePerson.updateValueAndValidity();
     }
-
+    this.formGroup.updateValueAndValidity();
   }
 
   // Ajax Dropdown
@@ -388,7 +498,7 @@ export class Int06101Component implements OnInit {
   }
 
   // State Checking
-  invalidFormGroup(control) { return this.submitted && this.formGroup.get(control).invalid }
+  invalidFormGroup(control) { return this.submitted && this.formGroup.get(control) && this.formGroup.get(control).invalid }
   invalidFormArray(index, control) { return this.submitted && this.persons.at(index).get(control).invalid }
 
 }

@@ -88,100 +88,12 @@ public class IaWithdrawalList extends BaseEntity {
 
 	@Column(name = "LIST_NAME")
 	private String listName;
-	
-	@Column(name = "PAYMENT_METHOD")
-	private String pmmethodPersonType;
-	
-	@Column(name = "REF_PAYMENT")
-	private String refpersonType;
-	
+
 	@Column(name = "PAYEE")
-	private String payeepersonType;
-	
+	private String payee;
+
 	@Column(name = "PERSON_TYPE")
 	private String personType;
-
-	
-	public String getPayeepersonType() {
-		return payeepersonType;
-	}
-
-	public void setPayeepersonType(String payeepersonType) {
-		this.payeepersonType = payeepersonType;
-	}
-
-	public String getPersonType() {
-		return personType;
-	}
-
-	public void setPersonType(String personType) {
-		this.personType = personType;
-	}
-
-	public String getPmmethodPersonType() {
-		return pmmethodPersonType;
-	}
-
-	public void setPmmethodPersonType(String pmmethodPersonType) {
-		this.pmmethodPersonType = pmmethodPersonType;
-	}
-
-	public String getRefpersonType() {
-		return refpersonType;
-	}
-
-	public void setRefpersonType(String refpersonType) {
-		this.refpersonType = refpersonType;
-	}
-
-
-	public String getBudgetId() {
-		return budgetId;
-	}
-
-	public void setBudgetId(String budgetId) {
-		this.budgetId = budgetId;
-	}
-
-	public String getBudgetName() {
-		return budgetName;
-	}
-
-	public void setBudgetName(String budgetName) {
-		this.budgetName = budgetName;
-	}
-
-	public String getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
-	public String getListId() {
-		return listId;
-	}
-
-	public void setListId(String listId) {
-		this.listId = listId;
-	}
-
-	public String getListName() {
-		return listName;
-	}
-
-	public void setListName(String listName) {
-		this.listName = listName;
-	}
 
 	public Long getWithdrawalId() {
 		return withdrawalId;
@@ -311,4 +223,68 @@ public class IaWithdrawalList extends BaseEntity {
 		this.note = note;
 	}
 
+	public String getBudgetId() {
+		return budgetId;
+	}
+
+	public void setBudgetId(String budgetId) {
+		this.budgetId = budgetId;
+	}
+
+	public String getBudgetName() {
+		return budgetName;
+	}
+
+	public void setBudgetName(String budgetName) {
+		this.budgetName = budgetName;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public String getListId() {
+		return listId;
+	}
+
+	public void setListId(String listId) {
+		this.listId = listId;
+	}
+
+	public String getListName() {
+		return listName;
+	}
+
+	public void setListName(String listName) {
+		this.listName = listName;
+	}
+
+	public String getPayee() {
+		return payee;
+	}
+
+	public void setPayee(String payee) {
+		this.payee = payee;
+	}
+
+	public String getPersonType() {
+		return personType;
+	}
+
+	public void setPersonType(String personType) {
+		this.personType = personType;
+	}
+	
 }

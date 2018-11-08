@@ -95,6 +95,14 @@ public class Int06101Service {
 		}
 		return data;
 	}
+	
+	public IaWithdrawalList findById(Long id) {
+		return listRep.findOne(id);
+	}
+	
+	public List<IaWithdrawalPersons> findByListId(Long id) {
+		return personsRep.findByWithDrawalId(id);
+	}
 
 	public List<BudgetList> getListName(BudgetList en) {
 		List<BudgetList> data = new ArrayList<BudgetList>();
@@ -133,9 +141,10 @@ public class Int06101Service {
 			data.setItemDesc(formVo.getItemDescription());
 			data.setNote(formVo.getNote());
 			data.setListId(formVo.getList());
-			data.setPayeepersonType(formVo.getPayeepersonType());
-			data.setPmmethodPersonType(formVo.getPmmethodPersonType());
-			data.setRefpersonType(formVo.getRefpersonType());
+			data.setPayee(formVo.getPayee());
+			data.setPersonType(formVo.getPersonType());
+			data.setListName(formVo.getListName());
+			data.setCategoryName(formVo.getCategoryName());
 			Long id = listRep.save(data).getWithdrawalId();
 			if (formVo.getPersons().size() > 0) {
 				for(IaWithdrawalPersons vo : formVo.getPersons()) {
@@ -144,6 +153,51 @@ public class Int06101Service {
 					vo.setOFFICEDesc(officeDesc);
 				}
 				personsRep.save(formVo.getPersons());
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	public void update(Int06101FormVo formVo, Long id) {
+
+		try {
+			String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeId();
+			String officeDesc = ApplicationCache.getListOfValueByValueType("SECTOR_LIST", officeCode).get(0).getTypeDescription();
+			IaWithdrawalList data = listRep.findOne(id);
+			data.setOfficeCode(officeCode);
+			data.setOFFICEDesc(officeDesc);
+			data.setWithdrawalDate(DateConstant.convertStrDDMMYYYYToDate(formVo.getWithdrawal()));
+			data.setActivities(formVo.getActivity());
+			data.setBudgetName(formVo.getBudgetName());
+			data.setRefNum(formVo.getRefnum());
+			data.setBudgetId(formVo.getBudged());
+			data.setBudgetType(formVo.getBudget());
+			data.setCategoryId(formVo.getCategory());
+			data.setWithdrawalAmount(stringToDecimal(formVo.getAmountOfMoney()));
+			data.setSocialSecurity(stringToDecimal(formVo.getDeductSocial()));
+			data.setWithholdingTax(stringToDecimal(formVo.getWithholding()));
+			data.setAnotherAmount(stringToDecimal(formVo.getOther()));
+			data.setReceivedAmount(stringToDecimal(formVo.getAmountOfMoney1()));
+			data.setWithdrawalDocNum(formVo.getNumberRequested());
+			data.setPaymentDocNum(formVo.getDocumentNumber());
+			data.setItemDesc(formVo.getItemDescription());
+			data.setNote(formVo.getNote());
+			data.setListId(formVo.getList());
+			data.setPayee(formVo.getPayee());
+			data.setPersonType(formVo.getPersonType());
+			data.setListName(formVo.getListName());
+			data.setCategoryName(formVo.getCategoryName());
+			if (formVo.getPersons().size() > 0) {
+//				List<IaWithdrawalPersons> persons = personsRep.findByWithDrawalId(id);
+//				for(IaWithdrawalPersons vo : formVo.getPersons()) {
+//					if (BeanUtils.isEmpty(vo.getWithdrawalPersonsId())) {
+//						personsRep.save(vo);
+//					} else {
+//						personsRep.delete();
+//					}
+//				}
+//				personsRep.save(formVo.getPersons());
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
