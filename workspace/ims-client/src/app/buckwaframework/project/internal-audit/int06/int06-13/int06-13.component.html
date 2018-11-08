@@ -2,9 +2,182 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 
 <div class="ui grid">
-  <div class="sixteen wide column">
-    <div class="ui segment">
-      
+    <div class="sixteen wide column">
+        <div class="ui top  attached header segment">
+            <span> กำหนดค่าเช่าบ้านข้าราชการ (ตำแหน่งประเภทบริหาร)</span>
+        </div>
+
+        <div class="ui attached center segment {{loading1 ? 'loading1' : ''}} ">
+
+            <table id="dataTable1" class="ui small celled table nowrap striped selectable" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="text-align: center !important">ระดับ</th>
+                        <th colspan="2" style="text-align: center !important">เงินเดือน / บาท</th>
+                        <th rowspan="2" style="text-align: center !important">ค่าเช่าบ้านไม่เกิน<br>เดือนละ / บาท</th>
+                        <th rowspan="2" style="text-align: center !important">แก้ไข</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">ตั้งแต่</th>
+                        <th style="text-align: center !important">แต่ไม่ถึง</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </div>
-  </div>
+
+    <div class="sixteen wide column">
+        <div class="ui top  attached header segment">
+            <span> กำหนดค่าเช่าบ้านข้าราชการ (ตำแหน่งประเภทอำนวยการ)</span>
+        </div>
+
+        <div class="ui attached center segment {{loading2 ? 'loading2' : ''}} ">
+
+
+            <table id="dataTable2" class="ui small celled table nowrap striped selectable" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="text-align: center !important">ระดับ</th>
+                        <th colspan="2" style="text-align: center !important">เงินเดือน / บาท</th>
+                        <th rowspan="2" style="text-align: center !important">ค่าเช่าบ้านไม่เกิน<br>เดือนละ / บาท</th>
+                        <th rowspan="2" style="text-align: center !important">แก้ไข</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">ตั้งแต่</th>
+                        <th style="text-align: center !important">แต่ไม่ถึง</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div class="sixteen wide column">
+        <div class="ui top  attached header segment">
+            <span>กำหนดค่าเช่าบ้านข้าราชการ (ตำแหน่งประเภทวิชาการ)</span>
+        </div>
+
+        <div class="ui attached center segment {{loading3 ? 'loading3' : ''}} ">
+
+
+            <table id="dataTable3" class="ui small celled table nowrap striped selectable" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="text-align: center !important">ระดับ</th>
+                        <th colspan="2" style="text-align: center !important">เงินเดือน / บาท</th>
+                        <th rowspan="2" style="text-align: center !important">ค่าเช่าบ้านไม่เกิน<br>เดือนละ / บาท</th>
+                        <th rowspan="2" style="text-align: center !important">แก้ไข</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">ตั้งแต่</th>
+                        <th style="text-align: center !important">แต่ไม่ถึง</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div class="sixteen wide column">
+        <div class="ui top  attached header segment">
+            <span>กำหนดค่าเช่าบ้านข้าราชการ (ตำแหน่งประเภททั่วไป)</span>
+        </div>
+
+        <div class="ui attached center segment {{loading4 ? 'loading4' : ''}} ">
+
+
+            <table id="dataTable4" class="ui small celled table nowrap striped selectable" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="text-align: center !important">ระดับ</th>
+                        <th colspan="2" style="text-align: center !important">เงินเดือน / บาท</th>
+                        <th rowspan="2" style="text-align: center !important">ค่าเช่าบ้านไม่เกิน<br>เดือนละ / บาท</th>
+                        <th rowspan="2" style="text-align: center !important">แก้ไข</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center !important; border-left: 1px solid rgba(34,36,38,.1) !important">ตั้งแต่</th>
+                        <th style="text-align: center !important">แต่ไม่ถึง</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="ui modal" id="editData">
+        <div class="header">แก้ไขกำหนดค่าเช่าบ้านข้าราชการ</div>
+        <div class="content">
+            <form class="ui form ">
+                <!-- row 1 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>ตำแหน่ง</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input type="text" name="position" [(ngModel)]="dataEdit.position" disabled>
+                    </div>
+                    <div class="one wide field ">
+                    </div>
+                    <div class="two wide field ">
+                        <label>ระดับ</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input type="text" name="levels" [(ngModel)]="dataEdit.levels" disabled>
+                    </div>
+                    <div class="one wide field ">
+                    </div>
+                </div>
+                <!-- row 2 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>เงินเดือนตั้งแต่</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input type="text"  name="salaryFrom" [(ngModel)]="dataEdit.salaryFrom" (keypress)="typeNumber($event)" (keyup)="onKey($event)">
+                    </div>
+                    <div class="one wide field ">
+                        <label>บาท</label>
+                    </div>
+                    <div class="two wide field ">
+                        <label>แต่ไม่ถึง</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input type="text" name="salaryTo" [(ngModel)]="dataEdit.salaryTo" (keypress)="typeNumber($event)">
+                    </div>
+                    <div class="one wide field ">
+                        <label>บาท</label>
+                    </div>
+                </div>
+                <!-- row 3 -->
+                <div class="inline fields  ui grid">
+                    <div class="one wide field "></div>
+                    <div class="three wide field ">
+                        <label>ค่าเช่าบ้านไม่เกินเดือนละ</label>
+                    </div>
+                    <div class="four wide field ">
+                        <input type="text" name="rentAmount" [(ngModel)]="dataEdit.rentAmount" (keypress)="typeNumber($event)">
+                    </div>
+                    <div class="one wide field ">
+                        <label>บาท</label>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui center aligned grid">
+                <div class="sixteen wide column">
+                    <button class="ui mini primary button" type="button" (click)="editData(dataEdit.ruleId,dataEdit.codePosition,dataEdit.salaryFrom,dataEdit.salaryTo,dataEdit.rentAmount)">
+                        <i class="save icon"></i>
+                        บันทึก
+                    </button>
+                    <button class="ui deny mini button" type="button">
+                        <i class="remove icon"></i>
+                        ยกเลิก
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

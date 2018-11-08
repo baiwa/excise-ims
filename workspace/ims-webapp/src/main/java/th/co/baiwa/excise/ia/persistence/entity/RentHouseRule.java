@@ -1,7 +1,6 @@
 package th.co.baiwa.excise.ia.persistence.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,43 +11,46 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
+
 @Entity
-@Table(name="RULE_ID")
+@Table(name = "IA_RENT_HOUSE_RULE")
 public class RentHouseRule extends BaseEntity {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8986338797579216204L;
 	@Id
-	@SequenceGenerator(name="IA_RENT_HOUSE_RULE_GEN", sequenceName="IA_RENT_HOUSE_RULE_SEQ", allocationSize = 1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IA_RENT_HOUSE_RULE_GEN")
-	@Column(name="RULE_ID")
+	@SequenceGenerator(name = "IA_RENT_HOUSE_RULE_GEN", sequenceName = "IA_RENT_HOUSE_RULE_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RENT_HOUSE_RULE_GEN")
+	@Column(name = "RULE_ID")
 	private Long ruleId;
-	
-	@Column(name="YEAR")
+
+	@Column(name = "YEAR")
 	private String year;
-	
-	@Column(name="COPY_NUMBER")
+
+	@Column(name = "COPY_NUMBER")
 	private String copyNumber;
-	
-	@Column(name="POSITION")
+
+	@Column(name = "POSITION")
 	private String position;
-	
-	@Column(name="LEVELS")
+
+	@Column(name = "LEVELS")
 	private String levels;
-	
-	@Column(name="SALARY_FROM")
+
+	@Column(name = "SALARY_FROM")
 	private BigDecimal salaryFrom;
-	
-	@Column(name="SALARY_TO")
+
+	@Column(name = "SALARY_TO")
 	private BigDecimal salaryTo;
-	
-	@Column(name="RENT_AMOUNT")
+
+	@Column(name = "RENT_AMOUNT")
 	private BigDecimal rentAmount;
 
+	@Column(name = "CODE_POSITION")
+	private String codePosition;
 	
-
+	
 	public Long getRuleId() {
 		return ruleId;
 	}
@@ -117,5 +119,14 @@ public class RentHouseRule extends BaseEntity {
 		this.rentAmount = rentAmount;
 	}
 
+	public String getCodePosition() {
+		return codePosition;
+	}
+
+	public void setCodePosition(String codePosition) {
+		this.codePosition = codePosition;
+	}
+	
+	
 
 }
