@@ -22,7 +22,7 @@ public class ExciseConstants {
 	    	public static final String FALSE = "FALSE";
 	    }
 	    
-	    public static class TA {
+	    public static class IA {
 	    	public static class STATUS {
 		    	public static final String PROCESS = "2048";
 		    	public static final String PASS = "2057";

@@ -59,7 +59,7 @@ public class Int061103Service {
 		master.setOffer(form.getOffer());
 		master.setOfferType(form.getOfferType());
 		master.setSumAmount(new BigDecimal(form.getSumAmount()));
-		master.setStatusCheck(ExciseConstants.TA.STATUS.PROCESS);
+		master.setStatusCheck(ExciseConstants.IA.STATUS.PROCESS);
 		TuitionFee masterResult = tuitionFeeRepository.save(master);
 		
 		List<Int061103VoChild> childForms= form.getItems();		
