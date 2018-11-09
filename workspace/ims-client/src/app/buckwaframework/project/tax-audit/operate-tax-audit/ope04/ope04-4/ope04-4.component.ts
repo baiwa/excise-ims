@@ -148,6 +148,15 @@ export class Ope044Component implements OnInit, AfterViewInit {
     });
   }
 
+  export =()=>{
+    let dataSum = this.ope044Service.getSummaryData();
+    console.log(dataSum);
+    let formExcel = $("#form-data-excel").get(0);
+    formExcel.action = AjaxService.CONTEXT_PATH + "ta/opo044/export";
+    formExcel.dataJson.value = JSON.stringify({voList : dataSum});
+    formExcel.submit();
+  }
+
   save = async () => {
     this.buttonDisabled = await true;
     await this.ope044Service.save(this.formControl.value).then(async (res) => {

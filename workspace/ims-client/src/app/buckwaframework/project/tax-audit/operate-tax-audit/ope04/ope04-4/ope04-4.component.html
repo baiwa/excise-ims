@@ -164,7 +164,14 @@
                     <i class="reply icon"></i>
                     ย้อนกลับ
                 </button>
+                <button class="ui mini button" (click)="export()">
+                    <i class="reply icon"></i>
+                    export
+                </button>
             </div>
         </div>
     </div>
 </div>
+<form id="form-data-excel" method="POST"> 
+    <input type="hidden" name="dataJson" id="dataJson">
+</form>

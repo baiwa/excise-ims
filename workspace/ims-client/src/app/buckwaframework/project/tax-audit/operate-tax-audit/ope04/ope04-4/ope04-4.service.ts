@@ -145,7 +145,7 @@ export class Ope044Service {
                 "contentType": "application/json",
                 "type": "POST",
                 "data": (d) => {
-                    return this.dataList = JSON.stringify($.extend({}, d, {
+                    return  JSON.stringify($.extend({}, d, {
                         "exciseId": $("#exciseId").val(),
                         "searchFlag": this.searchFlag,
                         "dataExcel": this.dataExcel
@@ -195,12 +195,20 @@ export class Ope044Service {
                     }
                 },
             ],
-            "drawCallback": (settings) => {
-                console.log("dataList : ", this.dataList);
+            "drawCallback": (settings) => {                
                 $('.r-mark-tr').closest('td').addClass('background-color : red');
                 $('.g-mark-tr').closest('td').addClass('background-color : green');
             }
 
         });
+    }
+
+    getSummaryData(){
+         let dataList = this.table.data();
+         let dataArray = [];
+        for(let i=0;i<dataList.length;i++){
+            dataArray.push(dataList[i]);
+        }
+        return dataArray
     }
 }
