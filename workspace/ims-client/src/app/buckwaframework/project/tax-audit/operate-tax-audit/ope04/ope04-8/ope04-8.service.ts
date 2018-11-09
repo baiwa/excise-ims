@@ -191,4 +191,13 @@ export class Ope048Service {
             }
         });
     }
+
+    export = () =>{
+        if(this.table.data().count()==0){
+         this.message.alert("ไม่พบข้อมูล");
+         return false;
+        }
+        const URL_DOWNLOAD = "ta/opo048/export";
+        this.ajax.download(URL_DOWNLOAD);
+       }
 }

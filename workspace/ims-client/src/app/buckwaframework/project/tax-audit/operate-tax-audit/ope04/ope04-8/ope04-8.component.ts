@@ -182,4 +182,9 @@ export class Ope048Component implements OnInit, AfterViewInit {
   dataTable = () => {
     this.ope048Service.dataTable();
   }
+
+  export = () => {
+    this.ope048Service.export();
+  }
+
 }
