@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.ia.persistence.entity.RentHouse;
 import th.co.baiwa.excise.ia.persistence.entity.WithdrawFileUpload;
 import th.co.baiwa.excise.ia.persistence.repository.RentHouseRepository;
@@ -46,6 +47,7 @@ public class Int061101Service {
 		data.setSalary(en.getSalary());
 		data.setTotalMonth(en.getTotalMonth());
 		data.setTotalWithdraw(en.getTotalWithdraw());
+		data.setStatus(ExciseConstants.IA.STATUS.PROCESS);
 
 		return rentHouseRepository.save(data);
 	}

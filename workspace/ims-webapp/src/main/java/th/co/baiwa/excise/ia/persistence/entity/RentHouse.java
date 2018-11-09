@@ -70,6 +70,9 @@ public class RentHouse extends BaseEntity {
 
 	@Column(name = "TOTAL_WITHDRAW")
 	private BigDecimal totalWithdraw;
+	
+	@Column(name = "STATUS")
+	private String status;
 
 	public BigDecimal getRentHouseId() {
 		return rentHouseId;
@@ -197,6 +200,14 @@ public class RentHouse extends BaseEntity {
 
 	public void setTotalWithdraw(BigDecimal totalWithdraw) {
 		this.totalWithdraw = totalWithdraw;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
