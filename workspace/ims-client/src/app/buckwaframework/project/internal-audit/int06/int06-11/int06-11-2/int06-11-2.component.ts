@@ -165,8 +165,6 @@ export class Int06112Component implements OnInit {
         });
 
         promise.then(res => {
-          console.log(this.arrayUpload);
-          console.log("response: ", res);
           if (Utils.isNotNull(res.id)) {
             const formData = new FormData();
             formData.append("id", res.id);
@@ -176,7 +174,6 @@ export class Int06112Component implements OnInit {
             });
 
             var urlUpload = "ia/int061102/upload";
-            console.log("formData: ", formData);
             this.ajaxService.upload(urlUpload, formData, res => {
               this.message.successModal(res.json().messageTh);
               this.router.navigate(["/int06/11"]);
