@@ -54,6 +54,9 @@ public class Ope041Controller {
 	@ResponseBody
 	public DataTableAjax<Ope041DataTable> excel(@ModelAttribute Ope041Vo vo, HttpServletRequest httpServletRequest)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
+		
+		httpServletRequest.getSession().removeAttribute(SESSION_DATA);
+		
 		List<Ope041DataTable> result = new ArrayList<Ope041DataTable>();
 		if ((BeanUtils.isNotEmpty(vo.getStartDate())) && (BeanUtils.isNotEmpty(vo.getEndDate()))) {
 			result = planWorksheetHeaderService.queryExciseIdFromAccDTL(vo.getExciseId(), vo.getType(),
@@ -130,7 +133,7 @@ public class Ope041Controller {
 		outStream.flush();
 		outStream.close();
 		
-		httpServletRequest.getSession().removeAttribute(SESSION_DATA);
+		
 	}
 
 }

@@ -488,6 +488,10 @@ export class Ope042Component implements OnInit, AfterViewInit {
 
 
   export(){
+
+    console.log($("#showDt").DataTable().rows().data());
+
+
     if(this.showDt.data().count()==0){
      this.messageBarService.alert("ไม่่พบข้อมูล");
      return false;

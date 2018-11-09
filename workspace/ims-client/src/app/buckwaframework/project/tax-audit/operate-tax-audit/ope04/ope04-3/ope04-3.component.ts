@@ -435,6 +435,16 @@ export class Ope043Component implements OnInit, AfterViewInit {
     }
     return x;
   }
+
+  export(){
+    if(this.showDt.data().count()==0){
+     this.messageBarService.alert("ไม่พบข้อมูล");
+     return false;
+    }
+    const URL_DOWNLOAD = "ope043/export";
+    this.ajax.download(URL_DOWNLOAD);
+   }
+
 }
 
 class File {

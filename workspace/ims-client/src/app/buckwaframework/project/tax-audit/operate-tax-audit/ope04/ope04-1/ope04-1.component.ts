@@ -42,6 +42,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
   emptyColumn: any;
   allData: any;
 
+
   constructor(
     private authService: AuthService,
     private ajax: AjaxService,
@@ -330,7 +331,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
       columns: [
         {
           render: function(data, type, row, meta) {
-            console.log("product : ", row.product);
+           // console.log("product : ", row.product);
             return meta.row + meta.settings._iDisplayStart + 1;
           },
           className: "center"
@@ -451,13 +452,14 @@ export class Ope041Component implements OnInit, AfterViewInit {
   }
 
   export(){
-   // console.log($("#showDt").DataTable().rows().data());
-   if(this.showDt.data().count()==0){
-    this.messageBarService.alert("ไม่่พบข้อมูล");
+  // console.log($("#showDt").DataTable().rows().data());
+  if(this.showDt.data().count()==0){
+    this.messageBarService.alert("ไม่พบข้อมูล");
     return false;
    }
    const URL_DOWNLOAD = "ope041/export";
    this.ajax.download(URL_DOWNLOAD);
+
   }
 
 }

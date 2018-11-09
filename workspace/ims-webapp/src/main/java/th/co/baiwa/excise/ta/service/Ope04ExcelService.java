@@ -18,6 +18,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
+import th.co.baiwa.excise.ta.persistence.vo.Ope043DataTable;
 
 @Service
 public class Ope04ExcelService {
@@ -180,9 +181,7 @@ public class Ope04ExcelService {
 
 		/* set sheet */
 		for (int i = 2; i <= 5; i++) {
-			if (i != 1) {
-				sheet.setColumnWidth(i, 76 * 50);
-			}
+			sheet.setColumnWidth(i, 76 * 50);
 		}
 		sheet.setColumnWidth(0, 76 * 35);
 		sheet.setColumnWidth(1, 76 * 150);
@@ -220,6 +219,81 @@ public class Ope04ExcelService {
 			cell = row.createCell(cellNum);
 			cell.setCellStyle(cellCenter);
 			cellNum++;
+
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		/* EndDetail */
+
+		/* set write */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+
+		return outByteStream;
+	}
+	
+	public ByteArrayOutputStream exportOpe043(List<Ope043DataTable> dataList) throws IOException {
+		/* create spreadsheet */
+		XSSFWorkbook workbook = setUpExcel();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		System.out.println("Creating excel");
+		row = sheet.createRow(0);
+
+		/* Header */
+		String[] tbTH1 = { "ลำดับ", "รายการ", "คงเหลือจากการตรวจนับ","ผลต่างของข้อมูล 1","ผลต่างของข้อมูล2" };
+		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH1[cellNum]);
+			cell.setCellStyle(thStyle);
+		}
+		;
+
+		/* set sheet */
+		sheet.setColumnWidth(0, 76 * 35);
+		sheet.setColumnWidth(1, 76 * 150);
+		
+		for (int i = 2; i <= 4; i++) {
+			sheet.setColumnWidth(i, 76 * 100);
+		}
+
+		/* Detail */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+		for (Ope043DataTable data : dataList) {
+			row = sheet.createRow(rowNum);
+			// No.
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			// Order
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getOrder());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(thStyle);
+			cellNum++;
+
+
 
 			no++;
 			rowNum++;
