@@ -6,6 +6,7 @@ import { Ope048Service } from './ope04-8.service';
 import { Ope048Form } from './ope04-8.modesl';
 import { Utils } from 'helpers/utils';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AjaxService } from 'services/ajax.service';
 declare var $: any;
 @Component({
   selector: 'ope04-8',
@@ -183,8 +184,13 @@ export class Ope048Component implements OnInit, AfterViewInit {
     this.ope048Service.dataTable();
   }
 
-  export = () => {
-    this.ope048Service.export();
+  export =()=>{
+    let dataSum = this.ope048Service.getSummaryData();
+    console.log(dataSum);
+    let formExcel = $("#form-data-excel").get(0);
+    formExcel.action = AjaxService.CONTEXT_PATH + "ta/opo048/export";
+    formExcel.dataJson.value = JSON.stringify({voList : dataSum});
+    formExcel.submit();
   }
 
 }

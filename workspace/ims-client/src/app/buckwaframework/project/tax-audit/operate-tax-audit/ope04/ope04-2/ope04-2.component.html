@@ -158,7 +158,7 @@
                             (change)="onChangeUpload($event)" required>
                     </div>
                     <div class="four wide field">
-                        <button class="ui mini primary button" type="submit">
+                        <button class="ui mini primary button" type="submit" [disabled]="uploadDisabled">
                             <i class="upload icon"></i>
                             อัพโหลด
                         </button>
@@ -177,3 +177,6 @@
         </div>
     </div>
 </div>
+<form id="form-data-excel" method="POST"> 
+    <input type="hidden" name="dataJson" id="dataJson">
+</form>

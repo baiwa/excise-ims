@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
 import th.co.baiwa.excise.ta.persistence.vo.Ope043DataTable;
+import th.co.baiwa.excise.ta.persistence.vo.Ope044Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope048Vo;
 
@@ -247,7 +248,8 @@ public class Ope04ExcelService {
 		row = sheet.createRow(0);
 
 		/* Header */
-		String[] tbTH1 = { "ลำดับ", "รายการ", "คงเหลือจากการตรวจนับ", "ผลต่างของข้อมูล 1", "ผลต่างของข้อมูล2" };
+		String[] tbTH1 = { "ลำดับ", "รายการ", "รับชื่อฟิลด์จาก Excel 1", "รับชื่อฟิลด์จาก Excel 2",
+				"ยอดคงเหลือจากการตรวจนับ" };
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
@@ -307,7 +309,88 @@ public class Ope04ExcelService {
 		return outByteStream;
 	}
 
-	public ByteArrayOutputStream exportOpe046(List<Ope046Vo> dataList) throws IOException {
+	public ByteArrayOutputStream exportOpo044(List<Ope044Vo> dataList) throws IOException {
+		/* create spreadsheet */
+		XSSFWorkbook workbook = setUpExcel();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		System.out.println("Creating excel");
+		row = sheet.createRow(0);
+
+		/* Header */
+		String[] tbTH1 = { "ลำดับ", "รายการ", "ปริมาณรับจากการผลิต ตามงบเดือน", "ปริมาณรับจากการผลิต แบบ ภส.07-02",
+				"ใบรับสินค้าสำเร็จรูป", "ราคาจากการตรวจสอบ", "ผลต่างคู่ข้อมูล", };
+		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH1[cellNum]);
+			cell.setCellStyle(thStyle);
+		}
+		;
+
+		/* set sheet */
+		sheet.setColumnWidth(0, 76 * 35);
+		sheet.setColumnWidth(1, 76 * 200);
+
+		for (int i = 2; i <= 6; i++) {
+			sheet.setColumnWidth(i, 76 * 100);
+		}
+
+		/* Detail */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+		for (Ope044Vo data : dataList) {
+			row = sheet.createRow(rowNum);
+			// No.
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			// Order
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getOrder());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		/* EndDetail */
+
+		/* set write */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+
+		return outByteStream;
+	}
+
+	public ByteArrayOutputStream exportOpo046(List<Ope046Vo> dataList) throws IOException {
 		/* create spreadsheet */
 		XSSFWorkbook workbook = setUpExcel();
 		Sheet sheet = workbook.createSheet();
@@ -349,16 +432,8 @@ public class Ope04ExcelService {
 
 			// Order
 			cell = row.createCell(cellNum);
-			// cell.setCellValue(data.getTaExciseAcc0307List());
+			cell.setCellValue(data.getTaExciseAcc0502DtlList());
 			cell.setCellStyle(cellLeft);
-			cellNum++;
-
-			cell = row.createCell(cellNum);
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-
-			cell = row.createCell(cellNum);
-			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -391,7 +466,7 @@ public class Ope04ExcelService {
 		return outByteStream;
 	}
 
-	public ByteArrayOutputStream exportOpe048(List<Ope048Vo> dataList) throws IOException {
+	public ByteArrayOutputStream exportOpo048(List<Ope048Vo> dataList) throws IOException {
 		/* create spreadsheet */
 		XSSFWorkbook workbook = setUpExcel();
 		Sheet sheet = workbook.createSheet();
@@ -403,9 +478,8 @@ public class Ope04ExcelService {
 		row = sheet.createRow(0);
 
 		/* Header */
-		String[] tbTH1 = { "ลำดับ", "รายการ", "ราคาสินค้าตามแบบแจ้ง", "ราคาจากข้อมูลภายนอก",
-				"ราคาต่อหน่วยตามประกาศกรมสรรพสามิต", "ราคาจากการตรวจสอบ", "ราคาต่อหน่วยจากรายการภาษี ภส 03-07",
-				"ผลต่างราคา" };
+		String[] tbTH1 = { "ลำดับ", "รหัสรายการ", "รายการ", "ราคาสินค้าตามแบบแจ้ง",
+				"ราคาจากข้อมูลภายนอก", "ราคาต่อหน่วยตามประกาศกรมสรรพสามิต", "ราคาจากการตรวจสอบ", };
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
@@ -415,10 +489,11 @@ public class Ope04ExcelService {
 
 		/* set sheet */
 		sheet.setColumnWidth(0, 76 * 35);
-		sheet.setColumnWidth(1, 76 * 200);
+		sheet.setColumnWidth(1, 76 * 35);
+		sheet.setColumnWidth(2, 76 * 200);
 
-		for (int i = 2; i <= 7; i++) {
-			sheet.setColumnWidth(i, 76 * 100);
+		for (int i = 3; i <= 6; i++) {
+			sheet.setColumnWidth(i, 76 * 120);
 		}
 
 		/* Detail */
@@ -433,14 +508,19 @@ public class Ope04ExcelService {
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
 			// Order
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getTaExciseAcc0307List());
 			cell.setCellStyle(cellLeft);
 			cellNum++;
-
+			
 			cell = row.createCell(cellNum);
-			cell.setCellStyle(cellCenter);
+			cell.setCellStyle(thStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -448,20 +528,13 @@ public class Ope04ExcelService {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellStyle(cellCenter);
+			cell.setCellStyle(thStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellStyle(cellCenter);
+			cell.setCellStyle(thStyle);
 			cellNum++;
 
-			cell = row.createCell(cellNum);
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-
-			cell = row.createCell(cellNum);
-			cell.setCellStyle(cellCenter);
-			cellNum++;
 
 			no++;
 			rowNum++;

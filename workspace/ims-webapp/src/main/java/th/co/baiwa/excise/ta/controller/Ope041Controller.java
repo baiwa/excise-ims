@@ -16,15 +16,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
 
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
+import th.co.baiwa.excise.ta.persistence.vo.Ope041ExcelVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.ta.service.Ope04ExcelService;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
@@ -48,22 +51,15 @@ public class Ope041Controller {
 	@Autowired
 	private PlanWorksheetHeaderService planWorksheetHeaderService;
 
-	private final String SESSION_DATA = "SESSION_DATA_OPE041";
-
 	@PostMapping("excel")
 	@ResponseBody
 	public DataTableAjax<Ope041DataTable> excel(@ModelAttribute Ope041Vo vo, HttpServletRequest httpServletRequest)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
-		
-		httpServletRequest.getSession().removeAttribute(SESSION_DATA);
-		
+
 		List<Ope041DataTable> result = new ArrayList<Ope041DataTable>();
 		if ((BeanUtils.isNotEmpty(vo.getStartDate())) && (BeanUtils.isNotEmpty(vo.getEndDate()))) {
 			result = planWorksheetHeaderService.queryExciseIdFromAccDTL(vo.getExciseId(), vo.getType(),
 					vo.getStartDate(), vo.getEndDate());
-			if (!result.isEmpty()) {
-				httpServletRequest.getSession().setAttribute(SESSION_DATA, result);
-			}
 
 		}
 
@@ -111,18 +107,19 @@ public class Ope041Controller {
 		}
 	}
 
-	@GetMapping("/export")
-	@ResponseBody
-	public void export(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+	@PostMapping("/export")
+	public void export(@RequestParam String dataJson, HttpServletResponse response) throws Exception {
 
-		@SuppressWarnings("unchecked")
-		List<Ope041DataTable> resultList = (List<Ope041DataTable>) httpServletRequest.getSession().getAttribute(SESSION_DATA);
+		Gson gson = new Gson();
+		Ope041ExcelVo result = gson.fromJson(dataJson, Ope041ExcelVo.class);
+
+		List<Ope041DataTable> dataList = result.getVoList();
 
 		/* set fileName */
 		String fileName = URLEncoder.encode("กระดาษทำการรับวัตถุดิบ", "UTF-8");
 
 		/* write it as an excel attachment */
-		ByteArrayOutputStream outByteStream = ope04Service.exportOpe041(resultList);
+		ByteArrayOutputStream outByteStream = ope04Service.exportOpe041(dataList);
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
@@ -132,8 +129,7 @@ public class Ope041Controller {
 		outStream.write(outArray);
 		outStream.flush();
 		outStream.close();
-		
-		
+
 	}
 
 }

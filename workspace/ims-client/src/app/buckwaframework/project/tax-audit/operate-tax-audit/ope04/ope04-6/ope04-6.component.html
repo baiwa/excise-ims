@@ -136,6 +136,10 @@
             <i class="print icon"></i>
             บันทึกข้อมูล
           </button>
+          <button class="ui mini yellow button"  (click)="export()">
+            <i class="print icon"></i>
+            ส่งออก
+        </button>
         </div>
       </div>
     </div>
@@ -173,3 +177,6 @@
     </div>
   </div>
 </div>
+<form id="form-data-excel" method="POST"> 
+  <input type="hidden" name="dataJson" id="dataJson">
+</form>

@@ -132,7 +132,7 @@
             <br>
             <div class="ui center aligned grid">
                 <div class="six wide column">
-                    <button class="ui mini primary button" (click)="saveTable()" type="button" [disabled]="btSave">
+                    <button class="ui mini primary button" (click)="saveTable()" type="button" >
                         <i class="print icon"></i>
                         บันทึกข้อมูล
                     </button>
@@ -159,7 +159,7 @@
                             (change)="onChangeUpload($event)" required>
                     </div>
                     <div class="four wide field">
-                        <button class="ui mini primary button" type="submit" [disabled]="btUpload">
+                        <button class="ui mini primary button" type="submit" [disabled]="uploadDisabled">
                             <i class="upload icon"></i>
                             อัพโหลด
                         </button>
@@ -178,3 +178,6 @@
         </div>
     </div>
 </div>
+<form id="form-data-excel" method="POST"> 
+    <input type="hidden" name="dataJson" id="dataJson">
+</form>

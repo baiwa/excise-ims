@@ -242,4 +242,13 @@ export class Opeo46Service {
 
 
     }
+
+    getSummaryData(){
+        let dataList = this.table.data();
+        let dataArray = [];
+       for(let i=0;i<dataList.length;i++){
+           dataArray.push(dataList[i]);
+       }
+       return dataArray
+   }
 }

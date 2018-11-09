@@ -20,6 +20,8 @@ export class Ope042Component implements OnInit, AfterViewInit {
     { label: 'สร้างกระดาษทำการตรวจสอบภาษี', route: '#' },
     { label: 'สร้างกระดาษทำการจ่ายวัตถุดิบ', route: '#' },
   ];
+  
+  uploadDisabled : boolean = true;
 
   obj: Data;
   exciseId: any;
@@ -295,6 +297,7 @@ export class Ope042Component implements OnInit, AfterViewInit {
       };
       reader.readAsDataURL(event.target.files[0]);
     }
+    this.uploadDisabled = false;
   };
 
   onClickShow = e => {
@@ -487,18 +490,27 @@ export class Ope042Component implements OnInit, AfterViewInit {
   }
 
 
-  export(){
 
-    console.log($("#showDt").DataTable().rows().data());
-
-
-    if(this.showDt.data().count()==0){
-     this.messageBarService.alert("ไม่่พบข้อมูล");
-     return false;
-    }
-    // const URL_DOWNLOAD = "ope042/export";
-    // this.ajax.download(URL_DOWNLOAD);
+  getSummaryData(){
+    let dataList = this.showDt.data();
+    let dataArray = [];
+   for(let i=0;i<dataList.length;i++){
+       dataArray.push(dataList[i]);
    }
+   return dataArray
+}
+
+
+
+// ============= upload ================
+export =()=>{
+  let dataSum = this.getSummaryData();
+  console.log(dataSum);
+  let formExcel = $("#form-data-excel").get(0);
+  formExcel.action = AjaxService.CONTEXT_PATH + "ope042/export";
+  formExcel.dataJson.value = JSON.stringify({voList : dataSum});
+  formExcel.submit();
+}
 
 }
 

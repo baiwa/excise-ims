@@ -22,8 +22,8 @@ export class Ope041Component implements OnInit, AfterViewInit {
     { label: 'สร้างกระดาษทำการตรวจสอบภาษี', route: '#' },
     { label: 'สร้างกระดาษทำการรับวัตถุดิบ', route: '#' },    
   ];
-  btUpload : boolean;
-  btSave: boolean;
+
+  uploadDisabled : boolean = true;
 
   objectExport : any;
   obj: Data;
@@ -68,9 +68,6 @@ export class Ope041Component implements OnInit, AfterViewInit {
 
   ngOnInit() {
    
-    this.btUpload =true; 
-    this.btSave= true;
-
     this.authService.reRenderVersionProgram('OPE-04010');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ope04-1").css("width", "100%");
@@ -162,7 +159,6 @@ export class Ope041Component implements OnInit, AfterViewInit {
   onUpload = (event: any) => {
     // Prevent actual form submission
     event.preventDefault();
-    this.btSave= false;
     this.dataTB = [];
     for (var i = 0; i < this.showDt.data().length; i++) {
       this.dataTB.push(this.showDt.data()[i]);
@@ -271,13 +267,12 @@ export class Ope041Component implements OnInit, AfterViewInit {
           "ไม่สามารถอัพโหลดข้อมูลได้",
           "เกิดข้อผิดพลาด"
         );
-        this.btSave= true;
+        
       }
     );
   };
 
   onChangeUpload = (event: any) => {
-    this.btUpload =false; 
     
     if (event.target.files && event.target.files.length > 0) {
       let reader = new FileReader();
@@ -291,7 +286,9 @@ export class Ope041Component implements OnInit, AfterViewInit {
         this.fileExel = [f];
       };
       reader.readAsDataURL(event.target.files[0]);
+      
     }
+    this.uploadDisabled = false;
   };
 
   onClickShow = e => {
@@ -465,16 +462,29 @@ export class Ope041Component implements OnInit, AfterViewInit {
     return x;
   }
 
-  export(){
-  // console.log($("#showDt").DataTable().rows().data());
-  if(this.showDt.data().count()==0){
-    this.messageBarService.alert("ไม่พบข้อมูล");
-    return false;
-   }
-   const URL_DOWNLOAD = "ope041/export";
-   this.ajax.download(URL_DOWNLOAD);
 
-  }
+  getSummaryData(){
+    let dataList = this.showDt.data();
+    let dataArray = [];
+   for(let i=0;i<dataList.length;i++){
+       dataArray.push(dataList[i]);
+   }
+   return dataArray
+}
+
+
+
+// ============= upload ================
+export =()=>{
+  
+  let dataSum = this.getSummaryData();
+  console.log(dataSum);
+  let formExcel = $("#form-data-excel").get(0);
+  formExcel.action = AjaxService.CONTEXT_PATH + "ope041/export";
+  formExcel.dataJson.value = JSON.stringify({voList : dataSum});
+  formExcel.submit();
+}
+
 
 }
 

@@ -7,6 +7,8 @@ import { TextDateTH } from 'helpers/datepicker';
 import { formatter } from 'helpers/datepicker';
 import { Utils } from 'helpers/utils';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { AjaxService } from 'services/ajax.service';
+
 declare var $: any;
 @Component({
   selector: 'ope04-6',
@@ -199,8 +201,19 @@ export class Ope046Component implements OnInit {
     return result;
   }
 
+
+  export =()=>{
+    let dataSum = this.opeo46Service.getSummaryData();
+    console.log(dataSum);
+    let formExcel = $("#form-data-excel").get(0);
+    formExcel.action = AjaxService.CONTEXT_PATH + "ta/opo046/export";
+    formExcel.dataJson.value = JSON.stringify({voList : dataSum});
+    formExcel.submit();
+  }
+
   dataTable = () => {
     this.opeo46Service.dataTable();
   }
+
 }
 
