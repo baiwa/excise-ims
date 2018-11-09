@@ -29,8 +29,8 @@ export class Int084Component implements OnInit {
   ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
-      { label: "การประเมินความเสี่ยง", route: "#" },
-      { label: "การประเมินความเสี่ยงทั้งหมด", route: "#" },
+      { label: "ตรวจสอบรายได้", route: "#" },
+      { label: "การประเมินความเสี่ยงรายได้", route: "#" },
     ];
   }
 

@@ -46,7 +46,6 @@ private authService: AuthService,
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบรายได้", route: "#" },
       { label: "ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต", route: "#" },
-      { label: "เพิ่มเลขแบบพิมพ์", route: "#" }
     ];
   }
 
