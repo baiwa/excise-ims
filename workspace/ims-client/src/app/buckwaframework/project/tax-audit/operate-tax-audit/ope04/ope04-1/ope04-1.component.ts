@@ -5,6 +5,7 @@ import { DecimalFormat } from "../../../../../common/helper";
 import { MessageBarService } from "../../../../../common/services/message-bar.service";
 import { AuthService } from "services/auth.service";
 import { BreadCrumb } from "models/breadcrumb";
+import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 
 declare var $: any;
 
@@ -21,7 +22,9 @@ export class Ope041Component implements OnInit, AfterViewInit {
     { label: 'สร้างกระดาษทำการตรวจสอบภาษี', route: '#' },
     { label: 'สร้างกระดาษทำการรับวัตถุดิบ', route: '#' },    
   ];
-  
+  btUpload : boolean;
+  btSave: boolean;
+
   objectExport : any;
   obj: Data;
   exciseId: any;
@@ -46,7 +49,8 @@ export class Ope041Component implements OnInit, AfterViewInit {
   constructor(
     private authService: AuthService,
     private ajax: AjaxService,
-    private messageBarService: MessageBarService
+    private messageBarService: MessageBarService,
+    private formBuilder: FormBuilder,
   ) {
     this.exciseIdArr = "";
     this.firstDataList = {
@@ -63,6 +67,10 @@ export class Ope041Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+   
+    this.btUpload =true; 
+    this.btSave= true;
+
     this.authService.reRenderVersionProgram('OPE-04010');
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown.ope04-1").css("width", "100%");
@@ -123,7 +131,9 @@ export class Ope041Component implements OnInit, AfterViewInit {
         this.firstDataList = res[0];
       });
     });
+
   }
+
 
   ngAfterViewInit(): void {
     $("#showData").hide();
@@ -152,7 +162,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
   onUpload = (event: any) => {
     // Prevent actual form submission
     event.preventDefault();
-
+    this.btSave= false;
     this.dataTB = [];
     for (var i = 0; i < this.showDt.data().length; i++) {
       this.dataTB.push(this.showDt.data()[i]);
@@ -255,16 +265,20 @@ export class Ope041Component implements OnInit, AfterViewInit {
           }
         });
       },
+      
       err => {
         this.messageBarService.errorModal(
           "ไม่สามารถอัพโหลดข้อมูลได้",
           "เกิดข้อผิดพลาด"
         );
+        this.btSave= true;
       }
     );
   };
 
   onChangeUpload = (event: any) => {
+    this.btUpload =false; 
+    
     if (event.target.files && event.target.files.length > 0) {
       let reader = new FileReader();
 

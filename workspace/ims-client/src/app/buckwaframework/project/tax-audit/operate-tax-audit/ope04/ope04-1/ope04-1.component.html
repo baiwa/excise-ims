@@ -84,7 +84,7 @@
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
                                 <input type="text" name="endDate" id="endDate" autocomplete="off" [(ngModel)]="obj.endDate"
-                                    [attr.readonly]="null" placeholder="ดด/ปปปป" [attr.required]="true">
+                                [attr.readonly]="null" placeholder="ดด/ปปปป" [attr.required]="true">
                             </div>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
             <br>
             <div class="ui center aligned grid">
                 <div class="six wide column">
-                    <button class="ui mini primary button" (click)="saveTable()" type="button">
+                    <button class="ui mini primary button" (click)="saveTable()" type="button" [disabled]="btSave">
                         <i class="print icon"></i>
                         บันทึกข้อมูล
                     </button>
@@ -159,7 +159,7 @@
                             (change)="onChangeUpload($event)" required>
                     </div>
                     <div class="four wide field">
-                        <button class="ui mini primary button" type="submit">
+                        <button class="ui mini primary button" type="submit" [disabled]="btUpload">
                             <i class="upload icon"></i>
                             อัพโหลด
                         </button>
