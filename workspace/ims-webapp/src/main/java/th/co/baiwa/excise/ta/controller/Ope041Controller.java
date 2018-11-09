@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
-import th.co.baiwa.excise.ta.service.Ope041Service;
+import th.co.baiwa.excise.ta.service.Ope04ExcelService;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 import th.co.baiwa.excise.ta.service.ReceiveRmatWsService;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
@@ -40,7 +40,7 @@ public class Ope041Controller {
 	private ReceiveRmatWsService receiveRmatWsService;
 
 	@Autowired
-	private Ope041Service ope041Service;
+	private Ope04ExcelService ope04Service;
 
 	@Autowired
 	private UploadFileExciseService uploadFileExciseService;
@@ -119,7 +119,7 @@ public class Ope041Controller {
 		String fileName = URLEncoder.encode("กระดาษทำการรับวัตถุดิบ", "UTF-8");
 
 		/* write it as an excel attachment */
-		ByteArrayOutputStream outByteStream = ope041Service.export(resultList);
+		ByteArrayOutputStream outByteStream = ope04Service.exportOpe041(resultList);
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
 
 @Service
-public class Ope041Service {
+public class Ope04ExcelService {
 	private CellStyle thStyle;
 	private CellStyle cellCenter;
 	private CellStyle cellRight;
@@ -80,7 +80,7 @@ public class Ope041Service {
 		return workbook;
 	}
 
-	public ByteArrayOutputStream export(List<Ope041DataTable> dataList) throws IOException {
+	public ByteArrayOutputStream exportOpe041(List<Ope041DataTable> dataList) throws IOException {
 		/* create spreadsheet */
 		XSSFWorkbook workbook = setUpExcel();
 		Sheet sheet = workbook.createSheet();
@@ -136,7 +136,7 @@ public class Ope041Service {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellStyle(cellCenter);
+			cell.setCellStyle(thStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -157,4 +157,82 @@ public class Ope041Service {
 		return outByteStream;
 	}
 
+	
+	public ByteArrayOutputStream exportOpe042(List<Ope041DataTable> dataList) throws IOException {
+		/* create spreadsheet */
+		XSSFWorkbook workbook = setUpExcel();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		System.out.println("Creating excel");
+		row = sheet.createRow(0);
+
+		/* Header */
+		String[] tbTH1 = { "ลำดับ", "รายการ", "ใบเบิกวัตถุดิบ", "บัญชีประจำวัน", "งบเดือน", "จำนวนรับน้ำมัน", };
+		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH1[cellNum]);
+			cell.setCellStyle(thStyle);
+		}
+		;
+
+		/* set sheet */
+		for (int i = 2; i <= 5; i++) {
+			if (i != 1) {
+				sheet.setColumnWidth(i, 76 * 50);
+			}
+		}
+		sheet.setColumnWidth(0, 76 * 35);
+		sheet.setColumnWidth(1, 76 * 150);
+
+		/* Detail */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+		for (Ope041DataTable data : dataList) {
+			row = sheet.createRow(rowNum);
+			// No.
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			// Product
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getProduct());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(thStyle);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		/* EndDetail */
+
+		/* set write */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+
+		return outByteStream;
+	}
+	
 }
