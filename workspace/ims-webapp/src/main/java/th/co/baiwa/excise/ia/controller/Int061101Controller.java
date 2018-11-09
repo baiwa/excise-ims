@@ -11,12 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
-import th.co.baiwa.buckwaframework.security.domain.UserBean;
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.ia.persistence.entity.RentHouse;
 import th.co.baiwa.excise.ia.persistence.vo.Int061101FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int061101GetUserLogin;
 import th.co.baiwa.excise.ia.service.Int061101Service;
 
 @Controller

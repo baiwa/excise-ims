@@ -422,8 +422,14 @@
           <div class="two wide field">
             <label>หลักฐานประกอบคำขอเบิก</label>
           </div>
-          <div class="four wide field">
-            <!-- <input type="file" #file (change)="onFilesAdded()" multiple /> -->
+          <div class="four wide field upload-panel">
+            <input type="file" id="files" name="files" accept=".pdf, image/*, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+            application/vnd.ms-excel,.doc,.docx"
+              (change)="onFilesAdded()" />
+          </div>
+          <div class="three wide field">
+            <button class="ui mini yellow button" type="button" (click)="onUpload($event)" [ngClass]="{ 'disabled': flag }">
+              <i class="upload icon"></i>อัพโหลด</button>
           </div>
         </div>
         <div class="inline fields">
@@ -439,21 +445,24 @@
                   <th style="text-align: center !important;">จัดการ</th>
                 </tr>
               </thead>
-              <!-- <tbody>
-                <tr *ngFor="let file of files; let i = index">
+              <tbody>
+                <tr *ngIf="arrayUpload.length < 1">
+                  <td colspan="5" class="text-center">ไม่มีข้อมูล</td>
+                </tr>
+                <tr *ngFor="let file of arrayUpload; let i = index">
                   <td class="container" style="text-align: center !important;">{{i+1}}</td>
                   <td class="container" style="text-align: center !important;">
-                    {{file.lastModifiedDate}}
+                    {{file.date}}
                   </td>
                   <td class="container" style="text-align: center !important;">{{file.name}}</td>
                   <td class="container" style="text-align: center !important;">
                     {{file.size}}
                   </td>
                   <td class="container" style="text-align: center !important;">
-                    <button type="button" class="ui mini negative button"><i class="trash alternate outline icon"></i>ลบ</button>
+                    <button type="button" class="ui mini negative button" (click)="onDeleteRow(i)"><i class="trash alternate outline icon"></i>ลบ</button>
                   </td>
                 </tr>
-              </tbody> -->
+              </tbody>
             </table>
           </div>
 
@@ -464,7 +473,7 @@
       <div class="ui attached segment">
         <div class="ui center aligned grid">
           <div class="sixteen wide column">
-            <button class="ui primary button" type="submit" [disabled]="!medicalWelfareForm.valid">
+            <button class="ui primary button" type="submit" [disabled]="!medicalWelfareForm.valid" [ngClass]="{ 'disabled': arrayUpload.length < 1 }">
               <i class="save icon"></i>บันทึก</button>
             <!-- <button class="ui yellow button" type="button">
                 <i class="print icon"></i>ส่งออก</button> -->

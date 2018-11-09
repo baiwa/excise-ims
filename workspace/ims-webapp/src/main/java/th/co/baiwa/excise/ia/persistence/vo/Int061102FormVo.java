@@ -1,5 +1,9 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
+import java.math.BigDecimal;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class Int061102FormVo {
 
 	private String fullName;
@@ -29,6 +33,10 @@ public class Int061102FormVo {
 	private String motherCitizenId;
 	private String childName;
 	private String childCitizenId;
+
+	private MultipartFile[] files;
+	private BigDecimal id;
+	private String type;
 
 	public String getFullName() {
 		return fullName;
@@ -138,6 +146,18 @@ public class Int061102FormVo {
 		return childCitizenId;
 	}
 
+	public MultipartFile[] getFiles() {
+		return files;
+	}
+
+	public BigDecimal getId() {
+		return id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
@@ -244,6 +264,18 @@ public class Int061102FormVo {
 
 	public void setChildCitizenId(String childCitizenId) {
 		this.childCitizenId = childCitizenId;
+	}
+
+	public void setFiles(MultipartFile[] files) {
+		this.files = files;
+	}
+
+	public void setId(BigDecimal id) {
+		this.id = id;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }
