@@ -200,9 +200,6 @@ public class Ope046Service {
 			vo.setColumn2(StringUtils.trim(columns.get(1)));
 			vo.setColumn3(StringUtils.trim(columns.get(2)));
 			vo.setColumn4(StringUtils.trim(columns.get(3)));
-			vo.setColumn5(StringUtils.trim(columns.get(4)));
-			vo.setColumn6(StringUtils.trim(columns.get(5)));
-			
 			dataList.add(vo);		
 	}
 

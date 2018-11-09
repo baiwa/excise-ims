@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { TextDateTH, DecimalFormat, digit, formatter } from '../../../../../common/helper';
 import { AjaxService, MessageBarService, AuthService } from '../../../../../common/services';
 import { BreadCrumb } from 'models/breadcrumb';
@@ -10,11 +10,11 @@ declare var $: any;
   selector: 'ope04-4',
   templateUrl: './ope04-4.component.html',
   styleUrls: ['./ope04-4.component.css'],
-  providers:[Ope044Service]
+  providers: [Ope044Service]
 })
-export class Ope044Component implements OnInit {
+export class Ope044Component implements OnInit, AfterViewInit {
 
-  breadcrumb: BreadCrumb[] = [    
+  breadcrumb: BreadCrumb[] = [
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การตรวจสอบภาษี', route: '#' },
     { label: 'สร้างกระดาษทำการตรวจสอบภาษี', route: '#' },
@@ -24,31 +24,36 @@ export class Ope044Component implements OnInit {
   form: Ope044Form = new Ope044Form();
   exciseIdList: any;
   loading: boolean = false;
-  buttonDisabled: boolean = false;
+  buttonDisabled: boolean = true;
   error: boolean = false;
-  uploadDisabled: boolean = true;    
+  uploadDisabled: boolean = true;
   formControl: FormGroup;
-  
+
+  dform: string = '';
+  dTo: string = '';
+  company: string = '';
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private ope044Service :Ope044Service
+    private ope044Service: Ope044Service
   ) {
-    
+
   }
 
   ngOnInit() {
-    this.authService.reRenderVersionProgram('OPE-04400'); 
-    
+    this.authService.reRenderVersionProgram('OPE-04400');
+    $("#showData").hide();
     this.newForm();
     // this.authService.reRenderVersionProgram('OPE-04600');
     $("#Dtable").hide();
     this.findExciseId();
     this.callDropdown();
     this.calenda();
+    
+  }
+  ngAfterViewInit() {
     this.dataTable();
   }
-
   newForm() {
     this.formControl = this.formBuilder.group({
       dateFrom: ["", Validators.required],
@@ -83,10 +88,15 @@ export class Ope044Component implements OnInit {
   }
 
   search = () => {
+    
+    this.dform = this.formControl.controls.dateFrom.value;
+    this.dTo = this.formControl.controls.dateTo.value;
+    this.company = this.formControl.controls.entrepreneur.value;
     this.submitted = true;
     if (this.formControl.invalid) {
       return;
     }
+    $("#showData").show();
     this.loading = true;
     $("#Dtable").show();
     this.ope044Service.search().then(res => {
@@ -99,11 +109,14 @@ export class Ope044Component implements OnInit {
 
   claer = () => {
     this.error = false;
+    this.submitted = false;
     $("form-exciseId").removeClass('error');
     $("#Dtable").hide();
     this.newForm();
     this.uploadDisabled = true;
+    this.buttonDisabled = true;
     this.ope044Service.claer();
+    $("#showData").hide();
   }
   changeExciseId = (e) => {
     let exciseId = e.target.value;
@@ -129,10 +142,10 @@ export class Ope044Component implements OnInit {
     this.loading = true;
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
-    this.ope044Service.upload(formBody);
-    setTimeout(() => {
+    this.ope044Service.upload(formBody).then(() => {
       this.loading = false;
-    }, 500);
+      this.buttonDisabled = false;
+    });
   }
 
   save = async () => {
