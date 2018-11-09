@@ -33,7 +33,6 @@ export class Int0122Component implements OnInit {
             { label: "ตรวจสอบภายใน", route: "#" },
             { label: "ตรวจสอบรายได้", route: "#" },
             { label: "ตรวจสอบใบอนุญาต", route: "#" },
-            { label: "ค้นหาและตรวจสอบใบอนุญาต", route: "#" }
         ];
 
     }

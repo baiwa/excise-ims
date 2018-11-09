@@ -138,11 +138,11 @@
                     <div class="ui center aligned grid">
                         <div class="four wide column">
                             <button *ngIf="flag !== 'EDIT'" class="ui mini green button" (click)="checkStatus('SAVE')" type="submit">
-                                <i class="save icon"></i>บันทึก
+                                <i class="plus icon"></i>เพิ่ม
                             </button>
 
-                            <button *ngIf="flag === 'EDIT'" class="ui mini primary button" (click)="checkStatus('EDIT')" type="submit">
-                                <i class="save icon"></i>บันทึก
+                            <button *ngIf="flag === 'EDIT'" class="ui mini green button" (click)="checkStatus('EDIT')" type="submit">
+                                <i class="plus icon"></i>เพิ่ม
                             </button>
 
                             <button class="ui mini button" type="button" routerLink="/int06/9">
@@ -183,7 +183,7 @@
             <br>
             <div class="ui center aligned grid">
                 <div class="sixteen wide column">
-                    <button class="ui mini green button" (click)="onSave()"> 
+                    <button class="ui mini primary button" (click)="onSave()"> 
                             <i class="save icon"></i> บันทึก
                         </button>
                     <button class="ui mini  button" (click)="hidedata()">

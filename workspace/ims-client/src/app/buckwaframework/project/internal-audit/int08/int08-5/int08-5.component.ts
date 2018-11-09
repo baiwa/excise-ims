@@ -29,7 +29,7 @@ export class Int085Component implements OnInit {
   ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
-      { label: "การประเมินความเสี่ยง", route: "#" },
+      { label: "ตรวจสอบรายได้", route: "#" },
       { label: "ติดตามผลการตรวจสอบ", route: "#" },
     ];
   }
