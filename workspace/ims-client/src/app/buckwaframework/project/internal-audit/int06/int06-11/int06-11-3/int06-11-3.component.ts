@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { TextDateTH, formatter } from 'helpers/datepicker';
 import { IaService } from 'services/ia.service';
 import { Utils } from 'helpers/utils';
+import { MessageBarService } from 'services/message-bar.service';
+
 declare var $: any;
 @Component({
   selector: 'app-int06-11-3',
@@ -51,12 +53,16 @@ export class Int06113Component implements OnInit, AfterViewInit {
   userDetails: any;
   money: any;
   countFrom: number = 0;
+  loadingUL: boolean = false;
+  flgOnLoad: boolean = true;
+  tableUpload: any = [];
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private myService: Int06113Service,
     private router: Router,
-    private iaService: IaService
+    private iaService: IaService,
+    private msg: MessageBarService
   ) {
     this.newFormControl();
     this.items = this.formControl.get('items') as FormArray;
@@ -82,14 +88,37 @@ export class Int06113Component implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.calenda();
   }
+
+  onChangeFile() {
+    this.flgOnLoad = false;
+  }
+  onUpload(e) {
+    e.preventDefault();
+    if ($("#files").val() === "") {
+      this.msg.errorModal("กรุณาเลือกไฟล์อัปโหลด");
+    } else {
+      this.myService.onUpload().then(data => {
+        this.tableUpload = data;
+      });
+    }
+  }
+
+  onDel(index: number) {
+    this.loadingUL = true;
+    this.myService.onDel(index);
+    setTimeout(() => {
+      this.loadingUL = false;
+    }, 300);
+  }
+
   checkMoney(money) {
-    this.countFrom = Utils.isNotNull(money.money1) ? this.countFrom+=1 : this.countFrom+=0;
-    this.countFrom = Utils.isNotNull(money.money2) ? this.countFrom+=1 : this.countFrom+=0;
-    this.countFrom = Utils.isNotNull(money.money3) ? this.countFrom+=1 : this.countFrom+=0;
+    this.countFrom = Utils.isNotNull(money.money1) ? this.countFrom += 1 : this.countFrom += 0;
+    this.countFrom = Utils.isNotNull(money.money2) ? this.countFrom += 1 : this.countFrom += 0;
+    this.countFrom = Utils.isNotNull(money.money3) ? this.countFrom += 1 : this.countFrom += 0;
     console.log("countFrom : ", this.countFrom);
 
-    for(let i=0;i<this.countFrom;i++){
-      this.items.push(this.createChlidItem());   
+    for (let i = 0; i < this.countFrom; i++) {
+      this.items.push(this.createChlidItem());
     }
   }
   newFormControl = () => {
@@ -145,50 +174,48 @@ export class Int06113Component implements OnInit, AfterViewInit {
 
   save(event: any) {
     event.preventDefault();
-    let birth = $(".birth input");
-    let birthReplace = $(".birthReplace input");
-    let dateDeadReplace = $(".dateDeadReplace input");
-
-    for (let i = 0; i < birth.length; i++) {
-
-      let _birth = $(birth[i]).val();
-      this.items.value[i].birth = _birth;
-
-      let _birthReplace = $(birthReplace[i]).val();
-      this.items.value[i].birthReplace = _birthReplace;
-
-      let _dateDeadReplace = $(dateDeadReplace[i]).val();
-      this.items.value[i].dateDeadReplace = _dateDeadReplace;
-      console.log("item : ", this.items);
-      console.log("item controls : ", this.items.controls[i]);
-      console.log(_birth);
-      console.log("item value:", this.items.controls[i].patchValue({
-        birth: _birth
-      }));
-      console.log("value : ", this.items.controls[i].value);
-      console.log("---------------------------------------------------")
-    }
-
-    event.preventDefault();
     this.submitted = true;
     if (this.formControl.invalid) {
       return;
     }
-    // this.loading = true;
-    // this.checkMateDescription(this.formControl.controls.mateDescription.value);
-    // this.checkStatus(this.formControl.controls.status.value);
-    // this.checkType(this.formControl.controls.type.value);
-    // this.checkTypeRecive(this.formControl.controls.typeRecive.value);
-    // this.checkOfferType(this.formControl.controls.offerType.value);
 
-    // this.dateChange();
+    this.msg.comfirm(confirm => {
+      if (confirm) {
+        let birth = $(".birth input");
+        let birthReplace = $(".birthReplace input");
+        let dateDeadReplace = $(".dateDeadReplace input");
 
-    // this.myService.save(this.formControl.value).then(res=>{      
-    //   this.loading = false;
-    //   this.router.navigate(['/int06/11']);
-    // }).catch(rej=>{
-    //   this.router.navigate(['/int06/11']);
-    // });
+        for (let i = 0; i < birth.length; i++) {
+
+          let _birth = $(birth[i]).val();
+          this.items.value[i].birth = _birth;
+
+          let _birthReplace = $(birthReplace[i]).val();
+          this.items.value[i].birthReplace = _birthReplace;
+
+          let _dateDeadReplace = $(dateDeadReplace[i]).val();
+          this.items.value[i].dateDeadReplace = _dateDeadReplace;
+        }
+
+        this.loading = true;
+        this.checkMateDescription(this.formControl.controls.mateDescription.value);
+        this.checkStatus(this.formControl.controls.status.value);
+        this.checkType(this.formControl.controls.type.value);
+        this.checkTypeRecive(this.formControl.controls.typeRecive.value);
+        this.checkOfferType(this.formControl.controls.offerType.value);
+
+
+        this.myService.save(this.formControl.value).then(res => {
+          this.myService.saveFile(res);
+          this.loading = false;
+          this.router.navigate(['/int06/11']);
+        }).catch(rej => {
+          this.router.navigate(['/int06/11']);
+        });
+      }
+    }, "ยืนยันการบันทึกข้อมูล");
+
+
   }
 
   checkMateDescription(checkMateDescription) {

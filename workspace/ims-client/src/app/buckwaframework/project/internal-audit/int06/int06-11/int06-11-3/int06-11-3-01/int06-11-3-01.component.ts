@@ -72,6 +72,8 @@ export class Int0611301Component implements OnInit, AfterViewInit {
     "money2": this.money2,
     "money3": this.money3,
   }
+
+  nextButton: boolean = true;
   constructor(
     private myService: int0611301Service,
     private iaService: IaService,
@@ -96,7 +98,7 @@ export class Int0611301Component implements OnInit, AfterViewInit {
 
   showForm = (e) => {
     let number = e.target.value;
-
+    this.nextButton = false;
     if (number == 1) {
       $(".number1").show()
     }
@@ -118,15 +120,15 @@ export class Int0611301Component implements OnInit, AfterViewInit {
       this.iaService.setData(res);
       this.router.navigate(['/int06/11/3']);
     });
-    
+
   }
 
-
-  claer = () => {
+  claer = () => {    
     $(".number1").hide();
     $(".number2").hide();
     $(".number3").hide();
     $('.ui.dropdown').dropdown('restore defaults');
+    this.nextButton = true;
   }
   /// ==> form1
 

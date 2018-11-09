@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.excise.ia.persistence.vo.Int061101FormVo;
+import th.co.baiwa.excise.ia.persistence.entity.TuitionFee;
 import th.co.baiwa.excise.ia.persistence.vo.Int061103FormUpload;
 import th.co.baiwa.excise.ia.persistence.vo.Int061103Vo;
 import th.co.baiwa.excise.ia.service.Int061103Service;
@@ -27,9 +27,8 @@ public class Int061103Controlleer {
 	 
 	 @PostMapping("/save")
 	 @ResponseBody
-	 public Int061103Vo save(@RequestBody Int061103Vo tuitionFee){
-		 int061103Service.save(tuitionFee);
-		 return tuitionFee;
+	 public TuitionFee save(@RequestBody Int061103Vo tuitionFee){		 
+		 return int061103Service.save(tuitionFee); 
 	 }
 	 
 	 @PostMapping("/upload")

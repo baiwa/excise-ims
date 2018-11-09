@@ -41,7 +41,7 @@ public class Int061103Service {
 	@Autowired
 	private WithdrawFileUploadRepository withdrawFileUploadRepository;
 	
-	public void save(Int061103Vo form){
+	public TuitionFee save(Int061103Vo form){
 		
 		TuitionFee master = new TuitionFee();
 		master.setName(form.getName());
@@ -89,7 +89,9 @@ public class Int061103Service {
 			childs.add(child);
 			
 		}
-		childRepository.save(childs);				
+		childRepository.save(childs);	
+		
+		return masterResult;
 	}
 
 	public void uploadFiles(Int061103FormUpload uploadList) {
