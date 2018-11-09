@@ -15,7 +15,7 @@ import th.co.baiwa.excise.ia.service.Int0611031Service;
 
 @Controller
 @RequestMapping("api/ia/int0611031")
-public class Int0611031Controlleer {
+public class Int0611031Controller {
 
 	 @Autowired
 	 private Int0611031Service int0611031Service;

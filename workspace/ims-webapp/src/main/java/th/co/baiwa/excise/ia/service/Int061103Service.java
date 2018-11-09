@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.ia.persistence.entity.TuitionFee;
 import th.co.baiwa.excise.ia.persistence.entity.TuitionFeeChild;
 import th.co.baiwa.excise.ia.persistence.entity.WithdrawFileUpload;
@@ -58,6 +59,7 @@ public class Int061103Service {
 		master.setOffer(form.getOffer());
 		master.setOfferType(form.getOfferType());
 		master.setSumAmount(new BigDecimal(form.getSumAmount()));
+		master.setStatusCheck(ExciseConstants.TA.STATUS.PROCESS);
 		TuitionFee masterResult = tuitionFeeRepository.save(master);
 		
 		List<Int061103VoChild> childForms= form.getItems();		

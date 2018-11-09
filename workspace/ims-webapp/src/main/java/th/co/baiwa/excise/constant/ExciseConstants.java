@@ -21,5 +21,14 @@ public class ExciseConstants {
 	    	public static final String TRUE = "TRUE";
 	    	public static final String FALSE = "FALSE";
 	    }
+	    
+	    public static class TA {
+	    	public static class STATUS {
+		    	public static final String PROCESS = "2048";
+		    	public static final String PASS = "2057";
+		    	public static final String NOT_PASS = "2056";
+		    	public static final String SUCCESS = "2055";		    			    			   
+		    }
+	    }
 
 }

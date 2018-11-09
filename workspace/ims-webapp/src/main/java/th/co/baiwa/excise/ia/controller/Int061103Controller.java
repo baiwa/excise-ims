@@ -19,7 +19,7 @@ import th.co.baiwa.excise.ia.service.Int061103Service;
 
 @Controller
 @RequestMapping("api/ia/int061103")
-public class Int061103Controlleer {
+public class Int061103Controller {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	 @Autowired
