@@ -37,10 +37,10 @@ export class FollowSupervisionComponent implements OnInit {
 
   onSubmit = e => {
     console.log(this.obj);
-    const url = "report/pdf/ts/AskForMoney2";   
+    const url = "report/pdf/ts/AskForMoney";   
     this.ajax.post(url,`'${JSON.stringify(this.obj).toString()}'`, res => {
       if (res.status == 200 && res.statusText == "OK") {
-        window.open("/ims-webapp/api/report/pdf/AskForMoney2/file");
+        window.open("/ims-webapp/api/report/pdf/AskForMoney/file");
       }
     });
   };

@@ -34,9 +34,9 @@ public class ReportController {
 
 	@Autowired
 	private ReportService reportService;
-
-	@Autowired
-	private ReporterService reporterService;
+//
+//	@Autowired
+//	private ReporterService reporterService;
 	
 	@GetMapping("/pdf/{name}/file")
 	@ResponseBody
@@ -87,11 +87,11 @@ public class ReportController {
 		byte[] report = reportService.objectToPDF(name, json); // null
 		//return report;
 	}
-	
-	@PostMapping("/pdf/ts/{report}")
-	@ResponseBody // byte[]
-	public void pdfTsReport(@PathVariable("reporter") String name, @RequestBody String json) throws IOException, JRException { // byte[]
-		byte[] report = reporterService.objectToPDF(name, json); // null
-		//return report;
-	}
+//	
+//	@PostMapping("/pdf/ts/{report}")
+//	@ResponseBody // byte[]
+//	public void pdfTsReport(@PathVariable("reporter") String name, @RequestBody String json) throws IOException, JRException { // byte[]
+//		byte[] report = reporterService.objectToPDF(name, json); // null
+//		//return report;
+//	}
 }
