@@ -113,6 +113,9 @@ public class HealthCareWelFareEntity extends BaseEntity {
 
 	@Column(name = "FILE_ID")
 	private BigDecimal fileId;
+	
+	@Column(name = "STATUS_CHECK")
+	private String statusCheck;
 
 	public BigDecimal getId() {
 		return id;
@@ -344,6 +347,14 @@ public class HealthCareWelFareEntity extends BaseEntity {
 
 	public void setFileId(BigDecimal fileId) {
 		this.fileId = fileId;
+	}
+
+	public String getStatusCheck() {
+		return statusCheck;
+	}
+
+	public void setStatusCheck(String statusCheck) {
+		this.statusCheck = statusCheck;
 	}
 
 }

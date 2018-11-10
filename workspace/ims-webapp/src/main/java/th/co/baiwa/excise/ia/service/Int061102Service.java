@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.ia.persistence.entity.HealthCareWelFareEntity;
 import th.co.baiwa.excise.ia.persistence.entity.WithdrawFileUpload;
 import th.co.baiwa.excise.ia.persistence.repository.HealthCareWelFareRepository;
@@ -65,6 +66,7 @@ public class Int061102Service {
 		vo.setMotherCitizenId(int061102FormVo.getMotherCitizenId());
 		vo.setChildName(int061102FormVo.getChildName());
 		vo.setChildCitizenId(int061102FormVo.getChildCitizenId());
+		vo.setStatusCheck(ExciseConstants.IA.STATUS.PROCESS);
 
 		return healthCareWelFareRepository.save(vo);
 	}
