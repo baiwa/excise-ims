@@ -61,6 +61,7 @@ export class Int06101Component implements OnInit {
   // Forms
   formGroup: FormGroup = new FormGroup({});
   persons: FormArray = new FormArray([]);
+  delete: number[] = [];
 
   // State
   private submitted: boolean = false;
@@ -87,7 +88,7 @@ export class Int06101Component implements OnInit {
 
     // Initial FormGroup
     this.formGroup = this.formBuilder.group({
-      note: ['', [Validators.maxLength(7)]],
+      note: ['', [Validators.maxLength(1000)]],
       deductSocial: ['', [Validators.maxLength(7)]],
       withholding: ['', [Validators.maxLength(7)]],
       other: ['', [Validators.maxLength(7)]],
@@ -175,14 +176,34 @@ export class Int06101Component implements OnInit {
         }
 
         // Loading person
-        this.getPerson().then(data => {
+        this.getPerson().then((persons: Person[]) => {
+          // console.log("onEdit::EDIT =>", persons, persons.length); 
+          this.persons = this.formGroup.get('persons') as FormArray;
+          this.persons.removeAt(0);
+          for (let key in persons) {
+            this.persons.push(this.createPerson({
+              id: [persons[key].withdrawalPersonsId],
+              amount: [persons[key].amount, [Validators.required, Validators.maxLength(7)]],
+              title: [persons[key].payee.split(" ")[0], [Validators.required, Validators.maxLength(40)]],
+              payeeFirst: [persons[key].payee.split(" ")[1], [Validators.required, Validators.maxLength(80)]],
+              payeeLast: [persons[key].payee.split(" ")[2], [Validators.required, Validators.maxLength(80)]],
+              paymentDate: [moment(persons[key].paymentDate).format("DD/MM/YYYY"), [Validators.required, Validators.maxLength(10)]],
+              paymentMethod: [persons[key].paymentMethod, [Validators.required, Validators.maxLength(200)]],
+              refPayment: [persons[key].refPayment, [Validators.required, Validators.maxLength(50)]],
+              bankName: [persons[key].bankName, [Validators.maxLength(200)]]
+            }));
+          }
           this.loading = false;
         }).catch(() => {
+          this.messageBarService.errorModal();
+          console.error("PERSONS ไม่สามารถโหลดได้...");
           this.loading = false;
         });
 
       }).catch(() => {
+        this.messageBarService.errorModal();
         this.loading = false;
+        console.error("LIST ไม่สามารถโหลดได้...");
       });
     }
 
@@ -220,8 +241,9 @@ export class Int06101Component implements OnInit {
   }
 
   // Initial Form `Person`
-  createPerson(): FormGroup {
-    const data = {
+  createPerson(obj?): FormGroup {
+    const data = obj || {
+      id: [''],
       amount: ['', [Validators.required, Validators.maxLength(7)]],
       title: ['', [Validators.required, Validators.maxLength(40)]],
       payeeFirst: ['', [Validators.required, Validators.maxLength(80)]],
@@ -256,7 +278,16 @@ export class Int06101Component implements OnInit {
   // Remove Form from FormArray
   delPerson(index: number): void {
     this.persons = this.formGroup.get('persons') as FormArray;
-    this.persons.removeAt(index);
+    if (this.id != "" && this.persons.at(index).get('id').value != "") {
+      this.messageBarService.comfirm(e => {
+        if (e) {
+          this.delete.push(parseInt(this.persons.at(index).get('id').value));
+          this.persons.removeAt(index);
+        }
+      }, "ต้องการเปลี่ยนแปลงข้อมูล ?");
+    } else {
+      this.persons.removeAt(index);
+    }
   }
 
   // Submit Form
@@ -358,6 +389,108 @@ export class Int06101Component implements OnInit {
     }
   }
 
+  // Update List and Persons
+  updateData() {
+    // Is submitted
+    this.submitted = true;
+
+    // Check Validators 1st and Alert MESSAGE from constant `ALERT_MSG`
+    for (let j in ALERT_MSG) {
+      for (let i in this.formGroup.controls) {
+        if (i == j) {
+          if (i == "persons" && this.persons.invalid) {
+            for (let h in ALERT_MSG.persons) {
+              for (let g in this.persons) {
+                if (h == g && this.persons.get(g).invalid) {
+                  this.messageBarService.alert(ALERT_MSG[j], "แจ้งเตือน");
+                  return;
+                }
+              }
+            }
+          } else if (this.formGroup.get(i).invalid) {
+            this.messageBarService.alert(ALERT_MSG[j], "แจ้งเตือน");
+            return;
+          }
+        }
+        if (this.formGroup.get(i).invalid) {
+          console.log(i);
+        }
+      }
+    }
+    // Check Validators 2nd
+    if (this.formGroup.valid) {
+      this.loading = true;
+      const URL = "ia/int06101/update";
+      const { list, note, deductSocial, withholding, // destruct data from `this.formGroup`
+        other, amountOfMoney1, numberRequested, documentNumber,
+        itemDescription, refnum, withdrawal, activity,
+        budged, category, budget, amountOfMoney, payee,
+        persontitle, firstnamePerson, lastnamePerson,
+        personType, persons, payeeCorporate } = this.formGroup.value;
+      let _persons: Person[] = []; // Person Array
+      for (let key in persons) {
+        const { amount, paymentMethod, refPayment, paymentDate,
+          title, payeeFirst, payeeLast, bankName } = persons[key];
+        _persons.push({
+          amount: parseFloat(amount),
+          paymentMethod: paymentMethod,
+          refPayment: refPayment,
+          paymentDate: stringToDate(paymentDate),
+          payee: `${title} ${payeeFirst} ${payeeLast}`,
+          bankName: bankName,
+        })
+      }
+      const payeeCorporat = this.formGroup.get('payeeCorporate');
+      const persontitl = this.formGroup.get('persontitle');
+      const firstnamePerso = this.formGroup.get('firstnamePerson');
+      const lastnamePerso = this.formGroup.get('lastnamePerson');
+      if (this.checkRadio1) { // clear validate payeeCorporate
+        payeeCorporat.clearValidators(); payeeCorporat.updateValueAndValidity();
+        persontitl.setValidators([Validators.required, Validators.maxLength(40)]); persontitl.updateValueAndValidity();
+        firstnamePerso.setValidators([Validators.required, Validators.maxLength(80)]); firstnamePerso.updateValueAndValidity();
+        lastnamePerso.setValidators([Validators.required, Validators.maxLength(80)]); lastnamePerso.updateValueAndValidity();
+      } else if (this.checkRadio2) { // clear validate persontitle, firstnamePerson, lastnamePerson
+        this.checkRadio2 = true;
+        payeeCorporat.setValidators([Validators.required, Validators.maxLength(100)]); payeeCorporat.updateValueAndValidity();
+        persontitl.clearValidators(); persontitl.updateValueAndValidity();
+        firstnamePerso.clearValidators(); firstnamePerso.updateValueAndValidity();
+        lastnamePerso.clearValidators(); lastnamePerso.updateValueAndValidity();
+      }
+      const data: Int06101 = { // Binding Data
+        refnum: refnum, withdrawal: withdrawal, activity: activity,
+        budged: budged, budget: budget, category: category,
+        list: list, amountOfMoney: amountOfMoney, deductSocial: deductSocial,
+        withholding: withholding, other: other, amountOfMoney1: amountOfMoney1,
+        numberRequested: numberRequested, documentNumber: documentNumber,
+        itemDescription: itemDescription, note: note,
+        budgetName: this.budged.find(obj => obj.budgetId == budged).budgetName,
+        listName: this.list.find(obj => obj.listId == list).listName,
+        categoryName: this.category.find(obj => obj.categoryId == category).categoryName,
+        payee: this.checkRadio1 ? `${persontitle} ${firstnamePerson} ${lastnamePerson}` : payeeCorporate,
+        persons: _persons, personType: personType,
+      };
+      const request  = {
+        data: data,
+        delete: this.delete
+      };
+      this.ajax.post(`${URL}/${this.id}`, request, response => {
+        const msg = response.json();
+        if (msg.messageType == "C") {
+          this.messageBarService.successModal(msg.messageTh);
+          this.unsave = false;
+          this.router.navigate(['/int06/10']);
+          this.loading = false;
+        } else {
+          this.messageBarService.errorModal(msg.messageTh);
+          this.loading = false;
+        }
+      }).catch(() => {
+        this.messageBarService.errorModal();
+        this.loading = false;
+      });
+    }
+  }
+
   getList(): Promise<List> {
     return this.ajax.get(`${URL.GET_LIST}/${this.id}`, response => {
       const data = response.json() as List;
@@ -366,9 +499,9 @@ export class Int06101Component implements OnInit {
     });
   }
 
-  getPerson(): Promise<Person> {
-    return this.ajax.get(`${URL.GET_LIST}/${this.id}`, response => {
-      const data = response.json() as Person;
+  getPerson(): Promise<Person[]> {
+    return this.ajax.get(`${URL.GET_PERSON}/${this.id}`, response => {
+      const data = response.json() as Person[];
       // console.log("PERSONS =>", data);
       return data;
     });
@@ -501,4 +634,9 @@ export class Int06101Component implements OnInit {
   invalidFormGroup(control) { return this.submitted && this.formGroup.get(control) && this.formGroup.get(control).invalid }
   invalidFormArray(index, control) { return this.submitted && this.persons.at(index).get(control).invalid }
 
+}
+
+interface Request {
+  data: Int06101;
+  delete: number[];
 }

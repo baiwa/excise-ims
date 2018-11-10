@@ -30,7 +30,7 @@
             <div class="ui calendar" id="dateWithdraw" style="width:100%">
               <div class="ui input left icon">
                 <i class="calendar alter nate outline icon"></i>
-                <input type="text" placeholder="วว/ดด/ปปปป" formControlName="withdrawal" id="withdrawal" name="withdrawal">
+                <input type="text" placeholder="วว/ดด/ปปปป" readonly="" autocomplete="off" formControlName="withdrawal" id="withdrawal" name="withdrawal">
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@
             <label class="text-right full-width">จำนวนเงินขอเบิก</label>
           </div>
           <div class="four wide field" [ngClass]="{'error': invalidFormGroup('amountOfMoney')}">
-            <input type="number" id="amountOfMoney" formControlName="amountOfMoney" name="amountOfMoney">
+            <input type="text" numberOnly id="amountOfMoney" maxlength="7" formControlName="amountOfMoney" name="amountOfMoney">
           </div>
         </div>
 
@@ -107,13 +107,13 @@
             <label class="text-right full-width">หักประกันสังคม</label>
           </div>
           <div class="four wide field" [ngClass]="{'error': invalidFormGroup('deductSocial')}">
-            <input type="number" id="deductSocial" formControlName="deductSocial" name="deductSocial">
+            <input type="text" numberOnly id="deductSocial" formControlName="deductSocial" minlength="1" maxlength="7" name="deductSocial">
           </div>
           <div class="three wide field ">
             <label class="text-right full-width">ภาษีหัก ณ ที่จ่าย</label>
           </div>
           <div class="four wide field" [ngClass]="{'error': invalidFormGroup('withholding')}">
-            <input type="number" id="withholding" formControlName="withholding" name="withholding">
+            <input type="text" numberOnly id="withholding" formControlName="withholding" minlength="1" maxlength="7" name="withholding">
           </div>
         </div>
 
@@ -123,13 +123,13 @@
             <label class="text-right full-width">อื่น ๆ</label>
           </div>
           <div class="four wide field" [ngClass]="{'error': invalidFormGroup('other')}">
-            <input type="number" id="other" formControlName="other" name="other">
+            <input type="text" numberOnly id="other" minlength="1" maxlength="7" formControlName="other" name="other">
           </div>
           <div class="three wide field ">
             <label class="text-right full-width">จำนวนเงินขอรับ</label>
           </div>
           <div class="four wide field" [ngClass]="{'error': invalidFormGroup('amountOfMoney1')}">
-            <input type="number" id="amountOfMoney1" formControlName="amountOfMoney1" name="amountOfMoney1">
+            <input type="text" numberOnly id="amountOfMoney1" minlength="1" maxlength="7" formControlName="amountOfMoney1" name="amountOfMoney1">
           </div>
         </div>
 
@@ -202,7 +202,7 @@
             <label class="text-right full-width">คำอธิบายรายการ</label>
           </div>
           <div class="eleven wide field">
-            <input type="text" id="itemDescription" formControlName="itemDescription" name="itemDescription">
+            <input type="text" id="itemDescription" maxlength="100" formControlName="itemDescription" name="itemDescription">
           </div>
         </div>
 
@@ -212,7 +212,7 @@
             <label class="text-right full-width">หมายเหตุ</label>
           </div>
           <div class="eleven wide field">
-            <textarea rows="4" id="note" name="note" formControlName="note"></textarea>
+            <textarea rows="4" id="note" name="note" maxlength="1000" formControlName="note"></textarea>
           </div>
         </div>
       </div>
@@ -222,7 +222,7 @@
         <div class="sixteen wide column">
           <div class="ui attached segment">
             <div class="ui form">
-              <div class="field ">
+              <div class="field">
                 <label class="text-center full-width">
                   <h3>รายละเอียดการจ่ายเงิน</h3>
                 </label>
@@ -264,7 +264,7 @@
                     <div class="frame ui calendar" id="datePersons{{i}}" style="width:100%">
                       <div class="ui input left icon">
                         <i class="calendar alter nate outline icon"></i>
-                        <input type="text" formControlName="paymentDate" placeholder="วว/ดด/ปปปป" id="datePersons1{{i}}"
+                        <input type="text" formControlName="paymentDate" readonly="" autocomplete="off" placeholder="วว/ดด/ปปปป" id="datePersons1{{i}}"
                           name="datePersons1{{i}}">
                       </div>
                     </div>
@@ -272,7 +272,7 @@
                   <div class="three wide field required" [ngClass]="{'error': invalidFormArray(i,'amount')}"
                     [formGroupName]="i">
                     <label>จำนวนเงินที่จ่าย</label>
-                    <input type="number" formControlName="amount" maxlength="7" id="amountPaid{{i}}" name="amountPaid{{i}}">
+                    <input type="text" numberOnly formControlName="amount" maxlength="7" id="amountPaid{{i}}" name="amountPaid{{i}}">
                   </div>
                 </div>
                 <div class="fields">
@@ -300,23 +300,22 @@
                   </div>
                   <div class="two wide field" [formGroupName]="i">
                     <label>&nbsp;</label>
-                    <div class="ui input" *ngIf="(i === persons.controls.length-1 || i === 29); then thenBlock; else elseBlock"></div>
-                    <ng-template #thenBlock>
-                      <button class="ui green mini button btn-custom" type="button" id="addFile" (click)="addPerson()"
-                        [disabled]="statusSendBackFile">
-                        <i class="add icon"></i>
-                        เพิ่ม
-                      </button>
-                    </ng-template>
-                    <ng-template #elseBlock>
+                    <div class="ui input">
                       <button class="ui red mini button btn-custom" type="button" (click)="delPerson(i);">
                         <i class="trash alternate icon"></i>
                         ลบ
                       </button>
-                    </ng-template>
+                    </div>
                   </div>
                 </div>
               </ng-container>
+              <div class="ui inline center aligned field grid">
+                <button class="ui green mini button btn-custom" type="button" id="addFile" (click)="addPerson()"
+                  [disabled]="statusSendBackFile">
+                  <i class="add icon"></i>
+                  เพิ่ม
+                </button>
+              </div>
             </div>
           </div>
         </div>

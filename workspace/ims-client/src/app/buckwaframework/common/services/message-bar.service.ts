@@ -71,7 +71,7 @@ export class MessageBarService {
     $(".baiwa-alert").modal("show");
   }
 
-  errorModal = (msg: string, title: string = "เกิดข้อผิดพลาด") => {
+  errorModal = (msg: string = "ไม่สามารถทำรายการได้กรุณาลองใหม่อีกครั้ง หรือ ติดต่อผู้ดูแลระบบ", title: string = "เกิดข้อผิดพลาด") => {
     $("#alert-header").html(title);
     $("#alert-content").html(msg);
     $("#alert-actions").html(
