@@ -25,9 +25,9 @@ public class ExciseConstants {
 	    public static class IA {
 	    	public static class STATUS {
 		    	public static final String PROCESS = "2048";
-		    	public static final String PASS = "2057";
+		    	public static final String PASS = "2055";
 		    	public static final String NOT_PASS = "2056";
-		    	public static final String SUCCESS = "2055";		    			    			   
+		    	public static final String SUCCESS = "2057";	    				    			   
 		    }
 	    }
 
