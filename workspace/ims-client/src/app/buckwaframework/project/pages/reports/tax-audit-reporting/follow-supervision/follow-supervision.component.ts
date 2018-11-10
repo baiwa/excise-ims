@@ -30,19 +30,36 @@ export class FollowSupervisionComponent implements OnInit {
       type: "date",
       text: TextDateTH,
       formatter: formatter('วดป')
+      ,
+      onChanges: (date , text)=>{
+       $("#date").val(text);
+      }
 
-    });
-   
+    });   
   }
 
   onSubmit = e => {
     console.log(this.obj);
-    const url = "report/pdf/ts/AskForMoney";   
-    this.ajax.post(url,`'${JSON.stringify(this.obj).toString()}'`, res => {
-      if (res.status == 200 && res.statusText == "OK") {
-        window.open("/ims-webapp/api/report/pdf/AskForMoney/file");
-      }
-    });
+    this.obj.date =   $("#date").val();
+    var form = document.createElement("form");
+		form.method = "POST";
+		form.action = AjaxService.CONTEXT_PATH + "report/pdf/oa/ask-for-money-report";
+    form.style.display = "none";    
+    var jsonInput = document.createElement("input");
+    jsonInput.name = "json";
+    jsonInput.value = JSON.stringify(this.obj);
+    form.appendChild(jsonInput);
+
+    document.body.appendChild(form);
+	  form.submit();
+
+    // const url = "report/pdf/oa/ask-for-money-report";   
+    // this.ajax.post(url,`'${JSON.stringify(this.obj).toString()}'`, res => {
+    //   if (res.status == 200 && res.statusText == "OK") {
+    //     window.open("/ims-webapp/api/report/pdf/oa/ask-for-money-report/file");
+    //   }
+    // });
+
   };
   onDiscard = () => {
     // on click this view hide them

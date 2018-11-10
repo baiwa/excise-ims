@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AskForMoney" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6f672709-ad0d-4577-a217-438622a92055">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AskForMoney" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="6f672709-ad0d-4577-a217-438622a92055">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="logo1" class="java.io.InputStream"/>
+	<parameter name="governmentService" class="java.lang.String"/>
+	<parameter name="date" class="java.lang.String"/>
+	<parameter name="study" class="java.lang.String"/>
+	<parameter name="actionMonitoring" class="java.lang.String"/>
+	<parameter name="resultsAre" class="java.lang.String"/>
+	<parameter name="fromOperation" class="java.lang.String"/>
+	<parameter name="Parameter1" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -63,15 +70,15 @@
 				</textElement>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="63" y="129" width="445" height="19" uuid="fc592148-cbab-4a17-b930-18f75aeebe4c"/>
-				<box>
+				<box leftPadding="20">
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
 				<textElement>
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" รายงานผลการตรวจปฏิบัติการ ติดตามแนะนำกำกับดูแล"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="37" y="132" width="57" height="30" uuid="b2584195-4522-4827-99be-b8afc0b2cac9"/>
@@ -87,15 +94,15 @@
 				</textElement>
 				<textFieldExpression><![CDATA["วันที่"]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="259" y="111" width="249" height="18" uuid="2d38a3e3-3964-4340-a45c-d77e755a43e7"/>
-				<box>
+			<textField isBlankWhenNull="true">
+				<reportElement x="259" y="107" width="249" height="22" uuid="2d38a3e3-3964-4340-a45c-d77e755a43e7"/>
+				<box leftPadding="27">
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Bottom">
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="38" y="152" width="51" height="25" uuid="ec2cfbba-b7dd-4f81-a3a3-fe86451c40a6"/>
@@ -104,15 +111,15 @@
 				</textElement>
 				<textFieldExpression><![CDATA["เรียน"]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="64" y="149" width="444" height="19" uuid="cb72b9df-7c9e-401e-8b00-085e6b075bd8"/>
-				<box>
+				<box leftPadding="24">
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Bottom">
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{study}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="77" y="185" width="62" height="25" uuid="2c113d0d-4617-4f83-b627-0869b5d6f1ac"/>
@@ -121,15 +128,15 @@
 				</textElement>
 				<textFieldExpression><![CDATA["ตามหนังสือ"]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="134" y="182" width="374" height="19" uuid="7e32fe39-9fc1-4a08-ba0c-df295782c00c"/>
-				<box>
+			<textField isBlankWhenNull="true">
+				<reportElement x="134" y="182" width="235" height="19" uuid="7e32fe39-9fc1-4a08-ba0c-df295782c00c"/>
+				<box leftPadding="27">
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Bottom">
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{governmentService}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="37" y="210" width="42" height="25" uuid="a8e2abfe-de01-48ec-92ca-b5dbafffaa6e"/>
@@ -162,15 +169,15 @@
 				</textElement>
 				<textFieldExpression><![CDATA["ปฏิบัติการ ติดตามกำกับดูแล"]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="174" y="232" width="334" height="19" uuid="4491e88c-5312-4aaf-9037-676266a3a138"/>
-				<box>
+				<box leftPadding="27">
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Bottom">
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{actionMonitoring}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="37" y="260" width="42" height="25" uuid="9847f386-936b-4983-9aa3-5dc7be1a8eef"/>
@@ -196,25 +203,25 @@
 				</textElement>
 				<textFieldExpression><![CDATA["นั้น"]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="63" y="70" width="445" height="18" uuid="0188c5c3-fe92-494f-bc60-2a7256aa5793"/>
-				<box>
+			<textField isBlankWhenNull="true">
+				<reportElement x="63" y="68" width="445" height="20" uuid="0188c5c3-fe92-494f-bc60-2a7256aa5793"/>
+				<box leftPadding="27">
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Bottom">
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{governmentService}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="74" y="278" width="216" height="19" uuid="f17b5aa1-796a-49cc-9f1b-02392965a3fa"/>
-				<box>
+			<textField isBlankWhenNull="true">
+				<reportElement x="73" y="278" width="216" height="19" uuid="f17b5aa1-796a-49cc-9f1b-02392965a3fa"/>
+				<box leftPadding="20">
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
 				<textElement>
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{governmentService}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="286" y="281" width="222" height="25" uuid="1ac0d8ff-4250-4e31-ba31-ed96151d5d2d"/>
@@ -429,6 +436,47 @@
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="369" y="185" width="15" height="25" uuid="65f31dc6-53d5-4b9a-886a-538653b1cdad"/>
+				<textElement>
+					<font fontName="TH Sarabun New" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ที่"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="182" width="60" height="19" uuid="933e1073-b05d-41ec-bd6e-660b896ed4d0"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font fontName="TH Sarabun New" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="437" y="185" width="15" height="25" uuid="8d37942b-8fe4-42cc-99b2-a7c3780bff1b"/>
+				<textElement>
+					<font fontName="TH Sarabun New" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="442" y="182" width="66" height="19" uuid="d2af9a5b-048b-4f96-b761-a06141d81408"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font fontName="TH Sarabun New" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="39" y="335" width="471" height="397" uuid="39634a7b-787b-414f-b636-040b02f8ea6e"/>
+				<textElement>
+					<font fontName="TH Sarabun New" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{resultsAre}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

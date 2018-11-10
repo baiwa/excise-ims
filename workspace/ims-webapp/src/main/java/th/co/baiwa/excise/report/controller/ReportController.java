@@ -24,7 +24,7 @@ import net.sf.jasperreports.engine.JRException;
 import th.co.baiwa.buckwaframework.common.util.ThaiNumberUtils;
 import th.co.baiwa.excise.report.bean.ContractBean;
 import th.co.baiwa.excise.report.service.ReportService;
-import th.co.baiwa.excise.report.service.ReporterService;
+import th.co.baiwa.excise.report.service.AskForMoneyReportService;
 
 @Controller
 @RequestMapping("api/report")
