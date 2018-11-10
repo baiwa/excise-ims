@@ -24,6 +24,7 @@ import net.sf.jasperreports.engine.JRException;
 import th.co.baiwa.buckwaframework.common.util.ThaiNumberUtils;
 import th.co.baiwa.excise.report.bean.ContractBean;
 import th.co.baiwa.excise.report.service.ReportService;
+import th.co.baiwa.excise.report.service.ReporterService;
 
 @Controller
 @RequestMapping("api/report")
@@ -34,6 +35,9 @@ public class ReportController {
 	@Autowired
 	private ReportService reportService;
 
+	@Autowired
+	private ReporterService reporterService;
+	
 	@GetMapping("/pdf/{name}/file")
 	@ResponseBody
 	public void pdfSomething(@PathVariable("name") String name, HttpServletResponse response) throws Exception {
@@ -81,6 +85,13 @@ public class ReportController {
 	@ResponseBody // byte[]
 	public void pdfTs(@PathVariable("report") String name, @RequestBody String json) throws IOException, JRException { // byte[]
 		byte[] report = reportService.objectToPDF(name, json); // null
+		//return report;
+	}
+	
+	@PostMapping("/pdf/ts/{report}")
+	@ResponseBody // byte[]
+	public void pdfTsReport(@PathVariable("reporter") String name, @RequestBody String json) throws IOException, JRException { // byte[]
+		byte[] report = reporterService.objectToPDF(name, json); // null
 		//return report;
 	}
 }

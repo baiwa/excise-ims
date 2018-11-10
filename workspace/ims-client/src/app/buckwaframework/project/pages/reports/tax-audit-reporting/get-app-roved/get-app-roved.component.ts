@@ -25,7 +25,9 @@ export class GetAppRovedComponent implements OnInit {
   onSubmit = e => {
     console.log(this.obj);
     this.obj.date =   $("#date").val();
-    const url = "report/pdf/ts/AppGetApp";   
+    this.obj.accordingToPlan1 =   $("#accordingToPlan1").val();
+    this.obj.accordingToPlan2 =   $("#accordingToPlan2").val();
+    const url = "report/pdf/ts/ApprovedToGoToWork";   
     this.ajax.post(url,`'${JSON.stringify(this.obj).toString()}'`, res => {
       if (res.status == 200 && res.statusText == "OK") {
         window.open("/ims-webapp/api/report/pdf/ApprovedToGoToWork/file");
@@ -52,10 +54,14 @@ export class GetAppRovedComponent implements OnInit {
 
     });
     $("#date2").calendar({
-      startCalendar: $("#date1"),
+      startCalendar: $("#date2"),
       type: "date",
       text: TextDateTH,
       formatter: formatter('วดป')
+      ,
+      onChanges: (date , text)=>{
+       $("#accordingToPlan1").val(text);
+      }
 
     });
     $("#date3").calendar({
@@ -63,6 +69,10 @@ export class GetAppRovedComponent implements OnInit {
       type: "date",
       text: TextDateTH,
       formatter: formatter('วดป')
+      ,
+      onChanges: (date , text)=>{
+       $("#accordingToPlan2").val(text);
+      }
 
     });
   }

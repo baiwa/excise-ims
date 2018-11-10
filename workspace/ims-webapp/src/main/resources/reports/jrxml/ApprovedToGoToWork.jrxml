@@ -160,7 +160,7 @@
 			<textField>
 				<reportElement x="61" y="218" width="182" height="19" uuid="11f26489-1cf2-4730-8b14-dcc7df5e4850"/>
 				<box>
-					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<bottomPมา ออฟen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="TH Sarabun New" size="14"/>

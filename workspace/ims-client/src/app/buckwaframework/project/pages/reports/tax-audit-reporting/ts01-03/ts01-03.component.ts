@@ -138,6 +138,7 @@ class Ts0103 {
   month1: string;
   year1: string;
   day2: string;
+  
   month2: string;
   year2: string;
   time: string;
