@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.ta.persistence.dao.CreatePeperReciveProductDao;
+import th.co.baiwa.excise.ta.persistence.dao.CreatePeperPayProductDao;
 import th.co.baiwa.excise.ta.persistence.entity.PdtReceicwWsHdr;
 import th.co.baiwa.excise.ta.persistence.entity.TaPdtReceiveWsDtl;
 import th.co.baiwa.excise.ta.persistence.repository.PdtReceicwWsHdrRepository;
@@ -34,10 +34,10 @@ import th.co.baiwa.excise.ta.persistence.vo.Ope046ExcelVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046FormVo;
 
 @Service
-public class Ope044Service {
+public class Ope045Service {
 
 	@Autowired
-	private CreatePeperReciveProductDao createPeperReciveProductDao;
+	private CreatePeperPayProductDao createPeperPayProductDao;
 	
 	@Autowired
 	private PdtReceicwWsHdrRepository headerRepo;
@@ -51,8 +51,8 @@ public class Ope044Service {
 		
 		if (StringUtils.isNotBlank(formVo.getExciseId())) {
 
-			List<Ope044Vo> list = createPeperReciveProductDao.findAll(formVo);
-			Long count = createPeperReciveProductDao.count(formVo);
+			List<Ope044Vo> list = createPeperPayProductDao.findAll(formVo);
+			Long count = createPeperPayProductDao.count(formVo);
 
 			if (formVo.getDataExcel() != null) {
 				mapData(list, formVo.getDataExcel());
@@ -93,13 +93,13 @@ public class Ope044Service {
 	}
 
 	public List<LabelValueBean> exciseidList() {
-		List<LabelValueBean> dataList = createPeperReciveProductDao.exciseidList();
+		List<LabelValueBean> dataList = createPeperPayProductDao.exciseidList();
 		return dataList;
 	}
 
 	public Ope044FormVo findByExciseId(String exciseId) {
 		if (StringUtils.isNotBlank(exciseId)) {
-			List<Ope044FormVo> list = createPeperReciveProductDao.findByExciseId(exciseId);
+			List<Ope044FormVo> list = createPeperPayProductDao.findByExciseId(exciseId);
 			return list.get(0);
 		}
 		return new Ope044FormVo();

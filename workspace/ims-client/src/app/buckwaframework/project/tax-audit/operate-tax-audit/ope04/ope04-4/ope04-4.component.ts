@@ -1,10 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { TextDateTH, DecimalFormat, digit, formatter } from '../../../../../common/helper';
-import { AjaxService, MessageBarService, AuthService } from '../../../../../common/services';
 import { BreadCrumb } from 'models/breadcrumb';
 import { Ope044Service } from './ope04-4.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Ope044Form } from './ope04-4.model';
+import { formatter, TextDateTH } from 'helpers/datepicker';
+import { AuthService } from 'services/auth.service';
+import { AjaxService } from 'services/ajax.service';
 declare var $: any;
 @Component({
   selector: 'ope04-4',
@@ -32,6 +33,7 @@ export class Ope044Component implements OnInit, AfterViewInit {
   dform: string = '';
   dTo: string = '';
   company: string = '';
+
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
@@ -49,7 +51,7 @@ export class Ope044Component implements OnInit, AfterViewInit {
     this.findExciseId();
     this.callDropdown();
     this.calenda();
-    
+
   }
   ngAfterViewInit() {
     this.dataTable();
@@ -88,10 +90,12 @@ export class Ope044Component implements OnInit, AfterViewInit {
   }
 
   search = () => {
-    
-    this.dform = this.formControl.controls.dateFrom.value;
-    this.dTo = this.formControl.controls.dateTo.value;
-    this.company = this.formControl.controls.entrepreneur.value;
+
+    this.company = this.formControl.value.entrepreneur;
+
+    this.dform = this.formatDateThai(this.formControl.value.dateFrom);
+    this.dTo = this.formatDateThai(this.formControl.value.dateTo);    
+
     this.submitted = true;
     if (this.formControl.invalid) {
       return;
@@ -148,12 +152,12 @@ export class Ope044Component implements OnInit, AfterViewInit {
     });
   }
 
-  export =()=>{
+  export = () => {
     let dataSum = this.ope044Service.getSummaryData();
     console.log(dataSum);
     let formExcel = $("#form-data-excel").get(0);
     formExcel.action = AjaxService.CONTEXT_PATH + "ta/opo044/export";
-    formExcel.dataJson.value = JSON.stringify({voList : dataSum});
+    formExcel.dataJson.value = JSON.stringify({ voList: dataSum });
     formExcel.submit();
   }
 
@@ -225,5 +229,13 @@ export class Ope044Component implements OnInit, AfterViewInit {
 
   dataTable = () => {
     this.ope044Service.dataTable();
+  }
+
+  formatDateThai(text){  
+    let array = text.split("/");
+    let _month = array[0];
+    let _year = array[1];
+    let month = TextDateTH.months[parseInt(_month) - 1];
+    return month + " " + _year;
   }
 }

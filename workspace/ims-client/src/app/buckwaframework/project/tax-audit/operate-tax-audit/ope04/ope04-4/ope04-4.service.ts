@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Utils } from 'helpers/utils';
 import { AjaxService } from 'services/ajax.service';
 import { MessageBarService } from 'services/message-bar.service';
-import { resolve } from 'url';
-import { reject } from 'q';
 declare var $: any;
 @Injectable()
 export class Ope044Service {
@@ -61,7 +59,7 @@ export class Ope044Service {
 
     upload = (form: any): Promise<any> => {
         return new Promise((resolve, reject) => {
-            let url = "ta/opo046/upload";
+            let url = "ta/opo044/upload";
             this.ajax.upload(url, form, success => {
                 this.dataExcel = success.json();
                 if (Utils.isNull(this.dataExcel)) {

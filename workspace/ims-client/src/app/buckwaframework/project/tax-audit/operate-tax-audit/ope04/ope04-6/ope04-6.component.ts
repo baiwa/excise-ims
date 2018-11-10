@@ -30,7 +30,7 @@ export class Ope046Component implements OnInit {
   form: Ope046Form = new Ope046Form();
   exciseIdList: any;
   loading: boolean = false;
-  buttonDisabled: boolean = false;
+  buttonDisabled: boolean = true;
   error: boolean = false;
   uploadDisabled: boolean = true;
   formControl: FormGroup;
@@ -103,6 +103,7 @@ export class Ope046Component implements OnInit {
     $("#Dtable").hide();
     this.newForm();
     this.uploadDisabled = true;
+    this.buttonDisabled = true;
     this.opeo46Service.claer();
   }
   changeExciseId = (e) => {
@@ -129,10 +130,11 @@ export class Ope046Component implements OnInit {
     this.loading = true;
     const form = $("#upload-form")[0];
     let formBody = new FormData(form);
-    this.opeo46Service.upload(formBody);
-    setTimeout(() => {
+    this.opeo46Service.upload(formBody).then(()=>{
+      this.buttonDisabled = false;
       this.loading = false;
-    }, 500);
+    });
+
   }
 
   save = async () => {

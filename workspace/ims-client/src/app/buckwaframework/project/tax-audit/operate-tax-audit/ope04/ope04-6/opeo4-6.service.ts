@@ -17,7 +17,7 @@ export class Opeo46Service {
     dataRespon: any;
     searchFlag: String = "FALSE";
     fileName: any;
-    dataExcel: any = null;   
+    dataExcel: any = null;
     constructor(
         private ajax: AjaxService,
         private message: MessageBarService
@@ -44,9 +44,9 @@ export class Opeo46Service {
         });
     }
 
-    onChangeUpload = async (event: any): Promise<any>=> {
+    onChangeUpload = async (event: any): Promise<any> => {
 
-        return new Promise((resolve,reject)=>{
+        return new Promise((resolve, reject) => {
             if (event.target.files && event.target.files.length > 0) {
                 let reader = new FileReader();
                 reader.onload = (e: any) => {
@@ -59,32 +59,36 @@ export class Opeo46Service {
                     console.log(this.fileName);
                 };
                 reader.readAsDataURL(event.target.files[0]);
-            }            
+            }
             resolve();
-        });        
+        });
     };
 
-    upload = (form: any) => {
-        let url = "ta/opo046/upload";
-        this.ajax.upload(url, form, success => {
-            this.dataExcel = success.json();
-            if (Utils.isNull(this.dataExcel)) {
-                this.message.errorModal('ไม่สามารถอัปโหลดไฟล์');
-            }
-        }).then(() => {
-            this.table.ajax.reload();
-        });
+    upload = (form: any): Promise<any> => {
+        return new Promise((resolve, reject) => {
+            let url = "ta/opo046/upload";
+            this.ajax.upload(url, form, success => {
+                this.dataExcel = success.json();
+                if (Utils.isNull(this.dataExcel)) {
+                    this.message.errorModal('ไม่สามารถอัปโหลดไฟล์');
+                }
+            }).then(() => {
+                this.table.ajax.reload();
+            });
+
+            resolve();
+        })
     }
 
-    search = ():Promise<any> => {
-        return new Promise((resolve,reject)=>{
+    search = (): Promise<any> => {
+        return new Promise((resolve, reject) => {
             this.searchFlag = "TRUE";
             if (this.table != null) {
                 this.table.destroy();
             }
             this.dataTable();
             resolve();
-        });        
+        });
         // $("#dataTable").DataTableTh().ajax.reload();
     }
     claer = () => {
@@ -101,38 +105,38 @@ export class Opeo46Service {
         this.dataTable();
     }
 
-    save = async (form : any): Promise<any> => {
-        return new Promise(async(resolve, reject) => {
-        let data = await this.table.data();
-        let url = await "ta/opo046/save";
+    save = async (form: any): Promise<any> => {
+        return new Promise(async (resolve, reject) => {
+            let data = await this.table.data();
+            let url = await "ta/opo046/save";
 
-        let list = await [];
-        for (let i = 0; i < data.length; i++) {
-            let row = await this.table.row(i).data();
-            await list.push(row);
-        }
-        await console.log(list);
-        if (data.length == 0) {
-            await this.message.alert("ไม่มีข้อมูล");
-            return;
-        }
-        let d = {
-            "voList" : list,
-            "form" :form
-        }
-
-        this.message.comfirm(async (res) => {
-            if (res) {
-                return await this.ajax.post(url,d, async res => {
-                    await resolve(res.json());
-                    await this.message.successModal("บันทึกรายการ");
-                }, async err => {
-                    await this.message.errorModal("บันทึกรายการไม่สำเร็จ");
-                });
-            }else{
-                await resolve("C");
+            let list = await [];
+            for (let i = 0; i < data.length; i++) {
+                let row = await this.table.row(i).data();
+                await list.push(row);
             }
-        }, "บันทึกรายการ");
+            await console.log(list);
+            if (data.length == 0) {
+                await this.message.alert("ไม่มีข้อมูล");
+                return;
+            }
+            let d = {
+                "voList": list,
+                "form": form
+            }
+
+            this.message.comfirm(async (res) => {
+                if (res) {
+                    return await this.ajax.post(url, d, async res => {
+                        await resolve(res.json());
+                        await this.message.successModal("บันทึกรายการ");
+                    }, async err => {
+                        await this.message.errorModal("บันทึกรายการไม่สำเร็จ");
+                    });
+                } else {
+                    await resolve("C");
+                }
+            }, "บันทึกรายการ");
         });
     }
     dataTable = () => {
@@ -168,14 +172,14 @@ export class Opeo46Service {
                 {
                     "data": "taxAmount",
                     "className": "ui right aligned",
-                    "render" : (data)=>{
+                    "render": (data) => {
                         return Utils.moneyFormatInt(data);
                     }
                 },
                 {
-                    "data": "amount",                    
+                    "data": "amount",
                     "className": "ui right aligned",
-                    "render" : (data)=>{
+                    "render": (data) => {
                         return Utils.moneyFormatInt(data);
                     }
                 },
@@ -193,14 +197,14 @@ export class Opeo46Service {
                 {
                     "data": "taxNumber",
                     "className": "ui right aligned",
-                    "render" : (data)=>{
+                    "render": (data) => {
                         return Utils.moneyFormatInt(data);
                     }
                 },
                 {
                     "data": "volume",
                     "className": "ui right aligned",
-                    "render" : (data)=>{
+                    "render": (data) => {
                         return Utils.moneyFormatInt(data);
                     }
                 },
@@ -243,12 +247,12 @@ export class Opeo46Service {
 
     }
 
-    getSummaryData(){
+    getSummaryData() {
         let dataList = this.table.data();
         let dataArray = [];
-       for(let i=0;i<dataList.length;i++){
-           dataArray.push(dataList[i]);
-       }
-       return dataArray
-   }
+        for (let i = 0; i < dataList.length; i++) {
+            dataArray.push(dataList[i]);
+        }
+        return dataArray
+    }
 }
