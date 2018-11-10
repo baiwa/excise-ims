@@ -376,12 +376,15 @@ export class Int0613Component implements OnInit, AfterViewInit {
 
      
     });
+    this.dataEdit = [];
+  }
+  numbers(e){
+    console.log("nnn: ",e.target.value);
   }
 
-
-  onKey = (e) => {
-  return Utils.moneyFormatDecimal(e);
-  }
+  // onKey = (e) => {
+  // return Utils.moneyFormatDecimal(e);
+  // }
 
 
   typeNumber(e) {

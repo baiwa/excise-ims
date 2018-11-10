@@ -135,7 +135,7 @@ export class SendLineUserComponent implements OnInit, AfterViewInit {
 
       '<th rowspan="2" style="text-align: center !important">พิกัด</th> ' +
       '<th rowspan="2" style="text-align: center !important">ที่อยู่โรงอุตสาหกรรม/สถานบริการ</th> ' +
-      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตกเก่า</th> ' +
+      '<th rowspan="2" style="text-align: center !important" >เลขทะเบียนสรรพสามิตเก่า</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะล่าสุด</th> ' +
       '<th rowspan="2" style="text-align: center !important">สถานะ/วันที่</th> ' +
       '<th rowspan="2" style="text-align: center !important">พิกัดอื่นๆ</th> ' +
