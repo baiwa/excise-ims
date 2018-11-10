@@ -1,4 +1,4 @@
-import { TextDateTH, formatter, digit, ThaiFormatter, toDateLocale } from "./datepicker";
+import { TextDateTH, formatter, digit, ThaiFormatter, toDateLocale, ThDateToEnDate, ThMonthYearToEnMonthYear, ThYearToEnYear, EnDateToThDate, EnMonthYearToThMonthYear, EnYearToThYear } from "./datepicker";
 import { numberWithCommas, thaiNumber } from "./number";
 import { Prices } from "./travel";
 import { ThaiNumberToText, ArabicNumberToText, CheckNumber, ThaiNumber } from "./thaibath";
@@ -28,5 +28,17 @@ export {
   // FormData
   toFormData,
   // Utils
-  Utils
+  Utils,
+
+  
+  // ConverDate พศ เป็น คศ
+  ThDateToEnDate,
+  ThMonthYearToEnMonthYear,
+  ThYearToEnYear,
+
+  // ConvertDate คศ เป็น พศ
+  EnDateToThDate, // ววดดปป
+  EnMonthYearToThMonthYear, // ดดปป
+  EnYearToThYear, // ปี
+  
 };

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import th.co.baiwa.excise.ia.persistence.entity.BudgetList;
 import th.co.baiwa.excise.ia.persistence.entity.IaWithdrawalList;
 import th.co.baiwa.excise.ia.persistence.entity.IaWithdrawalPersons;
 import th.co.baiwa.excise.ia.persistence.vo.Int06101FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int06101FormVoRequest;
 import th.co.baiwa.excise.ia.service.Int06101Service;
 
 @Controller
@@ -112,6 +114,30 @@ public class Int06101Controller {
 			int06101Service.add(formVo);
 		} catch (Exception e) {
 			logger.error("Error ! add ", e);
+			return ApplicationCache.getMessage("MSG_00003");
+		}
+		return ApplicationCache.getMessage("MSG_00002");
+	}
+	
+	@PostMapping("/update/{id}")
+	@ResponseBody
+	public Message update(@RequestBody Int06101FormVoRequest formVo, @PathVariable("id") Long id) {
+		try {
+			int06101Service.update(formVo, id);
+		} catch (Exception e) {
+			logger.error("Error ! update ", e);
+			return ApplicationCache.getMessage("MSG_00003");
+		}
+		return ApplicationCache.getMessage("MSG_00002");
+	}
+	
+	@DeleteMapping("delete/{id}")
+	@ResponseBody
+	public Message delete(@PathVariable("id") Long id) {
+		try {
+			int06101Service.delete(id);
+		} catch (Exception e) {
+			logger.error("Error ! delete ", e);
 			return ApplicationCache.getMessage("MSG_00003");
 		}
 		return ApplicationCache.getMessage("MSG_00002");

@@ -1,0 +1,31 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">ผลการตรวจสอบกระดาษทำการจ่ายสินค้าสำเร็จรูป</h2>
+
+    <div class="ui top attached header segment" style="background: #1e83db;color: white">
+      <span>ระบุรายละเอียดกระดาษทำการ</span>
+    </div>
+    <div class="ui attached segment">
+      <table id="dataTable" class="ui small celled table striped selectable nowrap" style="width: 100%">
+        <thead>
+          <tr>
+            <th class="text-center">ลำดับที่</th>
+            <th class="text-center">รายการ</th>
+            <th class="text-center">ปริมาณจ่ายสิค้าสำเร็จรูปในใบกำกับภาษี</th>
+            <th class="text-center">ปริมาณจากการตรวจสอบ</th>                        
+            <th class="text-center">ปริมาณจากงบเดือน</th>
+            <th class="text-center">ผลต่าง</th>
+          </tr>
+        </thead>
+
+      </table>
+      <div class="ui stackable center aligned page grid">
+        <button class="mini button ui" type="button" routerLink="/ope04/4-1"><i class="reply icon"></i>กลับ</button>
+      </div>
+      <br>
+    </div>
+
+  </div>
+</div>

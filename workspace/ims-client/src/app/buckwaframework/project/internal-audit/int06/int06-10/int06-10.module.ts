@@ -9,6 +9,7 @@ import { AuthGuard, CanDeactivateGuard } from '../../../../common/services';
 import { Int06101Component } from './int06-10-1/int06-10-1.component';
 import { Int06102Component } from './int06-10-2/int06-10-2.component';
 import { BreadcrumbModule } from '../../../../common/components';
+import { DirectivesModule } from 'app/buckwaframework/common/directives/directives.module';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     BreadcrumbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DirectivesModule
   ],
   declarations: [
     Int0610Component,

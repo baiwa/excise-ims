@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { AjaxService, MessageBarService, AuthService } from 'app/buckwaframework/common/services';
 import { TextDateTH, formatter } from 'helpers/datepicker';
 import { Utils } from "helpers/utils";
@@ -15,10 +15,9 @@ export class Int0610Component implements OnInit, AfterViewInit {
 
   activityList: any;
   budgetList: any;
-  breadcrumb: BreadCrumb[]
+  breadcrumb: BreadCrumb[];
 
   _dataTable: any;
-
 
   constructor(
     private authService: AuthService,
@@ -49,11 +48,28 @@ export class Int0610Component implements OnInit, AfterViewInit {
       const { id } = e.currentTarget;
       this._dataTable.row($(e).parents("tr")).data();
       if ("edit" == id.split("-")[0]) {
+        // Editing
         this.router.navigate(["/int06/10/1"], {
           queryParams: { id: id.split("-")[1] }
         });
       } else if ("show" == id.split("-")[0]) {
-        this.message.alert("ระบบยังไม่เปิดบริการฟีเจอร์นี้.. กรุณารอสักกำนึง");
+        // Showing
+        this.message.errorModal();
+      } else if ("delete" == id.split("-")[0]) {
+        // Deleting
+        this.message.comfirm(e => {
+          if (e) {
+            this.ajax.delete(`ia/int06101/delete/${id.split("-")[1]}`, response => {
+              const msg = response.json();
+              if (msg.messageType == "C") {
+                this.message.successModal(msg.messageTh);
+                this.onSearch();
+              } else {
+                this.message.errorModal(msg.messageTh);
+              }
+            })
+          }
+        }, `ท่านต้องการลบข้อมูลขอเบิกรหัส ${id.split("-")[1]} หรือไม่ ?`);
       }
     });
   }
@@ -217,6 +233,7 @@ export class Int0610Component implements OnInit, AfterViewInit {
             return `
             <button class="ui mini primary button" id="show-${full.withdrawalid}" value="show-${full.withdrawalid}"><i class="search icon"></i>ดู</button>
             <button class="ui mini yellow button" id="edit-${full.withdrawalid}" value="edit-${full.withdrawalid}"><i class="edit icon"></i>แก้ไข</button>
+            <button class="ui mini red button" id="delete-${full.withdrawalid}" value="delete-${full.withdrawalid}"><i class="trash icon"></i>ลบ</button>
             `;
           }
         }

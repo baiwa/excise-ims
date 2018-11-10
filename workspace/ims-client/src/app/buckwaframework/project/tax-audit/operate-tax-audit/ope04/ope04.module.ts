@@ -26,6 +26,7 @@ import { Ope0431Component } from './ope04-3/ope04-3-1/ope04-3-1.component';
 import { Ope0432Component } from './ope04-3/ope04-3-2/ope04-3-2.component';
 import { Ope0451Component } from './ope04-5/ope04-5-1/ope04-5-1.component';
 import { Ope0452Component } from './ope04-5/ope04-5-2/ope04-5-2.component';
+import { Ope0442Component } from "./ope04-4/ope04-4-2/ope04-4-2.component";
 
 
 
@@ -41,7 +42,8 @@ const routes: Routes = [
   { path: "3-2", component: Ope0432Component, canActivate: [AuthGuard] },
   { path: "3", component: Ope043Component, canActivate: [AuthGuard] },
   { path: "4", component: Ope044Component, canActivate: [AuthGuard] },
-  { path: "4/1", component: Ope0441Component, canActivate: [AuthGuard] },
+  { path: "4-1", component: Ope0441Component, canActivate: [AuthGuard] },
+  { path: "4-2", component: Ope0442Component, canActivate: [AuthGuard] },
   { path: "5", component: Ope045Component, canActivate: [AuthGuard] },
   { path: "5-1", component: Ope0451Component, canActivate: [AuthGuard] },
   { path: "5-2", component: Ope0452Component, canActivate: [AuthGuard] },
@@ -67,6 +69,7 @@ const routes: Routes = [
     Ope043Component,
     Ope044Component,
     Ope0441Component,
+    Ope0442Component,
     Ope045Component,
     Ope046Component,
     Ope047Component,

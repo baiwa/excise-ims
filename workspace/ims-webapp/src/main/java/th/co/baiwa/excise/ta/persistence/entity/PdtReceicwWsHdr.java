@@ -28,30 +28,41 @@ public class PdtReceicwWsHdr extends BaseEntity {
 
 	@Column(name = "TA_PDT_RECEIVE_WS_HDR_ID")
 	private BigDecimal taPdtReceiveWsHdrId;
-	
+
 	@Column(name = "TAX_PLAN_ID")
 	private BigDecimal taxPlanId;
-	
+
 	@Column(name = "EXCISE_ID")
 	private String exciseId;
-	
+
 	@Column(name = "TAXATION_ID")
 	private String taxationId;
-	
+
 	@Column(name = "TA_ANALYSIS_ID")
 	private String taAnalysisId;
-	
+
 	@Column(name = "START_DATE")
 	private String startDate;
-	
+
 	@Column(name = "END_DATE")
 	private String endDate;
-	
+
 	@Column(name = "PDT_TYPE")
 	private String pdtType;
-	
+
 	@Column(name = "SUB_PDT_TYPE")
 	private String subPdtType;
+
+	@Column(name = "COMPANY_NAME")
+	private String companyName;
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
 
 	public BigDecimal getTaPdtReceiveWsHdrId() {
 		return taPdtReceiveWsHdrId;
