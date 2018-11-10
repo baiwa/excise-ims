@@ -183,7 +183,7 @@ public class Ope044Service {
 		entityHdr.setEndDate(formHeader.getDateTo());
 		entityHdr.setPdtType(formHeader.getType());
 		entityHdr.setSubPdtType(formHeader.getCoordinates());
-		entityHdr.setTaxationId(formHeader.getEntrepreneur());
+		entityHdr.setCompanyName(formHeader.getEntrepreneur());
 		PdtReceicwWsHdr hdr = headerRepo.save(entityHdr);
 		
 		// ==> Details

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Utils } from 'helpers/utils';
 declare var $: any;
 @Injectable()
-export class Ope0451Service {
+export class Ope0452Service {
 
     //==> params
     table: any;
-    datatable = (taTaxReduceWsHdrId: any) => {
+    datatable = (id: any) => {
         this.table = $("#dataTable").DataTableTh({
             "serverSide": false,
             "processing": true,
@@ -19,7 +19,7 @@ export class Ope0451Service {
                 "type": "POST",
                 "data": (d) => {
                     return JSON.stringify($.extend({}, d, {
-                        "taTaxReduceWsHdrId": taTaxReduceWsHdrId,
+                        "id": id,
                         // "searchFlag": this.searchFlag,
                         // "dataExcel": this.dataExcel
                     }));
@@ -39,13 +39,13 @@ export class Ope0451Service {
                     "data": "amount1Out",
                     "className": "ui right aligned",
                     "render": (data) => {
-                        return Utils.moneyFormatInt(data);
+                        return Utils.moneyFormatDecimal(data);
                     }
                 }, {
                     "data": "amount2Out",
                     "className": "ui right aligned",
                     "render": (data) => {
-                        return Utils.moneyFormatInt(data);
+                        return Utils.moneyFormatDecimal(data);
                     }
                 }, {
                     "data": "amountTable2",
@@ -55,12 +55,15 @@ export class Ope0451Service {
                     }
                 }, {
                     "data": "amountMax",
-                    "className": "ui center aligned"
+                    "className": "ui center aligned",
+                    "render": (data) => {
+                        return Utils.moneyFormatDecimal(data);
+                    }
                 }, {
                     "data": "amountTable3",
                     "className": "ui right aligned",
                     "render": (data) => {
-                        return Utils.moneyFormatInt(data);
+                        return Utils.moneyFormatDecimal(data);
                     }
                 }, {
                     "data": "diff",

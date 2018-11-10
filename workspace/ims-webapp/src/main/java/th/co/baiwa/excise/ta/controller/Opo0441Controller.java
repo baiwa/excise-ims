@@ -16,31 +16,31 @@ import th.co.baiwa.excise.ta.persistence.vo.Ope0451FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope045Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0461FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0462Vo;
-import th.co.baiwa.excise.ta.service.Ope0451Service;
+import th.co.baiwa.excise.ta.service.Ope0441Service;
 
 @Controller
-@RequestMapping("api/ta/opo0451")
-public class Opo0451Controller {
+@RequestMapping("api/ta/opo0441")
+public class Opo0441Controller {
 
 	@Autowired
-	private Ope0451Service ope0451Service;
+	private Ope0441Service ope0441Service;
 
 	@PostMapping("/findAll")
 	@ResponseBody
 	public DataTableAjax<Ope0462Vo> findAll(@RequestBody Ope0451FormVo formVo){
-		return ope0451Service.findAll(formVo);
+		return ope0441Service.findAll(formVo);
 	}
 
 	@GetMapping("/findExciseId")
 	@ResponseBody
 	public List<LabelValueBean> findExciseId() {
-		List<LabelValueBean> dataList = ope0451Service.findExciseId();
+		List<LabelValueBean> dataList = ope0441Service.findExciseId();
 		return dataList;
 	}
 
 	@PostMapping("/findDetails")
 	@ResponseBody
 	public DataTableAjax<Ope045Vo> findDetails(@RequestBody Ope0461FormVo formVo){
-		return ope0451Service.findDetails(formVo);
+		return ope0441Service.findDetails(formVo);
 	}
 }

@@ -14,7 +14,7 @@ import th.co.baiwa.excise.ta.persistence.vo.Ope0461FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0462Vo;
 
 @Service
-public class Ope0451Service {
+public class Ope0441Service {
 
 		
 	@Autowired

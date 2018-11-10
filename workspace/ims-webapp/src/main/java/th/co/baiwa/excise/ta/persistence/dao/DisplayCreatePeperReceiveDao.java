@@ -19,12 +19,12 @@ import th.co.baiwa.excise.ta.persistence.vo.Ope0462Vo;
 import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
-public class DisplayCreatePeperPayHeaderDao {
+public class DisplayCreatePeperReceiveDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
 	//===================================> Headers <======================================	
-	private final String SQL = "SELECT * FROM TA_PDT_DRAWING_WS_HEADER WHERE 1=1 ";
+	private final String SQL = "SELECT * FROM TA_PDT_RECEIVE_WS_HDR WHERE 1=1 ";
 
 	public Long count(Ope0451FormVo formVo) {
 
@@ -79,7 +79,7 @@ public class DisplayCreatePeperPayHeaderDao {
 		public Ope0462Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Ope0462Vo vo = new Ope0462Vo();
 
-			vo.setTaTaxReduceWsHdrId(rs.getString("TA_PDT_DRAWING_WS_HEADER_ID"));
+			vo.setTaTaxReduceWsHdrId(rs.getString("TA_PDT_RECEIVE_WS_HDR_ID"));
 			vo.setExciseId(rs.getString("EXCISE_ID"));
 			vo.setTaAnalysisId(rs.getString("TA_ANALYSIS_ID"));
 			vo.setTaxationId(rs.getString("COMPANY_NAME"));
@@ -93,7 +93,7 @@ public class DisplayCreatePeperPayHeaderDao {
 	};
 
 	public List<LabelValueBean> findExciseId() {
-		String sql = "SELECT DISTINCT EXCISE_ID FROM TA_PDT_DRAWING_WS_HEADER";
+		String sql = "SELECT DISTINCT EXCISE_ID FROM TA_PDT_RECEIVE_WS_HDR";
 		List<LabelValueBean> list = jdbcTemplate.query(sql, exciseIdRowmapper);
 		return list;
 
@@ -109,14 +109,14 @@ public class DisplayCreatePeperPayHeaderDao {
 	
 	
 	//===================================> Details <======================================
-	private final String SQL_DETAILS = "SELECT * FROM TA_PDT_DRAWING_WS_DTL WHERE 1=1 ";
+	private final String SQL_DETAILS = "SELECT * FROM TA_PDT_RECEIVE_WS_DTL WHERE 1=1 ";
 	public Long countDetails(Ope0461FormVo formVo) {
 
 		StringBuilder sql = new StringBuilder(SQL_DETAILS);
 		List<Object> params = new ArrayList<>();
 		if (StringUtils.isNotBlank(formVo.getTaTaxReduceWsHdrId())) {
 			
-			sql.append(" AND TA_PDT_DRAWING_WS_HEADER_ID = ? ");
+			sql.append(" AND TA_PDT_RECEIVE_WS_HDR = ? ");
 			params.add(formVo.getTaTaxReduceWsHdrId());
 		}
 
@@ -131,7 +131,7 @@ public class DisplayCreatePeperPayHeaderDao {
 		List<Object> params = new ArrayList<>();
 
 		if (StringUtils.isNotBlank(formVo.getTaTaxReduceWsHdrId())) {
-			sql.append(" AND TA_PDT_DRAWING_WS_HEADER_ID = ? ");
+			sql.append(" AND TA_PDT_RECEIVE_WS_HDR = ? ");
 			params.add(formVo.getTaTaxReduceWsHdrId());
 		}
 		sql.append(" ORDER BY CREATED_DATE DESC ");
@@ -146,12 +146,10 @@ public class DisplayCreatePeperPayHeaderDao {
 		public Ope045Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Ope045Vo vo = new Ope045Vo();
 
-			vo.setOrder(rs.getString("TA_PDT_DRAWING_WS_DTL_ORDER"));
-			vo.setAmount1Out(rs.getString("VALUES_IN_BILL"));
-			vo.setAmount2Out(rs.getString("VALUES_OF_PRODUCT"));
-			vo.setAmountTable2(rs.getString("VALUES_OF_07_04"));
-			vo.setAmountMax(rs.getString("MAX_VALUES"));
-			vo.setAmountTable3(rs.getString("VALUES_OF_DRAWING"));
+			vo.setOrder(rs.getString("TA_PDT_WS_DTL_ORDER"));
+			vo.setAmount1Out(rs.getString("MONTH_BOOK_07_04"));
+			vo.setAmount2Out(rs.getString("ACCOUNT_07_02"));
+			vo.setAmountTable2(rs.getString("PDT_RECEIVE_BILL"));
 			vo.setDiff(rs.getString("RESULT"));
 
 			return vo;

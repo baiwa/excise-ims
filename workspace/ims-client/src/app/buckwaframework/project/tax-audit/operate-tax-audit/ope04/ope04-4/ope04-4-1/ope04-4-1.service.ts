@@ -3,7 +3,7 @@ import { AjaxService } from 'services/ajax.service';
 import { Router } from '@angular/router';
 declare var $: any;
 @Injectable()
-export class Ope451Service {
+export class Ope0441Service {
   // ==> params
   form: FromVo = new FromVo();
   table: any;
@@ -93,7 +93,7 @@ export class Ope451Service {
           var closestRow = $(e.target).closest('tr');
           var data = this.table.row(closestRow).data();
           console.log(data);
-          this.router.navigate(["/ope04/5-2"], {
+          this.router.navigate(["/ope04/4-2"], {
               queryParams: {
                   id: data.taTaxReduceWsHdrId
               }
