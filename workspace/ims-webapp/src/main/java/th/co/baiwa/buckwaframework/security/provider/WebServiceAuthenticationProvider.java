@@ -46,7 +46,7 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 		
 		if (!"excise".equals(env)) {
 			Response response = webServiceExciseService.webServiceLdap(name, password);
-			if ("200".equals(response.getStatusCode())) {
+			if ("000".equals(response.getCode())) {
 				userDetails.setOfficeId(response.getOfficeCode());
 				userDetails.setUserThaiName(response.getUserThaiName());
 				userDetails.setUserThaiSurname(response.getUserThaiSurname());
