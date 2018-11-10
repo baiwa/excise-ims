@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { BaseModel, ManageReq, BreadCrumb } from 'models/index';
 import { TextDateTH, formatter } from '../../../../common/helper/datepicker';
 import { AuthService } from "services/auth.service";
+import { async } from "@angular/core/testing";
 declare var $: any;
 @Component({
   selector: "int08-4",
@@ -13,10 +14,12 @@ declare var $: any;
   styleUrls: ["./int08-4.component.css"]
 })
 export class Int084Component implements OnInit {
-  startDate:any;
-  endDate:any;
+  startDate:any="";
+  endDate:any="";
   startDateTM:any;
   endDateTM:any;
+  int084VoList:any=[];
+  idHead:any;
 
   breadcrumb: BreadCrumb[];
   constructor(
@@ -85,18 +88,28 @@ export class Int084Component implements OnInit {
   }
 
   clickSearch = function () {
+
+    if (this.startDate==""||this.endDate=="") {
+      this.messageBarService.alert("กรุณาระบุ ระยะเวลาที่ตรวจสอบ");
+      return false;
+    }
+   
+    if ($("#billLost").val()<0||$("#billLost").val()>100||$("#billLost").val()=="") {
+      this.messageBarService.alert("จำนวนเปอร์เซ้นใบเสร็จเสีย ไม่ถูกต้อง");
+      return false;
+    }
     $("#searchFlag").val("TRUE");
    this.dataTable();
   }
 
-  dataTable = function(){
+  dataTable = () => {
     if ($('#tableData').DataTable() != null) {$('#tableData').DataTable().destroy();};
+    this.int084VoList = [];
     var table = $('#tableData').DataTableTh({
-      "lengthChange":true,
       "serverSide": false,
       "searching": false,
-      "ordering": false,
       "processing": true,
+      "ordering": false,
       "scrollX": true,    
 
       "ajax" : {
@@ -117,7 +130,7 @@ export class Int084Component implements OnInit {
       },
       "columns": [
         {
-          "data": "officeCode","className":"center"
+          "data": "officeCode","className":"center","orderable": false
         }, {
           "data": "officeName"
         }, {
@@ -125,29 +138,43 @@ export class Int084Component implements OnInit {
         }, {
           "data": "endDate","className":"center"
         }, {
+          "data": "billAll","className":"right"
+        }, {
+          "data": "billWaste","className":"right"
+        }, {
           "data": "riskNumber","className":"center"
         }, {
-          "data": "riskList"
+          "data": "riskRemark"
         }
-      ]
+      ],"createdRow": ( row, data, dataIndex )=> {
+        this.int084VoList.push(data);
+        this.idHead = data.idHead;
+      }
     });
   }
+
+
+
   exportFile=()=>{
-    console.log("exportFile");
     let param = "";
     let url = "/ia/int084/exportFile";
     
-    param +="?searchFlag=" + $("#searchFlag").val();
-    param +="&startDate=" + this.startDate;
-    param +="&endDate=" + this.endDate;
-
+    param +="?idHead=" + this.idHead;
     param +="&startDateTM=" + this.startDateTM;
     param +="&endDateTM=" + this.endDateTM;
 
-    param +="&billLost=" + $("#billLost").val();
-    
-
+    console.log("idHead : ",this.idHead);
     this.ajax.download(url+param);
+    
+  }
+
+  saveData=()=>{
+    let url = "/ia/int084/save";
+    this.ajax.post(url,this.int084VoList, res => {        
+      const msg = res.json();
+      console.log("exportFile");
+      this.exportFile();
+    });
   }
 
 }

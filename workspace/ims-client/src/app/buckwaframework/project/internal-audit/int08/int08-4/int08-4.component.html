@@ -36,7 +36,7 @@
           <label>จำนวนใบเสร็จเสียเกิน</label>
         </div>
         <div class="two wide field">
-          <input id="billLost" type="number" [attr.step]="1" required>
+          <input id="billLost" type="number" min="0" max="100" [attr.step]="1" required>
         </div>
         <div class="one wide field ui right aligned">
           <label>%</label>
@@ -65,6 +65,8 @@
           <th style="text-align: center !important;">ชื่อสำนักงานสรรพสามิต</th>
           <th style="text-align: center !important;">ช่วงเดือนที่</th>
           <th style="text-align: center !important;">ถึงเดือนที่</th>
+          <th style="text-align: center !important;">จำนวนใบเสร็จ</th>
+          <th style="text-align: center !important;">จำนวนใบเสีย</th>
           <th style="text-align: center !important;">จำนวนความเสี่ยง</th>
           <th style="text-align: center !important;">รายละเอียดความเสี่ยง</th>
         </tr>
@@ -73,8 +75,13 @@
     <br>
     <div class="ui center aligned grid">
       <div class="sixteen wide column">
+<<<<<<< Updated upstream
         <button class="ui mini yellow button" (click)="exportFile()">
           <i class="print icon"></i>ส่งออก</button>
+=======
+        <button class="ui mini primary button" (click)="saveData()">
+          <i class="file excel outline icon"></i>ส่งออก</button>
+>>>>>>> Stashed changes
       </div>
     </div>
     <br>

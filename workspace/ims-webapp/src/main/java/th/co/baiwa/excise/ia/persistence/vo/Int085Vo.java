@@ -14,14 +14,19 @@ public class Int085Vo extends DataTableRequest {
 	private String endDate;
 
 	private String riskNumber;
+	private String riskRemark;
 	private String riskList;
+	private String riskPersen;
+
+	private String billAll;
+	private String billWaste;
 
 	private String officeCode;
 	private String officeName;
 	private String risk;
 	private String origin;
 	private String riskScore;
-	
+
 	private String statusM;
 
 	public String getSearchFlag() {
@@ -64,12 +69,44 @@ public class Int085Vo extends DataTableRequest {
 		this.riskNumber = riskNumber;
 	}
 
+	public String getRiskRemark() {
+		return riskRemark;
+	}
+
+	public void setRiskRemark(String riskRemark) {
+		this.riskRemark = riskRemark;
+	}
+
 	public String getRiskList() {
 		return riskList;
 	}
 
 	public void setRiskList(String riskList) {
 		this.riskList = riskList;
+	}
+
+	public String getRiskPersen() {
+		return riskPersen;
+	}
+
+	public void setRiskPersen(String riskPersen) {
+		this.riskPersen = riskPersen;
+	}
+
+	public String getBillAll() {
+		return billAll;
+	}
+
+	public void setBillAll(String billAll) {
+		this.billAll = billAll;
+	}
+
+	public String getBillWaste() {
+		return billWaste;
+	}
+
+	public void setBillWaste(String billWaste) {
+		this.billWaste = billWaste;
 	}
 
 	public String getOfficeCode() {
@@ -112,10 +149,6 @@ public class Int085Vo extends DataTableRequest {
 		this.riskScore = riskScore;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public String getStatusM() {
 		return statusM;
 	}
@@ -123,7 +156,9 @@ public class Int085Vo extends DataTableRequest {
 	public void setStatusM(String statusM) {
 		this.statusM = statusM;
 	}
-	
-	
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 }

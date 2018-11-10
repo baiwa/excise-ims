@@ -1,7 +1,5 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
-import java.util.Date;
-
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
 public class Int084Vo extends DataTableRequest {
@@ -11,12 +9,17 @@ public class Int084Vo extends DataTableRequest {
 	private String searchFlag;
 
 	private Long id;
+	private Long idHead;
 
 	private String startDate;
 	private String endDate;
 
 	private String riskNumber;
-	private String riskList;
+	private String riskRemark;
+	private String riskPersen;
+	
+	private String billAll;
+	private String billWaste;
 
 	private String officeCode;
 	private String officeName;
@@ -38,6 +41,14 @@ public class Int084Vo extends DataTableRequest {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getIdHead() {
+		return idHead;
+	}
+
+	public void setIdHead(Long idHead) {
+		this.idHead = idHead;
 	}
 
 	public String getStartDate() {
@@ -64,12 +75,36 @@ public class Int084Vo extends DataTableRequest {
 		this.riskNumber = riskNumber;
 	}
 
-	public String getRiskList() {
-		return riskList;
+	public String getRiskRemark() {
+		return riskRemark;
 	}
 
-	public void setRiskList(String riskList) {
-		this.riskList = riskList;
+	public void setRiskRemark(String riskRemark) {
+		this.riskRemark = riskRemark;
+	}
+
+	public String getRiskPersen() {
+		return riskPersen;
+	}
+
+	public void setRiskPersen(String riskPersen) {
+		this.riskPersen = riskPersen;
+	}
+
+	public String getBillAll() {
+		return billAll;
+	}
+
+	public void setBillAll(String billAll) {
+		this.billAll = billAll;
+	}
+
+	public String getBillWaste() {
+		return billWaste;
+	}
+
+	public void setBillWaste(String billWaste) {
+		this.billWaste = billWaste;
 	}
 
 	public String getOfficeCode() {

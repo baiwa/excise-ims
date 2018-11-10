@@ -13,8 +13,8 @@ declare var $: any;
   styleUrls: ["./int08-5.component.css"]
 })
 export class Int085Component implements OnInit {
-  startDate:any;
-  endDate:any;
+  startDate:any="";
+  endDate:any="";
   startDateTM:any;
   endDateTM:any;
 
@@ -86,6 +86,10 @@ export class Int085Component implements OnInit {
 
   clickSearch = function () {
     $("#searchFlag").val("TRUE");
+    if (this.startDate==""||this.endDate=="") {
+      this.messageBarService.alert("กรุณาระบุ ระยะเวลาที่ตรวจสอบ");
+      return false;
+    }
    this.dataTable();
   }
 
@@ -125,9 +129,13 @@ export class Int085Component implements OnInit {
         }, {
           "data": "endDate","className":"center"
         }, {
+          "data": "billAll","className":"right"
+        }, {
+          "data": "billWaste","className":"right"
+        }, {
           "data": "riskNumber","className":"center"
         }, {
-          "data": "riskList"
+          "data": "riskRemark"
         }, {
           "data": "statusM","className":"center",
           "render": function (data, type, row, meta) {

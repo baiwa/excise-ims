@@ -1,11 +1,14 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
+import java.util.List;
+
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 
 public class Int084FormVo extends DataTableRequest {
 
 	private String searchFlag;
 	private Long id;
+	private Long idHead;
 	private String startDate;
 	private String endDate;
 	private String startDateTM;
@@ -13,6 +16,7 @@ public class Int084FormVo extends DataTableRequest {
 	private String billLost;
 
 	private Int084Vo int084Vo;
+	private List<Int084Vo> int084VoList;
 
 	public String getSearchFlag() {
 		return searchFlag;
@@ -28,6 +32,14 @@ public class Int084FormVo extends DataTableRequest {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getIdHead() {
+		return idHead;
+	}
+
+	public void setIdHead(Long idHead) {
+		this.idHead = idHead;
 	}
 
 	public String getStartDate() {
@@ -78,5 +90,12 @@ public class Int084FormVo extends DataTableRequest {
 		this.int084Vo = int084Vo;
 	}
 
-	
+	public List<Int084Vo> getInt084VoList() {
+		return int084VoList;
+	}
+
+	public void setInt084VoList(List<Int084Vo> int084VoList) {
+		this.int084VoList = int084VoList;
+	}
+
 }

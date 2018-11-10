@@ -3,79 +3,184 @@ package th.co.baiwa.excise.ia.service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.criteria.From;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.cop.persistence.vo.Cop0711FormVo;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.ia.persistence.dao.IaIncomeExciseAudRptDao;
-import th.co.baiwa.excise.ia.persistence.vo.Int0171FormVo;
+import th.co.baiwa.excise.ia.persistence.dao.IaIncomeExciseAudDao;
+import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAud;
+import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAudDtl;
+import th.co.baiwa.excise.ia.persistence.repository.IncomeExciseAudDtlRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int084FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int084Vo;
 import th.co.baiwa.excise.upload.service.ExcalService;
-import th.co.baiwa.excise.ws.entity.response.licfri6010.LicFri6010;
-import th.co.baiwa.excise.ws.entity.response.licfri6010.LicenseList6010;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class Int084Service {
 	private static Logger log = LoggerFactory.getLogger(Int084Service.class);
 	
 	@Autowired
-	private IaIncomeExciseAudRptDao iaIncomeExciseAudRptDao;
+	private IaIncomeExciseAudDao iaIncomeExciseAudDao;
 	
 	@Autowired
 	private ExcalService excalService;
+	
+	@Autowired
+	private IncomeExciseAudService incomeExciseAudService;
+	
+	@Autowired
+	private IncomeExciseAudDtlRepository incomeExciseAudDtlRepository;
+	
 
 	public DataTableAjax<Int084Vo> findAll(Int084FormVo formVo) {
-		List<Int084Vo> listReturn = new ArrayList<Int084Vo>();
-		// query data
-		List<Int084Vo> list = iaIncomeExciseAudRptDao.findAllInt084(formVo);
-		Long count = iaIncomeExciseAudRptDao.countInt084(formVo);
 		
+		DataTableAjax<Int084Vo> dataTableAjax = new DataTableAjax<>();
+		
+		List<Int084Vo> list = new ArrayList<Int084Vo>();
+		List<Int084Vo> listReturn = new ArrayList<Int084Vo>();
+		long count = 0l;
+		
+		// query data
+		if ("TRUE".equalsIgnoreCase(formVo.getSearchFlag())) {
+			Long id = IncFri8020(formVo);
+			List<IncomeExciseAudDtl> incomeExciseAudDtlList = incomeExciseAudDtlRepository.findByIaIncomeExciseAudId(id);
+			
+			for (IncomeExciseAudDtl incomeExciseAudDtl : incomeExciseAudDtlList) {
+				String add = "Y";
+				Int084Vo dataDtl = new Int084Vo();
+				for (Int084Vo int084Vo : list) {
+					if(incomeExciseAudDtl.getOfficeCode().equals(int084Vo.getOfficeCode())) {
+						 add = "N";
+					}
+					
+				}
+				
+				if("Y".equals(add)) {
+					Long billNo = 0l;
+					Long billNo2 = 0l;
+					Long billWaste = 0l;
+					Long billAll = 0l;
+					Float riskSum = 0f;
+					
+					for (IncomeExciseAudDtl incomeExciseAudDtl2 : incomeExciseAudDtlList) {
+						if(incomeExciseAudDtl2.getOfficeCode().equals(incomeExciseAudDtl.getOfficeCode())) {
+							billAll++;
+							String bill = (!BeanUtils.isEmpty(incomeExciseAudDtl2.getReceiptNo()))?incomeExciseAudDtl2.getReceiptNo().split("/")[1]:"0";
+							if(NumberUtils.isNumber(bill)) {
+							if(billNo==0l&&billNo2==0l) {
+								billNo = Long.valueOf((!BeanUtils.isEmpty(incomeExciseAudDtl2.getReceiptNo()))?incomeExciseAudDtl2.getReceiptNo().split("/")[1]:"0");
+							}else {
+								billNo2 = Long.valueOf((!BeanUtils.isEmpty(incomeExciseAudDtl2.getReceiptNo()))?incomeExciseAudDtl2.getReceiptNo().split("/")[1]:"0");
+//								log.info("OfficeCode : {} billNo : {} billNo2 : {} ",incomeExciseAudDtl.getOfficeCode(),billNo,billNo2);
+								
+								if(billNo2!=0) {
+									Long sum = (billNo2-1)-billNo;
+									billWaste +=sum;
+									billNo = billNo2;
+								}
+							}
+							}
+						}
+					}
+					billAll+=billWaste;
+					dataDtl.setIdHead(id);
+					dataDtl.setOfficeCode(incomeExciseAudDtl.getOfficeCode());
+					List<Lov> officeCodeList = ApplicationCache.getListOfValueByValueType("SECTOR_LIST", incomeExciseAudDtl.getOfficeCode());
+					dataDtl.setOfficeName((officeCodeList.size()!=0)?officeCodeList.get(0).getSubTypeDescription():"");
+					dataDtl.setStartDate(formVo.getStartDate());
+					dataDtl.setStartDate(formVo.getStartDate());
+					dataDtl.setEndDate(formVo.getEndDate());
+					dataDtl.setBillAll(billAll.toString());
+					dataDtl.setBillWaste(billWaste.toString());
+					dataDtl.setRiskNumber("1");
+					dataDtl.setRiskScore("1");
+					
+					Float per = (Float.valueOf(billWaste)/Float.valueOf(billAll))*100f;
+					String perS = String.format("%.02f", per);
+					dataDtl.setRiskPersen(perS);
+					dataDtl.setRiskRemark("จำนวนใบเสร็จเสีย "+perS+" %");
+					
+					list.add(dataDtl);
+					count++;
+				}
+			
+			}
+			
 		for (Int084Vo int084Vo : list) {
-			int084Vo.setStartDate(formVo.getStartDate());
-			int084Vo.setEndDate(formVo.getEndDate());
-			int084Vo.setRiskNumber("1");
-			int084Vo.setRiskList("ใบเสร็จเสีย  5 %");
-			listReturn.add(int084Vo);
+			if(Float.valueOf(int084Vo.getRiskPersen())>=Float.valueOf(formVo.getBillLost())&&int084Vo.getOfficeName()!=""){
+//				log.info("getRiskPersen : {} getBillLost : {} ",int084Vo.getRiskPersen(),formVo.getBillLost());
+				listReturn.add(int084Vo);
+			}
 		}
 		
-		// set data table
-		DataTableAjax<Int084Vo> dataTableAjax = new DataTableAjax<>();
-
-		if ("TRUE".equalsIgnoreCase(formVo.getSearchFlag())) {
+			// set data table
+		
 			// dataTableAjax.setDraw(formVo.getDraw() + 1);
 			dataTableAjax.setRecordsTotal(count);
 			dataTableAjax.setRecordsFiltered(count);
-			dataTableAjax.setData(list);
+			dataTableAjax.setData(listReturn);
+			
 		}
+		
+		
 
 		return dataTableAjax;
 	}
 	
+	public Long save(List<Int084Vo> int084VoList) throws ParseException {
+		Long id = 0l;
+		for (Int084Vo int084Vo : int084VoList) {
+			iaIncomeExciseAudDao.saveDataInt084(int084Vo);
+		}
+		return id ;
+	}
+	
+	public Long IncFri8020(Int084FormVo formVo) {
+		IncomeExciseAud incomeExciseAud = new IncomeExciseAud();
+		
+		String startDate = formVo.getStartDateTM().split("/")[2]+formVo.getStartDateTM().split("/")[0];
+		String endDate = formVo.getEndDateTM().split("/")[2]+formVo.getEndDateTM().split("/")[0];
+		
+		incomeExciseAud.setStartMonth(startDate);
+		incomeExciseAud.setEndMonth(endDate);
+		
+		incomeExciseAud = incomeExciseAudService.createIncomeExciseAud(incomeExciseAud);
+		if(BeanUtils.isNotEmpty(incomeExciseAud)) {
+			log.info("IaIncomeExciseAudId : {}",incomeExciseAud.getIaIncomeExciseAudId());
+		}else {
+			log.info("insert Fail.");
+		}
+		return incomeExciseAud.getIaIncomeExciseAudId();
+
+	}
+	
+	
+	
 	public void exportFile(Int084FormVo formVo, HttpServletResponse response) throws IOException {
 		List<Int084Vo> dataList084 = new ArrayList<Int084Vo>();
 		
-		DataTableAjax<Int084Vo> dataTable = findAll(formVo);
-		
-		dataList084 = dataTable.getData();
+		dataList084 = iaIncomeExciseAudDao.findAllInt084(formVo);
 		 log.info("Data list exportFile {} row",dataList084.size());
 //		dataTestList = formVo.getDataT();
 		
