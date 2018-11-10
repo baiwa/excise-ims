@@ -21,27 +21,25 @@ export class Ope0412Component implements OnInit {
 
   // ==> params
   formControl: FormGroup;
-  taTaxReduceWsHdrId: string = "";
+  id: string = "";
   constructor(
     private ope0412Service: Ope0412Service,
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+  ) {
+    this.id = this.route.snapshot.queryParams["id"];
+    if (Utils.isNull(this.id)) this.router.navigate(['/ope04/4-1']);
+   }
 
-  ngOnInit() {
-    this.taTaxReduceWsHdrId = this.route.snapshot.queryParams["taTaxReduceWsHdrId"];
-    if (Utils.isNull(this.taTaxReduceWsHdrId)) this.router.navigate(['/ope04/6-2']);
-    console.log(this.taTaxReduceWsHdrId);
-    this.datatable(this.taTaxReduceWsHdrId);
+  ngOnInit() {        
+    this.datatable(this.id);
   }
 
   claer = () => {
   }
-  back(){
-    this.router.navigate(['/ope04/6-2']);
-  }
-  datatable = (taTaxReduceWsHdrId: any) => {
-    this.ope0412Service.datatable(taTaxReduceWsHdrId);
+
+  datatable = (id: any) => {
+    this.ope0412Service.datatable(id);
   }
 }

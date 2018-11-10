@@ -59,15 +59,13 @@ public class DisplayRawMaterialChrckerDetailDao {
 		public Ope0412Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Ope0412Vo vo = new Ope0412Vo();
 
-			vo.setList(rs.getString("LIST"));
-			vo.setTotalTax(rs.getBigDecimal("TOTAL_TAX"));
-			vo.setPdtAmount1(rs.getBigDecimal("PDT_AMOUNT_1"));
-			vo.setTaxPerPdt(rs.getBigDecimal("TAX_PER_PDT"));
-			vo.setBillNo(rs.getString("BILL_NO"));
-			vo.setTaxAmount(rs.getBigDecimal("TAX_AMOUNT"));
-			vo.setPdtSAmount2(rs.getBigDecimal("PDT_AMOUNT_2"));
-			vo.setMaxValues(rs.getBigDecimal("MAX_VALUES"));
-			vo.setResult(rs.getBigDecimal("RESULT"));
+			vo.setOrder(rs.getString("RECEIVE_RMAT_DETAIL_ORDER"));
+			vo.setTaxInv(rs.getString("PURCHASE_TAX_INV"));
+			vo.setDaybook(rs.getString("DAY_BOOK"));
+			vo.setMonthBook(rs.getString("MONTH_BOOK"));
+			vo.setExternalData(rs.getString("EXTERNAL_DATA"));
+			vo.setMaxalues(rs.getString("MAX_VALUES"));
+			vo.setResult(rs.getString("RESULT"));
 
 			return vo;
 		}

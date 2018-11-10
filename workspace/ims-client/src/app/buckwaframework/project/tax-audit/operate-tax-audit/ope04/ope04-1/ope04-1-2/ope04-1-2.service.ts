@@ -9,7 +9,7 @@ export class Ope0412Service {
    table: any;
    constructor() { }
 
-   datatable = (taTaxReduceWsHdrId : any) => {
+   datatable = (id : any) => {
        this.table = $("#dataTable").DataTableTh({
            "serverSide": false,
            "processing": true,
@@ -22,7 +22,7 @@ export class Ope0412Service {
                "type": "POST",
                "data": (d) => {
                    return JSON.stringify($.extend({}, d, {
-                       "taTaxReduceWsHdrId": taTaxReduceWsHdrId,
+                       "id": id,
                        // "searchFlag": this.searchFlag,
                        // "dataExcel": this.dataExcel
                    }));
@@ -30,63 +30,48 @@ export class Ope0412Service {
            },
            "columns": [
                {
-                   "data": "list",
+                   "data": "order",
                    "render": function (data, type, row, meta) {
                        return meta.row + meta.settings._iDisplayStart + 1;
                    },
                    "className": "ui center aligned"
                },{
-                   "data": "list",
+                   "data": "order",
                    "className": "ui left aligned"
                },{
-                   "data": "totalTax",
+                   "data": "taxInv",
                    "className": "ui right aligned",
                    "render": (data) => {
                        return Utils.moneyFormatInt(data);
                    }
                },{
-                   "data": "pdtAmount1",
+                   "data": "daybook",
                    "className": "ui right aligned",
                    "render": (data) => {
                        return Utils.moneyFormatInt(data);
                    }
                },{
-                   "data": "taxPerPdt",
-                   "className": "ui right aligned",
-                   "render": (data) => {
-                       return Utils.moneyFormatDecimal(data);
-                   }
-               },{
-                   "data": "billNo",
-                   "className": "ui center aligned"
-               },{
-                   "data": "taxAmount",
+                   "data": "monthBook",
                    "className": "ui right aligned",
                    "render": (data) => {
                        return Utils.moneyFormatInt(data);
                    }
                },{
-                   "data": "pdtSAmount2",
+                   "data": "externalData",
+                   "className": "ui right aligned"
+               },{
+                   "data": "maxalues",
                    "className": "ui right aligned",
                    "render": (data) => {
                        return Utils.moneyFormatInt(data);
-                   }
-               },{
-                   "data": "maxValues",
-                   "className": "ui right aligned",
-                   "render": (data) => {
-                       return Utils.moneyFormatDecimal(data);
                    }
                },{
                    "data": "result",
                    "className": "ui right aligned",
                    "render": (data) => {
-                       if (data != 0) {
-                           return '<span class="r-mark-tr">' + Utils.moneyFormatDecimal(data) + '</span>';
-                       }
-                       return '<span class="g-mark-tr">' + Utils.moneyFormatDecimal(data) + '</span>';                        
+                       return Utils.moneyFormatInt(data);
                    }
-               },
+               }
            ],
            "drawCallback": (settings) => {
                $('.r-mark-tr').closest('td').addClass('background-color : red');

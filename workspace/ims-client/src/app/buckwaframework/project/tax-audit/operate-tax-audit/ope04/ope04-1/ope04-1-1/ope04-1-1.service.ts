@@ -60,13 +60,7 @@ export class Ope0411Service {
                      "data": "exciseId",
                      "className": "ui left aligned"
                  }, {
-                     "data": "taxationId",
-                     "className": "ui left aligned",
-                 }, {
-                     "data": "pdtType",
-                     "className": "ui left aligned",
-                 }, {
-                     "data": "subPdtType",
+                     "data": "taAnalysisId",
                      "className": "ui left aligned",
                  }, {
                      "data": "startDate",
@@ -95,7 +89,7 @@ export class Ope0411Service {
              console.log(data);
              this.router.navigate(["/ope04/1-2"], {
                  queryParams: {
-                     taTaxReduceWsHdrId: data.taTaxReduceWsHdrId
+                     id: data.taTaxReduceWsHdrId
                  }
              });
          });

@@ -31,12 +31,13 @@ export class Ope0461Component implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+  ) { 
+    this.taTaxReduceWsHdrId = this.route.snapshot.queryParams["taTaxReduceWsHdrId"];
+    if (Utils.isNull(this.taTaxReduceWsHdrId)) this.router.navigate(['/ope04/6-2']);    
+  }
 
   ngOnInit() {
-    this.taTaxReduceWsHdrId = this.route.snapshot.queryParams["taTaxReduceWsHdrId"];
-    if (Utils.isNull(this.taTaxReduceWsHdrId)) this.router.navigate(['/ope04/6-2']);
-    console.log(this.taTaxReduceWsHdrId);
+    
     this.datatable(this.taTaxReduceWsHdrId);
   }
 

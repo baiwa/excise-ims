@@ -26,15 +26,16 @@ export class Ope0452Component implements OnInit, AfterViewInit {
     private myService: Ope0452Service,
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+  ) { 
+    this.id = this.route.snapshot.queryParams["id"];
+    if (Utils.isNull(this.id)) this.router.navigate(['/ope04/5-1']);    
+  }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
-    this.id = this.route.snapshot.queryParams["id"];
-    if (Utils.isNull(this.id)) this.router.navigate(['/ope04/5-1']);
-    console.log(this.id);
+   
     this.datatable(this.id);
   }
   datatable = (id: any) => {

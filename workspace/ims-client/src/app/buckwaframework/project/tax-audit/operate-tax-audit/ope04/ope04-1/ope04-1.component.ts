@@ -45,7 +45,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
   emptyColumn: any;
   allData: any;
 
-
+  btnSaveDisabled : boolean = true;
   constructor(
     private authService: AuthService,
     private ajax: AjaxService,
@@ -149,6 +149,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
   };
 
   clearAll = () => {
+    this.btnSaveDisabled = true;
     $("#exciseId").dropdown('restore defaults');
     $("#showData").hide();
     $("#fileExel").val('');
@@ -157,6 +158,7 @@ export class Ope041Component implements OnInit, AfterViewInit {
   };
 
   onUpload = (event: any) => {
+    this.btnSaveDisabled = false;
     // Prevent actual form submission
     event.preventDefault();
     this.dataTB = [];

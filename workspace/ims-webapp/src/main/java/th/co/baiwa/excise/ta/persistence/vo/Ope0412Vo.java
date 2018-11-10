@@ -1,88 +1,68 @@
 package th.co.baiwa.excise.ta.persistence.vo;
 
-import java.math.BigDecimal;
-
 public class Ope0412Vo {
 
-	private String list;
-	private BigDecimal totalTax;
-	private BigDecimal pdtAmount1;
-	private BigDecimal taxPerPdt;
-	private String billNo;
-	private BigDecimal taxAmount;
-	private BigDecimal pdtSAmount2;
-	private BigDecimal maxValues;
-	private BigDecimal result;
+	private String order;
+	private String taxInv;
+	private String daybook;
+	private String monthBook;
+	private String externalData;
+	private String maxalues;
+	private String result;
 
-	public String getList() {
-		return list;
+	public String getOrder() {
+		return order;
 	}
 
-	public void setList(String list) {
-		this.list = list;
+	public void setOrder(String order) {
+		this.order = order;
 	}
 
-	public BigDecimal getTotalTax() {
-		return totalTax;
+	public String getTaxInv() {
+		return taxInv;
 	}
 
-	public void setTotalTax(BigDecimal totalTax) {
-		this.totalTax = totalTax;
+	public void setTaxInv(String taxInv) {
+		this.taxInv = taxInv;
 	}
 
-	public BigDecimal getPdtAmount1() {
-		return pdtAmount1;
+	public String getDaybook() {
+		return daybook;
 	}
 
-	public void setPdtAmount1(BigDecimal pdtAmount1) {
-		this.pdtAmount1 = pdtAmount1;
+	public void setDaybook(String daybook) {
+		this.daybook = daybook;
 	}
 
-	public BigDecimal getTaxPerPdt() {
-		return taxPerPdt;
+	public String getMonthBook() {
+		return monthBook;
 	}
 
-	public void setTaxPerPdt(BigDecimal taxPerPdt) {
-		this.taxPerPdt = taxPerPdt;
+	public void setMonthBook(String monthBook) {
+		this.monthBook = monthBook;
 	}
 
-	public String getBillNo() {
-		return billNo;
+	public String getExternalData() {
+		return externalData;
 	}
 
-	public void setBillNo(String billNo) {
-		this.billNo = billNo;
+	public void setExternalData(String externalData) {
+		this.externalData = externalData;
 	}
 
-	public BigDecimal getTaxAmount() {
-		return taxAmount;
+	public String getMaxalues() {
+		return maxalues;
 	}
 
-	public void setTaxAmount(BigDecimal taxAmount) {
-		this.taxAmount = taxAmount;
+	public void setMaxalues(String maxalues) {
+		this.maxalues = maxalues;
 	}
 
-	public BigDecimal getPdtSAmount2() {
-		return pdtSAmount2;
-	}
-
-	public void setPdtSAmount2(BigDecimal pdtSAmount2) {
-		this.pdtSAmount2 = pdtSAmount2;
-	}
-
-	public BigDecimal getMaxValues() {
-		return maxValues;
-	}
-
-	public void setMaxValues(BigDecimal maxValues) {
-		this.maxValues = maxValues;
-	}
-
-	public BigDecimal getResult() {
+	public String getResult() {
 		return result;
 	}
 
-	public void setResult(BigDecimal result) {
+	public void setResult(String result) {
 		this.result = result;
 	}
 
