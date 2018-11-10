@@ -1,3 +1,144 @@
-<p>
-  int06-11-5 works!
-</p>
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<br>
+
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white;">
+    <span>ระบุเงื่อนไขในการค้นหา</span>
+</div>
+<form [formGroup]="searchForm" (submit)="handleSearch($event)">
+    <div class="ui form">
+        <div class="ui attached segment">
+            <div class="inline fields">
+                <div class="one wide field">
+                </div>
+
+                <div class="two wide field">
+                    <label class="text-right full-width">แบบขอเบิก</label>
+                </div>
+
+                <div class="five wide field">
+                    <select class="ui dropdown ai search full-width" formControlName="withdrawRequest">
+                      <option value="">กรุณาเลือก</option>
+                      <option *ngFor="let wdr of withdrawRequestList | async;" [value]="wdr.lovId">
+                        {{ wdr.typeDescription }}
+                      </option>
+                    </select>
+                </div>
+
+                <div class="two wide field">
+                    <label class="text-right full-width">สถานะการดำเนินการ</label>
+                </div>
+
+                <div class="three wide field">
+                    <select name="type" class="ui dropdown search ai full-width" formControlName="status">
+                      <option value="">กรุณาเลือก</option>
+                      <option *ngFor="let st of statusList | async;" [value]="st.lovId">
+                        {{ st.subTypeDescription }}
+                      </option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="ui center aligned grid">
+                <div class="sixteen wide column">
+                    <button class="ui mini primary button" type="submit"><i
+              class="search icon"></i>ค้นหา</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<br>
+<br>
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white;">
+    <span>ผลการค้นหา</span>
+</div>
+<div class="ui form">
+    <div class="ui attached segment">
+        <table id="dataTable" class="ui small celled table aligned hover striped selectable" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="text-center">ผู้เบิก</th>
+                    <th class="text-center">ตำแหน่ง</th>
+                    <th class="text-center">สังกัด</th>
+                    <th class="text-center">วันที่เบิก</th>
+                    <th class="text-center">จำนวนเงินที่ขอเบิก</th>
+                    <th class="text-center">สถานะการดำเนินการ</th>
+                    <th class="text-center">จัดการ</th>
+                </tr>
+            </thead>
+            <!-- <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody> -->
+        </table>
+        <br>
+        <div class="inline fields ">
+            <div class="four wide field">
+            </div>
+
+            <div class="two wide field">
+                <label class="text-right full-width">รวมจำนวนเงินที่ขอเบิก</label>
+            </div>
+        </div>
+
+        <div class="inline fields ">
+            <div class="five wide field">
+            </div>
+
+            <div class="two wide field">
+                <label class="text-right full-width">- รอดำเนินการ</label>
+            </div>
+
+            <div class="two wide field">
+                <input class="custom-readonly disabled" type="text" autocomplete="off">
+            </div>
+
+            <div class="one wide field">
+                <label class="text-left full-width">บาท</label>
+            </div>
+        </div>
+
+        <div class="inline fields ">
+            <div class="five wide field">
+            </div>
+
+            <div class="two wide field">
+                <label class="text-right full-width">- ผ่าน</label>
+            </div>
+
+            <div class="two wide field">
+                <input class="custom-readonly disabled" type="text" autocomplete="off">
+            </div>
+
+            <div class="one wide field">
+                <label class="text-left full-width">บาท</label>
+            </div>
+        </div>
+
+        <div class="inline fields ">
+            <div class="five wide field">
+            </div>
+
+            <div class="two wide field">
+                <label class="text-right full-width">- ไม่ผ่าน</label>
+            </div>
+
+            <div class="two wide field">
+                <input class="custom-readonly disabled" type="text" autocomplete="off">
+            </div>
+
+            <div class="one wide field">
+                <label class="text-left full-width">บาท</label>
+            </div>
+        </div>
+
+        <br>
+        <div class="ui center aligned grid">
+            <div class="sixteen wide column">
+                <button class="ui mini primary button" type="submit"><i class="save icon"></i>ทำใบขอเบิก</button>
+            </div>
+        </div>
+    </div>
+</div>

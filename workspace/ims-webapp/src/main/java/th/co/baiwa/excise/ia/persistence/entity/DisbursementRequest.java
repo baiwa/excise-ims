@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
@@ -42,7 +43,7 @@ public class DisbursementRequest extends BaseEntity {
 	private BigDecimal amountPay;
 
 	@Column(name = "BILL_LADING")
-	private String billLading;
+	private BigDecimal billLading;
 
 	@Column(name = "BILL_PAY")
 	private String billPay;
@@ -55,8 +56,12 @@ public class DisbursementRequest extends BaseEntity {
 
 	@Column(name = "POSITION_PAY")
 	private String positionPay;
-
+	
+	@Column(name = "STATUS")
 	private String status;
+	
+	@Transient
+	private String createdDateStr;
 
 	public BigDecimal getId() {
 		return id;
@@ -98,11 +103,11 @@ public class DisbursementRequest extends BaseEntity {
 		this.amountPay = amountPay;
 	}
 
-	public String getBillLading() {
+	public BigDecimal getBillLading() {
 		return billLading;
 	}
 
-	public void setBillLading(String billLading) {
+	public void setBillLading(BigDecimal billLading) {
 		this.billLading = billLading;
 	}
 
@@ -144,6 +149,14 @@ public class DisbursementRequest extends BaseEntity {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getCreatedDateStr() {
+		return createdDateStr;
+	}
+
+	public void setCreatedDateStr(String createdDateStr) {
+		this.createdDateStr = createdDateStr;
 	}
 
 }
