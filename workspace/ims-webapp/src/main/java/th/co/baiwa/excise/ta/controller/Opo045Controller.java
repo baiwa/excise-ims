@@ -24,9 +24,11 @@ import com.google.gson.Gson;
 
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.ta.persistence.vo.Ope044FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope044SumVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope044Vo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope045FormVo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope045SumVo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope045Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046ExcelVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046FormVo;
 import th.co.baiwa.excise.ta.service.Ope045Service;
@@ -44,7 +46,7 @@ public class Opo045Controller {
 
 	@PostMapping("/findAll")
 	@ResponseBody
-	public DataTableAjax<Ope044Vo> findAll(@RequestBody Ope044FormVo formVo) {
+	public DataTableAjax<Ope045Vo> findAll(@RequestBody Ope045FormVo formVo) {
 		return ope045Service.findAll(formVo);
 	}
 
@@ -57,7 +59,7 @@ public class Opo045Controller {
 
 	@PostMapping("/findByExciseId")
 	@ResponseBody
-	public Ope044FormVo findByExciseId(@RequestBody String exciseId) {
+	public Ope045FormVo findByExciseId(@RequestBody String exciseId) {
 		return ope045Service.findByExciseId(exciseId);
 	}
 
@@ -70,7 +72,7 @@ public class Opo045Controller {
 
 	@PostMapping("/save")
 	@ResponseBody
-	public Ope044SumVo save(@RequestBody Ope044SumVo sumVo) {
+	public Ope045SumVo save(@RequestBody Ope045SumVo sumVo) {
 		ope045Service.save(sumVo);
 		return sumVo;
 	}

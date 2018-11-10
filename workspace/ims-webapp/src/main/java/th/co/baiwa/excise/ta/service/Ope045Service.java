@@ -23,13 +23,13 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.dao.CreatePeperPayProductDao;
-import th.co.baiwa.excise.ta.persistence.entity.PdtReceicwWsHdr;
-import th.co.baiwa.excise.ta.persistence.entity.TaPdtReceiveWsDtl;
-import th.co.baiwa.excise.ta.persistence.repository.PdtReceicwWsHdrRepository;
-import th.co.baiwa.excise.ta.persistence.repository.TaPdtReceiveWsDtlRepository;
-import th.co.baiwa.excise.ta.persistence.vo.Ope044FormVo;
-import th.co.baiwa.excise.ta.persistence.vo.Ope044SumVo;
-import th.co.baiwa.excise.ta.persistence.vo.Ope044Vo;
+import th.co.baiwa.excise.ta.persistence.entity.TaPdtDrawingWsDtl;
+import th.co.baiwa.excise.ta.persistence.entity.TaPdtDrawingWsHeader;
+import th.co.baiwa.excise.ta.persistence.repository.TaPdtDrawingWsDtlRepository;
+import th.co.baiwa.excise.ta.persistence.repository.TaPdtDrawingWsHeaderRepository;
+import th.co.baiwa.excise.ta.persistence.vo.Ope045FormVo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope045SumVo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope045Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046ExcelVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046FormVo;
 
@@ -38,20 +38,20 @@ public class Ope045Service {
 
 	@Autowired
 	private CreatePeperPayProductDao createPeperPayProductDao;
-	
-	@Autowired
-	private PdtReceicwWsHdrRepository headerRepo;
-	
-	@Autowired
-	private TaPdtReceiveWsDtlRepository detailsRepo;
 
-	public DataTableAjax<Ope044Vo> findAll(Ope044FormVo formVo) {
+	@Autowired
+	private TaPdtDrawingWsHeaderRepository headerRepo;
 
-		DataTableAjax<Ope044Vo> dataTableAjax = new DataTableAjax<>();
-		
+	@Autowired
+	private TaPdtDrawingWsDtlRepository detailsRepo;
+
+	public DataTableAjax<Ope045Vo> findAll(Ope045FormVo formVo) {
+
+		DataTableAjax<Ope045Vo> dataTableAjax = new DataTableAjax<>();
+
 		if (StringUtils.isNotBlank(formVo.getExciseId())) {
 
-			List<Ope044Vo> list = createPeperPayProductDao.findAll(formVo);
+			List<Ope045Vo> list = createPeperPayProductDao.findAll(formVo);
 			Long count = createPeperPayProductDao.count(formVo);
 
 			if (formVo.getDataExcel() != null) {
@@ -64,8 +64,8 @@ public class Ope045Service {
 		return dataTableAjax;
 	}
 
-	public void mapData(List<Ope044Vo> list, List<Ope046ExcelVo> dataExcel) {
-		for (Ope044Vo vo : list) {
+	public void mapData(List<Ope045Vo> list, List<Ope046ExcelVo> dataExcel) {
+		for (Ope045Vo vo : list) {
 			for (Ope046ExcelVo excel : dataExcel) {
 				if (vo.getOrder().equals(excel.getColumn2())) {
 					vo.setAmount1Out(excel.getColumn3());
@@ -76,7 +76,7 @@ public class Ope045Service {
 		}
 
 		for (Ope046ExcelVo excel : dataExcel) {
-			Ope044Vo vo = new Ope044Vo();
+			Ope045Vo vo = new Ope045Vo();
 			if ("N".equalsIgnoreCase(excel.getFlag())) {
 				vo.setOrder(excel.getColumn2());
 				vo.setAmount1Out(excel.getColumn3());
@@ -97,12 +97,12 @@ public class Ope045Service {
 		return dataList;
 	}
 
-	public Ope044FormVo findByExciseId(String exciseId) {
+	public Ope045FormVo findByExciseId(String exciseId) {
 		if (StringUtils.isNotBlank(exciseId)) {
-			List<Ope044FormVo> list = createPeperPayProductDao.findByExciseId(exciseId);
+			List<Ope045FormVo> list = createPeperPayProductDao.findByExciseId(exciseId);
 			return list.get(0);
 		}
-		return new Ope044FormVo();
+		return new Ope045FormVo();
 	}
 
 	public List<Ope046ExcelVo> readFileExcel(Ope046FormVo formVo)
@@ -174,39 +174,35 @@ public class Ope045Service {
 		}
 	}
 
-	public void save(Ope044SumVo sumVo) {
+	public void save(Ope045SumVo sumVo) {
 		// ==> Header
-		Ope044FormVo formHeader = sumVo.getForm();
-		PdtReceicwWsHdr entityHdr = new PdtReceicwWsHdr();
+		Ope045FormVo formHeader = sumVo.getForm();
+		TaPdtDrawingWsHeader entityHdr = new TaPdtDrawingWsHeader();
 		entityHdr.setExciseId(formHeader.getExciseId());
 		entityHdr.setStartDate(formHeader.getDateFrom());
 		entityHdr.setEndDate(formHeader.getDateTo());
 		entityHdr.setPdtType(formHeader.getType());
 		entityHdr.setSubPdtType(formHeader.getCoordinates());
-		entityHdr.setTaxationId(formHeader.getEntrepreneur());
-		PdtReceicwWsHdr hdr = headerRepo.save(entityHdr);
-		
+		entityHdr.setCompanyName(formHeader.getEntrepreneur());
+
+		TaPdtDrawingWsHeader hdr = headerRepo.save(entityHdr);
+
 		// ==> Details
-		List<Ope044Vo> formDetails = sumVo.getVoList();		
-		List<TaPdtReceiveWsDtl> enDtls = new ArrayList<>();
-		
-		for (Ope044Vo vo : formDetails) {
-			TaPdtReceiveWsDtl entityDetail = new TaPdtReceiveWsDtl();
-			
-			//==> Set Detail
-			
-			entityDetail.setTaPdtReceiveWsHdr(hdr.getTaPdtReceiveWsHdrId());
-			entityDetail.setTaPdtWsDtlOrder(vo.getOrder());
-			entityDetail.setMonthBook0704(vo.getAmount1());
-			entityDetail.setAccount0702(vo.getAmount1Out());
-			entityDetail.setPdtReceiveBill(vo.getAmount2Out());
-			
-			BigDecimal amountOut1 = new BigDecimal(vo.getAmount1Out());
-			BigDecimal amountOut2 = new BigDecimal(vo.getAmount2Out());
-			BigDecimal diff = amountOut1.subtract(amountOut2);
-			
-			entityDetail.setResult(diff.toString());
-			
+		List<Ope045Vo> formDetails = sumVo.getVoList();
+		List<TaPdtDrawingWsDtl> enDtls = new ArrayList<>();
+
+		for (Ope045Vo vo : formDetails) {
+			// ==> Set Detail
+			TaPdtDrawingWsDtl entityDetail = new TaPdtDrawingWsDtl();
+			entityDetail.setTaPdtDrawingWsHeaderId(hdr.getTaPdtDrawingWsHeaderId());
+			entityDetail.setTaPdtDrawingWsDtlOrder(vo.getOrder());					
+			entityDetail.setValuesInBill(vo.getAmount1Out());
+			entityDetail.setValuesOfProduct(vo.getAmount2Out());
+			entityDetail.setValuesOf0704(vo.getAmountTable2());
+			entityDetail.setMaxValues(vo.getAmountMax());
+			entityDetail.setValuesOfDrawing(vo.getAmountTable3());
+			entityDetail.setResult(vo.getDiff());
+
 			enDtls.add(entityDetail);
 		}
 		detailsRepo.save(enDtls);
