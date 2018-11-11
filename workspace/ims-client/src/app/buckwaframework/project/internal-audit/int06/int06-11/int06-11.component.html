@@ -1,41 +1,33 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <br>
-<form class="ui container" #ngForm="ngForm" [formGroup]="form" (submit)="handleSubmit($event)">
-    <div class="ui grid">
-
-        <div class="sixteen wide column">
-
-            <div class="ui top centered attached header segment">
-                <span>บันทึกคำขอเบิก</span>
-            </div>
-
-            <div class="ui bottom attached segment">
-                <div class="ui form">
-
-                    <div class="ui centered inline fields grid">
-
-                        <div class="two wide field">
-                            <label class="full-width text-right">เลือกแบบขอเบิก</label>
-                        </div>
-                        <div class="six wide field">
-                            <select id="bill" name="bill" class="ui fluid dropdown" formControlName="bill">
-                                <option value="">กรุณาเลือก</option>
-                                <option *ngFor="let bill of bills; let i = index" [value]="bill.value">
-                                    {{ bill.label }}
-                                </option>
-                            </select>
-                        </div>
-
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>บันทึกคำขอเบิก</span>
+</div>
+<form #ngForm="ngForm" [formGroup]="form" (submit)="handleSubmit($event)">
+    <div class="ui attached segment">
+        <br>
+        <div class="ui form">
+            <div class="ui attached">
+                <div class="inline fields">
+                    <div class="four wide field"></div>
+                    <div class="two wide field">
+                        <label class="full-width text-right">เลือกแบบขอเบิก</label>
                     </div>
-
-                    <!-- <div class="ui centered inline fields grid">
+                    <div class="four wide field">
+                        <select id="bill" name="bill" class="ui fluid dropdown" formControlName="bill">
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let bill of bills; let i = index" [value]="bill.value">
+                                {{ bill.label }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <!-- <div class="ui centered inline fields grid">
                         <div class="inline fifteen wide field" *ngIf="{ 'hidden': hidden(['2']).hidden }">
                             <div style="width: 100%" class="ui divider"></div>
                         </div>
                     </div>
-
                     <div class="ui centered inline fields grid" [ngClass]="{ 'hidden': hidden(['2','3']).hidden }">
-
                         <div class="one wide field" [ngClass]="{ 'required': required('type').required }">
                             <label class="full-width text-right">ประเภท</label>
                         </div>
@@ -58,7 +50,6 @@
                                 </option>
                             </select>
                         </div>
-
                         <div class="one wide field" [ngClass]="{ 'error': required('salary').required }">
                             <label class="full-width text-right">เงินเดือน</label>
                         </div>
@@ -70,11 +61,8 @@
                                 </option>
                             </select>
                         </div>
-
-
                     </div>
                     <ng-container *ngFor="let child of children; let i = index">
-
                         <div class="ui centered inline fields grid" [ngClass]="{ 'hidden': hidden(['1','2','4']).hidden }">
                             <div class="one wide field" [ngClass]="{ 'required': required('chkChild'+i).required }">
                                 <div class="ui checkbox">
@@ -85,7 +73,6 @@
                             </div>
                             <div class="ui fourteen wide field grid">
                                 <div class="sixteen wide column">
-
                                     <div class="inline fields">
                                         <div class="four wide field" [ngClass]="{ 'required': required('typeChild'+i).required }">
                                             <label>ประเภทสถานศึกษา</label>
@@ -149,25 +136,22 @@
                                             </select>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="fifteen wide field" *ngIf="i != children.length -1">
                                 <div style="width: 100%" class="ui divider"></div>
                             </div>
                         </div>
-
                     </ng-container>
-
                     <div class="ui centered inline fields grid">
                         <div class="inline fifteen wide field" *ngIf="{ 'hidden': hidden(['2']).hidden }">
                             <div style="width: 100%" class="ui divider"></div>
                         </div>
                     </div> -->
-                    <br>
-                    <br>
-                    <div class="ui centered inline fields grid">
-                        <div class="field">
+                <br>
+                <div class="ui centered aligned grid">
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
                             <button class="ui primary mini button" [disabled]="form.controls.bill.value == ''" type="submit">
                                 <i class="plus icon"></i>
                                 ทำรายการ
