@@ -78,7 +78,7 @@
   <!-- add modal -->
   <div class="ui large modal transition hidden" id='modalAdd'>
     <div class="header" style="text-align: center !important;background: #1e83db;color: white">
-      ระบุรายละเอียด
+      ระบุรายละเอียดเดือน&nbsp; {{fiscalYearText}}
     </div>
 
     <div class="scrolling content">
@@ -89,20 +89,61 @@
           <input type="hidden" id="idMaster">
           <input type="hidden" id="fiscalyear">
 
+
+          <div class="inline fields">
+            <div class="two wide field"></div>
+            <div class="three wide field right aligned">
+              <label>สำนักงานสรรพสามิตภาค</label>
+            </div>
+            <div class="three wide field">
+              <select class="ui dropdown" id="#" name="#" autocomplete="off" style="width: 100%">
+                <option value="">กรุณาเลือก</option>
+                <!-- <option *ngFor="let data of entrepreneurNoList">{{data}}</option> -->
+              </select>
+            </div>
+
+            <div class="three wide field ui right aligned">
+              <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
+            </div>
+            <div class="three wide field">
+                <div class="ui input left icon">
+                  <select class="ui dropdown" id="#" name="#" autocomplete="off" style="width: 100%">
+                    <option value="">กรุณาเลือก</option>
+                    <!-- <option *ngFor="let data of entrepreneurNoList">{{data}}</option> -->
+                  </select>
+                </div>
+            </div>
+
+          </div>
+
+
           <div class="inline fields">
             <div class="two wide field"></div>
             <div class="three wide field right aligned">
               <label>เลขที่ผู้ประกอบการ</label>
             </div>
             <div class="three wide field">
-              <select class="ui dropdown" id="entrepreneurNo" name="entrepreneurNo" style="width: 100%">
+              <select class="ui dropdown" id="entrepreneurNo" name="entrepreneurNo" autocomplete="off" style="width: 100%">
                 <option value="">กรุณาเลือก</option>
                 <option *ngFor="let data of entrepreneurNoList">{{data}}</option>
               </select>
             </div>
 
             <div class="three wide field ui right aligned">
-              <label>วันที่ตรวจ</label>
+              <label class="text-right full-width">ผู้ประกอบการ</label>
+            </div>
+            <div class="three wide field">
+              <div class="ui input left icon">
+                <input class="custom-readonly" type="text" id="#" readonly >
+              </div>
+            </div>
+
+          </div>
+
+          <div class="inline fields">
+            <div class="two wide field"></div>
+            <div class="three wide field right aligned">
+              <label>วันที่ออกตรวจปฏิบัติการ</label>
             </div>
             <div class="three wide field">
               <div class="ui calendar" id="modalDate1" style="width: 100%">
@@ -113,15 +154,11 @@
               </div>
             </div>
 
-          </div>
-
-          <div class="inline fields">
-            <div class="two wide field"></div>
-            <div class="three wide field right aligned">
-              <label>แผนปฏิบัติการ</label>
+            <div class="three wide field ui right aligned">
+              <label class="text-right full-width">แผนปฏิบัติการ</label>
             </div>
             <div class="three wide field">
-              <select class="ui dropdown" id="actionPlan" name="actionPlan" style="width: 100%">
+              <select class="ui dropdown" id="actionPlan" name="actionPlan" autocomplete="off" style="width: 100%">
                 <option value="">กรุณาเลือก</option>
                 <option *ngFor="let data of actionPlanList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
               </select>

@@ -152,7 +152,8 @@ export class Cop0711Component implements OnInit, OnDestroy {
          $("#entrepreneurNo").dropdown('set selected',data.entrepreneurNo);
          $("#checkDate").val(data.checkDate);
          $("#actionPlan").dropdown('set selected',data.actionPlan);
-      }
+      },
+      autofocus: false
     }).modal('show');
    
   }
