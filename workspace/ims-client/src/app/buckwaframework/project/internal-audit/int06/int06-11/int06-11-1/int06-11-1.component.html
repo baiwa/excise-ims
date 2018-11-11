@@ -1,105 +1,94 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <br>
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-    <span>รายละเอียดแบบขอเบิกเงินค่าเช่าบ้าน (แบบ 6006)</span>
+    <span>บันทึกคำขอเบิกเงินค่าเช่าบ้าน (แบบ 6006)</span>
 </div>
 <form [formGroup]="rentHouseForm" (submit)="save($event)" id="upload-form">
     <div class="ui attached  segment">
         <br>
-        <div class="inline fields" style="text-align: center !important;">
+        <!-- <div class="inline fields" style="text-align: center !important;">
             <h1>แบบขอเบิกเงินค่าเช่าบ้าน (แบบ ๖๐๐๖)</h1>
-        </div>
-        <br>
-
+        </div> -->
         <div class="ui form">
-            <div class="ui attached  segment">
+            <!-- <div class="ui attached  segment">
                 <div class="inline fields hd">
                     <div class="one wide field"></div>
                     <div class="four wide field">
-                        <h4>๑. การขอเบิกและการรับรอง</h4>
+                        <h4>การขอเบิกและการรับรอง</h4>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="ui attached  segment">
                 <div class="inline fields">
-                    <div class="two wide field">
-                    </div>
-
+                    <div class="one wide field"></div>
                     <div class="one wide field">
                         <label>ข้าพเจ้า</label>
                     </div>
-                    <div class="four wide field" [ngClass]="{ 'error': validateField('name') }">
+                    <div class="three wide field" [ngClass]="{ 'error': validateField('name') }">
                         <input type="text" class="custom-readonly disabled" formControlName="name">
                     </div>
                     <div class="one wide field">
                         <label>ตำแหน่ง</label>
                     </div>
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('position') }">
+                    <div class="four wide field" [ngClass]="{ 'error': validateField('position') }">
                         <input type="text" class="custom-readonly disabled" formControlName="position">
                     </div>
 
                     <div class="one wide field">
                         <label>สังกัด</label>
                     </div>
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('affiliation') }">
+                    <div class="four wide field" [ngClass]="{ 'error': validateField('affiliation') }">
                         <input type="text" class="custom-readonly disabled" formControlName="affiliation">
                     </div>
-
                 </div>
-
                 <br>
-
                 <div class="inline fields hd">
-                    <div class="two wide field"></div>
+                    <div class="one wide field"></div>
                     <div class="four wide field">
-                        <label>๑. ขอยื่นเบิกเงินค่าเช่าบ้าน ดังนี้ </label>
+                        <label>ขอยื่นเบิกเงินค่าเช่าบ้าน ดังนี้ </label>
                     </div>
                 </div>
                 <br>
                 <br>
-                <div class="inline fields">
-                    <div class="two wide field"></div>
-                    <div class="three wide field">
-                        <label>๑.๑ ข้าพเจ้าได้จ่ายเงิน</label>
-                    </div>
-
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('paymentCost') }">
-                        <div class="ui radio checkbox">
-                            <input type="radio" formControlName="paymentCost" value="ค่าเช่าบ้าน">
-                            <label>
-                            <b>ค่าเช่าบ้าน</b>
-                          </label>
-                        </div>
-                    </div>
-
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('paymentCost') }">
-                        <div class="ui radio checkbox">
-                            <input type="radio" formControlName="paymentCost" value="ค่าเช่าซื้อ">
-                            <label>
-                            <b>ค่าเช่าซื้อ</b>
-                          </label>
-                        </div>
-                    </div>
-
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('paymentCost') }">
-                        <div class="ui radio checkbox">
-                            <input type="radio" formControlName="paymentCost" value="ค่าผ่อนชำระเงินกู้">
-                            <label>
-                            <b>ค่าผ่อนชำระเงินกู้</b>
-                          </label>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="inline fields">
                     <div class="one wide field"></div>
                     <div class="two wide field">
-                        <label>ให้แก่</label>
+                        <label>ข้าพเจ้าได้จ่ายเงิน</label>
                     </div>
-                    <div class="six wide field" [ngClass]="{ 'error': validateField('paymentFor') }">
+                    <div class="two wide field" [ngClass]="{ 'error': validateField('paymentCost') }">
+                        <div class="ui radio checkbox">
+                            <input type="radio" formControlName="paymentCost" value="ค่าเช่าบ้าน">
+                            <label>
+                                <b>ค่าเช่าบ้าน</b>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="two wide field" [ngClass]="{ 'error': validateField('paymentCost') }">
+                        <div class="ui radio checkbox">
+                            <input type="radio" formControlName="paymentCost" value="ค่าเช่าซื้อ">
+                            <label>
+                                <b>ค่าเช่าซื้อ</b>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="two wide field" [ngClass]="{ 'error': validateField('paymentCost') }">
+                        <div class="ui radio checkbox">
+                            <input type="radio" formControlName="paymentCost" value="ค่าผ่อนชำระเงินกู้">
+                            <label>
+                                <b>ค่าผ่อนชำระเงินกู้</b>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="one wide field">
+                        <label class="full-width text-right">ให้แก่</label>
+                    </div>
+                    <div class="five wide field" [ngClass]="{ 'error': validateField('paymentFor') }">
                         <input type="text" formControlName="paymentFor">
                     </div>
-                    <div class="two wide field">
+                </div>
+                <div class="inline fields">
+                    <div class="one wide field"></div>
+                    <div class="one wide field">
                         <label>ประจำเดือน</label>
                     </div>
                     <div class="three wide field" [ngClass]="{ 'error': validateField('period') }">
@@ -110,42 +99,45 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="inline fields">
-                    <div class="one wide field"></div>
                     <div class="two wide field">
-                        <label>ตามใบเสร็จรับเงิน</label>
+                        <label class="full-width text-right">ตามใบเสร็จรับเงิน</label>
                     </div>
                     <div class="one wide field" [ngClass]="{ 'error': validateField('refReceipts') }">
                         <input type="text" formControlName="refReceipts" (keypress)="typeNumber($event)">
                     </div>
                     <div class="one wide field">
-                        <label>ฉบับ</label>
+                        <label class="full-width text-center">ฉบับ</label>
                     </div>
                     <div class="one wide field">
-                        <label>เป็นจำนวน</label>
+                        <label class="full-width text-right">เป็นจำนวน</label>
                     </div>
                     <div class="three wide field" [ngClass]="{ 'error': validateField('billAmount') }">
                         <input type="text" formControlName="billAmount" (keypress)="typeNumber($event)">
                     </div>
-                    <div class="two wide field">
-                        <label>บาท</label>
+                    <div class="one wide field">
+                        <label class="full-width text-center">บาท</label>
                     </div>
                     <!-- <div class="three wide field">
                         ( หนึ่งหมื่นสองพันบาทถ้วน )
                     </div> -->
                 </div>
-                <div class="inline fields">
-                    <div class="two wide field"></div>
-                    <div class="four wide field">
-                        <label>๑.๒ ข้าพเจ้าได้รับเงินเดือน เดือนละ</label>
-                    </div>
 
+                <div class="inline fields">
+                    <div class="one wide field"></div>
+                    <div class="two wide field">
+                        <label>ข้าพเจ้าได้รับเงินเดือน เดือนละ</label>
+                    </div>
                     <div class="three wide field" [ngClass]="{ 'error': validateField('salary') }">
                         <input type="text" formControlName="salary" (keypress)="typeNumber($event)">
                     </div>
-                    <div class="two wide field">
-                        <label>บาท</label>
+                    <div class="one wide field">
+                        <label class="full-width text-center">บาท</label>
+                    </div>
+                    <div class="five wide field">
+                        <label class="full-width text-center">มีสิทธิได้รับค่าเช่าบ้านตามที่ได้รับอนุมัติในแบบขอรับค่าเช่าบ้าน (แบบ 6005) เลขที่</label>
+                    </div>
+                    <div class="two wide field" [ngClass]="{ 'error': validateField('requestNo') }">
+                        <input type="text" formControlName="requestNo">
                     </div>
                     <!-- <div class="three wide field">
                         ( หนึ่งหมื่นสองพันบาทถ้วน )
@@ -154,35 +146,20 @@
 
                 <div class="inline fields">
                     <div class="one wide field"></div>
-                    <div class="seven wide field">
-                        <label>มีสิทธิได้รับค่าเช่าบ้านตามที่ได้รับอนุมัติในแบบขอรับค่าเช่าบ้าน (แบบ 6005) เลขที่</label>
-                    </div>
-                    <div class="six wide field" [ngClass]="{ 'error': validateField('requestNo') }">
-                        <input type="text" formControlName="requestNo">
-                    </div>
-                </div>
-                <div class="inline fields">
-                    <div class="one wide field"></div>
-                    <div class="two wide field">
+                    <div class="one wide field">
                         <label>ไม่เกินเดือนละ</label>
                     </div>
                     <div class="three wide field" [ngClass]="{ 'error': validateField('notOver') }">
                         <input type="text" formControlName="notOver" (keypress)="typeNumber($event)">
                     </div>
                     <div class="one wide field">
-                        <label>บาท</label>
+                        <label class="full-width text-center">บาท</label>
                     </div>
-                    <!-- <div class="three wide field">( หนึ่งหมื่นสองพันบาทถ้วน )</div> -->
-                </div>
-
-                <div class="inline fields">
-                    <div class="two wide field"></div>
-                    <div class="four wide field">
-                        <label>๑.๓ ข้าพเจ้าขอเบิกเงินค่าเช่าบ้านประจำเดือน</label>
+                    <div class="three wide field">
+                        <label class="full-width text-center">ข้าพเจ้าขอเบิกเงินค่าเช่าบ้านประจำเดือน</label>
                     </div>
-
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('periodWithdraw') }">
-                        <div class="ui calendar" id="periodWithdrawCld" style="width:100%;">
+                    <div class="two wide field" [ngClass]="{ 'error': validateField('periodWithdraw') }">
+                        <div class="ui calendar" id="periodWithdrawCldform" style="width:100%;">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
                                 <input type="text" placeholder="เดือน" formControlName="periodWithdraw" autocomplete="off" readonly="">
@@ -190,49 +167,58 @@
                         </div>
                     </div>
                     <div class="one wide field">
+                        <label class="full-width text-center">ถึง</label>
+                    </div>
+                    <div class="two wide field" [ngClass]="{ 'error': validateField('periodWithdraw') }">
+                        <div class="ui calendar" id="periodWithdrawCldto" style="width:100%;">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="text" placeholder="เดือน" formControlName="periodWithdraw" autocomplete="off" readonly="">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="three wide field">( หนึ่งหมื่นสองพันบาทถ้วน )</div> -->
+                </div>
+
+                <div class="inline fields">
+                    <div class="one wide field"></div>
+                    <div class="one wide field">
                         <label>รวม</label>
                     </div>
                     <div class="two wide field" [ngClass]="{ 'error': validateField('totalMonth') }">
                         <input type="text" formControlName="totalMonth" (keypress)="typeNumber($event)">
                     </div>
-                    <div class="two wide field">
-                        <label>เดือน</label>
+                    <div class="one wide field">
+                        <label class="full-width text-center">เดือน</label>
                     </div>
-                </div>
-                <div class="inline fields">
-                    <div class="one wide field"></div>
-                    <div class="two wide field">
-                        <label>เป็นเงิน</label>
+                    <div class="one wide field">
+                        <label class="full-width text-right">เป็นเงิน</label>
                     </div>
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('totalWithdraw') }">
+                    <div class="two wide field" [ngClass]="{ 'error': validateField('totalWithdraw') }">
                         <input type="text" formControlName="totalWithdraw" (keypress)="typeNumber($event)">
                     </div>
                     <div class="one wide field">
-                        <label>บาท</label>
+                        <label class="full-width text-center">บาท</label>
                     </div>
-                    <!-- <div class="three wide field">( หนึ่งหมื่นสองพันบาทถ้วน )</div> -->
-                </div>
-                <div class="inline fields">
-                    <div class="two wide field"></div>
-                    <div class="four wide field">
-                        <label>๑.๔ พร้อมนี้ข้าพเจ้าได้แนบใบเสร็จรับเงินจำนวน</label>
+                    <div class="three wide field">
+                        <label>พร้อมนี้ข้าพเจ้าได้แนบใบเสร็จรับเงินจำนวน</label>
                     </div>
-
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('receipts') }">
+                    <div class="one wide field" [ngClass]="{ 'error': validateField('receipts') }">
                         <input type="text" formControlName="receipts" (keypress)="typeNumber($event)">
                     </div>
-                    <div class="one wide field">
-                        <label>ฉบับ</label>
-                    </div>
                     <div class="two wide field">
+                        <label>ฉบับ</label>
                         <label>มาด้วยแล้ว</label>
                     </div>
                 </div>
+
+                <!-- <div class="three wide field">( หนึ่งหมื่นสองพันบาทถ้วน )</div> -->
+                <br>
                 <div class="inline fields">
-                    <div class="two wide field"></div>
-                    <div class="ten wide field">
-                        <label>๒.ข้าพเจ้าขอรับรองว่าข้อความที่ให้ไว้ข้างต้นเป็นความจริงทุกประการ และข้าพเจ้ามีสิทธิได้รับเงินค่าเช่าบ้านตามพระราชกฤษฎีกา
-            <br> ค่าเช่าบ้านข้าราชการ พ.ศ.2547 และได้ดำเนินการถูกต้องตามระเบียบทุกประการแล้ว</label>
+                    <div class="one wide field"></div>
+                    <div class="twelve wide field">
+                        <label>ข้าพเจ้าขอรับรองว่าข้อความที่ให้ไว้ข้างต้นเป็นความจริงทุกประการ และข้าพเจ้ามีสิทธิได้รับเงินค่าเช่าบ้านตามพระราชกฤษฎีกา
+                            ค่าเช่าบ้านข้าราชการ พ.ศ.2547 และได้ดำเนินการถูกต้องตามระเบียบทุกประการแล้ว</label>
                     </div>
                 </div>
             </div>
@@ -249,7 +235,8 @@
 
                 </div>
                 <div class="ten wide field">
-                    <label style="color:red">*รับรองไฟล์นามสกุล &nbsp;&nbsp;เอกสาร xls, xlsx, doc, docx, ppt, pptx &nbsp;&nbsp;รูป gif, jpeg, jpg, png, bmp &nbsp;&nbsp;ขนาดไม่เกิน 25 MB</label>
+                    <label style="color:red">*รับรองไฟล์นามสกุล &nbsp;&nbsp;เอกสาร xls, xlsx, doc, docx, ppt, pptx &nbsp;&nbsp;รูป gif, jpeg, jpg,
+                        png, bmp &nbsp;&nbsp;ขนาดไม่เกิน 25 MB</label>
                 </div>
             </div>
             <div class="inline fields ">
@@ -264,7 +251,8 @@
                     application/vnd.ms-excel,.doc,.docx" (change)="onChangeFile()">
                 </div>
                 <div class="three wide field">
-                    <button class="ui mini yellow button" type="button" (click)="onUpload($event)" [ngClass]="{ 'disabled': flgOnLoad }"><i class="upload icon"></i>อัพโหลด</button>
+                    <button class="ui mini yellow button" type="button" (click)="onUpload($event)" [ngClass]="{ 'disabled': flgOnLoad }">
+                        <i class="upload icon"></i>อัพโหลด</button>
                 </div>
             </div>
 
@@ -286,7 +274,8 @@
                         <td class="text-center">{{ul.name}}</td>
                         <!-- <td class="text-right">{{ul.size}}</td> -->
                         <td class="text-center">
-                            <button class="ui mini red button" type="button" (click)="onDel(i)"><i class="trash icon"></i>ลบ</button>
+                            <button class="ui mini red button" type="button" (click)="onDel(i)">
+                                <i class="trash icon"></i>ลบ</button>
                         </td>
                     </tr>
                 </thead>
@@ -294,9 +283,12 @@
 
             <div class="ui center aligned grid">
                 <div class="sixteen wide column">
-                    <button class="ui mini primary button" type="submit" [ngClass]="{ 'disabled': tableUpload.length < 1 }"><i class="save icon"></i>บันทึก</button>
-                    <button class="ui mini yellow button" type="button"><i class="print icon"></i>ส่งออก</button>
-                    <button class="ui mini button" type="button" routerLink='/int06/11'><i class="close icon"></i>ยกเลิก</button>
+                    <button class="ui mini primary button" type="submit" [ngClass]="{ 'disabled': tableUpload.length < 1 }">
+                        <i class="save icon"></i>บันทึก</button>
+                    <button class="ui mini yellow button" type="button">
+                        <i class="print icon"></i>ส่งออก</button>
+                    <button class="ui mini button" type="button" routerLink='/int06/11'>
+                        <i class="close icon"></i>ยกเลิก</button>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@
         <div class="sixteen wide column">
 
             <div class="ui top centered attached header segment">
-                <span>สร้างเอกสารขอเบิก</span>
+                <span>บันทึกคำขอเบิก</span>
             </div>
 
             <div class="ui bottom attached segment">
@@ -15,7 +15,7 @@
                     <div class="ui centered inline fields grid">
 
                         <div class="two wide field">
-                            <label class="full-width text-right">แบบขอเบิก</label>
+                            <label class="full-width text-right">เลือกแบบขอเบิก</label>
                         </div>
                         <div class="six wide field">
                             <select id="bill" name="bill" class="ui fluid dropdown" formControlName="bill">
@@ -168,17 +168,14 @@
                     <br>
                     <div class="ui centered inline fields grid">
                         <div class="field">
-                            <button class="ui primary button" [disabled]="form.controls.bill.value == ''" type="submit">
+                            <button class="ui primary mini button" [disabled]="form.controls.bill.value == ''" type="submit">
                                 <i class="plus icon"></i>
                                 ทำรายการ
                             </button>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
-
     </div>
 </form>

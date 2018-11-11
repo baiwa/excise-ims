@@ -39,7 +39,7 @@ export class Int06111Component implements OnInit {
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
       { label: "บันทึกคำขอเบิก", route: "#" },
-      { label: "รายละเอียดแบบขอเบิกเงินค่าเช่าบ้าน", route: "#" }
+      { label: "บันทึกคำขอเบิกเงินค่าเช่าบ้าน", route: "#" }
     ];
   }
 
@@ -88,7 +88,17 @@ export class Int06111Component implements OnInit {
       }
     });
 
-    $("#periodWithdrawCld").calendar({
+    $("#periodWithdrawCldform").calendar({
+      minDate: new Date(),
+      type: "month",
+      text: TextDateTH,
+      formatter: formatter("monthOnly"),
+      onChange: (date, ddmmyyyy) => {
+        this.rentHouseForm.patchValue({ periodWithdraw: ddmmyyyy });
+      }
+    });
+
+    $("#periodWithdrawCldto").calendar({
       minDate: new Date(),
       type: "month",
       text: TextDateTH,
