@@ -35,7 +35,7 @@ export class Cop10Component implements AfterViewInit {
 
   clickSearch = function () {
     if ($("#fiscalYear").val()=="") {
-      this.message.alert("กรุณาระบุ แผนการตรวจปฏิบัติการประจำปีงบประมาณ");
+      this.message.alert("กรุณาระบุ แผนการตรวจปฏิบัติการประจำปี");
       return false;
     }
     $("#searchFlag").val("TRUE");

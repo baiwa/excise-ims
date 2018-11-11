@@ -56,7 +56,7 @@ export class Cop0711Component implements OnInit, OnDestroy {
   ) {
     this.breadcrumb = [
       { label: "ตรวจปฏิบัติการ", route: "#" },
-      { label: "แผนการตรวจปฏิบัติการประจำปีงบประมาณ", route: "#" },
+      { label: "แผนการตรวจปฏิบัติการประจำปี", route: "#" },
       { label: "รายละเอียดแผนปฏิบัติการ", route: "#" }
  
     ];

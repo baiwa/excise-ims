@@ -81,7 +81,7 @@ export class Cop011Component implements OnInit {
     this.onAddField();  
     this.date = new Date(); 
     var month = this.date.getFullYear();
-    this.planName = "แผนปฏิบัติการประจำปีงบประมาณ : "+month;
+    this.planName = "แผนปฏิบัติการประจำปี : "+month;
     console.log(this.date);
     console.log(this.planName);
 

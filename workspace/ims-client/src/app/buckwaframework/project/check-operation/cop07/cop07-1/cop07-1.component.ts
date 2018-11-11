@@ -37,7 +37,7 @@ export class Cop071Component implements OnInit {
   ) {
     this.breadcrumb = [
       { label: "ตรวจปฏิบัติการ", route: "#" },
-      { label: "แผนการตรวจปฏิบัติการประจำปีงบประมาณ", route: "#" }
+      { label: "แผนการตรวจปฏิบัติการประจำปี", route: "#" }
     ];
     
    }
@@ -52,7 +52,7 @@ export class Cop071Component implements OnInit {
 
   clickSearch = function () {
     if ($("#fiscalYear").val()=="") {
-      this.message.alert("กรุณาระบุ แผนการตรวจปฏิบัติการประจำปีงบประมาณ");
+      this.message.alert("กรุณาระบุ แผนการตรวจปฏิบัติการประจำปี");
       return false;
     }
 
