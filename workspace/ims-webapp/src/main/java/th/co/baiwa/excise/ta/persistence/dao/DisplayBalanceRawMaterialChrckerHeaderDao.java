@@ -92,7 +92,7 @@ public class DisplayBalanceRawMaterialChrckerHeaderDao {
 	};
 
 	public List<LabelValueBean> findExciseId() {
-		String sql = "SELECT DISTINCT EXCISE_ID FROM TA_RECEIVE_RMAT_WS_HEADER";
+		String sql = "SELECT DISTINCT EXCISE_ID FROM TA_MATERIALS_WORK_SHEET_HEADER";
 		List<LabelValueBean> list = jdbcTemplate.query(sql, exciseIdRowmapper);
 		return list;
 
