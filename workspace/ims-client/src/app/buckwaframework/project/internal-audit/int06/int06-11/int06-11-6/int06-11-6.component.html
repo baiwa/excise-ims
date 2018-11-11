@@ -1,3 +1,201 @@
-<p>
-  int06-11-6 works!
-</p>
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<br>
+<div class="sixteen wide column">
+  <h2 class="ui header">ติดตามผลขอเบิก ขอจ่าย</h2>
+
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white;">
+    <span>ระบุเงื่อนไขในการค้นหา</span>
+  </div>
+  <form [formGroup]="searchForm" (submit)="handleSearch($event)">
+    <div class="ui form">
+      <div class="ui attached segment">
+        <div class="inline fields">
+          <div class="four wide field">
+          </div>
+          <div class="two wide field">
+            <label class="text-right full-width">ประเภทการขอเบิก</label>
+          </div>
+          <div class="four wide field">
+            <select class="ui dropdown ai search full-width" formControlName="withdrawRequest">
+              <option value="">กรุณาเลือก</option>
+              <option *ngFor="let wdr of withdrawRequestList | async;" [value]="wdr.lovId">
+                {{ wdr.typeDescription }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <br>
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button" type="submit">
+              <i class="search icon"></i>ค้นหา</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <br>
+  <br>
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white;">
+    <span>ผลการค้นหา</span>
+  </div>
+  <div class="ui form">
+    <div class="ui attached segment">
+      <table id="dataTable" class="ui small celled table aligned hover striped selectable" style="width:100%">
+        <thead>
+          <tr>
+            <th style="text-align: center !important;">เลขที่ทำการ</th>
+            <th style="text-align: center !important;">เลขที่ใบขอเบิก</th>
+            <th style="text-align: center !important;">ผู้สร้างใบขอเบิก</th>
+            <th style="text-align: center !important;">ตำแหน่ง</th>
+            <th style="text-align: center !important;">สังกัด</th>
+            <th style="text-align: center !important;">วันที่สร้างใบขอเบิก</th>
+            <th style="text-align: center !important;">จำนวนเงินที่ขอเบิก</th>
+            <th style="text-align: center !important;">ประเภทการขอเบิก</th>
+            <th style="text-align: center !important;">สถานะการดำเนินการ</th>
+            <th style="text-align: center !important;width:200px !important">จัดการ</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+  <div id="segmentApprove">
+    <br>
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white;">
+      <span>รายละเอียดเปลียบเทียบใบ ขอเบิก ขอจ่าย</span>
+    </div>
+    <div class="ui form">
+      <div class="ui attached segment">
+        <table id="dataTable2" class="ui small celled table aligned hover striped selectable" style="width:100%">
+          <thead>
+            <tr>
+              <th style="text-align: center !important;">ประเถท</th>
+              <th style="text-align: center !important;">เลขที่ใบขอเบิก-จ่าย</th>
+              <th style="text-align: center !important;">ผู้สร้าง</th>
+              <th style="text-align: center !important;">ตำแหน่ง</th>
+              <th style="text-align: center !important;">สังกัด</th>
+              <th style="text-align: center !important;">วันที่สร้าง</th>
+              <th style="text-align: center !important;">จำนวนเงิน</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: center !important;">ใบขอเบิก</td>
+              <td style="text-align: center !important;">{{dataApprove.billLading}}</td>
+              <td style="text-align: center !important;">{{dataApprove.createdBy}}</td>
+              <td style="text-align: center !important;">{{dataApprove.position}}</td>
+              <td style="text-align: center !important;">{{dataApprove.affiliation}}</td>
+              <td style="text-align: center !important;">{{dataApprove.createdDateStr}}</td>
+              <td style="text-align: center !important;">{{dataApprove.amount}}</td>
+            </tr>
+            <tr>
+                <td style="text-align: center !important;">ใบขอจ่าย</td>
+                <td style="text-align: center !important;">{{dataApprove.billPay}}</td>
+                <td style="text-align: center !important;">{{dataApprove.createdByPay}}</td>
+                <td style="text-align: center !important;">{{dataApprove.positionPay}}</td>
+                <td style="text-align: center !important;">{{dataApprove.affiliationPay}}</td>
+                <td style="text-align: center !important;">{{dataApprove.createdDatePayStr}}</td>
+                <td style="text-align: center !important;">{{dataApprove.amountPay}}</td>
+              </tr>
+          </tbody>
+        </table>
+        <br>
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini green button" type="button" (click)="approve('2065')">
+              <i class="check icon"></i>อนุมัติ</button>
+            <button class="ui mini red button" type="button" (click)="approve('2066')">
+              <i class="remove icon"></i>ไม่อนุมัติ</button>
+          </div>
+        </div>
+        <br>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Edit modal -->
+<div class="ui small modal transition hidden" id='modalEdit'>
+  <div class="header" style="text-align: center !important;background: #1e83db;color: white;">
+    กรุณาระบุข้อมูลใบขอเบิก
+  </div>
+
+  <div class="scrolling content">
+    <form id="addModal-form" ngNativeValidate>
+      <div class="ui form center aligned">
+
+        <input type="hidden" id="id">
+
+        <div class="inline fields">
+          <div class="three wide field"></div>
+          <div class="three wide field right aligned">
+            <label>เลขที่ใบขอเบิก</label>
+          </div>
+          <div class="six wide field">
+            <input id="billLading" type="text">
+          </div>
+        </div>
+        <br>
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <div class="ui mini yellow button" (click)="editData()">
+      <i class="edit icon"></i>บัททึกการแก้ไข</div>
+    <div class="ui mini deny button">
+      <i class="close icon"></i>ยกเลิก</div>
+  </div>
+</div>
+<!--End Edit modal -->
+<!-- Add modal -->
+<div class="ui small modal transition hidden" id='modalAdd'>
+  <div class="header" style="text-align: center !important;background: #1e83db;color: white;">
+    กรุณาระบุข้อมูลใบขอจ่าย
+  </div>
+
+  <div class="scrolling content">
+    <form id="addModal-form" ngNativeValidate>
+      <div class="ui form center aligned">
+
+        <input type="hidden" id="id">
+
+        <div class="inline fields">
+          <div class="three wide field"></div>
+          <div class="three wide field right aligned">
+            <label>เลขที่ใบขอจ่าย</label>
+          </div>
+          <div class="six wide field">
+            <input id="billPay" type="text">
+          </div>
+        </div>
+        <div class="inline fields">
+          <div class="three wide field"></div>
+          <div class="three wide field right aligned">
+            <label>จำนวนเงินที่ขอจ่าย</label>
+          </div>
+          <div class="six wide field">
+            <input id="amountPay" type="text">
+          </div>
+          <div class="one wide field right aligned">
+            <label>บาท</label>
+          </div>
+        </div>
+        <br>
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <div class="ui mini green button" (click)="addData()">
+      <i class="edit icon"></i>บัททึกใบขอจ่าย</div>
+    <div class="ui mini deny button">
+      <i class="close icon"></i>ยกเลิก</div>
+  </div>
+</div>
+<!--End Add modal -->
+
+<form id="call">
+  <input type="hidden" id="nameCall" (click)="callBackData()">
+</form>
