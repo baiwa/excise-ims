@@ -214,7 +214,7 @@
 				<textFieldExpression><![CDATA[$P{governmentService}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="73" y="278" width="216" height="19" uuid="f17b5aa1-796a-49cc-9f1b-02392965a3fa"/>
+				<reportElement x="69" y="278" width="216" height="19" uuid="f17b5aa1-796a-49cc-9f1b-02392965a3fa"/>
 				<box leftPadding="20">
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
