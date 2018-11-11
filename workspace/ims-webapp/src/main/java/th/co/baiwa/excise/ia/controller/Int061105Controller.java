@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.entity.DisbursementRequest;
 import th.co.baiwa.excise.ia.persistence.vo.Int061105FormSearchVo;
 import th.co.baiwa.excise.ia.service.Int061105Service;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
 @RequestMapping("api/ia/int061105")
@@ -25,26 +27,38 @@ public class Int061105Controller {
 
 	@PostMapping("/search")
 	@ResponseBody
-	public DataTableAjax<DisbursementRequest> save(@ModelAttribute Int061105FormSearchVo ids) {
+	public DataTableAjax<DisbursementRequest> search(@ModelAttribute Int061105FormSearchVo ids) {
 		return int061105Service.search(ids);
 	}
 	
-	@PostMapping("/approve")
+	@PostMapping("/comment")
 	@ResponseBody
-	public Message approve(@RequestBody Int061105FormSearchVo ids) {
-		return int061105Service.approve(ids);
+	public Message comment(@RequestBody Int061105FormSearchVo ids) {
+		return int061105Service.comment(ids);
 	}
-
-	// @PostMapping("/save")
-	// @ResponseBody
-	// public Message save(@RequestBody DisbursementRequest en) {
-	// logger.info("Saved to saveProcurement");
-	// try {
-	// int06115Service.save(en);
-	// } catch (Exception e) {
-	// return ApplicationCache.getMessage("MSG_00003");
-	// }
-	// return ApplicationCache.getMessage("MSG_00002");
-	// }
+	
+	@PostMapping("/save")
+	@ResponseBody
+	public Message save(@RequestBody DisbursementRequest en) {
+		Message msg = ApplicationCache.getMessage("MSG_00003");
+		try {
+			if(BeanUtils.isNotEmpty(en)) {
+				int061105Service.save(en);
+				msg = ApplicationCache.getMessage("MSG_00002");
+			}else {
+				msg = ApplicationCache.getMessage("MSG_00003");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return msg;
+	}
+	
+	@PostMapping("/getNextval")
+	@ResponseBody
+	public Long getNextval() {
+		return int061105Service.getNextval();
+	}
 
 }

@@ -56,7 +56,7 @@ public class Int061105Service {
 				d.setPosition(r.getPosition());
 				d.setCreatedDateStr(DateConstant.convertDateToStrDDMMYYYY(r.getCreatedDate()));
 				d.setAmount(r.getTotalWithdraw());
-				d.setStatus(ids.getStatus());
+				d.setStatus(r.getStatus());
 				dataList.add(d);
 			}
 
@@ -72,7 +72,7 @@ public class Int061105Service {
 				d.setAffiliation(vo.getAffiliation());
 				d.setCreatedDateStr(DateConstant.convertDateToStrDDMMYYYY(vo.getCreatedDate()));
 				d.setAmount(new BigDecimal(vo.getTotalMoney()));
-				d.setStatus(ids.getStatus());
+				d.setStatus(vo.getStatusCheck());
 				dataList.add(d);
 			}
 
@@ -82,13 +82,13 @@ public class Int061105Service {
 			DisbursementRequest d;
 			for (TuitionFee t : result) {
 				d = new DisbursementRequest();
-				d.setId(new BigDecimal(t.getId()));
+				d.setId(t.getId());
 				d.setCreatedBy(t.getCreatedBy());
 				d.setPosition(t.getPition());
 				d.setAffiliation(t.getBelong());
 				d.setCreatedDateStr(DateConstant.convertDateToStrDDMMYYYY(t.getCreatedDate()));
 				d.setAmount(t.getSumAmount());
-				d.setStatus(ids.getStatus());
+				d.setStatus(t.getStatusCheck());
 				dataList.add(d);
 			}
 
@@ -103,7 +103,7 @@ public class Int061105Service {
 		return dataTableAjax;
 	}
 
-	public Message approve(Int061105FormSearchVo ids) {
+	public Message comment(Int061105FormSearchVo ids) {
 		Message msg;
 		msg = ApplicationCache.getMessage("MSG_00003");
 		
@@ -113,7 +113,13 @@ public class Int061105Service {
 				 * แบบขอเบิกเงินค่าเช่าบ้าน (แบบ 6006)
 			     */
 				RentHouse update = rentHouseRepository.findOne(ids.getIdSelect());
-				update.setStatus(ExciseConstants.IA.STATUS.PASS);
+				/* check status */
+				if("APPROVE".equals(ids.getComment())) {
+					update.setStatus(ExciseConstants.IA.STATUS.PASS);
+				}else {
+					update.setStatus(ExciseConstants.IA.STATUS.NOT_PASS);
+				}
+				
 				rentHouseRepository.save(update);
 				msg = ApplicationCache.getMessage("MSG_00002");
 				
@@ -121,18 +127,31 @@ public class Int061105Service {
 				/**
 			     * ใบเบิกเงินสวัสดิการเกี่ยวกับการรักษาพยาบาล (แบบ 7131)
 			     */
-				TuitionFee update = tuitionFeeRepository.findOne(ids.getIdSelect().longValue());
-				update.setStatusCheck(ExciseConstants.IA.STATUS.PASS);
-				tuitionFeeRepository.save(update);
+				HealthCareWelFareEntity update = healthCareWelFareRepository.findOne(ids.getIdSelect().longValue());
+				/* check status */
+				if("APPROVE".equals(ids.getComment())) {
+					update.setStatusCheck(ExciseConstants.IA.STATUS.PASS);
+				}else {
+					update.setStatusCheck(ExciseConstants.IA.STATUS.NOT_PASS);
+				}
+				
+				healthCareWelFareRepository.save(update);
 				msg = ApplicationCache.getMessage("MSG_00002");
 				
 			}else if("2060".equals(ids.getWithdrawRequest())) {
 				 /**
 			      * ใบเบิกเงินสวัสดิการเกี่ยวกับการศึกษาบุตร (แบบ 7223)
 			      */
-				HealthCareWelFareEntity update = healthCareWelFareRepository.findOne(ids.getIdSelect().longValue());
-				update.setStatusCheck(ExciseConstants.IA.STATUS.PASS);
-				healthCareWelFareRepository.save(update);
+				TuitionFee update = tuitionFeeRepository.findOne(ids.getIdSelect());
+				
+				/* check status */
+				if("APPROVE".equals(ids.getComment())) {
+					update.setStatusCheck(ExciseConstants.IA.STATUS.PASS);
+				}else {
+					update.setStatusCheck(ExciseConstants.IA.STATUS.NOT_PASS);
+				}
+				
+				tuitionFeeRepository.save(update);
 				msg = ApplicationCache.getMessage("MSG_00002");
 				
 			}else {
@@ -143,6 +162,14 @@ public class Int061105Service {
 		
 		return msg;
 		
+	}
+
+	public void save(DisbursementRequest en) {
+		int061105Dao.insertDisbursementRequest(en);
+	}
+
+	public Long getNextval() {
+		return int061105Dao.getNextval();
 	}
 
 }

@@ -6,6 +6,7 @@ public class Int061105FormSearchVo {
 	private String status;
 	private String withdrawRequest;
 	private BigDecimal idSelect;
+	private String comment;
 	
 	public String getStatus() {
 		return status;
@@ -24,6 +25,12 @@ public class Int061105FormSearchVo {
 	}
 	public void setIdSelect(BigDecimal idSelect) {
 		this.idSelect = idSelect;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 }
