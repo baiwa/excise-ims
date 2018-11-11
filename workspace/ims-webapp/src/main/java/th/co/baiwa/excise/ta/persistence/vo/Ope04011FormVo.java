@@ -10,6 +10,8 @@ public class Ope04011FormVo {
 	private String addedTax;
 	private String extraMoney;
 	private String fine;
+	
+	
 	public String getExciseId() {
 		return exciseId;
 	}
