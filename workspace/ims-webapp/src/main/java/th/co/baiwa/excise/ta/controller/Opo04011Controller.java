@@ -35,4 +35,11 @@ public class Opo04011Controller {
 		Ope04011FormVo form = ope04011Service.findByExciseId(formVo);
 		return form;
 	}
+	
+	@PostMapping("/save")
+	@ResponseBody
+	public Ope04011FormVo save(@RequestBody Ope04011FormVo formVo){
+		ope04011Service.save(formVo);
+		return formVo;
+	}
 }

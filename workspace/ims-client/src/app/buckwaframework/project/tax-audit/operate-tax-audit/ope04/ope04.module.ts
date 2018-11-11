@@ -28,12 +28,7 @@ import { Ope0451Component } from './ope04-5/ope04-5-1/ope04-5-1.component';
 import { Ope0452Component } from './ope04-5/ope04-5-2/ope04-5-2.component';
 import { Ope0442Component } from "./ope04-4/ope04-4-2/ope04-4-2.component";
 import { Ope04011Component } from "./ope04-011/ope04-011.component";
-
-
-
-
-
-
+import { DirectivesModule } from "app/buckwaframework/common/directives/directives.module";
 
 const routes: Routes = [
   { path: "1", component: Ope041Component, canActivate: [AuthGuard] },
@@ -67,7 +62,8 @@ const routes: Routes = [
     RouterModule.forChild(routes), CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    DirectivesModule
     ],
   declarations: [
     Ope041Component,

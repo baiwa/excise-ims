@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ta.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +8,16 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ta.persistence.dao.ReportCheckDao;
+import th.co.baiwa.excise.ta.persistence.entity.TaxAuditResult;
+import th.co.baiwa.excise.ta.persistence.repository.TaxAuditResultRepository;
 import th.co.baiwa.excise.ta.persistence.vo.Ope04011FormVo;
 
 @Service
 public class Ope04011Service {
 
+	@Autowired
+	private TaxAuditResultRepository auditResultRepository;
+	
 	private final String PRODUCT = "สินค้า";
 	private final String SERVICE = "บริการ";
 	private final String PRODUCT_IMPORT = "สินค้านำเข้า";
@@ -36,6 +42,18 @@ public class Ope04011Service {
 		if (PRODUCT_IMPORT_CODE.equals(form.getType())) form.setType(PRODUCT_IMPORT);
 		
 		return form;
+	}
+	
+	public void save(Ope04011FormVo formVo){
+		TaxAuditResult entity = new TaxAuditResult();
+		entity.setExciseId(formVo.getExciseId());
+		entity.setAnalysNumber(formVo.getAnlysisNumber());
+		entity.setCompanyName(formVo.getCompanyName());
+		entity.setAddedTax(new BigDecimal(formVo.getAddedTax()));
+		entity.setFine(new BigDecimal(formVo.getFine()));
+		entity.setExtraMoney(new BigDecimal(formVo.getExtraMoney()));
+		
+		auditResultRepository.save(entity);
 	}
 
 }
