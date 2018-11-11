@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.dao.DisplayBalanceRawMaterialChrckerHeaderDao;
+import th.co.baiwa.excise.ta.persistence.vo.Ope0422Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0431Vo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope0461FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0462FormVo;
 
 @Service
@@ -39,6 +41,16 @@ public class Ope0431Service {
 		return dataList;
 	}
 
-	
+	public DataTableAjax<Ope0422Vo> findDetails(Ope0461FormVo formVo){
+		DataTableAjax<Ope0422Vo> dataTableAjax = new DataTableAjax<>();
+		
+			List<Ope0422Vo> list = displayBalanceRawMaterialChrckerHeaderDao.findDetails(formVo);
+			Long count = displayBalanceRawMaterialChrckerHeaderDao.countDetails(formVo);
+
+			dataTableAjax.setRecordsTotal(count);
+			dataTableAjax.setRecordsFiltered(count);
+			dataTableAjax.setData(list);		
+		return dataTableAjax;
+	}
 
 }

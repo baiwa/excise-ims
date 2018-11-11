@@ -27,10 +27,10 @@ public class DisplayRawMaterialChrckerDetailDao {
 
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
-		if (StringUtils.isNotBlank(formVo.getTaTaxReduceWsHdrId())) {
+		if (StringUtils.isNotBlank(formVo.getId())) {
 			
 			sql.append(" AND TA_RECEIVE_RMAT_HEADER_ID = ? ");
-			params.add(formVo.getTaTaxReduceWsHdrId());
+			params.add(formVo.getId());
 		}
 
 		String countSql = OracleUtils.countForDatatable(sql);
@@ -43,9 +43,9 @@ public class DisplayRawMaterialChrckerDetailDao {
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
 
-		if (StringUtils.isNotBlank(formVo.getTaTaxReduceWsHdrId())) {
+		if (StringUtils.isNotBlank(formVo.getId())) {
 			sql.append(" AND TA_RECEIVE_RMAT_HEADER_ID = ? ");
-			params.add(formVo.getTaTaxReduceWsHdrId());
+			params.add(formVo.getId());
 		}
 		sql.append(" ORDER BY CREATED_DATE DESC ");
 		

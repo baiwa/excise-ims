@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.excise.ta.persistence.vo.Ope0422Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0431Vo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope0461FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0462FormVo;
 import th.co.baiwa.excise.ta.service.Ope0431Service;
 
@@ -34,6 +36,12 @@ public class Opo0431Controller {
 	public List<LabelValueBean> findExciseId() {
 		List<LabelValueBean> dataList = ope0431Service.findExciseId();
 		return dataList;
+	}
+	
+	@PostMapping("/findDetails")
+	@ResponseBody
+	public DataTableAjax<Ope0422Vo> findDetails(@RequestBody Ope0461FormVo formVo){
+		return ope0431Service.findDetails(formVo);
 	}
 
 }

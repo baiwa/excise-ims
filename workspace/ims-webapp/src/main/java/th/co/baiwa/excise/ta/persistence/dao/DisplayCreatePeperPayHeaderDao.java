@@ -114,10 +114,10 @@ public class DisplayCreatePeperPayHeaderDao {
 
 		StringBuilder sql = new StringBuilder(SQL_DETAILS);
 		List<Object> params = new ArrayList<>();
-		if (StringUtils.isNotBlank(formVo.getTaTaxReduceWsHdrId())) {
+		if (StringUtils.isNotBlank(formVo.getId())) {
 			
 			sql.append(" AND TA_PDT_DRAWING_WS_HEADER_ID = ? ");
-			params.add(formVo.getTaTaxReduceWsHdrId());
+			params.add(formVo.getId());
 		}
 
 		String countSql = OracleUtils.countForDatatable(sql);
@@ -130,9 +130,9 @@ public class DisplayCreatePeperPayHeaderDao {
 		StringBuilder sql = new StringBuilder(SQL_DETAILS);
 		List<Object> params = new ArrayList<>();
 
-		if (StringUtils.isNotBlank(formVo.getTaTaxReduceWsHdrId())) {
+		if (StringUtils.isNotBlank(formVo.getId())) {
 			sql.append(" AND TA_PDT_DRAWING_WS_HEADER_ID = ? ");
-			params.add(formVo.getTaTaxReduceWsHdrId());
+			params.add(formVo.getId());
 		}
 		sql.append(" ORDER BY CREATED_DATE DESC ");
 		
