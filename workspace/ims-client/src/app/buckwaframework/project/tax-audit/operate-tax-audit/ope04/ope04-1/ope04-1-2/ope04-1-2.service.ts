@@ -69,7 +69,11 @@ export class Ope0412Service {
                    "data": "result",
                    "className": "ui right aligned",
                    "render": (data) => {
-                       return Utils.moneyFormatInt(data);
+                    if (Utils.moneyFormatInt(data) != "0") {
+                        return '<span class="r-mark-tr">' + Utils.moneyFormatInt(data) + '</span>';
+
+                    }
+                    return '<span class="g-mark-tr">' + Utils.moneyFormatInt(data) + '</span>'; 
                    }
                }
            ],

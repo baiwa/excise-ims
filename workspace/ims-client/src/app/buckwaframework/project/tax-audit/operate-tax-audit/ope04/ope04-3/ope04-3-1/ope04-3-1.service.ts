@@ -60,15 +60,9 @@ export class Ope0431Service {
                  "data": "exciseId",
                  "className": "ui left aligned"
              }, {
-                 "data": "taxationId",
+                 "data": "taAnalysisId",
                  "className": "ui left aligned",
-             }, {
-                 "data": "pdtType",
-                 "className": "ui left aligned",
-             }, {
-                 "data": "subPdtType",
-                 "className": "ui left aligned",
-             }, {
+             },  {
                  "data": "startDate",
                  "className": "ui center aligned"
              }, {
@@ -93,9 +87,9 @@ export class Ope0431Service {
          var closestRow = $(e.target).closest('tr');
          var data = this.table.row(closestRow).data();
          console.log(data);
-         this.router.navigate(["/ope04/1-2"], {
+         this.router.navigate(["/ope04/3-2"], {
              queryParams: {
-                 taTaxReduceWsHdrId: data.taTaxReduceWsHdrId
+                 id: data.taTaxReduceWsHdrId
              }
          });
      });
