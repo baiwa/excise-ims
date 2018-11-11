@@ -6,6 +6,7 @@ import { MessageBarService } from 'services/message-bar.service';
 import { TextDateTH, formatter } from 'helpers/datepicker';
 import { Utils } from 'helpers/utils';
 import { Router } from '@angular/router';
+import { BreadCrumb } from 'models/breadcrumb';
 
 declare var $: any;
 
@@ -15,6 +16,7 @@ declare var $: any;
   styleUrls: ['./int06-11-2.component.css']
 })
 export class Int06112Component implements OnInit {
+  breadcrumb: BreadCrumb[];
 
   medicalWelfareForm = this.fb.group({
     fullName: [''],
@@ -63,7 +65,14 @@ export class Int06112Component implements OnInit {
     private ajaxService: AjaxService,
     private message: MessageBarService,
     private router: Router
-  ) { }
+  ) { 
+    this.breadcrumb = [
+      { label: "ตรวจสอบภายใน", route: "#" },
+      { label: "ตรวจสอบเบิกจ่าย", route: "#" },
+      { label: "บันทึกคำขอเบิก", route: "#" },
+      { label: "บันทึกคำขอเบิกเงินสวัสดิการเกี่ยวกับการรักษาพยาบาล (แบบ 7131)", route: "#" }
+    ];
+  }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-06112');

@@ -231,20 +231,16 @@
     <div class="ui form">
         <div class="ui attached segment" [ngClass]="{ 'loading': loadingUL }">
             <div class="inline fields ">
-                <div class="two wide field">
-
-                </div>
+                <div class="five wide field"></div>
                 <div class="ten wide field">
                     <label style="color:red">*รับรองไฟล์นามสกุล &nbsp;&nbsp;เอกสาร xls, xlsx, doc, docx, ppt, pptx &nbsp;&nbsp;รูป gif, jpeg, jpg,
                         png, bmp &nbsp;&nbsp;ขนาดไม่เกิน 25 MB</label>
                 </div>
             </div>
             <div class="inline fields ">
-                <div class="two wide field">
-
-                </div>
+                <div class="two wide field"></div>
                 <div class="three wide field">
-                    <label>หลักฐานประกอบคำเบิก</label>
+                    <label class="full-width text-right">หลักฐานประกอบคำเบิก</label>
                 </div>
                 <div class="six wide field upload-panel">
                     <input type="file" name="files" id="files" accept=".pdf, image/*, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
@@ -255,7 +251,6 @@
                         <i class="upload icon"></i>อัพโหลด</button>
                 </div>
             </div>
-
             <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
                 <thead>
                     <tr style="text-align: center">
@@ -280,13 +275,12 @@
                     </tr>
                 </thead>
             </table>
-
             <div class="ui center aligned grid">
                 <div class="sixteen wide column">
                     <button class="ui mini primary button" type="submit" [ngClass]="{ 'disabled': tableUpload.length < 1 }">
                         <i class="save icon"></i>บันทึก</button>
-                    <button class="ui mini yellow button" type="button">
-                        <i class="print icon"></i>ส่งออก</button>
+                    <!-- <button class="ui mini yellow button" type="button">
+                        <i class="print icon"></i>ส่งออก</button> -->
                     <button class="ui mini button" type="button" routerLink='/int06/11'>
                         <i class="close icon"></i>ยกเลิก</button>
                 </div>

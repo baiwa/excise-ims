@@ -19,8 +19,8 @@ export class Int0611301Component implements OnInit, AfterViewInit {
   breadcrumb: BreadCrumb[] = [
     { label: "ตรวจสอบภายใน", route: "#" },
     { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-    { label: "บันทึกคำขอ", route: "#" },
-    { label: "ใบเบิกเงินสวัสดิการเกี่ยวกับการศึกษาบุตร", route: "#" },
+    { label: "บันทึกคำขอเบิก", route: "#" },
+    { label: "บันทึกคำขอเบิกเงินสวัสดิการเกี่ยวกับการศึกษาบุตร (แบบ 7223)", route: "#" },
   ];
 
   // ==> disabled

@@ -39,7 +39,7 @@ export class Int06111Component implements OnInit {
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
       { label: "บันทึกคำขอเบิก", route: "#" },
-      { label: "บันทึกคำขอเบิกเงินค่าเช่าบ้าน", route: "#" }
+      { label: "บันทึกคำขอเบิกเงินค่าเช่าบ้าน (แบบ 6006)", route: "#" }
     ];
   }
 

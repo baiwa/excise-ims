@@ -1,15 +1,10 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <br>
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-  <span>รายละเอียดใบเบิกเงินสวัสดิการเกี่ยวกับการศึกษาบุตร (แบบ 7223)</span>
+  <span>บันทึกคำขอเบิกเงินสวัสดิการเกี่ยวกับการศึกษาบุตร (แบบ 7223)</span>
 </div>
 <div class="ui attached  segment {{loading ? 'loading' : ''}}">
   <br>
-  <div class="inline fields" style="text-align: center !important;">
-    <h2>ใบเบิกเงินสวัสดิการเกี่ยวกับการศึกษาบุตรโปรดทำเครื่องหมาย
-      <i class="check icon"></i> ลงในช่อง &nbsp;
-      <input type="checkbox" disabled> &nbsp; พร้อมทั้งกรอกข้อความเท่าที่จำเป็น</h2>
-  </div>
   <br>
   <form class="ui form" id="form" [formGroup]="formControl" (submit)="save($event)">
 
