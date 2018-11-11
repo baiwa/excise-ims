@@ -17,7 +17,7 @@ export class SummaryReportComponent implements OnInit {
   breadcrumb: BreadCrumb[] = [
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การคัดเลือกราย', route: '#' },
-    { label: 'รับกระดาษทำการคัดเลือกลาย', route: '#' },
+    { label: 'ตรวจสอบการเลือกรายผู้ประกอบการ', route: '#' },
   ]
   sendLineUser: any;
   listItem: any[];

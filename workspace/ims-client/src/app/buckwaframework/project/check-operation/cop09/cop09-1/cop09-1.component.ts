@@ -53,7 +53,7 @@ export class Cop091Component implements OnInit {
 
   clickSearch = function () {
     if ($("#fiscalYear").val()=="") {
-      this.message.alert("กรุณาระบุ แผนการตรวจปฏิบัติการประจำปีงบประมาณ");
+      this.message.alert("กรุณาระบุ แผนการตรวจปฏิบัติการประจำปี");
       return false;
     }
 
