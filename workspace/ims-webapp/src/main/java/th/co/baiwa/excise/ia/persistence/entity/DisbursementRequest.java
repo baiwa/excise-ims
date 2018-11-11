@@ -37,7 +37,7 @@ public class DisbursementRequest extends BaseEntity {
 	@Column(name = "AFFILIATION_PAY")
 	private String affiliationPay;
 
-	private BigDecimal amount;
+	private BigDecimal amount;  
 
 	@Column(name = "AMOUNT_PAY")
 	private BigDecimal amountPay;
