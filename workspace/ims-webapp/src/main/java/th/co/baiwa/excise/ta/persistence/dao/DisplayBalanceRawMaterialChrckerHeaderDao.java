@@ -12,7 +12,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.domain.LabelValueBean;
+import th.co.baiwa.excise.ta.persistence.vo.Ope0422Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0431Vo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope0461FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0462FormVo;
 import th.co.baiwa.excise.utils.OracleUtils;
 
@@ -100,6 +102,56 @@ public class DisplayBalanceRawMaterialChrckerHeaderDao {
 		@Override
 		public LabelValueBean mapRow(ResultSet rs, int arg1) throws SQLException {
 			return new LabelValueBean(rs.getString("EXCISE_ID"), rs.getString("EXCISE_ID"));
+		}
+	};
+	
+	//===================================> Details <======================================
+	private final String SQL_DETAILS = "SELECT * FROM TA_MATERIALS_WORKSHEET_DETAIL WHERE 1=1 ";
+	public Long countDetails(Ope0461FormVo formVo) {
+
+		StringBuilder sql = new StringBuilder(SQL_DETAILS);
+		List<Object> params = new ArrayList<>();
+		if (StringUtils.isNotBlank(formVo.getId())) {
+			
+			sql.append(" AND TA_MATERIALS_WS_HEADER_ID = ? ");
+			params.add(formVo.getId());
+		}
+
+		String countSql = OracleUtils.countForDatatable(sql);
+		Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+		return count;
+	}
+
+	public List<Ope0422Vo> findDetails(Ope0461FormVo formVo) {
+
+		StringBuilder sql = new StringBuilder(SQL_DETAILS);
+		List<Object> params = new ArrayList<>();
+
+		if (StringUtils.isNotBlank(formVo.getId())) {
+			sql.append(" AND TA_MATERIALS_WS_HEADER_ID = ? ");
+			params.add(formVo.getId());
+		}
+		sql.append(" ORDER BY CREATED_DATE DESC ");
+		
+		List<Ope0422Vo> list = jdbcTemplate.query(sql.toString(), params.toArray(), detailRowmapper);
+		return list;
+
+	}
+
+	private RowMapper<Ope0422Vo> detailRowmapper = new RowMapper<Ope0422Vo>() {
+		@Override
+		public Ope0422Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Ope0422Vo vo = new Ope0422Vo();
+
+			vo.setOrder(rs.getString("MATERIALS_WS_DTL_ORDER"));
+			vo.setTaxInv(rs.getString("MATERIALS_WS_DTL_BALANCE"));
+			vo.setDaybook(rs.getString("MATERIALS_WS_DTL_COUNTING"));
+			vo.setMonthBook(rs.getString("MATERIALS_WS_DTL_STORAGE"));
+			vo.setExternalData(rs.getString("RESULT"));
+			vo.setMaxalues(rs.getString("RESULT_1"));
+			vo.setResult(rs.getString("RESULT"));
+
+			return vo;
 		}
 	};
 

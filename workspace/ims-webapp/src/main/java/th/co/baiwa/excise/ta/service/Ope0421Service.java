@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.ta.persistence.dao.DisplayPayRawMaterialChrckerHeaderDao;
+import th.co.baiwa.excise.ta.persistence.dao.DisplayPayRawMaterialCheckerDao;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0421Vo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope0422Vo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope0461FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0462FormVo;
 
 @Service
@@ -16,7 +18,7 @@ public class Ope0421Service {
 
 		
 	@Autowired
-	private DisplayPayRawMaterialChrckerHeaderDao displayPayRawMaterialChrckerHeaderDao;
+	private DisplayPayRawMaterialCheckerDao displayPayRawMaterialChrckerHeaderDao;
 
 
 	public DataTableAjax<Ope0421Vo> findAll(Ope0462FormVo formVo) {
@@ -39,6 +41,19 @@ public class Ope0421Service {
 		return dataList;
 	}
 
+	
+	public DataTableAjax<Ope0422Vo> findDetails(Ope0461FormVo formVo){
+		DataTableAjax<Ope0422Vo> dataTableAjax = new DataTableAjax<>();
+		
+			List<Ope0422Vo> list = displayPayRawMaterialChrckerHeaderDao.findDetails(formVo);
+			Long count = displayPayRawMaterialChrckerHeaderDao.countDetails(formVo);
+
+			dataTableAjax.setRecordsTotal(count);
+			dataTableAjax.setRecordsFiltered(count);
+			dataTableAjax.setData(list);		
+		return dataTableAjax;
+	}
+	
 	
 
 }

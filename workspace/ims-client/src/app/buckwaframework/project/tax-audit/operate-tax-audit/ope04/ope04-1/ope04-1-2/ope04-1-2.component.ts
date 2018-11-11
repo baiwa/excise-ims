@@ -29,7 +29,7 @@ export class Ope0412Component implements OnInit {
     private route: ActivatedRoute,
   ) {
     this.id = this.route.snapshot.queryParams["id"];
-    if (Utils.isNull(this.id)) this.router.navigate(['/ope04/4-1']);
+    if (Utils.isNull(this.id)) this.router.navigate(['/ope04/1-1']);
    }
 
   ngOnInit() {        

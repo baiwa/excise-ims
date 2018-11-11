@@ -41,7 +41,7 @@ export class Ope0421Service {
            "scrollX": true,
            "paging": true,
            "ajax": {
-               "url": '/ims-webapp/api/ta/opo0421/findAll',
+               "url": AjaxService.CONTEXT_PATH + 'ta/opo0421/findAll',
                "contentType": "application/json",
                "type": "POST",
                "data": (d) => {
@@ -60,13 +60,7 @@ export class Ope0421Service {
                    "data": "exciseId",
                    "className": "ui left aligned"
                }, {
-                   "data": "taxationId",
-                   "className": "ui left aligned",
-               }, {
-                   "data": "pdtType",
-                   "className": "ui left aligned",
-               }, {
-                   "data": "subPdtType",
+                   "data": "taAnalysisId",
                    "className": "ui left aligned",
                }, {
                    "data": "startDate",
@@ -93,9 +87,9 @@ export class Ope0421Service {
            var closestRow = $(e.target).closest('tr');
            var data = this.table.row(closestRow).data();
            console.log(data);
-           this.router.navigate(["/ope04/1-2"], {
+           this.router.navigate(["/ope04/2-2"], {
                queryParams: {
-                   taTaxReduceWsHdrId: data.taTaxReduceWsHdrId
+                   id: data.taTaxReduceWsHdrId
                }
            });
        });
