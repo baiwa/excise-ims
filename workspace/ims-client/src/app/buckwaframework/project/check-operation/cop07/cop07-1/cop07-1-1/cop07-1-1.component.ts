@@ -38,6 +38,12 @@ export class Cop0711Component implements OnInit, OnDestroy {
   outsidePlanNumber:any;
   outsidePlanSuccess:any;
 
+  exciseName:any;
+
+  travelTo1AddList: any;
+  travelTo2AddList: any;
+
+  travelToDescription: any;
 
   entrepreneurNoList:any;
   actionPlanList:any;
@@ -81,10 +87,52 @@ export class Cop0711Component implements OnInit, OnDestroy {
     this.getHead();
     this.dataTable();
     this.dataTable2();
+    this.travelTo1AddDropdown();
   }
 
   ngOnDestroy() {
     $('#modalAddDocument').remove();
+  }
+
+  travelTo1AddDropdown = () =>{
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: "SECTOR_VALUE"}, res => {
+      this.travelTo1AddList = res.json();
+    });
+  }
+
+  travelTo2AddDropdown = e =>{
+    var id = e.target.value;
+    if (id != "") {
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: "SECTOR_VALUE",lovIdMaster: id}, res => {
+      this.travelTo2AddList = res.json();
+      this.setTravelToAdd(e);
+    });
+  }
+  }
+
+  changeExciseId = (e) => {
+      let exciseId = e.target.value;
+      let url = "cop/cop064/findByExciseId";
+        this.ajax.post(url, JSON.stringify(exciseId), res => {
+              let data = res.json()
+              console.log("exciseName : ",data.exciseName);
+              this.exciseName = data.exciseName;
+          })
+  }
+  
+
+  setTravelToAdd = e => {
+    $('#travelToAdd').val(e.target.value);
+    $('#travelToIdAdd').val(e.target.value);
+
+    if ($("#travelTo2Add").val() != "") {
+      this.travelToDescription = $('#travelTo1Add option:selected').text()+" "+$('#travelTo2Add option:selected').text();
+    } else if ($("#travelTo1Add").val() != "") {
+      this.travelToDescription = $('#travelTo1Add option:selected').text();
+    }
+    console.log("TravelToDescription : ",this.travelToDescription);
   }
 
   calenda = function () {
@@ -136,6 +184,8 @@ export class Cop0711Component implements OnInit, OnDestroy {
     $('#modalAdd').modal({
       onShow: ()=>{
         this.calenda();
+        $(".ui.dropdown").dropdown();
+        $(".ui.dropdown.ai").css("width", "100%");
       }
     }).modal('show');
     
@@ -148,6 +198,8 @@ export class Cop0711Component implements OnInit, OnDestroy {
     $('#modalAdd').modal({
       onShow: ()=>{
          this.calenda();
+         $(".ui.dropdown").dropdown();
+         $(".ui.dropdown.ai").css("width", "100%");
          $("#id").val(data.id);
          $("#entrepreneurNo").dropdown('set selected',data.entrepreneurNo);
          $("#checkDate").val(data.checkDate);
@@ -159,12 +211,12 @@ export class Cop0711Component implements OnInit, OnDestroy {
   }
 
   saveData() {
-    if ($("#actionPlan").val()=='1871'&&$('#tableData').DataTableTh().column(0).data().length>=this.asPlanNumber) {
+    if ($("#actionPlan").val()=='1871'&&$('#tableData').DataTable().column(0).data().length>=this.asPlanNumber) {
       this.message.alert("ไม่สามารถเพิ่มจำนวน ตามแผนปฏิบัติการ   เกิน "+this.asPlanNumber+" ราย");
       return false;
     }
 
-    if ($("#actionPlan").val()=='1872'&&$('#tableData2').DataTableTh().column(0).data().length>=this.outsidePlanNumber) {
+    if ($("#actionPlan").val()=='1872'&&$('#tableData2').DataTable().column(0).data().length>=this.outsidePlanNumber) {
       this.message.alert("ไม่สามารถเพิ่มจำนวน นอกแผนปฏิบัติการ   เกิน "+this.outsidePlanNumber+" ราย");
       return false;
     }
@@ -189,8 +241,8 @@ export class Cop0711Component implements OnInit, OnDestroy {
       this.message.errorModal(commonMessage.msg.messageTh);
     }
     $("#searchFlag").val("TRUE");
-    $('#tableData').DataTableTh().ajax.reload();
-    $('#tableData2').DataTableTh().ajax.reload();
+    $('#tableData').DataTable().ajax.reload();
+    $('#tableData2').DataTable().ajax.reload();
     });
   }
 
@@ -214,8 +266,8 @@ export class Cop0711Component implements OnInit, OnDestroy {
       this.message.errorModal(commonMessage.msg.messageTh);
     }
     $("#searchFlag").val("TRUE");
-    $('#tableData').DataTableTh().ajax.reload();
-    $('#tableData2').DataTableTh().ajax.reload();
+    $('#tableData').DataTable().ajax.reload();
+    $('#tableData2').DataTable().ajax.reload();
     });
   }
 
@@ -311,7 +363,7 @@ export class Cop0711Component implements OnInit, OnDestroy {
         this.message.errorModal(msg.messageTh);
       }
       $("#searchFlag").val("TRUE");
-      $('#tableData').DataTableTh().ajax.reload();
+      $('#tableData').DataTable().ajax.reload();
       });
      }
     },"ลบรายการ");
@@ -411,7 +463,7 @@ export class Cop0711Component implements OnInit, OnDestroy {
         this.message.errorModal(msg.messageTh);
       }
       $("#searchFlag").val("TRUE");
-      $('#tableData2').DataTableTh().ajax.reload();
+      $('#tableData2').DataTable().ajax.reload();
       });
      }
     },"ลบรายการ");
