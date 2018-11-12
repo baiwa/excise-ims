@@ -52,7 +52,7 @@
                 <br>
                 <div class="inline fields">
                     <div class="one wide field"></div>
-                    <div class="two wide field">
+                    <div class="two wide field required">
                         <label>ข้าพเจ้าได้จ่ายเงิน</label>
                     </div>
                     <div class="two wide field" [ngClass]="{ 'error': validateField('paymentCost') }">
@@ -79,7 +79,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="one wide field">
+                    <div class="one wide field required">
                         <label class="full-width text-right">ให้แก่</label>
                     </div>
                     <div class="five wide field" [ngClass]="{ 'error': validateField('paymentFor') }">
@@ -88,7 +88,7 @@
                 </div>
                 <div class="inline fields">
                     <div class="one wide field"></div>
-                    <div class="two wide field">
+                    <div class="two wide field required">
                         <label>ประจำเดือน</label>
                     </div>
                     <div class="three wide field" [ngClass]="{ 'error': validateField('period') }">
@@ -99,7 +99,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="two wide field">
+                    <div class="two wide field required">
                         <label class="full-width text-right">ตามใบเสร็จรับเงิน</label>
                     </div>
                     <div class="one wide field" [ngClass]="{ 'error': validateField('refReceipts') }">
@@ -108,7 +108,7 @@
                     <div class="one wide field">
                         <label class="full-width text-center">ฉบับ</label>
                     </div>
-                    <div class="one wide field">
+                    <div class="two wide field required">
                         <label class="full-width text-right">เป็นจำนวน</label>
                     </div>
                     <div class="three wide field" [ngClass]="{ 'error': validateField('billAmount') }">
@@ -124,7 +124,7 @@
 
                 <div class="inline fields">
                     <div class="one wide field"></div>
-                    <div class="three wide field">
+                    <div class="three wide field required">
                         <label>ข้าพเจ้าได้รับเงินเดือน เดือนละ</label>
                     </div>
                     <div class="three wide field" [ngClass]="{ 'error': validateField('salary') }">
@@ -155,7 +155,7 @@
                     <div class="one wide field">
                         <label class="full-width text-center">บาท</label>
                     </div>
-                    <div class="four wide field">
+                    <div class="four wide field required">
                         <label class="full-width text-center">ข้าพเจ้าขอเบิกเงินค่าเช่าบ้านประจำเดือน</label>
                     </div>
                     <div class="two wide field" [ngClass]="{ 'error': validateField('periodWithdraw') }">
@@ -200,7 +200,7 @@
                     <div class="one wide field">
                         <label class="full-width text-center">บาท</label>
                     </div>
-                    <div class="four wide field">
+                    <div class="four wide field required">
                         <label>พร้อมนี้ข้าพเจ้าได้แนบใบเสร็จรับเงินจำนวน</label>
                     </div>
                     <div class="one wide field" [ngClass]="{ 'error': validateField('receipts') }">

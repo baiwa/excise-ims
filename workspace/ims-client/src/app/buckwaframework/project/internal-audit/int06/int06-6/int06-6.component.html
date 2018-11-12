@@ -1,7 +1,7 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
     <div class="sixteen wide column">
-        
+
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>ค้นหารายการคุม KTB-Corporate</span>
         </div>
@@ -45,7 +45,7 @@
                         <label class="text-right full-width">ประเภทงบประมาณ</label>
                     </div>
                     <div class="four wide field ">
-                        <select name="budgetType" id="budgetType" class="ui dropdown ai search full-width office" >
+                        <select name="budgetType" id="budgetType" class="ui dropdown ai search full-width office">
                             <option value="">กรุณาเลือก</option>
                             <option *ngFor="let item of budgetTypeList" value="{{item.value1}}">{{item.value1}}</option>
                         </select>
@@ -60,8 +60,7 @@
                         <div class="ui calendar full-width" id="dateF">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input name="dateFrom" type="text" id="dateFrom" autocomplete="off" [attr.readonly]="null"
-                                    placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                                <input name="dateFrom" type="text" id="dateFrom" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
                             </div>
                         </div>
                     </div>
@@ -73,8 +72,7 @@
                             <div class="ui calendar full-width" id="dateT">
                                 <div class="ui input left icon">
                                     <i class="calendar alter nate outline icon"></i>
-                                    <input name="dateTo" type="text" id="dateTo" autocomplete="off" [attr.readonly]="null"
-                                        placeholder="วว/ดด/ปปปป" [attr.required]="true">
+                                    <input name="dateTo" type="text" id="dateTo" autocomplete="off" [attr.readonly]="null" placeholder="วว/ดด/ปปปป" [attr.required]="true">
                                 </div>
                             </div>
                         </div>
@@ -91,9 +89,14 @@
     </div>
 </div>
 
-<div class="ui segment">
+<br>
+
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>ผลการค้นหารายการคุม KTB - Corporate </span>
+</div>
+<div class="ui attached segment">
     <table id="dataTable" class="ui small celled table striped selectable nowrap" style="width: 100%;">
-        <thead>											
+        <thead>
             <tr>
                 <th style="text-align: center !important">ลำดับที่</th>
                 <th style="text-align: center !important">ผู้รับเงิน</th>
@@ -102,9 +105,9 @@
                 <th style="text-align: center !important">รายการ</th>
                 <th style="text-align: center !important">จำนวนเงิน</th>
                 <th style="text-align: center !important">วันที่โอน</th>
-           
+
             </tr>
-        </thead>       
+        </thead>
     </table>
 
     <div class="ui grid">

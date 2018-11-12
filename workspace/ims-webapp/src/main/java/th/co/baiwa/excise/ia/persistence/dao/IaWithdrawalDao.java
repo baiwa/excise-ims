@@ -190,7 +190,7 @@ public class IaWithdrawalDao {
     	}
     	
     	if (StringUtils.isNotBlank(formVo.getActivity())) {
-    		sql.append(" AND ACTIVITY = ? ");
+    		sql.append(" AND ACTIVITIES = ? ");
     		param.add(formVo.getActivity());
     	}
     	 if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())){
@@ -218,7 +218,7 @@ public class IaWithdrawalDao {
 	    	}
 	    	
 	    	if (StringUtils.isNotBlank(formVo.getActivity())) {
-	    		sql.append(" AND ACTIVITY = ? ");
+	    		sql.append(" AND ACTIVITIES = ? ");
 	    		param.add(formVo.getActivity());
 	    	}
 	    	 if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())){

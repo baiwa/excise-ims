@@ -33,8 +33,7 @@
                             <div class="ui calendar" id="calendar" style="width:100%">
                                 <div class="ui input left icon">
                                     <i class="calendar alter nate outline icon"></i>
-                                    <input type="text" placeholder="วว/ดด/ปปปป" formControlName="refDate" id="refDate"
-                                        autocomplete="off" readonly="">
+                                    <input type="text" placeholder="วว/ดด/ปปปป" formControlName="refDate" id="refDate" autocomplete="off" readonly="">
                                 </div>
                             </div>
                         </div>
@@ -78,8 +77,7 @@
                             <label class="custom-label-w-25 text-right">หมวด</label>
                         </div>
                         <div class="four wide field " [ngClass]="{ 'error': submitted && f.ctgBudget.errors }">
-                            <select class="ui search dropdown ai search" formControlName="ctgBudget" id="ctgBudget"
-                                (change)="ctgBudgetChange($event)">
+                            <select class="ui search dropdown ai search" formControlName="ctgBudget" id="ctgBudget" (change)="ctgBudgetChange($event)">
                                 <option value="">กรุณาเลือก</option>
                                 <option *ngFor="let data of combobox4" value="{{data.categoryId}}">{{data.categoryName}}</option>
                             </select>
@@ -140,26 +138,29 @@
 
                     <div class="ui center aligned grid">
                         <div class="four wide column">
-                            <button *ngIf="flag !== 'EDIT'" class="ui mini green button" (click)="checkStatus('SAVE')"
-                                type="submit">
+                            <button *ngIf="flag !== 'EDIT'" class="ui mini green button" (click)="checkStatus('SAVE')" type="submit">
                                 <i class="plus icon"></i>เพิ่ม
                             </button>
 
-                            <button *ngIf="flag === 'EDIT'" class="ui mini green button" (click)="checkStatus('EDIT')"
-                                type="submit">
-                                <i class="plus icon"></i>เพิ่ม
+                            <button *ngIf="flag === 'EDIT'" class="ui mini green button" (click)="checkStatus('EDIT')" type="submit">
+                                <i class="save icon"></i>บันทึก
                             </button>
 
-                            <button class="ui mini button" type="button" routerLink="/int06/9">
+                            <!-- <button class="ui mini button" type="button" routerLink="/int06/9">
                                 <i class="close icon"></i>ยกเลิก
-                            </button>
+                            </button> -->
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-
-        <div class="ui segment" id="int0621">
+    </div>
+    <br>
+    <div class="sixteen wide column" id="tableSave">
+        <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+            <span>ผลการค้นหารายการโอนเงิน</span>
+        </div>
+        <div class="ui attached segment">
             <div>
                 <table id="datatable" class="ui small celled table striped nowrap selectable" style="width: 100%">
                     <thead>
@@ -188,7 +189,7 @@
             <br>
             <div class="ui center aligned grid">
                 <div class="sixteen wide column">
-                    <button class="ui mini primary button" (click)="onSave()">
+                    <button class="ui mini primary button" [ngClass]="{'disabled': checkTable.length < 1 }" (click)="onSave()">
                         <i class="save icon"></i> บันทึก
                     </button>
                     <button class="ui mini  button" (click)="hidedata()">

@@ -72,8 +72,13 @@ export class Int069Component implements OnInit {
       }
     });
   }
+
+  ngAfterViewInit(): void {
+    this.selfService.DATATABLE();
+  }
+
   onFilter = () => {
-    $("#int069").show();
+    // $("#int069").show();
     let DATA = {
       transferList: this.combo1,
       budgetType: this.combo2,
@@ -85,7 +90,7 @@ export class Int069Component implements OnInit {
   };
 
   hidedata() {
-    $("#int069").hide();
+    // $("#int069").hide();
     $("#combo1").dropdown("restore defaults");
     $("#combo2").dropdown("restore defaults");
     $("#combo3").dropdown("restore defaults");
@@ -102,13 +107,12 @@ export class Int069Component implements OnInit {
   }
 
   // export
-  export =()=>{
+  export = () => {
     let dataSum = this.selfService.getDataExcel();
     console.log(dataSum);
-    let formExcel = $("#form-data-excel").get(0);                      
+    let formExcel = $("#form-data-excel").get(0);
     formExcel.action = AjaxService.CONTEXT_PATH + "ia/int069/export";
-    formExcel.dataJson.value = JSON.stringify({voList : dataSum});		
+    formExcel.dataJson.value = JSON.stringify({ voList: dataSum });
     formExcel.submit();
-  }
-
+  };
 }

@@ -24,4 +24,6 @@
         </div>
     </div>
 </div> -->
-<iframe src="http://150.95.24.42:8080/web-dashboard/" style="position: absolute; height: 90%; border: none"  width="100%"></iframe>
+<ng-container *ngIf="position === 'ส่วนกลาง'">
+    <iframe src="http://150.95.24.42:8080/web-dashboard/" style="position: absolute; height: 90%; border: none" width="100%"></iframe>
+</ng-container>

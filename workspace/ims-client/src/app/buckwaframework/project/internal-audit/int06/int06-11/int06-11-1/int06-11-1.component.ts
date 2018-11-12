@@ -51,7 +51,7 @@ export class Int06111Component implements OnInit {
       this.rentHouseForm.patchValue({
         name: obj.fullName,
         position: obj.title,
-        affiliation: obj.position
+        affiliation: "-"
       });
     });
     // this.titles = this.selfService.dropdown("TITLE", null);
