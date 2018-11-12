@@ -24,21 +24,21 @@
                     <div class="one wide field">
                         <label>ข้าพเจ้า</label>
                     </div>
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('name') }">
-                        <input type="text" class="custom-readonly disabled" formControlName="name">
+                    <div class="three wide field disabled" [ngClass]="{ 'error': validateField('name') }">
+                        <input type="text" class="custom-readonly" formControlName="name">
                     </div>
                     <div class="one wide field">
                         <label>ตำแหน่ง</label>
                     </div>
-                    <div class="four wide field" [ngClass]="{ 'error': validateField('position') }">
-                        <input type="text" class="custom-readonly disabled" formControlName="position">
+                    <div class="four wide field disabled" [ngClass]="{ 'error': validateField('position') }">
+                        <input type="text" class="custom-readonly" formControlName="position">
                     </div>
 
                     <div class="one wide field">
                         <label>สังกัด</label>
                     </div>
-                    <div class="four wide field" [ngClass]="{ 'error': validateField('affiliation') }">
-                        <input type="text" class="custom-readonly disabled" formControlName="affiliation">
+                    <div class="four wide field disabled" [ngClass]="{ 'error': validateField('affiliation') }">
+                        <input type="text" class="custom-readonly" formControlName="affiliation">
                     </div>
                 </div>
                 <br>
@@ -88,7 +88,7 @@
                 </div>
                 <div class="inline fields">
                     <div class="one wide field"></div>
-                    <div class="one wide field">
+                    <div class="two wide field">
                         <label>ประจำเดือน</label>
                     </div>
                     <div class="three wide field" [ngClass]="{ 'error': validateField('period') }">
@@ -124,21 +124,21 @@
 
                 <div class="inline fields">
                     <div class="one wide field"></div>
-                    <div class="two wide field">
+                    <div class="three wide field">
                         <label>ข้าพเจ้าได้รับเงินเดือน เดือนละ</label>
                     </div>
                     <div class="three wide field" [ngClass]="{ 'error': validateField('salary') }">
-                        <input type="text" formControlName="salary" (keypress)="typeNumber($event)">
+                        <input type="text" formControlName="salary" (keypress)="typeNumber($event)" (blur)="showSalary($event)">
                     </div>
                     <div class="one wide field">
                         <label class="full-width text-center">บาท</label>
                     </div>
-                    <div class="five wide field">
+                    <!-- <div class="five wide field">
                         <label class="full-width text-center">มีสิทธิได้รับค่าเช่าบ้านตามที่ได้รับอนุมัติในแบบขอรับค่าเช่าบ้าน (แบบ 6005) เลขที่</label>
                     </div>
                     <div class="two wide field" [ngClass]="{ 'error': validateField('requestNo') }">
                         <input type="text" formControlName="requestNo">
-                    </div>
+                    </div> -->
                     <!-- <div class="three wide field">
                         ( หนึ่งหมื่นสองพันบาทถ้วน )
                     </div> -->
@@ -146,16 +146,16 @@
 
                 <div class="inline fields">
                     <div class="one wide field"></div>
-                    <div class="one wide field">
+                    <div class="two wide field">
                         <label>ไม่เกินเดือนละ</label>
                     </div>
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('notOver') }">
-                        <input type="text" formControlName="notOver" (keypress)="typeNumber($event)">
+                    <div class="three wide field disabled" [ngClass]="{ 'error': validateField('notOver') }">
+                        <input type="text" class="custom-readonly" formControlName="notOver">
                     </div>
                     <div class="one wide field">
                         <label class="full-width text-center">บาท</label>
                     </div>
-                    <div class="three wide field">
+                    <div class="four wide field">
                         <label class="full-width text-center">ข้าพเจ้าขอเบิกเงินค่าเช่าบ้านประจำเดือน</label>
                     </div>
                     <div class="two wide field" [ngClass]="{ 'error': validateField('periodWithdraw') }">
@@ -169,11 +169,11 @@
                     <div class="one wide field">
                         <label class="full-width text-center">ถึง</label>
                     </div>
-                    <div class="two wide field" [ngClass]="{ 'error': validateField('periodWithdraw') }">
+                    <div class="two wide field" [ngClass]="{ 'error': validateField('periodWithdrawTo') }">
                         <div class="ui calendar" id="periodWithdrawCldto" style="width:100%;">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" placeholder="เดือน" formControlName="periodWithdraw" autocomplete="off" readonly="">
+                                <input type="text" placeholder="เดือน" formControlName="periodWithdrawTo" autocomplete="off" readonly="">
                             </div>
                         </div>
                     </div>
@@ -185,8 +185,8 @@
                     <div class="one wide field">
                         <label>รวม</label>
                     </div>
-                    <div class="two wide field" [ngClass]="{ 'error': validateField('totalMonth') }">
-                        <input type="text" formControlName="totalMonth" (keypress)="typeNumber($event)">
+                    <div class="two wide field disabled" [ngClass]="{ 'error': validateField('totalMonth') }">
+                        <input type="text" class="custom-readonly" formControlName="totalMonth">
                     </div>
                     <div class="one wide field">
                         <label class="full-width text-center">เดือน</label>
@@ -194,13 +194,13 @@
                     <div class="one wide field">
                         <label class="full-width text-right">เป็นเงิน</label>
                     </div>
-                    <div class="two wide field" [ngClass]="{ 'error': validateField('totalWithdraw') }">
-                        <input type="text" formControlName="totalWithdraw" (keypress)="typeNumber($event)">
+                    <div class="two wide field disabled" [ngClass]="{ 'error': validateField('totalWithdraw') }">
+                        <input type="text" class="custom-readonly" formControlName="totalWithdraw">
                     </div>
                     <div class="one wide field">
                         <label class="full-width text-center">บาท</label>
                     </div>
-                    <div class="three wide field">
+                    <div class="four wide field">
                         <label>พร้อมนี้ข้าพเจ้าได้แนบใบเสร็จรับเงินจำนวน</label>
                     </div>
                     <div class="one wide field" [ngClass]="{ 'error': validateField('receipts') }">

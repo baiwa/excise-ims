@@ -9,6 +9,7 @@ import { ComboBox } from "models/combobox";
 import { TextDateTH, formatter } from "helpers/datepicker";
 import { Utils } from "helpers/utils";
 import { BreadCrumb } from "models/breadcrumb";
+import * as moment from "moment";
 
 declare var $: any;
 @Component({
@@ -26,6 +27,7 @@ export class Int06111Component implements OnInit {
   loadingUL: boolean = false;
   tableUpload: any = [];
   flgOnLoad: boolean = true;
+  monthStart: any;
 
   constructor(
     private selfService: Int061101Service,
@@ -49,7 +51,7 @@ export class Int06111Component implements OnInit {
       this.rentHouseForm.patchValue({
         name: obj.fullName,
         position: obj.title,
-        affiliation: "-"
+        affiliation: obj.position
       });
     });
     // this.titles = this.selfService.dropdown("TITLE", null);
@@ -68,9 +70,10 @@ export class Int06111Component implements OnInit {
       refReceipts: ["", Validators.required],
       billAmount: ["", Validators.required],
       salary: ["", Validators.required],
-      requestNo: ["", Validators.required],
+      // requestNo: ["", Validators.required],
       notOver: ["", Validators.required],
       periodWithdraw: ["", Validators.required],
+      periodWithdrawTo: ["", Validators.required],
       totalMonth: ["", Validators.required],
       totalWithdraw: ["", Validators.required],
       receipts: ["", Validators.required]
@@ -89,22 +92,37 @@ export class Int06111Component implements OnInit {
     });
 
     $("#periodWithdrawCldform").calendar({
-      minDate: new Date(),
+      // minDate: new Date(),
+      endCalendar: $("#periodWithdrawCldto"),
       type: "month",
       text: TextDateTH,
       formatter: formatter("monthOnly"),
       onChange: (date, ddmmyyyy) => {
-        this.rentHouseForm.patchValue({ periodWithdraw: ddmmyyyy });
+        this.monthStart = date;
+        this.rentHouseForm.patchValue({
+          periodWithdraw: ddmmyyyy
+        });
       }
     });
 
     $("#periodWithdrawCldto").calendar({
-      minDate: new Date(),
+      // minDate: new Date(),
+      startCalendar: $("#periodWithdrawCldform"),
       type: "month",
       text: TextDateTH,
       formatter: formatter("monthOnly"),
       onChange: (date, ddmmyyyy) => {
-        this.rentHouseForm.patchValue({ periodWithdraw: ddmmyyyy });
+        let amountMonth =
+          Math.round(moment(date).diff(this.monthStart, "months", true)) + 1;
+        this.rentHouseForm.get("totalMonth").setValue(amountMonth);
+        this.rentHouseForm.patchValue({
+          periodWithdrawTo: ddmmyyyy
+        });
+
+        //sum totalWithdraw
+        let salary = this.rentHouseForm.get("salary").value;
+        // let totalMonth = this.rentHouseForm.get("totalMonth").value;
+        this.rentHouseForm.get("totalWithdraw").setValue(salary * amountMonth);
       }
     });
   };
@@ -122,13 +140,13 @@ export class Int06111Component implements OnInit {
     e.preventDefault();
     this.msg.comfirm(confirm => {
       if (confirm) {
-        this.loadingUL = true;
         this.submitted = true;
         // stop here if form is invalid
         if (this.rentHouseForm.invalid) {
           this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ");
           return;
         }
+        this.loadingUL = true;
         this.selfService.save(this.rentHouseForm.value, this.cbLoading);
       }
     }, "ยืนยันการบันทึกข้อมูล");
@@ -159,5 +177,9 @@ export class Int06111Component implements OnInit {
     setTimeout(() => {
       this.loadingUL = false;
     }, 300);
+  }
+
+  showSalary(e) {
+    this.rentHouseForm.get("notOver").setValue(e.target.value);
   }
 }

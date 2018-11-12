@@ -48,6 +48,7 @@ public class Int061101Service {
 		data.setTotalMonth(en.getTotalMonth());
 		data.setTotalWithdraw(en.getTotalWithdraw());
 		data.setStatus(ExciseConstants.IA.STATUS.PROCESS);
+		data.setPeriodWithdrawTo(en.getPeriodWithdrawTo());
 
 		return rentHouseRepository.save(data);
 	}
