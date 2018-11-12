@@ -51,6 +51,9 @@ public class RentHouse extends BaseEntity {
 
 	@Column(name = "PERIOD_WITHDRAW")
 	private String periodWithdraw;
+	
+	@Column(name = "PERIOD_WITHDRAW_TO")
+	private String periodWithdrawTo;
 
 	@Column(name = "\"POSITION\"")
 	private String position;
@@ -208,6 +211,14 @@ public class RentHouse extends BaseEntity {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getPeriodWithdrawTo() {
+		return periodWithdrawTo;
+	}
+
+	public void setPeriodWithdrawTo(String periodWithdrawTo) {
+		this.periodWithdrawTo = periodWithdrawTo;
 	}
 
 }

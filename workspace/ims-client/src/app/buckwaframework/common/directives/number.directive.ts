@@ -3,6 +3,8 @@ import { Directive, Input, ElementRef, HostListener } from '@angular/core';
 @Directive({ selector: '[numberOnly]' })
 export class NumberDirective {
 
+    @Input() dash: boolean = false;
+
     constructor(private el: ElementRef) {
         console.log('numberOnly');
     }
@@ -20,6 +22,9 @@ export class NumberDirective {
             key = String.fromCharCode(key);
         }
         let regex = /[0-9]|\./;
+        if (this.dash == true) {
+            regex = /[0-9-]|\./;
+        }
         if (!regex.test(key)) {
             theEvent.returnValue = false;
             if (theEvent.preventDefault) theEvent.preventDefault();

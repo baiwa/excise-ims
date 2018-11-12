@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { Int0691Service } from "projects/internal-audit/int06/int06-9/int06-9-1/int06-9-1.service";
 import { BreadCrumb } from "models/breadcrumb";
-import { NgForm, FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { ComboBox } from "models/combobox";
 import { TextDateTH, formatter } from "helpers/datepicker";
 import { ActivatedRoute } from "@angular/router";
-import { async } from "@angular/core/testing";
 import { AuthService } from "../../../../../common/services";
 import { Utils } from "helpers/utils";
 
@@ -149,6 +148,7 @@ export class Int0691Component implements OnInit {
       } else {
         //form is valid
         this.selfService.addData(this.transferForm.value, this.flag);
+        this.transferForm.reset();
       }
     } else {
       if (this.transferForm.invalid) {
@@ -159,6 +159,7 @@ export class Int0691Component implements OnInit {
         this.flag,
         this.transferId
       );
+      this.transferForm.reset();
     }
   }
 

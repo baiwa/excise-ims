@@ -23,7 +23,8 @@
                             <label class="custom-label-w-25 text-right">เลขที่</label>
                         </div>
                         <div class="three wide field " [ngClass]="{ 'error': submitted && f.refNum.errors }">
-                            <input type="text" (keypress)="typeNumber($event)" formControlName="refNum" autocomplete="off">
+                            <input type="text" numberOnly formControlName="refNum" autocomplete="off">
+                            <!-- numberOnly [dash]="true" -->
                         </div>
                         <div class="two wide field required text-right">
                             <label class="custom-label-w-25 text-right">วันที่เอกสาร</label>
@@ -32,7 +33,8 @@
                             <div class="ui calendar" id="calendar" style="width:100%">
                                 <div class="ui input left icon">
                                     <i class="calendar alter nate outline icon"></i>
-                                    <input type="text" placeholder="วว/ดด/ปปปป" formControlName="refDate" id="refDate" autocomplete="off" readonly="">
+                                    <input type="text" placeholder="วว/ดด/ปปปป" formControlName="refDate" id="refDate"
+                                        autocomplete="off" readonly="">
                                 </div>
                             </div>
                         </div>
@@ -76,7 +78,8 @@
                             <label class="custom-label-w-25 text-right">หมวด</label>
                         </div>
                         <div class="four wide field " [ngClass]="{ 'error': submitted && f.ctgBudget.errors }">
-                            <select class="ui search dropdown ai search" formControlName="ctgBudget" id="ctgBudget" (change)="ctgBudgetChange($event)">
+                            <select class="ui search dropdown ai search" formControlName="ctgBudget" id="ctgBudget"
+                                (change)="ctgBudgetChange($event)">
                                 <option value="">กรุณาเลือก</option>
                                 <option *ngFor="let data of combobox4" value="{{data.categoryId}}">{{data.categoryName}}</option>
                             </select>
@@ -111,7 +114,7 @@
                             <label>จำนวนเงิน</label>
                         </div>
                         <div class="four wide field " [ngClass]="{ 'error': submitted && f.amount.errors }">
-                            <input type="text" (keypress)="typeNumber($event)" formControlName="amount" id="amount" autocomplete="off">
+                            <input type="text" numberOnly formControlName="amount" id="amount" autocomplete="off">
                         </div>
                     </div>
 
@@ -137,11 +140,13 @@
 
                     <div class="ui center aligned grid">
                         <div class="four wide column">
-                            <button *ngIf="flag !== 'EDIT'" class="ui mini green button" (click)="checkStatus('SAVE')" type="submit">
+                            <button *ngIf="flag !== 'EDIT'" class="ui mini green button" (click)="checkStatus('SAVE')"
+                                type="submit">
                                 <i class="plus icon"></i>เพิ่ม
                             </button>
 
-                            <button *ngIf="flag === 'EDIT'" class="ui mini green button" (click)="checkStatus('EDIT')" type="submit">
+                            <button *ngIf="flag === 'EDIT'" class="ui mini green button" (click)="checkStatus('EDIT')"
+                                type="submit">
                                 <i class="plus icon"></i>เพิ่ม
                             </button>
 
@@ -156,7 +161,7 @@
 
         <div class="ui segment" id="int0621">
             <div>
-                <table id="datatable" class="ui small celled table striped selectable" style="width: 150%">
+                <table id="datatable" class="ui small celled table striped nowrap selectable" style="width: 100%">
                     <thead>
                         <tr style="text-align: center;">
                             <th rowspan="2">ลำดับที่</th>
@@ -183,12 +188,12 @@
             <br>
             <div class="ui center aligned grid">
                 <div class="sixteen wide column">
-                    <button class="ui mini primary button" (click)="onSave()"> 
-                            <i class="save icon"></i> บันทึก
-                        </button>
+                    <button class="ui mini primary button" (click)="onSave()">
+                        <i class="save icon"></i> บันทึก
+                    </button>
                     <button class="ui mini  button" (click)="hidedata()">
-                            <i class="close icon"></i> ยกเลิก
-                        </button>
+                        <i class="close icon"></i> ยกเลิก
+                    </button>
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@ import { Int0691Component } from "projects/internal-audit/int06/int06-9/int06-9-
 import { Int0692Component } from "./int06-9-2/int06-9-2.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BreadcrumbModule } from "../../../../common/components";
+import { DirectivesModule } from "app/buckwaframework/common/directives/directives.module";
 
 const routes: Routes = [
   { path: "", component: Int069Component, canActivate: [AuthGuard] },
@@ -22,7 +23,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     BreadcrumbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DirectivesModule
   ],
   declarations: [Int069Component, Int0691Component, Int0692Component],
   exports: [RouterModule]
