@@ -3,107 +3,111 @@
 <br>
 <!-- form search -->
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-  <span>ค้นหารายการขอเบิก </span>
+    <span>ค้นหารายการขอเบิก </span>
 </div>
 
 <div class="ui attached segment">
-  <form class="ui form">
-    <input type="hidden" id="searchFlag" name="searchFlag">
-    <!-- row 1 -->
-    <div class="inline fields">
-      <div class="three wide field">
-        <label class="text-right full-width">ประเภทงบประมาณ</label>
-      </div>
-      <div class="four wide field ">
-        <select name="budget" id="budget" class="ui ai dropdown  search full-width">
+    <form class="ui form">
+        <input type="hidden" id="searchFlag" name="searchFlag">
+        <!-- row 1 -->
+        <div class="inline fields">
+            <div class="three wide field">
+                <label class="text-right full-width">ประเภทงบประมาณ</label>
+            </div>
+            <div class="four wide field ">
+                <select name="budget" id="budget" class="ui ai dropdown  search full-width">
           <option value="">กรุณาเลือก</option>
           <option *ngFor="let item of budgetList" value="{{item.lovId}}">{{item.value1}}</option>
         </select>
-      </div>
-      <div class="two wide field">
-        <label class="text-right full-width">กิจกรรม</label>
-      </div>
-      <div class="four wide field ">
-        <select name="activity" id="activity" class="ui ai dropdown  search full-width">
+            </div>
+            <div class="two wide field">
+                <label class="text-right full-width">กิจกรรม</label>
+            </div>
+            <div class="four wide field ">
+                <select name="activity" id="activity" class="ui ai dropdown  search full-width">
           <option value="">กรุณาเลือก</option>
-          <option *ngFor="let item of activityList" value="{{item.lovId}}">{{item.value1}}</option>
+          <option *ngFor="let item of activityList" value="{{item.value1}}">{{item.value1}}</option>
         </select>
-      </div>
-    </div>
-    <!-- row 2 -->
-    <div class="inline fields">
-      <div class="three wide field">
-        <label class="text-right full-width">วันที่</label>
-      </div>
-      <div class="four wide field">
-        <div class="ui calendar" id="dateForm" style="width:100%">
-          <div class="ui input left icon">
-            <i class="calendar alter nate outline icon"></i>
-            <input type="text" placeholder="วว/ดด/ปปปป">
-          </div>
+            </div>
         </div>
-      </div>
-      <div class="two wide field">
-        <label class="text-right right full-width">ถึง</label>
-      </div>
-      <div class="four wide field">
-        <div class="ui calendar" id="dateTo" style="width:100%">
-          <div class="ui input left icon">
-            <i class="calendar alter nate outline icon"></i>
-            <input type="text" placeholder="วว/ดด/ปปปป">
-          </div>
+        <!-- row 2 -->
+        <div class="inline fields">
+            <div class="three wide field">
+                <label class="text-right full-width">วันที่</label>
+            </div>
+            <div class="four wide field">
+                <div class="ui calendar" id="dateForm" style="width:100%">
+                    <div class="ui input left icon">
+                        <i class="calendar alter nate outline icon"></i>
+                        <input type="text" placeholder="วว/ดด/ปปปป">
+                    </div>
+                </div>
+            </div>
+            <div class="two wide field">
+                <label class="text-right right full-width">ถึง</label>
+            </div>
+            <div class="four wide field">
+                <div class="ui calendar" id="dateTo" style="width:100%">
+                    <div class="ui input left icon">
+                        <i class="calendar alter nate outline icon"></i>
+                        <input type="text" placeholder="วว/ดด/ปปปป">
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <!-- row 3 -->
-    <div class="ui center aligned grid">
-      <div class="six wide column">
-        <button class="ui mini primary button" type="button" (click)="onSearch()">
+        <!-- row 3 -->
+        <div class="ui center aligned grid">
+            <div class="six wide column">
+                <button class="ui mini primary button" type="button" (click)="onSearch()">
           <i class="search icon"></i> ค้นหา </button>
-        <button class="ui mini button" type="button" (click)="onClear()">
+                <button class="ui mini button" type="reset" (click)="onClear()">
           <i class="refresh  icon"></i> ล้างข้อมูล </button>
-        <!-- <button class="ui primary  mini button"  [routerLink]="[ '/int06/10/2'] ">
+                <!-- <button class="ui primary  mini button"  [routerLink]="[ '/int06/10/2'] ">
             <i class="list ul icon"></i> รายการใบเบิก </button> -->
-        <button class="ui green mini button" [routerLink]="[ '/int06/10/1'] ">
+                <button class="ui green mini button" [routerLink]="[ '/int06/10/1'] ">
           <i class="add icon"></i> เพิ่มข้อมูล </button>
-      </div>
-    </div>
-  </form>
+            </div>
+        </div>
+    </form>
 </div>
 
+<br>
 <!-- form search -->
-<div class="ui segment">
-  <!-- <div class="ui segment" id="int0610">
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>ผลการค้นหารายการขอเบิก </span>
+</div>
+<div class="ui attached segment">
+    <!-- <div class="ui segment" id="int0610">
         <div style="overflow-x: scroll;"> -->
-  <div class="ui grid">
-    <div class="sixteen wide column">
-      <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%">
-        <thead>
-          <tr>
-            <th style="text-align: center !important">ลำดับที่</th>
-            <th style="text-align: center !important">เลขที่เอกสารอ้างอิง</th>
-            <th style="text-align: center !important">วันที่ขอเบิก</th>
-            <th style="text-align: center !important">ประเภทงบประมาณ</th>
-            <th style="text-align: center !important">กิจกรรม</th>
-            <th style="text-align: center !important">งบ</th>
-            <th style="text-align: center !important">หมวด</th>
-            <th style="text-align: center !important">หมวดย่อย</th>
-            <th style="text-align: center !important">รายการ</th>
-            <th style="text-align: center !important">จำนวนเงินขอเบิก</th>
-            <th style="text-align: center !important">ภาษีหัก ณ ที่จ่าย</th>
-            <th style="text-align: center !important">หักประกันสังคม</th>
-            <th style="text-align: center !important">อื่นๆ</th>
-            <th style="text-align: center !important">จำนวนเงินขอรับ</th>
-            <th style="text-align: center !important">เลขที่เอกสารขอเบิก</th>
-            <th style="text-align: center !important">เลขที่เอกสารขอจ่าย</th>
-            <th style="text-align: center !important">หมายเหตุ</th>
-            <th style="text-align: center !important">จัดการ</th>
-          </tr>
-        </thead>
-      </table>
+    <div class="ui grid">
+        <div class="sixteen wide column">
+            <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th style="text-align: center !important">ลำดับที่</th>
+                        <th style="text-align: center !important">เลขที่เอกสารอ้างอิง</th>
+                        <th style="text-align: center !important">วันที่ขอเบิก</th>
+                        <th style="text-align: center !important">ประเภทงบประมาณ</th>
+                        <th style="text-align: center !important">กิจกรรม</th>
+                        <th style="text-align: center !important">งบ</th>
+                        <th style="text-align: center !important">หมวด</th>
+                        <th style="text-align: center !important">หมวดย่อย</th>
+                        <th style="text-align: center !important">รายการ</th>
+                        <th style="text-align: center !important">จำนวนเงินขอเบิก</th>
+                        <th style="text-align: center !important">ภาษีหัก ณ ที่จ่าย</th>
+                        <th style="text-align: center !important">หักประกันสังคม</th>
+                        <th style="text-align: center !important">อื่นๆ</th>
+                        <th style="text-align: center !important">จำนวนเงินขอรับ</th>
+                        <th style="text-align: center !important">เลขที่เอกสารขอเบิก</th>
+                        <th style="text-align: center !important">เลขที่เอกสารขอจ่าย</th>
+                        <th style="text-align: center !important">หมายเหตุ</th>
+                        <th style="text-align: center !important">จัดการ</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="sixteen wide center aligned column">
+            <button class="ui mini yellow button"><i class="print icon"></i> ส่งออก</button>
+        </div>
     </div>
-    <div class="sixteen wide center aligned column">
-      <button class="ui mini yellow button"><i class="print icon"></i> ส่งออก</button>
-    </div>
-  </div>
 </div>

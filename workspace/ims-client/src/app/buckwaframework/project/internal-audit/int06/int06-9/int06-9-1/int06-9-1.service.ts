@@ -100,7 +100,7 @@ export class Int0691Service {
     });
   };
 
-  addData = (transferForm, flag: string, id?: number) => {
+  addData = (transferForm, flag: string, id?: number, cb?: Function) => {
     let dataFilter = this.budgetData.filter(
       obj => obj.listId == transferForm.subCtgBudget
     );
@@ -121,8 +121,8 @@ export class Int0691Service {
     data.transferList = transferForm.transferList;
 
     if (flag === "SAVE") {
-      $("#int0621").show();
       this.showDatatable.push(data);
+      cb(this.showDatatable);
       this.DATATABLE();
     } else {
       data.transferId = id;
@@ -155,7 +155,6 @@ export class Int0691Service {
   };
 
   clearData() {
-    $("#int0621").hide();
     this.showDatatable = [];
     this.router.navigate(["int06/9"], {
       queryParams: {}

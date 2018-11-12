@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.dao.BudgetListDao;
 import th.co.baiwa.excise.ia.persistence.entity.BudgetList;
@@ -44,7 +45,7 @@ public class Int0691Service {
 
 	public void saveTable(List<TransferList> entity) {
 		String officeId = UserLoginUtils.getCurrentUserBean().getOfficeId();
-		Lov lov = lovRepository.findBySubType(officeId);
+		Lov lov = ApplicationCache.getListOfValueByValueType("SECTOR_LIST", officeId).get(0);
 		for (TransferList t : entity) {
 			t.setRefDate(DateConstant.convertStrDDMMYYYYToDate(t.getRefDateStr()));
 			t.setOfficeCode(officeId);

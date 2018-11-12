@@ -33,6 +33,7 @@ export class Int0691Component implements OnInit {
   submitted = false;
   budgetData: any = [];
   loading: boolean = true;
+  checkTable: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,13 +47,6 @@ export class Int0691Component implements OnInit {
       // { label: "ทะเบียนคุมการรับจ่ายเงิน", route: "#" },
       { label: "บันทึกข้อมูลรับโอนเงิน", route: "#" }
     ];
-  }
-
-  ngAfterViewInit() {
-    $("#int0621").hide();
-    $(".ui.dropdown.ai")
-      .dropdown()
-      .css("width", "100%");
   }
 
   ngOnInit() {
@@ -94,6 +88,16 @@ export class Int0691Component implements OnInit {
         this.transferForm.patchValue({ refDate: b });
       }
     });
+  }
+
+  ngAfterViewInit() {
+    this.selfService.DATATABLE();
+    $(".ui.dropdown.ai")
+      .dropdown()
+      .css("width", "100%");
+    if (this.flag === "EDIT") {
+      $("#tableSave").hide();
+    }
   }
 
   onFlagEDIT() {
@@ -147,8 +151,16 @@ export class Int0691Component implements OnInit {
         return;
       } else {
         //form is valid
-        this.selfService.addData(this.transferForm.value, this.flag);
-        this.transferForm.reset();
+        this.selfService.addData(
+          this.transferForm.value,
+          this.flag,
+          null,
+          this.cbTable
+        );
+        // this.transferForm.reset();
+        // this.transferForm.markAsPristine();
+        // this.transferForm.markAsUntouched();
+        // this.transferForm.updateValueAndValidity();
       }
     } else {
       if (this.transferForm.invalid) {
@@ -159,7 +171,7 @@ export class Int0691Component implements OnInit {
         this.flag,
         this.transferId
       );
-      this.transferForm.reset();
+      // this.transferForm.reset();
     }
   }
 
@@ -222,6 +234,7 @@ export class Int0691Component implements OnInit {
   }
 
   hidedata() {
+    this.checkTable = [];
     this.selfService.clearData();
   }
 
@@ -242,4 +255,8 @@ export class Int0691Component implements OnInit {
       this.combobox5 = value;
     });
   }
+
+  cbTable = list => {
+    this.checkTable = list;
+  };
 }
