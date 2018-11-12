@@ -28,7 +28,7 @@ export class Int0610Component implements OnInit, AfterViewInit {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-      { label: "ทะเบียนคุมการรับจ่ายเงิน", route: "#" },
+      // { label: "ทะเบียนคุมการรับจ่ายเงิน", route: "#" },
       { label: "ค้นหารายการขอเบิก", route: "#" },
     ];
   }

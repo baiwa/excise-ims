@@ -37,7 +37,7 @@ export class Int069Component implements OnInit {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-      { label: "ทะเบียนคุมการรับจ่ายเงิน", route: "#" },
+      // { label: "ทะเบียนคุมการรับจ่ายเงิน", route: "#" },
       { label: "บันทึกข้อมูลรับโอนเงิน", route: "#" }
     ];
   }
