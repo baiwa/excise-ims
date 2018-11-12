@@ -10,7 +10,7 @@ import { AjaxService } from "services/ajax.service";
 
 declare var $: any;
 const URL = {
-  export:"/ia/int065/exportFile"
+  export: "/ia/int065/exportFile"
 }
 @Component({
   selector: "app-int06-5",
@@ -39,8 +39,9 @@ export class Int065Component implements OnInit, AfterViewInit {
   branchList: any;
   budgetTypeList: any;
   dataInTable: any = [];
+  dataTableV: any;
 
-  constructor(private int065Service: Int065Service,private authService: AuthService, private ajax: AjaxService,) {
+  constructor(private int065Service: Int065Service, private authService: AuthService, private ajax: AjaxService, ) {
   }
 
   ngAfterViewInit() {
@@ -53,7 +54,7 @@ export class Int065Component implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-   
+
   }
 
   sector = () => {
@@ -61,6 +62,7 @@ export class Int065Component implements OnInit, AfterViewInit {
       this.sectorList = res;
     });
   }
+
   area = (e) => {
     $("#area").dropdown('restore defaults');
     $("#branch").dropdown('restore defaults');
@@ -72,6 +74,7 @@ export class Int065Component implements OnInit, AfterViewInit {
       });
     }
   }
+
   branch = (e) => {
     this.branchList = null
     $("#branch").dropdown('restore defaults');
@@ -83,7 +86,7 @@ export class Int065Component implements OnInit, AfterViewInit {
   }
 
   budgetType = () => {
-    this.int065Service.budgetType().then((res)=>{
+    this.int065Service.budgetType().then((res) => {
       this.budgetTypeList = res;
     });
   }
@@ -91,42 +94,22 @@ export class Int065Component implements OnInit, AfterViewInit {
   search = () => {
     $("#searchFlag").val("TRUE");
     this.int065Service.search();
-    // let promise1 = new Promise((resolve, reject) => {
-    //   this.int065Service.search();
-    //   resolve();
-    // });
-
-    // promise1.then(() => {
-    //   console.log('resove success');
-    //   setTimeout(() => {
-    //     this.dataInTable = $('#dataTable').DataTableTh().data();
-    //   console.log( this.dataInTable);
-    //   console.log(this.dataInTable.length);
-    //   }, 500);
-      
-    // });
+    setTimeout(() => {
+      this.dataInTable = this.int065Service.getTable().data();
+      // console.log(this.dataInTable);
+      // console.log(this.dataInTable.length);
+    }, 500);
   }
   clear = () => {
     this.int065Service.clear();
   }
 
-  exportFile=()=>{
+  exportFile = () => {
     this.int065Service.exportFile();
   }
 
-
-   dataTable = () => {
-   // let promise1 = new Promise((resolve, reject) => {
-      this.int065Service.dataTable();
-    //  resolve();
-   // });
-
-    // promise1.then(() => {
-    //   this.dataInTable = $('#dataTable').DataTableTh().data();
-    // });
-    
-     
-     
+  dataTable = () => {
+    this.int065Service.dataTable();
   }
 
   calenda = () => {

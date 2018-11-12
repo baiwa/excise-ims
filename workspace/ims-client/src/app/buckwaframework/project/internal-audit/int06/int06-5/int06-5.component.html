@@ -1,7 +1,7 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <div class="ui grid">
     <div class="sixteen wide column">
-        
+
         <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
             <span>ค้นหารายการคุมเช็ค</span>
         </div>
@@ -46,7 +46,7 @@
                         <label class="text-right full-width">ประเภทงบประมาณ</label>
                     </div>
                     <div class="four wide field ">
-                        <select name="budgetType" id="budgetType" class="ui dropdown ai search full-width office" >
+                        <select name="budgetType" id="budgetType" class="ui dropdown ai search full-width office">
                             <option value="">กรุณาเลือก</option>
                             <option *ngFor="let item of budgetTypeList" value="{{item.value1}}">{{item.value1}}</option>
                         </select>
@@ -98,22 +98,22 @@
             <tr>
                 <th style="text-align: center !important">ลำดับที่</th>
                 <th style="text-align: center !important">วันที่สั่งจ่าย</th>
-                <th style="text-align: center !important">เช็คเล่มที่</th>                      
-                <th style="text-align: center !important">ชื่อธนาคาร</th>     
+                <th style="text-align: center !important">เช็คเล่มที่</th>
+                <th style="text-align: center !important">ชื่อธนาคาร</th>
                 <th style="text-align: center !important">จำนวนเงินสั่งจ่ายในเช็ค</th>
                 <th style="text-align: center !important">ประเภทงบประมาณ</th>
                 <th style="text-align: center !important">รายการ</th>
                 <th style="text-align: center !important">ผู้รับเงิน</th>
             </tr>
-        </thead>       
+        </thead>
     </table>
 
     <div class="ui grid">
-            <div class="sixteen wide center aligned column">
-                <button class="ui mini yellow button" (click)="exportFile()" [disabled]="dataInTable.length == 0">
-                        <i class="print icon"></i>
-                    ส่งออก</button>
-            </div>
+        <div class="sixteen wide center aligned column">
+            <button class="ui mini yellow button" (click)="exportFile()" [disabled]="dataInTable.length == 0">
+                <i class="print icon"></i>ส่งออก
+            </button>
         </div>
+    </div>
 
 </div>
