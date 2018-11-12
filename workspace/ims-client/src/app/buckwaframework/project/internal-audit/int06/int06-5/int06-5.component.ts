@@ -23,7 +23,7 @@ export class Int065Component implements OnInit, AfterViewInit {
   breadcrumb: BreadCrumb[] = [
     { label: "ตรวจสอบภายใน", route: "#" },
     { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-    { label: "ทะเบียนคุมการรับจ่ายเงิน", route: "#" },
+    // { label: "ทะเบียนคุมการรับจ่ายเงิน", route: "#" },
     { label: "ค้นหารายการคุมเช็ค", route: "#" }
   ];
   form: FormSearch = new FormSearch();
