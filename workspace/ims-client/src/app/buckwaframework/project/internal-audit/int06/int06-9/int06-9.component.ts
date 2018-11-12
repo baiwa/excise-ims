@@ -100,4 +100,15 @@ export class Int069Component implements OnInit {
   closePopupEdit() {
     $("#int0699").modal("hide");
   }
+
+  // export
+  export =()=>{
+    let dataSum = this.selfService.getDataExcel();
+    console.log(dataSum);
+    let formExcel = $("#form-data-excel").get(0);                      
+    formExcel.action = AjaxService.CONTEXT_PATH + "ia/int069/export";
+    formExcel.dataJson.value = JSON.stringify({voList : dataSum});		
+    formExcel.submit();
+  }
+
 }

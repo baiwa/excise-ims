@@ -67,12 +67,12 @@ export class Int069Service {
       },
       columns: [
         {},
-        { data: "mofNum" },
-        { data: "refNum" },
-        { data: "refDateStr" },
+        { data: "mofNum", className: "center aligned" },
+        { data: "refNum" , className: "center aligned"},
+        { data: "refDateStr" , className: "center aligned"},
         { data: "transferList" },
         { data: "budgetType" },
-        { data: "budgetCode" },
+        { data: "budgetCode" , className: "center aligned"},
         { data: "activities" },
         { data: "budget" },
         { data: "ctgBudget" },
@@ -97,7 +97,7 @@ export class Int069Service {
       ],
       columnDefs: [
         {
-          targets: [0, 14],
+          targets: [0,14],
           className: "center aligned",
 
           render: function(data, type, row, meta) {
@@ -128,7 +128,20 @@ export class Int069Service {
 
           this.DATATABLE();
         });
+
       }
     });
   }
+
+  // getDataExcel
+  getDataExcel(){
+    let dataList = this.datatable.data();   
+    let dataArray = [];
+   for(let i=0;i<dataList.length;i++){
+       dataArray.push(dataList[i]);
+   }
+   return dataArray
+}
+
+
 }
