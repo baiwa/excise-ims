@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Utils } from 'helpers/utils';
 declare var $: any;
 @Injectable()
-export class Ope0422Service {
+export class Ope0432Service {
 //==> params
 table: any;
 constructor() { }
@@ -15,7 +15,7 @@ datatable = (id : any) => {
         "searching": true,
         "paging": true,
         "ajax": {
-            "url": '/ims-webapp/api/ta/opo0421/findDetails',
+            "url": '/ims-webapp/api/ta/opo0431/findDetails',
             "contentType": "application/json",
             "type": "POST",
             "data": (d) => {
@@ -35,7 +35,7 @@ datatable = (id : any) => {
                 "className": "ui center aligned"
             },{
                 "data": "order",
-                "className": "ui left aligned"
+                "className": "ui center aligned"
             },{
                 "data": "taxInv",
                 "className": "ui right aligned",
@@ -74,7 +74,7 @@ datatable = (id : any) => {
                         return '<span class="r-mark-tr">' + Utils.moneyFormatInt(data) + '</span>';
 
                     }
-                    return '<span class="g-mark-tr">' + Utils.moneyFormatInt(data) + '</span>'; 
+                    return '<span class="g-mark-tr">' + Utils.moneyFormatInt(data) + '</span>';                    
                 }
             }
         ],

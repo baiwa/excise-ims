@@ -17,7 +17,7 @@ export class ReceiveLineUserComponent implements OnInit {
   breadcrumb: BreadCrumb[] = [
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การคัดเลือกราย', route: '#' },
-    { label: 'รับกระดาษทำการคัดเลือกลาย', route: '#' },
+    { label: 'รับกระดาษทำการคัดเลือกราย', route: '#' },
   ]
   sendLineUser: any;
   listItem: any[];

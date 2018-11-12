@@ -25,10 +25,10 @@ public class TuitionFeeChild extends BaseEntity {
 	@SequenceGenerator(name = "IA_TUITION_FEE_CHILD_GEN", sequenceName = "IA_TUITION_FEE_CHILD_SEQ", allocationSize = 1)
 
 	@Column(name = "ID")
-	private Long id;
+	private BigDecimal id;
 
 	@Column(name = "IA_TUITION_FEE_ID")
-	private Long iaTuitionFeeId;
+	private BigDecimal iaTuitionFeeId;
 
 	@Column(name = "NAME")
 	private String name;
@@ -69,19 +69,19 @@ public class TuitionFeeChild extends BaseEntity {
 	@Column(name = "AMOUNT")
 	private BigDecimal amount;
 
-	public Long getId() {
+	public BigDecimal getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(BigDecimal id) {
 		this.id = id;
 	}
 
-	public Long getIaTuitionFeeId() {
+	public BigDecimal getIaTuitionFeeId() {
 		return iaTuitionFeeId;
 	}
 
-	public void setIaTuitionFeeId(Long iaTuitionFeeId) {
+	public void setIaTuitionFeeId(BigDecimal iaTuitionFeeId) {
 		this.iaTuitionFeeId = iaTuitionFeeId;
 	}
 

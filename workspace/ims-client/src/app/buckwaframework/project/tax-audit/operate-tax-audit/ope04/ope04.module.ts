@@ -27,9 +27,8 @@ import { Ope0432Component } from './ope04-3/ope04-3-2/ope04-3-2.component';
 import { Ope0451Component } from './ope04-5/ope04-5-1/ope04-5-1.component';
 import { Ope0452Component } from './ope04-5/ope04-5-2/ope04-5-2.component';
 import { Ope0442Component } from "./ope04-4/ope04-4-2/ope04-4-2.component";
-
-
-
+import { Ope04011Component } from "./ope04-011/ope04-011.component";
+import { DirectivesModule } from "app/buckwaframework/common/directives/directives.module";
 
 const routes: Routes = [
   { path: "1", component: Ope041Component, canActivate: [AuthGuard] },
@@ -53,7 +52,9 @@ const routes: Routes = [
   { path: "7", component: Ope047Component, canActivate: [AuthGuard] },
   { path: "8", component: Ope048Component, canActivate: [AuthGuard] },
   { path: "9", component: Ope049Component, canActivate: [AuthGuard] },
-  { path: "10", component: Ope0410Component, canActivate: [AuthGuard] }
+  { path: "10", component: Ope0410Component, canActivate: [AuthGuard] },
+  { path: "10", component: Ope0411Component, canActivate: [AuthGuard] },
+  { path: "11", component: Ope04011Component, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -61,7 +62,8 @@ const routes: Routes = [
     RouterModule.forChild(routes), CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    DirectivesModule
     ],
   declarations: [
     Ope041Component,
@@ -85,7 +87,8 @@ const routes: Routes = [
     Ope0431Component,
     Ope0432Component,
     Ope0451Component,
-    Ope0452Component
+    Ope0452Component,
+    Ope04011Component
   ],
   exports: [RouterModule]
 })

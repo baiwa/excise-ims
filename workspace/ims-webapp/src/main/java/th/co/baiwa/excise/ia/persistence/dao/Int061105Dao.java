@@ -3,6 +3,7 @@ package th.co.baiwa.excise.ia.persistence.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.ia.persistence.entity.DisbursementRequest;
 import th.co.baiwa.excise.ia.persistence.entity.HealthCareWelFareEntity;
 import th.co.baiwa.excise.ia.persistence.entity.RentHouse;
 import th.co.baiwa.excise.ia.persistence.entity.TuitionFee;
 import th.co.baiwa.excise.ia.persistence.vo.Int061102FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int061105FormSearchVo;
+import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetDetail;
 
 @Repository
 public class Int061105Dao {
@@ -25,9 +29,9 @@ public class Int061105Dao {
 
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(" SELECT * FROM IA_RENT_HOUSE R ");
-		sql.append(" where R.STATUS = ? ");
-		valueList.add(ids.getStatus());
-		sql.append(" and R.IS_DELETED = 'N' ");
+//		sql.append(" where R.STATUS = ? ");
+//		valueList.add(ids.getStatus());
+		sql.append(" WHERE R.IS_DELETED = 'N' ");
 
 		List<RentHouse> dataList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingRentHouse);
 		return dataList;
@@ -42,7 +46,8 @@ public class Int061105Dao {
 			en.setPosition(rs.getString("POSITION"));
 			en.setAffiliation(rs.getString("AFFILIATION"));
 			en.setCreatedDate(rs.getDate("CREATED_DATE"));
-			en.setTotalWithdraw(rs.getBigDecimal("TOTAL_WITHDRAW"));		
+			en.setTotalWithdraw(rs.getBigDecimal("TOTAL_WITHDRAW"));	
+			en.setStatus(rs.getString("STATUS"));
 			return en;
 		}
 	};
@@ -51,9 +56,9 @@ public class Int061105Dao {
 		
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(" SELECT * FROM IA_TUITION_FEE T ");
-		sql.append(" where T.STATUS = ? ");
-		valueList.add(ids.getStatus());
-		sql.append(" and T.IS_DELETED = 'N' ");
+//		sql.append(" where T.STATUS = ? ");
+//		valueList.add(ids.getStatus());
+		sql.append(" WHERE T.IS_DELETED = 'N' ");
 		
 		List<TuitionFee> dataList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingTuitionFee);
 		return dataList;
@@ -63,12 +68,13 @@ public class Int061105Dao {
 		@Override
 		public TuitionFee mapRow(ResultSet rs, int arg1) throws SQLException {
 			TuitionFee en = new TuitionFee();
-			en.setId(rs.getLong("ID"));
+			en.setId(rs.getBigDecimal("ID"));
 			en.setCreatedBy(rs.getString("CREATED_BY"));
 			en.setPition(rs.getString("PITION"));
 			en.setBelong(rs.getString("BELONG"));
 			en.setCreatedDate(rs.getDate("CREATED_DATE"));
-			en.setSumAmount(rs.getBigDecimal("SUM_AMOUNT"));			
+			en.setSumAmount(rs.getBigDecimal("SUM_AMOUNT"));		
+			en.setStatusCheck(rs.getString("STATUS_CHECK"));
 			return en;
 		}
 	};
@@ -77,9 +83,9 @@ public class Int061105Dao {
 		
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(" SELECT * FROM IA_MEDICAL_WELFARE M ");
-		sql.append(" where M.STATUS = ? ");
-		valueList.add(ids.getStatus());
-		sql.append(" and M.IS_DELETED = 'N' ");
+//		sql.append(" where M.STATUS = ? ");
+//		valueList.add(ids.getStatus());
+		sql.append(" WHERE M.IS_DELETED = 'N' ");
 		
 		List<HealthCareWelFareEntity> dataList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingMedicalWelfare);
 		return dataList;
@@ -91,12 +97,49 @@ public class Int061105Dao {
 			HealthCareWelFareEntity en = new HealthCareWelFareEntity();
 			en.setId(rs.getBigDecimal("ID"));
 			en.setCreatedBy(rs.getString("CREATED_BY"));
-			en.setPosition(rs.getString("PITION"));
-			en.setAffiliation(rs.getString("BELONG"));
+			en.setPosition(rs.getString("POSITION"));
+			en.setAffiliation(rs.getString("AFFILIATION"));
 			en.setCreatedDate(rs.getDate("CREATED_DATE"));
-			en.setTotalMoney(rs.getString("SUM_AMOUNT"));			
+			en.setTotalMoney(rs.getString("TOTAL_MONEY"));		
+			en.setStatusCheck(rs.getString("STATUS_CHECK"));
 			return en;
 		}
 	};
+
+	public Long getNextval() {
+		List<Object> valueList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder(" SELECT IA_DISBURSEMENT_REQUEST_SEQ.NEXTVAL FROM DUAL ");
+		Long idSEQ = jdbcTemplate.queryForObject(sql.toString(), valueList.toArray(),Long.class);
+		return idSEQ;
+	}
+	
+	public void insertDisbursementRequest(DisbursementRequest en) {
+		StringBuilder sql = new StringBuilder(" Insert into IA_DISBURSEMENT_REQUEST (ID, BILL_LADING, POSITION , AFFILIATION, AMOUNT, STATUS, BILL_PAY, POSITION_PAY, AFFILIATION_PAY, AMOUNT_PAY, CREATED_DATE_PAY, CREATED_BY, CREATED_DATE, UPDATED_BY, UPDATED_DATE, IS_DELETED, VERSION, CREATED_BY_PAY, REQUEST_TYPE) "); 
+		sql.append(" values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
+
+		jdbcTemplate.update(sql.toString(), new Object[] {
+				en.getId(),
+				en.getBillLading(),
+				en.getPosition(),
+				en.getAffiliation(),
+				en.getAmount(),
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				en.getCreatedBy(),
+				DateConstant.convertStrDDMMYYYYToDate(en.getCreatedDateStr()),
+				null,
+				null,
+				"N",
+				1,
+				null,
+				en.getRequestType()
+		});
+	}
+
+
 
 }

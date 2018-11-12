@@ -1,0 +1,120 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">รายงานผลการตรวจสอบ</h2>
+
+    <div class="ui top attached header segment" style="background: #1e83db;color: white">
+      <span>ระบุรายละเอียด</span>
+    </div>
+    <div class="ui attached segment {{loading ? 'loading' : ''}}">
+      <form class="ui form" id="form" [formGroup]="formControl" (submit)="save()">
+        <!-- row 1 -->
+        <div class="inline fields  ui grid">
+          <div class="three wide field required">
+            <label class="text-right full-width">ทะเบียนสรรพสามิต</label>
+          </div>
+          <div class="four wide field" [ngClass]="{ 'error': submitted && f.exciseId.invalid }">
+            <select name="exciseId" id="exciseId" formControlName="exciseId" class="ui dropdown ai search full-width office"
+              (change)="findByExciseId($event)">
+              <option value="">กรุณาเลือก</option>
+              <option *ngFor="let item of exciseIdList" value="{{item.value}}">{{item.label}}</option>
+            </select>
+          </div>
+          <div class="three wide field ">
+
+          </div>
+          <div class="four wide field ">
+
+          </div>
+        </div>
+
+        <!-- row 2 -->
+        <div class="inline fields  ui grid">
+          <div class="three wide field ">
+            <label class="text-right full-width">ผู้ประกอบการ</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" class="custom-readonly"  formControlName="companyName" name="companyName" id="companyName" disabled>
+          </div>
+          <div class="three wide field ">
+            <label class="text-right full-width">เลขที่วิเคราะห์</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" class="custom-readonly"  formControlName="anlysisNumber" name="anlysisNumber" id="anlysisNumber" disabled>
+          </div>
+        </div>
+
+        <!-- row 3 -->
+        <div class="inline fields  ui grid">
+          <div class="three wide field ">
+            <label class="text-right full-width">ประเภท</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" class="custom-readonly"  formControlName="type" name="type" id="type" disabled>
+          </div>
+          <div class="three wide field ">
+            <label class="text-right full-width">พิกัด</label>
+          </div>
+          <div class="four wide field ">
+            <input type="text" class="custom-readonly"  formControlName="subtype" name="subtype" id="subtype" disabled>
+          </div>
+        </div>
+
+        <!-- row 4 -->
+        <div class="inline fields  ui grid">
+          <div class="three wide field required">
+            <label class="text-right full-width">ภาษีที่ต้องชำระเพิ่ม</label>
+          </div>
+          <div class="four wide field " [ngClass]="{ 'error': submitted && f.addedTax.invalid }">
+            <input type="text" formControlName="addedTax" name="addedTax" id="addedTax" numberOnly>
+          </div>
+          <div class="three wide field ">
+
+          </div>
+          <div class="four wide field ">
+
+          </div>
+        </div>
+
+        <!-- row 5 -->
+        <div class="inline fields  ui grid">
+          <div class="three wide field required">
+            <label class="text-right full-width">เบี้ยปรับ</label>
+          </div>
+          <div class="four wide field " [ngClass]="{ 'error': submitted && f.fine.invalid }">
+            <input type="text" formControlName="fine" name="fine" id="fine" numberOnly>
+          </div>
+          <div class="three wide field ">
+
+          </div>
+          <div class="four wide field ">
+
+          </div>
+        </div>
+        <!-- row 6 -->
+        <div class="inline fields  ui grid">
+          <div class="three wide field required">
+            <label class="text-right full-width">เงินเพิ่ม</label>
+          </div>
+          <div class="four wide field " [ngClass]="{ 'error': submitted && f.extraMoney.invalid }">
+            <input type="text" formControlName="extraMoney" name="extraMoney" id="extraMoney" numberOnly>
+          </div>
+          <div class="three wide field ">
+
+          </div>
+          <div class="four wide field ">
+
+          </div>
+        </div>
+        <br><br>
+        <div class="ui stackable center aligned page grid">
+          <button class="ui mini primary button" type="submit"><i class="file outline icon"></i>
+            บันทึก</button>
+          <button class="ui mini gray button" type="button" (click)="claer()"><i class="sync icon"></i>
+            ล้างข้อมูล</button>
+        </div><br>
+      </form>
+    </div>
+    <br>
+  </div>
+</div>

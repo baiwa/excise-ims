@@ -37,13 +37,13 @@ public class DisbursementRequest extends BaseEntity {
 	@Column(name = "AFFILIATION_PAY")
 	private String affiliationPay;
 
-	private BigDecimal amount;
+	private BigDecimal amount;  
 
 	@Column(name = "AMOUNT_PAY")
 	private BigDecimal amountPay;
 
 	@Column(name = "BILL_LADING")
-	private BigDecimal billLading;
+	private String billLading;
 
 	@Column(name = "BILL_PAY")
 	private String billPay;
@@ -60,8 +60,18 @@ public class DisbursementRequest extends BaseEntity {
 	@Column(name = "STATUS")
 	private String status;
 	
+	@Column(name = "CREATED_BY_PAY")
+	private String createdByPay;
+	
+	@Column(name = "REQUEST_TYPE")
+	private String requestType;
+	
+	
 	@Transient
 	private String createdDateStr;
+	
+	@Transient
+	private String createdDatePayStr;
 
 	public BigDecimal getId() {
 		return id;
@@ -103,11 +113,11 @@ public class DisbursementRequest extends BaseEntity {
 		this.amountPay = amountPay;
 	}
 
-	public BigDecimal getBillLading() {
+	public String getBillLading() {
 		return billLading;
 	}
 
-	public void setBillLading(BigDecimal billLading) {
+	public void setBillLading(String billLading) {
 		this.billLading = billLading;
 	}
 
@@ -158,5 +168,37 @@ public class DisbursementRequest extends BaseEntity {
 	public void setCreatedDateStr(String createdDateStr) {
 		this.createdDateStr = createdDateStr;
 	}
+
+	public String getCreatedByPay() {
+		return createdByPay;
+	}
+
+	public void setCreatedByPay(String createdByPay) {
+		this.createdByPay = createdByPay;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public String getRequestType() {
+		return requestType;
+	}
+
+	public void setRequestType(String requestType) {
+		this.requestType = requestType;
+	}
+
+	public String getCreatedDatePayStr() {
+		return createdDatePayStr;
+	}
+
+	public void setCreatedDatePayStr(String createdDatePayStr) {
+		this.createdDatePayStr = createdDatePayStr;
+	}
+	
+	
+	
+	
 
 }
