@@ -76,12 +76,12 @@
     <br>
   </div>
   <!-- add modal -->
-  <div class="ui large modal transition hidden" id='modalAdd'>
+  <div class="ui large modal  transition hidden" id='modalAdd'>
     <div class="header" style="text-align: center !important;background: #1e83db;color: white">
       ระบุรายละเอียดเดือน&nbsp; {{fiscalYearText}}
     </div>
 
-    <div class="scrolling content">
+    <div class="content">
       <form id="addModal-form" ngNativeValidate>
         <div class="ui form center aligned">
 
@@ -91,61 +91,59 @@
 
 
           <div class="inline fields">
-            <div class="two wide field"></div>
-            <div class="three wide field right aligned">
-              <label>สำนักงานสรรพสามิตภาค</label>
-            </div>
+            <div class="one wide field"></div>
             <div class="three wide field">
-              <select class="ui dropdown" id="#" name="#" autocomplete="off" style="width: 100%">
-                <option value="">กรุณาเลือก</option>
-                <!-- <option *ngFor="let data of entrepreneurNoList">{{data}}</option> -->
-              </select>
-            </div>
-
-            <div class="three wide field ui right aligned">
-              <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
-            </div>
-            <div class="three wide field">
-                <div class="ui input left icon">
-                  <select class="ui dropdown" id="#" name="#" autocomplete="off" style="width: 100%">
-                    <option value="">กรุณาเลือก</option>
-                    <!-- <option *ngFor="let data of entrepreneurNoList">{{data}}</option> -->
-                  </select>
-                </div>
-            </div>
-
+                <label>สำนักงานสรรพสามิตภาค</label>
+              </div>
+              <div class="four wide field">
+                <select class="ui dropdown ai search selection" style="width: 100%;" id="travelTo1Add" (change)="travelTo2AddDropdown($event)">
+                  <option value="">กรุณาเลือก</option>
+                  <option *ngFor="let data of travelTo1AddList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                </select>
+              </div>
+              <div class="three wide field">
+                <label>สำนักงานสรรพสามิตพื้นที่</label>
+              </div>
+              <div class="four wide field">
+                <select class="ui dropdown ai search selection" style="width: 100%;" id="travelTo2Add" (change)="setTravelToAdd($event)">
+                  <option value="">กรุณาเลือก</option>
+                  <option *ngFor="let data of travelTo2AddList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                </select>
+              </div>
           </div>
 
 
           <div class="inline fields">
-            <div class="two wide field"></div>
+            <div class="one wide field"></div>
             <div class="three wide field right aligned">
               <label>เลขที่ผู้ประกอบการ</label>
             </div>
-            <div class="three wide field">
-              <select class="ui dropdown" id="entrepreneurNo" name="entrepreneurNo" autocomplete="off" style="width: 100%">
+            <div class="four wide field">
+              <select class="ui dropdown ai search full-width office" id="entrepreneurNo" name="entrepreneurNo" autocomplete="off" style="width: 100%" (change)="changeExciseId($event)">
                 <option value="">กรุณาเลือก</option>
                 <option *ngFor="let data of entrepreneurNoList">{{data}}</option>
               </select>
             </div>
-
-            <div class="three wide field ui right aligned">
-              <label class="text-right full-width">ผู้ประกอบการ</label>
-            </div>
-            <div class="three wide field">
-              <div class="ui input left icon">
-                <input class="custom-readonly" type="text" id="#" readonly >
-              </div>
-            </div>
-
           </div>
+          <div class="inline fields">
+              <div class="one wide field"></div>
+              <div class="three wide field ui right aligned">
+                <label>ผู้ประกอบการ</label>
+              </div>
+              <div class="ten wide field">
+                <div class="ui input left icon">
+                  <input class="custom-readonly" type="text" id="exciseName" value="{{exciseName}}" readonly >
+                </div>
+              </div>
+  
+            </div>
 
           <div class="inline fields">
-            <div class="two wide field"></div>
+            <div class="one wide field"></div>
             <div class="three wide field right aligned">
               <label>วันที่ออกตรวจปฏิบัติการ</label>
             </div>
-            <div class="three wide field">
+            <div class="four wide field">
               <div class="ui calendar" id="modalDate1" style="width: 100%">
                 <div class="ui input left icon">
                   <i class="calendar alter nate outline icon"></i>
@@ -155,10 +153,10 @@
             </div>
 
             <div class="three wide field ui right aligned">
-              <label class="text-right full-width">แผนปฏิบัติการ</label>
+              <label>แผนปฏิบัติการ</label>
             </div>
-            <div class="three wide field">
-              <select class="ui dropdown" id="actionPlan" name="actionPlan" autocomplete="off" style="width: 100%">
+            <div class="four wide field">
+              <select class="ui dropdown ai" id="actionPlan" name="actionPlan" autocomplete="off" style="width: 100%">
                 <option value="">กรุณาเลือก</option>
                 <option *ngFor="let data of actionPlanList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
               </select>

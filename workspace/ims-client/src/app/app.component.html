@@ -153,6 +153,8 @@
                         </div>
                     </div> -->
                     <a class="item " [routerLink]="[ '/int06/11'] " *ngIf="authService.renderByPage('int06/11')" routerLinkActive="active"> บันทึกคำขอเบิก</a>
+                    <a class="item " [routerLink]="[ '/int06/11/5'] " *ngIf="authService.renderByPage('int06/11/5')" routerLinkActive="active"> สร้างใบขอเบิก</a>
+                    <a class="item " [routerLink]="[ '/int06/11/6'] " *ngIf="authService.renderByPage('int06/11/6')" routerLinkActive="active"> ติดตามผลขอเบิก ขอจ่าย</a>
                     <a class="item " [routerLink]="[ '/int06/9'] " *ngIf="authService.renderByPage('int06/9')" routerLinkActive="active "> บันทึกข้อมูลรับโอนเงิน</a>
                     <a class="item " [routerLink]="[ '/int06/10'] " *ngIf="authService.renderByPage('int06/10')" routerLinkActive="active ">บันทึกข้อมูลเบิกจ่าย</a>
                     <a class="item " [routerLink]="[ '/int06/5'] " *ngIf="authService.renderByPage('int06/5')" routerLinkActive="active "> ทะเบียนคุมเช็ค</a>
@@ -234,7 +236,7 @@
                 <a class="item " *ngIf="authService.renderByPage('cop02/1')" [routerLink]="[ '/cop02/1'] " routerLinkActive="active ">รวบรวมข้อมูลเพื่อเตรียมออกตรวจปฏิบัติการ</a>
                 <a class="item " *ngIf="authService.renderByPage('cop03/1')" [routerLink]="[ '/cop03/1'] " routerLinkActive="active ">จัดทำหนังสือขออนุมัติเดินทางไปราชการตรวจปฏิบัติการ</a>
                 <a class="item " *ngIf="authService.renderByPage('cop03/1/1')" [routerLink]="[ '/cop03/1/1'] " routerLinkActive="active ">ค้นหาหนังสือขออนนุมัติเดินทางไปราชการ</a> -->
-            <a class="item " *ngIf="authService.renderByPage('cop07/1')" [routerLink]="[ '/cop07/1'] " routerLinkActive="active ">แผนการตรวจปฏิบัติการประจำปีงบประมาณ</a>
+            <a class="item " *ngIf="authService.renderByPage('cop07/1')" [routerLink]="[ '/cop07/1'] " routerLinkActive="active ">แผนการตรวจปฏิบัติการประจำปี</a>
             <!-- <a class="item " *ngIf="authService.renderByPage('cop08')" [routerLink]="[ '/cop08'] " routerLinkActive="active ">วิเคราะห์แนวโน้มการชำระภาษีของผู้ประกอบการ</a> -->
             <div class="ui dropdown item ">รายงานการตรวจปฏิบัติการ
                 <i class="dropdown icon "></i>
@@ -250,8 +252,8 @@
             </div>
             <!-- <a class="item " *ngIf="authService.renderByPage('cop06')" [routerLink]="[ '/cop06'] " routerLinkActive="active ">รายงานการตรวจปฏิบัติการ</a> -->
             <a class="item " *ngIf="authService.renderByPage('cop09/1')" [routerLink]="[ '/cop09/1'] " routerLinkActive="active ">สรุปผลการตรวจปฏิบัติการ</a>
-            <a class="item " *ngIf="authService.renderByPage('cop06')" [routerLink]="[ '/tax-audit-manage'] " routerLinkActive="active ">จัดทำหนังสือราชการ บันทึกข้อความ และแบบ ตส.ต่างๆ</a>
-            <a class="item " *ngIf="authService.renderByPage('cop10')" [routerLink]="[ '/cop10'] " routerLinkActive="active ">กราฟแผนการตรวจปฏิบัติการประจำปีงบประมาณ</a>
+            <!-- <a class="item " *ngIf="authService.renderByPage('cop06')" [routerLink]="[ '/tax-audit-manage'] " routerLinkActive="active ">จัดทำหนังสือราชการ บันทึกข้อความ และแบบ ตส.ต่างๆ</a> -->
+            <a class="item " *ngIf="authService.renderByPage('cop10')" [routerLink]="[ '/cop10'] " routerLinkActive="active ">กราฟแผนการตรวจปฏิบัติการประจำปี</a>
             <!-- <a class="item " *ngIf="authService.renderByPage('cop04/1')" [routerLink]="[ '/cop04/1'] " routerLinkActive="active ">บันทึกผลการตรวจปฏิบัติการ</a>
                 <a class="item " *ngIf="authService.renderByPage('cop04/2')" [routerLink]="[ '/cop04/2'] " routerLinkActive="active ">ค้นหาบันทึกผลการตรวจปฏิบัติการ</a>
                 <a class="item " *ngIf="authService.renderByPage('cop05/1')" [routerLink]="[ '/cop05/1'] " routerLinkActive="active ">รายงานผลการตรวจปฏิบัติการ</a>   -->
