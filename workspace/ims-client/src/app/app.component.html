@@ -53,8 +53,10 @@
             <div class="ui dropdown item " *ngIf="authService.renderByPage('int01')">
                 <i class="dropdown icon "></i> ตรวจสอบรายได้
                 <div class="menu ">
-                    <a class="item " [routerLink]="[ '/int08/4'] " *ngIf="authService.renderByPage('int08/4')" routerLinkActive="active ">ประเมินความเสี่ยงรายได้</a>
+                    <a class="item " [routerLink]="[ '/int08/4'] " *ngIf="authService.renderByPage('int08/4')" routerLinkActive="active ">การตรวจสอบใบเสร็จเสีย</a>
                     <a class="item " [routerLink]="[ '/int08/5'] " *ngIf="authService.renderByPage('int08/5')" routerLinkActive="active ">ติดตามผลการตรวจสอบ</a>
+                    <a class="item " [routerLink]="[ '/int08/6'] " *ngIf="authService.renderByPage('int08/6')" routerLinkActive="active ">การตรวจสอบการนำส่งเงินบัญชี</a>
+                    <a class="item " [routerLink]="[ '/int08/7'] " *ngIf="authService.renderByPage('int08/7')" routerLinkActive="active ">การตรวจสอบรายงานการตรวจ</a>
                     <!-- <a class="item " [routerLink]="[ '/int01/1/1'] " *ngIf="authService.renderByPage('int01/1/1')" routerLinkActive="active "
                         style=" color:White ">ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต</a>
                     <a class="item " [routerLink]="[ '/int01/2/1'] " *ngIf="authService.renderByPage('int01/2/1')" routerLinkActive="active "
@@ -185,7 +187,7 @@
         ตรวจสอบภาษี
         <i class="dropdown icon "></i>
         <div class="menu ">
-                <a class="item " [routerLink]="[ 'tax-audit-select-line/tsl0101-00'] " routerLinkActive="active">การคัดเลือกราย</a>
+            <a class="item " [routerLink]="[ 'tax-audit-select-line/tsl0101-00'] " routerLinkActive="active">การคัดเลือกราย</a>
             <!-- <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('tax-audit-s1')">
                 <i class="dropdown icon "></i>การคัดเลือกราย
                 <div class="menu ">
@@ -202,13 +204,13 @@
                 <i class="dropdown icon "></i>การตรวจสอบภาษี
                 <div class="menu ">
                     <a class="item " *ngIf="authService.renderByPage('analysis')" [routerLink]="[ '/analysis'] " routerLinkActive="active ">การวิเคราะห์ข้อมูลเบื้องต้น</a> -->
-                    <!-- <a class="item " routerLinkActive="active ">รวบรวมข้อมูลเบื้องต้น </a> -->
-                    <!-- <a class="item " [routerLink]="[ 'tax-audit-manage'] " routerLinkActive="active ">ขออนุมัติออกตรวจสอบภาษี</a> -->
-                    <!-- <a class="item " *ngIf="authService.renderByPage('select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน')" [routerLink]="[ '/select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน'] " routerLinkActive="active ">สร้างกระดาษทำการตรวจสอบภาษี</a>
+            <!-- <a class="item " routerLinkActive="active ">รวบรวมข้อมูลเบื้องต้น </a> -->
+            <!-- <a class="item " [routerLink]="[ 'tax-audit-manage'] " routerLinkActive="active ">ขออนุมัติออกตรวจสอบภาษี</a> -->
+            <!-- <a class="item " *ngIf="authService.renderByPage('select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน')" [routerLink]="[ '/select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน'] " routerLinkActive="active ">สร้างกระดาษทำการตรวจสอบภาษี</a>
                     <a class="item " *ngIf="authService.renderByPage('select-form/rs001')" [routerLink]="[ '/select-form/rs001'] " routerLinkActive="active ">ผลการสร้างกระดาษทำการตรวจสอบภาษี</a>
                     <a class="item " [routerLink]="['/ope04/11'] " *ngIf="authService.renderByPage('/ope04/11')" routerLinkActive="active ">รายงานผลการตรวจสอบ</a> -->
-                    <!-- <a class="item " routerLinkActive="active ">สรุปผลการตรวจสอบภาษี</a> -->
-                <!-- </div>
+            <!-- <a class="item " routerLinkActive="active ">สรุปผลการตรวจสอบภาษี</a> -->
+            <!-- </div>
             </div> -->
             <!-- <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('tax-audit-s3')">
                 <i class="dropdown icon "></i>รายงานผลการตรวจสอบภาษี
