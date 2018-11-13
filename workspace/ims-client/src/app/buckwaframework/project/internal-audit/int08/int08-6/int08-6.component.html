@@ -1,0 +1,94 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<br>
+<div class="sixteen wide column">
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>การตรวจสอบการนำส่งเงินบัญชี</span>
+    </div>
+    <form [formGroup]="searchForm" (submit)="handleSearch($event)">
+        <div class="ui attached segment">
+            <div class="ui form">
+                <div class="inline fields">
+                    <div class="three wide field"></div>
+                    <div class="two wide required field">
+                        <label>ระยะเวลาที่ตรวจสอบ</label>
+                    </div>
+                    <div class="three wide field ui calendar" id="calendar" [ngClass]="{ 'error': validateField('startDate') }">
+                        <div class="ui input left icon">
+                            <i class="calendar alter nate outline icon"></i>
+                            <input type="calendar" readonly="" id="startDate" formControlName="startDate" [attr.required]="true" autocomplete="off" placeholder="ดด/ปปปป">
+                        </div>
+                    </div>
+                    <div class="one wide field">
+                        <label class="text-center full-width">ถึง</label>
+                    </div>
+                    <div class="three wide field ui calendar" id="calendar1" [ngClass]="{ 'error': validateField('endDate') }">
+                        <div class="ui input left icon">
+                            <i class="calendar alter nate outline icon"></i>
+                            <input type="calendar" readonly="" id="endDate" formControlName="endDate" [attr.required]="true" autocomplete="off" placeholder="ดด/ปปปป">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="three wide field"></div>
+                    <div class="two wide field required">
+                        <label>หน่วยงาน</label>
+                    </div>
+                    <div class="three wide field" [ngClass]="{ 'error': validateField('department') }">
+                        <select class="ui dropdown ai search full-width" formControlName="department">
+                    <option value="">กรุณาเลือก</option>
+                    <option *ngFor="let data of departmentList | async" [value]="data.lovId">
+                      {{ data.value1 }}
+                    </option>
+                  </select>
+                    </div>
+
+                    <div class="one wide field required">
+                        <label class="text-right full-width">บัญชี</label>
+                    </div>
+
+                    <div class="three wide field" [ngClass]="{ 'error': validateField('account') }">
+                        <select class="ui dropdown ai search full-width" formControlName="account">
+                    <option value="">กรุณาเลือก</option>
+                    <option *ngFor="let data of accounts | async" [value]="data.lovId">
+                      {{ data.value1 }}
+                    </option>
+                  </select>
+                    </div>
+                </div>
+                <br>
+                <div class="ui center aligned grid">
+                    <div class="eight wide column">
+                        <button class="ui mini primary button" type="submit">
+                          <i class="search icon"></i>ค้นหา
+                        </button>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </form>
+    <br>
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>ผลการค้นหาการตรวจสอบการนำส่งเงินบัญชี</span>
+    </div>
+    <div class="ui attached  segment">
+
+        <table id="tableData" class="ui small celled table nowrap striped selectable" style="width: 100%">
+            <thead>
+                <tr>
+                    <th style="text-align: center !important;">ภาค</th>
+                    <th style="text-align: center !important;">พื้นที่</th>
+                    <th style="text-align: center !important;">สาขา</th>
+                    <th style="text-align: center !important;">รหัสพื้นที่ที่ออกใบเสร็จ</th>
+                    <th style="text-align: center !important;">วันที่จัดเก็บ</th>
+                    <th style="text-align: center !important;">วันที่นำส่ง</th>
+                    <th style="text-align: center !important;">เงินเก็บ</th>
+                    <th style="text-align: center !important;">เงินฝาก</th>
+                    <th style="text-align: center !important;">สถานะการตรวจ</th>
+                </tr>
+            </thead>
+        </table>
+        <br>
+    </div>
+</div>
