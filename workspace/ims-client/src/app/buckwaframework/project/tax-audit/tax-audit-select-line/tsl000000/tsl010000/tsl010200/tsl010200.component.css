@@ -1,0 +1,12 @@
+
+.transition-left {
+   /* position: fixed;
+   left: -270px; */
+   display: none
+}
+.custom-menu{
+   border-top-left-radius: 0rem;
+   border-top-right-radius: 0.285714rem;
+   border-bottom-right-radius: 0.285714rem;
+   border-bottom-left-radius: 0rem;
+}

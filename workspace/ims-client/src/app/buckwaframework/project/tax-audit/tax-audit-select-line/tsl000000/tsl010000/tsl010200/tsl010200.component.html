@@ -1,0 +1,64 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h2 class="ui header">ตารางแสดงผลการคัดเลือกราย</h2>
+
+    <div class="ui top attached header segment" style="background: #1e83db;color: white">
+      <span>ตารางแสดงผลการคัดเลือกราย</span>
+    </div>
+    <div class="ui attached segment">
+      <br>
+      <div class="ui grid">
+        <button (click)="toggleBar()" class="ui button custom-menu" type="button"><i class="bars icon"></i>เมนู</button>
+      </div><br>
+      <div class="ui grid" style="margin-top: 0">
+        <div style="padding-right: 0;" [ngClass]="{'three wide column': !toggle, 'transition-left' : toggle}">
+          <div class="ui vertical menu" style="width: auto" name="coordinates" id="coordinates" (change)="changeCoordinates()">
+            <div class="item">
+              <div class="header">ชำระภาษีไม่ติดต่อเกิน 4 เดือน</div>
+            </div>
+            <div class="item">
+              <div class="menu">
+                <a class="item hover">ความแตกต่างของการชำระภาษี มากกว่า </a>
+                <a class="item hover">ความแตกต่างของการชำระภาษี น้อยกว่า</a>
+                <a class="item hover">อื่นๆ</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding-top: 0" [ngClass]="{'thirteen': !toggle, 'sixteen': toggle,'wide': true, 'column': true, 'transition-left-2': toggle}">
+
+          <table id="userManagementDt" class="ui small celled table aligned hover striped selectable nowrap" style="width: 100%;">
+            <thead id="tableOne">
+              <tr>
+                <th>เลขทะเบียนสรรพสามิต</th>
+                <th>ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>
+                <th>ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>
+                <th>พิกัดสินค้า/บริการ</th>
+                <th>สรรพสามิตภาค</th>
+                <th>สรรพสามิตพื้นที่</th>
+                <!-- <th>การชำระภาษี (บาท)</th>
+                  <th>ส่วนต่างการชำระภาษีระหว่างเดือน (เปอร์เซ็น)</th> -->
+              </tr>
+            </thead>
+          </table>
+          <table id="userManagementDt" class="ui small celled table aligned hover striped selectable nowrap" style="width: 100%;">
+            <thead id="tableTwo">
+              <tr>
+                <th>เลขทะเบียนสรรพสามิต</th>
+                <th>ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>
+                <th>ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>
+                <th>พิกัดสินค้า/บริการ</th>
+                <th>สรรพสามิตภาค</th>
+                <th>สรรพสามิตพื้นที่</th>
+                <!-- <th>การชำระภาษี (บาท)</th>
+                    <th>ส่วนต่างการชำระภาษีระหว่างเดือน (เปอร์เซ็น)</th> -->
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

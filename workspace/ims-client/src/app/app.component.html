@@ -185,7 +185,8 @@
         ตรวจสอบภาษี
         <i class="dropdown icon "></i>
         <div class="menu ">
-            <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('tax-audit-s1')">
+                <a class="item " [routerLink]="[ 'tax-audit-select-line/tsl0101-00'] " routerLinkActive="active">การคัดเลือกราย</a>
+            <!-- <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('tax-audit-s1')">
                 <i class="dropdown icon "></i>การคัดเลือกราย
                 <div class="menu ">
                     <a class="item " [routerLink]="[ '/trader-selection'] " *ngIf="authService.renderByPage('trader-selection')" routerLinkActive="active ">สร้างกระดาษทำการคัดเลือกราย</a>
@@ -196,19 +197,19 @@
                     <a class="item " [routerLink]="[ '/add-external-data/summary-report'] " *ngIf="authService.renderByPage('/add-external-data/summary-report')" routerLinkActive="active ">ตรวจสอบการเลือกรายผู้ประกอบการ</a>
 
                 </div>
-            </div>
-            <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('tax-audit-s2')">
+            </div> -->
+            <!-- <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('tax-audit-s2')">
                 <i class="dropdown icon "></i>การตรวจสอบภาษี
                 <div class="menu ">
-                    <a class="item " *ngIf="authService.renderByPage('analysis')" [routerLink]="[ '/analysis'] " routerLinkActive="active ">การวิเคราะห์ข้อมูลเบื้องต้น</a>
+                    <a class="item " *ngIf="authService.renderByPage('analysis')" [routerLink]="[ '/analysis'] " routerLinkActive="active ">การวิเคราะห์ข้อมูลเบื้องต้น</a> -->
                     <!-- <a class="item " routerLinkActive="active ">รวบรวมข้อมูลเบื้องต้น </a> -->
                     <!-- <a class="item " [routerLink]="[ 'tax-audit-manage'] " routerLinkActive="active ">ขออนุมัติออกตรวจสอบภาษี</a> -->
-                    <a class="item " *ngIf="authService.renderByPage('select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน')" [routerLink]="[ '/select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน'] " routerLinkActive="active ">สร้างกระดาษทำการตรวจสอบภาษี</a>
+                    <!-- <a class="item " *ngIf="authService.renderByPage('select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน')" [routerLink]="[ '/select-form/บริการ/สินค้าน้ำมันและผลิตภัณฑ์น้ำมัน'] " routerLinkActive="active ">สร้างกระดาษทำการตรวจสอบภาษี</a>
                     <a class="item " *ngIf="authService.renderByPage('select-form/rs001')" [routerLink]="[ '/select-form/rs001'] " routerLinkActive="active ">ผลการสร้างกระดาษทำการตรวจสอบภาษี</a>
-                    <a class="item " [routerLink]="['/ope04/11'] " *ngIf="authService.renderByPage('/ope04/11')" routerLinkActive="active ">รายงานผลการตรวจสอบ</a>
+                    <a class="item " [routerLink]="['/ope04/11'] " *ngIf="authService.renderByPage('/ope04/11')" routerLinkActive="active ">รายงานผลการตรวจสอบ</a> -->
                     <!-- <a class="item " routerLinkActive="active ">สรุปผลการตรวจสอบภาษี</a> -->
-                </div>
-            </div>
+                <!-- </div>
+            </div> -->
             <!-- <div class="ui dropdown item " routerLinkActive="active " *ngIf="authService.renderByPage('tax-audit-s3')">
                 <i class="dropdown icon "></i>รายงานผลการตรวจสอบภาษี
                 <div class="menu ">
@@ -219,8 +220,8 @@
                 </div>
             </div>
             <a class="item " routerLinkActive="active ">ทะเบียนคุมหนังสือเรียก</a> -->
-            <a class="item " *ngIf="authService.renderByPage('tax-audit-manage')" [routerLink]="[ 'tax-audit-manage'] " routerLinkActive="active ">บันทึกข้อความ หนังสือราชการ
-            </a>
+            <!-- <a class="item " *ngIf="authService.renderByPage('tax-audit-manage')" [routerLink]="[ 'tax-audit-manage'] " routerLinkActive="active ">บันทึกข้อความ หนังสือราชการ
+            </a> -->
         </div>
     </div>
     <div class="ui simple dropdown item " *ngIf="authService.renderByPage('check-operation')" style=" color:White ">
