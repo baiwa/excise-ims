@@ -2,13 +2,25 @@
 <br>
 <div class="sixteen wide column">
   <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-    <span>การประเมินความเสี่ยงรายได้</span>
+    <span>การตรวจสอบใบเสร็จเสีย</span>
   </div>
   <div class="ui attached segment">
     <div class="ui form">
       <input type="hidden" id="searchFlag">
       <input type="hidden" id="id">
 
+      <div class="inline fields">
+          <div class="three wide field"></div>
+          <div class="two wide required field">
+            <label>สำนักงานสรรพสามิตภาค</label>
+          </div>
+          <div class="three wide field">
+            <select class="ui dropdown ai selection" style="width: 100%;" id="sector">
+              <option value="1">ทั้งหมด</option>
+              <option *ngFor="let data of travelTo1AddList" value="{{data.value2}}">{{data.subTypeDescription}}</option>
+            </select>
+          </div>
+        </div>
       <div class="inline fields">
         <div class="three wide field"></div>
         <div class="two wide required field">
@@ -35,7 +47,7 @@
         <div class="two wide required field">
           <label>จำนวนใบเสร็จเสียเกิน</label>
         </div>
-        <div class="two wide field">
+        <div class="one wide field">
           <input id="billLost" type="number" min="0" max="100" [attr.step]="1" required>
         </div>
         <div class="one wide field ui right aligned">
@@ -67,7 +79,6 @@
           <th style="text-align: center !important;">ถึงเดือนที่</th>
           <th style="text-align: center !important;">จำนวนใบเสร็จ</th>
           <th style="text-align: center !important;">จำนวนใบเสีย</th>
-          <th style="text-align: center !important;">จำนวนความเสี่ยง</th>
           <th style="text-align: center !important;">รายละเอียดความเสี่ยง</th>
         </tr>
       </thead>

@@ -158,16 +158,33 @@ public class IaIncomeExciseAudDao {
 			    	    vo.setRisk(rs.getString("RISK"));
 			    	    vo.setOrigin(rs.getString("ORIGIN"));
 			    	    vo.setRiskScore(rs.getString("RISK_SCORE"));
+			    	    
+			    	    vo.setStartDate(rs.getString("START_DATE"));
+			    	    vo.setEndDate(rs.getString("END_DATE") );
+			    	    vo.setBillAll(rs.getString("BILL_ALL"));
+			    	    vo.setBillWaste(rs.getString("BILL_WASTE"));
+			    	    vo.setRiskRemark(rs.getString("RISK_REMARK"));
+			    	    vo.setRiskPersen(rs.getString("RISK_PERSEN"));
+			    	    
 		  	
 			    		return vo;
 			    	}
-			    };		
+			    };	
+			    
+				public Long countSaveInt084(Long id) {
+					
+					StringBuilder sql = new StringBuilder(" select count(*) from IA_INCOME_EXCISE_AUD_RPT WHERE IA_INCOME_EXCISE_AUD_ID = ?");
+					List<Object> params = new ArrayList<>();
+			
+						params.add(id);
+	
+			        Long count = jdbcTemplate.queryForObject(sql.toString(), params.toArray(), Long.class);
+			        return count;
+			    }
 		    
 		    public Long saveDataInt084 (Int084Vo vo) {
 		    	Long id = jdbcTemplate.queryForObject(" select IA_INCOME_EXCISE_AUD_RPT_SEQ.NEXTVAL from dual ",Long.class);
-		    	
-		    
-		    	
+    	
 		    	jdbcTemplate.update(" INSERT INTO IA_INCOME_EXCISE_AUD_RPT( " + 
 		    			"IA_INCOME_EXCISE_AUD_RPT_ID, " +
 		    			"IA_INCOME_EXCISE_AUD_ID, " +

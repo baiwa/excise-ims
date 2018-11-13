@@ -15,6 +15,8 @@ public class Int084FormVo extends DataTableRequest {
 	private String endDateTM;
 	private String billLost;
 
+	private String sector;
+
 	private Int084Vo int084Vo;
 	private List<Int084Vo> int084VoList;
 
@@ -80,6 +82,14 @@ public class Int084FormVo extends DataTableRequest {
 
 	public void setBillLost(String billLost) {
 		this.billLost = billLost;
+	}
+
+	public String getSector() {
+		return sector;
+	}
+
+	public void setSector(String sector) {
+		this.sector = sector;
 	}
 
 	public Int084Vo getInt084Vo() {

@@ -63,6 +63,17 @@ public class Int084Controller {
 		
 	}
 	
+	@GetMapping("/exportFile2")
+	@ResponseBody
+	public  void exportFile2(@ModelAttribute Int084FormVo formVo, HttpServletResponse response) throws Exception {
+		try {
+			int084Service.exportFile2(formVo,response);
+		} catch (Exception e) {
+			log.error("Error ! ==> exportFile2 method exportFile",e);
+		}
+		
+	}
+	
 	   @PostMapping("/save")
 	    @ResponseBody
 	    public CommonMessage<Long> save(@RequestBody List<Int084Vo> int084VoList){

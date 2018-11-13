@@ -92,9 +92,9 @@ public class Int084Service {
 								billNo = Long.valueOf((!BeanUtils.isEmpty(incomeExciseAudDtl2.getReceiptNo()))?incomeExciseAudDtl2.getReceiptNo().split("/")[1]:"0");
 							}else {
 								billNo2 = Long.valueOf((!BeanUtils.isEmpty(incomeExciseAudDtl2.getReceiptNo()))?incomeExciseAudDtl2.getReceiptNo().split("/")[1]:"0");
-//								log.info("OfficeCode : {} billNo : {} billNo2 : {} ",incomeExciseAudDtl.getOfficeCode(),billNo,billNo2);
+								//log.info("OfficeCode : {} billNo : {} billNo2 : {} ",incomeExciseAudDtl.getOfficeCode(),billNo,billNo2);
 								
-								if(billNo2!=0) {
+								if(billNo2!=0&&billNo2>billNo) {
 									Long sum = (billNo2-1)-billNo;
 									billWaste +=sum;
 									billNo = billNo2;
@@ -127,19 +127,28 @@ public class Int084Service {
 			
 			}
 			
-		for (Int084Vo int084Vo : list) {
-			if(Float.valueOf(int084Vo.getRiskPersen())>=Float.valueOf(formVo.getBillLost())&&int084Vo.getOfficeName()!=""){
-//				log.info("getRiskPersen : {} getBillLost : {} ",int084Vo.getRiskPersen(),formVo.getBillLost());
-				listReturn.add(int084Vo);
-			}
-		}
+		
 		
 			// set data table
 		
 			// dataTableAjax.setDraw(formVo.getDraw() + 1);
 			dataTableAjax.setRecordsTotal(count);
 			dataTableAjax.setRecordsFiltered(count);
-			dataTableAjax.setData(listReturn);
+			if("1".equals(formVo.getSector())) {
+				dataTableAjax.setData(list);
+			}else {
+				for (Int084Vo int084Vo : list) {
+//					if(Float.valueOf(int084Vo.getRiskPersen())>=Float.valueOf(formVo.getBillLost())&&int084Vo.getOfficeName()!=""){
+					String sec = (!BeanUtils.isEmpty(int084Vo.getOfficeCode()))?int084Vo.getOfficeCode().substring(0, 2):"0";
+					if(formVo.getSector().equals(sec)){
+						
+						listReturn.add(int084Vo);
+						
+					}
+				}
+				dataTableAjax.setData(listReturn);
+			}
+			
 			
 		}
 		
@@ -150,9 +159,17 @@ public class Int084Service {
 	
 	public Long save(List<Int084Vo> int084VoList) throws ParseException {
 		Long id = 0l;
-		for (Int084Vo int084Vo : int084VoList) {
-			iaIncomeExciseAudDao.saveDataInt084(int084Vo);
+		
+		Long count = iaIncomeExciseAudDao.countSaveInt084(int084VoList.get(0).getIdHead());
+		log.info(" save data ID : {}",int084VoList.get(0).getIdHead());
+		log.info(" save count : {}",count);
+		if(count==0) {
+			
+			for (Int084Vo int084Vo : int084VoList) {
+				iaIncomeExciseAudDao.saveDataInt084(int084Vo);
+			}
 		}
+		
 		return id ;
 	}
 	
@@ -224,33 +241,33 @@ public class Int084Service {
 			for (Int084Vo detail : dataList084) {
 				row = sheet.createRow(rowNum);
 				// No.
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue((StringUtils.isNotBlank(detail.getOfficeName()))?detail.getOfficeName(): "" );
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue((StringUtils.isNotBlank(detail.getOfficeCode()))?detail.getOfficeCode(): "" );
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue((StringUtils.isNotBlank(detail.getRisk()))?detail.getRisk(): "" );
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue((StringUtils.isNotBlank(detail.getOrigin()))?detail.getOrigin(): "" );
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(detail.getOfficeName()))?detail.getOfficeName(): "" );
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(detail.getOfficeCode()))?detail.getOfficeCode(): "" );
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(detail.getRisk()))?detail.getRisk(): "" );
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(detail.getOrigin()))?detail.getOrigin(): "" );
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
 		
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue((StringUtils.isNotBlank(formVo.getStartDateTM()))?formVo.getStartDateTM(): "" );
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(formVo.getStartDateTM()))?formVo.getStartDateTM(): "" );
 				
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue((StringUtils.isNotBlank(formVo.getEndDateTM()))?formVo.getEndDateTM(): "" );
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(formVo.getEndDateTM()))?formVo.getEndDateTM(): "" );
 				
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue((StringUtils.isNotBlank(detail.getRiskScore()))?detail.getRiskScore(): "" );
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
-				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft  );cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(detail.getRiskScore()))?detail.getRiskScore(): "" );
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue("");
 				
 				rowNum++;
 				cellNum = 0;
@@ -259,6 +276,92 @@ public class Int084Service {
 			
 			/*set	fileName*/		
 			String fileName ="TeamMate_"+DateFormatUtils.format(new Date(),"yyyyMMdd");;
+			log.info(fileName);
+			
+			/* write it as an excel attachment */
+			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+			workbook.write(outByteStream);
+			byte [] outArray = outByteStream.toByteArray();
+			response.setContentType("application/vnd.ms-excel");
+			response.setContentLength(outArray.length);
+			response.setHeader("Expires:", "0"); // eliminates browser caching
+			response.setHeader("Content-Disposition", "attachment; filename="+fileName+".xlsx");
+			OutputStream outStream = response.getOutputStream();
+			outStream.write(outArray);
+			outStream.flush();
+			outStream.close();
+			
+			log.info("Done");
+		}
+	public void exportFile2(Int084FormVo formVo, HttpServletResponse response) throws IOException {
+		List<Int084Vo> dataList084 = new ArrayList<Int084Vo>();
+		
+		dataList084 = iaIncomeExciseAudDao.findAllInt084(formVo);
+		 log.info("Data list exportFile {} row",dataList084.size());
+//		dataTestList = formVo.getDataT();
+		
+			/* create spreadsheet */
+			XSSFWorkbook workbook = excalService.setUpExcel();
+			CellStyle thStyle = excalService.thStyle;
+
+			CellStyle fontHeader = workbook.createCellStyle();
+			fontHeader.setFont(excalService.fontHeader);
+			
+			Sheet sheet = workbook.createSheet();
+			int rowNum = 0;
+			int cellNum = 0;
+			Row row = sheet.createRow(rowNum);
+			Cell cell = row.createCell(cellNum);
+			log.info("Creating excel");
+			
+			 
+			/* create data spreadsheet */
+
+			/* Header */
+//			String[] tbTH1 = formVo.getTrHtml1();
+			
+
+			String[] tbTH1 = {"รหัสสำนักงานสรรพสามิต","ชื่อสำนักงานสรรพสามิต","ช่วงเดือนที่","ถึงเดือนที่","จำนวนใบเสร็จ","จำนวนใบเสีย","รายละเอียดความเสี่ยง"};
+			row = sheet.createRow(rowNum);
+			for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
+				cell = row.createCell(cellNum);
+				cell.setCellValue(tbTH1[cellNum]);
+				cell.setCellStyle(thStyle);
+			};
+
+			/* Detail */
+//			List<LicenseList6010> exportDataList = null;
+			rowNum++;
+			cellNum = 0;
+			for (Int084Vo detail : dataList084) {
+				row = sheet.createRow(rowNum);
+				// No.
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(detail.getOfficeCode()))?detail.getOfficeCode(): "" );
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(detail.getOfficeName()))?detail.getOfficeName(): "" );
+				
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(detail.getStartDate()))?detail.getStartDate(): "" );
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(detail.getEndDate()))?detail.getEndDate(): "" );
+				
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(detail.getBillAll()))?detail.getBillAll(): "" );
+				cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(detail.getBillWaste()))?detail.getBillWaste(): "" );
+				
+				Float persenRow = Float.valueOf((!BeanUtils.isEmpty(detail.getRiskPersen())?detail.getRiskPersen():"0")) ;
+				Float persen = Float.valueOf((!BeanUtils.isEmpty(formVo.getBillLost())?formVo.getBillLost():"0"));
+//	             log.info("persenRow {} persen {}",persenRow,persen);   
+				if(persenRow>=persen) {
+					cell = row.createCell(cellNum++);cell.setCellStyle(excalService.bgRed);cell.setCellValue((StringUtils.isNotBlank(detail.getRiskRemark()))?detail.getRiskRemark(): "" );
+				}else {
+					cell = row.createCell(cellNum++);cell.setCellStyle(excalService.cellLeft);cell.setCellValue((StringUtils.isNotBlank(detail.getRiskRemark()))?detail.getRiskRemark(): "" );
+				}
+				
+				
+				rowNum++;
+				cellNum = 0;
+			}
+			
+			
+			/*set	fileName*/		
+			String fileName ="Bill_lost_"+DateFormatUtils.format(new Date(),"yyyyMMdd");;
 			log.info(fileName);
 			
 			/* write it as an excel attachment */

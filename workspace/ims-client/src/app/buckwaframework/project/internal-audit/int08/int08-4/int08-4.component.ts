@@ -20,6 +20,7 @@ export class Int084Component implements OnInit {
   endDateTM:any;
   int084VoList:any=[];
   idHead:any;
+  travelTo1AddList: any;
 
   breadcrumb: BreadCrumb[];
   constructor(
@@ -33,7 +34,7 @@ export class Int084Component implements OnInit {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบรายได้", route: "#" },
-      { label: "การประเมินความเสี่ยงรายได้", route: "#" },
+      { label: "การตรวจสอบใบเสร็จเสีย", route: "#" },
     ];
   }
 
@@ -43,6 +44,7 @@ export class Int084Component implements OnInit {
     $(".ui.dropdown.ai").css("width", "100%");
     this.carenda();
     this.dataTable();
+    this.travelTo1AddDropdown();
 
   }
 
@@ -86,8 +88,16 @@ export class Int084Component implements OnInit {
       }
     });
   }
+  travelTo1AddDropdown = () =>{
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: "SECTOR_VALUE"}, res => {
+      this.travelTo1AddList = res.json();
+      console.log("travelTo1AddList : ",this.travelTo1AddList);
+    });
+  }
 
   clickSearch = function () {
+
 
     if (this.startDate==""||this.endDate=="") {
       this.messageBarService.alert("กรุณาระบุ ระยะเวลาที่ตรวจสอบ");
@@ -119,6 +129,7 @@ export class Int084Component implements OnInit {
         "data" : (d) => {
           return JSON.stringify($.extend({}, d, {
             "searchFlag" : $("#searchFlag").val(),
+            "sector" :  $("#sector").val(),
             "startDate" : this.startDate,
             "endDate"  : this.endDate,
             "startDateTM" : this.startDateTM,
@@ -142,20 +153,41 @@ export class Int084Component implements OnInit {
         }, {
           "data": "billWaste","className":"right"
         }, {
-          "data": "riskNumber","className":"center"
-        }, {
-          "data": "riskRemark"
+          "data": "riskRemark",
+          "render": (data, type, row, ) => {
+                let persenRow = parseInt(row.riskPersen) ;
+                let persen = parseInt($("#billLost").val()) ;
+                if ( persenRow>=persen) {
+                    return '<span class="r-mark-tr">' +data+ '</span>';
+                }
+                return data;
+          }
         }
       ],"createdRow": ( row, data, dataIndex )=> {
         this.int084VoList.push(data);
         this.idHead = data.idHead;
+      },
+      "drawCallback": (settings) => {
+          $('.r-mark-tr').closest('td').addClass('background-color : red');
       }
     });
   }
 
+saveData=()=>{
+    console.log("saveData",this.int084VoList);
+    let url = "/ia/int084/save";
+
+    this.ajax.post(url,this.int084VoList, res => {        
+      const msg = res.json();
+
+      // this.exportFile();
+      this.exportFile2();
+    });
+  }
 
 
   exportFile=()=>{
+    console.log("exportFile");
     let param = "";
     let url = "/ia/int084/exportFile";
     
@@ -168,14 +200,21 @@ export class Int084Component implements OnInit {
     
   }
 
-  saveData=()=>{
-    let url = "/ia/int084/save";
-    this.ajax.post(url,this.int084VoList, res => {        
-      const msg = res.json();
-      console.log("exportFile");
-      this.exportFile();
-    });
+  exportFile2=()=>{
+    console.log("exportFile2");
+    let param = "";
+    let url = "/ia/int084/exportFile2";
+    
+    param +="?idHead=" + this.idHead;
+    param +="&startDate=" + this.startDate;
+    param +="&endDate=" + this.endDate;
+    param +="&billLost=" + $("#billLost").val();
+
+    console.log("idHead : ",this.idHead);
+    this.ajax.download(url+param);
+    
   }
 
+  
 }
 
