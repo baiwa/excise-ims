@@ -29,34 +29,12 @@
 
         <div style="padding-top: 0" [ngClass]="{'thirteen': !toggle, 'sixteen': toggle,'wide': true, 'column': true, 'transition-left-2': toggle}">
 
-          <table id="userManagementDt" class="ui small celled table aligned hover striped selectable nowrap" style="width: 100%;">
+          <table id="datatable1" class="ui small celled table aligned hover striped selectable nowrap" style="width: 100%;">
             <thead id="tableOne">
-              <tr>
-                <th>เลขทะเบียนสรรพสามิต</th>
-                <th>ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>
-                <th>ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>
-                <th>พิกัดสินค้า/บริการ</th>
-                <th>สรรพสามิตภาค</th>
-                <th>สรรพสามิตพื้นที่</th>
-                <!-- <th>การชำระภาษี (บาท)</th>
-                  <th>ส่วนต่างการชำระภาษีระหว่างเดือน (เปอร์เซ็น)</th> -->
-              </tr>
+             <!-- table details-->
             </thead>
           </table>
-          <table id="userManagementDt" class="ui small celled table aligned hover striped selectable nowrap" style="width: 100%;">
-            <thead id="tableTwo">
-              <tr>
-                <th>เลขทะเบียนสรรพสามิต</th>
-                <th>ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>
-                <th>ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>
-                <th>พิกัดสินค้า/บริการ</th>
-                <th>สรรพสามิตภาค</th>
-                <th>สรรพสามิตพื้นที่</th>
-                <!-- <th>การชำระภาษี (บาท)</th>
-                    <th>ส่วนต่างการชำระภาษีระหว่างเดือน (เปอร์เซ็น)</th> -->
-              </tr>
-            </thead>
-          </table>
+          <button class="ui button" type="button" (click)="add()">addColumn</button>
         </div>
       </div>
     </div>

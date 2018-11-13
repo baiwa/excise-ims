@@ -4,7 +4,6 @@ import java.beans.PropertyEditorSupport;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -13,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,7 +32,7 @@ public class TaxAuditSelectListController {
 	
 	@PostMapping("/saveToTaPlanSearchRick")
 	@ResponseBody
-	public void saveToTaPlanSearchRick(@ModelAttribute PlanFromWsVo vo) {
+	public PlanFromWsVo saveToTaPlanSearchRick(@RequestBody PlanFromWsVo vo) {
 		logger.debug("saveToTaPlanSearchRick");
 		try {
 			planFromWsHeaderService.findExciseIdOrderByPercenTax(vo);
@@ -41,6 +40,7 @@ public class TaxAuditSelectListController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return vo;
 	}
 	
 	@InitBinder

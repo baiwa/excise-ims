@@ -67,12 +67,15 @@ public class PlanFromWsHeaderService {
 		planWorksheetHeader.setAnalysNumber(analysNumber);
 		List<PlanWorksheetHeader> planWorksheetHeaderList = planWorksheetHeaderDao.queryPlanWorksheetHeaderCriteria(planWorksheetHeader);
 		List<Long> listHeader = new ArrayList<Long>();
-		for (PlanWorksheetHeader plan : planWorksheetHeaderList) {
-			validateCondition(plan , monthLIst , vo);
-			if("S".equals(plan.getFlag())) {
-				listHeader.add(plan.getWorkSheetHeaderId());
+		if (!planWorksheetHeaderList.isEmpty()) {
+			for (PlanWorksheetHeader plan : planWorksheetHeaderList) {
+				validateCondition(plan , monthLIst , vo);
+				if("S".equals(plan.getFlag())) {
+					listHeader.add(plan.getWorkSheetHeaderId());
+				}
 			}
 		}
+		
 		
 		
 	}

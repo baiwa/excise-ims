@@ -7,7 +7,7 @@
       <span>กำหนดเงื่อนไขคัดเลือกรายผู้ประกอบการ</span>
     </div>
     <div class="ui attached segment {{loading ? 'loading' : ''}}">
-      <form class="ui form" [formGroup]="formControl" (submit)="search()">
+      <form class="ui form" [formGroup]="formControl" (submit)="save()">
         <!-- row 1 -->
         <div class="inline fields  ui grid">
           <div class="three wide field required">

@@ -16,26 +16,34 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
     { label: 'การคัดเลือกราย', route: '#' },
     { label: 'ตารางแสดงผลการคัดเลือกราย', route: '#' },
   ]
-
+  month : number = 7;
   toggle: boolean = true;
   constructor(
     private myService: Tsl010200Service,
     private authService: AuthService
   ) {
-    this.authService.reRenderVersionProgram('TSL-010200');
+    this.authService.reRenderVersionProgram('TSL-010200');    
   }
 
-  ngOnInit() {
+  ngOnInit() {    
   }
 
   ngAfterViewInit() {
-    this.datatatble();
+    this.datatable(this.month);
   }
 
-  datatatble() {
-    this.myService.datatable();
+  add(){
+    this.month++;
+    this.datatable(this.month);
   }
-  
+
+  datatable(month){
+    this.myService.createTableHeader(month).then(res=>{
+      this.myService.createTableBody(month).then(res=>{
+        this.myService.datatable();
+      })
+    });
+  }
   toggleBar() {
     if (this.toggle) {
       this.toggle = false;

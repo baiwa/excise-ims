@@ -52,14 +52,14 @@ export class Tsl010100Component implements OnInit {
     });
   }
 
-  search() {
+  save() {
     //==> Validate fields
     this.submitted = true;
     if (this.formControl.invalid) {
       return false;
     }
     //==> submit
-    this.myService.search(this.formControl.value);
+    this.myService.save(this.formControl.value);
   }
 
   clear() {
