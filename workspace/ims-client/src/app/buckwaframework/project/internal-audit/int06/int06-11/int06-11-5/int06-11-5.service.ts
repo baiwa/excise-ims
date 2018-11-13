@@ -78,6 +78,14 @@ export class Int061105Service {
         : $.fn.dataTable.render.number(",", ".", 2, "").display(data);
     };
 
+    //render check string is null or empty
+    let renderString = function(data, type, row, meta) {
+      if (Utils.isNull(data)) {
+        data = "-";
+      }
+      return data;
+    };
+
     this.dataTable = $("#dataTable").DataTableTh({
       lengthChange: false,
       searching: false,
@@ -92,9 +100,18 @@ export class Int061105Service {
         data: this.formData
       },
       columns: [
-        { data: "createdBy" },
-        { data: "position" },
-        { data: "affiliation" },
+        {
+          data: "createdBy",
+          render: renderString
+        },
+        {
+          data: "position",
+          render: renderString
+        },
+        {
+          data: "affiliation",
+          render: renderString
+        },
         { data: "createdDateStr" },
         {
           data: "amount",
@@ -120,6 +137,9 @@ export class Int061105Service {
         {
           render: function(data, type, full, meta) {
             return (
+              `<button type="button" class="ui mini button blue" id="dtl-${
+                full.id
+              }"><i class="eye icon"></i>รายละเอียด</button>` +
               `<button type="button" class="ui mini button green ${
                 full.status === "2055" ? "disabled" : ""
               }" id="approve-${
@@ -175,16 +195,18 @@ export class Int061105Service {
     $("#dataTable tbody").on("click", "button", e => {
       this.dataTable.row($(e).parents("tr")).data();
       const { id } = e.currentTarget;
-      // console.log("id: ", id);
+      console.log("id: ", id);
       let typeId = id.split("-")[0];
-      // console.log("typeId: ", typeId);
+      console.log("typeId: ", typeId);
       let idSelect = id.split("-")[1];
-      // console.log("idSelect: ", idSelect);
+      console.log("idSelect: ", idSelect);
 
       if ("approve" == typeId) {
         this.comment(idSelect, "APPROVE");
-      } else {
+      } else if ("reject" == typeId) {
         this.comment(idSelect, "REJECT");
+      } else {
+        console.log(idSelect);
       }
     });
   }
@@ -214,38 +236,6 @@ export class Int061105Service {
         }
       }
     });
-    // if (this.idToWithdrawRequest === "2058") {
-    //   /**
-    //    * แบบขอเบิกเงินค่าเช่าบ้าน (แบบ 6006)
-    //    */
-    //   this.ajax.post(
-    //     URL.COMMENT,
-    //     {
-    //       idSelect: id,
-    //       withdrawRequest: this.idToWithdrawRequest,
-    //       comment: "APPROVE"
-    //     },
-    //     success => {
-    //       this.Datatable();
-    //       console.log(success.json());
-    //     }
-    //   ), error => {
-    //       this.msg.errorModal("ไม่สามารถอัปเดทข้อมูลได้");
-    //     };
-    // } else if (this.idToWithdrawRequest === "2059") {
-    //   /**
-    //    * ใบเบิกเงินสวัสดิการเกี่ยวกับการรักษาพยาบาล (แบบ 7131)
-    //    */
-    // } else if (this.idToWithdrawRequest === "2060") {
-    //   /**
-    //    * ใบเบิกเงินสวัสดิการเกี่ยวกับการศึกษาบุตร (แบบ 7223)
-    //    */
-    // } else {
-    //   /**
-    //    * not thing
-    //    */
-    //   this.msg.errorModal("ไม่สามารถอัปเดทข้อมูลได้");
-    // }
   }
 
   getNextval() {

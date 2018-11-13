@@ -14,6 +14,9 @@ import { Int0611301Component } from "./int06-11-3/int06-11-3-01/int06-11-3-01.co
 import { BreadcrumbModule } from "components/breadcrumb/breadcrumb.module";
 import { Int06115Component } from "./int06-11-5/int06-11-5.component";
 import { Int06116Component } from "./int06-11-6/int06-11-6.component";
+import { Int061151Component } from "./int06-11-5/int06-11-5-1/int06-11-5-1.component";
+import { Int061152Component } from "./int06-11-5/int06-11-5-2/int06-11-5-2.component";
+import { Int061153Component } from "./int06-11-5/int06-11-5-3/int06-11-5-3.component";
 
 const routes: Routes = [
   { path: "", component: Int0611Component, canActivate: [AuthGuard] },
@@ -22,7 +25,8 @@ const routes: Routes = [
   { path: "3", component: Int06113Component, canActivate: [AuthGuard] },
   { path: "3-1", component: Int0611301Component, canActivate: [AuthGuard] },
   { path: "4", component: Int06114Component, canActivate: [AuthGuard] },
-  { path: "5", component: Int06115Component, canActivate: [AuthGuard] },
+  // { path: "5", component: Int06115Component, canActivate: [AuthGuard] },
+  { path: "5", loadChildren: "./int06-11-5/int06-11-5.module#Int061105Module" },
   { path: "6", component: Int06116Component, canActivate: [AuthGuard] }
 ];
 
@@ -41,8 +45,11 @@ const routes: Routes = [
     Int06113Component,
     Int06114Component,
     Int0611301Component,
-    Int06115Component,
+    // Int06115Component,
     Int06116Component
+    // Int061151Component,
+    // Int061152Component,
+    // Int061153Component
   ],
   exports: [RouterModule]
 })
