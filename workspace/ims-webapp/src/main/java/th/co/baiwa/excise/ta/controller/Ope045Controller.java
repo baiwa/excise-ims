@@ -24,53 +24,56 @@ import com.google.gson.Gson;
 
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.excise.ta.persistence.vo.Ope044SumVo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope044Vo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope045FormVo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope045SumVo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope045Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046ExcelVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope046FormVo;
-import th.co.baiwa.excise.ta.persistence.vo.Ope046SumVo;
-import th.co.baiwa.excise.ta.persistence.vo.Ope046Vo;
-import th.co.baiwa.excise.ta.service.Ope046Service;
+import th.co.baiwa.excise.ta.service.Ope045Service;
 import th.co.baiwa.excise.ta.service.Ope04ExcelService;
 
 @Controller
-@RequestMapping("api/ta/opo046")
-public class Opo046Controller {
+@RequestMapping("api/ta/opo045")
+public class Ope045Controller {
 
 	@Autowired
 	private Ope04ExcelService ope04Service;
 
 	@Autowired
-	private Ope046Service ope046Service;
+	private Ope045Service ope045Service;
 
 	@PostMapping("/findAll")
 	@ResponseBody
-	public DataTableAjax<Ope046Vo> findAll(@RequestBody Ope046FormVo formVo) {
-		return ope046Service.findAll(formVo);
+	public DataTableAjax<Ope045Vo> findAll(@RequestBody Ope045FormVo formVo) {
+		return ope045Service.findAll(formVo);
 	}
 
 	@GetMapping("/exciseidList")
 	@ResponseBody
-	public List<LabelValueBean> findExciseId() {
-		List<LabelValueBean> dataList = ope046Service.findExciseId();
+	public List<LabelValueBean> exciseidList() {
+		List<LabelValueBean> dataList = ope045Service.exciseidList();
 		return dataList;
 	}
 
 	@PostMapping("/findByExciseId")
 	@ResponseBody
-	public Ope046FormVo findByExciseId(@RequestBody String exciseId) {
-		return ope046Service.findByExciseId(exciseId);
+	public Ope045FormVo findByExciseId(@RequestBody String exciseId) {
+		return ope045Service.findByExciseId(exciseId);
 	}
 
 	@PostMapping("/upload")
 	@ResponseBody
 	public List<Ope046ExcelVo> upload(@ModelAttribute Ope046FormVo formVo)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
-		return ope046Service.readFileExcel(formVo);
+		return ope045Service.readFileExcel(formVo);
 	}
 
 	@PostMapping("/save")
 	@ResponseBody
-	public Ope046SumVo save(@RequestBody Ope046SumVo sumVo) {
-		ope046Service.save(sumVo);
+	public Ope045SumVo save(@RequestBody Ope045SumVo sumVo) {
+		ope045Service.save(sumVo);
 		return sumVo;
 	}
 
@@ -78,15 +81,15 @@ public class Opo046Controller {
 	public void export(@RequestParam String dataJson, HttpServletResponse response) throws Exception {
 
 		Gson gson = new Gson();
-		Ope046SumVo result = gson.fromJson(dataJson, Ope046SumVo.class);
+		Ope044SumVo result = gson.fromJson(dataJson, Ope044SumVo.class);
 
-		List<Ope046Vo> dataList = result.getVoList();
+		List<Ope044Vo> dataList = result.getVoList();
 
 		/* set fileName */
-		String fileName = URLEncoder.encode("กระดาษทำการตรวจสอบรายการวัตถุดิบที่ขอลดหย่อนภาษีที่ยื่นต่อกรมสรรพสามิต", "UTF-8");
+		String fileName = URLEncoder.encode("กระดาษทำการรับสินค้าสำเร็จรูป", "UTF-8");
 
 		/* write it as an excel attachment */
-		ByteArrayOutputStream outByteStream = ope04Service.exportOpo046(dataList);
+		ByteArrayOutputStream outByteStream = ope04Service.exportOpo044(dataList);
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
@@ -98,4 +101,5 @@ public class Opo046Controller {
 		outStream.close();
 
 	}
+
 }

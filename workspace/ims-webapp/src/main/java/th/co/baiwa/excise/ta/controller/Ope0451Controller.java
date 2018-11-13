@@ -20,7 +20,7 @@ import th.co.baiwa.excise.ta.service.Ope0451Service;
 
 @Controller
 @RequestMapping("api/ta/opo0451")
-public class Opo0451Controller {
+public class Ope0451Controller {
 
 	@Autowired
 	private Ope0451Service ope0451Service;

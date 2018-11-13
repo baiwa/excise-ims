@@ -8,21 +8,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.excise.ta.persistence.vo.Ope0412Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0461FormVo;
-import th.co.baiwa.excise.ta.persistence.vo.Ope0461Vo;
-import th.co.baiwa.excise.ta.service.Ope0461Service;
+import th.co.baiwa.excise.ta.service.Ope0412Service;
 
 @Controller
-@RequestMapping("api/ta/opo0461")
-public class Opo0461Controller {
+@RequestMapping("api/ta/ope0412")
+public class Ope0412Controller {
 
 	@Autowired
-	private Ope0461Service ope0461Service;
+	private Ope0412Service ope0412Service;
 
 	@PostMapping("/findAll")
 	@ResponseBody
-	public DataTableAjax<Ope0461Vo> findAll(@RequestBody Ope0461FormVo formVo){
-		return ope0461Service.findAll(formVo);
+	public DataTableAjax<Ope0412Vo> findAll(@RequestBody Ope0461FormVo formVo){
+		return ope0412Service.findAll(formVo);
 	}
 
 	/*@GetMapping("/exciseidList")

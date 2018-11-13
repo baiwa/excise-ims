@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,74 +20,74 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.google.gson.Gson;
 
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.ta.persistence.vo.Ope048ExcelVo;
-import th.co.baiwa.excise.ta.persistence.vo.Ope048FormVo;
-import th.co.baiwa.excise.ta.persistence.vo.Ope048SumVo;
-import th.co.baiwa.excise.ta.persistence.vo.Ope048Vo;
-import th.co.baiwa.excise.ta.service.Ope048Service;
+import th.co.baiwa.excise.ta.persistence.vo.Ope044FormVo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope044SumVo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope044Vo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope046ExcelVo;
+import th.co.baiwa.excise.ta.persistence.vo.Ope046FormVo;
+import th.co.baiwa.excise.ta.service.Ope044Service;
 import th.co.baiwa.excise.ta.service.Ope04ExcelService;
 
 @Controller
-@RequestMapping("api/ta/opo048")
-public class Opo048Controller {
+@RequestMapping("api/ta/opo044")
+public class Ope044Controller {
 
 	@Autowired
 	private Ope04ExcelService ope04Service;
 
 	@Autowired
-	private Ope048Service ope048Service;
+	private Ope044Service ope044Service;
 
 	@PostMapping("/findAll")
 	@ResponseBody
-	public DataTableAjax<Ope048Vo> findAll(@RequestBody Ope048FormVo formVo) {
-		return ope048Service.findAll(formVo);
+	public DataTableAjax<Ope044Vo> findAll(@RequestBody Ope044FormVo formVo) {
+		return ope044Service.findAll(formVo);
 	}
 
 	@GetMapping("/exciseidList")
 	@ResponseBody
-	public List<LabelValueBean> findExciseId() {
-		List<LabelValueBean> dataList = ope048Service.findExciseId();
+	public List<LabelValueBean> exciseidList() {
+		List<LabelValueBean> dataList = ope044Service.exciseidList();
 		return dataList;
 	}
 
 	@PostMapping("/findByExciseId")
 	@ResponseBody
-	public Ope048FormVo findByExciseId(@RequestBody String exciseId) {
-		return ope048Service.findByExciseId(exciseId);
+	public Ope044FormVo findByExciseId(@RequestBody String exciseId) {
+		return ope044Service.findByExciseId(exciseId);
 	}
 
 	@PostMapping("/upload")
 	@ResponseBody
-	public List<Ope048ExcelVo> upload(@ModelAttribute Ope048FormVo formVo) throws EncryptedDocumentException,
-			InvalidFormatException, IOException, org.apache.poi.openxml4j.exceptions.InvalidFormatException {
-		return ope048Service.readFileExcel(formVo);
+	public List<Ope046ExcelVo> upload(@ModelAttribute Ope046FormVo formVo)
+			throws EncryptedDocumentException, InvalidFormatException, IOException {
+		return ope044Service.readFileExcel(formVo);
 	}
 
-	/*
-	 * @PostMapping("/save")
-	 * 
-	 * @ResponseBody public List<Ope046Vo> save(@RequestBody List<Ope046Vo> vo) {
-	 * ope048Service.save(vo); return vo; }
-	 */
+	@PostMapping("/save")
+	@ResponseBody
+	public Ope044SumVo save(@RequestBody Ope044SumVo sumVo) {
+		ope044Service.save(sumVo);
+		return sumVo;
+	}
 
 	@PostMapping("/export")
 	public void export(@RequestParam String dataJson, HttpServletResponse response) throws Exception {
 
 		Gson gson = new Gson();
-		Ope048SumVo result = gson.fromJson(dataJson, Ope048SumVo.class);
+		Ope044SumVo result = gson.fromJson(dataJson, Ope044SumVo.class);
 
-		List<Ope048Vo> dataList = result.getVoList();
+		List<Ope044Vo> dataList = result.getVoList();
 
 		/* set fileName */
-		String fileName = URLEncoder.encode("กระดาษทำการตรวจสอบด้านราคา", "UTF-8");
+		String fileName = URLEncoder.encode("กระดาษทำการรับสินค้าสำเร็จรูป", "UTF-8");
 
 		/* write it as an excel attachment */
-		ByteArrayOutputStream outByteStream = ope04Service.exportOpo048(dataList);
+		ByteArrayOutputStream outByteStream = ope04Service.exportOpo044(dataList);
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
@@ -98,4 +99,5 @@ public class Opo048Controller {
 		outStream.close();
 
 	}
+
 }
