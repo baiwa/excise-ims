@@ -36,8 +36,6 @@ public class Int084Controller {
 	private Int084Service int084Service;
 	
 	
-	
-
 	@PostMapping("/list")
 	@ResponseBody
 	public DataTableAjax<Int084Vo> list(@RequestBody Int084FormVo formVo){

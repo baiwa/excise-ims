@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -127,17 +129,32 @@ public class Int084Service {
 			
 			}
 			
-		
-		
+			List<Int084Vo> list2 = new ArrayList<Int084Vo>();
+			for (Int084Vo int084Vo : list) {
+				if(!BeanUtils.isEmpty(int084Vo.getOfficeName())){
+					
+					list2.add(int084Vo);
+					
+				}
+			}
 			// set data table
 		
 			// dataTableAjax.setDraw(formVo.getDraw() + 1);
 			dataTableAjax.setRecordsTotal(count);
 			dataTableAjax.setRecordsFiltered(count);
+			
 			if("1".equals(formVo.getSector())) {
-				dataTableAjax.setData(list);
+				
+				Collections.sort(list2, new Comparator<Int084Vo>() {
+					@Override
+					public int compare(final Int084Vo object1, final Int084Vo object2) {
+						return object1.getOfficeCode().compareTo(object2.getOfficeCode());
+					}
+				});
+				dataTableAjax.setData(list2);
 			}else {
-				for (Int084Vo int084Vo : list) {
+				for (Int084Vo int084Vo : list2) {
+					
 //					if(Float.valueOf(int084Vo.getRiskPersen())>=Float.valueOf(formVo.getBillLost())&&int084Vo.getOfficeName()!=""){
 					String sec = (!BeanUtils.isEmpty(int084Vo.getOfficeCode()))?int084Vo.getOfficeCode().substring(0, 2):"0";
 					if(formVo.getSector().equals(sec)){
@@ -146,6 +163,12 @@ public class Int084Service {
 						
 					}
 				}
+				Collections.sort(listReturn, new Comparator<Int084Vo>() {
+					@Override
+					public int compare(final Int084Vo object1, final Int084Vo object2) {
+						return object1.getOfficeCode().compareTo(object2.getOfficeCode());
+					}
+				});
 				dataTableAjax.setData(listReturn);
 			}
 			
@@ -156,6 +179,7 @@ public class Int084Service {
 
 		return dataTableAjax;
 	}
+	
 	
 	public Long save(List<Int084Vo> int084VoList) throws ParseException {
 		Long id = 0l;
@@ -192,7 +216,7 @@ public class Int084Service {
 
 	}
 	
-	
+ 
 	
 	public void exportFile(Int084FormVo formVo, HttpServletResponse response) throws IOException {
 		List<Int084Vo> dataList084 = new ArrayList<Int084Vo>();
@@ -381,3 +405,7 @@ public class Int084Service {
 		}
 
 }
+
+
+
+
