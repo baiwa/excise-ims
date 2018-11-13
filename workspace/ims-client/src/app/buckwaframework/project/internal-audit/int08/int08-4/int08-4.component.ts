@@ -51,7 +51,6 @@ export class Int084Component implements OnInit {
   carenda(){
     $("#calendar").calendar({
       endCalendar: $("#calendar1"),
-      maxDate: new Date(),
       type: "month",
       text: TextDateTH,
       formatter: formatter('ดป'),
@@ -70,7 +69,6 @@ export class Int084Component implements OnInit {
     });
     $("#calendar1").calendar({
       startCalendar: $("#calendar"),
-      maxDate: new Date(),
       type: "month",
       text: TextDateTH,
       formatter: formatter('ดป'),
@@ -119,7 +117,6 @@ export class Int084Component implements OnInit {
       "serverSide": false,
       "searching": false,
       "processing": true,
-      "ordering": false,
       "scrollX": true,    
 
       "ajax" : {
@@ -141,7 +138,13 @@ export class Int084Component implements OnInit {
       },
       "columns": [
         {
-          "data": "officeCode","className":"center","orderable": false
+          "data": "officeCode",
+          "render": function (data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          "className": "ui center aligned"
+        }, {
+          "data": "officeCode","className":"center"
         }, {
           "data": "officeName"
         }, {

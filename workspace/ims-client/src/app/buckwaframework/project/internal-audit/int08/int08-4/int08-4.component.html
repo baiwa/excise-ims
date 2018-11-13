@@ -24,7 +24,7 @@
       <div class="inline fields">
         <div class="three wide field"></div>
         <div class="two wide required field">
-          <label>ระยะเวลาที่ตรวจสอบ</label>
+          <label>ระยะเวลาที่ตรวจสอบ (ปีปฏิทิน)</label>
         </div>
         <div class="three wide field ui calendar" id="calendar">
           <div class="ui input left icon">
@@ -66,13 +66,14 @@
   </div>
   <br>
   <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-    <span>ผลการค้นหา</span>
+    <span>ผลการค้นหา การตรวจสอบใบเสร็จเสีย</span>
   </div>
   <div class="ui attached  segment">
 
     <table id="tableData" class="ui small celled table nowrap striped selectable" style="width: 100%">
       <thead>
         <tr>
+          <th style="text-align: center !important;">ลำดับที่</th>
           <th style="text-align: center !important;">รหัสสำนักงานสรรพสามิต</th>
           <th style="text-align: center !important;">ชื่อสำนักงานสรรพสามิต</th>
           <th style="text-align: center !important;">ช่วงเดือนที่</th>
@@ -87,7 +88,7 @@
     <div class="ui center aligned grid">
       <div class="sixteen wide column">
         <button class="ui mini yellow button" (click)="saveData()">
-          <i class="print icon"></i>ส่งออก</button>
+          <i class="print icon"></i>ส่งออกไฟล์ Excel</button>
       </div>
     </div>
     <br>
