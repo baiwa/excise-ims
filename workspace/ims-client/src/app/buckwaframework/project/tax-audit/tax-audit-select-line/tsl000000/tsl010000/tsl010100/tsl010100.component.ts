@@ -14,7 +14,7 @@ export class Tsl010100Component implements OnInit {
 
   breadcrumb: BreadCrumb[] = [
     { label: 'ตรวจสอบภาษี', route: '#' },
-    { label: 'คัดเลือกลาย', route: '#' },
+    { label: 'การคัดเลือกราย', route: '#' },
   ];
 
   //==> params
