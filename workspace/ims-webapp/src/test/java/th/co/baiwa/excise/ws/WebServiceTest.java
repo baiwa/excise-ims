@@ -14,6 +14,7 @@ import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseTaxReceiveDao;
 import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAud;
 import th.co.baiwa.excise.ia.service.IncomeExciseAudService;
+import th.co.baiwa.excise.ta.persistence.vo.PlanFromWsVo;
 import th.co.baiwa.excise.ta.service.PlanFromWsHeaderService;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.IncFri8000Res;
@@ -63,17 +64,20 @@ public class WebServiceTest {
 		calendar.set(Integer.parseInt("2561"), 8, 30);
 		exciseTaxReceiveDao.queryMonthShotName(calendar.getTime(), 12);
 		
-		String startDateStr = "10/01/2561";
-		String endDateStr = "02/05/2561";
-		Date startDate = DateConstant.convertStrDDMMYYYYToDate(startDateStr);
-		Date endDate = DateConstant.convertStrDDMMYYYYToDate(endDateStr);
+		PlanFromWsVo planFromWsVo = new PlanFromWsVo();
+		planFromWsVo.setDateFrom("10/2560");
+		planFromWsVo.setDateTo("09/2561");
+		planFromWsVo.setMonthNonPay("2");
+		planFromWsVo.setSymbol1("<");
+		planFromWsVo.setPercent1("-40");
+		planFromWsVo.setSymbol1(">");
+		planFromWsVo.setPercent2("10");
 		try {
-			planFromWsHeaderService.findExciseIdOrderByPercenTax(startDate, endDate, 3, 20);
+			planFromWsHeaderService.findExciseIdOrderByPercenTax(planFromWsVo);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		
 	}
 

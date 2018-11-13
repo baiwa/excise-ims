@@ -1,8 +1,9 @@
 package th.co.baiwa.excise.ta.service;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,10 +15,13 @@ import th.co.baiwa.excise.ia.persistence.dao.ExciseTaxReceiveDao;
 import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetDetailDao;
 import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetHeaderDao;
 import th.co.baiwa.excise.ta.persistence.entity.PlanFromWsHeader;
+import th.co.baiwa.excise.ta.persistence.entity.PlanRiskDtl;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetDetail;
 import th.co.baiwa.excise.ta.persistence.entity.analysis.PlanWorksheetHeader;
 import th.co.baiwa.excise.ta.persistence.repository.PlanFromWsHeaderRepository;
+import th.co.baiwa.excise.ta.persistence.repository.PlanRiskDtlRepository;
 import th.co.baiwa.excise.ta.persistence.repository.PlanWorksheetHeaderRepository;
+import th.co.baiwa.excise.ta.persistence.vo.PlanFromWsVo;
 
 @Service
 public class PlanFromWsHeaderService {
@@ -39,13 +43,19 @@ public class PlanFromWsHeaderService {
 
 	@Autowired
 	private PlanWorksheetHeaderService planWorksheetHeaderService;
+	
+	@Autowired
+	private PlanRiskDtlRepository planRiskDtlRepository;
+	
+	private final String RISK_TYPE_NON_PAY = "NON_PAY";
+	private final String RISK_TYPE_PERCENT_DIFF_SYMBOL_1 = "PERCENT_DIFF >";
+	private final String RISK_TYPE_PERCENT_DIFF_SYMBOL_2 = "PERCENT_DIFF <";
+	private final String RISK_TYPE_PERCENT_DIFF_SYMBOL_3 = "PERCENT_DIFF =";
 
-	public void findExciseIdOrderByPercenTax(Date startDate , Date endDate , int monthNotPayRisk , int percentDiff) throws SQLException{
+	public void findExciseIdOrderByPercenTax(PlanFromWsVo vo) throws SQLException{
 		//budgetYear 2561  01/10/2560 -> 30/09/2561
-		Calendar calendarStartDate = Calendar.getInstance(DateConstant.LOCAL_TH);
-		calendarStartDate.setTime(startDate);
-		Calendar calendarEndDate = Calendar.getInstance(DateConstant.LOCAL_TH);
-		calendarEndDate.setTime(endDate);
+		Date startDate = DateConstant.convertStrToDate(vo.getDateFrom(), DateConstant.MM_YYYY);
+		Date endDate = DateConstant.convertStrToDate(vo.getDateTo(), DateConstant.MM_YYYY);
 		int daysBetween = (int)ChronoUnit.MONTHS.between(DateConstant.dateToLocalDadte(startDate), DateConstant.dateToLocalDadte(endDate));
 		String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-01-"+ planWorksheetHeaderDao.getAnalysNumber();
 		List<String> monthLIst = exciseTaxReceiveDao.queryMonthShotName(endDate, daysBetween);
@@ -56,12 +66,19 @@ public class PlanFromWsHeaderService {
 		PlanWorksheetHeader planWorksheetHeader = new PlanWorksheetHeader();
 		planWorksheetHeader.setAnalysNumber(analysNumber);
 		List<PlanWorksheetHeader> planWorksheetHeaderList = planWorksheetHeaderDao.queryPlanWorksheetHeaderCriteria(planWorksheetHeader);
+		List<Long> listHeader = new ArrayList<Long>();
 		for (PlanWorksheetHeader plan : planWorksheetHeaderList) {
-			validateCondition(plan , monthLIst , monthNotPayRisk,percentDiff);
+			validateCondition(plan , monthLIst , vo);
+			if("S".equals(plan.getFlag())) {
+				listHeader.add(plan.getWorkSheetHeaderId());
+			}
 		}
+		
+		
 	}
 
-	private void validateCondition(PlanWorksheetHeader plan , List<String> monthList ,int monthNotPayRisk , int percentDiff) {
+	private void validateCondition(PlanWorksheetHeader plan , List<String> monthList ,PlanFromWsVo vo) {
+		int monthNotPayRisk = Integer.parseInt(vo.getMonthNonPay());
 		PlanWorksheetDetail search = new PlanWorksheetDetail();
 		search.setAnalysNumber(plan.getAnalysNumber());
 		search.setExciseId(plan.getExciseId());
@@ -71,23 +88,28 @@ public class PlanFromWsHeaderService {
 		int countNotPayTaxMonth = 0;
 		int maxNotPay = 0;
 		
-		
+		List<String> dtlListMonth = new ArrayList<String>();
 		
 		for (PlanWorksheetDetail dtl : dtlList) {
-			
-			//######### condition 1########################
-			if(monthList.indexOf(dtl.getMonth()) > -1) {
-				if(maxNotPay < countNotPayTaxMonth) {
-					maxNotPay = countNotPayTaxMonth;
-				}
+			dtlListMonth.add(dtl.getMonth());
+		}
+		for (String month : monthList) {
+			if(dtlListMonth.indexOf(month) == -1) {
+				countNotPayTaxMonth = 0;
 			}else {
 				countNotPayTaxMonth ++;
 			}
-			//######### END condition 1####################
-			
+			if(maxNotPay < countNotPayTaxMonth) {
+				maxNotPay = countNotPayTaxMonth;
+			}
+
 		}
-		if(monthNotPayRisk >= maxNotPay) {
+		
+		if(maxNotPay >= monthNotPayRisk ) {
 			plan.setFlag("S");
+			PlanRiskDtl planRiskDtl = new PlanRiskDtl(new BigDecimal(plan.getWorkSheetHeaderId()), RISK_TYPE_NON_PAY, maxNotPay+"");
+			planRiskDtlRepository.save(planRiskDtl);
+			
 		}
 		//######### condition 2########################
 		// field condition 2
@@ -95,7 +117,7 @@ public class PlanFromWsHeaderService {
 		double secondAmount = 0;
 		for (String month : monthList) {
 			firstAmount = 0;
-			secondAmount = 0;
+			
 			for (PlanWorksheetDetail dtl : dtlList) {
 				if(month.equals(dtl.getMonth())) {
 					firstAmount =  dtl.getAmount() != null  ? dtl.getAmount().doubleValue() : 0;
@@ -111,13 +133,31 @@ public class PlanFromWsHeaderService {
 					onePercen = secondAmount/100;
 					percenDiff = 100 - (firstAmount/onePercen);
 				}
-				if(percenDiff > 30) {
-					plan.setFlag("S");
+				
+				if(">".equals(vo.getSymbol1())) {
+					if(percenDiff > Double.parseDouble(vo.getPercent1())) {
+						plan.setFlag("S");
+						PlanRiskDtl planRiskDtl = new PlanRiskDtl(new BigDecimal(plan.getWorkSheetHeaderId()), RISK_TYPE_PERCENT_DIFF_SYMBOL_1,  percenDiff + " > "+ vo.getPercent1());
+						planRiskDtlRepository.save(planRiskDtl);
+					}
+				}else if("<".equals(vo.getSymbol1())) {
+					if(percenDiff < Double.parseDouble(vo.getPercent1())) {
+						plan.setFlag("S");
+						PlanRiskDtl planRiskDtl = new PlanRiskDtl(new BigDecimal(plan.getWorkSheetHeaderId()), RISK_TYPE_PERCENT_DIFF_SYMBOL_2,  percenDiff + " < "+ vo.getPercent1());
+						planRiskDtlRepository.save(planRiskDtl);
+					}
+				}else {
+					if(percenDiff == Double.parseDouble(vo.getPercent1())) {
+						plan.setFlag("S");
+						PlanRiskDtl planRiskDtl = new PlanRiskDtl(new BigDecimal(plan.getWorkSheetHeaderId()), RISK_TYPE_PERCENT_DIFF_SYMBOL_3,  percenDiff + " = "+ vo.getPercent1());
+						planRiskDtlRepository.save(planRiskDtl);
+					}
 				}
+				
 			}
+			secondAmount = firstAmount;
 			
 		}		
-		//######### condition 3########################
 		System.out.println("#########################");
 	}
 

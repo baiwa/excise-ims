@@ -1,8 +1,10 @@
 package th.co.baiwa.excise.ta.controller;
 
 import java.beans.PropertyEditorSupport;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -33,7 +35,12 @@ public class TaxAuditSelectListController {
 	@ResponseBody
 	public void saveToTaPlanSearchRick(@ModelAttribute PlanFromWsVo vo) {
 		logger.debug("saveToTaPlanSearchRick");
-//		planFromWsHeaderService.findExciseIdOrderByPercenTax(, vo.getMonthNotPayRisk(), vo.getPercentDiff());
+		try {
+			planFromWsHeaderService.findExciseIdOrderByPercenTax(vo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@InitBinder

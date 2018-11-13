@@ -1,39 +1,56 @@
 package th.co.baiwa.excise.ta.persistence.vo;
 
-import java.util.Date;
-
 public class PlanFromWsVo{
 	
-	private Date startDate;
-	private Date endDate;
-	private Integer monthNotPayRisk;
-	private Integer percentDiff;
-	
-	
-
-	public Integer getMonthNotPayRisk() {
-		return monthNotPayRisk;
+	 private String dateFrom;
+     private String dateTo;
+     private String monthNonPay;
+     private String symbol1;
+     private String symbol2;
+     private String percent1;
+     private String percent2;
+     
+	public String getDateFrom() {
+		return dateFrom;
 	}
-	public void setMonthNotPayRisk(Integer monthNotPayRisk) {
-		this.monthNotPayRisk = monthNotPayRisk;
+	public void setDateFrom(String dateFrom) {
+		this.dateFrom = dateFrom;
 	}
-	public Integer getPercentDiff() {
-		return percentDiff;
+	public String getDateTo() {
+		return dateTo;
 	}
-	public void setPercentDiff(Integer percentDiff) {
-		this.percentDiff = percentDiff;
+	public void setDateTo(String dateTo) {
+		this.dateTo = dateTo;
 	}
-	public Date getStartDate() {
-		return startDate;
+	public String getMonthNonPay() {
+		return monthNonPay;
 	}
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setMonthNonPay(String monthNonPay) {
+		this.monthNonPay = monthNonPay;
 	}
-	public Date getEndDate() {
-		return endDate;
+	public String getSymbol1() {
+		return symbol1;
 	}
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setSymbol1(String symbol1) {
+		this.symbol1 = symbol1;
+	}
+	public String getSymbol2() {
+		return symbol2;
+	}
+	public void setSymbol2(String symbol2) {
+		this.symbol2 = symbol2;
+	}
+	public String getPercent1() {
+		return percent1;
+	}
+	public void setPercent1(String percent1) {
+		this.percent1 = percent1;
+	}
+	public String getPercent2() {
+		return percent2;
+	}
+	public void setPercent2(String percent2) {
+		this.percent2 = percent2;
 	}
 	
 	
