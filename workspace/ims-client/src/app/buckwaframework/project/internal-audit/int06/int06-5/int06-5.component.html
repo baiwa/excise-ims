@@ -113,10 +113,15 @@
 
     <div class="ui grid">
         <div class="sixteen wide center aligned column">
-            <button class="ui mini yellow button" (click)="exportFile()">
+            <button class="ui mini yellow button" (click)="export()">
                 <i class="print icon"></i>ส่งออก
             </button>
         </div>
     </div>
 
 </div>
+
+<!-- form-data-excel -->
+<form id="form-data-excel" method="POST"> 
+    <input type="hidden" name="dataJson" id="dataJson">
+</form>

@@ -12,6 +12,7 @@ const URL = {
 @Injectable()
 export class Int066Service {
   form: FormSearch = new FormSearch();
+  table: any;
   constructor(
     private ajax: AjaxService,
     private message: MessageBarService
@@ -86,7 +87,7 @@ export class Int066Service {
   }
   dataTable = () => {
 
-    const table = $("#dataTable").DataTableTh({
+    this.table = $("#dataTable").DataTableTh({
       "serverSide": true,
       "searching": false,
       "processing": true,
@@ -139,5 +140,15 @@ export class Int066Service {
         }
       ]
     });
+  }
+
+     // getDataExcel
+     getDataExcel(){
+      let dataList = this.table.data();   
+      let dataArray = [];
+     for(let i=0;i<dataList.length;i++){
+         dataArray.push(dataList[i]);
+     }
+     return dataArray
   }
 }

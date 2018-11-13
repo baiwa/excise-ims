@@ -74,17 +74,6 @@ export class Int065Service {
     this.table.ajax.reload();
   }
 
-  exportFile = () => {
-    let param = "";
-    param += "?sector=" + this.form.sector;
-    param += "&area=" + this.form.area;
-    param += "&branch=" + this.form.branch;
-    param += "&dateFrom=" + this.form.dateFrom;
-    param += "&dateTo=" + this.form.dateTo;
-    param += "&budgetType=" + $("#budgetType").val();
-    console.log(URL.export + param);
-    this.ajax.download(URL.export + param);
-  }
 
   dataTable = () => {
     console.log("My datatable");
@@ -154,4 +143,14 @@ export class Int065Service {
     });
   }
 
+    // getDataExcel
+    getDataExcel(){
+      let dataList = this.table.data();   
+      let dataArray = [];
+     for(let i=0;i<dataList.length;i++){
+         dataArray.push(dataList[i]);
+     }
+     return dataArray
+  }
+  
 }

@@ -113,4 +113,11 @@ export class Int066Component implements OnInit {
       formatter: formatter()
     });
   }
+  export =()=>{
+    let data = this.int066Service.getDataExcel();
+    let formExcel = $("#form-data-excel").get(0);                      
+    formExcel.action = AjaxService.CONTEXT_PATH + "ia/int066/export";
+    formExcel.dataJson.value = JSON.stringify({int065ExcelList : data});		
+    formExcel.submit();
+  };
 }

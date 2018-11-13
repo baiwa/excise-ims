@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.ia.persistence.vo.Int0610Vo;
+import th.co.baiwa.excise.ia.persistence.vo.Int065Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int069Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -164,19 +165,19 @@ public class CheckPaymentExcelService {
 
 			// MofNum
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getMofNum(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getMofNum(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			// RefNum
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getRefNum(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getRefNum(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			// getRefDateStr
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getRefDateStr(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getRefDateStr(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
@@ -186,7 +187,7 @@ public class CheckPaymentExcelService {
 				cell.setCellValue(data.getTransferList());
 				cell.setCellStyle(cellLeft);
 			} else {
-				cell.setCellValue("-");
+				cell.setCellValue("");
 				cell.setCellStyle(cellCenter);
 			}
 			cellNum++;
@@ -197,14 +198,14 @@ public class CheckPaymentExcelService {
 				cell.setCellValue(data.getBudgetType());
 				cell.setCellStyle(cellLeft);
 			} else {
-				cell.setCellValue("-");
+				cell.setCellValue("");
 				cell.setCellStyle(cellCenter);
 			}
 			cellNum++;
 
 			// getBudgetCode
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getBudgetCode(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getBudgetCode(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
@@ -214,7 +215,7 @@ public class CheckPaymentExcelService {
 				cell.setCellValue(data.getActivities());
 				cell.setCellStyle(cellLeft);
 			} else {
-				cell.setCellValue("-");
+				cell.setCellValue("");
 				cell.setCellStyle(cellCenter);
 			}
 			cellNum++;
@@ -225,7 +226,7 @@ public class CheckPaymentExcelService {
 				cell.setCellValue(data.getBudget());
 				cell.setCellStyle(cellLeft);
 			} else {
-				cell.setCellValue("-");
+				cell.setCellValue("");
 				cell.setCellStyle(cellCenter);
 			}
 			cellNum++;
@@ -236,7 +237,7 @@ public class CheckPaymentExcelService {
 				cell.setCellValue(data.getCtgBudget());
 				cell.setCellStyle(cellLeft);
 			} else {
-				cell.setCellValue("-");
+				cell.setCellValue("");
 				cell.setCellStyle(cellCenter);
 			}
 			cellNum++;
@@ -475,5 +476,197 @@ public class CheckPaymentExcelService {
 
 		return outByteStream;
 	}
+	
+	
+	
+	
+	
 
+	public ByteArrayOutputStream exportInt065(List<Int065Vo> list) throws IOException {
+		/* create spreadsheet */
+		XSSFWorkbook workbook = setUpExcel();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+
+		/* Header */
+		String[] tbTH1 = {"ลำดับ", "วันที่สั่งจ่าย", "เช็คเล่มที่ ", "ชื่อธนาคาร", "จำนวนเงินสั่งจ่ายในเช็ค", "ประเภทงบประมาณ","รายการ","ผู้รับเงิน"};
+		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH1[cellNum]);
+			cell.setCellStyle(thStyle);
+		}
+		;
+
+		/* set sheet */
+
+		// setColumnWidth
+		for (int i = 1; i <= 7; i++) {
+			if (i == 1 || i == 2 ) {
+				sheet.setColumnWidth(i, 76 * 60);
+			}  else {
+				sheet.setColumnWidth(i, 76 * 100);
+			}
+
+		}
+
+		/* Detail */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+        for(Int065Vo item : list) {
+        	row = sheet.createRow(rowNum);
+			// No.
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);		
+			cell.setCellValue(StringUtils.defaultIfBlank(item.getPaymentDate(), ""));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);	
+			cell.setCellValue(StringUtils.defaultIfBlank(item.getRefPayment(), ""));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);		
+			cell.setCellValue(StringUtils.defaultIfBlank(item.getBankName(), ""));
+			
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);		
+			cell.setCellValue(StringUtils.defaultIfBlank(formatter.format(new BigDecimal(item.getAmount())), ""));		
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);		
+			cell.setCellValue(StringUtils.defaultIfBlank(item.getBudgetType(), ""));
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(item.getItemDesc(), ""));			
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);		
+			cell.setCellValue(StringUtils.defaultIfBlank(item.getPayee(), ""));		
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			no++;
+			rowNum++;
+			cellNum = 0;
+        }
+
+		/* EndDetail */
+
+		/* set write */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+
+		return outByteStream;
+	}
+
+	
+	
+	public ByteArrayOutputStream exportInt066(List<Int065Vo> list) throws IOException {
+		/* create spreadsheet */
+		XSSFWorkbook workbook = setUpExcel();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+
+		/* Header */
+		String[] tbTH1 = {"ลำดับที่", "ผู้รับเงิน", "เลขที่บัญชี ", "ประเภทค่าใช้จ่าย", "รายการ","จำนวนเงิน","วันที่โอน"};
+		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH1[cellNum]);
+			cell.setCellStyle(thStyle);
+		}
+		;
+
+		/* set sheet */
+
+		// setColumnWidth
+		for (int i = 1; i <= 6; i++) {
+			if ( i == 1 ) {
+				sheet.setColumnWidth(i, 76 * 100);
+			}else if(i == 2) {
+				sheet.setColumnWidth(i, 76 * 60);
+			}
+			else {
+				sheet.setColumnWidth(i, 76 * 100);
+			}
+
+		}
+
+		/* Detail */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+        for(Int065Vo item : list) {
+        	row = sheet.createRow(rowNum);
+			// No.
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);		
+			cell.setCellValue(StringUtils.defaultIfBlank(item.getPayee(), ""));		
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+		
+			cell = row.createCell(cellNum);	
+			cell.setCellValue(StringUtils.defaultIfBlank(item.getRefPayment(), ""));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+		
+		
+			cell = row.createCell(cellNum);		
+			cell.setCellValue(StringUtils.defaultIfBlank(item.getBudgetType(), ""));
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(item.getItemDesc(), ""));			
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);		
+			cell.setCellValue(StringUtils.defaultIfBlank(formatter.format(new BigDecimal(item.getAmount())), ""));		
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+	
+			
+			cell = row.createCell(cellNum);		
+			cell.setCellValue(StringUtils.defaultIfBlank(item.getPaymentDate(), ""));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			no++;
+			rowNum++;
+			cellNum = 0;
+        }
+
+		/* EndDetail */
+
+		/* set write */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+
+		return outByteStream;
+	}
 }

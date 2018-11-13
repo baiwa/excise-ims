@@ -104,10 +104,6 @@ export class Int065Component implements OnInit, AfterViewInit {
     this.int065Service.clear();
   }
 
-  exportFile = () => {
-    this.int065Service.exportFile();
-  }
-
   dataTable = () => {
     this.int065Service.dataTable();
   }
@@ -130,4 +126,12 @@ export class Int065Component implements OnInit, AfterViewInit {
   }
 
 
+    // export
+    export =()=>{
+      let data = this.int065Service.getDataExcel();
+      let formExcel = $("#form-data-excel").get(0);                      
+      formExcel.action = AjaxService.CONTEXT_PATH + "ia/int065/export";
+      formExcel.dataJson.value = JSON.stringify({int065ExcelList : data});		
+      formExcel.submit();
+    };
 }
