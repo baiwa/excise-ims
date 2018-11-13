@@ -24,26 +24,20 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.ia.persistence.entity.TransferList;
-import th.co.baiwa.excise.ia.persistence.vo.Int069ExcelVo;
+import th.co.baiwa.excise.ia.persistence.vo.CheckPaymentExcelVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int069FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int069Vo;
 import th.co.baiwa.excise.ia.service.CheckPaymentExcelService;
 import th.co.baiwa.excise.ia.service.Int069Service;
-import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
-import th.co.baiwa.excise.ta.persistence.vo.Ope041ExcelVo;
-import th.co.baiwa.excise.ta.service.Ope04ExcelService;
-
-
 
 @Controller
 @RequestMapping("api/ia/int069")
 public class Int069Controller {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	
 	@Autowired
 	private CheckPaymentExcelService checkPaymentExcelService;
-	
+
 	@Autowired
 	private Int069Service int069Service;
 
@@ -69,14 +63,13 @@ public class Int069Controller {
 
 		return msg;
 	}
-	
+
 	@PostMapping("/export")
 	public void export(@RequestParam String dataJson, HttpServletResponse response) throws Exception {
 
 		Gson gson = new Gson();
-		Int069ExcelVo result = gson.fromJson(dataJson, Int069ExcelVo.class);
-		System.out.println("test");
-		List<Int069Vo> dataList = result.getVoList();
+		CheckPaymentExcelVo result = gson.fromJson(dataJson, CheckPaymentExcelVo.class);
+		List<Int069Vo> dataList = result.getInt069ExcelList();
 
 		/* set fileName */
 		String fileName = URLEncoder.encode("บันทึกข้อมูลรับโอนเงิน", "UTF-8");

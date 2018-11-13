@@ -285,7 +285,32 @@ export class Int0610Component implements OnInit, AfterViewInit {
             `;
           }
         }
-      ]
+      ],
+      rowCallback: (row, data, index) => {
+        console.log(data);
+      }
     });
-  };
+  }
+
+
+  // getDataExcel
+  getDataExcel(){
+      let dataList = this._dataTable.data();   
+      let dataArray = [];
+     for(let i=0;i<dataList.length;i++){
+         dataArray.push(dataList[i]);
+     }
+     return dataArray
+  }
+
+    // export
+    export =()=>{
+      let data = this.getDataExcel();
+      let formExcel = $("#form-data-excel").get(0);                      
+      formExcel.action = AjaxService.CONTEXT_PATH + "ia/int0610/export";
+      formExcel.dataJson.value = JSON.stringify({int0610ExcelList : data});		
+      formExcel.submit();
+    }
+
+
 }

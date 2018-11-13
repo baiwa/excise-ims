@@ -79,6 +79,7 @@
 <div class="ui attached segment">
     <!-- <div class="ui segment" id="int0610">
         <div style="overflow-x: scroll;"> -->
+<<<<<<< Updated upstream
     <div class="ui grid">
         <div class="sixteen wide column">
             <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%">
@@ -111,3 +112,42 @@
         </div>
     </div>
 </div>
+=======
+  <div class="ui grid">
+    <div class="sixteen wide column">
+      <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%">
+        <thead>
+          <tr>
+            <th style="text-align: center !important">ลำดับที่</th>
+            <th style="text-align: center !important">เลขที่เอกสารอ้างอิง</th>
+            <th style="text-align: center !important">วันที่ขอเบิก</th>
+            <th style="text-align: center !important">ประเภทงบประมาณ</th>
+            <th style="text-align: center !important">กิจกรรม</th>
+            <th style="text-align: center !important">งบ</th>
+            <th style="text-align: center !important">หมวด</th>
+            <th style="text-align: center !important">หมวดย่อย</th>
+            <th style="text-align: center !important">รายการ</th>
+            <th style="text-align: center !important">จำนวนเงินขอเบิก</th>
+            <th style="text-align: center !important">ภาษีหัก ณ ที่จ่าย</th>
+            <th style="text-align: center !important">หักประกันสังคม</th>
+            <th style="text-align: center !important">อื่นๆ</th>
+            <th style="text-align: center !important">จำนวนเงินขอรับ</th>
+            <th style="text-align: center !important">เลขที่เอกสารขอเบิก</th>
+            <th style="text-align: center !important">เลขที่เอกสารขอจ่าย</th>
+            <th style="text-align: center !important">หมายเหตุ</th>
+            <th style="text-align: center !important">จัดการ</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="sixteen wide center aligned column">
+      <button class="ui mini yellow button" (click)="export()"><i class="print icon"></i> ส่งออก</button>
+    </div>
+  </div>
+</div>
+
+<!-- form-data-excel -->
+<form id="form-data-excel" method="POST"> 
+  <input type="hidden" name="dataJson" id="dataJson">
+</form>
+>>>>>>> Stashed changes

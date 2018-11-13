@@ -2,6 +2,7 @@ package th.co.baiwa.excise.ia.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.excise.ia.persistence.vo.Int0610Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int069Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -34,7 +36,7 @@ public class CheckPaymentExcelService {
 	private CellStyle topRight;
 	private CellStyle topLeft;
 	private Font fontHeader;
-	
+
 	private XSSFWorkbook setUpExcel() {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
@@ -87,9 +89,9 @@ public class CheckPaymentExcelService {
 		topLeft.setAlignment(HorizontalAlignment.LEFT);
 		return workbook;
 	}
-	
+
 	DecimalFormat formatter = new DecimalFormat("#,##0.00");
-	
+
 	public ByteArrayOutputStream exportInt069(List<Int069Vo> dataList) throws IOException {
 		/* create spreadsheet */
 		XSSFWorkbook workbook = setUpExcel();
@@ -100,13 +102,15 @@ public class CheckPaymentExcelService {
 		Cell cell = row.createCell(cellNum);
 
 		/* Header */
-		String[] tbTH1 = {"ลำดับที่","เอกสารอ้างอิง","","","รายการโอนเงิน","ประเภทเงิน","รหัสเงิน","กิจกรรม","งบ","หมวด","หมวดย่อย","รายการ","จำนวนเงิน","หมายเหตุ"};
+		String[] tbTH1 = { "ลำดับที่", "เอกสารอ้างอิง", "", "", "รายการโอนเงิน", "ประเภทเงิน", "รหัสเงิน", "กิจกรรม",
+				"งบ", "หมวด", "หมวดย่อย", "รายการ", "จำนวนเงิน", "หมายเหตุ" };
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
 			cell.setCellStyle(thStyle);
-		};
-		String[] tbTH2 = {"ที่ กค","เลขที่","ว.ด.ป"};
+		}
+		;
+		String[] tbTH2 = { "ที่ กค", "เลขที่", "ว.ด.ป" };
 		row = sheet.createRow(1);
 		int cellNumtbTH2 = 1;
 		for (int i = 0; i < tbTH2.length; i++) {
@@ -114,14 +118,15 @@ public class CheckPaymentExcelService {
 			cell.setCellValue(tbTH2[i]);
 			cell.setCellStyle(thStyle);
 			cellNumtbTH2++;
-		};
-		
+		}
+		;
 
 		for (int i = 4; i < tbTH1.length; i++) {
 			cell = row.createCell(i);
 			cell.setCellStyle(thStyle);
-		};
-		
+		}
+		;
+
 		cell = row.createCell(0);
 		cell.setCellStyle(thStyle);
 
@@ -129,23 +134,21 @@ public class CheckPaymentExcelService {
 		// merge(firstRow, lastRow, firstCol, lastCol)
 		sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 3));
 		sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-		for(int i= 4;i<=13;i++) {
+		for (int i = 4; i <= 13; i++) {
 			sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
 		}
-		
-		
+
 		// setColumnWidth
 		for (int i = 1; i <= 13; i++) {
-			if(i==1|| i==2 ||i==3) {
+			if (i == 1 || i == 2 || i == 3) {
 				sheet.setColumnWidth(i, 76 * 50);
-			}else if (i == 10 || i==11 || i==13) {
+			} else if (i == 10 || i == 11 || i == 13) {
 				sheet.setColumnWidth(i, 76 * 150);
-			}else {
+			} else {
 				sheet.setColumnWidth(i, 76 * 80);
 			}
-		
+
 		}
-		
 
 		/* Detail */
 		rowNum = 2;
@@ -159,140 +162,124 @@ public class CheckPaymentExcelService {
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
-			
 			// MofNum
 			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(data.getMofNum())) {
-				cell.setCellValue(data.getMofNum());
-			}else {
-				cell.setCellValue("-");
-			}
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getMofNum(), "-"));
 			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			// RefNum
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(data.getRefNum())) {
-				cell.setCellValue(data.getRefNum());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			// getRefDateStr
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(data.getRefDateStr())) {
-				cell.setCellValue(data.getRefDateStr());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-			
-			// getTransferList
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(data.getTransferList())) {
-				cell.setCellValue(data.getTransferList());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellLeft);
 			cellNum++;
 
-			
-			// getBudgetType
+			// RefNum
 			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(data.getBudgetType())) {
-				cell.setCellValue(data.getBudgetType());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellLeft);
-			cellNum++;
-			
-			// getBudgetCode
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(data.getBudgetCode())) {
-				cell.setCellValue(data.getBudgetCode());
-			}else {
-				cell.setCellValue("-");
-			}
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getRefNum(), "-"));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
-			
-			// getActivities
+
+			// getRefDateStr
 			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(data.getActivities())) {
-				cell.setCellValue(data.getActivities());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellLeft);
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getRefDateStr(), "-"));
+			cell.setCellStyle(cellCenter);
 			cellNum++;
-			
-			// getBudget
+
+			// getTransferList
 			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(data.getBudget())) {
-				cell.setCellValue(data.getBudget());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellLeft);
-			cellNum++;
-			
-			// getCtgBudget
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(data.getCtgBudget())) {
-				cell.setCellValue(data.getCtgBudget());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellLeft);
-			cellNum++;
-			
-			// getSubCtgBudget
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(data.getSubCtgBudget())) {
-				cell.setCellValue(data.getSubCtgBudget());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellLeft);
-			cellNum++;
-			
-			// getDescriptionList
-			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(data.getDescriptionList())) {
-				cell.setCellValue(data.getDescriptionList());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(cellLeft);
-			cellNum++;
-			
-			// getAmount
-			cell = row.createCell(cellNum);
-			if(BeanUtils.isNotEmpty(data.getAmount())) {
-				cell.setCellValue(formatter.format(data.getAmount()));
-				cell.setCellStyle(cellRight);
-			}else {
+			if (StringUtils.isNotBlank(data.getTransferList())) {
+				cell.setCellValue(data.getTransferList());
+				cell.setCellStyle(cellLeft);
+			} else {
 				cell.setCellValue("-");
 				cell.setCellStyle(cellCenter);
 			}
-			
 			cellNum++;
-			
+
+			// getBudgetType
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getBudgetType())) {
+				cell.setCellValue(data.getBudgetType());
+				cell.setCellStyle(cellLeft);
+			} else {
+				cell.setCellValue("-");
+				cell.setCellStyle(cellCenter);
+			}
+			cellNum++;
+
+			// getBudgetCode
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getBudgetCode(), "-"));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			// getActivities
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getActivities())) {
+				cell.setCellValue(data.getActivities());
+				cell.setCellStyle(cellLeft);
+			} else {
+				cell.setCellValue("-");
+				cell.setCellStyle(cellCenter);
+			}
+			cellNum++;
+
+			// getBudget
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getBudget())) {
+				cell.setCellValue(data.getBudget());
+				cell.setCellStyle(cellLeft);
+			} else {
+				cell.setCellValue("-");
+				cell.setCellStyle(cellCenter);
+			}
+			cellNum++;
+
+			// getCtgBudget
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getCtgBudget())) {
+				cell.setCellValue(data.getCtgBudget());
+				cell.setCellStyle(cellLeft);
+			} else {
+				cell.setCellValue("-");
+				cell.setCellStyle(cellCenter);
+			}
+			cellNum++;
+
+			// getSubCtgBudget
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getSubCtgBudget())) {
+				cell.setCellValue(data.getSubCtgBudget());
+				cell.setCellStyle(cellLeft);
+			} else {
+				cell.setCellValue("-");
+				cell.setCellStyle(cellCenter);
+			}
+			cellNum++;
+
+			// getDescriptionList
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getDescriptionList())) {
+				cell.setCellValue(data.getDescriptionList());
+				cell.setCellStyle(cellLeft);
+			} else {
+				cell.setCellValue("-");
+				cell.setCellStyle(cellCenter);
+			}
+			cellNum++;
+
+			// getAmount
+			cell = row.createCell(cellNum);
+			if (BeanUtils.isNotEmpty(data.getAmount())) {
+				cell.setCellValue(formatter.format(data.getAmount()));
+				cell.setCellStyle(cellRight);
+			} else {
+				cell.setCellValue("-");
+				cell.setCellStyle(cellCenter);
+			}
+			cellNum++;
+
 			// getNote
 			cell = row.createCell(cellNum);
-			if(StringUtils.isNotBlank(data.getNote())) {
-				cell.setCellValue(data.getNote());
-			}else {
-				cell.setCellValue("");
-			}
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getNote(), ""));
 			cell.setCellStyle(cellLeft);
 			cellNum++;
-			
+
 			no++;
 			rowNum++;
 			cellNum = 0;
@@ -306,10 +293,187 @@ public class CheckPaymentExcelService {
 
 		return outByteStream;
 	}
-	
-	
-	
-	
-	
-	
+
+	public ByteArrayOutputStream exportInt0610(List<Int0610Vo> dataList) throws IOException {
+		/* create spreadsheet */
+		XSSFWorkbook workbook = setUpExcel();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+
+		/* Header */
+		String[] tbTH1 = { "ลำดับที่", "เลขที่เอกสารอ้างอิง", "วันที่ขอเบิก", "ประเภทงบประมาณ", "กิจกรรม", "งบ", "หมวด",
+				"หมวดย่อย", "รายการ", "จำนวนเงินขอเบิก", "ภาษีหัก ณ ที่จ่าย", "หักประกันสังคม", "อื่นๆ",
+				"จำนวนเงินขอรับ", "เลขที่เอกสารขอเบิก", "เลขที่เอกสารขอจ่าย", "หมายเหตุ" };
+		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH1[cellNum]);
+			cell.setCellStyle(thStyle);
+		}
+		;
+
+		/* set sheet */
+
+		// setColumnWidth
+		for (int i = 1; i <= 18; i++) {
+			if (i == 2 || i == 9 || i == 10 || i == 11 || i == 12 || i == 13) {
+				sheet.setColumnWidth(i, 76 * 60);
+			} else if (i == 16) {
+				sheet.setColumnWidth(i, 76 * 250);
+			} else {
+				sheet.setColumnWidth(i, 76 * 100);
+			}
+
+		}
+
+		/* Detail */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+		for (Int0610Vo data : dataList) {
+			row = sheet.createRow(rowNum);
+			// No.
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			// RefNum
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getRefnum(), "-"));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			// getWithdrawaldate
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getWithdrawaldate(), "-"));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			// getBudgettype
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getBudgettype(), "-"));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			// getActivities
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getActivities(), "-"));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			// getBudgetname
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getBudgetname(), "-"));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			// getCategoryname
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getCategoryname(), "-"));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			// getListname
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getListname(), "-"));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			/// getItemdesc
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getItemdesc(), "-"));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			// getWithdrawalamount
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getWithdrawalamount())) {
+				cell.setCellValue(formatter.format(new BigDecimal(data.getWithdrawalamount())));
+				cell.setCellStyle(cellRight);
+			} else {
+				cell.setCellValue("-");
+				cell.setCellStyle(cellCenter);
+			}
+
+			cellNum++;
+
+			// getWithholdingtax
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getWithholdingtax())) {
+				cell.setCellValue(formatter.format(new BigDecimal(data.getWithholdingtax())));
+				cell.setCellStyle(cellRight);
+			} else {
+				cell.setCellValue("-");
+				cell.setCellStyle(cellCenter);
+			}
+			cellNum++;
+
+			// getSocialsecurity
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getSocialsecurity())) {
+				cell.setCellValue(formatter.format(new BigDecimal(data.getSocialsecurity())));
+				cell.setCellStyle(cellRight);
+			} else {
+				cell.setCellValue("-");
+				cell.setCellStyle(cellCenter);
+			}
+			cellNum++;
+
+			// getAnotheramount
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getAnotheramount())) {
+				cell.setCellValue(formatter.format(new BigDecimal(data.getAnotheramount())));
+				cell.setCellStyle(cellRight);
+			} else {
+				cell.setCellValue("-");
+				cell.setCellStyle(cellCenter);
+			}
+			cellNum++;
+
+			// getReceivedamount
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getReceivedamount())) {
+				cell.setCellValue(formatter.format(new BigDecimal(data.getReceivedamount())));
+				cell.setCellStyle(cellRight);
+			} else {
+				cell.setCellValue("-");
+				cell.setCellStyle(cellCenter);
+			}
+			cellNum++;
+
+			/// getWithdrawaldocnum
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getWithdrawaldocnum(), "-"));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			/// getPaymentdocnum
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getPaymentdocnum(), "-"));
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			/// getNote
+			cell = row.createCell(cellNum);
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getNote(), ""));
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		/* EndDetail */
+
+		/* set write */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+
+		return outByteStream;
+	}
+
 }
