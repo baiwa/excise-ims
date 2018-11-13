@@ -183,24 +183,14 @@ public class CheckPaymentExcelService {
 
 			// getTransferList
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getTransferList())) {
-				cell.setCellValue(data.getTransferList());
-				cell.setCellStyle(cellLeft);
-			} else {
-				cell.setCellValue("");
-				cell.setCellStyle(cellCenter);
-			}
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getTransferList(), ""));
+			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			// getBudgetType
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getBudgetType())) {
-				cell.setCellValue(data.getBudgetType());
-				cell.setCellStyle(cellLeft);
-			} else {
-				cell.setCellValue("");
-				cell.setCellStyle(cellCenter);
-			}
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getBudgetType(), ""));
+			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			// getBudgetCode
@@ -211,68 +201,42 @@ public class CheckPaymentExcelService {
 
 			// getActivities
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getActivities())) {
-				cell.setCellValue(data.getActivities());
-				cell.setCellStyle(cellLeft);
-			} else {
-				cell.setCellValue("");
-				cell.setCellStyle(cellCenter);
-			}
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getActivities(), ""));
+			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			// getBudget
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getBudget())) {
-				cell.setCellValue(data.getBudget());
-				cell.setCellStyle(cellLeft);
-			} else {
-				cell.setCellValue("");
-				cell.setCellStyle(cellCenter);
-			}
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getBudget(), ""));
+			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			// getCtgBudget
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getCtgBudget())) {
-				cell.setCellValue(data.getCtgBudget());
-				cell.setCellStyle(cellLeft);
-			} else {
-				cell.setCellValue("");
-				cell.setCellStyle(cellCenter);
-			}
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getCtgBudget(), ""));
+			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			// getSubCtgBudget
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getSubCtgBudget())) {
-				cell.setCellValue(data.getSubCtgBudget());
-				cell.setCellStyle(cellLeft);
-			} else {
-				cell.setCellValue("-");
-				cell.setCellStyle(cellCenter);
-			}
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getSubCtgBudget(), ""));
+			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			// getDescriptionList
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getDescriptionList())) {
-				cell.setCellValue(data.getDescriptionList());
-				cell.setCellStyle(cellLeft);
-			} else {
-				cell.setCellValue("-");
-				cell.setCellStyle(cellCenter);
-			}
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getDescriptionList(), ""));
+			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			// getAmount
 			cell = row.createCell(cellNum);
 			if (BeanUtils.isNotEmpty(data.getAmount())) {
 				cell.setCellValue(formatter.format(data.getAmount()));
-				cell.setCellStyle(cellRight);
 			} else {
-				cell.setCellValue("-");
-				cell.setCellStyle(cellCenter);
+				cell.setCellValue("");
 			}
+			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			// getNote
@@ -343,49 +307,49 @@ public class CheckPaymentExcelService {
 
 			// RefNum
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getRefnum(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getRefnum(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			// getWithdrawaldate
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getWithdrawaldate(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getWithdrawaldate(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			// getBudgettype
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getBudgettype(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getBudgettype(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			// getActivities
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getActivities(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getActivities(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			// getBudgetname
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getBudgetname(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getBudgetname(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			// getCategoryname
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getCategoryname(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getCategoryname(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			// getListname
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getListname(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getListname(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			/// getItemdesc
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getItemdesc(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getItemdesc(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
@@ -393,67 +357,61 @@ public class CheckPaymentExcelService {
 			cell = row.createCell(cellNum);
 			if (StringUtils.isNotBlank(data.getWithdrawalamount())) {
 				cell.setCellValue(formatter.format(new BigDecimal(data.getWithdrawalamount())));
-				cell.setCellStyle(cellRight);
 			} else {
-				cell.setCellValue("-");
-				cell.setCellStyle(cellCenter);
+				cell.setCellValue("");
 			}
-
+			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			// getWithholdingtax
 			cell = row.createCell(cellNum);
 			if (StringUtils.isNotBlank(data.getWithholdingtax())) {
 				cell.setCellValue(formatter.format(new BigDecimal(data.getWithholdingtax())));
-				cell.setCellStyle(cellRight);
 			} else {
-				cell.setCellValue("-");
-				cell.setCellStyle(cellCenter);
+				cell.setCellValue("");
 			}
+			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			// getSocialsecurity
 			cell = row.createCell(cellNum);
 			if (StringUtils.isNotBlank(data.getSocialsecurity())) {
 				cell.setCellValue(formatter.format(new BigDecimal(data.getSocialsecurity())));
-				cell.setCellStyle(cellRight);
 			} else {
-				cell.setCellValue("-");
-				cell.setCellStyle(cellCenter);
+				cell.setCellValue("");
 			}
+			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			// getAnotheramount
 			cell = row.createCell(cellNum);
 			if (StringUtils.isNotBlank(data.getAnotheramount())) {
 				cell.setCellValue(formatter.format(new BigDecimal(data.getAnotheramount())));
-				cell.setCellStyle(cellRight);
 			} else {
-				cell.setCellValue("-");
-				cell.setCellStyle(cellCenter);
+				cell.setCellValue("");
 			}
+			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			// getReceivedamount
 			cell = row.createCell(cellNum);
 			if (StringUtils.isNotBlank(data.getReceivedamount())) {
 				cell.setCellValue(formatter.format(new BigDecimal(data.getReceivedamount())));
-				cell.setCellStyle(cellRight);
 			} else {
-				cell.setCellValue("-");
-				cell.setCellStyle(cellCenter);
+				cell.setCellValue("");
 			}
+			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			/// getWithdrawaldocnum
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getWithdrawaldocnum(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getWithdrawaldocnum(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			/// getPaymentdocnum
 			cell = row.createCell(cellNum);
-			cell.setCellValue(StringUtils.defaultIfBlank(data.getPaymentdocnum(), "-"));
+			cell.setCellValue(StringUtils.defaultIfBlank(data.getPaymentdocnum(), ""));
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
