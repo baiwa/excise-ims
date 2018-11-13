@@ -56,7 +56,7 @@ public class PlanWorksheetHeader extends BaseEntity {
 	private BigDecimal percentage;
 
 	@Column(name = "TOTAL_MONTH")
-	private String totalMonth;
+	private BigDecimal totalMonth;
 
 	@Column(name = "DECIDE_TYPE")
 	private String decideType;
@@ -175,15 +175,7 @@ public class PlanWorksheetHeader extends BaseEntity {
 	public void setPercentage(BigDecimal percentage) {
 		this.percentage = percentage;
 	}
-
-	public String getTotalMonth() {
-		return totalMonth;
-	}
-
-	public void setTotalMonth(String totalMonth) {
-		this.totalMonth = totalMonth;
-	}
-
+	
 	public String getDecideType() {
 		return decideType;
 	}
@@ -262,6 +254,14 @@ public class PlanWorksheetHeader extends BaseEntity {
 
 	public void setSector(String sector) {
 		this.sector = sector;
+	}
+
+	public BigDecimal getTotalMonth() {
+		return totalMonth;
+	}
+
+	public void setTotalMonth(BigDecimal totalMonth) {
+		this.totalMonth = totalMonth;
 	}
 
 }

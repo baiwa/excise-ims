@@ -16,7 +16,7 @@ import th.co.baiwa.buckwaframework.security.domain.UserBean;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.CommonHeader;
-import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeader;
+import th.co.baiwa.excise.ta.persistence.entity.analysis.PlanWorksheetHeader;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 import th.co.baiwa.excise.utils.BeanUtils;
 

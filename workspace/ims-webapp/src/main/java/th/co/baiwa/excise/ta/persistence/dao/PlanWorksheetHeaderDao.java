@@ -16,8 +16,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeader;
+import th.co.baiwa.buckwaframework.common.persistence.dao.BatchSetter;
+import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.excise.ia.persistence.entity.CwpScwdDtl;
+import th.co.baiwa.excise.ta.persistence.entity.PlanFromWsHeader;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
+import th.co.baiwa.excise.ta.persistence.entity.analysis.PlanWorksheetHeader;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.ta.persistence.vo.PlanWorksheetVo;
 import th.co.baiwa.excise.utils.BeanUtils;
@@ -27,6 +32,9 @@ import th.co.baiwa.excise.utils.OracleUtils;
 public class PlanWorksheetHeaderDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private CommonJdbcDao commonJdbcDao;
 
 	private Logger logger = LoggerFactory.getLogger(PlanWorksheetHeaderDao.class);
 
@@ -84,6 +92,7 @@ public class PlanWorksheetHeaderDao {
 		}
 		jdbcTemplate.batchUpdate(sql.toString(), objArrayOfList);
 	}
+	
 
 	public int updatePlanWorksheetHeaderFlag(String flag, String analysNum, String exciseId, String viewStatus ,String sector , String central) {
 
@@ -182,6 +191,53 @@ public class PlanWorksheetHeaderDao {
 		}
 		return 0;
 	}
+	
+	
+	public int[][] planFromWsInsertBatch(final List<PlanFromWsHeader> detailList, int executeSize) throws SQLException {
+		StringBuilder sql = new StringBuilder(
+				" INSERT INTO TA_PLAN_WORK_SHEET_HEADER (WORK_SHEET_HEADER_ID,ANALYS_NUMBER,EXCISE_ID,COMPANY_NAME,FACTORY_NAME,FACTORY_ADDRESS,EXCISE_OWNER_AREA,PRODUCT_TYPE,EXCISE_OWNER_AREA_1,TOTAL_AMOUNT,PERCENTAGE,TOTAL_MONTH,DECIDE_TYPE,FLAG,CREATED_BY,CREATED_DATE,UPDATED_BY,UPDATED_DATE,FIRST_MONTH,LAST_MONTH,MONTH_DATE,FULL_MONTH)");
+		sql.append(" values(TA_PLAN_WS_HEADER_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
+		
+		return commonJdbcDao.executeBatch(sql.toString(), new BatchSetter<PlanFromWsHeader>() {
+			@Override
+			public List<PlanFromWsHeader> getBatchObjectList() {
+				return detailList;
+			}
+			
+			@Override
+			public Object[] toObjects(PlanFromWsHeader obj) {
+				String username = UserLoginUtils.getCurrentUsername();
+				return new Object[] {
+						obj.getAnalysNumber(),
+						obj.getExciseId(),
+						obj.getCompanyName(),
+						obj.getFactoryName(),
+						obj.getFactoryAddress(),
+						obj.getExciseOwnerArea(),
+						obj.getProductType(),
+						obj.getExciseOwnerArea1(),
+						obj.getTotalAmount(),
+						obj.getPercentage(),
+						obj.getTotalMonth(),
+						obj.getDecideType(),
+						"N",
+						username,
+						new Date(),
+						obj.getUpdatedBy(),
+						obj.getUpdatedDate(),
+						obj.getFirstMonth(),
+						obj.getLastMonth(),
+						obj.getMonthDate(),
+						obj.getFullMonth()
+				};
+			}
+			
+			@Override
+			public int getExecuteSize() {
+				return executeSize;
+			}
+		});
+	}
 
 	private Object[] planWorksheetHeaderToArrayObject(PlanWorksheetHeader value) {
 
@@ -216,7 +272,7 @@ public class PlanWorksheetHeaderDao {
 		@Override
 		public PlanWorksheetHeader mapRow(ResultSet rs, int arg1) throws SQLException {
 			PlanWorksheetHeader header = new PlanWorksheetHeader();
-			header.setWorksheetHeaderId(rs.getBigDecimal("WORK_SHEET_HEADER_ID"));
+			header.setWorkSheetHeaderId(rs.getLong("WORK_SHEET_HEADER_ID"));
 			header.setWorkSheetNumber(rs.getString("WORK_SHEET_NUMBER"));
 			header.setAnalysNumber(rs.getString("ANALYS_NUMBER"));
 			header.setExciseId(rs.getString("EXCISE_ID"));

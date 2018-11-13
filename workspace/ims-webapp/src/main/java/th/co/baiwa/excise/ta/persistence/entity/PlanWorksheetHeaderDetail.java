@@ -6,7 +6,7 @@ import th.co.baiwa.excise.domain.DataTableRequest;
 
 public class PlanWorksheetHeaderDetail extends DataTableRequest {
 
-    private BigDecimal worksheetHeaderId;
+    private Long worksheetHeaderId;
     private String analysNumber;
     private String exciseId;
     private String exciseIdOld;
@@ -83,13 +83,7 @@ public class PlanWorksheetHeaderDetail extends DataTableRequest {
         this.exciseIdOld = exciseIdOld;
     }
 
-    public BigDecimal getWorksheetHeaderId() {
-        return worksheetHeaderId;
-    }
-
-    public void setWorksheetHeaderId(BigDecimal worksheetHeaderId) {
-        this.worksheetHeaderId = worksheetHeaderId;
-    }
+   
 
     public String getAnalysNumber() {
         return analysNumber;
@@ -466,5 +460,13 @@ public class PlanWorksheetHeaderDetail extends DataTableRequest {
     public void setType(String type) {
         this.type = type;
     }
+
+	public Long getWorksheetHeaderId() {
+		return worksheetHeaderId;
+	}
+
+	public void setWorksheetHeaderId(Long worksheetHeaderId) {
+		this.worksheetHeaderId = worksheetHeaderId;
+	}
 
 }

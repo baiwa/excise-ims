@@ -47,6 +47,7 @@ public class DateConstant {
 	public final static String DD_MM_YYYY_HH_mm = "dd/MM/yyyy HH:mm";
 	public final static String DD_MM_YYYY_HH_MM_SS = "dd/MM/yyyy HH:mm:ss";
 	public final static String YYYY = "yyyy";
+	public final static String YYYY_MM_DD = "yyyy-MM-dd";
 
 	public static List<String> startBackDate(Date date, int backDate) {
 		List<String> monthList = new ArrayList<>();

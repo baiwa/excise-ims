@@ -18,7 +18,6 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
 import th.co.baiwa.excise.ta.persistence.entity.SummaryReport;

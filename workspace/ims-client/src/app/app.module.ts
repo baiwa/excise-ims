@@ -36,7 +36,7 @@ import { ModalModule } from "components/index";
   declarations: [
     AppComponent,
     TranslatePipe,
-    LoginPage,
+    LoginPage
 
 
   ],

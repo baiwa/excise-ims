@@ -20,6 +20,7 @@ public class RequestFilterMapping extends DataTableRequest{
 	private String sector;
 	private String central;
 	private String viewStatus;
+	private String budgetYear;
 	
 	public String getAnalysNumber() {
 		return analysNumber;
@@ -104,6 +105,12 @@ public class RequestFilterMapping extends DataTableRequest{
 	}
 	public void setCentral(String central) {
 		this.central = central;
+	}
+	public String getBudgetYear() {
+		return budgetYear;
+	}
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
 	}
 	
 }

@@ -261,7 +261,6 @@ const routes: Routes = [
     loadChildren: "projects/internal-audit/int10/int10.module#Int10Module",
     canActivate: [AuthGuard]
   },
-
   {
     path: "ope04",
     loadChildren: "projects/tax-audit/operate-tax-audit/ope04/ope04.module#Ope04Module",
@@ -272,10 +271,14 @@ const routes: Routes = [
     loadChildren: "projects/tax-audit/operate-tax-audit/ope05/ope05.module#Ope05Module",
     canActivate: [AuthGuard]
   },
-
   {
     path: "add-external-data",
     loadChildren: "projects/tax-audit/trader-selection/add-external-data/add-external-data.module#AddExternalDataModule",
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "tax-audit-select-line",
+    loadChildren: "projects/tax-audit/tax-audit-select-line/tax-audit-select-line.module#TaxAuditSelectLine",
     canActivate: [AuthGuard]
   },
 

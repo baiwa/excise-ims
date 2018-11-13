@@ -12,4 +12,6 @@ public interface PlanWorksheetHeaderRepository extends CommonJpaCrudRepository<P
 	
 	public PlanWorksheetHeader findByExciseIdAndAnalysNumber(String exciseId ,  String analysNumber);
 	
+	public List<PlanWorksheetHeader> findByAnalysNumber(String analysNumber);
+	
 }

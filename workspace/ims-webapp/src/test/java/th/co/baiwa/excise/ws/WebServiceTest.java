@@ -1,13 +1,20 @@
 package th.co.baiwa.excise.ws;
 
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.ia.persistence.dao.ExciseTaxReceiveDao;
 import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAud;
 import th.co.baiwa.excise.ia.service.IncomeExciseAudService;
+import th.co.baiwa.excise.ta.service.PlanFromWsHeaderService;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.IncFri8000Res;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.IncomeList8000Res;
@@ -28,9 +35,16 @@ public class WebServiceTest {
 	private WebServiceExciseService webServiceExciseService;
 
 	@Autowired
-	IncomeExciseAudService incomeExciseAudService;
+	private IncomeExciseAudService incomeExciseAudService;
+	
+	@Autowired
+	private PlanFromWsHeaderService planFromWsHeaderService;
+	
+	@Autowired
+	private ExciseTaxReceiveDao exciseTaxReceiveDao;
+	
 
-	@Test
+	//@Test
 	public void IncFri8020() {
 		IncomeExciseAud incomeExciseAud = new IncomeExciseAud();
 		incomeExciseAud.setStartMonth("201801");
@@ -42,6 +56,25 @@ public class WebServiceTest {
 			System.out.println("insert Fail.");
 		}
 
+	}
+	@Test
+	public void findExciseIdOrderByPercenTax() {
+		Calendar calendar = Calendar.getInstance(DateConstant.LOCAL_TH);
+		calendar.set(Integer.parseInt("2561"), 8, 30);
+		exciseTaxReceiveDao.queryMonthShotName(calendar.getTime(), 12);
+		
+		String startDateStr = "10/01/2561";
+		String endDateStr = "02/05/2561";
+		Date startDate = DateConstant.convertStrDDMMYYYYToDate(startDateStr);
+		Date endDate = DateConstant.convertStrDDMMYYYYToDate(endDateStr);
+		try {
+			planFromWsHeaderService.findExciseIdOrderByPercenTax(startDate, endDate, 3, 20);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	// @Test

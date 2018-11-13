@@ -29,9 +29,9 @@ import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetHeaderDao;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseRegistartionNumber;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseTaxReceive;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetDetail;
-import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeader;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
+import th.co.baiwa.excise.ta.persistence.entity.analysis.PlanWorksheetHeader;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.ta.persistence.vo.ResVo;
@@ -254,12 +254,12 @@ public class PlanWorksheetHeaderService {
 		PlanWorksheetDetail planDetail;
 		for (PlanWorksheetHeader planWorksheetHeader : planWorksheetHeaderList) {
 			if (planWorksheetHeader != null
-					&& !planWorksheetHeader.getWorksheetHeaderId().equals(planShow.getWorksheetHeaderId())) {
+					&& !planWorksheetHeader.getWorkSheetHeaderId().equals(planShow.getWorksheetHeaderId())) {
 				if (planShow.getWorksheetHeaderId() != null) {
 					PlanWorksheetHeaderDetailList.add(planShow);
 				}
 				planShow = new PlanWorksheetHeaderDetail();
-				planShow.setWorksheetHeaderId(planWorksheetHeader.getWorksheetHeaderId());
+				planShow.setWorksheetHeaderId(planWorksheetHeader.getWorkSheetHeaderId());
 				planShow.setAnalysNumber(planWorksheetHeader.getAnalysNumber());
 				planShow.setExciseId(planWorksheetHeader.getExciseId());
 				planShow.setCompanyName(planWorksheetHeader.getCompanyName());
