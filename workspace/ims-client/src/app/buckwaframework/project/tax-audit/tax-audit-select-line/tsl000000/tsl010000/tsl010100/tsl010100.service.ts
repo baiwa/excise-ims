@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AjaxService } from 'services/ajax.service';
 import { Router } from '@angular/router';
 import { MessageBarService } from 'services/message-bar.service';
+import { IaService } from 'services/ia.service';
+
 
 @Injectable()
 export class Tsl010100Service {
@@ -9,7 +11,8 @@ export class Tsl010100Service {
   constructor(
     private ajax: AjaxService,
     private router: Router,
-    private messege : MessageBarService
+    private messege : MessageBarService,
+    private obectService : IaService
   ) { }
 
   save(form): Promise<any> {
@@ -18,6 +21,7 @@ export class Tsl010100Service {
       this.ajax.post(url, JSON.stringify(form), res => {
         resolve(res.json());
         this.messege.successModal("บันทึกรายการ");
+        this.obectService.setData(form);
         this.router.navigate(['/tax-audit-select-line/tsl0102-00']);
       },err=>{
         this.messege.errorModal("ทำรายการไม่สำเร็จ");

@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Tsl010200Service } from './tsl010200.service';
 import { BreadCrumb } from 'models/breadcrumb';
 import { AuthService } from 'services/auth.service';
+import { IaService } from 'services/ia.service';
+
 declare var $: any;
 @Component({
   selector: 'app-tsl010200',
@@ -18,11 +20,14 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
   ]
   month : number = 7;
   toggle: boolean = true;
+  deff : any;
   constructor(
+    private objService : IaService,
     private myService: Tsl010200Service,
     private authService: AuthService
   ) {
-    this.authService.reRenderVersionProgram('TSL-010200');    
+    this.authService.reRenderVersionProgram('TSL-010200'); 
+    this.deff = this.objService.getData();
   }
 
   ngOnInit() {    
