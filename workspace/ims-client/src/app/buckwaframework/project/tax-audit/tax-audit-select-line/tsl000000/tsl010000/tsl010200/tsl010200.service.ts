@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { resolve, reject } from 'q';
+import { Utils } from 'helpers/utils';
 declare var $: any;
 @Injectable()
 export class Tsl010200Service {
@@ -28,10 +29,10 @@ export class Tsl010200Service {
       subProduct: "น้ำมัน",
       sector: "สรรพสามิตภาคที่ 1",
       area: "สรรพสามิตพื้นที่ลพบุรี",
-      month0: "19014498.75",
-      month1: "18289133.85",
-      month2: "20482213.7",
-      month3: "22445482.8",
+      month0: "19,014,498.75",
+      month1: "18,289,133.85",
+      month2: "20,482,213.7",
+      month3: "22,445,482.8",
       month4: "-",
       month5: "-",
       month6: "-",
@@ -44,15 +45,15 @@ export class Tsl010200Service {
     },
     {
       exciseId: "0107547000711-1-002",
-      conpanyName: "บริษัท ไทยออยล์ จำกัด (มหาชน)",
+      conpanyName: "บริษัท ปตท. จำกัด (มหาชน)",
       address: "555/1 อาคารศูนย์เอนเนอร์ยี่คอมเพล็กซ์ ชั้น11 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
       subProduct: "น้ำมัน",
       sector: "สรรพสามิตภาคที่ 1",
       area: "สรรพสามิตพื้นที่ลพบุรี",
-      month0: "4093170506.62",
-      month1: "3439326365.7",
-      month2: "4677643829.55",
-      month3: "4082285656.72",
+      month0: "4,093,170,506.62",
+      month1: "3,439,326,365.7",
+      month2: "4,677,643,829.55",
+      month3: "2,082,285,656.72",
       month4: "-",
       month5: "-",
       month6: "-",
@@ -62,7 +63,49 @@ export class Tsl010200Service {
       pack3: "-",
       pack4: "-",
       pack5: "-",
-    }
+    },
+    {
+      exciseId: "0107547000711-1-123",
+      conpanyName: "บริษัท ไทยออยล์ จำกัด (มหาชน)",
+      address: "555/1 อาคารศูนย์เอนเนอร์ยี่คอมเพล็กซ์ ชั้น11 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
+      subProduct: "น้ำมัน",
+      sector: "สรรพสามิตภาคที่ 1",
+      area: "สรรพสามิตพื้นที่ลพบุรี",
+      month0: "4,093,170,506.62",
+      month1: "3,439,326,365.7",
+      month2: "4,677,643,829.55",
+      month3: "6,082,285,656.72",
+      month4: "-",
+      month5: "-",
+      month6: "-",
+      pack0: "-19.01",
+      pack1: "26.47",
+      pack2: "-14.58",
+      pack3: "-",
+      pack4: "-",
+      pack5: "-",
+    },
+    {
+      exciseId: "0107544000108-1-013",
+      conpanyName: "บริษัท ปตท. จำกัด (มหาชน)",
+      address: "555 หมู่ที่1 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
+      subProduct: "น้ำมัน",
+      sector: "สรรพสามิตภาคที่ 1",
+      area: "สรรพสามิตพื้นที่หนองบัวลำภู",
+      month0: "19,014,498.75",
+      month1: "18,289,133.85",
+      month2: "20,482,213.7",
+      month3: "22,445,482.8",
+      month4: "-",
+      month5: "-",
+      month6: "-",
+      pack0: "-3.97",
+      pack1: "10.7",
+      pack2: "9.85",
+      pack3: "-",
+      pack4: "-",
+      pack5: "-",
+    },
   ];
   constructor(
   ) { }
@@ -119,12 +162,13 @@ export class Tsl010200Service {
       this.jsonColumn += '      }                           ';
 
       for (let index = 0; index < month; index++) {
-        this.jsonColumn += `,{ "data" : "month${index}"`;
-        this.jsonColumn += ' }';
+        this.jsonColumn += `,{ "data" : "month${index}",`;
+        this.jsonColumn += '   "className" : "text-right"}';        
         // if (index != month - 1) this.jsonColumn += ', '
       }
       for (let index = 0; index < month - 1; index++) {
-        this.jsonColumn += ',{ "data" : "pack' + index + '" }';
+        this.jsonColumn += ',{ "data" : "pack' + index + '" ,';
+        this.jsonColumn += '"className" : "text-right" }';
         // if (index != month - 1) this.jsonColumn += ', '
       }
       this.jsonColumn += ']';

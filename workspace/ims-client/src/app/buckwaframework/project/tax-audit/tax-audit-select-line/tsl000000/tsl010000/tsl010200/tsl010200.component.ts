@@ -31,12 +31,6 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.datatable(this.month);
   }
-
-  add(){
-    this.month++;
-    this.datatable(this.month);
-  }
-
   datatable(month){
     this.myService.createTableHeader(month).then(res=>{
       this.myService.createTableBody(month).then(res=>{
