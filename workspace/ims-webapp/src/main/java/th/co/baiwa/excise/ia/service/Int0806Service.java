@@ -27,6 +27,8 @@ public class Int0806Service {
 	public DataTableAjax<MoneyCheck> search(Int0806FormSearchVo en) {
 		List<MoneyCheck> dataList = new ArrayList<MoneyCheck>();
 		if(BeanUtils.isNotEmpty(en.getCombo1()) && BeanUtils.isNotEmpty(en.getCombo2())) {
+			en.setOfficeCode(en.getCombo1() + en.getCombo2() + "00");
+			dataList = int0806Dao.queryByfilter(en);
 			if(dataList.size() > 0) {
 				for (MoneyCheck m : dataList) {
 					if(m.getTrnDate().compareTo(m.getDepositDate()) <= 1) {
