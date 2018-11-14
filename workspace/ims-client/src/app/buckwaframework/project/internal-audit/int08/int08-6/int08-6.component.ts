@@ -62,7 +62,8 @@ export class Int086Component implements OnInit, AfterViewInit {
       endDate: "",
       account: "",
       combo1: "",
-      combo2: ""
+      combo2: "",
+      flag: ""
     };
   }
   setVariable() {
@@ -159,7 +160,8 @@ export class Int086Component implements OnInit, AfterViewInit {
       endDate: this.searchForm.value.endDate,
       account: this.searchForm.value.account,
       combo1: this.searchForm.value.combo1,
-      combo2: this.searchForm.value.combo2
+      combo2: this.searchForm.value.combo2,
+      flag: "S"
     };
     // combo1: subT1[0].subType,
     // combo2: subT2[0].subType

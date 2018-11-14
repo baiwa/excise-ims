@@ -7,6 +7,7 @@ public class Int0806FormSearchVo {
     private String combo1;
     private String combo2;
     private String officeCode;
+    private String flag;
     
 	public String getStartDate() {
 		return startDate;
@@ -43,6 +44,12 @@ public class Int0806FormSearchVo {
 	}
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
+	}
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
     
 
