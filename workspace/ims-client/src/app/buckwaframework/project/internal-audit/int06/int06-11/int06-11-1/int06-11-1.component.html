@@ -12,7 +12,7 @@
         <div class="ui form">
             <!-- <div class="ui attached  segment">
                 <div class="inline fields hd">
-                    <div class="one wide field"></div>
+                    
                     <div class="four wide field">
                         <h4>การขอเบิกและการรับรอง</h4>
                     </div>
@@ -20,7 +20,7 @@
             </div> -->
             <div class="ui attached  segment">
                 <div class="inline fields">
-                    <div class="one wide field"></div>
+
                     <div class="one wide field">
                         <label>ข้าพเจ้า</label>
                     </div>
@@ -43,7 +43,7 @@
                 </div>
                 <br>
                 <div class="inline fields hd">
-                    <div class="one wide field"></div>
+
                     <div class="four wide field">
                         <label>ขอยื่นเบิกเงินค่าเช่าบ้าน ดังนี้ </label>
                     </div>
@@ -51,7 +51,7 @@
                 <br>
                 <br>
                 <div class="inline fields">
-                    <div class="one wide field"></div>
+
                     <div class="two wide field required">
                         <label>ข้าพเจ้าได้จ่ายเงิน</label>
                     </div>
@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div class="inline fields">
-                    <div class="one wide field"></div>
+
                     <div class="two wide field required">
                         <label>ประจำเดือน</label>
                     </div>
@@ -95,7 +95,8 @@
                         <div class="ui calendar" id="periodCld" style="width:100%;">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" placeholder="เดือน" formControlName="period" autocomplete="off" readonly="">
+                                <input type="text" placeholder="เดือน" formControlName="period" autocomplete="off"
+                                    readonly="">
                             </div>
                         </div>
                     </div>
@@ -123,7 +124,7 @@
                 </div>
 
                 <div class="inline fields">
-                    <div class="one wide field"></div>
+
                     <div class="three wide field required">
                         <label>ข้าพเจ้าได้รับเงินเดือน เดือนละ</label>
                     </div>
@@ -145,7 +146,7 @@
                 </div>
 
                 <div class="inline fields">
-                    <div class="one wide field"></div>
+
                     <div class="two wide field">
                         <label>ไม่เกินเดือนละ</label>
                     </div>
@@ -162,7 +163,8 @@
                         <div class="ui calendar" id="periodWithdrawCldform" style="width:100%;">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" placeholder="เดือน" formControlName="periodWithdraw" autocomplete="off" readonly="">
+                                <input type="text" placeholder="เดือน" formControlName="periodWithdraw" autocomplete="off"
+                                    readonly="">
                             </div>
                         </div>
                     </div>
@@ -173,7 +175,8 @@
                         <div class="ui calendar" id="periodWithdrawCldto" style="width:100%;">
                             <div class="ui input left icon">
                                 <i class="calendar alter nate outline icon"></i>
-                                <input type="text" placeholder="เดือน" formControlName="periodWithdrawTo" autocomplete="off" readonly="">
+                                <input type="text" placeholder="เดือน" formControlName="periodWithdrawTo" autocomplete="off"
+                                    readonly="">
                             </div>
                         </div>
                     </div>
@@ -181,7 +184,7 @@
                 </div>
 
                 <div class="inline fields">
-                    <div class="one wide field"></div>
+
                     <div class="one wide field">
                         <label>รวม</label>
                     </div>
@@ -203,21 +206,63 @@
                     <div class="four wide field required">
                         <label>พร้อมนี้ข้าพเจ้าได้แนบใบเสร็จรับเงินจำนวน</label>
                     </div>
-                    <div class="one wide field" [ngClass]="{ 'error': validateField('receipts') }">
-                        <input type="text" formControlName="receipts" (keypress)="typeNumber($event)">
+                    <div class="one wide field disabled" [ngClass]="{ 'error': validateField('receipts') }">
+                        <input type="text" formControlName="receipts" class="custom-readonly" maxlength="2" numberOnly>
                     </div>
                     <div class="two wide field">
                         <label>ฉบับ</label>
                         <label>มาด้วยแล้ว</label>
+                        <button class="ui icon mini green button" type="button" (click)="addReceiptRH()"><i class="plus icon"></i></button>
                     </div>
                 </div>
+
+                <ng-container formArrayName="receiptsRH" *ngFor="let key of receiptsRH.controls; let i=index">
+                    <div class="inline fields" [formGroupName]="i">
+                        <div class="one wide field">&nbsp;</div>
+                        <div class="two wide field">
+                            <label class="full-width text-right">{{i+1}}. เลขที่ใบเสร็จ</label>
+                        </div>
+                        <div class="three wide field" [ngClass]="{'error': errorReceipt(i, 'receiptNo')}">
+                            <div class="ui input">
+                                <input type="text" name="receiptNo{{i}}" id="receiptNo{{i}}" placeholder="เลขที่ใบเสร็จ"
+                                    formControlName="receiptNo">
+                            </div>
+                        </div>
+                        <div class="one wide field">
+                            <label class="full-width text-right">จำนวน</label></div>
+                        <div class="three wide field" [ngClass]="{'error': errorReceipt(i, 'receiptAmount')}">
+                            <div class="ui input">
+                                <input type="text" numberOnly maxlength="10" id="receiptAmount{{i}}" placeholder="จำนวน"
+                                    name="receiptAmount{{i}}" formControlName="receiptAmount">
+                            </div>
+                        </div>
+                        <div class="one wide field">
+                            <label class="full-width text-right">วันที่</label>
+                        </div>
+                        <div class="three wide field" [ngClass]="{'error': errorReceipt(i, 'receiptDate')}">
+                            <div class="ui calendar full-width" id="receiptD{{i}}">
+                                <div class="ui input left icon">
+                                    <i class="calendar alter nate outline icon"></i>
+                                    <input type="text" formControlName="receiptDate" id="receiptDate{{i}}" name="receiptDate{{i}}"
+                                        autocomplete="off" [readonly]="true" placeholder="วว/ดด/ปปปป">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="one wide field">
+                            <button class="ui icon red mini button" type="button" (click)="removeReceipt(i)">
+                                <i class="minus icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
 
                 <!-- <div class="three wide field">( หนึ่งหมื่นสองพันบาทถ้วน )</div> -->
                 <br>
                 <div class="inline fields">
-                    <div class="one wide field"></div>
+
                     <div class="twelve wide field">
-                        <label>ข้าพเจ้าขอรับรองว่าข้อความที่ให้ไว้ข้างต้นเป็นความจริงทุกประการ และข้าพเจ้ามีสิทธิได้รับเงินค่าเช่าบ้านตามพระราชกฤษฎีกา
+                        <label>ข้าพเจ้าขอรับรองว่าข้อความที่ให้ไว้ข้างต้นเป็นความจริงทุกประการ
+                            และข้าพเจ้ามีสิทธิได้รับเงินค่าเช่าบ้านตามพระราชกฤษฎีกา
                             ค่าเช่าบ้านข้าราชการ พ.ศ.2547 และได้ดำเนินการถูกต้องตามระเบียบทุกประการแล้ว</label>
                     </div>
                 </div>
@@ -233,7 +278,8 @@
             <div class="inline fields ">
                 <div class="five wide field"></div>
                 <div class="ten wide field">
-                    <label style="color:red">*รับรองไฟล์นามสกุล &nbsp;&nbsp;เอกสาร xls, xlsx, doc, docx, ppt, pptx &nbsp;&nbsp;รูป gif, jpeg, jpg,
+                    <label style="color:red">*รับรองไฟล์นามสกุล &nbsp;&nbsp;เอกสาร xls, xlsx, doc, docx, ppt, pptx
+                        &nbsp;&nbsp;รูป gif, jpeg, jpg,
                         png, bmp &nbsp;&nbsp;ขนาดไม่เกิน 25 MB</label>
                 </div>
             </div>
@@ -244,7 +290,8 @@
                 </div>
                 <div class="six wide field upload-panel">
                     <input type="file" name="files" id="files" accept=".pdf, image/*, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
-                    application/vnd.ms-excel,.doc,.docx" (change)="onChangeFile()">
+                    application/vnd.ms-excel,.doc,.docx"
+                        (change)="onChangeFile()">
                 </div>
                 <div class="three wide field">
                     <button class="ui mini yellow button" type="button" (click)="onUpload($event)" [ngClass]="{ 'disabled': flgOnLoad }">

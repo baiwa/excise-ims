@@ -111,8 +111,7 @@ export class Int022Component implements OnInit, AfterViewInit {
     this.init();
   }
 
-  ngAfterViewInit(): void {
-  }
+  ngAfterViewInit(): void { }
 
   canDeactivate(): Observable<boolean> | boolean {
     if (this.unsave) {
