@@ -19,13 +19,13 @@
         <label>สรรพสามิตภาค :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dataRecord.exciseArea}}">
       </div>
       <div class="two wide field ">
         <label>สรรพสามิตภาคพื้นที่ :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dataRecord.exciseSubArea}}">
       </div>
     </div>
     <div class="inline fields">
@@ -34,13 +34,13 @@
         <label>เลขทะเบียนสรรพสามิต :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dataRecord.exciseId}}">
       </div>
       <div class="two wide field ">
         <label>ชื่อผู้ประกอบการ/โรงอุตสาหกรรม :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dataRecord.companyName}}">
       </div>
     </div>
     <div class="inline fields">
@@ -49,13 +49,13 @@
         <label>สินค้า :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dataRecord.product}}">
       </div>
       <div class="two wide field ">
         <label>ความเสี่ยงที่ถูกตรวจสอบ :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dataRecord.riskTypeDesc}}">
       </div>
     </div>
     <div class="inline fields">
@@ -64,7 +64,7 @@
         <label>เวลาที่ตรวจสอบ (ปีปฏิทิน) :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dateCalendar}}">
       </div>
     </div>
     <div class="inline fields">
@@ -73,7 +73,7 @@
         <label>ที่อยู่สถานบริการ/โรงอุตสาหกรรม :</label>
       </div>
       <div class="four wide field ">
-        <textarea rows="5"></textarea>
+        <textarea rows="5" value="{{dataRecord.companyAddress}}"></textarea>
       </div>
     </div>
   </div>
@@ -246,7 +246,7 @@
   <div class="ui center aligned grid">
     <div class="sixteen wide column">
       <button class="ui primary mini button">รายงานการตรวจ</button>
-      <button class="ui mini button" type="button" routerLink="/tax-audit-select-line/tsl0106-00">ย้อนกลับ</button>
+      <button class="ui mini button" type="button" (click)="onClickBack()">ย้อนกลับ</button>
     </div>
   </div>
   <br />

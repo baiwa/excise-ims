@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadCrumb } from 'models/breadcrumb';
 import { AjaxService } from 'services/ajax.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { IaService } from 'services/ia.service';
 
 declare var $: any;
 
@@ -21,11 +23,21 @@ export class Tsl010700Component implements OnInit {
   entrepreneurTable: any;
   getRawTable: any;
   payRawTable: any;
+  dataRecord: any;
+  dateCalendar: string = "";
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(
+    private dataService: IaService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.dataRecord = dataService.getData();
+    this.dateCalendar = this.route.snapshot.queryParams['dateCalendar'];
+    console.log(this.dataRecord);
+    console.log(this.dateCalendar);
   }
+
+  ngOnInit() { }
 
   ngAfterViewInit() {
     this.initEntrepreneurDatatable();
@@ -164,5 +176,11 @@ export class Tsl010700Component implements OnInit {
       ],
     });
   };
+
+  onClickBack() {
+    this.router.navigate(["/tax-audit-select-line/tsl0106-00"], {
+      queryParams: {}
+    });
+  }
 
 }

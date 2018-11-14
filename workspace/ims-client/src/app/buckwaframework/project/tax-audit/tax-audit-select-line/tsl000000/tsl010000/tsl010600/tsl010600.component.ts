@@ -3,6 +3,8 @@ import { BreadCrumb } from 'models/breadcrumb';
 import { AjaxService } from 'services/ajax.service';
 import { Router } from '@angular/router';
 import { TextDateTH, formatter } from 'helpers/datepicker';
+import { IaService } from 'services/ia.service';
+
 
 declare var $: any;
 
@@ -24,6 +26,7 @@ export class Tsl010600Component implements OnInit {
   searchFlag: string = "TRUE";
 
   constructor(
+    private dataService: IaService,
     private router: Router
   ) { }
 
@@ -31,10 +34,9 @@ export class Tsl010600Component implements OnInit {
 
   ngAfterViewInit() {
     this.initDatatable();
-    this.calendar();
   }
 
-  calendar = function () {
+  calendar = () => {
     $("#date").calendar({
       type: "month",
       text: TextDateTH,
@@ -100,17 +102,29 @@ export class Tsl010600Component implements OnInit {
     this.datatable.on("click", "td > .select-record", (event) => {
       event.preventDefault();
       var data = this.datatable.row($(event.currentTarget).closest("tr")).data();
-      $('#modalTsl').modal('show');
-      this.calendar();
+      this.dataService.setData(data);
+      $('#modalTsl').modal({
+        onShow: () => {
+          this.calendar();
+        }
+      }).modal('show');
     });
 
   };
 
   onClickOK() {
-    $('#modalTsl').modal('hide');
-    this.router.navigate(["/tax-audit-select-line/tsl0107-00"], {
-      queryParams: {}
-    });
+    $('#modalTsl').modal({
+      onDeny: () => {
+        this.calendar();
+      }
+    }).modal('hide');
+    this.router.navigate(["/tax-audit-select-line/tsl0107-00"],
+      {
+        queryParams: {
+          "dateCalendar": this.dateCalendar
+        }
+      }
+    );
   }
 
 }
