@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="three wide field" [ngClass]="{ 'error': validateField('account') }">
-                        <select class="ui dropdown ai search full-width" formControlName="account">
+                        <select class="ui dropdown ai search full-width" formControlName="account" id="account">
                         <option value="">กรุณาเลือก</option>
                         <option *ngFor="let data of accounts | async" [value]="data.value2">
                             {{ data.value1 }}
@@ -72,6 +72,9 @@
                     <div class="eight wide column">
                         <button class="ui mini primary button" type="submit">
                           <i class="search icon"></i>ค้นหา
+                        </button>
+                        <button class="ui mini button" type="reset" (click)="onReset()">
+                            <i class="refresh icon"></i>ล้างข้อมูล
                         </button>
                     </div>
                 </div>

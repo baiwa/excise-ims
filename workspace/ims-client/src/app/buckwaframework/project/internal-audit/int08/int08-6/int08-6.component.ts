@@ -247,4 +247,12 @@ export class Int086Component implements OnInit, AfterViewInit {
       ]
     });
   }
+
+  onReset() {
+    $("#combo1").dropdown("restore defaults");
+    $("#combo2").dropdown("restore defaults");
+    $("#account").dropdown("restore defaults");
+    this.searchForm.get("startDate").setValue("");
+    this.searchForm.get("endDate").setValue("");
+  }
 }
