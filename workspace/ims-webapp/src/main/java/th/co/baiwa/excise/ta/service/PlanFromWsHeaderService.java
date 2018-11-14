@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseRegisttionNumberDao;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseTaxReceiveDao;
@@ -73,7 +76,9 @@ public class PlanFromWsHeaderService {
 		// DateConstant.YYYYMMDD) + "-01-"+ planWorksheetHeaderDao.getAnalysNumber();
 		List<String> monthList = exciseTaxReceiveDao.queryMonthShotName(endDate, daysBetween+1);
 		List<Tsl010200Vo> tlTsl010200VoAllList = new ArrayList<Tsl010200Vo>();
-		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.searchAllRegistartionNumber();
+		String officeId = UserLoginUtils.getCurrentUserBean().getOfficeId().substring(0, 2);
+		List<Lov> lovList = ApplicationCache.getListOfValueByValueType("SECTOR_VALUE", officeId);
+		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.searchAllRegistartionNumber(lovList.get(0).getValue1());
 		if (BeanUtils.isNotEmpty(regisNumberList)) {
 			Tsl010200Vo indexDate = new Tsl010200Vo();
 			for (ExciseRegistartionNumber registartionNumber : regisNumberList) {
@@ -103,7 +108,7 @@ public class PlanFromWsHeaderService {
 						indexDate.setConpanyName(registartionNumber.getExciseFacName());
 						indexDate.setAddress(registartionNumber.getIndustrialAddress());
 						indexDate.setSubProduct(registartionNumber.getTaexciseProductType());
-						indexDate.setSector(registartionNumber.getSector());
+						indexDate.setSector(registartionNumber.getTaexciseSectorArea());
 						indexDate.setArea(registartionNumber.getExciseArea());
 						for (int i = 0; i < monthList.size(); i++) {
 							int index = receiveMonth.indexOf(monthList.get(i));
@@ -153,11 +158,12 @@ public class PlanFromWsHeaderService {
 		Date startDate = DateConstant.convertStrToDate(vo.getDateFrom(), DateConstant.MM_YYYY);
 		Date endDate = DateConstant.convertStrToDate(vo.getDateTo(), DateConstant.MM_YYYY);
 		int daysBetween = (int) ChronoUnit.MONTHS.between(DateConstant.dateToLocalDadte(startDate), DateConstant.dateToLocalDadte(endDate));
-		// String analysNumber = DateConstant.DateToString(new Date(),
-		// DateConstant.YYYYMMDD) + "-01-"+ planWorksheetHeaderDao.getAnalysNumber();
+//		String analysNumber = DateConstant.DateToString(new Date(),DateConstant.YYYYMMDD) + "-01-"+ planWorksheetHeaderDao.getAnalysNumber();
 		List<String> monthList = exciseTaxReceiveDao.queryMonthShotName(endDate, daysBetween+1);
 		List<Tsl010200Vo> tlTsl010200VoAllList = new ArrayList<Tsl010200Vo>();
-		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.searchAllRegistartionNumber();
+		String officeId = UserLoginUtils.getCurrentUserBean().getOfficeId().substring(0, 2);
+		List<Lov> lovList = ApplicationCache.getListOfValueByValueType("SECTOR_VALUE", officeId);
+		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.searchAllRegistartionNumber(lovList.get(0).getValue1());
 		boolean valid = true;
 		if (BeanUtils.isNotEmpty(regisNumberList)) {
 			Tsl010200Vo indexDate = new Tsl010200Vo();
@@ -255,7 +261,7 @@ public class PlanFromWsHeaderService {
 						indexDate.setConpanyName(registartionNumber.getExciseFacName());
 						indexDate.setAddress(registartionNumber.getIndustrialAddress());
 						indexDate.setSubProduct(registartionNumber.getTaexciseProductType());
-						indexDate.setSector(registartionNumber.getSector());
+						indexDate.setSector(registartionNumber.getTaexciseSectorArea());
 						indexDate.setArea(registartionNumber.getExciseArea());
 						for (int i = 0; i < monthList.size(); i++) {
 							int index = receiveMonth.indexOf(monthList.get(i));

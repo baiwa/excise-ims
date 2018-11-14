@@ -314,10 +314,12 @@ public class ExciseRegisttionNumberDao {
 		return new BigDecimal(0);
 	}
 	
-	public List<ExciseRegistartionNumber> searchAllRegistartionNumber(){
+	public List<ExciseRegistartionNumber> searchAllRegistartionNumber(String sector){
 		List<Object> objList = new ArrayList<Object>();
-		
-		return  jdbcTemplate.query(SQL_REGIS,objList.toArray()  ,exciseRegisttionRowmapper);
+		StringBuilder sql = new StringBuilder(SQL_REGIS);
+		sql.append("where d.TA_EXCISE_SECTOR_AREA = ? ");
+		objList.add(sector);
+		return  jdbcTemplate.query(sql.toString(),objList.toArray()  ,exciseRegisttionRowmapper);
 	}
 
 }
