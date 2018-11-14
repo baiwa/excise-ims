@@ -331,7 +331,7 @@ public class Int084Service {
 			CellStyle fontHeader = workbook.createCellStyle();
 			fontHeader.setFont(excalService.fontHeader);
 			
-			Sheet sheet = workbook.createSheet();
+			Sheet sheet = workbook.createSheet("ใบเสร็จเสีย");
 			int rowNum = 0;
 			int cellNum = 0;
 			Row row = sheet.createRow(rowNum);
@@ -383,9 +383,19 @@ public class Int084Service {
 				cellNum = 0;
 			}
 			
+			// Column Width
+			int colIndex = 0;
+			sheet.setColumnWidth(colIndex++, 25 * 256);
+			sheet.setColumnWidth(colIndex++, 38 * 256);
+			sheet.setColumnWidth(colIndex++, 11 * 256);
+			sheet.setColumnWidth(colIndex++, 11 * 256);
+			sheet.setColumnWidth(colIndex++, 14 * 256);
+			sheet.setColumnWidth(colIndex++, 14 * 256);
+			sheet.setColumnWidth(colIndex++, 25 * 256);
+			
 			
 			/*set	fileName*/		
-			String fileName ="Bill_lost_"+DateFormatUtils.format(new Date(),"yyyyMMdd");;
+			String fileName ="Bill_Lost_"+DateFormatUtils.format(new Date(),"yyyyMMdd");;
 			log.info(fileName);
 			
 			/* write it as an excel attachment */

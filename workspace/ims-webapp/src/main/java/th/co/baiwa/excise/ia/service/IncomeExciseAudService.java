@@ -46,7 +46,7 @@ public class IncomeExciseAudService {
 	
 	
 	public IncomeExciseAud createIncomeExciseAud(IncomeExciseAud incomeExciseAud) {
-		logger.info("createIncomeExciseAud startMonth = {} || endMonth = {} "+ incomeExciseAud.getStartMonth() , incomeExciseAud.getEndMonth());
+		logger.info("createIncomeExciseAud startMonth = {} || endMonth = {} ", incomeExciseAud.getStartMonth() , incomeExciseAud.getEndMonth());
 		List<IncomeList> incomeLists = new ArrayList<IncomeList>();
 		List<IncomeExciseAudDtl> incDetailList = new ArrayList<IncomeExciseAudDtl>();
 		IncomeExciseAudDtl incomeExciseAudDtl = new IncomeExciseAudDtl();
