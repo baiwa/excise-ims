@@ -255,7 +255,7 @@
         <label>ข้อมูลใบกำกับภาษีทั้งหมด: </label>
       </div>
       <div class="two wide field ">
-        <input type="text">
+        <input type="text" >
         <label> &nbsp; ฉบับ</label>
       </div>
     </div>
@@ -339,7 +339,7 @@
   <br />
   <div class="ui center aligned grid">
     <div class="sixteen wide column">
-      <button class="ui primary mini button">รายงานการตรวจ</button>
+      <button class="ui primary mini button" (click)="onReport()" >รายงานการตรวจ</button>
       <button class="ui mini button" type="button" (click)="onClickBack()">ย้อนกลับ</button>
     </div>
   </div>

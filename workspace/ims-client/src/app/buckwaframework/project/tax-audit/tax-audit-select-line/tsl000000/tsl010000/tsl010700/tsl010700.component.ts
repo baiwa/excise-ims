@@ -3,6 +3,8 @@ import { BreadCrumb } from 'models/breadcrumb';
 import { AjaxService } from 'services/ajax.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IaService } from 'services/ia.service';
+import { AuthService } from 'services/auth.service';
+import { MessageBarService } from 'services/index';
 
 declare var $: any;
 
@@ -25,19 +27,61 @@ export class Tsl010700Component implements OnInit {
   getRawTable: any;
   payRawTable: any;
   dataRecord: any;
+  obj: data;
   dateCalendar: string = "";
+  id: any;
 
   constructor(
     private dataService: IaService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private message: MessageBarService,
+    private ajax: AjaxService,
   ) {
     this.dataRecord = this.dataService.getData();
+    console.log("dataRecord", this.dataRecord);
     this.dateCalendar = this.route.snapshot.queryParams['dateCalendar'];
     this.searchFlag = this.route.snapshot.queryParams['searchFlag'];
+    this.obj = new data();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.authService.reRenderVersionProgram('tsl010700').then(user => {
+      this.obj.officer = user.fullName;
+      console.log(this.obj.officer);
+    });
+  }
+
+
+
+  onReport() {
+    // console.log(this.obj);
+    // var form = document.createElement("form");
+    // form.method = "POST";
+    // form.action = AjaxService.CONTEXT_PATH + "internalAudit/report/pdf/int/reportCheckIncome";
+    // form.style.display = "none";    
+    // var jsonInput = document.createElement("input");
+    // jsonInput.name = "json";
+    // jsonInput.value = JSON.stringify(this.obj);
+    // form.appendChild(jsonInput);
+
+    // document.body.appendChild(form);
+    // form.submit();
+    this.message.comfirm(confirm => {
+      if (confirm) {
+        const URL = "exciseTax/report/updateFlag";
+        this.ajax.post(URL, parseInt(this.dataRecord.taYearPlanId) || 0, response => {
+          this.message.successModal(response.json().messageTh);
+          this.router.navigate(["/tax-audit-select-line/tsl0106-00"]);
+        }).catch(err => {
+          this.message.errorModal("ไม่สามารถทำการบันทึกได้");
+          console.error(err);
+        });
+      }
+    }, "ยืนยันการบันทึกข้อมูล");
+
+  }
 
   ngAfterViewInit() {
     this.initGetRawDatatable();
@@ -187,4 +231,20 @@ export class Tsl010700Component implements OnInit {
     });
   }
 
+
+
 }
+
+class data {
+  exciseArea: string;
+  exciseSubArea: string;
+  exciseId: string;
+  companyName: string;
+  product: string;
+  riskTypeDesc: string;
+  dateCalendar: string;
+  companyAddress: string;
+
+  officer: string;
+
+} 

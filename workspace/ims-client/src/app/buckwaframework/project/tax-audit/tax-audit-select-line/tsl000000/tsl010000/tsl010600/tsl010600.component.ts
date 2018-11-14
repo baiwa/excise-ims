@@ -67,8 +67,13 @@ export class Tsl010600Component implements OnInit {
       },
       columns: [
         {
+          data: "flag",
           className: "ui center aligned",
           render: function (data, row) {
+            console.log(data, row)
+            if(data=="2") {
+              return '<p>เลือก</p>';
+            }
             return '<a href="#" class="select-record"><u>เลือก</u></a>';
           }
         }, {
