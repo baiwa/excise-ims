@@ -4,7 +4,8 @@ import { ComboBox } from "models/combobox";
 import { AjaxService } from "services/ajax.service";
 
 const URL = {
-  VALUE1: "ia/int0806/getValue1"
+  VALUE1: "ia/int0806/getValue1",
+  DROPDOWN: "combobox/controller/getDropByTypeAndParentId"
 };
 
 @Injectable()
@@ -27,6 +28,23 @@ export class Int0806Service {
         error => {
           console.log(error);
         };
+    });
+  };
+
+  pullComboBox = (
+    type: string,
+    combo: string,
+    id?: number
+  ): Observable<ComboBox[]> => {
+    return new Observable<ComboBox[]>(obs => {
+      this.dropdown(type, combo, id).then(() => obs.next(this[combo]));
+    });
+  };
+
+  dropdown = (type: string, combo: string, id?: number): Promise<any> => {
+    const DATA = { type: type, lovIdMaster: id || null };
+    return this.ajax.post(URL.DROPDOWN, DATA, res => {
+      this[combo] = res.json();
     });
   };
 }

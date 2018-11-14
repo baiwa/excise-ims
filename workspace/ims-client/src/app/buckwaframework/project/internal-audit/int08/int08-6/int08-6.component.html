@@ -2,15 +2,52 @@
 <br>
 <div class="sixteen wide column">
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>การตรวจสอบการนำส่งเงินบัญชี</span>
+        <span>การตรวจสอบการนำเงินฝากเข้าบัญชีพักหน่วยงานและกองทุน</span>
     </div>
     <form [formGroup]="searchForm" (submit)="handleSearch($event)">
         <div class="ui attached segment">
             <div class="ui form">
                 <div class="inline fields">
-                    <div class="three wide field"></div>
-                    <div class="two wide required field">
-                        <label>ระยะเวลาที่ตรวจสอบ</label>
+                    <div class="three wide field required">
+                        <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
+                    </div>
+                    <div class="four wide field" [ngClass]="{ 'error': validateField('combo1') }">
+                        <select class="ui search dropdown ai search full-width" formControlName="combo1" id="combo1" (change)="dropdown($event, 'comboBox2')">
+                            <option value="">กรุณาเลือก</option>
+                            <option value="0">ทั้งหมด</option>
+                            <option *ngFor="let data of comboBox1" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                        </select>
+                    </div>
+
+                    <div class="three wide field required">
+                        <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
+                    </div>
+
+                    <div class="four wide field" [ngClass]="{ 'error': validateField('combo2') }">
+                        <select class="ui search dropdown ai search full-width" formControlName="combo2" id="combo2">
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let data of comboBox2" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="inline fields">
+                    <div class="one wide field"></div>
+                    <div class="one wide field required">
+                        <label class="text-right full-width">บัญชี</label>
+                    </div>
+
+                    <div class="three wide field" [ngClass]="{ 'error': validateField('account') }">
+                        <select class="ui dropdown ai search full-width" formControlName="account">
+                        <option value="">กรุณาเลือก</option>
+                        <option *ngFor="let data of accounts | async" [value]="data.value2">
+                            {{ data.value1 }}
+                        </option>
+                    </select>
+                    </div>
+
+                    <div class="three wide required field">
+                        <label class="text-right full-width">ระยะเวลาที่ตรวจสอบ (ปีปฏิทิน)</label>
                     </div>
                     <div class="three wide field ui calendar" id="calendar" [ngClass]="{ 'error': validateField('startDate') }">
                         <div class="ui input left icon">
@@ -27,35 +64,10 @@
                             <input type="calendar" readonly="" id="endDate" formControlName="endDate" [attr.required]="true" autocomplete="off" placeholder="ดด/ปปปป">
                         </div>
                     </div>
+
+
                 </div>
 
-                <div class="inline fields">
-                    <div class="three wide field"></div>
-                    <div class="two wide field required">
-                        <label>หน่วยงาน</label>
-                    </div>
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('department') }">
-                        <select class="ui dropdown ai search full-width" formControlName="department">
-                    <option value="">กรุณาเลือก</option>
-                    <option *ngFor="let data of departmentList | async" [value]="data.lovId">
-                      {{ data.value1 }}
-                    </option>
-                  </select>
-                    </div>
-
-                    <div class="one wide field required">
-                        <label class="text-right full-width">บัญชี</label>
-                    </div>
-
-                    <div class="three wide field" [ngClass]="{ 'error': validateField('account') }">
-                        <select class="ui dropdown ai search full-width" formControlName="account">
-                    <option value="">กรุณาเลือก</option>
-                    <option *ngFor="let data of accounts | async" [value]="data.lovId">
-                      {{ data.value1 }}
-                    </option>
-                  </select>
-                    </div>
-                </div>
                 <br>
                 <div class="ui center aligned grid">
                     <div class="eight wide column">
@@ -70,22 +82,20 @@
     </form>
     <br>
     <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>ผลการค้นหาการตรวจสอบการนำส่งเงินบัญชี</span>
+        <span>ผลการค้นหาการตรวจสอบการนำเงินฝากเข้าบัญชีพักหน่วยงานและกองทุน</span>
     </div>
     <div class="ui attached  segment">
 
-        <table id="tableData" class="ui small celled table nowrap striped selectable" style="width: 100%">
+        <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%">
             <thead>
                 <tr>
-                    <th style="text-align: center !important;">ภาค</th>
-                    <th style="text-align: center !important;">พื้นที่</th>
-                    <th style="text-align: center !important;">สาขา</th>
-                    <th style="text-align: center !important;">รหัสพื้นที่ที่ออกใบเสร็จ</th>
-                    <th style="text-align: center !important;">วันที่จัดเก็บ</th>
-                    <th style="text-align: center !important;">วันที่นำส่ง</th>
-                    <th style="text-align: center !important;">เงินเก็บ</th>
-                    <th style="text-align: center !important;">เงินฝาก</th>
-                    <th style="text-align: center !important;">สถานะการตรวจ</th>
+                    <th class="text-center">ลำดับที่</th>
+                    <th class="text-center">เลขที่ใบเสร็จ</th>
+                    <th class="text-center">วันที่นำฝาก</th>
+                    <th class="text-center">เงินจัดเก็บ</th>
+                    <th class="text-center">เงินนำฝาก</th>
+                    <th class="text-center">สถานะการตรวจวันที่</th>
+                    <th class="text-center">สถานะการตรวจจำนวนเงิน</th>
                 </tr>
             </thead>
         </table>
