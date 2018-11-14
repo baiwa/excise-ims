@@ -38,9 +38,9 @@ export class Int06115Component implements OnInit, AfterViewInit {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-      { label: "ตรวจสอบหลักฐานการเบิก", route: "#" }
+      { label: "ตรวจสอบหลักฐานการขอเบิก และทำใบขอเบิก", route: "#" }
     ];
-
+    
     this.withdrawRequestList = selfService.dropdown("WITHDRAW_REQUEST", null);
     // this.statusList = selfService.dropdown("WITHDRAW_STATUS", null);
 

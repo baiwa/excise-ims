@@ -39,7 +39,7 @@ export class Int06118Component implements OnInit {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-      { label: "ติดตามผลขอเบิก ขอจ่าย", route: "#" }
+      { label: "เปรียบเทียบใบขอเบิก ขอจ่าย และอนุมัติจ่าย", route: "#" }
     ];
 
     this.withdrawRequestList = selfService.dropdown("WITHDRAW_REQUEST", null);
@@ -123,6 +123,7 @@ export class Int06118Component implements OnInit {
       if (res) {
         this.ajax.post(URL, { 
           id:this.dataApprove.id,
+          withdrawRequest:$("#withdrawRequest").val(),
           status:status
       },res => {
         const commonMessage = res.json();

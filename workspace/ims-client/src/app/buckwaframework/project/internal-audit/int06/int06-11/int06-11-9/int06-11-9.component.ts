@@ -39,7 +39,7 @@ export class Int06119Component implements OnInit {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },
-      { label: "ติดตามผลขอเบิก ขอจ่าย", route: "#" }
+      { label: "ตรวจสอบหลักฐานการขอเบิก และอนุมัติการขอเบิก", route: "#" }
     ];
 
     this.withdrawRequestList = selfService.dropdown("WITHDRAW_REQUEST", null);
