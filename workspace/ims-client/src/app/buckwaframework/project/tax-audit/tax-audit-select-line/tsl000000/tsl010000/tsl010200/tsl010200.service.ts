@@ -865,19 +865,19 @@ export class Tsl010200Service {
 
   activeTable(e) {
     if (e == 1) {
-      this.table.clear().draw();
-      this.table.rows.add(this.data); // Add new data
-      this.table.columns.adjust().draw(); // Redraw the DataTable\
+      // this.table.clear().draw();
+      // this.table.rows.add(this.data); // Add new data
+      // this.table.columns.adjust().draw(); // Redraw the DataTable\
     }
     if (e == 2) {
-      this.tableC.clear().draw();
-      this.tableC.rows.add(this.dataTableCompare); // Add new data
-      this.tableC.columns.adjust().draw(); // Redraw the DataTable\
+      // this.tableC.clear().draw();
+      // this.tableC.rows.add(this.dataTableCompare); // Add new data
+      // this.tableC.columns.adjust().draw(); // Redraw the DataTable\
     }
     if (e == 3) {
-      this.tableC2y.clear().draw();
-      this.tableC2y.rows.add(this.dataTableCompare2Year); // Add new data
-      this.tableC2y.columns.adjust().draw(); // Redraw the DataTable\
+      // this.tableC2y.clear().draw();
+      // this.tableC2y.rows.add(this.dataTableCompare2Year); // Add new data
+      // this.tableC2y.columns.adjust().draw(); // Redraw the DataTable\
     }
   }
   datatable = () => {
@@ -887,6 +887,9 @@ export class Tsl010200Service {
       "scrollX": true,
       "paging": true,
       "data": this.data,
+    //   fixedColumns:   {
+    //     leftColumns: 3,
+    // },
       "columns": [
         {
           render: function (data, type, full, meta) {
@@ -1024,7 +1027,7 @@ export class Tsl010200Service {
               data +
               '" type="checkbox"><label></label></div>';
           },
-          className: "center"
+          "className": "center"
         },
         {
           "data": "exciseId"

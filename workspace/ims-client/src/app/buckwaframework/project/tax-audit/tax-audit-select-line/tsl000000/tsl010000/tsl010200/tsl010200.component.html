@@ -19,11 +19,11 @@
             </div>
             <div class="item">
               <div class="menu">
-                <a class="item hover" (click)="activeTable(1)">เงื่อนไขที่ 1 ความถี่ของเดือนที่ชำระภาษี ตั้งแต่ เดือน
+                <a class="item hover" (click)="activeTable(1)" id="table1">เงื่อนไขที่ 1 ความถี่ของเดือนที่ชำระภาษี ตั้งแต่ เดือน
                   {{dispaly.dateFrom}} ถึง
                   {{dispaly.dateTo}}<br> จำนวนเดือนที่ไม่ชำระภาษีติดต่อกัน {{form.monthNonPay}}</a>
-                <a class="item hover" (click)="activeTable(2)"> เงื่อนไขที่ 2 เปรียบเทียบจำนวนภาษีระหว่างเดือน</a>
-                <a class="item hover" (click)="activeTable(3)">เงื่อนไขที่ 3
+                <a class="item hover" (click)="activeTable(2)" id="table2"> เงื่อนไขที่ 2 เปรียบเทียบจำนวนภาษีระหว่างเดือน</a>
+                <a class="item hover" (click)="activeTable(3)" id="table3">เงื่อนไขที่ 3
                   เปรียบเทียบความแต่งต่างการชำระภาษีระหว่างปี เทียบกับ ปี</a>
               </div>
             </div>

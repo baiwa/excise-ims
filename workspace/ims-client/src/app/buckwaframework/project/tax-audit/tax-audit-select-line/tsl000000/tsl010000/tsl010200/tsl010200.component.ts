@@ -35,9 +35,9 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
   loading: boolean = true;
 
   // ==== show table ===
-  table1 : boolean = false;
-  table2 : boolean = true;
-  table3 : boolean = true;
+  table1: boolean = false;
+  table2: boolean = true;
+  table3: boolean = true;
   constructor(
     private objService: IaService,
     private myService: Tsl010200Service,
@@ -61,8 +61,10 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
 
   ngOnInit() {
     $(".datatable1").show();
-    $(".tableCompare").hide();
-    $(".tableCompare2Year").hide();
+    $(".tableCompare").show();
+    $(".tableCompare2Year").show();
+
+    $("#table1").addClass('active');
   }
 
   ngAfterViewInit() {
@@ -76,16 +78,28 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
       $(".datatable1").show();
       $(".tableCompare").hide();
       $(".tableCompare2Year").hide();
+
+      $("#table1").addClass('active');
+      $("#table2").removeClass('active');
+      $("#table3").removeClass('active');
     }
     if (e == 2) {
       $(".datatable1").hide();
       $(".tableCompare").show();
       $(".tableCompare2Year").hide();
+
+      $("#table1").removeClass('active');
+      $("#table2").addClass('active');
+      $("#table3").removeClass('active');
     }
     if (e == 3) {
       $(".datatable1").hide();
       $(".tableCompare").hide();
       $(".tableCompare2Year").show();
+
+      $("#table1").removeClass('active');
+      $("#table2").removeClass('active');
+      $("#table3").addClass('active');
     }
     this.myService.activeTable(e);
   }
@@ -98,6 +112,8 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
         this.loading = false;
         this.tableCompare();
         this.tableCompare2Year();
+        $(".tableCompare").hide();
+        $(".tableCompare2Year").hide();
       })
     });
   }
