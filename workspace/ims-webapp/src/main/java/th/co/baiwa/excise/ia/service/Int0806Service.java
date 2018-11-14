@@ -2,18 +2,17 @@ package th.co.baiwa.excise.ia.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.Int0806Dao;
 import th.co.baiwa.excise.ia.persistence.entity.MoneyCheck;
 import th.co.baiwa.excise.ia.persistence.vo.Int0806FormSearchVo;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class Int0806Service {
@@ -44,7 +43,9 @@ public class Int0806Service {
 			
 			if(dataList.size() > 0) {
 				for (MoneyCheck m : dataList) {
-					if(m.getTrnDate().compareTo(m.getDepositDate()) <= 1) {
+					long diffInMillies = Math.abs(m.getDepositDate().getTime() - m.getTrnDate().getTime());
+				    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+					if(diff < 1) {
 						m.setStatusDate("S");
 						m.setDepositDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getDepositDate()));
 						m.setTrnDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getTrnDate()));
