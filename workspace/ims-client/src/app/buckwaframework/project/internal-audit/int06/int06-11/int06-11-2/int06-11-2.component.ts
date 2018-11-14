@@ -3,11 +3,11 @@ import { AuthService } from 'services/auth.service';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { AjaxService } from 'services/ajax.service';
 import { MessageBarService } from 'services/message-bar.service';
-import { TextDateTH, formatter } from 'helpers/datepicker';
+import { TextDateTH, formatter, ThDateToEnDate } from 'helpers/datepicker';
 import { Utils } from 'helpers/utils';
 import { Router } from '@angular/router';
 import { BreadCrumb } from 'models/breadcrumb';
-import * as moment from 'moment'; 
+import * as moment from 'moment';
 
 declare var $: any;
 
@@ -278,12 +278,34 @@ export class Int06112Component implements OnInit {
   onSubmit() {
     this.delFlag = true;
     this.submittedFlag = true;
-    if (this.medicalWelfareForm.invalid || this.medicalWelfareForm.get('receiptQuantity').value) {
+    if (this.medicalWelfareForm.invalid || this.medicalWelfareForm.get('receiptQuantity').value == 0) {
       this.message.errorModal("กรุณากรอกข้อมูลให้ครบ");
       return;
     }
     this.message.comfirm(confirm => {
+      const form = this.medicalWelfareForm;
       if (confirm) {
+        if (form.get('statusChild1').value == '0') {
+          const date = moment(ThDateToEnDate(form.get('birthDateChild1').value), "DD/MM/YYYY");
+          if (moment().diff(date, 'years') > 20) {
+            this.message.errorModal("กรุณากรอกข้อมูลอายุให้ถูกต้อง");
+            return;
+          }
+        }
+        if (form.get('statusChild2').value == '0') {
+          const date = moment(ThDateToEnDate(form.get('birthDateChild2').value), "DD/MM/YYYY");
+          if (moment().diff(date, 'years') > 20) {
+            this.message.errorModal("กรุณากรอกข้อมูลอายุให้ถูกต้อง");
+            return;
+          }
+        }
+        if (form.get('statusChild3').value == '0') {
+          const date = moment(ThDateToEnDate(form.get('birthDateChild3').value), "DD/MM/YYYY");
+          if (moment().diff(date, 'years') > 20) {
+            this.message.errorModal("กรุณากรอกข้อมูลอายุให้ถูกต้อง");
+            return;
+          }
+        }
         this.medicalWelfareForm.enable();
         const {
           fullName, position, affiliation, phoneNumber, disease, hospitalName, hospitalOwner,
@@ -336,6 +358,7 @@ export class Int06112Component implements OnInit {
             for (let key in _receipts) {
               _receipts[key].id = data.id;
               _receipts[key].receiptDate = moment(_receipts[key].receiptDate, "DD/MM/YYYY").toDate();
+              _receipts[key].receiptType = "MD";
             }
 
             const urlUpload = "ia/int061102/upload";

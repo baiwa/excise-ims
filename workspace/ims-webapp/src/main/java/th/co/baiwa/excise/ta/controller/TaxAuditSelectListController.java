@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ta.persistence.vo.PlanFromWsVo;
+import th.co.baiwa.excise.ta.persistence.vo.Tsl010200FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010200Vo;
 import th.co.baiwa.excise.ta.service.PlanFromWsHeaderService;
 
@@ -66,6 +67,15 @@ public class TaxAuditSelectListController {
 	public List<Tsl010200Vo> findCondition2(@RequestBody PlanFromWsVo vo) {
 		logger.debug("saveToTaPlanSearchRick");
 		return planFromWsHeaderService.findCondition2(vo);
+	}
+	
+	@PostMapping("/saveCondition1")
+	@ResponseBody
+	public List<Tsl010200Vo> saveCondition1(Tsl010200FormVo formVo){
+		System.out.println(formVo);
+		planFromWsHeaderService.saveCondition1(formVo);
+		return formVo.getDataList();
+		
 	}
 }
 

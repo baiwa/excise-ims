@@ -3,7 +3,7 @@ import { AuthService } from "services/auth.service";
 import { Int061101Service } from "./int06-11-1.service";
 import { MessageBarService } from "services/message-bar.service";
 import { ActivatedRoute } from "@angular/router";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { FormGroup, Validators, FormBuilder, FormArray } from "@angular/forms";
 import { Observable } from "rxjs";
 import { ComboBox } from "models/combobox";
 import { TextDateTH, formatter } from "helpers/datepicker";
@@ -28,6 +28,8 @@ export class Int06111Component implements OnInit {
   tableUpload: any = [];
   flgOnLoad: boolean = true;
   monthStart: any;
+
+  receiptsRH: FormArray = new FormArray([]);
 
   constructor(
     private selfService: Int061101Service,
@@ -76,7 +78,8 @@ export class Int06111Component implements OnInit {
       periodWithdrawTo: ["", Validators.required],
       totalMonth: ["", Validators.required],
       totalWithdraw: ["", Validators.required],
-      receipts: ["", Validators.required]
+      receipts: [0, Validators.required],
+      receiptsRH: this.fb.array([])
     });
   }
 
@@ -138,14 +141,14 @@ export class Int06111Component implements OnInit {
 
   save(e) {
     e.preventDefault();
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.rentHouseForm.invalid) {
+      this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ");
+      return;
+    }
     this.msg.comfirm(confirm => {
       if (confirm) {
-        this.submitted = true;
-        // stop here if form is invalid
-        if (this.rentHouseForm.invalid) {
-          this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ");
-          return;
-        }
         this.loadingUL = true;
         this.selfService.save(this.rentHouseForm.value, this.cbLoading);
       }
@@ -154,6 +157,41 @@ export class Int06111Component implements OnInit {
 
   typeNumber(e) {
     return Utils.onlyNumber(e);
+  }
+
+  addReceiptRH() {
+    this.receiptsRH = this.rentHouseForm.get('receiptsRH') as FormArray;
+    const form = this.rentHouseForm.get('receipts');
+    const index = this.receiptsRH.controls.length;
+    form.setValue(parseInt(form.value)+1);
+    this.receiptsRH.push(this.fb.group({
+      receiptNo: ['', Validators.required],
+      receiptAmount: ['', Validators.required],
+      receiptDate: ['', Validators.required],
+    }));
+    setTimeout(() => {
+      $(`#receiptD${index}`).calendar({
+        type: "date",
+        text: TextDateTH,
+        formatter: formatter('day-month-year'),
+        onChange: (date, text) => {
+          this.receiptsRH = this.rentHouseForm.get('receiptsRH') as FormArray;
+          this.receiptsRH.at(index).get(`receiptDate`).setValue(text);
+        }
+      });
+    }, 400);
+  }
+
+  removeReceiptRH(index) {
+    this.receiptsRH = this.rentHouseForm.get('receiptsRH') as FormArray;
+    const form = this.rentHouseForm.get('receipts');
+    form.setValue(parseInt(form.value)-1);
+    this.receiptsRH.removeAt(index);
+  }
+
+  errorReceipt(index, control) {
+    this.receiptsRH = this.rentHouseForm.get('receiptsRH') as FormArray;
+    return this.receiptsRH.at(index).get(control).invalid;
   }
 
   onUpload(e) {

@@ -4,8 +4,10 @@ declare var $: any;
 @Injectable()
 export class Tsl010200Service {
 
+  dataList: any[] = [];
   // ==>params  
   table: any;
+  table2: any;
   jsonColumn: any = "";
   month: any = [
     'ม.ค.',
@@ -21,7 +23,7 @@ export class Tsl010200Service {
     'พ.ย.',
     'ธ.ค.',
   ]
-  dataSelect:any;
+  dataSelect: any;
   data: any = [
     // {
     //   exciseId: "",
@@ -188,13 +190,13 @@ export class Tsl010200Service {
     });
   }
 
-  datatable=()=> {    
+  datatable = () => {
     this.table = $("#datatable1").DataTableTh({
       "serverSide": false,
       "processing": false,
       "scrollX": true,
       "paging": true,
-      "data" : this.data,
+      "data": this.data,
       // "ajax": {
       //     "url": '/ims-webapp/api/taxAudit/selectList/findCondition1',
       //     "contentType": "application/json",
@@ -210,14 +212,12 @@ export class Tsl010200Service {
       "columns": [
         {
           render: function (data, type, full, meta) {
-            return `<input type="checkbox" name="chk${meta.row}" id="chk${
-              meta.row
-              }" value="${$("<div/>")
-                .text(data)
-                .html()}">`;
+            return '<div class="ui checkbox tableDt"><input name="checkDelId" value="' +
+              data +
+              '" type="checkbox"><label></label></div>';
           },
           className: "center"
-        },{
+        }, {
           "data": "exciseId"
         },
         {
@@ -274,10 +274,10 @@ export class Tsl010200Service {
         {
           "data": "month10",
           "className": "text-right"
-        },{
+        }, {
           "data": "month11",
           "className": "text-right"
-        },{
+        }, {
           "data": "month12",
           "className": "text-right"
         },
@@ -287,7 +287,163 @@ export class Tsl010200Service {
       // },
       "drawCallback": (settings) => {
 
+      }, rowCallback: (row, data, index) => {
+        $("td > .tableDt", row).bind("change", () => {
+          let isDelete = false;
+          for (let index = 0; index < this.dataList.length; index++) {
+            const element = this.dataList[index];
+            if (element == data) {
+              isDelete = true;
+
+              this.dataList.splice(index, 1);
+
+            }
+          }
+          if (!isDelete) {
+            this.dataList.push(data);
+          }
+          console.log(this.dataList);
+          this.table2.clear().draw();
+          this.table2.rows.add(this.dataList); // Add new data
+          this.table2.columns.adjust().draw(); // Redraw the DataTable\
+        })
+
+        // if(this.table2 != null){
+        //   this.table2.destroy();
+        //   this.datatable2();
+        // }
+
       }
+
+
+    });
+    $("#select-all").on("click", function () {
+      // Check/uncheck all checkboxes in the table
+      var rows = $("#datatable1").DataTable().rows({ search: "applied" }).nodes();
+      $('input[type="checkbox"]', rows).prop("checked", this.checked);
+    });
+  }
+
+  datatable2 = () => {
+    this.table2 = $("#datatable2").DataTableTh({
+      "serverSide": false,
+      "processing": false,
+      "scrollX": true,
+      "paging": true,
+      "data": this.dataList,
+      // "ajax": {
+      //     "url": '/ims-webapp/api/taxAudit/selectList/findCondition1',
+      //     "contentType": "application/json",
+      //     "type": "POST",
+      //     "data": (d) => {
+      //         return JSON.stringify($.extend({}, d, {
+      //             "dateFrom": form.dateFrom,
+      //             "dateTo": form.dateTo,
+      //             "monthNonPay": form.monthNonPay
+      //         }));
+      //     },
+      // },
+      "columns": [
+        {
+          render: function (data, type, full, meta) {
+            return '<div class="ui checkbox tableDt"><input name="checkDelId" value="' +
+              data +
+              '" type="checkbox"><label></label></div>';
+          },
+          className: "center"
+        }, {
+          "data": "exciseId"
+        },
+        {
+          "data": "conpanyName"
+        },
+        {
+          "data": "address"
+        },
+        {
+          "data": "subProduct"
+        },
+        {
+          "data": "sector"
+        },
+        {
+          "data": "area"
+        },
+        {
+          "data": "month1",
+          "className": "text-right"
+        },
+        {
+          "data": "month2",
+          "className": "text-right"
+        },
+        {
+          "data": "month3",
+          "className": "text-right"
+        },
+        {
+          "data": "month4",
+          "className": "text-right"
+        },
+        {
+          "data": "month5",
+          "className": "text-right"
+        },
+        {
+          "data": "month6",
+          "className": "text-right"
+        },
+        {
+          "data": "month7",
+          "className": "text-right"
+        },
+        {
+          "data": "month8",
+          "className": "text-right"
+        },
+        {
+          "data": "month9",
+          "className": "text-right"
+        },
+        {
+          "data": "month10",
+          "className": "text-right"
+        }, {
+          "data": "month11",
+          "className": "text-right"
+        }, {
+          "data": "month12",
+          "className": "text-right"
+        },
+      ],//JSON.parse(this.jsonColumn),
+      // "fixedColumns": {
+      //   leftColumns: 2
+      // },
+      "drawCallback": (settings) => {
+
+      }, rowCallback: (row, data, index) => {
+        $("td > .tableDt", row).bind("change", () => {
+          let isDelete = false;
+          for (let index = 0; index < this.dataList.length; index++) {
+            const element = this.dataList[index];
+            if (element == data) {
+              isDelete = true;
+
+              this.dataList.splice(index, 1);
+
+            }
+          }
+          if (!isDelete) {
+            this.dataList.push(data);
+          }
+          console.log(this.dataList);
+
+        })
+
+
+
+      }
+
 
     });
     $("#select-all").on("click", function () {
@@ -308,7 +464,7 @@ export class Tsl010200Service {
 
   }
 
-  select=()=>{
+  select = () => {
     var data = $("#datatable1").DataTable().rows().data();
     console.log(data);
     for (let i = 0; i < data.length; i++) {
