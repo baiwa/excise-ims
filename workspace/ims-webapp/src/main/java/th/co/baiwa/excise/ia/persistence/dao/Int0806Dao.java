@@ -86,28 +86,14 @@ public class Int0806Dao {
 		}
 	};
 	
-	public List<Lov> getSubtype(String subType) {
-
+	public String getSubtype(String id) {
 		List<Object> valueList = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM SYS_LOV L ");
+		StringBuilder sql = new StringBuilder(" SELECT L.SUB_TYPE FROM SYS_LOV L ");
 		sql.append(" WHERE L.LOV_ID = ? ");
-		valueList.add(subType);
+		valueList.add(id);
 
-		List<Lov> dataList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingGetSubtype);
-		return dataList;
+		String data = jdbcTemplate.queryForObject(sql.toString(), valueList.toArray(), String.class);
+		return data;
 	}
-
-	private RowMapper<Lov> fieldMappingGetSubtype = new RowMapper<Lov>() {
-		@Override
-		public Lov mapRow(ResultSet rs, int arg1) throws SQLException {
-			Lov en = new Lov();
-			en.setLovId(rs.getLong("LOV_ID"));
-			en.setLovIdMaster(rs.getLong("LOV_ID_MASTER"));
-			en.setType(rs.getString("TYPE"));
-			en.setValue1(rs.getString("VALUE1"));
-			en.setSubType(rs.getString("SUB_TYPE"));
-			return en;
-		}
-	};
 
 }

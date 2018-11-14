@@ -66,8 +66,8 @@ export class Int086Component implements OnInit, AfterViewInit {
   }
   setVariable() {
     this.searchForm = this.fb.group({
-      startDate: [""],
-      endDate: [""],
+      startDate: ["", Validators.required],
+      endDate: ["", Validators.required],
       account: ["", Validators.required],
       combo1: ["", Validators.required],
       combo2: ["", Validators.required]
@@ -138,20 +138,22 @@ export class Int086Component implements OnInit, AfterViewInit {
       this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ");
       return;
     }
-    let subT1 = this.comboBox1.filter(
-      obj => obj.lovId == this.searchForm.value.combo1
-    );
-    let subT2 = this.comboBox2.filter(
-      obj => obj.lovId == this.searchForm.value.combo2
-    );
+    // let subT1 = this.comboBox1.filter(
+    //   obj => obj.lovId == this.searchForm.value.combo1
+    // );
+    // let subT2 = this.comboBox2.filter(
+    //   obj => obj.lovId == this.searchForm.value.combo2
+    // );
 
     this.searchData = {
       startDate: this.searchForm.value.startDate,
       endDate: this.searchForm.value.endDate,
       account: this.searchForm.value.account,
-      combo1: subT1[0].subType,
-      combo2: subT2[0].subType
+      combo1: this.searchForm.value.combo1,
+      combo2: this.searchForm.value.combo2
     };
+    // combo1: subT1[0].subType,
+    // combo2: subT2[0].subType
     this.Datatable();
   }
 
