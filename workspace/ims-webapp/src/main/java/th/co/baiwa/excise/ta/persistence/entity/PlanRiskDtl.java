@@ -25,13 +25,22 @@ public class PlanRiskDtl extends BaseEntity {
 	@SequenceGenerator(name = "TA_PLAN_RISK_DTL_GEN", sequenceName = "TA_PLAN_RISK_DTL_SEQ", allocationSize = 1)
 	@Column(name = "TA_PLAN_RISK_DTL_ID")
 	private BigDecimal taPlanRiskDtlId;
+	
 	@Column(name = "WORK_SHEET_HEADER_ID")
 	private BigDecimal workSheetHeaderId;
+	
 	@Column(name = "RISK_TYPE")
 	private String riskType;
+	
 	@Column(name = "RISK_DTL")
 	private String riskDtl;
-
+	
+	@Column(name = "MONTH")
+	private String month;
+	
+	@Column(name = "AMOUNT")
+	private String amount;
+	
 	public PlanRiskDtl(BigDecimal workSheetHeaderId, String riskType, String riskDtl) {
 		this.riskType = riskType;
 		this.workSheetHeaderId = workSheetHeaderId;
@@ -75,6 +84,18 @@ public class PlanRiskDtl extends BaseEntity {
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+	public String getMonth() {
+		return month;
+	}
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	public String getAmount() {
+		return amount;
+	}
+	public void setAmount(String amount) {
+		this.amount = amount;
 	}
 
 }

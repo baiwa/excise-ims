@@ -1,8 +1,6 @@
 package th.co.baiwa.excise.ws;
 
-import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.Date;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,12 +70,7 @@ public class WebServiceTest {
 		planFromWsVo.setPercent1("-40");
 		planFromWsVo.setSymbol1(">");
 		planFromWsVo.setPercent2("10");
-		try {
-			planFromWsHeaderService.findExciseIdOrderByPercenTax(planFromWsVo);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 	}
 

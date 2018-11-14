@@ -25,6 +25,7 @@ public class Tsl010200Vo {
 	// difference
 	private String pack1;
 	private String pack2;
+	private String pack3;
 	private String pack4;
 	private String pack5;
 	private String pack6;
@@ -265,6 +266,14 @@ public class Tsl010200Vo {
 
 	public void setPack12(String pack12) {
 		this.pack12 = pack12;
+	}
+
+	public String getPack3() {
+		return pack3;
+	}
+
+	public void setPack3(String pack3) {
+		this.pack3 = pack3;
 	}
 
 }

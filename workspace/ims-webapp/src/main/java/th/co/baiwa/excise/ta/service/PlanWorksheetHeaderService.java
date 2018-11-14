@@ -28,14 +28,18 @@ import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetDetailDao;
 import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetHeaderDao;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseRegistartionNumber;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseTaxReceive;
+import th.co.baiwa.excise.ta.persistence.entity.PlanRiskDtl;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetDetail;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
 import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
 import th.co.baiwa.excise.ta.persistence.entity.analysis.PlanWorksheetHeader;
+import th.co.baiwa.excise.ta.persistence.repository.PlanRiskDtlRepository;
+import th.co.baiwa.excise.ta.persistence.repository.PlanWorksheetHeaderRepository;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.ta.persistence.vo.ResVo;
 import th.co.baiwa.excise.ta.persistence.vo.SectorMapValue;
+import th.co.baiwa.excise.ta.persistence.vo.Tsl010200Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.utils.NumberUtils;
 
@@ -58,6 +62,13 @@ public class PlanWorksheetHeaderService {
 	
 	@Autowired
 	private SummaryReportService summaryReportService;
+	
+	@Autowired
+	private PlanWorksheetHeaderRepository planWorksheetHeaderRepository;
+	
+	
+	@Autowired
+	private PlanRiskDtlRepository planRiskDtlRepository;
 
 	public String insertPlanWorksheetHeaderService(MockupVo mockupVo, Date startBackDate, int month,
 			String productType) {
@@ -706,6 +717,71 @@ public class PlanWorksheetHeaderService {
 			returnDataList.get(0).setColumnName(formUploadList.get(0).getColumn6());
 		}
 		return returnDataList;
+	}
+	
+	public List<Tsl010200Vo> searchListExcise() {
+		List<Tsl010200Vo> tsl010200VoList = new ArrayList<Tsl010200Vo>();
+		String analysNumber = planWorksheetHeaderDao.queryAnalysNumberFromHeader().get(0);
+		List<PlanWorksheetHeader> planWorksheetHeaders = planWorksheetHeaderRepository.findByAnalysNumber(analysNumber);
+		Tsl010200Vo tsl010200Vo = new Tsl010200Vo();
+		for (PlanWorksheetHeader planWorksheetHeader : planWorksheetHeaders) {
+			tsl010200Vo = new Tsl010200Vo();
+			tsl010200Vo.setExciseId(planWorksheetHeader.getExciseId());
+			tsl010200Vo.setConpanyName(planWorksheetHeader.getCompanyName());
+			tsl010200Vo.setAddress(planWorksheetHeader.getFactoryAddress());
+			tsl010200Vo.setSubProduct(planWorksheetHeader.getProductType());
+			tsl010200Vo.setArea(planWorksheetHeader.getExciseOwnerArea());
+			
+			List<PlanRiskDtl> planRiskDtlList = planRiskDtlRepository.findByWorkSheetHeaderId(new BigDecimal(planWorksheetHeader.getWorkSheetHeaderId()));
+			if(BeanUtils.isNotEmpty(planRiskDtlList)) {
+				for (int i = 0; i < planRiskDtlList.size(); i++) {
+					PlanRiskDtl plan = planRiskDtlList.get(i);
+					
+					if(i == 0) {
+						tsl010200Vo.setMonth1(plan.getMonth());
+						tsl010200Vo.setPack1(plan.getRiskDtl());
+					}else if(i == 1) {
+						tsl010200Vo.setMonth2(plan.getMonth());
+						tsl010200Vo.setPack2(plan.getRiskDtl());
+					}else if(i == 2) {
+						tsl010200Vo.setMonth3(plan.getMonth());
+						tsl010200Vo.setPack3(plan.getRiskDtl());
+					}else if(i == 3) {
+						tsl010200Vo.setMonth4(plan.getMonth());
+						tsl010200Vo.setPack4(plan.getRiskDtl());
+					}else if(i == 4) {
+						tsl010200Vo.setMonth5(plan.getMonth());
+						tsl010200Vo.setPack5(plan.getRiskDtl());
+					}else if(i == 5) {
+						tsl010200Vo.setMonth6(plan.getMonth());
+						tsl010200Vo.setPack6(plan.getRiskDtl());
+					}else if(i == 6) {
+						tsl010200Vo.setMonth7(plan.getMonth());
+						tsl010200Vo.setPack7(plan.getRiskDtl());
+					}else if(i == 7) {
+						tsl010200Vo.setMonth8(plan.getMonth());
+						tsl010200Vo.setPack8(plan.getRiskDtl());
+					}else if(i == 8) {
+						tsl010200Vo.setMonth9(plan.getMonth());
+						tsl010200Vo.setPack9(plan.getRiskDtl());
+					}else if(i == 9) {
+						tsl010200Vo.setMonth10(plan.getMonth());
+						tsl010200Vo.setPack10(plan.getRiskDtl());
+					}else if(i == 10) {
+						tsl010200Vo.setMonth11(plan.getMonth());
+						tsl010200Vo.setPack11(plan.getRiskDtl());
+					}else if(i == 11) {
+						tsl010200Vo.setMonth12(plan.getMonth());
+						tsl010200Vo.setPack12(plan.getRiskDtl());
+					}
+				}
+			}
+			tsl010200VoList.add(tsl010200Vo);
+		}
+		
+		
+		return tsl010200VoList;
+	
 	}
 
 }

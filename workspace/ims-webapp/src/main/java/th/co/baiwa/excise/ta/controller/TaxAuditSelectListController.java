@@ -1,9 +1,9 @@
 package th.co.baiwa.excise.ta.controller;
 
 import java.beans.PropertyEditorSupport;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ta.persistence.vo.PlanFromWsVo;
+import th.co.baiwa.excise.ta.persistence.vo.Tsl010200Vo;
 import th.co.baiwa.excise.ta.service.PlanFromWsHeaderService;
 
 @Controller
@@ -30,18 +31,7 @@ public class TaxAuditSelectListController {
 	@Autowired
 	private PlanFromWsHeaderService planFromWsHeaderService;
 	
-	@PostMapping("/saveToTaPlanSearchRick")
-	@ResponseBody
-	public PlanFromWsVo saveToTaPlanSearchRick(@RequestBody PlanFromWsVo vo) {
-		logger.debug("saveToTaPlanSearchRick");
-		try {
-			planFromWsHeaderService.findExciseIdOrderByPercenTax(vo);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return vo;
-	}
+	
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -62,6 +52,19 @@ public class TaxAuditSelectListController {
 				}
 			}
 		});
+	}
+	
+	@PostMapping("/findCondition1")
+	@ResponseBody
+	public List<Tsl010200Vo> findCondition1(@RequestBody PlanFromWsVo vo) {
+		logger.debug("saveToTaPlanSearchRick");
+		return planFromWsHeaderService.findCondition1(vo);
+	}
+	@PostMapping("/findCondition2")
+	@ResponseBody
+	public List<Tsl010200Vo> findCondition2(@RequestBody PlanFromWsVo vo) {
+		logger.debug("saveToTaPlanSearchRick");
+		return planFromWsHeaderService.findCondition2(vo);
 	}
 }
 

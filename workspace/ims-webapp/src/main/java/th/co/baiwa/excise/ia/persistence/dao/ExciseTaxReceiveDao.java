@@ -93,5 +93,29 @@ public class ExciseTaxReceiveDao {
 		});
 		return monthShotName;
 	}
+	
+	public List<ExciseTaxReceive> findReciseTaxByExciseIdAndMonthList(String register, List<String> monthList ) {
+		List<Object> objList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder(" SELECT H.* from ta_excise_tax_receive H ");
+		
+		sql.append(" where H.TA_EXCISE_ID =  ? ");
+		objList.add(register);
+		
+		
+		sql.append("and H.TA_EXCISE_TAX_RECEIVE_MONTH in ( ");
+		for (int i = 0; i < monthList.size(); i++) {
+			sql.append("?");
+			if(i < monthList.size() -1 ) {
+				sql.append(",");
+			}
+			objList.add(monthList.get(i));
+		}
+		sql.append(" ) ");
+		
+
+		List<ExciseTaxReceive> list = JdbcTemplate.query(sql.toString(), objList.toArray(), exciseRegisttionRowmapper);
+
+		return list;
+	}
 
 }

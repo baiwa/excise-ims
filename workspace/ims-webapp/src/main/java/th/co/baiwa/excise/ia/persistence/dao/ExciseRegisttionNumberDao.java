@@ -26,7 +26,7 @@ public class ExciseRegisttionNumberDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private final String sqlTaExciseId = " select D.*  from EXCISEADM.ta_excise_registtion_number D ";
+	private final String SQL_REGIS = " select D.*  from EXCISEADM.ta_excise_registtion_number D ";
 
 	public Long countListdataPay(AnalysisFromCountVo countVo) {
 		StringBuilder sql = new StringBuilder();
@@ -68,7 +68,7 @@ public class ExciseRegisttionNumberDao {
 	}
 	public List<ExciseRegistartionNumber> queryByExciseId(String register, String exciseProductType,  List<String> conditionList, String formSearch, String coordinatesFlag) {
 		List<Object> objList = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder(sqlTaExciseId);
+		StringBuilder sql = new StringBuilder(SQL_REGIS);
 		if (BeanUtils.isNotEmpty(conditionList)) {
 			sql.append(
 					" LEFT JOIN  ( SELECT D.TA_EXCISE_ID ,SUM(TO_NUMBER(REPLACE(trim(D.TA_EXCISE_TAX_RECEIVE_AMOUNT), ',',''), '99999999999999.99')) as total_amount FROM TA_EXCISE_TAX_RECEIVE D ");
@@ -137,7 +137,7 @@ public class ExciseRegisttionNumberDao {
 
 	public long queryCountByExciseId(String exciseProductType, List<String> conditionList, String formSearch, String coordinatesFlag) {
 		List<Object> objList = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder(sqlTaExciseId);
+		StringBuilder sql = new StringBuilder(SQL_REGIS);
 		if (BeanUtils.isNotEmpty(conditionList)) {
 			sql.append(
 					" LEFT JOIN  ( SELECT D.TA_EXCISE_ID ,SUM(TO_NUMBER(REPLACE(trim(D.TA_EXCISE_TAX_RECEIVE_AMOUNT), ',',''), '99999999999999.99')) as total_amount FROM TA_EXCISE_TAX_RECEIVE D ");
@@ -233,7 +233,7 @@ public class ExciseRegisttionNumberDao {
 	public List<ExciseRegistartionNumber> queryByExciseRegistionNumber(String exciseProductType,
 			List<String> conditionList) {
 		List<Object> objList = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder(sqlTaExciseId);
+		StringBuilder sql = new StringBuilder(SQL_REGIS);
 		if (BeanUtils.isNotEmpty(conditionList)) {
 			sql.append(
 					" LEFT JOIN  ( SELECT D.TA_EXCISE_ID ,SUM(TO_NUMBER(REPLACE(trim(D.TA_EXCISE_TAX_RECEIVE_AMOUNT), ',',''), '99999999999999.99')) as total_amount FROM TA_EXCISE_TAX_RECEIVE D ");
@@ -312,6 +312,12 @@ public class ExciseRegisttionNumberDao {
 				exciseRegisttionRowmapper);
 
 		return new BigDecimal(0);
+	}
+	
+	public List<ExciseRegistartionNumber> searchAllRegistartionNumber(){
+		List<Object> objList = new ArrayList<Object>();
+		
+		return  jdbcTemplate.query(SQL_REGIS,objList.toArray()  ,exciseRegisttionRowmapper);
 	}
 
 }
