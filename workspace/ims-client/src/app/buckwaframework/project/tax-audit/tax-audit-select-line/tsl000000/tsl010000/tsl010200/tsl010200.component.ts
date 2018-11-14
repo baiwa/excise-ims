@@ -46,11 +46,12 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
 
     if(this.form == null) {
       this.router.navigate(['/tax-audit-select-line/tsl0101-00']);
-    }
-
-    this.dispaly.dateFrom = TextDateTH.months[parseInt(this.form.dateFrom.substr(0, 2))];
-    this.dispaly.dateTo = TextDateTH.months[parseInt(this.form.dateTo.substr(0, 2))];
-    this.dispaly.month = parseInt(this.form.dateTo.substr(0, 2)) - parseInt(this.form.dateFrom.substr(0, 2)) + 1;
+    }else{
+      this.dispaly.dateFrom = TextDateTH.months[parseInt(this.form.dateFrom.substr(0, 2)) - 1];
+      this.dispaly.dateTo = TextDateTH.months[parseInt(this.form.dateTo.substr(0, 2)) -1];
+      //this.dispaly.month = parseInt(this.form.dateTo.substr(0, 2)) - parseInt(this.form.dateFrom.substr(0, 2)) + 1;
+      console.log("display : ", this.dispaly);
+    }   
   }
 
   ngOnInit() {

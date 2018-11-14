@@ -117,85 +117,12 @@ export class Tsl010200Service {
     private ajax: AjaxService
   ) { }
 
-  createTableHeader(form): Promise<any> {
-    let dateForm = form.dateFrom;
-    let dateTo = form.dateTo;
-    dateForm = parseInt(dateForm.substr(0, 2));
-    dateTo = parseInt(dateTo.substr(0, 2));
-    let month = 0
-    month = (dateForm > dateTo ? dateForm - dateTo : dateTo - dateForm) + 1;
-    console.log("month : ", month);
+
+  save(): Promise<any> {
+    let url = "taxAudit/selectList/saveCondition1";
     return new Promise((resolve, reject) => {
-      let head = '<tr>' +
-        
-        '<th class="text-center" rowspan="2" >เลขทะเบียนสรรพสามิต</th>' +
-        '<th class="text-center" rowspan="2" >ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>' +
-        '<th class="text-center" rowspan="2" >ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>' +
-        '<th class="text-center" rowspan="2" >พิกัดสินค้า/บริการ</th>' +
-        '<th class="text-center" rowspan="2" >สรรพสามิตภาค</th>' +
-        '<th class="text-center" rowspan="2" >สรรพสามิตพื้นที่</th>';
-
-      if (month != 0) {
-        head += '<th class="text-center" colspan="' + month + '">สรรพสามิตพื้นที่</th>';
-        //head += '<th class="text-center" colspan="' + (month - 1) + '">ส่วนต่างการชำระภาษีระหว่างเดือน (เปอร์เซ็น)</th>';
-        head += '</tr> <tr>';
-      }
-
-      for (let i = 0; i < month; i++) {
-        head += '<th>' + this.month[i] + '</th>'
-      }
-
-      // for (let i = 0; i < month - 1; i++) {
-      //   head += `<th> เดือนที่ ${i + 1} และเดือนที่ ${i + 2}</th>`
-      // }
-
-      head += '</tr>';
-      $("#tableOne").html(head);
-      console.log(head);
-      resolve(month);
-    })
-  }
-  createTableBody(month: number): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.jsonColumn += '     [ {                           ';
-      this.jsonColumn += `          "data": "exciseId" `;
-      this.jsonColumn += '      }, {                        ';
-      this.jsonColumn += '          "data": "exciseId"      ';
-      this.jsonColumn += '      }, {                        ';
-      this.jsonColumn += '          "data": "conpanyName"   ';
-      this.jsonColumn += '      },                          ';
-      this.jsonColumn += '      {                           ';
-      this.jsonColumn += '          "data": "address"       ';
-      this.jsonColumn += '      },                          ';
-      this.jsonColumn += '      {                           ';
-      this.jsonColumn += '          "data": "subProduct"    ';
-      this.jsonColumn += '      },                          ';
-      this.jsonColumn += '      {                           ';
-      this.jsonColumn += '          "data": "sector"        ';
-      this.jsonColumn += '      },                          ';
-      this.jsonColumn += '      {                           ';
-      this.jsonColumn += '          "data": "area"          ';
-      this.jsonColumn += '      }                           ';
-
-      for (let index = 1; index <= month; index++) {
-        this.jsonColumn += `,{ "data" : "month${index}",`;
-        this.jsonColumn += '   "className" : "text-right"}';
-      }
-      // for (let index = 0; index < month - 1; index++) {
-      //   this.jsonColumn += ',{ "data" : "pack' + index + '" ,';
-      //   this.jsonColumn += '"className" : "text-right" }';
-      //   // if (index != month - 1) this.jsonColumn += ', '
-      // }
-      this.jsonColumn += ']';
-      resolve(this.jsonColumn);
-    });
-  }
-
-  save():Promise<any>{
-    let  url = "taxAudit/selectList/saveCondition1";
-    return new Promise((resolve,reject)=>{
-      this.ajax.post(url,JSON.stringify({dataList : this.dataList}),res=>{
-        console.log("Data List  : ",this.dataList);
+      this.ajax.post(url, JSON.stringify({ dataList: this.dataList }), res => {
+        console.log("Data List  : ", this.dataList);
         resolve(res.json());
       });
     });
@@ -207,18 +134,6 @@ export class Tsl010200Service {
       "scrollX": true,
       "paging": true,
       "data": this.data,
-      // "ajax": {
-      //     "url": '/ims-webapp/api/taxAudit/selectList/findCondition1',
-      //     "contentType": "application/json",
-      //     "type": "POST",
-      //     "data": (d) => {
-      //         return JSON.stringify($.extend({}, d, {
-      //             "dateFrom": form.dateFrom,
-      //             "dateTo": form.dateTo,
-      //             "monthNonPay": form.monthNonPay
-      //         }));
-      //     },
-      // },
       "columns": [
         {
           render: function (data, type, full, meta) {
@@ -291,13 +206,8 @@ export class Tsl010200Service {
           "data": "month12",
           "className": "text-right"
         },
-      ],//JSON.parse(this.jsonColumn),
-      // "fixedColumns": {
-      //   leftColumns: 2
-      // },
-      "drawCallback": (settings) => {
-
-      }, rowCallback: (row, data, index) => {
+      ],
+      "rowCallback": (row, data, index) => {
         $("td > .tableDt", row).bind("change", () => {
           let isDelete = false;
           for (let index = 0; index < this.dataList.length; index++) {
@@ -318,16 +228,12 @@ export class Tsl010200Service {
           this.table2.columns.adjust().draw(); // Redraw the DataTable\
         })
 
-        // if(this.table2 != null){
-        //   this.table2.destroy();
-        //   this.datatable2();
-        // }
-
       }
 
 
     });
     $("#select-all").on("click", function () {
+
       // Check/uncheck all checkboxes in the table
       var rows = $("#datatable1").DataTable().rows({ search: "applied" }).nodes();
       $('input[type="checkbox"]', rows).prop("checked", this.checked);
@@ -341,18 +247,6 @@ export class Tsl010200Service {
       "scrollX": true,
       "paging": true,
       "data": this.dataList,
-      // "ajax": {
-      //     "url": '/ims-webapp/api/taxAudit/selectList/findCondition1',
-      //     "contentType": "application/json",
-      //     "type": "POST",
-      //     "data": (d) => {
-      //         return JSON.stringify($.extend({}, d, {
-      //             "dateFrom": form.dateFrom,
-      //             "dateTo": form.dateTo,
-      //             "monthNonPay": form.monthNonPay
-      //         }));
-      //     },
-      // },
       "columns": [
         {
           "data": "exciseId"
@@ -364,95 +258,15 @@ export class Tsl010200Service {
           "data": "address"
         },
         {
-          "data": "subProduct"
-        },
-        {
           "data": "sector"
         },
         {
           "data": "area"
-        },
-        {
-          "data": "month1",
-          "className": "text-right"
-        },
-        {
-          "data": "month2",
-          "className": "text-right"
-        },
-        {
-          "data": "month3",
-          "className": "text-right"
-        },
-        {
-          "data": "month4",
-          "className": "text-right"
-        },
-        {
-          "data": "month5",
-          "className": "text-right"
-        },
-        {
-          "data": "month6",
-          "className": "text-right"
-        },
-        {
-          "data": "month7",
-          "className": "text-right"
-        },
-        {
-          "data": "month8",
-          "className": "text-right"
-        },
-        {
-          "data": "month9",
-          "className": "text-right"
-        },
-        {
-          "data": "month10",
-          "className": "text-right"
         }, {
-          "data": "month11",
-          "className": "text-right"
-        }, {
-          "data": "month12",
-          "className": "text-right"
+          "data": "subProduct"
         },
-      ],//JSON.parse(this.jsonColumn),
-      // "fixedColumns": {
-      //   leftColumns: 2
-      // },
-      "drawCallback": (settings) => {
 
-      }, rowCallback: (row, data, index) => {
-        $("td > .tableDt", row).bind("change", () => {
-          let isDelete = false;
-          for (let index = 0; index < this.dataList.length; index++) {
-            const element = this.dataList[index];
-            if (element == data) {
-              isDelete = true;
-
-              this.dataList.splice(index, 1);
-
-            }
-          }
-          if (!isDelete) {
-            this.dataList.push(data);
-          }
-          console.log(this.dataList);
-
-        })
-
-
-
-      }
-
-
-    });
-    $("#select-all").on("click", function () {
-      // Check/uncheck all checkboxes in the table
-      var rows = $("#datatable1").DataTable().rows({ search: "applied" }).nodes();
-      $('input[type="checkbox"]', rows).prop("checked", this.checked);
+      ],
     });
   }
 
