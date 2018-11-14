@@ -252,7 +252,7 @@ export class Int061105Service {
   save(saveData: any) {
     let DATA = {
       withdrawRequest: this.idToWithdrawRequest,
-      disbursementRequest:{
+      disbursementRequest: {
         affiliation: saveData.affiliation,
         amount: $("#pass").val(),
         id: saveData.id,
@@ -264,6 +264,7 @@ export class Int061105Service {
       }
     };
     this.ajax.post(URL.SAVE, DATA, res => {
+      this.Datatable();
       this.msg.successModal(res.json().messageTh);
     }),
       error => {

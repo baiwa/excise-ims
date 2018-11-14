@@ -167,6 +167,31 @@ public class Int061105Service {
 
 	public void save(Int061105FormSearchVo ids) {
 		int061105Dao.insertDisbursementRequest(ids.getDisbursementRequest());
+		//insert iaDisReqId in table child
+		if(BeanUtils.isNotEmpty(ids.getWithdrawRequest())) {
+			if("2058".equals(ids.getWithdrawRequest())) {
+				//แบบขอเบิกเงินค่าเช่าบ้าน (แบบ 6006)
+				List<RentHouse> dataList = rentHouseRepository.findByStatusAndIaDisReqIdIsNull("2055");
+				for (RentHouse r : dataList) {
+					r.setIaDisReqId(ids.getDisbursementRequest().getId());
+					rentHouseRepository.save(r);
+				}
+			}else if("2059".equals(ids.getWithdrawRequest())) {
+				// ใบเบิกเงินสวัสดิการเกี่ยวกับการรักษาพยาบาล (แบบ 7131)
+				List<HealthCareWelFareEntity> dataList = healthCareWelFareRepository.findByStatusCheckAndIaDisReqIdIsNull("2055");
+				for (HealthCareWelFareEntity r : dataList) {
+					r.setIaDisReqId(ids.getDisbursementRequest().getId());
+					healthCareWelFareRepository.save(r);
+				}
+			}else {
+				//ใบเบิกเงินสวัสดิการเกี่ยวกับการศึกษาบุตร (แบบ 7223)
+				List<TuitionFee> dataList = tuitionFeeRepository.findByStatusCheckAndIaDisReqIdIsNull("2055");
+				for (TuitionFee r : dataList) {
+					r.setIaDisReqId(ids.getDisbursementRequest().getId());
+					tuitionFeeRepository.save(r);
+				}
+			}
+		}
 	}
 
 	public Long getNextval() {

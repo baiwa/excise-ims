@@ -29,9 +29,9 @@ public class Int061105Dao {
 
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(" SELECT * FROM IA_RENT_HOUSE R ");
-//		sql.append(" where R.STATUS = ? ");
-//		valueList.add(ids.getStatus());
 		sql.append(" WHERE R.IS_DELETED = 'N' ");
+		sql.append(" AND R.IA_DIS_REQ_ID IS NULL ");
+		
 
 		List<RentHouse> dataList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingRentHouse);
 		return dataList;
@@ -56,9 +56,8 @@ public class Int061105Dao {
 		
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(" SELECT * FROM IA_TUITION_FEE T ");
-//		sql.append(" where T.STATUS = ? ");
-//		valueList.add(ids.getStatus());
 		sql.append(" WHERE T.IS_DELETED = 'N' ");
+		sql.append(" AND T.IA_DIS_REQ_ID IS NULL ");
 		
 		List<TuitionFee> dataList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingTuitionFee);
 		return dataList;
@@ -83,9 +82,8 @@ public class Int061105Dao {
 		
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(" SELECT * FROM IA_MEDICAL_WELFARE M ");
-//		sql.append(" where M.STATUS = ? ");
-//		valueList.add(ids.getStatus());
 		sql.append(" WHERE M.IS_DELETED = 'N' ");
+		sql.append(" AND M.IA_DIS_REQ_ID IS NULL ");
 		
 		List<HealthCareWelFareEntity> dataList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingMedicalWelfare);
 		return dataList;
