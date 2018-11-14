@@ -4,6 +4,7 @@ declare var $: any;
 @Injectable()
 export class Tsl010200Service {
 
+  dataList: any[] = [];
   // ==>params  
   table: any;
   jsonColumn: any = "";
@@ -21,7 +22,7 @@ export class Tsl010200Service {
     'พ.ย.',
     'ธ.ค.',
   ]
-  dataSelect:any;
+  dataSelect: any;
   data: any = [
     // {
     //   exciseId: "",
@@ -188,13 +189,13 @@ export class Tsl010200Service {
     });
   }
 
-  datatable=()=> {    
+  datatable = () => {
     this.table = $("#datatable1").DataTableTh({
       "serverSide": false,
       "processing": false,
       "scrollX": true,
       "paging": true,
-      "data" : this.data,
+      "data": this.data,
       // "ajax": {
       //     "url": '/ims-webapp/api/taxAudit/selectList/findCondition1',
       //     "contentType": "application/json",
@@ -210,14 +211,12 @@ export class Tsl010200Service {
       "columns": [
         {
           render: function (data, type, full, meta) {
-            return `<input type="checkbox" name="chk${meta.row}" id="chk${
-              meta.row
-              }" value="${$("<div/>")
-                .text(data)
-                .html()}">`;
+            return '<div class="ui checkbox tableDt"><input name="checkDelId" value="' +
+              data +
+              '" type="checkbox"><label></label></div>';
           },
           className: "center"
-        },{
+        }, {
           "data": "exciseId"
         },
         {
@@ -274,10 +273,10 @@ export class Tsl010200Service {
         {
           "data": "month10",
           "className": "text-right"
-        },{
+        }, {
           "data": "month11",
           "className": "text-right"
-        },{
+        }, {
           "data": "month12",
           "className": "text-right"
         },
@@ -287,7 +286,29 @@ export class Tsl010200Service {
       // },
       "drawCallback": (settings) => {
 
+      }, rowCallback: (row, data, index) => {
+        $("td > .tableDt", row).bind("change", () => {
+          let isDelete = false;
+          for (let index = 0; index < this.dataList.length; index++) {
+            const element = this.dataList[index];
+            if (element == data) {
+              isDelete = true;
+
+              this.dataList.splice(index, 1);
+
+            }
+          }
+          if (!isDelete) {
+            this.dataList.push(data);
+          }
+          console.log(this.dataList);
+
+        })
+
+
+
       }
+
 
     });
     $("#select-all").on("click", function () {
@@ -308,7 +329,7 @@ export class Tsl010200Service {
 
   }
 
-  select=()=>{
+  select = () => {
     var data = $("#datatable1").DataTable().rows().data();
     console.log(data);
     for (let i = 0; i < data.length; i++) {
