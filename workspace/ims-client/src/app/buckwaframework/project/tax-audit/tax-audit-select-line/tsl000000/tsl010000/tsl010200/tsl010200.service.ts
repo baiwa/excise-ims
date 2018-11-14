@@ -3,6 +3,7 @@ import { AjaxService } from 'services/ajax.service';
 import { reject } from 'q';
 import { Utils } from 'helpers/utils';
 import { Router } from '@angular/router';
+import { MessageBarService } from 'services/message-bar.service';
 declare var $: any;
 @Injectable()
 export class Tsl010200Service {
@@ -823,8 +824,8 @@ export class Tsl010200Service {
       "showCh": ""
     }, {
 
-      "year":"",
-      "exciseId":"",
+      "year": "",
+      "exciseId": "",
       "conpanyName": "",
       "address": "",
       "subProduct": "",
@@ -847,7 +848,8 @@ export class Tsl010200Service {
   ];
   constructor(
     private ajax: AjaxService,
-    private router: Router
+    private router: Router,
+    private messege: MessageBarService,
   ) { }
 
   checkRisk(risk) {
@@ -856,14 +858,21 @@ export class Tsl010200Service {
     if (risk == this.risk.riskCode3) risk = this.risk.riskDesc3;
     return risk;
   }
-  save(): Promise<any> {
+  save() {
     let url = "taxAudit/selectList/saveCondition1";
-    return new Promise((resolve, reject) => {
-      this.ajax.post(url, JSON.stringify({ dataList: this.dataList }), res => {
-        this.router.navigate(['/tax-audit-select-line/tsl0102-00']);
-        resolve(res.json());
-      });
-    });
+
+    this.messege.comfirm((res) => {
+      if (res) {
+
+        this.ajax.post(url, JSON.stringify({ dataList: this.dataList }), res => {
+          this.router.navigate(['/tax-audit-select-line/tsl0106-00']);
+          this.messege.successModal("ทำรายสำเร็จ");
+
+        }, err => {
+          this.messege.errorModal("ทำรายการไม่สำเร็จ");
+        });
+      }
+    }, "บันทึกรายการ");
   }
 
   activeTable(e) {

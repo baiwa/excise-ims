@@ -125,15 +125,7 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
     this.myService.tableCompare2Year();
   }
   save() {
-    this.messege.comfirm((res) => {
-      if (res) {
-        this.myService.save().then(res => {
-          this.messege.successModal("ทำรายสำเร็จ");          
-        }, err => {
-          this.messege.errorModal("ทำรายการไม่สำเร็จ");
-        })
-      }
-    }, "บันทึกรายการ");
+    this.myService.save();
 
   }
   datatable2() {
