@@ -244,7 +244,12 @@ export class Int086Component implements OnInit, AfterViewInit {
           targets: [3, 4],
           className: "right"
         }
-      ]
+      ],
+
+      rowCallback: (row, data, index) => {
+        console.log(data);
+      }
+
     });
   }
 
@@ -255,4 +260,25 @@ export class Int086Component implements OnInit, AfterViewInit {
     this.searchForm.get("startDate").setValue("");
     this.searchForm.get("endDate").setValue("");
   }
+
+    // getDataExcel
+    getDataExcel(){
+      let dataList = this.dataTable.data();   
+      let dataArray = [];
+     for(let i=0;i<dataList.length;i++){
+         dataArray.push(dataList[i]);
+     }
+     return dataArray
+  }
+
+
+    // export
+    export =()=>{
+      let data = this.getDataExcel();
+      let formExcel = $("#form-data-excel").get(0);                      
+      formExcel.action = AjaxService.CONTEXT_PATH + "ia/int068/export";
+      formExcel.dataJson.value = JSON.stringify({int068ExcelList : data});		
+      formExcel.submit();
+    };
+
 }

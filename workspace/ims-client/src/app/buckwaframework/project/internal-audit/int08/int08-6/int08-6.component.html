@@ -102,5 +102,19 @@
             </thead>
         </table>
         <br>
+        <div class="ui center aligned grid">
+            <div class="sixteen wide column">
+    
+          <button class="ui mini yellow button"  (click)="export()">
+            <i class="print icon"></i>
+            ส่งออก
+          </button>
+            </div>
+        </div>
     </div>
 </div>
+
+<!-- form-data-excel -->
+<form id="form-data-excel" method="POST"> 
+    <input type="hidden" name="dataJson" id="dataJson">
+</form>
