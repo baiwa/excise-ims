@@ -112,10 +112,11 @@ export class Int061105Service {
           data: "affiliation",
           render: renderString
         },
-        { data: "createdDateStr" },
+        { data: "createdDateStr" , className:"center"},
         {
           data: "amount",
-          render: renderNumber
+          render: renderNumber,
+          className:"right"
         },
         {
           data: "status",
@@ -137,9 +138,10 @@ export class Int061105Service {
         {
           render: function(data, type, full, meta) {
             return (
-              `<button type="button" class="ui mini button blue" id="dtl-${
-                full.id
-              }"><i class="eye icon"></i>รายละเอียด</button>` +
+              // // `<button type="button" class="ui mini button blue" id="dtl-${
+              // //   full.id
+              // // }"><i class="eye icon"></i>รายละเอียด</button>` 
+              // +
               `<button type="button" class="ui mini button green ${
                 full.status === "2055" ? "hidden" : ""
               }" id="approve-${

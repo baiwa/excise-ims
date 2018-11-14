@@ -4,6 +4,8 @@
   <span>ตรวจสอบข้อมูลด้านภาษีสรรพาสามิต</span>
 </div>
 
+<input type="hidden" id="searchFlag" name="searchFlag">
+
 <!-- Segment I -->
 <div class="ui attached segment">
   <div class="ui grid center aligned">
@@ -19,13 +21,13 @@
         <label>สรรพสามิตภาค :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dataRecord.exciseArea}}">
       </div>
       <div class="two wide field ">
         <label>สรรพสามิตภาคพื้นที่ :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dataRecord.exciseSubArea}}">
       </div>
     </div>
     <div class="inline fields">
@@ -34,13 +36,13 @@
         <label>เลขทะเบียนสรรพสามิต :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dataRecord.exciseId}}">
       </div>
       <div class="two wide field ">
         <label>ชื่อผู้ประกอบการ/โรงอุตสาหกรรม :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dataRecord.companyName}}">
       </div>
     </div>
     <div class="inline fields">
@@ -49,13 +51,13 @@
         <label>สินค้า :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dataRecord.product}}">
       </div>
       <div class="two wide field ">
         <label>ความเสี่ยงที่ถูกตรวจสอบ :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dataRecord.riskTypeDesc}}">
       </div>
     </div>
     <div class="inline fields">
@@ -64,7 +66,7 @@
         <label>เวลาที่ตรวจสอบ (ปีปฏิทิน) :</label>
       </div>
       <div class="four wide field ">
-        <input type="text">
+        <input type="text" value="{{dateCalendar}}">
       </div>
     </div>
     <div class="inline fields">
@@ -73,69 +75,13 @@
         <label>ที่อยู่สถานบริการ/โรงอุตสาหกรรม :</label>
       </div>
       <div class="four wide field ">
-        <textarea rows="5"></textarea>
+        <textarea rows="5" value="{{dataRecord.companyAddress}}"></textarea>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Datatable I -->
-<div class="ui segment" style="width: 100%;">
-  <br />
-  <div class="ui grid center aligned">
-    <div class="sixteen wide column">
-      <h4>ข้อมูลใบกำกับภาษี</h4>
-    </div>
-  </div>
-  <br>
-
-  <table id="tableEntrepreneur" class="ui small celled table nowrap striped selectable" style="width: 100%;">
-    <thead>
-      <tr>
-        <th style="text-align: center !important;">ลำดับ</th>
-        <th style="text-align: center !important;">วัน เดือน ปี ที่ออกใบกำกับภาษี</th>
-        <th style="text-align: center !important;">เล่มที่/เลขที่</th>
-        <th style="text-align: center !important;">รายการสินค้า</th>
-        <th style="text-align: center !important;">ราคาต่อหน่วย</th>
-        <th style="text-align: center !important;">จำนวนเงิน</th>
-        <th style="text-align: center !important;">รวมทั้งสิ้น (ราคารวมภาษีมูลค่าเพิ่ม)</th>
-      </tr>
-    </thead>
-  </table>
-  <br />
-  <div id="" class="ui form">
-    <div class="inline fields">
-      <div class="four wide field"></div>
-      <div class="two wide field ">
-        <label>ผลการตรวจสอบ :</label>
-      </div>
-    </div>
-    <div class="inline fields">
-      <div class="four wide field"></div>
-      <div class="eight wide field ">
-        <textarea rows="5"></textarea>
-      </div>
-    </div>
-    <div class="inline fields">
-      <div class="four wide field"></div>
-      <div class="two wide field ">
-        <div class="ui radio checkbox">
-          <input type="radio" name="resultEntrepreneur" value="0" [checked]="true">
-          <label>ข้อมูลถูกต้อง</label>
-        </div>
-      </div>
-      <div class="two wide field ">
-        <div class="ui radio checkbox">
-          <input type="radio" name="resultEntrepreneur" value="1">
-          <label>ข้อมูลไม่ถูกต้อง</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- Datatable II -->
 <div class="ui segment" style="width: 100%;">
   <br />
   <div class="ui grid center aligned">
@@ -190,7 +136,7 @@
 
 </div>
 
-<!-- Datatable III -->
+<!-- Datatable II -->
 <div class="ui segment" style="width: 100%;">
   <br />
   <div class="ui grid center aligned">
@@ -206,9 +152,10 @@
         <th style="text-align: center !important;">ลำดับ</th>
         <th style="text-align: center !important;">รายการวัตถุดิบ</th>
         <th style="text-align: center !important;">หน่วยวัตถุดิบ</th>
-        <th style="text-align: center !important;">ยอดคงเหลือยกมา</th>
-        <th style="text-align: center !important;">รับเดือนนี้</th>
-        <th style="text-align: center !important;">รวม</th>
+        <th style="text-align: center !important;">ผลิตสินค้าตามพิกัด</th>
+        <th style="text-align: center !important;">ผลิตสินค้าอื่น</th>
+        <th style="text-align: center !important;">เสียหาย</th>
+        <th style="text-align: center !important;">อื่นๆ</th>
       </tr>
     </thead>
   </table>
@@ -242,11 +189,109 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="ui segment" style="width: 100%;">
+  <br />
+  <div class="ui grid center aligned">
+    <div class="sixteen wide column">
+      <h4>ข้อมูลใบกำกับภาษี</h4>
+    </div>
+  </div>
+  <br />
+  <div id="" class="ui form">
+    <div class="inline fields">
+      <div class="four wide field"></div>
+      <div class="two wide field ">
+        <label>ข้อมูลใบกำกับภาษีทั้งหมด: </label>
+      </div>
+      <div class="two wide field ">
+        <input type="text">
+        <label> &nbsp; ฉบับ</label>
+      </div>
+    </div>
+    <div class="inline fields">
+      <div class="four wide field"></div>
+      <div class="two wide field ">
+        <label>ผลการตรวจสอบ :</label>
+      </div>
+    </div>
+    <div class="inline fields">
+      <div class="four wide field"></div>
+      <div class="eight wide field ">
+        <textarea rows="5"></textarea>
+      </div>
+    </div>
+    <div class="inline fields">
+      <div class="four wide field"></div>
+      <div class="two wide field ">
+        <div class="ui radio checkbox">
+          <input type="radio" name="taxInvoice" value="0" [checked]="true">
+          <label>ข้อมูลถูกต้อง</label>
+        </div>
+      </div>
+      <div class="two wide field ">
+        <div class="ui radio checkbox">
+          <input type="radio" name="taxInvoice" value="1">
+          <label>ข้อมูลไม่ถูกต้อง</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ui segment" style="width: 100%;">
+  <br />
+  <div class="ui grid center aligned">
+    <div class="sixteen wide column">
+      <h4>ข้อมูลบัญชีงบดุล</h4>
+    </div>
+  </div>
+  <br />
+  <div id="" class="ui form">
+    <div class="inline fields">
+      <div class="four wide field"></div>
+      <div class="two wide field ">
+        <label>บัญชีงบดุล: </label>
+      </div>
+      <div class="two wide field ">
+        <input type="text">
+        <label> &nbsp; ฉบับ</label>
+      </div>
+    </div>
+    <div class="inline fields">
+      <div class="four wide field"></div>
+      <div class="two wide field ">
+        <label>ผลการตรวจสอบ :</label>
+      </div>
+    </div>
+    <div class="inline fields">
+      <div class="four wide field"></div>
+      <div class="eight wide field ">
+        <textarea rows="5"></textarea>
+      </div>
+    </div>
+    <div class="inline fields">
+      <div class="four wide field"></div>
+      <div class="two wide field ">
+        <div class="ui radio checkbox">
+          <input type="radio" name="balanceAccount" value="0" [checked]="true">
+          <label>ข้อมูลถูกต้อง</label>
+        </div>
+      </div>
+      <div class="two wide field ">
+        <div class="ui radio checkbox">
+          <input type="radio" name="balanceAccount" value="1">
+          <label>ข้อมูลไม่ถูกต้อง</label>
+        </div>
+      </div>
+    </div>
+  </div>
   <br />
   <div class="ui center aligned grid">
     <div class="sixteen wide column">
       <button class="ui primary mini button">รายงานการตรวจ</button>
-      <button class="ui mini button" type="button" routerLink="/tax-audit-select-line/tsl0106-00">ย้อนกลับ</button>
+      <button class="ui mini button" type="button" (click)="onClickBack()">ย้อนกลับ</button>
     </div>
   </div>
   <br />

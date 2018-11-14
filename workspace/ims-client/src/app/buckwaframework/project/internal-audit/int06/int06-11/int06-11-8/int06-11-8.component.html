@@ -1,5 +1,5 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
-<h2>เปรียบเทียบใบขอเบิก ขอจ่าย และอนุมัติจ่าย</h2>
+<br>
 <div class="sixteen wide column">
   <div class="ui top centered attached header segment" style="background: #1e83db;color: white;">
     <span>ระบุเงื่อนไขในการค้นหา</span>
@@ -44,8 +44,8 @@
             <th style="text-align: center !important;">เลขที่ทำการ</th>
             <th style="text-align: center !important;">เลขที่ใบขอเบิก</th>
             <th style="text-align: center !important;">ผู้สร้างใบขอเบิก</th>
-            <th style="text-align: center !important;">ตำแหน่ง</th>
-            <th style="text-align: center !important;">สังกัด</th>
+            <!-- <th style="text-align: center !important;">ตำแหน่ง</th>
+            <th style="text-align: center !important;">สังกัด</th> -->
             <th style="text-align: center !important;">วันที่สร้างใบขอเบิก</th>
             <th style="text-align: center !important;">จำนวนเงินที่ขอเบิก</th>
             <th style="text-align: center !important;">ประเภทการขอเบิก</th>
@@ -69,8 +69,8 @@
               <th style="text-align: center !important;">ประเถท</th>
               <th style="text-align: center !important;">เลขที่ใบขอเบิก-จ่าย</th>
               <th style="text-align: center !important;">ผู้สร้าง</th>
-              <th style="text-align: center !important;">ตำแหน่ง</th>
-              <th style="text-align: center !important;">สังกัด</th>
+              <!-- <th style="text-align: center !important;">ตำแหน่ง</th>
+              <th style="text-align: center !important;">สังกัด</th> -->
               <th style="text-align: center !important;">วันที่สร้าง</th>
               <th style="text-align: center !important;">จำนวนเงิน</th>
             </tr>
@@ -80,8 +80,8 @@
               <td style="text-align: center !important;">ใบขอเบิก</td>
               <td style="text-align: center !important;">{{dataApprove.billLading}}</td>
               <td style="text-align: center !important;">{{dataApprove.createdBy}}</td>
-              <td style="text-align: center !important;">{{dataApprove.position}}</td>
-              <td style="text-align: center !important;">{{dataApprove.affiliation}}</td>
+              <!-- <td style="text-align: center !important;">{{dataApprove.position}}</td>
+              <td style="text-align: center !important;">{{dataApprove.affiliation}}</td> -->
               <td style="text-align: center !important;">{{dataApprove.createdDateStr}}</td>
               <td style="text-align: center !important;">{{dataApprove.amount}}</td>
             </tr>
@@ -89,8 +89,8 @@
                 <td style="text-align: center !important;">ใบขอจ่าย</td>
                 <td style="text-align: center !important;">{{dataApprove.billPay}}</td>
                 <td style="text-align: center !important;">{{dataApprove.createdByPay}}</td>
-                <td style="text-align: center !important;">{{dataApprove.positionPay}}</td>
-                <td style="text-align: center !important;">{{dataApprove.affiliationPay}}</td>
+                <!-- <td style="text-align: center !important;">{{dataApprove.positionPay}}</td>
+                <td style="text-align: center !important;">{{dataApprove.affiliationPay}}</td> -->
                 <td style="text-align: center !important;">{{dataApprove.createdDatePayStr}}</td>
                 <td style="text-align: center !important;">{{dataApprove.amountPay}}</td>
               </tr>

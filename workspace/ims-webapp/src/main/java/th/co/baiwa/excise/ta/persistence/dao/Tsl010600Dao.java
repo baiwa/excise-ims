@@ -22,7 +22,13 @@ public class Tsl010600Dao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private final String SQL_SEARCH = " SELECT * FROM TA_YEAR_PLAN WHERE 1=1 AND USER_ID = ? ";
+	private final String SQL_SEARCH = " SELECT *  " + 
+			"FROM TA_YEAR_PLAN p  " + 
+			"WHERE ANALYSIS_NUMBER =  " + 
+			"  (SELECT MAX(ANALYSIS_NUMBER)  " + 
+			"  FROM TA_YEAR_PLAN p  " + 
+			"  WHERE P.CREATED_BY = ?  " + 
+			"  ) ";
 
 	public List<Tsl010600Vo> search(Tsl010600FormVo tsl010600FormVo) {
 		StringBuilder sql = new StringBuilder(SQL_SEARCH);
@@ -34,13 +40,13 @@ public class Tsl010600Dao {
 			params.add(StringUtils.trim(tsl010600FormVo.getExciseId()));
 		}
 		
-		sql.append(" AND ANALYSIS_NUMBER = ( ");
-		sql.append(" SELECT MAX(ANALYSIS_NUMBER) ");
-		sql.append(" FROM TA_YEAR_PLAN ");
-		sql.append(" ) ");
+//		sql.append(" AND ANALYSIS_NUMBER = ( ");
+//		sql.append(" SELECT MAX(ANALYSIS_NUMBER) ");
+//		sql.append(" FROM TA_YEAR_PLAN ");
+//		sql.append(" ) ");
 
 		String sqlLimit = OracleUtils.limitForDataTable(sql, tsl010600FormVo.getStart(), tsl010600FormVo.getLength());
-		List<Tsl010600Vo> list = jdbcTemplate.query(sqlLimit, params.toArray(), Tsl010300RowMapper);
+		List<Tsl010600Vo> list = jdbcTemplate.query(sqlLimit, params.toArray(), Tsl010600RowMapper);
 		return list;
 	}
 	
@@ -54,17 +60,17 @@ public class Tsl010600Dao {
 			params.add(StringUtils.trim(tsl010600FormVo.getExciseId()));
 		}
 		
-		sql.append(" AND ANALYSIS_NUMBER = ( ");
-		sql.append(" SELECT MAX(ANALYSIS_NUMBER) ");
-		sql.append(" FROM TA_YEAR_PLAN ");
-		sql.append(" ) ");
+//		sql.append(" AND ANALYSIS_NUMBER = ( ");
+//		sql.append(" SELECT MAX(ANALYSIS_NUMBER) ");
+//		sql.append(" FROM TA_YEAR_PLAN ");
+//		sql.append(" ) ");
 		
 		String countSql = OracleUtils.countForDatatable(sql);
 		long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
 		return count;
 	}
 
-	private RowMapper<Tsl010600Vo> Tsl010300RowMapper = new RowMapper<Tsl010600Vo>() {
+	private RowMapper<Tsl010600Vo> Tsl010600RowMapper = new RowMapper<Tsl010600Vo>() {
 		@Override
 		public Tsl010600Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Tsl010600Vo vo = new Tsl010600Vo();
@@ -78,7 +84,7 @@ public class Tsl010600Dao {
 			vo.setProduct(rs.getString("PRODUCT"));
 			vo.setRiskType(rs.getString("RISK_TYPE"));
 			vo.setFlag(rs.getString("FLAG"));
-			vo.setAnalysisNumber(rs.getInt("ANALYSIS_NUMBER"));
+			vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
 
 			if (TSL.STATUS.RISK_1_CODE.equals(vo.getRiskType())) {
 				vo.setRiskTypeDesc(TSL.STATUS.RISK_1_DESC);

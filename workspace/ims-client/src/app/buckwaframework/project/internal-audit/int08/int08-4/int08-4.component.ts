@@ -103,7 +103,7 @@ export class Int084Component implements OnInit {
     }
    
     if ($("#billLost").val()<0||$("#billLost").val()>100||$("#billLost").val()=="") {
-      this.messageBarService.alert("จำนวนเปอร์เซ้นใบเสร็จเสีย ไม่ถูกต้อง");
+      this.messageBarService.alert("จำนวนเปอร์เซ็นใบเสร็จเสีย ไม่ถูกต้อง");
       return false;
     }
     $("#searchFlag").val("TRUE");
@@ -143,9 +143,11 @@ export class Int084Component implements OnInit {
               return meta.row + meta.settings._iDisplayStart + 1;
           },
           "className": "ui center aligned"
-        }, {
-          "data": "officeCode","className":"center"
-        }, {
+        }, 
+        // {
+        //   "data": "officeCode","className":"center"
+        // }, 
+        {
           "data": "officeName"
         }, {
           "data": "startDate","className":"center"

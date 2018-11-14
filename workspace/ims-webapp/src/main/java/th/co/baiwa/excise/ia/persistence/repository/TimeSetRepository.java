@@ -22,7 +22,7 @@ public interface TimeSetRepository extends CommonJpaCrudRepository<TimeSet, Long
 			+ "' AND ( (t.START_DATE_TIME <= ?1 AND t.END_DATE_TIME >= ?1) OR (t.START_DATE_TIME <= ?2 AND t.END_DATE_TIME >= ?2)OR ( t.START_DATE_TIME BETWEEN ?1 and ?2 or t.END_DATE_TIME BETWEEN ?1 and ?2 )  )", nativeQuery = true)
 	public int countOverlap(Date startDate, Date endDate);
 
-	@Query(value = " SELECT * FROM IA_TIME_SET t WHERE t.IS_DELETED = '" + FLAG.N_FLAG + "' AND ( (t.START_DATE_TIME <= sysdate AND t.END_DATE_TIME >= sysdate))",
+	@Query(value = " SELECT * FROM IA_TIME_SET t WHERE t.IS_DELETED = '" + FLAG.N_FLAG + "' AND ( (t.START_DATE_TIME <= sysdate AND t.END_DATE_TIME => sysdate))",
 			nativeQuery = true)
 	public List<TimeSet> findStatusOpen();
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadCrumb } from 'models/breadcrumb';
 import { AjaxService } from 'services/ajax.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { IaService } from 'services/ia.service';
 
 declare var $: any;
 
@@ -18,84 +20,48 @@ export class Tsl010700Component implements OnInit {
     { label: 'ตรวจสอบข้อมูลด้านภาษีสรรพาสามิต', route: '#' },
   ];
 
+  searchFlag: string = "FALSE";
   entrepreneurTable: any;
   getRawTable: any;
   payRawTable: any;
+  dataRecord: any;
+  dateCalendar: string = "";
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(
+    private dataService: IaService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.dataRecord = dataService.getData();
+    this.dateCalendar = this.route.snapshot.queryParams['dateCalendar'];
+    this.searchFlag = this.route.snapshot.queryParams['searchFlag'];
   }
 
+  ngOnInit() { }
+
   ngAfterViewInit() {
-    this.initEntrepreneurDatatable();
     this.initGetRawDatatable();
     this.initPayRawDatatable();
   }
 
-  initEntrepreneurDatatable = () => {
-    const URL = AjaxService.CONTEXT_PATH + "taxAudit/checkDisplay/searchEntrepreneur";
-    this.entrepreneurTable = $("#tableEntrepreneur").DataTableTh({
-      serverSide: false,
-      searching: false,
-      processing: false,
-      ordering: false,
-      scrollX: true,
-      // ajax: {
-      //   type: "POST",
-      //   url: URL,
-      //   contentType: "application/json",
-      //   data: (d) => {
-      //     return JSON.stringify($.extend({}, d, {
-      //     }));
-      //   }
-      // },
-      columns: [
-        {
-          className: "ui center aligned",
-          render: function (data, type, row, meta) {
-            return meta.row + meta.settings._iDisplayStart + 1;
-          }
-        }, {
-          data: "cusName",
-          className: "ui center aligned"
-        }, {
-          data: "checkPointDest",
-          className: "ui center aligned"
-        }, {
-          data: "dateOutDisplay",
-          className: "ui center aligned"
-        }, {
-          data: "dateInDisplay",
-          className: "ui center aligned"
-        }, {
-          data: "id",
-          className: "ui center aligned"
-        }, {
-          data: "id",
-          className: "ui center aligned"
-        }
-      ],
-    });
-  };
-
   initGetRawDatatable = () => {
-    const URL2 = AjaxService.CONTEXT_PATH + "taxAudit/checkDisplay/searchGetRaw";
+    const URL = AjaxService.CONTEXT_PATH + "taxAudit/checkDisplay/search";
     this.getRawTable = $("#tableGetRawMaterial").DataTableTh({
-      serverSide: false,
+      serverSide: true,
       searching: false,
-      processing: false,
+      processing: true,
       ordering: false,
       scrollX: true,
-      // ajax: {
-      //   type: "POST",
-      //   url: URL,
-      //   contentType: "application/json",
-      //   data: (d) => {
-      //     return JSON.stringify($.extend({}, d, {
-      //     }));
-      //   }
-      // },
+      ajax: {
+        type: "POST",
+        url: URL,
+        contentType: "application/json",
+        data: (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "searchFlag": this.searchFlag
+          }));
+        }
+      },
       columns: [
         {
           className: "ui center aligned",
@@ -103,42 +69,43 @@ export class Tsl010700Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "cusName",
-          className: "ui center aligned"
+          data: "list",
+          className: "ui left aligned"
         }, {
-          data: "checkPointDest",
-          className: "ui center aligned"
+          data: "unit",
+          className: "ui left aligned"
         }, {
-          data: "dateOutDisplay",
-          className: "ui center aligned"
+          data: "stock",
+          className: "ui right aligned"
         }, {
-          data: "dateInDisplay",
-          className: "ui center aligned"
+          data: "receive",
+          className: "ui right aligned"
         }, {
-          data: "id",
-          className: "ui center aligned"
+          data: "receiveTotal",
+          className: "ui right aligned"
         }
       ],
     });
   };
 
   initPayRawDatatable = () => {
-    const URL3 = AjaxService.CONTEXT_PATH + "taxAudit/checkDisplay/searchPayRaw";
+    const URL = AjaxService.CONTEXT_PATH + "taxAudit/checkDisplay/search";
     this.payRawTable = $("#tablePayRawMaterial").DataTableTh({
-      serverSide: false,
+      serverSide: true,
       searching: false,
       processing: true,
       ordering: false,
       scrollX: true,
-      // ajax: {
-      //   type: "POST",
-      //   url: URL,
-      //   contentType: "application/json",
-      //   data: (d) => {
-      //     return JSON.stringify($.extend({}, d, {
-      //     }));
-      //   }
-      // },
+      ajax: {
+        type: "POST",
+        url: URL,
+        contentType: "application/json",
+        data: (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "searchFlag": this.searchFlag
+          }));
+        }
+      },
       columns: [
         {
           className: "ui center aligned",
@@ -146,23 +113,56 @@ export class Tsl010700Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "cusName",
-          className: "ui center aligned"
+          data: "list",
+          className: "ui left aligned"
         }, {
-          data: "checkPointDest",
-          className: "ui center aligned"
+          data: "unit",
+          className: "ui left aligned"
         }, {
-          data: "dateOutDisplay",
-          className: "ui center aligned"
+          data: "productInline",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
         }, {
-          data: "dateInDisplay",
-          className: "ui center aligned"
+          data: "productOutline",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
         }, {
-          data: "id",
-          className: "ui center aligned"
+          data: "corrupt",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "other",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
         }
       ],
     });
   };
+
+  onClickBack() {
+    this.router.navigate(["/tax-audit-select-line/tsl0106-00"], {
+      queryParams: {}
+    });
+  }
 
 }

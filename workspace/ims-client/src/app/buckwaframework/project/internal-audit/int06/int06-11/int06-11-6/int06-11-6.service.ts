@@ -82,10 +82,10 @@ export class Int06116Service {
         { data: "id" },
         { data: "billLading" },
         { data: "createdBy" },
-        { data: "position" },
-        { data: "affiliation" },
-        { data: "createdDateStr" },
-        { data: "amount",render: renderNumber},
+        // { data: "position" },
+        // { data: "affiliation" },
+        { data: "createdDateStr",  className:"center"},
+        { data: "amount",render: renderNumber, className:"right"},
         { data: "requestType",
           render: function(data) {
             var requestType = "";
@@ -126,11 +126,11 @@ export class Int06116Service {
             var btn = '';
 
             if (data === "2062") {
-              btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
+              // btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
               btn += `<button type="button" class="ui mini button yellow btn-edit"><i class="edit icon"></i>แก้ไขเลขที่ใบขอเบิก</button>`;
 
             } else if (data === "2063") {
-              btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
+              // btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
               btn += `<button type="button" class="ui mini button yellow btn-edit"><i class="edit icon"></i>แก้ไขเลขที่ใบขอเบิก</button>`;
               btn += `<button type="button" class="ui mini button green btn-add"><i class="plus icon"></i>ทำใบขอจ่าย</button>`;
 
