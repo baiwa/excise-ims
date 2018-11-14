@@ -639,7 +639,7 @@ public class CheckPaymentExcelService {
 		Cell cell = row.createCell(cellNum);
 
 		/* Header */
-		String[] tbTH1 = {"ลำดับที่", "เลขที่ใบเสร็จ", "วันที่นำฝาก ", "เงินจัดเก็บ", "เงินนำฝาก","สถานะการตรวจวันที่","สถานะการตรวจจำนวนเงิน"};
+		String[] tbTH1 = {"ลำดับที่", "เลขที่ใบเสร็จ", "วันที่จัดเก็บ", "วันที่นำฝาก ", "เงินจัดเก็บ", "เงินนำฝาก","สถานะการตรวจวันที่","สถานะการตรวจจำนวนเงิน"};
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
@@ -648,19 +648,16 @@ public class CheckPaymentExcelService {
 		;
 
 		/* set sheet */
-
-		// setColumnWidth
-		for (int i = 1; i <= 6; i++) {
-			if ( i == 1 ) {
-				sheet.setColumnWidth(i, 76 * 100);
-			}else if(i == 2) {
-				sheet.setColumnWidth(i, 76 * 60);
-			}
-			else {
-				sheet.setColumnWidth(i, 76 * 80);
-			}
-
-		}
+		// Column Width
+		int colIndex = 0;
+		sheet.setColumnWidth(colIndex++, 7 * 256);
+		sheet.setColumnWidth(colIndex++, 20 * 256);
+		sheet.setColumnWidth(colIndex++, 11 * 256);
+		sheet.setColumnWidth(colIndex++, 11 * 256);
+		sheet.setColumnWidth(colIndex++, 12 * 256);
+		sheet.setColumnWidth(colIndex++, 12 * 256);
+		sheet.setColumnWidth(colIndex++, 18 * 256);
+		sheet.setColumnWidth(colIndex++, 23 * 256);
 
 		/* Detail */
 		rowNum = 1;
@@ -676,6 +673,11 @@ public class CheckPaymentExcelService {
 			
 			cell = row.createCell(cellNum);		
 			cell.setCellValue(StringUtils.defaultIfBlank(item.getReceiptNo(), ""));		
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);		
+			cell.setCellValue(StringUtils.defaultIfBlank(item.getTrnDateStr(), ""));		
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 			

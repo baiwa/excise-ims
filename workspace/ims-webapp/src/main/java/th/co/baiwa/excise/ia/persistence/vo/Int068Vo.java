@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class Int068Vo {
 	private String receiptNo;
+	private String trnDateStr;
 	private String depositDateStr;
 	private BigDecimal nettaxAmount;
 	private BigDecimal netlocAmount;
@@ -16,6 +17,14 @@ public class Int068Vo {
 
 	public void setReceiptNo(String receiptNo) {
 		this.receiptNo = receiptNo;
+	}
+
+	public String getTrnDateStr() {
+		return trnDateStr;
+	}
+
+	public void setTrnDateStr(String trnDateStr) {
+		this.trnDateStr = trnDateStr;
 	}
 
 	public String getDepositDateStr() {

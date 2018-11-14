@@ -78,7 +78,7 @@ public class Int068Controller {
 		List<Int068Vo> dataList = result.getInt068ExcelList();
 
 		/* set fileName */
-		String fileName = URLEncoder.encode("การตรวจสอบการนำเงินฝากเข้าบัญชีพักหน่วยงานและกองทุน", "UTF-8");
+		String fileName = "import_account_list";
 
 		/* write it as an excel attachment */
 		ByteArrayOutputStream outByteStream = checkPaymentExcelService.exportInt068(dataList);
