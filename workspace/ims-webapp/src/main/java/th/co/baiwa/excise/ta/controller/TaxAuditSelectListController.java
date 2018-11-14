@@ -58,7 +58,8 @@ public class TaxAuditSelectListController {
 	@ResponseBody
 	public List<Tsl010200Vo> findCondition1(@RequestBody PlanFromWsVo vo) {
 		logger.debug("saveToTaPlanSearchRick");
-		return planFromWsHeaderService.findCondition1(vo);
+		List<Tsl010200Vo> list = planFromWsHeaderService.findCondition1(vo);
+		return list;
 	}
 	@PostMapping("/findCondition2")
 	@ResponseBody

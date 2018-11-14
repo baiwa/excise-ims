@@ -44,11 +44,11 @@ export class Tsl010100Component implements OnInit {
     this.formControl = this.formBuilder.group({
       dateFrom: ["", Validators.required],
       dateTo: ["", Validators.required],
-      monthNonPay: ["", Validators.required],
-      symbol1: ["", Validators.required],
-      symbol2: ["", Validators.required],
-      percent1: ["", Validators.required],
-      percent2: ["", Validators.required]
+      monthNonPay: [""],
+      symbol1: [""],
+      symbol2: [""],
+      percent1: [""],
+      percent2: [""]
     });
   }
 
@@ -81,7 +81,7 @@ export class Tsl010100Component implements OnInit {
       formatter: formatter('month-year'),
       onChange: (date, text) => {
         this.formControl.controls.dateFrom.setValue(text);
-      }
+      },
     });
     $("#dateT").calendar({
       maxDate: new Date(date.getFullYear() + "-" + (date.getMonth())),

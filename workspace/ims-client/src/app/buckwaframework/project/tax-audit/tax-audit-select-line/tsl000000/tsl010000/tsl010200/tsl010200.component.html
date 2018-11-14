@@ -6,7 +6,7 @@
     <div class="ui top attached header segment" style="background: #1e83db;color: white">
       <span>ตารางแสดงผลการคัดเลือกราย</span>
     </div>
-    <div class="ui attached segment">
+    <div class="ui attached segment {{loading ? 'loading' : ''}}">
       <br>
       <div class="ui grid">
         <button (click)="toggleBar()" class="ui button custom-menu" type="button"><i class="bars icon"></i>เมนู</button>
@@ -15,13 +15,22 @@
         <div style="padding-right: 0;" [ngClass]="{'three wide column': !toggle, 'transition-left' : toggle}">
           <div class="ui vertical menu" style="width: auto" name="coordinates" id="coordinates" (change)="changeCoordinates()">
             <div class="item">
-              <div class="header">ชำระภาษีไม่ติดต่อเกิน 4 เดือน</div>
+              <div class="header">เงื่อนไขที่ 1 ความถี่ของเดือนที่ชำระภาษี ตั้งแต่ เดือน {{dispaly.dateFrom}} ถึง
+                {{dispaly.dateTo}}</div>
             </div>
             <div class="item">
               <div class="menu">
-                <a class="item hover">ความแตกต่างของการชำระภาษี มากกว่า {{deff.percent1}}</a>
-                <a class="item hover">ความแตกต่างของการชำระภาษี น้อยกว่า {{deff.percent2}}</a>
-                <a class="item hover">อื่นๆ</a>
+                <div class="item hover"> จำนวนเดือนที่ไม่ชำระภาษีติดต่อกัน {{dispaly.month}} เดือน</div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="header">เงื่อนไขที่ 2 เปรียบเทียบจำนวนภาษีระหว่างเดือน</div>
+            </div>
+            <div class="item">
+              <div class="menu">
+                <a class="item hover"> ความแตกต่างของภาษีระหว่างเดือนมากกว่าหรือเท่ากับร้อยละ</a>
+                <a class="item hover"> ความแตกต่างของภาษีระหว่างเดือนน้อยกว่าหรือเท่ากับร้อยละ</a>
+                <a class="item hover">ความแตกต่างของภาษีระหว่างเดือนเท่ากับร้อยละ</a>
               </div>
             </div>
           </div>
@@ -31,9 +40,47 @@
 
           <table id="datatable1" class="ui small celled table aligned hover striped selectable nowrap" style="width: 100%;">
             <thead id="tableOne">
-             <!-- table details-->
+              <tr>
+                <th rowspan="2" style="text-align: center !important"><input type="checkbox" name="select-all" id="select-all"></th>
+                <th class="text-center" rowspan="2">เลขทะเบียนสรรพสามิต</th>
+                <th class="text-center" rowspan="2">ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>
+                <th class="text-center" rowspan="2">ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>
+                <th class="text-center" rowspan="2">พิกัดสินค้า/บริการ</th>
+                <th class="text-center" rowspan="2">สรรพสามิตภาค</th>
+                <th class="text-center" rowspan="2">สรรพสามิตพื้นที่</th>
+                <th class="text-center" colspan="12">การชำระภาษี (บาท)</th>
+              </tr>
+              <tr>
+                <th>ม.ค.</th>
+                <th>ก.พ.</th>
+                <th>มี.ค.</th>
+                <th>เม.ย.</th>
+                <th>พ.ค.</th>
+                <th>มิ.ย.</th>
+                <th>ก.ค.</th>
+                <th>ส.ค.</th>
+                <th>ก.ย.</th>
+                <th>ต.ค.</th>
+                <th>พ.ย.</th>
+                <th>ธ.ค.</th>
+              </tr>
+              <!-- table details-->
             </thead>
-          </table>          
+          </table>
+          <br>
+          <!-- button -->
+          <div class="ui center aligned grid">
+            <div class="six wide column">
+              <button class="ui mini primary button" (click)="select()">
+                <i class="file icon"></i>
+                เลือก
+              </button>
+              <button class="ui mini button" routerLink="/tax-audit-select-line/tsl0101-00">
+                <i class="refresh icon"></i>
+                ยกเลิก
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

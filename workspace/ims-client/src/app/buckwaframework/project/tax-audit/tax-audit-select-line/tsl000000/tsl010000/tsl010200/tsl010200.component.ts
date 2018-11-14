@@ -3,6 +3,7 @@ import { Tsl010200Service } from './tsl010200.service';
 import { BreadCrumb } from 'models/breadcrumb';
 import { AuthService } from 'services/auth.service';
 import { IaService } from 'services/ia.service';
+import { TextDateTH } from 'helpers/datepicker';
 
 declare var $: any;
 @Component({
@@ -18,30 +19,50 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
     { label: 'การคัดเลือกราย', route: '#' },
     { label: 'ตารางแสดงผลการคัดเลือกราย', route: '#' },
   ]
-  month : number = 7;
-  toggle: boolean = true;
-  deff : any;
+  month: number = 7;
+  form: any;
+  dispaly: any = {
+    dateFrom: '',
+    dateTo: '',
+    month: ''
+  }
+
+  diff: any;
+  toggle: boolean = false;
+  loading: boolean = true;
   constructor(
-    private objService : IaService,
+    private objService: IaService,
     private myService: Tsl010200Service,
     private authService: AuthService
   ) {
-    this.authService.reRenderVersionProgram('TSL-010200'); 
-    this.deff = this.objService.getData();
+    this.authService.reRenderVersionProgram('TSL-010200');
+    this.form = this.objService.getData();
+    console.log("form : ", this.form);
+
+    this.dispaly.dateFrom = TextDateTH.months[parseInt(this.form.dateFrom.substr(0, 2))];
+    this.dispaly.dateTo = TextDateTH.months[parseInt(this.form.dateTo.substr(0, 2))];
+    this.dispaly.month = parseInt(this.form.dateTo.substr(0, 2)) - parseInt(this.form.dateFrom.substr(0, 2)) + 1;
   }
 
-  ngOnInit() {    
+  ngOnInit() {
   }
 
   ngAfterViewInit() {
-    this.datatable(this.month);
+    this.datatable(this.form);
   }
-  datatable(month){
-    this.myService.createTableHeader(month).then(res=>{
-      this.myService.createTableBody(month).then(res=>{
-        this.myService.datatable();
-      })
+
+  datatable(form) {
+
+    this.myService.dataTaxNonpay(form).then((res) => {
+      this.myService.datatable();
+      //   this.myService.createTableHeader(form).then(res => {
+      //     this.myService.createTableBody(res).then(res => {
+      this.loading = false;
+
+      //     })
+      //   });
     });
+
   }
   toggleBar() {
     if (this.toggle) {
@@ -50,4 +71,5 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
       this.toggle = true;
     }
   }
+
 }

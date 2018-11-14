@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { resolve, reject } from 'q';
-import { Utils } from 'helpers/utils';
+import { AjaxService } from 'services/ajax.service';
 declare var $: any;
 @Injectable()
 export class Tsl010200Service {
 
   // ==>params  
+  table: any;
   jsonColumn: any = "";
   month: any = [
     'ม.ค.',
@@ -21,7 +21,23 @@ export class Tsl010200Service {
     'พ.ย.',
     'ธ.ค.',
   ]
+  dataSelect:any;
   data: any = [
+    // {
+    //   exciseId: "",
+    //   conpanyName: "",
+    //   address: "",
+    //   subProduct: "",
+    //   sector: "",
+    //   area: "",
+    //   month0: "",
+    //   month1: "",
+    //   month2: "",
+    //   month3: "",
+    //   month4: "",
+    //   month5: "",
+    //   month6: ""
+    // },
     {
       exciseId: "0107544000108-1-013",
       conpanyName: "บริษัท ปตท. จำกัด (มหาชน)",
@@ -35,84 +51,80 @@ export class Tsl010200Service {
       month3: "22,445,482.8",
       month4: "-",
       month5: "-",
-      month6: "-",
-      pack0: "-3.97",
-      pack1: "10.7",
-      pack2: "9.85",
-      pack3: "-",
-      pack4: "-",
-      pack5: "-",
     },
-    {
-      exciseId: "0107547000711-1-002",
-      conpanyName: "บริษัท ปตท. จำกัด (มหาชน)",
-      address: "555/1 อาคารศูนย์เอนเนอร์ยี่คอมเพล็กซ์ ชั้น11 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
-      subProduct: "น้ำมัน",
-      sector: "สรรพสามิตภาคที่ 1",
-      area: "สรรพสามิตพื้นที่ลพบุรี",
-      month0: "4,093,170,506.62",
-      month1: "3,439,326,365.7",
-      month2: "4,677,643,829.55",
-      month3: "2,082,285,656.72",
-      month4: "-",
-      month5: "-",
-      month6: "-",
-      pack0: "-19.01",
-      pack1: "26.47",
-      pack2: "-14.58",
-      pack3: "-",
-      pack4: "-",
-      pack5: "-",
-    },
-    {
-      exciseId: "0107547000711-1-123",
-      conpanyName: "บริษัท ไทยออยล์ จำกัด (มหาชน)",
-      address: "555/1 อาคารศูนย์เอนเนอร์ยี่คอมเพล็กซ์ ชั้น11 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
-      subProduct: "น้ำมัน",
-      sector: "สรรพสามิตภาคที่ 1",
-      area: "สรรพสามิตพื้นที่ลพบุรี",
-      month0: "4,093,170,506.62",
-      month1: "3,439,326,365.7",
-      month2: "4,677,643,829.55",
-      month3: "6,082,285,656.72",
-      month4: "-",
-      month5: "-",
-      month6: "-",
-      pack0: "-19.01",
-      pack1: "26.47",
-      pack2: "-14.58",
-      pack3: "-",
-      pack4: "-",
-      pack5: "-",
-    },
-    {
-      exciseId: "0107544000108-1-013",
-      conpanyName: "บริษัท ปตท. จำกัด (มหาชน)",
-      address: "555 หมู่ที่1 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
-      subProduct: "น้ำมัน",
-      sector: "สรรพสามิตภาคที่ 1",
-      area: "สรรพสามิตพื้นที่หนองบัวลำภู",
-      month0: "19,014,498.75",
-      month1: "18,289,133.85",
-      month2: "20,482,213.7",
-      month3: "22,445,482.8",
-      month4: "-",
-      month5: "-",
-      month6: "-",
-      pack0: "-3.97",
-      pack1: "10.7",
-      pack2: "9.85",
-      pack3: "-",
-      pack4: "-",
-      pack5: "-",
-    },
+    // {
+    //   exciseId: "0107547000711-1-002",
+    //   conpanyName: "บริษัท ปตท. จำกัด (มหาชน)",
+    //   address: "555/1 อาคารศูนย์เอนเนอร์ยี่คอมเพล็กซ์ ชั้น11 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
+    //   subProduct: "น้ำมัน",
+    //   sector: "สรรพสามิตภาคที่ 1",
+    //   area: "สรรพสามิตพื้นที่ลพบุรี",
+    //   month0: "4,093,170,506.62",
+    //   month1: "3,439,326,365.7",
+    //   month2: "4,677,643,829.55",
+    //   month3: "2,082,285,656.72",
+    //   month4: "-",
+    //   month5: "-",
+    //   month6: "-"
+    // },
+    // {
+    //   exciseId: "0107547000711-1-123",
+    //   conpanyName: "บริษัท ไทยออยล์ จำกัด (มหาชน)",
+    //   address: "555/1 อาคารศูนย์เอนเนอร์ยี่คอมเพล็กซ์ ชั้น11 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
+    //   subProduct: "น้ำมัน",
+    //   sector: "สรรพสามิตภาคที่ 1",
+    //   area: "สรรพสามิตพื้นที่ลพบุรี",
+    //   month0: "4,093,170,506.62",
+    //   month1: "3,439,326,365.7",
+    //   month2: "4,677,643,829.55",
+    //   month3: "6,082,285,656.72",
+    //   month4: "-",
+    //   month5: "-",
+    //   month6: "-",
+    //   pack0: "-19.01",
+    //   pack1: "26.47",
+    //   pack2: "-14.58",
+    //   pack3: "-",
+    //   pack4: "-",
+    //   pack5: "-",
+    // },
+    // {
+    //   exciseId: "0107544000108-1-013",
+    //   conpanyName: "บริษัท ปตท. จำกัด (มหาชน)",
+    //   address: "555 หมู่ที่1 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
+    //   subProduct: "น้ำมัน",
+    //   sector: "สรรพสามิตภาคที่ 1",
+    //   area: "สรรพสามิตพื้นที่หนองบัวลำภู",
+    //   month0: "19,014,498.75",
+    //   month1: "18,289,133.85",
+    //   month2: "20,482,213.7",
+    //   month3: "22,445,482.8",
+    //   month4: "-",
+    //   month5: "-",
+    //   month6: "-",
+    //   pack0: "-3.97",
+    //   pack1: "10.7",
+    //   pack2: "9.85",
+    //   pack3: "-",
+    //   pack4: "-",
+    //   pack5: "-",
+    // },
   ];
   constructor(
+    private ajax: AjaxService
   ) { }
 
-  createTableHeader(month): Promise<any> {
+  createTableHeader(form): Promise<any> {
+    let dateForm = form.dateFrom;
+    let dateTo = form.dateTo;
+    dateForm = parseInt(dateForm.substr(0, 2));
+    dateTo = parseInt(dateTo.substr(0, 2));
+    let month = 0
+    month = (dateForm > dateTo ? dateForm - dateTo : dateTo - dateForm) + 1;
+    console.log("month : ", month);
     return new Promise((resolve, reject) => {
       let head = '<tr>' +
+        '<th rowspan="2" class="text-center"></th>' +
         '<th class="text-center" rowspan="2" >เลขทะเบียนสรรพสามิต</th>' +
         '<th class="text-center" rowspan="2" >ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>' +
         '<th class="text-center" rowspan="2" >ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>' +
@@ -122,28 +134,29 @@ export class Tsl010200Service {
 
       if (month != 0) {
         head += '<th class="text-center" colspan="' + month + '">สรรพสามิตพื้นที่</th>';
-        head += '<th class="text-center" colspan="' + (month - 1) + '">ส่วนต่างการชำระภาษีระหว่างเดือน (เปอร์เซ็น)</th>';
+        //head += '<th class="text-center" colspan="' + (month - 1) + '">ส่วนต่างการชำระภาษีระหว่างเดือน (เปอร์เซ็น)</th>';
         head += '</tr> <tr>';
       }
 
-      for (let index = 0; index < month; index++) {
-        head += '<th>' + this.month[index] + '</th>'
+      for (let i = 0; i < month; i++) {
+        head += '<th>' + this.month[i] + '</th>'
       }
 
-      for (let i = 0; i < month - 1; i++) {
-        head += `<th> เดือนที่ ${i + 1} และเดือนที่ ${i + 2}</th>`
-      }
+      // for (let i = 0; i < month - 1; i++) {
+      //   head += `<th> เดือนที่ ${i + 1} และเดือนที่ ${i + 2}</th>`
+      // }
 
       head += '</tr>';
       $("#tableOne").html(head);
       console.log(head);
-      resolve(head);
+      resolve(month);
     })
   }
   createTableBody(month: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.jsonColumn += '[';
-      this.jsonColumn += '      {                           ';
+      this.jsonColumn += '     [ {                           ';
+      this.jsonColumn += `          "data": "exciseId" `;
+      this.jsonColumn += '      }, {                        ';
       this.jsonColumn += '          "data": "exciseId"      ';
       this.jsonColumn += '      }, {                        ';
       this.jsonColumn += '          "data": "conpanyName"   ';
@@ -161,49 +174,148 @@ export class Tsl010200Service {
       this.jsonColumn += '          "data": "area"          ';
       this.jsonColumn += '      }                           ';
 
-      for (let index = 0; index < month; index++) {
+      for (let index = 1; index <= month; index++) {
         this.jsonColumn += `,{ "data" : "month${index}",`;
-        this.jsonColumn += '   "className" : "text-right"}';        
-        // if (index != month - 1) this.jsonColumn += ', '
+        this.jsonColumn += '   "className" : "text-right"}';
       }
-      for (let index = 0; index < month - 1; index++) {
-        this.jsonColumn += ',{ "data" : "pack' + index + '" ,';
-        this.jsonColumn += '"className" : "text-right" }';
-        // if (index != month - 1) this.jsonColumn += ', '
-      }
+      // for (let index = 0; index < month - 1; index++) {
+      //   this.jsonColumn += ',{ "data" : "pack' + index + '" ,';
+      //   this.jsonColumn += '"className" : "text-right" }';
+      //   // if (index != month - 1) this.jsonColumn += ', '
+      // }
       this.jsonColumn += ']';
       resolve(this.jsonColumn);
     });
   }
 
-  datatable() {
-    console.log("jsonColumn : ", this.jsonColumn);
-    console.log("data : ", this.data);
-    $("#datatable1").DataTableTh({
+  datatable=()=> {    
+    this.table = $("#datatable1").DataTableTh({
       "serverSide": false,
       "processing": false,
       "scrollX": true,
       "paging": true,
-      "data": this.data,
+      "data" : this.data,
       // "ajax": {
-      //     "url": '/ims-webapp/api/ta/opo046/findAll',
+      //     "url": '/ims-webapp/api/taxAudit/selectList/findCondition1',
       //     "contentType": "application/json",
       //     "type": "POST",
       //     "data": (d) => {
       //         return JSON.stringify($.extend({}, d, {
-      //             //"exciseId": $("#exciseId").val(),
-      //             //"searchFlag": this.searchFlag,
-      //             //"dataExcel": this.dataExcel
+      //             "dateFrom": form.dateFrom,
+      //             "dateTo": form.dateTo,
+      //             "monthNonPay": form.monthNonPay
       //         }));
-
       //     },
       // },
-      "columns": JSON.parse(this.jsonColumn),
+      "columns": [
+        {
+          render: function (data, type, full, meta) {
+            return `<input type="checkbox" name="chk${meta.row}" id="chk${
+              meta.row
+              }" value="${$("<div/>")
+                .text(data)
+                .html()}">`;
+          },
+          className: "center"
+        },{
+          "data": "exciseId"
+        },
+        {
+          "data": "conpanyName"
+        },
+        {
+          "data": "address"
+        },
+        {
+          "data": "subProduct"
+        },
+        {
+          "data": "sector"
+        },
+        {
+          "data": "area"
+        },
+        {
+          "data": "month1",
+          "className": "text-right"
+        },
+        {
+          "data": "month2",
+          "className": "text-right"
+        },
+        {
+          "data": "month3",
+          "className": "text-right"
+        },
+        {
+          "data": "month4",
+          "className": "text-right"
+        },
+        {
+          "data": "month5",
+          "className": "text-right"
+        },
+        {
+          "data": "month6",
+          "className": "text-right"
+        },
+        {
+          "data": "month7",
+          "className": "text-right"
+        },
+        {
+          "data": "month8",
+          "className": "text-right"
+        },
+        {
+          "data": "month9",
+          "className": "text-right"
+        },
+        {
+          "data": "month10",
+          "className": "text-right"
+        },{
+          "data": "month11",
+          "className": "text-right"
+        },{
+          "data": "month12",
+          "className": "text-right"
+        },
+      ],//JSON.parse(this.jsonColumn),
+      // "fixedColumns": {
+      //   leftColumns: 2
+      // },
       "drawCallback": (settings) => {
 
       }
 
     });
+    $("#select-all").on("click", function () {
+      // Check/uncheck all checkboxes in the table
+      var rows = $("#datatable1").DataTable().rows({ search: "applied" }).nodes();
+      $('input[type="checkbox"]', rows).prop("checked", this.checked);
+    });
+  }
 
+  dataTaxNonpay(form): Promise<any> {
+    let url = "taxAudit/selectList/findCondition1";
+    return new Promise((resolve, reject) => {
+      this.ajax.post(url, JSON.stringify(form), (res) => {
+        this.data = res.json();
+        resolve(res.json());
+      })
+    });
+
+  }
+
+  select=()=>{
+    var data = $("#datatable1").DataTable().rows().data();
+    console.log(data);
+    for (let i = 0; i < data.length; i++) {
+      if ((<HTMLInputElement>document.getElementById(`chk${i}`)).checked) {
+        this.dataSelect.push(data[i]);
+      }
+    } //end for loops
+    console.log("data : ", this.dataSelect);
   }
 }

@@ -16,17 +16,12 @@ export class Tsl010100Service {
   ) { }
 
   save(form): Promise<any> {
-    let url = "taxAudit/selectList/saveToTaPlanSearchRick";
-    return new Promise((resolve, reject) => {
-      this.ajax.post(url, JSON.stringify(form), res => {
-        resolve(res.json());
-        this.messege.successModal("บันทึกรายการ");
+    let url = "taxAudit/selectList/findCondition1";
+    return new Promise((resolve, reject) => {      
+        resolve();        
         this.obectService.setData(form);
         this.router.navigate(['/tax-audit-select-line/tsl0102-00']);
-      },err=>{
-        this.messege.errorModal("ทำรายการไม่สำเร็จ");
-        reject(err.json());
-      });
+  
     });
   }
 }
