@@ -19,15 +19,15 @@ import th.co.baiwa.excise.utils.BeanUtils;
 public class Int0806Service {
 	@Autowired
 	private Int0806Dao int0806Dao;
-	
-	public List<Lov> getValue1(Lov en) {	
+
+	public List<Lov> getValue1(Lov en) {
 		return int0806Dao.getValue1(en);
 	}
-	
+
 	public DataTableAjax<MoneyCheck> search(Int0806FormSearchVo en) {
 		List<MoneyCheck> dataList = new ArrayList<MoneyCheck>();
-		if(BeanUtils.isNotEmpty(en.getCombo1()) && BeanUtils.isNotEmpty(en.getCombo2())) {
 			//query find subtype
+		if("S".equals(en.getFlag())) {
 			if("0".equals(en.getCombo1())) {
 				en.setOfficeCode("");
 			}else {
@@ -37,6 +37,8 @@ public class Int0806Service {
 				en.setOfficeCode(s1 + s2 + "00");
 //				en.setOfficeCode(en.getCombo1() + en.getCombo2() + "00");
 			}
+		}
+			
 			//filter data
 			dataList = int0806Dao.queryByfilter(en);
 			
@@ -45,9 +47,11 @@ public class Int0806Service {
 					if(m.getTrnDate().compareTo(m.getDepositDate()) <= 1) {
 						m.setStatusDate("S");
 						m.setDepositDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getDepositDate()));
+						m.setTrnDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getTrnDate()));
 					}else {
 						m.setStatusDate("F");
 						m.setDepositDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getDepositDate()));
+						m.setTrnDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getTrnDate()));
 					}
 					if("0".equals(m.getNetlocAmount().subtract(m.getNettaxAmount()))) {
 						m.setStatusMoney("S");
@@ -56,7 +60,6 @@ public class Int0806Service {
 					}
 				}
 			}
-		}
 	
 		DataTableAjax<MoneyCheck> dataTableAjax = new DataTableAjax<>();
 		dataTableAjax.setRecordsTotal(Long.valueOf(dataList.size()));
@@ -64,5 +67,5 @@ public class Int0806Service {
 		dataTableAjax.setData(dataList);
 		return dataTableAjax;
 	}
-	
+
 }

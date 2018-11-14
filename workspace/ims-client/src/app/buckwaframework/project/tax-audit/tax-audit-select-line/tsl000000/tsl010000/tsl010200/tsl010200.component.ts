@@ -28,7 +28,7 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
   }
 
   diff: any;
-  toggle: boolean = false;
+  toggle: boolean = true;
   loading: boolean = true;
   constructor(
     private objService: IaService,
@@ -49,6 +49,7 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.datatable(this.form);
+    this.datatable2();
   }
 
   datatable(form) {
@@ -62,8 +63,12 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
       //     })
       //   });
     });
-
   }
+
+  datatable2(){
+    this.myService.datatable2();
+  }
+
   toggleBar() {
     if (this.toggle) {
       this.toggle = false;

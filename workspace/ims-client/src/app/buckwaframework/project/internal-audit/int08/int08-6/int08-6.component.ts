@@ -32,6 +32,7 @@ export class Int086Component implements OnInit, AfterViewInit {
   comboBox1: any;
   comboBox2: any;
   searchData: any;
+  formDisabled: boolean = false;
 
   constructor(
     private selfService: Int0806Service,
@@ -61,7 +62,8 @@ export class Int086Component implements OnInit, AfterViewInit {
       endDate: "",
       account: "",
       combo1: "",
-      combo2: ""
+      combo2: "",
+      flag: ""
     };
   }
   setVariable() {
@@ -123,11 +125,19 @@ export class Int086Component implements OnInit, AfterViewInit {
 
   dropdown(e, combo: string) {
     e.preventDefault();
-    this.selfService
-      .pullComboBox("SECTOR_VALUE", combo, e.target.value)
-      .subscribe(data => {
-        this.comboBox2 = data;
-      });
+    if (e.target.value == 0) {
+      // this.searchForm.get("combo2").disable();
+      this.formDisabled = true;
+      this.searchForm.get("combo2").clearValidators();
+      this.searchForm.get("combo2").updateValueAndValidity();
+    } else {
+      this.formDisabled = false;
+      this.selfService
+        .pullComboBox("SECTOR_VALUE", combo, e.target.value)
+        .subscribe(data => {
+          this.comboBox2 = data;
+        });
+    }
   }
 
   handleSearch(e) {
@@ -150,7 +160,8 @@ export class Int086Component implements OnInit, AfterViewInit {
       endDate: this.searchForm.value.endDate,
       account: this.searchForm.value.account,
       combo1: this.searchForm.value.combo1,
-      combo2: this.searchForm.value.combo2
+      combo2: this.searchForm.value.combo2,
+      flag: "S"
     };
     // combo1: subT1[0].subType,
     // combo2: subT2[0].subType
@@ -201,6 +212,10 @@ export class Int086Component implements OnInit, AfterViewInit {
           render: renderString
         },
         {
+          data: "trnDateStr",
+          render: renderString
+        },
+        {
           data: "depositDateStr",
           render: renderString
         },
@@ -237,7 +252,7 @@ export class Int086Component implements OnInit, AfterViewInit {
       ],
       columnDefs: [
         {
-          targets: [0, 1, 2, 5, 6],
+          targets: [0, 1, 2, 6, 7],
           className: "center"
         },
         {
@@ -249,7 +264,6 @@ export class Int086Component implements OnInit, AfterViewInit {
       rowCallback: (row, data, index) => {
         console.log(data);
       }
-
     });
   }
 
@@ -261,24 +275,22 @@ export class Int086Component implements OnInit, AfterViewInit {
     this.searchForm.get("endDate").setValue("");
   }
 
-    // getDataExcel
-    getDataExcel(){
-      let dataList = this.dataTable.data();   
-      let dataArray = [];
-     for(let i=0;i<dataList.length;i++){
-         dataArray.push(dataList[i]);
-     }
-     return dataArray
+  // getDataExcel
+  getDataExcel() {
+    let dataList = this.dataTable.data();
+    let dataArray = [];
+    for (let i = 0; i < dataList.length; i++) {
+      dataArray.push(dataList[i]);
+    }
+    return dataArray;
   }
 
-
-    // export
-    export =()=>{
-      let data = this.getDataExcel();
-      let formExcel = $("#form-data-excel").get(0);                      
-      formExcel.action = AjaxService.CONTEXT_PATH + "ia/int068/export";
-      formExcel.dataJson.value = JSON.stringify({int068ExcelList : data});		
-      formExcel.submit();
-    };
-
+  // export
+  export = () => {
+    let data = this.getDataExcel();
+    let formExcel = $("#form-data-excel").get(0);
+    formExcel.action = AjaxService.CONTEXT_PATH + "ia/int068/export";
+    formExcel.dataJson.value = JSON.stringify({ int068ExcelList: data });
+    formExcel.submit();
+  };
 }

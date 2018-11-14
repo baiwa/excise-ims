@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { ComboBox } from "models/combobox";
 import { Utils } from "helpers/utils";
+import * as moment from 'moment';
 
 declare var $: any;
 const URL = {
@@ -24,7 +25,7 @@ export class Int061101Service {
     private ajax: AjaxService,
     private msg: MessageBarService,
     private router: Router
-  ) {}
+  ) { }
 
   // getUserLogin = () => {
   //   return new Promise<any>((resolve, reject) => {
@@ -72,11 +73,25 @@ export class Int061101Service {
         this.fileUpload.forEach(file => {
           execelFiles.append("files", file.inputFIle.files[0]);
         });
-
+        let _receipts = formData.receiptsRH;
+        for (let key in _receipts) {
+          _receipts[key].id = returnForm.rentHouseId;
+          _receipts[key].receiptDate = moment(_receipts[key].receiptDate, "DD/MM/YYYY").toDate();
+          _receipts[key].receiptType = "RH";
+        }
         this.ajax.upload(URL.UPLOAD, execelFiles, res => {
-          this.msg.successModal(res.json().messageTh);
-          cbLoading(false);
-          this.router.navigate(["/int06/11"]);
+          const urlReceipt = "ia/int061102/receipt/save";
+          this.ajax.post(urlReceipt, _receipts, response => {
+            this.msg.successModal(response.json().messageTh);
+            cbLoading(false);
+            this.router.navigate(["/int06/11"]);
+          }).catch(err => {
+            this.msg.errorModal("ไม่สามารถทำการบันทึกได้");
+            console.error(err);
+          });
+        }).catch(err => {
+          this.msg.errorModal("ไม่สามารถทำการบันทึกได้");
+          console.error(err);
         }),
           error => {
             this.msg.errorModal("ไม่สามารถบันทึกได้");

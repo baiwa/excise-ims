@@ -23,6 +23,7 @@ import th.co.baiwa.excise.ta.persistence.repository.PlanFromWsHeaderRepository;
 import th.co.baiwa.excise.ta.persistence.repository.PlanRiskDtlRepository;
 import th.co.baiwa.excise.ta.persistence.repository.PlanWorksheetHeaderRepository;
 import th.co.baiwa.excise.ta.persistence.vo.PlanFromWsVo;
+import th.co.baiwa.excise.ta.persistence.vo.Tsl010200FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010200Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -65,7 +66,7 @@ public class PlanFromWsHeaderService {
 		int daysBetween = (int) ChronoUnit.MONTHS.between(DateConstant.dateToLocalDadte(startDate), DateConstant.dateToLocalDadte(endDate));
 		// String analysNumber = DateConstant.DateToString(new Date(),
 		// DateConstant.YYYYMMDD) + "-01-"+ planWorksheetHeaderDao.getAnalysNumber();
-		List<String> monthList = exciseTaxReceiveDao.queryMonthShotName(endDate, daysBetween);
+		List<String> monthList = exciseTaxReceiveDao.queryMonthShotName(endDate, daysBetween+1);
 		List<Tsl010200Vo> tlTsl010200VoAllList = new ArrayList<Tsl010200Vo>();
 		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.searchAllRegistartionNumber();
 		if (BeanUtils.isNotEmpty(regisNumberList)) {
@@ -149,7 +150,7 @@ public class PlanFromWsHeaderService {
 		int daysBetween = (int) ChronoUnit.MONTHS.between(DateConstant.dateToLocalDadte(startDate), DateConstant.dateToLocalDadte(endDate));
 		// String analysNumber = DateConstant.DateToString(new Date(),
 		// DateConstant.YYYYMMDD) + "-01-"+ planWorksheetHeaderDao.getAnalysNumber();
-		List<String> monthList = exciseTaxReceiveDao.queryMonthShotName(endDate, daysBetween);
+		List<String> monthList = exciseTaxReceiveDao.queryMonthShotName(endDate, daysBetween+1);
 		List<Tsl010200Vo> tlTsl010200VoAllList = new ArrayList<Tsl010200Vo>();
 		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.searchAllRegistartionNumber();
 		boolean valid = true;
@@ -306,4 +307,7 @@ public class PlanFromWsHeaderService {
 
 	}
 
+	public void saveCondition1(Tsl010200FormVo formVo){
+		
+	}
 }

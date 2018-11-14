@@ -23,7 +23,7 @@
                         <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
                     </div>
 
-                    <div class="four wide field" [ngClass]="{ 'error': validateField('combo2') }">
+                    <div class="four wide field" [ngClass]="{ 'error': validateField('combo2'), 'disabled': formDisabled}">
                         <select class="ui search dropdown ai search full-width" formControlName="combo2" id="combo2">
                             <option value="">กรุณาเลือก</option>
                             <option *ngFor="let data of comboBox2" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
@@ -93,6 +93,7 @@
                 <tr>
                     <th class="text-center">ลำดับที่</th>
                     <th class="text-center">เลขที่ใบเสร็จ</th>
+                    <th class="text-center">วันที่จัดเก็บ</th>
                     <th class="text-center">วันที่นำฝาก</th>
                     <th class="text-center">เงินจัดเก็บ</th>
                     <th class="text-center">เงินนำฝาก</th>
@@ -104,10 +105,10 @@
         <br>
         <div class="ui center aligned grid">
             <div class="sixteen wide column">
-    
-          <button class="ui mini yellow button"  (click)="export()">
+
+                <button class="ui mini yellow button" (click)="export()">
             <i class="print icon"></i>
-            ส่งออก
+            ส่งออกไฟล์ excel
           </button>
             </div>
         </div>
@@ -115,6 +116,6 @@
 </div>
 
 <!-- form-data-excel -->
-<form id="form-data-excel" method="POST"> 
+<form id="form-data-excel" method="POST">
     <input type="hidden" name="dataJson" id="dataJson">
 </form>
