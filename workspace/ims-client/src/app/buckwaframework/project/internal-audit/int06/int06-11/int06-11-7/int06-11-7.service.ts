@@ -19,7 +19,7 @@ const URL = {
 
 declare var $: any;
 @Injectable()
-export class Int061105Service {
+export class Int061107Service {
   dataTable: any;
   formData: any;
   idToWithdrawRequest: any;
@@ -36,6 +36,7 @@ export class Int061105Service {
   ) {
     this.formData = {
       // status: "",
+      id: 0,
       withdrawRequest: ""
     };
   }
@@ -53,12 +54,13 @@ export class Int061105Service {
     });
   };
 
-  search(formData: any) {
+  search(id: any,withdrawRequest:any) {
     this.formData = {
       // status: "",
-      withdrawRequest: formData.withdrawRequest
+      id: id,
+      withdrawRequest: withdrawRequest
     };
-    this.idToWithdrawRequest = formData.withdrawRequest;
+    this.idToWithdrawRequest = withdrawRequest;
     this.Datatable();
   }
 
@@ -94,6 +96,7 @@ export class Int061105Service {
       processing: true,
       serverSide: false,
       paging: true,
+      scrollX: true,
       ajax: {
         type: "POST",
         url: URL.SEARCH,
@@ -137,19 +140,7 @@ export class Int061105Service {
         {
           render: function(data, type, full, meta) {
             return (
-              `<button type="button" class="ui mini button blue" id="dtl-${
-                full.id
-              }"><i class="eye icon"></i>รายละเอียด</button>` +
-              `<button type="button" class="ui mini button green ${
-                full.status === "2055" ? "hidden" : ""
-              }" id="approve-${
-                full.id
-              }"><i class="check icon"></i>ผ่าน</button>` +
-              `<button type="button" class="ui mini button red ${
-                full.status === "2056" ? "hidden" : ""
-              }" id="reject-${
-                full.id
-              }"><i class="close icon"></i>ไม่ผ่าน</button>`
+              `<button type="button" class="ui mini button blue" id="dtl-${full.id}"><i class="eye icon"></i>รายละเอียด</button>` 
             );
           }
         }
@@ -251,20 +242,18 @@ export class Int061105Service {
 
   save(saveData: any) {
     let DATA = {
-      withdrawRequest: this.idToWithdrawRequest,
-      disbursementRequest:{
-        affiliation: saveData.affiliation,
-        amount: $("#pass").val(),
-        id: saveData.id,
-        billLading: saveData.billLading,
-        position: saveData.position,
-        createdDateStr: saveData.createdDateStr,
-        createdBy: saveData.createdBy,
-        requestType: this.idToWithdrawRequest
-      }
+      affiliation: saveData.affiliation,
+      amount: saveData.amount,
+      id: saveData.id,
+      billLading: saveData.billLading,
+      position: saveData.position,
+      createdDateStr: saveData.createdDateStr,
+      createdBy: saveData.createdBy,
+      requestType: this.idToWithdrawRequest
     };
     this.ajax.post(URL.SAVE, DATA, res => {
       this.msg.successModal(res.json().messageTh);
+      this.router.navigate(["/int06/11/6"]);
     }),
       error => {
         this.msg.errorModal(error.json().messageTh);

@@ -1,0 +1,83 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<br>
+
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white;">
+    <span>รายละเอียด</span>
+</div>
+<div class="ui form">
+    <div class="ui attached segment">
+        <table id="dataTable" class="ui small celled table aligned hover striped selectable nowrap" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="text-center">ผู้เบิก</th>
+                    <th class="text-center">ตำแหน่ง</th>
+                    <th class="text-center">สังกัด</th>
+                    <th class="text-center">วันที่เบิก</th>
+                    <th class="text-center">จำนวนเงินที่ขอเบิก</th>
+                    <th class="text-center">สถานะการดำเนินการ</th>
+                    <th class="text-center">จัดการ</th>
+                </tr>
+            </thead>
+        </table>
+        <br>
+        <div class="inline fields ">
+            <div class="four wide field">
+            </div>
+
+            <div class="two wide field">
+                <label class="text-right full-width">รวมจำนวนเงินที่ขอเบิก</label>
+            </div>
+        </div>
+
+        <div class="inline fields ">
+            <div class="five wide field">
+            </div>
+
+            <div class="two wide field">
+                <label class="text-right full-width">- รอดำเนินการ</label>
+            </div>
+
+            <div class="two wide field">
+                <input class="custom-readonly disabled" id="process" type="text" autocomplete="off">
+            </div>
+
+            <div class="one wide field">
+                <label class="text-left full-width">บาท</label>
+            </div>
+        </div>
+
+        <div class="inline fields ">
+            <div class="five wide field">
+            </div>
+
+            <div class="two wide field">
+                <label class="text-right full-width">- ผ่าน</label>
+            </div>
+
+            <div class="two wide field">
+                <input class="custom-readonly disabled" id="pass" type="text" autocomplete="off">
+            </div>
+
+            <div class="one wide field">
+                <label class="text-left full-width">บาท</label>
+            </div>
+        </div>
+
+        <div class="inline fields ">
+            <div class="five wide field">
+            </div>
+
+            <div class="two wide field">
+                <label class="text-right full-width">- ไม่ผ่าน</label>
+            </div>
+
+            <div class="two wide field">
+                <input class="custom-readonly disabled" id="notPass" type="text" autocomplete="off">
+            </div>
+
+            <div class="one wide field">
+                <label class="text-left full-width">บาท</label>
+            </div>
+        </div>
+    </div>
+</div>

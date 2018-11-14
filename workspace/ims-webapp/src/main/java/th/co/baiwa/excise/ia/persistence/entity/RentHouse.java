@@ -76,6 +76,9 @@ public class RentHouse extends BaseEntity {
 	
 	@Column(name = "STATUS")
 	private String status;
+	
+	@Column(name = "IA_DIS_REQ_ID")
+	private BigDecimal iaDisReqId;
 
 	public BigDecimal getRentHouseId() {
 		return rentHouseId;
@@ -221,4 +224,17 @@ public class RentHouse extends BaseEntity {
 		this.periodWithdrawTo = periodWithdrawTo;
 	}
 
+	public BigDecimal getIaDisReqId() {
+		return iaDisReqId;
+	}
+
+	public void setIaDisReqId(BigDecimal iaDisReqId) {
+		this.iaDisReqId = iaDisReqId;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }

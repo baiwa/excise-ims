@@ -10,13 +10,13 @@ import { Router, ActivatedRoute } from "@angular/router";
 
 const URL = {
   DROPDOWN: "combobox/controller/getDropByTypeAndParentId",
-  SEARCH: AjaxService.CONTEXT_PATH + "ia/int061106/search",
-  APPROVE: "ia/int061106/approve"
+  SEARCH: AjaxService.CONTEXT_PATH + "ia/int061108/search",
+  APPROVE: "ia/int061108/approve"
 };
 
 declare var $: any;
 @Injectable()
-export class Int06116Service {
+export class Int06118Service {
   dataTable: any;
   formData: any;
   idToWithdrawRequest: any;
@@ -125,14 +125,18 @@ export class Int06116Service {
           render: function(data, type, full, meta) {
             var btn = '';
 
-            if (data === "2062") {
-              btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
-              btn += `<button type="button" class="ui mini button yellow btn-edit"><i class="edit icon"></i>แก้ไขเลขที่ใบขอเบิก</button>`;
+            if (data === "2064"){
 
-            } else if (data === "2063") {
               btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
-              btn += `<button type="button" class="ui mini button yellow btn-edit"><i class="edit icon"></i>แก้ไขเลขที่ใบขอเบิก</button>`;
-              btn += `<button type="button" class="ui mini button green btn-add"><i class="plus icon"></i>ทำใบขอจ่าย</button>`;
+              btn += `<button type="button" class="ui mini button primary btn-approve"><i class="edit icon"></i>เปรียบเทียบใบ  ขอเบิก ขอจ่าย</button>`;
+
+            } else if (data === "2065"){
+              btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
+              btn += `<button type="button" class="ui mini button primary btn-approve"><i class="edit icon"></i>เปรียบเทียบใบ  ขอเบิก ขอจ่าย</button>`;
+
+            } else if (data === "2066"){
+              btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
+              btn += `<button type="button" class="ui mini button primary btn-approve"><i class="edit icon"></i>เปรียบเทียบใบ  ขอเบิก ขอจ่าย</button>`;
 
             }
 

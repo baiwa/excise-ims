@@ -2,11 +2,16 @@ package th.co.baiwa.excise.ia.persistence.vo;
 
 import java.math.BigDecimal;
 
+import th.co.baiwa.excise.ia.persistence.entity.DisbursementRequest;
+
 public class Int061105FormSearchVo {
+	
 	private String status;
 	private String withdrawRequest;
 	private BigDecimal idSelect;
 	private String comment;
+	
+	private DisbursementRequest disbursementRequest;
 	
 	public String getStatus() {
 		return status;
@@ -32,5 +37,13 @@ public class Int061105FormSearchVo {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+	public DisbursementRequest getDisbursementRequest() {
+		return disbursementRequest;
+	}
+	public void setDisbursementRequest(DisbursementRequest disbursementRequest) {
+		this.disbursementRequest = disbursementRequest;
+	}
+	
+	
 
 }

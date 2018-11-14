@@ -16,21 +16,21 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.DisbursementRequest;
-import th.co.baiwa.excise.ia.persistence.vo.Int061106FormVo;
+import th.co.baiwa.excise.ia.persistence.vo.Int061108FormVo;
 
 @Repository
-public class Int061106Dao {
+public class Int061108Dao {
 
-	private static Logger log = LoggerFactory.getLogger(Int061106Dao.class);
+	private static Logger log = LoggerFactory.getLogger(Int061108Dao.class);
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
 	
-	private final String SQL_IA_DISBURSEMENT_REQUEST = " SELECT * FROM IA_DISBURSEMENT_REQUEST WHERE IS_DELETED = 'N' AND REQUEST_TYPE = ? AND (STATUS = '2062' OR STATUS = '2063') ";
+	private final String SQL_IA_DISBURSEMENT_REQUEST = " SELECT * FROM IA_DISBURSEMENT_REQUEST WHERE IS_DELETED = 'N' AND REQUEST_TYPE = ? AND STATUS = '2064' ";
 	  
 
-		public List<DisbursementRequest> findAllInt061106(Int061106FormVo formVo) {
+		public List<DisbursementRequest> findAllInt061108(Int061108FormVo formVo) {
 			
 			StringBuilder sql = new StringBuilder(SQL_IA_DISBURSEMENT_REQUEST);
 			List<Object> params = new ArrayList<>();
@@ -40,11 +40,11 @@ public class Int061106Dao {
             
 //			sql.append(" ORDER BY OFFICE_CODE asc");
 			log.info("findAllInt085 sql : {}",sql);
-	        List<DisbursementRequest> list = jdbcTemplate.query(sql.toString(), params.toArray(), int061106Rowmapper);
+	        List<DisbursementRequest> list = jdbcTemplate.query(sql.toString(), params.toArray(), int061108Rowmapper);
 	        return list;
 	    }
 		
-		 private RowMapper<DisbursementRequest> int061106Rowmapper = new RowMapper<DisbursementRequest>() {
+		 private RowMapper<DisbursementRequest> int061108Rowmapper = new RowMapper<DisbursementRequest>() {
 		    	@Override
 		    	public DisbursementRequest mapRow(ResultSet rs, int arg1) throws SQLException {
 		    		DisbursementRequest vo = new DisbursementRequest();
@@ -86,18 +86,18 @@ public class Int061106Dao {
 		    	}
 		    };
 		    
-			public void updateBillLadingInt061106(Int061106FormVo form) {
+			public void updateBillLadingInt061108(Int061108FormVo form) {
 				
 				StringBuilder sql = new StringBuilder(" UPDATE IA_DISBURSEMENT_REQUEST SET BILL_LADING = ?,STATUS = '2063' WHERE ID = ? ");
 
 				log.info("getBillLading : {}",form.getBillLading());
 				log.info("getId : {}",form.getId());
 					
-				log.info("updateBillLadingInt061106 sql : {}",sql);
+				log.info("updateBillLadingInt061108 sql : {}",sql);
 		       jdbcTemplate.update(sql.toString(),new Object[] {form.getBillLading(),form.getId()});
 		    }
 			
-			public void updateBillPayInt061106(Int061106FormVo form) {
+			public void updateBillPayInt061108(Int061108FormVo form) {
 				
 				StringBuilder sql = new StringBuilder();
 				
@@ -114,7 +114,7 @@ public class Int061106Dao {
 				sql.append(" STATUS = '2064'");
 				sql.append(" WHERE ID = ? ");
 					
-				log.info("updateBillLadingInt061106 sql : {}",sql);
+				log.info("updateBillLadingInt061108 sql : {}",sql);
 		       jdbcTemplate.update(sql.toString(),new Object[] {
 		    		   form.getBillPay(),
 		    		   UserLoginUtils.getCurrentUserBean().getUsername(),
@@ -129,7 +129,7 @@ public class Int061106Dao {
 			
 			
 			
-			public void updateApproveInt061106(Int061106FormVo form) {
+			public void updateApproveInt061108(Int061108FormVo form) {
 				
 				StringBuilder sql = new StringBuilder();
 				
@@ -142,7 +142,7 @@ public class Int061106Dao {
 				sql.append(" STATUS = ?");
 				sql.append(" WHERE ID = ? ");
 					
-				log.info("updateBillLadingInt061106 sql : {}",sql);
+				log.info("updateBillLadingInt061108 sql : {}",sql);
 		       jdbcTemplate.update(sql.toString(),new Object[] {
 		    		   UserLoginUtils.getCurrentUserBean().getUsername(),
 	    		   		ApplicationCache.getListOfValueByValueType("SECTOR_LIST",UserLoginUtils.getCurrentUserBean().getOfficeId()).get(0).getSubTypeDescription(),

@@ -116,6 +116,9 @@ public class HealthCareWelFareEntity extends BaseEntity {
 	
 	@Column(name = "STATUS_CHECK")
 	private String statusCheck;
+	
+	@Column(name = "IA_DIS_REQ_ID")
+	private BigDecimal iaDisReqId;
 
 	public BigDecimal getId() {
 		return id;
@@ -356,5 +359,20 @@ public class HealthCareWelFareEntity extends BaseEntity {
 	public void setStatusCheck(String statusCheck) {
 		this.statusCheck = statusCheck;
 	}
+
+	
+	public BigDecimal getIaDisReqId() {
+		return iaDisReqId;
+	}
+
+	public void setIaDisReqId(BigDecimal iaDisReqId) {
+		this.iaDisReqId = iaDisReqId;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 
 }

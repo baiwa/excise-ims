@@ -17,6 +17,9 @@ import { Int06116Component } from "./int06-11-6/int06-11-6.component";
 import { Int061151Component } from "./int06-11-5/int06-11-5-1/int06-11-5-1.component";
 import { Int061152Component } from "./int06-11-5/int06-11-5-2/int06-11-5-2.component";
 import { Int061153Component } from "./int06-11-5/int06-11-5-3/int06-11-5-3.component";
+import { Int06117Component } from "./int06-11-7/int06-11-7.component";
+import { Int06118Component } from "./int06-11-8/int06-11-8.component";
+import { Int06119Component } from "./int06-11-9/int06-11-9.component";
 
 const routes: Routes = [
   { path: "", component: Int0611Component, canActivate: [AuthGuard] },
@@ -27,7 +30,10 @@ const routes: Routes = [
   { path: "4", component: Int06114Component, canActivate: [AuthGuard] },
   // { path: "5", component: Int06115Component, canActivate: [AuthGuard] },
   { path: "5", loadChildren: "./int06-11-5/int06-11-5.module#Int061105Module" },
-  { path: "6", component: Int06116Component, canActivate: [AuthGuard] }
+  { path: "6", component: Int06116Component, canActivate: [AuthGuard] },
+  { path: "7", component: Int06117Component, canActivate: [AuthGuard] },
+  { path: "8", component: Int06118Component, canActivate: [AuthGuard] },
+  { path: "9", component: Int06119Component, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -46,7 +52,10 @@ const routes: Routes = [
     Int06114Component,
     Int0611301Component,
     // Int06115Component,
-    Int06116Component
+    Int06116Component,
+    Int06117Component,
+    Int06118Component,
+    Int06119Component
     // Int061151Component,
     // Int061152Component,
     // Int061153Component

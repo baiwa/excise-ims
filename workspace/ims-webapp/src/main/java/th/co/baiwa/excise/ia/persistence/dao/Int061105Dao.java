@@ -123,7 +123,7 @@ public class Int061105Dao {
 				en.getPosition(),
 				en.getAffiliation(),
 				en.getAmount(),
-				null,
+				"2208",
 				null,
 				null,
 				null,

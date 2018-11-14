@@ -56,6 +56,60 @@
       </table>
     </div>
   </div>
+  <div id="segmentApprove">
+    <br>
+    <div class="ui top centered attached header segment" style="background: #1e83db;color: white;">
+      <span>รายละเอียดเปรียบเทียบใบ ขอเบิก ขอจ่าย</span>
+    </div>
+    <div class="ui form">
+      <div class="ui attached segment">
+        <table id="dataTable2" class="ui small celled table aligned hover striped selectable nowrap" style="width:100%">
+          <thead>
+            <tr>
+              <th style="text-align: center !important;">ประเถท</th>
+              <th style="text-align: center !important;">เลขที่ใบขอเบิก-จ่าย</th>
+              <th style="text-align: center !important;">ผู้สร้าง</th>
+              <th style="text-align: center !important;">ตำแหน่ง</th>
+              <th style="text-align: center !important;">สังกัด</th>
+              <th style="text-align: center !important;">วันที่สร้าง</th>
+              <th style="text-align: center !important;">จำนวนเงิน</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: center !important;">ใบขอเบิก</td>
+              <td style="text-align: center !important;">{{dataApprove.billLading}}</td>
+              <td style="text-align: center !important;">{{dataApprove.createdBy}}</td>
+              <td style="text-align: center !important;">{{dataApprove.position}}</td>
+              <td style="text-align: center !important;">{{dataApprove.affiliation}}</td>
+              <td style="text-align: center !important;">{{dataApprove.createdDateStr}}</td>
+              <td style="text-align: center !important;">{{dataApprove.amount}}</td>
+            </tr>
+            <tr>
+                <td style="text-align: center !important;">ใบขอจ่าย</td>
+                <td style="text-align: center !important;">{{dataApprove.billPay}}</td>
+                <td style="text-align: center !important;">{{dataApprove.createdByPay}}</td>
+                <td style="text-align: center !important;">{{dataApprove.positionPay}}</td>
+                <td style="text-align: center !important;">{{dataApprove.affiliationPay}}</td>
+                <td style="text-align: center !important;">{{dataApprove.createdDatePayStr}}</td>
+                <td style="text-align: center !important;">{{dataApprove.amountPay}}</td>
+              </tr>
+          </tbody>
+        </table>
+        <br>
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini green button" type="button" (click)="approve('2065')">
+              <i class="check icon"></i>อนุมัติ</button>
+            <button class="ui mini red button" type="button" (click)="approve('2066')">
+              <i class="remove icon"></i>ไม่อนุมัติ</button>
+          </div>
+        </div>
+        <br>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <!-- Edit modal -->

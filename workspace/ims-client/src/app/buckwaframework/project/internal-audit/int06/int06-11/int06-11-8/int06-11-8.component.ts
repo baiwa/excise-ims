@@ -10,17 +10,17 @@ import { Observable } from "rxjs/Observable";
 import { ComboBox } from "models/combobox";
 import { Utils } from "helpers/utils";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Int06116Service } from "projects/internal-audit/int06/int06-11/int06-11-6/int06-11-6.service";
+import { Int06118Service } from "projects/internal-audit/int06/int06-11/int06-11-8/int06-11-8.service";
 
 
 declare var $: any;
 @Component({
-  selector: "app-int06-11-6",
-  templateUrl: "./int06-11-6.component.html",
-  styleUrls: ["./int06-11-6.component.css"],
-  providers: [Int06116Service]
+  selector: "app-int06-11-8",
+  templateUrl: "./int06-11-8.component.html",
+  styleUrls: ["./int06-11-8.component.css"],
+  providers: [Int06118Service]
 })
-export class Int06116Component implements OnInit {
+export class Int06118Component implements OnInit {
   createWdRequest: FormGroup;
   searchForm: FormGroup;
   breadcrumb: BreadCrumb[];
@@ -29,7 +29,7 @@ export class Int06116Component implements OnInit {
   dataApprove:any=[];
 
   constructor(
-    private selfService: Int06116Service,
+    private selfService: Int06118Service,
     private fb: FormBuilder,
     private msg: MessageBarService,
     private router: Router,
@@ -79,7 +79,7 @@ export class Int06116Component implements OnInit {
   editData=()=>{
     console.log("Edit");
     $('#modalEdit').modal('hide');
-    const URL = "ia/int061106/edit";
+    const URL = "ia/int061108/edit";
     this.ajax.post(URL, { 
         id:$("#id").val(),
         billLading:$("#billLading").val()
@@ -99,7 +99,7 @@ export class Int06116Component implements OnInit {
   addData=()=>{
     console.log("Add");
     $('#modalAdd').modal('hide');
-    const URL = "ia/int061106/add";
+    const URL = "ia/int061108/add";
     this.ajax.post(URL, { 
         id:$("#id").val(),
         billPay:$("#billPay").val(),
@@ -118,21 +118,26 @@ export class Int06116Component implements OnInit {
   }
   approve=(status)=>{
     console.log("Approve");
-    const URL = "ia/int061106/approve";
-    this.ajax.post(URL, { 
-        id:this.dataApprove.id,
-        status:status
-    },res => {
-      const commonMessage = res.json();
-      
-    if (commonMessage.msg.messageType == "C") {
-      this.msg.successModal(commonMessage.msg.messageTh);
-    } else {
-      this.msg.errorModal(commonMessage.msg.messageTh);
-    }
-    $("#searchFlag").val("TRUE");
-    $('#dataTable').DataTable().ajax.reload();
-    });
+    const URL = "ia/int061108/approve";
+    this.msg.comfirm((res) => {
+      if (res) {
+        this.ajax.post(URL, { 
+          id:this.dataApprove.id,
+          status:status
+      },res => {
+        const commonMessage = res.json();
+        
+      if (commonMessage.msg.messageType == "C") {
+        this.msg.successModal(commonMessage.msg.messageTh);
+      } else {
+        this.msg.errorModal(commonMessage.msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      $('#dataTable').DataTable().ajax.reload();
+      });
+      }
+    }, (status=='2065')?'ยืนยันการ อนุมัติ':' ยืนยันการ ไม่อนุมัติ');
+
   }
 
 }

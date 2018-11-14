@@ -10,13 +10,13 @@ import { Router, ActivatedRoute } from "@angular/router";
 
 const URL = {
   DROPDOWN: "combobox/controller/getDropByTypeAndParentId",
-  SEARCH: AjaxService.CONTEXT_PATH + "ia/int061106/search",
-  APPROVE: "ia/int061106/approve"
+  SEARCH: AjaxService.CONTEXT_PATH + "ia/int061109/search",
+  APPROVE: "ia/int061109/approve"
 };
 
 declare var $: any;
 @Injectable()
-export class Int06116Service {
+export class Int06119Service {
   dataTable: any;
   formData: any;
   idToWithdrawRequest: any;
@@ -104,19 +104,9 @@ export class Int06116Service {
         { data: "status",
         render: function(data) {
           var status = "";
-          if (data === "2062") {
-            status = "อนุมัติขอเบิก (รอเลขอ้างอิงขอเบิก)";
-          } else if (data === "2063") {
-            status = "รอเลขอ้างอิงขอจ่าย";
-          } else if (data === "2064") {
-            status = "รออนุมัติขอจ่าย";
-          } else if (data === "2065") {
-            status = "อนุมัติขอจ่าย";
-          } else if (data === "2066") {
-            status = "ไม่อนุมัติขอจ่าย";
-          } else {
-            status = "-";
-          }
+          if (data == "2208") {
+            status = "รออนุมัติขอเบิก";
+          } 
           return status;
         }
         },{
@@ -125,38 +115,38 @@ export class Int06116Service {
           render: function(data, type, full, meta) {
             var btn = '';
 
-            if (data === "2062") {
-              btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
-              btn += `<button type="button" class="ui mini button yellow btn-edit"><i class="edit icon"></i>แก้ไขเลขที่ใบขอเบิก</button>`;
+            if (data == "2208"){
 
-            } else if (data === "2063") {
               btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
-              btn += `<button type="button" class="ui mini button yellow btn-edit"><i class="edit icon"></i>แก้ไขเลขที่ใบขอเบิก</button>`;
-              btn += `<button type="button" class="ui mini button green btn-add"><i class="plus icon"></i>ทำใบขอจ่าย</button>`;
+              btn += `<button type="button" class="ui mini button green btn-approve"><i class="check icon"></i>อนุมัติขอเบิก</button>`;
+              btn += `<button type="button" class="ui mini button red btn-unApprove"><i class="remove icon"></i>ไม่อนุมัติขอเบิก</button>`;
 
             }
-
             return btn;
           }
         }
       ]
     });
 
-    this.dataTable.on('click', 'tbody tr button.btn-edit',(e)=> {
-      var closestRow = $(e.target).closest('tr');
-      var data = this.dataTable.row(closestRow).data();
-      this.modalEdit(data);
-    });
-    this.dataTable.on('click', 'tbody tr button.btn-add',(e)=> {
-      var closestRow = $(e.target).closest('tr');
-      var data = this.dataTable.row(closestRow).data();
-      this.modalAdd(data);
-    });
     this.dataTable.on('click', 'tbody tr button.btn-approve',(e)=> {
       var closestRow = $(e.target).closest('tr');
       var data = this.dataTable.row(closestRow).data();
-      this.approve(data);
-      $("#nameCall").click();
+      this.msg.comfirm((res) => {
+        if (res) {
+          this.approve(data,'2062');
+        }
+      }, "ยืนยันการ อนุมัติ");
+      
+    });
+    this.dataTable.on('click', 'tbody tr button.btn-unApprove',(e)=> {
+      var closestRow = $(e.target).closest('tr');
+      var data = this.dataTable.row(closestRow).data();
+      this.msg.comfirm((res) => {
+        if (res) {
+          this.approve(data,'2209');
+        }
+      }, "ยืนยันการ ไม่อนุมัติ");
+      
     });
     this.dataTable.on('click', 'tbody tr button.btn-description',(e)=> {
       var closestRow = $(e.target).closest('tr');
@@ -173,30 +163,24 @@ export class Int06116Service {
 
     
   }
-  modalEdit=(data)=> {
-    console.log("data edit : ",data);
-    $('#modalEdit').modal({
-      onShow: ()=>{
-         $("#id").val(data.id);
-         $("#billLading").val(data.billLading);
-      }
-    }).modal('show');
-  }
 
-  modalAdd=(data)=> {
-    console.log("data add : ",data);
-    $('#modalAdd').modal({
-      onShow: ()=>{
-         $("#id").val(data.id);
-         $("#billPay").val(data.billPay);
-         $("#amountPay").val(data.amountPay);
-      }
-    }).modal('show');
-  }
-
-  approve=(data)=> {
-    console.log("data Approve : ",data);
-   return  this.dataApprove=data;
+  approve=(data,status)=> {
+    console.log("Approve");
+    const URL = "ia/int061109/approve";
+    this.ajax.post(URL, { 
+        id:data.id,
+        status:status
+    },res => {
+      const commonMessage = res.json();
+      
+    if (commonMessage.msg.messageType == "C") {
+      this.msg.successModal(commonMessage.msg.messageTh);
+    } else {
+      this.msg.errorModal(commonMessage.msg.messageTh);
+    }
+    $("#searchFlag").val("TRUE");
+    $('#dataTable').DataTable().ajax.reload();
+    });
   }
   
  

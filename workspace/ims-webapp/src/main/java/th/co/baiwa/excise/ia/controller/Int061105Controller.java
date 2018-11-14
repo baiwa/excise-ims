@@ -39,11 +39,11 @@ public class Int061105Controller {
 	
 	@PostMapping("/save")
 	@ResponseBody
-	public Message save(@RequestBody DisbursementRequest en) {
+	public Message save(@RequestBody Int061105FormSearchVo ids) {
 		Message msg = ApplicationCache.getMessage("MSG_00003");
 		try {
-			if(BeanUtils.isNotEmpty(en)) {
-				int061105Service.save(en);
+			if(BeanUtils.isNotEmpty(ids)) {
+				int061105Service.save(ids);
 				msg = ApplicationCache.getMessage("MSG_00002");
 			}else {
 				msg = ApplicationCache.getMessage("MSG_00003");

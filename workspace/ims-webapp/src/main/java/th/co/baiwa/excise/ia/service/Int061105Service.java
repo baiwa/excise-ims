@@ -39,6 +39,7 @@ public class Int061105Service {
 	@Autowired
 	private TuitionFeeRepository tuitionFeeRepository;
 	
+
 	@Autowired
 	private HealthCareWelFareRepository healthCareWelFareRepository;
 
@@ -164,8 +165,8 @@ public class Int061105Service {
 		
 	}
 
-	public void save(DisbursementRequest en) {
-		int061105Dao.insertDisbursementRequest(en);
+	public void save(Int061105FormSearchVo ids) {
+		int061105Dao.insertDisbursementRequest(ids.getDisbursementRequest());
 	}
 
 	public Long getNextval() {

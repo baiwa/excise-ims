@@ -1,20 +1,21 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
-import { Int061105Service } from "./int06-11-5.service";
+import { Int061107Service } from "./int06-11-7.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageBarService } from "services/message-bar.service";
 import { BreadCrumb } from "models/breadcrumb";
 import { Observable } from "rxjs";
 import { ComboBox } from "models/combobox";
 import { AuthService } from "services/auth.service";
+import { ActivatedRoute } from "@angular/router";
 
 declare var $: any;
 @Component({
-  selector: "app-int06-11-5",
-  templateUrl: "./int06-11-5.component.html",
-  styleUrls: ["./int06-11-5.component.css"],
-  providers: [Int061105Service]
+  selector: "app-int06-11-7",
+  templateUrl: "./int06-11-7.component.html",
+  styleUrls: ["./int06-11-7.component.css"],
+  providers: [Int061107Service]
 })
-export class Int06115Component implements OnInit, AfterViewInit {
+export class Int06117Component implements OnInit, AfterViewInit {
   // createWdRequest: FormGroup;
   searchForm: FormGroup;
   breadcrumb: BreadCrumb[];
@@ -29,10 +30,14 @@ export class Int06115Component implements OnInit, AfterViewInit {
   checkBtn2: boolean = false;
   // statusList: Observable<ComboBox>;
 
+  id:any;
+  withdrawRequest:any;
+
   constructor(
     private authService: AuthService,
-    private selfService: Int061105Service,
+    private selfService: Int061107Service,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private msg: MessageBarService
   ) {
     this.breadcrumb = [
@@ -73,9 +78,12 @@ export class Int06115Component implements OnInit, AfterViewInit {
       this.position = data.title;
       this.affiliation = data.position;
     });
+    this.id = this.route.snapshot.queryParams["id"];
+    this.withdrawRequest = this.route.snapshot.queryParams["withdrawRequest"];
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown ai").css("width", "100%");
     this.setVariable();
+    this.handleSearch();
   }
 
   ngAfterViewInit(): void {
@@ -84,16 +92,8 @@ export class Int06115Component implements OnInit, AfterViewInit {
     this.selfService.clickTdButton(); //click button in datatable
   }
 
-  handleSearch(e) {
-    e.preventDefault();
-    this.submitted = true;
-    // stop here if form is invalid
-    if (this.searchForm.invalid) {
-      this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ");
-      return;
-    }
-    this.checkBtn1 = true;
-    this.selfService.search(this.searchForm.value);
+  handleSearch() {
+    this.selfService.search(this.id,this.withdrawRequest);
   }
 
   total = e => {
@@ -109,7 +109,10 @@ export class Int06115Component implements OnInit, AfterViewInit {
           position: this.position,
           affiliation: this.affiliation,
           createdDateStr: new Date().toLocaleDateString(),
-          amount:parseFloat($("#pass").val())
+          amount:
+            parseFloat($("#process").val()) +
+            parseFloat($("#pass").val()) +
+            parseFloat($("#notPass").val())
         };
       })
       .then(() => {
