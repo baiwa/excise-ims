@@ -19,9 +19,11 @@ import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetDetailDao;
 import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetHeaderDao;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseRegistartionNumber;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseTaxReceive;
+import th.co.baiwa.excise.ta.persistence.entity.YearPlan;
 import th.co.baiwa.excise.ta.persistence.repository.PlanFromWsHeaderRepository;
 import th.co.baiwa.excise.ta.persistence.repository.PlanRiskDtlRepository;
 import th.co.baiwa.excise.ta.persistence.repository.PlanWorksheetHeaderRepository;
+import th.co.baiwa.excise.ta.persistence.repository.YearPlanRepository;
 import th.co.baiwa.excise.ta.persistence.vo.PlanFromWsVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010200FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010200Vo;
@@ -31,7 +33,7 @@ import th.co.baiwa.excise.utils.BeanUtils;
 public class PlanFromWsHeaderService {
 
 	private static final Logger logger = LoggerFactory.getLogger(PlanFromWsHeaderService.class);
-
+	private static final String PROCESS = "1";
 	@Autowired
 	private PlanFromWsHeaderRepository planFromWsHeaderRepository;
 
@@ -55,6 +57,9 @@ public class PlanFromWsHeaderService {
 
 	@Autowired
 	private PlanRiskDtlRepository planRiskDtlRepository;
+	
+	@Autowired
+	private YearPlanRepository yearPlanRepository;
 
 	private final String RISK_TYPE_NON_PAY = "NON_PAY";
 	private final String RISK_TYPE_PERCENT_DIFF = "PERCENT_DIFF";
@@ -96,7 +101,7 @@ public class PlanFromWsHeaderService {
 						indexDate = new Tsl010200Vo();
 						indexDate.setExciseId(registartionNumber.getExciseId());
 						indexDate.setConpanyName(registartionNumber.getExciseFacName());
-						indexDate.setAddress(registartionNumber.getExciseFacAddress());
+						indexDate.setAddress(registartionNumber.getIndustrialAddress());
 						indexDate.setSubProduct(registartionNumber.getTaexciseProductType());
 						indexDate.setSector(registartionNumber.getSector());
 						indexDate.setArea(registartionNumber.getExciseArea());
@@ -248,7 +253,7 @@ public class PlanFromWsHeaderService {
 						indexDate = new Tsl010200Vo();
 						indexDate.setExciseId(registartionNumber.getExciseId());
 						indexDate.setConpanyName(registartionNumber.getExciseFacName());
-						indexDate.setAddress(registartionNumber.getExciseFacAddress());
+						indexDate.setAddress(registartionNumber.getIndustrialAddress());
 						indexDate.setSubProduct(registartionNumber.getTaexciseProductType());
 						indexDate.setSector(registartionNumber.getSector());
 						indexDate.setArea(registartionNumber.getExciseArea());
@@ -308,6 +313,29 @@ public class PlanFromWsHeaderService {
 	}
 
 	public void saveCondition1(Tsl010200FormVo formVo){
+		List<Tsl010200Vo> dataList = formVo.getDataList();
 		
+		String analysNumber = DateConstant.DateToString(new Date(),DateConstant.YYYYMMDD) + "-01-"+ planWorksheetHeaderDao.getAnalysNumber();
+		List<YearPlan> entitys = new ArrayList<>();
+		for (Tsl010200Vo vo : dataList) {
+			
+			YearPlan entity = new YearPlan();
+			entity.setAnalysisNumber(analysNumber);
+			entity.setExciseId(vo.getExciseId());
+			entity.setCompanyName(vo.getConpanyName());
+			entity.setCompanyAddress(vo.getAddress());
+			entity.setExciseArea(vo.getSector());
+			entity.setExciseSubArea(vo.getArea());
+			entity.setFlag(PROCESS);
+			entity.setRiskType("1");
+//			*1 = ความถี่ของเดือนที่ชำระภาษี,
+//			2 = เปรียบเทียบจำนวนภาษีระหว่างเดือน,
+//			3 = เปรียบเทียบความแต่งต่างการชำระภาษีระหว่างปี
+
+			entitys.add(entity);
+		}
+		
+		yearPlanRepository.save(entitys);
+		logger.info("Save TA_YEAR_PLAN");
 	}
 }
