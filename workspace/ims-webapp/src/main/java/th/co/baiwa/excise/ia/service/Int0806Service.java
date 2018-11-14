@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -54,7 +55,9 @@ public class Int0806Service {
 						m.setDepositDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getDepositDate()));
 						m.setTrnDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getTrnDate()));
 					}
-					if("0".equals(m.getNetlocAmount().subtract(m.getNettaxAmount()))) {
+//					if(BigDecimal.ZERO.equals( m.getNetlocAmount().subtract(m.getNettaxAmount()) )) {
+					Long sum = m.getNetlocAmount().longValue() - m.getNettaxAmount().longValue();
+						if(sum == 0) {
 						m.setStatusMoney("S");
 					}else {
 						m.setStatusMoney("F");
