@@ -20,6 +20,7 @@ export class Tsl010700Component implements OnInit {
     { label: 'ตรวจสอบข้อมูลด้านภาษีสรรพาสามิต', route: '#' },
   ];
 
+  searchFlag: string = "FALSE";
   entrepreneurTable: any;
   getRawTable: any;
   payRawTable: any;
@@ -33,81 +34,34 @@ export class Tsl010700Component implements OnInit {
   ) {
     this.dataRecord = dataService.getData();
     this.dateCalendar = this.route.snapshot.queryParams['dateCalendar'];
-    console.log(this.dataRecord);
-    console.log(this.dateCalendar);
+    this.searchFlag = this.route.snapshot.queryParams['searchFlag'];
   }
 
   ngOnInit() { }
 
   ngAfterViewInit() {
-    this.initEntrepreneurDatatable();
     this.initGetRawDatatable();
     this.initPayRawDatatable();
   }
 
-  initEntrepreneurDatatable = () => {
-    const URL = AjaxService.CONTEXT_PATH + "taxAudit/checkDisplay/searchEntrepreneur";
-    this.entrepreneurTable = $("#tableEntrepreneur").DataTableTh({
-      serverSide: false,
-      searching: false,
-      processing: false,
-      ordering: false,
-      scrollX: true,
-      // ajax: {
-      //   type: "POST",
-      //   url: URL,
-      //   contentType: "application/json",
-      //   data: (d) => {
-      //     return JSON.stringify($.extend({}, d, {
-      //     }));
-      //   }
-      // },
-      columns: [
-        {
-          className: "ui center aligned",
-          render: function (data, type, row, meta) {
-            return meta.row + meta.settings._iDisplayStart + 1;
-          }
-        }, {
-          data: "cusName",
-          className: "ui center aligned"
-        }, {
-          data: "checkPointDest",
-          className: "ui center aligned"
-        }, {
-          data: "dateOutDisplay",
-          className: "ui center aligned"
-        }, {
-          data: "dateInDisplay",
-          className: "ui center aligned"
-        }, {
-          data: "id",
-          className: "ui center aligned"
-        }, {
-          data: "id",
-          className: "ui center aligned"
-        }
-      ],
-    });
-  };
-
   initGetRawDatatable = () => {
-    const URL2 = AjaxService.CONTEXT_PATH + "taxAudit/checkDisplay/searchGetRaw";
+    const URL = AjaxService.CONTEXT_PATH + "taxAudit/checkDisplay/search";
     this.getRawTable = $("#tableGetRawMaterial").DataTableTh({
-      serverSide: false,
+      serverSide: true,
       searching: false,
-      processing: false,
+      processing: true,
       ordering: false,
       scrollX: true,
-      // ajax: {
-      //   type: "POST",
-      //   url: URL,
-      //   contentType: "application/json",
-      //   data: (d) => {
-      //     return JSON.stringify($.extend({}, d, {
-      //     }));
-      //   }
-      // },
+      ajax: {
+        type: "POST",
+        url: URL,
+        contentType: "application/json",
+        data: (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "searchFlag": this.searchFlag
+          }));
+        }
+      },
       columns: [
         {
           className: "ui center aligned",
@@ -115,42 +69,43 @@ export class Tsl010700Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "cusName",
-          className: "ui center aligned"
+          data: "list",
+          className: "ui left aligned"
         }, {
-          data: "checkPointDest",
-          className: "ui center aligned"
+          data: "unit",
+          className: "ui left aligned"
         }, {
-          data: "dateOutDisplay",
-          className: "ui center aligned"
+          data: "stock",
+          className: "ui right aligned"
         }, {
-          data: "dateInDisplay",
-          className: "ui center aligned"
+          data: "receive",
+          className: "ui right aligned"
         }, {
-          data: "id",
-          className: "ui center aligned"
+          data: "receiveTotal",
+          className: "ui right aligned"
         }
       ],
     });
   };
 
   initPayRawDatatable = () => {
-    const URL3 = AjaxService.CONTEXT_PATH + "taxAudit/checkDisplay/searchPayRaw";
+    const URL = AjaxService.CONTEXT_PATH + "taxAudit/checkDisplay/search";
     this.payRawTable = $("#tablePayRawMaterial").DataTableTh({
-      serverSide: false,
+      serverSide: true,
       searching: false,
       processing: true,
       ordering: false,
       scrollX: true,
-      // ajax: {
-      //   type: "POST",
-      //   url: URL,
-      //   contentType: "application/json",
-      //   data: (d) => {
-      //     return JSON.stringify($.extend({}, d, {
-      //     }));
-      //   }
-      // },
+      ajax: {
+        type: "POST",
+        url: URL,
+        contentType: "application/json",
+        data: (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "searchFlag": this.searchFlag
+          }));
+        }
+      },
       columns: [
         {
           className: "ui center aligned",
@@ -158,19 +113,22 @@ export class Tsl010700Component implements OnInit {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          data: "cusName",
+          data: "list",
           className: "ui center aligned"
         }, {
-          data: "checkPointDest",
+          data: "unit",
           className: "ui center aligned"
         }, {
-          data: "dateOutDisplay",
+          data: "productInline",
           className: "ui center aligned"
         }, {
-          data: "dateInDisplay",
+          data: "productOutline",
           className: "ui center aligned"
         }, {
-          data: "id",
+          data: "corrupt",
+          className: "ui center aligned"
+        }, {
+          data: "other",
           className: "ui center aligned"
         }
       ],

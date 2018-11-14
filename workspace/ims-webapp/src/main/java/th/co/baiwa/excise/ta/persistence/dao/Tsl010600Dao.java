@@ -40,7 +40,7 @@ public class Tsl010600Dao {
 		sql.append(" ) ");
 
 		String sqlLimit = OracleUtils.limitForDataTable(sql, tsl010600FormVo.getStart(), tsl010600FormVo.getLength());
-		List<Tsl010600Vo> list = jdbcTemplate.query(sqlLimit, params.toArray(), Tsl010300RowMapper);
+		List<Tsl010600Vo> list = jdbcTemplate.query(sqlLimit, params.toArray(), Tsl010600RowMapper);
 		return list;
 	}
 	
@@ -64,7 +64,7 @@ public class Tsl010600Dao {
 		return count;
 	}
 
-	private RowMapper<Tsl010600Vo> Tsl010300RowMapper = new RowMapper<Tsl010600Vo>() {
+	private RowMapper<Tsl010600Vo> Tsl010600RowMapper = new RowMapper<Tsl010600Vo>() {
 		@Override
 		public Tsl010600Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Tsl010600Vo vo = new Tsl010600Vo();

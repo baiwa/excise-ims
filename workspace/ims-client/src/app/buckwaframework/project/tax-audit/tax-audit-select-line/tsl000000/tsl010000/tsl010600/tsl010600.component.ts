@@ -121,7 +121,8 @@ export class Tsl010600Component implements OnInit {
     this.router.navigate(["/tax-audit-select-line/tsl0107-00"],
       {
         queryParams: {
-          "dateCalendar": this.dateCalendar
+          "dateCalendar": this.dateCalendar,
+          "searchFlag": "TRUE"
         }
       }
     );
