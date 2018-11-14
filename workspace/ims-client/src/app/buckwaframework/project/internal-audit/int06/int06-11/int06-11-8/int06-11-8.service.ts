@@ -82,10 +82,10 @@ export class Int06118Service {
         { data: "id" },
         { data: "billLading" },
         { data: "createdBy" },
-        { data: "position" },
-        { data: "affiliation" },
-        { data: "createdDateStr" },
-        { data: "amount",render: renderNumber},
+        // { data: "position" },
+        // { data: "affiliation" },
+        { data: "createdDateStr", className:"center" },
+        { data: "amount",render: renderNumber, className:"right",},
         { data: "requestType",
           render: function(data) {
             var requestType = "";
@@ -127,15 +127,15 @@ export class Int06118Service {
 
             if (data === "2064"){
 
-              btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
+              // btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
               btn += `<button type="button" class="ui mini button primary btn-approve"><i class="edit icon"></i>เปรียบเทียบใบขอเบิก ขอจ่าย</button>`;
 
             } else if (data === "2065"){
-              btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
+              // btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
               btn += `<button type="button" class="ui mini button primary btn-approve"><i class="edit icon"></i>เปรียบเทียบใบขอเบิก ขอจ่าย</button>`;
 
             } else if (data === "2066"){
-              btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
+              // btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
               btn += `<button type="button" class="ui mini button primary btn-approve"><i class="edit icon"></i>เปรียบเทียบใบขอเบิก ขอจ่าย</button>`;
 
             }

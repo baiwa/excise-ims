@@ -82,10 +82,10 @@ export class Int06119Service {
         { data: "id" },
         { data: "billLading" },
         { data: "createdBy" },
-        { data: "position" },
-        { data: "affiliation" },
-        { data: "createdDateStr" },
-        { data: "amount",render: renderNumber},
+        // { data: "position" },
+        // { data: "affiliation" },
+        { data: "createdDateStr", className:"center" },
+        { data: "amount",render: renderNumber, className:"right"},
         { data: "requestType",
           render: function(data) {
             var requestType = "";
@@ -117,7 +117,7 @@ export class Int06119Service {
 
             if (data == "2208"){
 
-              btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
+              // btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
               btn += `<button type="button" class="ui mini button green btn-approve"><i class="check icon"></i>อนุมัติขอเบิก</button>`;
               btn += `<button type="button" class="ui mini button red btn-unApprove"><i class="remove icon"></i>ไม่อนุมัติขอเบิก</button>`;
 

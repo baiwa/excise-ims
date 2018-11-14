@@ -71,7 +71,7 @@ public class Int061105Service {
 				d.setPosition(vo.getPosition());
 				d.setAffiliation(vo.getAffiliation());
 				d.setCreatedDateStr(DateConstant.convertDateToStrDDMMYYYY(vo.getCreatedDate()));
-				d.setAmount(new BigDecimal(vo.getTotalMoney()));
+				d.setAmount(BeanUtils.isNotEmpty(vo.getTotalMoney()) ?new BigDecimal(vo.getTotalMoney()) : BigDecimal.ZERO);
 				d.setStatus(vo.getStatusCheck());
 				dataList.add(d);
 			}
