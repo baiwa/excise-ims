@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AjaxService } from 'services/ajax.service';
 import { reject } from 'q';
 import { Utils } from 'helpers/utils';
+import { Router } from '@angular/router';
 declare var $: any;
 @Injectable()
 export class Tsl010200Service {
@@ -714,39 +715,39 @@ export class Tsl010200Service {
   dataTableCompare2Year: any = [
     {
       "year": "2560",
-      "exciseId": "0107544000108-1-013",
-      "conpanyName": "บริษัท ปตท. จำกัด (มหาชน)",
-      "address": "555 หมู่ที่1 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
-      "subProduct": "น้ำมัน",
-      "sector": "ภาคที่ 1",
-      "area": "อ่างทอง",
-      "month1": "19,014,498.75",
-      "month2": "18,289,133.85",
-      "month3": "20,482,213.70",
-      "month4": "22,445,482.80",
+      "exciseId": "0775546000001-1-001",
+      "conpanyName": "บริษัท เนเจอร์รี่ จำกัด",
+      "address": "555/1 อาคารศูนย์เอนเนอร์ยี่คอมเพล็กซ์ ชั้น11 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
+      "subProduct": "เครื่องดื่ม",
+      "sector": "ภาคที่ 2",
+      "area": "ชลบุรี 1",
+      "month1": "19014498.75",
+      "month2": "18289133.85",
+      "month3": "20482213.70",
+      "month4": "22445482.80",
       "month5": "-",
       "month6": "-",
       "month7": "-",
-      "month8": "198133",
-      "month9": "20,442,213.70",
-      "month10": "19,289,133.85",
-      "month11": "19,989,133.85",
+      "month8": "19813300",
+      "month9": "20442213.70",
+      "month10": "19289133.85",
+      "month11": "19989133.85",
       "month12": "-",
       "showCh": "show"
     }, {
       "year": "2561",
-      "exciseId": "0107544000108-1-013",
-      "conpanyName": "บริษัท ปตท. จำกัด (มหาชน)",
-      "address": "555 หมู่ที่1 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
-      "subProduct": "น้ำมัน",
-      "sector": "ภาคที่ 1",
-      "area": "อ่างทอง",
-      "month1": "20,482,213.7",
-      "month2": "20,482,213.70",
-      "month3": "18,289,133.85",
+      "exciseId": "0775546000001-1-001",
+      "conpanyName": "บริษัท เนเจอร์รี่ จำกัด",
+      "address": "555/1 อาคารศูนย์เอนเนอร์ยี่คอมเพล็กซ์ ชั้น11 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
+      "subProduct": "เครื่องดื่ม",
+      "sector": "ภาคที่ 2",
+      "area": "ชลบุรี 1",
+      "month1": "20482213.70",
+      "month2": "20482213.70",
+      "month3": "18289133.85",
       "month4": "-",
       "month5": "-",
-      "month6": "19,514,498.75",
+      "month6": "19514498.75",
       "month7": "-",
       "month8": "-",
       "month9": "-",
@@ -763,89 +764,90 @@ export class Tsl010200Service {
       "subProduct": "",
       "sector": "",
       "area": "",
-      "month1": "-1,467,714.95",
-      "month2": "-2,193,079.85",
-      "month3": "2,193,079.85",
-      "month4": "22,445,482.80",
+      "month1": "-1467714.95",
+      "month2": "-2193079.85",
+      "month3": "2193079.85",
+      "month4": "22445482.80",
       "month5": "-",
-      "month6": "-19,514,498.75",
+      "month6": "-19514498.75",
       "month7": "-",
       "month8": "-",
-      "month9": "20,442,213.70",
-      "month10": "19,289,133.85",
-      "month11": "19,989,133.85",
+      "month9": "20442213.70",
+      "month10": "19289133.85",
+      "month11": "19989133.85",
       "month12": "-",
       "showCh": ""
     },
     {
       "year": "2560",
-      "exciseId": "0107547000711-1-002",
-      "conpanyName": "บริษัท ไทยออยล์ จำกัด (มหาชน)",
-      "address": "555/1 อาคารศูนย์เอนเนอร์ยี่คอมเพล็กซ์ ชั้น11 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
-      "subProduct": "น้ำมัน",
-      "sector": "ภาคที่ 2",
-      "area": "ชลบุรี 1",
-      "month1": "4093170506.62",
-      "month2": "3439326365.7",
-      "month3": "4677643829.55",
-      "month4": "4082285656.72",
-      "month5": "4082285656.72",
-      "month6": "3439326365.7",
-      "month7": "4082285656.72",
+      "exciseId": "0105540039831-3-001",
+      "conpanyName": "บริษัท ดัชมิลด์ ดิไวซ์ เซลส์ (ประเทศไทย) จำกัด",
+      "address": "252/133 อาคาร- ซอย- ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง  จังหวัดกรุงเทพมหานคร 10310",
+      "subProduct": "เครื่องดื่ม",
+      "sector": "สรรพสามิตภาคที่ 1",
+      "area": "สรรพสามิตพื้นที่ปทุมธานี 2",
+      "month1": "19014498.75",
+      "month2": "18289133.85",
+      "month3": "20482213.70",
+      "month4": "22445482.80",
+      "month5": "-",
+      "month6": "-",
+      "month7": "-",
       "month8": "-",
-      "month9": "-",
-      "month10": "-",
-      "month11": "-",
+      "month9": "20442213.70",
+      "month10": "19289133.85",
+      "month11": "19989133.85",
       "month12": "-",
       "showCh": "show"
-    },
-    {
-      "year": "2560",
-      "exciseId": "0107547000711-1-002",
-      "conpanyName": "บริษัท ไทยออยล์ จำกัด (มหาชน)",
-      "address": "555/1 อาคารศูนย์เอนเนอร์ยี่คอมเพล็กซ์ ชั้น11 ซอย- ถนนวิภาวดีรังสิต แขวงจตุจักร เขตจตุจักร จังหวัดกรุงเทพมหานคร 10900",
-      "subProduct": "น้ำมัน",
-      "sector": "ภาคที่ 2",
-      "area": "ชลบุรี 1",
-      "month1": "4,093,170,505.62",
-      "month2": "3,439,326,365.70",
-      "month3": "4,677,643,829.55",
-      "month4": "4,082,285,656.72",
-      "month5": "4,082,285,656.72",
-      "month6": "3,439,326,365.7",
-      "month7": "4,082,285,656.72",
+    }, {
+
+      "year": "2561",
+      "exciseId": "0105540039831-3-001",
+      "conpanyName": "บริษัท ดัชมิลด์ ดิไวซ์ เซลส์ (ประเทศไทย) จำกัด",
+      "address": "252/133 อาคาร- ซอย- ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง  จังหวัดกรุงเทพมหานคร 10310",
+      "subProduct": "เครื่องดื่ม",
+      "sector": "สรรพสามิตภาคที่ 1",
+      "area": "สรรพสามิตพื้นที่ปทุมธานี 2",
+      "month1": "20482213.7",
+      "month2": "20482213.7",
+      "month3": "20482213.70",
+      "month4": "22445482.80",
+      "month5": "-",
+      "month6": "-",
+      "month7": "-",
       "month8": "-",
-      "month9": "-",
-      "month10": "-",
-      "month11": "-",
+      "month9": "20442213.70",
+      "month10": "19289133.85",
+      "month11": "19989133.85",
       "month12": "-",
       "showCh": ""
-    },
-    {
-      "year": "",
-      "exciseId": "",
+    }, {
+
+      "year":"",
+      "exciseId":"",
       "conpanyName": "",
       "address": "",
       "subProduct": "",
       "sector": "",
       "area": "",
-      "month1": "1.00",
-      "month2": "0.00",
-      "month3": "0.00",
+      "month1": "-1467714.95",
+      "month2": "-2193079.85",
+      "month3": "2193079.85",
       "month4": "0.00",
-      "month5": "0.00",
-      "month6": "0.00",
-      "month7": "0.00",
+      "month5": "-",
+      "month6": "-",
+      "month7": "-",
       "month8": "-",
-      "month9": "-",
-      "month10": "-",
-      "month11": "-",
+      "month9": "0",
+      "month10": "0",
+      "month11": "0",
       "month12": "-",
       "showCh": ""
-    },
+    }
   ];
   constructor(
-    private ajax: AjaxService
+    private ajax: AjaxService,
+    private router: Router
   ) { }
 
   checkRisk(risk) {
@@ -858,6 +860,7 @@ export class Tsl010200Service {
     let url = "taxAudit/selectList/saveCondition1";
     return new Promise((resolve, reject) => {
       this.ajax.post(url, JSON.stringify({ dataList: this.dataList }), res => {
+        this.router.navigate(['/tax-audit-select-line/tsl0102-00']);
         resolve(res.json());
       });
     });
@@ -887,9 +890,9 @@ export class Tsl010200Service {
       "scrollX": true,
       "paging": true,
       "data": this.data,
-    //   fixedColumns:   {
-    //     leftColumns: 3,
-    // },
+      //   fixedColumns:   {
+      //     leftColumns: 3,
+      // },
       "columns": [
         {
           render: function (data, type, full, meta) {
@@ -919,35 +922,62 @@ export class Tsl010200Service {
         },
         {
           "data": "month1",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month2",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month3",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month4",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month5",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month6",
           "className": "text-right"
+          ,
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month7",
           "className": "text-right"
+          ,
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month8",
           "className": "text-right"
+          ,
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month9",
@@ -956,12 +986,24 @@ export class Tsl010200Service {
         {
           "data": "month10",
           "className": "text-right"
+          ,
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "month11",
           "className": "text-right"
+          ,
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "month12",
           "className": "text-right"
+          ,
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
       ],
       "rowCallback": (row, data, index) => {
@@ -1030,7 +1072,7 @@ export class Tsl010200Service {
           "className": "center"
         },
         {
-          "data": "exciseId"
+          "data": "exciseId",
         },
         {
           "data": "conpanyName"
@@ -1049,71 +1091,152 @@ export class Tsl010200Service {
         },
         {
           "data": "month1",
-          "className": "text-right"
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month2",
-          "className": "text-right"
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month3",
-          "className": "text-right"
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month4",
-          "className": "text-right"
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month5",
-          "className": "text-right"
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month6",
-          "className": "text-right"
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month7",
-          "className": "text-right"
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month8",
-          "className": "text-right"
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month9",
-          "className": "text-right"
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month10",
-          "className": "text-right"
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "month11",
-          "className": "text-right"
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "month12",
-          "className": "text-right"
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "pack1",
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "pack2",
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "pack3",
+          "className": "right",
+          "render": (data, row) => {
+            console.log(data);
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "pack4",
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "pack5",
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "pack6",
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "pack7",
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "pack8",
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "pack9",
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "pack10",
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "pack11",
+          "className": "right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }
       ],
       "rowCallback": (row, data, index) => {
@@ -1198,49 +1321,85 @@ export class Tsl010200Service {
         },
         {
           "data": "month1",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month2",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month3",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month4",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month5",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month6",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month7",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month8",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month9",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
         {
           "data": "month10",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "month11",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         }, {
           "data": "month12",
-          "className": "text-right"
+          "className": "text-right",
+          "render": (data, row) => {
+            return Utils.moneyFormatDecimal(data);
+          }
         },
       ],
       "rowCallback": (row, data, index) => {
