@@ -26,7 +26,7 @@ public class Int0806Service {
 	
 	public DataTableAjax<MoneyCheck> search(Int0806FormSearchVo en) {
 		List<MoneyCheck> dataList = new ArrayList<MoneyCheck>();
-		if(BeanUtils.isNotEmpty(en.getCombo1()) && BeanUtils.isNotEmpty(en.getCombo2())) {
+		if(BeanUtils.isNotEmpty(en.getCombo1()) || BeanUtils.isNotEmpty(en.getCombo2())) {
 			//query find subtype
 			if("0".equals(en.getCombo1())) {
 				en.setOfficeCode("");
@@ -45,9 +45,11 @@ public class Int0806Service {
 					if(m.getTrnDate().compareTo(m.getDepositDate()) <= 1) {
 						m.setStatusDate("S");
 						m.setDepositDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getDepositDate()));
+						m.setTrnDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getTrnDate()));
 					}else {
 						m.setStatusDate("F");
 						m.setDepositDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getDepositDate()));
+						m.setTrnDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getTrnDate()));
 					}
 					if("0".equals(m.getNetlocAmount().subtract(m.getNettaxAmount()))) {
 						m.setStatusMoney("S");

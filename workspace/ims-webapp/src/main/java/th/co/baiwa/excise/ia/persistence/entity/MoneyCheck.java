@@ -92,6 +92,9 @@ public class MoneyCheck extends BaseEntity {
 	
 	@Transient
 	private String statusMoney;
+	
+	@Transient
+	private String trnDateStr;
 
 	public BigDecimal getId() {
 		return id;
@@ -275,6 +278,14 @@ public class MoneyCheck extends BaseEntity {
 
 	public void setStatusMoney(String statusMoney) {
 		this.statusMoney = statusMoney;
+	}
+
+	public String getTrnDateStr() {
+		return trnDateStr;
+	}
+
+	public void setTrnDateStr(String trnDateStr) {
+		this.trnDateStr = trnDateStr;
 	}
 
 }
