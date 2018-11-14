@@ -20,7 +20,7 @@ export class Tsl010100Component implements OnInit {
   //==> params
   submitted: boolean = false;
   formControl: FormGroup;
-
+  year: string = '';
 
   //==> params group
   symbol: any = [
@@ -43,12 +43,14 @@ export class Tsl010100Component implements OnInit {
   newForm() {
     this.formControl = this.formBuilder.group({
       dateFrom: ["", Validators.required],
-      dateTo: ["", Validators.required],
+      dateTo: [""],
       monthNonPay: [""],
       symbol1: [""],
       symbol2: [""],
+      symbol3: [""],
       percent1: [""],
-      percent2: [""]
+      percent2: [""],
+      percent3: [""]
     });
   }
 
@@ -59,6 +61,15 @@ export class Tsl010100Component implements OnInit {
       return false;
     }
     //==> submit
+    this.formControl.patchValue({
+      dateFrom: "01/" + this.year,
+      dateTo: "12/" + this.year,     
+      symbol1: ">",
+      symbol2: "<",
+      symbol3: "="
+    });
+
+    console.log("form : ", this.formControl.value);
     this.myService.save(this.formControl.value);
   }
 
@@ -76,12 +87,14 @@ export class Tsl010100Component implements OnInit {
     $("#dateF").calendar({
       maxDate: new Date(date.getFullYear() + "-" + (date.getMonth())),
       endCalendar: $("#dateT"),
-      type: "month",
+      type: "year",
       text: TextDateTH,
-      formatter: formatter('month-year'),
+      formatter: formatter('year'),
       onChange: (date, text) => {
+        this.year = text;
         this.formControl.controls.dateFrom.setValue(text);
       },
+      
     });
     $("#dateT").calendar({
       maxDate: new Date(date.getFullYear() + "-" + (date.getMonth())),

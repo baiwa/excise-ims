@@ -23,6 +23,7 @@ import th.co.baiwa.excise.ta.persistence.repository.PlanFromWsHeaderRepository;
 import th.co.baiwa.excise.ta.persistence.repository.PlanRiskDtlRepository;
 import th.co.baiwa.excise.ta.persistence.repository.PlanWorksheetHeaderRepository;
 import th.co.baiwa.excise.ta.persistence.vo.PlanFromWsVo;
+import th.co.baiwa.excise.ta.persistence.vo.Tsl010200FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010200Vo;
 import th.co.baiwa.excise.utils.BeanUtils;
 
@@ -306,4 +307,7 @@ public class PlanFromWsHeaderService {
 
 	}
 
+	public void saveCondition1(Tsl010200FormVo formVo){
+		
+	}
 }
